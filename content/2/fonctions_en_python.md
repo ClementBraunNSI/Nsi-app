@@ -6,9 +6,6 @@ chapter: "Introduction à Python"
 icon: "🔧"
 ---
 
-# 📚 Fonctions en Python
-> Modularité et réutilisabilité du code.
-
 ## 🎯 Définitions
 
 Une fonction est un bloc de code réutilisable qui effectue une tâche spécifique. Elle permet de **modulariser** le code et d'éviter les répétitions inutiles.
