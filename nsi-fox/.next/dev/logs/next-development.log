@@ -1,6 +1,0 @@
-[00:00:00.695] Server  LOG     ✓ Ready in 491ms
-[00:00:05.027] Browser WARN    Image with src "/images/fox_0.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:05.027] Browser WARN    Image with src "/images/fox_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:05.027] Browser WARN    Image with src "/images/fox_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:05.027] Browser WARN    Image with src "/images/fox_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:05.027] Browser WARN    Image with src "/images/fox_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
