@@ -1,7 +1,7 @@
 ---
 title: "Types de données en Python"
 description: "Les types fondamentaux pour structurer vos données : booléens, nombres et chaînes."
-level: "Niveau 1"
+level: "2"
 chapter: "Introduction à Python"
 icon: "🔢"
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Types de données en Python"
 subtitle: "Les types fondamentaux pour structurer vos données"
-level: "Niveau 1"
+level: "2"
 chapter: "Introduction à Python"
 icon: "🔢"
 ---
