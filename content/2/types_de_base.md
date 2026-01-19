@@ -5,8 +5,10 @@ subtitle: "Les types fondamentaux pour structurer vos données"
 level: "Niveau 1"
 icon: "🔢"
 ---
+```
 
 # 📚 Types de données en Python
+
 > Les types fondamentaux pour structurer vos données
 
 ## 🔘 Les Booléens
@@ -14,13 +16,13 @@ icon: "🔢"
 Le type booléen représente des valeurs de vérité avec seulement deux états possibles : **True** (vrai) et **False** (faux). Essentiel pour les conditions et le contrôle de flux.
 
 ### Valeurs de base
+
 - ✅ **True** : Valeur vraie. Utilisée quand une condition est satisfaite.
 - ❌ **False** : Valeur fausse. Utilisée quand une condition n'est pas satisfaite.
 
 ```python
 est_jeune = True
 a_termine_cours = False
-
 ```
 
 ### Opérateurs Logiques
@@ -56,7 +58,7 @@ derniere_lettre = nom[-1]  # 'e'
 
 ---
 
-### 2. `Cours_4.mdx` (Fonctions)
+### 2.Fonctions
 
 ```mdx
 ---
@@ -65,6 +67,7 @@ subtitle: "Modularité et réutilisabilité du code"
 level: "Niveau 2"
 icon: "🔧"
 ---
+```
 
 # 📚 Fonctions en Python
 > Apprendre à modulariser et réutiliser son code.
