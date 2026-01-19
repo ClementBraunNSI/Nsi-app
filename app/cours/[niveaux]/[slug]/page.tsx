@@ -6,6 +6,8 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string }> }) {
   // On récupère les paramètres de l'URL
@@ -34,8 +36,8 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
         <p className="text-slate-500 mb-4">
           Le fichier <code className="bg-slate-100 px-1">{slug}.md</code> est introuvable dans le dossier <code className="bg-slate-100 px-1">/content/{dossierPhysique}/</code>
         </p>
-        <Link href={`/cours/${niveaux}`} className="text-blue-600 underline font-medium">
-          Retour au sommaire du niveau {niveaux}
+        <Link href={`/niveaux/${dossierPhysique}`} className="text-blue-600 underline font-medium">
+          Retour au sommaire du niveau {dossierPhysique}
         </Link>
       </div>
     );
@@ -48,7 +50,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     <div className="min-h-screen bg-white">
       <nav className="border-b border-slate-100 p-6">
         <div className="max-w-4xl mx-auto">
-          <Link href={`/cours/${niveaux}`} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 transition-colors font-medium">
+          <Link href={`/niveaux/${niveaux}`} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 transition-colors font-medium">
             <ChevronLeft size={20} /> Retour
           </Link>
         </div>
@@ -81,7 +83,8 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             source={content} 
             options={{
               mdxOptions: {
-                remarkPlugins: [remarkGfm],
+                remarkPlugins: [remarkGfm, remarkMath],
+                rehypePlugins: [rehypeKatex],
               },
             }}
           />

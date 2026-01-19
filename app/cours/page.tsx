@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
-import { ChevronRight, BookOpen } from 'lucide-react';
+import { ChevronRight, BookOpen, GraduationCap } from 'lucide-react';
 
 interface CoursData {
   slug: string;
@@ -64,12 +64,20 @@ export default async function PageTousLesCours() {
     });
   });
 
-  // 3. Trier par niveau, puis par chapitre
-  tousLesCours.sort((a, b) => {
-    if (a.level !== b.level) {
-      return parseInt(a.level) - parseInt(b.level);
+  // 3. Grouper par niveau, puis par chapitre
+  const coursParNiveau: Record<string, Record<string, typeof tousLesCours>> = {};
+
+  tousLesCours.forEach((cours) => {
+    const niveau = cours.level;
+    const chapitre = cours.chapter;
+
+    if (!coursParNiveau[niveau]) {
+      coursParNiveau[niveau] = {};
     }
-    return a.chapter.localeCompare(b.chapter);
+    if (!coursParNiveau[niveau][chapitre]) {
+      coursParNiveau[niveau][chapitre] = [];
+    }
+    coursParNiveau[niveau][chapitre].push(cours);
   });
 
   return (
@@ -85,39 +93,63 @@ export default async function PageTousLesCours() {
         </div>
       </div>
 
-      {/* Liste des cours triés */}
-      <div className="space-y-4">
-        {tousLesCours.map((cours, index) => (
-          <Link
-            key={`${cours.level}-${cours.slug}`}
-            href={`/cours/${cours.level}/${cours.slug}`}
-            className="group flex items-center justify-between p-6 bg-white border border-slate-100 rounded-2xl hover:border-orange-500 hover:shadow-xl transition-all duration-300 block"
-          >
-            <div className="flex items-center gap-5">
-              <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-3xl group-hover:bg-orange-50 transition-colors">
-                {cours.icon}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className={`px-3 py-1 text-xs font-bold uppercase tracking-widest text-white rounded-full ${LEVELS_INFO[cours.level]?.color || 'bg-gray-500'}`}>
-                    {LEVELS_INFO[cours.level]?.title || `Niveau ${cours.level}`}
-                  </span>
-                  <span className="text-sm font-bold text-orange-600 uppercase tracking-widest">
-                    {cours.chapter}
+      {/* Affichage par niveau et chapitre */}
+      {Object.entries(coursParNiveau).sort(([a], [b]) => parseInt(a) - parseInt(b)).map(([niveau, chapitres]) => (
+        <section key={niveau} className="mb-12">
+          {/* En-tête du niveau */}
+          <div className="flex items-center gap-4 mb-8 pb-4 border-b-2 border-orange-100">
+            <div className={`w-12 h-12 ${LEVELS_INFO[niveau]?.color || 'bg-gray-500'} rounded-2xl flex items-center justify-center text-white shadow-lg`}>
+              <GraduationCap size={24} />
+            </div>
+            <div>
+              <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+                {LEVELS_INFO[niveau]?.title || `Niveau ${niveau}`}
+              </h2>
+              <p className="text-slate-500 mt-1">Tous les chapitres de ce niveau</p>
+            </div>
+          </div>
+
+          {/* Chapitres du niveau */}
+          {Object.entries(chapitres).sort(([a], [b]) => a.localeCompare(b)).map(([nomChapitre, coursDuChapitre]) => (
+            <details key={nomChapitre} className="mb-6 bg-white border border-slate-100 rounded-2xl overflow-hidden">
+              <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-orange-50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <BookOpen className="text-orange-500" size={20} />
+                  <h3 className="text-xl font-bold text-slate-800">{nomChapitre}</h3>
+                  <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
+                    {coursDuChapitre.length} cours
                   </span>
                 </div>
-                <h3 className="font-bold text-lg text-slate-900 group-hover:text-orange-600 transition-colors">
-                  {cours.title}
-                </h3>
-                <p className="text-sm text-slate-500 mt-1">{cours.description}</p>
+                <ChevronRight className="text-slate-400 details-marker-hidden" size={20} />
+              </summary>
+              <div className="px-6 pb-6 space-y-3">
+                {coursDuChapitre.map((cours) => (
+                  <Link
+                    key={cours.slug}
+                    href={`/cours/${niveau}/${cours.slug}`}
+                    className="group flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-2xl group-hover:bg-orange-50 transition-colors">
+                        {cours.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+                          {cours.title}
+                        </h4>
+                        <p className="text-sm text-slate-500">{cours.description}</p>
+                      </div>
+                    </div>
+                    <div className="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all">
+                      <ChevronRight size={18} />
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </div>
-            <div className="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all">
-              <ChevronRight size={22} />
-            </div>
-          </Link>
-        ))}
-      </div>
+            </details>
+          ))}
+        </section>
+      ))}
     </main>
   );
 }
