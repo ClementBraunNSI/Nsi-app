@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon } from 'lucide-react';
+import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon, ChevronLeft } from 'lucide-react';
 
 // Tes données de niveaux restent inchangées
 const LEVELS = [
@@ -51,7 +51,22 @@ export default function LandingPage() {
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  // Logique de recherche automatisée
+  // Carousel state
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const colleagues = [
+    { name: "Lucas Relmy", site: "http://lucasrelmynsi.gitlab.io/site_cours/", phrase: "Explorez l'informatique avec clarté et structure grâce aux cours organisés de Lucas Relmy." },
+    { name: "Erwan Demerville", site: "https://nsi.erwandemerville.fr/", phrase: "Maîtrisez la NSI avec des ressources complètes et interactives pour Première et Terminale." },
+    { name: "Stéphane Ramstein", site: "https://stephane_ramstein.gitlab.io/nsi/", phrase: "Le portail complet pour la NSI : cours, outils, orientation et concours." },
+    { name: "Mathieu Marchand", site: "https://mmarchand-nsi.github.io/", phrase: "Explorez l'informatique scientifique avec des projets concrets et des outils professionnels." },
+    { name: "Nicolas Leal", site: "http://www.prof-leal.fr/", phrase: "Découvrez le numérique avec curiosité et rigueur pour SNT et NSI." },
+    { name: "Théo Quertier", site: "https://ge0rgi0.github.io/TAQ/", phrase: "TAQ : votre guide structuré pour maîtriser NSI et SNT étape par étape." },
+    { name: "Mathieu Cardoso", site: "https://profcardoso.github.io/", phrase: "Cours NSI-SNT complets avec ressources pratiques et club informatique." }
+  ];
+
+  const itemsPerPage = 3; // Fixed for desktop, can adjust for mobile if needed
+  const maxIndex = Math.max(0, colleagues.length - itemsPerPage);
   useEffect(() => {
     const fetchResults = async () => {
       if (searchQuery.trim().length > 1) {
@@ -152,37 +167,59 @@ export default function LandingPage() {
               Découvrez les ressources exceptionnelles de mes collègues enseignants NSI à travers la France.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { name: "Lucas Relmy", site: "http://lucasrelmynsi.gitlab.io/site_cours/", phrase: "Explorez l'informatique avec clarté et structure grâce aux cours organisés de Lucas Relmy." },
-              { name: "Erwan Demerville", site: "https://nsi.erwandemerville.fr/", phrase: "Maîtrisez la NSI avec des ressources complètes et interactives pour Première et Terminale." },
-              { name: "Stéphane Ramstein", site: "https://stephane_ramstein.gitlab.io/nsi/", phrase: "Le portail complet pour la NSI : cours, outils, orientation et concours." },
-              { name: "Mathieu Marchand", site: "https://mmarchand-nsi.github.io/", phrase: "Explorez l'informatique scientifique avec des projets concrets et des outils professionnels." },
-              { name: "Nicolas Leal", site: "http://www.prof-leal.fr/", phrase: "Découvrez le numérique avec curiosité et rigueur pour SNT et NSI." },
-              { name: "Théo Quertier", site: "https://ge0rgi0.github.io/TAQ/", phrase: "TAQ : votre guide structuré pour maîtriser NSI et SNT étape par étape." },
-              { name: "Mathieu Cardoso", site: "https://profcardoso.github.io/", phrase: "Cours NSI-SNT complets avec ressources pratiques et club informatique." }
-            ].map((colleague, i) => (
-              <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-orange-500 group-hover:text-white transition-all shadow-inner">
-                    👨‍🏫
+          <div className="relative max-w-6xl mx-auto">
+            <div className="flex justify-center gap-4 mb-8">
+              <button 
+                onClick={() => {
+                  setIsAnimating(true);
+                  setTimeout(() => {
+                    setCurrentIndex(Math.max(0, currentIndex - itemsPerPage));
+                    setIsAnimating(false);
+                  }, 200);
+                }}
+                disabled={currentIndex === 0}
+                className="p-3 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                <ChevronLeft size={20} className="text-slate-600" />
+              </button>
+              <button 
+                onClick={() => {
+                  setIsAnimating(true);
+                  setTimeout(() => {
+                    setCurrentIndex(Math.min(maxIndex, currentIndex + itemsPerPage));
+                    setIsAnimating(false);
+                  }, 200);
+                }}
+                disabled={currentIndex >= maxIndex}
+                className="p-3 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                <ChevronRight size={20} className="text-slate-600" />
+              </button>
+            </div>
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 transition-opacity duration-200 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+              {colleagues.slice(currentIndex, currentIndex + itemsPerPage).map((colleague, i) => (
+                <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-orange-500 group-hover:text-white transition-all shadow-inner">
+                      👨‍🏫
+                    </div>
+                    <div>
+                      <h3 className="font-black text-slate-800 text-lg">{colleague.name}</h3>
+                      <p className="text-orange-600 font-bold text-xs uppercase tracking-widest">Enseignant NSI</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-black text-slate-800 text-lg">{colleague.name}</h3>
-                    <p className="text-orange-600 font-bold text-xs uppercase tracking-widest">Enseignant NSI</p>
-                  </div>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-6 italic">{colleague.phrase}</p>
+                  <a 
+                    href={colleague.site} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-orange-200 text-sm"
+                  >
+                    Visiter le site <ChevronRight size={16} />
+                  </a>
                 </div>
-                <p className="text-slate-500 text-sm leading-relaxed mb-6 italic">{colleague.phrase}</p>
-                <a 
-                  href={colleague.site} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-orange-200 text-sm"
-                >
-                  Visiter le site <ChevronRight size={16} />
-                </a>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -190,7 +227,10 @@ export default function LandingPage() {
       <footer className="bg-white border-t border-slate-100 py-16">
         <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-slate-400 font-bold text-sm tracking-widest uppercase">© 2026 Clément Braun — NSI</div>
-          <div className="flex gap-8">
+          <div className="flex items-center gap-8">
+            <Link href="/mentions-legales" className="text-slate-400 hover:text-slate-600 transition-colors text-sm font-medium">
+              Mentions légales
+            </Link>
             <Github className="text-slate-300 hover:text-slate-900 cursor-pointer transition-colors" />
           </div>
         </div>
