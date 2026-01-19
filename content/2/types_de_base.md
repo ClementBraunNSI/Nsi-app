@@ -60,14 +60,12 @@ derniere_lettre = nom[-1]  # 'e'
 
 ### 2.Fonctions
 
-```mdx
 ---
 title: "Fonctions en Python"
 subtitle: "Modularité et réutilisabilité du code"
 level: "Niveau 2"
 icon: "🔧"
 ---
-```
 
 # 📚 Fonctions en Python
 > Apprendre à modulariser et réutiliser son code.
