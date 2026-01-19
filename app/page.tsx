@@ -4,21 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon, ChevronLeft } from 'lucide-react';
 
-// Tes données de niveaux restent inchangées
+// Les constantes (LEVELS, CONTRIBUTORS) restent identiques...
 const LEVELS = [
   { id: 0, title: "SNI", desc: "Sciences Numériques et Informatique : les bases.", img: "/images/fox_0.png", color: "bg-slate-500", tag: "Niveau 0" },
   { id: 1, title: "SNT", desc: "Sciences Numériques et Technologie (2nde).", img: "/images/fox_1.png", color: "bg-blue-500", tag: "Niveau 1" },
   { id: 2, title: "Première NSI", desc: "Algorithmique, Python et structures de données.", img: "/images/fox_2.png", color: "bg-orange-500", tag: "Niveau 2" },
   { id: 3, title: "Terminale NSI", desc: "Récursivité, SQL et architectures réseaux.", img: "/images/fox_3.png", color: "bg-purple-500", tag: "Niveau 3" },
   { id: 4, title: "BTS SIO", desc: "Services Informatiques aux Organisations.", img: "/images/fox_4.png", color: "bg-emerald-500", tag: "Niveau 4" },
-];
-
-const CONTRIBUTORS = [
-  { name: "Clément Braun", role: "Auteur Principal", avatar: "🦊", desc: "Enseignant NSI et concepteur de la plateforme." },
-  { name: "Nicolas DELPLACE", role: "Lycée de l'Escaut", avatar: "🏢", desc: "Enseignant d'informatique à Valenciennes." },
-  { name: "Stéphane RAMSTEIN", role: "Lycée Raymond Queneau", avatar: "📚", desc: "Enseignant d'informatique à Villeneuve-d'Ascq." },
-  { name: "Benoit PAPEGAY", role: "Université de Lille", avatar: "🎓", desc: "Enseignant chercheur et contributeur pédagogique." },
-  { name: "Mathieu MARCHAND", role: "Lycée Benjamin Franklin", avatar: "🌊", desc: "Enseignant d'informatique à Auray." }
 ];
 
 const CourseCard = ({ title, desc, img, tag, color, href }: any) => (
@@ -50,8 +42,6 @@ export default function LandingPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-
-  // Carousel state
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -65,8 +55,9 @@ export default function LandingPage() {
     { name: "Mathieu Cardoso", site: "https://profcardoso.github.io/", phrase: "Cours NSI-SNT complets avec ressources pratiques et club informatique." }
   ];
 
-  const itemsPerPage = 3; // Fixed for desktop, can adjust for mobile if needed
+  const itemsPerPage = 3;
   const maxIndex = Math.max(0, colleagues.length - itemsPerPage);
+
   useEffect(() => {
     const fetchResults = async () => {
       if (searchQuery.trim().length > 1) {
@@ -84,7 +75,6 @@ export default function LandingPage() {
         setResults([]);
       }
     };
-
     const timer = setTimeout(fetchResults, 300);
     return () => clearTimeout(timer);
   }, [searchQuery]);
@@ -102,12 +92,10 @@ export default function LandingPage() {
             </svg>
           </span>
         </h1>
-        
         <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
           La plateforme de référence pour la NSI. Des cours épurés, des illustrations uniques et un parcours de progression jusqu'au BTS.
         </p>
 
-        {/* Barre de recherche unique et intelligente */}
         <div className="relative max-w-xl mx-auto z-50">
           <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" size={24} />
           <input 
@@ -117,19 +105,13 @@ export default function LandingPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-16 pr-8 py-6 bg-white border-2 border-slate-100 rounded-[2rem] shadow-xl shadow-slate-100 focus:border-orange-500 focus:ring-0 outline-none transition-all text-lg font-medium text-slate-800" 
           />
-
-          {/* Menu déroulant des résultats de notions */}
           {searchQuery.length > 1 && (
             <div className="absolute top-full left-0 right-0 mt-4 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden text-left animate-in fade-in slide-in-from-top-2">
               {isSearching ? (
                 <div className="p-8 text-center text-slate-400">Recherche dans les cours... 🦊</div>
               ) : results.length > 0 ? (
                 results.map((course: any, i) => (
-                  <Link 
-                    key={i}
-                    href={`/cours/${course.level}/${course.slug}`}
-                    className="flex items-center justify-between p-5 hover:bg-orange-50 transition-colors border-b border-slate-50 last:border-0"
-                  >
+                  <Link key={i} href={`/cours/${course.level}/${course.slug}`} className="flex items-center justify-between p-5 hover:bg-orange-50 transition-colors border-b border-slate-50 last:border-0">
                     <div>
                       <div className="font-bold text-slate-800">{course.title}</div>
                       <div className="text-[10px] text-orange-500 font-black uppercase tracking-widest">{course.category}</div>
@@ -149,16 +131,11 @@ export default function LandingPage() {
         <h2 className="text-2xl font-black text-slate-800 mb-10">Parcourir par niveaux</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {LEVELS.map((lvl) => (
-            <CourseCard 
-              key={lvl.id} 
-              {...lvl}
-              href={`/niveaux/${lvl.id}`}
-            />
+            <CourseCard key={lvl.id} {...lvl} href={`/niveaux/${lvl.id}`} />
           ))}
         </div>
       </main>
 
-      {/* Section Sites de collègues */}
       <section className="bg-slate-50 py-24 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-8">
           <div className="text-center mb-16">
@@ -172,10 +149,7 @@ export default function LandingPage() {
               <button 
                 onClick={() => {
                   setIsAnimating(true);
-                  setTimeout(() => {
-                    setCurrentIndex(Math.max(0, currentIndex - itemsPerPage));
-                    setIsAnimating(false);
-                  }, 200);
+                  setTimeout(() => { setCurrentIndex(Math.max(0, currentIndex - itemsPerPage)); setIsAnimating(false); }, 200);
                 }}
                 disabled={currentIndex === 0}
                 className="p-3 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all"
@@ -185,10 +159,7 @@ export default function LandingPage() {
               <button 
                 onClick={() => {
                   setIsAnimating(true);
-                  setTimeout(() => {
-                    setCurrentIndex(Math.min(maxIndex, currentIndex + itemsPerPage));
-                    setIsAnimating(false);
-                  }, 200);
+                  setTimeout(() => { setCurrentIndex(Math.min(maxIndex, currentIndex + itemsPerPage)); setIsAnimating(false); }, 200);
                 }}
                 disabled={currentIndex >= maxIndex}
                 className="p-3 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all"
@@ -209,12 +180,7 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <p className="text-slate-500 text-sm leading-relaxed mb-6 italic">{colleague.phrase}</p>
-                  <a 
-                    href={colleague.site} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-orange-200 text-sm"
-                  >
+                  <a href={colleague.site} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-orange-200 text-sm">
                     Visiter le site <ChevronRight size={16} />
                   </a>
                 </div>
@@ -231,6 +197,7 @@ export default function LandingPage() {
             <Link href="/mentions-legales" className="text-slate-400 hover:text-slate-600 transition-colors text-sm font-medium">
               Mentions légales
             </Link>
+            {/* Suppression du lien vers /admin/login car la connexion est maintenant dans le layout */}
             <Github className="text-slate-300 hover:text-slate-900 cursor-pointer transition-colors" />
           </div>
         </div>

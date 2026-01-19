@@ -12,6 +12,14 @@ interface CoursData {
   icon: string;
 }
 
+const LEVELS_INFO: Record<string, { title: string; color: string }> = {
+  '0': { title: 'SNI', color: 'bg-slate-500' },
+  '1': { title: 'SNT', color: 'bg-blue-500' },
+  '2': { title: 'Première NSI', color: 'bg-orange-500' },
+  '3': { title: 'Terminale NSI', color: 'bg-purple-500' },
+  '4': { title: 'BTS SIO', color: 'bg-emerald-500' },
+};
+
 export default async function PageSommaireNiveau({ params }: { params: Promise<{ id: string }> }) {
   // 1. On attend la résolution des paramètres (Obligatoire pour Next.js 15+)
   const resolvedParams = await params;
@@ -64,7 +72,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
         <div className="p-3 bg-orange-600 rounded-2xl text-white shadow-lg">
           <GraduationCap size={32} />
         </div>
-        <h1 className="text-4xl font-black text-slate-900 tracking-tight">Niveau {id}</h1>
+        <h1 className="text-4xl font-black text-slate-900 tracking-tight">{LEVELS_INFO[id]?.title || `Niveau ${id}`}</h1>
       </div>
 
       {/* Affichage des sections par chapitre */}
