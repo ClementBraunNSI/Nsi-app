@@ -89,7 +89,7 @@ export default function LandingPage() {
         </h1>
         
         <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
-          La plateforme de référence pour la NSI. Des cours épurés, des illustrations uniques et un parcours de progression du Niveau 0 au BTS.
+          La plateforme de référence pour la NSI. Des cours épurés, des illustrations uniques et un parcours de progression jusqu'au BTS.
         </p>
 
         {/* Barre de recherche unique et intelligente */}
@@ -143,24 +143,44 @@ export default function LandingPage() {
         </div>
       </main>
 
-      {/* Section Collaborations */}
+      {/* Section Sites de collègues */}
       <section className="bg-slate-50 py-24 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Collaborations & Ressources</h2>
+            <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Sites de collègues</h2>
             <p className="text-slate-500 font-medium max-w-2xl mx-auto italic">
-              "Seul on va plus vite, ensemble on va plus loin." Ce projet mutualise les travaux de collègues passionnés.
+              Découvrez les ressources exceptionnelles de mes collègues enseignants NSI à travers la France.
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-6">
-            {CONTRIBUTORS.map((person, i) => (
-              <div key={i} className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group text-center w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(20%-1.5rem)] min-w-[220px]">
-                <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl mb-5 mx-auto group-hover:bg-orange-500 group-hover:text-white transition-all shadow-inner">
-                  {person.avatar}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { name: "Lucas Relmy", site: "http://lucasrelmynsi.gitlab.io/site_cours/", phrase: "Explorez l'informatique avec clarté et structure grâce aux cours organisés de Lucas Relmy." },
+              { name: "Erwan Demerville", site: "https://nsi.erwandemerville.fr/", phrase: "Maîtrisez la NSI avec des ressources complètes et interactives pour Première et Terminale." },
+              { name: "Stéphane Ramstein", site: "https://stephane_ramstein.gitlab.io/nsi/", phrase: "Le portail complet pour la NSI : cours, outils, orientation et concours." },
+              { name: "Mathieu Marchand", site: "https://mmarchand-nsi.github.io/", phrase: "Explorez l'informatique scientifique avec des projets concrets et des outils professionnels." },
+              { name: "Nicolas Leal", site: "http://www.prof-leal.fr/", phrase: "Découvrez le numérique avec curiosité et rigueur pour SNT et NSI." },
+              { name: "Théo Quertier", site: "https://ge0rgi0.github.io/TAQ/", phrase: "TAQ : votre guide structuré pour maîtriser NSI et SNT étape par étape." },
+              { name: "Mathieu Cardoso", site: "https://profcardoso.github.io/", phrase: "Cours NSI-SNT complets avec ressources pratiques et club informatique." }
+            ].map((colleague, i) => (
+              <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-orange-500 group-hover:text-white transition-all shadow-inner">
+                    👨‍🏫
+                  </div>
+                  <div>
+                    <h3 className="font-black text-slate-800 text-lg">{colleague.name}</h3>
+                    <p className="text-orange-600 font-bold text-xs uppercase tracking-widest">Enseignant NSI</p>
+                  </div>
                 </div>
-                <h3 className="font-black text-slate-800 text-lg mb-1 leading-tight">{person.name}</h3>
-                <p className="text-orange-600 font-bold text-[10px] uppercase tracking-widest mb-3">{person.role}</p>
-                <p className="text-slate-500 text-[13px] leading-relaxed">{person.desc}</p>
+                <p className="text-slate-500 text-sm leading-relaxed mb-6 italic">{colleague.phrase}</p>
+                <a 
+                  href={colleague.site} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-orange-200 text-sm"
+                >
+                  Visiter le site <ChevronRight size={16} />
+                </a>
               </div>
             ))}
           </div>

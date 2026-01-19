@@ -98,7 +98,7 @@ export default function AboutPage() {
           Que vous soyez élève, parent ou enseignant, n'hésitez pas à me contacter pour échanger sur le projet.
         </p>
         <a 
-          href="mailto:ton-email@exemple.fr" 
+          href="clementbraun@supwallon.fr" 
           className="inline-flex items-center gap-3 px-10 py-5 bg-orange-500 text-white rounded-[2rem] font-black hover:scale-105 transition-transform shadow-2xl shadow-orange-200"
         >
           <Mail size={24} /> Me contacter par mail
