@@ -1,67 +1,61 @@
-import React from 'react';
 import fs from 'fs';
 import path from 'path';
+import matter from 'gray-matter';
 import Link from 'next/link';
-import { ChevronLeft, BookOpen, ChevronRight, PlayCircle } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
-// On ajoute "async" ici
-export default function NiveauPage({ params }: { params: Promise<{ id: string }> }) {
-  // On attend (await) que les paramètres soient prêts
-  const resolvedParams = React.use ? React.use(params) : React.useSyncExternalStore(() => () => {}, () => params) as any; 
-  // Version simplifiée pour Next.js 15 :
-  // const { id } = await params; (si tu es sûr d'être en Server Component)
+export default async function PageNiveau({ params }: { params: { niveaux: string } }) {
+  const { niveaux } = params;
+  const contentPath = path.join(process.cwd(), 'content');
+  const files = fs.readdirSync(contentPath);
+
+  // 1. Extraire tous les cours du niveau sélectionné
+  const tousLesCours = files.map(filename => {
+    const content = fs.readFileSync(path.join(contentPath, filename), 'utf-8');
+    const { data } = matter(content);
+    return { 
+      slug: filename.replace('.mdx', '').replace('.md', ''), 
+      ...data 
+    };
+  }).filter(c => c.level?.toLowerCase().replace(' ', '-') === niveaux);
+
+  // 2. Grouper les cours par chapitre
+  const chapitres: Record<string, any[]> = {};
+  tousLesCours.forEach(cours => {
+    const nomChapitre = cours.chapter || "Autres";
+    if (!chapitres[nomChapitre]) chapitres[nomChapitre] = [];
+    chapitres[nomChapitre].push(cours);
+  });
 
   return (
-    <NiveauContent paramsPromise={params} />
-  );
-}
+    <main className="max-w-4xl mx-auto p-8">
+      <h1 className="text-3xl font-bold mb-10 capitalize">📚 {niveaux.replace('-', ' ')}</h1>
 
-// Pour plus de sécurité et de compatibilité, utilise cette structure :
-async function NiveauContent({ paramsPromise }: { paramsPromise: Promise<{ id: string }> }) {
-  const { id } = await paramsPromise;
-  const contentDirectory = path.join(process.cwd(), 'content', id);
-  
-  let chapters: string[] = [];
-  if (fs.existsSync(contentDirectory)) {
-    chapters = fs.readdirSync(contentDirectory).filter(file => file.endsWith('.md'));
-  }
-
-  return (
-    <div className="min-h-screen bg-[#FDFCFB]">
-      <div className="max-w-4xl mx-auto px-8 py-12">
-        <Link href="/" className="inline-flex items-center gap-2 text-slate-400 font-bold hover:text-orange-500 mb-12">
-          <ChevronLeft size={20} /> Retour à l'accueil
-        </Link>
-
-        <header className="mb-12">
-          <h1 className="text-5xl font-black text-slate-900 tracking-tight">Niveau {id}</h1>
-        </header>
-
-        <div className="grid gap-4">
-          {chapters.length > 0 ? (
-            chapters.map((file) => {
-              const slug = file.replace('.md', '');
-              return (
-                <Link key={file} href={`/cours/${id}/${slug}`}>
-                  <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:border-orange-200 transition-all flex items-center justify-between group">
-                    <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-orange-500 group-hover:text-white transition-all">
-                        <PlayCircle size={24} />
-                      </div>
-                      <span className="font-black text-slate-800 text-lg capitalize">{slug.replace(/_/g, ' ')}</span>
-                    </div>
-                    <ChevronRight className="text-slate-200 group-hover:text-orange-500" />
+      {Object.entries(chapitres).map(([nomChapitre, coursDuChapitre]) => (
+        <div key={nomChapitre} className="mb-12">
+          <h2 className="text-xl font-semibold text-blue-600 mb-4 border-b pb-2">
+            {nomChapitre}
+          </h2>
+          <div className="grid gap-4">
+            {coursDuChapitre.map((cours) => (
+              <Link 
+                key={cours.slug}
+                href={`/cours/${niveaux}/${cours.slug}`}
+                className="flex items-center justify-between p-4 bg-white border rounded-xl hover:shadow-md transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-2xl">{cours.icon || '📄'}</span>
+                  <div>
+                    <h3 className="font-bold group-hover:text-blue-500">{cours.title}</h3>
+                    <p className="text-sm text-gray-500">{cours.description}</p>
                   </div>
-                </Link>
-              );
-            })
-          ) : (
-            <div className="py-20 text-center border-2 border-dashed border-slate-100 rounded-[2rem] text-slate-400">
-              Aucun chapitre trouvé dans /content/{id}
-            </div>
-          )}
+                </div>
+                <ChevronRight size={20} className="text-gray-400" />
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
-    </div>
+      ))}
+    </main>
   );
 }
