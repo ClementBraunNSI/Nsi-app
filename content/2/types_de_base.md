@@ -6,11 +6,6 @@ chapter: "Introduction à Python"
 icon: "🔢"
 ---
 
-
-# 📚 Types de données en Python
-
-> Les types fondamentaux pour structurer vos données
-
 ## 🔘 Les Booléens
 
 Le type booléen représente des valeurs de vérité avec seulement deux états possibles : **True** (vrai) et **False** (faux). Essentiel pour les conditions et le contrôle de flux.
