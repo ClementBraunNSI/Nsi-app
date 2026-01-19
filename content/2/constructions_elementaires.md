@@ -1,6 +1,9 @@
 ---
-title: "Constructions élémentaires en Python"
-description: "Les fondements de la programmation Python : variables, opérateurs, conditions et boucles."
+title: "Types de données en Python"
+description: "Les types fondamentaux pour structurer vos données : booléens, nombres et chaînes."
+level: "Niveau 1"
+chapter: "Introduction à Python"
+icon: "🔢"
 ---
 
 ## 🤖 Qu'est-ce qu'un programme ?

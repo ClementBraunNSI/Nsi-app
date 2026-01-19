@@ -1,11 +1,11 @@
-```mdx
 ---
 title: "Types de données en Python"
 subtitle: "Les types fondamentaux pour structurer vos données"
 level: "Niveau 1"
+chapter: "Introduction à Python"
 icon: "🔢"
 ---
-```
+
 
 # 📚 Types de données en Python
 
