@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* On force le blanc partout pour être sûr */
+:root {
+  background-color: white !important;
+  color: #111827 !important; /* Un noir très sombre */
+}
+
+body {
+  background-color: white !important;
+  color: #111827 !important;
+}
+
+/* On force le texte du Markdown (prose) à être visible */
+.prose {
+  --tw-prose-body: #111827 !important;
+  --tw-prose-headings: #000000 !important;
+  --tw-prose-links: #2563eb !important;
+  --tw-prose-bold: #000000 !important;
+  color: #111827 !important;
+}
+
+/* On s'assure que même en mode sombre système, le site reste clair */
+@media (prefers-color-scheme: dark) {
+  :root, body {
+    background-color: white !important;
+    color: #111827 !important;
+  }
+}
+/* Style forcé pour les tableaux dans le contenu des cours */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.5rem 0;
+  font-size: 0.95rem;
+  border: 1px solid #e5e7eb !important; /* Bordure extérieure */
+  border-radius: 12px;
+  overflow: hidden;
+  display: table; /* Force l'affichage en tableau */
+}
+
+.prose thead {
+  background-color: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.prose th {
+  padding: 14px 20px !important;
+  text-align: left !important;
+  color: #111827 !important;
+  font-weight: 700 !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.prose td {
+  padding: 14px 20px !important;
+  border: 1px solid #f3f4f6 !important;
+  color: #4b5563 !important;
+}
+
+/* Effet zebra pour la lecture */
+.prose tr:nth-child(even) {
+  background-color: #fcfcfd;
+}
