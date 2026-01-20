@@ -111,6 +111,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="fr">
+      <head>
+        <title>La tanière du code by Clément BRAUN</title>
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-slate-900`}>
         {isAppLoading && <FoxLoader />}
         
@@ -121,8 +124,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-200 group-hover:rotate-12 transition-transform">
                 <span className="text-2xl">🦊</span>
               </div>
-              <span className="text-2xl font-black text-slate-900 tracking-tighter uppercase">
-                CLÉMENT BRAUN <span className="text-orange-500">NSI</span>
+              <span className="text-lg font-bold text-slate-900 uppercase tracking-wider">
+                <span style={{ color: '#F97316' }}>La tanière du Code</span> <span style={{ color: '#374151' }}>by Clément BRAUN</span>
               </span>
             </Link>
 
