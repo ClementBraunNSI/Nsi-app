@@ -112,7 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr">
       <head>
-        <title>La tanière du code by Clément BRAUN</title>
+        <title>La tanière du code par Clément BRAUN</title>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-slate-900`}>
         {isAppLoading && <FoxLoader />}
