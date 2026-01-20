@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon, ChevronLeft } from 'lucide-react';
+import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon, ChevronLeft, Zap } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
-// Les constantes (LEVELS, CONTRIBUTORS) restent identiques...
+// Niveaux classiques
 const LEVELS = [
   { id: 0, title: "SNI", desc: "Sciences Numériques et Informatique : les bases.", img: "/images/fox_0.png", color: "bg-slate-500", tag: "Niveau 0" },
   { id: 1, title: "SNT", desc: "Sciences Numériques et Technologie (2nde).", img: "/images/fox_1.png", color: "bg-blue-500", tag: "Niveau 1" },
@@ -13,21 +14,37 @@ const LEVELS = [
   { id: 4, title: "BTS SIO", desc: "Services Informatiques aux Organisations.", img: "/images/fox_4.png", color: "bg-emerald-500", tag: "Niveau 4" },
 ];
 
-const CourseCard = ({ title, desc, img, tag, color, href }: any) => (
+// Données des cours particuliers
+const PRIVATE_LESSONS = [
+  { 
+    id: 'private-1', 
+    title: "Coaching Particulier", 
+    desc: "Accès à tes ressources personnalisées, exercices spécifiques et suivi individuel.", 
+    img: "/images/fox_3.png", 
+    color: "bg-orange-600", 
+    tag: "Privé", 
+    href: "/student/dashboard" 
+  },
+];
+
+const CourseCard = ({ title, desc, img, tag, color, href, isPrivate = false }: any) => (
   <Link href={href} className="group flex flex-col"> 
-    <div className="bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full">
+    <div className={`rounded-[2rem] overflow-hidden border shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full ${isPrivate ? 'border-orange-200 bg-orange-50/50' : 'bg-white border-slate-100'}`}>
       <div className="relative h-56 w-full bg-slate-50 p-4">
         <Image src={img} alt={title} fill className="object-contain p-2 transition-transform duration-700 group-hover:scale-110" />
-        <div className="absolute top-5 right-5 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-tighter text-slate-800 shadow-sm border border-slate-100">
+        <div className={`absolute top-5 right-5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter shadow-sm border ${isPrivate ? 'bg-orange-500 text-white border-orange-400' : 'bg-white/90 backdrop-blur-md text-slate-800 border-slate-100'}`}>
           {tag}
         </div>
       </div>
       <div className="p-8 flex flex-col flex-1">
-        <h3 className="text-2xl font-black text-slate-800 mb-3 group-hover:text-orange-500 transition-colors">{title}</h3>
+        <h3 className="text-2xl font-black text-slate-800 mb-3 group-hover:text-orange-500 transition-colors flex items-center gap-2">
+          {isPrivate && <Zap size={20} className="text-orange-500" fill="currentColor" />}
+          {title}
+        </h3>
         <p className="text-slate-500 text-sm leading-relaxed mb-8 line-clamp-2">{desc}</p>
         <div className="mt-auto pt-6 border-t border-slate-50 flex justify-between items-center">
           <span className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
-            <Book size={14} /> Voir les chapitres
+            <Book size={14} /> Ouvrir l'espace
           </span>
           <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${color} text-white shadow-lg transform group-hover:rotate-12 transition-transform`}>
             <ChevronRight size={24} />
@@ -39,6 +56,7 @@ const CourseCard = ({ title, desc, img, tag, color, href }: any) => (
 );
 
 export default function LandingPage() {
+  const [hasPrivateAccess, setHasPrivateAccess] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -57,6 +75,35 @@ export default function LandingPage() {
 
   const itemsPerPage = 3;
   const maxIndex = Math.max(0, colleagues.length - itemsPerPage);
+
+  useEffect(() => {
+    const checkAccess = async (session: any) => {
+      if (session?.user) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('has_private_lessons')
+          .eq('id', session.user.id)
+          .single();
+        setHasPrivateAccess(data?.has_private_lessons || false);
+      } else {
+        setHasPrivateAccess(false);
+      }
+    };
+
+    // Vérification initiale
+    supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session));
+
+    // Écoute des changements d'auth (login / logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') {
+        setHasPrivateAccess(false);
+      } else {
+        checkAccess(session);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -128,6 +175,26 @@ export default function LandingPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-8 pb-32">
+        {/* SECTION PRIVÉE DYNAMIQUE */}
+        {hasPrivateAccess && (
+          <div className="mb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            <div className="flex items-center gap-3 mb-10">
+              <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-orange-200">
+                <Zap size={20} fill="currentColor" />
+              </div>
+              <h2 className="text-2xl font-black text-slate-800 uppercase italic tracking-tight">
+                Mon Accompagnement <span className="text-orange-500">Privé</span>
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {PRIVATE_LESSONS.map((lesson) => (
+                <CourseCard key={lesson.id} {...lesson} isPrivate={true} />
+              ))}
+            </div>
+            <div className="mt-16 border-b border-slate-100"></div>
+          </div>
+        )}
+
         <h2 className="text-2xl font-black text-slate-800 mb-10">Parcourir par niveaux</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {LEVELS.map((lvl) => (
@@ -137,6 +204,7 @@ export default function LandingPage() {
       </main>
 
       <section className="bg-slate-50 py-24 border-t border-slate-100">
+        {/* Section collègues identique... */}
         <div className="max-w-7xl mx-auto px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Sites de collègues</h2>
@@ -197,7 +265,6 @@ export default function LandingPage() {
             <Link href="/mentions-legales" className="text-slate-400 hover:text-slate-600 transition-colors text-sm font-medium">
               Mentions légales
             </Link>
-            {/* Suppression du lien vers /admin/login car la connexion est maintenant dans le layout */}
             <Github className="text-slate-300 hover:text-slate-900 cursor-pointer transition-colors" />
           </div>
         </div>
