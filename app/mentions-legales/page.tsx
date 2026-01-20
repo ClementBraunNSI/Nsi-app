@@ -38,6 +38,10 @@ export default function MentionsLegales() {
             <p>
               Ce site ne collecte aucune donnée personnelle. Les liens vers les sites externes 
               relèvent de la responsabilité de leurs propriétaires respectifs.
+
+              Lors d'une création de compte, celle-ci est créée sans utiliser de données personnelles.
+              Les seules pouvant être utilisées sont le nom et le prénom de l'étudiant lors de la création de compte qui ne sont pas obligatoires.
+              Ces noms et prénoms ne sont pas utilisées pour des traitements particuliers si ce n'est que l'étudiant sache qu'il est bien sur son compte et que l'enseignant (Clément BRAUN) sache quels exercices l'étudiant a réalisé sur un dashboard personnalisé.
             </p>
           </section>
 
