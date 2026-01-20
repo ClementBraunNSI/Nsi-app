@@ -27,6 +27,13 @@ function FoxLoader() {
 
   return (
     <div className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-2 tracking-tight">
+          <span style={{ color: '#FDBA74' }}>La tanière du </span><span style={{ color: '#FB923C' }}>code</span>
+        </h1>
+        <p className="text-slate-500 text-base font-medium">Par Clément Braun</p>
+      </div>
+      
       <div className="flex gap-4 mb-6">
         {[...Array(totalFoxes)].map((_, i) => (
           <span 
@@ -45,7 +52,7 @@ function FoxLoader() {
           style={{ width: `${progress}%` }}
         ></div>
       </div>
-      <p className="mt-6 text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 animate-pulse italic">
+      <p className="mt-6 text-sm font-black uppercase tracking-[0.4em] text-orange-500 animate-pulse italic">
         Initialisation du terrier...
       </p>
     </div>
@@ -64,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsAppLoading(false), 1200);
+    const timer = setTimeout(() => setIsAppLoading(false), 2000);
 
     const initAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
