@@ -125,7 +125,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <span className="text-2xl">🦊</span>
               </div>
               <span className="text-lg font-bold text-slate-900 uppercase tracking-wider">
-                <span style={{ color: '#F97316' }}>La tanière du Code</span> <span style={{ color: '#374151' }}>by Clément BRAUN</span>
+                <span style={{ color: '#F97316' }}>La tanière du Code</span> <span style={{ color: '#374151' }}>par Clément BRAUN</span>
               </span>
             </Link>
 
