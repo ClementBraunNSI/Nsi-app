@@ -2,7 +2,7 @@
 title: "Gestion de Projet Informatique"
 description: "Fondamentaux de la gestion de projet, rôles, méthodes et outils"
 level: "4"
-chapter: "Gestion_de_Projet"
+chapter: "Gestion de projet"
 icon: "📊"
 ---
 

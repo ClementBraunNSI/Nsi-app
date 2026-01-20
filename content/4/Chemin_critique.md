@@ -2,7 +2,7 @@
 title: "Le Chemin Critique"
 description: "Méthode de planification et d'optimisation de projets"
 level: "4"
-chapter: "Gestion_de_Projet"
+chapter: "Gestion de projet"
 icon: "🎯"
 ---
 

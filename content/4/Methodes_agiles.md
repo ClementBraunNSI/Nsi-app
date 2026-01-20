@@ -2,7 +2,7 @@
 title: "Méthodes Agiles"
 description: "Introduction aux méthodes agiles (Scrum, Kanban) et à la gestion de projet moderne"
 level: "4"
-chapter: "Gestion_de_Projet"
+chapter: "Gestion de projet"
 icon: "🚀"
 ---
 

@@ -2,7 +2,7 @@
 title: "Introduction à ITIL"
 description: "Gestion des services informatiques et bonnes pratiques (ITIL v4)"
 level: "4"
-chapter: "Gestion_de_Projet"
+chapter: "Gestion de projet"
 icon: "🧭"
 ---
 

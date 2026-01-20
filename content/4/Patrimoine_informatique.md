@@ -2,7 +2,7 @@
 title: "Patrimoine Informatique"
 description: "Recensement et identification des ressources numériques (SIO Bloc 1)"
 level: "4"
-chapter: "Gestion_de_Projet"
+chapter: "Gestion de projet"
 icon: "🧩"
 ---
 

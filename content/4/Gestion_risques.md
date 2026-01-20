@@ -2,7 +2,7 @@
 title: "Gestion des Risques"
 description: "Identification, analyse et traitement des risques en projet informatique"
 level: "4"
-chapter: "Gestion_de_Projet"
+chapter: "Gestion de projet"
 icon: "⚠️"
 ---
 
