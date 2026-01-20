@@ -2,7 +2,7 @@
 title: "Patrimoine Informatique"
 description: "Recensement et identification des ressources numériques (SIO Bloc 1)"
 level: "4"
-chapter: "Gestion de projet"
+chapter: "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques"
 icon: "🧩"
 ---
 

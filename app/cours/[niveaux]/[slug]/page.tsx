@@ -9,36 +9,25 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
-export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string }> }) {
-  // On récupère les paramètres de l'URL
-  const { niveaux, slug } = await params;
+// Importation des composants pour les onglets
+import { ExerciseTabs, ExerciseSection, Correction } from '@/components/ExerciseTabs';
 
-  /* LOGIQUE DE CHEMIN :
-     Si l'URL est /cours/2/types-de-bases
-     niveaux = "2"
-     On cherche dans : /content/2/types-de-bases.md
-  */
+export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string }> }) {
+  const { niveaux, slug } = await params;
   
-  // Construction du chemin : content / (valeur de niveaux, ex: "2") / slug.md
-  const dossierPhysique = niveaux; // Contient "0", "1", "2", etc.
+  const dossierPhysique = niveaux; 
   let filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slug}.md`);
   
-  // Tentative avec .mdx si le .md n'existe pas
   if (!fs.existsSync(filePath)) {
     filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slug}.mdx`);
   }
 
-  // Si le fichier est introuvable
   if (!fs.existsSync(filePath)) {
     return (
       <div className="p-10 text-center">
         <h1 className="text-2xl font-bold">Cours non trouvé</h1>
-        <p className="text-slate-500 mb-4">
-          Le fichier <code className="bg-slate-100 px-1">{slug}.md</code> est introuvable dans le dossier <code className="bg-slate-100 px-1">/content/{dossierPhysique}/</code>
-        </p>
-        <Link href={`/niveaux/${dossierPhysique}`} className="text-blue-600 underline font-medium">
-          Retour au sommaire du niveau {dossierPhysique}
-        </Link>
+        <p className="text-slate-500 mb-4">Le fichier {slug}.md est introuvable.</p>
+        <Link href={`/`} className="text-orange-600 underline">Retour à l'accueil</Link>
       </div>
     );
   }
@@ -46,41 +35,61 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content, data } = matter(fileContent);
 
+  const mdxComponents = {
+    ExerciseTabs,
+    ExerciseSection,
+    Correction,
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="border-b border-slate-100 p-6">
-        <div className="max-w-4xl mx-auto">
-          <Link href={`/niveaux/${niveaux}`} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 transition-colors font-medium">
-            <ChevronLeft size={20} /> Retour
+    <div className="min-h-screen bg-[#FDFCFB]">
+      {/* Barre de navigation haute */}
+      <nav className="border-b border-slate-100 bg-white/50 backdrop-blur-md sticky top-20 z-30">
+        <div className="max-w-5xl mx-auto px-6 py-4">
+          <Link href={`/niveaux/${niveaux}`} className="flex items-center gap-2 text-slate-400 hover:text-orange-600 transition-colors text-xs font-black uppercase tracking-widest">
+            <ChevronLeft size={16} /> Retour au niveau {niveaux}
           </Link>
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 py-12">
-        <div className="mb-10">
-          {data.chapter && (
-            <span className="text-orange-600 font-bold tracking-widest uppercase text-sm">
-              {data.chapter}
-            </span>
-          )}
-          <h1 className="text-5xl font-black text-slate-900 mt-2 tracking-tight">
-            {data.title || slug.replace(/[_-]/g, ' ')}
-          </h1>
+      <main className="max-w-5xl mx-auto px-6 py-12">
+        {/* En-tête style "Orange Fox" */}
+        <div className="bg-orange-50/50 rounded-[2.5rem] p-10 text-center border border-orange-100 mb-12 relative overflow-hidden">
+          <div className="relative z-10">
+            <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-3 italic uppercase tracking-tighter">
+              {data.title || slug.replace(/[_-]/g, ' ')}
+            </h1>
+            {data.chapter && (
+              <p className="text-orange-600 text-sm font-black mb-4 uppercase tracking-widest">
+                {data.chapter}
+              </p>
+            )}
+            {data.meta && (
+              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 bg-white/80 inline-block px-6 py-2 rounded-full border border-orange-100 shadow-sm italic">
+                {data.meta}
+              </div>
+            )}
+          </div>
+          <div className="absolute top-[-20%] right-[-5%] text-[12rem] opacity-[0.03] select-none pointer-events-none">🦊</div>
         </div>
 
-        <article className="prose prose-slate lg:prose-xl max-w-none 
-          prose-headings:text-slate-900 prose-headings:font-bold
+        <article className="prose prose-slate max-w-none 
+          prose-headings:italic prose-headings:uppercase prose-headings:font-black
           prose-p:text-slate-600 prose-p:leading-relaxed
           prose-strong:text-slate-900
+          prose-a:text-orange-600 prose-a:font-bold prose-a:no-underline hover:prose-a:underline
+          
+          /* RESTAURATION DES COULEURS DE CODE CLAIRES */
           prose-code:text-orange-700 prose-code:bg-orange-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
           prose-pre:bg-[#FFFBF5] prose-pre:border-l-4 prose-pre:border-orange-400 prose-pre:text-orange-900 prose-pre:shadow-sm prose-pre:rounded-r-xl
+          
           prose-table:border-collapse prose-table:border prose-table:border-slate-200 prose-table:rounded-xl prose-table:overflow-hidden
-          prose-th:bg-slate-50 prose-th:text-slate-900 prose-th:p-4 prose-th:border prose-th:border-slate-200 prose-th:font-bold
-          prose-td:p-4 prose-td:border prose-td:border-slate-100 prose-td:text-slate-600
-          prose-tr:even:bg-slate-50/50
+          prose-th:bg-slate-50 prose-th:text-slate-900 prose-th:p-4 prose-th:border prose-th:border-slate-200
+          prose-td:p-4 prose-td:border prose-td:border-slate-100
           ">
           <MDXRemote 
             source={content} 
+            components={mdxComponents}
             options={{
               mdxOptions: {
                 remarkPlugins: [remarkGfm, remarkMath],

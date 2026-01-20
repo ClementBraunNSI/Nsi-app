@@ -97,12 +97,32 @@ export default function LandingPage() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_OUT') {
         setHasPrivateAccess(false);
-      } else {
+      } else if (event === 'SIGNED_IN' && session) {
         checkAccess(session);
+      } else if (!session) {
+        setHasPrivateAccess(false);
       }
     });
 
-    return () => subscription.unsubscribe();
+    // Re-vérification lors du focus et de la visibilité de la page
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session));
+      }
+    };
+
+    const handleFocus = () => {
+      supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session));
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      subscription.unsubscribe();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   useEffect(() => {
