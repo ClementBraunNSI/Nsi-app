@@ -109,6 +109,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     if (error) alert("Erreur : " + error.message);
   };
 
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+    } catch (error) {
+      console.error("Erreur de déconnexion:", error);
+      // Forcer la déconnexion locale en cas d'erreur réseau
+      setUser(null);
+      setRole(null);
+      router.push('/');
+    }
+  };
+
   return (
     <html lang="fr">
       <head>

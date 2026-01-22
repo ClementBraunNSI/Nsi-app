@@ -1,4 +1,4 @@
-import { Trophy, Star, Target, Zap, Crown, Medal, Flame, BookOpen, Shield, GraduationCap, Code } from 'lucide-react';
+import { Trophy, Star, Target, Zap, Crown, Medal, Flame, BookOpen, Shield, GraduationCap, Code, Box, Hammer } from 'lucide-react';
 
 export interface Achievement {
   id: string;
@@ -105,5 +105,21 @@ export const ACHIEVEMENTS: Achievement[] = [
     icon: Target,
     color: 'text-indigo-500 bg-indigo-100',
     condition: (stats) => stats.exercisesCount >= 50
+  },
+  {
+    id: 'badge_poo_master',
+    title: 'Architecte Objet',
+    description: 'Obtenir le badge POO C#.',
+    icon: Box,
+    color: 'text-fuchsia-500 bg-fuchsia-100',
+    condition: (stats) => stats.badges.some(b => b.course_id === 'bts_csharp_poo')
+  },
+  {
+    id: 'badge_poo_practice',
+    title: 'Constructeur Pro',
+    description: 'Valider la fiche d\'exercices pratiques de POO.',
+    icon: Hammer,
+    color: 'text-lime-500 bg-lime-100',
+    condition: (stats) => stats.badges.some(b => b.course_id === 'bts_poo_basics')
   }
 ];
