@@ -1,10 +1,11 @@
 ---
 title: "Exercices : Spécification"
 chapter: "Introduction à Python"
+badgeId: "specifications-python"
 meta: "Docstrings, Type Hinting et Documentation"
 ---
 
-<ExerciseTabs>
+<ExerciseTabs courseId="specifications-python" courseTitle="Spécification">
   <ExerciseSection id="easy" label="1. Documentation">
     ## Ajouter des Docstrings
 

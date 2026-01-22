@@ -1,10 +1,11 @@
 ---
 title: "Exercices : Types en Python"
 chapter: "Introduction à Python"
+badgeId: "types-python"
 meta: "Variables, Types, Opérateurs et Conditions"
 ---
 
-<ExerciseTabs>
+<ExerciseTabs courseId="types-python" courseTitle="Types en Python">
   <ExerciseSection id="intro" label="1. Introduction">
     ## Premiers pas avec les types
 

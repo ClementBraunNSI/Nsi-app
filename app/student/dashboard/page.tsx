@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
-import { GraduationCap, Zap, BookOpen, ArrowRight, Clock } from 'lucide-react';
+import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
+import { GraduationCap, Zap, BookOpen, ArrowRight, Clock, Award, X, Calendar, Trophy, Target, Lock } from 'lucide-react';
 
 // Mapping des niveaux selon tes spécifications
 const LEVEL_MAP: Record<string, { label: string; code: string }> = {
@@ -33,6 +34,11 @@ export default function StudentDashboard() {
   const [profile, setProfile] = useState<any>(null);
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [badgesCount, setBadgesCount] = useState(0);
+  const [exercisesCount, setExercisesCount] = useState(0);
+  const [badges, setBadges] = useState<any[]>([]);
+  const [showBadgesModal, setShowBadgesModal] = useState(false);
+  const [showAchievementsModal, setShowAchievementsModal] = useState(false);
 
   useEffect(() => {
     async function getProfile() {
@@ -52,12 +58,62 @@ export default function StudentDashboard() {
             const courseData = await res.json();
             setCourses(courseData.courses || []);
           }
+
+          // Fetch badges
+          const { data: badgesData, count: badgesTotal } = await supabase
+            .from('badges')
+            .select('*', { count: 'exact' })
+            .eq('user_id', session.user.id)
+            .order('unlocked_at', { ascending: false });
+          
+          setBadgesCount(badgesTotal || 0);
+          setBadges(badgesData || []);
+
+          // Fetch exercises count
+          const { count: exercisesTotal } = await supabase
+            .from('user_progress')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', session.user.id);
+
+          setExercisesCount(exercisesTotal || 0);
         }
       }
       setLoading(false);
     }
     getProfile();
   }, []);
+
+  // Calculate completed chapters
+  const completedChapters = React.useMemo(() => {
+    if (!courses.length) return [];
+    
+    // Group courses by chapter, filtering only those with badgeId
+    const chapterCourses: Record<string, string[]> = {};
+    
+    courses.forEach(course => {
+      if (course.chapter && course.badgeId) {
+        if (!chapterCourses[course.chapter]) {
+          chapterCourses[course.chapter] = [];
+        }
+        chapterCourses[course.chapter].push(course.badgeId);
+      }
+    });
+    
+    // Check completion
+    const completed: string[] = [];
+    // User badges might use course_id or badge_name depending on how they were saved, 
+    // but ExerciseTabs uses course_id matching the badgeId.
+    const userBadgeIds = new Set(badges.map(b => b.course_id)); 
+    
+    Object.entries(chapterCourses).forEach(([chapter, badgeIds]) => {
+      // A chapter is completed if it has badgeIds and all are unlocked
+      if (badgeIds.length > 0 && badgeIds.every(id => userBadgeIds.has(id))) {
+        completed.push(chapter);
+      }
+    });
+    
+    return completed;
+  }, [courses, badges]);
 
   if (loading) return <div className="p-10 text-center font-bold">Chargement...</div>;
 
@@ -78,6 +134,11 @@ export default function StudentDashboard() {
 
   const currentLevelInfo = profile?.level ? LEVEL_MAP[profile.level] : null;
 
+  // Calculate unlocked achievements
+  const unlockedAchievements = ACHIEVEMENTS.filter(achievement => 
+    achievement.condition({ badgesCount, exercisesCount, badges, completedChapters })
+  );
+
   return (
     <div className="min-h-screen bg-[#FDFCFB] p-4 md:p-8 text-slate-900 font-sans">
       <div className="max-w-5xl mx-auto space-y-8">
@@ -94,6 +155,30 @@ export default function StudentDashboard() {
                 {currentLevelInfo ? `${currentLevelInfo.label} (Niveau ${currentLevelInfo.code})` : "Niveau non défini"}
               </p>
             </div>
+          </div>
+          
+          <div className="flex gap-3">
+            <button 
+              onClick={() => setShowAchievementsModal(true)}
+              className="flex items-center gap-3 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100 hover:bg-purple-50 hover:border-purple-200 hover:scale-105 transition-all cursor-pointer group"
+            >
+              <Target className="text-purple-500 group-hover:rotate-12 transition-transform" size={24} />
+              <div className="text-left">
+                <div className="text-2xl font-black text-slate-900 leading-none group-hover:text-purple-600 transition-colors">{unlockedAchievements.length}</div>
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider group-hover:text-purple-400 transition-colors">Succès</div>
+              </div>
+            </button>
+
+            <button 
+              onClick={() => setShowBadgesModal(true)}
+              className="flex items-center gap-3 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100 hover:bg-orange-50 hover:border-orange-200 hover:scale-105 transition-all cursor-pointer group"
+            >
+              <Award className="text-orange-500 group-hover:rotate-12 transition-transform" size={24} />
+              <div className="text-left">
+                <div className="text-2xl font-black text-slate-900 leading-none group-hover:text-orange-600 transition-colors">{badgesCount}</div>
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider group-hover:text-orange-400 transition-colors">Badges</div>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -151,6 +236,113 @@ export default function StudentDashboard() {
           </div>
         </div>
       </div>
+
+      {/* MODAL SUCCÈS */}
+      {showAchievementsModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-[3rem] p-8 md:p-10 max-w-4xl w-full relative shadow-2xl animate-in zoom-in duration-300 border border-purple-100 max-h-[80vh] overflow-y-auto">
+            <button 
+              onClick={() => setShowAchievementsModal(false)}
+              className="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition-colors"
+            >
+              <X size={20} />
+            </button>
+            
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 mx-auto mb-4">
+                <Target size={32} />
+              </div>
+              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Mes Succès</h2>
+              <p className="text-slate-500 font-medium mt-2">Débloque des récompenses uniques en progressant !</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {ACHIEVEMENTS.map((achievement) => {
+                const isUnlocked = unlockedAchievements.some(a => a.id === achievement.id);
+                const Icon = achievement.icon;
+                
+                return (
+                  <div 
+                    key={achievement.id} 
+                    className={`
+                      relative overflow-hidden p-6 rounded-3xl border transition-all
+                      ${isUnlocked 
+                        ? 'bg-white border-purple-100 shadow-lg shadow-purple-50' 
+                        : 'bg-slate-50 border-slate-100 opacity-60 grayscale-[0.8]'}
+                    `}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`
+                        w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-sm shrink-0
+                        ${isUnlocked ? achievement.color : 'bg-slate-200 text-slate-400'}
+                      `}>
+                        <Icon size={24} />
+                      </div>
+                      <div>
+                        <h3 className={`font-black text-lg leading-tight mb-1 ${isUnlocked ? 'text-slate-900' : 'text-slate-500'}`}>
+                          {achievement.title}
+                        </h3>
+                        <p className="text-xs font-bold text-slate-400 leading-relaxed">
+                          {achievement.description}
+                        </p>
+                      </div>
+                    </div>
+                    {!isUnlocked && (
+                      <div className="absolute top-3 right-3 text-slate-300">
+                        <Lock size={16} />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL BADGES */}
+      {showBadgesModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-[3rem] p-8 md:p-10 max-w-2xl w-full relative shadow-2xl animate-in zoom-in duration-300 border border-orange-100 max-h-[80vh] overflow-y-auto">
+            <button 
+              onClick={() => setShowBadgesModal(false)}
+              className="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition-colors"
+            >
+              <X size={20} />
+            </button>
+            
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600 mx-auto mb-4">
+                <Award size={32} />
+              </div>
+              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Mes Badges</h2>
+              <p className="text-slate-500 font-medium mt-2">Bravo pour tes progrès ! Voici tes récompenses.</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {badges.length > 0 ? (
+                badges.map((badge: any) => (
+                  <div key={badge.id} className="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-center hover:bg-orange-50 hover:border-orange-200 transition-colors group">
+                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-500 mx-auto mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                      <Trophy size={20} />
+                    </div>
+                    <h3 className="font-bold text-slate-800 text-sm mb-1 leading-tight">{badge.badge_name}</h3>
+                    <div className="flex items-center justify-center gap-1 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                      <Calendar size={10} />
+                      {new Date(badge.unlocked_at).toLocaleDateString()}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-full py-10 text-center text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                  Tu n'as pas encore gagné de badge.<br/>
+                  Termine des fiches d'exercices pour en débloquer !
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

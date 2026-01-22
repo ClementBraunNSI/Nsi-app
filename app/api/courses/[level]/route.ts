@@ -29,6 +29,7 @@ export async function GET(
         title: String(data.title || fileName.replace(/\.mdx?$/, '')),
         description: String(data.description || "Consulter la leçon"),
         chapter: String(data.chapter || "Général"),
+        badgeId: String(data.badgeId || ""),
         icon: String(data.icon || '📘'),
       };
     });

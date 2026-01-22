@@ -1,11 +1,16 @@
 ---
 title: "Exercices : Les Fonctions"
 chapter: "Introduction à Python"
+badgeId: "les-fonctions-python"
 meta: "Définition, Paramètres et Valeurs de retour"
 ---
 
-<ExerciseTabs>
-  <ExerciseSection id="intro" label="1. Introduction">
+{/* L'id 'les-fonctions-python' doit correspondre à l'identifiant 
+  utilisé dans votre base de données pour cette fiche précise. 
+*/}
+<ExerciseTabs courseId="les-fonctions-python" courseTitle="Les Fonctions">
+  
+  <ExerciseSection id="fonctions-intro-1" label="1. Introduction">
     ## Concept de fonction
 
     ### Exercice 1.1 : Calcul de la moyenne
@@ -19,7 +24,7 @@ meta: "Définition, Paramètres et Valeurs de retour"
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="easy" label="2. Niveau Facile">
+  <ExerciseSection id="fonctions-facile-2" label="2. Niveau Facile">
     ## En-têtes et signatures
 
     ### Exercice 2.1 : Fonction est_pair (En-tête)
@@ -44,7 +49,7 @@ meta: "Définition, Paramètres et Valeurs de retour"
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="hard" label="3. Niveau Difficile">
+  <ExerciseSection id="fonctions-difficile-3" label="3. Niveau Difficile">
     ## Logique et types
 
     ### Exercice 3.1 : Fonction parité

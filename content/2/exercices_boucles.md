@@ -1,10 +1,11 @@
 ---
 title: "Exercices : Les Boucles"
 chapter: "Introduction à Python"
+badgeId: "les-boucles-python"
 meta: "Boucles for et while, itérations et conditions"
 ---
 
-<ExerciseTabs>
+<ExerciseTabs courseId="les-boucles-python" courseTitle="Les Boucles">
   <ExerciseSection id="intro" label="1. Introduction">
     ## Premiers pas avec les boucles
 

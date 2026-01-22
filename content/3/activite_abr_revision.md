@@ -3,7 +3,7 @@ title: "Arbres binaires de recherche et Algorithmes"
 chapter: "Terminale NSI · Structures avancées"
 meta: "Révision ABR, implémentations et complexité"
 access: "private"
-allowedStudents: ["Roméo"]
+allowedStudents: ["Roméo VILLARROYA","Clément BRAUN"]
 ---
 
 ## 1. Rappels théoriques
