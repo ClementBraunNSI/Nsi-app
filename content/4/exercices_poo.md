@@ -1,11 +1,11 @@
 ---
 title: "TP : Les Bases de la POO en C#"
 chapter: "BTS SIO 1 : B2 - Développement (SLAM)"
-badgeId: "bts_csharp_tp_poo_bases"
+badgeId: "bts_poo_basics"
 meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
 ---
 
-<ExerciseTabs courseId="bts_csharp_tp_poo_bases" courseTitle="TP POO - Bases">
+<ExerciseTabs courseId="bts_poo_basics" courseTitle="TP POO - Bases">
   
   <ExerciseSection id="tp-poo-exercice1" label="Exercice 1 - Compte Bancaire">
     ## 🏦 Exercice 1 : Gestion de Compte Bancaire (Niveau Débutant)
