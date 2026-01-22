@@ -1,4 +1,4 @@
-import { Trophy, Star, Target, Zap, Crown, Medal, Flame, BookOpen } from 'lucide-react';
+import { Trophy, Star, Target, Zap, Crown, Medal, Flame, BookOpen, Shield, GraduationCap, Code } from 'lucide-react';
 
 export interface Achievement {
   id: string;
@@ -33,6 +33,30 @@ export const ACHIEVEMENTS: Achievement[] = [
     icon: BookOpen,
     color: 'text-cyan-500 bg-cyan-100',
     condition: (stats) => stats.completedChapters.includes('Introduction à Python')
+  },
+  {
+    id: 'chapter_bts_cyber',
+    title: 'Expert CyberSécurité',
+    description: 'Terminer tous les exercices du chapitre BTS SIO 1 : B3 - CyberSécurité.',
+    icon: Shield,
+    color: 'text-slate-500 bg-slate-100',
+    condition: (stats) => stats.completedChapters.includes('BTS SIO 1 : B3 - CyberSécurité')
+  },
+  {
+    id: 'chapter_bts_dev',
+    title: 'Développeur C#',
+    description: 'Terminer tous les exercices du chapitre BTS SIO 1 : B2 - Développement (SLAM).',
+    icon: Code,
+    color: 'text-violet-500 bg-violet-100',
+    condition: (stats) => stats.completedChapters.includes('BTS SIO 1 : B2 - Développement (SLAM)')
+  },
+  {
+    id: 'bts_start',
+    title: 'Étudiant SIO',
+    description: 'Obtenir un premier badge de niveau BTS.',
+    icon: GraduationCap,
+    color: 'text-pink-500 bg-pink-100',
+    condition: (stats) => stats.badges.some(b => b.course_id && b.course_id.startsWith('bts_'))
   },
   {
     id: 'badge_collector_1',

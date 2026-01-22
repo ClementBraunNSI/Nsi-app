@@ -1,9 +1,9 @@
 ---
 title: Introduction à la cybersécurité
 description: Introduction aux concepts fondamentaux de la cybersécurité, les piliers CIA, les menaces courantes et la gestion des risques.
-level: bts
+level: "4"
 chapter: "BTS SIO 1 : B3 - CyberSécurité"
-icon: 🛡️
+badgeId: "premiers-pas-c-sharp"
 ---
 
 # Introduction à la cybersécurité

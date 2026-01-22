@@ -1,13 +1,14 @@
 ---
 title: "TP - Sécurité Web : Injections SQL"
 chapter: "BTS SIO 1 : B3 - CyberSécurité"
+badgeId: "bts_sql_injection"
 meta: "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
 ---
 
 ### Contexte
 Les injections SQL restent l'une des vulnérabilités les plus critiques du web (Top 10 OWASP). Ce TP vous place dans la peau d'un attaquant éthique pour comprendre les mécanismes, puis dans celle d'un administrateur système pour analyser les traces et sécuriser l'infrastructure.
 
-<ExerciseTabs>
+<ExerciseTabs courseId="bts_sql_injection" courseTitle="Badge Injection SQL">
   <ExerciseSection id="part1" label="1. Découverte (25')">
     ## Partie 1 : Découverte de l'injection SQL
     Objectif : Manipuler une base de données via un formulaire web vulnérable.
