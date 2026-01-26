@@ -8,6 +8,7 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
 <ExerciseTabs courseId="bts_poo_basics" courseTitle="TP POO - Bases">
   
   <ExerciseSection id="tp-poo-exercice1" label="Exercice 1 - Compte Bancaire">
+    <Enonce>
     ## 🏦 Exercice 1 : Gestion de Compte Bancaire (Niveau Débutant)
 
     ### Contexte
@@ -95,9 +96,11 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     - Propriétés avec contrôle d'accès (`private set`)
     - Constructeur avec paramètres
     - Méthodes qui modifient l'état de l'objet
+    </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="tp-poo-exercice2" label="Exercice 2 - Bibliothèque">
+    <Enonce>
     ## 📚 Exercice 2 : Gestion de Livres (Niveau Débutant/Intermédiaire)
 
     ### Contexte
@@ -190,9 +193,11 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     - Validation avant modification
     - Calcul basé sur les propriétés
     - Messages contextuels
+    </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="tp-poo-exercice3" label="Exercice 3 - Étudiants">
+    <Enonce>
     ## 🎓 Exercice 3 : Gestion d'Étudiants (Niveau Intermédiaire)
 
     ### Contexte
@@ -312,9 +317,11 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     - Collection privée (encapsulation)
     - Calculs sur collections
     - Validation de données
+    </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="tp-poo-exercice4" label="Exercice 4 - Concessionnaire">
+    <Enonce>
     ## 🚗 Exercice 4 : Gestion de Concessionnaire (Niveau Intermédiaire/Avancé)
 
     ### Contexte
@@ -523,6 +530,7 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
   </ExerciseSection>
 
   <ExerciseSection id="tp-poo-exercice5" label="Exercice 5 - Héritage">
+    <Enonce>
     ## 🐾 Exercice 5 : Animaux et Héritage (Niveau Avancé)
 
     ### Contexte

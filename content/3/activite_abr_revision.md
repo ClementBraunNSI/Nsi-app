@@ -1,4 +1,5 @@
 ---
+
 title: "Arbres binaires de recherche et Algorithmes"
 chapter: "Terminale NSI · Structures avancées"
 meta: "Révision ABR, implémentations et complexité"
@@ -6,6 +7,9 @@ access: "private"
 allowedStudents: ["Roméo VILLARROYA","Clément BRAUN"]
 ---
 
+<ExerciseTabs courseId="abr-revision" courseTitle="Révision ABR">
+  <ExerciseSection id="abr-1" label="1. Rappels théoriques">
+    <Enonce>
 ## 1. Rappels théoriques
 
 ### 1.1 Définitions
@@ -30,7 +34,11 @@ Dans un ABR équilibré, les opérations de recherche, insertion et suppression 
 Dans le pire des cas (arbre dégénéré en liste chaînée), la complexité devient **O(n)**.
 
 ---
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="abr-2" label="2. Exercice 1 : Construction et propriétés">
+    <Enonce>
 ## 2. Exercice 1 : Construction et propriétés
 
 ### Question 1 : Dessiner l'arbre
@@ -61,7 +69,11 @@ On insère maintenant les mêmes valeurs mais dans cet ordre :
 - Que peut-on en conclure sur l'importance de l'ordre d'insertion ?
 
 ---
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="abr-3" label="3. Exercice 2 : Parcours d'arbres">
+    <Enonce>
 ## 3. Exercice 2 : Parcours d'arbres
 
 On considère l'ABR suivant :
@@ -88,7 +100,11 @@ Donner le résultat des parcours suivants :
 Que remarquez-vous concernant le parcours infixe d'un ABR ? Expliquer pourquoi.
 
 ---
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="abr-4" label="4. Exercice 3 : Implémentation en Python">
+    <Enonce>
 ## 4. Exercice 3 : Implémentation en Python
 
 ### Question 1 : Classes Noeud et Arbre
@@ -164,7 +180,11 @@ def hauteur(self):
 Écrire un exemple d'utilisation de vos classes pour créer l'arbre de l'exercice 1 (avec les valeurs 50, 30, 70, 20, 40, 60, 80) et afficher sa taille et sa hauteur.
 
 ---
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="abr-5" label="5. Exercice 4 : Analyse de complexité">
+    <Enonce>
 ## 5. Exercice 4 : Analyse de complexité
 
 ### Question 1 : Comparaison des structures
@@ -185,7 +205,11 @@ Pour un ABR contenant n nœuds, donner un encadrement de sa hauteur h en fonctio
 **Hauteur maximale :**
 
 ---
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="abr-6" label="6. Exercice bonus : Vérification d'un ABR">
+    <Enonce>
 ## 6. Exercice bonus : Vérification d'un ABR
 
 Écrire une méthode `est_abr(self)` qui vérifie si un arbre binaire donné est bien un arbre binaire de recherche.
@@ -200,3 +224,6 @@ def est_abr(self):
 **Indice :** Une approche consiste à vérifier que le parcours infixe de l'arbre produit une liste triée par ordre croissant. Vous pouvez d'abord écrire une méthode `parcours_infixe(self)` qui renvoie la liste des valeurs dans l'ordre infixe.
 
 ---
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>

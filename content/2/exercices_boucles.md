@@ -6,9 +6,8 @@ meta: "Boucles for et while, itérations et conditions"
 ---
 
 <ExerciseTabs courseId="les-boucles-python" courseTitle="Les Boucles">
-  <ExerciseSection id="intro" label="1. Introduction">
-    ## Premiers pas avec les boucles
-
+  <ExerciseSection id="boucles-1-1" label="1.1 - Afficher les nombres de 1 à 100">
+    <Enonce>
     ### Exercice 1.1 : Afficher les nombres de 1 à 100
     **Écrire un programme qui affiche dans le terminal tous les nombres entre 1 et 100 (à l'aide d'une boucle `for` puis d'une boucle `while`).**
 
@@ -25,7 +24,11 @@ meta: "Boucles for et while, itérations et conditions"
         i += 1
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="boucles-1-2" label="1.2 - Table de multiplication">
+    <Enonce>
     ### Exercice 1.2 : Table de multiplication
     **Écrire un programme qui prend un nombre entier et affiche sa table de multiplication (jusqu'à 10).**
 
@@ -37,7 +40,11 @@ meta: "Boucles for et while, itérations et conditions"
         print(i, "x", nombre, "=", i * nombre)
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="boucles-1-3" label="1.3 - Somme des nombres">
+    <Enonce>
     ### Exercice 1.3 : Somme des nombres de 1 à 100
     **Écrire un programme qui réalise la somme des nombres entiers de 1 jusque 100.**
 
@@ -49,11 +56,11 @@ meta: "Boucles for et while, itérations et conditions"
     print("La somme de 1 à 100 est", somme)
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="easy" label="2. Niveau Facile">
-    ## Manipulation de boucles simples
-
+  <ExerciseSection id="boucles-2-1" label="2.1 - Nombres pairs (Facile)">
+    <Enonce>
     ### Exercice 2.1 : Afficher les nombres pairs entre 1 à 100
     **Écrire un programme qui affiche dans le terminal tous les nombres pairs entre 1 et 100.**
 
@@ -72,7 +79,11 @@ meta: "Boucles for et while, itérations et conditions"
         i += 1
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="boucles-2-2" label="2.2 - Compter les voyelles (Facile)">
+    <Enonce>
     ### Exercice 2.2 : Compter les voyelles
     **Écrire un programme qui lit une chaîne de caractères et affiche le nombre de voyelles présentes dans cette chaîne.**
 
@@ -86,7 +97,11 @@ meta: "Boucles for et while, itérations et conditions"
     print("La phrase compte", nb_voyelles, "voyelles.")
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="boucles-2-3" label="2.3 - Inverser une chaîne (Facile)">
+    <Enonce>
     ### Exercice 2.3 : Inverser une chaîne de caractères
     **Écrire un programme qui affiche les caractères d'une chaîne de caractères dans l'autre sens.**
     *Exemple : "bonjour" → "ruojnob".*
@@ -100,7 +115,11 @@ meta: "Boucles for et while, itérations et conditions"
     print(resultat)
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="boucles-2-4" label="2.4 - Somme des chiffres (Facile)">
+    <Enonce>
     ### Exercice 2.4 : Somme des chiffres d'un nombre
     **Écrire un programme qui calcule la somme des chiffres d'un nombre donné par l'utilisateur.**
     *Exemple : pour 123, il affichera 6.*
@@ -114,11 +133,11 @@ meta: "Boucles for et while, itérations et conditions"
     print("La somme des chiffres est :", resultat)
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="medium" label="3. Intermédiaire">
-    ## Logique itérative
-
+  <ExerciseSection id="boucles-3-1" label="3.1 - Boucle conditionnelle (Moyen)">
+    <Enonce>
     ### Exercice 3.1 : Boucle jusqu'à un nombre négatif
     **Écrire un programme qui demande en boucle un nombre à l'utilisateur. Si le nombre est positif, la boucle continue, si le nombre est négatif, la boucle s'arrête.**
 
@@ -129,7 +148,11 @@ meta: "Boucles for et while, itérations et conditions"
         nombre = int(input("Donnez un autre nombre : "))
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="boucles-3-2" label="3.2 - Multiples de 3 (Moyen)">
+    <Enonce>
     ### Exercice 3.2 : Multiples de 3
     **Écrire un programme qui demande à l'utilisateur un nombre et affiche les 10 multiples par 3 consécutifs.**
     *Exemple : 1 → 3, 9, 27, 81...*
@@ -142,7 +165,11 @@ meta: "Boucles for et while, itérations et conditions"
         print(nombre)
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="boucles-3-3" label="3.3 - Divisions par 2 (Moyen)">
+    <Enonce>
     ### Exercice 3.3 : Divisions par 2
     **Écrire un programme qui demande un nombre à l'utilisateur et affiche dans le terminal combien de fois celui-ci est divisible par 2.**
 
@@ -156,11 +183,11 @@ meta: "Boucles for et while, itérations et conditions"
     print("Nombre de divisions par 2 :", compteur)
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="hard" label="4. Niveau Difficile">
-    ## Algorithmes avancés
-
+  <ExerciseSection id="boucles-4-1" label="4.1 - Nombres premiers (Difficile)">
+    <Enonce>
     ### Exercice 4.1 : Diviseurs et nombres premiers
     **Écrire un programme qui demande un nombre `n` à un utilisateur et affiche dans le terminal ses diviseurs (autre que lui-même et 1). S'il n'en a aucun, affiche : "Aucun diviseur, n est premier."**
 
@@ -178,7 +205,11 @@ meta: "Boucles for et while, itérations et conditions"
         print("Aucun diviseur, n est premier.")
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="boucles-4-2" label="4.2 - Conjecture de Syracuse (Difficile)">
+    <Enonce>
     ### Exercice 4.2 : Conjecture de Syracuse
     **Écrire un programme qui réalise la conjecture de Syracuse pour un nombre demandé par l'utilisateur. Tant que le nombre n'est pas 1, s'il est pair, on le divise par 2 sinon on le multiplie par 3 et on ajoute 1.**
     *Exemple : 10 → 5 → 16 → 8 → 4 → 2 → 1*
@@ -195,5 +226,6 @@ meta: "Boucles for et while, itérations et conditions"
     print(1)
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 </ExerciseTabs>

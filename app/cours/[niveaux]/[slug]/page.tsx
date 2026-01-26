@@ -10,7 +10,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 // Importation des composants pour les onglets
-import { ExerciseTabs, ExerciseSection, Correction } from '@/components/ExerciseTabs';
+import { ExerciseTabs, ExerciseSection, Correction, Enonce } from '@/components/ExerciseTabs';
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string }> }) {
   const { niveaux, slug } = await params;
@@ -39,6 +39,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     ExerciseTabs,
     ExerciseSection,
     Correction,
+    Enonce,
   };
 
   return (

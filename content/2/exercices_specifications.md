@@ -6,9 +6,8 @@ meta: "Docstrings, Type Hinting et Documentation"
 ---
 
 <ExerciseTabs courseId="specifications-python" courseTitle="Spécification">
-  <ExerciseSection id="easy" label="1. Documentation">
-    ## Ajouter des Docstrings
-
+  <ExerciseSection id="specs-1-1" label="1.1 - Documenter est_pair">
+    <Enonce>
     ### Exercice 1.1 : Documenter est_pair
     **Ajouter une docstring complète à la fonction `est_pair` suivante :**
     ```python
@@ -29,11 +28,11 @@ meta: "Docstrings, Type Hinting et Documentation"
         return n % 2 == 0
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="medium" label="2. Pratique">
-    ## Fonctions diverses
-
+  <ExerciseSection id="specs-2-1" label="2.1 - Spécification de compter_mots">
+    <Enonce>
     ### Exercice 2.1 : Spécification de compter_mots
     **Proposer une spécification (docstring) pour la fonction `compter_mots` :**
     ```python
@@ -62,7 +61,11 @@ meta: "Docstrings, Type Hinting et Documentation"
         return compteur
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="specs-2-2" label="2.2 - Spécification de surface">
+    <Enonce>
     ### Exercice 2.2 : Spécification de surface
     **Proposer une spécification pour la fonction `surface` :**
     ```python
@@ -87,11 +90,11 @@ meta: "Docstrings, Type Hinting et Documentation"
         return aire
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="hard" label="3. Rédaction complète">
-    ## Exercices de synthèse
-
+  <ExerciseSection id="specs-3-1" label="3.1 - Synthèse (Somme, Moyenne, Périmètre)">
+    <Enonce>
     ### Exercice 3.1 : Somme, Moyenne et Périmètre
     **Écrivez les fonctions complètes (code + spécification) pour :**
     1. Calculer la somme d'une liste.
@@ -122,5 +125,6 @@ meta: "Docstrings, Type Hinting et Documentation"
         return 2 * (longueur + largeur)
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 </ExerciseTabs>

@@ -122,25 +122,7 @@ function ExerciseProgressBar({ total, completed }: { total: number, completed: n
   );
 }
 
-export function Correction({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <div className="mt-6 mb-6">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-5 py-2.5 bg-orange-50 hover:bg-orange-100 text-orange-600 rounded-xl transition-all text-sm font-bold border border-orange-100 shadow-sm"
-      >
-        {isOpen ? <Unlock size={18} /> : <Lock size={18} />}
-        {isOpen ? 'Masquer la solution' : 'Voir la correction'}
-      </button>
-      {isOpen && (
-        <div className="mt-4 p-6 bg-slate-50 rounded-2xl border border-slate-200 animate-in fade-in slide-in-from-top-2 duration-300">
-          {children}
-        </div>
-      )}
-    </div>
-  );
-}
+
 
 export function ExerciseTabs({ children, courseId, courseTitle }: { children: React.ReactNode, courseId: string, courseTitle: string }) {
   const childrenArray = React.Children.toArray(children) as React.ReactElement<TabProps>[];
@@ -354,6 +336,31 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
   );
 }
 
-export function ExerciseSection({ children }: { id: string; label: string; children: React.ReactNode }) {
-  return <div className="animate-in fade-in duration-500">{children}</div>;
+export function Enonce({ children }: { children: React.ReactNode }) {
+  return <div className="enonce">{children}</div>;
+}
+
+export function Correction({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-8 p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+      <h4 className="text-emerald-800 font-bold flex items-center gap-2 mb-4 uppercase tracking-wider text-xs">
+        <Check size={16} /> Correction
+      </h4>
+      <div className="prose prose-emerald prose-sm max-w-none">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export function Verification({ children }: { children: React.ReactNode }) {
+  return null; // Invisible in the Course view
+}
+
+export function ExerciseSection({ id, label, children }: TabProps) {
+  return (
+    <div className="exercise-section" id={id} data-label={label}>
+      {children}
+    </div>
+  );
 }

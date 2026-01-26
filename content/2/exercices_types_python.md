@@ -6,9 +6,8 @@ meta: "Variables, Types, Opérateurs et Conditions"
 ---
 
 <ExerciseTabs courseId="types-python" courseTitle="Types en Python">
-  <ExerciseSection id="intro" label="1. Introduction">
-    ## Premiers pas avec les types
-
+  <ExerciseSection id="types-1-1" label="1.1 - Identification des types">
+    <Enonce>
     ### Exercice 1.1 : Identification des types
     **Donner les types des valeurs suivantes :**
     `13`, `14.5`, `'Hello World!'`, `True`, `'15.5'`
@@ -22,7 +21,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
     print(type('15.5'))         # <class 'str'> (Attention, c'est entre guillemets)
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="types-1-2" label="1.2 - Table de vérité XOR">
+    <Enonce>
     ### Exercice 1.2 : Table de vérité XOR
     **À l'aide de Python, écrire un programme qui affiche dans le terminal la table de vérité de la fonction booléenne `xor` (ou exclusif).**
 
@@ -36,7 +39,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
     print(1, 1, 0)
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="types-1-3" label="1.3 - Somme de deux nombres">
+    <Enonce>
     ### Exercice 1.3 : Somme de deux nombres
     **Écrire un programme qui permet d'afficher la somme de deux nombres entiers de la forme `'La somme est x+y'` avec x et y définis précédemment.**
 
@@ -47,7 +54,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
     print('La somme est', x + y)
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="types-1-4" label="1.4 - Affichage amélioré">
+    <Enonce>
     ### Exercice 1.4 : Affichage amélioré
     **Améliorer le programme précédent pour qu'il affiche `'La somme de x et y est x+y'`.**
 
@@ -58,7 +69,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
     print('La somme de', x, 'et', y, 'est', x + y)
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="types-1-5" label="1.5 - Concaténation de chaînes">
+    <Enonce>
     ### Exercice 1.5 : Concaténation de chaînes
     **Écrire un programme qui instancie deux chaînes de caractères, les concatène et affiche le résultat sous la forme :**
     `'La chaîne résultante est : [résultat]'`.
@@ -70,7 +85,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
     print("La chaîne résultante est :", chaine_a + chaine_b)
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="types-1-6" label="1.6 - Étude de code et Booléens">
+    <Enonce>
     ### Exercice 1.6 : Étude de code et Booléens
     **Partie A : Évaluer les valeurs de `result` à la fin de chaque programme :**
 
@@ -130,7 +149,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
         print("6.", x < 0 or (x > 0 and x % 2 != 0))
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="types-1-7" label="1.7 - Parité d'un nombre">
+    <Enonce>
     ### Exercice 1.7 : Parité d'un nombre
     **Écrire un programme qui demande un nombre à l'utilisateur et affiche dans le terminal si ce nombre est pair ou impair.**
 
@@ -143,11 +166,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
         print("impair")
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="facile" label="2. Facile">
-    ## Conditions et comparaisons
-
+  <ExerciseSection id="types-2-1" label="2.1 - Maximum entre trois nombres">
+    <Enonce>
     ### Exercice 2.1 : Maximum entre trois nombres
     **Écrire un programme qui permet de trouver la valeur maximale entre trois variables entières saisies.**
     Ce programme affichera dans la console : *"Le nombre [x] est plus grand que [y] et [z]"*.
@@ -167,7 +190,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
         print(val_3, " est la plus grande")
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="types-2-2" label="2.2 - Calculatrice basique">
+    <Enonce>
     ### Exercice 2.2 : Calculatrice basique
     **Écrire un programme qui simule une calculatrice basique.**
     Elle demandera à l'utilisateur :
@@ -196,7 +223,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
             print("Division par zéro impossible")
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="types-2-3" label="2.3 - Profit ou perte">
+    <Enonce>
     ### Exercice 2.3 : Profit ou perte
     **Écrire un programme qui, étant donné deux valeurs `cout_de_production` et `prix_de_vente` (saisies par l'utilisateur), affiche dans le terminal :**
     - `profit` si le prix de vente est supérieur au coût.
@@ -217,11 +248,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
         print("perte")
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="moyen" label="3. Intermédiaire">
-    ## Algorithmes complets
-
+  <ExerciseSection id="types-3-1" label="3.1 - Mentions au baccalauréat">
+    <Enonce>
     ### Exercice 3.1 : Mentions au baccalauréat
     **Écrire un programme qui prend une note sur 20 et affiche dans le terminal la mention correspondante :**
     - `Très bien` : note ≥ 16
@@ -247,5 +278,6 @@ meta: "Variables, Types, Opérateurs et Conditions"
         print("Mention : Échec")
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 </ExerciseTabs>

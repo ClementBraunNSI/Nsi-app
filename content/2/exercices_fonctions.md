@@ -10,9 +10,8 @@ meta: "Définition, Paramètres et Valeurs de retour"
 */}
 <ExerciseTabs courseId="les-fonctions-python" courseTitle="Les Fonctions">
   
-  <ExerciseSection id="fonctions-intro-1" label="1. Introduction">
-    ## Concept de fonction
-
+  <ExerciseSection id="fonctions-1-1" label="1.1 - Calcul de la moyenne">
+    <Enonce>
     ### Exercice 1.1 : Calcul de la moyenne
     **Écrire une fonction `moyenne` qui prend deux nombres en paramètres et renvoie leur moyenne.**
 
@@ -22,11 +21,11 @@ meta: "Définition, Paramètres et Valeurs de retour"
         return (a + b) / 2
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-facile-2" label="2. Niveau Facile">
-    ## En-têtes et signatures
-
+  <ExerciseSection id="fonctions-2-1" label="2.1 - Fonction est_pair (En-tête)">
+    <Enonce>
     ### Exercice 2.1 : Fonction est_pair (En-tête)
     **Écrire l'en-tête d'une fonction `est_pair` qui prend en paramètre un nombre entier et renvoie un booléen.**
 
@@ -37,7 +36,11 @@ meta: "Définition, Paramètres et Valeurs de retour"
         return n % 2 == 0
     ```
     </Correction>
+    </Enonce>
+  </ExerciseSection>
 
+  <ExerciseSection id="fonctions-2-2" label="2.2 - Afficher la somme">
+    <Enonce>
     ### Exercice 2.2 : Afficher la somme
     **Écrire l'en-tête d'une fonction `afficher_somme` qui prend deux nombres en paramètres et ne renvoie rien (procédure).**
 
@@ -47,11 +50,11 @@ meta: "Définition, Paramètres et Valeurs de retour"
         print(a + b)
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-difficile-3" label="3. Niveau Difficile">
-    ## Logique et types
-
+  <ExerciseSection id="fonctions-3-1" label="3.1 - Fonction parité">
+    <Enonce>
     ### Exercice 3.1 : Fonction parité
     **Écrire une fonction `parite` qui prend un entier en paramètre et renvoie `True` si le nombre est pair, `False` sinon. Utilisez le type hinting.**
     *Exemple : parite(7) doit renvoyer False.*
@@ -62,5 +65,6 @@ meta: "Définition, Paramètres et Valeurs de retour"
         return nombre % 2 == 0
     ```
     </Correction>
+    </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
