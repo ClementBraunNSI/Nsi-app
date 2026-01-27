@@ -36,7 +36,9 @@ Dans le pire des cas (arbre dégénéré en liste chaînée), la complexité dev
 ---
     </Enonce>
     <Verification>
+```python
 assert True, "Rappels théoriques lus."
+```
     </Verification>
   </ExerciseSection>
 
@@ -74,7 +76,9 @@ On insère maintenant les mêmes valeurs mais dans cet ordre :
 ---
     </Enonce>
     <Verification>
+```python
 assert True, "Cet exercice est théorique (dessin). Cliquez pour valider."
+```
     </Verification>
   </ExerciseSection>
 
@@ -108,7 +112,9 @@ Que remarquez-vous concernant le parcours infixe d'un ABR ? Expliquer pourquoi.
 ---
     </Enonce>
     <Verification>
+```python
 assert True, "Cet exercice est théorique (parcours). Cliquez pour valider."
+```
     </Verification>
   </ExerciseSection>
 
@@ -191,6 +197,7 @@ def hauteur(self):
 ---
     </Enonce>
     <Verification>
+```python
 assert 'Noeud' in locals(), "La classe Noeud n'est pas définie"
 assert 'Arbre' in locals(), "La classe Arbre n'est pas définie"
 
@@ -253,6 +260,7 @@ assert hasattr(a, 'hauteur'), "Méthode hauteur manquante"
 # 50(root) -> 30 -> 20. Path len 2. Height 2.
 # 50 -> 70. Path len 1.
 assert a.hauteur() == 2, "Hauteur incorrecte"
+```
     </Verification>
   </ExerciseSection>
 
@@ -280,7 +288,9 @@ Pour un ABR contenant n nœuds, donner un encadrement de sa hauteur h en fonctio
 ---
     </Enonce>
     <Verification>
+```python
 assert True, "Cet exercice est théorique (complexité). Cliquez pour valider."
+```
     </Verification>
   </ExerciseSection>
 
@@ -302,6 +312,7 @@ def est_abr(self):
 ---
     </Enonce>
     <Verification>
+```python
 assert 'Arbre' in locals(), "La classe Arbre n'est pas définie"
 assert 'Noeud' in locals(), "La classe Noeud n'est pas définie"
 
@@ -328,6 +339,7 @@ b.racine = Noeud(10)
 bg = Arbre(Noeud(20)) # Arbre avec racine 20
 b.gauche = bg
 assert b.est_abr() == False, "Doit retourner False pour un arbre invalide (20 > 10 à gauche)"
+```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

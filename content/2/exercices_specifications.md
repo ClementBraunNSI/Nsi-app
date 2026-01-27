@@ -150,6 +150,7 @@ assert abs(surface(1) - 3.14159) < 0.0001, "Le calcul de surface semble incorrec
     </Correction>
     </Enonce>
     <Verification>
+```python
 for f_name in ['calculer_somme_liste', 'calculer_moyenne', 'calculer_perimetre_rectangle']:
     assert f_name in locals(), f"La fonction '{f_name}' n'est pas définie."
     f = locals()[f_name]
@@ -159,6 +160,7 @@ for f_name in ['calculer_somme_liste', 'calculer_moyenne', 'calculer_perimetre_r
 assert calculer_somme_liste([1, 2, 3]) == 6, "Erreur dans calculer_somme_liste."
 assert calculer_moyenne(10, 20) == 15, "Erreur dans calculer_moyenne."
 assert calculer_perimetre_rectangle(5, 2) == 14, "Erreur dans calculer_perimetre_rectangle."
+```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

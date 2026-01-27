@@ -22,6 +22,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
     ```
     </Correction>
     </Enonce>
+    <Verification>
+```python
+assert True
+```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-1-2" label="1.2 - Table de vérité XOR">
@@ -40,6 +45,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
     ```
     </Correction>
     </Enonce>
+    <Verification>
+```python
+assert True
+```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-1-3" label="1.3 - Somme de deux nombres">
@@ -59,9 +69,11 @@ meta: "Variables, Types, Opérateurs et Conditions"
     </Correction>
     </Enonce>
     <Verification>
+```python
 assert 'x' in locals() and 'y' in locals(), "Les variables x et y doivent être définies."
 assert 's' in locals(), "La variable 's' n'est pas définie."
 assert s == x + y, "La somme est incorrecte."
+```
     </Verification>
   </ExerciseSection>
 
@@ -82,9 +94,11 @@ assert s == x + y, "La somme est incorrecte."
     </Correction>
     </Enonce>
     <Verification>
+```python
 assert 'x' in locals() and 'y' in locals(), "Les variables x et y doivent être définies."
 assert 's' in locals(), "La variable 's' n'est pas définie."
 assert s == x + y, "La somme est incorrecte."
+```
     </Verification>
   </ExerciseSection>
 
@@ -106,9 +120,11 @@ assert s == x + y, "La somme est incorrecte."
     </Correction>
     </Enonce>
     <Verification>
+```python
 assert 'chaine_a' in locals() and 'chaine_b' in locals(), "Les variables chaine_a et chaine_b doivent être définies."
 assert 'resultat' in locals(), "La variable resultat n'est pas définie."
 assert resultat == chaine_a + chaine_b, "La concaténation est incorrecte."
+```
     </Verification>
   </ExerciseSection>
 
@@ -174,6 +190,11 @@ assert resultat == chaine_a + chaine_b, "La concaténation est incorrecte."
     ```
     </Correction>
     </Enonce>
+    <Verification>
+```python
+assert True
+```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-1-7" label="1.7 - Parité d'un nombre">
@@ -194,7 +215,9 @@ assert resultat == chaine_a + chaine_b, "La concaténation est incorrecte."
     </Correction>
     </Enonce>
     <Verification>
+```python
 assert 'a' in locals(), "La variable 'a' n'est pas définie."
+```
     </Verification>
   </ExerciseSection>
 
@@ -226,9 +249,11 @@ assert 'a' in locals(), "La variable 'a' n'est pas définie."
     </Correction>
     </Enonce>
     <Verification>
+```python
 assert 'val_1' in locals() and 'val_2' in locals() and 'val_3' in locals(), "Les variables val_1, val_2, val_3 doivent être définies."
 assert 'maximum' in locals(), "La variable 'maximum' n'est pas définie."
 assert maximum == max(val_1, val_2, val_3), "Le maximum calculé est incorrect."
+```
     </Verification>
   </ExerciseSection>
 
@@ -270,6 +295,7 @@ assert maximum == max(val_1, val_2, val_3), "Le maximum calculé est incorrect."
     </Correction>
     </Enonce>
     <Verification>
+```python
 assert 'a' in locals() and 'b' in locals(), "Les variables a et b doivent être définies."
 assert 'operateur' in locals(), "La variable operateur doit être définie."
 assert 'resultat' in locals(), "La variable resultat doit être définie."
@@ -278,6 +304,7 @@ elif operateur == '-': assert resultat == a - b
 elif operateur == '*': assert resultat == a * b
 elif operateur == '/': 
     if b != 0: assert abs(resultat - (a/b)) < 0.0001
+```
     </Verification>
   </ExerciseSection>
 
@@ -308,11 +335,13 @@ elif operateur == '/':
     </Correction>
     </Enonce>
     <Verification>
+```python
 assert 'prix_de_vente' in locals() and 'cout_de_production' in locals(), "Les variables de prix doivent être définies."
 assert 'message' in locals(), "La variable message doit être définie."
 if prix_de_vente > cout_de_production: assert "profit" in message
 elif prix_de_vente < cout_de_production: assert "perte" in message
 else: assert "marge" in message
+```
     </Verification>
   </ExerciseSection>
 
@@ -348,6 +377,7 @@ else: assert "marge" in message
     </Correction>
     </Enonce>
     <Verification>
+```python
 assert 'note' in locals(), "La variable note doit être définie."
 assert 'mention' in locals(), "La variable mention doit être définie."
 m = mention.lower()
@@ -356,6 +386,7 @@ elif note >= 14: assert "bien" in m and "très" not in m and "assez" not in m
 elif note >= 12: assert "assez bien" in m
 elif note >= 10: assert "passable" in m
 else: assert "échec" in m or "echec" in m
+```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

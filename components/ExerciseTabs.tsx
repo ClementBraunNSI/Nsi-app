@@ -229,7 +229,7 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
         />
       )}
 
-      <ExerciseProgressBar total={childrenArray.length} completed={completedIds.length} />
+      {/* ProgressBar removed as requested */}
 
       <div className="flex flex-wrap gap-3 mb-8">
         {childrenArray.map((child) => {
@@ -244,14 +244,6 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
               }`}
             >
               <span className="truncate">{child.props.label}</span>
-              <button
-                onClick={(e) => toggleComplete(e, child.props.id)}
-                className={`w-7 h-7 rounded-xl flex items-center justify-center transition-all border-2 shadow-sm ${
-                  isDone ? 'bg-white text-orange-500 border-white' : 'bg-slate-200 text-transparent border-slate-300 hover:border-orange-400'
-                }`}
-              >
-                <Check size={16} strokeWidth={4} />
-              </button>
             </div>
           );
         })}
@@ -269,26 +261,13 @@ export function Enonce({ children }: { children: React.ReactNode }) {
 }
 
 export function Correction({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mt-8 p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
-      <h4 className="text-emerald-800 font-bold flex items-center gap-2 mb-4 uppercase tracking-wider text-xs">
-        <Check size={16} /> Correction
-      </h4>
-      <div className="prose prose-emerald prose-sm max-w-none">
-        {children}
-      </div>
-    </div>
-  );
+  return null;
 }
 
 export function Verification({ children }: { children: React.ReactNode }) {
   return null; // Invisible in the Course view
 }
 
-export function ExerciseSection({ id, label, children }: TabProps) {
-  return (
-    <div className="exercise-section" id={id} data-label={label}>
-      {children}
-    </div>
-  );
+export function ExerciseSection({ children }: TabProps) {
+  return <>{children}</>;
 }

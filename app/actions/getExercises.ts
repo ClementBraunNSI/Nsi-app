@@ -87,7 +87,16 @@ export async function getAllExercises(): Promise<LabExercise[]> {
           // Try to find <Verification> content
           const verificationRegex = /<Verification>([\s\S]*?)<\/Verification>/;
           const verificationMatch = rawContent.match(verificationRegex);
-          const verificationCode = verificationMatch ? dedent(verificationMatch[1]) : undefined;
+          let verificationCode = verificationMatch ? dedent(verificationMatch[1]) : undefined;
+
+          if (verificationCode) {
+            // Remove markdown code fences if present (start and end)
+            verificationCode = verificationCode
+              .replace(/^```python\s*\n?/, '') // Remove ```python at start
+              .replace(/^```\s*\n?/, '')       // Remove ``` at start
+              .replace(/\n?```\s*$/, '')       // Remove ``` at end
+              .trim();
+          }
 
           // Remove <Correction> and <Verification> blocks from the content shown to user
           exerciseContent = exerciseContent
