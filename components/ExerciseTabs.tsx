@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Check, Trophy, Star, Lock, Unlock, PartyPopper, Target, X } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
+import AchievementUnlockedModal from './AchievementUnlockedModal';
+import SuccessModal from './SuccessModal';
 
 interface TabProps {
   id: string;
@@ -17,80 +19,6 @@ const LEVEL_MAP: Record<string, { label: string; code: string }> = {
   'TNSI': { label: 'Terminale NSI', code: '3' },
   'SIO': { label: 'BTS SIO', code: '4' }
 };
-
-// --- COMPOSANT MODAL SUCCÈS DÉBLOQUÉ ---
-function AchievementUnlockedModal({ achievement, onClose }: { achievement: Achievement, onClose: () => void }) {
-  const Icon = achievement.icon;
-  return (
-    <div 
-      className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-500 cursor-pointer"
-      onClick={onClose}
-    >
-      <div 
-        className="bg-white rounded-[3rem] p-10 max-w-md w-full text-center shadow-2xl animate-in zoom-in duration-500 border-4 border-purple-100 relative overflow-hidden cursor-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        
-        {/* Effet de fond */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-purple-50 to-transparent -z-10" />
-        
-        <button 
-          onClick={onClose}
-          className="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition-colors z-20"
-        >
-          <X size={20} />
-        </button>
-
-        <div className={`w-24 h-24 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-xl rotate-3 animate-bounce ${achievement.color}`}>
-          <Icon size={48} />
-        </div>
-        
-        <div className="inline-block px-4 py-1 rounded-full bg-purple-100 text-purple-600 text-xs font-black uppercase tracking-widest mb-4 animate-in slide-in-from-bottom-2 duration-700 delay-100">
-          Nouveau Succès !
-        </div>
-
-        <h2 className="text-3xl font-black text-slate-900 mb-2 italic uppercase tracking-tighter animate-in slide-in-from-bottom-4 duration-700 delay-200">
-          {achievement.title}
-        </h2>
-        
-        <p className="text-slate-500 mb-8 leading-relaxed font-medium animate-in slide-in-from-bottom-6 duration-700 delay-300">
-          {achievement.description}
-        </p>
-        
-        <button
-          onClick={onClose}
-          className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-black uppercase tracking-widest transition-all shadow-lg shadow-purple-200 active:scale-95 flex items-center justify-center gap-3 animate-in slide-in-from-bottom-8 duration-700 delay-500 z-20 relative"
-        >
-          Génial ! <Star size={20} fill="currentColor" />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// --- COMPOSANT MODAL DE FÉLICITATIONS ---
-function SuccessModal({ courseTitle, onConfirm }: { courseTitle: string, onConfirm: () => void }) {
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-white rounded-[3rem] p-10 max-w-md w-full text-center shadow-2xl animate-in zoom-in duration-300 border border-orange-100">
-        <div className="w-20 h-20 bg-orange-500 rounded-3xl flex items-center justify-center text-white mx-auto mb-6 shadow-lg rotate-3">
-          <Trophy size={40} />
-        </div>
-        <h2 className="text-3xl font-black text-slate-900 mb-4 italic uppercase tracking-tighter">Félicitations !</h2>
-        <p className="text-slate-500 mb-8 leading-relaxed font-medium">
-          Vous avez validé la fiche d'exercice : <br/>
-          <span className="font-bold text-orange-600 text-lg italic underline decoration-orange-200">"{courseTitle}"</span>
-        </p>
-        <button
-          onClick={onConfirm}
-          className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-black uppercase tracking-widest transition-all shadow-lg shadow-orange-100 active:scale-95 flex items-center justify-center gap-3"
-        >
-          Valider & recevoir mon badge <PartyPopper size={20} />
-        </button>
-      </div>
-    </div>
-  );
-}
 
 // --- BARRE DE PROGRESSION ---
 function ExerciseProgressBar({ total, completed }: { total: number, completed: number }) {

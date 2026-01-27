@@ -47,14 +47,22 @@ meta: "Variables, Types, Opérateurs et Conditions"
     ### Exercice 1.3 : Somme de deux nombres
     **Écrire un programme qui permet d'afficher la somme de deux nombres entiers de la forme `'La somme est x+y'` avec x et y définis précédemment.**
 
+    *Pour la vérification, stockez `x`, `y` et le résultat de la somme dans une variable `s`.*
+
     <Correction>
     ```python
     x = 4
     y = 3
-    print('La somme est', x + y)
+    s = x + y
+    print('La somme est', s)
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'x' in locals() and 'y' in locals(), "Les variables x et y doivent être définies."
+assert 's' in locals(), "La variable 's' n'est pas définie."
+assert s == x + y, "La somme est incorrecte."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-1-4" label="1.4 - Affichage amélioré">
@@ -62,14 +70,22 @@ meta: "Variables, Types, Opérateurs et Conditions"
     ### Exercice 1.4 : Affichage amélioré
     **Améliorer le programme précédent pour qu'il affiche `'La somme de x et y est x+y'`.**
 
+    *Pour la vérification, stockez `x`, `y` et le résultat de la somme dans une variable `s`.*
+
     <Correction>
     ```python
     x = 4
     y = 3
-    print('La somme de', x, 'et', y, 'est', x + y)
+    s = x + y
+    print('La somme de', x, 'et', y, 'est', s)
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'x' in locals() and 'y' in locals(), "Les variables x et y doivent être définies."
+assert 's' in locals(), "La variable 's' n'est pas définie."
+assert s == x + y, "La somme est incorrecte."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-1-5" label="1.5 - Concaténation de chaînes">
@@ -78,14 +94,22 @@ meta: "Variables, Types, Opérateurs et Conditions"
     **Écrire un programme qui instancie deux chaînes de caractères, les concatène et affiche le résultat sous la forme :**
     `'La chaîne résultante est : [résultat]'`.
 
+    *Pour la vérification, stockez les chaînes dans `chaine_a`, `chaine_b` et le résultat concaténé dans `resultat`.*
+
     <Correction>
     ```python
     chaine_a = "Bonjour"
     chaine_b = "Au Revoir"
-    print("La chaîne résultante est :", chaine_a + chaine_b)
+    resultat = chaine_a + chaine_b
+    print("La chaîne résultante est :", resultat)
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'chaine_a' in locals() and 'chaine_b' in locals(), "Les variables chaine_a et chaine_b doivent être définies."
+assert 'resultat' in locals(), "La variable resultat n'est pas définie."
+assert resultat == chaine_a + chaine_b, "La concaténation est incorrecte."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-1-6" label="1.6 - Étude de code et Booléens">
@@ -157,6 +181,8 @@ meta: "Variables, Types, Opérateurs et Conditions"
     ### Exercice 1.7 : Parité d'un nombre
     **Écrire un programme qui demande un nombre à l'utilisateur et affiche dans le terminal si ce nombre est pair ou impair.**
 
+    *Pour la vérification, stockez le nombre saisi dans une variable `a`.*
+
     <Correction>
     ```python
     a = int(input("Entrez un nombre : "))
@@ -167,6 +193,9 @@ meta: "Variables, Types, Opérateurs et Conditions"
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'a' in locals(), "La variable 'a' n'est pas définie."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-2-1" label="2.1 - Maximum entre trois nombres">
@@ -174,6 +203,8 @@ meta: "Variables, Types, Opérateurs et Conditions"
     ### Exercice 2.1 : Maximum entre trois nombres
     **Écrire un programme qui permet de trouver la valeur maximale entre trois variables entières saisies.**
     Ce programme affichera dans la console : *"Le nombre [x] est plus grand que [y] et [z]"*.
+
+    *Pour la vérification, stockez les trois valeurs dans `val_1`, `val_2`, `val_3` et la valeur maximale trouvée dans `maximum`.*
 
     <Correction>
     
@@ -183,14 +214,22 @@ meta: "Variables, Types, Opérateurs et Conditions"
     val_3 = int(input("Valeur 3 : "))
 
     if val_1 > val_2 and val_1 > val_3:
+        maximum = val_1
         print(val_1, " est la plus grande")
     elif val_2 > val_1 and val_2 > val_3:
+        maximum = val_2
         print(val_2, " est la plus grande")
     elif val_3 > val_1 and val_3 > val_2:
+        maximum = val_3
         print(val_3, " est la plus grande")
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'val_1' in locals() and 'val_2' in locals() and 'val_3' in locals(), "Les variables val_1, val_2, val_3 doivent être définies."
+assert 'maximum' in locals(), "La variable 'maximum' n'est pas définie."
+assert maximum == max(val_1, val_2, val_3), "Le maximum calculé est incorrect."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-2-2" label="2.2 - Calculatrice basique">
@@ -203,6 +242,8 @@ meta: "Variables, Types, Opérateurs et Conditions"
     
     Le programme affichera : *L'opération a [opérateur] b vaut ...*
 
+    *Pour la vérification, stockez les valeurs dans `a`, `b`, `operateur` et le résultat dans `resultat`.*
+
     <Correction>
     
     ```python
@@ -211,19 +252,33 @@ meta: "Variables, Types, Opérateurs et Conditions"
     operateur = input("Entrez un opérateur (+ - / *) : ")
 
     if operateur == "+":
-        print(a + b)
+        resultat = a + b
     elif operateur == "-":
-        print(a - b)
+        resultat = a - b
     elif operateur == "*":
-        print(a * b)
+        resultat = a * b
     elif operateur == "/":
         if b != 0:
-            print(a / b)
+            resultat = a / b
         else:
+            resultat = None
             print("Division par zéro impossible")
+    
+    if resultat is not None:
+        print(resultat)
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'a' in locals() and 'b' in locals(), "Les variables a et b doivent être définies."
+assert 'operateur' in locals(), "La variable operateur doit être définie."
+assert 'resultat' in locals(), "La variable resultat doit être définie."
+if operateur == '+': assert resultat == a + b
+elif operateur == '-': assert resultat == a - b
+elif operateur == '*': assert resultat == a * b
+elif operateur == '/': 
+    if b != 0: assert abs(resultat - (a/b)) < 0.0001
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-2-3" label="2.3 - Profit ou perte">
@@ -234,6 +289,8 @@ meta: "Variables, Types, Opérateurs et Conditions"
     - `perte` si le prix de vente est inférieur.
     - `pas de marge` si c'est égal.
 
+    *Pour la vérification, stockez les prix dans `cout_de_production` et `prix_de_vente`, et le message affiché dans `message`.*
+
     <Correction>
     
     ```python
@@ -241,14 +298,22 @@ meta: "Variables, Types, Opérateurs et Conditions"
     cout_de_production = int(input("Entrez un coût de production : "))
 
     if prix_de_vente > cout_de_production:
-        print("profit")
+        message = "profit"
     elif prix_de_vente == cout_de_production:
-        print("pas de marge")
+        message = "pas de marge"
     else:
-        print("perte")
+        message = "perte"
+    print(message)
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'prix_de_vente' in locals() and 'cout_de_production' in locals(), "Les variables de prix doivent être définies."
+assert 'message' in locals(), "La variable message doit être définie."
+if prix_de_vente > cout_de_production: assert "profit" in message
+elif prix_de_vente < cout_de_production: assert "perte" in message
+else: assert "marge" in message
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-3-1" label="3.1 - Mentions au baccalauréat">
@@ -261,23 +326,36 @@ meta: "Variables, Types, Opérateurs et Conditions"
     - `Passable` : 10 ≤ note < 12
     - `Échec` : note < 10
 
+    *Pour la vérification, stockez la note dans `note` et la mention dans `mention`.*
+
     <Correction>
     
     ```python
     note = float(input("Entrez une note sur 20 : "))
 
     if note >= 16:
-        print("Mention : Très bien")
+        mention = "Très bien"
     elif 14 <= note < 16: # On peut aussi écrire: note >= 14 and note < 16
-        print("Mention : Bien")
+        mention = "Bien"
     elif 12 <= note < 14:
-        print("Mention : Assez bien")
+        mention = "Assez bien"
     elif 10 <= note < 12:
-        print("Mention : Passable")
+        mention = "Passable"
     else:
-        print("Mention : Échec")
+        mention = "Échec"
+    print("Mention :", mention)
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'note' in locals(), "La variable note doit être définie."
+assert 'mention' in locals(), "La variable mention doit être définie."
+m = mention.lower()
+if note >= 16: assert "très bien" in m
+elif note >= 14: assert "bien" in m and "très" not in m and "assez" not in m
+elif note >= 12: assert "assez bien" in m
+elif note >= 10: assert "passable" in m
+else: assert "échec" in m or "echec" in m
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>

@@ -35,6 +35,9 @@ Dans le pire des cas (arbre dégénéré en liste chaînée), la complexité dev
 
 ---
     </Enonce>
+    <Verification>
+assert True, "Rappels théoriques lus."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="abr-2" label="2. Exercice 1 : Construction et propriétés">
@@ -70,6 +73,9 @@ On insère maintenant les mêmes valeurs mais dans cet ordre :
 
 ---
     </Enonce>
+    <Verification>
+assert True, "Cet exercice est théorique (dessin). Cliquez pour valider."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="abr-3" label="3. Exercice 2 : Parcours d'arbres">
@@ -101,6 +107,9 @@ Que remarquez-vous concernant le parcours infixe d'un ABR ? Expliquer pourquoi.
 
 ---
     </Enonce>
+    <Verification>
+assert True, "Cet exercice est théorique (parcours). Cliquez pour valider."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="abr-4" label="4. Exercice 3 : Implémentation en Python">
@@ -181,6 +190,70 @@ def hauteur(self):
 
 ---
     </Enonce>
+    <Verification>
+assert 'Noeud' in locals(), "La classe Noeud n'est pas définie"
+assert 'Arbre' in locals(), "La classe Arbre n'est pas définie"
+
+# Test Noeud
+try:
+    n = Noeud(10)
+    assert hasattr(n, 'cle'), "Les objets Noeud doivent avoir un attribut 'cle'"
+    assert n.cle == 10, "La clé du noeud n'est pas correctement initialisée"
+except TypeError:
+    assert False, "Le constructeur de Noeud doit accepter un argument (la clé)"
+
+# Test Arbre init
+try:
+    a = Arbre()
+    assert hasattr(a, 'racine'), "L'arbre doit avoir un attribut 'racine'"
+    assert hasattr(a, 'gauche'), "L'arbre doit avoir un attribut 'gauche'"
+    assert hasattr(a, 'droit'), "L'arbre doit avoir un attribut 'droit'"
+except:
+    assert False, "Erreur à l'initialisation de Arbre"
+
+# Test est_vide
+assert hasattr(a, 'est_vide'), "Méthode est_vide manquante"
+assert a.est_vide() == True, "Un nouvel arbre doit être vide"
+
+# Test inserer
+assert hasattr(a, 'inserer'), "Méthode inserer manquante"
+a.inserer(50)
+assert a.est_vide() == False, "L'arbre ne doit plus être vide après insertion"
+assert a.racine.cle == 50, "La racine doit être 50"
+
+a.inserer(30)
+a.inserer(70)
+# Structure: 50 -> g:30, d:70
+# Attention: implementation of left/right as Arbre or Noeud?
+# Enonce says: "un fils gauche et un fils droit (qui sont des arbres)"
+# So a.gauche is an Arbre, a.gauche.racine is a Noeud(30)
+if isinstance(a.gauche, Arbre):
+    assert a.gauche.racine.cle == 30, "Insertion à gauche incorrecte"
+    assert a.droit.racine.cle == 70, "Insertion à droite incorrecte"
+else:
+    # Maybe user implemented differently despite instructions?
+    # Strict adherence to instructions:
+    assert False, "self.gauche et self.droit doivent être des instances de Arbre"
+
+# Test recherche
+assert hasattr(a, 'recherche'), "Méthode recherche manquante"
+assert a.recherche(30) == True, "recherche(30) devrait retourner True"
+assert a.recherche(70) == True, "recherche(70) devrait retourner True"
+assert a.recherche(99) == False, "recherche(99) devrait retourner False"
+
+# Test taille
+assert hasattr(a, 'taille'), "Méthode taille manquante"
+# Current: 50, 30, 70 -> size 3
+assert a.taille() == 3, "Taille incorrecte pour 3 noeuds"
+a.inserer(20)
+assert a.taille() == 4, "Taille incorrecte après insertion"
+
+# Test hauteur
+assert hasattr(a, 'hauteur'), "Méthode hauteur manquante"
+# 50(root) -> 30 -> 20. Path len 2. Height 2.
+# 50 -> 70. Path len 1.
+assert a.hauteur() == 2, "Hauteur incorrecte"
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="abr-5" label="5. Exercice 4 : Analyse de complexité">
@@ -206,6 +279,9 @@ Pour un ABR contenant n nœuds, donner un encadrement de sa hauteur h en fonctio
 
 ---
     </Enonce>
+    <Verification>
+assert True, "Cet exercice est théorique (complexité). Cliquez pour valider."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="abr-6" label="6. Exercice bonus : Vérification d'un ABR">
@@ -225,5 +301,33 @@ def est_abr(self):
 
 ---
     </Enonce>
+    <Verification>
+assert 'Arbre' in locals(), "La classe Arbre n'est pas définie"
+assert 'Noeud' in locals(), "La classe Noeud n'est pas définie"
+
+# Test existence méthode
+a = Arbre()
+assert hasattr(a, 'est_abr'), "La méthode est_abr doit être présente dans la classe Arbre"
+
+# Test Cas Valide (Vide)
+assert a.est_abr() == True, "Un arbre vide est un ABR"
+
+# Test Cas Valide (Peuplé)
+a.inserer(10)
+a.inserer(5)
+a.inserer(15)
+assert a.est_abr() == True, "L'arbre construit avec inserer() devrait être valide"
+
+# Test Cas Invalide
+# On force une structure invalide
+# 10 avec 20 à gauche
+b = Arbre()
+b.racine = Noeud(10)
+# On suppose que le constructeur Arbre accepte (racine, gauche, droit) ou qu'on peut assigner
+# D'après l'exo précédent: __init__(self, racine=None, gauche=None, droit=None)
+bg = Arbre(Noeud(20)) # Arbre avec racine 20
+b.gauche = bg
+assert b.est_abr() == False, "Doit retourner False pour un arbre invalide (20 > 10 à gauche)"
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>

@@ -30,7 +30,15 @@ icon: "🔄"
 
 - Demande un nombre de départ
 - Affiche le compte à rebours jusqu'à 0
+
+*Pour la vérification, stockez le nombre de départ dans une variable `n` et la liste des nombres affichés dans une variable `rebours` (ex: `[5, 4, 3, 2, 1, 0]`).*
     </Enonce>
+    <Verification>
+assert 'n' in locals(), "La variable 'n' n'est pas définie."
+assert 'rebours' in locals(), "La variable 'rebours' n'est pas définie."
+assert isinstance(rebours, list), "La variable 'rebours' doit être une liste."
+assert rebours == list(range(n, -1, -1)), f"Le compte à rebours est incorrect pour n={n}."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="boucles-3" label="Introduction 🦊 - Tables de multiplication">
@@ -41,7 +49,17 @@ icon: "🔄"
 
 - Demande un nombre
 - Affiche sa table de multiplication de 1 à 10
+
+*Pour la vérification, stockez le nombre choisi dans `n` et la liste des résultats dans `table` (ex: `[5, 10, ..., 50]`).*
     </Enonce>
+    <Verification>
+assert 'n' in locals(), "La variable 'n' n'est pas définie."
+assert 'table' in locals(), "La variable 'table' n'est pas définie."
+assert isinstance(table, list), "La variable 'table' doit être une liste."
+assert len(table) == 10, "La table doit contenir 10 valeurs."
+expected = [n * i for i in range(1, 11)]
+assert table == expected, f"La table de multiplication pour {n} est incorrecte."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="boucles-4" label="Introduction 🦊 - Escalier d'étoiles">
@@ -70,7 +88,16 @@ chaine_2 = "X"*5
 **
 ***
 ```
+
+*Pour la vérification, stockez le nombre de marches dans `n` et la liste des lignes (chaînes de caractères) dans `lignes` (ex: `['*', '**', '***']`).*
     </Enonce>
+    <Verification>
+assert 'n' in locals(), "La variable 'n' n'est pas définie."
+assert 'lignes' in locals(), "La variable 'lignes' n'est pas définie."
+assert isinstance(lignes, list), "La variable 'lignes' doit être une liste."
+expected = ['*' * i for i in range(1, n + 1)]
+assert lignes == expected, f"L'escalier est incorrect pour n={n}."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="boucles-5" label="Introduction 🦊 - Somme des nombres">
@@ -82,7 +109,15 @@ chaine_2 = "X"*5
 - Demande un nombre n
 - Calcule la somme des nombres de 1 à n
 - Affiche le résultat
+
+*Pour la vérification, stockez le nombre choisi dans `n` et le résultat dans `somme`.*
     </Enonce>
+    <Verification>
+assert 'n' in locals(), "La variable 'n' n'est pas définie."
+assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
+expected = sum(range(1, n + 1))
+assert somme == expected, f"La somme des nombres de 1 à {n} doit être {expected}."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="boucles-6" label="Introduction 🦊 - Puissance de 2">
@@ -93,7 +128,16 @@ chaine_2 = "X"*5
 
 - Demande un nombre n
 - Affiche les puissances de 2 jusqu'à 2^n
+
+*Pour la vérification, stockez le nombre choisi dans `n` et la liste des puissances calculées dans `puissances` (ex: `[1, 2, 4, ..., 2^n]`).*
     </Enonce>
+    <Verification>
+assert 'n' in locals(), "La variable 'n' n'est pas définie."
+assert 'puissances' in locals(), "La variable 'puissances' n'est pas définie."
+assert isinstance(puissances, list), "La variable 'puissances' doit être une liste."
+expected = [2**i for i in range(n + 1)]
+assert puissances == expected, f"Les puissances de 2 jusqu'à 2^{n} sont incorrectes."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="boucles-7" label="Introduction 🦊 - Message répété">
@@ -107,7 +151,17 @@ chaine_2 = "X"*5
 - Affiche la phrase autant de fois que demandé
 
 ## 🌟 Niveau Facile
+
+*Pour la vérification, stockez la phrase dans `phrase`, le nombre de répétitions dans `n`, et créez une liste `resultats` contenant la phrase répétée `n` fois.*
     </Enonce>
+    <Verification>
+assert 'phrase' in locals(), "La variable 'phrase' n'est pas définie."
+assert 'n' in locals(), "La variable 'n' n'est pas définie."
+assert 'resultats' in locals(), "La variable 'resultats' n'est pas définie."
+assert isinstance(resultats, list), "La variable 'resultats' doit être une liste."
+assert len(resultats) == n, f"La liste doit contenir {n} éléments."
+assert all(r == phrase for r in resultats), "Tous les éléments doivent être égaux à la phrase."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="boucles-8" label="Facile 🦊 - Calculatrice continue">
@@ -122,7 +176,13 @@ chaine_2 = "X"*5
 - Recommence si la réponse est "oui"
 
 ## 🔥 Niveau Intermédiaire
+
+*Pour la vérification, assurez-vous que votre boucle se termine correctement quand on entre 'non'. Aucune variable spécifique n'est vérifiée automatiquement ici car c'est un programme interactif.*
     </Enonce>
+    <Verification>
+# Pas de vérification automatique stricte pour ce programme interactif complexe
+assert True
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="boucles-9" label="Intermédiaire 🦊🦊 - Devinette avec limite">
@@ -134,7 +194,12 @@ chaine_2 = "X"*5
 - Donne 5 essais pour deviner un nombre entre 1 et 100
 - Affiche "Perdu!" si le nombre n'est pas trouvé après 5 essais
 - Affiche le nombre d'essais utilisés en cas de victoire
+
+*Pour la vérification, utilisez une variable `essais_restants` qui décrémente à chaque tour.*
     </Enonce>
+    <Verification>
+assert 'essais_restants' in locals() or 'essais' in locals(), "Utilisez une variable pour compter les essais."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="boucles-10" label="Intermédiaire 🦊🦊 - Caisse enregistreuse">
@@ -142,6 +207,16 @@ chaine_2 = "X"*5
 ### Intermédiaire 🦊🦊 - Caisse enregistreuse
 
 **Écrire un programme qui :**
+
+- Demande des prix d'articles un par un
+- S'arrête quand on entre 0
+- Affiche le total à payer
+
+*Pour la vérification, stockez le montant total calculé dans une variable `total`.*
     </Enonce>
+    <Verification>
+assert 'total' in locals(), "La variable 'total' n'est pas définie."
+assert isinstance(total, (int, float)), "Le total doit être un nombre."
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>

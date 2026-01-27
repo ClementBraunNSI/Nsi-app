@@ -24,6 +24,27 @@ export async function getAllExercises(): Promise<LabExercise[]> {
   const exercises: LabExercise[] = [];
   const levels = fs.readdirSync(contentDir).filter(f => !f.startsWith('.'));
 
+  // Helper to dedent content
+  const dedent = (str: string) => {
+    const lines = str.split('\n');
+    // Remove first line if empty (often happens after opening tag)
+    if (lines.length > 0 && lines[0].trim() === '') lines.shift();
+    // Remove last line if empty
+    if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+    let minIndent = Infinity;
+    for (const line of lines) {
+      if (line.trim().length > 0) {
+        const indent = line.search(/\S/);
+        if (indent !== -1 && indent < minIndent) {
+          minIndent = indent;
+        }
+      }
+    }
+    if (minIndent === Infinity) return str.trim();
+    return lines.map(line => (line.length >= minIndent ? line.slice(minIndent) : line)).join('\n').trim();
+  };
+
   for (const level of levels) {
     // Filter out level 4 (BTS SIO) as requested
     if (level === '4') continue;
@@ -61,33 +82,12 @@ export async function getAllExercises(): Promise<LabExercise[]> {
           
           let exerciseContent = enonceMatch ? enonceMatch[1] : rawContent;
 
-          // Helper to dedent content
-          const dedent = (str: string) => {
-            const lines = str.split('\n');
-            // Remove first line if empty (often happens after opening tag)
-            if (lines.length > 0 && lines[0].trim() === '') lines.shift();
-            // Remove last line if empty
-            if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
-
-            let minIndent = Infinity;
-            for (const line of lines) {
-              if (line.trim().length > 0) {
-                const indent = line.search(/\S/);
-                if (indent !== -1 && indent < minIndent) {
-                  minIndent = indent;
-                }
-              }
-            }
-            if (minIndent === Infinity) return str.trim();
-            return lines.map(line => (line.length >= minIndent ? line.slice(minIndent) : line)).join('\n').trim();
-          };
-
           exerciseContent = dedent(exerciseContent);
 
           // Try to find <Verification> content
           const verificationRegex = /<Verification>([\s\S]*?)<\/Verification>/;
           const verificationMatch = rawContent.match(verificationRegex);
-          const verificationCode = verificationMatch ? verificationMatch[1].trim() : undefined;
+          const verificationCode = verificationMatch ? dedent(verificationMatch[1]) : undefined;
 
           // Remove <Correction> and <Verification> blocks from the content shown to user
           exerciseContent = exerciseContent

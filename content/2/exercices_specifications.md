@@ -15,6 +15,8 @@ meta: "Docstrings, Type Hinting et Documentation"
         return n % 2 == 0
     ```
 
+    *Pour la vérification, la fonction doit avoir une docstring définie.*
+
     <Correction>
     ```python
     def est_pair(n):
@@ -29,6 +31,11 @@ meta: "Docstrings, Type Hinting et Documentation"
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'est_pair' in locals(), "La fonction 'est_pair' n'est pas définie."
+assert est_pair.__doc__ is not None and len(est_pair.__doc__.strip()) > 0, "La fonction doit avoir une docstring."
+assert est_pair(4) is True, "est_pair(4) doit renvoyer True."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="specs-2-1" label="2.1 - Spécification de compter_mots">
@@ -43,6 +50,8 @@ meta: "Docstrings, Type Hinting et Documentation"
                 compteur = compteur + 1
         return compteur
     ```
+
+    *Pour la vérification, la fonction doit avoir une docstring définie.*
 
     <Correction>
     ```python
@@ -62,6 +71,11 @@ meta: "Docstrings, Type Hinting et Documentation"
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'compter_mots' in locals(), "La fonction 'compter_mots' n'est pas définie."
+assert compter_mots.__doc__ is not None and len(compter_mots.__doc__.strip()) > 0, "La fonction doit avoir une docstring."
+assert compter_mots("a b c") == 3, "compter_mots('a b c') doit renvoyer 3."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="specs-2-2" label="2.2 - Spécification de surface">
@@ -74,6 +88,8 @@ meta: "Docstrings, Type Hinting et Documentation"
         aire = pi * rayon ** 2
         return aire
     ```
+
+    *Pour la vérification, la fonction doit avoir une docstring définie.*
 
     <Correction>
     ```python
@@ -91,15 +107,22 @@ meta: "Docstrings, Type Hinting et Documentation"
     ```
     </Correction>
     </Enonce>
+    <Verification>
+assert 'surface' in locals(), "La fonction 'surface' n'est pas définie."
+assert surface.__doc__ is not None and len(surface.__doc__.strip()) > 0, "La fonction doit avoir une docstring."
+assert abs(surface(1) - 3.14159) < 0.0001, "Le calcul de surface semble incorrect."
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="specs-3-1" label="3.1 - Synthèse (Somme, Moyenne, Périmètre)">
     <Enonce>
     ### Exercice 3.1 : Somme, Moyenne et Périmètre
     **Écrivez les fonctions complètes (code + spécification) pour :**
-    1. Calculer la somme d'une liste.
-    2. Calculer la moyenne de deux nombres.
-    3. Calculer le périmètre d'un rectangle.
+    1. Calculer la somme d'une liste (`calculer_somme_liste`).
+    2. Calculer la moyenne de deux nombres (`calculer_moyenne`).
+    3. Calculer le périmètre d'un rectangle (`calculer_perimetre_rectangle`).
+
+    *Pour la vérification, définissez les trois fonctions avec leurs docstrings.*
 
     <Correction>
     ```python
@@ -126,5 +149,16 @@ meta: "Docstrings, Type Hinting et Documentation"
     ```
     </Correction>
     </Enonce>
+    <Verification>
+for f_name in ['calculer_somme_liste', 'calculer_moyenne', 'calculer_perimetre_rectangle']:
+    assert f_name in locals(), f"La fonction '{f_name}' n'est pas définie."
+    f = locals()[f_name]
+    assert callable(f), f"'{f_name}' doit être une fonction."
+    assert f.__doc__ is not None and len(f.__doc__.strip()) > 0, f"La fonction '{f_name}' doit avoir une docstring."
+
+assert calculer_somme_liste([1, 2, 3]) == 6, "Erreur dans calculer_somme_liste."
+assert calculer_moyenne(10, 20) == 15, "Erreur dans calculer_moyenne."
+assert calculer_perimetre_rectangle(5, 2) == 14, "Erreur dans calculer_perimetre_rectangle."
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>

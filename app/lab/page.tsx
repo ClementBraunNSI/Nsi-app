@@ -11,12 +11,23 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
+import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
+import AchievementUnlockedModal from '@/components/AchievementUnlockedModal';
+import SuccessModal from '@/components/SuccessModal';
 
 declare global {
   interface Window {
     loadPyodide: any;
   }
 }
+
+const LEVEL_MAP: Record<string, { label: string; code: string }> = {
+  'SNI': { label: 'SNI', code: '0' },
+  'SNT': { label: 'SNT', code: '1' },
+  '1NSI': { label: 'Première NSI', code: '2' },
+  'TNSI': { label: 'Terminale NSI', code: '3' },
+  'SIO': { label: 'BTS SIO', code: '4' }
+};
 
 export default function LabPage() {
   const [exercises, setExercises] = useState<LabExercise[]>([]);
@@ -26,6 +37,11 @@ export default function LabPage() {
   const [isRunning, setIsRunning] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [completedExercises, setCompletedExercises] = useState<string[]>([]);
+  
+  // Modals State
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
+  const [pendingBadge, setPendingBadge] = useState<{ courseId: string, courseTitle: string } | null>(null);
   
   // Pyodide Ref
   const pyodideRef = useRef<any>(null);
@@ -140,10 +156,18 @@ export default function LabPage() {
               await saveProgress(selectedExercise);
             }
          } catch (e: any) {
-            console.error("Verification failed", e);
+            const msg = e.message || '';
+            const isAssertionError = msg.includes('AssertionError');
+
+            // Log differently based on error type to avoid scary console errors for expected failures
+            if (isAssertionError) {
+                console.log("Verification failed (AssertionError):", msg);
+            } else {
+                console.error("Verification failed:", e);
+            }
+
             // We want to show a clean error message if it's an assertion error
             // Pyodide error messages can be verbose.
-            const msg = e.message || '';
             let userMsg = `❌ Échec de la vérification.`;
 
             // Extract the specific assertion message if available
@@ -152,7 +176,7 @@ export default function LabPage() {
 
             if (assertionMatch && assertionMatch[1]) {
                userMsg = `❌ ${assertionMatch[1].trim()}`;
-            } else if (msg.includes('AssertionError')) {
+            } else if (isAssertionError) {
                userMsg += ` Une condition n'est pas remplie. Vérifiez votre code.`;
             } else {
                userMsg += ` ${msg}`;
@@ -205,17 +229,101 @@ export default function LabPage() {
     const completedIds = progress?.map(p => p.exercise_id) || [];
     const allDone = badgeExercises.every(e => completedIds.includes(e.id));
 
-    if (allDone) {
-      // Award Badge
-      const { error } = await supabase.from('badges').upsert({
-        user_id: user.id,
-        course_id: exercise.courseId,
-        badge_name: exercise.courseTitle,
-        unlocked_at: new Date().toISOString()
-      }, { onConflict: 'user_id, course_id' });
+    // Check if badge is already awarded
+    const { data: existingBadge } = await supabase
+        .from('badges')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('course_id', exercise.courseId)
+        .single();
 
-      if (!error) {
-        alert(`Félicitations ! Vous avez débloqué le badge : ${exercise.courseTitle}`);
+    if (allDone && !existingBadge) {
+      setPendingBadge({ courseId: exercise.courseId, courseTitle: exercise.courseTitle });
+      setShowSuccessModal(true);
+    }
+  };
+
+  const handleAwardBadge = async () => {
+    if (!pendingBadge || !user) return;
+    
+    const { courseId, courseTitle } = pendingBadge;
+    const badgeName = courseTitle || courseId || "Badge";
+    
+    // 1. Fetch CURRENT stats (before insertion)
+    const { data: profile } = await supabase.from('profiles').select('level').eq('id', user.id).single();
+    const { count: currentBadgesCount, data: currentBadges } = await supabase.from('badges').select('*', { count: 'exact' }).eq('user_id', user.id);
+    const { count: currentExercisesCount } = await supabase.from('user_progress').select('*', { count: 'exact', head: true }).eq('user_id', user.id);
+    
+    // Fetch courses for chapter calculation
+    let courses: any[] = [];
+    if (profile && profile.level && LEVEL_MAP[profile.level]) {
+        try {
+          const res = await fetch(`/api/courses/${LEVEL_MAP[profile.level].code}`);
+          const data = await res.json();
+          courses = data.courses || [];
+        } catch (e) {
+          console.error("Erreur fetching courses:", e);
+        }
+    }
+
+    // Helper to calculate completed chapters
+    const getCompletedChapters = (badgesList: any[]) => {
+        if (!courses.length) return [];
+        const chapterCourses: Record<string, string[]> = {};
+        courses.forEach(c => {
+            if (c.chapter && c.badgeId) {
+                if (!chapterCourses[c.chapter]) chapterCourses[c.chapter] = [];
+                chapterCourses[c.chapter].push(c.badgeId);
+            }
+        });
+        const completed: string[] = [];
+        const userBadgeIds = new Set(badgesList.map(b => b.course_id));
+        Object.entries(chapterCourses).forEach(([chapter, badgeIds]) => {
+            if (badgeIds.length > 0 && badgeIds.every(id => userBadgeIds.has(id))) {
+                completed.push(chapter);
+            }
+        });
+        return completed;
+    };
+
+    // Calculate PREVIOUS unlocked
+    const prevStats = {
+        badgesCount: currentBadgesCount || 0,
+        exercisesCount: currentExercisesCount || 0,
+        badges: currentBadges || [],
+        completedChapters: getCompletedChapters(currentBadges || [])
+    };
+    const prevUnlocked = ACHIEVEMENTS.filter(a => a.condition(prevStats));
+
+    // Award Badge
+    const { error } = await supabase.from('badges').upsert({
+      user_id: user.id,
+      course_id: courseId,
+      badge_name: badgeName,
+      unlocked_at: new Date().toISOString()
+    }, { onConflict: 'user_id, course_id' });
+
+    if (!error) {
+      setShowSuccessModal(false);
+      setPendingBadge(null);
+
+      // 3. Calculate NEW stats (Simulated)
+      const newBadge = { course_id: courseId, badge_name: badgeName, user_id: user.id, unlocked_at: new Date().toISOString() };
+      const newBadgesList = [...(currentBadges || []), newBadge];
+      
+      const newStats = {
+          badgesCount: (currentBadgesCount || 0) + 1,
+          exercisesCount: currentExercisesCount || 0,
+          badges: newBadgesList,
+          completedChapters: getCompletedChapters(newBadgesList)
+      };
+      const newUnlocked = ACHIEVEMENTS.filter(a => a.condition(newStats));
+
+      // 4. Find difference
+      const newlyUnlocked = newUnlocked.filter(na => !prevUnlocked.some(pa => pa.id === na.id));
+
+      if (newlyUnlocked.length > 0) {
+          setUnlockedAchievement(newlyUnlocked[0]); 
       }
     }
   };
@@ -239,6 +347,33 @@ export default function LabPage() {
       }
     }
     return cleanLines.join('\n');
+  };
+
+  const handleEditorWillMount = (monaco: any) => {
+    monaco.editor.defineTheme('orange-dark', {
+      base: 'vs-dark',
+      inherit: true,
+      rules: [
+        { token: 'keyword', foreground: 'F97316', fontStyle: 'bold' }, // Orange-500
+        { token: 'type.identifier', foreground: 'FDBA74' }, // Orange-300
+        { token: 'string', foreground: 'FDBA74' }, // Orange-300
+        { token: 'number', foreground: 'F97316' }, // Orange-500
+        { token: 'comment', foreground: '525252' }, // Neutral-600
+        { token: 'delimiter', foreground: 'A3A3A3' }, // Neutral-400
+        { token: 'identifier', foreground: 'FFFFFF' },
+        { token: 'function', foreground: 'FED7AA' }, // Orange-200
+      ],
+      colors: {
+        'editor.background': '#0f0f0f', // Very dark
+        'editor.foreground': '#ffffff',
+        'editorCursor.foreground': '#F97316',
+        'editor.lineHighlightBackground': '#1f1f1f',
+        'editorLineNumber.foreground': '#404040',
+        'editor.selectionBackground': '#F9731633',
+        'editorIndentGuide.background': '#262626',
+        'editorIndentGuide.activeBackground': '#F97316',
+      }
+    });
   };
 
   return (
@@ -400,7 +535,8 @@ export default function LabPage() {
                    <Editor
                      height="100%"
                      defaultLanguage="python"
-                     theme="vs-dark"
+                     theme="orange-dark"
+                     beforeMount={handleEditorWillMount}
                      value={code}
                      onChange={(value) => setCode(value || '')}
                      options={{
@@ -440,6 +576,20 @@ export default function LabPage() {
           </div>
         )}
       </div>
+
+      {showSuccessModal && pendingBadge && (
+        <SuccessModal 
+          courseTitle={pendingBadge.courseTitle} 
+          onConfirm={handleAwardBadge} 
+        />
+      )}
+      
+      {unlockedAchievement && (
+        <AchievementUnlockedModal 
+          achievement={unlockedAchievement} 
+          onClose={() => setUnlockedAchievement(null)} 
+        />
+      )}
     </div>
   );
 }
