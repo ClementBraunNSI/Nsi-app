@@ -2,7 +2,7 @@
 title: "Simulation d'un Réseau Informatique"
 description: "Découverte du logiciel Filius pour simuler des réseaux et comprendre les échanges de données."
 level: "2"
-chapter: "I - Internet"
+chapter: "Internet"
 icon: "🔌"
 ---
 
@@ -11,11 +11,11 @@ icon: "🔌"
 
 ## 🔧 Approche du logiciel Filius
 
-![Interface Filius](img/notice_filius.png)
+![Interface Filius](/content/1/notice_filius.png)
 
 > **Le logiciel Filius possède 3 modes de fonctionnement :**
 
-![Modes Filius](img/modes_filius.png)
+![Modes Filius](/content/1/modes_filius.png)
 
 ### ✏️ Annotation
 Permet d'annoter le schéma réseau pour une meilleure compréhension.
@@ -28,7 +28,7 @@ Permet d'utiliser la simulation pour étudier les échanges de données en temps
 
 ## 🏗️ Construction d'un réseau simple
 
-![Schéma réseau simple](img/s1.png)
+![Schéma réseau simple](/content/1/s1.png)
 
 1. Quels sont les éléments de ce réseau ?
 2. À quoi sert le routeur dans cette configuration ?
@@ -40,7 +40,7 @@ Permet d'utiliser la simulation pour étudier les échanges de données en temps
 > **Évolution**
 > Après avoir compris le fonctionnement de base de Filius, nous allons maintenant étoffer le réseau précédent pour une configuration plus complexe.
 
-![Schéma réseau étoffé](img/s2.png)
+![Schéma réseau étoffé](/content/1/s2.png)
 
 1. À quelle propriété du routeur faut-il veiller pour réaliser ce schéma ?
 2. Réaliser le schéma ci-dessus en utilisant le mode construction de Filius.

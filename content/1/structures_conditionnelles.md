@@ -2,7 +2,7 @@
 title: "Structures conditionnelles"
 description: "Introduction aux booléens et aux structures conditionnelles en Python."
 level: "2"
-chapter: "IV - Programmation Python"
+chapter: "Programmation Python"
 icon: "🔀"
 ---
 
@@ -22,7 +22,7 @@ Une **équation booléenne** est un ensemble de fonctions booléenne prenant en 
 
 | Fonction NOT | Fonction OR | Fonction AND |
 | :----------: | :---------: | :----------: |
-| ![](not.png)| ![](or.png)| ![](and.png)|
+| ![](/content/1/not.png)| ![](/content/1/or.png)| ![](/content/1/and.png)|
 
 ## Exemples
 

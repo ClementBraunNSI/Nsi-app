@@ -2,8 +2,8 @@
 title: "Activité - Données Structurées"
 description: "Activité interactive sur les données structurées"
 level: "seconde"
-chapter: 7
-icon: "puzzle-piece"
+chapter: "Données structurées"
+icon: "🧩"
 ---
 
 # Activité Interactive

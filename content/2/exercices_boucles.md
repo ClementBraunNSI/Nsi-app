@@ -28,8 +28,10 @@ meta: "Boucles for et while, itérations et conditions"
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'nombres' in locals(), "La variable 'nombres' n'est pas définie."
 assert nombres == list(range(1, 101)), "La liste des nombres est incorrecte."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -50,10 +52,12 @@ assert nombres == list(range(1, 101)), "La liste des nombres est incorrecte."
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'n' in locals(), "La variable 'n' n'est pas définie."
 assert 'table' in locals(), "La variable 'table' n'est pas définie."
 expected = [n * i for i in range(1, 11)]
 assert table == expected, f"La table de multiplication pour {n} est incorrecte."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -74,8 +78,10 @@ assert table == expected, f"La table de multiplication pour {n} est incorrecte."
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
 assert somme == 5050, "La somme des nombres de 1 à 100 doit être 5050."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -103,8 +109,10 @@ assert somme == 5050, "La somme des nombres de 1 à 100 doit être 5050."
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'pairs' in locals(), "La variable 'pairs' n'est pas définie."
 assert pairs == [i for i in range(1, 101) if i % 2 == 0], "La liste des nombres pairs est incorrecte."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -127,11 +135,13 @@ assert pairs == [i for i in range(1, 101) if i % 2 == 0], "La liste des nombres 
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'phrase' in locals(), "La variable 'phrase' n'est pas définie."
 assert 'nb_voyelles' in locals(), "La variable 'nb_voyelles' n'est pas définie."
 vowels = "aeiouyAEIOUY"
 expected = sum(1 for char in phrase if char in vowels)
 assert nb_voyelles == expected, f"Le nombre de voyelles pour '{phrase}' devrait être {expected}."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -154,9 +164,11 @@ assert nb_voyelles == expected, f"Le nombre de voyelles pour '{phrase}' devrait 
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'phrase' in locals(), "La variable 'phrase' n'est pas définie."
 assert 'resultat' in locals(), "La variable 'resultat' n'est pas définie."
 assert resultat == phrase[::-1], f"L'inverse de '{phrase}' doit être '{phrase[::-1]}'."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -179,11 +191,13 @@ assert resultat == phrase[::-1], f"L'inverse de '{phrase}' doit être '{phrase[:
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'nombre' in locals(), "La variable 'nombre' n'est pas définie."
 assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
 s_num = str(nombre)
 expected = sum(int(d) for d in s_num)
 assert somme == expected, f"La somme des chiffres de {nombre} doit être {expected}."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -203,8 +217,10 @@ assert somme == expected, f"La somme des chiffres de {nombre} doit être {expect
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'nombres' in locals(), "La variable 'nombres' n'est pas définie."
 assert all(n >= 0 for n in nombres), "Tous les nombres stockés doivent être positifs."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -226,6 +242,7 @@ assert all(n >= 0 for n in nombres), "Tous les nombres stockés doivent être po
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'depart' in locals(), "La variable 'depart' n'est pas définie."
 assert 'suite' in locals(), "La variable 'suite' n'est pas définie."
 assert len(suite) == 10, "La suite doit contenir 10 nombres."
@@ -235,6 +252,7 @@ for _ in range(10):
     curr *= 3
     expected.append(curr)
 assert suite == expected, "La suite de multiples est incorrecte."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -291,10 +309,12 @@ assert compteur == c, f"Le nombre de divisions par 2 pour {depart} devrait être
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'n' in locals(), "La variable 'n' n'est pas définie."
 assert 'diviseurs' in locals(), "La variable 'diviseurs' n'est pas définie."
 expected = [i for i in range(2, n) if n % i == 0]
 assert diviseurs == expected, f"Les diviseurs pour {n} sont incorrects."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -320,6 +340,7 @@ assert diviseurs == expected, f"Les diviseurs pour {n} sont incorrects."
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'depart' in locals(), "La variable 'depart' n'est pas définie."
 assert 'suite' in locals(), "La variable 'suite' n'est pas définie."
 assert suite[-1] == 1, "La suite doit se terminer par 1."
@@ -340,6 +361,7 @@ calc_suite.append(1)
 # Note: l'énoncé dit "Tant que le nombre n'est pas 1", donc le 1 est affiché à la fin.
 # Si l'utilisateur a stocké le départ dans suite[0], alors ok.
 assert suite == calc_suite, f"La suite de Syracuse pour {depart} est incorrecte."
+    ```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

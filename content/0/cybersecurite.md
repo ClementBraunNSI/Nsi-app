@@ -6,6 +6,9 @@ chapter: "Cybersecurite"
 icon: "🔒"
 ---
 
+<ExerciseTabs courseId="cybersecurite-intro" courseTitle="Cybersécurité">
+  <ExerciseSection id="cyber-1" label="1. Cours : Introduction">
+    <Enonce>
 ## Introduction
 
 La **cybersécurité** désigne l'ensemble des techniques et pratiques visant à protéger les systèmes informatiques, les réseaux et les données contre les attaques, les dommages ou les accès non autorisés. À l'ère du numérique, où nous partageons constamment des informations en ligne, comprendre les enjeux de la cybersécurité est devenu essentiel.
@@ -101,5 +104,36 @@ Message clair :  BONJOUR
 Clé (décalage) : 3
 Message chiffré : ERQMRXU
 ```
+    </Enonce>
+    <Verification>
+```python
+assert True
+```
+    </Verification>
+  </ExerciseSection>
 
-**Activité pratique :**
+  <ExerciseSection id="cyber-2" label="2. Exercice : Déchiffrement">
+    <Enonce>
+### Activité pratique : Déchiffrement
+
+Vous avez intercepté un message chiffré avec le code de César (décalage de 1).
+
+**Message chiffré :** "QZUIPO"
+
+Déchiffrez ce message pour retrouver le mot original et stockez-le dans la variable `message_clair` (sous forme de chaîne de caractères).
+
+**Indice :** Reculez chaque lettre d'un rang dans l'alphabet.
+
+```python
+message_clair = "..." 
+```
+    </Enonce>
+    <Verification>
+```python
+assert 'message_clair' in locals(), "La variable message_clair n'est pas définie"
+assert isinstance(message_clair, str), "message_clair doit être une chaîne de caractères"
+assert message_clair == "PYTHON", "Le message déchiffré est incorrect. Q->P, Z->Y, U->T, I->H, P->O, O->N"
+```
+    </Verification>
+  </ExerciseSection>
+</ExerciseTabs>

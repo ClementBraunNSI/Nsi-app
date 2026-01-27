@@ -2,7 +2,7 @@
 title: "Les Réseaux Sociaux : Définitions et Enjeux"
 description: "Comprendre les réseaux sociaux, leur modèle économique, les enjeux de cyberviolence et leur modélisation par les graphes."
 level: "2"
-chapter: "III - Réseaux sociaux"
+chapter: "Réseaux sociaux"
 icon: "📱"
 ---
 
@@ -148,7 +148,7 @@ Une bonne e-reputation permet de créer un sentiment de confiance à l'égard de
 | **Direction** | Sens de la relation | Abonnement unilatéral vs amitié mutuelle |
 
 **Indiquer sur le dessin ci-dessous, quel graphe est orienté et lequel est non orienté.**
-![rs](rs.png)
+![rs](/content/1/rs.png)
 
 **Vous avez un groupe de 6 amis : Alice, Bob, Charlie, David, Emma et Frank. Vous devez modéliser leurs amitiés en utilisant un graphe. Un graphe est constitué de sommets (les personnes) et d'arêtes (les relations d'amitié). Voici les informations sur leurs amitiés :**
 
@@ -173,6 +173,6 @@ Une bonne e-reputation permet de créer un sentiment de confiance à l'égard de
 
 En **1967**, le psychologue **Stanley Milgram** teste une hypothèse révolutionnaire : dans un monde de plus en plus connecté, quelle est la distance sociale réelle entre deux personnes quelconques ?
 
-![milgram](g_milgram.png)
+![milgram](/content/1/g_milgram.png)
 
 **Testez la théorie des 6 degrés à l'ère digitale :**

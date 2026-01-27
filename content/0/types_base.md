@@ -6,11 +6,14 @@ chapter: "Programmation_Python"
 icon: "🐍"
 ---
 
+<ExerciseTabs courseId="types-base" courseTitle="Types de base">
+  <ExerciseSection id="cours-types" label="Cours">
+    <Enonce>
 ## Introduction
 
 En informatique, les données que nous manipulons ont différentes natures : des nombres, du texte, des réponses vrai/faux, etc. Chaque donnée possède un **type** qui détermine ce que l'on peut faire avec elle.
 
-## Qu'est-ce qu'un type de données ?
+## Qu'est-ce un type de données ?
 
 Le **type** d'une donnée correspond à :
 1. L'ensemble des **valeurs possibles** pour cette donnée
@@ -188,3 +191,34 @@ if diviseur != 0:
 else:
     print("Impossible de diviser par zéro")
 ```
+    </Enonce>
+    <Verification>
+```python
+assert True
+```
+    </Verification>
+  </ExerciseSection>
+
+  <ExerciseSection id="ex-types-pratique" label="Exercice Pratique">
+    <Enonce>
+### Exercice Pratique
+
+**Déclarez trois variables :**
+1. `annee` (entier) valant 2024
+2. `langage` (chaîne) valant "Python"
+3. `version` (flottant) valant 3.12
+
+**Puis affichez la phrase :** "En 2024, j'apprends Python 3.12" en utilisant ces variables.
+    </Enonce>
+    <Verification>
+```python
+assert 'annee' in locals() and annee == 2024, "La variable 'annee' doit valoir 2024."
+assert 'langage' in locals() and langage == "Python", "La variable 'langage' doit valoir 'Python'."
+assert 'version' in locals() and version == 3.12, "La variable 'version' doit valoir 3.12."
+assert isinstance(annee, int), "'annee' doit être un entier."
+assert isinstance(langage, str), "'langage' doit être une chaîne."
+assert isinstance(version, float), "'version' doit être un flottant."
+```
+    </Verification>
+  </ExerciseSection>
+</ExerciseTabs>

@@ -2,8 +2,8 @@
 title: "Activité - Microcontrôleurs"
 description: "Activité interactive sur les microcontrôleurs"
 level: "seconde"
-chapter: 8
-icon: "gamepad"
+chapter: "Micro-controleurs"
+icon: "🎮"
 ---
 
 # Activité Microcontrôleurs

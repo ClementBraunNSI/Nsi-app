@@ -2,7 +2,7 @@
 title: "Simulation de Serveurs WEB et DNS"
 description: "Mise en place de serveurs WEB et DNS dans un réseau simulé avec Filius."
 level: "2"
-chapter: "I - Internet"
+chapter: "Internet"
 icon: "🌍"
 ---
 

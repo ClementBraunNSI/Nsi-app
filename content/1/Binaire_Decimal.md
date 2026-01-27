@@ -2,7 +2,7 @@
 title: "Le binaire : Définition"
 description: "Comprendre la base 2, les bits, octets et les conversions avec le décimal."
 level: "2"
-chapter: "I - Internet"
+chapter: "Internet"
 icon: "🔢"
 ---
 
@@ -43,6 +43,6 @@ On divise successivement le nombre à convertir par 2.
 Chaque **reste** correspond au nombre dans la représentation et chaque **quotient** est à diviser à la suite par 2.
 On répète ces opération jusqu'à ce que le quotient soit 0 et le reste 1.
 
-![div_succ](img/div_succ.png)
+![div_succ](/content/1/div_succ.png)
 
 La représentation du nombre binaire s’obtient en écrivant les restes dans le sens de la flèche ci dessus.

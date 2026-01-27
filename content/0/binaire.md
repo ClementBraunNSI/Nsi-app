@@ -6,6 +6,9 @@ chapter: "Representation_de_base"
 icon: "🔢"
 ---
 
+<ExerciseTabs courseId="binaire-base" courseTitle="Binaire">
+  <ExerciseSection id="binaire-1" label="1. Comprendre les bases">
+    <Enonce>
 ## Différencier comptage et dénombrement
 
 On appelle **dénombrer** le fait de donner un par un les nombres d'une suite ou d'un ensemble.
@@ -62,18 +65,54 @@ Exemple :
 
 Pour ce nombre dans le tableau de puissances de 2, il serait écrit 1101. Pour obtenir sa valeur en base 10 pour que nous humains puissions le comprendre plus facilement, on peut utilser la technique vue pour la base 10 :
 
-$1101_{2} = 1*8 + 1*4+ 0*2 + 1*1 = 13_{10}$.  
+$1101_{2} = 1*8 + 1*4+ 0*2 + 1*1 = 13_{10}$.
+    </Enonce>
+    <Verification>
+```python
+assert True
+```
+    </Verification>
+  </ExerciseSection>
 
-#### Exercice
+  <ExerciseSection id="binaire-2" label="2. Exercice : Conversions">
+    <Enonce>
+### Exercice
 
-Pour chacun de ces nombres en base 2, donner sa représentation en base 10
+Pour chacun de ces nombres en base 2, calculer sa représentation en base 10 et l'assigner aux variables `n1`, `n2`, `n3`, `n4` et `n5`.
 
-- $11101_2$
-- $10101_2$
-- $111111_2$
-- $10001_2$
-- $10111_2$
+1. $11101_2$ (assigner à `n1`)
+2. $10101_2$ (assigner à `n2`)
+3. $111111_2$ (assigner à `n3`)
+4. $10001_2$ (assigner à `n4`)
+5. $10111_2$ (assigner à `n5`)
 
+Exemple :
+```python
+n1 = 12  # Si la réponse est 12
+```
+    </Enonce>
+    <Verification>
+```python
+assert 'n1' in locals(), "La variable n1 n'est pas définie"
+assert n1 == 29, "n1 incorrect. 11101_2 = 16+8+4+1"
+
+assert 'n2' in locals(), "La variable n2 n'est pas définie"
+assert n2 == 21, "n2 incorrect. 10101_2 = 16+4+1"
+
+assert 'n3' in locals(), "La variable n3 n'est pas définie"
+assert n3 == 63, "n3 incorrect. 111111_2 = 32+16+8+4+2+1"
+
+assert 'n4' in locals(), "La variable n4 n'est pas définie"
+assert n4 == 17, "n4 incorrect. 10001_2 = 16+1"
+
+assert 'n5' in locals(), "La variable n5 n'est pas définie"
+assert n5 == 23, "n5 incorrect. 10111_2 = 16+4+2+1"
+```
+    </Verification>
+  </ExerciseSection>
+
+  <ExerciseSection id="binaire-3" label="3. Décimal vers Binaire">
+    <Enonce>
 ### Obtenir la représentation en base 2 d'un nombre en base 10
 
 La représentation en base 2 d'un nombre est utile pour savoir comment l'ordinateur fonctionne et ce qu'il peut comprendre. On pourra anticiper des résultats, créer des programmes et plus encore en maîtrisant la représentation en base 2.
@@ -102,3 +141,11 @@ On cherche à obtenir la représentation en base 2 du nombre 154.
 |128|64|32|16|8|4|2|1|
 |---|--|--|--|-|-|-|-|
 |1||||||||
+    </Enonce>
+    <Verification>
+```python
+assert True
+```
+    </Verification>
+  </ExerciseSection>
+</ExerciseTabs>

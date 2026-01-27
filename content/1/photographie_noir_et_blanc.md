@@ -2,8 +2,8 @@
 title: "Photographie Noir et Blanc"
 description: "Comprendre la numérisation des images en noir et blanc, les pixels et la définition"
 level: "seconde"
-chapter: 5
-icon: "camera"
+chapter: "Photographie Numérique"
+icon: "📷"
 ---
 
 # 1. Histoire de la photographie

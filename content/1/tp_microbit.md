@@ -2,8 +2,8 @@
 title: "TP - Micro:bit"
 description: "S'initier à la programmation embarquée avec la carte Micro:bit"
 level: "seconde"
-chapter: 8
-icon: "microchip"
+chapter: "Micro-controleurs"
+icon: "🤖"
 ---
 
 # Travail Pratique : Cartes Micro:bit
@@ -18,7 +18,7 @@ La carte **Micro:bit** est un petit ordinateur de poche programmable. Elle perme
 - Capteurs intégrés : accéléromètre, boussole, capteur de température, capteur de lumière.
 - Connectivité Bluetooth et Radio.
 
-![carte](microbit.png)
+![carte](/content/1/microbit.png)
 
 ## 2. Premiers pas en Python
 

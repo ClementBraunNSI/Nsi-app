@@ -2,8 +2,8 @@
 title: "Simulateur Micro:bit"
 description: "Guide d'utilisation du simulateur Python pour Micro:bit"
 level: "seconde"
-chapter: 8
-icon: "desktop"
+chapter: "Micro-controleurs"
+icon: "🖥️"
 ---
 
 # Simulateur BBC Micro:bit V2

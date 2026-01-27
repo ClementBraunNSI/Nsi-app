@@ -8,6 +8,17 @@ import { createClient } from '@/utils/supabase/server';
 export default async function PageSommaireNiveau({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const supabase = await createClient();
+
+  // Configuration des niveaux (Titres et Couleurs)
+  const LEVEL_CONFIG: Record<string, { title: string; color: string }> = {
+    '0': { title: 'SNI', color: 'bg-slate-500' },
+    '1': { title: 'SNT', color: 'bg-blue-500' },
+    '2': { title: 'Première NSI', color: 'bg-orange-500' },
+    '3': { title: 'Terminale NSI', color: 'bg-purple-500' },
+    '4': { title: 'BTS SIO', color: 'bg-emerald-500' },
+  };
+
+  const currentLevel = LEVEL_CONFIG[id] || { title: `Niveau ${id}`, color: 'bg-blue-500' };
   
   // 1. Récupérer l'utilisateur
   const { data: { user } } = await supabase.auth.getUser();
@@ -62,12 +73,12 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
     <main className="max-w-5xl mx-auto p-8 min-h-screen bg-white">
       <div className="flex items-center justify-between mb-12">
         <div className="flex items-center gap-4">
-          <div className={`p-3 rounded-2xl text-white shadow-lg ${id === '3' ? 'bg-purple-500' : 'bg-blue-500'}`}>
+          <div className={`p-3 rounded-2xl text-white shadow-lg ${currentLevel.color}`}>
             <GraduationCap size={32} />
           </div>
           <div>
             <h1 className="text-4xl font-black text-slate-900 tracking-tight">
-              {id === '3' ? 'Terminale NSI' : `Niveau ${id}`}
+              {currentLevel.title}
             </h1>
             {isAdmin && (
               <div className="flex items-center gap-1.5 mt-1 text-emerald-600 font-bold text-[10px] uppercase tracking-widest">

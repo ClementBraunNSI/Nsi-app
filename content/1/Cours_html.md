@@ -2,7 +2,7 @@
 title: "Notice sur HTML"
 description: "Introduction au HTML, structure d'un fichier et principales balises."
 level: "2"
-chapter: "II - Web"
+chapter: "Web"
 icon: "📝"
 ---
 

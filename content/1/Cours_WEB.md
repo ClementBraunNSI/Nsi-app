@@ -2,7 +2,7 @@
 title: "Web"
 description: "L'évolution du World Wide Web et ses technologies fondamentales : Client-Serveur, HTTP, HTML et DNS."
 level: "2"
-chapter: "II - Web"
+chapter: "Web"
 icon: "🌐"
 ---
 
@@ -47,7 +47,7 @@ Machine qui dispose d'informations et a pour rôle de les envoyer. Correspond à
 >
 > Les échanges entre client et serveur se font via des **requêtes** - des messages formalisés qui permettent de demander ou d'envoyer des données.
 
-![Schéma du modèle client-serveur](client_serveur.png)
+![Schéma du modèle client-serveur](/content/1/client_serveur.png)
 
 ## 🏷️ Adresses IP et URL
 
@@ -93,7 +93,7 @@ Si l'adresse n'est pas connue, une série de requêtes récursives est lancée p
 
 > 💡 **Exemple pratique :** Recherche de www.google.fr → Le navigateur utilise directement l'IP **172.217.20.163** si elle est en cache.
 
-![Processus de résolution DNS récursive](dns.png)
+![Processus de résolution DNS récursive](/content/1/dns.png)
 
 ## 📝 Le Langage HTML
 

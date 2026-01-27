@@ -6,6 +6,9 @@ chapter: "Representation_de_base"
 icon: "🔘"
 ---
 
+<ExerciseTabs courseId="booleens-logique" courseTitle="Logique Booléenne">
+  <ExerciseSection id="bool-1" label="1. Cours : Logique Booléenne">
+    <Enonce>
 ## Introduction
 
 La logique booléenne est un système mathématique qui ne manipule que deux valeurs : **VRAI** (True) ou **FAUX** (False). Elle est au cœur du fonctionnement des ordinateurs et permet de prendre des décisions dans les programmes informatiques.
@@ -103,3 +106,51 @@ resultat = not a  # Résultat : False
 Le **OU EXCLUSIF** renvoie VRAI si **une seule** des deux conditions est vraie (mais pas les deux en même temps).
 
 **Table de vérité du OU EXCLUSIF :**
+
+| A     | B     | A XOR B |
+|-------|-------|---------|
+| FAUX  | FAUX  | FAUX    |
+| FAUX  | VRAI  | VRAI    |
+| VRAI  | FAUX  | VRAI    |
+| VRAI  | VRAI  | FAUX    |
+    </Enonce>
+    <Verification>
+```python
+assert True
+```
+    </Verification>
+  </ExerciseSection>
+
+  <ExerciseSection id="bool-2" label="2. Exercice Pratique">
+    <Enonce>
+### Exercice Pratique
+
+Déterminez le résultat des expressions logiques suivantes et assignez-les aux variables `r1`, `r2`, `r3` et `r4`.
+
+1. `(True and False) or True` -> `r1`
+2. `not (True or False)` -> `r2`
+3. `(10 > 5) and (3 < 2)` -> `r3`
+4. `(5 == 5) or (2 == 3)` -> `r4`
+
+**Exemple :**
+```python
+r1 = False # Si vous pensez que c'est Faux
+```
+    </Enonce>
+    <Verification>
+```python
+assert 'r1' in locals(), "La variable r1 n'est pas définie"
+assert r1 == True, "r1 incorrect. (Faux) OU Vrai = Vrai"
+
+assert 'r2' in locals(), "La variable r2 n'est pas définie"
+assert r2 == False, "r2 incorrect. NON (Vrai) = Faux"
+
+assert 'r3' in locals(), "La variable r3 n'est pas définie"
+assert r3 == False, "r3 incorrect. (Vrai) ET (Faux) = Faux"
+
+assert 'r4' in locals(), "La variable r4 n'est pas définie"
+assert r4 == True, "r4 incorrect. (Vrai) OU (Faux) = Vrai"
+```
+    </Verification>
+  </ExerciseSection>
+</ExerciseTabs>

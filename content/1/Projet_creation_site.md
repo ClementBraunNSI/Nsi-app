@@ -2,7 +2,7 @@
 title: "Projet : Création du Bestiaire"
 description: "Création d'un site web de bestiaire en 3 parties : HTML, CSS, et finalisation."
 level: "2"
-chapter: "II - Web"
+chapter: "Web"
 icon: "🐉"
 ---
 
@@ -26,14 +26,14 @@ Vous retrouverez :
 
 Voici ce que vous devez reproduire lors de la première séance:
 
-![a_reproduire](a_reproduire.png)
+![a_reproduire](/content/1/a_reproduire.png)
 
 Chacun des blocs de couleur correspond à une partie bien précise du site.
 On les nomme `div` pour division d'une page web. Ils permettent de scinder la page en diverses parties.
 
 Le site est aussi régi par une feuille de style qui n'est pas à modifier pour cette première étape.
 
-![base](base.png)
+![base](/content/1/base.png)
 
 À cause d'un soucis d'affichage, le Nom du monstre correspond au bloc violet.
 
@@ -87,7 +87,7 @@ Un des éléments de style présent sur votre maquette est l'ensemble des bordur
 
 *Vous chercherez sur internet comment réaliser des bordures en CSS pour retrouver les mots-clefs correspondants.*
 
-![final](presque_fini.png)
+![final](/content/1/presque_fini.png)
 
 > **🏋️ Partie 3**
 

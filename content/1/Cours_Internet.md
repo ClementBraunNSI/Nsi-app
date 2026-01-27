@@ -2,7 +2,7 @@
 title: "Internet"
 description: "L'histoire et le fonctionnement du réseau mondial, des pionniers à la révolution TCP/IP."
 level: "2"
-chapter: "I - Internet"
+chapter: "Internet"
 icon: "🌐"
 ---
 
@@ -26,17 +26,17 @@ Installation du protocole TCP/IPv4 sur ARPANET. Création simultanée des règle
 ### 1990s - Explosion du Web
 Tim Berners-Lee et Robert Cailliau créent le World Wide Web au CERN en Suisse, révolutionnant l'accès à l'information.
 
-![Tim Berners-Lee et Robert Cailliau](img/tblrc.jpeg)
+![Tim Berners-Lee et Robert Cailliau](/content/1/tblrc.jpeg)
 
 ### Aujourd'hui - Internet Mondial
 Plus de 4 milliards d'internautes connectés, échangeant emails, fichiers et accédant à une quantité incommensurable de données.
 
-![Réseau ARPANET](img/arpanet.jpeg)
+![Réseau ARPANET](/content/1/arpanet.jpeg)
 
 > **Le saviez-vous ?**
 > L'objectif initial était de relier seulement trois universités : Stanford, Los Angeles et l'Utah.
 
-![Carte mondiale d'Internet](/geo-mercator.svg)
+![Carte mondiale d'Internet](/content/1/geo-mercator.svg)
 
 ## 🔧 Anatomie d'un Réseau Informatique
 
@@ -69,7 +69,7 @@ Réseau localisé dans une même zone géographique (maison, bureau, école).
 #### 🌍 Réseau Internet (WAN)
 Réseau accessible à Internet, connectant des réseaux locaux du monde entier.
 
-![Schéma réseau local et Internet](img/rlinternet.png)
+![Schéma réseau local et Internet](/content/1/rlinternet.png)
 
 > **Question clé**
 > On dispose de machines et d'un réseau, mais comment se retrouvent-elles pour communiquer ? Quelles techniques sont utilisées ?

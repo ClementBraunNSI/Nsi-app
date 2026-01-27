@@ -23,10 +23,12 @@ meta: "Définition, Paramètres et Valeurs de retour"
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'moyenne' in locals(), "La fonction 'moyenne' n'est pas définie."
 assert callable(moyenne), "'moyenne' doit être une fonction."
 assert moyenne(10, 20) == 15, "moyenne(10, 20) devrait renvoyer 15."
 assert moyenne(0, 10) == 5, "moyenne(0, 10) devrait renvoyer 5."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -64,9 +66,11 @@ assert est_pair(5) is False, "est_pair(5) doit renvoyer False."
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'afficher_somme' in locals(), "La fonction 'afficher_somme' n'est pas définie."
 assert callable(afficher_somme), "'afficher_somme' doit être une fonction."
 assert afficher_somme(2, 3) is None, "La fonction ne doit rien renvoyer (None)."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -84,10 +88,12 @@ assert afficher_somme(2, 3) is None, "La fonction ne doit rien renvoyer (None)."
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'parite' in locals(), "La fonction 'parite' n'est pas définie."
 assert callable(parite), "'parite' doit être une fonction."
 assert parite(8) is True, "parite(8) doit renvoyer True."
 assert parite(7) is False, "parite(7) doit renvoyer False."
+    ```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

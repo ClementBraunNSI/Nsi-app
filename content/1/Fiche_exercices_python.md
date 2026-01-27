@@ -2,7 +2,7 @@
 title: "Fiche d'exercices : Python"
 description: "Premiers pas avec Python : variables, input/output, et calculs simples."
 level: "2"
-chapter: "IV - Programmation Python"
+chapter: "Programmation Python"
 icon: "🐍"
 ---
 
@@ -19,7 +19,9 @@ icon: "🐍"
 - Recopiez vos programmes sur votre cahier pour pouvoir les réviser plus tard
     </Enonce>
     <Verification>
+```python
 assert True, "Consignes lues."
+```
     </Verification>
   </ExerciseSection>
 
@@ -32,8 +34,10 @@ assert True, "Consignes lues."
 *Pour la vérification, stockez le texte dans une variable `message` avant de l'afficher.*
     </Enonce>
     <Verification>
+```python
 assert 'message' in locals(), "La variable 'message' n'est pas définie."
 assert message == "Bonjour le monde !", "Le message doit être 'Bonjour le monde !'"
+```
     </Verification>
   </ExerciseSection>
 
@@ -46,10 +50,12 @@ assert message == "Bonjour le monde !", "Le message doit être 'Bonjour le monde
 *Utilisez les variables `prenom` (texte) et `age` (entier).*
     </Enonce>
     <Verification>
+```python
 assert 'prenom' in locals(), "La variable 'prenom' n'est pas définie."
 assert 'age' in locals(), "La variable 'age' n'est pas définie."
 assert isinstance(prenom, str), "Le prénom doit être du texte."
 assert isinstance(age, int), "L'âge doit être un nombre entier."
+```
     </Verification>
   </ExerciseSection>
 
@@ -62,8 +68,10 @@ assert isinstance(age, int), "L'âge doit être un nombre entier."
 *Stockez le résultat dans une variable nommée `resultat`.*
     </Enonce>
     <Verification>
+```python
 assert 'resultat' in locals(), "La variable 'resultat' n'est pas définie."
 assert resultat == 42, "Le calcul 15 + 27 devrait donner 42."
+```
     </Verification>
   </ExerciseSection>
 
@@ -78,10 +86,12 @@ assert resultat == 42, "Le calcul 15 + 27 devrait donner 42."
 - Affiche ces informations
     </Enonce>
     <Verification>
+```python
 assert 'nom' in locals(), "La variable 'nom' n'est pas définie."
 assert 'age' in locals(), "La variable 'age' n'est pas définie."
 assert isinstance(nom, str), "La variable 'nom' doit être du texte (str)."
 assert isinstance(age, int), "La variable 'age' doit être un nombre entier (int)."
+```
     </Verification>
   </ExerciseSection>
 
@@ -94,8 +104,10 @@ assert isinstance(age, int), "La variable 'age' doit être un nombre entier (int
 *Stockez la réponse de l'utilisateur dans une variable `prenom`.*
     </Enonce>
     <Verification>
+```python
 assert 'prenom' in locals(), "La variable 'prenom' n'est pas définie."
 assert isinstance(prenom, str), "La variable 'prenom' doit être du texte."
+```
     </Verification>
   </ExerciseSection>
 
@@ -112,12 +124,14 @@ assert isinstance(prenom, str), "La variable 'prenom' doit être du texte."
 ## 🌟 Niveau Facile
     </Enonce>
     <Verification>
+```python
 assert 'a' in locals(), "La variable 'a' n'est pas définie."
 assert 'b' in locals(), "La variable 'b' n'est pas définie."
 assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
 assert isinstance(a, (int, float)), "La variable 'a' doit être un nombre."
 assert isinstance(b, (int, float)), "La variable 'b' doit être un nombre."
 assert somme == a + b, "Le calcul de la somme est incorrect."
+```
     </Verification>
   </ExerciseSection>
 
@@ -131,12 +145,14 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
 *N'oubliez pas de convertir les entrées en nombres avec `int()` ou `float()`*
     </Enonce>
     <Verification>
+```python
 assert 'a' in locals(), "La variable 'a' n'est pas définie."
 assert 'b' in locals(), "La variable 'b' n'est pas définie."
 assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
 assert isinstance(a, (int, float)), "La variable 'a' doit être un nombre."
 assert isinstance(b, (int, float)), "La variable 'b' doit être un nombre."
 assert somme == a + b, "Le calcul de la somme est incorrect."
+```
     </Verification>
   </ExerciseSection>
 
@@ -150,12 +166,14 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
 *Rappel : Périmètre = 2 × (longueur + largeur)*
     </Enonce>
     <Verification>
+```python
 assert 'longueur' in locals(), "La variable 'longueur' n'est pas définie."
 assert 'largeur' in locals(), "La variable 'largeur' n'est pas définie."
 assert 'perimetre' in locals(), "La variable 'perimetre' n'est pas définie."
 assert isinstance(longueur, (int, float)), "La longueur doit être un nombre."
 assert isinstance(largeur, (int, float)), "La largeur doit être un nombre."
 assert perimetre == 2 * (longueur + largeur), "Le calcul du périmètre est incorrect."
+```
     </Verification>
   </ExerciseSection>
 
@@ -169,10 +187,12 @@ assert perimetre == 2 * (longueur + largeur), "Le calcul du périmètre est inco
 *Rappel : Aire = π × rayon² (utilisez 3.14 pour π)*
     </Enonce>
     <Verification>
+```python
 assert 'rayon' in locals(), "La variable 'rayon' n'est pas définie."
 assert 'aire' in locals(), "La variable 'aire' n'est pas définie."
 assert isinstance(rayon, (int, float)), "Le rayon doit être un nombre."
 assert abs(aire - (3.14 * rayon ** 2)) < 0.01, "Le calcul de l'aire est incorrect."
+```
     </Verification>
   </ExerciseSection>
 
@@ -186,10 +206,12 @@ assert abs(aire - (3.14 * rayon ** 2)) < 0.01, "Le calcul de l'aire est incorrec
 *Formule : F = C × 9/5 + 32*
     </Enonce>
     <Verification>
+```python
 assert 'celsius' in locals(), "La variable 'celsius' n'est pas définie."
 assert 'fahrenheit' in locals(), "La variable 'fahrenheit' n'est pas définie."
 assert isinstance(celsius, (int, float)), "La température doit être un nombre."
 assert abs(fahrenheit - (celsius * 9/5 + 32)) < 0.01, "Le calcul de la conversion est incorrect."
+```
     </Verification>
   </ExerciseSection>
 
@@ -204,12 +226,14 @@ assert abs(fahrenheit - (celsius * 9/5 + 32)) < 0.01, "Le calcul de la conversio
 - Affiche le prix TTC (`prix_ttc`)
     </Enonce>
     <Verification>
+```python
 assert 'prix_ht' in locals(), "La variable 'prix_ht' n'est pas définie."
 assert 'montant_tva' in locals(), "La variable 'montant_tva' n'est pas définie."
 assert 'prix_ttc' in locals(), "La variable 'prix_ttc' n'est pas définie."
 assert isinstance(prix_ht, (int, float)), "Le prix HT doit être un nombre."
 assert abs(montant_tva - (prix_ht * 0.2)) < 0.01, "Le calcul de la TVA est incorrect."
 assert abs(prix_ttc - (prix_ht + montant_tva)) < 0.01, "Le calcul du prix TTC est incorrect."
+```
     </Verification>
   </ExerciseSection>
 
@@ -243,6 +267,7 @@ assert nom_complet == (prenom + " " + nom).upper() or nom_complet == (prenom + n
 *Stockez les résultats dans : `somme`, `difference`, `produit`, `quotient`.*
     </Enonce>
     <Verification>
+```python
 assert 'a' in locals(), "La variable 'a' n'est pas définie."
 assert 'b' in locals(), "La variable 'b' n'est pas définie."
 assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
@@ -253,6 +278,7 @@ assert somme == a + b, "Erreur dans la somme."
 assert difference == a - b, "Erreur dans la différence."
 assert produit == a * b, "Erreur dans le produit."
 assert quotient == a / b, "Erreur dans le quotient."
+```
     </Verification>
   </ExerciseSection>
 
@@ -266,6 +292,7 @@ assert quotient == a / b, "Erreur dans le quotient."
 *Variables de sortie : `cm`, `mm`, `km`*
     </Enonce>
     <Verification>
+```python
 assert 'metres' in locals(), "La variable 'metres' n'est pas définie."
 assert 'cm' in locals(), "La variable 'cm' n'est pas définie."
 assert 'mm' in locals(), "La variable 'mm' n'est pas définie."
@@ -273,6 +300,7 @@ assert 'km' in locals(), "La variable 'km' n'est pas définie."
 assert cm == metres * 100, "Erreur conversion cm."
 assert mm == metres * 1000, "Erreur conversion mm."
 assert km == metres / 1000, "Erreur conversion km."
+```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

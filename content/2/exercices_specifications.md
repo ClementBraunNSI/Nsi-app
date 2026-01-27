@@ -72,9 +72,11 @@ assert est_pair(4) is True, "est_pair(4) doit renvoyer True."
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'compter_mots' in locals(), "La fonction 'compter_mots' n'est pas définie."
 assert compter_mots.__doc__ is not None and len(compter_mots.__doc__.strip()) > 0, "La fonction doit avoir une docstring."
 assert compter_mots("a b c") == 3, "compter_mots('a b c') doit renvoyer 3."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -108,9 +110,11 @@ assert compter_mots("a b c") == 3, "compter_mots('a b c') doit renvoyer 3."
     </Correction>
     </Enonce>
     <Verification>
+    ```python
 assert 'surface' in locals(), "La fonction 'surface' n'est pas définie."
 assert surface.__doc__ is not None and len(surface.__doc__.strip()) > 0, "La fonction doit avoir une docstring."
 assert abs(surface(1) - 3.14159) < 0.0001, "Le calcul de surface semble incorrect."
+    ```
     </Verification>
   </ExerciseSection>
 

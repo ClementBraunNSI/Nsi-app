@@ -2,7 +2,7 @@
 title: "Galerie des Monstres"
 description: "Découvrez les créations de nos élèves."
 level: "2"
-chapter: "II - Web"
+chapter: "Web"
 icon: "👾"
 ---
 
