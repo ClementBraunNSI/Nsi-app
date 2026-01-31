@@ -1,8 +1,8 @@
 ---
 title: "TP : Audit RGPD d'un site web réel"
-chapter: "BTS SIO 1 : B3.1 - Protection des données personnelles"
-badgeId: "bts_cyber_rgpd_audit"
-meta: "RGPD, Audit, Cookies, Mentions Légales, Cybersécurité"
+chapter: "BTS SIO 1 : B3 - CyberSécurité"
+badgeId: "bts_sql_audit_rgpd"
+meta: "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
 ---
 
 <ExerciseTabs courseId="bts_cyber_rgpd_audit" courseTitle="TP Cybersécurité - Audit RGPD">
