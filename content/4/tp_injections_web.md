@@ -1,8 +1,8 @@
-# TP : Audit de Sécurité Web (SQLi & XSS)
-**Public :** BTS SIO 1ère année (SISR/SLAM)
-**Durée :** 2 heures
-**Objectif :** Comprendre le fonctionnement des failles Web pour mieux protéger les serveurs.
-
+---
+title: "TP SISR : Injections SQL et failles XSS"
+chapter: "BTS SIO 1 : B3 - CyberSécurité"
+badgeId: "bts_sql_audit_rgpd"
+meta: "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
 ---
 
 ## 1. Mise en place du Lab
@@ -10,7 +10,7 @@
 Pour ce TP, nous n'allons pas installer une usine à gaz. Nous utiliserons un "micro-site" vulnérable conçu spécifiquement pour l'exercice.
 
 ### Installation
-1.  Récupérez le fichier [lab_securite.php](lab_securite.php).
+1.  Récupérez le fichier `lab_cybersecurite.php`.
 2.  Lancez un serveur PHP local.
     *   **Option A (Ligne de commande) :** Ouvrez un terminal dans le dossier du fichier et tapez :
         ```bash
@@ -31,7 +31,7 @@ L'application possède une page de login. Le développeur vérifie le mot de pas
 Essayez de vous connecter en tant qu'**admin** sans connaître le mot de passe.
 
 *   **Indice :** L'application construit la requête SQL en collant votre texte directement.
-*   **Payload à tester :** `' OR '1'='1`
+*   **Payload à tester : comparaison OR**
 *   **Question :** Que se passe-t-il ? Pourquoi cela fonctionne-t-il ? (Analysez la requête SQL affichée en bas de page).
 
 **Défi 2 : Vol de base de données (UNION Based)**
@@ -39,7 +39,7 @@ Une fois connecté, vous avez un champ de recherche de notes.
 Essayez d'injecter une commande `UNION` pour récupérer la liste des utilisateurs et leurs mots de passe.
 
 *   **Indice :** Il faut deviner le nombre de colonnes.
-*   **Payload :** `' UNION SELECT 1, username, password FROM users --`
+*   **Payload : à utiliser UNION** `
 *   **Objectif :** Récupérer le mot de passe de l'utilisateur "Toto".
 
 ---
