@@ -88,6 +88,9 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
           prose-table:border-collapse prose-table:border prose-table:border-slate-200 prose-table:rounded-xl prose-table:overflow-hidden
           prose-th:bg-slate-50 prose-th:text-slate-900 prose-th:p-4 prose-th:border prose-th:border-slate-200
           prose-td:p-4 prose-td:border prose-td:border-slate-100
+          
+          /* STYLES DES IMAGES */
+          prose-img:rounded-3xl prose-img:shadow-md prose-img:border prose-img:border-slate-100 prose-img:mx-auto prose-img:my-10 prose-img:max-h-[500px] prose-img:w-auto
           ">
           <MDXRemote 
             source={content} 
