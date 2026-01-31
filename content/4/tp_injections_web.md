@@ -39,7 +39,6 @@ Une fois connecté, vous avez un champ de recherche de notes.
 Essayez d'injecter une commande `UNION` pour récupérer la liste des utilisateurs et leurs mots de passe.
 
 *   **Indice :** Il faut deviner le nombre de colonnes.
-*   **Payload : à utiliser UNION** `
 *   **Objectif :** Récupérer le mot de passe de l'utilisateur "Toto".
 
 ---
