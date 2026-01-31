@@ -160,7 +160,13 @@ icon: "🛡️"
 
     ### Exercice de réflexion
     *Pourquoi l'ordre du Top 10 change-t-il d'une version à l'autre ?*
-    *(Réponse attendue : Évolution des technologies, nouvelles méthodes d'attaque, meilleure sensibilisation sur certaines failles).*
+
+    ### Exercice TD : Identification de failles
+    **Associer chaque situation à la faille OWASP correspondante (A01 à A10) :**
+    1.  "J'ai laissé le fichier `config.php.bak` accessible à la racine du site web."
+    2.  "Mon application utilise une librairie de génération de PDF qui n'a pas été mise à jour depuis 3 ans."
+    3.  "Je peux voir les factures d'un autre client simplement en changeant le numéro de facture dans l'URL."
+    4.  "Le formulaire de contact n'a pas de CAPTCHA et permet d'envoyer 1000 messages par seconde."
   </ExerciseSection>
 
   <ExerciseSection id="tech_focus" label="2. Focus Technique (E5)">
@@ -234,7 +240,6 @@ icon: "🛡️"
     *Réponse : Faille XSS Reflected. Si `name` contient `<script>...`, il sera exécuté.*
   </ExerciseSection>
 
-  <ExerciseSection id="risk_analysis" label="3. Analyse Risques (E6)">
     ## 3. Analyse des Risques et Aspects Légaux (Préparation E6)
 
     En mission professionnelle, vous devez évaluer l'impact métier et gérer la conformité.
@@ -262,12 +267,18 @@ icon: "🛡️"
         *   **Obligatoire ?** OUI, si le risque est élevé (ex: mots de passe faibles, données bancaires).
     3.  **Documentation** : Inscrire l'incident au registre des violations.
 
-    ### Exercice TD : Rédaction d'une alerte
+  <ExerciseSection id="risk_analysis" label="3. Analyse Risques (E6)">
+    ### Exercice TD 1 : Rédaction d'une alerte
     Rédigez le mail d'alerte technique à envoyer au DSI suite à la découverte d'une faille XSS Stored dans le module de commentaires du site e-commerce.
     *   **Objet :** Alerte Sécurité Critique - Faille XSS Module Commentaires
     *   **Description :** Script malveillant persistant détecté.
     *   **Impact :** Risque de vol de session pour tous les visiteurs (clients et admins).
     *   **Recommandation immédiate :** Désactiver le module de commentaires / Purger les entrées suspectes.
+
+    ### Exercice TD 2 : Analyse de Contexte (Score CVSS)
+    **Contexte :** Une faille d'Injection SQL (SQLi) est découverte sur le site "vitrine" de la boulangerie du quartier. Le site présente uniquement des photos de pains et les horaires. Il n'y a pas de compte client, pas d'espace membre, et pas de données personnelles stockées. La base de données ne contient que la table `produits` et `horaires`.
+
+    **Question :** Évaluez la gravité réelle de cette faille pour la boulangerie (Critique, Élevée, Moyenne, Faible). Justifiez en utilisant les critères Confidentialité, Intégrité, Disponibilité.
   </ExerciseSection>
 
 </ExerciseTabs>
