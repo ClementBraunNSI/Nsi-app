@@ -15,6 +15,12 @@ $db->exec("CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT, password T
 $db->exec("INSERT INTO users (username, password) VALUES ('admin', 'SuperSecretPassword!123')");
 $db->exec("INSERT INTO users (username, password) VALUES ('toto', 'ilovepizza')");
 
+// Création de la table NOTES (Pour SQLi UNION Based)
+$db->exec("CREATE TABLE notes (id INTEGER PRIMARY KEY, student TEXT, grade INTEGER)");
+$db->exec("INSERT INTO notes (student, grade) VALUES ('Alice', 18)");
+$db->exec("INSERT INTO notes (student, grade) VALUES ('Bob', 12)");
+$db->exec("INSERT INTO notes (student, grade) VALUES ('Charlie', 15)");
+
 // Création de la table MESSAGES (Pour XSS Stored)
 $db->exec("CREATE TABLE messages (id INTEGER PRIMARY KEY, content TEXT)");
 
@@ -119,9 +125,31 @@ if (isset($_POST['new_message'])) {
         
         <?php
         if (isset($_GET['q'])) {
+            $q = $_GET['q'];
             // FAILLE XSS ICI : on affiche directement $_GET['q']
-            echo "<p>Résultats pour : <b>" . $_GET['q'] . "</b></p>";
-            echo "<p><i>Aucun résultat trouvé dans la base.</i></p>";
+            echo "<p>Résultats pour : <b>" . $q . "</b></p>";
+            
+            // FAILLE SQLI (UNION BASED) : Concaténation directe
+            $sql = "SELECT * FROM notes WHERE student LIKE '%$q%'";
+            
+            // Affichage de la requête pour aider (mode debug/CTF)
+            // echo "<small style='color:gray'>Debug SQL: " . htmlspecialchars($sql) . "</small><br><br>";
+
+            $results = $db->query($sql);
+            if ($results) {
+                echo "<ul>";
+                while ($row = $results->fetchArray()) {
+                    // Affichage sécurisé des résultats de la base
+                    // Le 'grade' peut être le password si injection réussie
+                    $val = isset($row['grade']) ? $row['grade'] : (isset($row[2]) ? $row[2] : '?');
+                    $name = isset($row['student']) ? $row['student'] : (isset($row[1]) ? $row[1] : '?');
+                    
+                    echo "<li>" . htmlspecialchars($name) . " : " . htmlspecialchars($val) . "</li>";
+                }
+                echo "</ul>";
+            } else {
+                 echo "<p><i>Erreur dans la requête.</i></p>";
+            }
         }
         ?>
 
