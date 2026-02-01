@@ -19,6 +19,8 @@ $db->exec("CREATE TABLE messages (id INTEGER PRIMARY KEY, content TEXT)");
 // Désactiver les protections XSS du navigateur pour l'exercice
 header("X-XSS-Protection: 0");
 
+// Démarre la session ET crée automatiquement un cookie 'PHPSESSID' sur le navigateur
+// C'est ce cookie qui permet au serveur de vous reconnaître d'une page à l'autre.
 session_start();
 
 // Traitement du Login
