@@ -1,9 +1,8 @@
-# TP : Création d'une Mini-Blockchain en Python
-
-**Public :** BTS SIO SLAM 1ère année
-**Module :** Cybersécurité & Programmation Objet
-**Durée estimée :** 4 heures
-
+---
+title: "TP SLAM : Création d'une mini blockchain"
+chapter: "BTS SIO 1 : B3 - CyberSécurité"
+badgeId: "bts_sql_blockchain"
+meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 ---
 
 ## Objectifs Pédagogiques
