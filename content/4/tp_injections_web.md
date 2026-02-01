@@ -113,7 +113,7 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
     Le formulaire "Livre d'or" n'a pas de protection (token CSRF).
 
     ### 🎯 Défi 4.1 : Création du piège
-    Objectif : En tant qu'attaquant, faire poster "J'aime les poneys" par l'admin dans le livre d'or sans qu'il s'en rende compte.
+    Objectif : En tant qu'attaquant, faire poster "J'aime les renards" par l'admin dans le livre d'or sans qu'il s'en rende compte.
 
     **Procédure guidée :**
     1.  Créer un fichier HTML `piege.html` sur le bureau.
