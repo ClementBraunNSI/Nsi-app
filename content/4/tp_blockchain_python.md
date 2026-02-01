@@ -88,17 +88,7 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
     *   `hash` : Sa propre empreinte (calculée à partir de tout le reste).
 
     ### 📝 Exercice 2.1 : Le Constructeur
-    Créer la classe `Block` avec son constructeur :
-
-    ```python
-    class Block:
-        def __init__(self, index, data, previous_hash):
-            self.index = index
-            self.timestamp = time.time()
-            self.data = data
-            self.previous_hash = previous_hash
-            self.hash = self.calculate_hash() # On le calcule tout de suite
-    ```
+    Créer la classe `Block` avec son constructeur.
 
     ### 📝 Exercice 2.2 : Calculer l'empreinte
     Ajouter la méthode `calculate_hash` à la classe `Block`.
@@ -125,17 +115,8 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
     La Blockchain est le gestionnaire. C'est une liste ordonnée de blocs.
 
     ### 📝 Exercice 3.1 : Le Genesis Block
-    Le premier bloc est spécial car il n'a pas de prédécesseur. On l'appelle le "Genesis Block".
-    Créer la classe `Blockchain` :
-    ```python
-    class Blockchain:
-        def __init__(self):
-            self.chain = [self.create_genesis_block()]
-
-        def create_genesis_block(self):
-            # Retourne un Block avec index=0, data="Genesis", previous_hash="0"
-            return Block(0, "Genesis", "0")
-    ```
+    Le premier bloc est spécial car il n'a pas de prédécesseur avec un hash "0". On l'appelle le "Genesis Block".
+    Créer la classe `Blockchain`.
 
     ### 📝 Exercice 3.2 : Ajouter un maillon
     Pour ajouter un bloc, il faut respecter la règle d'or : **Le `previous_hash` du nouveau bloc DOIT être le `hash` du dernier bloc de la chaîne.**
@@ -150,10 +131,10 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     ### 📝 Exercice 3.3 : Visualisation
     Dans le programme principal (`if __name__ == "__main__":`), simuler une utilisation :
-    1.  Instancier la Blockchain.
-    2.  Ajouter 3 blocs avec des transactions fictives ("A envoie à B", "B envoie à C"...).
-    3.  Parcourir la liste `chain` avec une boucle et afficher chaque bloc.
-    4.  Vérifier visuellement que le `Prev` du bloc N correspond au `Hash` du bloc N-1.
+    4.  Instancier la Blockchain.
+    5.  Ajouter 3 blocs avec des transactions fictives ("A envoie à B", "B envoie à C"...).
+    6.  Parcourir la liste `chain` avec une boucle et afficher chaque bloc.
+    7.  Vérifier visuellement que le `Prev` du bloc N correspond au `Hash` du bloc N-1.
     </Enonce>
   </ExerciseSection>
 
