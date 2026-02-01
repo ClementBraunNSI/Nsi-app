@@ -1,0 +1,151 @@
+nom,hp,atq,def,attaques,evolution,niveau_evolution,niveau,xp
+Bulbizarre,45,49,49,fouet lianes;tranch'herbe,Herbizarre,16,1,0
+Herbizarre,60,62,63,fouet lianes;tranch'herbe,Florizarre,32,16,0
+Florizarre,80,82,83,fouet lianes;tranch'herbe,,0,32,0
+Salamèche,39,52,43,flammèche;griffe,Reptincel,16,1,0
+Reptincel,58,64,58,flammèche;griffe,Dracaufeu,36,16,0
+Dracaufeu,78,84,78,lance-flamme;griffe,,0,36,0
+Carapuce,44,48,65,pistolet à o;charge,Carabaffe,16,1,0
+Carabaffe,59,63,80,pistolet à o;charge,Tortank,36,16,0
+Tortank,79,83,100,hydrocanon;charge,,0,36,0
+Chenipan,45,30,35,charge;sécrétion,Chrysacier,7,1,0
+Chrysacier,50,20,55,armure,,10,7,0
+Papilusion,60,45,50,poudre dodo;tornade,,0,10,0
+Aspicot,40,35,30,dard-venin;charge,Coconfort,7,1,0
+Coconfort,45,25,50,armure,Dardargnan,10,7,0
+Dardargnan,65,90,40,furie;dard-venin,,0,10,0
+Roucool,40,45,40,charge;jet de sable,Roucoups,18,1,0
+Roucoups,63,60,55,tornade;vive-attaque,Roucarnage,36,18,0
+Roucarnage,83,80,75,cyclone;bec vrille,,0,36,0
+Rattata,30,56,35,charge;morsure,Rattatac,20,1,0
+Rattatac,55,81,60,croc fatal;morsure,,0,20,0
+Piafabec,40,60,30,picpic;furie,Rapasdepic,20,1,0
+Rapasdepic,65,90,65,bec vrille;picpic,,0,20,0
+Abo,35,60,44,morsure;dard-venin,Arbok,22,1,0
+Arbok,60,95,69,acide;morsure,,0,22,0
+Pikachu,35,55,40,tonerre;queue de fer,Raichu,25,1,0
+Raichu,60,90,55,fatal-foudre;queue de fer,,0,25,0
+Sabelette,50,75,85,griffe;jet de sable,Sablaireau,22,1,0
+Sablaireau,75,100,110,tranche;tunnel,,0,22,0
+Nidoran♀,55,47,52,double-pied;morsure,Nidorina,16,1,0
+Nidorina,70,62,67,griffe;dard-venin,Nidoqueen,36,16,0
+Nidoqueen,90,92,87,séisme;empal'korne,,0,36,0
+Nidoran♂,46,57,40,double-pied;morsure,Nidorino,16,1,0
+Nidorino,61,72,57,griffe;dard-venin,Nidoking,36,16,0
+Nidoking,81,102,77,séisme;empal'korne,,0,36,0
+Mélofée,70,45,48,écras'face;berceuse,Mélodelfe,25,1,0
+Mélodelfe,95,70,73,métronome;torgnoles,,0,25,0
+Goupix,38,41,40,flammèche;vive-attaque,Feunard,25,1,0
+Feunard,73,76,75,lance-flamme;danse-flamme,,0,25,0
+Rondoudou,115,45,20,berceuse;écras'face,Grodoudou,25,1,0
+Grodoudou,140,70,45,plaquage;torgnoles,,0,25,0
+Nosferapti,40,45,35,vampirisme;ultrason,Nosferalto,22,1,0
+Nosferalto,75,80,70,cru-aile;tranch'air,,0,22,0
+Mystherbe,45,50,55,poudre dodo;acide,Ortide,21,1,0
+Ortide,60,65,70,poudre toxik;mega-sangsue,Rafflesia,36,21,0
+Rafflesia,75,80,85,lance-soleil;poudre toxik,,0,36,0
+Paras,35,70,55,griffe;poudre toxik,Parasect,24,1,0
+Parasect,60,95,80,spore;tranche,,0,24,0
+Mimitoss,60,55,50,poudre toxik;choc mental,Aéromite,31,1,0
+Aéromite,70,65,60,psyko;tornade,,0,31,0
+Taupiqueur,10,55,25,tunnel;griffe,Triopikeur,26,1,0
+Triopikeur,35,100,50,seisme;tunnel,,0,26,0
+Miaouss,40,45,35,griffe;morsure,Persian,28,1,0
+Persian,65,70,60,tranche;combo-griffe,,0,28,0
+Psykokwak,50,52,48,pistolet à o;griffe,Akwakwak,33,1,0
+Akwakwak,80,82,78,hydrocanon;psyko,,0,33,0
+Férosinge,40,80,35,griffe;balayage,Colossinge,28,1,0
+Colossinge,65,105,60,poing-karate;ultimapoing,,0,28,0
+Caninos,55,70,45,flammèche;morsure,Arcanin,36,1,0
+Arcanin,90,110,80,lance-flamme;crocs feu,,0,36,0
+Ptitard,40,50,40,pistolet à o;hypnose,Têtarte,25,1,0
+Têtarte,65,65,65,bulles d'o;hypnose,Tartard,36,25,0
+Tartard,90,95,95,hydrocanon;ultimapoing,,0,36,0
+Abra,25,20,15,teleport,Kadabra,16,1,0
+Kadabra,40,35,30,psyko;choc mental,Alakazam,36,16,0
+Alakazam,55,50,45,psyko;protection,,0,36,0
+Machoc,70,80,50,balayage;poing-karate,Machopeur,28,1,0
+Machopeur,80,100,70,sacrifice;ultimapoing,Mackogneur,36,28,0
+Mackogneur,90,130,80,close combat;ultimapoing,,0,36,0
+Chétiflor,50,75,35,fouet lianes;poudre toxik,Boustiflor,21,1,0
+Boustiflor,65,90,50,acide;fouet lianes,Empiflor,36,21,0
+Empiflor,80,105,65,lance-soleil;lame-feuille,,0,36,0
+Tentacool,40,40,35,acide;constriction,Tentacruel,30,1,0
+Tentacruel,80,70,65,surf;hydrocanon,,0,30,0
+Racaillou,40,80,100,jet-pierres;charge,Gravalanch,25,1,0
+Gravalanch,55,95,115,éboulement;jet-pierres,Grolem,36,25,0
+Grolem,80,120,130,seisme;explosion,,0,36,0
+Ponyta,50,85,55,flammèche;charge,Galopa,40,1,0
+Galopa,65,100,70,lance-flamme;ruade,,0,40,0
+Ramoloss,90,65,65,pistolet à o;choc mental,Flagadoss,37,1,0
+Flagadoss,95,75,110,surf;psyko,,0,37,0
+Magnéti,25,35,70,éclair;sonicboom,Magnéton,30,1,0
+Magnéton,50,60,95,tonnerre;cage-éclair,,0,30,0
+Canarticho,52,90,55,picpic;tranche,,0,1,0
+Doduo,35,85,45,picpic;furie,Dodrio,31,1,0
+Dodrio,60,110,70,bec vrille;triplattaque,,0,31,0
+Otaria,65,45,55,pistolet à o;coup d'boule,Lamantine,34,1,0
+Lamantine,90,70,80,surf;laser glace,,0,34,0
+Tadmorv,80,80,50,acide;bomb-beurk,Grotadmorv,38,1,0
+Grotadmorv,105,105,75,bomb-beurk;destruction,,0,38,0
+Kokiyas,30,65,100,pistolet à o;charge,Crustabri,36,1,0
+Crustabri,50,95,180,surf;laser glace,,0,36,0
+Fantominus,30,35,30,lechouille;hypnose,Spectrum,25,1,0
+Spectrum,45,50,45,ball'ombre;hypnose,Ectoplasma,36,25,0
+Ectoplasma,60,65,60,ball'ombre;devoreve,,0,36,0
+Onix,35,45,160,jet-pierres;charge,,0,1,0
+Soporifik,60,48,45,choc mental;hypnose,Hypnomade,26,1,0
+Hypnomade,85,73,70,psyko;hypnose,,0,26,0
+Krabby,30,105,90,griffe;bulles d'o,Krabboss,28,1,0
+Krabboss,55,130,115,guillotine;crabhammer,,0,28,0
+Voltorbe,40,30,50,éclair;sonicboom,Électrode,30,1,0
+Électrode,60,50,70,fatal-foudre;explosion,,0,30,0
+Noeunoeuf,60,40,80,choc mental;bombe oeuf,Noadkoko,36,1,0
+Noadkoko,95,95,85,lance-soleil;bomb-oeuf,,0,36,0
+Osselait,50,50,95,massd'os;jet-pierres,Ossatueur,28,1,0
+Ossatueur,60,80,110,osmerang;massd'os,,0,28,0
+Kicklee,50,120,53,pied voltige;ultimapoing,,0,1,0
+Tygnon,50,105,79,poing-karate;ultimapoing,,0,1,0
+Excelangue,90,55,75,ligotage;plaquage,,0,1,0
+Smogo,40,65,95,destruction;gaz toxik,Smogogo,35,1,0
+Smogogo,65,90,120,explosion;gaz toxik,,0,35,0
+Rhinocorne,80,85,95,empal'korne;charge,Rhinoféros,42,1,0
+Rhinoféros,105,130,120,empal'korne;séisme,,0,42,0
+Leveinard,250,5,5,bombe oeuf;ecras'face,,0,1,0
+Kangourex,105,95,80,ultimapoing;plaquage,,0,1,0
+Hypotrempe,30,40,70,pistolet à o;charge,Hypocéan,32,1,0
+Hypocéan,55,65,95,hydrocanon;danse draco,,0,32,0
+Poissirène,45,67,60,pistolet à o;picpic,Poissoroy,33,1,0
+Poissoroy,80,92,65,hydrocanon;empal'korne,,0,33,0
+Stari,30,45,55,pistolet à o;charge,Staross,36,1,0
+Staross,60,75,85,surf;laser glace,,0,36,0
+M. Mime,40,45,65,psyko;protection,,0,1,0
+Insécateur,70,110,80,tranche;danse-lames,,0,1,0
+Lippoutou,65,50,35,laser glace;choc mental,,0,1,0
+Élektek,65,83,57,poing-éclair;fatal-foudre,,0,1,0
+Magmar,65,95,57,lance-flamme;poing de feu,,0,1,0
+Scarabrute,65,125,100,empal'korne;guillotine,,0,1,0
+Tauros,75,100,95,charge;corne-vrille,,0,1,0
+Magicarpe,20,10,55,trempette;charge,Léviator,20,1,0
+Léviator,95,125,79,hydrocanon;ultralaser,,0,20,0
+Lokhlass,130,85,80,surf;laser glace,,0,1,0
+Métamorph,48,48,48,morphing,,0,1,0
+Évoli,55,55,50,charge;jet de sable,Aquali,36,1,0
+Aquali,130,65,60,surf;hydrocanon,,0,36,0
+Voltali,65,65,60,fatal-foudre;cage-éclair,,0,36,0
+Pyroli,65,130,60,lance-flamme;danse flamme,,0,36,0
+Porygon,65,60,70,rafale psy;triplattaque,,0,1,0
+Amonita,35,40,100,pistolet à o;charge,Amonistar,40,1,0
+Amonistar,70,60,125,surf;laser glace,,0,40,0
+Kabuto,30,80,90,griffe;jet-pierres,Kabutops,40,1,0
+Kabutops,60,115,105,tranche;laser glace,,0,40,0
+Ptéra,80,105,65,cru-aile;ultralaser,,0,1,0
+Ronflex,160,110,65,plaquage;ultralaser,,0,1,0
+Articodin,90,85,100,laser glace;blizzard,,0,1,0
+Électhor,90,90,85,fatal-foudre;bec vrille,,0,1,0
+Sulfura,90,100,90,lance-flamme;danse flamme,,0,1,0
+Minidraco,41,64,45,draco-rage;charge,Draco,30,1,0
+Draco,61,84,65,draco-rage;colere,Dracolosse,55,30,0
+Dracolosse,91,134,95,ultralaser;colere,,0,55,0
+Mewtwo,106,110,90,psyko;ultralaser,,0,1,0
+Mew,100,100,100,psyko;ultralaser,,0,1,0

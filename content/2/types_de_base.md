@@ -59,7 +59,7 @@ derniere_lettre = nom[-1]  # 'e'
 title: "Fonctions en Python"
 subtitle: "Modularité et réutilisabilité du code"
 level: "Niveau 2"
-icon: "🔧"
+icon: "🔢"
 ---
 
 # 📚 Fonctions en Python

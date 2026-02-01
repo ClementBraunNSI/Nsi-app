@@ -1,10 +1,12 @@
 ---
-title: Entiers négatifs en Binaire
-description: Représentation des nombres signés et complément à 2
+title: "Entiers négatifs en Binaire"
+description: "Représentation des nombres signés et complément à 2"
 level: premiere
 chapter: "Représentation des données"
-icon: minus-square
+icon: "🌡️"
+badgeId: "premiere_entiers_relatifs"
 ---
+
 
 # Entiers négatifs en Binaire
 

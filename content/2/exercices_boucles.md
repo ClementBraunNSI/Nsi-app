@@ -1,9 +1,12 @@
 ---
 title: "Exercices : Les Boucles"
+description: "Cours sur Exercices : Les Boucles"
+level: premiere
 chapter: "Introduction à Python"
-badgeId: "les-boucles-python"
-meta: "Boucles for et while, itérations et conditions"
+icon: "🔄"
+badgeId: "premiere_exercices_boucles"
 ---
+
 
 <ExerciseTabs courseId="les-boucles-python" courseTitle="Les Boucles">
   <ExerciseSection id="boucles-1-1" label="1.1 - Afficher les nombres de 1 à 100">

@@ -1,5 +1,6 @@
 ---
 title: "Exercices : Types en Python"
+icon: "🏷️"
 chapter: "Introduction à Python"
 badgeId: "types-python"
 meta: "Variables, Types, Opérateurs et Conditions"

@@ -3,7 +3,7 @@ title: "Fonctions en Python"
 description: "Apprendre à modulariser et réutiliser son code pour créer des programmes plus clairs et efficaces."
 level: "2"
 chapter: "Introduction à Python"
-icon: "🔧"
+icon: "🐍"
 ---
 
 ## 🎯 Définitions

@@ -1,5 +1,6 @@
 ---
 title: "Exercices : Spécification"
+icon: "📋"
 chapter: "Introduction à Python"
 badgeId: "specifications-python"
 meta: "Docstrings, Type Hinting et Documentation"

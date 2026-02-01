@@ -121,5 +121,21 @@ export const ACHIEVEMENTS: Achievement[] = [
     icon: Hammer,
     color: 'text-lime-500 bg-lime-100',
     condition: (stats) => stats.badges.some(b => b.course_id === 'bts_poo_basics')
+  },
+  {
+    id: 'premiere_explorer',
+    title: 'Explorateur de Première',
+    description: 'Obtenir 3 badges du niveau Première.',
+    icon: Medal,
+    color: 'text-orange-500 bg-orange-100',
+    condition: (stats) => stats.badges.filter(b => b.course_id && b.course_id.startsWith('premiere_')).length >= 3
+  },
+  {
+    id: 'premiere_expert',
+    title: 'Expert de Première',
+    description: 'Obtenir 10 badges du niveau Première.',
+    icon: GraduationCap,
+    color: 'text-yellow-500 bg-yellow-100',
+    condition: (stats) => stats.badges.filter(b => b.course_id && b.course_id.startsWith('premiere_')).length >= 10
   }
 ];

@@ -11,6 +11,8 @@ import rehypeKatex from 'rehype-katex';
 
 // Importation des composants pour les onglets
 import { ExerciseTabs, ExerciseSection, Correction, Enonce, Verification } from '@/components/ExerciseTabs';
+import { Admonition } from '@/components/Admonition';
+import { transformAdmonitions } from '@/lib/admonition-utils';
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string }> }) {
   const { niveaux, slug } = await params;
@@ -35,12 +37,16 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content, data } = matter(fileContent);
 
+  // Transformation des admonitions (!!! type "titre") en composants React (<Admonition>)
+  const contentWithAdmonitions = transformAdmonitions(content);
+
   const mdxComponents = {
     ExerciseTabs,
     ExerciseSection,
     Correction,
     Enonce,
     Verification,
+    Admonition,
   };
 
   return (
@@ -93,7 +99,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
           prose-img:rounded-3xl prose-img:shadow-md prose-img:border prose-img:border-slate-100 prose-img:mx-auto prose-img:my-10 prose-img:max-h-[500px] prose-img:w-auto
           ">
           <MDXRemote 
-            source={content} 
+            source={contentWithAdmonitions} 
             components={mdxComponents}
             options={{
               mdxOptions: {
