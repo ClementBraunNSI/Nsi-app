@@ -54,6 +54,7 @@ fonction recherche_dichotomique(liste, valeur):
 
 !!! example "Exercice : Implémentation"
     Traduire le pseudocode ci-dessus en Python.
+    
 ## Efficacité et Complexité
 
 La recherche dichotomique est beaucoup plus rapide que la **recherche séquentielle** (parcourir toute la liste un par un).
