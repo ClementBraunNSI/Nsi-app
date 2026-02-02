@@ -54,28 +54,6 @@ fonction recherche_dichotomique(liste, valeur):
 
 !!! example "Exercice : Implémentation"
     Traduire le pseudocode ci-dessus en Python.
-
-    ```python
-    def recherche_dichotomique(liste, valeur):
-        """
-        Recherche la valeur dans la liste TRIÉE.
-        Renvoie l'indice de la valeur ou -1 si absente.
-        """
-        debut = 0
-        fin = len(liste) - 1
-        
-        while debut <= fin:
-            milieu = (debut + fin) // 2
-            if liste[milieu] == valeur:
-                return milieu
-            elif liste[milieu] < valeur:
-                debut = milieu + 1
-            else:
-                fin = milieu - 1
-                
-        return -1
-    ```
-
 ## Efficacité et Complexité
 
 La recherche dichotomique est beaucoup plus rapide que la **recherche séquentielle** (parcourir toute la liste un par un).
