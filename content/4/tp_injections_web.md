@@ -57,9 +57,8 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
     La commande SQL `UNION` permet de combiner les résultats de deux requêtes.
     *   **Objectif :** Afficher la liste des utilisateurs et leurs mots de passe à la place des notes.
     *   **Méthode :**
-        1.  Trouver le nombre de colonnes affichées (tenter `' UNION SELECT 1, 2 --`).
-        2.  Remplacer les chiffres par des noms de colonnes (`username`, `password`) et la table (`users`).
-        3.  Payload final ressemblant à : `' UNION SELECT username, password FROM users --`
+    1.  Quelles colonnes et table(s) sont à utiliser lors de la requête pour récupérer le nom d'utilisateur et le mot de passe ?
+    2.  Payload final ressemblant à : `' UNION SELECT c1, c2 FROM table --`
     </Enonce>
   </ExerciseSection>
 
