@@ -1,7 +1,7 @@
 ---
 title: "Cybersécurité"
 description: "Introduction aux enjeux de la sécurité informatique, chiffrement et bonnes pratiques."
-level: "0"
+level: SNI
 chapter: "Cybersecurite"
 icon: "🔒"
 ---

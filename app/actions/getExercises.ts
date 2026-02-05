@@ -15,6 +15,26 @@ export interface LabExercise {
   chapter: string;
   level: string;
   fileName: string;
+  allowedStudents?: string[];
+}
+
+// Helper to recursively get files
+function getFilesRecursively(dir: string): string[] {
+  let results: string[] = [];
+  const list = fs.readdirSync(dir);
+  
+  list.forEach(file => {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getFilesRecursively(filePath));
+    } else {
+      results.push(filePath);
+    }
+  });
+  
+  return results;
 }
 
 export async function getAllExercises(): Promise<LabExercise[]> {
@@ -23,6 +43,19 @@ export async function getAllExercises(): Promise<LabExercise[]> {
 
   const exercises: LabExercise[] = [];
   const levels = fs.readdirSync(contentDir).filter(f => !f.startsWith('.'));
+
+  const LEVEL_MAPPING: Record<string, string> = {
+    '0': 'SNI',
+    '1': 'SNT',
+    '2': '1NSI',
+    '3': 'TNSI',
+    '4': 'SIO',
+    'premiere': '1NSI',
+    'terminale': 'TNSI',
+    'sni': 'SNI',
+    'snt': 'SNT',
+    'sio': 'SIO'
+  };
 
   // Helper to dedent content
   const dedent = (str: string) => {
@@ -52,10 +85,13 @@ export async function getAllExercises(): Promise<LabExercise[]> {
     const levelPath = path.join(contentDir, level);
     if (!fs.statSync(levelPath).isDirectory()) continue;
 
-    const files = fs.readdirSync(levelPath).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+    // Get all files recursively for this level (needed for particuliers/romeo/...)
+    const allFiles = getFilesRecursively(levelPath);
+    const files = allFiles.filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
 
-    for (const file of files) {
-      const filePath = path.join(levelPath, file);
+    for (const filePath of files) {
+      // Use relative path for fileName or just the basename
+      const fileName = path.basename(filePath);
       const fileContent = fs.readFileSync(filePath, 'utf-8');
       const { data, content } = matter(fileContent);
 
@@ -106,6 +142,10 @@ export async function getAllExercises(): Promise<LabExercise[]> {
           // One final trim
           exerciseContent = exerciseContent.trim();
 
+          // Normalize level
+          const rawLevel = data.level || level;
+          const normalizedLevel = LEVEL_MAPPING[String(rawLevel).toLowerCase()] || rawLevel;
+
           exercises.push({
             id: match[1],
             label: match[2],
@@ -114,8 +154,9 @@ export async function getAllExercises(): Promise<LabExercise[]> {
             content: exerciseContent, // The markdown content inside <Enonce> or the section
             verificationCode: verificationCode,
             chapter: data.chapter || 'Divers',
-            level: level,
-            fileName: file.replace(/\.mdx?$/, '')
+            level: normalizedLevel,
+            fileName: fileName.replace(/\.mdx?$/, ''),
+            allowedStudents: data.allowedStudents,
           });
         }
       }

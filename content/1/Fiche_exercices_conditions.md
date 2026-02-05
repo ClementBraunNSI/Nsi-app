@@ -2,7 +2,7 @@
 
 title: "Fiche d'exercices : Les conditions en Python"
 description: "Exercices sur les conditions (if/else) en Python."
-level: "2"
+level: seconde
 chapter: "Programmation Python"
 icon: "❓"
 ---

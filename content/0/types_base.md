@@ -1,7 +1,7 @@
 ---
 title: "Valeur et type des données"
 description: "Découverte des types fondamentaux en Python : nombres, chaînes et booléens."
-level: "0"
+level: SNI
 chapter: "Programmation_Python"
 icon: "🐍"
 ---

@@ -11,12 +11,98 @@ import { supabase } from '@/lib/supabase';
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
+// --- LOADING MESSAGES ---
+const BASE_MESSAGES = [
+  "Initialisation du terrier...",
+  "Réveil des renards...",
+  "Nettoyage des pattes...",
+  "Organisation des données...",
+  "Calcul de la meilleure trajectoire...",
+  "Chargement des connaissances...",
+  "Affûtage des griffes...",
+  "Inspection des tunnels...",
+  "Remplissage des gamelles...",
+];
+
+const getSeasonalMessages = () => {
+  const date = new Date();
+  const month = date.getMonth(); // 0-11
+  const day = date.getDate();
+  const messages = [...BASE_MESSAGES];
+
+  // Hiver (Décembre - Février)
+  if (month === 11 || month === 0 || month === 1) {
+    messages.push(
+      "Installation du chauffage...",
+      "Hibernation terminée...",
+      "Dégivrage des circuits...",
+      "Mise des moufles...",
+      "Préparation du chocolat chaud..."
+    );
+  }
+
+  // Printemps (Mars - Mai)
+  if (month >= 2 && month <= 4) {
+    messages.push(
+      "Grand nettoyage de printemps...",
+      "Chasse aux papillons...",
+      "Fleurissement du code...",
+      "Sortie de l'hibernation..."
+    );
+  }
+
+  // Été (Juin - Août)
+  if (month >= 5 && month <= 7) {
+    messages.push(
+      "Application de la crème solaire...",
+      "Recherche d'un coin d'ombre...",
+      "Hydratation du système...",
+      "Mise en place des lunettes de soleil..."
+    );
+  }
+
+  // Automne (Septembre - Novembre)
+  if (month >= 8 && month <= 10) {
+    messages.push(
+      "Ramassage des feuilles...",
+      "Préparation des stocks pour l'hiver...",
+      "Admiration des couleurs d'automne...",
+      "Sortie des parapluies..."
+    );
+  }
+
+  // Événements Spéciaux
+  if (month === 11 && day >= 20 && day <= 26) messages.push("Distribution des cadeaux 🎁", "Joyeux Noël ! 🎄", "Emballage des surprises...");
+  if (month === 0 && day <= 7) messages.push("Bonne année ! 🎉", "Résolution : Coder plus !", "Nouvelle année, nouveau code...");
+  if (month === 9 && day >= 25) messages.push("Attention aux fantômes... 👻", "Des bonbons ou un bug ? 🎃", "Bouh ! 🧛‍♂️");
+  if (month === 3 && day === 1) messages.push("Attention aux poissons ! 🐟", "Ce n'est pas une blague...");
+  if (month === 1 && day === 14) messages.push("Code in Love... 💙", "Mon cœur bat pour le code...");
+  
+  // Période BAC / Examens (Juin)
+  if (month === 5) {
+    messages.push(
+      "Courage pour le BAC ! 💪", 
+      "Dernières révisions...", 
+      "On ne lâche rien !",
+      "Compilation des fiches de révision..."
+    ); 
+  }
+  
+  return messages;
+};
+
 // --- COMPOSANT FOX LOADER ---
 function FoxLoader() {
   const [progress, setProgress] = useState(0);
+  const [message, setMessage] = useState("Initialisation du terrier...");
   const totalFoxes = 5;
 
   useEffect(() => {
+    // Select random message on mount
+    const availableMessages = getSeasonalMessages();
+    const randomMsg = availableMessages[Math.floor(Math.random() * availableMessages.length)];
+    setMessage(randomMsg);
+
     const interval = setInterval(() => {
       setProgress(prev => (prev < 100 ? prev + 4 : 100));
     }, 30);
@@ -52,8 +138,8 @@ function FoxLoader() {
           style={{ width: `${progress}%` }}
         ></div>
       </div>
-      <p className="mt-6 text-sm font-black uppercase tracking-[0.4em] text-orange-500 animate-pulse italic">
-        Initialisation du terrier...
+      <p className="mt-6 text-lg font-black uppercase tracking-[0.2em] text-orange-500 animate-pulse italic text-center px-4">
+        {message}
       </p>
     </div>
   );
@@ -152,7 +238,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/lab" className={pathname === '/lab' ? 'text-orange-500' : 'text-slate-500 hover:text-orange-500 transition-colors'}>
                 Lab
               </Link>
-              
+
               {/* LIEN À PROPOS RÉINTRODUIT ICI */}
               <Link href="/a-propos" className={pathname === '/a-propos' ? 'text-orange-500' : 'text-slate-500 hover:text-orange-500 transition-colors'}>
                 À propos

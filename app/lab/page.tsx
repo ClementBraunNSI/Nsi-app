@@ -50,8 +50,21 @@ export default function LabPage() {
   const [expandedFiches, setExpandedFiches] = useState<string[]>([]);
   const [expandedChapters, setExpandedChapters] = useState<string[]>([]);
 
+  // Filter exercises based on allowedStudents
+  const filteredExercises = exercises.filter(ex => {
+    // Public exercises are visible to everyone
+    if (!ex.allowedStudents || ex.allowedStudents.length === 0) return true;
+    
+    // Private exercises require a logged-in user
+    if (!user) return false;
+    
+    // Check if the user is in the allowed list
+    const userName = user.user_metadata?.full_name || user.user_metadata?.name || '';
+    return ex.allowedStudents.includes(userName);
+  });
+
   // Group exercises by Level > Chapter > CourseTitle
-  const groupedExercises = exercises.reduce((acc, ex) => {
+  const groupedExercises = filteredExercises.reduce((acc, ex) => {
     // 1. Level
     if (!acc[ex.level]) acc[ex.level] = {};
     
@@ -391,7 +404,7 @@ export default function LabPage() {
           {Object.entries(groupedExercises).sort(([a], [b]) => a.localeCompare(b)).map(([level, chapters]) => (
             <div key={level}>
               <h3 className="text-xs font-black text-orange-500 uppercase tracking-widest mb-4 pl-2 border-l-4 border-orange-500">
-                Niveau {level}
+                {LEVEL_MAP[level]?.label || `Niveau ${level}`}
               </h3>
               
               <div className="space-y-3">

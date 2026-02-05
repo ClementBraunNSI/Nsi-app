@@ -1,7 +1,7 @@
 ---
 title: "Fiche d'exercices : Python"
 description: "Premiers pas avec Python : variables, input/output, et calculs simples."
-level: "2"
+level: seconde
 chapter: "Programmation Python"
 icon: "🐍"
 ---

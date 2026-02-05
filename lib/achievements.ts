@@ -1,4 +1,4 @@
-import { Trophy, Star, Target, Zap, Crown, Medal, Flame, BookOpen, Shield, GraduationCap, Code, Box, Hammer } from 'lucide-react';
+import { Trophy, Star, Target, Zap, Crown, Medal, Flame, BookOpen, Shield, GraduationCap, Code, Box, Hammer, Brain } from 'lucide-react';
 
 export interface Achievement {
   id: string;
@@ -121,6 +121,14 @@ export const ACHIEVEMENTS: Achievement[] = [
     icon: Hammer,
     color: 'text-lime-500 bg-lime-100',
     condition: (stats) => stats.badges.some(b => b.course_id === 'bts_poo_basics')
+  },
+  {
+    id: 'maitre_comprehension',
+    title: 'Maître de la Compréhension',
+    description: 'Valider la fiche d\'exercices sur les listes par compréhension.',
+    icon: Brain,
+    color: 'text-purple-500 bg-purple-100',
+    condition: (stats) => stats.badges.some(b => b.course_id === 'listes-comprehension-exos')
   },
   {
     id: 'premiere_explorer',

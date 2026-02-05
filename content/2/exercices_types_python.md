@@ -4,6 +4,7 @@ icon: "🏷️"
 chapter: "Introduction à Python"
 badgeId: "types-python"
 meta: "Variables, Types, Opérateurs et Conditions"
+level : premiere
 ---
 
 <ExerciseTabs courseId="types-python" courseTitle="Types en Python">

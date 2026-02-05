@@ -2,7 +2,7 @@
 
 title: "Fiche d'exercices : Les boucles en Python"
 description: "Exercices sur les boucles (for/while) en Python."
-level: "2"
+level: seconde
 chapter: "Programmation Python"
 icon: "🔄"
 ---

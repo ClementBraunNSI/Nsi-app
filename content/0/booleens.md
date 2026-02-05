@@ -1,7 +1,7 @@
 ---
 title: "Logique booléenne"
 description: "Les valeurs Vrai/Faux et les opérateurs logiques (ET, OU, NON)."
-level: "0"
+level: SNI
 chapter: "Representation_de_base"
 icon: "🔘"
 ---

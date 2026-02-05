@@ -4,6 +4,7 @@ icon: "📋"
 chapter: "Introduction à Python"
 badgeId: "specifications-python"
 meta: "Docstrings, Type Hinting et Documentation"
+level : premiere
 ---
 
 <ExerciseTabs courseId="specifications-python" courseTitle="Spécification">
