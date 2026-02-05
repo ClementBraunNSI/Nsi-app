@@ -4,31 +4,37 @@ import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Lock } from 'lucide-react';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { createClient } from '@/utils/supabase/server';
 
 // Importation des composants pour les onglets
 import { ExerciseTabs, ExerciseSection, Correction, Enonce, Verification } from '@/components/ExerciseTabs';
 import { Admonition } from '@/components/Admonition';
 import { transformAdmonitions } from '@/lib/admonition-utils';
 
-export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string }> }) {
+export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
   const { niveaux, slug } = await params;
   
+  // Reconstruct slug string from array and decode
+  const slugStr = Array.isArray(slug) 
+    ? slug.map(s => decodeURIComponent(s)).join('/') 
+    : decodeURIComponent(slug);
+
   const dossierPhysique = niveaux; 
-  let filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slug}.md`);
+  let filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slugStr}.md`);
   
   if (!fs.existsSync(filePath)) {
-    filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slug}.mdx`);
+    filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slugStr}.mdx`);
   }
 
   if (!fs.existsSync(filePath)) {
     return (
       <div className="p-10 text-center">
         <h1 className="text-2xl font-bold">Cours non trouvé</h1>
-        <p className="text-slate-500 mb-4">Le fichier {slug}.md est introuvable.</p>
+        <p className="text-slate-500 mb-4">Le fichier {slugStr}.md est introuvable.</p>
         <Link href={`/`} className="text-orange-600 underline">Retour à l'accueil</Link>
       </div>
     );
@@ -36,6 +42,84 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
 
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content, data } = matter(fileContent);
+
+  // Access Control Logic
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (data.allowedStudents) {
+    if (!user) {
+      return (
+        <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center p-8">
+          <div className="text-center max-w-md">
+            <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-red-600 mx-auto mb-4">
+              <Lock size={32} />
+            </div>
+            <h2 className="text-xl font-black text-slate-900 mb-2">Accès refusé</h2>
+            <p className="text-slate-500 mb-6">Vous devez être connecté pour accéder à ce cours.</p>
+            
+            {/* Debug Info */}
+            <div className="bg-gray-100 p-4 rounded-lg mb-6 text-left text-xs text-gray-600 overflow-auto">
+               <p><strong>Debug Info:</strong></p>
+               <p>User: Not Logged In</p>
+               <p>Auth Check Method: supabase.auth.getUser()</p>
+            </div>
+
+            <Link 
+              href="/login" 
+              className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl inline-block transition-colors"
+            >
+              Se connecter
+            </Link>
+          </div>
+        </div>
+      );
+    }
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('id', user.id)
+      .single();
+    
+    const allowedStudents = data.allowedStudents;
+    const normalize = (str: string) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ' ').trim();
+
+    const hasAccess = Array.isArray(allowedStudents) && profile?.full_name && allowedStudents.some(name => 
+      normalize(name) === normalize(profile.full_name)
+    );
+
+    if (!hasAccess) {
+      return (
+        <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center p-8">
+          <div className="text-center max-w-md">
+            <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-red-600 mx-auto mb-4">
+              <Lock size={32} />
+            </div>
+            <h2 className="text-xl font-black text-slate-900 mb-2">Accès restreint</h2>
+            <p className="text-slate-500 mb-6">Vous n'avez pas la permission d'accéder à ce cours.</p>
+            
+            {/* Debug Info */}
+            <div className="bg-gray-100 p-4 rounded-lg mb-6 text-left text-xs text-gray-600 overflow-auto">
+              <p><strong>Debug Info:</strong></p>
+              <p>User ID: {user.id}</p>
+              <p>Profile Name: {profile?.full_name}</p>
+              <p>Normalized Profile: {profile?.full_name ? normalize(profile.full_name) : 'N/A'}</p>
+              <p>Allowed: {JSON.stringify(allowedStudents)}</p>
+              <p>Normalized Allowed: {JSON.stringify(allowedStudents.map((s: string) => normalize(s)))}</p>
+            </div>
+
+            <Link 
+              href="/student/dashboard" 
+              className="text-orange-600 hover:text-orange-700 font-bold"
+            >
+              Retour au tableau de bord
+            </Link>
+          </div>
+        </div>
+      );
+    }
+  }
 
   // Transformation des admonitions (!!! type "titre") en composants React (<Admonition>)
   const contentWithAdmonitions = transformAdmonitions(content);
@@ -65,7 +149,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
         <div className="bg-orange-50/50 rounded-[2.5rem] p-10 text-center border border-orange-100 mb-12 relative overflow-hidden">
           <div className="relative z-10">
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-3 italic uppercase tracking-tighter">
-              {data.title || slug.replace(/[_-]/g, ' ')}
+              {data.title || slugStr.replace(/[_-]/g, ' ')}
             </h1>
             {data.chapter && (
               <p className="text-orange-600 text-sm font-black mb-4 uppercase tracking-widest">

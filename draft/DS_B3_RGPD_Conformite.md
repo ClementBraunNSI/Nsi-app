@@ -4,7 +4,7 @@
 
 **Durée totale : 2 heures**  
 **Partie 1** – Cadre juridique et principes fondamentaux (10 points)  
-**Partie 2** – Obligations, Droits et Transferts (10 points)  
+**Partie 2** – Obligations, Droits et Sécurité (10 points)  
 **Partie 3** – Audit et mise en situation pratique (10 points)
 
 **La justification, la rigueur, la rédaction et le soin de la copie entrent dans la notation (bonus/malus).**
@@ -81,19 +81,22 @@ Identifiez le **droit spécifique** (nom précis) que la personne souhaite exerc
 2.  *Situation B* : Un ancien client demande à ne plus jamais recevoir d'appels téléphoniques de prospection commerciale de la part de l'entreprise (droit absolu).
 3.  *Situation C* : Un candidat constate une erreur dans l'orthographe de son nom sur son espace personnel et demande à l'entreprise de la corriger.
 
-### 2.3 Transferts hors UE (4 points)
+### 2.3 Sécurité et Mesures Techniques (4 points)
 
-Le transfert de données personnelles en dehors de l'Union Européenne est par principe interdit, sauf exceptions encadrées.
+Le RGPD impose des mesures techniques et organisationnelles appropriées pour garantir la sécurité des données personnelles.
 
-#### Question 1 : Pays adéquats (1 point)
-Qu'appelle-t-on un "pays adéquat" selon la Commission Européenne ? Citez un exemple de pays reconnu adéquat (hors USA).
+#### Question 1 : Chiffrement et Pseudonymisation (2 points)
+Expliquez la différence entre :
+a) Le **chiffrement** des données
+b) La **pseudonymisation** des données
 
-#### Question 2 : Garanties appropriées (2 points)
-Si un pays n'est pas reconnu comme "adéquat" (ex: Inde, Chine), l'entreprise doit mettre en place des garanties juridiques. Citez et expliquez brièvement ce que sont les **CCT (Clauses Contractuelles Types)**.
+Pour chaque technique, citez un exemple concret d'application dans un système informatique.
 
-#### Question 3 : Le cas des États-Unis (1 point)
-Les transferts vers les États-Unis ont connu plusieurs rebondissements juridiques (invalidation du Safe Harbor, puis du Privacy Shield).
-Quel est le nom du **cadre légal actuel** (depuis juillet 2023) qui facilite de nouveau les échanges avec les entreprises américaines certifiées ?
+#### Question 2 : Sauvegardes et Haute Disponibilité (1 point)
+Une entreprise héberge des données clients sur ses serveurs. Quelles mesures techniques doit-elle mettre en place pour garantir la **disponibilité** des données en cas de panne ou de catastrophe ?
+
+#### Question 3 : Gestion des accès et habilitations (1 point)
+Dans un système de gestion des données, pourquoi est-il important de mettre en place un **contrôle d'accès basé sur les rôles (RBAC)** ? Citez deux principes de sécurité fondamentaux.
 
 ---
 

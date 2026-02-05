@@ -96,6 +96,7 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     - Propriétés avec contrôle d'accès (`private set`)
     - Constructeur avec paramètres
     - Méthodes qui modifient l'état de l'objet
+
     </Enonce>
   </ExerciseSection>
 
@@ -193,6 +194,7 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     - Validation avant modification
     - Calcul basé sur les propriétés
     - Messages contextuels
+  
     </Enonce>
   </ExerciseSection>
 
@@ -527,6 +529,7 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     - Communication entre objets
     - Calculs sur des collections d'objets
     - Recherche dans une collection
+    </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="tp-poo-exercice5" label="Exercice 5 - Héritage">
@@ -831,6 +834,6 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     Oiseaux : 1
     Disponibles à l'adoption : 3
     ```
-
+    </Enonce>
   </ExerciseSection>
 </ExerciseTabs>

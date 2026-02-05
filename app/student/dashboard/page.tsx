@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import { getReservedCourses } from '@/app/actions/getReservedCourses';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import { GraduationCap, Zap, BookOpen, ArrowRight, Clock, Award, X, Calendar, Trophy, Target, Lock } from 'lucide-react';
 
@@ -20,19 +21,20 @@ const PRIVATE_LESSONS = [
     title: "Suivi Individuel - Perfectionnement", 
     duration: "1h / semaine", 
     tag: "Privé", 
-    href: "/cours/particuliers/suivi" 
+    href: "/student/courses" 
   },
   { 
     title: "Préparation intensive examen", 
     duration: "Coaching", 
     tag: "Examen", 
-    href: "/cours/particuliers/examen" 
+    href: "/student/courses" 
   }
 ];
 
 export default function StudentDashboard() {
   const [profile, setProfile] = useState<any>(null);
   const [courses, setCourses] = useState<any[]>([]);
+  const [privateCourses, setPrivateCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [badgesCount, setBadgesCount] = useState(0);
   const [exercisesCount, setExercisesCount] = useState(0);
@@ -57,6 +59,12 @@ export default function StudentDashboard() {
             const res = await fetch(`/api/courses/${code}`);
             const courseData = await res.json();
             setCourses(courseData.courses || []);
+          }
+
+          // Fetch cours particuliers si l'élève a accès
+          if (data.has_private_lessons) {
+            const reserved = await getReservedCourses(data.full_name);
+            setPrivateCourses(reserved || []);
           }
 
           // Fetch badges
@@ -189,22 +197,41 @@ export default function StudentDashboard() {
               <Zap size={16} fill="currentColor" /> Ton Accompagnement Particulier
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {PRIVATE_LESSONS.map((lesson, index) => (
-                <Link href={lesson.href} key={index} className="group">
-                  <div className="bg-orange-500 border border-orange-400 p-6 rounded-3xl flex items-center justify-between hover:bg-orange-600 transition-all shadow-lg shadow-orange-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-white">
-                        <Zap size={18} fill="currentColor" />
+              {privateCourses.length > 0 ? (
+                privateCourses.map((lesson, index) => (
+                  <Link href={lesson.path} key={index} className="group">
+                    <div className="bg-orange-500 border border-orange-400 p-6 rounded-3xl flex items-center justify-between hover:bg-orange-600 transition-all shadow-lg shadow-orange-100 h-full">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-white shrink-0">
+                          <Zap size={18} fill="currentColor" />
+                        </div>
+                        <div>
+                          <span className="text-[8px] font-black uppercase tracking-widest text-white/80 block mb-1">Module Privé</span>
+                          <h3 className="font-bold text-white leading-tight">{lesson.title}</h3>
+                        </div>
                       </div>
-                      <div>
-                        <span className="text-[8px] font-black uppercase tracking-widest text-white/80 block mb-1">Module Privé</span>
-                        <h3 className="font-bold text-white leading-tight">{lesson.title}</h3>
-                      </div>
+                      <ArrowRight className="text-white opacity-50 group-hover:opacity-100 transition-opacity" size={20} />
                     </div>
-                    <ArrowRight className="text-white opacity-50 group-hover:opacity-100 transition-opacity" size={20} />
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))
+              ) : (
+                PRIVATE_LESSONS.map((lesson, index) => (
+                  <Link href={lesson.href} key={index} className="group">
+                    <div className="bg-orange-500 border border-orange-400 p-6 rounded-3xl flex items-center justify-between hover:bg-orange-600 transition-all shadow-lg shadow-orange-100">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-white">
+                          <Zap size={18} fill="currentColor" />
+                        </div>
+                        <div>
+                          <span className="text-[8px] font-black uppercase tracking-widest text-white/80 block mb-1">Module Privé</span>
+                          <h3 className="font-bold text-white leading-tight">{lesson.title}</h3>
+                        </div>
+                      </div>
+                      <ArrowRight className="text-white opacity-50 group-hover:opacity-100 transition-opacity" size={20} />
+                    </div>
+                  </Link>
+                ))
+              )}
             </div>
           </div>
         )}

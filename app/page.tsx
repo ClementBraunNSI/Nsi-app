@@ -81,9 +81,12 @@ export default function LandingPage() {
       if (session?.user) {
         const { data } = await supabase
           .from('profiles')
-          .select('has_private_lessons')
+          .select('has_private_lessons, level')
           .eq('id', session.user.id)
           .single();
+        
+        console.log("Niveau de l'utilisateur connecté :", data?.level);
+
         setHasPrivateAccess(data?.has_private_lessons || false);
       } else {
         setHasPrivateAccess(false);
@@ -218,7 +221,7 @@ export default function LandingPage() {
         <h2 className="text-2xl font-black text-slate-800 mb-10">Parcourir par niveaux</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {LEVELS.map((lvl) => (
-            <CourseCard key={lvl.id} {...lvl} href={`/niveaux/${lvl.id}`} />
+            <CourseCard key={lvl.id} {...lvl} href={`/cours/${lvl.id}`} />
           ))}
         </div>
       </main>
