@@ -5,7 +5,7 @@ import "./globals.css";
 import "katex/dist/katex.min.css";
 import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
-import { LogOut, X, LayoutDashboard } from 'lucide-react';
+import { LogOut, X, LayoutDashboard, Sun, Moon, Eye, Type, Zap, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -152,11 +152,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAppLoading, setIsAppLoading] = useState(true);
+
+  // --- ACCESSIBILITY & THEME STATES ---
+  const [darkMode, setDarkMode] = useState(false);
+  const [dyslexicMode, setDyslexicMode] = useState(false);
+  const [highContrastMode, setHighContrastMode] = useState(false);
+  const [showA11yMenu, setShowA11yMenu] = useState(false);
   
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
+    // Load preferences
+    const storedDark = localStorage.getItem('darkMode') === 'true';
+    const storedDyslexic = localStorage.getItem('dyslexicMode') === 'true';
+    const storedContrast = localStorage.getItem('highContrastMode') === 'true';
+
+    setDarkMode(storedDark);
+    setDyslexicMode(storedDyslexic);
+    setHighContrastMode(storedContrast);
+
+    if (storedDark) document.documentElement.classList.add('dark');
+    if (storedDyslexic) document.documentElement.classList.add('dyslexic');
+    if (storedContrast) document.documentElement.classList.add('high-contrast');
+
     const timer = setTimeout(() => setIsAppLoading(false), 2000);
 
     const initAuth = async () => {
@@ -209,6 +228,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     }
   };
 
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem('darkMode', String(newMode));
+    document.documentElement.classList.toggle('dark', newMode);
+  };
+
+  const toggleDyslexicMode = () => {
+    const newMode = !dyslexicMode;
+    setDyslexicMode(newMode);
+    localStorage.setItem('dyslexicMode', String(newMode));
+    document.documentElement.classList.toggle('dyslexic', newMode);
+  };
+
+  const toggleHighContrastMode = () => {
+    const newMode = !highContrastMode;
+    setHighContrastMode(newMode);
+    localStorage.setItem('highContrastMode', String(newMode));
+    document.documentElement.classList.toggle('high-contrast', newMode);
+  };
+
   return (
     <html lang="fr">
       <head>
@@ -243,6 +283,57 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/a-propos" className={pathname === '/a-propos' ? 'text-orange-500' : 'text-slate-500 hover:text-orange-500 transition-colors'}>
                 À propos
               </Link>
+
+              {/* --- BOUTONS ACCESSIBILITÉ & DARK MODE --- */}
+              <div className="flex items-center gap-2 px-2">
+                <button 
+                  onClick={toggleDarkMode}
+                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-orange-100 hover:text-orange-600 transition-all"
+                  title={darkMode ? "Mode Clair" : "Mode Sombre"}
+                >
+                  {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+
+                <div className="relative">
+                  <button 
+                    onClick={() => setShowA11yMenu(!showA11yMenu)}
+                    className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${showA11yMenu ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-600 hover:bg-orange-100 hover:text-orange-600'}`}
+                    title="Accessibilité"
+                  >
+                    <Eye size={20} />
+                  </button>
+
+                  {showA11yMenu && (
+                    <div className="absolute top-12 right-0 w-64 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl p-4 z-[150] animate-in fade-in zoom-in-95 duration-200">
+                      <h3 className="text-xs font-black uppercase text-slate-400 mb-3 tracking-widest">Accessibilité</h3>
+                      
+                      <div className="space-y-2">
+                        <button 
+                          onClick={toggleDyslexicMode}
+                          className={`w-full flex items-center justify-between p-3 rounded-lg text-sm font-medium transition-all ${dyslexicMode ? 'bg-orange-50 text-orange-700 border border-orange-200' : 'hover:bg-slate-50 text-slate-700 dark:text-slate-300'}`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Type size={16} />
+                            <span>Police Dyslexie</span>
+                          </div>
+                          {dyslexicMode && <Check size={16} />}
+                        </button>
+
+                        <button 
+                          onClick={toggleHighContrastMode}
+                          className={`w-full flex items-center justify-between p-3 rounded-lg text-sm font-medium transition-all ${highContrastMode ? 'bg-orange-50 text-orange-700 border border-orange-200' : 'hover:bg-slate-50 text-slate-700 dark:text-slate-300'}`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Zap size={16} />
+                            <span>Haut Contraste</span>
+                          </div>
+                          {highContrastMode && <Check size={16} />}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
 
               <div className="flex items-center gap-4 relative">
                 {user ? (
