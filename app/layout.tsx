@@ -285,10 +285,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </Link>
 
               {/* --- BOUTONS ACCESSIBILITÉ & DARK MODE --- */}
-              <div className="flex items-center gap-2 px-2">
+              <div className="flex items-center gap-2 px-2 border-l border-slate-200 dark:border-slate-700 pl-4">
                 <button 
                   onClick={toggleDarkMode}
-                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-orange-100 hover:text-orange-600 transition-all"
+                  className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-orange-500 transition-all"
                   title={darkMode ? "Mode Clair" : "Mode Sombre"}
                 >
                   {darkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -297,7 +297,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className="relative">
                   <button 
                     onClick={() => setShowA11yMenu(!showA11yMenu)}
-                    className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${showA11yMenu ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-600 hover:bg-orange-100 hover:text-orange-600'}`}
+                    className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${showA11yMenu ? 'bg-orange-100 text-orange-600' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-orange-500'}`}
                     title="Accessibilité"
                   >
                     <Eye size={20} />
