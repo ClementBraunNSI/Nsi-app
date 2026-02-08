@@ -229,11 +229,41 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
     </Enonce>
   </ExerciseSection>
 
+  <ExerciseSection id="tp-audit-ctf" label="Challenges (Bonus)">
+    <Enonce>
+    ## Partie 6 : Challenges CTF (Bonus)
+
+    Pour ceux qui ont terminé en avance. Ces défis ne nécessitent **aucune modification** du fichier `lab_securite.php`, seulement de l'ingéniosité.
+
+    ### Challenge 6.1 : Cartographie de la base de données (A03: Injection)
+    Vous avez accès à la table `notes` via la recherche. Mais quelles sont les autres tables cachées ?
+    Dans SQLite, une table système spéciale nommée `sqlite_master` contient le schéma de toute la base.
+
+    *   **Objectif :** Utiliser une injection SQL (UNION) dans la barre de recherche pour lister le nom de toutes les tables de la base (`tbl_name`).
+    *   **Indice :** La table `sqlite_master` contient les colonnes `type`, `name`, `tbl_name`, `rootpage`, `sql`.
+    *   **Question :** Quel est le nom de la table contenant les utilisateurs ? (Prouvez-le avec une capture d'écran du résultat de l'injection).
+
+    ### Challenge 6.2 : Cracking de mot de passe (A02: Cryptographic Failures)
+    Vous savez que l'utilisateur `admin` existe. Mais il y a un autre utilisateur nommé `toto`.
+
+    1.  Utilisez l'injection SQL découverte précédemment pour extraire le mot de passe de `toto` depuis la table des utilisateurs.
+    2.  Connectez-vous avec `toto`.
+    3.  Quelle est sa note en "Maths" ? (Visible uniquement une fois connecté).
+
+    ### Challenge 6.3 : Security Hardening (A05: Security Misconfiguration)
+    Le fichier `lab_securite.php` contient cette ligne :
+    `header("X-XSS-Protection: 0");`
+
+    1.  **Recherche :** Pourquoi cette ligne est-elle dangereuse en production ? Que fait-elle exactement ?
+    2.  **Patching :** Proposez 3 en-têtes HTTP (Headers) de sécurité à ajouter pour durcir l'application (ex: CSP, HSTS...).
+    </Enonce>
+  </ExerciseSection>
+
   <ExerciseSection id="tp-audit-report" label="Rapport d'Audit">
     <Enonce>
-    ## Partie 6 : Le Rapport d'Audit
+    ## Partie 7 : Le Rapport d'Audit
 
-    Rédiger un rapport synthétique (PDF ou Markdown) contenant pour chaque faille (SQLi, XSS, CSRF) :
+    Rédiger un rapport synthétique (PDF ou Markdown) contenant pour chaque faille (SQLi, XSS, CSRF) et pour les bonus :
     1.  **Description :** Expliquer le principe de la faille.
     2.  **Preuve (PoC) :** Capture d'écran de l'attaque réussie.
     3.  **Code Vulnérable :** Copier-coller la ligne PHP responsable.
