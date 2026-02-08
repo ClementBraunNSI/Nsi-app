@@ -26,6 +26,8 @@ Pour qu'un ordinateur puisse traiter une image, celle-ci doit être **numérisé
 
 Une image numérique est composée d'une grille de petits carrés appelés **pixels** (contraction de *picture element*).
 
+![Grille de pixels](/content/1/img_to_tab.png)
+
 > **Définition** : Un **pixel** est le plus petit élément constitutif d'une image numérique. C'est un point de couleur uniforme.
 
 Si l'on zoome sur une image, on finit par voir ces carrés : c'est la **pixellisation**.
@@ -55,6 +57,11 @@ $$ \text{Résolution} = \frac{\text{Nombre de pixels sur une ligne}}{\text{Longu
 L'image la plus simple est composée uniquement de noir et de blanc pur.
 Chaque pixel peut être codé sur **1 bit** :
 
+![Tableau binaire](/content/1/stab.png)
+
+![Image originale](/content/1/maya.png)
+![Image en niveaux de gris](/content/1/maya_gris.png)
+
 | Couleur | Valeur numérique | Représentation binaire |
 |---------|------------------|------------------------|
 | **Noir** | 0 | 0 |
@@ -65,6 +72,8 @@ Chaque pixel peut être codé sur **1 bit** :
 Pour obtenir des nuances (du gris), on utilise plus de bits pour coder chaque pixel.
 Le standard actuel est le codage sur **8 bits** (1 octet) par pixel.
 
+![Nuances de gris](/content/1/img_nuances.png)
+
 - Avec 1 bit : $2^1 = 2$ nuances (Noir / Blanc)
 - Avec 8 bits : $2^8 = 256$ nuances possibles
 
@@ -74,3 +83,10 @@ Les valeurs vont de **0** à **255** :
 - Les valeurs intermédiaires sont des gris de plus en plus clairs.
 
 > **À retenir** : Plus la valeur est élevée, plus le gris est clair (proche du blanc).
+
+## 4. Exercice : Le Négatif
+
+Pour obtenir le négatif d'une image, on inverse les couleurs.
+En niveaux de gris (0-255), le pixel inversé $P'$ se calcule ainsi : $P' = 255 - P$.
+
+![Image inversée (Négatif)](/content/1/mayainv.png)

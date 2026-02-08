@@ -27,6 +27,8 @@ On distingue deux catégories principales :
 
 ## 2.1 Le format CSV (Données tabulaires)
 
+![Tableau de données](/content/1/tab_01.png)
+
 Le format **CSV** (Comma-Separated Values) utilise des séparateurs (souvent des virgules ou des points-virgules) pour délimiter les colonnes.
 Il commence souvent par une ligne d'en-tête.
 

@@ -24,6 +24,8 @@ La carte **Micro:bit** est un petit ordinateur de poche programmable. Elle perme
 
 Pour programmer la carte, on utilise le langage Python sur l'éditeur en ligne : [python.microbit.org](https://python.microbit.org).
 
+![Environnement de travail](/content/1/editor.png)
+
 Voici la structure de base d'un programme :
 
 ```python
@@ -69,6 +71,8 @@ Alternez entre deux images toutes les secondes (par exemple un cœur et un carr�
 
 ### 🦊 Exercice 5 : Pixel Art (⭐⭐⭐)
 Créez votre propre image (par exemple une tête de renard) en définissant l'intensité de chaque LED (de 0 à 9).
+
+![Renard](/content/1/fox_microbit.png)
 
 ```python
 # Exemple de création d'image

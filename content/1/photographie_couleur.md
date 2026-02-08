@@ -10,10 +10,14 @@ icon: "🎨"
 
 L'œil humain perçoit la lumière grâce à deux types de cellules situées sur la rétine :
 
+![Schéma de l'oeil](/content/1/oeil.png)
+
 1.  **Les bâtonnets** : Très sensibles à la lumière (vision nocturne), ils ne perçoivent pas les couleurs (vision en niveaux de gris).
 2.  **Les cônes** : Moins sensibles, ils permettent la vision des couleurs. Il en existe trois types, sensibles respectivement au **Rouge**, au **Vert** et au **Bleu**.
 
 > **Analogie** : L'appareil photo numérique fonctionne sur le même principe que l'œil.
+
+![Comparaison Oeil - Appareil Photo](/content/1/apphoto.png)
 
 | Composant | Fonction | Équivalent photo |
 |-----------|----------|------------------|
@@ -37,6 +41,8 @@ On superpose trois lumières primaires : **Rouge**, **Vert**, **Bleu** (RVB ou R
 
 Chaque pixel d'une image couleur est composé de 3 sous-pixels (Rouge, Vert, Bleu).
 L'intensité de chaque composante est codée généralement sur **1 octet** (8 bits), soit une valeur entre 0 et 255.
+
+![Décomposition d'un pixel](/content/1/pix_to_couleur.png)
 
 Un pixel couleur est donc codé sur **3 octets** (24 bits).
 

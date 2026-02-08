@@ -24,6 +24,10 @@ Pour fonctionner, un objet connecté a besoin de plusieurs éléments :
 | **Interface** | Permet la communication | WiFi, Bluetooth, LoRa |
 | **Alimentation** | Fournit l'énergie | Batterie, secteur |
 
+![Carte Micro:bit - Face](/content/1/microbit.png)
+![Carte Micro:bit - Dos](/content/1/microbit-back.png)
+*Exemple de microcontrôleur : La carte BBC Micro:bit*
+
 ## 2.1 Capteurs et Actionneurs
 
 **Capteurs courants :**

@@ -99,6 +99,8 @@ Une bonne e-reputation permet de créer un sentiment de confiance à l'égard de
 
 ### 👤 Création et gestion de profil
 
+![Exemple d'inscription](/content/1/inscription.png)
+
 #### 🛠️ Étapes de création
 
 | Étape | Action | Conseils de sécurité |

@@ -41,6 +41,8 @@ Ces données sont inscrites par l'appareil photo au moment de la prise de vue et
 - **Géolocalisation** (coordonnées GPS : latitude, longitude, altitude)
 - **Auteur** / Copyright
 
+![Exemple de données EXIF](/content/1/exif.png)
+
 > **Attention à la vie privée** : Lorsque vous partagez une photo sur internet, vous partagez potentiellement ces informations (notamment votre localisation précise). La plupart des réseaux sociaux les effacent automatiquement, mais pas tous les services de partage.
 
 ## 2.1 Lire les métadonnées
@@ -51,3 +53,19 @@ Sur ordinateur, on peut souvent lire ces informations via les propriétés du fi
 - **Linux** : Clic droit > Propriétés > Image
 
 On peut aussi utiliser des outils en ligne de commande comme `exiftool` ou des scripts Python (bibliothèque `PIL` / `Pillow`).
+
+![Exemple de script PIL](/content/1/prog_pil.png)
+
+# 3. Exercice
+
+Reliez chaque format à sa description :
+
+![Exercice - Relier les formats](/content/1/exo_relier.png)
+
+## 4. Pour s'entraîner
+
+Voici quelques images originales que vous pouvez télécharger pour analyser leurs métadonnées :
+
+- [Photo Nikon COOLPIX P1](/content/1/Nikon_COOLPIX_P1.jpg)
+- [Photo iPhone X](/content/1/IMG_0716.jpeg)
+- [Photo Japon](/content/1/japan-katsura-river.jpg)
