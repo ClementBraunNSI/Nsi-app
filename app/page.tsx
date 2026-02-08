@@ -29,20 +29,20 @@ const PRIVATE_LESSONS = [
 
 const CourseCard = ({ title, desc, img, tag, color, href, isPrivate = false }: any) => (
   <Link href={href} className="group flex flex-col"> 
-    <div className={`rounded-[2rem] overflow-hidden border shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full ${isPrivate ? 'border-orange-200 bg-orange-50/50 dark:bg-orange-900/10 dark:border-orange-800' : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800'}`}>
-      <div className="relative h-56 w-full bg-slate-50 dark:bg-slate-950 p-4">
+    <div className={`rounded-[2rem] overflow-hidden border shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full ${isPrivate ? 'border-orange-200 bg-orange-50/50' : 'bg-white border-slate-100'}`}>
+      <div className="relative h-56 w-full bg-slate-50 p-4">
         <Image src={img} alt={title} fill className="object-contain p-2 transition-transform duration-700 group-hover:scale-110" />
-        <div className={`absolute top-5 right-5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter shadow-sm border ${isPrivate ? 'bg-orange-500 text-white border-orange-400' : 'bg-white/90 dark:bg-slate-800/90 backdrop-blur-md text-slate-800 dark:text-slate-200 border-slate-100 dark:border-slate-700'}`}>
+        <div className={`absolute top-5 right-5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter shadow-sm border ${isPrivate ? 'bg-orange-500 text-white border-orange-400' : 'bg-white/90 backdrop-blur-md text-slate-800 border-slate-100'}`}>
           {tag}
         </div>
       </div>
       <div className="p-8 flex flex-col flex-1">
-        <h3 className="text-2xl font-black text-slate-800 dark:text-slate-100 mb-3 group-hover:text-orange-500 transition-colors flex items-center gap-2">
+        <h3 className="text-2xl font-black text-slate-800 mb-3 group-hover:text-orange-500 transition-colors flex items-center gap-2">
           {isPrivate && <Zap size={20} className="text-orange-500" fill="currentColor" />}
           {title}
         </h3>
-        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-2">{desc}</p>
-        <div className="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800 flex justify-between items-center">
+        <p className="text-slate-500 text-sm leading-relaxed mb-8 line-clamp-2">{desc}</p>
+        <div className="mt-auto pt-6 border-t border-slate-50 flex justify-between items-center">
           <span className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
             <Book size={14} /> Ouvrir l'espace
           </span>
