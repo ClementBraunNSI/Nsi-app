@@ -248,14 +248,14 @@ meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
 
     1.  Utilisez l'injection SQL découverte précédemment pour extraire le mot de passe de `toto` depuis la table des utilisateurs.
     2.  Connectez-vous avec `toto`.
-    3.  Quelle est sa note en "Maths" ? (Visible uniquement une fois connecté).
+    3.  Quelle est sa moyenne ? (Visible uniquement une fois connecté).
 
     ### Challenge 6.3 : Security Hardening (A05: Security Misconfiguration)
     Le fichier `lab_securite.php` contient cette ligne :
     `header("X-XSS-Protection: 0");`
 
-    1.  **Recherche :** Pourquoi cette ligne est-elle dangereuse en production ? Que fait-elle exactement ?
-    2.  **Patching :** Proposez 3 en-têtes HTTP (Headers) de sécurité à ajouter pour durcir l'application (ex: CSP, HSTS...).
+    4.  **Recherche :** Pourquoi cette ligne est-elle dangereuse en production ? Que fait-elle exactement ?
+    5.  **Patching :** Proposez 3 en-têtes HTTP (Headers) de sécurité à ajouter pour durcir l'application (ex: CSP, HSTS...).
     </Enonce>
   </ExerciseSection>
 

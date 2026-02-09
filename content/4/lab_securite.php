@@ -12,6 +12,7 @@ $db->exec("CREATE TABLE notes (id INTEGER PRIMARY KEY, student TEXT, grade INTEG
 $db->exec("INSERT INTO notes (student, grade) VALUES ('Alice', 18)");
 $db->exec("INSERT INTO notes (student, grade) VALUES ('Bob', 12)");
 $db->exec("INSERT INTO notes (student, grade) VALUES ('Charlie', 15)");
+$db->exec("INSERT INTO notes (student, grade) VALUES ('toto', 15)");
 
 // Création de la table MESSAGES (Pour XSS Stored)
 $db->exec("CREATE TABLE messages (id INTEGER PRIMARY KEY, content TEXT)");
