@@ -9,6 +9,55 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import { createClient } from '@/utils/supabase/server';
+import { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }): Promise<Metadata> {
+  const { niveaux, slug } = await params;
+  
+  const slugStr = Array.isArray(slug) 
+    ? slug.map(s => decodeURIComponent(s)).join('/') 
+    : decodeURIComponent(slug);
+
+  const dossierPhysique = niveaux; 
+  let filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slugStr}.md`);
+  
+  if (!fs.existsSync(filePath)) {
+    filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slugStr}.mdx`);
+  }
+
+  if (!fs.existsSync(filePath)) {
+    return {
+      title: 'Cours non trouvé',
+    };
+  }
+
+  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const { data } = matter(fileContent);
+
+  const ogUrl = new URL('/api/og', process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
+  ogUrl.searchParams.set('title', data.title || slugStr);
+  if (data.chapter) {
+    ogUrl.searchParams.set('chapter', data.chapter);
+  }
+
+  return {
+    title: data.title || slugStr,
+    description: data.description || 'Cours de NSI sur Nsi-App',
+    openGraph: {
+      title: data.title || slugStr,
+      description: data.description || 'Cours de NSI sur Nsi-App',
+      type: 'article',
+      images: [
+        {
+          url: ogUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: data.title || slugStr,
+        },
+      ],
+    },
+  };
+}
 
 // Importation des composants pour les onglets
 import { ExerciseTabs, ExerciseSection, Correction, Enonce, Verification } from '@/components/ExerciseTabs';

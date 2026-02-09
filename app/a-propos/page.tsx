@@ -9,6 +9,13 @@ const CONTRIBUTORS = [
   { name: "Mathieu MARCHAND", role: "Lycée Benjamin Franklin", avatar: "🌊", desc: "Enseignant d'informatique à Auray." }
 ];
 
+const TIMELINE = [
+  { year: "2021 - 2022", place: "Lycée Pasteur", city: "Hénin-Beaumont (62)", icon: "🎒" },
+  { year: "2022 - 2024", place: "Lycée Raymond Queneau", city: "Villeneuve d'Ascq (59)", icon: "🏛️" },
+  { year: "2024 - 2025", place: "Lycée Charles de Gaulle", city: "Vannes (56)", icon: "⛵" },
+  { year: "2025 - 2026", place: "Destination Inconnue", city: "Quelque part dans la tanière...", icon: "🕵️‍♂️" },
+];
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100">
@@ -28,18 +35,23 @@ export default function AboutPage() {
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <span className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-100 rounded-xl text-sm font-medium text-slate-500 shadow-sm">
-                <MapPin size={16} className="text-orange-500" /> Nord & Pas-de-Calais
+                <MapPin size={16} className="text-orange-500" /> Pas-de-Calais (62)
+              </span>
+              <span className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-100 rounded-xl text-sm font-medium text-slate-500 shadow-sm">
+                <MapPin size={16} className="text-orange-500" /> Nord (59)
               </span>
               <span className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-100 rounded-xl text-sm font-medium text-slate-500 shadow-sm">
                 <MapPin size={16} className="text-orange-500" /> Morbihan (56)
               </span>
             </div>
           </div>
-          <div className="w-64 h-64 bg-orange-500 rounded-[3rem] flex items-center justify-center text-[8rem] shadow-2xl shadow-orange-200 rotate-3">
-            🦊
+          <div className="w-64 h-64 bg-orange-500 rounded-[3rem] flex items-center justify-center text-[8rem] shadow-2xl shadow-orange-200 rotate-3 transition-all duration-500 hover:rotate-12 hover:scale-110 hover:shadow-orange-400 cursor-pointer">
+            <span className="hover:animate-pulse">🦊</span>
           </div>
         </div>
       </header>
+
+     
 
       {/* Section : Pourquoi le Renard ? (Biodiversité) */}
       <section className="max-w-7xl mx-auto px-8 py-20">
@@ -62,6 +74,44 @@ export default function AboutPage() {
           </div>
           <div className="absolute -right-20 -bottom-20 opacity-10 rotate-12 pointer-events-none">
             <Globe size={500} />
+          </div>
+        </div>
+      </section>
+
+             {/* Section : Parcours */}
+      <section className="max-w-7xl mx-auto px-8 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-black text-slate-900 mb-4">L'itinéraire du renard</h2>
+          <p className="text-slate-500">Un parcours entre terrils, métropole et océan.</p>
+        </div>
+
+        <div className="relative">
+          {/* Ligne centrale (Desktop) */}
+          <div className="hidden md:block absolute left-1/2 h-full w-0.5 bg-slate-100 -translate-x-1/2" />
+
+          <div className="space-y-12">
+            {TIMELINE.map((step, i) => (
+              <div key={i} className={`flex flex-col md:flex-row items-center gap-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                {/* Bloc Contenu */}
+                <div className="flex-1 w-full md:w-auto">
+                  <div className={`p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                    <span className="text-orange-500 font-black text-sm uppercase tracking-widest">{step.year}</span>
+                    <h3 className="text-xl font-black text-slate-800 mt-2">{step.place}</h3>
+                    <p className="text-slate-500 flex items-center gap-2 justify-center md:justify-start mt-1">
+                      <MapPin size={14} /> {step.city}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Badge Central */}
+                <div className="relative z-10 w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-2xl shadow-xl shadow-orange-100 border-4 border-[#FDFCFB]">
+                  {step.icon}
+                </div>
+
+                {/* Espaceur pour l'équilibre (Desktop) */}
+                <div className="flex-1 hidden md:block" />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -98,7 +148,7 @@ export default function AboutPage() {
           Que vous soyez élève, parent ou enseignant, n'hésitez pas à me contacter pour échanger sur le projet.
         </p>
         <a 
-          href="clementbraun@supwallon.fr" 
+          href="mailto:clementbraun@supwallon.fr"
           className="inline-flex items-center gap-3 px-10 py-5 bg-orange-500 text-white rounded-[2rem] font-black hover:scale-105 transition-transform shadow-2xl shadow-orange-200"
         >
           <Mail size={24} /> Me contacter par mail
