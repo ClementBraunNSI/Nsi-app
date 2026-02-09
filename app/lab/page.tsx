@@ -47,6 +47,11 @@ export default function LabPage() {
   const pyodideRef = useRef<any>(null);
   const [isPyodideReady, setIsPyodideReady] = useState(false);
 
+  // SQL State
+  const [sqlDb, setSqlDb] = useState<any>(null);
+  const [sqlJs, setSqlJs] = useState<any>(null);
+  const [sqlResults, setSqlResults] = useState<{columns: string[], values: any[][]} | null>(null);
+
   const [expandedFiches, setExpandedFiches] = useState<string[]>([]);
   const [expandedChapters, setExpandedChapters] = useState<string[]>([]);
 
@@ -113,6 +118,24 @@ export default function LabPage() {
     };
     loadPyodideScript();
 
+    // Load SQL.js
+    const loadSqlJs = async () => {
+      try {
+        // @ts-ignore
+        const initSqlJs = (await import('sql.js')).default;
+        const SQL = await initSqlJs({
+          locateFile: (file: string) => `/sql/${file}`
+        });
+        setSqlJs(SQL);
+        // Initialize empty DB
+        const db = new SQL.Database();
+        setSqlDb(db);
+      } catch (err) {
+        console.error("Erreur lors du chargement de sql.js:", err);
+      }
+    };
+    loadSqlJs();
+
     // 1. Fetch Exercises
     getAllExercises().then(setExercises);
 
@@ -128,8 +151,108 @@ export default function LabPage() {
     checkAuth();
   }, []);
 
+  const prevCourseIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (selectedExercise) {
+        setCode(''); 
+        setSqlResults(null);
+        setOutput([]);
+        
+        if (selectedExercise.type === 'sql') {
+            // Reset DB only if changing course or not initialized
+            // This allows state persistence between exercises of the same course (e.g. Create Table -> Select)
+            if (!sqlDb || prevCourseIdRef.current !== selectedExercise.courseId) {
+                if (sqlJs) {
+                    const newDb = new sqlJs.Database();
+                    setSqlDb(newDb);
+                    setOutput(['> Base de données SQL initialisée.']);
+                }
+            } else {
+                 setOutput(['> Base de données active.']);
+            }
+        } else {
+             setOutput(['> Environnement Python prêt.']);
+        }
+        
+        prevCourseIdRef.current = selectedExercise.courseId;
+    }
+  }, [selectedExercise, sqlJs]);
+
   const handleRun = async () => {
     setIsRunning(true);
+
+    if (!selectedExercise) {
+      setIsRunning(false);
+      return;
+    }
+
+    // --- SQL MODE ---
+    if (selectedExercise.type === 'sql') {
+       if (!sqlDb) {
+         setOutput(['[Erreur] Base de données non initialisée']);
+         setIsRunning(false);
+         return;
+       }
+       
+       setOutput(['> Exécution de la requête SQL...']);
+       setSqlResults(null);
+
+       try {
+         // Run User Code
+         let results: any[] = [];
+         try {
+            // exec returns array of result objects
+            results = sqlDb.exec(code);
+         } catch(e: any) {
+            setOutput(prev => [...prev, `[Erreur SQL] ${e.message}`]);
+            setIsRunning(false);
+            return;
+         }
+
+         if (results.length > 0) {
+            const lastResult = results[results.length - 1];
+            setSqlResults({ columns: lastResult.columns, values: lastResult.values });
+            setOutput(prev => [...prev, `> ${results.length} requête(s) exécutée(s).`]);
+         } else {
+            // No result (e.g. INSERT)
+            setOutput(prev => [...prev, '> Commande exécutée avec succès.']);
+         }
+
+         // Run Verification if exists
+         if (selectedExercise.verificationCode) {
+            setOutput(prev => [...prev, '> Vérification...']);
+            try {
+                const verifRes = sqlDb.exec(selectedExercise.verificationCode);
+                
+                // If user code didn't return result (e.g. INSERT), show verification result (e.g. SELECT *)
+                if (results.length === 0 && verifRes.length > 0) {
+                    const lastResult = verifRes[verifRes.length - 1];
+                    setSqlResults({ columns: lastResult.columns, values: lastResult.values });
+                }
+                
+                if (user) {
+                    await saveProgress(selectedExercise);
+                }
+                setOutput(prev => [...prev, '✅ Exercice validé !']);
+
+            } catch(e: any) {
+                setOutput(prev => [...prev, `[Erreur Vérification] ${e.message}`]);
+            }
+         } else {
+             // No verification code, auto-validate
+             if (user) await saveProgress(selectedExercise);
+         }
+
+       } catch(e: any) {
+          setOutput(prev => [...prev, `[Erreur] ${e.message}`]);
+       } finally {
+          setIsRunning(false);
+       }
+       return;
+    }
+
+    // --- PYTHON MODE ---
     setOutput(['> Initialisation...']);
     
     // Si Pyodide n'est pas prêt, on attend un peu ou on simule
@@ -518,7 +641,7 @@ export default function LabPage() {
             <div className="h-[70%] flex flex-col bg-[#1e1e1e]">
               <div className="flex items-center justify-between px-4 py-2 bg-[#2d2d2d] border-b border-[#3e3e3e]">
                 <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-                  <span>main.py</span>
+                  <span>{selectedExercise.type === 'sql' ? 'main.sql' : 'main.py'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <button 
@@ -548,6 +671,7 @@ export default function LabPage() {
                    <Editor
                      height="100%"
                      defaultLanguage="python"
+                     language={selectedExercise.type === 'sql' ? 'sql' : 'python'}
                      theme="orange-dark"
                      beforeMount={handleEditorWillMount}
                      value={code}
@@ -565,12 +689,35 @@ export default function LabPage() {
                     Console / Sortie
                   </div>
                   <div className="flex-1 p-4 font-mono text-sm text-slate-300 overflow-y-auto space-y-1">
-                    {output.length > 0 ? (
-                      output.map((line, i) => (
-                        <div key={i} className="border-b border-transparent hover:border-[#333]">{line}</div>
-                      ))
-                    ) : (
-                      <div className="text-slate-600 italic">En attente d'exécution...</div>
+                    {selectedExercise.type === 'sql' && sqlResults ? (
+                       <div className="bg-white rounded-lg overflow-hidden text-slate-900 shadow-sm overflow-x-auto">
+                          <table className="min-w-full text-xs text-left">
+                            <thead className="bg-slate-100 font-bold border-b border-slate-200">
+                              <tr>
+                                {sqlResults.columns.map((col, idx) => (
+                                  <th key={idx} className="px-3 py-2">{col}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                              {sqlResults.values.map((row, rIdx) => (
+                                <tr key={rIdx} className="hover:bg-slate-50">
+                                  {row.map((cell: any, cIdx: number) => (
+                                     <td key={cIdx} className="px-3 py-2 font-mono">{String(cell)}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                       </div>
+                     ) : (
+                      output.length > 0 ? (
+                        output.map((line, i) => (
+                          <div key={i} className="border-b border-transparent hover:border-[#333]">{line}</div>
+                        ))
+                      ) : (
+                        <div className="text-slate-600 italic">En attente d'exécution...</div>
+                      )
                     )}
                   </div>
                 </div>

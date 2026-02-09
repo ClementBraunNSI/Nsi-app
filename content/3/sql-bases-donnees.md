@@ -4,7 +4,6 @@ description: "Interroger et manipuler les données relationnelles"
 level: "TNSI"
 chapter: "Bases de Données"
 icon: "💾"
-allowedStudents: ["Roméo VILLARROYA"]
 ---
 
 # 💾 SQL & Bases de Données

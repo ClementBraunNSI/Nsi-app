@@ -2,10 +2,9 @@
 title: "Arbres binaires de recherche et Algorithmes"
 description: "Révision ABR, implémentations et complexité"
 level: "TNSI"
-chapter: "Terminale NSI · Structures avancées"
+chapter: "Structures avancées"
 icon: "🌳"
 meta: "Révision ABR, implémentations et complexité"
-allowedStudents: ["Roméo VILLARROYA"]
 ---
 
 # 🌳 Arbres binaires de recherche et Algorithmes

@@ -63,6 +63,8 @@ export async function generateMetadata({ params }: { params: Promise<{ niveaux: 
 import { ExerciseTabs, ExerciseSection, Correction, Enonce, Verification } from '@/components/ExerciseTabs';
 import { Admonition } from '@/components/Admonition';
 import { transformAdmonitions } from '@/lib/admonition-utils';
+import SqlEditor from '@/components/SqlEditor';
+import SqlTable from '@/components/SqlTable';
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
   const { niveaux, slug } = await params;
@@ -180,6 +182,8 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     Enonce,
     Verification,
     Admonition,
+    SqlEditor,
+    SqlTable,
   };
 
   return (

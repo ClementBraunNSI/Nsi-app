@@ -43,11 +43,10 @@ Une table est constituée de :
 
 #### Exemple d'une table `Etudiants`
 
-| id | nom | age | classe |
-| :--- | :--- | :--- | :--- |
-| 1 | Alice | 17 | Terminale |
-| 2 | Bob | 16 | Première |
-| 3 | Charlie | 18 | Terminale |
+<SqlTable 
+  tableName="Etudiants" 
+  initialSql="CREATE TABLE Etudiants (id INTEGER PRIMARY KEY, nom TEXT, age INTEGER, classe TEXT); INSERT INTO Etudiants VALUES (1, 'Alice', 17, 'Terminale'); INSERT INTO Etudiants VALUES (2, 'Bob', 16, 'Première'); INSERT INTO Etudiants VALUES (3, 'Charlie', 18, 'Terminale');"
+/>
 
 ## Introduction au SQL
 
@@ -87,6 +86,17 @@ Pour sélectionner les valeurs suivant des contraintes / conditions, on doit ajo
 SELECT nom FROM Etudiants WHERE age > 17;
 ```
 Ici, on veut afficher le nom des étudiants avec l'instruction `SELECT nom FROM Etudiants` mais en ajoutant la contrainte `WHERE age > 17` permet d'obtenir tous les noms uniquement de ceux ayant plus de 17 ans.
+
+## Pratiquer le SQL
+
+Voici un éditeur SQL interactif pour tester vos requêtes sur la table `Etudiants`.
+
+<SqlEditor 
+  title="Éditeur SQL Interactif" 
+  description="Testez vos requêtes SELECT ici."
+  initialSql="CREATE TABLE Etudiants (id INTEGER PRIMARY KEY, nom TEXT, age INTEGER, classe TEXT); INSERT INTO Etudiants VALUES (1, 'Alice', 17, 'Terminale'); INSERT INTO Etudiants VALUES (2, 'Bob', 16, 'Première'); INSERT INTO Etudiants VALUES (3, 'Charlie', 18, 'Terminale'); INSERT INTO Etudiants VALUES (4, 'David', 16, 'Première'); INSERT INTO Etudiants VALUES (5, 'Eve', 17, 'Terminale');"
+  defaultQuery="SELECT * FROM Etudiants WHERE age >= 17;"
+/>
 
 ## Activité : SQL Murder Mystery
 

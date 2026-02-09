@@ -16,6 +16,7 @@ export interface LabExercise {
   level: string;
   fileName: string;
   allowedStudents?: string[];
+  type: 'python' | 'sql';
 }
 
 // Helper to recursively get files
@@ -128,7 +129,7 @@ export async function getAllExercises(): Promise<LabExercise[]> {
           if (verificationCode) {
             // Remove markdown code fences if present (start and end)
             verificationCode = verificationCode
-              .replace(/^```python\s*\n?/, '') // Remove ```python at start
+              .replace(/^```(python|sql)?\s*\n?/, '') // Remove ```python or ```sql at start
               .replace(/^```\s*\n?/, '')       // Remove ``` at start
               .replace(/\n?```\s*$/, '')       // Remove ``` at end
               .trim();
@@ -146,6 +147,10 @@ export async function getAllExercises(): Promise<LabExercise[]> {
           const rawLevel = data.level || level;
           const normalizedLevel = LEVEL_MAPPING[String(rawLevel).toLowerCase()] || rawLevel;
 
+          // Determine type based on courseId or title
+          const isSql = (courseId && courseId.toLowerCase().includes('sql')) || 
+                        (courseTitle && courseTitle.toLowerCase().includes('sql'));
+
           exercises.push({
             id: match[1],
             label: match[2],
@@ -157,6 +162,7 @@ export async function getAllExercises(): Promise<LabExercise[]> {
             level: normalizedLevel,
             fileName: fileName.replace(/\.mdx?$/, ''),
             allowedStudents: data.allowedStudents,
+            type: isSql ? 'sql' : 'python',
           });
         }
       }

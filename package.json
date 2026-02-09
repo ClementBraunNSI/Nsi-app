@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint"
   },
@@ -25,6 +25,7 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
+    "sql.js": "^1.13.0",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {

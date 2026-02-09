@@ -4,7 +4,6 @@ description: "Exercices pratiques sur SQL et les bases de données"
 level: "TNSI"
 chapter: "Bases de Données"
 icon: "💾"
-allowedStudents: ["Roméo VILLARROYA"]
 ---
 
 <ExerciseTabs courseId="sql-bases-donnees-exos" courseTitle="SQL & Bases de Données - Exercices">

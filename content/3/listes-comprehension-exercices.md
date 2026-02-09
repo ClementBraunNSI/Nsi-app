@@ -4,7 +4,6 @@ description: "Série d'exercices gradués pour maîtriser les listes par compré
 level: "TNSI"
 chapter: "Programmation Python"
 icon: "🐍"
-allowedStudents: ["Roméo VILLARROYA"]
 ---
 
 # 🐍 Listes par compréhension
