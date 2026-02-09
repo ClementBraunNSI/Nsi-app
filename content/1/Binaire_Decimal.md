@@ -41,7 +41,17 @@ Pour passer de la base 10 à la base 2, on peut utiliser la méthode que l'on ap
 
 On divise successivement le nombre à convertir par 2.
 Chaque **reste** correspond au nombre dans la représentation et chaque **quotient** est à diviser à la suite par 2.
-On répète ces opération jusqu'à ce que le quotient soit 0 et le reste 1.
+On répète ces opérations jusqu'à ce que le quotient soit 0.
+
+$$
+\begin{aligned}
+25 &= 2 \times 12 + \mathbf{1} \\
+12 &= 2 \times 6 + \mathbf{0} \\
+6 &= 2 \times 3 + \mathbf{0} \\
+3 &= 2 \times 1 + \mathbf{1} \\
+1 &= 2 \times 0 + \mathbf{1}
+\end{aligned}
+$$
 
 ![div_succ](/content/1/div_succ.png)
 
