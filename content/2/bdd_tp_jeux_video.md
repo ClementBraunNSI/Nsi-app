@@ -2,7 +2,7 @@
 title: "Projet - Gestion Jeux Vidéo"
 description: "Création d'un gestionnaire de collection de jeux vidéo en Python"
 level: premiere
-chapter: "Projets"
+chapter: "Bases de données"
 icon: "🎮"
 badgeId: "premiere_gestion_jeux_video"
 ---

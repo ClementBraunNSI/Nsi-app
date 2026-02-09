@@ -1,5 +1,5 @@
 ---
-title: "Types de données en Python"
+title: "Constructions élémentaires en Python"
 description: "Les types fondamentaux pour structurer vos données : booléens, nombres et chaînes."
 level : premiere
 chapter: "Introduction à Python"

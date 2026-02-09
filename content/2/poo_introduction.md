@@ -2,7 +2,7 @@
 title: "Introduction POO"
 description: "Découverte de la Programmation Orientée Objet (POO) en Python. Classes, Objets, Attributs et Méthodes."
 level: premiere
-chapter: "Approfondissement"
+chapter: "Programmation Orientée Objet"
 icon: "📦"
 badgeId: "premiere_introduction_poo"
 ---

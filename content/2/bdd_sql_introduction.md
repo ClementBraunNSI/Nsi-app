@@ -2,7 +2,7 @@
 title: "Bases de données et SQL"
 description: "Introduction aux bases de données relationnelles et au langage de requête SQL"
 level: premiere
-chapter: "Dictionnaires et Tables"
+chapter: "Bases de données"
 icon: "🗄️"
 badgeId: "premiere_intro_bases_donnees_sql"
 ---

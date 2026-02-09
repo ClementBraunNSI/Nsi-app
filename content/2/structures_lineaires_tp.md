@@ -2,7 +2,7 @@
 title: "TP Piles et Files"
 description: "Implémentation de Piles et Files et applications (parenthésage, file d'attente)."
 level: premiere
-chapter: "Approfondissement"
+chapter: "Structures de données linéaires"
 icon: "📥"
 badgeId: "premiere_tp_piles_files"
 ---
