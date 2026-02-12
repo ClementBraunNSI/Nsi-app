@@ -14,6 +14,19 @@ const LEVELS = [
   { id: 4, title: "BTS SIO", desc: "Services Informatiques aux Organisations.", img: "/images/fox_4.png", color: "bg-emerald-500", tag: "Niveau 4" },
 ];
 
+// Jeux et Outils
+const GAMES = [
+  { 
+    id: 'fox-game', 
+    title: "L'Académie des Renards", 
+    desc: "Apprends les bases de Python (boucles, conditions, fonctions) en guidant un renard à travers des énigmes.", 
+    img: "/images/fox_1.png", 
+    color: "bg-amber-500", 
+    tag: "Jeu Python", 
+    href: "/fox" 
+  },
+];
+
 // Données des cours particuliers
 const PRIVATE_LESSONS = [
   { 
@@ -222,6 +235,13 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {LEVELS.map((lvl) => (
             <CourseCard key={lvl.id} {...lvl} href={`/cours/${lvl.id}`} />
+          ))}
+        </div>
+
+        <h2 className="text-2xl font-black text-slate-800 mt-20 mb-10">Zone d'Entraînement</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {GAMES.map((game) => (
+            <CourseCard key={game.id} {...game} />
           ))}
         </div>
       </main>

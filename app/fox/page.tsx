@@ -4,6 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import { Play, RotateCcw, ChevronRight, ChevronLeft, HelpCircle, CheckCircle } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { LEVELS, LevelConfig, Direction, Position } from './levels';
 
 // --- GAME CONSTANTS ---
@@ -17,6 +18,15 @@ const SPRITES = {
   EMPTY: '',
   GRASS: '🟩'
 };
+
+import { loader } from '@monaco-editor/react';
+
+// Configure Monaco to use local files instead of CDN to prevent loading errors
+loader.config({
+  paths: {
+    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs'
+  }
+});
 
 export default function FoxGame() {
   // Game State
@@ -34,6 +44,7 @@ export default function FoxGame() {
 
   // Pyodide
   const pyodideRef = useRef<any>(null);
+  const pyodideLoadingRef = useRef(false); // Prevent double loading
   const [isPyodideReady, setIsPyodideReady] = useState(false);
 
   // Init Level
@@ -54,38 +65,65 @@ export default function FoxGame() {
 
   // Load Pyodide
   useEffect(() => {
-    const loadPyodideScript = async () => {
-      if (window.loadPyodide) {
-         initPyodide();
-         return;
-      }
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js';
-      script.async = true;
-      script.onload = () => initPyodide();
-      script.onerror = (e) => {
-        console.error("Failed to load Pyodide script:", e);
-        setLogs(prev => [...prev, "❌ Erreur critique : Impossible de charger le moteur Python (Pyodide). Vérifiez votre connexion internet."]);
-      };
-      document.body.appendChild(script);
-    };
+    if (isPyodideReady || pyodideLoadingRef.current) return;
+    
+    pyodideLoadingRef.current = true;
 
     const initPyodide = async () => {
       try {
+        if (!window.loadPyodide) {
+             throw new Error("window.loadPyodide is not defined (Script load failed?)");
+        }
+        
+        // Explicitly provide indexURL to avoid auto-detection issues
         // @ts-ignore
-        const pyodide = await window.loadPyodide();
+        const pyodide = await window.loadPyodide({
+            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
+        });
+        
         pyodideRef.current = pyodide;
         setIsPyodideReady(true);
         console.log("Pyodide Ready for Fox Game");
         setLogs(prev => [...prev, "✅ Moteur Python prêt !"]);
       } catch (e) {
-        console.error("Pyodide Load Error", e);
-        setLogs(prev => [...prev, `❌ Erreur d'initialisation Python: ${e}`]);
+        let msg = "Erreur inconnue";
+        if (typeof e === 'string') msg = e;
+        else if (e && (e as any).message) msg = (e as any).message;
+        
+        console.error("Pyodide Load Error (Safe):", msg);
+        setLogs(prev => [...prev, `❌ Erreur d'initialisation Python: ${msg}`]);
+        pyodideLoadingRef.current = false; // Allow retry?
       }
     };
 
+    const loadPyodideScript = () => {
+      // Check if already loaded by another component
+      if (window.loadPyodide) {
+         initPyodide();
+         return;
+      }
+      
+      // Check if script tag exists
+      const existingScript = document.querySelector('script[src*="pyodide.js"]');
+      if (existingScript) {
+          existingScript.addEventListener('load', () => initPyodide());
+          return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js';
+      script.async = true;
+      script.onload = () => initPyodide();
+      script.onerror = (e) => {
+        console.error("Failed to load Pyodide script (Network/404)");
+        setLogs(prev => [...prev, "❌ Erreur critique : Impossible de charger le moteur Python (Pyodide). Vérifiez votre connexion internet."]);
+        pyodideLoadingRef.current = false;
+      };
+      document.body.appendChild(script);
+    };
+
     loadPyodideScript();
-  }, []);
+  }, [isPyodideReady]);
 
   // --- EXECUTION LOGIC ---
   const handleRun = async () => {
@@ -321,21 +359,18 @@ def td(): tourner_droite()
       setStars(earnedStars);
 
       setLogs(prev => [
-        ...prev, 
-        '🎉 BRAVO ! Tu as attrapé la poule !',
-        `📊 Code : ${lines} lignes (Objectif : ${level.bestLineCount})`,
-        `⭐ Note : ${earnedStars}/3`
-      ]);
-      
-      try {
-        const confettiModule = await import('canvas-confetti');
-        const confetti = confettiModule.default || confettiModule;
-        // @ts-ignore
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-      } catch (e) {
-        console.warn("Confetti failed", e);
-      }
-    } else {
+              ...prev, 
+              '🎉 BRAVO! Tu as attrapé la poule!',
+              `📊 Code : ${lines} lignes (Objectif : ${level.bestLineCount})`,
+              `⭐ Note : ${earnedStars}/3`
+            ]);
+            
+            try {
+              confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            } catch (e) {
+              console.warn("Confetti failed", e);
+            }
+          } else {
       setGameStatus('lost');
       setLogs(prev => [...prev, '❌ Perdu... Le renard n\'est pas arrivé à destination.']);
     }

@@ -407,9 +407,18 @@ monChien.Manger();  // Méthode héritée de Animal
 monChien.Aboyer();  // Méthode propre à Chien
 ```
 
-### 3. Le Polymorphisme
+### 3. Le Polymorphisme et Méthodes Virtuelles
 
-**Définition :** Capacité à redéfinir le comportement d'une méthode dans une classe fille.
+**Définition :** Le polymorphisme est la capacité d'objets de classes différentes à répondre à la même méthode de manière spécifique. Cela est rendu possible grâce aux **méthodes virtuelles**.
+
+#### Le couple `virtual` / `override`
+
+Pour permettre la redéfinition d'une méthode, C# impose une règle explicite :
+
+1. **Dans la classe mère** : On ajoute le mot-clé **`virtual`** pour autoriser les enfants à modifier la méthode.
+2. **Dans la classe fille** : On utilise le mot-clé **`override`** pour indiquer qu'on remplace le comportement d'origine.
+
+> 💡 **Note :** Contrairement à d'autres langages (comme Java), en C#, les méthodes ne sont pas virtuelles par défaut. Il faut explicitement donner la permission de les modifier.
 
 ```csharp
 public class Animal
