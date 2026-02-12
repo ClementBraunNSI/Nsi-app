@@ -546,46 +546,15 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     ```csharp
     public class Animal
     {
-        // Propriétés communes à tous les animaux
-        public string Nom { get; set; }
-        public int Age { get; set; }
-        public double Poids { get; set; }
-        public bool EstAdopte { get; private set; }
+        // Propriétés communes : Nom, Age, Poids, EstAdopte (private set)
 
-        // Constructeur
-        public Animal(string nom, int age, double poids)
-        {
-            Nom = nom;
-            Age = age;
-            Poids = poids;
-            EstAdopte = false;
-        }
+        // Constructeur pour initialiser nom, age, poids (EstAdopte = false)
 
-        // Méthodes communes
-        public void Adopter()
-        {
-            if (!EstAdopte)
-            {
-                EstAdopte = true;
-                Console.WriteLine($"{Nom} a été adopté(e) !");
-            }
-            else
-            {
-                Console.WriteLine($"{Nom} est déjà adopté(e).");
-            }
-        }
+        // Méthode Adopter() : passe EstAdopte à true si ce n'est pas déjà le cas
 
-        public void Vieillir()
-        {
-            Age++;
-            Console.WriteLine($"{Nom} a maintenant {Age} ans.");
-        }
+        // Méthode Vieillir() : augmente l'âge de 1
 
-        public virtual void AfficherInfos()
-        {
-            string statut = EstAdopte ? "Adopté" : "Disponible";
-            Console.WriteLine($"{Nom} - {Age} ans - {Poids} kg - Statut : {statut}");
-        }
+        // Méthode virtuelle AfficherInfos() : affiche les infos de base
     }
     ```
 
@@ -594,27 +563,13 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     ```csharp
     public class Chien : Animal
     {
-        // Propriété spécifique aux chiens
-        public string Race { get; set; }
+        // Propriété spécifique : Race
 
-        // Constructeur qui appelle le constructeur parent avec "base"
-        public Chien(string nom, int age, double poids, string race) : base(nom, age, poids)
-        {
-            Race = race;
-        }
+        // Constructeur : appelle le constructeur de base
 
-        // Méthode spécifique aux chiens
-        public void Aboyer()
-        {
-            Console.WriteLine($"{Nom} aboie : Wouf wouf !");
-        }
+        // Méthode Aboyer() : affiche "Wouf wouf"
 
-        // Redéfinition de AfficherInfos pour ajouter la race
-        public override void AfficherInfos()
-        {
-            string statut = EstAdopte ? "Adopté" : "Disponible";
-            Console.WriteLine($"🐕 Chien : {Nom} ({Race}) - {Age} ans - {Poids} kg - Statut : {statut}");
-        }
+        // Redéfinition de AfficherInfos() : affiche avec l'émoji chien et la race
     }
     ```
 
@@ -623,27 +578,13 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     ```csharp
     public class Chat : Animal
     {
-        // Propriété spécifique aux chats
-        public string Couleur { get; set; }
+        // Propriété spécifique : Couleur
 
         // Constructeur
-        public Chat(string nom, int age, double poids, string couleur) : base(nom, age, poids)
-        {
-            Couleur = couleur;
-        }
 
-        // Méthode spécifique aux chats
-        public void Miauler()
-        {
-            Console.WriteLine($"{Nom} miaule : Miaou !");
-        }
+        // Méthode Miauler() : affiche "Miaou"
 
-        // Redéfinition de AfficherInfos
-        public override void AfficherInfos()
-        {
-            string statut = EstAdopte ? "Adopté" : "Disponible";
-            Console.WriteLine($"🐱 Chat : {Nom} ({Couleur}) - {Age} ans - {Poids} kg - Statut : {statut}");
-        }
+        // Redéfinition de AfficherInfos()
     }
     ```
 
@@ -652,27 +593,13 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     ```csharp
     public class Oiseau : Animal
     {
-        // Propriété spécifique aux oiseaux
-        public double EnvergureAiles { get; set; } // En cm
+        // Propriété spécifique : EnvergureAiles (en cm)
 
         // Constructeur
-        public Oiseau(string nom, int age, double poids, double envergureAiles) : base(nom, age, poids)
-        {
-            EnvergureAiles = envergureAiles;
-        }
 
-        // Méthode spécifique aux oiseaux
-        public void Chanter()
-        {
-            Console.WriteLine($"{Nom} chante : Cui cui !");
-        }
+        // Méthode Chanter() : affiche "Cui cui"
 
-        // Redéfinition de AfficherInfos
-        public override void AfficherInfos()
-        {
-            string statut = EstAdopte ? "Adopté" : "Disponible";
-            Console.WriteLine($"🐦 Oiseau : {Nom} - {Age} ans - {Poids} kg - Envergure : {EnvergureAiles} cm - Statut : {statut}");
-        }
+        // Redéfinition de AfficherInfos()
     }
     ```
 
@@ -681,69 +608,18 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     ```csharp
     public class Refuge
     {
-        public string Nom { get; set; }
-        private List<Animal> animaux;
+        // Propriété Nom et liste d'animaux (List<Animal>)
 
-        public Refuge(string nom)
-        {
-            Nom = nom;
-            animaux = new List<Animal>();
-        }
+        // Constructeur
 
-        // Ajouter un animal au refuge
-        public void AjouterAnimal(Animal animal)
-        {
-            animaux.Add(animal);
-            Console.WriteLine($"{animal.Nom} a été ajouté au refuge.");
-        }
+        // Méthode AjouterAnimal(Animal animal)
 
-        // Afficher tous les animaux
-        public void AfficherTousLesAnimaux()
-        {
-            Console.WriteLine($"\n=== Animaux du refuge {Nom} ===");
-            foreach (Animal animal in animaux)
-            {
-                animal.AfficherInfos();
-            }
-        }
+        // Méthode AfficherTousLesAnimaux()
 
-        // Afficher uniquement les animaux disponibles
-        public void AfficherAnimauxDisponibles()
-        {
-            Console.WriteLine($"\n=== Animaux disponibles à l'adoption ===");
-            foreach (Animal animal in animaux)
-            {
-                if (!animal.EstAdopte)
-                {
-                    animal.AfficherInfos();
-                }
-            }
-        }
+        // Méthode AfficherAnimauxDisponibles() : affiche seulement les animaux non adoptés
 
-        // Compter le nombre d'animaux par type
-        public void AfficherStatistiques()
-        {
-            int nbChiens = 0;
-            int nbChats = 0;
-            int nbOiseaux = 0;
-            int nbDisponibles = 0;
-
-            foreach (Animal animal in animaux)
-            {
-                if (animal is Chien) nbChiens++;
-                else if (animal is Chat) nbChats++;
-                else if (animal is Oiseau) nbOiseaux++;
-
-                if (!animal.EstAdopte) nbDisponibles++;
-            }
-
-            Console.WriteLine($"\n=== Statistiques du refuge {Nom} ===");
-            Console.WriteLine($"Total d'animaux : {animaux.Count}");
-            Console.WriteLine($"Chiens : {nbChiens}");
-            Console.WriteLine($"Chats : {nbChats}");
-            Console.WriteLine($"Oiseaux : {nbOiseaux}");
-            Console.WriteLine($"Disponibles à l'adoption : {nbDisponibles}");
-        }
+        // Méthode AfficherStatistiques() : compte et affiche le nombre de chiens, chats, oiseaux et le total disponible
+        // Astuce : utilisez le mot-clé "is" pour vérifier le type (ex: if (animal is Chien))
     }
     ```
 
@@ -752,46 +628,21 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     ```csharp
     public static void Main()
     {
-        // Créer un refuge
-        Refuge refuge = new Refuge("Les Amis des Animaux");
+        // 1. Créer un refuge
 
-        // Créer des animaux
-        Chien chien1 = new Chien("Rex", 3, 25.5, "Berger Allemand");
-        Chien chien2 = new Chien("Bella", 5, 18.0, "Labrador");
-        Chat chat1 = new Chat("Minou", 2, 4.5, "Tigré");
-        Chat chat2 = new Chat("Félix", 4, 5.0, "Noir");
-        Oiseau oiseau1 = new Oiseau("Kiwi", 1, 0.3, 25);
+        // 2. Créer plusieurs animaux (chiens, chats, oiseaux)
 
-        // Ajouter les animaux au refuge
-        refuge.AjouterAnimal(chien1);
-        refuge.AjouterAnimal(chien2);
-        refuge.AjouterAnimal(chat1);
-        refuge.AjouterAnimal(chat2);
-        refuge.AjouterAnimal(oiseau1);
+        // 3. Ajouter les animaux au refuge
 
-        // Afficher tous les animaux
-        refuge.AfficherTousLesAnimaux();
+        // 4. Afficher tous les animaux
 
-        // Test des méthodes spécifiques
-        Console.WriteLine("\n--- Test des méthodes spécifiques ---");
-        chien1.Aboyer();
-        chat1.Miauler();
-        oiseau1.Chanter();
+        // 5. Tester les méthodes spécifiques (Aboyer, Miauler...)
 
-        // Adopter quelques animaux
-        Console.WriteLine("\n--- Adoptions ---");
-        chien1.Adopter();
-        chat1.Adopter();
+        // 6. Faire adopter quelques animaux
 
-        // Faire vieillir un animal
-        Console.WriteLine("\n--- Anniversaire ---");
-        chien2.Vieillir();
+        // 7. Faire vieillir un animal
 
-        // Afficher les animaux disponibles
-        refuge.AfficherAnimauxDisponibles();
-
-        // Afficher les statistiques
-        refuge.AfficherStatistiques();
+        // 8. Afficher les animaux disponibles et les statistiques
     }
     ```
 
@@ -836,4 +687,104 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     ```
     </Enonce>
   </ExerciseSection>
+
+  <ExerciseSection id="tp-poo-exercice6" label="Exercice 6 - Héritage Véhicules">
+    <Enonce>
+    ## 🏍️ Exercice 6 : Concessionnaire Multi-Véhicules
+
+    ### Contexte
+    Le concessionnaire de l'exercice 4 s'agrandit ! Il ne vend plus seulement des voitures, mais aussi des motos et des quads.
+    Vous devez refactoriser votre code pour utiliser l'héritage.
+
+    ### 📋 Étapes à réaliser
+
+    **Étape 1 : Créer la classe mère `Vehicule`**
+
+    ```csharp
+    public class Vehicule
+    {
+        // Propriétés communes : Marque, Modele, Annee, Prix, EstVendu
+
+        // Constructeur
+
+        // Méthode Vendre()
+
+        // Méthode AppliquerRemise(double pourcentage)
+
+        // Méthode virtuelle AfficherInfos()
+    }
+    ```
+
+    **Étape 2 : Adapter la classe `Voiture`**
+
+    ```csharp
+    public class Voiture : Vehicule
+    {
+        // Propriété spécifique : Kilometrage
+
+        // Constructeur (appelle base)
+
+        // Redéfinition de AfficherInfos()
+    }
+    ```
+
+    **Étape 3 : Créer la classe `Moto`**
+
+    ```csharp
+    public class Moto : Vehicule
+    {
+        // Propriété spécifique : Cylindree (int, en cc)
+
+        // Constructeur
+
+        // Redéfinition de AfficherInfos() (avec émoji 🏍️)
+    }
+    ```
+
+    **Étape 4 : Créer la classe `Quad`**
+
+    ```csharp
+    public class Quad : Vehicule
+    {
+        // Propriété spécifique : EstHomologueRoute (bool)
+
+        // Constructeur
+
+        // Redéfinition de AfficherInfos()
+    }
+    ```
+
+    **Étape 5 : Adapter le `Concessionnaire`**
+
+    ```csharp
+    public class Concessionnaire
+    {
+        // Liste de Vehicule au lieu de Liste de Voiture
+
+        // Adapter les méthodes AjouterVehicule, AfficherVehiculesDisponibles, etc.
+
+        // Dans AfficherStatistiques, compter Voitures, Motos, Quads
+    }
+    ```
+
+    **Étape 6 : Tester**
+
+    ```csharp
+    public static void Main()
+    {
+        // Créer le concessionnaire
+
+        // Créer des Voitures, Motos, Quads
+
+        // Les ajouter au concessionnaire
+
+        // Tester la vente, les remises et l'affichage
+    }
+    ```
+
+    ### 🎯 Résultat attendu
+    Le programme doit afficher la liste hétérogène de véhicules et les statistiques par type.
+    </Enonce>
+  </ExerciseSection>
+
 </ExerciseTabs>

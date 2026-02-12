@@ -11,6 +11,7 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.91.0",
     "@tailwindcss/postcss": "^4.1.18",
+    "canvas-confetti": "^1.9.4",
     "gray-matter": "^4.0.3",
     "katex": "^0.16.27",
     "lucide-react": "^0.562.0",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "25.0.9",
     "@types/react": "19.2.8",
     "autoprefixer": "^10.4.23",
