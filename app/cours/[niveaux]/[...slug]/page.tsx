@@ -65,6 +65,16 @@ import { Admonition } from '@/components/Admonition';
 import { transformAdmonitions } from '@/lib/admonition-utils';
 import SqlEditor from '@/components/SqlEditor';
 import SqlTable from '@/components/SqlTable';
+import WebPreview from '@/components/interactive/WebPreview';
+import PixelManipulator from '@/components/interactive/PixelManipulator';
+import SocialGraph from '@/components/interactive/SocialGraph';
+import PacketTracer from '@/components/interactive/PacketTracer';
+import CsvDetective from '@/components/interactive/CsvDetective';
+import TrilaterationMap from '@/components/interactive/TrilaterationMap';
+import IotSimulator from '@/components/interactive/IotSimulator';
+import BinaryPixelArt from '@/components/interactive/BinaryPixelArt';
+import AlgorithmRace from '@/components/interactive/AlgorithmRace';
+import PasswordCracker from '@/components/interactive/PasswordCracker';
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
   const { niveaux, slug } = await params;
@@ -184,6 +194,16 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     Admonition,
     SqlEditor,
     SqlTable,
+    WebPreview,
+    PixelManipulator,
+    SocialGraph,
+    PacketTracer,
+    CsvDetective,
+    TrilaterationMap,
+    IotSimulator,
+    BinaryPixelArt,
+    AlgorithmRace,
+    PasswordCracker,
   };
 
   return (

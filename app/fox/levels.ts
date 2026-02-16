@@ -92,7 +92,12 @@ export const LEVELS: LevelConfig[] = [
     gridSize: { cols: 5, rows: 3 },
     start: { pos: { x: 0, y: 2 }, dir: 'E' },
     goal: { x: 4, y: 0 },
-    obstacles: [ {x:1, y:2}, {x:3, y:2}, {x:0, y:1}, {x:2, y:1}, {x:4, y:1} ],
+    // Obstacles adjusted to create a clear zig-zag path:
+    // Path: (0,2) -> (0,1) -> (1,1) -> (1,0) -> (2,0) -> (2,1) -> (3,1) -> (3,0) -> (4,0)
+    obstacles: [ 
+        {x:1, y:2}, {x:2, y:2}, {x:3, y:2}, {x:4, y:2}, // Bottom row blocked except start
+        {x:0, y:0}, {x:4, y:1} // Blocking direct path
+    ],
     initialCode: HEADER_SEQ,
     hint: "Visualise le chemin case par case.",
     bestLineCount: 11 // av, tg, av, td, av, tg, av, td, av (approx)
