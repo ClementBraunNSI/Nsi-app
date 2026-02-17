@@ -71,7 +71,7 @@ export default function FoxGame() {
 
     const initPyodide = async () => {
       try {
-        if (!window.loadPyodide) {
+        if (!(window as any).loadPyodide) {
              throw new Error("window.loadPyodide is not defined (Script load failed?)");
         }
         
@@ -98,7 +98,7 @@ export default function FoxGame() {
 
     const loadPyodideScript = () => {
       // Check if already loaded by another component
-      if (window.loadPyodide) {
+      if ((window as any).loadPyodide) {
          initPyodide();
          return;
       }

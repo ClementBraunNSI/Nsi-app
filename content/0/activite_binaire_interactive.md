@@ -1,7 +1,7 @@
 ---
 title: "Atelier Données : Pixel Art Binaire"
 description: "Comprendre comment une image est codée en 0 et 1."
-level: "2"
+level: "SNI"
 chapter: "Données Structurées"
 icon: "👾"
 ---

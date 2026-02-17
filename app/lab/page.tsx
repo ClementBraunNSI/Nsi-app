@@ -15,11 +15,6 @@ import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from '@/components/AchievementUnlockedModal';
 import SuccessModal from '@/components/SuccessModal';
 
-declare global {
-  interface Window {
-    loadPyodide: any;
-  }
-}
 
 const LEVEL_MAP: Record<string, { label: string; code: string }> = {
   'SNI': { label: 'SNI', code: '0' },

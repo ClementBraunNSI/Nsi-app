@@ -1,7 +1,7 @@
 ---
 title: "Atelier Algo : La Course au Tri"
 description: "Visualiser comment un algorithme trie des données."
-level: "2"
+level: "premiere"
 chapter: "Algorithmique"
 icon: "🏎️"
 ---
