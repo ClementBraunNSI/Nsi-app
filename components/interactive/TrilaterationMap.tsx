@@ -13,12 +13,12 @@ const Circle = dynamic(() => import('react-leaflet').then(mod => mod.Circle), { 
 const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
 const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
 
-// Fix Leaflet icons in Next.js
-const icon = L.icon({
+// Only create the icon if window is defined (client-side)
+const icon = typeof window !== 'undefined' ? L.icon({
   iconUrl: '/images/fox_1.png',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
-});
+}) : undefined;
 
 const SATELLITES = [
   { id: 1, pos: [48.8566, 2.3522], color: 'red', label: 'Sat A' }, // Paris
@@ -81,6 +81,7 @@ export default function TrilaterationMap() {
           </Circle>
         ))}
 
+        {icon && (
         <Marker 
           // @ts-ignore
           position={TARGET as L.LatLngExpression} 
@@ -88,6 +89,7 @@ export default function TrilaterationMap() {
         >
           <Popup>🦊 Le Renard est ici !</Popup>
         </Marker>
+        )}
       </MapContainer>
     </div>
   );
