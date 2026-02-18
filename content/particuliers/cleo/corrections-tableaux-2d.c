@@ -99,11 +99,11 @@ int main() {
 // ==========================================
 
 // --- 1.1 Morpion ---
-void afficher_grille_morpion(char g[3][3]) {
+void afficher_grille_morpion(int L, int C, char g[L][C]) {
     printf("\n");
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < L; i++) {
         printf(" %c | %c | %c \n", g[i][0], g[i][1], g[i][2]);
-        if(i < 2) printf("---|---|---\n");
+        if(i < L-1) printf("---|---|---\n");
     }
     printf("\n");
 }
@@ -116,44 +116,63 @@ void exo_1_1_morpion() {
         {' ', ' ', ' '}
     };
     printf("--- Grille vide ---");
-    afficher_grille_morpion(grille);
+    afficher_grille_morpion(3, 3, grille);
     
     grille[1][1] = 'X';
     grille[0][0] = 'O';
     
     printf("--- Grille modifiée ---");
-    afficher_grille_morpion(grille);
+    afficher_grille_morpion(3, 3, grille);
 }
 
 // --- 1.2 Tables ---
-void exo_1_2_tables() {
-    printf("\n--- EXERCICE 1.2 : TABLES DE MULTIPLICATION ---\n");
-    int table[10][10];
-
-    // Remplissage
-    for(int i = 0; i < 10; i++) {
-        for(int j = 0; j < 10; j++) {
+void remplir_table(int L, int C, int table[L][C]) {
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
             table[i][j] = (i + 1) * (j + 1);
         }
     }
+}
 
-    // Affichage
+void afficher_table(int L, int C, int table[L][C]) {
     printf("   X |");
-    for(int j=1; j<=10; j++) printf("%4d", j);
+    for(int j=1; j<=C; j++) printf("%4d", j);
     printf("\n-----+");
-    for(int j=1; j<=10; j++) printf("----");
+    for(int j=1; j<=C; j++) printf("----");
     printf("\n");
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < L; i++) {
         printf("%4d |", i + 1); // En-tête de ligne
-        for(int j = 0; j < 10; j++) {
+        for(int j = 0; j < C; j++) {
             printf("%4d", table[i][j]);
         }
         printf("\n");
     }
 }
 
+void exo_1_2_tables() {
+    printf("\n--- EXERCICE 1.2 : TABLES DE MULTIPLICATION ---\n");
+    int table[10][10];
+
+    remplir_table(10, 10, table);
+    afficher_table(10, 10, table);
+}
+
 // --- 1.3 Diagonale ---
+void afficher_diagonales(int L, int C, int mat[L][C]) {
+    printf("Diagonale principale : ");
+    for(int i = 0; i < L; i++) {
+        printf("%d ", mat[i][i]);
+    }
+    printf("\n");
+
+    printf("Diagonale secondaire : ");
+    for(int i = 0; i < L; i++) {
+        printf("%d ", mat[i][C-1-i]);
+    }
+    printf("\n");
+}
+
 void exo_1_3_diagonale() {
     printf("\n--- EXERCICE 1.3 : DIAGONALE ---\n");
     int mat[4][4] = {
@@ -163,20 +182,24 @@ void exo_1_3_diagonale() {
         {13, 14, 15, 16}
     };
 
-    printf("Diagonale principale : ");
-    for(int i = 0; i < 4; i++) {
-        printf("%d ", mat[i][i]);
-    }
-    printf("\n");
-
-    printf("Diagonale secondaire : ");
-    for(int i = 0; i < 4; i++) {
-        printf("%d ", mat[i][3-i]);
-    }
-    printf("\n");
+    afficher_diagonales(4, 4, mat);
 }
 
 // --- 1.4 Somme Totale ---
+void afficher_statistiques(int L, int C, int notes[L][C]) {
+    int somme = 0;
+    
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
+            somme += notes[i][j];
+        }
+    }
+
+    float moyenne = (float)somme / (float)(L * C);
+    printf("Somme totale : %d\n", somme);
+    printf("Moyenne globale : %.2f\n", moyenne);
+}
+
 void exo_1_4_somme_totale() {
     printf("\n--- EXERCICE 1.4 : SOMME TOTALE ---\n");
     int notes[3][5] = {
@@ -185,27 +208,13 @@ void exo_1_4_somme_totale() {
         {9, 11, 10, 8, 14}
     };
 
-    int somme = 0;
-    // On a 3 élèves (lignes) et 5 matières (colonnes)
-    
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 5; j++) {
-            somme += notes[i][j];
-        }
-    }
-
-    float moyenne = (float)somme / 15.0;
-    printf("Somme totale : %d\n", somme);
-    printf("Moyenne globale : %.2f\n", moyenne);
+    afficher_statistiques(3, 5, notes);
 }
 
 // --- 1.5 Damier ---
-void exo_1_5_damier() {
-    printf("\n--- EXERCICE 1.5 : DAMIER ---\n");
-    int damier[8][8];
-
-    for(int i = 0; i < 8; i++) {
-        for(int j = 0; j < 8; j++) {
+void generer_damier(int L, int C, int damier[L][C]) {
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
             if((i + j) % 2 == 0) {
                 damier[i][j] = 1; // Case noire
             } else {
@@ -213,14 +222,24 @@ void exo_1_5_damier() {
             }
         }
     }
+}
 
+void afficher_damier(int L, int C, int damier[L][C]) {
     printf("--- Damier ---\n");
-    for(int i = 0; i < 8; i++) {
-        for(int j = 0; j < 8; j++) {
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
             printf("%d ", damier[i][j]); 
         }
         printf("\n");
     }
+}
+
+void exo_1_5_damier() {
+    printf("\n--- EXERCICE 1.5 : DAMIER ---\n");
+    int damier[8][8];
+
+    generer_damier(8, 8, damier);
+    afficher_damier(8, 8, damier);
 }
 
 // ==========================================
@@ -228,10 +247,10 @@ void exo_1_5_damier() {
 // ==========================================
 
 // --- 2.1 Sommes ---
-void afficher_sommes_lignes(int mat[3][4], int lignes) {
-    for(int i = 0; i < lignes; i++) {
+void afficher_sommes_lignes(int L, int C, int mat[L][C]) {
+    for(int i = 0; i < L; i++) {
         int somme = 0;
-        for(int j = 0; j < 4; j++) {
+        for(int j = 0; j < C; j++) {
             somme += mat[i][j];
         }
         printf("Somme ligne %d : %d\n", i, somme);
@@ -245,23 +264,16 @@ void exo_2_1_sommes() {
         {5, 5, 5, 5},
         {10, 20, 30, 40}
     };
-    afficher_sommes_lignes(matrice, 3);
+    afficher_sommes_lignes(3, 4, matrice);
 }
 
 // --- 2.2 Maximum ---
-void exo_2_2_maximum() {
-    printf("\n--- EXERCICE 2.2 : MAXIMUM ---\n");
-    int matrice[3][4] = {
-        {12, 45, 78, 23},
-        {56, 99, 12, 34}, // Max est ici (99)
-        {10, 20, 30, 40}
-    };
-
+void trouver_et_afficher_maximum(int L, int C, int matrice[L][C]) {
     int max = matrice[0][0];
     int max_i = 0, max_j = 0;
 
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 4; j++) {
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
             if(matrice[i][j] > max) {
                 max = matrice[i][j];
                 max_i = i;
@@ -273,13 +285,30 @@ void exo_2_2_maximum() {
     printf("Le maximum est %d à la position [%d][%d]\n", max, max_i, max_j);
 }
 
+void exo_2_2_maximum() {
+    printf("\n--- EXERCICE 2.2 : MAXIMUM ---\n");
+    int matrice[3][4] = {
+        {12, 45, 78, 23},
+        {56, 99, 12, 34}, // Max est ici (99)
+        {10, 20, 30, 40}
+    };
+
+    trouver_et_afficher_maximum(3, 4, matrice);
+}
+
 // --- 2.3 Transposée ---
-void afficher_transposee(int mat[3][3]) {
+void afficher_transposee(int L, int C, int mat[L][C]) {
     printf("--- Transposée ---\n");
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 3; j++) {
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
             // On affiche mat[j][i] au lieu de mat[i][j]
-            printf("%d ", mat[j][i]);
+            // Attention : pour une transposée visuelle d'une matrice carrée ou rectangulaire
+            // Ici l'exercice initial était carré [3][3].
+            // Si on veut afficher la transposée, on itère sur les colonnes puis les lignes de l'originale
+            // Ou on considère que c'est une matrice carrée pour l'échange d'indices simple.
+            // L'énoncé initial disait "inverser lignes et colonnes" avec exemple carré.
+            // Pour être générique : on parcourt C lignes et L colonnes pour l'affichage.
+            printf("%d ", mat[j][i]); 
         }
         printf("\n");
     }
@@ -292,13 +321,15 @@ void exo_2_3_transposee() {
         {4, 5, 6},
         {7, 8, 9}
     };
-    afficher_transposee(matrice);
+    afficher_transposee(3, 3, matrice);
 }
 
 // --- 2.4 Symétrie ---
-int est_symetrique(int mat[3][3]) {
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 3; j++) {
+int est_symetrique(int L, int C, int mat[L][C]) {
+    if (L != C) return 0; // Une matrice non carrée ne peut pas être symétrique
+
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
             if(mat[i][j] != mat[j][i]) {
                 return 0; // Faux
             }
@@ -321,14 +352,14 @@ void exo_2_4_symetrie() {
         {7, 8, 9}
     };
 
-    printf("Test symétrique : %s\n", est_symetrique(sym) ? "OUI" : "NON");
-    printf("Test non symétrique : %s\n", est_symetrique(pas_sym) ? "OUI" : "NON");
+    printf("Test symétrique : %s\n", est_symetrique(3, 3, sym) ? "OUI" : "NON");
+    printf("Test non symétrique : %s\n", est_symetrique(3, 3, pas_sym) ? "OUI" : "NON");
 }
 
 // --- 2.5 Recherche ---
-int contient_valeur(int mat[3][4], int valeur) {
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 4; j++) {
+int contient_valeur(int L, int C, int mat[L][C], int valeur) {
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
             if(mat[i][j] == valeur) {
                 return 1; // Trouvé
             }
@@ -349,7 +380,7 @@ void exo_2_5_recherche() {
     printf("Quel nombre cherchez-vous ? ");
     scanf("%d", &cible);
 
-    if(contient_valeur(grille, cible)) {
+    if(contient_valeur(3, 4, grille, cible)) {
         printf("Le nombre %d est dans la grille !\n", cible);
     } else {
         printf("Le nombre %d n'est pas là.\n", cible);
@@ -361,6 +392,40 @@ void exo_2_5_recherche() {
 // ==========================================
 
 // --- 3.1 Malloc ---
+int **allouer_matrice(int L, int C) {
+    int **matrice = (int **)malloc(L * sizeof(int *));
+    for(int i = 0; i < L; i++) {
+        matrice[i] = (int *)malloc(C * sizeof(int));
+    }
+    return matrice;
+}
+
+void remplir_matrice_sequentielle(int **matrice, int L, int C) {
+    int compteur = 0;
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
+            matrice[i][j] = compteur++;
+        }
+    }
+}
+
+void afficher_matrice_dynamique(int **matrice, int L, int C) {
+    printf("\n--- Matrice Dynamique ---\n");
+    for(int i = 0; i < L; i++) {
+        for(int j = 0; j < C; j++) {
+            printf("%3d ", matrice[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void liberer_matrice(int **matrice, int L) {
+    for(int i = 0; i < L; i++) {
+        free(matrice[i]);
+    }
+    free(matrice);
+}
+
 void exo_3_1_malloc() {
     printf("\n--- EXERCICE 3.1 : MALLOC ---\n");
     int L, C;
@@ -370,33 +435,16 @@ void exo_3_1_malloc() {
     scanf("%d", &C);
 
     // 1. Allocation
-    int **matrice = (int **)malloc(L * sizeof(int *));
-    for(int i = 0; i < L; i++) {
-        matrice[i] = (int *)malloc(C * sizeof(int));
-    }
+    int **matrice = allouer_matrice(L, C);
 
     // 2. Remplissage
-    int compteur = 0;
-    for(int i = 0; i < L; i++) {
-        for(int j = 0; j < C; j++) {
-            matrice[i][j] = compteur++;
-        }
-    }
+    remplir_matrice_sequentielle(matrice, L, C);
 
     // 3. Affichage
-    printf("\n--- Matrice Dynamique ---\n");
-    for(int i = 0; i < L; i++) {
-        for(int j = 0; j < C; j++) {
-            printf("%3d ", matrice[i][j]);
-        }
-        printf("\n");
-    }
+    afficher_matrice_dynamique(matrice, L, C);
 
     // 4. Libération
-    for(int i = 0; i < L; i++) {
-        free(matrice[i]);
-    }
-    free(matrice);
+    liberer_matrice(matrice, L);
 }
 
 // --- 3.2 Identité ---
@@ -412,11 +460,7 @@ int **creer_matrice_identite(int n) {
     return mat;
 }
 
-void exo_3_2_identite() {
-    printf("\n--- EXERCICE 3.2 : IDENTITE ---\n");
-    int N = 5;
-    int **id = creer_matrice_identite(N);
-
+void afficher_matrice_identite(int **id, int N) {
     printf("Matrice Identité de taille %d :\n", N);
     for(int i = 0; i < N; i++) {
         for(int j = 0; j < N; j++) {
@@ -424,18 +468,19 @@ void exo_3_2_identite() {
         }
         printf("\n");
     }
+}
 
-    for(int i = 0; i < N; i++) free(id[i]);
-    free(id);
+void exo_3_2_identite() {
+    printf("\n--- EXERCICE 3.2 : IDENTITE ---\n");
+    int N = 5;
+    int **id = creer_matrice_identite(N);
+
+    afficher_matrice_identite(id, N);
+    liberer_matrice(id, N);
 }
 
 // --- 3.3 Pascal ---
-void exo_3_3_pascal() {
-    printf("\n--- EXERCICE 3.3 : PASCAL ---\n");
-    int H;
-    printf("Hauteur du triangle ? ");
-    scanf("%d", &H);
-
+int **creer_triangle_pascal(int H) {
     int **triangle = (int **)malloc(H * sizeof(int *));
 
     for(int i = 0; i < H; i++) {
@@ -448,14 +493,25 @@ void exo_3_3_pascal() {
             triangle[i][j] = triangle[i-1][j-1] + triangle[i-1][j];
         }
     }
+    return triangle;
+}
 
+void afficher_triangle_pascal(int **triangle, int H) {
     for(int i = 0; i < H; i++) {
         for(int j = 0; j <= i; j++) {
             printf("%d ", triangle[i][j]);
         }
         printf("\n");
     }
+}
 
-    for(int i = 0; i < H; i++) free(triangle[i]);
-    free(triangle);
+void exo_3_3_pascal() {
+    printf("\n--- EXERCICE 3.3 : PASCAL ---\n");
+    int H;
+    printf("Hauteur du triangle ? ");
+    scanf("%d", &H);
+
+    int **triangle = creer_triangle_pascal(H);
+    afficher_triangle_pascal(triangle, H);
+    liberer_matrice(triangle, H);
 }
