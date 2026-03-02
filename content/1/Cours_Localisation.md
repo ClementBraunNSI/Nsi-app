@@ -23,6 +23,13 @@ D'autres puissances ont développé leurs propres systèmes :
 *   🇷🇺 **GLONASS** (Russie)
 *   🇨🇳 **BeiDou** (Chine)
 
+<Quiz 
+  question="Quel est le nom du système de positionnement par satellite européen ?" 
+  options={["GPS", "Galileo", "GLONASS", "BeiDou"]} 
+  answer={1} 
+  explanation="Galileo est le système européen, souvent plus précis que le GPS américain car plus récent."
+/>
+
 ## 📍 Coordonnées Géographiques
 
 Pour localiser un point sur Terre, on utilise un système de coordonnées en trois dimensions :
@@ -32,6 +39,13 @@ Pour localiser un point sur Terre, on utilise un système de coordonnées en tro
 | **Latitude** | Angle par rapport à l'équateur (Nord/Sud) | Degrés | 48.8588897° N |
 | **Longitude** | Angle par rapport au méridien de Greenwich (Est/Ouest) | Degrés | 2.320041° E |
 | **Altitude** | Hauteur par rapport au niveau de la mer | Mètres | 35 m |
+
+<Quiz 
+  question="Que représente la Latitude ?" 
+  options={["La position Est/Ouest", "La hauteur par rapport à la mer", "La position Nord/Sud par rapport à l'équateur", "La vitesse de déplacement"]} 
+  answer={2} 
+  explanation="La Latitude indique si on est au Nord ou au Sud de l'équateur (0°)."
+/>
 
 <GpsCoordinates />
 
@@ -46,6 +60,13 @@ Pour localiser un point sur Terre, on utilise un système de coordonnées en tro
 1.  Le récepteur GPS capte les signaux d'au moins **4 satellites** (3 pour la position, 1 pour la synchronisation temporelle).
 2.  Il calcule la distance grâce au temps de trajet du signal ($d = v \times t$, avec $v = 300\,000 \text{ km/s}$).
 3.  L'intersection des sphères de distance donne la position exacte.
+
+<Quiz 
+  question="Combien de satellites sont nécessaires au minimum pour obtenir une position GPS précise (latitude, longitude et altitude) ?" 
+  options={["1", "2", "3", "4"]} 
+  answer={3} 
+  explanation="Il faut 3 satellites pour trianguler la position (X, Y, Z) et un 4ème pour synchroniser l'horloge du récepteur avec celle, atomique, des satellites."
+/>
 
 !!! warning "Précision du signal"
     La précision dépend de nombreux facteurs : nombre de satellites visibles, météo, obstacles (bâtiments, tunnels) et qualité du récepteur.

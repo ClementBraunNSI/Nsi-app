@@ -40,6 +40,13 @@ Plus de 1,7 milliard de sites web actifs, avec des technologies avancées permet
 
 > 🌍 **Anecdote historique :** Découvrez la [toute première page web](http://info.cern.ch/hypertext/WWW/TheProject.html) créée par les chercheurs du CERN !
 
+<Quiz 
+  question="Quelle est la différence majeure entre le Web 1.0 et le Web 2.0 ?" 
+  options={["Le Web 2.0 est plus rapide", "Le Web 2.0 permet aux utilisateurs de créer du contenu (participatif)", "Le Web 1.0 n'utilisait pas Internet", "Le Web 2.0 est payant"]} 
+  answer={1} 
+  explanation="Le Web 2.0 marque le passage de sites statiques (lecture seule) à des plateformes dynamiques où les utilisateurs interagissent et créent du contenu (réseaux sociaux, blogs, wikis)."
+/>
+
 ## 🔄 Le Modèle Client-Serveur
 
 > **🎯 Architecture Fondamentale**
@@ -57,6 +64,13 @@ Machine qui dispose d'informations et a pour rôle de les envoyer. Correspond à
 > Les échanges entre client et serveur se font via des **requêtes** - des messages formalisés qui permettent de demander ou d'envoyer des données.
 
 ![Schéma du modèle client-serveur](/content/1/client_serveur.png)
+
+<Quiz 
+  question="Quel est le rôle du Client dans le modèle Client-Serveur ?" 
+  options={["Il stocke les sites web", "Il fournit la connexion Internet", "Il envoie des requêtes pour demander des ressources", "Il gère les adresses IP"]} 
+  answer={2} 
+  explanation="Le Client (comme votre navigateur) demande des pages web au Serveur en envoyant des requêtes HTTP."
+/>
 
 ## 🏷️ Adresses IP et URL
 
@@ -94,6 +108,13 @@ Si l'adresse symbolique est stockée dans le cache du navigateur, celui-ci utili
 Si l'adresse n'est pas connue, une série de requêtes récursives est lancée pour trouver le serveur DNS qui dispose de l'information recherchée.
 
 > 💡 **Exemple pratique :** Recherche de www.google.fr → Le navigateur utilise directement l'IP **172.217.20.163** si elle est en cache.
+
+<Quiz 
+  question="Quelle est la fonction principale d'un serveur DNS ?" 
+  options={["Bloquer les publicités", "Traduire un nom de domaine (URL) en adresse IP", "Héberger les fichiers du site web", "Crypter les connexions"]} 
+  answer={1} 
+  explanation="Le DNS (Domain Name System) est l'annuaire d'Internet : il traduit les noms lisibles par les humains (google.fr) en adresses IP compréhensibles par les machines (172.217.20.163)."
+/>
 
 <DnsResolver />
 

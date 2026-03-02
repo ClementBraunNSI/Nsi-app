@@ -38,6 +38,20 @@ Plus de 4 milliards d'internautes connectés, échangeant emails, fichiers et ac
 
 ![Carte mondiale d'Internet](/content/1/geo-mercator.svg)
 
+<Quiz 
+  question="Quel était le nom du premier réseau, ancêtre d'Internet, créé dans les années 60 ?" 
+  options={["ARPANET", "INTERNET", "MINITEL", "WEB"]} 
+  answer={0} 
+  explanation="ARPANET (Advanced Research Projects Agency Network) est le premier réseau à transfert de paquets développé aux États-Unis."
+/>
+
+<Quiz 
+  question="Qui a inventé le World Wide Web (le Web) au CERN en 1989 ?" 
+  options={["Robert Kahn", "Vint Cerf", "Tim Berners-Lee", "Bill Gates"]} 
+  answer={2} 
+  explanation="Tim Berners-Lee a inventé le Web au CERN pour faciliter le partage d'informations entre scientifiques."
+/>
+
 ## 🔧 Anatomie d'un Réseau Informatique
 
 > **Définition : Réseau Informatique**
@@ -70,6 +84,13 @@ Réseau localisé dans une même zone géographique (maison, bureau, école).
 Réseau accessible à Internet, connectant des réseaux locaux du monde entier.
 
 ![Schéma réseau local et Internet](/content/1/rlinternet.png)
+
+<Quiz 
+  question="Quel appareil permet de connecter votre réseau local (maison) au réseau Internet mondial ?" 
+  options={["Le Switch", "Le Routeur (Box)", "La Carte Réseau", "Le Serveur"]} 
+  answer={1} 
+  explanation="C'est le rôle du routeur (souvent intégré dans votre Box Internet) de faire le lien entre votre réseau local (LAN) et le réseau étendu (WAN/Internet)."
+/>
 
 > **Question clé**
 > On dispose de machines et d'un réseau, mais comment se retrouvent-elles pour communiquer ? Quelles techniques sont utilisées ?

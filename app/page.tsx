@@ -20,7 +20,7 @@ const GAMES = [
     id: 'fox-game', 
     title: "L'Académie des Renards", 
     desc: "Apprends les bases de Python (boucles, conditions, fonctions) en guidant un renard à travers des énigmes.", 
-    img: "/images/fox_1.png", 
+    img: "/images/fox_act.png", 
     color: "bg-amber-500", 
     tag: "Jeu Python", 
     href: "/fox" 

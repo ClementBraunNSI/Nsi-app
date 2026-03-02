@@ -14,6 +14,13 @@ icon: "📝"
 >
 > **HTML** (HyperText Markup Language) est le langage de balisage utilisé pour structurer le contenu des pages web. Chaque page web est un fichier HTML qui contient des balises permettant de définir différents éléments comme des titres, des paragraphes, des images, des liens, etc.
 
+<Quiz 
+  question="Que signifie HTML ?" 
+  options={["HyperText Markup Language", "Hyper Transfer Mode Link", "Home Tool Made Language", "High Tech Machine Learning"]} 
+  answer={0} 
+  explanation="HTML est un langage de balisage (Markup Language) pour créer des pages Web."
+/>
+
 ## 2. Structure d'un fichier HTML
 
 > **📖 Définition**
@@ -44,6 +51,13 @@ Explication :
 - `<meta charset="UTF-8">` : Spécifie l'encodage de caractères (UTF-8).
 - `<title>` : Définit le titre qui apparaît dans l'onglet du navigateur.
 - `<body>` : Contient le contenu visible par l'utilisateur (titres, paragraphes, images, etc.).
+
+<Quiz 
+  question="Quelle balise contient tout ce qui sera visible à l'écran par le visiteur ?" 
+  options={["<head>", "<body>", "<title>", "<html>"]} 
+  answer={1} 
+  explanation="La balise <body> (corps) contient les textes, images et boutons. La balise <head> contient des informations invisibles pour le visiteur (titre de l'onglet, encodage...)."
+/>
 
 <HtmlStructureExplorer />
 

@@ -96,6 +96,7 @@ import IotInterface from '@/components/interactive/IotInterface';
 import FilterBubble from '@/components/interactive/FilterBubble';
 import DataProcessor from '@/components/interactive/DataProcessor';
 import FilterPlayground from '@/components/interactive/FilterPlayground';
+import Quiz from '@/components/interactive/Quiz';
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
   const { niveaux, slug } = await params;
@@ -246,6 +247,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     FilterBubble,
     DataProcessor,
     FilterPlayground,
+    Quiz,
   };
 
   return (

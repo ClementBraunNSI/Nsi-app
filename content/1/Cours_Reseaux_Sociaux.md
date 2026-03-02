@@ -14,6 +14,13 @@ icon: "📱"
 >
 > Un **réseau social numérique** est une plateforme en ligne qui permet aux utilisateurs de créer un profil, de se connecter avec d'autres personnes et de partager du contenu (textes, images, vidéos).
 
+<Quiz 
+  question="Quelle est la principale caractéristique d'un réseau social numérique ?" 
+  options={["Il permet de créer un profil et d'interagir avec d'autres utilisateurs", "Il sert uniquement à envoyer des emails", "Il est toujours payant", "Il ne fonctionne que sur ordinateur"]} 
+  answer={0} 
+  explanation="La définition même d'un réseau social repose sur la création de profil, la connexion (amis/abonnés) et le partage de contenu."
+/>
+
 **Activité : Analyse comparative**
 
 **Choisissez un réseau social et analysez :**
@@ -47,6 +54,13 @@ Un réseau social est associé à un modèle économique. De grandes sociétés 
 > **💰 Le modèle de la gratuité**
 > Si un service est gratuit, c'est que **vous êtes le produit** !
 > Les réseaux sociaux ne vous font pas payer l'inscription, mais ils vendent votre **attention** et vos **données personnelles** aux annonceurs publicitaires.
+
+<Quiz 
+  question="Si l'utilisation d'un réseau social est gratuite, comment l'entreprise génère-t-elle des revenus ?" 
+  options={["Grâce aux dons des utilisateurs", "En vendant votre attention et vos données aux publicitaires", "Elle ne génère pas de revenus", "Uniquement via les abonnements premium"]} 
+  answer={1} 
+  explanation="C'est le modèle économique de la publicité ciblée : 'Si c'est gratuit, vous êtes le produit'. Vos données permettent de cibler les pubs."
+/>
 
 Il existe un bon nombre de coûts liés à l'utilisation pour les particuliers de réseaux sociaux.
 
@@ -94,6 +108,13 @@ L'algorithme analyse vos "J'aime", vos partages et le temps que vous passez sur 
 ### 🫧 Le danger de la "Bulle de Filtres"
 Si vous aimez le football, l'algorithme ne vous montrera que du football. Si vous avez une opinion politique, il ne vous montrera que des gens d'accord avec vous.
 C'est ce qu'on appelle une **Bulle de Filtres** (ou chambre d'écho) : vous finissez par croire que tout le monde pense comme vous, et vous ne voyez plus la diversité du monde.
+
+<Quiz 
+  question="Qu'est-ce qu'une 'bulle de filtres' ?" 
+  options={["Un filtre photo populaire", "Le fait de ne voir que des contenus qui confirment nos opinions", "Un groupe de discussion privé", "Une protection contre les virus"]} 
+  answer={1} 
+  explanation="Les algorithmes nous enferment dans une bulle en nous montrant toujours plus de ce qu'on aime déjà, réduisant notre exposition à des points de vue différents."
+/>
 
 <FilterBubble />
 
