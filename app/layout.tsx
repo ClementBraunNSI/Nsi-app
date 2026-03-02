@@ -240,6 +240,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     };
 
     // Flou de protection quand la fenêtre perd le focus (anti-screenshot partiel)
+    // DÉSACTIVÉ TEMPORAIREMENT À LA DEMANDE DU CLIENT
+    /*
     const handleVisibilityChange = () => {
       if (document.hidden) {
         document.body.style.filter = 'blur(20px)';
@@ -256,21 +258,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     const handleFocus = () => {
        document.body.classList.remove('blur-protection');
     };
+    */
 
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('dragstart', handleDragStart);
-    window.addEventListener('blur', handleBlur);
-    window.addEventListener('focus', handleFocus);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    // window.addEventListener('blur', handleBlur);
+    // window.addEventListener('focus', handleFocus);
+    // document.addEventListener('visibilitychange', handleVisibilityChange);
     
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('dragstart', handleDragStart);
-      window.removeEventListener('blur', handleBlur);
-      window.removeEventListener('focus', handleFocus);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      // window.removeEventListener('blur', handleBlur);
+      // window.removeEventListener('focus', handleFocus);
+      // document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 

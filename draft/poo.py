@@ -1,5 +1,4 @@
 class Voiture:
-
     def __init__(self, marque:str, modele:str, nb_portes : int,
                 nb_ch : int, autonomie : int, couleur : str):
                 self.Marque = marque

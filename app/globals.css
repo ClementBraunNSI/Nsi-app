@@ -159,12 +159,12 @@ pre, code, .prose pre, .prose code {
   }
 }
 
-/* Protection visuelle (Privacy Mode) */
-.blur-protection {
+/* Protection visuelle (Privacy Mode) - DÉSACTIVÉ */
+/* .blur-protection {
   filter: blur(20px) !important;
   pointer-events: none !important;
   user-select: none !important;
-}
+} */
 
 /* Autorise la sélection dans les champs de formulaire */
 input, textarea {
