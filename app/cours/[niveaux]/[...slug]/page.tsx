@@ -98,6 +98,10 @@ import DataProcessor from '@/components/interactive/DataProcessor';
 import FilterPlayground from '@/components/interactive/FilterPlayground';
 import Quiz from '@/components/interactive/Quiz';
 import ReflectionInput from '@/components/interactive/ReflectionInput';
+import CourseNavigation from '@/components/CourseNavigation';
+import MobileBlocker from '@/components/MobileBlocker';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import { getAdjacentCourses } from '@/lib/course-utils';
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
   const { niveaux, slug } = await params;
@@ -139,8 +143,10 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-red-600 mx-auto mb-4">
               <Lock size={32} />
             </div>
-            <h2 className="text-xl font-black text-slate-900 mb-2">Accès refusé</h2>
-            <p className="text-slate-500 mb-6">Vous devez être connecté pour accéder à ce cours.</p>
+            <h2 className="text-xl font-black text-slate-900 mb-2">Réservé aux Explorateurs !</h2>
+            <p className="text-slate-500 mb-6">
+              Connecte-toi pour débloquer ce cours, sauvegarder ta progression et gagner des badges exclusifs.
+            </p>
             
             {/* Debug Info */}
             <div className="bg-gray-100 p-4 rounded-lg mb-6 text-left text-xs text-gray-600 overflow-auto">
@@ -208,6 +214,9 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   // Transformation des admonitions (!!! type "titre") en composants React (<Admonition>)
   const contentWithAdmonitions = transformAdmonitions(content);
 
+  // Navigation entre les cours
+  const { prev, next } = getAdjacentCourses(dossierPhysique, slugStr);
+
   const mdxComponents = {
     ExerciseTabs,
     ExerciseSection,
@@ -254,6 +263,9 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
 
   return (
     <div className="min-h-screen bg-[#FDFCFB]">
+      <MobileBlocker />
+      <ReadingProgressBar />
+      
       {/* Barre de navigation haute */}
       <nav className="border-b border-slate-100 bg-white/50 backdrop-blur-md sticky top-20 z-30">
         <div className="max-w-5xl mx-auto px-6 py-4">
@@ -302,7 +314,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
           prose-img:rounded-3xl prose-img:shadow-md prose-img:border prose-img:border-slate-100 prose-img:mx-auto prose-img:my-10 prose-img:max-h-[500px] prose-img:w-auto
           ">
           <MDXRemote 
-            source={contentWithAdmonitions} 
+            source={contentWithAdmonitions}
             components={mdxComponents}
             options={{
               mdxOptions: {
@@ -312,6 +324,12 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             }}
           />
         </article>
+
+        <CourseNavigation 
+          prevCourse={prev || undefined} 
+          nextCourse={next || undefined} 
+          currentLevel={niveaux} 
+        />
       </main>
     </div>
   );
