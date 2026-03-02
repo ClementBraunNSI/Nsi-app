@@ -9,9 +9,12 @@ interface QuizProps {
   explanation?: string;
 }
 
-export default function Quiz({ question, options, answer, explanation }: QuizProps) {
+export default function Quiz({ question, options = [], answer, explanation }: QuizProps) {
   const [selected, setSelected] = useState<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Ensure options is an array (in case it's passed as a string or undefined)
+  const safeOptions = Array.isArray(options) ? options : [];
 
   const handleSubmit = () => {
     if (selected !== null) {
@@ -34,7 +37,7 @@ export default function Quiz({ question, options, answer, explanation }: QuizPro
       </div>
       
       <div className="p-6 space-y-3">
-        {options.map((option, index) => {
+        {safeOptions.map((option, index) => {
           let optionClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex justify-between items-center group ";
           
           if (isSubmitted) {
@@ -89,7 +92,7 @@ export default function Quiz({ question, options, answer, explanation }: QuizPro
               {isCorrect ? <><Check size={18} /> Correct !</> : <><X size={18} /> Incorrect</>}
             </p>
             <p className="text-sm opacity-90">
-              {explanation || (isCorrect ? "Bravo, c'est la bonne réponse." : `La bonne réponse était : ${options[answer]}`)}
+              {explanation || (isCorrect ? "Bravo, c'est la bonne réponse." : `La bonne réponse était : ${safeOptions[answer]}`)}
             </p>
           </div>
         )}

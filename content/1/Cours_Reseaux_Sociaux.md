@@ -66,15 +66,13 @@ Il existe un bon nombre de coûts liés à l'utilisation pour les particuliers d
 
 **Lister quels coûts peuvent être associés au fonctionnement d'un réseau social**
 
-_______________________________________________________________________________________
-______________________________________________________________________________________________________________________________________________________________________________
+<ReflectionInput label="Vos idées de coûts :" placeholder="Ex: Serveurs, Salaires des ingénieurs..." />
 
 Ces entreprises doivent donc rémunérer ou financer toutes les fonctionnalités de leurs réseaux sociaux et cela avec diverses méthodes.
 
 **Lister des méthodes de financement des réseaux sociaux**
 
-_______________________________________________________________________________________
-______________________________________________________________________________________________________________________________________________________________________________
+<ReflectionInput label="Vos idées de financement :" placeholder="Ex: Publicité, Abonnements..." />
 
 ## 📖 Contenus disponibles sur un réseau social
 
@@ -82,7 +80,7 @@ Sur un réseau social, il existe bons nombre de contenus différents qui sont pu
 
 **Lister quels contenus peuvent être présents sur un réseau social**
 
-______________________________________________________________________________________________________________________________________________________________________________
+<ReflectionInput label="Vos idées de contenus :" placeholder="Ex: Photos, Vidéos, Textes..." />
 
 Les contenus sont soumis à un réglement spécifique au réseau social et même à la loi.
 En effet,chaque utilisateur est pénalement responsable de ce qu'il poste sur un réseau social.
