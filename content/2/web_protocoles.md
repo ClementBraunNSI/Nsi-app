@@ -48,6 +48,8 @@ protocole://sous-domaine.nom-de-domaine.extension/chemin/ressource
 Exemple : https://www.example.com/dossier/page.html
 ```
 
+<UrlBuilder />
+
 **Composants d'une URL :**
 *   **Protocole** : `https://` (indique le protocole de communication utilisé)
 *   **Sous-domaine** : `www` (subdivision du domaine principal)
@@ -63,6 +65,8 @@ Le système **DNS** (Domain Name System) est un service qui traduit les noms de 
 2.  Si non, une requête DNS est envoyée à un serveur DNS.
 3.  Le serveur DNS renvoie l'adresse IP correspondante.
 4.  Le navigateur peut alors établir une connexion avec le serveur web à cette adresse IP.
+
+<DnsResolver />
 
 ## Le protocole HTTP
 
@@ -84,6 +88,8 @@ Chaque requête et réponse HTTP contient :
 | :--- | :--- | :--- |
 | **GET** | Demande une ressource au serveur (sans modifier les données). | `GET /page.html` |
 | **POST** | Envoie des données au serveur (pour créer ou modifier une ressource). | `POST /formulaire` |
+
+<HttpMethodVisualizer />
 
 Exemple de requête GET :
 ```http
@@ -124,6 +130,8 @@ Les réponses HTTP contiennent un code de statut qui indique le résultat du tra
 *   **Intégrité** : Garantit que les données n'ont pas été modifiées pendant la transmission.
 *   **Authentification** : Vérifie l'identité du serveur auquel le client se connecte.
 
+<HttpsSimulator />
+
 !!! note "Certificats SSL/TLS"
     Le fonctionnement de HTTPS repose sur des certificats numériques délivrés par des autorités de certification (CA) qui attestent de l'identité du site web.
 
@@ -143,3 +151,5 @@ Les **cookies** sont de petits fichiers texte stockés par le navigateur sur l'o
 *   **Cookies persistants** : Conservés jusqu'à une date d'expiration spécifiée.
 *   **Cookies first-party** : Créés par le site visité.
 *   **Cookies third-party** : Créés par des domaines autres que celui visité (souvent pour le suivi publicitaire).
+
+<CookieManager />

@@ -7,6 +7,27 @@ meta: "Docstrings, Type Hinting et Documentation"
 level : premiere
 ---
 
+### 1.1 Le contrat de confiance : l'Assertion
+
+Une **assertion** est un moyen de vérifier qu'une condition est vraie à un moment donné du programme. C'est comme un "checkpoint" dans un jeu vidéo : si la condition est fausse, le programme s'arrête immédiatement avec une erreur.
+
+```mermaid
+graph TD
+    A[Début du programme] --> B{Assertion vraie ?}
+    B -- Oui --> C[Le programme continue]
+    B -- Non --> D[❌ CRASH : AssertionError]
+    D --> E[Fin prématurée]
+```
+
+**Exemple visuel :**
+Imaginez une machine qui ne doit accepter que des nombres positifs.
+```python
+x = -5
+assert x > 0, "Alerte ! x doit être positif"
+# Le programme plante ici, la suite n'est jamais exécutée.
+print("Ouf, x est positif")
+```
+
 <ExerciseTabs courseId="specifications-python" courseTitle="Spécification">
   <ExerciseSection id="specs-1-1" label="1.1 - Documenter est_pair">
     <Enonce>

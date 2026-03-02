@@ -105,3 +105,71 @@ body:not(.dark) {
 .prose tr:nth-child(even) {
   background-color: #fcfcfd;
 }
+/* Content Protection */
+/* Empêche la sélection de texte sur tout le site */
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Autorise la sélection de texte UNIQUEMENT dans les blocs de code */
+pre, code, .prose pre, .prose code {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+  cursor: text;
+}
+
+/* Protection contre l'impression */
+@media print {
+  /* On cache tous les enfants directs du body sauf notre overlay */
+  body > *:not(#print-overlay) {
+    display: none !important;
+  }
+
+  /* On s'assure que l'overlay est visible et prend toute la place */
+  #print-overlay {
+    display: flex !important;
+    visibility: visible !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 2147483647 !important; /* Max int 32-bit */
+    background-color: white !important;
+  }
+  
+  /* On nettoie le body */
+  html, body {
+    background: white !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* On désactive les en-têtes/pieds de page automatiques si possible via CSS (support limité) */
+  @page {
+    margin: 0;
+    size: auto;
+  }
+}
+
+/* Protection visuelle (Privacy Mode) */
+.blur-protection {
+  filter: blur(20px) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* Autorise la sélection dans les champs de formulaire */
+input, textarea {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}

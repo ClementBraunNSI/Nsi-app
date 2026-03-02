@@ -23,6 +23,15 @@ Le CERN annonce que le Web sera libre d'utilisation pour tous, sans redevances. 
 ### Aujourd'hui : Web Moderne
 Plus de 1,7 milliard de sites web actifs, avec des technologies avancées permettant des applications complexes et interactives.
 
+### 📜 L'Évolution : Du Web 1.0 au Web 2.0
+
+- **Web 1.0 (1990-2000)** : Le Web "statique". On ne pouvait que *lire* des informations (comme un journal en ligne).
+- **Web 2.0 (2000-présent)** : Le Web "participatif". L'utilisateur devient acteur : il publie, commente, partage (Réseaux sociaux, Blogs, Wikis).
+
+> **⚔️ La Guerre des Navigateurs**
+>
+> Dans les années 90, deux logiciels se sont battus pour dominer le marché : **Netscape** et **Internet Explorer**. C'est Microsoft qui a gagné cette première bataille, avant d'être détrôné plus tard par **Google Chrome**.
+
 > **🎯 Concept Fondamental : Les Hyperliens**
 >
 > La technologie du Web repose sur les **hyperliens** - des liens cliquables qui permettent de naviguer entre les ressources stockées sur différents serveurs à travers le monde.
@@ -57,14 +66,7 @@ Machine qui dispose d'informations et a pour rôle de les envoyer. Correspond à
 
 ### 🧩 Structure d'une URL
 
-Exemple : `https://www.google.com/search?q=exemple`
-
-1. **🔒 Protocole** : `http://` ou `https://`
-2. **🌍 Sous-domaine** : `www` (optionnel)
-3. **🏠 Nom de domaine** : `google`, `facebook`, etc.
-4. **🏷️ Extension** : `.com`, `.fr`, `.org`, etc.
-5. **Chemin vers la ressource** : `/search`
-6. **Paramètres de requête** : `?q=exemple`
+<UrlBuilder />
 
 > **🗂️ Serveur DNS (Domain Name Server)**
 >
@@ -93,7 +95,7 @@ Si l'adresse n'est pas connue, une série de requêtes récursives est lancée p
 
 > 💡 **Exemple pratique :** Recherche de www.google.fr → Le navigateur utilise directement l'IP **172.217.20.163** si elle est en cache.
 
-![Processus de résolution DNS récursive](/content/1/dns.png)
+<DnsResolver />
 
 ## 📝 Le Langage HTML
 
@@ -127,27 +129,9 @@ Les balises sont des éléments entourés de crochets angulaires (`< >`) qui ind
 
 ### 🔧 Les Méthodes HTTP
 
-#### 📥 Méthode GET
-Utilisée pour **récupérer** des informations. Ne modifie aucune donnée sur le serveur. Permet d'obtenir des pages web, images, fichiers CSS/JS, etc.
+#### 📥 Méthode GET vs 📤 Méthode POST
 
-```http
-GET /utilisateurs/profil?id=123 HTTP/1.1
-Host: www.reseausocial.com
-User-Agent: Mozilla/5.0
-Accept-Language: fr-FR
-```
-
-#### 📤 Méthode POST
-Utilisée pour **envoyer** des données au serveur afin de modifier des ressources. Utilisée pour les formulaires, upload de fichiers, mise à jour de profils, etc.
-
-```http
-POST /utilisateurs/inscription HTTP/1.1
-Host: www.reseausocial.com
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 54
-
-nom=Dupont&prenom=Jean&email=jean.dupont@email.com
-```
+<HttpMethodVisualizer />
 
 ### 📊 Codes de Statut HTTP
 
@@ -174,3 +158,29 @@ Pour éviter les biais, certaines pages ont des votes plus importants que d'autr
 > 🎯 **Impact :** Cette logique de calcul de pertinence est aujourd'hui utilisée par la plupart des moteurs de recherche pour classer les résultats.
 
 > 🚀 **Héritage :** PageRank a permis à Google de devenir le moteur de recherche dominant en proposant des résultats plus pertinents que ses concurrents.
+
+<PageRankVisualizer />
+
+## 🍪 Cookies et Traceurs
+
+> **Définition : Cookie**
+> Un **cookie** est un petit fichier texte déposé sur votre ordinateur par les sites web que vous visitez. Il permet de "mémoriser" des informations d'une page à l'autre (panier d'achat, connexion, préférences).
+
+### 🕵️ Le Traçage Publicitaire
+Certains cookies (tiers) ne servent pas au fonctionnement du site, mais à vous suivre de site en site pour établir votre **profil publicitaire**. C'est pour cela que vous voyez des pubs de chaussures après avoir visité un site de sport !
+
+<CookieManager />
+
+## 🔒 Sécurité : HTTPS et Cadenas
+
+> **HTTP vs HTTPS**
+> - **HTTP** : Les données circulent "en clair". N'importe qui sur le réseau peut les lire.
+> - **HTTPS** (S = Secure) : Les données sont **chiffrées**. Seul le destinataire peut les lire.
+
+### 🛡️ Simulation d'une attaque "Man-in-the-Middle"
+Essayez d'envoyer un mot de passe avec et sans HTTPS pour voir ce qu'un pirate peut intercepter.
+
+<HttpsSimulator />
+
+> **⚠️ Règle d'or**
+> Ne jamais entrer de mot de passe ou de numéro de carte bancaire si le petit cadenas 🔒 n'est pas présent dans la barre d'adresse !

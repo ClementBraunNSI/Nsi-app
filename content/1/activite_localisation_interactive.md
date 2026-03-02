@@ -6,12 +6,22 @@ chapter: "Localisation"
 icon: "📡"
 ---
 
-# 📡 Atelier Localisation : Le GPS
+<ExerciseTabs courseId="trilateration-gps" courseTitle="Atelier GPS : La Trilateration">
+  <ExerciseSection id="mission-gps" label="Mission : Retrouver le Renard">
+    <Enonce>
+### 📡 Mission : Retrouver le Renard
 
 Pour calculer ta position, ton téléphone écoute les signaux d'au moins 3 satellites. C'est le principe de la **trilatération**.
 
-## 🎯 Défi
-Le renard se cache quelque part à l'intersection des signaux.
-Déplace les curseurs pour ajuster le rayon de chaque satellite jusqu'à ce que les trois cercles se croisent exactement sur la tanière du renard.
+**Objectif :** Le renard se cache. Utilise les signaux des satellites Galileo pour trianguler sa position exacte.
+
+1.  **Lance la mission** pour activer le premier satellite.
+2.  **Ajuste le rayon** (cercle) de chaque satellite en fonction du temps mis par le signal pour arriver.
+    *   *Rappel : Distance = Vitesse × Temps*
+    *   *Vitesse du signal = 300 m / µs (300 000 km/s)*
+3.  L'intersection des 3 cercles te donnera la position exacte du renard.
 
 <TrilaterationMap />
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>

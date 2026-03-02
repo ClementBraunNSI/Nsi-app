@@ -21,25 +21,6 @@ icon: "💾"
     - Dupont Bob 18 ans
     - Durand Claire 17 ans
 
-    <Correction>
-    ```sql
-    CREATE TABLE etudiants (
-        id INTEGER PRIMARY KEY,
-        nom VARCHAR(50),
-        prenom VARCHAR(50),
-        age INTEGER
-    );
-
-    INSERT INTO etudiants (nom, prenom, age)
-    VALUES ('Martin', 'Alice', 17);
-
-    INSERT INTO etudiants (nom, prenom, age)
-    VALUES ('Dupont', 'Bob', 18);
-
-    INSERT INTO etudiants (nom, prenom, age)
-    VALUES ('Durand', 'Claire', 17);
-    ```
-    </Correction>
     <Verification>
     ```sql
     -- Vérification
@@ -53,21 +34,6 @@ icon: "💾"
     3. Afficher les étudiants de 17 ans
     4. Afficher les étudiants dont le nom commence par 'D'
 
-    <Correction>
-    ```sql
-    -- 1. Tous les étudiants
-    SELECT * FROM etudiants;
-
-    -- 2. Noms et prénoms seulement
-    SELECT nom, prenom FROM etudiants;
-
-    -- 3. Étudiants de 17 ans
-    SELECT * FROM etudiants WHERE age = 17;
-
-    -- 4. Noms commençant par 'D'
-    SELECT * FROM etudiants WHERE nom LIKE 'D%';
-    ```
-    </Correction>
     <Verification>
     ```sql
     -- Vérification
@@ -80,22 +46,6 @@ icon: "💾"
     6. Supprimer l'étudiant Durand
     7. Augmenter l'âge de tous les étudiants de 1 an
 
-    <Correction>
-    ```sql
-    -- 1. Modifier l'âge de Martin
-    UPDATE etudiants 
-    SET age = 18 
-    WHERE nom = 'Martin' AND prenom = 'Alice';
-
-    -- 2. Supprimer Durand
-    DELETE FROM etudiants 
-    WHERE nom = 'Durand';
-
-    -- 3. Augmenter tous les âges
-    UPDATE etudiants 
-    SET age = age + 1;
-    ```
-    </Correction>
     <Verification>
     ```sql
     -- Vérification
@@ -127,28 +77,6 @@ icon: "💾"
     5. **Après 1950** : Afficher les livres publiés strictement après l'année 1950.
     6. **Auteurs précis** : Afficher les livres écrits par 'George Orwell' OU 'Isaac Asimov'.
 
-    <Correction>
-    ```sql
-    -- 1. Tout voir
-    SELECT * FROM Livres;
-
-    -- 2. Titres uniquement
-    SELECT titre, auteur FROM Livres;
-
-    -- 3. Science-Fiction
-    SELECT titre FROM Livres WHERE genre = 'SF';
-
-    -- 4. Disponibles
-    SELECT titre FROM Livres WHERE disponible = 1;
-
-    -- 5. Après 1950
-    SELECT * FROM Livres WHERE annee_publication > 1950;
-
-    -- 6. Auteurs précis
-    SELECT * FROM Livres 
-    WHERE auteur = 'George Orwell' OR auteur = 'Isaac Asimov';
-    ```
-    </Correction>
     </Enonce>
   </ExerciseSection>
 
@@ -173,30 +101,6 @@ icon: "💾"
     5. **Le kilométrage** : Afficher les voitures ayant moins de 50 000 km, triées par kilométrage croissant.
     6. **Recherche spécifique** : Afficher les voitures qui ne sont PAS de couleur 'Blanc'.
 
-    <Correction>
-    ```sql
-    -- 1. Catalogue trié
-    SELECT * FROM Voitures ORDER BY prix ASC;
-
-    -- 2. Les Renault
-    SELECT modele, prix FROM Voitures WHERE marque = 'Renault';
-
-    -- 3. Voitures récentes et abordables
-    SELECT * FROM Voitures 
-    WHERE annee >= 2017 AND prix < 20000;
-
-    -- 4. Couleurs disponibles
-    SELECT DISTINCT couleur FROM Voitures;
-
-    -- 5. Le kilométrage
-    SELECT * FROM Voitures 
-    WHERE kilometrage < 50000 
-    ORDER BY kilometrage ASC;
-
-    -- 6. Recherche spécifique
-    SELECT * FROM Voitures WHERE couleur != 'Blanc';
-    ```
-    </Correction>
     </Enonce>
   </ExerciseSection>
 
@@ -236,40 +140,6 @@ icon: "💾"
     5. **Sans domicile** : Afficher les renards qui ne sont affectés à aucun enclos (`id_enclos` est NULL).
     6. **Inventaire** : Afficher le nom de l'enclos et la surface pour tous les enclos qui ont un sol de type 'Herbe' ou 'Terre'.
 
-    <Correction>
-    ```sql
-    -- 1. Qui est où ?
-    SELECT Renards.nom, Enclos.nom_enclos 
-    FROM Renards 
-    JOIN Enclos ON Renards.id_enclos = Enclos.id;
-
-    -- 2. Les grands espaces
-    SELECT Renards.nom 
-    FROM Renards 
-    JOIN Enclos ON Renards.id_enclos = Enclos.id 
-    WHERE Enclos.surface_m2 > 200;
-
-    -- 3. Les mâles de la Forêt
-    SELECT Renards.nom 
-    FROM Renards 
-    JOIN Enclos ON Renards.id_enclos = Enclos.id 
-    WHERE Renards.sexe = 'M' AND Enclos.nom_enclos = 'La Forêt';
-
-    -- 4. L'âge des pensionnaires
-    SELECT Renards.nom, Enclos.nom_enclos 
-    FROM Renards 
-    JOIN Enclos ON Renards.id_enclos = Enclos.id 
-    ORDER BY Renards.age DESC;
-
-    -- 5. Sans domicile
-    SELECT * FROM Renards WHERE id_enclos IS NULL;
-
-    -- 6. Inventaire
-    SELECT nom_enclos, surface_m2 
-    FROM Enclos 
-    WHERE type_sol = 'Herbe' OR type_sol = 'Terre';
-    ```
-    </Correction>
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>

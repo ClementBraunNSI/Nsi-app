@@ -16,6 +16,8 @@ badgeId: "premiere_langage_html"
 
 ## Structure d'un document HTML
 
+<HtmlStructureExplorer />
+
 Voici la structure de base d'un document HTML :
 
 ```html
@@ -91,6 +93,8 @@ Les balises HTML sont organisées en différentes catégories selon leur fonctio
 *   `<tr>` : Ligne de tableau (Table Row).
 *   `<th>` : Cellule d'en-tête (Table Header).
 *   `<td>` : Cellule de données (Table Data).
+
+<WebPreview />
 
 ## Formulaires et transmission de données
 

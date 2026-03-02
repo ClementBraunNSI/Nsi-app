@@ -26,6 +26,30 @@ On définit un ordinateur comme étant une machine qui réalise des calculs de m
 
 Le modèle de Von Neumann est caractérisé par la présence de **4 composants notables**.
 
+```mermaid
+graph TD
+    subgraph CPU [Processeur (CPU)]
+        UC[Unité de Contrôle (UC)]
+        UAL[Unité Arithmétique et Logique (UAL)]
+        Reg[Registres]
+        UC <--> UAL
+        UC <--> Reg
+        UAL <--> Reg
+    end
+
+    subgraph Memory [Mémoire]
+        RAM[RAM (Instructions + Données)]
+    end
+
+    subgraph IO [Entrées / Sorties]
+        Input[Clavier, Souris...]
+        Output[Écran, Imprimante...]
+    end
+
+    CPU <==>|Bus de Données / Adresse / Contrôle| Memory
+    CPU <==>|Bus| IO
+```
+
 ### UAL et UC : Le cerveau de la machine
 
 Les composants qui réalisent les calculs, résolvent les algorithmes et les ordonnent sont **l'Unité Arithmético Logique (UAL)** et **l'Unité de Contrôle (UC)**.

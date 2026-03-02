@@ -32,7 +32,7 @@ function Droppable({ id, children, active }: { id: string, children?: React.Reac
     <div 
       ref={setNodeRef} 
       className={`w-28 h-28 rounded-xl border-2 border-dashed flex items-center justify-center transition-colors ${
-        active ? 'bg-green-50 border-green-400' : 'bg-slate-50 border-slate-300'
+        active ? 'bg-orange-50 border-orange-400' : 'bg-slate-50 border-slate-300'
       }`}
     >
       {children || <span className="text-slate-400 text-xs font-bold uppercase">Déposer ici</span>}
@@ -136,7 +136,7 @@ export default function IotSimulator() {
       </div>
 
       {/* Status */}
-      <div className={`mt-6 p-4 rounded-lg text-center font-bold border ${isActuatorActive ? 'bg-red-50 text-red-600 border-red-200' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
+      <div className={`mt-6 p-4 rounded-lg text-center font-bold border ${isActuatorActive ? 'bg-orange-50 text-orange-600 border-orange-200' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
         État du système : {isActuatorActive ? "ALARME ACTIVÉE ! 🚨" : "Veille..."}
       </div>
     </div>

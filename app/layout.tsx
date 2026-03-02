@@ -204,6 +204,76 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     };
   }, [router]);
 
+  // Protection contre le vol de contenu
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Bloquer Ctrl+P / Cmd+P (Imprimer)
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        e.stopPropagation();
+        alert("L'impression est désactivée sur ce site.");
+      }
+      // Bloquer Ctrl+S / Cmd+S (Sauvegarder)
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        e.stopPropagation();
+        alert("La sauvegarde est désactivée.");
+      }
+      // Bloquer Ctrl+U / Cmd+U (Source)
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      // Bloquer Ctrl+Shift+I / Cmd+Option+I (Inspecteur)
+      if ((e.ctrlKey || e.metaKey) && (e.shiftKey || e.altKey) && e.key.toLowerCase() === 'i') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    const handleDragStart = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    // Flou de protection quand la fenêtre perd le focus (anti-screenshot partiel)
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        document.body.style.filter = 'blur(20px)';
+      } else {
+        document.body.style.filter = 'none';
+      }
+    };
+
+    // Plus agressif : flou dès que la souris quitte la fenêtre ou perte de focus
+    const handleBlur = () => {
+       document.body.classList.add('blur-protection');
+    };
+    
+    const handleFocus = () => {
+       document.body.classList.remove('blur-protection');
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
+    window.addEventListener('blur', handleBlur);
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('dragstart', handleDragStart);
+      window.removeEventListener('blur', handleBlur);
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -252,9 +322,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>La tanière du code par Clément BRAUN</title>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-slate-900`}>
+        <div id="print-overlay" className="fixed inset-0 z-[999999] bg-white hidden print:flex items-center justify-center text-red-600 font-black text-4xl uppercase text-center p-8">
+          ⚠️ Impression et Export PDF Interdits ⚠️
+          <br/>
+          <span className="text-xl text-slate-500 mt-4 block normal-case">Le contenu de ce site est protégé par des droits d'auteur.</span>
+        </div>
+        
         {isAppLoading && <FoxLoader />}
         
-        <header className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-[100] h-20">
+        <header className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-[100] h-20 print:hidden">
           <nav className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between relative">
             
             <Link href="/" className="flex items-center gap-3 group">

@@ -1,5 +1,5 @@
 ---
-title: "Projet - Application Bancaire"
+title: "Dictionnaires : App Bancaire"
 description: "Création d'une application bancaire simple en Python"
 level: premiere
 chapter: "Projets"
@@ -7,96 +7,111 @@ icon: "🏦"
 badgeId: "premiere_application_bancaire"
 ---
 
+import ExerciseTabs from '../../components/interactive/ExerciseTabs';
+import { Enonce } from '../../components/interactive/ExerciseTabs';
 
-# Projet - Application Bancaire Simple
+# 🏦 Projet - Application Bancaire Simple
 
 Le but de ce projet est de créer une application bancaire simple en utilisant Python.
 Nous allons nous concentrer sur la gestion des comptes bancaires et des transactions en utilisant les dictionnaires.
 
 Vous pouvez télécharger le code de base ici : [Code source](resources/app_back.py).
 
-## Le système de comptes
+## 1. Le système de comptes
 
 Chaque compte bancaire possède les caractéristiques suivantes :
-- nom (chaîne de caractères)
-- solde (nombre décimal)
-- transactions (liste des opérations effectuées)
+- `nom` (str) : Nom du titulaire
+- `solde` (float) : Montant disponible
+- `transactions` (list) : Historique des opérations
 
-### Création du système de comptes
+<ExerciseTabs courseId="proj_bank_struct" courseTitle="Structure des Comptes">
+  <ExerciseSection id="bank-struct-1" label="Base de données">
+    <Enonce>
+      Créez un dictionnaire vide `comptes` qui servira de base de données.
+      La clé sera le **numéro de compte** (ex: "FR76..."), et la valeur sera le dictionnaire des détails du compte.
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Base de données des comptes"
-    **Créer un dictionnaire vide `comptes` qui contiendra tous les comptes bancaires.**
+  <ExerciseSection id="bank-struct-2" label="Création de compte">
+    <Enonce>
+      Créez la fonction `creer_compte(numero, nom, solde_initial)` qui :
+      1. Vérifie si le numéro de compte n'existe pas déjà.
+      2. Crée un dictionnaire avec `nom`, `solde` et une liste `transactions` vide.
+      3. Ajoute ce dictionnaire dans `comptes`.
+      
+      Exemple d'appel :
+      ```python
+      creer_compte("12345", "Alice", 100.0)
+      ```
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-!!! question "Création de compte"
-    **Créer la fonction `creer_compte` qui prend en paramètres :**
-    - un numéro de compte (str)
-    - un nom (str)
-    - un solde initial (float, valeur par défaut : 0)
-    - une liste vide `transactions` qui correspond aux transactions.
-    
-    **Cette fonction ajoute dans le dictionnaires des comptes, un nouveau dictionnaire avec pour clef le numéro de compte et comme valeurs un autre dictionnaire contenant toutes les informations necessaires.**
-    La fonction doit vérifier si le compte n'existe pas déjà avant de le créer.
+## 2. Les opérations bancaires
 
-## Les opérations bancaires
+<ExerciseTabs courseId="proj_bank_ops" courseTitle="Opérations">
+  <ExerciseSection id="bank-ops-1" label="Dépôt">
+    <Enonce>
+      Créez la fonction `deposer(numero, montant)` qui :
+      1. Vérifie que le compte existe.
+      2. Ajoute le montant au solde.
+      3. Enregistre la transaction dans la liste `transactions` (ex: `"+ 50.0"`).
+    </Enonce>
+  </ExerciseSection>
 
-### Gestion des transactions
+  <ExerciseSection id="bank-ops-2" label="Retrait">
+    <Enonce>
+      Créez la fonction `retirer(numero, montant)` qui :
+      1. Vérifie que le compte existe.
+      2. Vérifie que le solde est suffisant.
+      3. Retire le montant.
+      4. Enregistre la transaction (ex: `"- 20.0"`).
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Dépôt d'argent"
-    **Créer la fonction `deposer` qui prend en paramètres :**
-    - un numéro de compte (str)
-    - un montant à déposer (float)
-    
-    La fonction doit :
-    1. Vérifier que le compte existe
-    2. Ajouter le montant au solde
-    3. Enregistrer la transaction dans l'historique
+  <ExerciseSection id="bank-ops-3" label="Consultation">
+    <Enonce>
+      Créez deux fonctions :
+      *   `verifier_solde(numero)` : Affiche le solde actuel.
+      *   `voir_transactions(numero)` : Affiche l'historique des opérations.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-!!! question "Retrait d'argent"
-    **Créer la fonction `retirer` qui prend en paramètres :**
-    - un numéro de compte (str)
-    - un montant à retirer (float)
-    
-    La fonction doit :
-    1. Vérifier que le compte existe
-    2. Vérifier que le solde est suffisant
-    3. Retirer le montant du solde
-    4. Enregistrer la transaction dans l'historique
+## 3. Interface utilisateur
 
-### Consultation des informations
+<ExerciseTabs courseId="proj_bank_ui" courseTitle="Interface">
+  <ExerciseSection id="bank-ui-1" label="Menu Principal">
+    <Enonce>
+      Créez une fonction `main()` avec une boucle infinie qui affiche le menu suivant :
 
-!!! question "Vérification du solde"
-    **Créer la fonction `verifier_solde` qui prend en paramètre un numéro de compte (str) et affiche le solde actuel du compte.**
+      ```text
+      --- MENU BANQUE ---
+      1. Créer un compte
+      2. Faire un dépôt
+      3. Faire un retrait
+      4. Vérifier le solde
+      5. Voir les transactions
+      6. Quitter
+      ```
 
-!!! question "Historique des transactions"
-    **Créer la fonction `voir_transactions` qui prend en paramètre un numéro de compte (str) et affiche l'historique des transactions du compte.**
+      Utilisez `input()` pour récupérer le choix et demander les informations nécessaires (numéro de compte, montant...).
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-## Interface utilisateur
+## 4. Tests 🧪
 
-!!! question "Menu principal"
-    **Créer la fonction `afficher_menu` qui affiche les options disponibles :**
-    1. Créer un compte
-    2. Faire un dépôt
-    3. Faire un retrait
-    4. Vérifier le solde
-    5. Voir les transactions
-    6. Quitter
-
-!!! question "Boucle principale"
-    **Créer la fonction `main` qui gère l'interaction avec l'utilisateur :**
-    - Afficher le menu
-    - Gérer les choix de l'utilisateur
-    - Gérer les erreurs de saisie
-    - Permettre de quitter proprement l'application
-
-!!! example "Test de l'application"
-    **Tester le bon fonctionnement de l'application :**
-    1. Créer un compte pour Alice avec 1000€
-    2. Créer un compte pour Bob avec 500€
-    3. Faire un dépôt de 200€ sur le compte d'Alice
-    4. Faire un retrait de 50€ sur le compte d'Alice
-    5. Vérifier le solde d'Alice
-    6. Afficher l'historique des transactions d'Alice
-    7. Tester la gestion des erreurs :
-        - Retrait avec solde insuffisant
-        - Accès à un compte inexistant
-        - Saisie de montants invalides
+<ExerciseTabs courseId="proj_bank_test" courseTitle="Validation">
+  <ExerciseSection id="bank-test-1" label="Scénario de test">
+    <Enonce>
+      Testez votre application avec le scénario suivant :
+      1. Créer un compte pour Alice avec 1000€.
+      2. Créer un compte pour Bob avec 500€.
+      3. Faire un dépôt de 200€ sur le compte d'Alice.
+      4. Faire un retrait de 50€ sur le compte d'Alice.
+      5. Vérifier le solde d'Alice (devrait être 1150€).
+      6. Tenter un retrait de 2000€ (doit être refusé).
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>

@@ -1,5 +1,5 @@
 ---
-title: "Projet - Gestion Bibliothèque"
+title: "Structures : Bibliothèque"
 description: "Système de gestion d'une collection de livres numériques en Python"
 level: premiere
 chapter: "Projets"
@@ -7,104 +7,107 @@ icon: "📚"
 badgeId: "premiere_gestion_bibliotheque"
 ---
 
+import ExerciseTabs from '../../components/interactive/ExerciseTabs';
+import { Enonce } from '../../components/interactive/ExerciseTabs';
 
-# Projet - Système de Gestion de Bibliothèque Numérique 📚
+# 📚 Projet - Système de Gestion de Bibliothèque Numérique
 
 Le but de ce projet est de créer un système en Python pour gérer une collection de livres numériques.
 
-## Concepts Abordés
-
+**Concepts Abordés :**
 - Structures de données : listes, dictionnaires
-- Manipulation de fichiers (CSV ou JSON pour stocker les données des livres)
+- Manipulation de fichiers (CSV)
 - Fonctions : définition, appel, paramètres, valeurs de retour
 - Boucles et conditions
-- Interfaces utilisateur simples en mode texte
 
-## Fonctionnalités à Implémenter
-
-### 1. Gestion des Livres
+## 1. Gestion des Livres
 
 Chaque livre sera représenté par un dictionnaire avec les clés suivantes :
-- `titre` (chaîne de caractères)
-- `auteur` (chaîne de caractères)
-- `annee_publication` (entier)
-- `genre` (chaîne de caractères)
-- `isbn` (chaîne de caractères, unique)
+- `titre` (str)
+- `auteur` (str)
+- `annee_publication` (int)
+- `genre` (str)
+- `isbn` (str, unique)
 
-!!! question "Initialisation de la bibliothèque"
-    Créer une liste vide nommée `bibliotheque` qui contiendra tous les dictionnaires représentant les livres.
+<ExerciseTabs courseId="proj_lib_struct" courseTitle="Structure des Données">
+  <ExerciseSection id="lib-struct-1" label="Initialisation">
+    <Enonce>
+      Créez une liste vide `bibliotheque` qui contiendra tous les dictionnaires représentant les livres.
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Ajout d'un livre"
-    Créer une fonction `ajouter_livre(bibliotheque, titre, auteur, annee_publication, genre, isbn)` qui :
-    1. Vérifie si un livre avec le même ISBN existe déjà dans la `bibliotheque`.
-    2. Si non, crée un dictionnaire pour le nouveau livre et l'ajoute à la liste `bibliotheque`.
-    3. Renvoie `True` si le livre a été ajouté, `False` sinon (par exemple, si l'ISBN existe déjà).
+  <ExerciseSection id="lib-struct-2" label="Ajout d'un livre">
+    <Enonce>
+      Créez une fonction `ajouter_livre(bibliotheque, titre, auteur, annee, genre, isbn)` qui :
+      1. Vérifie si un livre avec le même ISBN existe déjà.
+      2. Si non, crée le dictionnaire et l'ajoute à la liste.
+      3. Renvoie `True` si ajouté, `False` sinon.
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Recherche de livres"
-    Créer une fonction `rechercher_livres(bibliotheque, critere, valeur)` qui :
-    1. Prend en paramètre la `bibliotheque`, un `critere` de recherche (par exemple, "titre", "auteur", "genre") et une `valeur` à rechercher.
-    2. Renvoie une liste de tous les livres (dictionnaires) qui correspondent au critère et à la valeur.
-    Par exemple, `rechercher_livres(bibliotheque, "auteur", "Victor Hugo")` devrait renvoyer tous les livres de Victor Hugo.
+  <ExerciseSection id="lib-struct-3" label="Recherche">
+    <Enonce>
+      Créez une fonction `rechercher_livres(bibliotheque, critere, valeur)` qui :
+      1. Prend un `critere` ("titre", "auteur", etc.) et une `valeur`.
+      2. Renvoie une liste des livres correspondants.
+      
+      Exemple : `rechercher_livres(bibliotheque, "auteur", "Victor Hugo")`.
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Affichage des détails d'un livre"
-    Créer une fonction `afficher_details_livre(livre)` qui prend un dictionnaire de livre en paramètre et affiche ses informations de manière lisible.
+  <ExerciseSection id="lib-struct-4" label="Affichage">
+    <Enonce>
+      Créez une fonction `afficher_livre(livre)` qui affiche les détails proprement (ex: "Titre : ... | Auteur : ...").
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-!!! example "Tests de la gestion des livres"
-    1. Initialiser une bibliothèque vide.
-    2. Ajouter plusieurs livres avec des informations variées. Tenter d'ajouter un livre avec un ISBN déjà existant pour vérifier la gestion des doublons.
-    3. Rechercher des livres par titre, auteur et genre.
-    4. Afficher les détails des livres trouvés.
+## 2. Sauvegarde et Chargement 💾
 
-### 2. Sauvegarde et Chargement des Données
+Pour que les données persistent, nous allons utiliser un fichier CSV.
 
-Pour que les données persistent entre les sessions, nous allons les sauvegarder dans un fichier.
+<ExerciseTabs courseId="proj_lib_data" courseTitle="Persistance des Données">
+  <ExerciseSection id="lib-data-1" label="Sauvegarde">
+    <Enonce>
+      Créez une fonction `sauvegarder(bibliotheque, nom_fichier)` qui écrit le contenu de la liste dans un fichier CSV.
+      
+      *Utilisez le module `csv` et `DictWriter`.*
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Sauvegarde de la bibliothèque"
-    Créer une fonction `sauvegarder_bibliotheque(bibliotheque, nom_fichier)` qui :
-    1. Prend la liste `bibliotheque` et un `nom_fichier` (par exemple, "bibliotheque.csv") en paramètres.
-    2. Écrit les données de chaque livre dans le fichier CSV. Chaque ligne du CSV représentera un livre, et les colonnes correspondront aux attributs du livre (titre, auteur, etc.).
-    *Astuce : Vous pouvez utiliser le module `csv` de Python pour cela.*
+  <ExerciseSection id="lib-data-2" label="Chargement">
+    <Enonce>
+      Créez une fonction `charger(nom_fichier)` qui :
+      1. Lit le fichier CSV.
+      2. Reconstruit la liste de dictionnaires (attention à convertir l'année en `int`).
+      3. Renvoie la liste chargée (ou une liste vide si le fichier n'existe pas).
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-!!! question "Chargement de la bibliothèque"
-    Créer une fonction `charger_bibliotheque(nom_fichier)` qui :
-    1. Prend un `nom_fichier` en paramètre.
-    2. Lit les données depuis le fichier CSV et reconstruit la liste de dictionnaires `bibliotheque`.
-    3. Renvoie la `bibliotheque` chargée. Si le fichier n'existe pas, elle doit renvoyer une liste vide.
-    *Attention à bien convertir les types de données (par exemple, `annee_publication` en entier) lors du chargement.*
+## 3. Interface Utilisateur
 
-!!! example "Tests de sauvegarde et chargement"
-    1. Créer une bibliothèque et y ajouter quelques livres.
-    2. Sauvegarder la bibliothèque dans un fichier.
-    3. Effacer la variable `bibliotheque` actuelle (ou redémarrez votre script).
-    4. Charger la bibliothèque depuis le fichier et vérifier que tous les livres sont correctement restaurés.
+<ExerciseTabs courseId="proj_lib_ui" courseTitle="Menu Principal">
+  <ExerciseSection id="lib-ui-1" label="Menu Interactif">
+    <Enonce>
+      Créez une fonction `menu_principal()` :
 
-### 3. Interface Utilisateur (Menu Principal)
+      ```text
+      --- MA BIBLIOTHÈQUE ---
+      1. Ajouter un livre
+      2. Rechercher un livre
+      3. Afficher tout
+      4. Supprimer un livre (par ISBN)
+      5. Sauvegarder et Quitter
+      ```
 
-Créer une interface simple en mode texte pour interagir avec le système.
+      Le programme doit charger les données au démarrage et proposer de sauvegarder à la fermeture.
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Menu principal"
-    Créer une fonction `menu_principal()` qui affiche les options suivantes à l'utilisateur :
-    1. Ajouter un nouveau livre
-    2. Rechercher des livres
-    3. Afficher tous les livres
-    4. Supprimer un livre (par ISBN)
-    5. Sauvegarder et quitter
-    6. Quitter sans sauvegarder
-    
-    La fonction doit lire le choix de l'utilisateur et appeler les fonctions correspondantes.
-    La boucle du menu doit continuer jusqu'à ce que l'utilisateur choisisse de quitter.
-
-!!! question "Suppression d'un livre"
-    Créer une fonction `supprimer_livre(bibliotheque, isbn)` qui :
-    1. Recherche le livre par `isbn`.
-    2. Si trouvé, le supprime de la `bibliotheque` et renvoie `True`.
-    3. Sinon, renvoie `False`.
-
-!!! example "Test de l'interface utilisateur"
-    1. Lancer le `menu_principal()`.
-    2. Tester chaque option du menu :
-        - Ajouter plusieurs livres.
-        - Rechercher des livres.
-        - Afficher tous les livres.
-        - Supprimer un livre existant, puis essayer de supprimer un livre inexistant.
-        - Sauvegarder la bibliothèque et quitter. Relancer le programme pour vérifier que les données ont bien été sauvegardées et chargées au démarrage.
+  <ExerciseSection id="lib-ui-2" label="Suppression">
+    <Enonce>
+      Implémentez l'option 4 : `supprimer_livre(bibliotheque, isbn)`.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>

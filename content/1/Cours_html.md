@@ -45,6 +45,8 @@ Explication :
 - `<title>` : Définit le titre qui apparaît dans l'onglet du navigateur.
 - `<body>` : Contient le contenu visible par l'utilisateur (titres, paragraphes, images, etc.).
 
+<HtmlStructureExplorer />
+
 ## Les principales balises HTML
 
 > **📖 Définition**

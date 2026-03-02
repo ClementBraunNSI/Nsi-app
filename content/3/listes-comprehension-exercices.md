@@ -38,27 +38,6 @@ Syntaxe de base : `[expression for element in sequence if condition]`
     Créer une liste `commence_par_a` ne contenant que les animaux dont le nom commence par 'a'.
     *(Résultat attendu : `['abeille', 'anaconda', 'aigle']`)*
 
-    <Correction>
-    ```python
-    # 1. Les carrés
-    carres = [x**2 for x in range(11)]
-    print(carres)
-
-    # 2. Les pairs
-    pairs = [x for x in range(21) if x % 2 == 0]
-    print(pairs)
-
-    # 3. Longueurs des mots
-    mots = ["chat", "chien", "oiseau", "poisson"]
-    longueurs = [len(mot) for mot in mots]
-    print(longueurs)
-
-    # 4. Mots commençant par 'a'
-    animaux = ["abeille", "chat", "anaconda", "chien", "aigle"]
-    commence_par_a = [animal for animal in animaux if animal.startswith('a')]
-    print(commence_par_a)
-    ```
-    </Correction>
     </Enonce>
     <Verification>
     ```python
@@ -103,33 +82,6 @@ Syntaxe de base : `[expression for element in sequence if condition]`
     Soit la matrice `matrice = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]`.
     Créer une liste unique `plat` contenant tous les éléments de la matrice à la suite (`[1, 2, 3, 4, ...]`).
 
-    <Correction>
-    ```python
-    # 1. Multiples de 3 mais pas de 5
-    resultat_1 = [x for x in range(51) if x % 3 == 0 and x % 5 != 0]
-    print(resultat_1)
-
-    # 2. Tuples (nombre, cube)
-    resultat_2 = [(x, x**3) for x in range(1, 11)]
-    print(resultat_2)
-
-    # 3. Filtrage et transformation
-    phrase = "Python est un langage puissant et rapide"
-    resultat_3 = [mot.upper() for mot in phrase.split() if len(mot) > 4]
-    print(resultat_3)
-
-    # 4. Extraction de voyelles
-    texte = "Programmation"
-    voyelles = "aeiouyAEIOUY"
-    resultat_4 = [char for char in texte if char in voyelles]
-    print(resultat_4)
-
-    # 5. Aplatir une matrice
-    matrice = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    plat = [x for ligne in matrice for x in ligne]
-    print(plat)
-    ```
-    </Correction>
     </Enonce>
     <Verification>
     ```python
@@ -188,40 +140,6 @@ Syntaxe de base : `[expression for element in sequence if condition]`
     Soit `mots = ["radar", "python", "kayak", "algo", "ressasser"]`.
     Créer une liste contenant uniquement les mots qui sont des palindromes (se lisent pareil dans les deux sens).
 
-    <Correction>
-    ```python
-    # 1. Nombres premiers
-    premiers = [x for x in range(2, 51) if all(x % d != 0 for d in range(2, int(x**0.5) + 1))]
-    print(premiers)
-
-    # 2. Jeu de cartes
-    couleurs = ['Pique', 'Cœur', 'Carreau', 'Trèfle']
-    valeurs = ['7', '8', '9', '10', 'Valet', 'Dame', 'Roi', 'As']
-    cartes = [(v, c) for c in couleurs for v in valeurs]
-    print(cartes)
-
-    # 3. Transposée d'une matrice
-    matrice = [[1, 2, 3], [4, 5, 6]]
-    # On itère sur les colonnes (range(3)) puis sur les lignes
-    transposee = [[row[i] for row in matrice] for i in range(len(matrice[0]))]
-    print(transposee)
-
-    # 4. Intersection
-    liste_a = [1, 2, 3, 4, 5]
-    liste_b = [4, 5, 6, 7, 8]
-    intersection = [x for x in liste_a if x in liste_b]
-    print(intersection)
-
-    # 5. Table de multiplication
-    table = [[i * j for j in range(1, 6)] for i in range(1, 6)]
-    print(table)
-
-    # 6. Palindromes
-    mots = ["radar", "python", "kayak", "algo", "ressasser"]
-    palindromes = [mot for mot in mots if mot == mot[::-1]]
-    print(palindromes)
-    ```
-    </Correction>
     </Enonce>
     <Verification>
     ```python

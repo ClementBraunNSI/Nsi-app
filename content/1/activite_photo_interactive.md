@@ -21,5 +21,13 @@ Utilise les curseurs ci-dessous pour mélanger les couleurs.
 
 <PixelManipulator />
 
-## 🧠 Question
-Que se passe-t-il si tu mets les trois curseurs à la moitié (environ 128) ? Quelle couleur obtiens-tu ?
+## 📸 Traitement d'Image
+Maintenant, appliquons ces concepts sur une vraie image. Tu peux modifier les canaux Rouge, Vert et Bleu de l'image ci-dessous, ou appliquer des filtres.
+
+<ImageManipulator src="/2928B642-6655-413A-9D95-A1F0D6F3A868_1_105_c.jpeg" />
+
+### 🧠 Questions
+1. Si tu mets le canal **Rouge** à 0%, que devient l'image ?
+2. Comment obtenir une image en **Noir et Blanc** (niveaux de gris) manuellement avec les curseurs ? 
+3. Que fait le filtre **Seuil** ? À quoi cela pourrait-il servir ?
+

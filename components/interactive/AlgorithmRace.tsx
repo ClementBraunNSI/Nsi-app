@@ -67,7 +67,7 @@ export default function AlgorithmRace() {
               key={i}
               className={`w-8 rounded-t-lg transition-all duration-300 flex items-end justify-center pb-2 text-xs font-bold text-white shadow-sm ${
                 isComparing ? 'bg-orange-500 scale-110 z-10' : 
-                isSorted ? 'bg-green-500' : 
+                isSorted ? 'bg-slate-800' : 
                 'bg-slate-400'
               }`}
               style={{ height: `${val}%` }}

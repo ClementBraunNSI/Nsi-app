@@ -62,7 +62,7 @@ export default function BinaryPixelArt() {
         <div>
           <h3 className="text-xl font-bold text-slate-800 mb-2">2. Représentation Binaire</h3>
           <p className="text-sm text-slate-500 mb-2">L'ordinateur voit une suite de 0 (blanc) et de 1 (noir).</p>
-          <pre className="bg-slate-900 text-green-400 p-4 rounded-xl font-mono text-sm leading-relaxed overflow-auto max-h-48 shadow-inner">
+          <pre className="bg-slate-900 text-orange-400 p-4 rounded-xl font-mono text-sm leading-relaxed overflow-auto max-h-48 shadow-inner">
             {getBinaryString()}
           </pre>
         </div>

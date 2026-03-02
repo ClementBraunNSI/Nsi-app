@@ -94,3 +94,10 @@ Les équations logiques suivent des règles de priorité d'opérations similaire
 
 Par exemple, une équation logique simple pourrait être $S = A \vee B \oplus C$.
 Elle se lit "A et B ou C".
+
+## Application : Logique combinatoire (IoT)
+
+Voici un simulateur de système d'alarme utilisant des capteurs et une porte logique ET.
+Essayez de comprendre la condition logique nécessaire pour déclencher l'alarme.
+
+<IotSimulator />

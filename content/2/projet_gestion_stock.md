@@ -1,5 +1,5 @@
 ---
-title: "Projet - Gestion Stock et Ventes"
+title: "Structures : Gestion Stock"
 description: "Simulation d'un système de gestion de stock et de ventes pour un petit commerce"
 level: premiere
 chapter: "Projets"
@@ -7,104 +7,104 @@ icon: "📦"
 badgeId: "premiere_gestion_stock"
 ---
 
+import ExerciseTabs from '../../components/interactive/ExerciseTabs';
+import { Enonce } from '../../components/interactive/ExerciseTabs';
 
-# Projet - Système de Gestion de Stock et Ventes 🛒📦
+# 📦 Projet - Système de Gestion de Stock
 
-Ce projet a pour but de simuler un système simple de gestion de stock pour un petit commerce. Il permettra d'ajouter des produits, de mettre à jour leurs quantités, d'enregistrer des ventes et de visualiser l'état du stock.
+Ce projet a pour but de simuler un système simple de gestion de stock pour un petit commerce.
 
-## Concepts Abordés
+**Concepts Abordés :**
+- Structures de données : listes de dictionnaires
+- Fonctions et logique métier
+- Calculs (totaux, seuils)
 
-- Structures de données : listes de dictionnaires (pour les produits, les ventes).
-- Manipulation de fichiers (CSV/JSON pour la persistance des données).
-- Fonctions pour chaque opération (ajouter produit, enregistrer vente, etc.).
-- Logique de mise à jour des quantités.
-- Calculs simples (total d'une vente, valeur du stock).
+## 1. Catalogue Produits
 
-## Fonctionnalités à Implémenter
+Chaque produit est un dictionnaire :
+- `id` (str) : Référence unique (ex: "LIV001")
+- `nom` (str) : Désignation
+- `prix` (float) : Prix unitaire
+- `stock` (int) : Quantité disponible
+- `seuil` (int) : Seuil d'alerte stock bas
 
-### 1. Gestion du Catalogue de Produits
+<ExerciseTabs courseId="proj_stock_cat" courseTitle="Catalogue">
+  <ExerciseSection id="stock-cat-1" label="Initialisation">
+    <Enonce>
+      Créez une liste `catalogue` qui contiendra les produits.
+    </Enonce>
+  </ExerciseSection>
 
-Chaque produit a des attributs spécifiques.
+  <ExerciseSection id="stock-cat-2" label="Ajouter Produit">
+    <Enonce>
+      Créez une fonction `ajouter_produit(catalogue, id, nom, prix, stock, seuil)` :
+      1. Vérifie si l'ID n'existe pas déjà.
+      2. Ajoute le dictionnaire produit au catalogue.
+      3. Renvoie `True` si succès, `False` sinon.
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Structure d'un produit"
-    Définir une structure pour un produit en stock. Un dictionnaire est idéal :
-    - `id_produit` (chaîne de caractères ou entier, unique, ex: "LIV001", 101)
-    - `nom_produit` (chaîne de caractères, ex: "Livre de NSI")
-    - `description` (chaîne de caractères)
-    - `prix_unitaire_vente` (flottant)
-    - `quantite_stock` (entier)
-    - `seuil_alerte_stock` (entier, optionnel, pour indiquer un stock bas)
+  <ExerciseSection id="stock-cat-3" label="Modifier">
+    <Enonce>
+      Créez une fonction `modifier_produit(catalogue, id, nouveau_prix)` qui met à jour le prix d'un produit donné par son ID.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-!!! question "Catalogue des produits"
-    Créer une liste globale `catalogue_produits` pour stocker tous les dictionnaires de produits.
+## 2. Mouvements de Stock 📉📈
 
-!!! question "Ajouter un nouveau produit"
-    Créer une fonction `ajouter_produit(catalogue, id_prod, nom, desc, prix, qte_init, seuil_alerte)` qui :
-    1. Vérifie si un produit avec `id_prod` existe déjà.
-    2. Si non, crée un dictionnaire pour le nouveau produit et l'ajoute au `catalogue_produits`.
-    3. Renvoie `True` si le produit est ajouté, `False` sinon.
+<ExerciseTabs courseId="proj_stock_mvt" courseTitle="Mouvements">
+  <ExerciseSection id="stock-mvt-1" label="Mise à jour">
+    <Enonce>
+      Créez une fonction `maj_stock(catalogue, id, quantite)` :
+      *   `quantite` peut être positive (réapprovisionnement) ou négative (perte/vente).
+      *   La fonction doit mettre à jour le stock du produit.
+      *   **Attention** : Le stock ne peut pas être négatif. Si la quantité à retirer est trop grande, l'opération doit être annulée (renvoyer `False`).
+    </Enonce>
+  </ExerciseSection>
 
-!!! question "Modifier un produit"
-    Créer une fonction `modifier_produit(catalogue, id_prod, nouveau_nom=None, nouvelle_desc=None, nouveau_prix=None, nouveau_seuil=None)` qui :
-    1. Trouve le produit par `id_prod`.
-    2. Si trouvé, met à jour les champs spécifiés (ceux qui ne sont pas `None`).
-    3. Renvoie `True` si modifié, `False` si produit non trouvé.
-    *Note : La quantité en stock ne sera pas modifiée par cette fonction mais par des fonctions d'entrée/sortie de stock.*
+  <ExerciseSection id="stock-mvt-2" label="Alerte">
+    <Enonce>
+      Créez une fonction `verifier_alertes(catalogue)` qui affiche la liste des produits dont le stock est inférieur ou égal au seuil.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-!!! question "Afficher les détails d'un produit"
-    Créer une fonction `afficher_details_produit(produit)` qui affiche les informations d'un produit de manière lisible.
+## 3. Ventes et Panier 🛒
 
-!!! question "Afficher tous les produits"
-    Créer une fonction `afficher_catalogue(catalogue)` qui liste tous les produits avec quelques informations clés (ID, nom, prix, quantité).
+Une vente est une liste de tuples `(id_produit, quantite)`.
 
-!!! example "Tests de la gestion du catalogue"
-    1. Initialiser un catalogue vide.
-    2. Ajouter plusieurs produits différents.
-    3. Essayer d'ajouter un produit avec un ID existant.
-    4. Modifier les informations d'un produit existant (nom, prix).
-    5. Afficher le catalogue complet.
-    6. Afficher les détails d'un produit spécifique.
+<ExerciseTabs courseId="proj_stock_sell" courseTitle="Ventes">
+  <ExerciseSection id="stock-sell-1" label="Calcul du total">
+    <Enonce>
+      Créez une fonction `calculer_total(catalogue, panier)` qui :
+      1. Parcourt le panier.
+      2. Récupère le prix de chaque produit dans le catalogue.
+      3. Calcule le montant total.
+    </Enonce>
+  </ExerciseSection>
 
-### 2. Gestion des Stocks
+  <ExerciseSection id="stock-sell-2" label="Valider Vente">
+    <Enonce>
+      Créez une fonction `valider_vente(catalogue, panier)` qui :
+      1. Vérifie si tous les produits sont en stock suffisant.
+      2. Si oui, déduit les quantités du stock (appel à `maj_stock`).
+      3. Affiche le ticket de caisse avec le total.
+      4. Si non, affiche un message d'erreur indiquant quel produit manque.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-!!! question "Mettre à jour la quantité en stock"
-    Créer une fonction `maj_quantite_stock(catalogue, id_prod, quantite_ajoutee)` qui :
-    1. Trouve le produit par `id_prod`.
-    2. Si trouvé, ajoute `quantite_ajoutee` à `quantite_stock` (peut être négatif pour une sortie de stock non liée à une vente, comme une perte).
-    3. S'assure que la quantité en stock ne devient pas négative (ou gère ce cas selon la logique métier choisie).
-    4. Renvoie la nouvelle quantité en stock, ou `None` si produit non trouvé.
+## 4. Interface
 
-!!! question "Alerte stock bas"
-    Modifier `afficher_catalogue` ou créez une nouvelle fonction `verifier_stocks_bas(catalogue)` qui liste les produits dont la `quantite_stock` est inférieure ou égale à leur `seuil_alerte_stock`.
-
-!!! example "Tests de la gestion des stocks"
-    1. Ajouter un produit avec une quantité initiale et un seuil d'alerte.
-    2. Augmenter le stock de ce produit.\ Vérifier la nouvelle quantité.
-    3. Diminuer le stock (simuler une perte). Vérifier.
-    4. Diminuer le stock en dessous du seuil d'alerte et vérifier que l'alerte est visible.
-
-### 3. Enregistrement des Ventes
-
-Une vente peut concerner plusieurs produits en différentes quantités.
-
-!!! question "Structure d'une ligne de vente"
-    Pour chaque produit dans une vente, nous aurons besoin de :
-    - `id_produit_vendu`
-    - `quantite_vendue`
-    - `prix_unitaire_au_moment_vente` (important si les prix changent)
-
-!!! question "Structure d'une vente"
-    Définir une structure pour une vente (dictionnaire) :
-    - `id_vente` (entier, unique)
-    - `date_vente` (objet `datetime`)
-    - `lignes_vente` (liste de dictionnaires, chacun étant une ligne de vente comme définie ci-dessus)
-    - `total_vente` (flottant)
-
-!!! question "Base de données des ventes"
-    Créer une liste globale `historique_ventes` et un compteur `prochain_id_vente`.
-
-!!! question "Enregistrer une nouvelle vente"
-    Créer une fonction `enregistrer_vente(catalogue, historique_ventes, details_panier)` où `details_panier` est une liste de tuples `(id_produit, quantite_demandee)`.
-    Cette fonction doit :
-    1. Pour chaque item dans `details_panier` :
-        a. Vérifier si le produit existe et si la `quantite_demandee` est disponible en stock.
+<ExerciseTabs courseId="proj_stock_ui" courseTitle="Menu">
+  <ExerciseSection id="stock-ui-1" label="Menu Principal">
+    <Enonce>
+      Créez une interface textuelle pour tester votre application :
+      1. Gestion Catalogue (Ajout/Modif)
+      2. Gestion Stock (Réappro/Alertes)
+      3. Caisse (Saisir une vente)
+      4. Quitter
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>

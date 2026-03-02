@@ -111,6 +111,8 @@ for ligne in villes:
 
 ## Exercices pratiques
 
+<DataProcessor />
+
 ### Exercices faciles
 
 1.  **Afficher les noms des communes**

@@ -107,3 +107,73 @@ Pour qu'un réseau soit accessible sur Internet, chaque machine doit posséder u
 - **Portée** : Internet mondial
 
 > **Exemple** : `127.0.0.1` (localhost)
+
+## 🌐 Le Protocole TCP/IP
+
+Maintenant que nous savons comment les machines se reconnaissent sur Internet grâce aux adresses, découvrons comment les données transitent réellement d'une machine à une autre à travers le monde.
+
+> **🔗 Protocole TCP/IP**
+> Le protocole **TCP/IP** est un protocole de communication qui permet l'échange de données entre machines sur Internet. Il constitue le langage universel d'Internet, permettant à des milliards d'appareils de communiquer ensemble.
+
+### 🏗️ Les 4 Couches du Modèle
+
+Le modèle TCP/IP découpe la communication en 4 couches distinctes, chacune ayant un rôle précis.
+Cliquez sur chaque couche ci-dessous pour découvrir son rôle et une analogie simple.
+
+<TcpIpLayers />
+
+### 📦 Le Principe d'Encapsulation
+
+Lorsqu'on envoie un message (par exemple une page web), les données descendent les couches comme une poupée russe.
+
+<EncapsulationVisualizer />
+
+### ✂️ Le Découpage en Paquets
+
+Sur Internet, les données ne circulent pas d'un seul bloc. Elles sont découpées en petits paquets indépendants qui peuvent emprunter des chemins différents.
+
+> **🚦 Comment les routeurs choisissent le chemin ?**
+> Comme un **GPS** (Waze ou Google Maps), les routeurs connaissent l'état du trafic en temps réel.
+> Ils ne choisissent pas toujours le chemin le plus court en distance, mais le plus **rapide**. Si une route est encombrée (bouchon), le routeur envoie le paquet par un autre chemin, même s'il est plus long.
+
+<PacketTracer />
+
+> **Note :** Utilisez le simulateur ci-dessus pour lancer un "Ping" et visualiser le trajet d'un paquet à travers les routeurs.
+
+## 📖 Le DNS : L'Annuaire d'Internet
+
+Les ordinateurs communiquent avec des adresses IP (ex: `142.250.179.142`), mais les humains préfèrent des noms faciles à retenir (ex: `google.com`).
+
+> **📒 DNS (Domain Name System)**
+> Le **DNS** est l'annuaire d'Internet. Il traduit les noms de domaine (compréhensibles par l'humain) en adresses IP (compréhensibles par la machine).
+
+Imaginez que vous voulez appeler un ami. Vous cherchez son nom dans votre répertoire ("Maman") et votre téléphone compose le numéro (`06 12 34 56 78`). Le DNS fait exactement la même chose pour les sites web !
+
+## 🤝 Client-Serveur et Peer-to-Peer
+
+Il existe deux grandes façons d'organiser les communications sur Internet :
+
+### 🍽️ Le Modèle Client-Serveur
+C'est le modèle le plus courant (Web, Email, Streaming).
+- **Le Client** (vous) demande un service (une page web, une vidéo).
+- **Le Serveur** (Google, Netflix) fournit le service.
+*Analogie : Au restaurant, vous (client) commandez un plat, et le cuisinier (serveur) vous le prépare et vous l'apporte.*
+
+### 🔄 Le Modèle Peer-to-Peer (P2P)
+Dans ce modèle, il n'y a pas de chef ! Tous les ordinateurs sont égaux.
+- Chaque ordinateur est à la fois **client et serveur**.
+- Ils s'échangent des données directement entre eux.
+*Analogie : Un repas partagé (auberge espagnole) où tout le monde apporte quelque chose et partage avec les autres.*
+
+## 🌍 L'Infrastructure Physique
+
+On parle souvent du "Cloud" (nuage), mais Internet est bien réel et physique !
+
+> **📡 Le saviez-vous ?**
+> 99% du trafic Internet intercontinental passe sous les océans par des **câbles sous-marins** en fibre optique, pas par des satellites !
+
+Internet, c'est :
+1.  **Des Câbles** : Des milliers de kilomètres de fibre optique sous les mers et sous nos rues.
+2.  **Des Data Centers** : D'immenses hangars remplis d'ordinateurs (serveurs) qui stockent les vidéos, photos et sites web. Le "Cloud", c'est juste l'ordinateur de quelqu'un d'autre !
+3.  **Des Points d'Échange (IXP)** : Des carrefours où les réseaux des opérateurs (Orange, Free, Google...) se connectent pour s'échanger du trafic.
+

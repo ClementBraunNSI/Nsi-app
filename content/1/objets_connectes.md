@@ -73,3 +73,53 @@ Le cycle de vie de la donnée IoT se décompose en 5 étapes :
 - **Ville intelligente** (Smart City) : Gestion du trafic, éclairage public adaptatif, gestion des déchets.
 - **Industrie 4.0** : Maintenance prédictive, robotique, logistique.
 - **Agriculture** : Arrosage piloté, surveillance des cultures et du bétail.
+
+# 6. L'Interface Homme-Machine (IHM)
+
+Pour qu'un humain puisse interagir avec l'objet connecté (voir les données ou envoyer des commandes), il faut une **interface**.
+Elle peut prendre plusieurs formes :
+- Une application mobile (Smartphone).
+- Un site web (Tableau de bord).
+- Des boutons physiques sur l'objet.
+- La voix (Assistant vocal).
+
+<IotInterface />
+
+# 7. La Programmation "Événementielle"
+
+Contrairement à un programme classique qui s'exécute du début à la fin, un objet connecté fonctionne souvent en **boucle infinie** en attendant des **événements** (un clic, une température qui dépasse un seuil, un message reçu).
+
+### Exemple en Python (pour Micro:bit) :
+
+```python
+from microbit import *
+
+while True:  # Boucle infinie
+    if button_a.is_pressed():  # ÉVÉNEMENT : Si on appuie sur A
+        display.show(Image.HAPPY)  # ACTION : Sourire
+    elif temperature() > 30:   # ÉVÉNEMENT : Si trop chaud
+        display.scroll("ALERTE")   # ACTION : Message d'alerte
+    else:
+        display.clear()        # Sinon, rien
+```
+
+> **Structure typique :** `SI (Événement) ALORS (Action)`
+
+# 8. Risques et Sécurité
+
+Les objets connectés sont souvent le maillon faible de la sécurité informatique.
+
+### 🦠 Les Botnets (ex: Mirai)
+En 2016, le virus **Mirai** a infecté des centaines de milliers de caméras de surveillance et de routeurs mal sécurisés.
+Les pirates ont utilisé ces objets comme une "armée de zombies" (**Botnet**) pour lancer des attaques massives et faire tomber des sites comme Twitter ou Netflix.
+*Cause principale : Les utilisateurs n'avaient pas changé le mot de passe par défaut ("admin/admin").*
+
+### 🕵️ Vie Privée
+*   Une **montre connectée** sait où vous êtes et si vous dormez bien.
+*   Une **enceinte intelligente** écoute ce qui se dit dans votre salon.
+*   Une **caméra connectée** filme l'intérieur de chez vous.
+
+> **Conseil de sécurité** :
+> 1.  Changez toujours le mot de passe par défaut.
+> 2.  Faites les mises à jour de sécurité.
+> 3.  Isolez vos objets connectés sur un réseau WiFi "Invité" si possible.

@@ -1,8 +1,8 @@
 ---
-title: "Projet"
+title: "Web : Site Personnel"
 description: "Cours sur Projet"
 level: premiere
-chapter: "Web et Interaction"
+chapter: "Projets"
 icon: "🚀"
 badgeId: "premiere_projet"
 ---

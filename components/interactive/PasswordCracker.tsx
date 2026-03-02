@@ -48,7 +48,7 @@ export default function PasswordCracker() {
 
   return (
     <div className="border rounded-xl p-8 bg-slate-900 text-white shadow-lg my-8 font-mono">
-      <h3 className="text-xl font-bold text-green-400 mb-6 flex items-center gap-2">
+      <h3 className="text-xl font-bold text-orange-400 mb-6 flex items-center gap-2">
         🔓 Simulateur de Brute-Force
       </h3>
 
@@ -62,13 +62,13 @@ export default function PasswordCracker() {
               value={password}
               onChange={(e) => setPassword(e.target.value.toLowerCase())}
               disabled={status === 'cracking'}
-              className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white outline-none focus:border-green-500 w-full"
+              className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white outline-none focus:border-orange-500 w-full"
               placeholder="ex: a1b2"
             />
             <button 
               onClick={startCracking}
               disabled={status === 'cracking' || !password}
-              className="bg-green-600 hover:bg-green-500 text-white px-6 py-2 rounded-lg font-bold disabled:opacity-50 transition-all"
+              className="bg-orange-600 hover:bg-orange-500 text-white px-6 py-2 rounded-lg font-bold disabled:opacity-50 transition-all"
             >
               HACKER
             </button>
@@ -84,14 +84,14 @@ export default function PasswordCracker() {
           </div>
           <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
             <div className="text-slate-400 text-xs mb-1">Tentatives testées</div>
-            <div className="text-xl font-bold text-blue-400">
+            <div className="text-xl font-bold text-white">
               {attempts.toLocaleString()}
             </div>
           </div>
         </div>
 
-        <div className="bg-black p-6 rounded-xl border border-green-900/30 relative overflow-hidden">
-          <div className="absolute top-2 right-4 text-xs text-green-800 animate-pulse">SYSTEM_ACCESS: {status === 'cracked' ? 'GRANTED' : 'DENIED'}</div>
+        <div className="bg-black p-6 rounded-xl border border-orange-900/30 relative overflow-hidden">
+          <div className="absolute top-2 right-4 text-xs text-orange-800 animate-pulse">SYSTEM_ACCESS: {status === 'cracked' ? 'GRANTED' : 'DENIED'}</div>
           
           <div className="flex flex-col items-center justify-center h-24">
             {status === 'idle' && <span className="text-slate-600 text-sm">En attente de cible...</span>}
@@ -99,14 +99,14 @@ export default function PasswordCracker() {
             {status === 'cracking' && (
               <>
                 <div className="text-4xl font-bold text-white tracking-[0.5em] mb-2">{currentGuess}</div>
-                <div className="text-xs text-green-500">Test en cours...</div>
+                <div className="text-xs text-orange-500">Test en cours...</div>
               </>
             )}
 
             {status === 'cracked' && (
               <>
-                <div className="text-4xl font-bold text-green-500 tracking-[0.5em] mb-2">{currentGuess}</div>
-                <div className="text-xs text-green-400 font-bold">MOT DE PASSE TROUVÉ en {timeElapsed.toFixed(1)}s</div>
+                <div className="text-4xl font-bold text-orange-500 tracking-[0.5em] mb-2">{currentGuess}</div>
+                <div className="text-xs text-orange-400 font-bold">MOT DE PASSE TROUVÉ en {timeElapsed.toFixed(1)}s</div>
               </>
             )}
           </div>

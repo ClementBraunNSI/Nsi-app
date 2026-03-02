@@ -91,3 +91,69 @@ Le **modèle relationnel** organise les données en **tables** liées entre elle
 | 2 | Arctic | Vulpes lagopus | Toundra | 3.2 | Arctique |
 | 3 | Fennec | Vulpes zerda | Désert | 1.5 | Afrique |
 | 4 | Silver | Vulpes vulpes | Forêt | 7.1 | Amérique |
+
+# 3.5 Traitement des données
+
+Une fois les données structurées dans une table, on peut effectuer des opérations pour en extraire de l'information.
+
+### Les opérations de base :
+1. **Trier** : Ordonner les données (ex: du plus petit au plus grand).
+2. **Filtrer** : Ne garder que les données qui nous intéressent (ex: seulement les monstres de type Feu).
+3. **Calculer** : Faire des statistiques (ex: moyenne des niveaux).
+
+Essayez de manipuler cette base de données de monstres :
+
+<DataProcessor />
+
+# 4. Le Cloud Computing
+
+> **☁️ Définition**
+>
+> Le **Cloud Computing** (ou informatique en nuage) consiste à utiliser des serveurs informatiques distants via Internet pour stocker des données ou exécuter des applications, plutôt que de le faire sur son propre disque dur.
+
+### 🏠 Local vs ☁️ Cloud
+
+- **Stockage Local** : Vos fichiers sont sur votre ordinateur/téléphone. Si vous le perdez, vous perdez tout.
+- **Stockage Cloud** : Vos fichiers sont envoyés dans des **Data Centers** (immenses usines à serveurs). Ils sont dupliqués pour ne jamais être perdus.
+
+<CloudArchitecture />
+
+> **⚠️ Enjeu de souveraineté**
+>
+> La plupart des géants du Cloud (Google, Amazon, Microsoft) sont américains. Cela pose la question de la confidentialité : qui a le droit de regarder vos données stockées chez eux ? (cf. le *Cloud Act* américain).
+
+# 5. Données Personnelles et RGPD
+
+> **🛡️ RGPD (Règlement Général sur la Protection des Données)**
+>
+> Depuis 2018, ce règlement européen protège votre vie privée. Il impose des règles strictes aux entreprises qui collectent vos données.
+
+En tant que citoyen européen, vous disposez de **droits fondamentaux** sur vos données.
+
+<RgpdRights />
+
+# 6. Big Data et Open Data
+
+### 🌊 Big Data (Mégadonnées)
+
+Quand le volume de données devient si grand qu'il est impossible de le traiter avec des outils classiques (comme Excel), on parle de **Big Data**.
+Ces données proviennent de nos smartphones, des réseaux sociaux, des objets connectés, des satellites...
+
+Le Big Data est caractérisé par la règle des **3V** :
+1.  **Volume** : La quantité de données est gigantesque (Téraoctets, Pétaoctets).
+    *   *Exemple : YouTube reçoit 500 heures de vidéo chaque minute.*
+2.  **Variété** : Les données sont de toutes formes (Texte, images, sons, géolocalisation, clics...).
+    *   *Exemple : Facebook analyse vos photos, vos messages et vos likes en même temps.*
+3.  **Vélocité** : La vitesse à laquelle les données sont créées et doivent être analysées en temps réel.
+    *   *Exemple : Les algorithmes de trading en bourse décident en quelques millisecondes.*
+
+### 🔓 Open Data (Données Ouvertes)
+
+L'**Open Data** est une démarche politique et citoyenne qui consiste à mettre des données numériques **gratuitement à la disposition de tous**, sans restriction de droit d'auteur.
+
+C'est souvent l'État ou les collectivités qui ouvrent leurs données pour favoriser la transparence et l'innovation.
+
+*   **Exemple 1** : La RATP partage les horaires de bus en temps réel -> L'application *Citymapper* les utilise pour vous guider.
+*   **Exemple 2** : La base de données des produits alimentaires -> L'application *Yuka* l'utilise pour noter vos courses.
+
+> 🌍 **Ressource** : Visitez [data.gouv.fr](https://www.data.gouv.fr), la plateforme officielle des données publiques françaises.

@@ -532,9 +532,106 @@ meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-poo-exercice5" label="Exercice 5 - Héritage">
+  <ExerciseSection id="tp-poo-exercice5" label="Exercice 5 - Import CSV">
     <Enonce>
-    ## 🐾 Exercice 5 : Animaux et Héritage (Niveau Avancé)
+    ## 📂 Exercice 5 : Importation de Données CSV (Niveau Intermédiaire)
+
+    ### Contexte
+    Votre magasin reçoit régulièrement la liste de ses nouveaux produits sous forme de fichier CSV (Comma Separated Values).
+    Vous devez créer un programme capable de lire ce fichier et de transformer chaque ligne en un objet `Produit` utilisable dans votre application.
+
+    ### 📄 Le fichier CSV (`produits.csv`)
+    Voici le contenu du fichier que vous devrez traiter :
+    ```csv
+    A100;Ecran 24 pouces;150.00;10
+    B200;Clavier mécanique;89.99;5
+    C300;Souris sans fil;25.50;20
+    D400;Tapis de souris;12.00;50
+    ```
+    Chaque ligne correspond à : `Référence;Nom;Prix;Quantité`
+
+    ### 📋 Étapes à réaliser
+
+    **Étape 1 : Créer la classe `Produit`**
+    
+    Créez une classe avec les propriétés suivantes :
+    - `string Reference`
+    - `string Nom`
+    - `double Prix`
+    - `int Quantite`
+    
+    Ajoutez un constructeur pour initialiser ces valeurs et une méthode `Afficher()` pour voir les détails du produit.
+
+    **Étape 2 : Comprendre la lecture de fichier**
+    
+    Pour lire un fichier en C#, on utilise le namespace `System.IO`.
+    La méthode la plus simple est `File.ReadAllLines(chemin)` qui retourne un tableau de chaînes (une case par ligne).
+
+    Exemple d'utilisation :
+    ```csharp
+    using System.IO; // Indispensable en haut du fichier
+
+    // Lecture du fichier
+    string[] lignes = File.ReadAllLines("mon_fichier.csv");
+    
+    foreach (string ligne in lignes)
+    {
+        // ligne contient par exemple : "A100;Ecran 24 pouces;150.00;10"
+        
+        // On découpe la ligne à chaque point-virgule
+        string[] colonnes = ligne.Split(';'); 
+        
+        string refProduit = colonnes[0]; // "A100"
+        string nomProduit = colonnes[1]; // "Ecran 24 pouces"
+        
+        // Attention : il faut convertir les chaînes en nombres !
+        double prix = double.Parse(colonnes[2]); // "150.00" -> 150.0
+        int qte = int.Parse(colonnes[3]);        // "10" -> 10
+        
+        // Ici, vous pouvez créer votre objet Produit...
+    }
+    ```
+
+    **Étape 3 : Créer la classe `Magasin`**
+    
+    Elle doit contenir :
+    - Une liste de produits `List<Produit> Stock`.
+    - Un constructeur qui initialise la liste.
+    - Une méthode `ImporterProduits(string cheminFichier)` :
+      - Cette méthode doit lire le fichier ligne par ligne.
+      - Pour chaque ligne, elle crée un objet `Produit` et l'ajoute au `Stock`.
+      - ⚠️ **Important :** Utilisez un bloc `try...catch` pour gérer le cas où le fichier n'existe pas.
+
+    **Étape 4 : Tester dans le Main**
+    
+    1. Créez manuellement un fichier `produits.csv` à la racine de votre projet avec le contenu donné plus haut.
+    2. Dans le `Main`, instanciez un `Magasin`.
+    3. Appelez la méthode `ImporterProduits("produits.csv")`.
+    4. Affichez le contenu du stock pour vérifier que tout a bien été chargé.
+
+    ### 🎯 Résultat attendu
+    ```
+    Tentative d'importation du fichier produits.csv...
+    Importation réussie ! 4 produits ajoutés.
+
+    --- Stock du Magasin ---
+    [A100] Ecran 24 pouces : 150€ (Quantité: 10)
+    [B200] Clavier mécanique : 89.99€ (Quantité: 5)
+    [C300] Souris sans fil : 25.5€ (Quantité: 20)
+    [D400] Tapis de souris : 12€ (Quantité: 50)
+    ```
+
+    ### 💡 Concepts travaillés
+    - Manipulation de fichiers (`System.IO`)
+    - Traitement de chaînes de caractères (`Split`)
+    - Conversion de types (`Parse`)
+    - Gestion des exceptions (`try/catch`)
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="tp-poo-exercice6-animaux" label="Exercice 6 - Héritage (Animaux)">
+    <Enonce>
+    ## 🐾 Exercice 6 : Animaux et Héritage (Niveau Avancé)
 
     ### Contexte
     Vous devez créer un système de gestion d'animaux dans un refuge en utilisant l'héritage pour éviter la duplication de code.

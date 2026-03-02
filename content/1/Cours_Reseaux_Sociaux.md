@@ -43,6 +43,11 @@ Certains n'avaient pas forcément comme but d'être ceux qu'ils sont actuellemen
 ## 📖 Financement d'un réseau social
 
 Un réseau social est associé à un modèle économique. De grandes sociétés financent des réseaux sociaux à des fins lucratives (pour créer des bénéfices).
+
+> **💰 Le modèle de la gratuité**
+> Si un service est gratuit, c'est que **vous êtes le produit** !
+> Les réseaux sociaux ne vous font pas payer l'inscription, mais ils vendent votre **attention** et vos **données personnelles** aux annonceurs publicitaires.
+
 Il existe un bon nombre de coûts liés à l'utilisation pour les particuliers de réseaux sociaux.
 
 **Lister quels coûts peuvent être associés au fonctionnement d'un réseau social**
@@ -78,6 +83,23 @@ Ces contenus (prises de parole, opinions, photos, vidéo, placements de produits
 Elle renvoie directement à tous les utilisateurs l'image de celui qui publie du contenu en ligne.
 
 Une bonne e-reputation permet de créer un sentiment de confiance à l'égard de l'utilisateur qui poste des contenus en ligne.
+
+## 🔮 Les Algorithmes et la "Bulle de Filtres"
+
+Sur les réseaux sociaux, vous ne voyez pas **tout** ce que vos amis postent, ni dans l'ordre chronologique. C'est un **algorithme** de recommandation qui décide ce qui apparaît sur votre fil d'actualité.
+
+### 🤖 Comment ça marche ?
+L'algorithme analyse vos "J'aime", vos partages et le temps que vous passez sur chaque vidéo pour comprendre ce qui vous plaît. Son but : **vous garder le plus longtemps possible** sur l'application.
+
+### 🫧 Le danger de la "Bulle de Filtres"
+Si vous aimez le football, l'algorithme ne vous montrera que du football. Si vous avez une opinion politique, il ne vous montrera que des gens d'accord avec vous.
+C'est ce qu'on appelle une **Bulle de Filtres** (ou chambre d'écho) : vous finissez par croire que tout le monde pense comme vous, et vous ne voyez plus la diversité du monde.
+
+<FilterBubble />
+
+
+> **💡 Conseil**
+> Pour éclater votre bulle, forcez-vous à suivre des comptes qui ont des avis différents des vôtres ou qui parlent de sujets que vous ne connaissez pas !
 
 ## 🔐 Utilisation responsable des réseaux sociaux
 
@@ -149,6 +171,27 @@ Une bonne e-reputation permet de créer un sentiment de confiance à l'égard de
 | **Poids** | Force de la relation | Fréquence d'interaction, proximité |
 | **Direction** | Sens de la relation | Abonnement unilatéral vs amitié mutuelle |
 
+### 📏 Mesures dans un graphe
+
+Pour analyser la structure d'un réseau social, on utilise plusieurs mesures mathématiques clés :
+
+> **📏 Distance**
+> La distance entre deux sommets est le **nombre minimum de liens** (arêtes) qu'il faut parcourir pour aller de l'un à l'autre.
+
+> **⭕ Écartement**
+> L'écartement d'un sommet est la distance maximale qui le sépare des autres sommets du graphe.
+
+> **🎯 Centre**
+> Le centre d'un graphe est le sommet (ou les sommets) qui a l'**écartement le plus petit**. C'est la personne la "mieux placée" pour contacter rapidement tout le monde.
+
+> **📍 Rayon**
+> Le rayon est la valeur de l'écartement du centre (la plus petite des distances maximales).
+
+> **📏 Diamètre**
+> Le diamètre est la **distance maximale** entre deux sommets quelconques du graphe. C'est la "largeur" du réseau.
+
+<GraphMetricsExplorer />
+
 **Indiquer sur le dessin ci-dessous, quel graphe est orienté et lequel est non orienté.**
 ![rs](/content/1/rs.png)
 
@@ -163,11 +206,10 @@ Une bonne e-reputation permet de créer un sentiment de confiance à l'égard de
 
 **Activité**
 
-* À l'aide du graphe de l'exercice précédent, donner le centre du graphe (c'est à dire la personne qui a le plus d'amis).
-
-* Donner un rayon de ce graphe, donner sa longueur.
-
-* En déduire un diamètre de ce graphe, donner sa longueur.
+* À l'aide du graphe de l'exercice précédent, calculer les écartements de chaque sommet.
+* En déduire le **centre** du graphe.
+* Donner le **rayon** de ce graphe.
+* En déduire le **diamètre** de ce graphe.
 
 ## 🌍 L'expérience de Milgram et les "6 degrés de séparation"
 
@@ -175,6 +217,14 @@ Une bonne e-reputation permet de créer un sentiment de confiance à l'égard de
 
 En **1967**, le psychologue **Stanley Milgram** teste une hypothèse révolutionnaire : dans un monde de plus en plus connecté, quelle est la distance sociale réelle entre deux personnes quelconques ?
 
-![milgram](/content/1/g_milgram.png)
+**L'expérience :**
+Il demande à des volontaires du Midwest américain d'envoyer un courrier à une personne cible à Boston (un agent de change), mais ils ne peuvent le transmettre qu'à une connaissance personnelle susceptible de se rapprocher de la cible.
 
-**Testez la théorie des 6 degrés à l'ère digitale :**
+**Résultat :**
+Les lettres qui sont arrivées à destination sont passées par une moyenne de **5 à 6 intermédiaires**.
+C'est la naissance de la théorie des **"6 degrés de séparation"** : toute personne sur Terre serait reliée à n'importe quelle autre par une chaîne de relations individuelles de 6 maillons environ.
+
+<SocialGraph />
+
+> **🌐 À l'ère des réseaux sociaux**
+> Avec l'avènement de Facebook, Twitter et LinkedIn, cette distance s'est considérablement réduite ! Les études récentes (Facebook Research) estiment que nous sommes désormais séparés par environ **3,5 degrés** seulement. Le monde est devenu un "petit monde".

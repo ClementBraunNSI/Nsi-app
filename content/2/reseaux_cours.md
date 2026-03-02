@@ -148,6 +148,8 @@ Le modèle TCP/IP est un modèle en couche qui permet d'illustrer l'encapsulatio
 
 ![Introduction aux réseaux](/content/2/6_Internet_Reseaux/Modele_IP.png)
 
+<TcpIpLayers />
+
 ### Processus d'Encapsulation
 
 L'encapsulation est un concept clé du modèle TCP/IP :
@@ -164,6 +166,8 @@ L'encapsulation est un concept clé du modèle TCP/IP :
     *   **Couche Transport** = Mise sous enveloppe, numérotation
     *   **Couche Internet** = Adressage, choix de l'acheminement
     *   **Couche Accès Réseau** = Distribution physique
+
+<EncapsulationVisualizer />
 
 ### Structure des Couches
 

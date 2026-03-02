@@ -78,3 +78,66 @@ $$ \text{Poids (octets)} = \text{Nombre de pixels} \times 3 $$
 
 *Exemple :* Une image de $800 \times 600$ pixels en couleur pèse :
 $480 000 \times 3 = 1 440 000 \text{ octets} \approx 1,44 \text{ Mo}$ (sans compression).
+
+# 4.5 Traitement d'image : Les Filtres
+
+Une fois l'image numérisée, on peut modifier ses couleurs grâce à des opérations mathématiques sur chaque pixel. C'est ce que font les filtres Instagram !
+
+### Exemple : Le Noir et Blanc
+Pour passer une image couleur en noir et blanc (niveaux de gris), on remplace les valeurs R, V, B par leur moyenne.
+$$ Gris = \frac{R + V + B}{3} $$
+
+<FilterPlayground />
+
+# 5. La Compression d'Image
+
+Pour réduire le poids des images (et les envoyer plus vite sur Internet), on utilise des algorithmes de compression.
+
+### 💾 Comparaison des formats
+
+- **RAW / BMP** : Aucune compression. Qualité parfaite, mais fichier énorme.
+- **PNG (Portable Network Graphics)** : Compression **sans perte**. Idéal pour les graphiques, logos, schémas.
+- **JPEG (Joint Photographic Experts Group)** : Compression **destructive**. L'ordinateur supprime des nuances de couleurs invisibles à l'œil nu. Idéal pour les photos.
+
+<ImageCompression />
+
+# 5.5 Les Métadonnées (EXIF)
+
+Un fichier image ne contient pas que des pixels ! Il contient aussi des informations cachées appelées **métadonnées** (format **EXIF**).
+
+```mermaid
+classDiagram
+    class FichierJPEG {
+        +En-tête (Header)
+        +Métadonnées EXIF
+        +Données de l'image (Pixels compressés)
+    }
+    class EXIF {
+        +Marque : "Canon"
+        +Modèle : "EOS 5D"
+        +Date : "2023-06-15 14:30"
+        +GPS : "48.8566° N, 2.3522° E"
+        +Flash : "Non"
+    }
+    FichierJPEG *-- EXIF : Contient
+```
+
+Elles peuvent révéler :
+*   La marque de l'appareil photo.
+*   La date et l'heure de la prise de vue.
+*   Les réglages (flash, exposition).
+*   📍 **La géolocalisation GPS** exacte de la photo !
+
+> **⚠️ Danger Vie Privée** : Si vous postez une photo prise chez vous sur un réseau social sans "nettoyer" les métadonnées, n'importe qui peut retrouver votre adresse.
+> *(Voir le chapitre [Localisation](./Cours_Localisation.md) pour en savoir plus)*.
+
+# 6. Droit à l'image
+
+En France, chacun a le droit exclusif sur son image et l'utilisation qui en est faite.
+Avant de publier une photo sur un réseau social (Snapchat, Instagram...), vous devez vous poser les bonnes questions.
+
+<ImageRights />
+
+> **⚖️ La Loi**
+>
+> Publier la photo de quelqu'un sans son accord (dans un lieu privé) est un délit puni d'un an d'emprisonnement et de 45 000 € d'amende (Article 226-1 du Code Pénal).

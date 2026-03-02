@@ -41,6 +41,8 @@ En informatique, il a été décidé d'utiliser le binaire car **une machine peu
 
 ## Compter en Base 2
 
+<BinaryPixelArt />
+
 Pour compter en base 2, on opère de la même manière qu'en base 10. On a une colonne qui peut valoir 0 ou 1. Une fois que la colonne atteint 1, on rajoute une colonne à sa gauche à 1 et l'on passe la colonne de droite à 0.
 
 ### Comment passer de base 2 à base 10 ?

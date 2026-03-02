@@ -75,6 +75,27 @@ import IotSimulator from '@/components/interactive/IotSimulator';
 import BinaryPixelArt from '@/components/interactive/BinaryPixelArt';
 import AlgorithmRace from '@/components/interactive/AlgorithmRace';
 import PasswordCracker from '@/components/interactive/PasswordCracker';
+import ImageManipulator from '@/components/interactive/ImageManipulator';
+import EncapsulationVisualizer from '@/components/interactive/EncapsulationVisualizer';
+import TcpIpLayers from '@/components/interactive/TcpIpLayers';
+import GpsCoordinates from '@/components/interactive/GpsCoordinates';
+import NmeaDecoder from '@/components/interactive/NmeaDecoder';
+import CookieManager from '@/components/interactive/CookieManager';
+import HttpsSimulator from '@/components/interactive/HttpsSimulator';
+import DnsResolver from '@/components/interactive/DnsResolver';
+import UrlBuilder from '@/components/interactive/UrlBuilder';
+import HttpMethodVisualizer from '@/components/interactive/HttpMethodVisualizer';
+import PageRankVisualizer from '@/components/interactive/PageRankVisualizer';
+import HtmlStructureExplorer from '@/components/interactive/HtmlStructureExplorer';
+import GraphMetricsExplorer from '@/components/interactive/GraphMetricsExplorer';
+import CloudArchitecture from '@/components/interactive/CloudArchitecture';
+import RgpdRights from '@/components/interactive/RgpdRights';
+import ImageCompression from '@/components/interactive/ImageCompression';
+import ImageRights from '@/components/interactive/ImageRights';
+import IotInterface from '@/components/interactive/IotInterface';
+import FilterBubble from '@/components/interactive/FilterBubble';
+import DataProcessor from '@/components/interactive/DataProcessor';
+import FilterPlayground from '@/components/interactive/FilterPlayground';
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
   const { niveaux, slug } = await params;
@@ -204,6 +225,27 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     BinaryPixelArt,
     AlgorithmRace,
     PasswordCracker,
+    ImageManipulator,
+    EncapsulationVisualizer,
+    TcpIpLayers,
+    GpsCoordinates,
+    NmeaDecoder,
+    CookieManager,
+    HttpsSimulator,
+    DnsResolver,
+    UrlBuilder,
+    HttpMethodVisualizer,
+    PageRankVisualizer,
+    HtmlStructureExplorer,
+    GraphMetricsExplorer,
+    CloudArchitecture,
+    RgpdRights,
+    ImageCompression,
+    ImageRights,
+    IotInterface,
+    FilterBubble,
+    DataProcessor,
+    FilterPlayground,
   };
 
   return (

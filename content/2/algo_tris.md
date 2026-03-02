@@ -229,4 +229,15 @@ meta: "Durée : 2 heures · Objectif : Implémenter les algorithmes classiques"
     </Verification>
   </ExerciseSection>
 
+  <ExerciseSection id="tri-bonus" label="Bonus : Visualisation">
+    <Enonce>
+    ## Bonus : Visualisation (Tri à Bulles)
+    
+    Voici une visualisation interactive d'un autre algorithme de tri très connu : le **Tri à Bulles**.
+    Bien qu'il soit moins efficace que le tri par insertion ou sélection, il est intéressant à observer.
+    
+    <AlgorithmRace />
+    </Enonce>
+  </ExerciseSection>
+
 </ExerciseTabs>

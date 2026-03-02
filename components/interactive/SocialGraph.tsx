@@ -4,40 +4,44 @@
 import React, { useState } from 'react';
 
 const NODES = [
-  { id: 1, name: "Alice", x: 100, y: 100 },
-  { id: 2, name: "Bob", x: 250, y: 150 },
-  { id: 3, name: "Charlie", x: 150, y: 250 },
-  { id: 4, name: "David", x: 300, y: 300 },
-  { id: 5, name: "Eve", x: 400, y: 100 },
+  { id: 1, name: "M. BRAUN", role: "Professeur NSI", x: 80, y: 200 },
+  { id: 2, name: "Patrice Vergriete", role: "Maire de Dunkerque", x: 200, y: 120 },
+  { id: 3, name: "Gérald Darmanin", role: "Ancien Ministre", x: 320, y: 180 },
+  { id: 4, name: "Emmanuel Macron", role: "Président de la République", x: 440, y: 100 },
+  { id: 5, name: "Bill Gates", role: "Fondateur Microsoft", x: 560, y: 160 },
+  { id: 6, name: "Satya Nadella", role: "PDG Microsoft", x: 680, y: 220 },
+  { id: 7, name: "Mark Zuckerberg", role: "PDG Meta", x: 800, y: 140 },
 ];
 
 const LINKS = [
-  { source: 1, target: 2 },
-  { source: 2, target: 3 },
-  { source: 3, target: 1 },
-  { source: 2, target: 4 },
-  { source: 4, target: 5 },
-  { source: 5, target: 2 },
+  { source: 1, target: 2 }, // Braun -> Vergriete
+  { source: 2, target: 3 }, // Vergriete -> Darmanin
+  { source: 3, target: 4 }, // Darmanin -> Macron
+  { source: 4, target: 5 }, // Macron -> Gates
+  { source: 5, target: 6 }, // Gates -> Nadella
+  { source: 6, target: 7 }, // Nadella -> Zuckerberg
 ];
 
 export default function SocialGraph() {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
 
   const getNeighbors = (id: number) => {
-    return LINKS
+    const neighborIds = LINKS
       .filter(l => l.source === id || l.target === id)
       .map(l => l.source === id ? l.target : l.source);
+    // Déduplication avec Set pour éviter de compter deux fois si les liens sont bidirectionnels dans les données (ou si on ajoute des liens inverses plus tard)
+    return Array.from(new Set(neighborIds));
   };
 
   const neighbors = selectedNode ? getNeighbors(selectedNode) : [];
 
   return (
     <div className="border rounded-xl p-8 bg-slate-50 shadow-lg my-8">
-      <h3 className="text-xl font-bold mb-4 text-slate-800">Visualisation de Réseau Social</h3>
-      <p className="text-sm text-slate-500 mb-6">Clique sur un nœud (personne) pour voir ses amis (liens directs).</p>
+      <h3 className="text-xl font-bold mb-4 text-slate-800">Visualisation : Les 6 degrés de séparation</h3>
+      <p className="text-sm text-slate-500 mb-6">Exemple de chaîne de relations : De M. BRAUN à Mark Zuckerberg en 6 étapes.</p>
       
       <div className="relative w-full h-96 bg-white rounded-xl shadow-inner overflow-hidden border border-slate-200">
-        <svg className="w-full h-full">
+        <svg className="w-full h-full" viewBox="0 0 900 400">
           {/* Links */}
           {LINKS.map((link, i) => {
             const start = NODES.find(n => n.id === link.source)!;
@@ -78,7 +82,7 @@ export default function SocialGraph() {
               >
                 <circle
                   cx={node.x} cy={node.y} r={25}
-                  fill={isSelected ? "#f97316" : isNeighbor ? "#fbbf24" : "#3b82f6"}
+                  fill={isSelected ? "#ea580c" : isNeighbor ? "#fb923c" : "#0f172a"}
                   className="transition-colors duration-300 shadow-lg"
                 />
                 <text
@@ -89,16 +93,26 @@ export default function SocialGraph() {
                   fontWeight="bold"
                   pointerEvents="none"
                 >
-                  {node.name[0]}
+                  {node.id}
                 </text>
                 <text
                   x={node.x} y={node.y + 40}
                   textAnchor="middle"
-                  fill="#64748b"
+                  fill="#1e293b"
                   fontSize="12"
+                  fontWeight="bold"
                   pointerEvents="none"
                 >
                   {node.name}
+                </text>
+                <text
+                  x={node.x} y={node.y + 55}
+                  textAnchor="middle"
+                  fill="#64748b"
+                  fontSize="10"
+                  pointerEvents="none"
+                >
+                  {node.role}
                 </text>
               </g>
             );
@@ -108,7 +122,7 @@ export default function SocialGraph() {
 
       {selectedNode && (
         <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-100 text-sm">
-          <span className="font-bold text-orange-800">{NODES.find(n => n.id === selectedNode)?.name}</span> a {neighbors.length} ami(s) : 
+          <span className="font-bold text-orange-800">{NODES.find(n => n.id === selectedNode)?.name}</span> a {neighbors.length} connexion(s) de proximité : 
           <span className="text-slate-600 ml-2">
             {neighbors.map(nid => NODES.find(n => n.id === nid)?.name).join(', ')}
           </span>
