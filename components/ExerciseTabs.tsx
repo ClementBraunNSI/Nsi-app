@@ -53,7 +53,8 @@ function ExerciseProgressBar({ total, completed }: { total: number, completed: n
 
 
 export function ExerciseTabs({ children, courseId, courseTitle }: { children: React.ReactNode, courseId: string, courseTitle: string }) {
-  const childrenArray = React.Children.toArray(children) as React.ReactElement<TabProps>[];
+  // Filter only valid React elements to avoid text nodes (whitespace) causing issues
+  const childrenArray = React.Children.toArray(children).filter(React.isValidElement) as React.ReactElement<TabProps>[];
   const [activeTab, setActiveTab] = useState(childrenArray[0]?.props.id);
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
@@ -237,7 +238,7 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
           const isActive = activeTab === child.props.id;
           return (
             <div
-              key={child.props.id}
+              key={child.key}
               onClick={() => setActiveTab(child.props.id)}
               className={`flex-1 min-w-[160px] py-4 px-4 rounded-2xl text-xs font-black transition-all duration-300 uppercase tracking-tighter border-b-4 cursor-pointer flex items-center justify-between gap-3 ${
                 isActive ? 'bg-orange-500 text-white border-orange-700 shadow-lg scale-[1.02]' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-white'

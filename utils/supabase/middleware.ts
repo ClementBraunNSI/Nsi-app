@@ -31,7 +31,12 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  await supabase.auth.getUser()
+  try {
+    await supabase.auth.getUser()
+  } catch (error) {
+    // Si l'URL Supabase n'est pas définie ou accessible (ex: build time), on ignore l'erreur
+    console.error("Middleware Auth Error:", error)
+  }
 
   return response
 }

@@ -39,7 +39,11 @@ Créez la classe `MachineVirtuelle` avec les éléments suivants :
     *   Le score est calculé ainsi : `(Vcpu * 10) + (Ram * 5) + (Disque * 0.5)`.
     *   Ce score représente la "puissance" théorique de la machine.
 
----
+
+<br/>
+<br/>
+<br/>
+<br/>
 
 ### Partie 2 : L'Hyperviseur (8 points)
 
@@ -70,7 +74,6 @@ Créez la classe `Hyperviseur` :
     *   Si c'est possible : ajoute la VM à la liste et affiche "VM ajoutée".
     *   Sinon : affiche "Erreur : Capacité insuffisante".
 
----
 
 ### Partie 3 : Le Datacenter (7 points)
 
@@ -89,6 +92,8 @@ Créez la classe `Datacenter` :
         2.  Identifier ceux qui peuvent accueillir la VM (via `PeutAccueillir`).
         3.  Parmi les candidats, sélectionner celui qui a le plus de RAM libre (pour privilégier la performance).
         4.  Retourner cet hyperviseur (ou `null` si aucun n'est disponible).
+
+<br/>
 
 3.  **Méthode `AfficherStatistiquesGlobales()` :**
     *   Affiche le nombre total d'hyperviseurs.
