@@ -76,6 +76,11 @@ icon: "🛡️"
     *   **Reflected :** L'attaque est temporaire, le lien piégé doit être envoyé à la victime.
     *   **Stored :** L'attaque est permanente, stockée sur le serveur (BDD), et touche toutes les victimes qui visitent la page infectée sans action de l'attaquant.
 
+### C. Cross-Site Request Forgery (CSRF)
+1.  **Condition préalable :** L'utilisateur doit être **déjà connecté** (authentifié) sur le site cible dans son navigateur.
+2.  **Danger du GET :** Les requêtes `GET` peuvent être déclenchées par une simple balise `<img>` ou un lien, ce qui est trivial à cacher. Les actions sensibles doivent toujours utiliser `POST` (plus difficile à forger sans Javascript).
+3.  **Fonctionnement du Token :** Le serveur attend un code secret unique (le token) pour valider l'action. Le site de l'attaquant ne peut pas lire ce token (grâce à la Same-Origin Policy du navigateur), donc il ne peut pas envoyer une requête valide au nom de l'utilisateur.
+
 ---
 
 ## 3. Analyse Risques (E6) - Réponses

@@ -273,6 +273,41 @@ icon: "🛡️"
     1.  Quelle fonction PHP native permet de se protéger efficacement contre les XSS à l'affichage ?
     2.  Écrivez un petit script JS malveillant qui affiche le cookie de l'utilisateur dans une alerte.
     3.  Quelle est la différence fondamentale entre une XSS Stored et une XSS Reflected en termes de persistance ?
+
+    ---
+
+    ### C. Cross-Site Request Forgery (CSRF)
+
+    **1. Le Mécanisme**
+    Le CSRF (parfois prononcé "Sea-Surf") force l'utilisateur à exécuter des actions indésirables sur une application web où il est actuellement authentifié. L'attaquant n'a pas besoin de connaître les identifiants de la victime, il utilise simplement sa session active.
+
+    *Exemple :*
+    1.  L'utilisateur est connecté sur sa banque (`ma-banque.com`).
+    2.  Il visite un site malveillant (`site-piege.com`) qui contient une image invisible :
+        `<img src="http://ma-banque.com/virement?to=hacker&amount=1000" width="0" height="0" />`
+    3.  Le navigateur de l'utilisateur charge l'image, envoyant ainsi la requête de virement à la banque. Comme l'utilisateur est connecté, la banque accepte la requête (si elle ne vérifie pas l'origine).
+
+    **2. Impact Technique**
+    *   Modification de mot de passe.
+    *   Achats ou virements frauduleux.
+    *   Changement d'adresse email de récupération.
+
+    **3. Défense : Le Jeton (Token) Anti-CSRF**
+    Le serveur doit générer un jeton aléatoire unique pour chaque session (ou chaque formulaire) et l'inclure dans les formulaires HTML en tant que champ caché.
+    Lors de la soumission, le serveur vérifie si le jeton envoyé correspond à celui attendu. Le site de l'attaquant ne peut pas connaître ce jeton.
+
+    *Code sécurisé (Concept) :*
+    ```html
+    <form action="/virement" method="POST">
+        <input type="hidden" name="csrf_token" value="aF87d...3jK9" />
+        ...
+    </form>
+    ```
+
+    ### Questions E5 (CSRF)
+    1.  Pour qu'une attaque CSRF fonctionne, quelle est la condition préalable concernant l'état de l'utilisateur sur le site cible ?
+    2.  Pourquoi l'utilisation de `GET` pour des actions sensibles (suppression, virement) facilite-t-elle les attaques CSRF ?
+    3.  Expliquez brièvement comment le Token Anti-CSRF empêche l'attaque.
   </ExerciseSection>
 
   <ExerciseSection id="risk_analysis" label="3. Analyse Risques (E6)">
