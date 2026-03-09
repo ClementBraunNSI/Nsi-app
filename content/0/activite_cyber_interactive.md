@@ -1,8 +1,8 @@
 ---
 title: "Atelier Cybersécurité : Brute Force"
 description: "Comprendre pourquoi un mot de passe complexe est essentiel."
-level: "4"
-chapter: "Cybersécurité"
+level: "0"
+chapter: "Cybersécurite"
 icon: "🔐"
 ---
 
