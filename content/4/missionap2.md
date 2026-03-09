@@ -102,11 +102,11 @@ L'interface web est la vitrine pour les clients. Elle ne doit pas contenir de lo
     *   Utiliser des codes couleurs pour rendre l'information claire (ex: prix en évidence).
 
 3.  **Recherche (Bonus) :**
-    *   Ajouter un champ de recherche permettant de filtrer l'affichage (ex: par marque) sans recharger la page (JavaScript) ou avec rechargement (PHP).
+    *   Ajouter un champ de recherche permettant de filtrer l'affichage (ex: par marque) en PHP.
 
 ---
 
-7) Livrables attendus
+1) Livrables attendus
 
 *   **Le Code Source C#** (Projet Visual Studio complet, code commenté).
 *   **Le Code Source Web** (Fichiers PHP, CSS).
