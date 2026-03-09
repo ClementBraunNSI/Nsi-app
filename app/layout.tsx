@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
 import { LogOut, X, LayoutDashboard, Eye, Type, Zap, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import SplashText from '@/components/SplashText';
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -151,7 +152,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [showLogin, setShowLogin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isAppLoading, setIsAppLoading] = useState(true);
+  // const [isAppLoading, setIsAppLoading] = useState(true); // Supprimé pour performance
   
   // Accessibility States
   const [showA11yMenu, setShowA11yMenu] = useState(false);
@@ -172,7 +173,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     if (savedDyslexic) document.documentElement.classList.add('dyslexic');
     if (savedHighContrast) document.documentElement.classList.add('high-contrast');
 
-    const timer = setTimeout(() => setIsAppLoading(false), 2000);
+    // Suppression du délai artificiel de 2s
+    // const timer = setTimeout(() => setIsAppLoading(false), 2000);
 
     const initAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -200,7 +202,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
     return () => {
       subscription.unsubscribe();
-      clearTimeout(timer);
+      // clearTimeout(timer);
     };
   }, [router]);
 
@@ -331,7 +333,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <span className="text-xl text-slate-500 mt-4 block normal-case">Le contenu de ce site est protégé par des droits d'auteur.</span>
         </div>
         
-        {isAppLoading && <FoxLoader />}
+        {/* {isAppLoading && <FoxLoader />} */}
         
         <header className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-[100] h-20 print:hidden">
           <nav className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between relative">

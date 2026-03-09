@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon, ChevronLeft, Zap } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import SplashText from '@/components/SplashText';
 
 // Niveaux classiques
 const LEVELS = [
@@ -165,16 +166,18 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600">
       
-      <header className="max-w-7xl mx-auto px-8 pt-20 pb-24 text-center">
-        <h1 className="text-7xl md:text-8xl font-black text-slate-900 mb-10 tracking-tight">
-          Maîtrisez le <span className="text-orange-500">Code.</span><br />
-          Devenez un <span className="relative inline-block">
-            Renard.
-            <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
-              <path d="M0 5C20 2 80 2 100 5" stroke="#F97316" strokeWidth="4" fill="none" strokeLinecap="round" />
-            </svg>
-          </span>
-        </h1>
+      <header className="max-w-7xl mx-auto px-8 pt-20 pb-24 text-center relative">
+        <div className="relative inline-block">
+          <h1 className="text-7xl md:text-8xl font-black text-slate-900 mb-10 tracking-tight">
+            Maîtrisez le <span className="text-orange-500">Code.</span><br />
+            Devenez un <span className="relative inline-block">
+              Renard.
+              <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
+                <path d="M0 5C20 2 80 2 100 5" stroke="#F97316" strokeWidth="4" fill="none" strokeLinecap="round" />
+              </svg>
+            </span>
+          </h1>
+        </div>
         <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
           La plateforme de référence pour la NSI. Des cours épurés, des illustrations uniques et un parcours de progression jusqu'au BTS.
         </p>

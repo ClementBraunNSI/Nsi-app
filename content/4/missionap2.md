@@ -30,19 +30,40 @@ L'agence a besoin de deux outils complémentaires :
 
 ---
 
-3) Cahier des Charges
+3) Recherche Préliminaire (Veille Technologique)
+
+Avant de commencer le développement, vous devez acquérir les bases théoriques nécessaires pour cette mission.
+
+**Thème : L'Héritage et le Polymorphisme en POO**
+
+Vous devez produire une courte **note de synthèse** (1 page max) répondant aux questions suivantes :
+1.  **L'Héritage :**
+    *   Qu'est-ce que l'héritage (`:` en C#) et quel est son but principal (DRY - Don't Repeat Yourself) ?
+    *   Quelle est la différence entre une classe "Mère" (Base) et une classe "Fille" (Dérivée) ?
+    *   Peut-on hériter de plusieurs classes en C# ?
+2.  **Le Polymorphisme :**
+    *   Que signifient les mots-clés `virtual` et `override` en C# ?
+    *   Comment faire pour stocker des `Voiture` et des `Moto` dans une seule et même `List<Vehicule>` ?
+3.  **Application au projet :**
+    *   Proposez une ébauche de diagramme de classe pour AutoRent montrant comment `Voiture` et `Moto` héritent de `Vehicule`.
+
+*Ressources conseillées : Microsoft Docs (C#), Cours sur OpenClassrooms ou NSI.app.*
+
+---
+
+4) Cahier des Charges
 
 Le projet doit respecter les contraintes techniques et fonctionnelles suivantes :
 
 **A. Gestion des Données (Backend)**
 *   L'application doit être capable de lire un fichier de données brutes (`flotte.csv`) fourni par le siège.
 *   **NOUVEAU :** L'agence loue désormais trois types de véhicules : **Voitures**, **Motos** et **Camping-Cars**.
-*   Les données doivent être stockées en mémoire sous forme d'objets structurés en utilisant l'**Héritage** :
+*   Les données doivent être stockées en mémoire sous forme d'objets structurés en utilisant l'**Héritage** (vu en Recherche Préliminaire) :
     *   Une classe mère `Vehicule` contenant les propriétés communes (Immatriculation, Marque, Modèle, Prix, État).
     *   Des classes filles avec leurs spécificités :
         *   `Voiture` : Nombre de places, Climatisation (Oui/Non).
         *   `Moto` : Cylindrée (cc), Permis requis (A/A2).
-        *   `CampingCar` : Longueur (m), Capacité couchage, Douche (Oui/Non).
+        *   `CampingCar` : Longueur (m), Capacité couchage.
 *   L'application doit garantir l'intégrité des données (ex: pas de prix négatif, format d'immatriculation valide).
 
 **B. Traitements Automatisés**
@@ -58,7 +79,7 @@ Le projet doit respecter les contraintes techniques et fonctionnelles suivantes 
 
 ---
 
-4) Fonctionnement attendu de l'application C#
+1) Fonctionnement attendu de l'application C#
 
 L'application backend sera une **application Console** interactive destinée au gestionnaire de parc. Voici le scénario d'utilisation type :
 
@@ -78,7 +99,7 @@ L'application backend sera une **application Console** interactive destinée au 
 
 ---
 
-5) Développement de l'Application C# (Partie 2)
+6) Développement de l'Application C# (Partie 2)
 
 Vous devez concevoir et développer l'application en respectant les principes de la **Programmation Orientée Objet**, spécifiquement l'**Héritage** et le **Polymorphisme**.
 
@@ -98,7 +119,7 @@ Vous devez concevoir et développer l'application en respectant les principes de
 
 ---
 
-6) Développement de l'Interface Web (Partie 3)
+7) Développement de l'Interface Web (Partie 3)
 
 L'interface web est la vitrine pour les clients.
 
