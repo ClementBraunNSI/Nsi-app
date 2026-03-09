@@ -106,19 +106,16 @@ export default function SplashText() {
 
   return (
     <div 
-      className="absolute -top-12 -right-16 md:-right-24 transform origin-bottom-left hidden md:block select-none pointer-events-none z-10"
-      style={{ 
-        transform: `rotate(${rotation}deg)`,
-        animation: 'bounce 2.5s infinite ease-in-out'
-      }}
+      className="hidden md:inline-block ml-4 animate-bounce-subtle"
+      style={{ animation: 'bounce 3s infinite ease-in-out' }}
     >
-      <span className="text-lg md:text-xl font-black text-[#F97316] bg-[#FFF8E1] border-2 border-[#F97316] shadow-[4px_4px_0px_#F97316] px-3 py-1 rounded-sm whitespace-nowrap">
+      <span className="text-xs font-bold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-1 rounded-md shadow-sm whitespace-nowrap">
         {message}
       </span>
       <style jsx>{`
         @keyframes bounce {
-          0%, 100% { transform: rotate(${rotation}deg) scale(1); }
-          50% { transform: rotate(${rotation}deg) scale(1.05); }
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-2px); }
         }
       `}</style>
     </div>

@@ -57,7 +57,7 @@ Le projet doit respecter les contraintes techniques et fonctionnelles suivantes 
 
 **A. Gestion des Données (Backend)**
 *   L'application doit être capable de lire un fichier de données brutes (`flotte.csv`) fourni par le siège.
-*   **NOUVEAU :** L'agence loue désormais trois types de véhicules : **Voitures**, **Motos** et **Camping-Cars**.
+*   L'agence loue désormais trois types de véhicules : **Voitures**, **Motos** et **Camping-Cars**.
 *   Les données doivent être stockées en mémoire sous forme d'objets structurés en utilisant l'**Héritage** (vu en Recherche Préliminaire) :
     *   Une classe mère `Vehicule` contenant les propriétés communes (Immatriculation, Marque, Modèle, Prix, État).
     *   Des classes filles avec leurs spécificités :
@@ -69,7 +69,7 @@ Le projet doit respecter les contraintes techniques et fonctionnelles suivantes 
 **B. Traitements Automatisés**
 *   L'application doit permettre de filtrer les véhicules selon leur état (Disponible, En maintenance, Loué) **ET** selon leur type (Voiture, Moto, Camping-Car).
 *   Elle doit calculer des indicateurs financiers (ex: revenu potentiel total du parc).
-*   **NOUVEAU :** Simulation de devis. L'utilisateur peut sélectionner un véhicule et une durée pour obtenir le coût total (avec application d'une remise de 10% pour les locations > 7 jours).
+*   Simulation de devis. L'utilisateur peut sélectionner un véhicule et une durée pour obtenir le coût total (avec application d'une remise de 10% pour les locations > 7 jours).
 *   Elle doit générer un fichier d'export propre (`disponibles.csv`) contenant uniquement les véhicules prêts à la location, formaté pour être lu par le site web.
 
 **C. Interface Client (Frontend)**
