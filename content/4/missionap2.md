@@ -76,7 +76,7 @@ Vous devez concevoir et développer l'application en respectant les principes de
 1.  **Analyse et Modélisation :**
     *   Identifiez les entités nécessaires au projet. Quelles classes créer pour représenter un véhicule ? Pour gérer l'ensemble du parc ?
     *   Définir les propriétés de chaque classe en respectant le principe d'encapsulation (attributs privés, accès contrôlé).
-    *   Réaliser le **Diagramme de Classes** avant de commencer le développement.
+    *   Réaliser le **Diagramme de Classes UML** avant de commencer le développement.
 
 2.  **Implémentation :**
     *   Développer les classes identifiées.
