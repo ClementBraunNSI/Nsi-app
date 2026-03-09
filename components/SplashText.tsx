@@ -106,16 +106,16 @@ export default function SplashText() {
 
   return (
     <div 
-      className="hidden md:inline-block ml-4 animate-bounce-subtle"
+      className="mx-auto mb-10 w-fit transform animate-bounce-subtle select-none"
       style={{ animation: 'bounce 3s infinite ease-in-out' }}
     >
-      <span className="text-xs font-bold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-1 rounded-md shadow-sm whitespace-nowrap">
+      <span className="text-xl md:text-2xl font-black text-[#F97316] bg-[#FFF8E1] border-2 border-[#F97316] shadow-[4px_4px_0px_#F97316] px-6 py-2 rounded-sm whitespace-nowrap -rotate-2 inline-block hover:rotate-0 transition-transform cursor-default">
         {message}
       </span>
       <style jsx>{`
         @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-2px); }
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
         }
       `}</style>
     </div>

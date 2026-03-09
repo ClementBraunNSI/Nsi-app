@@ -84,7 +84,8 @@ export default function LandingPage() {
     { name: "Mathieu Marchand", site: "https://mmarchand-nsi.github.io/", phrase: "Explorez l'informatique scientifique avec des projets concrets et des outils professionnels." },
     { name: "Nicolas Leal", site: "http://www.prof-leal.fr/", phrase: "Découvrez le numérique avec curiosité et rigueur pour SNT et NSI." },
     { name: "Théo Quertier", site: "https://ge0rgi0.github.io/TAQ/", phrase: "TAQ : votre guide structuré pour maîtriser NSI et SNT étape par étape." },
-    { name: "Mathieu Cardoso", site: "https://profcardoso.github.io/", phrase: "Cours NSI-SNT complets avec ressources pratiques et club informatique." }
+    { name: "Mathieu Cardoso", site: "https://profcardoso.github.io/", phrase: "Cours NSI-SNT complets avec ressources pratiques et club informatique." },
+    { name: "NSI Rocks", site: "https://nsi.rocks/nsi", phrase: "Une mine d'or de ressources NSI : cours, exercices et projets pour progresser solide comme un roc." }
   ];
 
   const itemsPerPage = 3;
@@ -181,6 +182,8 @@ export default function LandingPage() {
         <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
           La plateforme de référence pour la NSI. Des cours épurés, des illustrations uniques et un parcours de progression jusqu'au BTS.
         </p>
+
+        <SplashText />
 
         <div className="relative max-w-xl mx-auto z-50">
           <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" size={24} />
