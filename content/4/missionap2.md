@@ -36,19 +36,25 @@ Le projet doit respecter les contraintes techniques et fonctionnelles suivantes 
 
 **A. Gestion des Données (Backend)**
 *   L'application doit être capable de lire un fichier de données brutes (`flotte.csv`) fourni par le siège.
-*   Les données doivent être stockées en mémoire sous forme d'objets structurés (Programmation Orientée Objet).
-*   Chaque véhicule est caractérisé par : son immatriculation, sa marque, son modèle, sa catégorie, son prix journalier, son kilométrage et son état.
+*   **NOUVEAU :** L'agence loue désormais trois types de véhicules : **Voitures**, **Motos** et **Camping-Cars**.
+*   Les données doivent être stockées en mémoire sous forme d'objets structurés en utilisant l'**Héritage** :
+    *   Une classe mère `Vehicule` contenant les propriétés communes (Immatriculation, Marque, Modèle, Prix, État).
+    *   Des classes filles avec leurs spécificités :
+        *   `Voiture` : Nombre de places, Climatisation (Oui/Non).
+        *   `Moto` : Cylindrée (cc), Permis requis (A/A2).
+        *   `CampingCar` : Longueur (m), Capacité couchage, Douche (Oui/Non).
 *   L'application doit garantir l'intégrité des données (ex: pas de prix négatif, format d'immatriculation valide).
 
 **B. Traitements Automatisés**
-*   L'application doit permettre de filtrer les véhicules selon leur état (Disponible, En maintenance, Loué).
+*   L'application doit permettre de filtrer les véhicules selon leur état (Disponible, En maintenance, Loué) **ET** selon leur type (Voiture, Moto, Camping-Car).
 *   Elle doit calculer des indicateurs financiers (ex: revenu potentiel total du parc).
+*   **NOUVEAU :** Simulation de devis. L'utilisateur peut sélectionner un véhicule et une durée pour obtenir le coût total (avec application d'une remise de 10% pour les locations > 7 jours).
 *   Elle doit générer un fichier d'export propre (`disponibles.csv`) contenant uniquement les véhicules prêts à la location, formaté pour être lu par le site web.
 
 **C. Interface Client (Frontend)**
 *   Le site web doit afficher dynamiquement la liste des véhicules disponibles à partir du fichier généré par l'application C#.
-*   L'interface doit être moderne et responsive (adaptée aux mobiles).
-*   Le client doit pouvoir visualiser clairement les informations de chaque véhicule (Marque, Modèle, Prix, etc.).
+*   L'interface doit permettre de filtrer l'affichage par catégorie (ex: "Voir uniquement les Motos").
+*   Le client doit pouvoir visualiser clairement les informations spécifiques (ex: la cylindrée pour une moto).
 
 ---
 
@@ -56,53 +62,58 @@ Le projet doit respecter les contraintes techniques et fonctionnelles suivantes 
 
 L'application backend sera une **application Console** interactive destinée au gestionnaire de parc. Voici le scénario d'utilisation type :
 
-1.  **Démarrage :** L'application se lance et charge automatiquement les données depuis le fichier source (`flotte.csv`). Si le fichier est introuvable ou corrompu, un message d'erreur explicite doit s'afficher.
+1.  **Démarrage :** L'application se lance et charge automatiquement les données depuis le fichier source (`flotte.csv`).
 2.  **Menu Principal :** L'utilisateur accède à un menu textuel proposant plusieurs actions :
-    *   *Afficher le parc complet* : Liste tous les véhicules avec leurs détails.
-    *   *Filtrer par état* : Demande à l'utilisateur quel état il souhaite voir (ex: "Disponible") et affiche les véhicules correspondants.
-    *   *Afficher les statistiques* : Affiche le nombre total de véhicules et le revenu potentiel global.
-    *   *Exporter pour le Web* : Génère le fichier `disponibles.csv` et affiche un message de confirmation.
-    *   *Quitter* : Ferme l'application.
+    *   *Afficher le parc complet* : Liste tous les véhicules (triés par type).
+    *   *Filtrer par type/état* : "Afficher toutes les Motos disponibles".
+    *   *Rechercher un véhicule* : Par immatriculation.
+    *   *Simuler un devis* : Calculer le prix pour X jours.
+    *   *Afficher les statistiques* :
+        *   Nombre de véhicules par type.
+        *   Revenu potentiel total.
+        *   Véhicule le plus cher et le moins cher.
+    *   *Exporter pour le Web* : Génère le fichier `disponibles.csv`.
+    *   *Quitter*.
 3.  **Interaction :** L'application doit gérer les erreurs de saisie (ex: choix invalide dans le menu) sans planter.
 
 ---
 
 5) Développement de l'Application C# (Partie 2)
 
-Vous devez concevoir et développer l'application en respectant les principes de la **Programmation Orientée Objet**.
+Vous devez concevoir et développer l'application en respectant les principes de la **Programmation Orientée Objet**, spécifiquement l'**Héritage** et le **Polymorphisme**.
 
 **Travail à faire :**
 
 1.  **Analyse et Modélisation :**
-    *   Identifiez les entités nécessaires au projet. Quelles classes créer pour représenter un véhicule ? Pour gérer l'ensemble du parc ?
-    *   Définir les propriétés de chaque classe en respectant le principe d'encapsulation (attributs privés, accès contrôlé).
-    *   Réaliser le **Diagramme de Classes UML** avant de commencer le développement.
+    *   Concevoir l'architecture des classes. Quelle est la classe de base ? Quelles sont les classes dérivées ?
+    *   Définir les propriétés communes et spécifiques.
+    *   Réaliser le **Diagramme de Classes UML** complet mettant en évidence les relations d'héritage.
 
 2.  **Implémentation :**
-    *   Développer les classes identifiées.
-    *   Mettre en place la lecture du fichier CSV. Comment transformer une ligne de texte en un objet C# ?
-    *   Implémenter la logique du menu principal et des différentes fonctionnalités décrites dans le "Fonctionnement attendu".
-    *   Gérer l'écriture du fichier d'export. S'assurer que le format de sortie est compatible avec ce que le site web attend.
+    *   Développer la hiérarchie de classes (`Vehicule`, `Voiture`, `Moto`, `CampingCar`).
+    *   Utiliser le **Polymorphisme** pour la méthode `AfficherDetails()` (chaque type de véhicule s'affiche différemment).
+    *   Mettre en place la lecture du fichier CSV. Attention : le fichier CSV contiendra une colonne "Type" qui vous permettra de savoir quelle classe instancier (Factory Pattern simplifié).
+    *   Implémenter la logique du menu et des filtres.
+    *   Gérer l'export CSV en incluant les nouvelles colonnes spécifiques.
 
 ---
 
 6) Développement de l'Interface Web (Partie 3)
 
-L'interface web est la vitrine pour les clients. Elle ne doit pas contenir de logique métier complexe (tout est fait en C#), mais se concentrer sur l'affichage.
+L'interface web est la vitrine pour les clients.
 
 **Travail à faire :**
 
 1.  **Structure de la page (`index.php`) :**
     *   Concevoir une page qui lit le fichier `disponibles.csv`.
-    *   Pour chaque ligne du fichier, générer dynamiquement le code HTML nécessaire pour afficher une "carte" véhicule.
+    *   Utiliser des icônes (FontAwesome ou Emojis) pour distinguer visuellement les types de véhicules (🚗, 🏍️, 🚐).
 
 2.  **Design et Ergonomie (CSS) :**
-    *   Mettre en page les résultats de manière grille (Grid ou Flexbox).
-    *   S'assurer que le site est lisible sur mobile.
-    *   Utiliser des codes couleurs pour rendre l'information claire (ex: prix en évidence).
+    *   Créer des "Badges" pour afficher les caractéristiques (ex: Badge "Permis A" pour les motos).
+    *   Mettre en page les résultats de manière grille.
 
-3.  **Recherche (Bonus) :**
-    *   Ajouter un champ de recherche permettant de filtrer l'affichage (ex: par marque) en PHP.
+3.  **Recherche et Filtres (Bonus) :**
+    *   Ajouter des boutons pour filtrer l'affichage instantanément (Tout, Voitures, Motos, Camping-Cars).
 
 ---
 
@@ -110,8 +121,8 @@ L'interface web est la vitrine pour les clients. Elle ne doit pas contenir de lo
 
 *   **Le Code Source C#** (Projet Visual Studio complet, code commenté).
 *   **Le Code Source Web** (Fichiers PHP, CSS).
-*   **Le Diagramme de Classes** (Format image ou PDF).
-*   **Un Guide Utilisateur** (PDF) expliquant comment utiliser l'application C# pour mettre à jour le site web.
+*   **Le Diagramme de Classes** (Indispensable pour valider l'héritage).
+*   **Un Guide Utilisateur** (PDF).
 
 ---
 
@@ -119,15 +130,11 @@ L'interface web est la vitrine pour les clients. Elle ne doit pas contenir de lo
 
 *   **Format du fichier CSV source (`flotte.csv`) :**
     ```csv
-    Immatriculation;Marque;Modele;Categorie;Prix;Km;Etat
-    AB-123-CD;Peugeot;208;Citadine;35;12000;Disponible
-    EF-456-GH;Renault;Clio;Citadine;32;45000;En maintenance
-    IJ-789-KL;BMW;X5;SUV;120;5000;Loué
+    Type;Immatriculation;Marque;Modele;Prix;Km;Etat;Divers1;Divers2
+    Voiture;AB-123-CD;Peugeot;208;35;12000;Disponible;5;Oui
+    Moto;EF-456-GH;Yamaha;MT-07;45;5000;En maintenance;689;A
+    CampingCar;IJ-789-KL;Fiat;Ducato;120;45000;Loué;7.2;4
     ```
-
-*   **Conseils Techniques :**
-    *   Pour la lecture/écriture de fichiers en C#, se renseigner sur les classes du namespace `System.IO`.
-    *   Pour le CSV en PHP, il existe des fonctions natives très pratiques pour lire un fichier ligne par ligne.
-    *   Penser à gérer les exceptions (fichiers manquants, erreurs de conversion de types).
+    *(Note : Les colonnes Divers1 et Divers2 changent de sens selon le type de véhicule. À vous de les mapper correctement dans votre code !)*
 
 > **Note :** Ce projet simule une architecture réelle où un "Back-Office" (C#) prépare les données pour un "Front-Office" (Web). Soigner la communication entre les deux (le format du fichier CSV d'échange).
