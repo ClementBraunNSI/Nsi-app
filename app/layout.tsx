@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
 import { LogOut, X, LayoutDashboard, Eye, Type, Zap, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import SplashText from '@/components/SplashText';
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -254,17 +255,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-slate-900`}>
         {isAppLoading && <FoxLoader />}
         
-        <header className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-[100] h-20">
+        <header className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-[100] h-20 print:hidden">
           <nav className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between relative">
             
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-200 group-hover:rotate-12 transition-transform">
-                <span className="text-2xl">🦊</span>
+            <div className="flex items-center gap-4">
+              <Link href="/" className="flex items-center gap-3 group">
+                <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-200 group-hover:rotate-12 transition-transform">
+                  <span className="text-2xl">🦊</span>
+                </div>
+                <span className="text-lg font-bold text-slate-900 uppercase tracking-wider">
+                  <span style={{ color: '#F97316' }}>La tanière du Code</span> <span style={{ color: '#374151' }}>par Clément BRAUN</span>
+                </span>
+              </Link>
+              <div className="hidden xl:block">
+                 <SplashText />
               </div>
-              <span className="text-lg font-bold text-slate-900 uppercase tracking-wider">
-                <span style={{ color: '#F97316' }}>La tanière du Code</span> <span style={{ color: '#374151' }}>par Clément BRAUN</span>
-              </span>
-            </Link>
+            </div>
 
             <div className="flex items-center gap-8 text-sm font-bold tracking-widest uppercase">
               {/* LIENS DE NAVIGATION */}
