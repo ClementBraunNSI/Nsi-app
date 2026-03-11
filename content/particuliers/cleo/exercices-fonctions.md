@@ -4,7 +4,7 @@ description: "Organiser le code en fonctions réutilisables"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "⚙️"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 <ExerciseTabs courseId="c-fonctions" courseTitle="C - Fonctions">

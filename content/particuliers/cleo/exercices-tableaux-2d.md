@@ -4,7 +4,7 @@ description: "Exercices progressifs sur les matrices"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "💪"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 <ExerciseTabs courseId="c-tableaux-2d-levels" courseTitle="C - Tableaux 2D - Niveaux">

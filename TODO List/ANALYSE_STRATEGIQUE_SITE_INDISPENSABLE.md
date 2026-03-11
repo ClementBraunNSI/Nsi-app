@@ -27,13 +27,6 @@ Le programme de Terminale est abstrait (Graphes, Récursivité, Processus). Il m
     *   *Besoin :* Simuler l'allocation CPU (Round-Robin, FIFO).
     *   *Fonction :* Un diagramme de Gantt qui se remplit en temps réel avec des processus de différentes couleurs.
 
-### B. Pour la Première & SNT
-*   [ ] **Mini-IDE Python dans le navigateur** (via Pyodide ou simple simulation)
-    *   *Besoin :* Exécuter les bouts de code directement dans la page sans ouvrir Thonny.
-    *   *Pourquoi indispensable ?* Réduit la friction. "Je lis, je teste, je comprends".
-
----
-
 ## 2. 🏆 La Dimension "Coach" (Préparation Bac & Examens)
 
 Le site doit préparer à l'épreuve. Actuellement, c'est un dépôt de connaissances. Il doit devenir un entraîneur.

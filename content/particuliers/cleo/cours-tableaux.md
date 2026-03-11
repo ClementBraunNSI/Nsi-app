@@ -4,7 +4,7 @@ description: "Stocker et manipuler plusieurs variables ensemble"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "📦"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 # 📦 C — Les Tableaux

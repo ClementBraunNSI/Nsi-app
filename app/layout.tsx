@@ -279,6 +279,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Lab
               </Link>
 
+              <Link href="/annales" className={pathname.startsWith('/annales') ? 'text-orange-500' : 'text-slate-500 hover:text-orange-500 transition-colors'}>
+                Annales
+              </Link>
+
               {/* LIEN À PROPOS RÉINTRODUIT ICI */}
               <Link href="/a-propos" className={pathname === '/a-propos' ? 'text-orange-500' : 'text-slate-500 hover:text-orange-500 transition-colors'}>
                 À propos

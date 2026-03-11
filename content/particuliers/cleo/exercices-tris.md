@@ -4,7 +4,7 @@ description: "Exercices guidés sur les tris : sélection, insertion et dénombr
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "🔄"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 <ExerciseTabs courseId="c-tris-exos" courseTitle="C - Algorithmes de Tri - Exercices">

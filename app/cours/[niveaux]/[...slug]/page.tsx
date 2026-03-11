@@ -98,6 +98,7 @@ import DataProcessor from '@/components/interactive/DataProcessor';
 import FilterPlayground from '@/components/interactive/FilterPlayground';
 import Quiz from '@/components/interactive/Quiz';
 import ReflectionInput from '@/components/interactive/ReflectionInput';
+import BugHunter from '@/components/interactive/BugHunter';
 import CourseNavigation from '@/components/CourseNavigation';
 import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
@@ -259,6 +260,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     FilterPlayground,
     Quiz,
     ReflectionInput,
+    BugHunter,
   };
 
   return (

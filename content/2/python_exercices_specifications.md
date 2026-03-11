@@ -7,7 +7,13 @@ meta: "Docstrings, Type Hinting et Documentation"
 level : premiere
 ---
 
-### 1.1 Le contrat de confiance : l'Assertion
+## 🐞 Chasseur de Bugs
+
+Avant de passer aux exercices de spécification, entraînez-vous à repérer les erreurs courantes de **nommage**, de **typage** et de **logique** qui rendent le code difficile à spécifier ou à maintenir.
+
+<BugHunter />
+
+## 1. Le contrat de confiance : l'Assertion
 
 Une **assertion** est un moyen de vérifier qu'une condition est vraie à un moment donné du programme. C'est comme un "checkpoint" dans un jeu vidéo : si la condition est fausse, le programme s'arrête immédiatement avec une erreur.
 

@@ -4,7 +4,7 @@ description: "Organiser le code en fonctions réutilisables"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "⚙️"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 # ⚙️ C — Fonctions
@@ -54,17 +54,13 @@ int main() {
 ### Fonction avec paramètres
 
 ```c
-#include <stdio.h>
-
-// Fonction avec paramètres
-void presenter(char nom[], int age) {
-    printf("Je m'appelle %s et j'ai %d ans.\n", nom, age);
+void dire_bonjour_a(char *nom) {
+    printf("Bonjour %s !\n", nom);
 }
 
 int main() {
-    presenter("Alice", 17);
-    presenter("Bob", 18);
-    
+    dire_bonjour_a("Alice");
+    dire_bonjour_a("Bob");
     return 0;
 }
 ```
@@ -72,97 +68,47 @@ int main() {
 ### Fonction avec valeur de retour
 
 ```c
-#include <stdio.h>
-
-// Fonction qui retourne un résultat
 int addition(int a, int b) {
-    int resultat = a + b;
-    return resultat;
+    return a + b;
 }
 
 int main() {
-    int somme = addition(5, 3);
-    printf("5 + 3 = %d\n", somme);
-    
-    // Ou directement :
-    printf("10 + 20 = %d\n", addition(10, 20));
-    
+    int resultat = addition(5, 3);
+    printf("5 + 3 = %d\n", resultat);
     return 0;
 }
 ```
 
-## 🧮 Exemples pratiques
+## 🧠 Portée des variables (Scope)
 
-### Calculer l'aire d'un rectangle
+### Variables locales
+Déclarées **dans une fonction**. Elles n'existent que dans cette fonction.
 
 ```c
-#include <stdio.h>
-
-double aire_rectangle(double longueur, double largeur) {
-    return longueur * largeur;
+void test() {
+    int x = 10; // Variable locale
 }
-
-double perimetre_rectangle(double longueur, double largeur) {
-    return 2 * (longueur + largeur);
-}
-
-int main() {
-    double l = 5.5, L = 3.2;
-    
-    printf("Aire : %.2f m²\n", aire_rectangle(l, L));
-    printf("Périmètre : %.2f m\n", perimetre_rectangle(l, L));
-    
-    return 0;
-}
+// x n'existe pas ici
 ```
 
-### Trouver le maximum de deux nombres
+### Variables globales
+Déclarées **en dehors de toute fonction**. Accessibles partout (à utiliser avec modération !).
 
 ```c
-#include <stdio.h>
+int score = 0; // Variable globale
 
-int maximum(int a, int b) {
-    if (a > b) {
-        return a;
-    } else {
-        return b;
-    }
-}
-
-// Version plus concise
-int max(int a, int b) {
-    return (a > b) ? a : b;
-}
-
-int main() {
-    int x = 15, y = 23;
-    
-    printf("Le maximum entre %d et %d est : %d\n", 
-           x, y, maximum(x, y));
-    
-    return 0;
+void augmenter_score() {
+    score += 10;
 }
 ```
 
-## ⚠️ Points importants
+## 📝 Exercices
 
-!!! warning "Ordre des fonctions"
-    - Déclarer la fonction **avant** de l'utiliser
-    - Ou utiliser un **prototype** en haut du fichier
+### 1. Carré d'un nombre
+Écrire une fonction `int carre(int n)` qui renvoie le carré de `n`.
 
-!!! info "Prototype de fonction"
-    ```c
-    // Prototype (déclaration)
-    int addition(int a, int b);
-    
-    // Utilisation
-    int main() {
-        int resultat = addition(3, 4);
-        return 0;
-    }
-    
-    // Définition
-    int addition(int a, int b) {
-        return a + b;
-    }
-    ```
+### 2. Maximum de deux nombres
+Écrire une fonction `int max(int a, int b)` qui renvoie le plus grand des deux.
+
+### 3. Est pair ?
+Écrire une fonction `int est_pair(int n)` qui renvoie 1 si `n` est pair, 0 sinon.

@@ -4,7 +4,7 @@ description: "Exercices pratiques sur les tableaux en C"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "📊"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 <ExerciseTabs courseId="c-tableaux-exos" courseTitle="C - Tableaux - Exercices">

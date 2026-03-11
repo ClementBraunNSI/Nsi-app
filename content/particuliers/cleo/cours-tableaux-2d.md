@@ -4,7 +4,7 @@ description: "Manipuler des matrices statiques et dynamiques"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "🏗️"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 # 🏗️ C — Les Tableaux à 2 Dimensions (Matrices)

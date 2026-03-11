@@ -36,14 +36,17 @@ export async function getReservedCourses(studentName: string): Promise<ReservedC
         const { data } = matter(fileContent);
 
         if (data.allowedStudents && Array.isArray(data.allowedStudents)) {
-          const normalize = (str: string) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ' ').trim();
+          const normalize = (str: string) => String(str).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ' ').trim();
           const studentNameNormalized = normalize(studentName);
           
           const isAllowed = data.allowedStudents.some((name: string) => 
             normalize(name) === studentNameNormalized
           );
 
-          if (isAllowed) {
+          // Fallback check without normalization if normalization fails to match
+          const isAllowedFallback = !isAllowed && data.allowedStudents.includes(studentName);
+
+          if (isAllowed || isAllowedFallback) {
             // Determine relative path parts for URL construction
             const relativePath = path.relative(contentDir, fullPath);
             const pathParts = relativePath.split(path.sep);
@@ -99,7 +102,7 @@ export async function getReservedCourses(studentName: string): Promise<ReservedC
             reservedCourses.push({
               title: data.title || item.replace(/\.mdx?$/, ''),
               level: level,
-              slug: item.replace(/\.mdx?$/, ''),
+              slug: pathParts.slice(1).join('/').replace(/\.mdx?$/, ''),
               path: urlPath
             });
           }
@@ -108,7 +111,11 @@ export async function getReservedCourses(studentName: string): Promise<ReservedC
     }
   }
 
-  scanDirectory(contentDir);
-  
+  try {
+    scanDirectory(contentDir);
+  } catch (error) {
+    console.error('Error scanning content directory:', error);
+  }
+
   return reservedCourses;
 }

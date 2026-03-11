@@ -4,7 +4,7 @@ description: "Exercices pratiques sur les variables et opérateurs en C"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "📝"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 <ExerciseTabs courseId="c-affectations-types-exos" courseTitle="C - Affectations & Types - Exercices">

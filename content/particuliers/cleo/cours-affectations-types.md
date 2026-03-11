@@ -4,7 +4,7 @@ description: "Variables, opérateurs, entrées/sorties - bases solides"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "🔧"
-allowedStudents: ["Cléo CHILAIN"]
+allowedStudents: ["Cléo"]
 ---
 
 # 🔧 C — Affectations & Types (débutante)
