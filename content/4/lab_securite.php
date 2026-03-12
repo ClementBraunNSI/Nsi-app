@@ -30,19 +30,24 @@ if (isset($_POST['login'])) {
     $u = $_POST['username'];
     $p = $_POST['password'];
 
-    // FAILLE SQL INJECTION ICI : Pas de préparation, concaténation directe
-    $sql = "SELECT * FROM users WHERE username = '$u' AND password = '$p'";
+    // [CORRECTION 5.2] Protection contre SQLi (Défi 2.1 - Contournement d'authentification)
+    // Au lieu de concaténer les variables ("... WHERE username = '$u' ..."), 
+    // on utilise prepare() + bindValue().
+    // La base de données traite ainsi les entrées comme du texte pur, jamais comme du code SQL executable.
+    $stmt = $db->prepare('SELECT * FROM users WHERE username = :username AND password = :password');
+    $stmt->bindValue(':username', $u, SQLITE3_TEXT);
+    $stmt->bindValue(':password', $p, SQLITE3_TEXT);
     
-    // On exécute la requête (vulnérable)
-    $result = $db->query($sql);
+    $result = $stmt->execute();
     
     // Si on trouve une ligne, c'est gagné
     if ($row = $result->fetchArray()) {
         $_SESSION['user'] = $row['username'];
     } else {
-        $login_error = "Identifiants incorrects. <br><small>Requête exécutée : " . htmlspecialchars($sql) . "</small>";
+        $login_error = "Identifiants incorrects.";
     }
 }
+
 
 // Traitement du Logout
 if (isset($_GET['logout'])) {

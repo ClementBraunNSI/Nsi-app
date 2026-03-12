@@ -34,7 +34,11 @@ meta: "Durée : 2 heures · Objectif : Implémenter les algorithmes classiques"
     | 4 | `[**1, 2, 3, 4**, 5, 6]` | Reste `[5, 6]`. Le min est **5**. Déjà bien placé. |
     | Fin | `[**1, 2, 3, 4, 5**, 6]` | Le dernier est forcément le plus grand. |
 
-    ### 3. À vous de jouer !
+    ### 3. Visualisation Interactive
+    
+    <SortingVisualizer algorithm="selection" />
+
+    ### 4. À vous de jouer !
 
     Nous allons implémenter ce tri étape par étape.
 
@@ -122,7 +126,11 @@ meta: "Durée : 2 heures · Objectif : Implémenter les algorithmes classiques"
     | 4 | `[**1, 2, 4, 5, 6**, 3]` | **1** | 1 est le plus petit, il redescend tout en bas. |
     | Fin | `[**1, 2, 3, 4, 5, 6**]` | **3** | S'insère entre 2 et 4. |
 
-    ### 3. À vous de jouer !
+    ### 3. Visualisation Interactive
+    
+    <SortingVisualizer algorithm="insertion" />
+
+    ### 4. À vous de jouer !
 
     **Exercice A : Insérer une valeur**
     Le cœur de l'algorithme est de prendre une valeur à un indice `i` et de la faire "remonter" vers la gauche tant qu'elle est plus petite que son voisin de gauche.
@@ -231,12 +239,18 @@ meta: "Durée : 2 heures · Objectif : Implémenter les algorithmes classiques"
 
   <ExerciseSection id="tri-bonus" label="Bonus : Visualisation">
     <Enonce>
-    ## Bonus : Visualisation (Tri à Bulles)
+    ## Bonus : Visualisation et Comparaison
     
-    Voici une visualisation interactive d'un autre algorithme de tri très connu : le **Tri à Bulles**.
+    ### 1. Tri à Bulles (Bubble Sort)
+    Voici une visualisation interactive du **Tri à Bulles**.
     Bien qu'il soit moins efficace que le tri par insertion ou sélection, il est intéressant à observer.
     
-    <AlgorithmRace />
+    <SortingVisualizer algorithm="bubble" />
+
+    ### 2. Comparateur de Performance (La Course !)
+    Lançons les différents algorithmes en parallèle pour voir lequel est le plus rapide.
+    
+    <SortingComparator />
     </Enonce>
   </ExerciseSection>
 
