@@ -1,0 +1,128 @@
+using System;
+using System.ComponentModel;
+using System.Net;
+using System.Security;
+using System.Collections.Generic;
+					
+
+public class Renard 
+{
+	public string Id {get;set;}
+	public string Surnom {get;set;}
+	public int Age {get;set;}
+	public double Poids {get;set;}
+	public int NiveauSociabilite {get;set;}
+	public bool EstMalade {get;set;}
+	
+	public Renard (string id, string surnom, int age, double poids, int niveausociabilite, bool estmalade = false) 
+	{
+		Id = id;
+		Surnom = surnom;
+		Age = age; 
+		Poids = poids;
+		NiveauSociabilite = niveausociabilite;
+		EstMalade = estmalade;
+	}
+	public static int CalculerIndiceCompatibilite(Renard renard, Renard autrerenard) 
+	{
+		int resultat = 50;
+		int moyenne = ((renard.NiveauSociabilite + autrerenard.NiveauSociabilite)/2) * 2;
+		if (renard.Age - autrerenard.Age < 6){
+			resultat += 20;
+		} else if (renard.Poids - autrerenard.Poids >= 3) {
+			resultat -= 15;
+		} else if (renard.EstMalade == true or (autrerenard.EstMalade == true){
+			resultat -= 30;
+		}
+		resultat += moyenne;
+		if (0 <= resultat <= 100){
+		return resultat;
+		}
+	}
+}	
+public class Enclos
+{
+	public string Nom {get;set;}
+	public int CapaciteMax {get;set;}
+	public List<Renard> _Pensionnaire {get;set;}
+
+	public Enclos (string nom, int capacitemax, List<Renard> _pensionnaire) 
+	{
+		Nom = nom;
+		CapaciteMax = capacitemax;
+		_Pensionnaire = _pensionnaire;
+	}
+	
+	public static bool PeutAccueillir ()
+	{
+		if (CapaciteMax - _Pensionnaire.Count > 0)
+		{
+		return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static bool AjouterRenard (Renard r)
+	{
+		if (PeutAccueillir() == true) {
+			_Pensionnaire.Add(r);
+			return true;
+		} else {
+			return false;	
+		}
+	}
+	
+	public static bool VerifierHarmonie()
+	{
+		if (_Pensionnaire.Count <= 2){
+			return true;
+		} else if (Renard.CalculerIndiceCompatibilite(_Pensionnaire[O], _Pensionnaire[1]) < 40 ) {
+			return false;	
+		} else {
+			return true;
+		}
+	}
+}
+
+public class ReserverNaturelle
+{
+	public string NomReserve {get;set;}
+	private List<Enclos>_Secteurs {get;set;}
+	
+	public ReserverNaturelle(string nomreserve, List<Enclos> _secteur)
+	{
+		NomReserve = nomreserve;
+		_Secteurs = _secteur;
+	}
+	
+	public static void AjouterEnclos(Enclos e)
+	{
+		_Secteurs.Add(e);	
+	}
+	
+	public static bool PlacerNouveauRenard(Renard nouveauRenard)
+	{
+		for (int i = 0; i < _secteurs.Count; i++)
+		{
+			if (_secteurs[i].PeutAccueillir() == true) {
+				Enclos.AjouterRenard(nouveauRenard);
+				Console.WriteLine ($"Le renard {Renard.Surnom} a été placé dans l'enclos {Enclos.Nom}");
+				return true;
+			} else {
+				Console.WriteLine ($"Urgence : Plus de place dans la réserve pour {Renard.Surnom}!");
+				return false;
+			}
+		}
+	}
+}
+
+public class Program
+{
+	public static void Main()
+	{
+		Renard renard = ("REN-001", "ROX", 10, 6.8, 4);
+		Renard autrerenard = ("REN-002","ROX1", 9, 6.0, 8);
+		Console.WriteLine (CalculerIndiceCompatibilite(renard, autrerenard));
+	}
+}

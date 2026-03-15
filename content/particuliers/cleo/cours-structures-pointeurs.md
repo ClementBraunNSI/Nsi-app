@@ -89,8 +89,6 @@ int main() {
 
 ## 🔄 Structures et Fonctions (Passage par Valeur vs Adresse)
 
-C'est ici que la différence avec la POO (C#) est la plus flagrante.
-
 En C, par défaut, les arguments sont passés **par valeur** (copie). Si vous modifiez une structure dans une fonction, l'original n'est pas modifié !
 
 ### Problème : Modification impossible par défaut

@@ -101,6 +101,9 @@ import ReflectionInput from '@/components/interactive/ReflectionInput';
 import BugHunter from '@/components/interactive/BugHunter';
 import SortingVisualizer from '@/components/interactive/SortingVisualizer';
 import SortingComparator from '@/components/interactive/SortingComparator';
+import BinarySearchVisualizer from '@/components/interactive/BinarySearchVisualizer';
+import LinearVsBinarySearch from '@/components/interactive/LinearVsBinarySearch';
+import PythonPlayground from '@/components/interactive/PythonPlayground';
 import CourseNavigation from '@/components/CourseNavigation';
 import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
@@ -265,6 +268,9 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     BugHunter,
     SortingVisualizer,
     SortingComparator,
+    BinarySearchVisualizer,
+    LinearVsBinarySearch,
+    PythonPlayground,
   };
 
   return (

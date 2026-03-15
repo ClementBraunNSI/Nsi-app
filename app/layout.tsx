@@ -5,7 +5,7 @@ import "./globals.css";
 import "katex/dist/katex.min.css";
 import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
-import { LogOut, X, LayoutDashboard, Eye, Type, Zap, Check } from 'lucide-react';
+import { LogOut, X, LayoutDashboard, Eye, Type, Zap, Check, Moon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -157,6 +157,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [showA11yMenu, setShowA11yMenu] = useState(false);
   const [dyslexicMode, setDyslexicMode] = useState(false);
   const [highContrastMode, setHighContrastMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   
   const pathname = usePathname();
   const router = useRouter();
@@ -165,12 +166,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // Load preferences
     const savedDyslexic = localStorage.getItem('dyslexicMode') === 'true';
     const savedHighContrast = localStorage.getItem('highContrastMode') === 'true';
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
     
     setDyslexicMode(savedDyslexic);
     setHighContrastMode(savedHighContrast);
+    setDarkMode(savedDarkMode);
 
     if (savedDyslexic) document.documentElement.classList.add('dyslexic');
     if (savedHighContrast) document.documentElement.classList.add('high-contrast');
+    if (savedDarkMode) document.documentElement.classList.add('dark');
 
     // Suppression du délai artificiel de 2s
     // const timer = setTimeout(() => setIsAppLoading(false), 2000);
@@ -233,6 +237,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     }
   };
 
+  const toggleDarkMode = () => {
+    const newValue = !darkMode;
+    setDarkMode(newValue);
+    localStorage.setItem('darkMode', String(newValue));
+    if (newValue) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
@@ -279,10 +294,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Lab
               </Link>
 
-              <Link href="/annales" className={pathname.startsWith('/annales') ? 'text-orange-500' : 'text-slate-500 hover:text-orange-500 transition-colors'}>
-                Annales
-              </Link>
-
               {/* LIEN À PROPOS RÉINTRODUIT ICI */}
               <Link href="/a-propos" className={pathname === '/a-propos' ? 'text-orange-500' : 'text-slate-500 hover:text-orange-500 transition-colors'}>
                 À propos
@@ -316,6 +327,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                           <span className="font-bold text-sm">Dyslexie</span>
                         </div>
                         {dyslexicMode && <Check size={16} />}
+                      </button>
+
+                      <button 
+                        onClick={toggleDarkMode}
+                        className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${darkMode ? 'bg-orange-50 text-orange-600 border border-orange-100' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'}`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <Moon size={18} />
+                          <span className="font-bold text-sm">Mode Sombre</span>
+                        </div>
+                        {darkMode && <Check size={16} />}
                       </button>
 
                       <button 

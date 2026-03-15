@@ -1,0 +1,10 @@
+Etudiant,Note /20,Feedback / Pistes de réflexion
+Adonys Sabri,4,"Des efforts de structuration visibles. La syntaxe est encore très éloignée du C# (mélange de concepts), mais l'intention des propriétés et méthodes est là. Il faut reprendre les bases de la déclaration de classe."
+Adrien Cadot,13,"Bon travail global. La logique algorithmique est bien comprise. Quelques erreurs de syntaxe (opérateurs logiques, déclaration) qui sont normales sans IDE. Attention à bien distinguer les types de retour."
+Allan Willoquet,12,"Copie récupérée (format ODT). Bon raisonnement algorithmique et structure correcte. Quelques confusions de syntaxe (probablement issues du Python ou d'un autre langage), mais les concepts Objets sont acquis."
+Aymen El Madi,6,"Il y a de l'idée dans la logique, mais la confusion entre 'classe' et 'méthode' bloque la compilation. Essayez de bien séparer la structure (classe) du comportement (méthodes)."
+Ibrahima Ndiaye,11,"Structure propre et lisible. Attention à la logique des 'return' : un return arrête la fonction, donc le score ne s'additionnait pas. C'est une erreur d'algo, pas de syntaxe. Bon début !"
+Kyllian Feray Lefort,7,"C'est plus du pseudo-code que du C#, mais la logique est cohérente. Vous avez compris ce qu'il fallait faire (comparer les âges, poids...), il ne reste plus qu'à apprendre la 'grammaire' du C# pour l'exprimer correctement."
+Lorenzo Lienard,15,"Très bonne copie. Le code est structuré, propre et la logique est quasi-parfaite. Une erreur conceptuelle sur l'utilisation de 'static' (qui empêche d'accéder aux données de l'instance), mais c'est un détail par rapport à la qualité globale."
+Mohamed Benrebrit,2,"Rendu trop léger pour être évalué significativement. Essayez au moins de poser la structure des classes la prochaine fois."
+Ryan Lefevre,5,"Vous avez bien identifié 'ce qu'il fallait faire' (les méthodes, les propriétés sont à la bonne place). Il manque maintenant le 'comment le faire' (le code à l'intérieur). La structure est comprise, c'est un premier pas."

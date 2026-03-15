@@ -1,0 +1,136 @@
+using System;
+using System.Collections.Generic;
+
+public class Renard
+{
+
+	public string Id{get;set;}
+	public string Surnom{get;set;}
+	public int Age{get;set;}
+	public double Poids{get;set;}
+	public int NiveauSociabilite{get;set;}
+	public bool EstMalade{get;set;}
+	
+	public Renard(string id , string surnom , int age , double poids , int niveausociabilite , bool estmalade = false)
+	{
+		Id = id;
+		Surnom = surnom;
+		Age = age;
+		Poids = poids;
+		NiveauSociabilite = niveausociabilite;
+		EstMalade = estmalade;
+	}
+	
+	public static int CalculerIndiceCompatibilite(Renard autreRenard){
+		int score = 50;
+		if((Age - autreRenard.Age) < 6){
+			score = score + 20;
+		}
+		if((Poids - autreRenard.Poids) > 3){
+			score = score - 15;
+		}
+		if((EstMalade || autreRenard.EstMalade = true) && (EstMalade = true) && (autreRenard.EstMalade = true)){
+			score = score - 30;
+		}
+		int moyenne = (NiveauSociabilite + autreRenard.NiveauSociabilite) / 2;
+		score = (score + moyenne) * 2;
+		return score;
+	}
+
+}
+
+public class Enclos
+{
+	public string Nom{get;set;}
+	public int CapaciteMax{get;set;}
+	private List<Renard> _Pensionnaires{get;set;}
+
+	public Enclos(string nom , int capacitemax, List<Renard> _pensionnaires){
+		Nom = nom;
+		CapaciteMax = capacitemax;
+		_Pensionnaires = _pensionnaires;
+	}
+	
+	public bool PeutAccueillir(){
+		int compte = 0;
+		foreach(Renard c in _Pensionnaires){
+			compte = compte + 1;
+		}
+		if(compte < CapaciteMax){
+			return true;
+		} else{ 
+			return false;
+		}
+	}
+	
+	public bool AjouterRenard(Renard r){
+		if(PeutAccueillir() is true){
+			_Pensionnaires.Add(r);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public bool VerifierHarmonie(){
+		int compteur = 0;
+		Renard a = _Pensionnaires[1];
+		Renard b = _Pensionnaires[2];
+		foreach(Renard e in _Pensionnaires){
+			compteur = compteur + 1;
+		}
+		if(compteur < 2){
+			return true;
+		} if(Renard.CalculerIndiceCompatibilite(a) + Renard.CalculerIndiceCompatibilite(b) < 40){
+			return false;
+		} else{
+			return true;
+		}
+		
+	}
+}
+
+
+public class ReserveNaturelle 
+{
+
+	public string NomReserve{get;set;}
+	private List<Enclos> _Secteurs{get;set;}
+	
+	
+	public ReserveNaturelle(string nomreserve, List<Enclos> _secteurs){
+		NomReserve = nomreserve;
+		_Secteurs = _secteurs;
+	}
+	
+	public void AjouterEnclos(Enclos e){
+		_Secteurs.Add(e);
+	}
+
+	public void PlacerNouveauRenard(Renard nouveauRenard){
+		foreach(Enclos e in _Secteurs){
+			if(Enclos.PeutAccueillir() is true){
+				
+			}
+		}
+	
+	}
+	
+	
+	
+	
+}
+
+
+
+					
+public class Program
+{
+	public static void Main()
+	{
+		new ReserveNaturelle('Le Terrir Sûr');
+		
+		new Enclos("Bois",2);
+		new Enclos("Colline",5);
+	}
+}

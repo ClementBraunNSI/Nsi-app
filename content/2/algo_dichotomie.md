@@ -30,6 +30,8 @@ L'algorithme repose sur trois étapes répétées tant qu'on n'a pas trouvé la 
     *   Si la valeur cherchée est *plus grande* : On ne garde que la **moitié droite**.
 3.  **Répéter** : On recommence avec la nouvelle zone réduite.
 
+<BinarySearchVisualizer />
+
 ## Algorithme en Pseudocode
 
 ```text
@@ -61,3 +63,5 @@ La recherche dichotomique est beaucoup plus rapide que la **recherche séquentie
 
 *   **Recherche Séquentielle** : Complexité linéaire $O(n)$. Pour 1 000 000 d'éléments, on peut faire jusqu'à 1 000 000 de comparaisons.
 *   **Recherche Dichotomique** : Complexité logarithmique $O(\log_2 n)$. Pour 1 000 000 d'éléments, on fait au maximum environ **20 comparaisons** ($2^{20} \approx 1 000 000$).
+
+<LinearVsBinarySearch />

@@ -4,6 +4,34 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@font-face {
+  font-family: 'Luciole';
+  src: url('/fonts/Luciole/Luciole-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Luciole';
+  src: url('/fonts/Luciole/Luciole-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Luciole';
+  src: url('/fonts/Luciole/Luciole-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --font-luciole: 'Luciole', sans-serif;
+}
+
 /* On force le blanc partout pour être sûr EN MODE LIGHT */
 :root:not(.dark) {
   background-color: white !important;
@@ -19,6 +47,56 @@ body:not(.dark) {
 .dark body {
   background-color: #0f172a !important;
   color: #f8fafc !important;
+}
+
+.dark header {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border-bottom-color: #334155 !important;
+}
+
+.dark .bg-white {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+/* Fix pour les cartes et conteneurs blancs en mode sombre */
+.dark .bg-white\/80 {
+  background-color: rgba(30, 41, 59, 0.9) !important;
+}
+
+.dark .bg-slate-50 {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+.dark .bg-slate-100 {
+  background-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+/* Texte */
+.dark .text-slate-900 { color: #f8fafc !important; }
+.dark .text-slate-800 { color: #f1f5f9 !important; }
+.dark .text-slate-700 { color: #e2e8f0 !important; }
+.dark .text-slate-600 { color: #cbd5e1 !important; }
+.dark .text-slate-500 { color: #94a3b8 !important; }
+.dark .text-slate-400 { color: #64748b !important; }
+
+/* Bordures */
+.dark .border-slate-100 { border-color: #334155 !important; }
+.dark .border-slate-200 { border-color: #475569 !important; }
+
+/* Code blocks et pre */
+.dark .prose pre {
+  background-color: #020617 !important;
+  border-color: #f97316 !important;
+}
+
+.dark .prose code {
+  color: #fdba74 !important;
+  background-color: #334155 !important;
 }
 
 .dark .prose {
@@ -49,10 +127,12 @@ body:not(.dark) {
 }
 
 /* Mode Dyslexie */
-.dyslexic body {
-  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif !important;
+.dyslexic body,
+.dyslexic * {
+  font-family: var(--font-luciole) !important;
   line-height: 2 !important;
-  word-spacing: 0.1em !important;
+  word-spacing: 0.15em !important;
+  letter-spacing: 0.05em !important;
 }
 
 /* Mode Haut Contraste */

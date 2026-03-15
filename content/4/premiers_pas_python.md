@@ -19,7 +19,16 @@ print("Hello World!")
 prenom = "Maya"
 print("Bonjour", prenom)
 ```
+
 Affiche un message dans le terminal. Plusieurs éléments peuvent être séparés par des virgules.
+
+<Admonition type="experiment" title="Testez votre code en direct !">
+Utilisez l'interpréteur ci-dessous pour tester vos commandes Python sans quitter la page. Essayez de modifier le message !
+</Admonition>
+
+<PythonPlayground initialCode="print('Hello NSI !')
+prenom = 'Maya'
+print('Bonjour', prenom)" />
 
 ### 🗣️ Demander à l'utilisateur
 
