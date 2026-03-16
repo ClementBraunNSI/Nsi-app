@@ -109,6 +109,8 @@ import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { getAdjacentCourses } from '@/lib/course-utils';
 
+import Breadcrumbs from '@/components/experimental/Breadcrumbs';
+
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
   const { niveaux, slug } = await params;
   
@@ -287,9 +289,17 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
         </div>
       </nav>
 
-      <main className="max-w-5xl mx-auto px-6 py-12">
+      <main className="max-w-5xl mx-auto px-6 py-8">
+        
+        <Breadcrumbs customItems={[
+          { label: 'Niveaux', href: '/niveaux' },
+          { label: niveaux.charAt(0).toUpperCase() + niveaux.slice(1), href: `/niveaux/${niveaux}` },
+          { label: data.chapter || 'Cours', href: '#' },
+          { label: data.title || slugStr, href: '#' }
+        ]} />
+
         {/* En-tête style "Orange Fox" */}
-        <div className="bg-orange-50/50 rounded-[2.5rem] p-10 text-center border border-orange-100 mb-12 relative overflow-hidden">
+        <div className="bg-orange-50/50 rounded-[2.5rem] p-10 text-center border border-orange-100 mb-12 relative overflow-hidden mt-6">
           <div className="relative z-10">
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-3 italic uppercase tracking-tighter">
               {data.title || slugStr.replace(/[_-]/g, ' ')}

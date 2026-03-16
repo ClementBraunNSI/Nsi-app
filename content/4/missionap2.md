@@ -150,6 +150,8 @@ L'interface web est la vitrine pour les clients.
 8) Ressources et Aides
 
 *   **Format du fichier CSV source (`flotte.csv`) :**
+    [📥 Télécharger le fichier flotte.csv](/assets/ap2/flotte.csv)
+
     ```csv
     Type;Immatriculation;Marque;Modele;Prix;Km;Etat;Divers1;Divers2
     Voiture;AB-123-CD;Peugeot;208;35;12000;Disponible;5;Oui

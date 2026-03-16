@@ -5,8 +5,9 @@ import "./globals.css";
 import "katex/dist/katex.min.css";
 import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
-import { LogOut, X, LayoutDashboard, Eye, Type, Zap, Check, Moon } from 'lucide-react';
+import { LogOut, X, LayoutDashboard, Eye, Type, Zap, Check, Moon, Command } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import CommandPalette from '@/components/experimental/CommandPalette';
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -415,6 +416,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </nav>
         </header>
 
+        <CommandPalette />
+        
         <main>{children}</main>
       </body>
     </html>

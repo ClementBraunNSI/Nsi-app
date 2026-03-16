@@ -1,0 +1,2510 @@
+---
+title: "Ressouces : Flotte de véhicules"
+chapter: "Ressources nécessaires"
+badgeId: "bts_sql_ressources_vehicules"
+meta: "Durée : AP2"
+---
+
+```csv
+Type;Immatriculation;Marque;Modele;Prix;Km;Etat;Divers1;Divers2
+Moto;ZL-744-GB;Harley-Davidson;Road Glide;218;48080;Disponible;1000;A
+Moto;ZG-299-LW;Yamaha;R1;72;58388;Disponible;1300;A
+CampingCar;EX-405-FK;Fiat;Talento;185;30993;Disponible;8.8;5
+Moto;WM-884-YE;Suzuki;GSX-S1000;129;35455;Disponible;1100;A
+CampingCar;VJ-882-CA;Fiat;Ducato;353;40095;Disponible;7.4;5
+CampingCar;BH-804-YN;Peugeot;Traveller;212;34404;Disponible;6.0;5
+Moto;AO-781-UY;Kawasaki;Z900;230;88862;Disponible;600;A2
+Voiture;CB-677-SS;Opel;Grandland;68;94111;Disponible;2;Oui
+Moto;YD-239-SC;Honda;X-ADV;57;39931;Loué;1800;A
+Moto;LV-436-IM;Ducati;Scrambler;238;12478;Disponible;750;A
+Voiture;JF-386-MF;Renault;Kangoo;133;31213;En maintenance;2;Oui
+Voiture;GI-065-IZ;Citroën;C4 X;37;189408;Disponible;2;Oui
+Voiture;ZE-113-BF;Audi;A3;101;53178;Disponible;5;Oui
+Voiture;WA-309-VQ;Dacia;Duster;58;171289;Disponible;2;Oui
+Voiture;RQ-840-RX;Mini;Countryman;134;189197;Disponible;4;Oui
+Voiture;CN-953-ZL;Toyota;Yaris Cross;72;192422;Disponible;5;Oui
+Voiture;GT-817-DC;Volkswagen;Tiguan;135;85518;Disponible;9;Oui
+CampingCar;TH-400-EO;Renault;Kangoo;277;241951;Disponible;7.0;5
+CampingCar;TH-483-JZ;Ford;Ranger (Cellule);103;54065;Loué;7.0;7
+CampingCar;IQ-776-XC;Ford;Transit Custom;242;11282;Disponible;7.1;4
+Voiture;OO-827-DU;BMW;Serie 4;41;11020;Disponible;2;Oui
+Voiture;KG-695-EB;Volvo;V60;178;90446;Disponible;5;Oui
+Voiture;RK-556-WL;Opel;Mokka;49;165326;Disponible;9;Oui
+Moto;HE-004-EE;Suzuki;V-Strom 650;172;98803;Disponible;1300;A
+Voiture;GI-958-FN;Fiat;Tipo;171;107123;En maintenance;4;Oui
+Voiture;IW-663-RM;Dacia;Spring;198;175703;Loué;5;Oui
+Moto;PJ-848-JX;KTM;Adventure 890;80;72768;Disponible;125;A2
+Voiture;ZA-437-SU;Seat;Ibiza;89;19006;Disponible;9;Oui
+Voiture;ZO-966-OQ;Mercedes;GLB;78;57394;Loué;2;Oui
+Moto;BJ-770-GF;Kawasaki;Ninja 650;112;99211;Disponible;1250;A
+Moto;JF-796-FM;BMW;F900XR;180;44331;Disponible;500;A2
+CampingCar;XA-060-BQ;Citroën;SpaceTourer;389;183323;Disponible;6.5;2
+Voiture;EA-235-PM;Peugeot;208;51;177371;Disponible;5;Non
+Moto;VJ-595-RQ;Suzuki;V-Strom 1050;221;87835;Disponible;125;A2
+CampingCar;FS-695-KI;Citroën;SpaceTourer;101;132746;Disponible;7.9;5
+Voiture;OQ-161-CE;Peugeot;5008;197;103254;Loué;2;Oui
+Voiture;YJ-739-GG;Volvo;XC40;173;77733;Disponible;5;Oui
+Moto;CY-116-FS;Harley-Davidson;Street Glide;117;36356;Loué;1000;A
+Moto;YA-542-UP;Kawasaki;Versys 650;84;91917;Disponible;1100;A
+Voiture;SY-114-IU;Volvo;XC40;66;91411;Disponible;5;Oui
+Voiture;OL-258-PE;Dacia;Jogger;146;169166;Loué;5;Oui
+CampingCar;ZF-767-LL;Iveco;Daily;213;134265;Disponible;7.6;7
+Voiture;WC-294-ZZ;Dacia;Jogger;65;102377;Disponible;4;Oui
+Voiture;QX-801-XM;Audi;A1;114;192329;Disponible;4;Oui
+Voiture;FM-297-GP;Ford;Puma;127;23005;Disponible;5;Oui
+Voiture;MB-919-AE;BMW;Serie 4;92;166615;Disponible;4;Oui
+CampingCar;XF-562-HB;Peugeot;Boxer;142;72123;Disponible;6.1;4
+Voiture;XM-100-UF;Mini;Cooper;156;88476;Loué;7;Oui
+Voiture;KO-259-DH;Seat;Ateca;121;27048;Disponible;5;Oui
+CampingCar;MV-952-MV;Mercedes;Vito;219;137326;Disponible;6.0;4
+Moto;RG-242-UR;Triumph;Speed Triple;143;23888;Disponible;650;A2
+Voiture;VH-846-BE;Kia;Ceed;49;26273;Disponible;5;Oui
+CampingCar;JN-283-JB;Fiat;Talento;294;47511;Disponible;8.0;6
+Moto;XN-220-OM;Harley-Davidson;Road Glide;193;21243;Disponible;900;A
+Voiture;GW-213-FK;Nissan;Juke;138;5881;Disponible;4;Oui
+Voiture;CP-594-PL;Peugeot;108;191;63198;Loué;2;Oui
+Voiture;TY-864-QS;Opel;Corsa;170;21556;Disponible;5;Non
+Moto;CV-760-QW;Harley-Davidson;Pan America;134;32216;Disponible;1300;A
+Voiture;KB-870-PN;Dacia;Jogger;71;52206;Disponible;7;Oui
+Voiture;ZF-471-TV;Dacia;Jogger;94;122853;Disponible;5;Oui
+Moto;RT-400-IJ;Harley-Davidson;Low Rider S;49;87838;Disponible;400;A2
+CampingCar;BS-950-FJ;Ford;Transit 2T;102;54255;Loué;8.2;2
+Moto;ED-998-IB;Ducati;Streetfighter V4;63;55744;Disponible;400;A2
+Moto;LE-277-ZX;BMW;F900R;165;71147;Disponible;1100;A
+Voiture;VQ-570-ZY;Toyota;bZ4X;75;187171;Disponible;7;Oui
+Moto;QU-978-ZP;Royal Enfield;Interceptor 650;180;37803;Disponible;750;A
+CampingCar;SA-263-RY;Volkswagen;Crafter;158;183110;Disponible;6.2;6
+Moto;MC-283-WG;Harley-Davidson;Street Glide;184;29747;Disponible;650;A2
+Moto;NH-089-CB;BMW;F750GS;168;76904;Disponible;650;A2
+CampingCar;SO-714-RO;Peugeot;Rifter;267;147031;Disponible;7.2;7
+Voiture;FJ-657-RA;Toyota;Highlander;165;104378;Disponible;4;Non
+Voiture;ZD-551-TJ;Nissan;Micra;91;194854;Loué;5;Oui
+Voiture;RP-471-GP;Seat;Ateca;33;93014;Disponible;9;Oui
+Moto;MA-333-TR;Suzuki;Hayabusa;223;7896;Disponible;500;A2
+Moto;GU-592-WY;KTM;Adventure 390;244;69118;Disponible;1800;A
+Voiture;WS-534-NR;Dacia;Spring;87;27948;Loué;5;Oui
+Voiture;OT-639-TX;BMW;Serie 1;140;114799;Disponible;5;Oui
+Voiture;PO-871-PS;Ford;Focus;103;190149;Loué;5;Oui
+Voiture;NB-712-JC;Seat;Arona;126;32171;Disponible;5;Oui
+Voiture;EV-210-HH;Hyundai;Kona;125;153458;Disponible;4;Oui
+CampingCar;HS-524-FP;Mercedes;Vito;196;135865;Loué;5.4;5
+Moto;SW-305-YK;BMW;F900R;244;1842;Disponible;750;A
+CampingCar;TZ-940-YX;Renault;Kangoo;379;99749;Disponible;7.9;5
+Voiture;MU-237-VR;Mini;Cooper;41;128022;En maintenance;9;Oui
+CampingCar;CI-995-ZD;Volkswagen;Grand California;310;146987;Disponible;8.3;4
+Voiture;SX-804-VD;Volvo;XC90;157;80496;Disponible;7;Oui
+Voiture;IC-631-NZ;Citroën;C3 Aircross;131;70023;Disponible;9;Non
+Moto;AW-918-RF;BMW;R1250RT;84;96751;Loué;1300;A
+Voiture;QK-929-NK;Peugeot;Rifter;87;116722;Disponible;9;Non
+CampingCar;NN-778-FS;Volkswagen;Caddy California;372;31922;Disponible;5.8;3
+Voiture;MC-015-PJ;Peugeot;108;33;194106;Disponible;7;Oui
+Voiture;JD-721-MS;Volvo;XC90;92;66534;Disponible;5;Oui
+CampingCar;CA-354-OL;Peugeot;Rifter;104;240387;Disponible;6.8;2
+Voiture;QB-906-AA;Peugeot;Rifter;93;165165;Loué;5;Oui
+Voiture;XC-249-IS;Mini;Clubman;155;58419;Disponible;4;Oui
+Voiture;CH-141-HQ;Volvo;XC40;63;94777;Loué;5;Oui
+Voiture;WH-296-IH;Fiat;500;66;105721;Disponible;2;Oui
+Moto;US-061-DQ;Suzuki;SV650;69;20743;Loué;500;A2
+Voiture;ZR-151-GU;Fiat;500X;199;135455;Disponible;2;Non
+Voiture;GY-210-RT;Peugeot;408;87;24258;Disponible;5;Oui
+Moto;WT-873-GQ;Suzuki;V-Strom 1050;223;84425;Loué;800;A
+Voiture;AJ-683-PA;Seat;Tarraco;75;87927;Disponible;5;Non
+Voiture;FL-149-FP;BMW;X3;183;176377;Loué;9;Oui
+Voiture;BV-681-UW;Hyundai;i10;122;183146;Disponible;7;Oui
+Voiture;RU-922-GY;Tesla;Model 3;111;43101;Loué;5;Oui
+Moto;JV-299-VG;Yamaha;Tracer 7;74;89868;Disponible;600;A2
+Moto;EY-800-UB;Suzuki;SV650;80;30271;Loué;400;A2
+CampingCar;WR-448-GS;Fiat;Scudo;144;242046;Disponible;8.4;2
+Voiture;GW-345-AK;Citroën;C5 X;80;135442;Loué;9;Non
+Moto;LJ-365-TB;Kawasaki;Versys 650;202;65145;Disponible;900;A
+CampingCar;QN-704-HY;Volkswagen;Caddy California;247;44497;Disponible;7.4;7
+Voiture;BJ-167-XS;Renault;Espace;116;68349;En maintenance;7;Oui
+Moto;JK-082-UO;Yamaha;MT-07;219;14891;Loué;1000;A
+Voiture;FW-519-GP;Skoda;Karoq;195;51658;Disponible;5;Oui
+Voiture;OY-794-JK;Dacia;Duster;89;100767;Loué;7;Oui
+CampingCar;JV-372-FV;Citroën;Jumper;142;77576;Disponible;8.8;2
+Voiture;DJ-500-EV;Volvo;XC90;107;169186;Disponible;4;Oui
+Moto;LV-631-EC;Kawasaki;Z900RS;91;74366;Disponible;1300;A
+CampingCar;BG-063-CC;Citroën;Berlingo;304;79860;Loué;5.9;5
+Voiture;JV-280-WH;Skoda;Fabia;37;59157;En maintenance;5;Non
+Voiture;MV-671-UH;Fiat;Panda;177;90613;Disponible;5;Oui
+CampingCar;CG-066-TT;Volkswagen;California;300;137006;Disponible;8.2;4
+Voiture;TN-969-SD;Citroën;C4 X;194;41131;Disponible;9;Oui
+CampingCar;IR-265-EI;Peugeot;Boxer;391;73642;Loué;7.1;6
+Voiture;LT-977-RI;Seat;Tarraco;144;7517;Disponible;4;Oui
+Voiture;NF-837-TI;Citroën;C3;138;187320;Disponible;9;Oui
+Voiture;HE-610-ME;Volvo;C40;86;170763;Disponible;5;Oui
+Voiture;OG-573-SO;Citroën;C4 X;112;117187;Loué;5;Oui
+CampingCar;BW-624-GT;Ford;Ranger (Cellule);371;66236;Loué;8.5;2
+Voiture;HW-544-DX;Nissan;X-Trail;170;157816;Disponible;5;Oui
+Voiture;TO-564-WZ;Fiat;500;80;180947;En maintenance;4;Oui
+Voiture;QK-497-UU;Toyota;RAV4;151;122610;Loué;9;Oui
+Voiture;VA-997-JJ;Ford;Mustang Mach-E;104;22672;Disponible;2;Oui
+Voiture;UV-744-DP;Dacia;Sandero;93;55878;Loué;5;Oui
+Voiture;ZB-339-PC;Hyundai;i20;74;13445;Disponible;5;Oui
+CampingCar;NW-434-PA;Mercedes;Marco Polo;101;49222;Disponible;7.7;3
+Moto;AN-342-IE;KTM;Adventure 890;92;358;Disponible;650;A2
+Moto;AW-835-XD;Ducati;Monster;91;28824;Disponible;1300;A
+CampingCar;GZ-020-GL;Ford;Transit 2T;397;210316;Disponible;8.0;6
+Voiture;NQ-480-JQ;Nissan;Qashqai;74;26524;Disponible;5;Non
+Voiture;FR-306-PP;Skoda;Scala;90;142070;Disponible;5;Oui
+Voiture;ML-702-CX;BMW;i4;126;89008;Loué;5;Oui
+Voiture;AO-819-WF;Opel;Crossland;76;143547;Disponible;5;Oui
+Voiture;SE-589-WZ;Citroën;Berlingo;165;165679;Disponible;2;Oui
+Voiture;ZM-064-IH;Mercedes;EQB;133;96848;Loué;9;Oui
+Moto;FK-127-NW;Royal Enfield;Interceptor 650;96;37933;Disponible;1000;A
+CampingCar;VQ-660-YC;Renault;Master;360;173732;Disponible;8.6;7
+Moto;BJ-675-QM;Kawasaki;Z900;54;24085;Disponible;800;A
+Voiture;RA-107-HT;Dacia;Spring;32;66617;Disponible;5;Non
+CampingCar;JJ-895-HI;Mercedes;Sprinter;252;204598;Disponible;6.3;7
+Voiture;KI-910-EI;Volvo;S60;101;32204;Disponible;4;Oui
+Voiture;XT-332-PP;Audi;Q7;164;169680;Disponible;5;Oui
+CampingCar;YH-331-NE;Mercedes;Sprinter;205;236905;Disponible;6.2;3
+Voiture;YJ-478-SH;Kia;Ceed;147;150044;Disponible;5;Oui
+CampingCar;MV-005-NX;Citroën;SpaceTourer;132;233795;Loué;8.9;5
+CampingCar;HX-648-EI;Ford;Transit 2T;106;200834;Disponible;7.4;6
+Moto;WL-010-HC;Royal Enfield;Meteor 350;203;4586;Disponible;1300;A
+Moto;IX-743-CF;Yamaha;XMAX;191;27669;Disponible;400;A2
+Voiture;RD-635-QM;Opel;Corsa;196;170189;Disponible;4;Oui
+Moto;OG-102-DR;Royal Enfield;Interceptor 650;117;2735;Disponible;300;A2
+Voiture;ZI-073-UX;Citroën;C3;48;33896;Loué;9;Oui
+CampingCar;IE-586-SH;Ford;Transit Custom;234;150704;Disponible;8.6;3
+Voiture;PR-558-QE;Skoda;Superb;129;62163;Disponible;5;Oui
+Moto;IY-256-PY;Kawasaki;Z650;167;10248;Disponible;750;A
+Voiture;XT-852-JK;Nissan;Juke;79;43197;Disponible;9;Oui
+Voiture;UL-169-ED;Audi;Q3;54;121448;Disponible;2;Non
+CampingCar;FV-439-DM;Iveco;Daily;238;150048;Disponible;8.8;7
+Moto;EC-018-TV;KTM;Super Duke 1290;215;70931;Disponible;125;A2
+CampingCar;RS-303-RT;Fiat;Ducato;179;27498;Disponible;8.9;6
+Moto;JI-736-GM;KTM;Adventure 390;59;77862;Disponible;1800;A
+Voiture;YY-124-FF;Nissan;Micra;145;52171;Disponible;2;Oui
+Voiture;LL-575-ME;Tesla;Model S;111;101132;Disponible;2;Oui
+Voiture;DG-192-UH;Nissan;Qashqai;46;43630;En maintenance;9;Oui
+Voiture;GY-692-ND;Audi;Q3;83;167394;Disponible;5;Oui
+CampingCar;ZS-911-XL;Volkswagen;California;377;240539;Disponible;8.8;7
+Voiture;JE-921-IM;Mini;Cooper;55;61049;Disponible;4;Oui
+Voiture;FK-577-DD;Renault;Clio;84;65980;Loué;9;Oui
+CampingCar;PK-179-QO;Volkswagen;Caddy California;396;190748;Disponible;8.7;6
+Voiture;FM-707-OA;Dacia;Spring;165;165602;Disponible;5;Non
+Voiture;NH-685-OG;Citroën;C4 X;118;70106;Disponible;5;Oui
+CampingCar;BZ-887-IC;Ford;Transit 2T;167;87190;Disponible;6.5;4
+Voiture;TF-241-ST;Seat;Ateca;150;65585;Disponible;5;Oui
+Moto;QG-823-FX;Harley-Davidson;Low Rider S;217;23793;Disponible;750;A
+Voiture;FR-738-GB;Kia;Picanto;171;70337;Disponible;5;Oui
+Moto;LZ-220-ZL;BMW;R18;244;9444;Disponible;125;A2
+Voiture;UJ-441-CD;Volkswagen;Up!;196;175849;Disponible;9;Oui
+Voiture;YZ-295-AQ;Fiat;Tipo;117;14896;En maintenance;4;Oui
+Voiture;EJ-510-LG;Seat;Leon;121;107224;Disponible;5;Oui
+CampingCar;UV-804-EA;Peugeot;Traveller;145;140008;Loué;8.9;7
+Voiture;UM-172-KM;Mini;Cooper S;93;147766;Disponible;7;Oui
+Voiture;YI-057-BH;Mercedes;CLA;90;171526;Loué;5;Oui
+Moto;SZ-872-OO;Harley-Davidson;Road Glide;166;29178;Disponible;300;A2
+Moto;HV-675-TW;KTM;Super Duke 1290;216;23805;Loué;600;A2
+Voiture;VH-398-HD;BMW;Serie 4;38;95859;Loué;5;Oui
+Voiture;TS-942-BI;Mini;Clubman;122;117613;Disponible;5;Oui
+Voiture;HH-961-AM;Ford;Kuga;51;183674;Disponible;5;Oui
+Moto;JZ-334-ZD;KTM;Adventure 890;153;77204;Disponible;1800;A
+Voiture;VU-701-RQ;Hyundai;i20;115;43518;Disponible;5;Non
+CampingCar;SP-857-GT;Citroën;SpaceTourer;267;237235;Disponible;6.3;3
+Voiture;NF-334-KO;Volvo;C40;111;18619;Disponible;9;Oui
+CampingCar;HP-067-NH;Volkswagen;California;392;126608;Loué;8.5;7
+Voiture;BY-847-IU;Audi;Q8;124;116655;Disponible;5;Oui
+Moto;HA-456-BA;Suzuki;V-Strom 1050;240;83806;Disponible;1000;A
+Moto;NT-943-KV;Ducati;Diavel V4;81;59141;En maintenance;300;A2
+Moto;OS-798-OS;Triumph;Trident 660;122;89392;Disponible;650;A2
+Voiture;DH-070-OS;Renault;Megane;105;107882;Loué;5;Non
+Voiture;EO-751-UJ;Toyota;bZ4X;161;33746;Disponible;7;Oui
+Voiture;LC-909-QT;Skoda;Octavia;154;138716;Disponible;7;Oui
+Voiture;RX-755-UY;Fiat;500X;91;136882;Loué;9;Oui
+Voiture;EV-175-YA;Seat;Ateca;79;169934;Disponible;4;Oui
+Voiture;YN-759-KV;Ford;Puma;65;133681;Loué;4;Non
+Moto;YP-610-BT;Suzuki;GSX-S1000GT;241;15181;Loué;750;A
+CampingCar;KH-213-QW;Volkswagen;Grand California;132;235667;Disponible;6.6;3
+CampingCar;TE-240-TF;Fiat;Ducato;138;15445;En maintenance;6.0;3
+Voiture;UA-513-RA;BMW;X2;72;9877;Disponible;7;Oui
+CampingCar;SY-829-CT;Iveco;Daily;126;159896;Loué;7.5;2
+Moto;JK-509-QS;Harley-Davidson;Street Glide;77;63673;Loué;500;A2
+CampingCar;PV-661-MP;Renault;Master;115;245830;Disponible;5.1;2
+Voiture;LC-447-WD;Peugeot;208;162;22613;Disponible;4;Oui
+Voiture;YO-504-FB;Hyundai;Santa Fe;68;159167;Disponible;5;Oui
+Voiture;OE-595-MB;Seat;Arona;176;124655;Disponible;4;Oui
+Moto;OO-278-WV;Honda;CB500F;156;96022;Disponible;1800;A
+Voiture;WD-797-HY;Citroën;C5 Aircross;143;131632;Disponible;9;Oui
+Moto;RR-197-WA;Royal Enfield;Classic 350;208;58093;En maintenance;800;A
+Moto;GE-596-KA;Triumph;Tiger 1200;127;85687;Disponible;1100;A
+Voiture;UF-664-WW;BMW;Serie 5;126;6962;En maintenance;2;Oui
+Voiture;NM-465-KK;Audi;Q7;194;194961;Disponible;5;Oui
+Voiture;RC-755-LH;Mini;Countryman;165;73537;Disponible;5;Oui
+Voiture;FT-705-XT;Mercedes;GLB;100;177020;Disponible;5;Oui
+Moto;HR-604-RT;Suzuki;GSX-S1000GT;173;4162;Disponible;1000;A
+Voiture;HY-768-LN;Peugeot;3008;105;168665;Disponible;9;Oui
+Voiture;WW-764-CO;Nissan;Micra;110;184202;Disponible;7;Oui
+CampingCar;YD-996-BT;Volkswagen;California;286;53280;En maintenance;6.3;4
+Voiture;PG-136-OQ;Kia;Rio;143;193615;Disponible;9;Oui
+CampingCar;YN-700-VF;Mercedes;Sprinter;107;46253;Loué;5.8;6
+Voiture;BJ-927-RE;Ford;Kuga;189;130097;Disponible;5;Oui
+Moto;QC-818-TM;Kawasaki;Versys 1000;158;60598;Disponible;300;A2
+Moto;SC-282-CM;BMW;F900XR;93;18371;Disponible;800;A
+CampingCar;UA-316-IY;Renault;Master;379;187480;Loué;8.1;4
+Moto;QC-754-ZA;Yamaha;R1;235;52173;Loué;1250;A
+CampingCar;AB-754-WU;Fiat;Talento;366;117662;Loué;8.1;2
+Voiture;WO-985-ZK;Citroën;C3;165;168746;Loué;5;Oui
+Moto;UV-253-SL;BMW;F750GS;203;33340;Disponible;750;A
+Moto;ME-012-SJ;BMW;S1000XR;140;65588;Disponible;1250;A
+Voiture;KR-781-QR;Kia;Ceed;124;140328;Disponible;5;Oui
+Voiture;HA-566-DA;Mercedes;GLB;60;37108;Loué;9;Oui
+Voiture;ZI-926-IP;Ford;Fiesta;181;90143;Disponible;7;Oui
+Voiture;LO-271-FK;Hyundai;Tucson;177;126816;Loué;2;Oui
+Moto;UH-756-TB;BMW;R18;183;8772;Loué;1250;A
+Voiture;KY-663-CA;Kia;Sportage;135;62210;Disponible;4;Oui
+Moto;EJ-820-IR;Kawasaki;Z900RS;209;77694;Loué;400;A2
+Voiture;OP-365-WB;BMW;Serie 1;56;180242;Disponible;9;Oui
+CampingCar;TE-619-OW;Mercedes;Sprinter;317;30358;Disponible;6.7;6
+Voiture;DV-653-NB;Skoda;Enyaq;160;96324;Disponible;2;Oui
+CampingCar;OP-472-GF;Citroën;SpaceTourer;229;43500;Disponible;7.7;6
+Voiture;OJ-706-FD;Audi;Q2;194;71912;Disponible;5;Oui
+Voiture;GK-340-MR;Ford;Puma;120;7754;Disponible;5;Non
+Moto;RM-033-GH;Ducati;Scrambler;224;56322;Disponible;1250;A
+Moto;DR-147-YM;KTM;Duke 890;192;48323;Disponible;1100;A
+Voiture;LG-459-TS;Audi;Q7;122;167753;Disponible;5;Oui
+Voiture;LG-029-RD;Audi;A6;62;176060;Disponible;9;Oui
+Voiture;DS-341-GV;Opel;Corsa;148;119234;Loué;2;Oui
+Moto;ME-294-ZZ;Yamaha;XSR900;172;93416;Disponible;650;A2
+Voiture;LD-603-DX;Peugeot;508;93;191368;Disponible;9;Oui
+Voiture;QK-074-IH;Volkswagen;Polo;141;140116;Disponible;5;Oui
+Moto;DJ-978-DA;KTM;Duke 390;234;4712;Disponible;650;A2
+Voiture;TF-008-TW;Ford;Kuga;160;106618;Loué;4;Non
+Voiture;XS-811-SN;Mini;Clubman;99;62987;Disponible;5;Oui
+CampingCar;NO-949-PT;Ford;Ranger (Cellule);271;134646;Disponible;7.7;5
+Voiture;CL-435-YP;Mini;Cooper;164;41598;Disponible;7;Oui
+Voiture;RP-253-JZ;Opel;Mokka;167;136688;Disponible;4;Oui
+Voiture;HT-325-XX;Opel;Grandland;182;166150;Disponible;9;Non
+Voiture;GG-050-RD;Mercedes;GLB;132;90755;Loué;9;Oui
+Voiture;PK-429-OA;Hyundai;i30;185;32180;Loué;5;Oui
+Voiture;NA-406-SS;Dacia;Jogger;186;130786;En maintenance;4;Oui
+Voiture;WT-988-UV;Nissan;X-Trail;79;137607;Disponible;7;Non
+Voiture;IU-700-ZA;Audi;Q5;158;192846;Disponible;4;Oui
+Voiture;CQ-285-HR;Fiat;500X;97;43779;Disponible;2;Oui
+Voiture;ZS-149-KI;Renault;Twingo;101;10082;Disponible;5;Oui
+CampingCar;SN-895-ZJ;Iveco;Daily;263;232116;Disponible;5.2;5
+Moto;QI-222-JG;Suzuki;V-Strom 650;70;11774;Disponible;400;A2
+Moto;MP-413-GM;Suzuki;GSX-S750;127;37537;Disponible;900;A
+Voiture;KZ-233-SS;Skoda;Octavia;82;180948;Disponible;5;Oui
+Moto;HW-875-QW;Kawasaki;Versys 650;231;75946;Loué;800;A
+Moto;HR-390-SA;Yamaha;R6;104;42330;Disponible;1000;A
+Voiture;MO-104-LC;Audi;Q2;56;174292;Disponible;2;Oui
+Voiture;ON-744-UX;Peugeot;Rifter;66;79598;Disponible;5;Oui
+CampingCar;BM-015-RP;Peugeot;Boxer;158;85460;Disponible;6.6;5
+Moto;QL-578-TP;Royal Enfield;Meteor 350;226;6804;Disponible;1000;A
+Moto;TJ-758-CY;Suzuki;SV650;155;70349;Disponible;125;A2
+Moto;FR-904-XU;Suzuki;SV650;140;66891;Disponible;125;A2
+Voiture;CE-555-NM;Seat;Tarraco;178;161959;Disponible;5;Oui
+Moto;YS-041-AH;Triumph;Rocket 3;191;25429;Disponible;1100;A
+Voiture;QJ-019-UM;Fiat;500;151;27055;Disponible;2;Non
+Voiture;TD-524-NG;BMW;X5;38;93267;Loué;4;Oui
+CampingCar;OQ-262-VL;Volkswagen;Grand California;350;62072;Disponible;5.6;4
+Moto;BL-970-HS;BMW;S1000XR;109;48590;Disponible;1250;A
+Voiture;QX-984-PO;Tesla;Model Y;100;78531;Loué;5;Oui
+Voiture;AG-842-RD;Renault;Megane;153;18028;Disponible;5;Oui
+Voiture;BX-306-QC;Mercedes;GLC;112;111113;Disponible;2;Oui
+Voiture;JD-199-KF;Kia;Sportage;176;17447;Loué;5;Oui
+Moto;OR-311-MC;Honda;Gold Wing;139;56942;Disponible;400;A2
+CampingCar;IB-929-JP;Renault;Master;213;123439;Loué;8.7;6
+Voiture;PQ-473-PU;Fiat;500X;59;43885;Disponible;5;Oui
+Moto;WW-880-WI;Honda;Forza 350;238;10206;Disponible;300;A2
+CampingCar;GC-927-CB;Iveco;Daily;128;204182;Loué;7.9;3
+Moto;IB-607-SG;Triumph;Bonneville T100;161;28852;Disponible;300;A2
+CampingCar;UA-375-VT;Mercedes;Vito;248;207424;Disponible;5.0;6
+Moto;FV-963-WQ;Yamaha;R1;237;29058;Disponible;600;A2
+Moto;NM-302-MT;Triumph;Bonneville T120;131;60623;Disponible;1300;A
+Voiture;YL-599-CP;Tesla;Model Y;103;86915;Loué;9;Oui
+Voiture;CR-206-XQ;Opel;Crossland;36;177268;Disponible;5;Oui
+Voiture;HK-513-WQ;Mini;Cooper S;187;108941;Loué;5;Non
+Moto;LV-917-RU;KTM;Super Duke 1290;121;19342;Disponible;900;A
+CampingCar;YQ-846-BK;Iveco;Daily;166;28913;Disponible;5.2;2
+Voiture;AC-948-HL;Hyundai;Tucson;71;166499;Loué;5;Oui
+CampingCar;TV-935-AS;Volkswagen;Grand California;192;232239;Disponible;8.7;2
+Voiture;NZ-845-SS;Kia;Rio;141;25572;Disponible;5;Oui
+Voiture;DC-756-MR;Mini;Cooper S;79;2100;Disponible;5;Oui
+Moto;QW-834-HS;BMW;CE 04;160;51362;Disponible;500;A2
+CampingCar;SY-427-DH;Peugeot;Boxer;135;100687;Disponible;7.0;3
+Voiture;OI-149-RP;Audi;A1;112;44663;Disponible;2;Oui
+Voiture;NR-529-BB;Dacia;Sandero;162;183956;Loué;5;Non
+Moto;XD-424-BT;Royal Enfield;Classic 350;110;96257;Disponible;1000;A
+Voiture;BP-935-FW;Kia;Picanto;78;55717;En maintenance;5;Oui
+CampingCar;FU-207-GS;Volkswagen;Caddy California;207;23309;Disponible;5.9;6
+Moto;GE-360-BD;KTM;Duke 890;231;12767;Loué;1000;A
+Voiture;KM-315-HZ;Mini;Clubman;36;60571;Disponible;5;Oui
+Voiture;CE-931-OK;Toyota;Corolla;67;139709;Disponible;4;Oui
+Moto;VX-476-RE;Suzuki;Hayabusa;145;4652;Disponible;125;A2
+Voiture;AU-938-PJ;Mini;Clubman;86;56115;Disponible;7;Oui
+CampingCar;AH-338-VJ;Citroën;Berlingo;382;75943;Loué;8.4;4
+Voiture;VY-630-ZU;Ford;Explorer;55;152495;Disponible;5;Oui
+Voiture;YB-036-EU;Mini;Countryman;57;46088;Disponible;5;Oui
+Moto;CV-679-HD;Honda;CB500F;244;97543;Loué;650;A2
+Moto;ZO-091-AT;Triumph;Trident 660;71;19729;Disponible;400;A2
+Moto;LY-184-IT;Suzuki;V-Strom 650;81;61510;Disponible;1800;A
+Moto;WX-866-RE;Ducati;Scrambler;199;96483;Disponible;650;A2
+Voiture;RY-024-RP;Volvo;V60;111;158206;Disponible;5;Oui
+Moto;VD-387-XV;Kawasaki;Z650;54;53309;Disponible;1800;A
+Moto;TN-191-CV;Harley-Davidson;Fat Bob;192;8709;Disponible;650;A2
+Voiture;QC-028-KM;Skoda;Fabia;130;73503;Disponible;5;Oui
+Voiture;RE-123-FC;Opel;Grandland;31;157902;Disponible;9;Oui
+Moto;HA-801-PO;Yamaha;MT-07;187;53193;Disponible;500;A2
+Moto;VT-469-HW;Royal Enfield;Continental GT 650;235;32775;Loué;1000;A
+Moto;CS-165-BI;KTM;Duke 125;88;64533;Disponible;1250;A
+Voiture;GY-658-QS;Opel;Mokka;76;199267;Disponible;7;Oui
+Voiture;GX-352-SO;Ford;Kuga;112;15778;Disponible;7;Oui
+Voiture;SL-515-XW;Peugeot;208;60;151244;Disponible;2;Oui
+Voiture;ZI-050-QE;Citroën;C5 X;97;32596;Loué;4;Oui
+Moto;YN-116-SX;Triumph;Bonneville T120;138;98680;Loué;600;A2
+Voiture;NB-158-VT;Hyundai;i10;150;182336;Disponible;5;Oui
+Moto;OJ-545-JS;Kawasaki;Z650;235;23839;Loué;600;A2
+Voiture;DC-321-AM;Hyundai;Bayon;172;34946;Disponible;4;Oui
+Voiture;WF-712-TN;Ford;Explorer;167;87707;Disponible;5;Oui
+Moto;XO-688-GC;Triumph;Tiger 1200;249;42759;En maintenance;600;A2
+Voiture;GG-943-BU;Mini;Clubman;130;32754;Disponible;9;Oui
+CampingCar;EO-322-WY;Citroën;SpaceTourer;234;62895;En maintenance;7.7;7
+Moto;BH-717-RY;BMW;F850GS;134;2507;Loué;1100;A
+Voiture;CI-414-SI;Hyundai;Bayon;119;74262;Disponible;4;Oui
+Voiture;OD-366-SA;Volkswagen;ID.3;112;147841;Disponible;5;Oui
+Voiture;JX-600-KX;Volkswagen;ID.5;131;142919;Disponible;7;Oui
+Voiture;IG-209-DS;Dacia;Sandero;32;81751;En maintenance;4;Non
+Voiture;CZ-815-ZP;BMW;Serie 2;85;83596;Disponible;5;Oui
+CampingCar;XE-775-LX;Volkswagen;Grand California;392;134583;Loué;8.1;3
+Moto;GG-088-XY;Suzuki;GSX-S750;79;96222;Disponible;650;A2
+Voiture;AX-448-RG;Dacia;Jogger;163;139131;Disponible;2;Non
+Voiture;BZ-829-VR;Kia;EV6;143;168545;Disponible;5;Oui
+CampingCar;UK-586-HB;Ford;Ranger (Cellule);156;73772;Loué;7.8;7
+Voiture;VJ-322-YS;Dacia;Jogger;115;1446;Disponible;5;Oui
+Voiture;OU-222-LI;Citroën;C4 X;199;39073;Loué;5;Oui
+Voiture;NB-467-UX;Mercedes;GLB;33;838;Disponible;4;Oui
+Moto;XS-495-SN;Honda;CB1000R;47;13901;Disponible;750;A
+Voiture;RD-529-UN;Tesla;Model Y;98;104518;Loué;4;Non
+Moto;NI-217-MA;Harley-Davidson;Low Rider S;68;11541;Loué;1800;A
+Voiture;HN-067-ON;Skoda;Kodiaq;94;28937;Disponible;5;Oui
+Voiture;CX-838-JL;Nissan;Ariya;168;93953;Disponible;2;Oui
+Voiture;JK-181-LH;Ford;Fiesta;98;81735;Disponible;9;Oui
+Voiture;RW-595-YQ;Mercedes;Classe E;126;116294;Disponible;4;Oui
+CampingCar;SL-873-TD;Volkswagen;Crafter;377;248774;Disponible;5.1;5
+Voiture;AZ-458-GU;Volkswagen;ID.5;184;155117;Loué;5;Oui
+Voiture;RJ-382-JL;Toyota;C-HR;82;153383;Disponible;5;Non
+Moto;DZ-949-GL;KTM;Super Adventure 1290;214;44364;Disponible;1800;A
+Voiture;IS-612-TS;Skoda;Kodiaq;150;113888;Loué;7;Oui
+Moto;JN-545-AA;KTM;Super Duke 1290;198;58910;Disponible;1000;A
+Voiture;GA-187-BA;Volkswagen;Passat;107;12520;Loué;5;Oui
+Voiture;BW-436-UA;Dacia;Spring;129;58426;Disponible;5;Non
+Voiture;GL-456-VT;Tesla;Model 3;188;87858;Disponible;2;Oui
+Voiture;GJ-752-YN;Dacia;Duster;80;76185;Disponible;4;Oui
+Voiture;SP-238-WM;Volvo;C40;40;60550;Disponible;5;Oui
+CampingCar;OA-709-PP;Mercedes;Marco Polo;103;6183;En maintenance;8.8;5
+Moto;SI-204-NE;Ducati;Panigale V4;216;75790;Disponible;125;A2
+CampingCar;AR-742-EV;Citroën;Berlingo;286;151850;Disponible;6.8;5
+Voiture;KB-832-AR;Citroën;C3;39;101651;Disponible;4;Oui
+Voiture;TT-521-RI;Opel;Astra;92;86556;Disponible;5;Oui
+Moto;OB-038-OK;Ducati;Streetfighter V4;196;67783;Disponible;1800;A
+CampingCar;EM-871-IG;Renault;Master;388;222298;En maintenance;8.3;6
+Voiture;FL-857-AS;Kia;Ceed;181;18592;Disponible;4;Oui
+Moto;JZ-142-WD;KTM;Adventure 390;131;78144;Disponible;1000;A
+Moto;FB-965-KR;BMW;S1000RR;121;14663;Disponible;600;A2
+Moto;KV-084-UC;KTM;Super Duke 1290;238;43837;Disponible;1250;A
+Voiture;KU-203-XX;Mercedes;GLA;186;158222;Disponible;4;Oui
+CampingCar;SW-670-GT;Volkswagen;Caddy California;113;128709;Disponible;7.7;3
+Voiture;XS-578-MD;Volkswagen;Up!;65;128408;En maintenance;4;Oui
+Voiture;FI-195-OR;BMW;X3;45;502;Disponible;4;Oui
+CampingCar;HF-824-GU;Renault;Kangoo;175;151418;Loué;7.2;6
+Voiture;VG-388-EM;Peugeot;Rifter;70;123430;Disponible;9;Oui
+Voiture;CP-802-XC;Ford;Puma;40;183602;Disponible;7;Oui
+Moto;HW-901-XO;Kawasaki;Ninja 400;137;84049;Disponible;800;A
+Voiture;YE-601-HR;Mini;Cooper S;39;99082;Loué;4;Oui
+Voiture;TX-722-YT;Opel;Astra;82;71309;Disponible;5;Oui
+Voiture;UX-305-YU;Citroën;C4;181;124891;Loué;5;Oui
+CampingCar;XD-462-EQ;Renault;Trafic SpaceNomad;345;121246;Disponible;8.2;2
+Moto;GY-707-IL;Honda;NT1100;58;40639;Disponible;750;A
+Moto;HJ-425-WL;KTM;Duke 390;207;57842;Disponible;1250;A
+Moto;AR-265-XA;KTM;Duke 390;114;11239;Loué;300;A2
+Voiture;MO-125-KT;Renault;Captur;79;27687;Disponible;7;Oui
+Voiture;QT-383-MV;Toyota;Highlander;199;16750;Loué;7;Non
+Voiture;RR-561-YE;Peugeot;208;69;42991;Disponible;4;Oui
+Moto;RS-066-KV;Ducati;Scrambler;41;97618;Disponible;1800;A
+Moto;PO-073-RG;Royal Enfield;Classic 350;233;27283;Disponible;600;A2
+Moto;IM-112-AP;Royal Enfield;Himalayan;175;32240;Disponible;400;A2
+Voiture;GI-692-LE;Audi;A1;168;70121;Disponible;5;Oui
+Voiture;WG-811-WP;Opel;Mokka;94;150801;Disponible;5;Oui
+Moto;MW-788-MR;Suzuki;V-Strom 1050;112;97198;Disponible;1100;A
+Moto;SD-581-GJ;BMW;R18;179;50730;Disponible;650;A2
+Voiture;GX-240-YH;BMW;Serie 5;171;135412;Disponible;4;Oui
+Voiture;PK-725-AD;Seat;Leon;196;16007;Disponible;2;Non
+Moto;XD-012-BA;Harley-Davidson;Street Glide;95;74622;Disponible;1800;A
+Voiture;II-796-GO;Kia;Niro;75;45675;Disponible;5;Oui
+Voiture;MJ-995-XJ;Kia;Rio;92;18002;Disponible;5;Non
+Voiture;TD-499-JL;Volvo;XC90;175;162675;Disponible;2;Oui
+Voiture;OJ-803-JH;Nissan;Qashqai;65;79545;Loué;5;Oui
+Voiture;WM-341-WY;Mini;Cooper S;147;84313;Disponible;4;Oui
+Voiture;AW-073-VS;Nissan;X-Trail;50;25073;Disponible;7;Oui
+Voiture;ZP-168-DU;Peugeot;3008;51;20122;Disponible;7;Oui
+Moto;BJ-717-PM;Triumph;Street Triple;90;27390;Disponible;300;A2
+Voiture;BF-465-IK;Seat;Arona;198;84739;Disponible;4;Oui
+Voiture;SK-047-VP;Hyundai;i10;136;41365;Disponible;5;Oui
+Voiture;EV-292-YC;Volkswagen;ID.4;128;189691;Disponible;4;Oui
+CampingCar;DI-293-GC;Iveco;Daily;124;121022;En maintenance;5.9;5
+CampingCar;EH-456-XM;Peugeot;Traveller;123;16417;Loué;8.5;6
+Voiture;VT-649-FK;Volvo;C40;190;180972;Loué;5;Oui
+Voiture;XQ-447-XX;Dacia;Sandero;68;13843;Disponible;5;Oui
+Voiture;KE-277-FN;Seat;Arona;199;197846;Disponible;5;Oui
+Voiture;LC-574-CB;Toyota;Prius;146;36447;Disponible;5;Oui
+Voiture;JZ-727-SB;Volvo;C40;138;3366;Loué;9;Oui
+Moto;BD-194-VM;Yamaha;R7;226;89004;Disponible;1300;A
+Moto;CH-225-QR;Ducati;Scrambler;209;39053;En maintenance;1250;A
+Moto;RA-907-SN;BMW;R1250RT;105;29910;Disponible;125;A2
+Voiture;VJ-073-AC;Toyota;Highlander;153;84657;Disponible;5;Oui
+Voiture;JH-758-SL;Ford;Focus;130;41627;Disponible;5;Oui
+Voiture;TD-654-MU;Tesla;Model 3;86;20817;Disponible;4;Oui
+Voiture;AK-929-IH;Seat;Ibiza;38;29895;Disponible;9;Non
+Voiture;VA-272-YJ;Opel;Corsa;63;113241;Disponible;5;Oui
+Voiture;RP-122-AO;Hyundai;Ioniq 5;117;132639;Disponible;5;Oui
+Moto;AO-612-BF;Ducati;Monster;226;3021;Loué;300;A2
+Moto;TF-297-UI;Suzuki;Hayabusa;84;25277;Disponible;1100;A
+CampingCar;RC-165-ZU;Renault;Trafic SpaceNomad;194;221076;Loué;9.0;2
+Voiture;MI-939-JY;Volkswagen;ID.3;166;71739;Disponible;5;Oui
+Voiture;BA-250-ER;Peugeot;208;154;114283;Disponible;7;Oui
+CampingCar;OI-999-PK;Peugeot;Traveller;273;19094;Loué;5.1;2
+Moto;UF-147-YM;Yamaha;Tracer 7;89;92814;Disponible;1250;A
+Moto;AU-441-GT;Suzuki;Hayabusa;144;98933;Disponible;400;A2
+Voiture;IV-733-CC;BMW;Serie 1;48;15471;Loué;7;Oui
+Voiture;OP-666-EE;Tesla;Model S;126;108789;Disponible;4;Oui
+Voiture;LJ-417-UB;Audi;Q8;61;156871;Disponible;7;Oui
+Moto;KR-348-LX;BMW;CE 04;75;91859;Disponible;1300;A
+Voiture;VR-955-WC;Tesla;Model X;99;35074;Disponible;2;Oui
+Voiture;EK-335-IE;Ford;Explorer;197;10128;Disponible;4;Non
+Moto;HT-496-AR;KTM;Super Duke 1290;148;47398;Disponible;125;A2
+Voiture;CX-897-AH;Hyundai;Santa Fe;100;130509;Disponible;2;Oui
+Moto;WS-841-BI;Royal Enfield;Meteor 350;235;82328;Disponible;600;A2
+Voiture;KM-041-XO;Volkswagen;Polo;171;90374;Disponible;4;Oui
+Voiture;HS-409-CX;Volkswagen;Tiguan;42;163177;Disponible;9;Oui
+Voiture;AC-492-AH;Volkswagen;ID.4;31;166924;Loué;5;Oui
+Voiture;OO-298-RP;Kia;Stonic;142;128915;Loué;5;Oui
+Voiture;XS-795-GE;Mini;Countryman;64;81655;Loué;5;Oui
+Moto;VP-242-HS;BMW;R1250GS;141;5798;Disponible;500;A2
+Moto;EJ-321-AH;Honda;CMX500 Rebel;109;59071;Disponible;300;A2
+Moto;GS-671-DK;BMW;F900R;64;69530;Loué;650;A2
+Voiture;IG-211-AF;Audi;A6;49;17442;Disponible;5;Non
+Voiture;GV-054-SL;BMW;Serie 4;121;134859;Loué;4;Non
+Moto;MF-325-FM;BMW;F900XR;146;31801;Disponible;750;A
+CampingCar;RB-062-YA;Volkswagen;Crafter;183;49324;En maintenance;7.2;7
+Moto;FZ-932-HX;Suzuki;SV650;190;65984;En maintenance;1000;A
+CampingCar;DV-955-GC;Renault;Master;393;249913;Disponible;7.0;7
+Voiture;NX-492-HO;Kia;Ceed;103;140275;En maintenance;9;Oui
+Voiture;BP-455-IP;Audi;Q3;82;5016;Disponible;5;Oui
+Voiture;XR-631-RT;Peugeot;108;172;189807;Disponible;9;Oui
+Moto;TM-570-PU;Ducati;Scrambler;203;59912;Loué;300;A2
+Voiture;JZ-403-NS;Citroën;C1;86;195282;Loué;5;Oui
+Moto;OL-500-ZB;Harley-Davidson;Road Glide;54;74616;En maintenance;1100;A
+Voiture;QM-689-TV;Toyota;Prius;73;167282;En maintenance;5;Oui
+Voiture;UP-020-WL;Ford;Kuga;197;162692;Disponible;5;Oui
+Voiture;IV-686-OM;Volkswagen;Polo;127;161309;Disponible;7;Oui
+Voiture;CK-591-CC;Kia;Sportage;153;69962;Disponible;5;Oui
+Moto;NM-502-TQ;Triumph;Speed Triple;109;20778;Loué;900;A
+Moto;GV-985-VM;KTM;Adventure 390;153;86139;Loué;300;A2
+Voiture;RI-442-KN;BMW;X1;127;109158;Disponible;7;Oui
+Voiture;HS-129-YG;Ford;Mustang Mach-E;132;84699;Loué;5;Oui
+Voiture;ZV-982-PA;Fiat;Tipo;86;119478;Disponible;4;Oui
+Voiture;HV-561-IH;Audi;Q2;139;123303;Disponible;4;Non
+Voiture;MF-678-WF;Fiat;Tipo;110;181853;Disponible;5;Oui
+Voiture;BT-627-FO;Seat;Ateca;100;59515;Loué;5;Oui
+Voiture;PR-909-CE;Mini;Countryman;200;118968;Disponible;4;Oui
+CampingCar;WL-777-GS;Peugeot;Boxer;357;70798;Disponible;8.5;2
+Voiture;IJ-742-EX;BMW;Serie 5;45;51696;En maintenance;2;Oui
+Moto;KO-560-AO;Royal Enfield;Continental GT 650;98;19164;Disponible;1300;A
+Voiture;AR-100-SH;Volkswagen;ID.3;77;78929;Disponible;5;Oui
+Voiture;PY-013-CN;Mini;Cooper;40;53564;Loué;7;Oui
+CampingCar;XX-025-QI;Mercedes;Sprinter;340;139414;En maintenance;7.1;7
+Voiture;TJ-204-MG;Dacia;Duster;85;3361;Disponible;2;Non
+Voiture;BK-901-QO;Hyundai;Santa Fe;165;145577;Disponible;5;Oui
+CampingCar;DJ-737-DH;Iveco;Daily;191;79716;Loué;6.0;5
+Voiture;DX-269-GM;Volvo;V60;38;30792;Disponible;5;Oui
+Moto;GP-503-FI;Harley-Davidson;Low Rider S;146;28338;Loué;500;A2
+CampingCar;JA-657-AJ;Citroën;Jumper;90;206347;Loué;6.7;2
+Voiture;SR-810-GI;Tesla;Model X;165;50697;Disponible;9;Oui
+Voiture;GR-581-IO;Volkswagen;Golf;61;67710;Loué;9;Oui
+Voiture;AP-449-EJ;Mercedes;EQA;110;58800;Disponible;4;Oui
+Voiture;LF-774-AU;Nissan;Micra;164;15909;Disponible;4;Non
+Voiture;GN-488-RU;Volvo;XC60;106;16727;Disponible;5;Oui
+Voiture;VK-214-DH;Mini;Clubman;153;75780;Disponible;9;Oui
+Moto;WK-848-II;Yamaha;R7;62;67081;Disponible;800;A
+Voiture;MF-945-MZ;Renault;Clio;121;109363;Disponible;5;Oui
+Voiture;KR-564-JP;Citroën;C5 X;97;51815;Disponible;7;Oui
+Voiture;PA-858-KK;Peugeot;2008;135;5975;Disponible;5;Non
+CampingCar;YU-200-OD;Peugeot;Rifter;244;52606;Disponible;7.1;4
+Voiture;HH-907-RQ;Volvo;V60;150;158278;Loué;9;Oui
+Moto;XT-851-QG;Ducati;Monster;60;9187;Disponible;400;A2
+Voiture;WW-270-KU;Dacia;Spring;182;37215;Disponible;5;Oui
+Voiture;XX-827-MQ;Toyota;Highlander;136;46525;Disponible;4;Oui
+Voiture;LC-209-SI;Kia;Picanto;58;57420;Disponible;5;Oui
+Voiture;IA-148-CT;Peugeot;3008;53;166376;Disponible;5;Oui
+Moto;QX-668-HL;Honda;Forza 350;138;95229;Disponible;500;A2
+Voiture;LI-173-GA;Tesla;Model Y;115;145248;Loué;2;Oui
+Voiture;UF-752-GE;Seat;Arona;194;76755;Disponible;4;Oui
+Moto;PY-884-DN;Triumph;Street Triple;201;65645;Disponible;1250;A
+Voiture;NF-899-SC;BMW;Serie 4;87;120131;Loué;7;Oui
+Voiture;QH-092-HF;Volkswagen;ID.5;56;84838;Disponible;2;Oui
+Voiture;HE-464-NS;BMW;X3;195;56763;Loué;2;Non
+Voiture;YZ-086-AY;Nissan;X-Trail;99;3208;Disponible;5;Oui
+CampingCar;ZH-416-NI;Renault;Trafic SpaceNomad;362;203855;Disponible;5.5;2
+CampingCar;QU-134-LD;Ford;Ranger (Cellule);199;203268;Disponible;8.4;7
+Voiture;TO-765-QE;Tesla;Model Y;77;137052;Loué;5;Oui
+Voiture;KO-839-YX;Opel;Corsa;114;76065;Loué;4;Oui
+Moto;NO-518-KM;Ducati;Monster;59;31114;Disponible;650;A2
+Moto;JJ-489-DZ;Triumph;Tiger 900;115;48946;Disponible;1300;A
+Voiture;NA-290-NJ;Seat;Ateca;108;145604;Disponible;5;Oui
+Voiture;GV-439-TT;Renault;Twingo;183;24084;Disponible;2;Oui
+Moto;TR-258-SQ;BMW;S1000RR;161;75276;Disponible;900;A
+Voiture;UF-990-YW;Mini;Cooper;46;63661;Disponible;5;Oui
+Voiture;TG-450-OA;Volvo;XC40;112;199645;Loué;7;Oui
+Voiture;PE-852-DY;Opel;Corsa;113;156477;En maintenance;7;Oui
+Voiture;QY-631-GR;BMW;i4;92;113765;Disponible;5;Oui
+Voiture;XF-157-QA;Renault;Espace;34;97213;Disponible;4;Oui
+Moto;TB-951-MI;Yamaha;MT-07;100;81559;Disponible;650;A2
+Voiture;VF-545-XL;Hyundai;Santa Fe;170;107909;Loué;5;Oui
+Voiture;PU-372-II;Ford;Kuga;122;109616;En maintenance;2;Oui
+Voiture;CF-506-DN;Tesla;Model X;53;117808;Disponible;4;Oui
+Voiture;RV-943-BN;Volkswagen;Polo;183;107011;Disponible;5;Oui
+Moto;HI-628-WC;Kawasaki;Z650;207;83759;Loué;900;A
+Voiture;XY-614-KW;Peugeot;208;198;53902;Disponible;4;Oui
+CampingCar;CT-171-GC;Volkswagen;Grand California;122;50522;Disponible;6.2;5
+Voiture;YW-617-YW;Kia;Picanto;104;37836;En maintenance;5;Oui
+Moto;JM-177-QG;Suzuki;Hayabusa;211;14941;Disponible;750;A
+CampingCar;VT-324-ER;Ford;Transit 2T;288;114775;Disponible;6.3;5
+CampingCar;CE-897-PL;Fiat;Ducato;360;67746;Disponible;6.9;3
+Voiture;HY-625-PN;Renault;Megane;117;22605;Disponible;5;Oui
+Voiture;AM-019-IU;Fiat;Tipo;193;94388;Disponible;4;Oui
+Voiture;GR-617-MY;Citroën;C3;38;47418;Disponible;5;Oui
+Voiture;FF-372-MT;BMW;X2;89;174910;Disponible;5;Non
+Moto;XX-615-UP;Yamaha;R6;63;30235;Disponible;800;A
+Voiture;PR-568-DC;Renault;Megane;175;119142;Loué;5;Oui
+Voiture;FT-841-NM;Nissan;Qashqai;86;186909;Disponible;4;Oui
+CampingCar;EE-712-XW;Renault;Master;193;189243;Disponible;7.1;7
+Voiture;WY-471-IL;Citroën;C4;162;77698;Loué;5;Oui
+Moto;UE-212-ZX;Honda;X-ADV;125;62546;Disponible;125;A2
+Moto;QJ-010-BC;Kawasaki;Ninja 400;243;28659;Disponible;1100;A
+Moto;HJ-941-KF;BMW;S1000XR;207;98880;Disponible;900;A
+Voiture;CD-547-JM;Volvo;S60;131;98870;Disponible;7;Non
+Voiture;PO-503-WC;Peugeot;208;184;145171;Disponible;4;Oui
+Voiture;TR-111-XD;Ford;Focus;47;65527;Loué;5;Oui
+CampingCar;WS-651-UJ;Fiat;Ducato;241;105813;Disponible;8.7;5
+Voiture;OW-351-BL;Mercedes;GLC;176;20029;Disponible;5;Oui
+CampingCar;GZ-166-NS;Iveco;Daily;387;99229;Loué;8.3;5
+Moto;NG-335-TV;Royal Enfield;Continental GT 650;161;61362;Loué;500;A2
+Voiture;GY-959-SB;Mercedes;EQA;179;85655;Disponible;4;Oui
+Voiture;PJ-396-MW;Ford;Puma;78;165115;Disponible;9;Oui
+Moto;MM-526-OD;Yamaha;TMAX;45;4694;Disponible;900;A
+Voiture;MI-487-IG;Volkswagen;ID.3;80;13619;Disponible;5;Oui
+Voiture;RZ-215-AA;Hyundai;Kona;78;133468;Disponible;5;Non
+Voiture;AX-226-VM;Peugeot;508;71;58771;Disponible;2;Oui
+Voiture;CI-541-OF;Renault;Zoe;119;24657;En maintenance;5;Oui
+Voiture;SI-808-VO;Renault;Twingo;101;37779;Disponible;5;Oui
+Voiture;JA-312-AA;Peugeot;2008;75;1792;Disponible;5;Oui
+Voiture;ZU-705-OV;Citroën;C5 Aircross;165;96107;Loué;9;Oui
+Moto;YP-733-PD;Harley-Davidson;Road Glide;205;89041;Disponible;1100;A
+Voiture;II-560-CN;Nissan;Juke;173;143317;Disponible;2;Oui
+Voiture;SP-087-RM;Citroën;C3 Aircross;98;106060;Loué;7;Oui
+CampingCar;IU-807-GM;Renault;Master;259;5346;Disponible;5.5;4
+Voiture;MK-462-DV;Ford;Kuga;52;191864;Disponible;9;Oui
+Moto;JQ-401-SR;Honda;X-ADV;71;88102;Disponible;800;A
+Voiture;RV-991-TA;Dacia;Spring;129;11464;Disponible;7;Oui
+CampingCar;BP-138-QJ;Iveco;Daily;124;122648;En maintenance;7.7;5
+Moto;MJ-607-DX;Honda;Gold Wing;176;7841;Disponible;1800;A
+CampingCar;IP-647-UY;Peugeot;Boxer;325;131579;Disponible;6.0;3
+CampingCar;OS-539-OD;Peugeot;Traveller;140;50796;Disponible;9.0;5
+Voiture;PL-382-UP;Fiat;500;101;131064;Disponible;7;Oui
+Voiture;WN-925-TQ;Opel;Corsa;38;28995;En maintenance;2;Oui
+Voiture;VP-061-QB;Mini;Countryman;95;151337;En maintenance;5;Oui
+Voiture;UW-289-VJ;Nissan;Juke;62;8514;Disponible;9;Oui
+Moto;KK-406-VH;Triumph;Speed Triple;159;73966;Loué;900;A
+Voiture;CA-098-LC;Citroën;Berlingo;114;74103;Disponible;4;Non
+Moto;PB-948-RS;Ducati;Diavel V4;171;33920;Disponible;900;A
+Voiture;VS-590-VB;Skoda;Superb;157;146619;Disponible;7;Oui
+Voiture;VU-899-GD;Dacia;Duster;35;2500;Disponible;5;Oui
+Voiture;KX-252-NF;Hyundai;i30;30;168749;Disponible;9;Oui
+Voiture;ZU-984-GH;Fiat;Tipo;169;69604;Disponible;9;Oui
+CampingCar;CI-212-RQ;Ford;Transit Custom;96;79037;Disponible;6.3;4
+Moto;XZ-091-LU;Royal Enfield;Meteor 350;151;78726;Disponible;500;A2
+Moto;TY-151-BT;Suzuki;V-Strom 1050;169;37587;Loué;650;A2
+Moto;VR-411-OG;Triumph;Trident 660;123;29779;Disponible;1000;A
+Moto;SS-734-HB;Royal Enfield;Himalayan;125;11906;Disponible;1100;A
+Moto;SZ-125-RD;Suzuki;SV650;49;91045;Disponible;800;A
+Voiture;QR-147-OL;Audi;Q3;89;137603;Disponible;5;Non
+CampingCar;LX-340-IN;Mercedes;Vito;281;164366;Disponible;6.8;4
+Voiture;PD-892-KB;Tesla;Model S;134;124874;Disponible;4;Oui
+Moto;QU-779-RJ;BMW;R1250GS;248;34175;Disponible;300;A2
+Moto;UZ-258-OS;Triumph;Tiger 900;235;59803;Disponible;1100;A
+Moto;JT-700-XG;Royal Enfield;Continental GT 650;124;18723;Disponible;1100;A
+Voiture;WH-961-HM;Hyundai;Santa Fe;190;118750;Disponible;5;Oui
+Voiture;HE-873-RP;Dacia;Spring;145;197880;Disponible;5;Oui
+Moto;EL-047-FO;Triumph;Bonneville T120;173;29746;Loué;300;A2
+Voiture;ZT-922-IA;Peugeot;308;89;158561;Disponible;5;Oui
+Moto;LK-346-ZJ;Honda;CB1000R;223;47549;Loué;900;A
+Moto;GD-926-RZ;Ducati;Streetfighter V4;193;48574;Loué;400;A2
+Moto;YP-986-SD;Honda;X-ADV;207;91278;En maintenance;1250;A
+Voiture;MJ-653-GA;Tesla;Model 3;94;109502;Loué;5;Oui
+CampingCar;IU-012-WY;Iveco;Daily;297;240245;Disponible;5.9;4
+Moto;QX-494-GB;Royal Enfield;Meteor 350;139;59165;Disponible;800;A
+Moto;QH-614-NI;KTM;Adventure 390;67;40319;Disponible;1000;A
+Moto;LA-464-CB;Ducati;Panigale V4;247;46457;Disponible;125;A2
+Moto;MK-711-QI;Yamaha;XMAX;133;74409;Disponible;1100;A
+CampingCar;HW-025-IF;Peugeot;Rifter;194;186770;Disponible;8.2;7
+Voiture;WO-522-FL;Opel;Astra;63;14169;Disponible;5;Oui
+Voiture;SE-158-KD;Peugeot;2008;115;97561;En maintenance;5;Oui
+Moto;XM-300-QD;Harley-Davidson;Street Glide;64;71988;Disponible;500;A2
+CampingCar;LG-909-TI;Iveco;Daily;298;233018;Disponible;7.0;7
+Voiture;OG-621-XG;Skoda;Kamiq;36;26064;Disponible;4;Oui
+Voiture;FS-935-CA;BMW;Serie 2;89;101901;Disponible;4;Oui
+Voiture;SY-594-XX;Tesla;Model 3;81;97084;Disponible;5;Non
+Voiture;ZG-366-AT;Volvo;XC90;67;192662;Disponible;9;Oui
+Voiture;RH-193-SR;Ford;Mustang Mach-E;135;154770;Loué;2;Oui
+Moto;UI-898-GG;Triumph;Tiger 900;165;65511;Loué;1300;A
+Voiture;OE-515-OS;Tesla;Model S;120;129097;Disponible;5;Oui
+Voiture;WF-043-PM;Seat;Leon;98;70238;Disponible;5;Oui
+Voiture;LG-684-BS;Renault;Twingo;98;35295;Disponible;9;Oui
+Moto;KU-892-LZ;Honda;CB1000R;154;7107;Disponible;500;A2
+Voiture;MW-506-BX;BMW;Serie 2;134;36157;Disponible;5;Oui
+Voiture;CT-474-JM;Dacia;Spring;39;70959;Disponible;7;Oui
+CampingCar;SS-563-LF;Fiat;Ducato;387;24656;Loué;6.3;6
+Moto;SV-728-BX;Triumph;Rocket 3;183;3154;Disponible;600;A2
+Moto;BG-028-BB;Royal Enfield;Classic 350;111;20091;Loué;600;A2
+Voiture;SB-046-UJ;Kia;Stonic;56;88087;Disponible;4;Oui
+Moto;UN-490-AH;BMW;R1250RT;183;90622;Disponible;125;A2
+Voiture;BS-021-ZF;Nissan;Leaf;69;88393;Disponible;5;Oui
+CampingCar;JE-588-VG;Volkswagen;Grand California;117;230466;Disponible;7.2;6
+Moto;MG-214-TS;KTM;Adventure 890;238;29886;Loué;400;A2
+Moto;UB-738-HO;BMW;CE 04;47;4310;Loué;800;A
+Voiture;OR-099-YQ;Mini;Clubman;95;39247;Disponible;7;Oui
+Voiture;LK-388-ME;Toyota;Corolla;71;122345;Loué;4;Oui
+CampingCar;RE-369-PV;Volkswagen;California;228;6282;Disponible;7.3;6
+Voiture;RG-766-CQ;Volvo;C40;166;144313;Disponible;7;Oui
+Moto;NC-025-IH;BMW;CE 04;160;9059;Disponible;1800;A
+Moto;LU-854-YM;BMW;R1250GS;54;31759;Disponible;300;A2
+Voiture;HQ-107-WJ;Audi;Q7;40;189270;Loué;5;Oui
+Moto;HH-611-IS;Harley-Davidson;Sportster S;104;28958;Disponible;1250;A
+Voiture;BY-496-SB;Fiat;Panda;64;81560;Disponible;5;Oui
+Moto;RJ-054-IB;Royal Enfield;Himalayan;234;43539;Disponible;300;A2
+Moto;CE-478-UT;Harley-Davidson;Sportster S;220;50894;Loué;1250;A
+Voiture;ZA-751-KL;Fiat;Tipo;193;23923;Loué;4;Non
+Voiture;PH-783-RG;Dacia;Spring;189;109463;Disponible;2;Oui
+Voiture;OE-121-LI;Mini;Clubman;169;168243;Disponible;5;Oui
+Voiture;ZV-777-FA;Ford;Mustang Mach-E;63;118672;Loué;9;Oui
+Voiture;GB-737-BO;Citroën;C4;111;90642;Disponible;5;Oui
+Voiture;ZE-966-SC;Mini;Cooper;60;114202;Disponible;9;Oui
+Moto;WD-620-HQ;Honda;Forza 125;206;33856;Disponible;600;A2
+CampingCar;SK-241-JU;Renault;Kangoo;128;194264;En maintenance;6.3;7
+CampingCar;TZ-803-XK;Ford;Transit Custom;398;200053;Loué;5.3;3
+CampingCar;JI-792-LQ;Iveco;Daily;163;159480;Disponible;7.8;4
+Voiture;QU-133-TB;Peugeot;3008;76;198292;Disponible;2;Non
+Voiture;PA-802-BH;Mini;Countryman;66;63750;Disponible;2;Oui
+Voiture;IS-888-YW;Skoda;Enyaq;105;146828;Disponible;5;Oui
+Moto;UW-194-TB;Honda;Africa Twin;51;14548;En maintenance;1300;A
+Voiture;ZW-816-DI;Audi;A5;187;47025;Disponible;9;Oui
+Voiture;UE-179-FO;Peugeot;208;64;86698;Disponible;4;Oui
+Moto;TI-062-VM;Triumph;Street Triple;111;54480;Disponible;1000;A
+CampingCar;UC-141-OT;Fiat;Scudo;127;91194;Disponible;6.6;7
+Voiture;NS-658-DJ;Tesla;Model X;73;80958;Loué;2;Oui
+Moto;MK-206-WT;BMW;S1000XR;152;20104;Disponible;125;A2
+CampingCar;DF-376-UQ;Renault;Kangoo;369;180668;Loué;5.3;3
+Moto;XH-998-TE;Royal Enfield;Meteor 350;227;50386;Disponible;1800;A
+Voiture;SA-472-WH;BMW;i4;190;7212;Disponible;4;Non
+Voiture;ZV-275-ZC;Mercedes;CLA;46;2686;Disponible;5;Oui
+CampingCar;AY-558-MK;Peugeot;Traveller;140;179910;Disponible;7.8;7
+Voiture;SJ-437-SQ;Fiat;500X;53;178026;Disponible;7;Oui
+Voiture;WZ-834-SD;Volvo;XC60;144;111679;Disponible;4;Oui
+Voiture;NJ-414-YT;Seat;Leon;185;140078;Disponible;2;Oui
+Voiture;WG-573-KL;Volvo;XC90;172;80783;Loué;4;Oui
+Voiture;DK-945-IH;Ford;Puma;45;155802;Disponible;5;Oui
+Voiture;SH-003-RA;Seat;Ateca;109;11560;Disponible;7;Oui
+Voiture;MS-122-FG;Nissan;Qashqai;143;73155;Disponible;2;Oui
+CampingCar;QK-054-ZA;Renault;Trafic SpaceNomad;205;143915;Disponible;5.0;7
+Voiture;LY-929-CT;BMW;Serie 1;197;98257;Disponible;5;Oui
+Moto;YU-739-ET;Triumph;Tiger 900;105;62652;Disponible;1300;A
+Voiture;EO-481-ZL;Audi;Q3;74;1974;Disponible;5;Oui
+Voiture;YZ-208-MT;Hyundai;i10;147;186341;Disponible;5;Oui
+CampingCar;GY-808-GO;Volkswagen;Crafter;301;67157;Disponible;5.5;2
+Moto;IX-577-GD;Triumph;Speed Triple;221;236;Disponible;125;A2
+Moto;CQ-218-XF;Ducati;Monster;210;26393;Loué;300;A2
+Moto;DC-402-KJ;Royal Enfield;Continental GT 650;72;1918;Disponible;300;A2
+Voiture;AT-755-NQ;Toyota;bZ4X;162;66061;Disponible;4;Oui
+Voiture;KI-294-SO;Volvo;C40;160;106482;Disponible;9;Oui
+Voiture;RI-982-GC;Renault;Captur;185;92134;Disponible;2;Non
+CampingCar;IL-689-LZ;Ford;Ranger (Cellule);99;10217;Disponible;5.9;6
+CampingCar;GT-503-JX;Citroën;Berlingo;98;220950;Disponible;8.8;5
+Voiture;AM-513-WH;Dacia;Spring;39;32843;Disponible;9;Oui
+Moto;VI-610-WW;Kawasaki;Z900RS;72;79803;Disponible;650;A2
+Voiture;QF-755-JH;Ford;Focus;152;50712;Disponible;2;Oui
+CampingCar;JF-765-QR;Fiat;Ducato;100;26659;Loué;6.9;2
+Voiture;VN-382-GA;Dacia;Jogger;84;106912;Loué;9;Oui
+Moto;IA-179-IE;Ducati;Monster;50;35779;Disponible;650;A2
+CampingCar;YH-892-OQ;Peugeot;Rifter;232;167692;Loué;8.5;3
+CampingCar;YZ-336-NC;Renault;Master;237;20799;Disponible;7.2;7
+Voiture;SS-387-JK;Citroën;C4 X;73;158269;Disponible;9;Oui
+Moto;ZR-176-DZ;Kawasaki;Ninja 1000SX;214;80756;Disponible;650;A2
+Voiture;OM-521-WI;Kia;Sorento;33;138122;Disponible;5;Oui
+Voiture;WR-445-RR;Renault;Captur;196;135578;Disponible;2;Oui
+Voiture;GO-821-YI;Fiat;500;112;153780;Loué;9;Oui
+Voiture;AS-093-VV;Volkswagen;Golf;187;179895;Loué;5;Oui
+Moto;YM-443-BJ;Harley-Davidson;Street Glide;144;84118;Disponible;600;A2
+Moto;IO-411-TK;Triumph;Tiger 1200;139;1655;Loué;600;A2
+Voiture;XN-310-FX;Tesla;Model Y;184;48368;Disponible;7;Oui
+Moto;QG-166-LS;Ducati;Panigale V2;170;33554;Disponible;600;A2
+Voiture;BM-614-EO;Mini;Cooper S;51;60151;Loué;5;Oui
+CampingCar;AO-095-NO;Volkswagen;Caddy California;117;55507;Disponible;7.8;7
+CampingCar;VW-511-JT;Citroën;Berlingo;242;139559;Disponible;5.8;5
+Moto;FG-410-BI;Suzuki;GSX-S750;183;9998;Disponible;300;A2
+Voiture;LZ-322-QT;Toyota;Yaris Cross;133;151318;Disponible;5;Non
+Moto;GK-696-RA;Yamaha;TMAX;204;46761;Disponible;1800;A
+Moto;QG-307-EE;Harley-Davidson;Sportster S;58;88205;Disponible;1100;A
+CampingCar;ZJ-806-WD;Fiat;Talento;98;192710;Disponible;8.8;3
+Voiture;KN-941-WL;Mercedes;Classe C;101;118286;Disponible;5;Oui
+Moto;NE-470-BM;Royal Enfield;Interceptor 650;234;34851;En maintenance;800;A
+Voiture;KC-494-JV;Seat;Ateca;44;102590;Disponible;5;Oui
+CampingCar;NT-063-SC;Peugeot;Boxer;315;224660;Disponible;6.0;7
+Moto;MZ-418-AH;Suzuki;GSX-S1000GT;170;78801;Disponible;125;A2
+Voiture;OY-627-OU;Ford;Explorer;76;159682;Disponible;4;Oui
+Voiture;AD-163-TH;Seat;Ibiza;70;75131;En maintenance;7;Oui
+CampingCar;FI-170-DA;Ford;Transit Custom;160;167062;Loué;8.6;3
+Moto;XP-986-RD;Triumph;Bonneville T120;249;42335;Loué;1000;A
+Voiture;XD-546-PI;Skoda;Kamiq;152;14353;Disponible;7;Oui
+Voiture;ES-526-HY;Nissan;X-Trail;96;106912;Disponible;5;Oui
+Voiture;HL-866-GN;Tesla;Model X;175;194362;Disponible;5;Oui
+Voiture;NP-609-KT;Skoda;Octavia;146;128905;Disponible;5;Oui
+Voiture;WH-499-JS;Ford;Explorer;158;76881;Disponible;2;Oui
+Voiture;FP-358-TL;Volvo;XC90;183;189295;Loué;7;Oui
+Moto;KG-631-PW;Kawasaki;Ninja 650;151;43888;Disponible;300;A2
+Voiture;DA-043-RT;Skoda;Octavia;132;148824;Loué;4;Oui
+Voiture;PL-763-YS;Skoda;Kodiaq;68;34071;Disponible;2;Oui
+CampingCar;PB-392-SM;Peugeot;Traveller;120;229660;En maintenance;5.2;6
+CampingCar;VR-875-MU;Fiat;Scudo;206;39865;Loué;6.2;5
+Moto;RA-403-VV;Suzuki;Hayabusa;141;1540;Loué;1300;A
+CampingCar;EY-507-QX;Iveco;Daily;248;167353;En maintenance;7.0;6
+Moto;WB-079-MU;KTM;Duke 125;240;93112;Disponible;750;A
+Moto;JB-984-KJ;Honda;X-ADV;193;78245;Loué;800;A
+Moto;HE-405-YN;Kawasaki;Versys 650;176;52999;Disponible;900;A
+Voiture;ES-171-YQ;Opel;Astra;45;195830;En maintenance;4;Oui
+Moto;QY-929-PM;Honda;Africa Twin;143;68232;Disponible;1250;A
+CampingCar;RP-183-VU;Ford;Transit Custom;221;89076;Disponible;8.7;3
+Voiture;DE-507-PK;Nissan;Micra;83;75204;Disponible;4;Oui
+Moto;ZX-254-NZ;KTM;Adventure 390;233;12752;Disponible;300;A2
+Voiture;RP-863-NN;Tesla;Model S;186;32854;Loué;5;Oui
+Moto;YP-619-HS;Triumph;Tiger 900;121;78403;Disponible;125;A2
+Voiture;BJ-069-HW;Hyundai;Bayon;142;189718;Disponible;4;Oui
+Moto;PF-885-CC;Yamaha;R7;64;29811;Loué;750;A
+Moto;DA-502-ZP;Kawasaki;Z650;87;77905;Disponible;1250;A
+Voiture;PN-605-EG;Tesla;Model X;189;51014;Disponible;5;Oui
+Moto;TX-085-GV;Yamaha;XSR700;139;66298;Disponible;1250;A
+Voiture;BH-391-LJ;Volkswagen;ID.3;159;2873;Disponible;2;Oui
+Moto;NH-814-CO;Ducati;Scrambler;64;67850;Loué;125;A2
+CampingCar;DV-702-BX;Peugeot;Traveller;344;56386;Disponible;7.6;3
+CampingCar;SY-562-ZN;Mercedes;Sprinter;325;226675;Disponible;5.3;5
+Voiture;JM-772-SA;Peugeot;Rifter;164;82123;Disponible;5;Oui
+Moto;XE-523-WP;Triumph;Speed Triple;144;8046;Disponible;900;A
+CampingCar;KD-125-PV;Citroën;SpaceTourer;296;49861;Disponible;7.4;6
+CampingCar;FF-308-FS;Ford;Ranger (Cellule);206;91015;Disponible;7.9;5
+Moto;TW-430-HV;BMW;CE 04;159;63311;Disponible;1000;A
+Voiture;NM-731-UI;Citroën;C5 X;94;26565;Disponible;5;Oui
+Voiture;ZT-560-GT;Tesla;Model 3;164;181327;Disponible;2;Oui
+Voiture;LE-778-UR;Kia;Rio;185;192793;Disponible;5;Oui
+Voiture;UB-460-IY;Mercedes;EQB;99;142589;Loué;4;Non
+CampingCar;BN-154-US;Peugeot;Boxer;215;15014;Disponible;7.3;3
+Moto;UM-279-UA;Honda;Africa Twin;86;38773;Disponible;125;A2
+Voiture;UZ-589-WP;Dacia;Sandero;117;176593;Disponible;7;Oui
+Moto;YZ-906-TA;KTM;Super Duke 1290;53;67181;Disponible;125;A2
+Voiture;BS-305-XF;Nissan;Ariya;167;160813;Disponible;9;Oui
+CampingCar;RF-834-HS;Ford;Transit 2T;129;219403;Disponible;8.2;2
+Voiture;AG-671-QK;Seat;Arona;33;109473;Disponible;5;Oui
+Voiture;XY-737-BW;Ford;Kuga;118;162331;Disponible;5;Oui
+Voiture;EL-758-LG;Ford;Explorer;187;162808;Disponible;2;Oui
+Moto;HB-373-FC;Ducati;Streetfighter V4;130;53083;Disponible;500;A2
+Moto;NN-187-WU;Honda;CB1000R;141;45382;Disponible;500;A2
+Voiture;DX-047-FV;Fiat;Tipo;68;123260;Disponible;5;Oui
+Voiture;GU-643-EF;Renault;Zoe;145;179023;Disponible;5;Oui
+Voiture;GC-361-EP;Volvo;XC40;51;102021;Loué;5;Oui
+Moto;FP-981-GT;Yamaha;MT-10;157;36334;Disponible;1000;A
+Voiture;BO-364-WB;Nissan;Micra;181;81545;Loué;7;Oui
+CampingCar;WL-382-UL;Ford;Ranger (Cellule);318;234503;Disponible;8.5;2
+Voiture;LE-389-IQ;BMW;Serie 2;142;11515;Loué;5;Oui
+Voiture;CI-488-AP;Fiat;500;148;120062;Disponible;5;Oui
+Moto;UU-644-TS;BMW;S1000XR;140;81431;Disponible;750;A
+Voiture;BF-115-KF;Toyota;Corolla;84;171581;Loué;9;Oui
+Voiture;FF-783-YL;Mercedes;Classe C;44;43454;Disponible;5;Oui
+Voiture;QX-893-GM;Mini;Cooper;123;105056;Disponible;9;Oui
+Voiture;GT-701-EY;Fiat;500;126;77640;Disponible;5;Oui
+Moto;RH-845-MK;Ducati;Multistrada V4;142;49324;Disponible;900;A
+Voiture;WR-638-GY;Tesla;Model 3;113;70551;Disponible;2;Oui
+Voiture;CU-380-OU;Peugeot;108;50;25874;Loué;7;Oui
+Voiture;JE-323-JQ;Renault;Zoe;43;130224;Disponible;2;Non
+Voiture;OZ-976-HQ;Nissan;X-Trail;197;103182;Disponible;5;Non
+Voiture;CY-251-FF;Volkswagen;Passat;180;4555;Disponible;9;Oui
+Voiture;QO-963-MB;Mini;Clubman;112;174403;Disponible;5;Oui
+Voiture;EF-955-TZ;Volkswagen;Arteon;62;165536;Disponible;2;Oui
+Voiture;SZ-954-RT;Peugeot;108;71;67660;Disponible;5;Oui
+Moto;HH-037-PW;Yamaha;Tracer 9;245;21208;Disponible;500;A2
+Voiture;UX-406-VK;Hyundai;Kona;130;48331;Disponible;4;Oui
+Voiture;WI-810-KW;Hyundai;Santa Fe;77;52989;Disponible;9;Oui
+CampingCar;EA-266-LV;Peugeot;Boxer;341;71529;Disponible;7.9;5
+Voiture;JT-557-IZ;Mini;Clubman;34;192834;Disponible;5;Non
+Moto;RN-228-YY;Harley-Davidson;Sportster S;169;91368;Disponible;800;A
+CampingCar;FO-789-PQ;Ford;Transit Custom;276;104127;Disponible;5.3;7
+Voiture;OR-952-WK;Volkswagen;Arteon;108;104122;Loué;2;Oui
+Voiture;PC-540-IU;Audi;Q8;162;132624;Disponible;9;Non
+Voiture;ER-145-DM;Audi;Q2;113;20033;Disponible;5;Oui
+Moto;HO-954-EX;Royal Enfield;Classic 350;156;44842;En maintenance;500;A2
+CampingCar;AL-530-FG;Volkswagen;California;167;60709;Disponible;6.4;5
+Voiture;TL-057-ZL;Citroën;C4;63;48168;Disponible;4;Oui
+Voiture;DW-354-AG;Seat;Leon;178;149085;Disponible;5;Non
+CampingCar;ST-328-CC;Citroën;SpaceTourer;360;174351;Disponible;7.2;4
+Moto;TC-643-YR;KTM;Super Duke 1290;111;25527;Disponible;1300;A
+CampingCar;JP-682-UU;Iveco;Daily;384;13518;Disponible;7.8;6
+Voiture;FX-246-VG;Audi;Q2;36;150451;Disponible;2;Oui
+Voiture;JV-662-NA;Fiat;500;156;64700;Disponible;5;Oui
+Voiture;YT-535-AB;BMW;Serie 1;60;40491;Disponible;7;Non
+Moto;JB-521-GW;Yamaha;XSR700;244;75842;Loué;1800;A
+Moto;SF-614-JO;Suzuki;GSX-S750;66;97807;Loué;300;A2
+Voiture;FN-623-RN;Fiat;Tipo;39;83219;Disponible;7;Non
+Voiture;OT-477-JC;Volvo;XC40;69;127420;Disponible;7;Oui
+Voiture;SL-462-ZD;Kia;EV6;175;18580;Loué;9;Oui
+Voiture;PK-786-YD;Fiat;500;193;70843;Disponible;5;Oui
+Moto;BR-601-NI;Honda;Gold Wing;158;38430;Disponible;650;A2
+Moto;FR-332-DF;Suzuki;GSX-S750;147;34084;Disponible;125;A2
+Voiture;XM-464-EP;Ford;Explorer;73;84508;Disponible;5;Oui
+Voiture;KV-510-HA;Citroën;Berlingo;50;160300;Loué;5;Oui
+Moto;FE-270-TV;Kawasaki;Ninja 1000SX;180;79754;Disponible;1250;A
+Voiture;FL-699-GJ;Seat;Leon;86;46985;Disponible;5;Oui
+Moto;NX-594-KX;Honda;Forza 350;216;26660;Disponible;600;A2
+Moto;NV-377-AE;Royal Enfield;Classic 350;206;78472;Disponible;500;A2
+Moto;YW-970-VN;Suzuki;Hayabusa;122;69977;Disponible;1250;A
+Moto;VJ-752-SB;Royal Enfield;Continental GT 650;233;12837;Loué;1000;A
+Moto;SE-863-KW;Harley-Davidson;Sportster S;241;51022;Loué;1800;A
+Moto;XS-702-TO;Harley-Davidson;Street Glide;69;61451;Disponible;800;A
+Voiture;IB-387-CK;Citroën;C4 X;72;176175;Disponible;9;Oui
+Moto;DS-268-YB;Triumph;Rocket 3;156;4215;Disponible;125;A2
+Voiture;DB-743-MI;Audi;Q7;64;13496;Loué;9;Oui
+Moto;OR-774-UG;Kawasaki;Z650;113;90299;Disponible;1800;A
+Voiture;BH-762-LP;Volvo;XC40;191;122563;Disponible;9;Oui
+Voiture;QI-024-KE;Nissan;Qashqai;36;148910;Loué;5;Oui
+Voiture;LP-351-ET;Peugeot;208;167;192735;En maintenance;4;Oui
+Voiture;JU-928-WH;Kia;EV6;160;38543;Disponible;7;Oui
+Moto;IM-644-YY;Yamaha;Tracer 9;85;38487;Loué;800;A
+Moto;ZV-854-AW;KTM;Duke 125;190;20246;Loué;1000;A
+Moto;PX-216-NY;Yamaha;TMAX;93;49548;En maintenance;1100;A
+Moto;FR-049-YN;Honda;X-ADV;225;27591;Disponible;1000;A
+Moto;HS-241-DE;Yamaha;MT-10;206;24233;Disponible;750;A
+Voiture;LG-268-HN;Toyota;bZ4X;139;105414;Disponible;7;Oui
+Moto;QW-834-SU;Yamaha;R7;185;75455;Loué;600;A2
+CampingCar;GY-640-XB;Iveco;Daily;261;131990;Disponible;7.6;4
+Voiture;WM-266-CC;Mini;Cooper S;74;163379;Disponible;7;Oui
+Voiture;UU-322-CY;Fiat;500;39;87911;Disponible;4;Oui
+Voiture;HD-248-NC;Volvo;XC90;184;584;Loué;4;Oui
+Moto;MH-341-CL;Ducati;Monster;182;51722;Disponible;800;A
+Voiture;JZ-074-GL;Renault;Espace;121;19920;Disponible;2;Oui
+Voiture;FU-582-XA;Peugeot;Rifter;177;94039;Disponible;5;Oui
+Voiture;HV-874-MJ;Hyundai;Ioniq 5;83;92384;En maintenance;7;Oui
+Moto;YW-460-QP;KTM;Adventure 390;43;97017;Loué;1000;A
+Moto;ZW-448-CO;Yamaha;R6;70;37976;Disponible;1250;A
+CampingCar;OK-513-PT;Volkswagen;California;229;139076;Loué;7.6;7
+Voiture;LY-743-LQ;Renault;Zoe;101;30799;Disponible;7;Oui
+Voiture;RJ-428-CZ;Seat;Ateca;157;95295;Disponible;4;Oui
+Voiture;WL-146-NO;Toyota;Corolla;92;146250;Disponible;5;Oui
+Voiture;MT-843-UX;BMW;X5;87;60733;Disponible;4;Oui
+Voiture;ZW-325-RG;Mercedes;Classe A;48;156176;Disponible;2;Oui
+Voiture;CB-934-EB;Mercedes;GLC;33;198818;Disponible;5;Oui
+Voiture;BQ-383-SB;Peugeot;2008;158;42985;Disponible;5;Oui
+Moto;AG-662-VY;BMW;F750GS;143;12590;Disponible;500;A2
+Voiture;YB-833-TH;Dacia;Spring;144;183725;Loué;9;Oui
+Moto;RY-996-VP;Ducati;Multistrada V4;219;48779;Disponible;400;A2
+Voiture;AX-010-UK;Ford;Kuga;130;87827;Loué;5;Oui
+Voiture;RH-983-AM;Ford;Kuga;76;76490;Disponible;2;Oui
+Voiture;BB-902-AT;Kia;Ceed;30;50651;Disponible;5;Oui
+Moto;NZ-229-HY;Honda;Forza 125;238;87029;Disponible;1250;A
+CampingCar;ML-727-SG;Ford;Ranger (Cellule);234;117542;Disponible;8.2;6
+Moto;JA-686-SH;Ducati;Monster;121;92228;En maintenance;800;A
+Voiture;QK-543-UL;Mercedes;CLA;53;81170;Disponible;5;Oui
+Voiture;XY-680-QP;Peugeot;208;144;157541;Loué;7;Oui
+CampingCar;HK-767-DI;Fiat;Scudo;351;24237;Loué;7.4;7
+Voiture;AF-696-BA;Nissan;Micra;142;3029;Disponible;2;Non
+Moto;MC-155-OS;Harley-Davidson;Sportster S;176;94293;Disponible;300;A2
+Voiture;KL-268-LW;Toyota;bZ4X;137;174109;Disponible;5;Oui
+Voiture;DM-365-AJ;Mini;Cooper;65;13604;Disponible;5;Oui
+Voiture;CY-426-NY;Opel;Corsa;124;27088;Disponible;9;Oui
+Moto;YF-058-YG;Honda;CB1000R;245;21108;Disponible;500;A2
+Moto;SH-278-NY;Harley-Davidson;Pan America;105;86852;Disponible;1250;A
+Voiture;RC-397-NT;Seat;Ibiza;112;143098;Disponible;5;Oui
+Voiture;KM-307-OZ;Toyota;Aygo X;48;146216;Disponible;5;Oui
+CampingCar;VD-148-PA;Fiat;Talento;256;120379;Disponible;5.4;4
+Moto;XS-265-SA;BMW;F900XR;239;83345;Disponible;650;A2
+Moto;OV-798-FL;Yamaha;XMAX;134;66801;Disponible;600;A2
+Voiture;HP-706-LH;Mercedes;Classe A;177;195618;Disponible;5;Oui
+Voiture;BW-233-CW;Volvo;XC60;36;74493;Disponible;5;Oui
+Voiture;RS-023-GK;Ford;Kuga;116;34735;Disponible;4;Oui
+Voiture;FZ-382-UB;Toyota;Aygo X;139;34131;Disponible;9;Oui
+CampingCar;JD-859-LZ;Fiat;Talento;126;173158;Disponible;7.9;7
+Voiture;LU-615-ZB;Dacia;Duster;110;95416;Disponible;4;Oui
+Voiture;AF-225-LH;Audi;A4;147;182288;Disponible;5;Oui
+Voiture;VC-031-HL;Mercedes;Classe C;135;190209;En maintenance;5;Non
+Voiture;RP-145-DT;Audi;Q2;130;113510;Loué;5;Oui
+Moto;ZY-437-ZK;KTM;Adventure 390;81;65861;Disponible;1300;A
+Voiture;SY-186-BM;Renault;Austral;144;195972;Disponible;7;Oui
+Voiture;SS-517-RW;Dacia;Jogger;69;100509;Disponible;9;Oui
+Voiture;TG-633-RK;Volkswagen;Golf;131;190672;Disponible;5;Oui
+CampingCar;IE-583-GI;Iveco;Daily;346;96674;Disponible;6.3;2
+Voiture;QM-928-JT;Toyota;C-HR;78;102830;Disponible;5;Oui
+Voiture;QM-829-KQ;Citroën;C5 X;142;86407;Disponible;5;Oui
+Moto;GO-249-YN;KTM;Super Adventure 1290;174;42572;Loué;1800;A
+CampingCar;XL-565-EA;Renault;Trafic SpaceNomad;351;14895;Disponible;5.0;2
+Voiture;GB-699-VH;Dacia;Duster;127;126021;Disponible;4;Oui
+Voiture;RO-580-PF;Hyundai;Kona;92;155286;Loué;5;Oui
+Moto;PZ-960-XD;Honda;CB650R;192;49109;Disponible;125;A2
+Voiture;AO-782-GS;Opel;Crossland;67;176535;Disponible;2;Oui
+Voiture;LZ-478-JR;Mini;Cooper S;131;104552;Disponible;9;Non
+Voiture;PO-876-QY;Peugeot;Rifter;122;130305;Disponible;9;Non
+Voiture;SA-658-TL;Fiat;500;78;112530;Disponible;5;Oui
+Voiture;UP-877-DB;Opel;Crossland;102;111286;Disponible;2;Oui
+Moto;CP-172-TG;Harley-Davidson;Sportster S;101;29532;Loué;1250;A
+Moto;PT-186-ZA;Honda;CB1000R;137;87018;Loué;800;A
+Voiture;JK-012-UK;Mercedes;CLA;67;85176;Loué;5;Oui
+Moto;HF-687-GI;Honda;CB650R;61;33192;Disponible;900;A
+Voiture;RY-718-MH;Mini;Cooper;74;46019;Disponible;7;Oui
+Voiture;LN-995-BB;Citroën;C3;175;5774;Loué;5;Oui
+Voiture;WY-765-PK;Seat;Arona;49;68869;Loué;7;Non
+Moto;FF-333-AW;Honda;Forza 350;227;31417;Disponible;125;A2
+Voiture;FI-363-QD;BMW;X1;176;186812;Disponible;5;Oui
+Moto;CP-411-CH;Kawasaki;Ninja 1000SX;68;57746;Disponible;500;A2
+CampingCar;VH-574-TW;Ford;Transit Custom;102;158611;Loué;5.8;2
+CampingCar;RX-838-GN;Fiat;Ducato;247;129337;Disponible;8.1;3
+Voiture;WF-173-RV;BMW;X5;65;70284;Disponible;2;Oui
+Moto;VI-600-EZ;Kawasaki;Ninja 400;132;52742;Loué;400;A2
+Voiture;WV-928-NY;Kia;Sorento;125;12365;En maintenance;7;Oui
+Voiture;ME-207-UD;Mercedes;Classe C;185;26408;Disponible;5;Oui
+Moto;VI-186-CU;KTM;Super Adventure 1290;214;33314;Disponible;300;A2
+Moto;YP-310-FK;BMW;R18;58;15971;Loué;500;A2
+Moto;RV-951-LB;Triumph;Rocket 3;125;86614;Disponible;1100;A
+Moto;OV-340-KG;Ducati;Monster;137;57475;Disponible;1300;A
+CampingCar;YY-439-OD;Renault;Trafic SpaceNomad;148;80120;Disponible;7.4;3
+Moto;ZN-680-TY;Ducati;Panigale V4;123;10264;Disponible;600;A2
+Voiture;BF-397-WO;Mini;Countryman;172;160479;Disponible;9;Non
+Voiture;PP-065-FA;Nissan;Juke;44;31995;Disponible;5;Oui
+Moto;CI-154-FD;Royal Enfield;Classic 350;200;35278;Disponible;500;A2
+Voiture;NV-493-SZ;Opel;Crossland;98;113815;Disponible;9;Oui
+Voiture;KO-499-IA;Volvo;XC90;118;188153;Disponible;7;Oui
+Voiture;EZ-608-MW;Volkswagen;Polo;111;31632;Disponible;5;Oui
+CampingCar;QR-848-HJ;Peugeot;Traveller;387;66558;Loué;5.1;7
+Moto;MI-192-SJ;BMW;R18;164;96393;Disponible;900;A
+Voiture;KF-555-PW;Nissan;Ariya;196;16962;Disponible;5;Oui
+Moto;DN-470-AX;Harley-Davidson;Fat Bob;179;87516;Disponible;125;A2
+Moto;FE-054-AQ;Honda;Forza 125;199;621;Disponible;900;A
+Moto;AB-629-XK;Honda;Gold Wing;159;85336;Disponible;500;A2
+Moto;DA-973-BH;Yamaha;R7;182;9383;Disponible;750;A
+CampingCar;KO-907-EB;Mercedes;Sprinter;112;165932;Disponible;7.7;3
+Voiture;SG-931-YW;Mini;Countryman;128;18093;Disponible;9;Oui
+Voiture;GR-403-NY;Volkswagen;Golf;31;72097;Disponible;5;Oui
+Voiture;PI-974-AS;Fiat;500;117;62010;Loué;5;Oui
+Voiture;PV-316-TG;Toyota;Prius;171;20181;Disponible;2;Oui
+Moto;ZN-283-KI;Royal Enfield;Continental GT 650;123;95884;Disponible;1250;A
+Voiture;JL-833-PL;Renault;Clio;196;52965;Disponible;5;Oui
+CampingCar;EY-670-EK;Peugeot;Rifter;302;79152;Disponible;8.8;6
+Moto;HI-500-SI;Kawasaki;Versys 1000;71;57806;Disponible;125;A2
+Moto;SM-912-ZZ;Suzuki;V-Strom 650;160;74335;Disponible;1250;A
+Voiture;GG-583-YO;Skoda;Fabia;186;122194;Disponible;5;Oui
+Voiture;RS-139-LI;Dacia;Jogger;57;117223;Loué;5;Oui
+Moto;LT-415-ZS;Yamaha;TMAX;81;180;Disponible;650;A2
+Moto;MB-373-BG;Triumph;Tiger 1200;93;44389;Disponible;650;A2
+Voiture;RK-102-HQ;Skoda;Superb;134;141627;Disponible;2;Oui
+Voiture;WH-645-BO;Peugeot;408;60;150184;Disponible;4;Oui
+CampingCar;TZ-136-CM;Iveco;Daily;332;22772;Disponible;5.8;6
+Moto;FS-152-LS;Royal Enfield;Interceptor 650;144;3432;Disponible;125;A2
+Voiture;NQ-544-AC;Citroën;Berlingo;134;115336;Disponible;2;Oui
+Voiture;QD-543-ZO;Volvo;XC60;168;22896;Disponible;4;Oui
+Voiture;LP-983-GQ;Mini;Cooper;140;161989;Disponible;5;Oui
+Moto;SJ-562-QR;Triumph;Speed Triple;198;39795;Loué;650;A2
+Moto;FL-520-OY;Suzuki;Hayabusa;41;76991;Disponible;1300;A
+Voiture;ER-823-WN;Nissan;Leaf;114;39927;Disponible;5;Oui
+Moto;GP-525-PN;KTM;Super Adventure 1290;153;89727;Disponible;1800;A
+Voiture;EB-357-RN;Skoda;Scala;49;7185;Loué;5;Oui
+Moto;KC-839-UU;Suzuki;V-Strom 1050;159;60525;Disponible;400;A2
+Voiture;PM-938-NY;Skoda;Karoq;36;174208;Disponible;5;Oui
+Moto;WW-418-BN;Harley-Davidson;Pan America;246;4263;Disponible;750;A
+Voiture;AQ-980-PX;Mercedes;GLA;37;109993;Disponible;5;Oui
+CampingCar;SO-340-KQ;Iveco;Daily;212;120952;Disponible;8.4;4
+Voiture;YZ-849-NA;Fiat;500X;103;114907;Disponible;7;Oui
+Voiture;BE-765-WG;Mercedes;EQA;154;7412;Disponible;5;Oui
+Moto;AN-671-SM;Harley-Davidson;Low Rider S;167;61941;Loué;1000;A
+Voiture;MP-031-YA;BMW;X5;194;53619;Disponible;5;Oui
+CampingCar;JW-305-UF;Volkswagen;Grand California;133;231212;Disponible;7.4;5
+Voiture;XJ-497-GX;Fiat;Panda;121;1855;Disponible;2;Oui
+Moto;LH-800-XB;Royal Enfield;Himalayan;185;26080;Disponible;1800;A
+Voiture;OF-530-CJ;Hyundai;Kona;123;59883;Disponible;9;Oui
+Moto;QM-540-OO;KTM;Super Adventure 1290;59;66447;Disponible;1250;A
+CampingCar;WE-596-YA;Iveco;Daily;267;43863;Disponible;8.0;2
+Voiture;AF-642-VI;Mini;Countryman;156;188550;Disponible;5;Oui
+CampingCar;CS-682-VG;Renault;Kangoo;331;89213;Disponible;7.8;2
+Voiture;KO-625-AR;Tesla;Model 3;174;159914;En maintenance;5;Oui
+Voiture;PG-787-BG;Hyundai;Santa Fe;48;190982;Disponible;9;Oui
+Voiture;DK-764-VF;Ford;Focus;127;68789;Disponible;2;Oui
+Voiture;DE-168-TP;Volkswagen;Up!;146;14577;Disponible;4;Oui
+Voiture;DP-243-SH;Audi;Q7;165;70308;Disponible;2;Non
+Voiture;KR-726-NY;Ford;Mustang Mach-E;35;35464;Disponible;2;Non
+Moto;YR-464-AI;Honda;CMX500 Rebel;237;55432;Disponible;1300;A
+Moto;JX-186-GE;Triumph;Rocket 3;206;77798;Disponible;600;A2
+Moto;BK-360-JB;Harley-Davidson;Sportster S;246;96068;Loué;1100;A
+Moto;IF-057-CT;Ducati;Diavel V4;213;32182;Disponible;650;A2
+Moto;AF-395-FY;Royal Enfield;Continental GT 650;177;51835;Disponible;800;A
+Voiture;WQ-083-CO;Mini;Clubman;142;81974;Disponible;7;Oui
+Moto;LP-744-SC;Kawasaki;Z650;190;58985;Disponible;650;A2
+CampingCar;YO-310-KG;Ford;Transit Custom;399;242037;En maintenance;5.0;6
+Voiture;AC-571-UK;Opel;Mokka;187;98812;Disponible;7;Oui
+Voiture;EX-305-HF;Dacia;Duster;97;92970;Disponible;2;Oui
+Moto;XW-706-TC;Yamaha;XMAX;134;74468;Disponible;800;A
+Voiture;NK-419-OD;Peugeot;Rifter;136;189395;Loué;4;Oui
+Moto;IB-766-EK;Ducati;Scrambler;244;78046;Disponible;650;A2
+Voiture;TM-409-DI;Seat;Leon;169;151072;En maintenance;5;Oui
+Moto;KC-362-HA;Kawasaki;Versys 1000;77;70643;Disponible;750;A
+Voiture;MR-025-VY;Skoda;Octavia;104;18826;Disponible;4;Oui
+Voiture;QO-907-AH;Seat;Arona;50;121967;Disponible;5;Oui
+Voiture;JK-661-ZB;Kia;Ceed;73;63350;Disponible;9;Oui
+Voiture;IX-176-TC;Mercedes;EQB;140;91434;En maintenance;5;Oui
+Voiture;ZK-256-FU;Tesla;Model S;142;180896;Disponible;5;Oui
+Moto;TI-360-GU;Triumph;Bonneville T120;196;33043;Disponible;900;A
+Voiture;KG-411-RZ;Toyota;Aygo X;97;133499;Disponible;2;Oui
+Moto;OF-962-DX;Harley-Davidson;Pan America;236;99497;Disponible;300;A2
+Voiture;GK-902-HS;Dacia;Spring;121;22324;Loué;5;Oui
+Voiture;AE-606-NL;Opel;Crossland;133;111577;Disponible;9;Oui
+Voiture;XB-979-ES;Hyundai;Ioniq 5;121;101783;Disponible;5;Oui
+CampingCar;RL-632-BJ;Ford;Ranger (Cellule);258;190222;Disponible;7.0;7
+Voiture;JF-410-OS;Nissan;Micra;182;33264;Disponible;5;Oui
+Moto;SD-740-GV;Yamaha;XSR900;156;44213;Disponible;750;A
+Voiture;PC-685-OS;Mini;Cooper;90;142653;Disponible;5;Oui
+Voiture;JG-500-MG;Mercedes;GLC;72;142873;Loué;5;Oui
+Voiture;AP-493-YV;Ford;Mustang Mach-E;165;52655;Disponible;4;Oui
+Voiture;OQ-379-UV;Volkswagen;T-Roc;65;29504;Disponible;9;Oui
+Voiture;ZY-507-TN;Dacia;Jogger;94;90300;Disponible;5;Oui
+Moto;BS-811-XE;Ducati;Scrambler;121;56783;Disponible;400;A2
+Moto;WO-411-UE;Ducati;Streetfighter V4;62;19591;Loué;1300;A
+Voiture;NC-281-ME;BMW;i4;82;167243;Loué;4;Oui
+Voiture;UE-805-LM;Audi;A5;42;77680;Loué;5;Oui
+Voiture;IR-054-RZ;Toyota;Yaris;69;118572;Disponible;2;Oui
+Moto;WV-927-NE;Honda;CB500F;126;85656;Loué;400;A2
+Voiture;HX-182-CX;Audi;A5;179;167413;Disponible;5;Oui
+Moto;TX-586-RG;KTM;Duke 125;42;57876;Disponible;650;A2
+Voiture;DW-270-PK;Audi;e-tron;174;199904;Disponible;4;Oui
+CampingCar;NL-161-PG;Peugeot;Traveller;248;77325;Disponible;6.1;7
+Moto;WX-669-KX;Yamaha;Tracer 7;98;64543;Disponible;600;A2
+Moto;AM-483-DE;Yamaha;R7;222;34291;Disponible;650;A2
+Voiture;PM-430-DB;Toyota;RAV4;119;85742;Disponible;5;Oui
+Voiture;XY-248-MU;Ford;Explorer;67;155952;Disponible;9;Oui
+Moto;OC-441-UY;KTM;Duke 390;166;53543;Disponible;1100;A
+Voiture;CK-626-UY;Seat;Arona;149;122862;Disponible;2;Oui
+Voiture;NB-883-EM;Mercedes;GLA;172;7727;Disponible;4;Oui
+Voiture;OC-520-UL;Hyundai;i30;150;145262;Loué;9;Oui
+Moto;TV-026-SE;Royal Enfield;Classic 350;169;76647;Disponible;900;A
+Moto;WG-311-XC;KTM;Super Duke 1290;60;96532;Disponible;1000;A
+Voiture;AI-796-YK;Volvo;S60;104;132840;Disponible;7;Oui
+Moto;JT-364-SG;Suzuki;GSX-S1000;181;3485;Disponible;900;A
+Moto;EW-016-NW;BMW;S1000XR;114;10399;Loué;900;A
+Voiture;CH-992-BA;Seat;Tarraco;165;96127;Loué;5;Oui
+Voiture;GT-230-BW;BMW;X1;166;180716;Disponible;9;Oui
+Voiture;ZP-865-OK;Mercedes;CLA;171;99800;Disponible;4;Oui
+Moto;NG-635-AH;KTM;Super Adventure 1290;107;87194;En maintenance;300;A2
+Moto;XS-002-XR;Suzuki;Hayabusa;161;41047;Disponible;750;A
+Moto;WA-437-XO;Harley-Davidson;Fat Bob;66;46546;Disponible;900;A
+Voiture;ME-792-YA;Audi;Q5;107;137239;Disponible;5;Oui
+Voiture;VL-517-HA;BMW;Serie 4;91;62726;Disponible;2;Oui
+Voiture;BW-959-UR;Seat;Leon;80;30512;Disponible;7;Oui
+CampingCar;JK-143-DJ;Renault;Kangoo;127;235250;Loué;5.2;6
+Voiture;BW-340-SA;Dacia;Jogger;45;170585;Disponible;7;Oui
+Voiture;JF-459-VU;Seat;Ibiza;188;21097;Disponible;2;Oui
+Voiture;NV-551-MN;Mercedes;GLA;71;111997;Disponible;2;Oui
+Voiture;FQ-064-JJ;BMW;X1;117;109814;Disponible;2;Oui
+Moto;EF-955-ZQ;Yamaha;MT-07;153;41513;Disponible;1000;A
+Voiture;RB-744-TW;Toyota;Yaris Cross;152;109772;Loué;5;Oui
+Voiture;SZ-082-WR;Audi;A6;118;192649;Disponible;5;Oui
+Voiture;JS-783-KX;Nissan;Qashqai;118;183268;Disponible;9;Oui
+Voiture;PM-811-ST;Toyota;Yaris;124;69711;Disponible;5;Oui
+Moto;EY-471-BU;KTM;Super Adventure 1290;162;29628;Disponible;650;A2
+Voiture;TT-717-IS;Volvo;S60;156;59665;Disponible;5;Oui
+Moto;LI-427-OS;BMW;R1250RT;136;99028;Disponible;1000;A
+Moto;ZX-404-MR;Harley-Davidson;Road Glide;250;45870;En maintenance;650;A2
+Voiture;ZR-637-FO;Peugeot;5008;185;147810;Loué;5;Oui
+Voiture;WW-977-UB;Dacia;Jogger;134;16582;Disponible;2;Oui
+Voiture;CU-986-HL;Skoda;Karoq;132;140604;Disponible;9;Oui
+Voiture;KQ-993-TF;BMW;Serie 5;108;77340;Disponible;9;Oui
+Voiture;FE-714-XP;Dacia;Spring;45;74251;Disponible;5;Oui
+CampingCar;UD-497-PJ;Mercedes;Marco Polo;95;82633;Disponible;7.8;7
+Voiture;AV-662-ST;Volkswagen;Tiguan;102;35138;Disponible;9;Oui
+Voiture;EL-739-TS;Seat;Ateca;48;119674;Disponible;5;Oui
+Moto;UV-922-VF;Harley-Davidson;Road Glide;183;1329;Loué;125;A2
+Voiture;AW-327-MU;Fiat;500X;173;140325;Disponible;4;Oui
+CampingCar;ES-791-WI;Renault;Trafic SpaceNomad;323;111445;Disponible;7.1;6
+CampingCar;PY-657-OV;Volkswagen;Grand California;310;192977;Disponible;5.9;5
+Voiture;DU-133-QZ;Mercedes;GLC;122;189391;Loué;5;Oui
+CampingCar;VZ-359-YX;Iveco;Daily;259;245374;Loué;8.2;3
+CampingCar;WK-869-HS;Volkswagen;Caddy California;149;165841;Disponible;7.4;4
+Voiture;BQ-323-RX;Skoda;Kamiq;38;177203;En maintenance;5;Oui
+Moto;UJ-839-OM;Honda;CB1000R;45;81618;Disponible;800;A
+Voiture;RV-307-AH;Skoda;Kodiaq;142;145639;Loué;5;Oui
+CampingCar;PD-402-VQ;Citroën;Jumper;357;184979;Disponible;6.7;3
+Voiture;BU-859-GG;Peugeot;3008;125;197270;Disponible;5;Oui
+Moto;CL-727-QI;KTM;Adventure 890;207;1730;Disponible;1000;A
+Voiture;JB-070-TS;Volvo;V60;46;198278;Disponible;9;Oui
+CampingCar;NO-651-YO;Volkswagen;Crafter;263;126205;Loué;8.0;4
+Moto;DX-673-ZE;Ducati;Scrambler;216;44122;Loué;900;A
+Moto;BD-026-WP;Royal Enfield;Meteor 350;63;81693;Disponible;1800;A
+Voiture;XA-449-UJ;Mini;Cooper;71;174305;Disponible;4;Oui
+Voiture;PX-427-OG;Nissan;Micra;112;131364;Loué;5;Oui
+Voiture;TC-734-UE;Nissan;Qashqai;46;124911;Disponible;5;Oui
+Voiture;FQ-029-AL;Kia;Rio;43;170890;Disponible;2;Oui
+Moto;BH-002-CT;Yamaha;R6;86;98141;Disponible;600;A2
+Voiture;LP-375-SE;Tesla;Model S;103;63321;Disponible;9;Oui
+CampingCar;JN-076-AU;Mercedes;Sprinter;128;68047;Disponible;7.9;7
+Moto;EJ-462-BQ;Kawasaki;Z900RS;199;40299;En maintenance;1250;A
+CampingCar;DX-130-RS;Citroën;Berlingo;369;39615;Disponible;8.8;2
+Voiture;OQ-567-VL;Nissan;Qashqai;173;74820;Disponible;5;Oui
+Moto;EY-318-VZ;Harley-Davidson;Low Rider S;197;75012;Disponible;1300;A
+Voiture;PT-410-PS;Citroën;C5 Aircross;140;114614;Disponible;7;Oui
+Moto;MN-165-GY;Triumph;Speed Triple;104;73170;Disponible;125;A2
+Voiture;EU-801-BC;Skoda;Kamiq;135;29213;Disponible;5;Non
+Voiture;HB-861-JX;Kia;Stonic;89;161153;Disponible;5;Oui
+Moto;JV-461-SL;Yamaha;MT-07;180;28975;Loué;750;A
+Voiture;GG-372-CF;Audi;A4;63;49520;Loué;5;Non
+Voiture;EM-292-SL;Dacia;Jogger;85;168774;Disponible;7;Oui
+Voiture;HD-112-DY;Audi;A4;185;64611;Loué;5;Non
+Voiture;HS-057-HH;Dacia;Spring;193;167784;Disponible;7;Oui
+Moto;QI-689-NR;Harley-Davidson;Low Rider S;209;15452;Disponible;600;A2
+CampingCar;IS-671-JI;Mercedes;Vito;156;157655;Disponible;7.0;3
+Voiture;GW-588-CB;Citroën;C5 X;55;79625;Loué;5;Oui
+Voiture;TV-692-HT;Audi;Q3;61;73985;Disponible;5;Oui
+Moto;TG-282-DV;Honda;Gold Wing;182;73730;Disponible;1800;A
+Voiture;JW-439-UH;Ford;Kuga;93;124831;Disponible;5;Oui
+Voiture;RS-362-PH;Ford;Focus;123;9988;Loué;4;Oui
+CampingCar;RJ-119-MB;Iveco;Daily;158;205446;Disponible;6.8;5
+CampingCar;PF-786-UV;Peugeot;Rifter;194;31422;Loué;6.8;5
+Voiture;ZN-095-GW;Volvo;XC60;189;63113;Disponible;2;Oui
+CampingCar;OY-179-XX;Citroën;Jumper;393;85610;Disponible;6.3;5
+Voiture;SB-395-GT;Nissan;X-Trail;153;150721;Disponible;9;Oui
+Voiture;PY-293-WL;Dacia;Duster;184;72205;Disponible;7;Oui
+Moto;DS-043-ES;Suzuki;V-Strom 650;170;13852;Loué;800;A
+Voiture;KM-007-AC;Tesla;Model Y;136;89461;Disponible;9;Oui
+Voiture;XQ-407-MU;BMW;i4;175;76310;Disponible;5;Oui
+Moto;OP-173-EP;BMW;F750GS;179;7767;Disponible;650;A2
+Voiture;FS-320-XV;Toyota;C-HR;83;116791;Loué;2;Oui
+Voiture;GN-493-FN;Seat;Ibiza;129;128624;Disponible;5;Oui
+Voiture;FN-103-VM;Mini;Clubman;86;12621;Disponible;9;Oui
+Voiture;BG-389-IQ;Volkswagen;ID.3;165;154678;Loué;9;Oui
+Moto;YN-930-LP;KTM;Duke 125;101;52416;Loué;800;A
+Voiture;WS-363-ZP;Toyota;RAV4;112;195535;Disponible;7;Oui
+Voiture;MF-957-EY;BMW;Serie 1;32;32370;Loué;4;Oui
+Moto;RN-490-OQ;Honda;CB1000R;233;88925;Disponible;300;A2
+Voiture;LR-884-MO;Toyota;Yaris;151;176206;Disponible;9;Oui
+Voiture;FR-507-UJ;Mini;Cooper;44;147567;Loué;5;Oui
+Moto;MP-764-WR;Suzuki;V-Strom 1050;220;81344;Disponible;1250;A
+Moto;PG-256-QY;Royal Enfield;Classic 350;245;56887;Disponible;1250;A
+Moto;TI-142-LZ;Suzuki;V-Strom 1050;189;81357;Disponible;600;A2
+Voiture;HL-337-MD;Volkswagen;Tiguan;56;154308;Disponible;7;Oui
+Voiture;NV-110-EA;Mercedes;Classe A;181;169753;Loué;9;Oui
+CampingCar;AV-668-ZC;Iveco;Daily;348;147347;Disponible;7.5;3
+Moto;HN-612-TM;Royal Enfield;Continental GT 650;242;90840;Disponible;900;A
+Moto;VQ-924-KS;Royal Enfield;Continental GT 650;170;7562;Disponible;750;A
+Voiture;JA-135-MZ;Ford;Focus;139;160219;Disponible;2;Oui
+Moto;DM-907-BR;Yamaha;Tracer 9;127;60347;Disponible;500;A2
+Moto;EX-782-BQ;Suzuki;V-Strom 1050;80;58543;Disponible;650;A2
+Moto;II-749-EC;Royal Enfield;Classic 350;204;72493;Disponible;400;A2
+Voiture;FT-461-PG;Toyota;bZ4X;90;114653;Disponible;4;Oui
+Voiture;HE-546-TI;Renault;Zoe;53;156416;Disponible;9;Oui
+CampingCar;FV-389-WL;Fiat;Ducato;228;134080;Loué;6.0;7
+Voiture;RQ-441-QN;Kia;EV6;41;124465;Loué;5;Oui
+Moto;EE-011-OD;KTM;Super Adventure 1290;245;43192;Disponible;125;A2
+Moto;DO-088-TW;BMW;S1000RR;174;98513;Disponible;900;A
+Voiture;WK-531-HP;Ford;Kuga;197;196976;Loué;4;Oui
+Voiture;BB-021-YJ;Mercedes;EQB;53;120791;Loué;9;Oui
+Voiture;QC-531-AS;Mercedes;Classe C;118;36803;Disponible;5;Oui
+Moto;TD-014-MI;Ducati;Monster;134;37252;Loué;1300;A
+Voiture;HM-039-BT;Mini;Cooper S;94;115638;Disponible;5;Oui
+Voiture;MC-246-WW;Ford;Fiesta;112;4951;Loué;5;Oui
+CampingCar;CN-435-NQ;Iveco;Daily;146;208776;Disponible;7.4;4
+Voiture;NG-431-BO;Nissan;Ariya;47;149624;Loué;5;Oui
+Moto;LY-546-AO;Triumph;Tiger 1200;168;58240;Disponible;1000;A
+CampingCar;CO-793-BL;Peugeot;Boxer;187;75945;Loué;6.7;7
+Moto;LI-721-LC;Ducati;Panigale V2;95;52376;Disponible;800;A
+Voiture;EV-998-UN;Fiat;500;170;72408;Disponible;9;Oui
+CampingCar;RO-507-GS;Fiat;Scudo;388;201385;Disponible;5.5;7
+Voiture;DL-071-RM;Kia;Picanto;148;109242;Disponible;5;Oui
+Voiture;XP-998-AA;Ford;Focus;200;196751;Disponible;9;Oui
+CampingCar;UT-247-EO;Volkswagen;California;110;221231;Disponible;6.0;4
+Voiture;LA-143-PW;Fiat;500X;111;155783;Disponible;5;Oui
+Voiture;VX-389-RE;Peugeot;5008;131;154843;Disponible;5;Oui
+Voiture;JX-441-ZC;Citroën;C1;151;21929;En maintenance;4;Oui
+Voiture;HT-578-VZ;Opel;Corsa;51;62870;Disponible;7;Oui
+Moto;IJ-236-JQ;Ducati;Panigale V2;188;83247;Disponible;800;A
+CampingCar;AR-564-IE;Mercedes;Marco Polo;120;213531;Loué;8.0;7
+Moto;XX-893-EA;BMW;F900XR;125;51442;Disponible;1100;A
+CampingCar;OX-437-FT;Iveco;Daily;210;103771;Disponible;6.0;6
+Voiture;BN-231-NW;Citroën;C3;154;119563;Disponible;7;Oui
+Moto;RU-985-UY;Kawasaki;Versys 650;127;20852;Disponible;400;A2
+Moto;YW-511-ZC;Harley-Davidson;Pan America;212;67766;Disponible;300;A2
+Voiture;RQ-171-PM;Volvo;XC90;82;3769;Disponible;5;Oui
+Voiture;IB-718-HQ;Citroën;C5 X;106;184539;Loué;5;Oui
+Voiture;TZ-887-XG;Volkswagen;Tiguan;63;159758;Loué;4;Oui
+CampingCar;AY-649-IR;Citroën;Jumper;399;197422;Disponible;5.2;4
+Moto;JR-552-JR;Ducati;Panigale V2;59;42967;En maintenance;1300;A
+CampingCar;PS-689-UQ;Citroën;Jumper;334;114025;Disponible;8.1;7
+Voiture;JQ-306-NR;Kia;Sorento;139;46031;Disponible;7;Oui
+Voiture;DO-701-LI;Peugeot;208;181;139673;Disponible;9;Oui
+CampingCar;CX-783-OH;Fiat;Ducato;285;129055;Disponible;6.8;6
+Moto;KH-889-EV;Ducati;Scrambler;135;82201;En maintenance;600;A2
+Voiture;NH-025-XM;Renault;Megane;131;140950;Loué;5;Oui
+Moto;ID-385-AZ;KTM;Super Adventure 1290;78;76374;Disponible;300;A2
+Moto;EO-474-AF;KTM;Super Duke 1290;189;34650;Disponible;800;A
+Voiture;XA-451-XN;Audi;Q3;50;178927;Disponible;7;Oui
+Moto;SN-513-VC;Suzuki;SV650;152;87550;Disponible;650;A2
+Moto;BI-785-NW;Yamaha;MT-10;156;37931;Loué;125;A2
+CampingCar;PY-379-ET;Citroën;Berlingo;254;114782;Disponible;5.8;7
+Moto;OU-985-IL;Honda;CB1000R;209;56451;Loué;900;A
+Moto;EL-039-DT;Triumph;Tiger 1200;108;20331;Loué;300;A2
+Voiture;NH-344-TG;Toyota;Yaris;94;115008;Disponible;5;Oui
+Voiture;XI-800-ZX;Kia;Sorento;89;103081;Disponible;7;Oui
+Voiture;YR-624-RA;Seat;Arona;139;194658;Disponible;5;Oui
+Moto;KN-535-VX;Suzuki;SV650;160;5903;Disponible;600;A2
+Voiture;WF-035-ZH;Opel;Mokka;43;119215;Disponible;5;Oui
+Voiture;BY-950-BG;Kia;Rio;160;158239;Disponible;5;Oui
+Moto;IH-638-WQ;Yamaha;Tracer 7;207;82457;Disponible;400;A2
+Moto;TM-043-XR;Triumph;Tiger 900;83;65951;Disponible;800;A
+Moto;RY-397-BN;Ducati;Panigale V4;167;79673;Loué;400;A2
+Voiture;CR-781-WW;Skoda;Enyaq;130;96584;Disponible;7;Oui
+Voiture;PF-041-PN;Seat;Leon;141;152188;Disponible;7;Oui
+Voiture;GC-160-TW;BMW;X5;167;161246;Disponible;7;Oui
+Voiture;SL-040-NZ;BMW;Serie 3;141;10439;Loué;5;Oui
+Voiture;VD-448-WD;Peugeot;408;118;21993;Disponible;4;Non
+Voiture;JK-228-BB;Opel;Mokka;58;104969;Disponible;5;Oui
+Voiture;AO-009-AE;Mercedes;Classe C;147;164264;Disponible;5;Non
+Voiture;KQ-930-IO;Volvo;XC60;35;99111;Disponible;4;Oui
+Voiture;XV-007-FW;Tesla;Model 3;139;96451;Disponible;2;Oui
+Voiture;GE-079-XD;Dacia;Duster;171;162347;Disponible;7;Oui
+Voiture;SJ-763-HX;Dacia;Spring;44;124046;Disponible;5;Oui
+Moto;HD-011-DC;Yamaha;XMAX;175;85999;Disponible;1100;A
+Moto;KR-830-YE;Suzuki;GSX-S750;171;19657;Loué;750;A
+Voiture;IJ-141-QU;Ford;Mustang Mach-E;155;9120;Disponible;5;Oui
+Voiture;ER-130-LA;Opel;Grandland;114;41999;Loué;4;Oui
+Voiture;KU-569-RE;Peugeot;408;168;77451;Loué;5;Oui
+CampingCar;MU-825-MR;Renault;Master;372;21527;Disponible;6.8;6
+Moto;MF-652-VQ;Harley-Davidson;Street Glide;159;80299;Disponible;1100;A
+CampingCar;OP-269-SC;Volkswagen;California;200;234454;Loué;5.0;4
+Moto;NO-500-GA;KTM;Super Adventure 1290;140;57354;Loué;1300;A
+Voiture;YW-518-QI;Toyota;RAV4;187;26853;Disponible;7;Oui
+Voiture;ZG-747-WU;Dacia;Sandero;178;162565;Disponible;4;Oui
+Voiture;RP-913-NE;Mini;Cooper;129;60497;En maintenance;4;Oui
+Voiture;FF-863-EZ;Audi;A1;137;53021;Disponible;5;Non
+Voiture;QD-874-PE;Volvo;XC90;190;143978;Disponible;5;Oui
+Voiture;FS-059-LX;Hyundai;i10;158;711;Disponible;5;Oui
+Voiture;NA-970-MZ;Citroën;C1;159;63209;Disponible;4;Non
+Voiture;OV-439-VG;Fiat;Panda;170;105925;Loué;9;Oui
+Voiture;YY-368-QV;Nissan;Micra;196;40070;Disponible;2;Oui
+CampingCar;PO-088-YD;Mercedes;Sprinter;160;207580;Disponible;7.5;7
+Moto;OB-713-KZ;Suzuki;V-Strom 650;185;14170;Disponible;1000;A
+Moto;VQ-839-AX;Harley-Davidson;Road Glide;176;30265;Disponible;650;A2
+Voiture;TP-353-RD;Volvo;XC60;103;35411;Disponible;5;Oui
+Moto;WG-199-MZ;Suzuki;V-Strom 650;241;40268;Disponible;125;A2
+CampingCar;XL-458-BV;Peugeot;Traveller;113;197004;En maintenance;6.6;6
+CampingCar;DZ-301-YK;Mercedes;Vito;311;101255;Disponible;7.6;7
+CampingCar;QJ-233-KF;Ford;Ranger (Cellule);248;32524;Disponible;6.9;3
+Voiture;PW-743-QF;Skoda;Scala;168;189276;Disponible;9;Oui
+Voiture;HB-167-AB;Toyota;Highlander;97;115272;Loué;9;Oui
+Voiture;LA-035-GW;Volvo;XC40;127;175605;Disponible;2;Oui
+Voiture;TL-480-QD;Renault;Austral;196;151860;Loué;2;Oui
+Moto;XY-165-DO;Kawasaki;Versys 1000;124;55616;Loué;1300;A
+Voiture;MA-772-WJ;Seat;Arona;130;38193;Disponible;4;Oui
+CampingCar;HT-432-AZ;Citroën;Berlingo;397;146656;Disponible;8.1;7
+Moto;IQ-265-YK;Ducati;Diavel V4;152;44704;Disponible;750;A
+Voiture;SZ-247-PL;BMW;Serie 1;74;14741;Disponible;4;Oui
+Voiture;OY-193-ZG;Fiat;500X;37;61994;Disponible;5;Oui
+Moto;ME-359-EU;Royal Enfield;Meteor 350;114;83072;Disponible;500;A2
+Voiture;GT-487-EB;Mercedes;CLA;44;6138;Disponible;9;Non
+CampingCar;JT-173-GL;Renault;Trafic SpaceNomad;257;212832;Loué;6.0;6
+CampingCar;PP-975-RV;Mercedes;Marco Polo;387;215087;Disponible;5.8;2
+Moto;MW-253-XT;KTM;Super Adventure 1290;185;5157;Loué;300;A2
+Voiture;RH-810-TH;Audi;e-tron;58;49656;Disponible;5;Oui
+Voiture;WF-072-WQ;Mini;Clubman;69;147113;En maintenance;5;Oui
+Voiture;LE-643-NR;Peugeot;208;176;22034;Disponible;2;Non
+Moto;QD-843-IH;Harley-Davidson;Fat Bob;151;66016;Disponible;1300;A
+Moto;KO-226-JB;Ducati;Multistrada V4;41;84394;Disponible;500;A2
+Voiture;LL-235-PR;Mini;Cooper S;83;2667;Disponible;5;Oui
+Voiture;DK-036-XM;Peugeot;208;130;194170;Disponible;5;Non
+Moto;DW-859-GN;Kawasaki;Z900;87;93510;Disponible;750;A
+Moto;SN-259-YJ;Triumph;Bonneville T120;54;43695;Loué;125;A2
+Voiture;SS-621-TZ;Citroën;C5 X;80;158269;Disponible;2;Oui
+CampingCar;ER-058-MJ;Iveco;Daily;320;9186;Disponible;8.0;2
+Voiture;GL-419-XU;Toyota;C-HR;49;75403;Loué;9;Oui
+Voiture;UB-324-PX;Volkswagen;Golf;90;102576;En maintenance;5;Oui
+CampingCar;ND-333-SP;Citroën;Berlingo;92;226124;Disponible;5.4;5
+Voiture;WT-907-LA;Dacia;Spring;168;94456;Disponible;2;Oui
+Moto;ZX-001-NG;Harley-Davidson;Fat Bob;67;82926;En maintenance;600;A2
+Voiture;CT-363-CU;Mini;Clubman;91;173909;Disponible;9;Oui
+Voiture;WM-587-RM;Tesla;Model 3;143;195123;Disponible;9;Oui
+Voiture;KK-009-YH;Fiat;Tipo;169;180983;Disponible;4;Oui
+Moto;ZE-786-UG;BMW;CE 04;190;10436;Disponible;600;A2
+Moto;XB-756-WN;BMW;CE 04;89;54145;Disponible;1000;A
+Voiture;KV-699-CE;Volkswagen;Up!;131;7173;Disponible;4;Non
+Voiture;MO-997-PX;Seat;Ibiza;74;122134;Disponible;5;Oui
+Moto;WC-644-FA;Ducati;Multistrada V4;144;9804;Disponible;900;A
+Voiture;YP-494-FY;Volkswagen;ID.3;135;69211;Disponible;7;Oui
+Moto;VQ-302-QP;Triumph;Rocket 3;239;2019;Loué;650;A2
+Voiture;OE-545-KW;Toyota;RAV4;102;39922;Disponible;5;Non
+Voiture;FH-859-JN;Skoda;Octavia;88;58889;Disponible;5;Oui
+CampingCar;VU-500-KI;Renault;Trafic SpaceNomad;115;17496;Disponible;7.0;3
+Moto;JL-223-AA;Ducati;Diavel V4;180;11978;Disponible;650;A2
+Voiture;NT-396-WR;Peugeot;5008;183;138813;Disponible;5;Oui
+Voiture;SO-433-JS;Hyundai;i10;158;16256;Loué;5;Oui
+Voiture;TF-229-MM;Opel;Grandland;184;48006;Disponible;5;Oui
+Voiture;JX-631-PV;Peugeot;5008;57;102217;Disponible;5;Oui
+Moto;MC-938-ZN;Honda;Forza 350;135;24647;Disponible;300;A2
+Moto;SS-090-LT;Suzuki;GSX-S750;49;51513;Loué;400;A2
+Moto;JP-299-LT;Royal Enfield;Himalayan;157;15485;Disponible;125;A2
+Voiture;MS-891-TX;Dacia;Sandero;53;135076;Disponible;9;Oui
+Voiture;XH-459-CQ;Tesla;Model X;186;133290;Disponible;5;Oui
+CampingCar;ED-481-NJ;Volkswagen;Caddy California;164;57688;Disponible;5.9;2
+Voiture;VL-246-KA;Toyota;RAV4;89;130978;En maintenance;5;Non
+CampingCar;BG-613-PE;Citroën;Berlingo;170;102533;Disponible;7.1;3
+CampingCar;FS-978-UE;Mercedes;Vito;103;172583;Disponible;5.6;2
+Voiture;US-552-QV;Audi;A6;105;156340;Disponible;9;Oui
+Moto;WD-895-EF;Ducati;Panigale V2;196;20962;Disponible;125;A2
+CampingCar;GB-977-GW;Fiat;Talento;352;57482;En maintenance;7.4;6
+Voiture;VX-541-GN;Tesla;Model 3;179;179963;Disponible;7;Oui
+Voiture;CQ-631-DH;Toyota;Aygo X;166;189200;Disponible;5;Non
+Voiture;KU-606-JZ;Hyundai;i30;109;199483;Disponible;4;Oui
+Voiture;GT-433-NJ;Volkswagen;Up!;116;132366;Loué;5;Oui
+Moto;PY-085-YC;Kawasaki;Z900;77;54478;Disponible;1300;A
+Moto;ZN-052-CQ;Triumph;Tiger 900;100;6287;Disponible;600;A2
+Voiture;WT-319-CI;Volvo;XC60;168;135611;Loué;2;Oui
+Voiture;UO-281-AZ;Ford;Explorer;129;53512;Disponible;5;Oui
+CampingCar;FF-352-KI;Volkswagen;Crafter;145;156691;Disponible;5.3;7
+Moto;IR-356-DU;Suzuki;GSX-S1000;130;60961;Disponible;500;A2
+Voiture;FV-148-FE;Nissan;Micra;115;111492;Disponible;7;Oui
+Moto;PW-824-RV;KTM;Super Duke 1290;56;34402;Disponible;1300;A
+Moto;ZF-739-HX;Triumph;Rocket 3;88;13715;Disponible;125;A2
+CampingCar;SU-746-XT;Renault;Kangoo;206;25410;Disponible;6.6;7
+Voiture;PN-631-YE;Fiat;500;52;150033;Disponible;4;Oui
+Voiture;VT-491-NI;Peugeot;108;185;4214;Loué;9;Non
+Voiture;DN-562-QY;Fiat;Tipo;38;55010;Disponible;7;Oui
+CampingCar;BS-410-EF;Peugeot;Boxer;186;226393;Disponible;6.4;7
+Voiture;LI-398-XD;Fiat;Panda;49;51859;Loué;5;Oui
+Moto;UV-074-ZE;Harley-Davidson;Fat Bob;190;41143;Disponible;1300;A
+Voiture;NV-249-HH;Seat;Tarraco;147;128512;Loué;7;Oui
+Voiture;IK-846-WU;Seat;Tarraco;100;91623;Disponible;9;Oui
+CampingCar;GY-628-IO;Volkswagen;Grand California;361;201596;Loué;7.9;2
+Moto;EO-823-UR;KTM;Adventure 390;218;82067;Disponible;1000;A
+Moto;HC-158-NO;Honda;Forza 125;85;4098;Disponible;650;A2
+CampingCar;BT-109-KO;Fiat;Ducato;322;168761;Disponible;8.9;6
+Moto;NL-823-LG;Kawasaki;Z900;221;27143;Disponible;400;A2
+Voiture;ZY-394-XM;Kia;Rio;68;126621;Disponible;7;Oui
+Voiture;EG-782-JJ;Tesla;Model S;56;198554;Disponible;5;Oui
+Voiture;HF-973-ZE;Mini;Cooper;43;130138;Disponible;5;Oui
+CampingCar;DR-221-JJ;Ford;Transit Custom;110;10645;Disponible;7.5;4
+Voiture;ZI-768-ZC;Mini;Countryman;182;50443;Loué;4;Oui
+Moto;FA-697-QQ;Suzuki;Hayabusa;62;35225;Disponible;600;A2
+Moto;LS-693-CF;BMW;R1250GS;64;10669;Disponible;125;A2
+Voiture;BB-417-JB;Seat;Ibiza;60;198044;Disponible;5;Oui
+CampingCar;ZL-961-TA;Iveco;Daily;175;136700;Disponible;7.8;2
+CampingCar;ES-092-AI;Renault;Master;106;208225;Disponible;5.1;7
+Voiture;SY-679-WE;BMW;X2;98;77630;Disponible;4;Oui
+Voiture;ZZ-352-ZU;Dacia;Jogger;177;108943;Disponible;5;Oui
+Voiture;SY-593-UT;Opel;Corsa;199;195470;En maintenance;4;Oui
+Moto;OR-555-XY;Triumph;Tiger 900;200;99053;Disponible;600;A2
+Voiture;DY-413-XN;Fiat;500;128;76869;Disponible;7;Oui
+CampingCar;WT-880-WM;Iveco;Daily;336;23145;Loué;6.1;6
+Voiture;CI-310-JZ;Dacia;Spring;87;125282;Disponible;5;Oui
+Voiture;DI-352-XV;Mercedes;GLC;51;46450;Disponible;7;Oui
+Voiture;IZ-754-QE;Audi;Q7;106;146060;Disponible;5;Oui
+CampingCar;AF-029-AV;Peugeot;Traveller;264;191981;Disponible;8.4;5
+Moto;QG-735-JS;Kawasaki;Z900RS;162;68504;Disponible;1250;A
+Moto;DS-345-IU;Kawasaki;Z900RS;180;86852;Disponible;1250;A
+Moto;OF-161-CZ;Harley-Davidson;Pan America;60;21704;Disponible;1250;A
+Moto;RD-305-NJ;Kawasaki;Ninja 650;152;33132;Loué;400;A2
+Voiture;PT-103-VZ;Fiat;500X;110;95847;Disponible;5;Oui
+Voiture;AH-951-JF;Audi;Q2;59;61706;Loué;5;Oui
+Voiture;SN-321-AM;Skoda;Enyaq;196;149372;Disponible;5;Oui
+Voiture;YV-387-PG;Mercedes;Classe E;186;151843;Disponible;9;Oui
+Moto;FM-547-IR;KTM;Super Adventure 1290;203;12198;Loué;600;A2
+Moto;WP-106-HK;Kawasaki;Ninja 650;163;50729;Loué;1000;A
+Voiture;BM-747-PS;Kia;EV6;137;143336;Disponible;5;Oui
+Voiture;WS-473-EN;BMW;Serie 2;101;3079;Disponible;9;Oui
+Voiture;VL-462-NQ;Hyundai;i10;112;168237;Disponible;7;Oui
+Voiture;YE-109-WP;Mini;Clubman;151;78623;Loué;2;Oui
+Moto;VI-223-OK;Kawasaki;Z900;49;82155;Disponible;1250;A
+Moto;QH-832-XS;Royal Enfield;Continental GT 650;220;8752;Disponible;1800;A
+Moto;OK-311-ZO;Harley-Davidson;Road Glide;60;77005;Disponible;1800;A
+Moto;VN-951-TP;Ducati;Panigale V2;106;93303;En maintenance;600;A2
+Voiture;MZ-294-DY;Nissan;Ariya;158;120912;Disponible;5;Oui
+Voiture;VH-040-BV;Toyota;Yaris Cross;148;49060;Disponible;5;Oui
+Voiture;YH-898-AQ;Fiat;Panda;157;90217;Disponible;5;Non
+CampingCar;CE-089-GW;Citroën;Jumper;118;73170;Disponible;7.6;7
+Voiture;UZ-697-DB;Dacia;Duster;102;94068;Disponible;5;Oui
+Voiture;UB-028-OV;Volkswagen;ID.5;117;136603;Disponible;5;Oui
+Voiture;KP-292-ST;Toyota;Corolla;175;69233;Loué;5;Oui
+CampingCar;XK-803-EW;Citroën;Berlingo;388;107954;Disponible;5.8;2
+CampingCar;JF-444-FV;Fiat;Scudo;273;14228;En maintenance;7.6;7
+Voiture;QH-061-RY;BMW;X5;60;89915;Loué;2;Oui
+Voiture;QZ-599-VY;Skoda;Superb;147;73438;Loué;5;Oui
+CampingCar;KP-609-WX;Mercedes;Marco Polo;187;80711;Disponible;8.1;2
+CampingCar;JD-890-OS;Mercedes;Sprinter;390;171707;Disponible;5.7;6
+Voiture;MT-272-AU;Peugeot;3008;36;9555;Loué;4;Non
+Voiture;PZ-198-GC;Ford;Focus;154;159596;Disponible;5;Oui
+Voiture;LV-082-SP;Ford;Focus;45;11888;Disponible;5;Oui
+Voiture;LT-154-NB;Audi;A3;67;93690;Disponible;9;Oui
+Voiture;HF-169-ZV;Hyundai;Santa Fe;32;163031;Disponible;5;Non
+Voiture;RN-853-XN;Mini;Countryman;145;187668;Loué;7;Oui
+Voiture;IP-829-LL;Nissan;X-Trail;113;83771;Disponible;5;Oui
+Voiture;VO-505-HM;Citroën;C4 X;73;193587;Loué;5;Non
+Moto;YZ-205-UY;Yamaha;R6;179;97851;Disponible;800;A
+Voiture;WX-713-RR;Peugeot;508;105;49635;Disponible;5;Oui
+Moto;YE-931-YZ;BMW;S1000XR;111;6243;Disponible;750;A
+Voiture;YS-933-UV;Skoda;Kamiq;81;89432;En maintenance;5;Oui
+Voiture;ZR-903-UD;Kia;Stonic;77;1577;Loué;9;Non
+Voiture;NI-335-NA;Audi;A5;197;35949;Disponible;7;Oui
+Moto;GJ-127-TY;Suzuki;GSX-S750;209;99039;Loué;800;A
+Voiture;YH-871-LE;Hyundai;i20;108;63174;Disponible;5;Oui
+Voiture;LZ-383-GX;Opel;Crossland;105;153259;Disponible;7;Oui
+Moto;ZA-695-IN;KTM;Duke 890;160;6272;Disponible;400;A2
+CampingCar;XO-663-SG;Mercedes;Marco Polo;392;163571;Loué;6.7;3
+Moto;CF-625-TD;Kawasaki;Z900;234;83113;Disponible;600;A2
+Voiture;TE-763-FS;Fiat;Panda;55;199340;Disponible;5;Non
+Voiture;TG-509-XM;BMW;Serie 2;99;112910;Disponible;4;Oui
+Voiture;MR-620-IO;Volkswagen;T-Roc;141;69828;Disponible;5;Oui
+Voiture;LL-259-OU;Dacia;Sandero;56;22984;Disponible;5;Oui
+CampingCar;BE-636-QX;Iveco;Daily;331;245561;Disponible;6.2;6
+Voiture;BG-599-EV;Volkswagen;T-Roc;168;153672;Disponible;2;Oui
+Voiture;ZW-054-CQ;Peugeot;308;199;172086;Disponible;5;Oui
+Voiture;XT-150-KU;BMW;i4;196;195416;Disponible;5;Oui
+Moto;JU-104-HM;Triumph;Trident 660;120;1269;Loué;600;A2
+Moto;TJ-516-YB;Ducati;Diavel V4;241;92189;Disponible;1800;A
+Voiture;ME-917-ZI;Audi;Q7;181;14966;Disponible;5;Oui
+Voiture;EO-797-SM;Citroën;C5 Aircross;33;69650;Disponible;5;Oui
+CampingCar;FZ-771-JF;Peugeot;Boxer;337;209534;Disponible;5.2;2
+Voiture;KD-799-AD;Fiat;Tipo;155;23231;Disponible;2;Oui
+Voiture;AX-581-IH;Peugeot;5008;97;174067;Disponible;2;Oui
+CampingCar;EB-095-ZO;Fiat;Talento;197;28527;Disponible;7.3;6
+Moto;SY-881-IV;Ducati;Monster;210;79991;Disponible;1250;A
+Moto;KZ-390-PO;Triumph;Speed Triple;190;92413;Disponible;750;A
+Voiture;RR-189-ME;Kia;Niro;53;70265;Disponible;5;Oui
+Voiture;XU-340-HJ;Peugeot;308;85;66716;Disponible;5;Oui
+Voiture;YH-938-QI;Volkswagen;Up!;153;122291;Disponible;9;Oui
+Voiture;LJ-003-PS;Hyundai;Ioniq 5;53;128596;Loué;5;Oui
+Voiture;AX-260-PZ;Dacia;Duster;52;24644;Disponible;5;Oui
+Voiture;KS-960-IL;Hyundai;Santa Fe;126;130646;Disponible;9;Oui
+CampingCar;JK-614-QI;Mercedes;Sprinter;333;85781;Disponible;7.1;4
+CampingCar;HQ-683-LE;Citroën;SpaceTourer;357;133836;Disponible;7.5;3
+Moto;KQ-560-QL;Honda;CB500F;197;5516;Loué;300;A2
+Voiture;GC-026-BA;Nissan;Juke;116;188558;Disponible;2;Oui
+Voiture;QA-079-HV;Peugeot;2008;37;85126;En maintenance;4;Oui
+Voiture;HP-692-NU;Mini;Clubman;58;76079;Disponible;5;Oui
+Moto;GX-079-ME;Harley-Davidson;Sportster S;236;78485;Disponible;1300;A
+Voiture;OB-405-TU;Volvo;C40;106;16968;En maintenance;7;Oui
+Voiture;UC-559-YS;Seat;Ateca;143;72225;Disponible;5;Oui
+Voiture;ZD-070-VS;Mini;Cooper;152;54205;Disponible;7;Oui
+Moto;AJ-650-TC;KTM;Duke 125;134;66804;Disponible;1250;A
+Voiture;YX-509-FX;Volkswagen;T-Roc;137;118243;Loué;4;Oui
+Moto;DV-938-SQ;Honda;CB650R;90;56455;Disponible;500;A2
+Voiture;AF-649-XI;Renault;Austral;161;101212;Disponible;9;Oui
+Voiture;CG-235-DI;Seat;Leon;110;142066;Disponible;2;Oui
+Moto;XS-811-DN;Yamaha;XSR700;78;90324;Disponible;900;A
+Voiture;FS-113-DD;Mercedes;CLA;108;109852;Loué;2;Oui
+CampingCar;DL-927-OC;Mercedes;Vito;187;174216;Loué;5.2;6
+Voiture;AU-017-GC;Seat;Leon;158;39652;Disponible;7;Oui
+Moto;ND-772-XQ;Suzuki;GSX-S750;124;39201;Disponible;300;A2
+Voiture;JR-140-OM;Seat;Ateca;85;89618;En maintenance;5;Oui
+Moto;FI-678-GV;Royal Enfield;Interceptor 650;140;19815;Loué;1800;A
+Moto;ZS-509-JH;Triumph;Tiger 1200;135;33490;Disponible;300;A2
+Moto;PZ-403-IH;Suzuki;GSX-S1000;135;15289;Loué;800;A
+Moto;NQ-831-ZE;Suzuki;V-Strom 1050;230;49446;Disponible;1300;A
+Voiture;MC-488-HX;Skoda;Octavia;76;111442;Disponible;4;Oui
+Moto;EY-199-DM;Kawasaki;Ninja 1000SX;250;86221;Disponible;650;A2
+Voiture;EL-230-LY;Toyota;C-HR;199;168025;Disponible;9;Oui
+Moto;NO-882-GW;Yamaha;Tracer 9;177;10550;Disponible;800;A
+CampingCar;DU-302-HR;Volkswagen;Caddy California;150;40765;Disponible;8.4;6
+Voiture;AP-536-IZ;Toyota;Aygo X;64;99937;Disponible;7;Non
+Voiture;BQ-950-CI;Peugeot;3008;65;41975;Disponible;7;Oui
+Voiture;PI-062-VN;Ford;Focus;200;141563;Disponible;5;Oui
+CampingCar;DP-365-UJ;Renault;Trafic SpaceNomad;166;38573;Loué;8.4;5
+Moto;NI-956-PO;Yamaha;MT-09;190;58092;Disponible;750;A
+Voiture;HE-427-SH;Toyota;RAV4;126;143282;Disponible;5;Non
+Moto;HM-993-KH;BMW;S1000XR;169;19111;Disponible;900;A
+CampingCar;QV-110-IJ;Peugeot;Rifter;202;181790;Disponible;5.1;3
+Moto;TA-653-UI;Suzuki;V-Strom 650;70;67071;Disponible;1300;A
+Voiture;CM-808-LA;Toyota;RAV4;135;77247;Loué;5;Oui
+Moto;BJ-853-HJ;BMW;CE 04;49;69329;Loué;800;A
+CampingCar;OR-444-HN;Fiat;Scudo;363;21847;Disponible;8.9;4
+Moto;VN-565-NS;Yamaha;Tracer 9;74;93293;Disponible;400;A2
+Voiture;IG-776-HQ;Dacia;Sandero;131;148944;Disponible;4;Oui
+Voiture;DT-683-PO;Hyundai;i30;83;72635;Loué;5;Oui
+Moto;CQ-880-RE;Harley-Davidson;Fat Bob;130;7475;Disponible;750;A
+Voiture;NF-067-IO;Mercedes;CLA;159;17405;Disponible;5;Oui
+Moto;VK-479-OU;Royal Enfield;Interceptor 650;224;80737;Disponible;500;A2
+Moto;ZA-191-AB;Honda;Forza 125;123;75711;Disponible;650;A2
+Voiture;TP-744-CB;Ford;Mustang Mach-E;111;147900;Disponible;5;Oui
+CampingCar;MZ-915-NG;Ford;Transit 2T;364;173103;Loué;5.1;6
+Moto;HS-649-DI;BMW;S1000RR;99;52530;Disponible;1300;A
+Voiture;FM-187-ED;Tesla;Model X;170;162337;Disponible;4;Oui
+CampingCar;LW-356-FH;Ford;Transit 2T;146;89571;Disponible;7.5;3
+CampingCar;AB-885-XK;Fiat;Ducato;163;152814;Disponible;5.3;6
+CampingCar;ET-752-EN;Mercedes;Vito;222;218013;Loué;5.1;7
+CampingCar;PZ-742-AM;Fiat;Talento;140;224908;En maintenance;5.8;5
+Voiture;UU-994-GI;Ford;Puma;90;22757;Disponible;4;Oui
+Moto;HU-540-TM;KTM;Duke 890;202;31864;Disponible;1100;A
+CampingCar;LN-837-UC;Ford;Ranger (Cellule);186;242738;Disponible;6.5;5
+CampingCar;YV-988-MV;Volkswagen;Crafter;334;107239;Disponible;6.6;3
+Voiture;QN-201-NH;Mercedes;Classe C;67;143986;Disponible;7;Oui
+Voiture;ZY-562-CN;Kia;Sportage;137;32978;Disponible;2;Oui
+Voiture;UX-187-YR;Mercedes;Classe E;79;106155;Disponible;5;Oui
+Voiture;ZK-324-IN;Ford;Mustang Mach-E;65;4333;Disponible;7;Oui
+Moto;DN-833-ET;Honda;Forza 125;68;85981;Disponible;1250;A
+Voiture;JQ-296-VZ;Mini;Cooper;133;76765;Disponible;5;Oui
+Moto;HS-027-YG;Kawasaki;Z900;142;16831;Disponible;900;A
+Voiture;PG-856-VG;Audi;Q8;154;159691;Disponible;2;Oui
+Moto;AO-820-EP;Harley-Davidson;Low Rider S;169;94301;Disponible;1100;A
+CampingCar;AV-870-NO;Volkswagen;Caddy California;93;70341;En maintenance;7.4;2
+Voiture;TD-396-WB;Peugeot;5008;66;60775;En maintenance;5;Oui
+Voiture;YL-926-GT;Toyota;Corolla;172;6487;Disponible;5;Oui
+Moto;PI-809-XN;Kawasaki;Z900RS;140;85607;Loué;400;A2
+Voiture;ZU-868-JI;Toyota;Aygo X;167;167138;Disponible;2;Oui
+Voiture;IW-890-PO;Audi;A4;106;178895;Disponible;4;Oui
+Voiture;MM-352-WD;Kia;Niro;38;80764;Disponible;2;Oui
+Moto;DB-548-HP;BMW;F900XR;240;9557;Disponible;400;A2
+CampingCar;NW-813-ON;Peugeot;Boxer;107;129180;Disponible;7.0;2
+CampingCar;UE-929-RY;Citroën;Jumper;232;106037;Loué;8.5;5
+Moto;PL-361-OG;BMW;F750GS;249;901;Loué;300;A2
+Voiture;IN-032-NJ;Mini;Countryman;142;128558;Disponible;5;Oui
+Voiture;VL-920-RH;Renault;Espace;124;139202;En maintenance;5;Oui
+Voiture;SE-204-AD;Toyota;Highlander;90;174624;Disponible;5;Oui
+CampingCar;UT-356-KG;Citroën;Jumper;384;208357;Loué;6.4;3
+Voiture;NO-124-AY;Seat;Ibiza;82;165492;Disponible;9;Oui
+Voiture;JW-854-IO;Seat;Ibiza;37;113332;Loué;5;Oui
+Moto;WE-931-NO;Harley-Davidson;Low Rider S;149;69805;Disponible;600;A2
+CampingCar;UV-716-VW;Peugeot;Rifter;206;225099;Disponible;7.2;5
+Voiture;FJ-545-MF;Mini;Clubman;32;42489;Disponible;4;Non
+Voiture;QC-865-EG;Renault;Kangoo;79;183026;Disponible;2;Oui
+Moto;XY-068-BO;Kawasaki;Ninja 400;136;36408;Disponible;1000;A
+Voiture;HH-861-LC;Dacia;Spring;30;79594;Disponible;5;Oui
+Moto;YC-640-HD;Suzuki;GSX-S1000;243;98400;Disponible;600;A2
+Voiture;LK-940-ON;Renault;Espace;132;197873;Disponible;9;Oui
+CampingCar;YC-293-YB;Ford;Transit Custom;316;140926;Disponible;5.1;3
+CampingCar;DP-474-MT;Volkswagen;Grand California;291;56278;Disponible;8.9;3
+CampingCar;NM-728-ER;Volkswagen;California;139;194156;Disponible;5.8;4
+Voiture;VV-722-ZW;Mercedes;EQA;146;91826;Disponible;2;Oui
+Moto;IC-103-UC;KTM;Super Duke 1290;161;67247;Loué;800;A
+Voiture;GP-197-BO;Tesla;Model Y;69;91069;Disponible;5;Oui
+Voiture;XY-285-GY;Opel;Crossland;32;171051;Loué;5;Oui
+Voiture;QK-902-MT;Mini;Countryman;148;74128;Disponible;9;Non
+Voiture;MS-501-SC;Fiat;500X;62;161832;Disponible;2;Oui
+CampingCar;PR-491-CT;Mercedes;Marco Polo;260;109194;Disponible;7.4;5
+Moto;UB-790-OA;KTM;Super Duke 1290;218;29487;Disponible;1000;A
+Moto;NX-777-TX;Royal Enfield;Classic 350;232;31627;Disponible;800;A
+Moto;AZ-376-WJ;Harley-Davidson;Street Glide;41;14535;Disponible;600;A2
+Voiture;XB-708-HG;Skoda;Scala;192;75418;Disponible;9;Oui
+Voiture;LZ-665-BB;Citroën;C3;166;9189;Disponible;4;Oui
+Voiture;IU-056-AV;Kia;Sorento;192;171002;Disponible;5;Oui
+Voiture;WL-290-TA;Nissan;Ariya;181;130960;Disponible;5;Oui
+Voiture;QC-479-KH;Nissan;Micra;68;165432;Disponible;5;Oui
+Voiture;CU-535-IJ;Hyundai;Ioniq 5;178;135686;Loué;4;Oui
+Voiture;OC-109-ZZ;Citroën;C1;46;111648;Disponible;7;Oui
+Voiture;KK-158-BO;Hyundai;Bayon;181;172436;En maintenance;7;Oui
+Moto;PQ-612-RA;Suzuki;Hayabusa;80;25973;Disponible;400;A2
+Voiture;UT-094-XD;Fiat;500X;119;132631;Disponible;5;Oui
+Moto;HX-138-OO;Kawasaki;Versys 650;234;58826;Disponible;500;A2
+Voiture;WV-927-XF;Peugeot;3008;152;89632;Disponible;5;Oui
+Moto;CY-099-DV;Harley-Davidson;Low Rider S;165;4479;Disponible;900;A
+Voiture;IT-431-ON;Hyundai;i30;49;159653;Disponible;7;Oui
+Moto;VU-813-DB;KTM;Duke 390;45;51990;Disponible;900;A
+CampingCar;MH-027-GX;Peugeot;Traveller;141;205726;Disponible;6.9;3
+Voiture;SZ-515-QB;Dacia;Sandero;83;5382;En maintenance;2;Oui
+Voiture;SA-744-RB;BMW;Serie 1;190;34049;Disponible;2;Oui
+Moto;EI-293-NJ;Suzuki;V-Strom 1050;249;82548;Loué;600;A2
+Moto;ZZ-586-TZ;Harley-Davidson;Road Glide;217;84401;Disponible;750;A
+Voiture;RK-399-EM;Seat;Tarraco;113;40924;Disponible;9;Oui
+Voiture;XE-466-CE;Ford;Mustang Mach-E;74;155624;Disponible;4;Oui
+Moto;TP-747-DT;Honda;Forza 350;175;57996;Disponible;1250;A
+Moto;FA-977-PG;Suzuki;Hayabusa;66;44461;Disponible;1800;A
+Voiture;US-344-MV;Citroën;Berlingo;91;164372;Disponible;5;Oui
+Voiture;HL-540-FT;Mini;Countryman;66;30621;Disponible;2;Oui
+Voiture;NZ-273-EP;Skoda;Karoq;65;5602;Disponible;4;Oui
+Voiture;MA-045-QI;Kia;Niro;78;160786;Disponible;4;Oui
+CampingCar;CZ-119-MG;Citroën;SpaceTourer;152;176531;Disponible;6.3;3
+Moto;OV-503-GL;Royal Enfield;Classic 350;63;29259;Disponible;750;A
+Voiture;XO-997-JB;Peugeot;3008;159;48983;Disponible;5;Oui
+Voiture;HH-161-UP;Audi;A3;84;55217;Disponible;7;Oui
+Voiture;OQ-360-ND;Toyota;Corolla;185;120563;Disponible;2;Oui
+Moto;KX-920-SA;Royal Enfield;Classic 350;142;90315;Disponible;1800;A
+Moto;NC-876-XN;Suzuki;Hayabusa;154;56352;Disponible;1000;A
+Moto;SJ-937-WY;Kawasaki;Z900RS;227;91995;Loué;900;A
+Voiture;EM-799-LM;Volvo;S60;161;111631;Disponible;9;Oui
+Voiture;IN-844-EE;Volvo;XC60;51;121505;Disponible;9;Oui
+Voiture;BS-978-XB;Tesla;Model 3;77;104167;Loué;4;Oui
+Voiture;SZ-029-PC;Dacia;Jogger;169;115987;Disponible;7;Oui
+Voiture;VV-042-WG;Toyota;Corolla;37;107480;Disponible;2;Oui
+Moto;JZ-736-EH;Kawasaki;Z650;85;53830;Disponible;1800;A
+Voiture;BB-365-OD;Seat;Tarraco;176;94179;Disponible;4;Oui
+Voiture;DF-265-CA;BMW;X3;99;20510;Loué;5;Oui
+CampingCar;JY-434-IL;Ford;Transit Custom;355;22666;Loué;5.2;3
+Voiture;GJ-489-HW;Skoda;Scala;89;85866;Disponible;7;Oui
+Moto;PF-304-PG;BMW;CE 04;150;84883;Disponible;900;A
+Voiture;RS-456-IA;Nissan;Qashqai;189;97330;Disponible;5;Oui
+Voiture;DU-551-NJ;Tesla;Model S;81;150860;Disponible;4;Non
+Voiture;YV-501-AM;Opel;Crossland;185;120522;Disponible;5;Oui
+Voiture;YY-526-QH;Citroën;C4 X;48;2156;Disponible;4;Oui
+Moto;VJ-013-NX;Honda;CB650R;81;6656;Disponible;1800;A
+Moto;IV-215-CK;Ducati;Monster;66;90555;Loué;750;A
+CampingCar;GJ-970-NR;Citroën;Jumper;352;161537;Disponible;7.2;5
+Voiture;CU-907-WF;Mercedes;Classe C;180;58357;Disponible;9;Oui
+CampingCar;UG-585-WU;Renault;Kangoo;322;195097;Disponible;7.4;4
+Voiture;WI-112-XV;Toyota;C-HR;98;160218;Disponible;5;Oui
+Voiture;TO-706-HH;Mini;Countryman;70;2198;Disponible;4;Oui
+Moto;NF-026-DU;Honda;CB650R;59;1927;Disponible;1250;A
+Voiture;AV-924-ZD;Nissan;X-Trail;98;89780;Disponible;5;Oui
+Voiture;QB-984-II;Hyundai;i10;44;49458;Disponible;4;Oui
+Voiture;UD-158-PO;Audi;Q2;183;834;Disponible;2;Oui
+Voiture;KF-427-NE;Kia;EV6;160;98756;Disponible;5;Oui
+CampingCar;OY-219-PO;Renault;Master;331;126187;Disponible;7.8;7
+Voiture;RO-335-SK;Seat;Ateca;114;129078;Disponible;9;Oui
+Voiture;HE-579-CF;Volkswagen;Passat;128;45478;Loué;4;Oui
+Voiture;SC-925-EX;Citroën;C5 Aircross;90;88496;Disponible;2;Oui
+CampingCar;XU-880-ZW;Renault;Master;94;54040;Disponible;8.1;7
+Moto;ZR-874-CN;Suzuki;V-Strom 650;75;80821;Disponible;750;A
+Voiture;ES-518-SA;Hyundai;Ioniq 5;197;108431;Disponible;2;Oui
+Voiture;IK-686-BK;Peugeot;2008;124;199207;Disponible;7;Oui
+Voiture;AR-900-SN;Skoda;Octavia;70;174331;Loué;7;Oui
+Moto;CO-434-IW;Suzuki;V-Strom 1050;180;25177;Disponible;125;A2
+Moto;WX-013-CE;Suzuki;GSX-S1000;193;75951;Disponible;750;A
+Voiture;VL-907-YL;Opel;Mokka;56;60024;Disponible;5;Oui
+Voiture;VU-215-AX;Fiat;500X;107;60047;Disponible;5;Oui
+CampingCar;LB-407-NT;Iveco;Daily;216;50233;Disponible;5.7;4
+Voiture;LJ-529-GJ;Seat;Arona;191;193445;Disponible;5;Oui
+Voiture;OP-174-KG;Nissan;Micra;30;85463;Loué;4;Oui
+Voiture;WA-586-BU;Mercedes;Classe A;69;122710;Disponible;5;Non
+Voiture;JF-928-WZ;Skoda;Fabia;176;152519;Disponible;5;Oui
+Voiture;DH-548-UT;Fiat;Panda;162;16641;Loué;4;Oui
+CampingCar;RD-210-GN;Volkswagen;Grand California;284;58117;En maintenance;6.8;3
+Voiture;FR-365-ST;Opel;Mokka;93;117723;Loué;5;Oui
+CampingCar;ZW-720-WT;Renault;Master;272;84775;Disponible;5.5;5
+CampingCar;WD-108-JE;Iveco;Daily;113;167443;Disponible;5.7;7
+Voiture;MQ-542-DL;Renault;Clio;174;113102;Disponible;5;Oui
+Voiture;YT-370-XR;Kia;Picanto;88;25415;Disponible;5;Oui
+Moto;JL-459-SK;Yamaha;XSR900;162;66868;Disponible;500;A2
+Voiture;VH-451-QZ;Volvo;XC90;163;10705;Disponible;2;Oui
+CampingCar;XR-332-BX;Peugeot;Rifter;120;145177;Disponible;6.7;3
+Moto;EJ-236-CO;Royal Enfield;Himalayan;104;92830;Disponible;600;A2
+Voiture;UK-322-KA;Peugeot;408;119;155332;Disponible;7;Oui
+CampingCar;FZ-118-IX;Ford;Transit Custom;332;34811;Disponible;8.5;6
+Voiture;RF-090-CS;Dacia;Sandero;93;76562;Disponible;5;Oui
+Moto;FP-053-UZ;BMW;R18;115;73763;Loué;1250;A
+Moto;XK-169-ZZ;Harley-Davidson;Low Rider S;136;34459;Disponible;750;A
+CampingCar;SZ-882-RD;Renault;Trafic SpaceNomad;154;7352;Disponible;6.5;2
+Voiture;MQ-126-SP;Fiat;500;38;191470;Disponible;5;Oui
+CampingCar;CB-949-FD;Volkswagen;Grand California;353;240979;Loué;5.1;6
+Voiture;YW-649-KO;Dacia;Duster;197;13893;Disponible;5;Oui
+Moto;NP-249-IN;Yamaha;TMAX;195;47826;Disponible;125;A2
+Moto;BZ-061-LJ;Triumph;Rocket 3;55;26245;Disponible;900;A
+Moto;YF-579-QB;KTM;Adventure 890;65;90950;Disponible;1000;A
+Voiture;RC-448-HR;Peugeot;5008;158;5566;Disponible;9;Oui
+Voiture;GO-937-VN;Ford;Fiesta;152;35208;Disponible;7;Oui
+Moto;JE-435-LE;KTM;Adventure 390;61;68230;Disponible;650;A2
+Moto;PS-648-EX;Royal Enfield;Interceptor 650;141;79905;Disponible;400;A2
+Moto;TP-886-QG;Yamaha;Tracer 9;167;51800;Disponible;1800;A
+Voiture;VU-693-PQ;Skoda;Karoq;106;120630;Disponible;5;Oui
+Voiture;SZ-524-MT;Peugeot;2008;82;118623;Disponible;7;Non
+Voiture;FG-253-CW;Audi;A4;86;195477;Loué;5;Oui
+Voiture;EK-061-ZQ;Renault;Arkana;72;160462;Disponible;5;Oui
+Voiture;AJ-377-AT;Dacia;Sandero;84;48674;Disponible;7;Oui
+Voiture;MM-807-JC;Ford;Explorer;165;147041;En maintenance;4;Oui
+Voiture;NX-678-FU;Mini;Cooper S;31;35382;Disponible;4;Oui
+Moto;AI-909-QW;Ducati;Streetfighter V4;239;40492;Disponible;800;A
+Voiture;GF-776-RH;Dacia;Jogger;116;121153;Disponible;5;Oui
+Voiture;KK-917-QB;Volvo;V60;129;144409;Disponible;5;Oui
+Moto;NZ-967-DK;Royal Enfield;Continental GT 650;64;58595;Disponible;300;A2
+Voiture;DH-889-QQ;BMW;Serie 5;175;60219;Loué;2;Oui
+Voiture;KT-969-DR;Fiat;500;61;105116;Disponible;7;Oui
+Moto;HP-212-VV;Honda;Forza 350;72;93104;Loué;800;A
+Moto;YY-019-FR;KTM;Duke 390;229;40907;Disponible;125;A2
+Voiture;HA-130-AI;Toyota;Corolla;162;35727;Disponible;7;Oui
+Voiture;DX-171-LH;Peugeot;2008;194;28077;Disponible;2;Oui
+Moto;EE-561-XP;Yamaha;XMAX;85;15962;Disponible;650;A2
+Moto;MH-263-GX;Yamaha;MT-09;119;35860;Disponible;1250;A
+Moto;IQ-631-CW;Royal Enfield;Classic 350;58;70500;Loué;1800;A
+Voiture;FL-267-LS;Fiat;500X;65;47492;Disponible;7;Oui
+CampingCar;IZ-889-WF;Ford;Transit Custom;258;161476;Disponible;7.4;7
+Moto;EL-592-KK;Harley-Davidson;Fat Bob;125;43486;Disponible;650;A2
+Voiture;MT-504-NJ;Mini;Clubman;181;79727;Loué;5;Oui
+Voiture;WL-437-AJ;Seat;Arona;95;48317;Disponible;7;Oui
+CampingCar;KO-611-XE;Citroën;SpaceTourer;179;216029;Disponible;7.7;4
+Voiture;MR-092-IA;Nissan;Leaf;159;129045;Disponible;5;Oui
+Voiture;PY-069-KJ;Mercedes;Classe C;34;8731;Disponible;5;Oui
+CampingCar;PY-757-SQ;Mercedes;Sprinter;369;190560;En maintenance;8.1;7
+Voiture;XM-144-SL;Kia;Niro;115;152320;Disponible;5;Oui
+Moto;NH-358-YE;Suzuki;Hayabusa;134;54207;Disponible;500;A2
+Voiture;QD-872-CL;BMW;Serie 5;130;156106;Disponible;5;Oui
+Voiture;WZ-160-NJ;Volkswagen;Up!;125;138786;Disponible;7;Oui
+Moto;AK-590-KL;BMW;F850GS;112;71322;Disponible;1250;A
+Voiture;EM-335-DI;Ford;Focus;31;188643;Disponible;7;Oui
+Voiture;OB-821-DL;Toyota;Prius;181;116798;Disponible;5;Oui
+CampingCar;UB-297-FU;Mercedes;Sprinter;300;233543;Disponible;5.8;2
+Moto;JE-936-UL;Honda;NT1100;160;25085;Disponible;125;A2
+CampingCar;BW-775-OZ;Citroën;SpaceTourer;148;86425;Disponible;7.1;2
+Voiture;GJ-822-HT;BMW;X5;39;199064;Disponible;7;Non
+Moto;BC-876-KP;Royal Enfield;Classic 350;194;6838;Disponible;1000;A
+Voiture;BX-065-UN;Tesla;Model X;177;169450;Disponible;5;Oui
+Moto;CF-945-HA;Yamaha;R7;191;67801;Disponible;500;A2
+Moto;KE-211-AQ;KTM;Adventure 890;131;87359;Disponible;750;A
+Voiture;PY-523-QB;Peugeot;2008;83;165564;Disponible;9;Oui
+CampingCar;FH-646-QB;Iveco;Daily;340;213904;Disponible;6.3;4
+Moto;KS-978-BH;BMW;F900R;131;63540;Disponible;750;A
+CampingCar;EJ-268-NE;Renault;Master;372;116569;Disponible;8.4;6
+Moto;KE-119-AX;Yamaha;MT-07;193;98369;Disponible;1250;A
+Voiture;NU-780-PW;Volvo;XC40;139;3986;Disponible;4;Non
+Moto;JR-274-FS;Harley-Davidson;Fat Bob;206;87157;Disponible;500;A2
+Voiture;ZN-866-WZ;Volvo;V60;105;54379;Loué;9;Oui
+Voiture;TD-021-CU;Seat;Tarraco;156;3780;Loué;5;Oui
+Voiture;RV-582-FG;Fiat;500X;156;154947;Disponible;5;Non
+Voiture;ZA-801-RC;Skoda;Karoq;79;159573;Disponible;5;Non
+Voiture;YG-170-TO;Renault;Arkana;87;7509;Disponible;7;Oui
+Voiture;BA-232-CP;Nissan;Ariya;48;139016;Disponible;5;Oui
+Voiture;NN-064-GA;Mini;Cooper S;137;127261;Disponible;5;Oui
+Voiture;NS-676-EU;Mercedes;CLA;86;81738;Disponible;5;Oui
+Voiture;QI-913-SI;Opel;Astra;125;117006;Disponible;5;Non
+Voiture;BY-897-CL;Opel;Mokka;112;183817;Disponible;5;Non
+Voiture;DZ-108-IK;BMW;X2;191;15192;Loué;9;Non
+Voiture;FT-838-NG;Peugeot;508;194;154457;Disponible;9;Oui
+Moto;JP-523-BM;Harley-Davidson;Sportster S;157;52474;Disponible;1300;A
+Voiture;HK-058-PE;Nissan;Ariya;135;154556;Loué;5;Oui
+Voiture;XF-129-ZY;Nissan;Ariya;161;126691;Disponible;2;Non
+CampingCar;RD-861-QB;Citroën;SpaceTourer;115;224070;Disponible;5.6;7
+CampingCar;PS-908-NA;Mercedes;Vito;359;122336;Disponible;5.8;5
+Moto;SP-064-IH;Royal Enfield;Meteor 350;233;28419;Disponible;1000;A
+Moto;ZR-544-LS;KTM;Adventure 390;199;78776;Loué;1800;A
+Voiture;UE-322-UC;Opel;Crossland;50;91142;Disponible;9;Oui
+Voiture;ZS-188-NQ;Citroën;C5 Aircross;102;129424;Disponible;9;Oui
+CampingCar;VE-697-ZL;Mercedes;Marco Polo;242;153947;Disponible;8.4;6
+Moto;RF-223-SP;Yamaha;XSR900;56;7665;Loué;800;A
+Voiture;WQ-027-GM;Opel;Astra;135;153849;Disponible;7;Non
+Voiture;XI-590-DI;Seat;Arona;194;184020;Disponible;2;Oui
+Voiture;PC-729-VX;Volvo;XC40;127;110897;Disponible;5;Oui
+CampingCar;SZ-101-WC;Renault;Master;202;198015;Loué;7.3;2
+Moto;UK-715-UY;Honda;Forza 350;216;30314;Disponible;900;A
+Voiture;WK-630-UI;Fiat;500X;77;49210;Disponible;5;Oui
+Voiture;WY-951-ZU;Hyundai;i30;123;29212;Disponible;5;Oui
+Voiture;UM-769-QL;Audi;A6;32;87665;Disponible;5;Oui
+Voiture;FA-286-GZ;Kia;EV6;102;173632;Disponible;4;Oui
+Voiture;XB-837-HV;Opel;Crossland;116;121927;Disponible;9;Oui
+Moto;IM-133-AJ;Royal Enfield;Meteor 350;217;39825;Disponible;1100;A
+Voiture;AR-595-EI;Skoda;Enyaq;110;152696;En maintenance;4;Oui
+Moto;UW-490-EW;Yamaha;XSR900;44;27739;Disponible;900;A
+Voiture;SM-230-AR;Skoda;Kodiaq;51;104076;Disponible;2;Oui
+CampingCar;CK-989-LS;Iveco;Daily;163;156877;Disponible;6.6;2
+Moto;TQ-636-ZC;Kawasaki;Z650;44;45176;Loué;400;A2
+Moto;EX-473-RK;Ducati;Diavel V4;63;83347;En maintenance;1000;A
+CampingCar;EW-250-PT;Iveco;Daily;357;169645;Disponible;8.1;7
+CampingCar;KX-367-PX;Fiat;Scudo;208;123719;Disponible;5.3;4
+Voiture;KW-771-QY;BMW;Serie 2;157;191732;Disponible;2;Oui
+Voiture;GO-405-JK;Tesla;Model X;175;123677;Loué;9;Oui
+Moto;OG-137-TR;Kawasaki;Z900RS;86;81338;Disponible;1800;A
+Moto;TW-725-BS;Suzuki;GSX-S750;229;69828;Disponible;750;A
+Voiture;UB-643-YJ;BMW;X1;64;9458;Disponible;2;Oui
+Moto;AY-796-VZ;Harley-Davidson;Low Rider S;50;70631;Disponible;500;A2
+CampingCar;ZP-745-NK;Mercedes;Marco Polo;275;211888;Loué;5.9;7
+CampingCar;PW-856-MO;Renault;Kangoo;200;169022;Disponible;5.6;3
+Moto;OS-675-YI;BMW;F850GS;160;17832;Disponible;1300;A
+Voiture;BG-797-XE;Renault;Twingo;137;81996;Disponible;2;Oui
+Voiture;GR-602-TA;Volvo;XC90;84;25370;En maintenance;9;Oui
+Moto;YZ-140-JL;Kawasaki;Z650;70;99759;Disponible;600;A2
+Voiture;DG-715-GK;Peugeot;3008;99;196343;Disponible;5;Oui
+Voiture;ET-947-FI;Volvo;C40;76;2934;Disponible;5;Oui
+Moto;PZ-073-XA;KTM;Adventure 890;168;65186;Disponible;400;A2
+Voiture;KJ-637-CI;BMW;X5;33;41395;Disponible;9;Oui
+CampingCar;AX-139-KK;Mercedes;Sprinter;311;143248;Disponible;5.9;7
+Voiture;DW-430-PC;Citroën;Berlingo;118;107974;Disponible;9;Oui
+CampingCar;AP-763-FB;Volkswagen;California;347;200913;Disponible;8.7;5
+Moto;YP-559-VX;KTM;Duke 390;168;13137;En maintenance;1100;A
+Voiture;TV-782-IP;Kia;Picanto;148;9493;Disponible;2;Oui
+Voiture;XC-771-JV;Audi;Q2;190;116758;Disponible;9;Oui
+Voiture;RV-761-CD;Peugeot;Rifter;63;160909;Disponible;5;Oui
+Moto;ZU-695-IS;Royal Enfield;Continental GT 650;207;30491;Loué;800;A
+Moto;NK-600-IX;Ducati;Streetfighter V4;231;17223;Loué;1000;A
+Voiture;OD-794-HA;Citroën;C5 Aircross;188;70976;Loué;9;Oui
+CampingCar;JL-830-PD;Mercedes;Sprinter;328;173753;En maintenance;6.6;2
+Moto;MT-754-PY;Kawasaki;Ninja 650;230;92718;Disponible;500;A2
+Moto;RH-430-WP;Royal Enfield;Himalayan;53;3350;Disponible;1300;A
+Voiture;TO-861-KO;Nissan;Juke;197;58629;Loué;5;Oui
+CampingCar;EK-784-UU;Mercedes;Marco Polo;302;86747;Loué;8.1;5
+Voiture;IS-968-LT;Hyundai;Santa Fe;171;121181;Disponible;7;Oui
+Moto;VL-137-UK;Harley-Davidson;Sportster S;155;59531;Disponible;650;A2
+CampingCar;XX-839-YV;Citroën;SpaceTourer;211;83837;Disponible;5.4;7
+CampingCar;NS-319-SL;Citroën;SpaceTourer;134;12342;Disponible;5.7;5
+Voiture;CV-894-FD;Audi;e-tron;175;181167;Disponible;2;Oui
+Voiture;IB-541-UG;Citroën;C4;175;584;Disponible;5;Oui
+CampingCar;PP-890-QR;Citroën;Jumper;98;97676;Loué;7.1;6
+Voiture;BW-319-ID;Hyundai;i30;69;37997;Disponible;7;Oui
+Voiture;NH-965-KQ;Renault;Kangoo;125;125098;Loué;4;Oui
+Voiture;NL-707-SJ;Toyota;Highlander;195;97625;Disponible;2;Oui
+Moto;SQ-320-TP;Yamaha;XSR700;147;72402;Disponible;900;A
+Moto;BC-046-AF;Ducati;Scrambler;50;33710;Disponible;125;A2
+Moto;HE-439-HX;Honda;CB1000R;197;22942;Disponible;1300;A
+Voiture;ST-494-XU;Toyota;Prius;160;140848;Loué;9;Oui
+Moto;PY-781-SD;KTM;Duke 390;81;44375;Disponible;1800;A
+Voiture;PK-823-PR;Audi;A3;57;166341;Disponible;7;Oui
+CampingCar;JA-619-IO;Fiat;Ducato;252;110207;Loué;8.7;7
+Voiture;LQ-129-JC;Mercedes;EQA;75;141017;Disponible;4;Non
+Voiture;NX-638-AC;Skoda;Kodiaq;151;137223;Disponible;9;Oui
+Voiture;SM-036-ZM;BMW;Serie 3;42;5408;Disponible;2;Oui
+Voiture;VH-623-SP;Mini;Cooper S;117;658;Disponible;4;Oui
+CampingCar;HN-857-KJ;Renault;Master;215;235659;Disponible;8.1;6
+Moto;QS-072-KL;Honda;Gold Wing;199;30844;Disponible;800;A
+CampingCar;QI-994-LR;Fiat;Scudo;185;135115;Loué;8.8;7
+Voiture;EZ-103-IH;Skoda;Enyaq;67;115786;Disponible;9;Oui
+Moto;MA-494-DS;Ducati;Monster;207;50208;Disponible;1800;A
+Voiture;SE-602-DS;Skoda;Kodiaq;95;20767;Disponible;7;Oui
+Moto;IP-930-DO;Kawasaki;Versys 650;45;3944;En maintenance;1000;A
+Moto;VN-961-XI;Ducati;Scrambler;91;72508;Disponible;500;A2
+Voiture;JS-919-TN;Mercedes;EQB;162;144539;Disponible;4;Oui
+Voiture;LJ-592-PN;Ford;Mustang Mach-E;72;52963;Disponible;5;Oui
+Voiture;UQ-034-SM;Renault;Captur;153;112111;Loué;2;Oui
+Voiture;VT-752-PT;Mercedes;GLA;119;120625;Loué;7;Oui
+Voiture;LE-295-QN;Fiat;500X;142;16304;Disponible;5;Oui
+Voiture;HD-183-FN;BMW;X2;50;145581;Disponible;2;Oui
+CampingCar;ZX-056-FN;Renault;Trafic SpaceNomad;203;85834;Disponible;8.1;5
+Voiture;BN-306-WQ;Tesla;Model S;153;43959;Disponible;5;Oui
+Voiture;AU-562-LI;Seat;Tarraco;163;157426;Disponible;4;Oui
+Voiture;OE-370-AL;BMW;Serie 2;156;189739;Disponible;5;Oui
+Voiture;SX-235-FX;Mini;Cooper S;102;169917;Disponible;9;Oui
+Voiture;JP-821-RC;Fiat;500X;63;158927;Disponible;5;Oui
+Moto;QC-654-GP;BMW;R1250RT;221;15507;Disponible;900;A
+Voiture;ZQ-397-TP;Audi;A5;93;28384;Loué;4;Oui
+CampingCar;FT-746-GL;Ford;Ranger (Cellule);282;164736;Disponible;8.1;7
+Voiture;LM-480-LS;Toyota;RAV4;121;58407;En maintenance;4;Oui
+Voiture;TW-838-SA;Ford;Puma;121;188046;Disponible;5;Oui
+Voiture;QJ-314-PX;Opel;Mokka;99;181323;Disponible;5;Oui
+Voiture;EL-521-FM;Toyota;Aygo X;74;33132;Disponible;9;Oui
+Moto;AD-704-LD;KTM;Super Duke 1290;170;17728;Loué;900;A
+Moto;CH-569-DD;Harley-Davidson;Street Glide;192;82917;Loué;600;A2
+Moto;WU-350-MI;Honda;Forza 125;95;71727;En maintenance;400;A2
+Voiture;OC-869-NS;Mini;Cooper S;123;182416;Disponible;5;Non
+Voiture;VV-930-PF;BMW;Serie 3;37;4228;Disponible;9;Non
+Voiture;FP-534-DE;Seat;Ibiza;86;168409;Disponible;9;Oui
+Voiture;BC-474-EB;Kia;Sportage;150;185792;Disponible;5;Oui
+Moto;EC-013-SW;Ducati;Monster;92;16896;Disponible;1250;A
+Voiture;MD-100-VJ;Skoda;Scala;78;60735;En maintenance;2;Oui
+Voiture;WO-360-PB;Mercedes;Classe A;45;5820;Loué;7;Oui
+Voiture;XZ-811-AL;Toyota;Aygo X;184;146692;Disponible;4;Oui
+Moto;NQ-570-OH;Royal Enfield;Meteor 350;181;87317;Disponible;300;A2
+Moto;VM-400-RP;Ducati;Diavel V4;227;37441;Disponible;1250;A
+Moto;MM-999-OT;Ducati;Panigale V2;80;33825;Disponible;125;A2
+Voiture;ML-967-ME;Renault;Clio;71;4715;Loué;9;Non
+Voiture;QG-708-PE;Volkswagen;T-Roc;81;168601;Disponible;5;Oui
+CampingCar;PJ-735-SD;Peugeot;Boxer;271;36599;En maintenance;5.8;2
+Voiture;PJ-814-UA;Volvo;C40;139;114743;Loué;5;Oui
+Moto;DG-230-MV;Ducati;Monster;214;33851;Disponible;400;A2
+Moto;VV-591-FP;Harley-Davidson;Sportster S;55;84743;Disponible;500;A2
+Moto;HF-901-UU;KTM;Duke 390;240;63019;Disponible;800;A
+Voiture;PH-112-CB;Opel;Mokka;69;109638;Disponible;7;Oui
+Voiture;GC-514-UF;Opel;Crossland;161;41423;Disponible;2;Oui
+Voiture;XL-871-WB;Hyundai;Tucson;195;68241;Disponible;7;Oui
+CampingCar;XS-150-NT;Fiat;Ducato;361;71861;Disponible;8.1;6
+Moto;NM-815-ZK;Yamaha;XSR900;151;77558;Disponible;650;A2
+Voiture;WH-611-XI;Ford;Kuga;169;130806;Disponible;5;Oui
+CampingCar;UL-501-EC;Mercedes;Vito;393;159606;Disponible;8.2;6
+Voiture;LN-871-QD;Seat;Arona;181;84232;Loué;9;Oui
+Voiture;DV-035-HA;Tesla;Model S;135;67957;Disponible;5;Oui
+CampingCar;JG-583-SY;Ford;Ranger (Cellule);307;65756;Disponible;5.3;4
+Moto;KY-580-CP;Suzuki;SV650;42;58272;Disponible;1300;A
+Voiture;DJ-268-NN;Citroën;C4 X;166;125282;Disponible;5;Oui
+Moto;KQ-829-SM;Kawasaki;Versys 650;108;49783;Loué;900;A
+Voiture;HH-631-UG;Volkswagen;ID.4;75;154499;Disponible;5;Oui
+Moto;BO-002-DW;Royal Enfield;Interceptor 650;156;48119;Disponible;1300;A
+Voiture;OV-670-KX;Hyundai;Bayon;106;113993;Disponible;5;Oui
+Voiture;IZ-115-RE;Nissan;Juke;114;1438;Disponible;5;Oui
+Voiture;TK-150-VC;Renault;Austral;36;101934;Loué;5;Oui
+Voiture;AN-057-PH;Mini;Clubman;105;5423;Disponible;9;Oui
+Voiture;AI-988-OS;Kia;Rio;162;178614;Disponible;7;Oui
+Voiture;WK-330-NE;Hyundai;Ioniq 5;59;27951;En maintenance;9;Oui
+Voiture;WU-929-CJ;Audi;Q7;198;15280;Loué;5;Oui
+Voiture;QS-399-EC;Mercedes;Classe E;135;28058;Disponible;7;Oui
+Voiture;TO-313-YW;Renault;Megane;92;15738;Loué;5;Oui
+Voiture;AO-966-XP;Peugeot;508;69;84910;Disponible;5;Oui
+CampingCar;EX-913-VC;Fiat;Talento;164;180517;Disponible;7.5;2
+Voiture;SU-700-MY;BMW;Serie 3;81;108402;Disponible;9;Oui
+Voiture;ZL-960-YN;Mini;Cooper;51;108597;Disponible;5;Oui
+CampingCar;PJ-810-ZK;Renault;Master;164;197036;Disponible;6.9;2
+Voiture;EC-355-QQ;Renault;Captur;86;25232;Disponible;9;Oui
+Moto;VQ-143-QY;BMW;F900XR;222;19384;Disponible;125;A2
+Voiture;IR-795-OG;Volvo;C40;149;147724;Disponible;9;Oui
+Voiture;LQ-577-TZ;Citroën;C5 Aircross;122;102785;Disponible;7;Oui
+Moto;SQ-570-XZ;Yamaha;Tracer 7;48;40341;Disponible;900;A
+Moto;PI-776-BW;Ducati;Multistrada V4;49;13293;En maintenance;1000;A
+Moto;FO-452-GQ;Suzuki;GSX-S750;135;37124;Loué;300;A2
+Voiture;HS-080-QT;Nissan;Juke;63;49832;Disponible;5;Oui
+Voiture;BW-444-NY;Skoda;Kodiaq;168;7621;En maintenance;5;Oui
+Voiture;IK-319-TN;Volkswagen;ID.5;198;88065;Disponible;2;Oui
+Voiture;PI-552-ZY;Opel;Astra;54;19388;Loué;7;Oui
+Moto;CC-576-ZX;Ducati;Diavel V4;169;86171;Disponible;1800;A
+Voiture;EL-309-QQ;Dacia;Duster;144;185097;Disponible;9;Oui
+Moto;LB-592-KV;Kawasaki;Versys 650;123;19129;Loué;900;A
+Moto;VM-051-VM;Yamaha;R6;208;45532;Loué;400;A2
+Voiture;OE-406-WY;Opel;Crossland;119;18859;Loué;2;Oui
+CampingCar;HG-561-LZ;Peugeot;Rifter;106;72850;Disponible;6.1;7
+Moto;QJ-142-BL;Kawasaki;Ninja 1000SX;217;62567;Loué;800;A
+CampingCar;EJ-180-QY;Volkswagen;Grand California;375;65225;Loué;8.5;4
+CampingCar;QT-391-YP;Mercedes;Sprinter;197;113176;Loué;8.0;6
+Voiture;WK-239-FJ;Nissan;Ariya;97;196963;Disponible;5;Oui
+Voiture;CU-581-GF;Toyota;Corolla;128;77404;Disponible;5;Oui
+Voiture;WA-463-BX;BMW;Serie 5;178;83215;Loué;9;Oui
+Voiture;DB-668-RO;Renault;Espace;167;99022;Disponible;5;Oui
+Voiture;IY-419-IC;BMW;X2;146;150801;Disponible;5;Oui
+CampingCar;MN-448-FK;Iveco;Daily;118;73746;En maintenance;6.2;3
+CampingCar;MX-821-GN;Ford;Transit 2T;332;230350;Loué;7.2;7
+Voiture;EU-933-LN;Renault;Arkana;79;49848;Disponible;2;Oui
+CampingCar;DQ-315-JO;Iveco;Daily;248;245394;Disponible;5.6;4
+Voiture;PW-894-OX;Toyota;bZ4X;78;143873;Disponible;7;Oui
+Voiture;RF-449-YX;Hyundai;i30;46;139694;En maintenance;5;Oui
+Voiture;XH-314-PW;Volkswagen;ID.3;137;56141;Disponible;7;Oui
+Voiture;TE-303-XY;Peugeot;3008;136;139963;Disponible;9;Oui
+CampingCar;SP-556-KV;Iveco;Daily;95;245846;Disponible;7.1;6
+Voiture;NK-485-YM;Seat;Tarraco;172;59894;Disponible;5;Oui
+Moto;HG-159-ZB;Suzuki;V-Strom 1050;73;79665;Disponible;800;A
+CampingCar;RD-038-NJ;Volkswagen;Crafter;237;11474;Disponible;8.8;5
+Moto;MO-501-ZU;Honda;CMX500 Rebel;212;81681;Disponible;750;A
+Voiture;GD-748-IH;Volvo;V60;93;193252;Disponible;4;Oui
+Voiture;DD-999-YD;Renault;Zoe;138;87550;Disponible;5;Oui
+Moto;ZI-471-DE;BMW;F850GS;98;28207;Disponible;1100;A
+Moto;XF-775-MD;Suzuki;Hayabusa;162;77375;Disponible;800;A
+CampingCar;WZ-461-KP;Fiat;Talento;356;35161;Disponible;7.6;3
+Voiture;KJ-853-GG;Kia;Picanto;82;107565;Disponible;7;Oui
+CampingCar;FZ-411-YN;Mercedes;Marco Polo;200;61846;Loué;8.4;7
+CampingCar;AK-569-HW;Mercedes;Marco Polo;266;203999;Disponible;6.9;3
+Moto;PY-712-BW;Yamaha;R6;97;32775;Disponible;750;A
+Voiture;WX-732-DA;Volkswagen;ID.3;112;106960;Disponible;9;Oui
+Voiture;UZ-148-TH;Opel;Astra;92;162169;Disponible;5;Oui
+Moto;ZA-630-AC;Yamaha;XSR900;144;97585;Disponible;300;A2
+Voiture;QV-867-UN;Opel;Astra;165;88032;Loué;5;Oui
+Voiture;FJ-220-VI;Hyundai;Santa Fe;35;167910;En maintenance;5;Oui
+CampingCar;YS-619-CC;Ford;Transit Custom;135;227835;Loué;6.1;6
+CampingCar;LF-195-RT;Ford;Ranger (Cellule);144;96633;Disponible;5.6;2
+Moto;VC-490-HL;Suzuki;GSX-S750;52;119;Disponible;1800;A
+CampingCar;PS-796-WB;Renault;Master;125;140621;Disponible;8.9;6
+Voiture;ZO-365-CH;Ford;Explorer;48;123189;Disponible;5;Oui
+Voiture;VK-223-IY;Citroën;C3;147;183662;Disponible;2;Oui
+CampingCar;LS-334-FI;Peugeot;Boxer;119;151839;Disponible;8.0;2
+CampingCar;YY-152-XE;Fiat;Scudo;203;71629;Disponible;7.4;4
+Voiture;ZR-592-RC;Renault;Austral;50;70063;Disponible;5;Oui
+Voiture;VJ-957-HL;Opel;Mokka;145;71923;Disponible;5;Oui
+Moto;MF-208-NQ;Harley-Davidson;Fat Bob;117;68646;Disponible;125;A2
+Voiture;ZM-968-MW;Audi;Q3;104;189697;Loué;7;Oui
+CampingCar;RB-314-KL;Renault;Master;379;21779;Disponible;6.4;7
+CampingCar;DD-770-MJ;Volkswagen;Caddy California;287;81971;Disponible;7.3;3
+CampingCar;IS-147-WB;Citroën;Berlingo;362;240072;Disponible;5.3;7
+Voiture;DZ-075-HD;Volvo;XC60;40;135369;Disponible;5;Non
+Voiture;BZ-458-PN;Seat;Tarraco;41;118158;Disponible;5;Oui
+Moto;AU-354-XB;Yamaha;R6;231;11733;Disponible;1000;A
+Voiture;LS-847-BG;BMW;Serie 3;108;94007;Disponible;5;Oui
+Voiture;ER-229-ES;Renault;Arkana;156;49265;Disponible;7;Oui
+Moto;DX-627-AB;Suzuki;SV650;102;93927;Disponible;900;A
+Voiture;EV-861-TP;Nissan;Micra;179;119691;Disponible;5;Oui
+Voiture;HP-216-QM;Volvo;XC90;131;107400;Loué;7;Oui
+Voiture;JU-893-OF;Peugeot;508;80;58541;Disponible;4;Oui
+Voiture;PP-327-GE;BMW;Serie 1;175;197118;En maintenance;7;Oui
+Moto;LO-331-EL;Triumph;Street Triple;57;65912;Disponible;800;A
+Voiture;ZX-694-YS;Opel;Corsa;153;64092;Disponible;5;Oui
+CampingCar;MI-546-KE;Citroën;Jumper;300;134839;Disponible;6.4;3
+CampingCar;EM-658-LX;Ford;Transit Custom;223;193803;En maintenance;8.5;5
+Voiture;CN-730-ZL;BMW;i4;93;90461;Disponible;2;Oui
+Voiture;DM-874-GU;Nissan;Ariya;139;106946;Disponible;4;Oui
+Moto;HA-335-LU;BMW;F750GS;107;89803;Disponible;900;A
+Moto;KW-847-UR;Harley-Davidson;Pan America;163;62721;Disponible;1000;A
+Voiture;IK-283-SY;Tesla;Model S;106;178270;En maintenance;4;Oui
+Voiture;AY-690-MG;Hyundai;Ioniq 5;37;17418;En maintenance;9;Oui
+Voiture;PR-282-EH;Nissan;X-Trail;52;123465;Loué;9;Oui
+Moto;KW-839-PA;Kawasaki;Versys 650;140;22212;Disponible;800;A
+Voiture;ZX-643-VS;Renault;Arkana;182;142542;Loué;2;Oui
+Moto;EY-914-AP;BMW;F850GS;66;51379;Disponible;750;A
+Voiture;BB-042-IE;Mini;Clubman;154;122642;Disponible;5;Oui
+Moto;UD-905-BV;Kawasaki;Ninja 650;157;55957;Disponible;650;A2
+Moto;FB-748-QF;Suzuki;V-Strom 1050;123;26020;Disponible;500;A2
+Moto;IP-962-NA;Triumph;Bonneville T120;233;61371;Disponible;1300;A
+Moto;QP-320-VB;Kawasaki;Versys 1000;68;86906;Loué;300;A2
+Voiture;KL-191-TB;Mini;Cooper S;160;140561;Disponible;5;Non
+Voiture;LW-546-GD;Fiat;Tipo;95;21786;Disponible;5;Oui
+Moto;VN-131-QT;Triumph;Tiger 1200;88;63888;Disponible;1000;A
+CampingCar;ND-640-RH;Ford;Transit 2T;152;112894;Disponible;8.8;7
+Moto;KR-779-KB;Royal Enfield;Classic 350;103;58656;Disponible;1300;A
+CampingCar;EQ-182-EB;Renault;Kangoo;228;118621;Loué;6.0;5
+Moto;LN-391-CL;Honda;CB1000R;226;83727;Loué;600;A2
+Moto;PU-975-KY;KTM;Duke 390;135;61071;Disponible;750;A
+Moto;KW-777-QK;Honda;NT1100;189;69581;Disponible;900;A
+CampingCar;VR-136-CI;Ford;Transit 2T;297;89369;Disponible;8.3;5
+CampingCar;SQ-790-XA;Volkswagen;Grand California;300;34823;Disponible;6.8;5
+Moto;MW-417-OL;Triumph;Trident 660;203;56976;Disponible;900;A
+Moto;YS-509-YX;Royal Enfield;Continental GT 650;91;30302;Disponible;900;A
+CampingCar;UY-832-NW;Fiat;Ducato;363;80127;Disponible;7.9;2
+Voiture;DX-038-AG;Volkswagen;Golf;60;168263;Disponible;4;Non
+Voiture;CC-935-ZZ;Mini;Cooper;39;106145;Disponible;9;Oui
+Voiture;UU-082-YR;Peugeot;408;199;127667;Loué;7;Oui
+Moto;SS-977-HJ;Royal Enfield;Interceptor 650;200;41737;Disponible;900;A
+CampingCar;LM-787-UY;Citroën;Jumper;277;156042;Loué;6.1;6
+Voiture;RB-135-OX;Volkswagen;ID.5;180;53319;Loué;2;Oui
+Moto;UU-253-WN;Yamaha;R7;95;21402;Disponible;600;A2
+Voiture;KK-393-NG;Seat;Leon;156;72954;Disponible;4;Non
+Moto;EZ-750-IX;KTM;Adventure 890;45;85682;Disponible;500;A2
+Voiture;AD-996-FM;Skoda;Superb;65;33687;Disponible;5;Oui
+Voiture;FQ-414-WS;Toyota;Highlander;74;19569;Loué;7;Oui
+Voiture;HZ-643-QU;Dacia;Jogger;48;82801;Loué;5;Oui
+Voiture;KU-215-LM;Audi;A5;44;133769;Loué;5;Oui
+Voiture;ZX-357-WE;Mini;Cooper;79;65082;Loué;9;Oui
+Voiture;FU-981-EW;Volvo;S60;138;177696;Disponible;5;Oui
+CampingCar;HG-820-EL;Mercedes;Marco Polo;150;161818;Disponible;6.3;6
+Voiture;NJ-668-BS;Hyundai;Ioniq 5;92;199783;Disponible;4;Oui
+Voiture;WJ-905-OX;Mercedes;Classe C;35;18790;Disponible;2;Oui
+Voiture;EJ-512-CF;BMW;Serie 5;196;179012;Disponible;5;Oui
+CampingCar;OD-439-ZI;Citroën;SpaceTourer;352;249230;Disponible;5.2;2
+Voiture;CP-218-DH;BMW;X1;124;92509;Disponible;5;Oui
+Voiture;BF-764-YK;Audi;e-tron;195;29963;Disponible;5;Non
+Voiture;ZM-704-QI;Volvo;XC40;200;182905;Disponible;5;Oui
+Voiture;JW-333-QD;Fiat;500X;101;119084;Disponible;4;Oui
+CampingCar;OU-865-DC;Ford;Ranger (Cellule);190;210598;Disponible;7.3;3
+Voiture;YV-906-ZH;Fiat;Tipo;53;29851;Disponible;7;Oui
+Moto;JI-897-RH;BMW;F850GS;176;98004;En maintenance;1300;A
+Moto;OK-221-HY;Yamaha;MT-09;106;12347;Disponible;800;A
+CampingCar;UD-713-YN;Volkswagen;Caddy California;148;42446;Disponible;7.8;6
+Voiture;OV-321-FZ;Skoda;Superb;158;129549;Disponible;5;Non
+CampingCar;LE-539-AT;Mercedes;Marco Polo;112;55717;En maintenance;5.8;3
+Voiture;TY-626-MF;Tesla;Model 3;191;193533;Loué;4;Oui
+Voiture;SI-769-QT;Renault;Austral;34;186982;Loué;4;Oui
+Moto;NF-679-WI;Harley-Davidson;Fat Bob;156;28341;Disponible;600;A2
+Moto;XV-704-RA;Ducati;Diavel V4;102;14004;Loué;1250;A
+CampingCar;CR-493-DA;Mercedes;Sprinter;390;197817;Disponible;8.0;5
+CampingCar;NU-335-MY;Fiat;Talento;222;90339;Loué;7.3;3
+Voiture;TD-727-MU;Mini;Cooper;78;65961;Loué;5;Oui
+Moto;EH-305-AP;KTM;Duke 390;75;20963;Disponible;600;A2
+Voiture;LO-558-YS;Fiat;Tipo;102;52489;En maintenance;4;Oui
+Voiture;CH-244-VZ;BMW;X1;113;28647;Disponible;5;Oui
+Moto;GG-167-SI;Ducati;Multistrada V4;184;37926;Disponible;750;A
+Voiture;PS-357-FC;Toyota;Aygo X;192;109303;Disponible;7;Oui
+Voiture;GF-205-JE;BMW;X5;37;174142;Disponible;5;Oui
+Voiture;CZ-836-KB;Kia;Niro;50;36304;Disponible;9;Oui
+Voiture;FQ-910-OJ;BMW;X2;156;40787;Disponible;4;Oui
+CampingCar;QI-302-AM;Fiat;Talento;117;237736;Disponible;8.0;5
+CampingCar;OO-570-BI;Mercedes;Sprinter;102;217134;Disponible;6.0;5
+Moto;AD-117-BX;Harley-Davidson;Pan America;169;87957;Disponible;125;A2
+CampingCar;CN-934-CK;Iveco;Daily;313;186039;Disponible;5.6;6
+Voiture;CJ-274-FP;Renault;Twingo;111;190356;Disponible;9;Oui
+Moto;QC-227-ST;Suzuki;Hayabusa;147;4355;Disponible;500;A2
+Moto;OU-320-YE;Ducati;Monster;207;46141;Loué;300;A2
+Voiture;SU-122-FV;Mercedes;Classe A;56;9431;Disponible;4;Oui
+Moto;FC-171-HQ;BMW;F900XR;173;68595;Disponible;600;A2
+Voiture;YI-329-ZK;Toyota;Yaris Cross;159;44150;Disponible;7;Oui
+Voiture;SE-578-IV;Mini;Countryman;171;94275;Disponible;5;Oui
+Moto;HY-906-AQ;Kawasaki;Versys 650;248;95816;Disponible;750;A
+Voiture;KJ-337-ET;Toyota;Corolla;101;143436;Disponible;2;Non
+Moto;BR-442-ZE;Suzuki;Hayabusa;154;6660;En maintenance;650;A2
+CampingCar;UA-103-VT;Iveco;Daily;280;67175;Disponible;8.4;2
+Voiture;UQ-554-SH;Mercedes;Classe E;177;129546;Disponible;5;Oui
+Moto;WL-008-TW;Royal Enfield;Interceptor 650;139;17613;Loué;1100;A
+Voiture;HQ-748-ZY;Opel;Corsa;158;76111;Disponible;9;Oui
+Voiture;QZ-360-NT;Mercedes;EQA;127;99077;Disponible;9;Oui
+Moto;VR-633-AQ;Ducati;Multistrada V4;47;26144;Disponible;800;A
+Voiture;UL-427-YC;Toyota;bZ4X;105;137549;Disponible;5;Oui
+Voiture;DA-554-OE;Tesla;Model Y;70;37989;Disponible;9;Oui
+Moto;KC-084-SC;Royal Enfield;Classic 350;67;64179;Disponible;300;A2
+Moto;RP-761-PH;Kawasaki;Z900RS;226;79337;Loué;1300;A
+Moto;RC-247-DZ;Ducati;Multistrada V4;113;77386;Disponible;1000;A
+Moto;FB-941-TS;Suzuki;GSX-S750;197;90483;Loué;1000;A
+Voiture;IA-004-FV;Volkswagen;ID.5;31;145040;Disponible;5;Oui
+Voiture;OR-199-ZP;BMW;Serie 2;113;95595;Disponible;5;Oui
+Voiture;HX-172-UT;Volkswagen;Golf;154;131609;Disponible;7;Oui
+Voiture;UU-314-QB;Mini;Cooper;136;45391;Disponible;5;Oui
+Moto;XR-495-DG;Triumph;Bonneville T120;190;61845;Loué;1100;A
+CampingCar;SJ-002-OQ;Fiat;Ducato;105;119592;Disponible;8.9;6
+Moto;DQ-481-XI;Harley-Davidson;Low Rider S;59;25890;Loué;750;A
+Voiture;SX-246-WJ;Seat;Ateca;193;10932;Disponible;4;Oui
+CampingCar;CT-839-CH;Peugeot;Traveller;336;156524;En maintenance;6.1;3
+Voiture;CZ-085-TN;Hyundai;Bayon;187;183643;Disponible;5;Oui
+Moto;PQ-277-ZO;KTM;Duke 390;112;83692;Loué;300;A2
+CampingCar;SJ-439-ZS;Volkswagen;Crafter;226;119510;Disponible;7.4;5
+Voiture;MK-669-JG;Dacia;Jogger;176;47280;Disponible;7;Oui
+Voiture;BN-227-GB;Audi;A4;135;130380;Disponible;2;Oui
+Voiture;HV-943-VL;Citroën;C4 X;172;85111;En maintenance;7;Oui
+Voiture;AO-699-RR;Nissan;Ariya;70;139013;Disponible;9;Non
+CampingCar;FS-930-JA;Mercedes;Sprinter;350;63237;Disponible;7.5;5
+Moto;PP-094-RQ;Kawasaki;Ninja 1000SX;227;13183;Disponible;1300;A
+Moto;UT-488-YD;Triumph;Speed Triple;231;25372;Disponible;1800;A
+Voiture;DG-203-BD;Opel;Mokka;151;191840;En maintenance;9;Oui
+CampingCar;LQ-286-XK;Fiat;Ducato;212;33760;Disponible;6.9;3
+CampingCar;BW-163-YF;Citroën;Berlingo;289;201573;Disponible;8.2;5
+CampingCar;LM-105-TE;Fiat;Talento;92;81028;Disponible;6.9;2
+Voiture;FT-848-NY;Seat;Ateca;168;87840;Loué;2;Oui
+Voiture;IX-184-KX;Toyota;Corolla;183;41077;Disponible;9;Oui
+CampingCar;EK-562-QP;Peugeot;Traveller;380;19742;Disponible;5.1;6
+Moto;HN-704-OI;BMW;F750GS;220;34455;Disponible;1250;A
+Moto;XP-391-PS;BMW;CE 04;224;90946;Disponible;1000;A
+CampingCar;GH-302-WW;Volkswagen;Grand California;137;104056;Disponible;8.5;7
+Voiture;ON-920-LW;Seat;Ibiza;52;36385;Loué;2;Oui
+Voiture;FJ-093-MQ;Fiat;500;42;13784;Loué;5;Non
+Voiture;IP-730-NG;Nissan;Qashqai;170;111177;Loué;5;Oui
+Voiture;UK-189-WJ;Peugeot;408;47;157722;Loué;9;Oui
+CampingCar;YF-842-IG;Renault;Trafic SpaceNomad;211;148668;Disponible;8.5;7
+Voiture;XT-553-CQ;Ford;Fiesta;184;179542;Disponible;4;Oui
+Voiture;LJ-668-GI;Ford;Fiesta;144;44299;Disponible;2;Oui
+Voiture;ED-326-EB;Citroën;C3;51;118933;Loué;5;Oui
+Voiture;XT-949-DA;Fiat;Tipo;126;10089;Disponible;7;Non
+Voiture;ZO-139-KT;BMW;Serie 3;197;61770;Loué;7;Oui
+Voiture;VK-643-BS;Volkswagen;Tiguan;175;15718;Disponible;2;Non
+Moto;HF-828-CZ;Harley-Davidson;Sportster S;183;7432;Disponible;1100;A
+Voiture;OJ-344-KK;Toyota;RAV4;38;88879;Disponible;7;Oui
+Voiture;YT-459-KY;Mercedes;Classe C;32;71144;Disponible;5;Oui
+Voiture;IR-800-VZ;Nissan;Ariya;45;47438;Loué;4;Oui
+Moto;SP-915-NH;BMW;R1250GS;115;55652;Disponible;1300;A
+Voiture;OS-976-IE;Kia;Sorento;83;91841;Disponible;7;Oui
+Moto;HV-184-AC;BMW;F750GS;66;11275;Loué;900;A
+Voiture;XM-026-ZP;Fiat;Panda;125;45709;Disponible;4;Oui
+Moto;FT-257-LW;Yamaha;R1;65;99134;Disponible;1250;A
+Voiture;HM-723-VW;Ford;Mustang Mach-E;175;40314;Disponible;4;Non
+Voiture;OR-100-KJ;Toyota;Highlander;90;87907;Disponible;4;Oui
+Moto;OH-327-CZ;KTM;Duke 125;86;73134;Disponible;1100;A
+Voiture;HE-105-IB;Mercedes;GLC;66;65844;Disponible;9;Oui
+Moto;WU-401-JN;Harley-Davidson;Fat Bob;249;48760;Disponible;1100;A
+Voiture;FT-318-SX;Volvo;XC60;159;187629;Disponible;5;Oui
+CampingCar;DL-272-ID;Peugeot;Boxer;235;220332;Loué;8.4;5
+Voiture;JG-815-IZ;Ford;Kuga;106;65855;En maintenance;5;Oui
+Moto;HI-331-SM;BMW;R1250RT;163;58367;Disponible;125;A2
+Moto;QD-597-XA;Honda;Forza 350;131;68213;Disponible;750;A
+Voiture;NK-506-RQ;Opel;Mokka;62;148720;Loué;5;Oui
+CampingCar;YI-158-YG;Ford;Ranger (Cellule);316;10539;En maintenance;7.1;2
+Voiture;QG-269-GN;Ford;Focus;118;98845;Disponible;9;Oui
+Voiture;YY-761-GS;BMW;Serie 1;58;171138;Disponible;9;Oui
+Voiture;LV-720-YD;Fiat;500;41;59902;Disponible;2;Oui
+Voiture;RG-825-KG;Toyota;RAV4;157;59846;Disponible;7;Oui
+Moto;TS-704-JX;Kawasaki;Ninja 1000SX;246;15142;Disponible;1800;A
+Voiture;VH-362-BN;Hyundai;Tucson;107;121600;Disponible;7;Oui
+Voiture;PW-013-VP;Peugeot;408;146;176479;Disponible;5;Oui
+Voiture;FS-144-BR;Mercedes;GLB;103;153565;Disponible;5;Oui
+Voiture;AR-833-ZO;Audi;A4;89;67626;Disponible;5;Oui
+Voiture;KP-298-JZ;Dacia;Jogger;122;41447;Loué;7;Oui
+Moto;ST-347-QZ;Harley-Davidson;Road Glide;210;37581;Loué;900;A
+Voiture;BF-221-QO;Kia;Sorento;105;102181;Disponible;5;Non
+Moto;HF-914-SN;Harley-Davidson;Pan America;112;41521;Disponible;500;A2
+CampingCar;BW-800-HV;Citroën;SpaceTourer;155;223234;Disponible;7.5;7
+Voiture;TX-376-IX;Tesla;Model S;189;198604;Disponible;5;Oui
+CampingCar;XY-532-UJ;Iveco;Daily;306;9207;Disponible;8.5;5
+Voiture;LG-629-JQ;Kia;Picanto;48;129716;En maintenance;9;Oui
+Moto;TF-846-CY;Royal Enfield;Classic 350;170;52961;Disponible;1250;A
+Moto;VK-444-MS;Kawasaki;Versys 650;112;43172;Disponible;1100;A
+CampingCar;XL-864-SW;Renault;Trafic SpaceNomad;125;120798;Loué;5.3;6
+Voiture;AI-548-RP;Ford;Focus;32;58366;Disponible;7;Oui
+Moto;FH-739-EP;Ducati;Diavel V4;124;93518;Disponible;900;A
+Moto;OX-984-UF;Suzuki;V-Strom 1050;128;81312;Disponible;1800;A
+Moto;OC-667-KO;BMW;R1250GS;120;84155;Disponible;125;A2
+CampingCar;ZN-800-CE;Volkswagen;Grand California;112;171635;Disponible;7.7;5
+Moto;KC-918-KG;Triumph;Bonneville T100;250;47444;Disponible;900;A
+Voiture;IS-290-AY;Audi;Q8;90;159758;Disponible;5;Oui
+Voiture;ML-693-UD;BMW;Serie 1;88;152048;Loué;7;Oui
+Moto;FP-280-VT;Triumph;Bonneville T100;68;78522;Disponible;750;A
+Voiture;QU-583-VC;Volvo;S60;75;41375;Disponible;7;Oui
+Voiture;JJ-060-WC;Dacia;Sandero;170;81992;Loué;5;Oui
+Voiture;RS-766-ZF;Audi;Q5;61;66565;Disponible;5;Oui
+Voiture;TI-356-MZ;Tesla;Model Y;61;33923;Disponible;7;Oui
+CampingCar;UI-984-CR;Peugeot;Rifter;152;219602;Disponible;5.8;2
+Voiture;XD-767-SQ;Peugeot;108;34;21927;Disponible;5;Oui
+Moto;RT-081-NN;KTM;Super Duke 1290;126;70561;Disponible;650;A2
+Voiture;JY-882-NG;BMW;X1;142;195029;Disponible;5;Oui
+Voiture;TU-271-TM;Toyota;Aygo X;60;123787;Disponible;9;Non
+Voiture;HT-166-FX;Peugeot;408;197;136557;Disponible;4;Oui
+Voiture;VF-641-RR;Audi;Q8;181;169033;Disponible;5;Oui
+Moto;PX-418-PT;Suzuki;V-Strom 1050;226;64178;Disponible;400;A2
+Voiture;ET-107-VY;Seat;Tarraco;193;124670;Disponible;5;Oui
+Voiture;II-180-HL;BMW;Serie 2;36;150196;Disponible;7;Oui
+Voiture;LY-041-BN;BMW;Serie 2;59;81157;Disponible;2;Oui
+Moto;WE-922-RV;Kawasaki;Ninja 1000SX;95;39632;Disponible;1100;A
+CampingCar;BV-248-GZ;Renault;Trafic SpaceNomad;322;137915;Disponible;6.3;7
+Moto;MZ-645-VI;KTM;Duke 125;61;79581;Disponible;125;A2
+CampingCar;VA-737-HG;Ford;Ranger (Cellule);253;197463;Disponible;6.5;5
+CampingCar;FB-225-RO;Renault;Kangoo;140;136388;Disponible;6.6;6
+Voiture;XH-517-BB;Dacia;Spring;141;101558;En maintenance;5;Oui
+CampingCar;RZ-224-LG;Citroën;Jumper;112;246611;Disponible;6.5;5
+Voiture;QW-665-KU;Peugeot;108;194;131935;Disponible;2;Oui
+Voiture;WK-473-OH;Peugeot;5008;90;8115;Disponible;2;Oui
+Voiture;XZ-156-UF;Nissan;Micra;192;30337;Disponible;5;Oui
+Moto;ZK-356-TC;Honda;CB1000R;141;79080;Disponible;800;A
+Moto;KP-751-PT;KTM;Super Adventure 1290;82;50297;Disponible;650;A2
+Voiture;QK-341-MY;Volvo;S60;119;42688;Disponible;9;Non
+Voiture;EI-164-NZ;Audi;Q7;156;66519;Disponible;4;Oui
+Voiture;NV-118-VU;Fiat;500;153;148363;Disponible;7;Oui
+Voiture;CN-967-FE;Peugeot;3008;120;107968;En maintenance;7;Oui
+Voiture;ZS-520-HP;BMW;Serie 4;167;132280;Disponible;2;Oui
+Voiture;SR-097-XB;Peugeot;408;32;103205;Disponible;9;Oui
+Moto;PO-573-CA;BMW;R1250RT;104;52088;Disponible;650;A2
+Moto;XQ-006-PD;Royal Enfield;Continental GT 650;142;65308;Loué;600;A2
+Voiture;FL-256-KY;Renault;Twingo;170;115056;Loué;5;Oui
+Moto;DU-724-CC;Yamaha;MT-09;189;70562;Disponible;1300;A
+Voiture;IG-097-OL;BMW;i4;92;129433;Disponible;4;Oui
+Moto;JF-574-JL;KTM;Duke 125;152;96242;Disponible;500;A2
+Moto;BF-220-EI;Suzuki;GSX-S1000;119;70217;Disponible;650;A2
+Voiture;KT-236-BC;Opel;Grandland;51;165319;Disponible;5;Oui
+Voiture;VZ-884-ZV;Hyundai;Bayon;126;10348;Loué;4;Oui
+Voiture;IM-779-PC;Citroën;C5 X;85;70149;Disponible;5;Oui
+Voiture;HB-433-FL;Peugeot;208;112;60991;Disponible;2;Oui
+Voiture;QZ-989-CJ;Mini;Cooper;51;145777;Loué;5;Oui
+Voiture;PC-607-JM;Nissan;Ariya;35;144560;Loué;5;Oui
+CampingCar;BY-961-TT;Ford;Ranger (Cellule);277;201896;Disponible;7.8;6
+Voiture;GN-782-JS;Mercedes;GLB;192;112726;Disponible;5;Oui
+Moto;WZ-723-OU;Honda;Gold Wing;161;28578;Disponible;1800;A
+CampingCar;TW-416-XB;Iveco;Daily;101;27909;Disponible;5.1;5
+Voiture;BH-388-RL;Fiat;500X;167;146834;Disponible;4;Oui
+Voiture;PL-736-NB;Ford;Mustang Mach-E;105;154025;Disponible;9;Oui
+Voiture;UZ-474-WX;Hyundai;Santa Fe;59;171031;Disponible;2;Oui
+CampingCar;RB-787-HJ;Fiat;Talento;173;77958;Disponible;6.7;4
+Voiture;OP-741-WP;Seat;Ibiza;114;70817;Disponible;2;Oui
+Voiture;QG-628-JY;Volkswagen;ID.5;99;178894;Disponible;4;Oui
+CampingCar;BS-738-UO;Volkswagen;Grand California;219;51481;Disponible;7.3;3
+Voiture;KP-091-XY;Tesla;Model 3;59;164048;Disponible;5;Oui
+Voiture;FT-476-VK;BMW;X5;67;13188;Loué;2;Oui
+Voiture;XL-733-PQ;Renault;Arkana;135;181046;Disponible;4;Oui
+CampingCar;FC-866-QH;Iveco;Daily;302;118641;Disponible;8.9;5
+Voiture;RU-083-DN;Seat;Arona;68;15166;Disponible;4;Oui
+Voiture;TC-821-CG;Skoda;Kodiaq;153;144528;Loué;5;Oui
+Voiture;HP-954-YJ;Ford;Mustang Mach-E;81;2297;Disponible;5;Oui
+Voiture;YH-393-PH;Nissan;Qashqai;129;53954;Loué;4;Oui
+Voiture;MI-692-PK;Skoda;Fabia;172;153231;Loué;2;Oui
+Voiture;ZO-851-DE;Renault;Espace;177;170450;Disponible;7;Oui
+Voiture;QM-427-JT;Peugeot;508;186;153622;Disponible;5;Oui
+Voiture;QZ-758-GI;Kia;Sorento;141;181611;En maintenance;9;Oui
+CampingCar;MU-942-XV;Ford;Ranger (Cellule);163;90706;Disponible;6.8;3
+Moto;EO-420-RW;Suzuki;V-Strom 1050;56;52448;Disponible;600;A2
+Moto;BY-558-SB;BMW;F850GS;119;38082;Disponible;650;A2
+Moto;HO-507-HB;Harley-Davidson;Sportster S;181;34932;Disponible;400;A2
+CampingCar;XO-976-DJ;Mercedes;Vito;234;190593;Disponible;6.1;6
+CampingCar;PU-116-AV;Citroën;SpaceTourer;141;12790;Disponible;6.3;4
+Moto;BD-218-NT;Harley-Davidson;Road Glide;183;24324;Disponible;900;A
+Voiture;TO-095-QT;Nissan;Micra;46;132133;Loué;5;Oui
+Voiture;ZQ-444-IE;Nissan;X-Trail;50;90542;Disponible;4;Non
+Voiture;BH-698-RQ;BMW;Serie 2;92;107887;Disponible;9;Oui
+CampingCar;SN-901-OE;Peugeot;Traveller;248;182140;Disponible;8.0;7
+Moto;PL-117-FX;Kawasaki;Versys 1000;188;53624;Disponible;1000;A
+Voiture;RS-872-PB;Mercedes;Classe A;142;107558;Disponible;2;Oui
+Moto;AW-330-XF;Royal Enfield;Interceptor 650;90;50221;Disponible;300;A2
+Voiture;UZ-875-SO;Volvo;C40;151;189404;Disponible;9;Non
+Moto;FD-433-OX;Yamaha;XSR700;71;9574;Disponible;1250;A
+Voiture;UK-402-CO;Volkswagen;Passat;178;84825;Disponible;4;Oui
+Moto;ID-808-YT;Triumph;Rocket 3;93;51816;Disponible;125;A2
+Moto;IJ-303-SI;Triumph;Trident 660;78;9649;En maintenance;1800;A
+Voiture;IB-441-WB;Volkswagen;ID.4;104;6853;Disponible;7;Oui
+Voiture;IX-810-NA;BMW;i4;119;101681;Disponible;2;Oui
+Moto;SM-491-HD;Royal Enfield;Interceptor 650;111;78955;Disponible;1250;A
+Voiture;JM-348-ZD;Tesla;Model S;190;6308;Disponible;2;Oui
+CampingCar;UH-436-XP;Ford;Transit Custom;254;231754;Disponible;8.0;3
+Voiture;NT-273-BR;Fiat;Tipo;144;28086;Disponible;2;Oui
+Voiture;QE-421-DN;Ford;Kuga;57;11389;Disponible;4;Oui
+Moto;TS-316-RP;Yamaha;R7;96;17272;Disponible;750;A
+Voiture;KQ-484-DF;Volkswagen;ID.3;152;109298;Disponible;9;Oui
+Moto;YG-123-UQ;Suzuki;GSX-S1000GT;98;11531;Disponible;125;A2
+CampingCar;QS-255-MJ;Renault;Trafic SpaceNomad;99;78462;Disponible;7.0;3
+Moto;WN-298-TH;Suzuki;GSX-S750;249;31206;Loué;125;A2
+Moto;BO-605-WS;Suzuki;GSX-S1000GT;229;84157;Disponible;1000;A
+Voiture;MT-324-XF;Volvo;V60;62;186309;Disponible;5;Oui
+Voiture;ZD-936-II;Citroën;C5 Aircross;105;121198;Disponible;9;Oui
+Moto;QV-299-RU;Royal Enfield;Meteor 350;162;69282;Disponible;800;A
+Voiture;XS-437-EZ;Mini;Clubman;129;107706;Disponible;2;Oui
+Voiture;GH-564-BG;Opel;Grandland;179;54520;Disponible;2;Non
+Moto;SX-530-BJ;KTM;Super Duke 1290;80;24596;Loué;500;A2
+Voiture;IR-942-BF;Peugeot;Rifter;71;152083;Disponible;5;Oui
+Voiture;HM-469-IW;Dacia;Sandero;184;192321;Disponible;9;Oui
+Moto;IA-270-IM;Suzuki;GSX-S750;110;27321;Disponible;1800;A
+CampingCar;JU-158-TO;Ford;Transit Custom;284;50157;Disponible;8.0;2
+Moto;EX-993-RM;Suzuki;GSX-S1000;159;2205;Disponible;1250;A
+Voiture;BN-662-CF;Mini;Countryman;45;13005;Disponible;2;Oui
+CampingCar;FM-717-LR;Renault;Kangoo;178;165692;Loué;7.8;3
+Moto;LQ-360-LH;Suzuki;GSX-S750;126;51056;Loué;900;A
+Voiture;UE-380-ED;Volvo;XC40;91;117047;Disponible;7;Oui
+Voiture;ZG-045-WA;Audi;Q5;179;127857;Disponible;2;Oui
+Moto;HZ-695-PY;Yamaha;R7;164;70893;Disponible;500;A2
+Voiture;EP-213-MB;Volvo;XC90;48;72167;Disponible;2;Oui
+Voiture;AC-728-UH;Renault;Captur;47;100199;Disponible;4;Oui
+Voiture;SF-421-WZ;Opel;Astra;90;159673;Loué;5;Oui
+Voiture;FB-298-IS;Skoda;Superb;110;59932;Disponible;9;Oui
+Moto;LO-653-FL;Kawasaki;Z650;62;79952;Disponible;1250;A
+CampingCar;XE-889-DX;Iveco;Daily;382;79967;Disponible;6.2;2
+Moto;EZ-139-FT;Triumph;Trident 660;147;12754;Disponible;400;A2
+Voiture;IE-899-GW;Mercedes;EQB;138;146358;Disponible;9;Oui
+Moto;KD-647-XX;KTM;Super Adventure 1290;83;39408;Disponible;900;A
+Moto;QL-552-WU;BMW;F900R;237;98459;Loué;500;A2
+CampingCar;ST-566-TY;Mercedes;Marco Polo;279;129536;Disponible;7.6;7
+CampingCar;IA-773-PD;Peugeot;Traveller;259;44765;Disponible;6.7;4
+Moto;SW-787-JB;Royal Enfield;Meteor 350;47;76765;Disponible;300;A2
+Moto;IM-532-UL;Royal Enfield;Interceptor 650;46;96092;Disponible;1300;A
+Voiture;CX-033-GX;Peugeot;Rifter;128;193200;Disponible;9;Oui
+CampingCar;NN-473-BT;Iveco;Daily;120;89564;Loué;5.8;6
+Voiture;TB-194-LV;BMW;X2;171;59159;Disponible;7;Oui
+Voiture;QL-633-ML;Nissan;X-Trail;86;199842;En maintenance;4;Oui
+Moto;IA-460-HT;BMW;F850GS;52;33858;Loué;300;A2
+Voiture;JM-558-IS;Seat;Ateca;131;182428;Disponible;2;Oui
+Voiture;WR-727-VI;Ford;Focus;132;116606;Disponible;5;Oui
+Moto;ID-220-VM;Royal Enfield;Interceptor 650;147;48433;Disponible;400;A2
+Voiture;DK-038-IH;Volvo;C40;124;112465;Disponible;7;Oui
+Moto;QE-043-XJ;Ducati;Streetfighter V4;105;91574;Disponible;750;A
+CampingCar;ZN-423-UZ;Iveco;Daily;382;18068;Loué;5.3;3
+Moto;PH-590-QO;Honda;Gold Wing;45;97252;Disponible;125;A2
+Voiture;JX-300-CI;Skoda;Octavia;117;6305;En maintenance;4;Oui
+Moto;HI-733-UR;Harley-Davidson;Street Glide;220;48127;Disponible;800;A
+Voiture;TJ-338-MT;Mercedes;EQA;87;91981;Disponible;5;Oui
+Moto;XE-865-CG;KTM;Duke 390;56;82824;Disponible;1000;A
+Voiture;MC-281-PU;BMW;X3;142;30343;Disponible;5;Oui
+Voiture;TX-827-WX;Volvo;S60;120;126125;Disponible;9;Oui
+Voiture;TI-524-IE;Audi;e-tron;167;35620;Disponible;5;Oui
+Voiture;LG-242-ET;Kia;Picanto;136;107701;Disponible;7;Oui
+Moto;BC-076-MJ;Kawasaki;Z900;157;85330;Disponible;750;A
+Moto;ZQ-490-TA;KTM;Super Duke 1290;98;83644;Disponible;800;A
+Voiture;TW-039-YU;Fiat;500;113;162513;Loué;9;Oui
+CampingCar;FK-270-SZ;Citroën;Jumper;316;143759;Disponible;8.6;2
+Moto;MB-765-NK;Harley-Davidson;Sportster S;71;98459;Disponible;650;A2
+Voiture;FL-458-RR;Hyundai;Ioniq 5;163;2660;Disponible;7;Non
+Voiture;CJ-648-ZF;Audi;Q2;135;157477;Disponible;5;Oui
+Moto;PO-940-MA;Triumph;Trident 660;218;7724;Disponible;400;A2
+Voiture;KM-736-IO;Kia;Sorento;113;118802;Disponible;2;Oui
+Moto;JE-177-PT;Honda;CB650R;99;96973;Disponible;500;A2
+Moto;TU-801-WA;BMW;S1000RR;163;90755;Disponible;1100;A
+Moto;DI-081-UJ;Ducati;Panigale V4;97;9020;Loué;800;A
+Voiture;HS-677-QO;Seat;Leon;178;6886;Disponible;7;Non
+Moto;YZ-071-XY;Triumph;Street Triple;224;18989;En maintenance;600;A2
+CampingCar;LZ-463-SE;Iveco;Daily;298;50002;Loué;6.6;7
+Voiture;YA-211-IE;Dacia;Duster;193;108650;Disponible;7;Non
+Moto;NC-529-SF;BMW;F900XR;67;60187;Disponible;900;A
+Moto;FW-412-MW;Honda;CB650R;154;61948;Disponible;1800;A
+Moto;US-303-FC;Honda;Forza 125;64;84583;Disponible;900;A
+CampingCar;IG-862-ME;Fiat;Ducato;400;169839;Loué;5.8;2
+Voiture;MC-135-XK;Citroën;C3;186;5817;Disponible;2;Oui
+Moto;DB-385-HZ;KTM;Super Adventure 1290;118;98467;Disponible;600;A2
+Moto;NI-004-HL;Honda;X-ADV;216;93734;Disponible;750;A
+Moto;BF-918-SA;BMW;F850GS;222;303;En maintenance;900;A
+Moto;MU-398-TJ;Harley-Davidson;Low Rider S;85;34994;Disponible;1300;A
+Voiture;PN-173-LK;Skoda;Superb;47;57056;Disponible;2;Non
+Voiture;CN-341-CK;Skoda;Scala;152;86357;Loué;5;Oui
+Voiture;CF-666-JV;Peugeot;2008;145;46692;Disponible;5;Oui
+Voiture;BN-285-II;Hyundai;i20;115;89452;Loué;5;Oui
+Voiture;KS-182-UX;Skoda;Karoq;197;115779;Disponible;2;Oui
+Voiture;MK-849-TW;Seat;Ateca;97;138767;Loué;2;Oui
+Voiture;ZY-706-HU;Kia;Sportage;86;6930;Disponible;7;Oui
+Voiture;QU-120-XL;Mini;Countryman;73;11933;Disponible;5;Oui
+Moto;WC-127-GR;Ducati;Monster;149;25620;Loué;900;A
+Moto;VH-614-YO;BMW;R1250GS;228;4805;Disponible;800;A
+Voiture;UL-987-RT;Renault;Espace;49;49570;Disponible;2;Oui
+Voiture;IK-254-HJ;Nissan;Leaf;161;90346;Disponible;9;Oui
+Voiture;WW-427-UJ;Volvo;V60;62;80869;Disponible;2;Oui
+Voiture;OZ-816-XF;Hyundai;Ioniq 5;40;84013;Disponible;4;Oui
+Voiture;FB-725-VG;Dacia;Spring;164;4200;Disponible;9;Oui
+Moto;ER-476-ZQ;Suzuki;GSX-S1000GT;52;23966;Disponible;1300;A
+CampingCar;OO-884-GR;Mercedes;Vito;352;11374;Disponible;8.6;7
+CampingCar;QG-608-EC;Mercedes;Vito;149;203942;Disponible;8.4;2
+Moto;AF-488-MG;Honda;NT1100;199;39535;Disponible;400;A2
+Voiture;HB-464-LH;Mercedes;GLC;86;121728;Disponible;5;Oui
+CampingCar;JQ-310-PA;Volkswagen;Grand California;106;60965;En maintenance;5.3;6
+Moto;FZ-084-GV;Kawasaki;Z900;144;26829;Disponible;125;A2
+Voiture;LR-114-RD;Citroën;Berlingo;162;178812;Disponible;4;Oui
+Moto;PY-065-EV;Honda;CB1000R;136;30494;Loué;600;A2
+Voiture;IJ-542-AD;Peugeot;208;126;28708;Disponible;7;Oui
+Voiture;HI-642-VN;Mini;Countryman;168;17317;Loué;9;Oui
+Voiture;XK-365-XQ;Opel;Astra;173;68227;Disponible;5;Oui
+Voiture;IL-669-NG;Fiat;500;63;134532;Disponible;5;Oui
+CampingCar;NJ-509-RB;Citroën;SpaceTourer;155;106033;Disponible;7.5;6
+Moto;SF-264-SO;Triumph;Trident 660;198;34660;Disponible;650;A2
+Moto;SB-572-IT;KTM;Adventure 890;182;31512;Disponible;125;A2
+Voiture;UE-314-QE;Mini;Countryman;61;173394;En maintenance;5;Oui
+CampingCar;TJ-527-PI;Citroën;Berlingo;198;210517;Disponible;7.4;6
+Moto;DT-563-CA;Harley-Davidson;Fat Bob;238;28423;Disponible;1000;A
+Voiture;ZV-129-RR;Mercedes;Classe E;104;53036;Disponible;5;Non
+CampingCar;GO-007-QA;Iveco;Daily;308;153498;Disponible;6.2;4
+CampingCar;FJ-046-RU;Mercedes;Vito;294;103978;Disponible;8.6;7
+Moto;XE-582-EU;Suzuki;GSX-S1000;212;13159;Disponible;500;A2
+Voiture;PQ-353-FI;BMW;Serie 4;109;82530;Loué;7;Oui
+Voiture;RI-515-CI;Tesla;Model 3;193;33177;En maintenance;5;Oui
+Moto;MA-351-XE;Kawasaki;Versys 650;221;66032;Disponible;1250;A
+Moto;QZ-387-RL;Ducati;Multistrada V4;218;51136;Disponible;600;A2
+Voiture;MV-474-FQ;Opel;Crossland;164;114062;Disponible;2;Oui
+Moto;IG-063-VG;Royal Enfield;Meteor 350;97;99727;Disponible;1000;A
+CampingCar;VV-921-PF;Ford;Transit Custom;140;127707;Disponible;7.4;6
+Moto;DR-257-KS;Kawasaki;Z650;137;3489;Disponible;125;A2
+Voiture;DU-475-YZ;Fiat;Tipo;46;119716;Disponible;4;Oui
+Voiture;YU-312-WK;Volvo;C40;32;104948;Disponible;5;Oui
+Voiture;JD-493-AV;Kia;Niro;63;193279;Disponible;7;Oui
+Voiture;IZ-832-WN;Dacia;Duster;157;163355;Loué;2;Oui
+Voiture;DV-219-EJ;Mercedes;Classe C;189;3382;Disponible;4;Oui
+Moto;HL-598-ZJ;KTM;Super Adventure 1290;136;31680;Disponible;1250;A
+Voiture;RC-134-NI;Dacia;Sandero;191;100945;Loué;5;Oui
+Voiture;OJ-418-MW;Skoda;Octavia;164;2216;Disponible;4;Oui
+Voiture;IG-076-WR;Hyundai;Ioniq 5;170;182305;Disponible;2;Oui
+Moto;FU-317-QV;Honda;Gold Wing;217;45414;Disponible;300;A2
+CampingCar;ID-600-KU;Citroën;Jumper;276;188867;Loué;6.1;3
+Moto;BE-465-FQ;Harley-Davidson;Low Rider S;115;16336;Disponible;400;A2
+Voiture;ZA-844-YT;Renault;Megane;170;45170;Disponible;5;Oui
+Moto;IU-229-HM;Harley-Davidson;Street Glide;123;15569;Disponible;1250;A
+Voiture;RR-451-AX;Skoda;Fabia;137;164348;Disponible;5;Oui
+Moto;IH-084-HL;Royal Enfield;Himalayan;231;98441;Loué;500;A2
+Moto;SY-710-ZO;Triumph;Tiger 900;144;32293;Disponible;400;A2
+Voiture;JB-479-YV;Nissan;Leaf;133;21588;Loué;5;Oui
+Voiture;ER-591-LJ;Nissan;Qashqai;152;56646;Loué;5;Oui
+Moto;EK-829-BJ;Yamaha;Tracer 9;52;79644;Loué;600;A2
+Voiture;HD-867-GS;Peugeot;108;95;1866;Disponible;2;Oui
+Voiture;CQ-741-IB;Kia;Picanto;63;197909;Loué;9;Non
+Moto;TR-162-MW;BMW;R1250GS;215;497;Loué;300;A2
+Moto;GY-752-NQ;Honda;CB650R;56;93144;Disponible;650;A2
+Moto;IE-309-YM;Ducati;Monster;230;21808;Disponible;1000;A
+CampingCar;JR-560-LQ;Renault;Trafic SpaceNomad;101;78903;Disponible;8.2;5
+Voiture;AT-653-GM;Peugeot;2008;181;87994;Disponible;4;Oui
+Voiture;IM-066-VJ;Audi;A1;198;11845;Disponible;5;Oui
+Moto;TC-865-IT;Suzuki;GSX-S750;200;41706;Disponible;125;A2
+Moto;VC-738-WS;Harley-Davidson;Low Rider S;80;62945;Loué;650;A2
+Voiture;SG-382-GD;Seat;Ibiza;143;28767;Disponible;2;Oui
+Voiture;CK-592-HW;Tesla;Model S;174;21390;Disponible;5;Oui
+Moto;YG-400-MO;KTM;Duke 125;47;93526;Loué;1100;A
+Voiture;TX-471-PQ;Tesla;Model S;129;112292;Disponible;5;Non
+Voiture;TZ-950-QK;Ford;Kuga;133;34928;Disponible;9;Oui
+CampingCar;EG-608-QM;Mercedes;Marco Polo;327;180437;Loué;5.2;7
+Voiture;BB-598-HM;Volvo;S60;188;23617;Disponible;2;Oui
+Moto;GD-377-DE;Yamaha;MT-07;155;62262;Disponible;125;A2
+CampingCar;IW-551-DE;Volkswagen;Crafter;258;155196;Disponible;5.9;2
+Voiture;WN-543-CT;Tesla;Model 3;190;187552;Disponible;5;Oui
+Moto;BK-938-QF;Triumph;Street Triple;108;62592;Disponible;300;A2
+CampingCar;WX-250-EM;Volkswagen;California;292;150921;Disponible;6.5;5
+Moto;HL-457-LD;Kawasaki;Versys 1000;192;42231;Disponible;900;A
+Moto;LH-810-KW;BMW;R18;55;87513;Disponible;1300;A
+Moto;ES-605-LO;Ducati;Scrambler;218;94683;En maintenance;400;A2
+Voiture;UT-305-LW;Nissan;Juke;70;127013;Disponible;2;Oui
+CampingCar;ZW-850-KR;Volkswagen;California;223;26106;Disponible;7.5;3
+Voiture;NU-654-EY;Dacia;Duster;76;62049;Disponible;2;Oui
+Moto;RK-212-HN;Triumph;Bonneville T120;231;87354;Disponible;1300;A
+Moto;LU-765-HB;Harley-Davidson;Sportster S;190;29906;Disponible;125;A2
+Voiture;LP-224-CG;Mercedes;Classe A;196;139922;Loué;4;Non
+Voiture;EW-067-YJ;Opel;Mokka;137;121180;Loué;5;Oui
+Moto;JN-549-VL;Harley-Davidson;Pan America;162;80569;Disponible;1250;A
+CampingCar;UY-395-UD;Peugeot;Traveller;244;32483;Loué;5.4;6
+Voiture;TM-927-VL;Citroën;C3 Aircross;97;62861;En maintenance;5;Oui
+Voiture;JO-921-BA;Fiat;Tipo;177;192506;Disponible;4;Oui
+Moto;ZN-236-YM;Harley-Davidson;Street Glide;126;60672;Disponible;1300;A
+Moto;MF-753-OD;Honda;Forza 350;217;49176;Disponible;750;A
+Moto;KT-394-AE;Honda;Forza 125;90;24304;Loué;750;A
+Voiture;BI-035-UR;Skoda;Octavia;150;147437;Disponible;5;Oui
+Moto;OL-283-TO;Honda;Forza 125;180;8700;Disponible;500;A2
+CampingCar;ZU-050-LK;Volkswagen;California;288;8387;Disponible;6.5;6
+Voiture;FW-287-VK;Nissan;Micra;166;178546;Loué;9;Oui
+Voiture;YQ-587-TG;Seat;Arona;39;150558;Disponible;7;Oui
+Voiture;GI-728-YB;Mercedes;Classe E;59;141439;Disponible;7;Oui
+Voiture;WX-399-YK;Peugeot;5008;144;59885;Disponible;5;Oui
+Voiture;EU-601-EB;Ford;Focus;50;21382;Disponible;9;Oui
+Voiture;RZ-604-GN;Skoda;Superb;71;106893;Disponible;7;Oui
+Moto;AZ-207-LQ;Harley-Davidson;Road Glide;143;77228;Disponible;1300;A
+Voiture;HU-452-EB;Dacia;Duster;192;101646;Disponible;2;Oui
+CampingCar;LH-990-BK;Renault;Master;326;205350;Loué;7.0;5
+CampingCar;TB-747-LV;Ford;Transit Custom;188;217125;Disponible;7.0;4
+CampingCar;CO-232-IG;Fiat;Ducato;329;226855;Disponible;7.0;3
+Voiture;PJ-075-VG;Skoda;Kodiaq;171;11321;Disponible;5;Oui
+CampingCar;FD-706-TV;Renault;Trafic SpaceNomad;266;46297;Disponible;7.3;3
+Voiture;SU-571-MI;Toyota;Corolla;124;184218;Disponible;5;Oui
+Moto;QW-701-YX;KTM;Adventure 390;184;70792;Disponible;900;A
+Voiture;KH-685-KE;Audi;A3;69;34922;Disponible;2;Oui
+Voiture;XI-042-JY;Ford;Explorer;199;93461;Disponible;5;Oui
+```
