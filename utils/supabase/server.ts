@@ -4,10 +4,26 @@ import { cookies } from 'next/headers';
 export async function createClient() {
   const cookieStore = await cookies();
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ""
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
+      global: {
+        fetch: async (url, options) => {
+          try {
+            return await fetch(url, options);
+          } catch (error) {
+            console.warn('Supabase fetch failed in server.ts:', error);
+            return new Response(JSON.stringify({ error: 'Network error' }), {
+              status: 502,
+              headers: { 'Content-Type': 'application/json' }
+            });
+          }
+        }
+      },
       cookies: {
         getAll() {
           return cookieStore.getAll();

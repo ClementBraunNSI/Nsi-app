@@ -27,18 +27,24 @@ export default function Breadcrumbs({ customItems }: BreadcrumbsProps) {
       </Link>
       
       {pathSegments.map((segment, index) => (
-        <div key={segment.href} className="flex items-center">
+        <div key={segment.href + index} className="flex items-center">
           <ChevronRight size={14} className="mx-2 text-slate-300" />
-          <Link 
-            href={segment.href}
-            className={`
-              hover:text-orange-600 transition-colors
-              ${index === pathSegments.length - 1 ? 'text-slate-900 font-bold pointer-events-none' : ''}
-            `}
-            aria-current={index === pathSegments.length - 1 ? 'page' : undefined}
-          >
-            {segment.label}
-          </Link>
+          {segment.href === '#' ? (
+            <span className="text-slate-900 font-bold">
+              {segment.label}
+            </span>
+          ) : (
+            <Link 
+              href={segment.href}
+              className={`
+                hover:text-orange-600 transition-colors
+                ${index === pathSegments.length - 1 ? 'text-slate-900 font-bold pointer-events-none' : ''}
+              `}
+              aria-current={index === pathSegments.length - 1 ? 'page' : undefined}
+            >
+              {segment.label}
+            </Link>
+          )}
         </div>
       ))}
     </nav>

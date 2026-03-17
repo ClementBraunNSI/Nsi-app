@@ -79,3 +79,20 @@ Nous allons créer une "Zone Expérimentale" (`/lab/experimental`) pour tester c
 1.  `CommandPalette` (Navigation rapide)
 2.  `SmartBreadcrumbs` (Navigation contextuelle)
 3.  `FlashCardReview` (Révision active)
+
+## 4. Optimisation Server-Side (RSC & Next.js 14+)
+
+Pour rivaliser avec la rapidité des sites statiques (MkDocs) tout en gardant l'interactivité, nous devons migrer un maximum de logique vers le serveur (React Server Components).
+
+### 🏗 Architecture Hybride (Server-First)
+*   **Liste des cours & Navigation (Sidebar) :** Doivent être générés statiquement au build (`generateStaticParams`) ou côté serveur. Actuellement, si c'est du `use client`, le navigateur doit télécharger tout le JS pour afficher le menu.
+*   **Rendu Markdown (MDX) :** Le parsing du MDX doit se faire à 100% sur le serveur (`rsc`). Le client ne doit recevoir que du HTML et du JSON léger, pas le parser Markdown complet.
+*   **Syntax Highlighting :** Utiliser `shiki` ou `prism` côté serveur. Le client reçoit des `<span>` colorés, pas besoin de charger une librairie de coloration syntaxique lourde au runtime.
+
+### ⚡ Suspense & Streaming
+*   **Chargement progressif :** Envelopper les composants lourds (ex: `MonacoEditor`, `GraphVisualizer`) dans des `<Suspense fallback={<Skeleton />}>`.
+*   **Interactivité différée :** Le texte du cours s'affiche instantanément (Serveur), et les widgets interactifs (Quiz, Code) s'hydratent ensuite (Client).
+
+### 💾 Base de Données & API
+*   **Server Actions :** Pour les formulaires (ex: "Was this helpful?", "Connexion"), utiliser les Server Actions de Next.js au lieu de créer des routes API REST `/api/...`. Ça réduit le code client et accélère les interactions.
+*   **Caching (ISR) :** Mettre en cache les pages de cours lourdes avec `revalidate: 3600` (1h) pour éviter de re-parser le MDX à chaque visite.
