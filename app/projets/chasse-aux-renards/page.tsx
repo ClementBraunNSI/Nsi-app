@@ -52,13 +52,13 @@ export default function ChasseAuxRenards() {
   const currentArtwork = artworks[currentIndex];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B1120]">
+    <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600">
       
-      {/* Navbar Minimaliste */}
-      <nav className="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md sticky top-0 z-30">
+      {/* Navbar Minimaliste (alignée sur CourseNavigation) */}
+      <nav className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-slate-500 hover:text-orange-500 transition-colors font-bold text-sm uppercase tracking-widest">
-            <Home size={18} /> Retour
+          <Link href="/" className="flex items-center gap-2 text-slate-400 hover:text-orange-500 transition-colors font-bold text-sm uppercase tracking-widest">
+            <Home size={18} /> Retour à l'accueil
           </Link>
           <div className="flex items-center gap-2 text-orange-500 font-black tracking-widest uppercase text-sm">
             <Palette size={18} /> Édition 24-25
@@ -66,40 +66,37 @@ export default function ChasseAuxRenards() {
         </div>
       </nav>
 
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="max-w-5xl mx-auto px-6 py-12">
         
-        {/* Header Style Fox */}
-        <div className="bg-orange-50 dark:bg-orange-950/20 rounded-[2.5rem] p-10 text-center border border-orange-100 dark:border-orange-900/50 mb-12 relative overflow-hidden">
-          <div className="relative z-10">
-            <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 italic uppercase tracking-tighter">
-              Chasse aux Ren'Arts
-            </h1>
-            <p className="text-orange-600 dark:text-orange-400 text-lg font-medium max-w-2xl mx-auto">
-              Découvrez les créations artistiques de nos élèves qui ont revisité les grands classiques de l'art en y intégrant notre mascotte renard !
-            </p>
-          </div>
-          <div className="absolute top-[-20%] right-[-5%] text-[12rem] opacity-[0.03] dark:opacity-[0.02] select-none pointer-events-none">🦊</div>
+        {/* Header Style standard du site */}
+        <div className="mb-12">
+          <h1 className="text-5xl md:text-6xl font-black text-slate-900 mb-4 tracking-tight">
+            Chasse aux <span className="text-orange-500">Ren'Arts.</span>
+          </h1>
+          <p className="text-slate-500 text-lg max-w-3xl font-medium leading-relaxed">
+            Découvrez les créations artistiques de nos élèves qui ont revisité les grands classiques de l'art en y intégrant notre mascotte renard !
+          </p>
         </div>
 
         {/* Gallery Section */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow-xl border border-slate-100 dark:border-slate-800">
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-slate-100">
           
           {/* Controls */}
           <div className="flex justify-between items-center mb-8">
             <button 
               onClick={prevSlide}
-              className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-orange-500 hover:text-white transition-all shadow-sm"
+              className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-all shadow-sm"
             >
               <ChevronLeft size={24} />
             </button>
             
-            <div className="font-mono text-lg font-bold text-slate-500">
-              <span className="text-orange-500">{currentIndex + 1}</span> / {artworks.length}
+            <div className="font-bold text-slate-400 tracking-widest">
+              <span className="text-slate-900">{currentIndex + 1}</span> / {artworks.length}
             </div>
 
             <button 
               onClick={nextSlide}
-              className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-orange-500 hover:text-white transition-all shadow-sm"
+              className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-all shadow-sm"
             >
               <ChevronRight size={24} />
             </button>
@@ -109,33 +106,33 @@ export default function ChasseAuxRenards() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
             
             <div 
-              className="lg:col-span-3 relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden cursor-pointer group bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+              className="lg:col-span-3 relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden cursor-pointer group bg-slate-50 border border-slate-100"
               onClick={() => setIsModalOpen(true)}
             >
               <Image 
                 src={currentArtwork.src} 
                 alt={currentArtwork.title}
                 fill
-                className="object-contain transition-transform duration-500 group-hover:scale-105"
-                unoptimized // Keep original image quality
+                className="object-contain p-2 transition-transform duration-700 group-hover:scale-105"
+                unoptimized
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                <span className="opacity-0 group-hover:opacity-100 bg-white/90 text-slate-900 px-4 py-2 rounded-full font-bold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all shadow-lg">
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-slate-900/5 transition-colors flex items-center justify-center">
+                <span className="opacity-0 group-hover:opacity-100 bg-white/95 text-slate-800 px-6 py-3 rounded-full font-black text-xs uppercase tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-all shadow-xl">
                   Agrandir l'œuvre
                 </span>
               </div>
             </div>
 
-            <div className="lg:col-span-2 space-y-6 text-center lg:text-left">
+            <div className="lg:col-span-2 space-y-6">
               <div>
-                <div className="inline-block px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-black uppercase tracking-widest rounded-lg mb-4">
+                <div className="inline-block px-4 py-1.5 bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-6 border border-orange-100">
                   Artiste : {currentArtwork.artist}
                 </div>
-                <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4 leading-tight">
+                <h2 className="text-3xl font-black text-slate-800 mb-4 leading-tight">
                   {currentArtwork.title}
                 </h2>
-                <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
-                  <p className="text-slate-500 dark:text-slate-400 italic text-sm">
+                <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                  <p className="text-slate-500 text-sm font-medium leading-relaxed">
                     {currentArtwork.original}
                   </p>
                 </div>
@@ -145,16 +142,16 @@ export default function ChasseAuxRenards() {
           </div>
 
           {/* Thumbnails */}
-          <div className="mt-12 flex gap-3 overflow-x-auto pb-4 px-2 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-orange-200 scrollbar-track-transparent">
+          <div className="mt-12 flex gap-3 overflow-x-auto pb-4 px-2 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
             {artworks.map((art, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
                 className={`
-                  relative w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden snap-center transition-all
+                  relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-2xl overflow-hidden snap-center transition-all duration-300
                   ${currentIndex === idx 
-                    ? 'ring-4 ring-orange-500 ring-offset-2 dark:ring-offset-slate-900 scale-105' 
-                    : 'opacity-50 hover:opacity-100'
+                    ? 'ring-2 ring-orange-500 ring-offset-4 scale-105 opacity-100' 
+                    : 'opacity-40 hover:opacity-100 border border-slate-100'
                   }
                 `}
               >

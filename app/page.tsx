@@ -26,6 +26,15 @@ const GAMES = [
     tag: "Jeu Python", 
     href: "/fox" 
   },
+  { 
+    id: 'fox-art', 
+    title: "Chasse aux Ren'Arts", 
+    desc: "Découvrez les créations artistiques de nos élèves qui ont revisité les grands classiques de l'art.", 
+    img: "/images/fox_chasse_renard.png", 
+    color: "bg-rose-500", 
+    tag: "Galerie d'Art", 
+    href: "/projets/chasse-aux-renards" 
+  },
 ];
 
 // Données des cours particuliers
@@ -249,17 +258,6 @@ export default function LandingPage() {
           {GAMES.map((game) => (
             <CourseCard key={game.id} {...game} />
           ))}
-
-          <Link href="/projets/chasse-aux-renards" className="group p-8 rounded-3xl border border-slate-100 bg-white shadow-xl shadow-slate-200/20 hover:shadow-2xl hover:shadow-orange-500/20 transition-all text-center flex flex-col items-center justify-center gap-4 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 text-white rounded-2xl flex items-center justify-center mb-2 group-hover:rotate-12 transition-transform shadow-lg relative z-10">
-                <Palette size={32} />
-              </div>
-            <div className="relative z-10">
-              <h3 className="text-xl font-bold text-slate-900">Chasse aux Ren'Arts</h3>
-              <p className="text-sm text-slate-500 mt-2">Galerie d'art des élèves</p>
-            </div>
-          </Link>
         </div>
       </main>
 
