@@ -253,7 +253,7 @@ export default function LandingPage() {
           ))}
         </div>
 
-        <h2 className="text-2xl font-black text-slate-800 mt-20 mb-10">Un peu plus de Renards</h2>
+        <h2 className="text-2xl font-black text-slate-800 mt-20 mb-10">Un peu plus de <span className="text-orange-500">Renards</span></h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {GAMES.map((game) => (
             <CourseCard key={game.id} {...game} />
