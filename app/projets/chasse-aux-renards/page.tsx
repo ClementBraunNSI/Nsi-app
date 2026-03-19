@@ -7,23 +7,125 @@ import { ChevronLeft, ChevronRight, X, Palette, Home } from 'lucide-react';
 import Breadcrumbs from '@/components/experimental/Breadcrumbs';
 
 const artworks = [
-  { src: '/images/chasse/2024_2025/raw.png', title: 'Le Semeur et le Renard', artist: 'Christopher', original: 'd\'après "Le Semeur" de Vincent van Gogh (1888)' },
-  { src: '/images/chasse/2024_2025/tableau-renard.jpg', title: 'La Création du Renard', artist: 'Elliott', original: 'd\'après "La Création d\'Adam" de Michel-Ange (vers 1511)' },
-  { src: '/images/chasse/2024_2025/1000051534.png', title: 'La fable du renard et de la proie', artist: 'Ethan', original: 'd\'après "La fable du chien et de la proie" de Paul de Vos (17e siècle)' },
-  { src: '/images/chasse/2024_2025/tableau-renard_2.jpg', title: 'Conversation de renards dans un patio', artist: 'Enzo', original: 'd\'après "Conversation dans un patio à Alger" de Rudolf Ernst (Fin XIXe)' },
-  { src: '/images/chasse/2024_2025/fallenangelfox.png', title: 'L\'Ange renard déchu', artist: 'Ewan', original: 'd\'après "L\'Ange déchu" d\'Alexandre Cabanel (1847)' },
-  { src: '/images/chasse/2024_2025/modifie.png', title: 'Kitagawa UtamaRen\'Art', artist: 'Hugo', original: 'd\'après "Kōmei San Bijin - Trois beautés célèbres" d\'Utamaro (1792-1793)' },
-  { src: '/images/chasse/2024_2025/renard_a_la_perle.jpg', title: 'Le renard à la perle', artist: 'Léon', original: 'd\'après "La Jeune Fille à la perle" de Johannes Vermeer (1665)' },
-  { src: '/images/chasse/2024_2025/imageia.jpg', title: 'Autoportrait du renard à l\'oreille bandée', artist: 'Lino', original: 'd\'après "Autoportrait à l\'oreille bandée" de Vincent van Gogh (1889)' },
-  { src: '/images/chasse/2024_2025/klimt_IA.png', title: 'Malcesine aux renards', artist: 'Lois', original: 'd\'après "Malcesine sur le lac de Garde" de Gustav Klimt' },
-  { src: '/images/chasse/2024_2025/1.jpg', title: 'Sky Palace Renardisé', artist: 'Lowen', original: 'Création originale de Lowen L. (2024)' },
-  { src: '/images/chasse/2024_2025/renard_au_ballon.png', title: 'Renard au ballon', artist: 'Lucas', original: 'd\'après "La Petite Fille au Ballon" de Banksy' },
-  { src: '/images/chasse/2024_2025/kanagafox_wave.png', title: 'La Vague de Kanagafox', artist: 'M. Braun', original: 'd\'après "La Grande Vague de Kanagawa" de Katsushika Hokusai (1830-1833)' },
-  { src: '/images/chasse/2024_2025/Renartumne_de_Arcimboldo.png', title: 'Renartumne', artist: 'Mathis', original: 'd\'après "Vertumne" de Giuseppe Arcimboldo (1590)' },
-  { src: '/images/chasse/2024_2025/tableau-renard_3.jpg', title: 'Le Fils du Renard', artist: 'Maxime', original: 'd\'après "Le Fils de l\'homme" de René Magritte (1964)' },
-  { src: '/images/chasse/2024_2025/fox.png', title: 'Foxes around the mountains', artist: 'Nathan', original: 'd\'après "Among the Sierra Nevada, California" d\'Albert Bierstadt (1868)' },
-  { src: '/images/chasse/2024_2025/laitièrenard.png', title: 'La Laitière aux aguets', artist: 'Nolann', original: 'd\'après "La Laitière" de Johannes Vermeer (vers 1658-1660)' },
-  { src: '/images/chasse/2024_2025/modifie_2.png', title: 'The Fox of Babylone', artist: 'Terry', original: 'd\'après "The Fall of Babylon" de John Martin (1831)' }
+  { 
+    src: '/images/chasse/2024_2025/raw.png', 
+    title: 'Le Semeur et le Renard', 
+    artist: 'Christopher', 
+    original: 'd\'après "Le Semeur" de Vincent van Gogh (1888)',
+    story: "Un matin d’automne, alors que le soleil se levait sur la campagne dorée, un renard sortit de sa tanière. Attiré par le mouvement du semeur, il le suivit jour après jour. Le village raconta plus tard que ce renard, loin d’être un voleur de poules, était le gardien des graines sacrées, veillant à leur bonne croissance..."
+  },
+  { 
+    src: '/images/chasse/2024_2025/tableau-renard.jpg', 
+    title: 'La Création du Renard', 
+    artist: 'Elliott', 
+    original: 'd\'après "La Création d\'Adam" de Michel-Ange (vers 1511)',
+    story: "Un hommage renardesque à La Création d’Adam de Michel-Ange, où Dieu et Adam sont remplacés par de majestueux renards, dans une relecture rusée et poétique du chef-d'œuvre classique."
+  },
+  { 
+    src: '/images/chasse/2024_2025/1000051534.png', 
+    title: 'La fable du renard et de la proie', 
+    artist: 'Ethan', 
+    original: 'd\'après "La fable du chien et de la proie" de Paul de Vos (17e siècle)',
+    story: "Inspirée d’une fable d’Ésope reprise par La Fontaine, l’œuvre montre un renard perdant sa proie en voulant saisir son reflet dans l’eau. Elle illustre la morale contre la cupidité."
+  },
+  { 
+    src: '/images/chasse/2024_2025/tableau-renard_2.jpg', 
+    title: 'Conversation de renards dans un patio', 
+    artist: 'Enzo', 
+    original: 'd\'après "Conversation dans un patio à Alger" de Rudolf Ernst (Fin XIXe)',
+    story: "Une peinture orientaliste réimaginée représentant une scène de vie quotidienne dans un patio algérien, où les renards ont pris la place des dignitaires locaux pour des discussions secrètes."
+  },
+  { 
+    src: '/images/chasse/2024_2025/fallenangelfox.png', 
+    title: 'L\'Ange renard déchu', 
+    artist: 'Ewan', 
+    original: 'd\'après "L\'Ange déchu" d\'Alexandre Cabanel (1847)',
+    story: "L’œuvre saisit par son mélange de beauté, de mélancolie et de révolte. C’est un exemple parfait du romantisme français du XIXe siècle, conjuguant esthétique classique et émotion dramatique, cette fois incarné par un esprit renardesque."
+  },
+  { 
+    src: '/images/chasse/2024_2025/modifie.png', 
+    title: 'Kitagawa UtamaRen\'Art', 
+    artist: 'Hugo', 
+    original: 'd\'après "Kōmei San Bijin - Trois beautés célèbres" d\'Utamaro (1792-1793)',
+    story: "Dans un Japon de l'ère Kansei, où la beauté prime sur le reste, trois femelles renardes nommées : Toyohina, Kita et Hisa, posent pour une gravure dans le bois avec une élégance mystique."
+  },
+  { 
+    src: '/images/chasse/2024_2025/renard_a_la_perle.jpg', 
+    title: 'Le renard à la perle', 
+    artist: 'Léon', 
+    original: 'd\'après "La Jeune Fille à la perle" de Johannes Vermeer (1665)',
+    story: "Dans une vieille forêt vivait Aurel, un renard curieux. Un jour, il trouva une perle mystérieuse dans les ruines d’un manoir. En la mettant à son oreille, il se transforma. Un corbeau jaloux tenta de lui prendre, mais Aurel répondit : « La beauté n’appartient à personne. Elle se partage. » Depuis, le renard à la perle veille sur l’inspiration du monde."
+  },
+  { 
+    src: '/images/chasse/2024_2025/imageia.jpg', 
+    title: 'Autoportrait du renard à l\'oreille bandée', 
+    artist: 'Lino', 
+    original: 'd\'après "Autoportrait à l\'oreille bandée" de Vincent van Gogh (1889)',
+    story: "Vincent van Braun n'a pas supporté la difficulté des études d'informatique. À cela s'ajoute sa bipolarité de développeur ; dans un élan de désespoir face à une erreur de compilation, il se coupe l'oreille."
+  },
+  { 
+    src: '/images/chasse/2024_2025/klimt_IA.png', 
+    title: 'Malcesine aux renards', 
+    artist: 'Lois', 
+    original: 'd\'après "Malcesine sur le lac de Garde" de Gustav Klimt',
+    story: "Une vision onirique du lac de Garde où les motifs dorés de Klimt se fondent dans la silhouette furtive de renards gardiens du village de Malcesine."
+  },
+  { 
+    src: '/images/chasse/2024_2025/1.jpg', 
+    title: 'Sky Palace Renardisé', 
+    artist: 'Lowen', 
+    original: 'Création originale de Lowen L. (2024)',
+    story: "Au sommet des nuages flotte un palais céleste gardé par des entités renardes mystiques, contrôlant le flux de l'énergie et des vents."
+  },
+  { 
+    src: '/images/chasse/2024_2025/renard_au_ballon.png', 
+    title: 'Renard au ballon', 
+    artist: 'Lucas', 
+    original: 'd\'après "La Petite Fille au Ballon" de Banksy',
+    story: "L'œuvre représente un renard tentant de rattraper un ballon rouge, un mélange subtil de poésie et de rébellion urbaine à la manière du célèbre street-artist."
+  },
+  { 
+    src: '/images/chasse/2024_2025/kanagafox_wave.png', 
+    title: 'La Vague de Kanagafox', 
+    artist: 'M. Braun', 
+    original: 'd\'après "La Grande Vague de Kanagawa" de Katsushika Hokusai (1830-1833)',
+    story: "Dans un Japon de l'ère Edo où les renards ont développé leur propre civilisation maritime, le maître Hokusai a immortalisé la puissance de l'océan. La vague géante menace les embarcations des renards pêcheurs."
+  },
+  { 
+    src: '/images/chasse/2024_2025/Renartumne_de_Arcimboldo.png', 
+    title: 'Renartumne', 
+    artist: 'Mathis', 
+    original: 'd\'après "Vertumne" de Giuseppe Arcimboldo (1590)',
+    story: "Le portrait allégorique de l'empereur est ici revisité sous les traits d'un renard composé de fruits, légumes et fleurs, symbolisant la ruse de la nature à travers les quatre saisons."
+  },
+  { 
+    src: '/images/chasse/2024_2025/tableau-renard_3.jpg', 
+    title: 'Le Fils du Renard', 
+    artist: 'Maxime', 
+    original: 'd\'après "Le Fils de l\'homme" de René Magritte (1964)',
+    story: "Dans une réalité parallèle où les renards ont développé une société secrète, un individu énigmatique nommé L le Renard est devenu le symbole du mystère. Il se promène silencieusement, le visage dissimulé, questionnant la frontière entre le visible et l'invisible."
+  },
+  { 
+    src: '/images/chasse/2024_2025/fox.png', 
+    title: 'Foxes around the mountains', 
+    artist: 'Nathan', 
+    original: 'd\'après "Among the Sierra Nevada, California" d\'Albert Bierstadt (1868)',
+    story: "Dans les montagnes profondes, où l’air est secret, une meute de renards dans l’ombre s’arrête. Leurs yeux brillent d’une lueur silencieuse, et dans la brume, leur danse est précieuse. Ils portent avec eux des histoires oubliées."
+  },
+  { 
+    src: '/images/chasse/2024_2025/laitièrenard.png', 
+    title: 'La Laitière aux aguets', 
+    artist: 'Nolann', 
+    original: 'd\'après "La Laitière" de Johannes Vermeer (vers 1658-1660)',
+    story: "L'œuvre paisible de la vie domestique hollandaise est troublée par l'apparition furtive d'un renard, attiré par le parfum du lait frais, ajoutant une tension subtile à cette scène de la vie quotidienne du XVIIᵉ siècle."
+  },
+  { 
+    src: '/images/chasse/2024_2025/modifie_2.png', 
+    title: 'The Fox of Babylone', 
+    artist: 'Terry', 
+    original: 'd\'après "The Fall of Babylon" de John Martin (1831)',
+    story: "Cette œuvre spectaculaire représente la destruction dramatique de Babylone. Le style romantique est marqué par des paysages apocalyptiques où l'esprit du renard s'échappe des ruines de l'empire corrompu."
+  }
 ];
 
 export default function ChasseAuxRenards() {
@@ -131,7 +233,16 @@ export default function ChasseAuxRenards() {
                 <h2 className="text-3xl font-black text-slate-800 mb-4 leading-tight">
                   {currentArtwork.title}
                 </h2>
-                <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                
+                {currentArtwork.story && currentArtwork.story !== "Histoire non trouvée." && (
+                  <div className="mb-4">
+                    <p className="text-slate-600 text-base leading-relaxed italic font-serif">
+                      "{currentArtwork.story}"
+                    </p>
+                  </div>
+                )}
+
+                <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100 mt-6">
                   <p className="text-slate-500 text-sm font-medium leading-relaxed">
                     {currentArtwork.original}
                   </p>

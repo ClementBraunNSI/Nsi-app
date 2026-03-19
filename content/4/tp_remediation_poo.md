@@ -39,33 +39,6 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
        - Elle ne prend **aucun paramètre**.
        - Elle affiche dans la console : *"Joueur [Pseudo] - Niveau [Niveau]"*.
     </Enonce>
-    <Correction>
-    ```csharp
-    using System;
-
-    public class Joueur
-    {
-        // 1. Les propriétés (sans le mot static !)
-        public string Pseudo { get; set; }
-        public int Niveau { get; set; }
-        public bool EstPremium { get; set; }
-
-        // 2. Le constructeur (Même nom que la classe, pas de "void")
-        public Joueur(string pseudo, int niveau)
-        {
-            Pseudo = pseudo;
-            Niveau = niveau;
-            EstPremium = false; // Valeur par défaut
-        }
-
-        // 3. Une méthode d'instance (sans static !)
-        public void AfficherProfil()
-        {
-            Console.WriteLine($"Joueur {Pseudo} - Niveau {Niveau}");
-        }
-    }
-    ```
-    </Correction>
   </ExerciseSection>
 
   <ExerciseSection id="tp-remed-exo2" label="Étape 2 - L'Instanciation (Le mot 'new')">
@@ -88,26 +61,6 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     3. Passez le joueur "Light" en Premium (`EstPremium = true`).
     4. Appelez la méthode `AfficherProfil()` sur vos deux joueurs.
     </Enonce>
-    <Correction>
-    ```csharp
-    class Program
-    {
-        public static void Main(string[] args)
-        {
-            // Instanciation : Création de vrais objets en mémoire avec 'new'
-            Joueur joueur1 = new Joueur("Shadow", 5);
-            Joueur joueur2 = new Joueur("Light", 42);
-
-            // Modification d'une propriété sur un objet spécifique
-            joueur2.EstPremium = true;
-
-            // Appel de méthode sur chaque instance
-            joueur1.AfficherProfil();
-            joueur2.AfficherProfil();
-        }
-    }
-    ```
-    </Correction>
   </ExerciseSection>
 
   <ExerciseSection id="tp-remed-exo3" label="Étape 3 - Interaction entre Objets (Le mot 'this')">
@@ -135,38 +88,6 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
     Testez cette méthode dans le `Main` en faisant attaquer "Shadow" contre "Light", puis "Light" contre "Shadow".
     </Enonce>
-    <Correction>
-    ```csharp
-    // À rajouter dans la classe Joueur :
-    public void Attaquer(Joueur cible)
-    {
-        // 'this' représente le joueur qui lance l'attaque
-        // 'cible' représente le joueur passé entre parenthèses
-        
-        if (this.Niveau > cible.Niveau)
-        {
-            Console.WriteLine($"{this.Pseudo} écrase {cible.Pseudo} !");
-        }
-        else
-        {
-            Console.WriteLine($"{this.Pseudo} a perdu contre {cible.Pseudo}...");
-        }
-    }
-
-    // Dans le Main :
-    public static void Main(string[] args)
-    {
-        Joueur shadow = new Joueur("Shadow", 5);
-        Joueur light = new Joueur("Light", 42);
-
-        // Shadow (niveau 5) attaque Light (niveau 42) -> Il perd
-        shadow.Attaquer(light); 
-
-        // Light (niveau 42) attaque Shadow (niveau 5) -> Il gagne
-        light.Attaquer(shadow);
-    }
-    ```
-    </Correction>
   </ExerciseSection>
 
   <ExerciseSection id="tp-remed-exo4" label="Étape 4 - Les Listes d'Objets">
@@ -188,55 +109,54 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
     Dans le `Main`, créez une guilde "Les Phénix", ajoutez-y vos joueurs, et affichez les membres.
     </Enonce>
-    <Correction>
-    ```csharp
-    using System;
-    using System.Collections.Generic; // Obligatoire pour utiliser List<>
+  </ExerciseSection>
 
-    public class Guilde
-    {
-        public string NomGuilde { get; set; }
-        private List<Joueur> _membres; // La liste est déclarée ici
+  <ExerciseSection id="tp-remed-exo5" label="Étape 5 - Algorithmes de recherche dans une Liste">
+    <Enonce>
+    ## 🔍 Étape 5 : Explorer et analyser une Liste
 
-        public Guilde(string nom)
-        {
-            NomGuilde = nom;
-            // ÉTAPE CRUCIALE : Il faut instancier la liste avant de l'utiliser !
-            _membres = new List<Joueur>(); 
-        }
+    Maintenant que vous savez ajouter des éléments dans une liste, il faut savoir exploiter ces données. Dans le DS, c'était le rôle des méthodes `PeutAccueillir` ou `VerifierHarmonie`.
 
-        public void AjouterMembre(Joueur j)
-        {
-            _membres.Add(j);
-            Console.WriteLine($"{j.Pseudo} a rejoint la guilde {NomGuilde} !");
-        }
+    ### 📋 Travail à faire
 
-        public void AfficherMembres()
-        {
-            Console.WriteLine($"--- Membres de {NomGuilde} ---");
-            foreach (Joueur membre in _membres)
-            {
-                // Ici on utilise la variable 'membre' de la boucle
-                Console.WriteLine("- " + membre.Pseudo);
-            }
-        }
-    }
+    Dans votre classe `Guilde`, ajoutez les méthodes suivantes :
 
-    // Dans le Main :
-    public static void Main(string[] args)
-    {
-        Joueur shadow = new Joueur("Shadow", 5);
-        Joueur light = new Joueur("Light", 42);
+    1. **`CalculerNiveauMoyen()`** : 
+       - Retourne un `double`.
+       - Calcule et retourne la moyenne des niveaux de tous les membres de la guilde. 
+       - *Attention : gérez le cas où la guilde est vide (retournez 0).*
 
-        Guilde lesPhenix = new Guilde("Les Phénix");
-        
-        lesPhenix.AjouterMembre(shadow);
-        lesPhenix.AjouterMembre(light);
+    2. **`TrouverMeilleurJoueur()`** :
+       - Retourne un objet `Joueur`.
+       - Parcourt la liste pour trouver le joueur avec le niveau le plus élevé et le retourne.
+       - *Astuce : créez une variable temporaire `Joueur meilleur = _membres[0];` avant votre boucle.*
 
-        lesPhenix.AfficherMembres();
-    }
-    ```
-    </Correction>
+    3. **`ExclureMembre(string pseudoCible)`** :
+       - Retourne un `bool` (`true` si le joueur a été trouvé et exclu, `false` sinon).
+       - Cherche le joueur par son pseudo dans la liste et le supprime (utilisez `_membres.Remove(joueur)`).
+
+    Testez ces méthodes dans votre `Main`.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="tp-remed-exo6" label="Étape 6 - Interaction entre Guildes (Le Boss Final)">
+    <Enonce>
+    ## 🏰 Étape 6 : GvG (Guilde vs Guilde)
+
+    C'est l'épreuve finale. Vous allez faire interagir deux objets `Guilde` entre eux, en utilisant les méthodes que vous venez de créer !
+
+    ### 📋 Travail à faire
+
+    Dans la classe `Guilde`, créez la méthode suivante :
+
+    **`DeclarerGuerre(Guilde guildeAdverse)`** :
+    - La méthode ne retourne rien (`void`).
+    - Elle compare le niveau moyen de la guilde actuelle (`this`) avec celui de la `guildeAdverse`.
+    - La guilde avec le niveau moyen le plus bas **perd son meilleur joueur** ! Ce joueur est exclu de la guilde perdante, et rejoint automatiquement la guilde gagnante.
+    - Affichez dans la console un résumé épique du combat (qui gagne, qui est transféré).
+
+    Dans le `Main`, créez deux guildes, remplissez-les de joueurs de niveaux différents, et lancez la guerre !
+    </Enonce>
   </ExerciseSection>
 
 </ExerciseTabs>
