@@ -57,6 +57,8 @@ racine.gauche = Noeud("B")
 racine.droit = Noeud("C")
 ```
 
+<TreeVisualizer />
+
 ## 3. Algorithmes de Parcours
 
 Comment visiter tous les nœuds d'un arbre ? Il existe plusieurs méthodes.

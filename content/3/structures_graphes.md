@@ -52,6 +52,8 @@ graphe = {
 *   ✅ Économe en mémoire.
 *   ✅ Facile de parcourir les voisins d'un sommet.
 
+<GraphVisualizer />
+
 ## 3. Algorithmes de Parcours
 
 Comme pour les arbres, on peut parcourir un graphe. Attention aux **cycles** (boucles) : il faut noter les sommets déjà visités pour ne pas tourner en rond !

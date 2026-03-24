@@ -34,6 +34,8 @@ Dans un ABR équilibré, les opérations de recherche, insertion et suppression 
 
 Dans le pire des cas (arbre dégénéré en liste chaînée), la complexité devient **O(n)**.
 
+<TreeVisualizer />
+
 ## 2. Exercice 1 : Construction et propriétés
 
 ### Question 1 : Dessiner l'arbre

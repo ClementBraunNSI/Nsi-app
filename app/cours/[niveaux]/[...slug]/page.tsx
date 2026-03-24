@@ -104,6 +104,9 @@ import SortingComparator from '@/components/interactive/SortingComparator';
 import BinarySearchVisualizer from '@/components/interactive/BinarySearchVisualizer';
 import LinearVsBinarySearch from '@/components/interactive/LinearVsBinarySearch';
 import PythonPlayground from '@/components/interactive/PythonPlayground';
+import CallStackVisualizer from '@/components/interactive/CallStackVisualizer';
+import TreeVisualizer from '@/components/interactive/TreeVisualizer';
+import GraphVisualizer from '@/components/interactive/GraphVisualizer';
 import CourseNavigation from '@/components/CourseNavigation';
 import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
@@ -273,6 +276,9 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     BinarySearchVisualizer,
     LinearVsBinarySearch,
     PythonPlayground,
+    CallStackVisualizer,
+    TreeVisualizer,
+    GraphVisualizer,
   };
 
   return (

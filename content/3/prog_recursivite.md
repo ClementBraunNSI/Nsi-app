@@ -51,6 +51,8 @@ Imaginez une pile d'assiettes. À chaque appel de fonction, on ajoute une assiet
 7.  Reprise `factorielle(3)` : calcule `3 * 2 = 6` -> **Dépile**
 8.  Résultat final : 6.
 
+<CallStackVisualizer />
+
 ⚠️ **Stack Overflow** : Si vous oubliez le cas de base ou si la récursion est trop profonde (par défaut 1000 en Python), la pile déborde et le programme plante (`RecursionError`).
 
 ## 3. Récursif vs Itératif
