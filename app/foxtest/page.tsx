@@ -81,7 +81,7 @@ const RockBlock = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" className="w-[141.4%] h-[188.5%] absolute" style={{ 
     left: '-20.7%', 
     top: '-67.8%',
-    transform: 'translateZ(10px) rotateZ(45deg) rotateX(-60deg)',
+    transform: 'translateZ(15px) rotateZ(45deg) rotateX(-60deg)',
     transformStyle: 'preserve-3d'
   }}> 
     <ellipse cx="64" cy="95" rx="45" ry="20" fill="#1e293b" opacity="0.2"/> 
