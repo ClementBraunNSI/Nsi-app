@@ -27,6 +27,15 @@ const GAMES = [
     href: "/fox" 
   },
   { 
+    id: 'fox-3d-test', 
+    title: "Académie des Renards • 3D Test", 
+    desc: "Prototype isométrique avec grille 3D, sprites renard/poule et obstacles. Prévisualisation technique.", 
+    img: "/images/foxtest/renard_droite.png", 
+    color: "bg-teal-500", 
+    tag: "Prototype", 
+    href: "/foxtest" 
+  },
+  { 
     id: 'fox-art', 
     title: "Chasse aux Ren'Arts", 
     desc: "Découvrez les créations artistiques de nos élèves qui ont revisité les grands classiques de l'art.", 
