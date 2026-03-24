@@ -9,14 +9,14 @@ icon: "🐍"
 <ExerciseTabs courseId="fiche-python" courseTitle="Fiche Python">
   <ExerciseSection id="python-1" label="Important ⚠️ - Consignes importantes">
     <Enonce>
-### Important ⚠️ - Consignes importantes
+      ### Important ⚠️ - Consignes importantes
 
-**Pour tous les exercices :**
+      **Pour tous les exercices :**
 
-- Créez un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
-- Testez votre code en l'exécutant
-- N'hésitez pas à modifier les valeurs pour voir comment le programme réagit
-- Recopiez vos programmes sur votre cahier pour pouvoir les réviser plus tard
+      - Créez un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
+      - Testez votre code en l'exécutant
+      - N'hésitez pas à modifier les valeurs pour voir comment le programme réagit
+      - Recopiez vos programmes sur votre cahier pour pouvoir les réviser plus tard
     </Enonce>
     <Verification>
 ```python
@@ -27,11 +27,11 @@ assert True, "Consignes lues."
 
   <ExerciseSection id="python-2" label="Introduction 🦊 - Premier programme">
     <Enonce>
-### Introduction 🦊 - Premier programme
+      ### Introduction 🦊 - Premier programme
 
-**Écrire un programme qui affiche "Bonjour le monde !"**
+      **Écrire un programme qui affiche "Bonjour le monde !"**
 
-*Pour la vérification, stockez le texte dans une variable `message` avant de l'afficher.*
+      *Pour la vérification, stockez le texte dans une variable `message` avant de l'afficher.*
     </Enonce>
     <Verification>
 ```python
@@ -43,11 +43,11 @@ assert message == "Bonjour le monde !", "Le message doit être 'Bonjour le monde
 
   <ExerciseSection id="python-3" label="Introduction 🦊 - Affichage simple">
     <Enonce>
-### Introduction 🦊 - Affichage simple
+      ### Introduction 🦊 - Affichage simple
 
-**Écrire un programme qui affiche votre prénom et votre âge sur deux lignes différentes.**
+      **Écrire un programme qui affiche votre prénom et votre âge sur deux lignes différentes.**
 
-*Utilisez les variables `prenom` (texte) et `age` (entier).*
+      *Utilisez les variables `prenom` (texte) et `age` (entier).*
     </Enonce>
     <Verification>
 ```python
@@ -61,11 +61,11 @@ assert isinstance(age, int), "L'âge doit être un nombre entier."
 
   <ExerciseSection id="python-4" label="Introduction 🦊 - Calcul simple">
     <Enonce>
-### Introduction 🦊 - Calcul simple
+      ### Introduction 🦊 - Calcul simple
 
-**Écrire un programme qui calcule et affiche le résultat de 15 + 27.**
+      **Écrire un programme qui calcule et affiche le résultat de 15 + 27.**
 
-*Stockez le résultat dans une variable nommée `resultat`.*
+      *Stockez le résultat dans une variable nommée `resultat`.*
     </Enonce>
     <Verification>
 ```python
@@ -77,13 +77,13 @@ assert resultat == 42, "Le calcul 15 + 27 devrait donner 42."
 
   <ExerciseSection id="python-5" label="Introduction 🦊 - Variables">
     <Enonce>
-### Introduction 🦊 - Variables
+      ### Introduction 🦊 - Variables
 
-**Écrire un programme qui :**
+      **Écrire un programme qui :**
 
-- Crée une variable `nom` avec votre nom
-- Crée une variable `age` avec votre âge
-- Affiche ces informations
+      - Crée une variable `nom` avec votre nom
+      - Crée une variable `age` avec votre âge
+      - Affiche ces informations
     </Enonce>
     <Verification>
 ```python
@@ -97,11 +97,11 @@ assert isinstance(age, int), "La variable 'age' doit être un nombre entier (int
 
   <ExerciseSection id="python-6" label="Introduction 🦊 - Première interaction">
     <Enonce>
-### Introduction 🦊 - Première interaction
+      ### Introduction 🦊 - Première interaction
 
-**Écrire un programme qui demande le prénom de l'utilisateur et lui dit bonjour.**
+      **Écrire un programme qui demande le prénom de l'utilisateur et lui dit bonjour.**
 
-*Stockez la réponse de l'utilisateur dans une variable `prenom`.*
+      *Stockez la réponse de l'utilisateur dans une variable `prenom`.*
     </Enonce>
     <Verification>
 ```python
@@ -113,15 +113,15 @@ assert isinstance(prenom, str), "La variable 'prenom' doit être du texte."
 
   <ExerciseSection id="python-7" label="Introduction 🦊 - Calcul avec variables">
     <Enonce>
-### Introduction 🦊 - Calcul avec variables
+      ### Introduction 🦊 - Calcul avec variables
 
-**Écrire un programme qui :**
+      **Écrire un programme qui :**
 
-- Crée deux variables `a` et `b` avec des nombres de votre choix
-- Calcule leur somme dans une variable `somme`
-- Affiche le résultat
+      - Crée deux variables `a` et `b` avec des nombres de votre choix
+      - Calcule leur somme dans une variable `somme`
+      - Affiche le résultat
 
-## 🌟 Niveau Facile
+      ## 🌟 Niveau Facile
     </Enonce>
     <Verification>
 ```python
@@ -137,12 +137,12 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
 
   <ExerciseSection id="python-8" label="Facile 🦊 - Addition de deux nombres">
     <Enonce>
-### Facile 🦊 - Addition de deux nombres
+      ### Facile 🦊 - Addition de deux nombres
 
-**Écrire un programme qui demande deux nombres à l'utilisateur et affiche leur somme.**
+      **Écrire un programme qui demande deux nombres à l'utilisateur et affiche leur somme.**
 
-*Utilisez les variables `a`, `b` et `somme`.*
-*N'oubliez pas de convertir les entrées en nombres avec `int()` ou `float()`*
+      *Utilisez les variables `a`, `b` et `somme`.*
+      *N'oubliez pas de convertir les entrées en nombres avec `int()` ou `float()`*
     </Enonce>
     <Verification>
 ```python
@@ -158,12 +158,12 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
 
   <ExerciseSection id="python-9" label="Facile 🦊 - Calcul de périmètre">
     <Enonce>
-### Facile 🦊 - Calcul de périmètre
+      ### Facile 🦊 - Calcul de périmètre
 
-**Écrire un programme qui demande la longueur et la largeur d'un rectangle et calcule son périmètre.**
+      **Écrire un programme qui demande la longueur et la largeur d'un rectangle et calcule son périmètre.**
 
-*Utilisez les variables `longueur`, `largeur` et `perimetre`.*
-*Rappel : Périmètre = 2 × (longueur + largeur)*
+      *Utilisez les variables `longueur`, `largeur` et `perimetre`.*
+      *Rappel : Périmètre = 2 × (longueur + largeur)*
     </Enonce>
     <Verification>
 ```python
@@ -179,12 +179,12 @@ assert perimetre == 2 * (longueur + largeur), "Le calcul du périmètre est inco
 
   <ExerciseSection id="python-10" label="Facile 🦊 - Calcul d'aire">
     <Enonce>
-### Facile 🦊 - Calcul d'aire
+      ### Facile 🦊 - Calcul d'aire
 
-**Écrire un programme qui demande le rayon d'un cercle et calcule son aire.**
+      **Écrire un programme qui demande le rayon d'un cercle et calcule son aire.**
 
-*Utilisez les variables `rayon` et `aire`.*
-*Rappel : Aire = π × rayon² (utilisez 3.14 pour π)*
+      *Utilisez les variables `rayon` et `aire`.*
+      *Rappel : Aire = π × rayon² (utilisez 3.14 pour π)*
     </Enonce>
     <Verification>
 ```python
@@ -198,12 +198,12 @@ assert abs(aire - (3.14 * rayon ** 2)) < 0.01, "Le calcul de l'aire est incorrec
 
   <ExerciseSection id="python-11" label="Facile 🦊 - Conversion de température">
     <Enonce>
-### Facile 🦊 - Conversion de température
+      ### Facile 🦊 - Conversion de température
 
-**Écrire un programme qui convertit une température de Celsius en Fahrenheit.**
+      **Écrire un programme qui convertit une température de Celsius en Fahrenheit.**
 
-*Utilisez les variables `celsius` et `fahrenheit`.*
-*Formule : F = C × 9/5 + 32*
+      *Utilisez les variables `celsius` et `fahrenheit`.*
+      *Formule : F = C × 9/5 + 32*
     </Enonce>
     <Verification>
 ```python
@@ -217,13 +217,13 @@ assert abs(fahrenheit - (celsius * 9/5 + 32)) < 0.01, "Le calcul de la conversio
 
   <ExerciseSection id="python-12" label="Facile 🦊 - Calcul de TVA">
     <Enonce>
-### Facile 🦊 - Calcul de TVA
+      ### Facile 🦊 - Calcul de TVA
 
-**Écrire un programme qui :**
+      **Écrire un programme qui :**
 
-- Demande un prix hors taxes (`prix_ht`)
-- Calcule le montant de la TVA (20%) (`montant_tva`)
-- Affiche le prix TTC (`prix_ttc`)
+      - Demande un prix hors taxes (`prix_ht`)
+      - Calcule le montant de la TVA (20%) (`montant_tva`)
+      - Affiche le prix TTC (`prix_ttc`)
     </Enonce>
     <Verification>
 ```python
@@ -239,16 +239,16 @@ assert abs(prix_ttc - (prix_ht + montant_tva)) < 0.01, "Le calcul du prix TTC es
 
   <ExerciseSection id="python-13" label="Facile 🦊 - Manipulation de chaînes">
     <Enonce>
-### Facile 🦊 - Manipulation de chaînes
+      ### Facile 🦊 - Manipulation de chaînes
 
-**Écrire un programme qui :**
+      **Écrire un programme qui :**
 
-- Demande le prénom et le nom de l'utilisateur (`prenom` et `nom`)
-- Affiche son nom complet en majuscules dans une variable `nom_complet`
+      - Demande le prénom et le nom de l'utilisateur (`prenom` et `nom`)
+      - Affiche son nom complet en majuscules dans une variable `nom_complet`
 
-*Utilisez la méthode `.upper()` pour mettre en majuscules*
+      *Utilisez la méthode `.upper()` pour mettre en majuscules*
 
-## 🔥 Niveau Intermédiaire
+      ## 🔥 Niveau Intermédiaire
     </Enonce>
     <Verification>
 assert 'prenom' in locals(), "La variable 'prenom' n'est pas définie."
@@ -260,11 +260,11 @@ assert nom_complet == (prenom + " " + nom).upper() or nom_complet == (prenom + n
 
   <ExerciseSection id="python-14" label="Intermédiaire 🦊🦊 - Calculatrice simple">
     <Enonce>
-### Intermédiaire 🦊🦊 - Calculatrice simple
+      ### Intermédiaire 🦊🦊 - Calculatrice simple
 
-**Écrire un programme qui demande deux nombres (`a` et `b`) et effectue les quatre opérations de base.**
+      **Écrire un programme qui demande deux nombres (`a` et `b`) et effectue les quatre opérations de base.**
 
-*Stockez les résultats dans : `somme`, `difference`, `produit`, `quotient`.*
+      *Stockez les résultats dans : `somme`, `difference`, `produit`, `quotient`.*
     </Enonce>
     <Verification>
 ```python
@@ -284,12 +284,12 @@ assert quotient == a / b, "Erreur dans le quotient."
 
   <ExerciseSection id="python-15" label="Intermédiaire 🦊🦊 - Conversion d'unités">
     <Enonce>
-### Intermédiaire 🦊🦊 - Conversion d'unités
+      ### Intermédiaire 🦊🦊 - Conversion d'unités
 
-**Écrire un programme qui convertit des mètres en centimètres, millimètres et kilomètres.**
+      **Écrire un programme qui convertit des mètres en centimètres, millimètres et kilomètres.**
 
-*Variable d'entrée : `metres`*
-*Variables de sortie : `cm`, `mm`, `km`*
+      *Variable d'entrée : `metres`*
+      *Variables de sortie : `cm`, `mm`, `km`*
     </Enonce>
     <Verification>
 ```python

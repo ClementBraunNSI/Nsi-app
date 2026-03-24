@@ -80,8 +80,8 @@ const GroundBlock = () => (
 const RockBlock = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" className="w-[141.4%] h-[188.5%] absolute" style={{ 
     left: '-20.7%', 
-    top: '-67.8%',
-    transform: 'translateZ(15px) rotateZ(45deg) rotateX(-60deg)',
+    top: '-43%',
+    transform: 'translateZ(10px) rotateZ(45deg) rotateX(-60deg)',
     transformStyle: 'preserve-3d'
   }}> 
     <ellipse cx="64" cy="95" rx="45" ry="20" fill="#1e293b" opacity="0.2"/> 
@@ -143,12 +143,12 @@ const IsoGrid = ({ level, foxPos, foxDir }: { level: LevelConfig, foxPos: Positi
                             {isGoal && (
                                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none" 
                                      style={{ 
-                                         transform: 'translateZ(30px) rotateZ(45deg) rotateX(-60deg)', // Remontée de 10px à 30px
+                                         transform: 'translateZ(10px) rotateZ(45deg) rotateX(-60deg)',
                                          transformStyle: 'preserve-3d',
                                          width: CELL_SIZE * 1.5,
                                          height: CELL_SIZE * 1.5,
-                                         left: -CELL_SIZE * 0.25,
-                                         top: -CELL_SIZE * 0.5
+                                         left: -CELL_SIZE * 0.15,
+                                         top: -CELL_SIZE * 0.55
                                      }}>
                                      <div className="w-full h-full animate-bounce" style={{ filter: 'drop-shadow(0px 10px 5px rgba(0,0,0,0.3))' }}>
                                          <ChickenSprite />
@@ -165,9 +165,9 @@ const IsoGrid = ({ level, foxPos, foxDir }: { level: LevelConfig, foxPos: Positi
                     style={{
                         width: CELL_SIZE * 1.5,
                         height: CELL_SIZE * 1.5,
-                        left: `${foxPos.x * (CELL_SIZE + 2) - CELL_SIZE * 0.25}px`,
-                        top: `${foxPos.y * (CELL_SIZE + 2) - CELL_SIZE * 0.5}px`,
-                        transform: `translateZ(35px) rotateZ(45deg) rotateX(-60deg)`, // Remonté de 15px à 35px pour éviter le clipping
+                        left: `${foxPos.x * (CELL_SIZE + 2) - CELL_SIZE * 0.05}px`,
+                        top: `${foxPos.y * (CELL_SIZE + 2) - CELL_SIZE * 0.55}px`,
+                        transform: `translateZ(15px) rotateZ(45deg) rotateX(-60deg)`,
                         transformStyle: 'preserve-3d'
                     }}
                 >

@@ -61,6 +61,28 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
   const [showModal, setShowModal] = useState(false);
   const [hasBadge, setHasBadge] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
+  const categories = Array.from(new Set(childrenArray.map(c => {
+    const raw = (c.props.label || '').toString();
+    const left = raw.split('-')[0].trim();
+    if (left.toLowerCase().includes('introduction')) return 'Introduction';
+    if (left.toLowerCase().includes('facile')) return 'Facile';
+    if (left.toLowerCase().includes('intermédiaire')) return 'Intermédiaire';
+    return 'Autres';
+  })));
+  const [activeGroup, setActiveGroup] = useState(categories.includes('Introduction') ? 'Introduction' : (categories[0] || 'Tous'));
+  const filteredChildren = childrenArray.filter(c => {
+    const raw = (c.props.label || '').toString();
+    const left = raw.split('-')[0].trim();
+    const cat = left.toLowerCase().includes('introduction') ? 'Introduction'
+      : left.toLowerCase().includes('facile') ? 'Facile'
+      : left.toLowerCase().includes('intermédiaire') ? 'Intermédiaire'
+      : 'Autres';
+    return cat === activeGroup;
+  });
+  useEffect(() => {
+    const first = filteredChildren[0]?.props.id || childrenArray[0]?.props.id;
+    if (first && first !== activeTab) setActiveTab(first);
+  }, [activeGroup, childrenArray.length]);
 
   useEffect(() => {
     const fetchProgress = async () => {
@@ -232,8 +254,22 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
 
       {/* ProgressBar removed as requested */}
 
+      <div className="flex flex-wrap gap-2 mb-4">
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => setActiveGroup(cat)}
+            className={`px-3 py-2 rounded-xl text-xs font-black tracking-widest uppercase border ${
+              activeGroup === cat ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-white'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       <div className="flex flex-wrap gap-3 mb-8">
-        {childrenArray.map((child) => {
+        {filteredChildren.map((child) => {
           const isDone = completedIds.includes(child.props.id);
           const isActive = activeTab === child.props.id;
           return (
