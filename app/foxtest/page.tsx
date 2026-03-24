@@ -430,10 +430,6 @@ def td(): tourner_droite()
 
        {/* En-tête Global */}
        <header className="w-full flex items-center justify-between px-8 py-4 bg-transparent absolute top-0 z-50">
-          <div className="flex items-center gap-3">
-            <FoxLogo className="w-9 h-9" />
-            <h1 className="font-extrabold text-[1.1rem] tracking-widest text-slate-800">FOX: L'AVENTURE DU CODE</h1>
-          </div>
           <nav className="hidden md:flex items-center gap-8 font-bold text-slate-600 text-sm tracking-widest">
             <a href="#" className="text-teal-800 border-b-[3px] border-teal-800 pb-1">NIVEAUX</a>
             <a href="#" className="hover:text-teal-800 transition-colors pb-1 border-b-[3px] border-transparent">PROGRÈS</a>
