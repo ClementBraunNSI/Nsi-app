@@ -6,8 +6,12 @@ import "katex/dist/katex.min.css";
 import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
 import { LogOut, X, LayoutDashboard, Eye, Type, Zap, Check, Moon, Command } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import { supabase } from '@/lib/supabase';
-import CommandPalette from '@/components/experimental/CommandPalette';
+const CommandPalette = dynamic(
+  () => import('@/components/experimental/CommandPalette'),
+  { ssr: false, loading: () => null }
+);
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
