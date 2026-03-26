@@ -33,6 +33,59 @@ Vous devez créer une classe `Carte` qui gère l'environnement.
   - `public bool EstTraversable(int x, int y)` : qui vérifie si une case donnée n'est pas un arbre.
   - `public bool EstHauteHerbe(int x, int y)` : pour déclencher des combats plus tard.
 
+**Exemple de carte (pour tester l'étape 1) :**
+
+Dimensions : largeur = 20, hauteur = 10.  
+Spawn conseillé : `X = 2`, `Y = 2` (case `.`).
+
+```text
+####################
+#.........*....*...#
+#..####....####..*.#
+#.....*.....*......#
+#####..####..####..#
+#....*....#...*....#
+#......####........#
+#....#......#......#
+#..*.........*.....#
+####################
+```
+
+Vous pouvez charger cette carte en mémoire via un tableau `char[,]` (conversion `string[]` -> `char[,]`) :
+
+```csharp
+string[] lignes = new[]
+{
+  "####################",
+  "#.........*....*...#",
+  "#..####....####..*.#",
+  "#.....*.....*......#",
+  "#####..####..####..#",
+  "#....*....#...*....#",
+  "#......####........#",
+  "#....#......#......#",
+  "#..*.........*.....#",
+  "####################",
+};
+
+int height = lignes.Length;
+int width = lignes[0].Length;
+
+char[,] grille = new char[width, height];
+
+for (int y = 0; y < height; y++)
+{
+  for (int x = 0; x < width; x++)
+  {
+    grille[x, y] = lignes[y][x];
+  }
+}
+
+// Spawn conseillé :
+int spawnX = 2;
+int spawnY = 2;
+```
+
 ### 2. Le Dresseur
 Créez une classe `Dresseur` pour représenter le joueur.
 
