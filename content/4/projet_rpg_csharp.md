@@ -47,7 +47,7 @@ Dans votre `Main`, le jeu va tourner en continu jusqu'à ce qu'on le quitte.
 - `while(true)` : Pour créer la boucle infinie du jeu.
 - `Console.Clear()` : Pour effacer l'écran avant de redessiner la carte (évite que la carte s'imprime à l'infini vers le bas).
 - `Console.ReadKey(true)` : Pour capter une touche du clavier (les flèches directionnelles) sans l'écrire dans la console. Renseignez-vous sur l'objet `ConsoleKeyInfo`.
-- `Console.SetCursorPosition(x, y)` : **C'est le secret !** Cela permet de placer le curseur de la console à un endroit précis. Utile pour dessiner le dresseur (`@`) *par-dessus* la carte sans tout casser.
+- `Console.SetCursorPosition(x, y)` : Cela permet de placer le curseur de la console à un endroit précis. Utile pour dessiner le dresseur (`@`) *par-dessus* la carte sans tout casser.
 
 <Admonition type="tip" title="Ordre d'affichage">
 Dans votre boucle, l'ordre logique est : 1. Nettoyer l'écran -> 2. Dessiner la carte -> 3. Dessiner le joueur par-dessus -> 4. Attendre une touche -> 5. Déplacer le joueur.
@@ -139,21 +139,147 @@ Créez ensuite une classe `PanelAttaques` (ou `GestionnaireAttaques`) dont le r�
 
 ---
 
-## 🌟 Bonus et Fonctionnalités Avancées (Pour aller plus loin)
+## 🧪 Étape 5 : Captures et Objets (Séance 5)
 
-Si vous avez terminé les étapes précédentes, vous pouvez implémenter ces mécaniques pour rendre votre jeu exceptionnel :
+L’exploration mène à la capture. Implémentez la mécanique de capture et introduisez les objets.
 
-- **Le Sac à Dos :** Création d'une classe `Objet` (mère) avec des enfants comme `Potion` (soigne), `FoxBall` (taux de capture variable).
-- **Dresseurs Rivaux :** Ajoutez des PNJ (Personnages Non Joueurs) sur la carte. S'ils vous voient (champ de vision), un combat se lance contre leur propre équipe de FoxMons (pas de capture possible !).
-- **Système d'Expérience et Évolution :** Gagner un combat donne de l'XP. À certains niveaux, le nom du FoxMon change (ex: Renardeau -> Renard -> Kitsune) et ses stats explosent.
-- **Sauvegarde / Chargement :** Utilisez la manipulation de fichiers (JSON) pour sauvegarder la progression, la position et l'équipe du dresseur.
-- **🏆 Interface Graphique (God Tier) :** Sortez le jeu de la console et portez-le sur *WinForms*, *WPF*, ou utilisez un moteur comme *MonoGame* pour afficher de vrais sprites de renards !
+### 1. Classe `Objet` et hiérarchie
+- Créez une classe abstraite `Objet` avec `Nom` et `Utiliser(Dresseur lanceur, FoxMon cible)`.
+- Créez des classes filles :
+  - `Potion` : restaure des PV.
+  - `VulBall` : tente la capture d’un FoxMon sauvage.
+  - `ObjetCombat` (ex: `BoostAttaque`) : applique un bonus temporaire.
+  - `ObjetTenu` (ex: `BaieSoin`) : effet automatique si condition remplie (ex: PV < 30%).
 
-<Admonition type="warning" title="Critères d'évaluation">
-La propreté de votre code est primordiale. Vous serez évalués sur :
-- L'architecture de votre projet (les classes sont-elles logiques et bien séparées ?).
-- La bonne utilisation de l'Héritage (pas de duplication de code inutile).
-- La bonne utilisation du Polymorphisme (méthodes `virtual` et `override`).
-- L'encapsulation (attributs en `private`, propriétés en `get/set`).
-- La jouabilité (le jeu ne doit pas planter à la première erreur de saisie du joueur).
+### 2. Sac à dos
+- Ajoutez un inventaire au `Dresseur`.
+- Ajoutez `AjouterObjet`, `RetirerObjet`, `AObjet`.
+- Dans le menu de combat, l’option `Objet` applique l’effet et consomme l’objet.
+
+### 3. Capture (sauvage uniquement)
+- Action `Capturer` disponible uniquement contre un FoxMon sauvage.
+- Probabilité de capture : `p = baseRate * (1 - HPactuels / HPmax) * multiplicateurBalle` (par défaut `baseRate=0.35`, `multiplicateurBalle=1.0` pour `VulBall`).
+- En cas de réussite : ajout à l’équipe (ou stockage si équipe pleine).
+- En échec : message et fin de tour.
+
+<Admonition type="warning" title="Règle">
+La capture est interdite en combat contre dresseur.
 </Admonition>
+
+---
+
+## 🤝 Étape 6 : Combats contre Dresseurs (Séance 6)
+
+### 1. PNJ Dresseurs
+- Ajoutez des PNJ avec champ de vision sur la carte.
+- Si le joueur entre dans ce champ, déclenchez un combat.
+
+### 2. Règles
+- Pas de capture.
+- Autoriser le `Changement` de FoxMon.
+- IA : choisit le premier FoxMon apte et attaque.
+
+### 3. Fin de combat
+- Victoire si toute l’équipe adverse est KO.
+- Récompense possible (argent, objets).
+
+---
+
+## ⚔️ Étape 7 : Dégâts, Types et Coups Critiques (Séance 7)
+
+### 1. Table des types (simplifiée)
+- Feu → Plante : 2.0 ; Plante → Eau : 2.0 ; Eau → Feu : 2.0.
+- Inverse défavorable : 0.5 ; même type : 1.0.
+
+### 2. Critiques et variabilité
+- Critique : 10% de chance, multiplicateur 1.5.
+- Variabilité : facteur aléatoire 0.85–1.00.
+
+### 3. Formule indicative
+- `dégâts = puissanceBase * multiplicateurType * (critique ? 1.5 : 1.0) * random(0.85..1.0)`
+
+---
+
+## 📈 Étape 8 : Expérience et Évolution (Séance 8)
+
+### 1. Gain d’XP
+- Après une victoire, attribuer des XP au FoxMon actif.
+- Courbe simple : `XP nécessaire = 10 * niveau^2`.
+
+### 2. Niveau et évolution
+- Augmenter PV max et statistiques à chaque niveau.
+- Évolutions par paliers : Renardeau → Renard → Kitsune.
+
+### 3. Cartes volumineuses via JSON
+- Remplacez la carte en tableaux 2D par un chargement depuis un fichier JSON pour permettre de grandes maps.
+- Proposez une structure JSON simple :
+
+```json
+{
+  "width": 40,
+  "height": 25,
+  "layers": {
+    "ground": [
+      "........................................",
+      "....#########.............******........",
+      "....#.......#.............******........",
+      "....#.......#.........................#.",
+      "....#.......#.............######......#.",
+      "....#########.............#....#......#.",
+      "..........................#....#......#.",
+      "**************............#....#......#.",
+      "**************............######......#.",
+      "......................................#.",
+      "######################################."
+    ],
+    "collision": [
+      "........................................",
+      "....#########.............******........",
+      "....#.......#.............******........",
+      "....#.......#.........................#.",
+      "....#.......#.............######......#.",
+      "....#########.............#....#......#.",
+      "..........................#....#......#.",
+      "**************............#....#......#.",
+      "**************............######......#.",
+      "......................................#.",
+      "######################################."
+    ]
+  },
+  "legend": {
+    ".": "chemin",
+    "#": "mur",
+    "*": "hautes_herbes"
+  },
+  "spawn": { "x": 2, "y": 2 },
+  "pnj": [
+    { "nom": "Rival", "x": 10, "y": 6, "vision": 4, "equipe": ["RenardFeu", "RenardPlante"] }
+  ]
+}
+```
+
+- Adaptez la classe `Carte` pour charger ce JSON (`File.ReadAllText`, `System.Text.Json`), reconstruire les layers en mémoire et exposer :
+  - `EstTraversable(x, y)` en se basant sur `collision`.
+  - `EstHauteHerbe(x, y)` en se basant sur `legend`.
+  - `Afficher()` en itérant la couche `ground`.
+- Utilisez `spawn` pour positionner le dresseur au lancement et initialisez les PNJ depuis `pnj`.
+- Optionnel : découpez la carte en “chunks” pour optimiser l’affichage si la taille augmente fortement.
+
+---
+
+## 💾 Étape 9 : Sauvegarde et Chargement (Séance 9)
+
+### 1. Données à persister
+- Position du dresseur, équipe, inventaire, PNJ vaincus.
+
+### 2. Format JSON
+- Utilisez `System.Text.Json` avec une classe `Sauvegarde`.
+
+### 3. Intégration
+- Ajoutez `Sauvegarder` et `Charger` au menu principal.
+
+---
+
+## 🌟 Aller plus loin
+
+- **🏆 Interface Graphique (God Tier) :** portage vers *WinForms*, *WPF* ou *MonoGame* pour des sprites.
