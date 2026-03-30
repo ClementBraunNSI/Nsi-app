@@ -18,21 +18,12 @@ const LEVELS = [
 // Jeux et Outils
 const GAMES = [
   { 
-    id: 'fox-game', 
-    title: "L'Académie des Renards", 
-    desc: "Apprends les bases de Python (boucles, conditions, fonctions) en guidant un renard à travers des énigmes.", 
-    img: "/images/fox_act.png", 
-    color: "bg-amber-500", 
-    tag: "Jeu Python", 
-    href: "/fox" 
-  },
-  { 
     id: 'fox-3d-test', 
-    title: "Académie des Renards • 3D Test", 
+    title: "Académie des Renards", 
     desc: "Prototype isométrique avec grille 3D, sprites renard/poule et obstacles. Prévisualisation technique.", 
-    img: "/images/foxtest/renard_droite.png", 
+    img: "/images/fox_act.png", 
     color: "bg-teal-500", 
-    tag: "Prototype", 
+    tag: "Apprentissage Python", 
     href: "/foxtest" 
   },
   { 
@@ -60,9 +51,10 @@ const PRIVATE_LESSONS = [
 ];
 
 const CourseCard = ({ title, desc, img, tag, color, href, isPrivate = false }: any) => (
-  <Link href={href} className="group flex flex-col"> 
-    <div className={`rounded-[2rem] overflow-hidden border shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full ${isPrivate ? 'border-orange-200 bg-orange-50/50' : 'bg-white border-slate-100'}`}>
-      <div className="relative h-56 w-full bg-slate-50 p-4">
+  <Link href={href} className="group flex flex-col">
+    <div className={`rounded-[2rem] overflow-hidden border transition-all duration-500 flex flex-col h-full backdrop-blur-sm ${isPrivate ? 'border-orange-200 bg-orange-50/60 shadow-[0_12px_35px_-20px_rgba(251,146,60,0.55)] hover:shadow-[0_22px_45px_-20px_rgba(251,146,60,0.6)]' : 'bg-white/90 border-slate-100 shadow-[0_12px_30px_-20px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_50px_-22px_rgba(15,23,42,0.45)]'} hover:-translate-y-2`}>
+      <div className="relative h-56 w-full bg-gradient-to-br from-slate-50 via-white to-slate-50/70 p-4 overflow-hidden">
+        <div className="absolute -top-12 -right-10 h-32 w-32 rounded-full bg-orange-100/50 blur-2xl pointer-events-none" />
         <Image src={img} alt={title} fill className="object-contain p-2 transition-transform duration-700 group-hover:scale-110" />
         <div className={`absolute top-5 right-5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter shadow-sm border ${isPrivate ? 'bg-orange-500 text-white border-orange-400' : 'bg-white/90 backdrop-blur-md text-slate-800 border-slate-100'}`}>
           {tag}
@@ -183,11 +175,16 @@ export default function LandingPage() {
   }, [searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600">
+    <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-20 -left-24 h-72 w-72 rounded-full bg-orange-200/35 blur-3xl" />
+        <div className="absolute top-[20%] -right-16 h-80 w-80 rounded-full bg-blue-200/25 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-purple-200/20 blur-3xl" />
+      </div>
       
-      <header className="max-w-7xl mx-auto px-8 pt-20 pb-24 text-center relative">
+      <header className="max-w-7xl mx-auto px-8 pt-20 pb-24 text-center relative z-10">
         <div className="relative inline-block">
-          <h1 className="text-7xl md:text-8xl font-black text-slate-900 mb-10 tracking-tight">
+          <h1 className="text-7xl md:text-8xl font-black text-slate-900 mb-10 tracking-tight drop-shadow-[0_10px_35px_rgba(15,23,42,0.12)]">
             Maîtrisez le <span className="text-orange-500">Code.</span><br />
             Devenez un <span className="relative inline-block">
               Renard.
@@ -210,7 +207,7 @@ export default function LandingPage() {
             placeholder="Rechercher une notion (ex: boucles, listes...)" 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-16 pr-8 py-6 bg-white border-2 border-slate-100 rounded-[2rem] shadow-xl shadow-slate-100 focus:border-orange-500 focus:ring-0 outline-none transition-all text-lg font-medium text-slate-800" 
+            className="w-full pl-16 pr-8 py-6 bg-white/90 border-2 border-slate-100 rounded-[2rem] shadow-[0_20px_45px_-25px_rgba(15,23,42,0.45)] focus:border-orange-500 focus:ring-0 outline-none transition-all text-lg font-medium text-slate-800 backdrop-blur-sm" 
           />
           {searchQuery.length > 1 && (
             <div className="absolute top-full left-0 right-0 mt-4 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden text-left animate-in fade-in slide-in-from-top-2">
@@ -234,7 +231,7 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-8 pb-32">
+      <main className="max-w-7xl mx-auto px-8 pb-32 relative z-10">
         {/* SECTION PRIVÉE DYNAMIQUE */}
         {hasPrivateAccess && (
           <div className="mb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
@@ -270,7 +267,7 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <section className="bg-slate-50 py-24 border-t border-slate-100">
+      <section className="bg-gradient-to-b from-slate-50 to-white py-24 border-t border-slate-100 relative z-10">
         {/* Section collègues identique... */}
         <div className="max-w-7xl mx-auto px-8">
           <div className="text-center mb-16">
@@ -304,7 +301,7 @@ export default function LandingPage() {
             </div>
             <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 transition-opacity duration-200 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
               {colleagues.slice(currentIndex, currentIndex + itemsPerPage).map((colleague, i) => (
-                <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group">
+                <div key={i} className="bg-white/95 p-8 rounded-[2rem] shadow-[0_12px_30px_-20px_rgba(15,23,42,0.35)] border border-slate-100 hover:border-orange-200 hover:shadow-[0_24px_50px_-22px_rgba(15,23,42,0.45)] transition-all duration-300 group backdrop-blur-sm">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-orange-500 group-hover:text-white transition-all shadow-inner">
                       👨‍🏫

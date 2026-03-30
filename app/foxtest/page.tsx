@@ -1,18 +1,14 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Editor, { loader } from '@monaco-editor/react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import { Play, RotateCcw, ChevronRight, ChevronLeft, ChevronUp, HelpCircle } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { LEVELS, LevelConfig, Direction, Position } from './levels';
-
 import Image from 'next/image';
 
-// Configuration de Monaco Editor
-loader.config({
-  paths: {
-    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs'
-  }
+const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
+  ssr: false,
+  loading: () => <div className="h-full w-full animate-pulse bg-[#1f2230]" />,
 });
 
 // --- COMPOSANTS GRAPHIQUES ---
@@ -25,6 +21,39 @@ const FoxLogo = ({ className = "w-8 h-8 drop-shadow-sm" }: { className?: string 
     <path d="M35 30L65 30L50 15L35 30Z" fill="#fb923c"/>
   </svg>
 );
+
+type AllowedCommand = { code: string; description: string };
+
+const getAllowedCommands = (levelId: number): AllowedCommand[] => {
+  const base: AllowedCommand[] = [
+    { code: 'avancer()', description: "Déplace le renard d'une case" },
+    { code: 'tourner_gauche()', description: 'Tourne le renard vers la gauche' },
+    { code: 'tourner_droite()', description: 'Tourne le renard vers la droite' },
+  ];
+
+  if (levelId >= 11) {
+    base.push(
+      { code: 'mur_devant()', description: 'Renvoie vrai si un mur est devant' },
+      { code: 'mur_gauche()', description: 'Renvoie vrai si un mur est à gauche' },
+      { code: 'mur_droite()', description: 'Renvoie vrai si un mur est à droite' },
+      { code: 'sur_objectif()', description: "Renvoie vrai si le renard est sur l'objectif" },
+      { code: 'while / if / else', description: 'Boucles et conditions autorisées' }
+    );
+  }
+
+  if (levelId >= 16) {
+    base.push({ code: 'def ma_fonction():', description: 'Définition de fonctions autorisée' });
+  }
+
+  return base;
+};
+
+const stripCommandHeader = (rawCode: string): string => {
+  if (!rawCode) return '';
+  return rawCode
+    .replace(/^# --- Commandes disponibles ---[\s\S]*?# -----------------------------\n*/m, '')
+    .trimStart();
+};
 
 const FoxSprite = ({ direction }: { direction: Direction }) => {
   const getSpriteSrc = () => {
@@ -105,9 +134,22 @@ const RockBlock = () => (
   </svg>
 );
 
-const IsoGrid = ({ level, foxPos, foxDir }: { level: LevelConfig, foxPos: Position, foxDir: Direction }) => {
+const IsoGrid = ({
+  level,
+  foxPos,
+  foxDir,
+}: {
+  level: LevelConfig;
+  foxPos: Position;
+  foxDir: Direction;
+}) => {
     const MAX_GRID_DIM = Math.max(level.gridSize.cols, level.gridSize.rows);
     const CELL_SIZE = Math.min(64, 400 / MAX_GRID_DIM); 
+    const obstacleSet = useMemo(
+      () => new Set(level.obstacles.map((o) => `${o.x},${o.y}`)),
+      [level.obstacles]
+    );
+    const totalCells = level.gridSize.rows * level.gridSize.cols;
     
     return (
         <div className="absolute inset-0 flex items-center justify-center overflow-visible">
@@ -123,10 +165,10 @@ const IsoGrid = ({ level, foxPos, foxDir }: { level: LevelConfig, foxPos: Positi
                 }}
             >
                 {/* Rendu des cases et obstacles */}
-                {Array.from({ length: level.gridSize.rows * level.gridSize.cols }).map((_, idx) => {
+                {Array.from({ length: totalCells }).map((_, idx) => {
                     const x = idx % level.gridSize.cols;
                     const y = Math.floor(idx / level.gridSize.cols);
-                    const isObstacle = level.obstacles.some((o: any) => o.x === x && o.y === y);
+                    const isObstacle = obstacleSet.has(`${x},${y}`);
                     const isGoal = level.goal.x === x && level.goal.y === y;
 
                     return (
@@ -210,7 +252,7 @@ export default function FoxGame() {
     setGameStatus('idle');
     setStars(0);
     setLogs([]);
-    setCode(lvl.initialCode || '');
+    setCode(stripCommandHeader(lvl.initialCode || ''));
   };
 
   useEffect(() => {
@@ -411,13 +453,18 @@ def td(): tourner_droite()
       const lines = code.split('\n').filter(l => l.trim().length > 0 && !l.trim().startsWith('#')).length;
       const earnedStars = lines <= level.bestLineCount ? 3 : lines <= level.bestLineCount + 2 ? 2 : 1;
       setStars(earnedStars);
-      try { confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } }); } catch (e) {}
+      try {
+        const confettiModule = await import('canvas-confetti');
+        const fire = confettiModule.default;
+        fire({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      } catch (e) {}
     } else {
       setGameStatus('lost');
     }
   };
 
   const instructionsUsed = code.split('\n').filter(l => l.trim().length > 0 && !l.trim().startsWith('#')).length;
+  const allowedCommands = getAllowedCommands(level.id);
   const maxInstr = level.maxInstructions || 10;
 
   return (
@@ -427,15 +474,6 @@ def td(): tourner_droite()
        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
             style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 15L60 30L30 45L0 30z\' fill=\'none\' stroke=\'%23457b7b\' stroke-width=\'2\'/%3E%3C/svg%3E")', backgroundSize: '80px 80px' }}>
        </div>
-
-       {/* En-tête Global */}
-       <header className="w-full flex items-center justify-between px-8 py-4 bg-transparent absolute top-0 z-50">
-          <nav className="hidden md:flex items-center gap-8 font-bold text-slate-600 text-sm tracking-widest">
-            <a href="#" className="text-teal-800 border-b-[3px] border-teal-800 pb-1">NIVEAUX</a>
-            <a href="#" className="hover:text-teal-800 transition-colors pb-1 border-b-[3px] border-transparent">PROGRÈS</a>
-            <a href="#" className="hover:text-teal-800 transition-colors pb-1 border-b-[3px] border-transparent">AIDE</a>
-          </nav>
-       </header>
 
        {/* Contenu Principal */}
        <main className="flex-1 w-full max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-8 p-6 z-10">
@@ -452,7 +490,7 @@ def td(): tourner_droite()
                     </button>
                 </div>
                 <div className="flex-1 relative pt-2">
-                    <Editor
+                    <MonacoEditor
                         height="100%"
                         defaultLanguage="python"
                         theme="vs-dark"
@@ -480,24 +518,21 @@ def td(): tourner_droite()
                 <div className="px-5 pt-5 pb-5 flex flex-col gap-6">
                   {/* Liste des commandes */}
                   <div className="flex flex-col gap-4">
-                    <div className="flex items-start gap-4">
-                      <div className="mt-0.5 w-7 flex justify-center">
-                        <FoxLogo className="w-7 h-7 drop-shadow-sm" />
+                    {allowedCommands.map((cmd, idx) => (
+                      <div key={cmd.code} className="flex items-start gap-4">
+                        <div className="mt-0.5 w-7 flex justify-center">
+                          {idx === 0 ? (
+                            <span className="text-xl leading-none" aria-hidden="true">🦊</span>
+                          ) : (
+                            <RotateCcw className="text-[#457b7b]" size={24} strokeWidth={2.5} />
+                          )}
+                        </div>
+                        <div>
+                          <code className="text-[13px] font-bold text-slate-800 font-mono bg-slate-100 px-1.5 py-0.5 rounded">{cmd.code}</code>
+                          <p className="text-[13px] text-slate-500 mt-1">{cmd.description}</p>
+                        </div>
                       </div>
-                      <div>
-                        <code className="text-[13px] font-bold text-slate-800 font-mono bg-slate-100 px-1.5 py-0.5 rounded">avancer()</code>
-                        <p className="text-[13px] text-slate-500 mt-1">Déplace le renard d'une case</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="mt-0.5 w-7 flex justify-center">
-                        <RotateCcw className="text-[#457b7b]" size={24} strokeWidth={2.5} />
-                      </div>
-                      <div>
-                        <code className="text-[13px] font-bold text-slate-800 font-mono bg-slate-100 px-1.5 py-0.5 rounded">tourner(direction)</code>
-                        <p className="text-[13px] text-slate-500 mt-1">Oriente le renard ('gauche' ou 'droite')</p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
 
                   {/* Bouton Exécuter */}

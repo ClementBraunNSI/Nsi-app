@@ -16,6 +16,68 @@
 9. https://www.python-lycee.com/activite-en-ligne-snt
 10. https://www.lesbonsprofs.com/nos-cours/seconde/snt/
 
+## Ressources supplementaires a benchmarker (profs NSI/SNT)
+
+1. Profjahier NSI
+   - URL: https://profjahier.github.io/html/NSI/index.html
+   - Forces: structuration orientee progression, ressources "terrain" reutilisables.
+   - Idees a reprendre: organisation de pages par notion + acces rapide exercices.
+   - Niveaux cibles: 1NSI / TNSI.
+
+2. Glassus - Premiere NSI (source GitHub)
+   - URL: https://github.com/glassus/premiere_nsi
+   - Forces: corpus pedagogique robuste, historique et structure de contenu mature.
+   - Idees a reprendre: conventions de chapitrage et organisation des ressources.
+   - Niveaux cibles: 1NSI.
+
+3. Glassus - Terminale NSI (source GitHub)
+   - URL: https://github.com/glassus/terminale_nsi
+   - Forces: couverture large du programme, nombreux supports/iterations.
+   - Idees a reprendre: granularite des sequences et articulation cours/exercices.
+   - Niveaux cibles: TNSI.
+
+4. Pixees - Informatique au lycee
+   - URL: https://pixees.fr/informatique-au-lycee-ressources-en-partage/
+   - Forces: hub de ressources et pratiques enseignant, forte curations.
+   - Idees a reprendre: section "ressources recommandees" par theme/niveau.
+   - Niveaux cibles: SNT / 1NSI / TNSI.
+
+5. Pixees - InformatiqueLycée Terminale
+   - URL: https://pixees.fr/informatiquelycee/term/
+   - Forces: alignement epreuves NSI, orientation revision/examen.
+   - Idees a reprendre: parcours "revision bac" explicite dans le site.
+   - Niveaux cibles: TNSI.
+
+6. Lycée GSH - NSI
+   - URL: https://www.lgsh.fr/nsi/nsi/index.php
+   - Forces: exemple de site "prof" simple et navigable par chapitres.
+   - Idees a reprendre: acces direct a un sommaire par periode/chapitre.
+   - Niveaux cibles: NSI lycee.
+
+7. Tutoriel France-IOI pour NSI
+   - URL: http://nsi.janviercommelemois.fr/tuto-france-ioi.html
+   - Forces: integration pratique d'une plateforme d'exercices auto-corriges.
+   - Idees a reprendre: pont "cours -> entrainement exterieur" avec suivi.
+   - Niveaux cibles: SNT / NSI.
+
+8. CAPYTALE - Documentation des activites
+   - URL: https://capytale.forge.apps.education.fr/documentation/Activites/
+   - Forces: grand catalogue d'activites (Python, SQL, Web, notebooks, etc.).
+   - Idees a reprendre: nomenclature des activites et typologies pedagogiques.
+   - Niveaux cibles: SNT / NSI / SIO.
+
+9. NSI/SNT Normandie - Usages Capytale
+   - URL: https://nsi-snt.ac-normandie.fr/creer-et-partager-des-activites-avec-capytale
+   - Forces: exemples concrets d'usage en classe, workflow enseignant-eleve.
+   - Idees a reprendre: chaine de production d'activites + partage par code.
+   - Niveaux cibles: SNT / NSI.
+
+10. Academie de Lille - France-IOI en NSI
+   - URL: https://pedagogie.ac-lille.fr/numerique-et-sciences-informatiques/france-ioi/
+   - Forces: cadrage institutionnel et mise en pratique en classe.
+   - Idees a reprendre: guide "demarrage rapide" pour profs et eleves.
+   - Niveaux cibles: NSI lycee.
+
 ## Ce que ton site fait deja bien (signaux forts)
 - Navigation de parcours: landing + "niveau" + "fiche cours" (routes sous `app/`).
 - Experience de lecture avec progression: `components/ReadingProgressBar.tsx`.
