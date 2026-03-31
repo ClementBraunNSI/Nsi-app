@@ -292,7 +292,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
       {/* Barre de navigation haute */}
       <nav className="border-b border-slate-100 bg-white/50 backdrop-blur-md sticky top-20 z-30">
         <div className="max-w-5xl mx-auto px-6 py-4">
-          <Link href={`/niveaux/${niveaux}`} className="flex items-center gap-2 text-slate-400 hover:text-orange-600 transition-colors text-xs font-black uppercase tracking-widest">
+          <Link href={`/cours/${niveaux}`} className="flex items-center gap-2 text-slate-400 hover:text-orange-600 transition-colors text-xs font-black uppercase tracking-widest">
             <ChevronLeft size={16} /> Retour au niveau {niveaux}
           </Link>
         </div>
@@ -301,8 +301,8 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
       <main className="max-w-5xl mx-auto px-6 py-8">
         
         <Breadcrumbs customItems={[
-          { label: 'Niveaux', href: '/niveaux' },
-          { label: niveaux.charAt(0).toUpperCase() + niveaux.slice(1), href: `/niveaux/${niveaux}` },
+          { label: 'Cours', href: '/cours' },
+          { label: niveaux.charAt(0).toUpperCase() + niveaux.slice(1), href: `/cours/${niveaux}` },
           { label: data.chapter || 'Cours', href: '#' },
           { label: data.title || slugStr, href: '#' }
         ]} />

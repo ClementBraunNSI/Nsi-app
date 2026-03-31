@@ -50,17 +50,15 @@ La Seconde Guerre Mondiale accélère la recherche. Il faut calculer des traject
 *   **1998** : Création de Google.
 *   **2007** : Lancement de l'iPhone. L'informatique devient mobile et tactile.
 
-## 📅 Frise Chronologique Interactive
+## 📅 Frise Chronologique
 
-<Timeline 
-  events={[
-    { date: "1843", title: "Ada Lovelace", description: "Premier programme informatique théorique." },
-    { date: "1936", title: "Alan Turing", description: "Concept de machine universelle." },
-    { date: "1945", title: "Von Neumann", description: "Architecture des ordinateurs modernes." },
-    { date: "1947", title: "Transistor", description: "Révolution électronique (Bell Labs)." },
-    { date: "1969", title: "ARPANET", description: "Naissance d'Internet (militaire)." },
-    { date: "1971", title: "Microprocesseur", description: "Intel 4004 : l'ordinateur sur une puce." },
-    { date: "1989", title: "Le Web", description: "Tim Berners-Lee invente le WWW au CERN." },
-    { date: "2007", title: "Smartphone", description: "L'iPhone lance l'ère de l'internet mobile." }
-  ]} 
-/>
+| Date | Événement | Description |
+| :--- | :--- | :--- |
+| 1843 | Ada Lovelace | Premier programme informatique théorique |
+| 1936 | Alan Turing | Concept de machine universelle |
+| 1945 | Von Neumann | Architecture des ordinateurs modernes |
+| 1947 | Transistor | Révolution électronique (Bell Labs) |
+| 1969 | ARPANET | Naissance d'Internet (militaire) |
+| 1971 | Microprocesseur | Intel 4004 : l'ordinateur sur une puce |
+| 1989 | Le Web | Tim Berners-Lee invente le WWW au CERN |
+| 2007 | Smartphone | L'iPhone lance l'ère de l'internet mobile |

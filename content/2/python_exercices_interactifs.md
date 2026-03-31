@@ -542,5 +542,3 @@ prerequisites:
   </ExerciseSection>
 
 </ExerciseTabs>
-
-</ExerciseTabs>

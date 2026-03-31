@@ -50,7 +50,7 @@ export default function CourseNavigation({ prevCourse, nextCourse, currentLevel 
       
       <div className="text-center mt-8">
         <Link 
-          href={`/niveaux/${currentLevel}`}
+          href={`/cours/${currentLevel}`}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition-colors text-sm"
         >
           <BookOpen size={16} /> Retour au sommaire

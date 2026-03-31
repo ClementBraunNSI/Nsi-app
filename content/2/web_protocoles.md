@@ -141,8 +141,8 @@ Les réponses HTTP contiennent un code de statut qui indique le résultat du tra
 
 | Type | Description | Caractéristiques |
 | :--- | :--- | :--- |
-| **Statique** | Contenu fixe et identique pour tous les utilisateurs. | • Pas de traitement serveur<br>• Chargement rapide<br>• Facile à mettre en cache |
-| **Dynamique** | Générée à la volée, contenu personnalisé. | • Traitement côté serveur<br>• Interactions complexes<br>• Gestion de contenu/utilisateurs |
+| **Statique** | Contenu fixe et identique pour tous les utilisateurs. | • Pas de traitement serveur<br />• Chargement rapide<br />• Facile à mettre en cache |
+| **Dynamique** | Générée à la volée, contenu personnalisé. | • Traitement côté serveur<br />• Interactions complexes<br />• Gestion de contenu/utilisateurs |
 
 ## Cookies et sessions
 

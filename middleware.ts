@@ -1,7 +1,12 @@
-import { type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith('/niveaux')) {
+    const redirected = request.nextUrl.clone();
+    redirected.pathname = request.nextUrl.pathname.replace(/^\/niveaux/, '/cours') || '/cours';
+    return NextResponse.redirect(redirected, 307);
+  }
   return await updateSession(request)
 }
 
