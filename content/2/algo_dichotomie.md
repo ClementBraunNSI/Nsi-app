@@ -1,10 +1,12 @@
 ---
-title: "Recherche Dichotomique"
-description: "Algorithme de recherche efficace dans une liste triée"
+title: Recherche Dichotomique
+description: Algorithme de recherche efficace dans une liste triée
 level: premiere
-chapter: "Algorithmique"
-icon: "🔍"
-badgeId: "premiere_recherche_dichotomique"
+chapter: Algorithmique
+icon: "\U0001F50D"
+badgeId: premiere_recherche_dichotomique
+prerequisites:
+  - algo_gloutons
 ---
 
 

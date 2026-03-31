@@ -1,9 +1,10 @@
 ---
-title: "Structures conditionnelles"
-description: "Introduction aux booléens et aux structures conditionnelles en Python."
-level: "2"
-chapter: "Programmation Python"
-icon: "🔀"
+title: Structures conditionnelles
+description: Introduction aux booléens et aux structures conditionnelles en Python.
+level: '2'
+chapter: Programmation Python
+icon: "\U0001F500"
+prerequisites: []
 ---
 
 # Structures conditionnelles

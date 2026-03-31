@@ -1,9 +1,11 @@
 ---
-title: "Logique booléenne"
-description: "Les valeurs Vrai/Faux et les opérateurs logiques (ET, OU, NON)."
+title: Logique booléenne
+description: 'Les valeurs Vrai/Faux et les opérateurs logiques (ET, OU, NON).'
 level: SNI
-chapter: "Representation_de_base"
-icon: "🔘"
+chapter: Representation_de_base
+icon: "\U0001F518"
+prerequisites:
+  - binaire
 ---
 
 <ExerciseTabs courseId="booleens-logique" courseTitle="Logique Booléenne">

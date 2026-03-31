@@ -2,7 +2,7 @@
 title: "TP Python : Traitement d'Image"
 description: "Manipuler les pixels d'une image numérique avec Python."
 level: "seconde"
-chapter: "Photographie"
+chapter: "Photographie Numérique"
 icon: "🐍"
 ---
 

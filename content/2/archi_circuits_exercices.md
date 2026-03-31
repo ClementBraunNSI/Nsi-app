@@ -1,10 +1,12 @@
 ---
-title: "Exercices : Circuits Logiques"
-description: "Cours sur Exercices : Circuits Logiques"
+title: 'Exercices : Circuits Logiques'
+description: 'Cours sur Exercices : Circuits Logiques'
 level: premiere
-chapter: "Architecture matérielle"
-icon: "⚡"
-badgeId: "premiere_fiche_exo_circuits"
+chapter: Architecture matérielle
+icon: ⚡
+badgeId: premiere_fiche_exo_circuits
+prerequisites:
+  - archi_circuits
 ---
 
 

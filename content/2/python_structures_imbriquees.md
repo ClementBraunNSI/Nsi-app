@@ -2,7 +2,7 @@
 title: "TP - Structures Imbriquées (Spotify)"
 description: "Manipuler des listes de dictionnaires contenant des listes"
 level: premiere
-chapter: "Structures de Données"
+chapter: Dictionnaires et Tables
 icon: "🎧"
 badgeId: "tp_spotify"
 ---

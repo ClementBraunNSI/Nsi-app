@@ -1,10 +1,14 @@
 ---
-title: "Piles et Files"
-description: "Structures de données linéaires avancées. Piles (LIFO) et Files (FIFO). Implémentation POO."
+title: Piles et Files
+description: >-
+  Structures de données linéaires avancées. Piles (LIFO) et Files (FIFO).
+  Implémentation POO.
 level: premiere
-chapter: "Structures de données linéaires"
-icon: "🥞"
-badgeId: "premiere_piles_files"
+chapter: Structures de données linéaires
+icon: "\U0001F95E"
+badgeId: premiere_piles_files
+prerequisites:
+  - structures_lineaires_cours
 ---
 
 

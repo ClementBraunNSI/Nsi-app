@@ -1,8 +1,10 @@
 ---
-title: "TP SLAM : Création d'une mini blockchain"
-chapter: "BTS SIO 1 : B3 - CyberSécurité"
-badgeId: "bts_sql_blockchain"
-meta: "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
+title: 'TP SLAM : Création d''une mini blockchain'
+chapter: 'BTS SIO 1 : B3 - CyberSécurité'
+badgeId: bts_sql_blockchain
+meta: 'Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer'
+prerequisites:
+  - tp_injections_web
 ---
 
 <ExerciseTabs courseId="bts_sql_blockchain" courseTitle="TP Blockchain">

@@ -1,10 +1,12 @@
 ---
-title: "Sécurité des Communications"
-description: "Chiffrement symétrique, asymétrique et protocoles sécurisés."
+title: Sécurité des Communications
+description: 'Chiffrement symétrique, asymétrique et protocoles sécurisés.'
 level: terminale
-chapter: "Architectures matérielles, OS & Réseaux"
-icon: "🔒"
-badgeId: "terminale_securite"
+chapter: 'Architectures matérielles, OS & Réseaux'
+icon: "\U0001F512"
+badgeId: terminale_securite
+prerequisites:
+  - reseaux_routage
 ---
 
 # 🔒 Sécurisation des Communications

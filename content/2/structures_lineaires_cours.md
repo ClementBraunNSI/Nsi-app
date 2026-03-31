@@ -1,10 +1,13 @@
 ---
-title: "Structures de données linéaires"
-description: "Maîtrisez les listes et tuples en Python pour organiser vos données efficacement"
+title: Structures de données linéaires
+description: >-
+  Maîtrisez les listes et tuples en Python pour organiser vos données
+  efficacement
 level: premiere
-chapter: "Structures de données linéaires"
-icon: "🔗"
-badgeId: "premiere_cours"
+chapter: Structures de données linéaires
+icon: "\U0001F517"
+badgeId: premiere_cours
+prerequisites: []
 ---
 
 

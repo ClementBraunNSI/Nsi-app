@@ -1,10 +1,14 @@
 ---
-title: "Algorithmes Gloutons"
-description: "Introduction aux stratégies d'optimisation gloutonnes (Rendu de monnaie, Sac à dos)"
+title: Algorithmes Gloutons
+description: >-
+  Introduction aux stratégies d'optimisation gloutonnes (Rendu de monnaie, Sac à
+  dos)
 level: premiere
-chapter: "Algorithmique"
-icon: "🍪"
-badgeId: "premiere_introduction_gloutons"
+chapter: Algorithmique
+icon: "\U0001F36A"
+badgeId: premiere_introduction_gloutons
+prerequisites:
+  - activite_algo_interactive
 ---
 
 

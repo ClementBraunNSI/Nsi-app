@@ -1,8 +1,10 @@
 ---
-title: "Ressouces : Lab vulnérable"
-chapter: "Ressources nécessaires"
-badgeId: "bts_sql_audit_rgpd"
-meta: "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
+title: 'Ressouces : Lab vulnérable'
+chapter: Ressources nécessaires
+badgeId: bts_sql_audit_rgpd
+meta: 'Durée : 2 heures · Objectif : Comprendre pour mieux protéger'
+prerequisites:
+  - ressources_vehicules
 ---
 
 ```php

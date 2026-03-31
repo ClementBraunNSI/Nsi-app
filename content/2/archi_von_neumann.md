@@ -1,10 +1,13 @@
 ---
-title: "Modèle de Von Neumann"
-description: "Comprendre les fondements de l'architecture informatique moderne et le modèle séquentiel"
+title: Modèle de Von Neumann
+description: >-
+  Comprendre les fondements de l'architecture informatique moderne et le modèle
+  séquentiel
 level: premiere
-chapter: "Architecture matérielle"
-icon: "⚙️"
-badgeId: "premiere_von_neumann"
+chapter: Architecture matérielle
+icon: ⚙️
+badgeId: premiere_von_neumann
+prerequisites: []
 ---
 
 

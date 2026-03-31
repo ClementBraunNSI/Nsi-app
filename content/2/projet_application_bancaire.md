@@ -1,10 +1,12 @@
 ---
-title: "Dictionnaires : App Bancaire"
-description: "Création d'une application bancaire simple en Python"
+title: 'Dictionnaires : App Bancaire'
+description: Création d'une application bancaire simple en Python
 level: premiere
-chapter: "Projets"
-icon: "🏦"
-badgeId: "premiere_application_bancaire"
+chapter: Projets
+icon: "\U0001F3E6"
+badgeId: premiere_application_bancaire
+prerequisites:
+  - projet_simulation_propagation
 ---
 
 import ExerciseTabs from '../../components/interactive/ExerciseTabs';

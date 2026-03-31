@@ -1,9 +1,12 @@
 ---
-title: "TP : Structures et Pointeurs en C"
-chapter: "C : Programmation Structurée"
-badgeId: "c_structs"
-meta: "Struct, Typedef, Pointeurs, Allocation Dynamique"
-allowedStudents: ["Cléo"]
+title: 'TP : Structures et Pointeurs en C'
+chapter: 'C : Programmation Structurée'
+badgeId: c_structs
+meta: 'Struct, Typedef, Pointeurs, Allocation Dynamique'
+allowedStudents:
+  - Cléo
+prerequisites:
+  - cours-structures-pointeurs
 ---
 
 <ExerciseTabs courseId="c_structs" courseTitle="TP C - Structures">

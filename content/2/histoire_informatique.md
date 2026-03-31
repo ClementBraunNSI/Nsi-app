@@ -1,10 +1,11 @@
 ---
-title: "Histoire de l'Informatique"
-description: "Les grandes étapes, figures et machines qui ont façonné le monde numérique."
+title: Histoire de l'Informatique
+description: 'Les grandes étapes, figures et machines qui ont façonné le monde numérique.'
 level: premiere
-chapter: "Histoire"
-icon: "📜"
-badgeId: "histoire_info"
+chapter: Histoire
+icon: "\U0001F4DC"
+badgeId: histoire_info
+prerequisites: []
 ---
 
 # 📜 Histoire de l'Informatique

@@ -1,9 +1,11 @@
 ---
-title: "Fiche d'exercices : Python"
-description: "Premiers pas avec Python : variables, input/output, et calculs simples."
+title: 'Fiche d''exercices : Python'
+description: 'Premiers pas avec Python : variables, input/output, et calculs simples.'
 level: seconde
-chapter: "Programmation Python"
-icon: "🐍"
+chapter: Programmation Python
+icon: "\U0001F40D"
+prerequisites:
+  - Fiche_exercices_conditions
 ---
 
 <ExerciseTabs courseId="fiche-python" courseTitle="Fiche Python">

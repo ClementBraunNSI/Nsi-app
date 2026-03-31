@@ -1,9 +1,11 @@
 ---
-title: "Patrimoine Informatique"
-description: "Recensement et identification des ressources numériques (SIO Bloc 1)"
-level: "4"
-chapter: "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques"
-icon: "🧩"
+title: Patrimoine Informatique
+description: Recensement et identification des ressources numériques (SIO Bloc 1)
+level: '4'
+chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
+icon: "\U0001F9E9"
+prerequisites:
+  - Methodes_agiles
 ---
 
 # 🧩 Patrimoine informatique

@@ -1,9 +1,12 @@
 ---
-title: "C# et les Données : Fichiers CSV et Bases de Données"
-description: "Apprendre à persister des données en C# : du fichier CSV simple à la base de données MariaDB."
-level: "2"
-chapter: "BTS SIO 1 : B2 - Développement (SLAM)"
-icon: "💾"
+title: 'C# et les Données : Fichiers CSV et Bases de Données'
+description: >-
+  Apprendre à persister des données en C# : du fichier CSV simple à la base de
+  données MariaDB.
+level: '2'
+chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
+icon: "\U0001F4BE"
+prerequisites: []
 ---
 
 # 💾 Persistance des Données en C#

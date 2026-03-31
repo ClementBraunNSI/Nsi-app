@@ -1,10 +1,12 @@
 ---
-title: "Représentation des caractères"
-description: "Codage ASCII et Unicode (UTF-8)"
+title: Représentation des caractères
+description: Codage ASCII et Unicode (UTF-8)
 level: premiere
-chapter: "Représentation des données"
-icon: "🔤"
-badgeId: "premiere_caracteres"
+chapter: Représentation des données
+icon: "\U0001F524"
+badgeId: premiere_caracteres
+prerequisites:
+  - donnees_reels
 ---
 
 

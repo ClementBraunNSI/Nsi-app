@@ -1,9 +1,11 @@
 ---
-title: "Simulateur Micro:bit"
-description: "Guide d'utilisation du simulateur Python pour Micro:bit"
-level: "seconde"
-chapter: "Micro-controleurs"
-icon: "🖥️"
+title: 'Simulateur Micro:bit'
+description: 'Guide d''utilisation du simulateur Python pour Micro:bit'
+level: seconde
+chapter: Micro-controleurs
+icon: "\U0001F5A5️"
+prerequisites:
+  - objets_connectes
 ---
 
 # Simulateur BBC Micro:bit V2

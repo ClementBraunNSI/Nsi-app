@@ -1,10 +1,12 @@
 ---
-title: "Programmation Dynamique"
-description: "Optimisation de problèmes complexes (Rendu de monnaie, Fibonacci)."
+title: Programmation Dynamique
+description: 'Optimisation de problèmes complexes (Rendu de monnaie, Fibonacci).'
 level: terminale
-chapter: "Algorithmique"
-icon: "⚡"
-badgeId: "terminale_prog_dynamique"
+chapter: Algorithmique
+icon: ⚡
+badgeId: terminale_prog_dynamique
+prerequisites:
+  - algo_diviser_pour_regner
 ---
 
 # ⚡ Programmation Dynamique

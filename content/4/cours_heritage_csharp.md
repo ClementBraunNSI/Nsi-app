@@ -1,9 +1,11 @@
 ---
-title: "L'Héritage et le Polymorphisme en C#"
-description: "Approfondissement sur l'héritage, les classes abstraites et le polymorphisme."
-level: "2"
-chapter: "BTS SIO 1 : B2 - Développement (SLAM)"
-icon: "🧬"
+title: L'Héritage et le Polymorphisme en C#
+description: 'Approfondissement sur l''héritage, les classes abstraites et le polymorphisme.'
+level: '2'
+chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
+icon: "\U0001F9EC"
+prerequisites:
+  - introduction_poo
 ---
 
 # 🧬 L'Héritage en C#

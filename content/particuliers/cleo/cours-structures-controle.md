@@ -1,10 +1,13 @@
 ---
-title: "C - Structures de Contrôle"
-description: "Conditions, choix et boucles pour diriger vos programmes"
-level: "particuliers"
-chapter: "Programmation en C"
-icon: "🔀"
-allowedStudents: ["Cléo"]
+title: C - Structures de Contrôle
+description: 'Conditions, choix et boucles pour diriger vos programmes'
+level: particuliers
+chapter: Programmation en C
+icon: "\U0001F500"
+allowedStudents:
+  - Cléo
+prerequisites:
+  - cours-tableaux-2d
 ---
 
 # 🔀 C — Structures de Contrôle

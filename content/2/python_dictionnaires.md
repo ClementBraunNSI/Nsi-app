@@ -1,10 +1,11 @@
 ---
-title: "Dictionnaires en Python"
-description: "Comprendre et manipuler la structure de données clé-valeur"
+title: Dictionnaires en Python
+description: Comprendre et manipuler la structure de données clé-valeur
 level: premiere
-chapter: "Dictionnaires et Tables"
-icon: "🗝️"
-badgeId: "premiere_dictionnaires"
+chapter: Dictionnaires et Tables
+icon: "\U0001F5DD️"
+badgeId: premiere_dictionnaires
+prerequisites: []
 ---
 
 

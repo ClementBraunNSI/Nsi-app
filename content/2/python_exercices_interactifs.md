@@ -1,10 +1,12 @@
 ---
-title: "Exercices : Les listes et les tuples"
-description: "Cours sur Exercices : Les listes et les tuples"
+title: 'Exercices : Les listes et les tuples'
+description: 'Cours sur Exercices : Les listes et les tuples'
 level: premiere
-chapter: "Structures de données linéaires"
-icon: "🖱️"
-badgeId: "premiere_fiche_exercices_interactifs"
+chapter: Structures de données linéaires
+icon: "\U0001F5B1️"
+badgeId: premiere_fiche_exercices_interactifs
+prerequisites:
+  - structures_lineaires_tp
 ---
 
 

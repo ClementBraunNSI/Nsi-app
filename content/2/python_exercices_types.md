@@ -1,10 +1,12 @@
 ---
-title: "Exercices : Types en Python"
-icon: "🏷️"
-chapter: "Introduction à Python"
-badgeId: "types-python"
-meta: "Variables, Types, Opérateurs et Conditions"
-level : premiere
+title: 'Exercices : Types en Python'
+icon: "\U0001F3F7️"
+chapter: Introduction à Python
+badgeId: types-python
+meta: 'Variables, Types, Opérateurs et Conditions'
+level: premiere
+prerequisites:
+  - python_fonctions
 ---
 
 <ExerciseTabs courseId="types-python" courseTitle="Types en Python">

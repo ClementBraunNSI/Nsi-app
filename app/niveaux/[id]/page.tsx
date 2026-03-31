@@ -2,8 +2,78 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
-import { ChevronRight, GraduationCap, LayoutGrid, Lock, ShieldCheck } from 'lucide-react';
+import { ChevronRight, GraduationCap, GitBranch, Lock, ShieldCheck } from 'lucide-react';
 import { createClient } from '@/utils/supabase/server';
+
+type CourseNode = {
+  slug: string;
+  title: string;
+  description: string;
+  chapter: string;
+  icon: string;
+  access: unknown;
+  allowedStudents: string[] | undefined;
+  prerequisites: string[];
+};
+
+type SkillTier = {
+  depth: number;
+  courses: CourseNode[];
+};
+
+function parsePrerequisites(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.map((v) => String(v).trim()).filter(Boolean);
+  }
+  if (typeof value === 'string') {
+    return value
+      .split(',')
+      .map((v) => v.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function buildSkillTiers(courses: CourseNode[]): SkillTier[] {
+  const bySlug = new Map(courses.map((c) => [c.slug, c]));
+  const deps = new Map<string, string[]>();
+
+  courses.forEach((course) => {
+    deps.set(
+      course.slug,
+      course.prerequisites.filter((p) => bySlug.has(p))
+    );
+  });
+
+  const memo = new Map<string, number>();
+  const visiting = new Set<string>();
+
+  const getDepth = (slug: string): number => {
+    if (memo.has(slug)) return memo.get(slug)!;
+    if (visiting.has(slug)) return 0;
+
+    visiting.add(slug);
+    const prereqs = deps.get(slug) || [];
+    const depth = prereqs.length === 0 ? 0 : Math.max(...prereqs.map(getDepth)) + 1;
+    visiting.delete(slug);
+    memo.set(slug, depth);
+    return depth;
+  };
+
+  const tiersMap = new Map<number, CourseNode[]>();
+  courses.forEach((course) => {
+    const depth = getDepth(course.slug);
+    if (!tiersMap.has(depth)) tiersMap.set(depth, []);
+    tiersMap.get(depth)!.push(course);
+  });
+
+  return Array.from(tiersMap.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([depth, tierCourses]) => ({
+      depth,
+      courses: tierCourses.sort((a, b) => a.title.localeCompare(b.title, 'fr')),
+    }));
+}
 
 export default async function PageSommaireNiveau({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -35,7 +105,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
   const files = fs.existsSync(folderPath) ? fs.readdirSync(folderPath) : [];
   const mdxFiles = files.filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
 
-  const tousLesCours = mdxFiles.map(fileName => {
+  const tousLesCours: CourseNode[] = mdxFiles.map(fileName => {
     const filePath = path.join(folderPath, fileName);
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const { data } = matter(fileContent);
@@ -46,7 +116,8 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
       chapter: String(data.chapter || "Général"), 
       icon: String(data.icon || '📘'),
       access: data.access,
-      allowedStudents: data.allowedStudents
+      allowedStudents: data.allowedStudents,
+      prerequisites: parsePrerequisites(data.prerequisites),
     };
   }).filter(cours => {
     // --- LA LOGIQUE QUE VOUS DEMANDEZ ---
@@ -63,7 +134,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
   });
 
   // Groupement par chapitre
-  const chapitres: Record<string, any[]> = {};
+  const chapitres: Record<string, CourseNode[]> = {};
   tousLesCours.forEach(c => {
     if (!chapitres[c.chapter]) chapitres[c.chapter] = [];
     chapitres[c.chapter].push(c);
@@ -89,41 +160,83 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
         </div>
       </div>
 
-      {Object.entries(chapitres).map(([nom, liste]) => (
+      {Object.entries(chapitres).map(([nom, liste]) => {
+        const tiers = buildSkillTiers(liste);
+        const chapterSlugSet = new Set(liste.map((c) => c.slug));
+
+        return (
         <section key={nom} className="mb-14">
           <h2 className="text-2xl font-bold text-slate-800 uppercase tracking-tight italic mb-6 border-b border-slate-50 pb-4 flex items-center gap-3">
-            <LayoutGrid className="text-orange-500" size={20} />
+            <GitBranch className="text-orange-500" size={20} />
             {nom}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {liste.map((cours) => (
-              <Link 
-                key={cours.slug}
-                href={`/cours/${id}/${cours.slug}`}
-                className={`group flex items-center justify-between p-6 bg-white border rounded-[2rem] transition-all duration-300 ${
-                  cours.access === 'private' ? 'border-amber-200 bg-amber-50/20' : 'border-slate-100'
-                }`}
-              >
-                <div className="flex items-center gap-5">
-                  <div className="text-3xl">{cours.icon}</div>
-                  <div>
-                    <h3 className="font-bold text-lg text-slate-900 group-hover:text-orange-600 flex items-center gap-2">
-                      {cours.title}
-                      {cours.access === 'private' && (
-                        <span className="text-[9px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-300 font-black flex items-center gap-1">
-                          <Lock size={10} /> PRIVÉ
-                        </span>
-                      )}
-                    </h3>
-                    <p className="text-sm text-slate-500 line-clamp-1">{cours.description}</p>
+          <div className="overflow-x-auto pb-2">
+            <div className="min-w-[760px] grid grid-flow-col auto-cols-[minmax(260px,1fr)] gap-5">
+              {tiers.map((tier, tierIndex) => (
+                <div key={tier.depth} className="relative">
+                  {tierIndex < tiers.length - 1 && (
+                    <div className="absolute top-8 -right-3 h-0.5 w-6 bg-orange-200" />
+                  )}
+                  <div className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">
+                    Étape {tier.depth + 1}
+                  </div>
+                  <div className="space-y-4">
+                    {tier.courses.map((cours) => (
+                      <Link
+                        key={cours.slug}
+                        href={`/cours/${id}/${cours.slug}`}
+                        className={`group block p-5 bg-white border rounded-[1.5rem] transition-all duration-300 hover:-translate-y-0.5 ${
+                          cours.access === 'private'
+                            ? 'border-amber-200 bg-amber-50/20'
+                            : 'border-slate-100'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-start gap-4">
+                            <div className="text-3xl leading-none">{cours.icon}</div>
+                            <div>
+                              <h3 className="font-bold text-base text-slate-900 group-hover:text-orange-600 flex items-center gap-2">
+                                {cours.title}
+                                {cours.access === 'private' && (
+                                  <span className="text-[9px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-300 font-black flex items-center gap-1">
+                                    <Lock size={10} /> PRIVÉ
+                                  </span>
+                                )}
+                              </h3>
+                              <p className="text-sm text-slate-500 line-clamp-2">{cours.description}</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="text-slate-300 group-hover:text-orange-500 mt-1" size={20} />
+                        </div>
+
+                        {cours.prerequisites.filter((p) => chapterSlugSet.has(p)).length > 0 && (
+                          <div className="mt-4 pt-3 border-t border-slate-100">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
+                              Prérequis
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {cours.prerequisites
+                                .filter((p) => chapterSlugSet.has(p))
+                                .map((prereq) => (
+                                  <span
+                                    key={prereq}
+                                    className="px-2 py-1 rounded-full text-[10px] font-bold border border-slate-200 text-slate-600 bg-slate-50"
+                                  >
+                                    {prereq}
+                                  </span>
+                                ))}
+                            </div>
+                          </div>
+                        )}
+                      </Link>
+                    ))}
                   </div>
                 </div>
-                <ChevronRight className="text-slate-300 group-hover:text-orange-500" size={22} />
-              </Link>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
-      ))}
+      )})}
     </main>
   );
 }

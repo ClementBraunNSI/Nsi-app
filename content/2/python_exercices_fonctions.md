@@ -1,10 +1,12 @@
 ---
-title: "Exercices : Les Fonctions"
-icon: "🧩"
-chapter: "Introduction à Python"
-badgeId: "les-fonctions-python"
-meta: "Définition, Paramètres et Valeurs de retour"
-level : premiere
+title: 'Exercices : Les Fonctions'
+icon: "\U0001F9E9"
+chapter: Introduction à Python
+badgeId: les-fonctions-python
+meta: 'Définition, Paramètres et Valeurs de retour'
+level: premiere
+prerequisites:
+  - python_exercices_boucles
 ---
 
 {/* L'id 'les-fonctions-python' doit correspondre à l'identifiant 

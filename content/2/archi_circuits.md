@@ -1,10 +1,12 @@
 ---
-title: "Circuits électroniques"
-description: "Portes logiques, transistors et tables de vérité"
+title: Circuits électroniques
+description: 'Portes logiques, transistors et tables de vérité'
 level: premiere
-chapter: "Architecture matérielle"
-icon: "🔌"
-badgeId: "premiere_circuits"
+chapter: Architecture matérielle
+icon: "\U0001F50C"
+badgeId: premiere_circuits
+prerequisites:
+  - archi_von_neumann
 ---
 
 

@@ -1,10 +1,12 @@
 ---
-title: "Fiche d'exercices - Web et HTTP"
-description: "Exercices sur le protocole HTTP, les URLs, le HTML, le CSS et JavaScript."
+title: Fiche d'exercices - Web et HTTP
+description: 'Exercices sur le protocole HTTP, les URLs, le HTML, le CSS et JavaScript.'
 level: premiere
-chapter: "Web et Interaction"
-icon: "🌍"
-badgeId: "premiere_fiche_exercices_web_http"
+chapter: Web et Interaction
+icon: "\U0001F30D"
+badgeId: premiere_fiche_exercices_web_http
+prerequisites:
+  - web_protocoles
 ---
 
 

@@ -1,10 +1,12 @@
 ---
-title: "Dictionnaires : PokéNSI"
-description: "Création d'un jeu inspiré de Pokémon en Python"
+title: 'Dictionnaires : PokéNSI'
+description: Création d'un jeu inspiré de Pokémon en Python
 level: premiere
-chapter: "Projets"
-icon: "👾"
-badgeId: "premiere_pokensi"
+chapter: Projets
+icon: "\U0001F47E"
+badgeId: premiere_pokensi
+prerequisites:
+  - projet_jeux_video
 ---
 
 import ExerciseTabs from '../../components/interactive/ExerciseTabs';

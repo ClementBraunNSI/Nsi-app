@@ -1,9 +1,12 @@
 ---
-title: "Listes par compréhension - Exercices"
-description: "Série d'exercices gradués pour maîtriser les listes par compréhension en Python."
-level: "TNSI"
-chapter: "Programmation Python"
-icon: "🐍"
+title: Listes par compréhension - Exercices
+description: >-
+  Série d'exercices gradués pour maîtriser les listes par compréhension en
+  Python.
+level: TNSI
+chapter: Programmation Python
+icon: "\U0001F40D"
+prerequisites: []
 ---
 
 # 🐍 Listes par compréhension

@@ -1,10 +1,12 @@
 ---
-title: "Exercices : Les Boucles"
-description: "Cours sur Exercices : Les Boucles"
+title: 'Exercices : Les Boucles'
+description: 'Cours sur Exercices : Les Boucles'
 level: premiere
-chapter: "Introduction à Python"
-icon: "🔄"
-badgeId: "premiere_exercices_boucles"
+chapter: Introduction à Python
+icon: "\U0001F504"
+badgeId: premiere_exercices_boucles
+prerequisites:
+  - python_exercices_types
 ---
 
 

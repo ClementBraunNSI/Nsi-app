@@ -1,10 +1,12 @@
 ---
-title: "Structures Linéaires : Listes, Piles, Files"
-description: "Implémentation et utilisation des structures de données linéaires."
+title: 'Structures Linéaires : Listes, Piles, Files'
+description: Implémentation et utilisation des structures de données linéaires.
 level: terminale
-chapter: "Structures de données"
-icon: "📚"
-badgeId: "terminale_structures_lineaires"
+chapter: Structures de données
+icon: "\U0001F4DA"
+badgeId: terminale_structures_lineaires
+prerequisites:
+  - poo_classes_objets
 ---
 
 # 📚 Structures de Données Linéaires

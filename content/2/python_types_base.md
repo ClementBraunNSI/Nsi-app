@@ -1,9 +1,11 @@
 ---
-title: "Types de données en Python"
-subtitle: "Les types fondamentaux pour structurer vos données"
-level: "2"
-chapter: "Introduction à Python"
-icon: "🔢"
+title: Types de données en Python
+subtitle: Les types fondamentaux pour structurer vos données
+level: '2'
+chapter: Introduction à Python
+icon: "\U0001F522"
+prerequisites:
+  - python_constructions_elementaires
 ---
 
 ## 🔘 Les Booléens

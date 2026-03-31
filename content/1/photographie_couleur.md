@@ -1,9 +1,11 @@
 ---
-title: "Photographie Couleur"
-description: "Comprendre la synthèse additive, le modèle RGB et la profondeur de couleur"
-level: "seconde"
-chapter: "Photographie Numérique"
-icon: "🎨"
+title: Photographie Couleur
+description: 'Comprendre la synthèse additive, le modèle RGB et la profondeur de couleur'
+level: seconde
+chapter: Photographie Numérique
+icon: "\U0001F3A8"
+prerequisites:
+  - metadonnees
 ---
 
 # 1. La vision humaine et les couleurs

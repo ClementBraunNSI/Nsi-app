@@ -1,10 +1,14 @@
 ---
-title: "Systèmes d'Exploitation"
-description: "Introduction aux systèmes d'exploitation (OS), leur histoire, composants et fonctionnement."
+title: Systèmes d'Exploitation
+description: >-
+  Introduction aux systèmes d'exploitation (OS), leur histoire, composants et
+  fonctionnement.
 level: premiere
-chapter: "Systèmes d'exploitation"
-icon: "💻"
-badgeId: "premiere_systemes_exploitation"
+chapter: Systèmes d'exploitation
+icon: "\U0001F4BB"
+badgeId: premiere_systemes_exploitation
+prerequisites:
+  - os_linux_commandes
 ---
 
 

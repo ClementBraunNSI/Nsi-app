@@ -1,8 +1,10 @@
 ---
-title: "Premiers pas en C#"
-chapter: "BTS SIO 1 : B2 - Développement (SLAM)"
-badgeId: "bts_csharp_intro"
-meta: "Syntaxe, Conditions, Boucles et Listes"
+title: Premiers pas en C#
+chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
+badgeId: bts_csharp_intro
+meta: 'Syntaxe, Conditions, Boucles et Listes'
+prerequisites:
+  - cours_heritage_csharp
 ---
 
 <ExerciseTabs courseId="bts_csharp_intro" courseTitle="Badge Premiers Pas en C#">

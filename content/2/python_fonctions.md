@@ -1,9 +1,13 @@
 ---
-title: "Fonctions en Python"
-description: "Apprendre à modulariser et réutiliser son code pour créer des programmes plus clairs et efficaces."
+title: Fonctions en Python
+description: >-
+  Apprendre à modulariser et réutiliser son code pour créer des programmes plus
+  clairs et efficaces.
 level: premiere
-chapter: "Introduction à Python"
-icon: "🐍"
+chapter: Introduction à Python
+icon: "\U0001F40D"
+prerequisites:
+  - python_types_base
 ---
 
 ## 🎯 Définitions

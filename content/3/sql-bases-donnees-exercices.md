@@ -1,9 +1,11 @@
 ---
-title: "SQL & Bases de Données - Exercices"
-description: "Exercices pratiques sur SQL et les bases de données"
-level: "TNSI"
-chapter: "Bases de Données"
-icon: "💾"
+title: SQL & Bases de Données - Exercices
+description: Exercices pratiques sur SQL et les bases de données
+level: TNSI
+chapter: Dictionnaires et Tables
+icon: "\U0001F4BE"
+prerequisites:
+  - sql-bases-donnees
 ---
 
 <ExerciseTabs courseId="sql-bases-donnees-exos" courseTitle="SQL & Bases de Données - Exercices">

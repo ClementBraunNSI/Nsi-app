@@ -1,10 +1,12 @@
 ---
-title: "Web : Site Personnel"
-description: "Cours sur Projet"
+title: 'Web : Site Personnel'
+description: Cours sur Projet
 level: premiere
-chapter: "Projets"
-icon: "🚀"
-badgeId: "premiere_projet"
+chapter: Projets
+icon: "\U0001F680"
+badgeId: premiere_projet
+prerequisites:
+  - projet_empreinte_carbone
 ---
 <style>
 /* Styles modernes pour le TP Web et HTTP */

@@ -1,10 +1,12 @@
 ---
-title: "Exercices : Spécification"
-icon: "📋"
-chapter: "Introduction à Python"
-badgeId: "specifications-python"
-meta: "Docstrings, Type Hinting et Documentation"
-level : premiere
+title: 'Exercices : Spécification'
+icon: "\U0001F4CB"
+chapter: Introduction à Python
+badgeId: specifications-python
+meta: 'Docstrings, Type Hinting et Documentation'
+level: premiere
+prerequisites:
+  - python_exercices_fonctions
 ---
 
 ## 🐞 Chasseur de Bugs

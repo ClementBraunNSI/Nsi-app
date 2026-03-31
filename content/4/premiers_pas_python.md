@@ -1,8 +1,10 @@
 ---
-title: "Premiers pas en Python"
-chapter: "BTS SIO 1 : B3 - CyberSécurité"
-badgeId: "bts_python_intro"
-meta: "Variables, Conditions, Fonctions, Boucles et Listes"
+title: Premiers pas en Python
+chapter: 'BTS SIO 1 : B3 - CyberSécurité'
+badgeId: bts_python_intro
+meta: 'Variables, Conditions, Fonctions, Boucles et Listes'
+prerequisites:
+  - introduction_cybersecurite
 ---
 
 <ExerciseTabs courseId="bts_python_intro" courseTitle="Badge Premiers Pas en Python">

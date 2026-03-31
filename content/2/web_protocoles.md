@@ -1,10 +1,12 @@
 ---
-title: "Le Web et HTTP"
-description: "Introduction au Web, architecture client-serveur, protocole HTTP et URL."
+title: Le Web et HTTP
+description: 'Introduction au Web, architecture client-serveur, protocole HTTP et URL.'
 level: premiere
-chapter: "Web et Interaction"
-icon: "🌐"
-badgeId: "premiere_web_protocoles"
+chapter: Web et Interaction
+icon: "\U0001F310"
+badgeId: premiere_web_protocoles
+prerequisites:
+  - web_javascript_interactions
 ---
 
 

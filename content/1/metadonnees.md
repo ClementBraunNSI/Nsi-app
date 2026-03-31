@@ -1,9 +1,13 @@
 ---
-title: "Métadonnées et Formats"
-description: "Comprendre les formats de fichiers image, la compression et les métadonnées EXIF"
-level: "seconde"
-chapter: "Photographie Numérique"
-icon: "🖼️"
+title: Métadonnées et Formats
+description: >-
+  Comprendre les formats de fichiers image, la compression et les métadonnées
+  EXIF
+level: seconde
+chapter: Photographie Numérique
+icon: "\U0001F5BC️"
+prerequisites:
+  - activite_photo_interactive
 ---
 
 # 1. Les formats de fichiers

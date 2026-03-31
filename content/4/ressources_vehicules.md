@@ -1,8 +1,9 @@
 ---
-title: "Ressouces : Flotte de véhicules"
-chapter: "Ressources nécessaires"
-badgeId: "bts_sql_ressources_vehicules"
-meta: "Durée : AP2"
+title: 'Ressouces : Flotte de véhicules'
+chapter: Ressources nécessaires
+badgeId: bts_sql_ressources_vehicules
+meta: 'Durée : AP2'
+prerequisites: []
 ---
 
 ```csv

@@ -1,10 +1,12 @@
 ---
-title: "Boucles : Simulation de Propagation"
-description: "Modéliser la propagation d'une rumeur ou d'un virus dans une population."
+title: 'Boucles : Simulation de Propagation'
+description: Modéliser la propagation d'une rumeur ou d'un virus dans une population.
 level: premiere
-chapter: "Projets"
-icon: "🦠"
-badgeId: "premiere_projet_virus"
+chapter: Projets
+icon: "\U0001F9A0"
+badgeId: premiere_projet_virus
+prerequisites:
+  - projet_systeme_vote
 ---
 
 # 🦠 Projet - Simulation de Propagation

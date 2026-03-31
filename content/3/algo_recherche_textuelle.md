@@ -1,10 +1,11 @@
 ---
-title: "Algorithmes de Recherche Textuelle"
-description: "Recherche de motifs dans un texte : Naïf et Boyer-Moore."
+title: Algorithmes de Recherche Textuelle
+description: 'Recherche de motifs dans un texte : Naïf et Boyer-Moore.'
 level: terminale
-chapter: "Algorithmique"
-icon: "🔍"
-badgeId: "terminale_algo_texte"
+chapter: Algorithmique
+icon: "\U0001F50D"
+badgeId: terminale_algo_texte
+prerequisites: []
 ---
 
 # 🔍 Recherche Textuelle

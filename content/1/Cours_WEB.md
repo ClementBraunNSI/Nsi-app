@@ -1,9 +1,13 @@
 ---
-title: "Web"
-description: "L'évolution du World Wide Web et ses technologies fondamentales : Client-Serveur, HTTP, HTML et DNS."
-level: "2"
-chapter: "Web"
-icon: "🌐"
+title: Web
+description: >-
+  L'évolution du World Wide Web et ses technologies fondamentales :
+  Client-Serveur, HTTP, HTML et DNS.
+level: '2'
+chapter: Web
+icon: "\U0001F310"
+prerequisites:
+  - Cours_html
 ---
 
 # 🌐 Web

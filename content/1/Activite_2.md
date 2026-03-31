@@ -1,9 +1,11 @@
 ---
-title: "Simulation de Serveurs WEB et DNS"
-description: "Mise en place de serveurs WEB et DNS dans un réseau simulé avec Filius."
-level: "2"
-chapter: "Internet"
-icon: "🌍"
+title: Simulation de Serveurs WEB et DNS
+description: Mise en place de serveurs WEB et DNS dans un réseau simulé avec Filius.
+level: '2'
+chapter: Internet
+icon: "\U0001F30D"
+prerequisites:
+  - Activite
 ---
 
 > **Objectif de l'activité**

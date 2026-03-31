@@ -1,9 +1,10 @@
 ---
-title: "Objets Connectés"
-description: "Comprendre l'Internet des Objets (IoT), les capteurs et les protocoles"
-level: "seconde"
-chapter: "Micro-controleurs"
-icon: "📶"
+title: Objets Connectés
+description: 'Comprendre l''Internet des Objets (IoT), les capteurs et les protocoles'
+level: seconde
+chapter: Micro-controleurs
+icon: "\U0001F4F6"
+prerequisites: []
 ---
 
 # 1. Introduction

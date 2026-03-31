@@ -1,10 +1,13 @@
 ---
-title: "C - Fonctions - Exercices"
-description: "Organiser le code en fonctions réutilisables"
-level: "particuliers"
-chapter: "Programmation en C"
-icon: "⚙️"
-allowedStudents: ["Cléo"]
+title: C - Fonctions - Exercices
+description: Organiser le code en fonctions réutilisables
+level: particuliers
+chapter: Programmation en C
+icon: ⚙️
+allowedStudents:
+  - Cléo
+prerequisites:
+  - exercices-tableaux-2d
 ---
 
 <ExerciseTabs courseId="c-fonctions" courseTitle="C - Fonctions">

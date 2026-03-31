@@ -1,8 +1,10 @@
 ---
-title: "TP : Les Bases de la POO en C#"
-chapter: "BTS SIO 1 : B2 - Développement (SLAM)"
-badgeId: "bts_poo_basics"
-meta: "Classes, Objets, Propriétés, Constructeurs, Héritage"
+title: 'TP : Les Bases de la POO en C#'
+chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
+badgeId: bts_poo_basics
+meta: 'Classes, Objets, Propriétés, Constructeurs, Héritage'
+prerequisites:
+  - projet_rpg_csharp
 ---
 
 <ExerciseTabs courseId="bts_poo_basics" courseTitle="TP POO - Bases">

@@ -1,10 +1,13 @@
 ---
-title: "C - Affectations & Types - Exercices"
-description: "Exercices pratiques sur les variables et opérateurs en C"
-level: "particuliers"
-chapter: "Programmation en C"
-icon: "📝"
-allowedStudents: ["Cléo"]
+title: C - Affectations & Types - Exercices
+description: Exercices pratiques sur les variables et opérateurs en C
+level: particuliers
+chapter: Programmation en C
+icon: "\U0001F4DD"
+allowedStudents:
+  - Cléo
+prerequisites:
+  - cours-structures-controle
 ---
 
 <ExerciseTabs courseId="c-affectations-types-exos" courseTitle="C - Affectations & Types - Exercices">

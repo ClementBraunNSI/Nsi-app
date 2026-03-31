@@ -1,9 +1,11 @@
 ---
-title: "Introduction à la POO en C#"
-description: "Les bases de la Programmation Orientée Objet : concepts, classes et objets."
-level: "2"
-chapter: "BTS SIO 1 : B2 - Développement (SLAM)"
-icon: "🎯"
+title: Introduction à la POO en C#
+description: 'Les bases de la Programmation Orientée Objet : concepts, classes et objets.'
+level: '2'
+chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
+icon: "\U0001F3AF"
+prerequisites:
+  - csharp_csv_bdd
 ---
 
 ## 🌟 Introduction

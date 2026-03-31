@@ -1,8 +1,10 @@
 ---
-title: "TP : Audit RGPD d'un site web réel"
-chapter: "BTS SIO 1 : B3 - CyberSécurité"
-badgeId: "bts_sql_audit_rgpd"
-meta: "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
+title: 'TP : Audit RGPD d''un site web réel'
+chapter: 'BTS SIO 1 : B3 - CyberSécurité'
+badgeId: bts_sql_audit_rgpd
+meta: 'Durée : 2 heures · Objectif : Comprendre pour mieux protéger'
+prerequisites:
+  - tp_blockchain_python
 ---
 
 <ExerciseTabs courseId="bts_cyber_rgpd_audit" courseTitle="TP Cybersécurité - Audit RGPD">

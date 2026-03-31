@@ -1,9 +1,11 @@
 ---
-title: "Atelier Web : Éditeur HTML"
-description: "Expérimente avec le code HTML et CSS en temps réel."
-level: "2"
-chapter: "Web"
-icon: "🌐"
+title: 'Atelier Web : Éditeur HTML'
+description: Expérimente avec le code HTML et CSS en temps réel.
+level: '2'
+chapter: Web
+icon: "\U0001F310"
+prerequisites:
+  - monstres
 ---
 
 # 🌐 Atelier Web : Crée ta première page

@@ -1,10 +1,11 @@
 ---
-title: "Booléens et Fonctions booléennes"
-description: "L'algèbre de George Boole et la logique binaire"
+title: Booléens et Fonctions booléennes
+description: L'algèbre de George Boole et la logique binaire
 level: premiere
-chapter: "Représentation des données"
-icon: "💡"
-badgeId: "premiere_booleens"
+chapter: Représentation des données
+icon: "\U0001F4A1"
+badgeId: premiere_booleens
+prerequisites: []
 ---
 
 

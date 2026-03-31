@@ -1,10 +1,13 @@
 ---
-title: "C - Tableaux - Exercices"
-description: "Exercices pratiques sur les tableaux en C"
-level: "particuliers"
-chapter: "Programmation en C"
-icon: "📊"
-allowedStudents: ["Cléo"]
+title: C - Tableaux - Exercices
+description: Exercices pratiques sur les tableaux en C
+level: particuliers
+chapter: Programmation en C
+icon: "\U0001F4CA"
+allowedStudents:
+  - Cléo
+prerequisites:
+  - exercices-fonctions
 ---
 
 <ExerciseTabs courseId="c-tableaux-exos" courseTitle="C - Tableaux - Exercices">

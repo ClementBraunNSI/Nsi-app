@@ -1,8 +1,10 @@
 ---
-title: "TP Remédiation : Les Bases Absolues de la POO en C#"
-chapter: "BTS SIO 1 : B2 - Développement (SLAM)"
-badgeId: "bts_poo_remediation"
-meta: "Classes, Objets, Constructeurs, Instance, Static"
+title: 'TP Remédiation : Les Bases Absolues de la POO en C#'
+chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
+badgeId: bts_poo_remediation
+meta: 'Classes, Objets, Constructeurs, Instance, Static'
+prerequisites:
+  - premiers_pas_csharp
 ---
 
 <Admonition type="warning" title="Objectif de cette séance">

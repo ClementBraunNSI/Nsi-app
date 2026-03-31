@@ -1,10 +1,12 @@
 ---
-title: "Variables : Calculateur d'Empreinte Carbone"
-description: "Créer un outil pour estimer l'impact écologique d'un trajet."
+title: 'Variables : Calculateur d''Empreinte Carbone'
+description: Créer un outil pour estimer l'impact écologique d'un trajet.
 level: premiere
-chapter: "Projets"
-icon: "🌱"
-badgeId: "premiere_projet_carbone"
+chapter: Projets
+icon: "\U0001F331"
+badgeId: premiere_projet_carbone
+prerequisites:
+  - projet_gestion_stock
 ---
 
 # 🌱 Projet - Calculateur d'Empreinte Carbone

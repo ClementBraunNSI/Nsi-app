@@ -1,10 +1,13 @@
 ---
-title: "C - Algorithmes de Tri - Exercices"
-description: "Exercices guidés sur les tris : sélection, insertion et dénombrement"
-level: "particuliers"
-chapter: "Programmation en C"
-icon: "🔄"
-allowedStudents: ["Cléo"]
+title: C - Algorithmes de Tri - Exercices
+description: 'Exercices guidés sur les tris : sélection, insertion et dénombrement'
+level: particuliers
+chapter: Programmation en C
+icon: "\U0001F504"
+allowedStudents:
+  - Cléo
+prerequisites:
+  - exercices-affectations-types
 ---
 
 <ExerciseTabs courseId="c-tris-exos" courseTitle="C - Algorithmes de Tri - Exercices">

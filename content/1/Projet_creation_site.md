@@ -1,9 +1,11 @@
 ---
-title: "Projet : Création du Bestiaire"
-description: "Création d'un site web de bestiaire en 3 parties : HTML, CSS, et finalisation."
-level: "2"
-chapter: "Web"
-icon: "🐉"
+title: 'Projet : Création du Bestiaire'
+description: 'Création d''un site web de bestiaire en 3 parties : HTML, CSS, et finalisation.'
+level: '2'
+chapter: Web
+icon: "\U0001F409"
+prerequisites:
+  - activite_web_interactive
 ---
 
 # 📚 Projet : Création du Bestiaire

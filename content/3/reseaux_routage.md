@@ -1,10 +1,12 @@
 ---
-title: "Réseaux : Protocoles de Routage"
-description: "Comment les paquets trouvent leur chemin sur Internet (RIP, OSPF)."
+title: 'Réseaux : Protocoles de Routage'
+description: 'Comment les paquets trouvent leur chemin sur Internet (RIP, OSPF).'
 level: terminale
-chapter: "Architectures matérielles, OS & Réseaux"
-icon: "🌐"
-badgeId: "terminale_routage"
+chapter: 'Architectures matérielles, OS & Réseaux'
+icon: "\U0001F310"
+badgeId: terminale_routage
+prerequisites:
+  - archi_soc
 ---
 
 # 🌐 Protocoles de Routage

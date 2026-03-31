@@ -1,9 +1,11 @@
 ---
-title: "Exercices - Données Structurées"
-description: "Exercices sur les formats CSV, JSON et les bases de données"
-level: "seconde"
-chapter: "Données structurées"
-icon: "📋"
+title: Exercices - Données Structurées
+description: 'Exercices sur les formats CSV, JSON et les bases de données'
+level: seconde
+chapter: Données structurées
+icon: "\U0001F4CB"
+prerequisites:
+  - activite_donnees_interactive
 ---
 
 # Exercice 1 : Découverte des formats de données

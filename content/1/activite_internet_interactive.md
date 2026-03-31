@@ -1,9 +1,11 @@
 ---
-title: "Atelier Internet : Le Routage"
-description: "Simuler l'envoi d'un paquet à travers le réseau Internet."
-level: "2"
-chapter: "Internet"
-icon: "🌐"
+title: 'Atelier Internet : Le Routage'
+description: Simuler l'envoi d'un paquet à travers le réseau Internet.
+level: '2'
+chapter: Internet
+icon: "\U0001F310"
+prerequisites:
+  - Binaire_Decimal
 ---
 
 # 🌐 Atelier Internet : Le Packet Tracer

@@ -1,10 +1,12 @@
 ---
-title: "Structures : Bibliothèque"
-description: "Système de gestion d'une collection de livres numériques en Python"
+title: 'Structures : Bibliothèque'
+description: Système de gestion d'une collection de livres numériques en Python
 level: premiere
-chapter: "Projets"
-icon: "📚"
-badgeId: "premiere_gestion_bibliotheque"
+chapter: Projets
+icon: "\U0001F4DA"
+badgeId: premiere_gestion_bibliotheque
+prerequisites:
+  - projet_tournoi_esport
 ---
 
 import ExerciseTabs from '../../components/interactive/ExerciseTabs';

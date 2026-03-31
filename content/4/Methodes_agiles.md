@@ -1,9 +1,13 @@
 ---
-title: "Méthodes Agiles"
-description: "Introduction aux méthodes agiles (Scrum, Kanban) et à la gestion de projet moderne"
-level: "4"
-chapter: "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques"
-icon: "🚀"
+title: Méthodes Agiles
+description: >-
+  Introduction aux méthodes agiles (Scrum, Kanban) et à la gestion de projet
+  moderne
+level: '4'
+chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
+icon: "\U0001F680"
+prerequisites:
+  - Chemin_critique
 ---
 
 # Méthodes Agiles Avancées

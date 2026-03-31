@@ -1,9 +1,10 @@
 ---
-title: "Données Structurées"
-description: "Comprendre les formats de données (CSV, JSON) et les bases de données"
-level: "seconde"
-chapter: "Données structurées"
-icon: "🗄️"
+title: Données Structurées
+description: 'Comprendre les formats de données (CSV, JSON) et les bases de données'
+level: seconde
+chapter: Données structurées
+icon: "\U0001F5C4️"
+prerequisites: []
 ---
 
 # 1. Introduction

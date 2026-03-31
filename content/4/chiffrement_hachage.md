@@ -1,9 +1,13 @@
 ---
-title: "Chiffrement et Hachage"
-description: "Fondamentaux de la cryptographie : chiffrement, hachage et signatures numériques"
-level: "BTS"
-chapter: "BTS SIO 1 : B3 - CyberSécurité"
-icon: "🔐"
+title: Chiffrement et Hachage
+description: >-
+  Fondamentaux de la cryptographie : chiffrement, hachage et signatures
+  numériques
+level: BTS
+chapter: 'BTS SIO 1 : B3 - CyberSécurité'
+icon: "\U0001F510"
+prerequisites:
+  - rgpd_cnil
 ---
 
 ## 🎯 Rappels : Les piliers de la sécurité

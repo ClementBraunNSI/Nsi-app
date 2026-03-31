@@ -1,9 +1,11 @@
 ---
-title: "Atelier Données : Le Détective CSV"
-description: "Apprendre à filtrer et trier des données structurées."
-level: "2"
-chapter: "Données structurées"
-icon: "📊"
+title: 'Atelier Données : Le Détective CSV'
+description: Apprendre à filtrer et trier des données structurées.
+level: '2'
+chapter: Données structurées
+icon: "\U0001F4CA"
+prerequisites:
+  - activite_blockly
 ---
 
 # 📊 Atelier Données : Enquête sur le CSV

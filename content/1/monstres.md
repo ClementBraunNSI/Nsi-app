@@ -1,9 +1,11 @@
 ---
-title: "Galerie des Monstres"
-description: "Découvrez les créations de nos élèves."
-level: "2"
-chapter: "Web"
-icon: "👾"
+title: Galerie des Monstres
+description: Découvrez les créations de nos élèves.
+level: '2'
+chapter: Web
+icon: "\U0001F47E"
+prerequisites:
+  - Cours_WEB
 ---
 
 # Galerie des Monstres

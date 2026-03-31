@@ -1,9 +1,11 @@
 ---
-title: "Activité - Microcontrôleurs"
-description: "Activité interactive sur les microcontrôleurs"
-level: "seconde"
-chapter: "Micro-controleurs"
-icon: "🎮"
+title: Activité - Microcontrôleurs
+description: Activité interactive sur les microcontrôleurs
+level: seconde
+chapter: Micro-controleurs
+icon: "\U0001F3AE"
+prerequisites:
+  - simulateur_microbit
 ---
 
 # Activité Microcontrôleurs

@@ -1,10 +1,14 @@
 ---
-title: "Structures : Gestion Stock"
-description: "Simulation d'un système de gestion de stock et de ventes pour un petit commerce"
+title: 'Structures : Gestion Stock'
+description: >-
+  Simulation d'un système de gestion de stock et de ventes pour un petit
+  commerce
 level: premiere
-chapter: "Projets"
-icon: "📦"
-badgeId: "premiere_gestion_stock"
+chapter: Projets
+icon: "\U0001F4E6"
+badgeId: premiere_gestion_stock
+prerequisites:
+  - projet_gestion_bibliotheque
 ---
 
 import ExerciseTabs from '../../components/interactive/ExerciseTabs';

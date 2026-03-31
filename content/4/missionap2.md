@@ -1,9 +1,11 @@
 ---
-title: "Mission AP2"
-description: "Développement d'une application de gestion de flotte (C# / CSV / Web)"
-level: "4"
-chapter: "BTS SIO 1 SLAM AP"
-icon: "🚗"
+title: Mission AP2
+description: Développement d'une application de gestion de flotte (C# / CSV / Web)
+level: '4'
+chapter: BTS SIO 1 SLAM AP
+icon: "\U0001F697"
+prerequisites:
+  - missionap1
 ---
 
 Mission 2 : Gestion de Flotte Automobile - AutoRent

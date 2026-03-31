@@ -1,10 +1,14 @@
 ---
-title: "TP KNN"
-description: "Travaux pratiques pour implémenter l'algorithme KNN sur des cas concrets (Fruits, Iris, Spam)."
+title: TP KNN
+description: >-
+  Travaux pratiques pour implémenter l'algorithme KNN sur des cas concrets
+  (Fruits, Iris, Spam).
 level: premiere
-chapter: "Algorithmique"
-icon: "🎯"
-badgeId: "premiere_tp_knn"
+chapter: Algorithmique
+icon: "\U0001F3AF"
+badgeId: premiere_tp_knn
+prerequisites:
+  - algo_tris
 ---
 
 

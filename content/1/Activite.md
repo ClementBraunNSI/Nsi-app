@@ -1,9 +1,13 @@
 ---
-title: "Simulation d'un Réseau Informatique"
-description: "Découverte du logiciel Filius pour simuler des réseaux et comprendre les échanges de données."
-level: "2"
-chapter: "Internet"
-icon: "🔌"
+title: Simulation d'un Réseau Informatique
+description: >-
+  Découverte du logiciel Filius pour simuler des réseaux et comprendre les
+  échanges de données.
+level: '2'
+chapter: Internet
+icon: "\U0001F50C"
+prerequisites:
+  - activite_internet_interactive
 ---
 
 > **Objectif de l'activité**

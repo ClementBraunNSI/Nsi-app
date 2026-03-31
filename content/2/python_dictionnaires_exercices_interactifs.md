@@ -1,10 +1,12 @@
 ---
-title: "Exercices : Dictionnaires"
-description: "Cours sur Exercices : Dictionnaires"
+title: 'Exercices : Dictionnaires'
+description: 'Cours sur Exercices : Dictionnaires'
 level: premiere
-chapter: "Dictionnaires et Tables"
-icon: "📖"
-badgeId: "premiere_fiche_exercices_dictionnaires_interactifs"
+chapter: Dictionnaires et Tables
+icon: "\U0001F4D6"
+badgeId: premiere_fiche_exercices_dictionnaires_interactifs
+prerequisites:
+  - python_csv
 ---
 
 

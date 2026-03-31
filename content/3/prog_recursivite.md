@@ -1,10 +1,12 @@
 ---
-title: "Récursivité"
-description: "Principe des fonctions récursives et pile d'exécution."
+title: Récursivité
+description: Principe des fonctions récursives et pile d'exécution.
 level: terminale
-chapter: "Langages et Programmation"
-icon: "🔄"
-badgeId: "terminale_recursivite"
+chapter: Langages et Programmation
+icon: "\U0001F504"
+badgeId: terminale_recursivite
+prerequisites:
+  - prog_modularite_mise_au_point
 ---
 
 # 🔄 La Récursivité

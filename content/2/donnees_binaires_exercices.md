@@ -1,10 +1,14 @@
 ---
-title: "Exercices Binaire et Hexadécimal"
-description: "Exercices sur la représentation des nombres en binaire et hexadécimal, opérations arithmétiques et complément à deux."
+title: Exercices Binaire et Hexadécimal
+description: >-
+  Exercices sur la représentation des nombres en binaire et hexadécimal,
+  opérations arithmétiques et complément à deux.
 level: premiere
-chapter: "Représentation des données"
-icon: "💾"
-badgeId: "premiere_fiche_exercices_binaires"
+chapter: Représentation des données
+icon: "\U0001F4BE"
+badgeId: premiere_fiche_exercices_binaires
+prerequisites:
+  - donnees_booleens_exercices
 ---
 
 

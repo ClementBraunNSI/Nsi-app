@@ -1,9 +1,11 @@
 ---
-title: "Le binaire : Définition"
-description: "Comprendre la base 2, les bits, octets et les conversions avec le décimal."
-level: "2"
-chapter: "Internet"
-icon: "🔢"
+title: 'Le binaire : Définition'
+description: 'Comprendre la base 2, les bits, octets et les conversions avec le décimal.'
+level: '2'
+chapter: Internet
+icon: "\U0001F522"
+prerequisites:
+  - Cours_Internet
 ---
 
 Nous comptons généralement en base 10, cela veut dire que nous utilisons 10 symboles pour représenter les chiffres. Combiner ces chiffres permet de créer des nombres.

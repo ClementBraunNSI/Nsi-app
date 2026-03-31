@@ -1,9 +1,10 @@
 ---
-title: "Notice sur HTML"
-description: "Introduction au HTML, structure d'un fichier et principales balises."
-level: "2"
-chapter: "Web"
-icon: "📝"
+title: Notice sur HTML
+description: 'Introduction au HTML, structure d''un fichier et principales balises.'
+level: '2'
+chapter: Web
+icon: "\U0001F4DD"
+prerequisites: []
 ---
 
 # 📚 Notice sur HTML et création d'un site web basique

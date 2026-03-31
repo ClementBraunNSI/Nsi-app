@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import Link from 'next/link';
-import { ChevronRight, GraduationCap, LayoutGrid, Zap } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 import { createClient } from '@/utils/supabase/server';
 import { getReservedCourses } from '@/app/actions/getReservedCourses';
+import BentoChaptersView from './BentoChaptersView';
 
 interface CoursData {
   slug: string;
@@ -101,6 +101,13 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
     if (!chapitres[nomChapitre]) chapitres[nomChapitre] = [];
     chapitres[nomChapitre].push(cours);
   });
+  const orderedChapitres = Object.entries(chapitres).sort(([a], [b]) => {
+    const aPrivate = a.includes('Particuliers');
+    const bPrivate = b.includes('Particuliers');
+    if (aPrivate && !bPrivate) return 1;
+    if (!aPrivate && bPrivate) return -1;
+    return a.localeCompare(b, 'fr');
+  });
 
   // Mapping des noms de niveaux pour l'affichage
   const DISPLAY_LEVEL_MAP: Record<string, string> = {
@@ -123,7 +130,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
   const theme = LEVEL_THEME[niveaux.trim()] || LEVEL_THEME['2']; // Fallback to orange-500
 
   return (
-    <main className="max-w-5xl mx-auto p-8 min-h-screen">
+    <main className="max-w-7xl mx-auto p-8 min-h-screen">
       <div className="flex items-center gap-4 mb-12">
         <div className={`p-3 rounded-2xl text-white shadow-lg ${theme.main}`}>
           <GraduationCap size={32} />
@@ -133,59 +140,22 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         </h1>
       </div>
 
-      {Object.entries(chapitres).map(([nomChapitre, coursDuChapitre]) => (
-        <section key={nomChapitre} className="mb-14">
-          <div className="flex items-center gap-3 mb-6">
-            {nomChapitre.includes('Particuliers') ? (
-              <Zap className="text-orange-500" size={20} fill="currentColor" />
-            ) : (
-              <LayoutGrid className={`${theme.icon}`} size={20} />
-            )}
-            <h2 className={`text-2xl font-bold ${nomChapitre.includes('Particuliers') ? 'text-orange-600' : 'text-gray-800'}`}>
-              {nomChapitre}
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {coursDuChapitre.map((cours) => (
-              <Link 
-                key={cours.slug}
-                href={cours.href || `/cours/${niveaux}/${cours.slug}`}
-                className={`group flex items-center justify-between p-6 rounded-3xl transition-all duration-300 ${
-                  cours.isPrivate 
-                    ? 'bg-orange-50 border border-orange-200 hover:border-orange-500 hover:shadow-xl hover:shadow-orange-100' 
-                    : `bg-white border border-gray-100 ${theme.border} hover:shadow-xl`
-                }`}
-              >
-                <div className="flex items-center gap-5">
-                  <span className={`text-4xl group-hover:scale-110 transition-transform duration-300 ${cours.isPrivate ? 'text-orange-500' : ''}`}>
-                    {cours.icon}
-                  </span>
-                  <div>
-                    <h3 className={`font-bold text-lg transition-colors ${
-                      cours.isPrivate 
-                        ? 'text-gray-900 group-hover:text-orange-600' 
-                        : `text-gray-900 ${theme.text}`
-                    }`}>
-                      {cours.title}
-                    </h3>
-                    <p className="text-sm text-gray-500 mt-1 line-clamp-1">
-                      {cours.description}
-                    </p>
-                  </div>
-                </div>
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                  cours.isPrivate
-                    ? 'bg-orange-100 text-orange-400 group-hover:bg-orange-500 group-hover:text-white'
-                    : `bg-slate-50 text-slate-400 ${theme.light} ${theme.text}`
-                }`}>
-                  <ChevronRight size={20} />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ))}
+      <BentoChaptersView
+        niveaux={niveaux}
+        theme={{ border: theme.border, text: theme.text, light: theme.light }}
+        chapters={orderedChapitres.map(([name, courses]) => ({
+          name,
+          isPrivate: name.includes('Particuliers'),
+          courses: courses.map((cours) => ({
+            slug: cours.slug,
+            title: cours.title,
+            description: cours.description,
+            icon: cours.icon,
+            href: cours.href || `/cours/${niveaux}/${cours.slug}`,
+            isPrivate: cours.isPrivate,
+          })),
+        }))}
+      />
     </main>
   );
 }

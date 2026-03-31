@@ -1,9 +1,11 @@
 ---
-title: "TP - Micro:bit"
-description: "S'initier à la programmation embarquée avec la carte Micro:bit"
-level: "seconde"
-chapter: "Micro-controleurs"
-icon: "🤖"
+title: 'TP - Micro:bit'
+description: 'S''initier à la programmation embarquée avec la carte Micro:bit'
+level: seconde
+chapter: Micro-controleurs
+icon: "\U0001F916"
+prerequisites:
+  - activite_objets_connectes
 ---
 
 # Travail Pratique : Cartes Micro:bit

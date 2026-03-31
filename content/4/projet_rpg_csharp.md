@@ -1,8 +1,10 @@
 ---
-title: "Projet Fil Rouge : Création d'un jeu 'FoxMon' (Type Pokémon)"
-chapter: "BTS SIO 1 : B2 - Développement (SLAM)"
-badgeId: "projet_rpg_csharp"
-meta: "C#, Projet, POO, Héritage, Polymorphisme, Console, Pokemon"
+title: 'Projet Fil Rouge : Création d''un jeu ''FoxMon'' (Type Pokémon)'
+chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
+badgeId: projet_rpg_csharp
+meta: 'C#, Projet, POO, Héritage, Polymorphisme, Console, Pokemon'
+prerequisites:
+  - tp_remediation_poo
 ---
 
 <Admonition type="info" title="Contexte du Projet">

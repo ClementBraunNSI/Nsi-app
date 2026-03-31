@@ -1,9 +1,12 @@
 ---
-title: "Internet"
-description: "L'histoire et le fonctionnement du réseau mondial, des pionniers à la révolution TCP/IP."
-level: "2"
-chapter: "Internet"
-icon: "🌐"
+title: Internet
+description: >-
+  L'histoire et le fonctionnement du réseau mondial, des pionniers à la
+  révolution TCP/IP.
+level: '2'
+chapter: Internet
+icon: "\U0001F310"
+prerequisites: []
 ---
 
 > **Définition : Internet**

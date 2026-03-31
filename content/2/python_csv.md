@@ -1,10 +1,12 @@
 ---
-title: "Traitement de données en tables"
-description: "Manipulation et analyse de fichiers CSV avec Python"
+title: Traitement de données en tables
+description: Manipulation et analyse de fichiers CSV avec Python
 level: premiere
-chapter: "Dictionnaires et Tables"
-icon: "📊"
-badgeId: "premiere_traitement_tables_csv"
+chapter: Dictionnaires et Tables
+icon: "\U0001F4CA"
+badgeId: premiere_traitement_tables_csv
+prerequisites:
+  - python_dictionnaires
 ---
 
 

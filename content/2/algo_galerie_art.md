@@ -1,10 +1,12 @@
 ---
-title: "galerie d art"
-description: "Cours sur galerie d art"
+title: galerie d art
+description: Cours sur galerie d art
 level: premiere
-chapter: "Web et Interaction"
-icon: "🎨"
-badgeId: "premiere_galerie_d_art"
+chapter: Web et Interaction
+icon: "\U0001F3A8"
+badgeId: premiere_galerie_d_art
+prerequisites:
+  - web_html
 ---
 # Ensemble des tableaux
 

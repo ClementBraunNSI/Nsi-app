@@ -1,10 +1,12 @@
 ---
-title: "Dictionnaires : Collection Jeux"
-description: "Création d'un gestionnaire de collection de jeux vidéo en Python"
+title: 'Dictionnaires : Collection Jeux'
+description: Création d'un gestionnaire de collection de jeux vidéo en Python
 level: premiere
-chapter: "Projets"
-icon: "🎮"
-badgeId: "premiere_gestion_jeux_video"
+chapter: Projets
+icon: "\U0001F3AE"
+badgeId: premiere_gestion_jeux_video
+prerequisites:
+  - projet_application_bancaire
 ---
 
 import ExerciseTabs from '../../components/interactive/ExerciseTabs';

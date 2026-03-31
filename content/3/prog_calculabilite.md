@@ -1,10 +1,12 @@
 ---
-title: "Calculabilité et Décidabilité"
-description: "Limites de l'informatique : ce qui peut être calculé ou non."
+title: Calculabilité et Décidabilité
+description: 'Limites de l''informatique : ce qui peut être calculé ou non.'
 level: terminale
-chapter: "Langages et Programmation"
-icon: "🛑"
-badgeId: "terminale_calculabilite"
+chapter: Langages et Programmation
+icon: "\U0001F6D1"
+badgeId: terminale_calculabilite
+prerequisites:
+  - prog_recursivite
 ---
 
 # 🛑 Calculabilité et Décidabilité

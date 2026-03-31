@@ -1,10 +1,14 @@
 ---
-title: "Exercices POO"
-description: "Exercices pratiques sur la POO. Création de classes, méthodes, héritage et encapsultation."
+title: Exercices POO
+description: >-
+  Exercices pratiques sur la POO. Création de classes, méthodes, héritage et
+  encapsultation.
 level: premiere
-chapter: "Programmation Orientée Objet"
-icon: "🏗️"
-badgeId: "premiere_exercices_poo"
+chapter: Programmation Orientée Objet
+icon: "\U0001F3D7️"
+badgeId: premiere_exercices_poo
+prerequisites:
+  - poo_introduction
 ---
 
 

@@ -1,9 +1,13 @@
 ---
-title: "TP : Modéliser un réseau social en Python"
-description: "Introduction à la Programmation Orientée Objet (POO) en Python pour simuler un réseau social."
-level: "2"
-chapter: "Réseaux sociaux"
-icon: "🐍"
+title: 'TP : Modéliser un réseau social en Python'
+description: >-
+  Introduction à la Programmation Orientée Objet (POO) en Python pour simuler un
+  réseau social.
+level: '2'
+chapter: Réseaux sociaux
+icon: "\U0001F40D"
+prerequisites:
+  - Cours_Reseaux_Sociaux
 ---
 
 # TP : Modéliser un réseau social en Python

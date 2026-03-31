@@ -1,10 +1,11 @@
 ---
-
-title: "Fiche d'exercices : Les conditions en Python"
-description: "Exercices sur les conditions (if/else) en Python."
+title: 'Fiche d''exercices : Les conditions en Python'
+description: Exercices sur les conditions (if/else) en Python.
 level: seconde
-chapter: "Programmation Python"
-icon: "❓"
+chapter: Programmation Python
+icon: ❓
+prerequisites:
+  - Fiche_exercices_boucles
 ---
 
 <ExerciseTabs courseId="fiche-conditions" courseTitle="Fiche Conditions">

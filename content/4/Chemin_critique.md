@@ -1,9 +1,11 @@
 ---
-title: "Le Chemin Critique"
-description: "Méthode de planification et d'optimisation de projets"
-level: "4"
-chapter: "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques"
-icon: "🎯"
+title: Le Chemin Critique
+description: Méthode de planification et d'optimisation de projets
+level: '4'
+chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
+icon: "\U0001F3AF"
+prerequisites:
+  - Gestion_risques
 ---
 
 # Le Chemin Critique

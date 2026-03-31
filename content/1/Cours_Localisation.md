@@ -1,9 +1,10 @@
 ---
-title: "La Géolocalisation"
-description: "Fonctionnement du GPS, enjeux de vie privée et cartographie numérique."
-level: "2"
-chapter: "Localisation"
-icon: "🌍"
+title: La Géolocalisation
+description: 'Fonctionnement du GPS, enjeux de vie privée et cartographie numérique.'
+level: '2'
+chapter: Localisation
+icon: "\U0001F30D"
+prerequisites: []
 ---
 
 > **📖 Définition : Géolocalisation**

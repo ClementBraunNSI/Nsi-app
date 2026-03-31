@@ -1,10 +1,14 @@
 ---
-title: "Sécurité Web : OWASP, SQLi & XSS"
-description: "Cours complet sur le Top 10 OWASP, avec un focus technique sur les injections SQL et XSS (Préparation E5/E6)."
-level: "BTS SIO"
-chapter: "BTS SIO 1 : B3 - CyberSécurité"
-badgeId: "bts_owasp_web"
-icon: "🛡️"
+title: 'Sécurité Web : OWASP, SQLi & XSS'
+description: >-
+  Cours complet sur le Top 10 OWASP, avec un focus technique sur les injections
+  SQL et XSS (Préparation E5/E6).
+level: BTS SIO
+chapter: 'BTS SIO 1 : B3 - CyberSécurité'
+badgeId: bts_owasp_web
+icon: "\U0001F6E1️"
+prerequisites:
+  - premiers_pas_python
 ---
 
 # Sécurité des Applications Web : OWASP & Attaques Majeures

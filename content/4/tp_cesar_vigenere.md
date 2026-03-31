@@ -1,9 +1,11 @@
 ---
-title: "TP - Chiffrement et Déchiffrement"
-description: "Implémentation des chiffrements de César, Vigenère et RSA en Python."
-level: "BTS SIO"
-chapter: "BTS SIO 1 : B3 - CyberSécurité"
-icon: "🔐"
+title: TP - Chiffrement et Déchiffrement
+description: 'Implémentation des chiffrements de César, Vigenère et RSA en Python.'
+level: BTS SIO
+chapter: 'BTS SIO 1 : B3 - CyberSécurité'
+icon: "\U0001F510"
+prerequisites:
+  - chiffrement_hachage
 ---
 
 <ExerciseTabs courseId="tp-cesar-vigenere" courseTitle="TP Chiffrement">

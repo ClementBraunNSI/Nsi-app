@@ -1,10 +1,12 @@
 ---
-title: "POO : Classes et Objets"
-description: "Comprendre et appliquer la Programmation Orientée Objet en Python."
+title: 'POO : Classes et Objets'
+description: Comprendre et appliquer la Programmation Orientée Objet en Python.
 level: terminale
-chapter: "Structures de données"
-icon: "🏗️"
-badgeId: "terminale_poo"
+chapter: Structures de données
+icon: "\U0001F3D7️"
+badgeId: terminale_poo
+prerequisites:
+  - structures_graphes
 ---
 
 # 🏗️ Programmation Orientée Objet (POO)

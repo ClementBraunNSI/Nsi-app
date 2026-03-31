@@ -1,10 +1,13 @@
 ---
-title: "Algorithme des K Plus Proches Voisins"
-description: "Comprendre l'algorithme KNN, son fonctionnement, la distance euclidienne et ses applications en classification et régression."
+title: Algorithme des K Plus Proches Voisins
+description: >-
+  Comprendre l'algorithme KNN, son fonctionnement, la distance euclidienne et
+  ses applications en classification et régression.
 level: premiere
-chapter: "Algorithmique"
-icon: "🧠"
-badgeId: "premiere_cours"
+chapter: Algorithmique
+icon: "\U0001F9E0"
+badgeId: premiere_cours
+prerequisites: []
 ---
 
 

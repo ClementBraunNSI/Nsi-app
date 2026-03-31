@@ -1,10 +1,11 @@
 ---
-title: "Le langage HTML"
-description: "Introduction au langage HTML, structure d'une page et principales balises."
+title: Le langage HTML
+description: 'Introduction au langage HTML, structure d''une page et principales balises.'
 level: premiere
-chapter: "Web et Interaction"
-icon: "📄"
-badgeId: "premiere_langage_html"
+chapter: Web et Interaction
+icon: "\U0001F4C4"
+badgeId: premiere_langage_html
+prerequisites: []
 ---
 
 

@@ -1,10 +1,14 @@
 ---
-title: "Exercices KNN"
-description: "Exercices pratiques sur l'algorithme des K Plus Proches Voisins (calculs manuels, implémentation Python, analyse)."
+title: Exercices KNN
+description: >-
+  Exercices pratiques sur l'algorithme des K Plus Proches Voisins (calculs
+  manuels, implémentation Python, analyse).
 level: premiere
-chapter: "Algorithmique"
-icon: "🏋️"
-badgeId: "premiere_exercices"
+chapter: Algorithmique
+icon: "\U0001F3CB️"
+badgeId: premiere_exercices
+prerequisites:
+  - algo_knn
 ---
 
 

@@ -1,9 +1,11 @@
 ---
-title: "SQL & Bases de Données"
-description: "Interroger et manipuler les données relationnelles"
-level: "TNSI"
-chapter: "Bases de Données"
-icon: "💾"
+title: SQL & Bases de Données
+description: Interroger et manipuler les données relationnelles
+level: TNSI
+chapter: Bases de Données
+icon: "\U0001F4BE"
+prerequisites:
+  - bdd_modele_relationnel
 ---
 
 # 💾 SQL & Bases de Données

@@ -1,9 +1,13 @@
 ---
-title: "Attendus RGPD & CNIL"
-description: "Politique de collecte et protection des données personnelles : RGPD, CNIL et droits des citoyens"
-level: "BTS"
-chapter: "BTS SIO 1 : B3 - CyberSécurité"
-icon: "⚖️"
+title: Attendus RGPD & CNIL
+description: >-
+  Politique de collecte et protection des données personnelles : RGPD, CNIL et
+  droits des citoyens
+level: BTS
+chapter: 'BTS SIO 1 : B3 - CyberSécurité'
+icon: ⚖️
+prerequisites:
+  - cours_owasp_web
 ---
 
 ## 1. Comprendre le cadre légal

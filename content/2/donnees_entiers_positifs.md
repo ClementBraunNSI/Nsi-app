@@ -1,10 +1,12 @@
 ---
-title: "Entiers Positifs en Binaire et Hexadécimal"
-description: "Comprendre les systèmes de numération et les conversions entre bases"
+title: Entiers Positifs en Binaire et Hexadécimal
+description: Comprendre les systèmes de numération et les conversions entre bases
 level: premiere
-chapter: "Représentation des données"
-icon: "🔢"
-badgeId: "premiere_entiers_positifs"
+chapter: Représentation des données
+icon: "\U0001F522"
+badgeId: premiere_entiers_positifs
+prerequisites:
+  - donnees_entiers_relatifs
 ---
 
 

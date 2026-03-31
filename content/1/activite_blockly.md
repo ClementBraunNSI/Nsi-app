@@ -1,9 +1,11 @@
 ---
-title: "Activité - Données Structurées"
-description: "Activité interactive sur les données structurées"
-level: "seconde"
-chapter: "Données structurées"
-icon: "🧩"
+title: Activité - Données Structurées
+description: Activité interactive sur les données structurées
+level: seconde
+chapter: Données structurées
+icon: "\U0001F9E9"
+prerequisites:
+  - donnees_structurees
 ---
 
 # Activité Interactive

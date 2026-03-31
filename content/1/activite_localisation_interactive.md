@@ -1,9 +1,11 @@
 ---
-title: "Atelier Localisation : Trilateration"
-description: "Comprendre le fonctionnement du GPS avec les satellites."
-level: "2"
-chapter: "Localisation"
-icon: "📡"
+title: 'Atelier Localisation : Trilateration'
+description: Comprendre le fonctionnement du GPS avec les satellites.
+level: '2'
+chapter: Localisation
+icon: "\U0001F4E1"
+prerequisites:
+  - Cours_Localisation
 ---
 
 <ExerciseTabs courseId="trilateration-gps" courseTitle="Atelier GPS : La Trilateration">

@@ -1,10 +1,11 @@
 ---
-title: "Algorithmes : Système de Vote"
-description: "Implémentation de différents systèmes de scrutin (Majoritaire, Condorcet)"
+title: 'Algorithmes : Système de Vote'
+description: 'Implémentation de différents systèmes de scrutin (Majoritaire, Condorcet)'
 level: premiere
-chapter: "Projets"
-icon: "🗳️"
-badgeId: "premiere_projet_vote"
+chapter: Projets
+icon: "\U0001F5F3️"
+badgeId: premiere_projet_vote
+prerequisites: []
 ---
 
 import ExerciseTabs from '../../components/interactive/ExerciseTabs';

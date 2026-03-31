@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
-import { ChevronRight, BookOpen, GraduationCap } from 'lucide-react';
+import { ChevronRight, BookOpen, GraduationCap, GitBranch } from 'lucide-react';
 
 interface CoursData {
   slug: string;
@@ -11,6 +11,7 @@ interface CoursData {
   chapter: string;
   icon: string;
   level: string;
+  prerequisites: string[];
 }
 
 const LEVELS_INFO: Record<string, { title: string; color: string }> = {
@@ -20,6 +21,52 @@ const LEVELS_INFO: Record<string, { title: string; color: string }> = {
   '3': { title: 'Terminale NSI', color: 'bg-purple-500' },
   '4': { title: 'BTS SIO', color: 'bg-emerald-500' },
 };
+
+function parsePrerequisites(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.map((v) => String(v).trim()).filter(Boolean);
+  }
+  if (typeof value === 'string') {
+    return value.split(',').map((v) => v.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+function buildSkillTiers(cours: CoursData[]) {
+  const bySlug = new Map(cours.map((c) => [c.slug, c]));
+  const deps = new Map<string, string[]>();
+  cours.forEach((c) => {
+    deps.set(c.slug, c.prerequisites.filter((p) => bySlug.has(p)));
+  });
+
+  const memo = new Map<string, number>();
+  const visiting = new Set<string>();
+
+  const getDepth = (slug: string): number => {
+    if (memo.has(slug)) return memo.get(slug)!;
+    if (visiting.has(slug)) return 0;
+    visiting.add(slug);
+    const prereqs = deps.get(slug) || [];
+    const depth = prereqs.length === 0 ? 0 : Math.max(...prereqs.map(getDepth)) + 1;
+    visiting.delete(slug);
+    memo.set(slug, depth);
+    return depth;
+  };
+
+  const tiers = new Map<number, CoursData[]>();
+  cours.forEach((c) => {
+    const depth = getDepth(c.slug);
+    if (!tiers.has(depth)) tiers.set(depth, []);
+    tiers.get(depth)!.push(c);
+  });
+
+  return Array.from(tiers.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([depth, courses]) => ({
+      depth,
+      courses: courses.sort((a, b) => a.title.localeCompare(b.title, 'fr')),
+    }));
+}
 
 export default async function PageTousLesCours() {
   // 1. Vérifier que le dossier content existe
@@ -59,7 +106,8 @@ export default async function PageTousLesCours() {
         description: String(data.description || "Consulter la leçon"),
         chapter: String(data.chapter || "Général"),
         icon: String(data.icon || '📘'),
-        level: level
+        level: level,
+        prerequisites: parsePrerequisites(data.prerequisites),
       });
     });
   });
@@ -109,44 +157,70 @@ export default async function PageTousLesCours() {
             </div>
           </div>
 
-          {/* Chapitres du niveau */}
+          {/* Arbre de compétences par chapitre */}
           {Object.entries(chapitres).sort(([a], [b]) => a.localeCompare(b)).map(([nomChapitre, coursDuChapitre]) => (
-            <details key={nomChapitre} className="mb-6 bg-white border border-slate-100 rounded-2xl overflow-hidden">
-              <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-orange-50 transition-colors">
+            <section key={nomChapitre} className="mb-6 bg-white border border-slate-100 rounded-2xl overflow-hidden p-6">
+              <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
-                  <BookOpen className="text-orange-500" size={20} />
+                  <GitBranch className="text-orange-500" size={20} />
                   <h3 className="text-xl font-bold text-slate-800">{nomChapitre}</h3>
                   <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
                     {coursDuChapitre.length} cours
                   </span>
                 </div>
-                <ChevronRight className="text-slate-400 details-marker-hidden" size={20} />
-              </summary>
-              <div className="px-6 pb-6 space-y-3">
-                {coursDuChapitre.map((cours) => (
-                  <Link
-                    key={cours.slug}
-                    href={`/cours/${niveau}/${cours.slug}`}
-                    className="group flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition-all duration-300"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-2xl group-hover:bg-orange-50 transition-colors">
-                        {cours.icon}
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
-                          {cours.title}
-                        </h4>
-                        <p className="text-sm text-slate-500">{cours.description}</p>
-                      </div>
-                    </div>
-                    <div className="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all">
-                      <ChevronRight size={18} />
-                    </div>
-                  </Link>
-                ))}
               </div>
-            </details>
+
+              <div className="overflow-x-auto pb-1">
+                <div className="min-w-[760px] grid grid-flow-col auto-cols-[minmax(250px,1fr)] gap-4">
+                  {buildSkillTiers(coursDuChapitre).map((tier, tierIndex, arr) => (
+                    <div key={`${nomChapitre}-${tier.depth}`} className="relative">
+                      {tierIndex < arr.length - 1 && (
+                        <div className="absolute top-7 -right-2 h-0.5 w-4 bg-orange-200" />
+                      )}
+                      <div className="mb-2 text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                        Étape {tier.depth + 1}
+                      </div>
+                      <div className="space-y-3">
+                        {tier.courses.map((cours) => (
+                          <Link
+                            key={cours.slug}
+                            href={`/cours/${niveau}/${cours.slug}`}
+                            className="group flex items-start justify-between p-4 bg-slate-50 border border-slate-100 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition-all duration-300"
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-2xl group-hover:bg-orange-50 transition-colors shrink-0">
+                                {cours.icon}
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+                                  {cours.title}
+                                </h4>
+                                <p className="text-sm text-slate-500 line-clamp-2">{cours.description}</p>
+                                {cours.prerequisites.length > 0 && (
+                                  <div className="mt-2 flex flex-wrap gap-1.5">
+                                    {cours.prerequisites.map((pr) => (
+                                      <span
+                                        key={`${cours.slug}-${pr}`}
+                                        className="text-[10px] font-bold text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded-full"
+                                      >
+                                        {pr}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all mt-1">
+                              <ChevronRight size={18} />
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
           ))}
         </section>
       ))}

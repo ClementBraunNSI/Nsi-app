@@ -1,8 +1,10 @@
 ---
-title: "TP - Sécurité Web : Injections SQL"
-chapter: "BTS SIO 1 : B3 - CyberSécurité"
-badgeId: "bts_sql_injection"
-meta: "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
+title: 'TP - Sécurité Web : Injections SQL'
+chapter: 'BTS SIO 1 : B3 - CyberSécurité'
+badgeId: bts_sql_injection
+meta: 'Durée : 2 heures · Objectif : Comprendre pour mieux protéger'
+prerequisites:
+  - tp_cesar_vigenere
 ---
 
 ### Contexte

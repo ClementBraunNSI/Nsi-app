@@ -1,10 +1,12 @@
 ---
-title: "Graphes"
-description: "Modélisation de réseaux, sommets, arêtes et algorithmes."
+title: Graphes
+description: 'Modélisation de réseaux, sommets, arêtes et algorithmes.'
 level: terminale
-chapter: "Structures de données"
-icon: "🕸️"
-badgeId: "terminale_graphes"
+chapter: Structures de données
+icon: "\U0001F578️"
+badgeId: terminale_graphes
+prerequisites:
+  - structures_arbres
 ---
 
 # 🕸️ Les Graphes

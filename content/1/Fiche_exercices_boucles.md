@@ -1,10 +1,11 @@
 ---
-
-title: "Fiche d'exercices : Les boucles en Python"
-description: "Exercices sur les boucles (for/while) en Python."
+title: 'Fiche d''exercices : Les boucles en Python'
+description: Exercices sur les boucles (for/while) en Python.
 level: seconde
-chapter: "Programmation Python"
-icon: "🔄"
+chapter: Programmation Python
+icon: "\U0001F504"
+prerequisites:
+  - structures_conditionnelles
 ---
 
 <ExerciseTabs courseId="fiche-boucles" courseTitle="Fiche Boucles">

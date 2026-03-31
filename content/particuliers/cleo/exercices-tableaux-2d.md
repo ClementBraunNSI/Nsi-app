@@ -1,10 +1,13 @@
 ---
-title: "C - Exercices Tableaux 2D"
-description: "Exercices progressifs sur les matrices"
-level: "particuliers"
-chapter: "Programmation en C"
-icon: "💪"
-allowedStudents: ["Cléo"]
+title: C - Exercices Tableaux 2D
+description: Exercices progressifs sur les matrices
+level: particuliers
+chapter: Programmation en C
+icon: "\U0001F4AA"
+allowedStudents:
+  - Cléo
+prerequisites:
+  - exercices-tris
 ---
 
 <ExerciseTabs courseId="c-tableaux-2d-levels" courseTitle="C - Tableaux 2D - Niveaux">

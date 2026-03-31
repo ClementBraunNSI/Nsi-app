@@ -1,9 +1,11 @@
 ---
-title: "Atelier Algo : La Course au Tri"
-description: "Visualiser comment un algorithme trie des données."
-level: "premiere"
-chapter: "Algorithmique"
-icon: "🏎️"
+title: 'Atelier Algo : La Course au Tri'
+description: Visualiser comment un algorithme trie des données.
+level: premiere
+chapter: Algorithmique
+icon: "\U0001F3CE️"
+prerequisites:
+  - algo_knn_cours
 ---
 
 # 🏎️ Atelier Algo : La Course au Tri

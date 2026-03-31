@@ -1,10 +1,14 @@
 ---
-title: "Exercices Booléens"
-description: "Exercices sur les booléens, les opérateurs de comparaison et les opérateurs logiques en Python."
+title: Exercices Booléens
+description: >-
+  Exercices sur les booléens, les opérateurs de comparaison et les opérateurs
+  logiques en Python.
 level: premiere
-chapter: "Représentation des données"
-icon: "✅"
-badgeId: "premiere_fiche_exercices_bool"
+chapter: Représentation des données
+icon: ✅
+badgeId: premiere_fiche_exercices_bool
+prerequisites:
+  - donnees_caracteres
 ---
 
 

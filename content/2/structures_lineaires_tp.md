@@ -1,10 +1,14 @@
 ---
-title: "TP Piles et Files"
-description: "Implémentation de Piles et Files et applications (parenthésage, file d'attente)."
+title: TP Piles et Files
+description: >-
+  Implémentation de Piles et Files et applications (parenthésage, file
+  d'attente).
 level: premiere
-chapter: "Structures de données linéaires"
-icon: "📥"
-badgeId: "premiere_tp_piles_files"
+chapter: Structures de données linéaires
+icon: "\U0001F4E5"
+badgeId: premiere_tp_piles_files
+prerequisites:
+  - structures_lineaires_piles_files
 ---
 
 

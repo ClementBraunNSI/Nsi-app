@@ -1,10 +1,12 @@
 ---
-title: "Listes : Tournoi E-Sport"
-description: "Gérer les scores et le classement d'un tournoi de jeu vidéo."
+title: 'Listes : Tournoi E-Sport'
+description: Gérer les scores et le classement d'un tournoi de jeu vidéo.
 level: premiere
-chapter: "Projets"
-icon: "🏆"
-badgeId: "premiere_projet_esport"
+chapter: Projets
+icon: "\U0001F3C6"
+badgeId: premiere_projet_esport
+prerequisites:
+  - poo_projet_pokensi
 ---
 
 # 🏆 Projet - Gestionnaire de Tournoi E-Sport

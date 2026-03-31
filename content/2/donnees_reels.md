@@ -1,10 +1,12 @@
 ---
-title: "Nombres réels en Binaire"
-description: "Représentation en virgule fixe et flottante (IEEE754)"
+title: Nombres réels en Binaire
+description: Représentation en virgule fixe et flottante (IEEE754)
 level: premiere
-chapter: "Représentation des données"
-icon: "🌊"
-badgeId: "premiere_reels"
+chapter: Représentation des données
+icon: "\U0001F30A"
+badgeId: premiere_reels
+prerequisites:
+  - donnees_entiers_positifs
 ---
 
 

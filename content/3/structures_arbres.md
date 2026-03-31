@@ -1,10 +1,11 @@
 ---
-title: "Arbres et Arbres Binaires"
-description: "Structures hiérarchiques, vocabulaire et algorithmes de base."
+title: Arbres et Arbres Binaires
+description: 'Structures hiérarchiques, vocabulaire et algorithmes de base.'
 level: terminale
-chapter: "Structures de données"
-icon: "🌳"
-badgeId: "terminale_arbres"
+chapter: Structures de données
+icon: "\U0001F333"
+badgeId: terminale_arbres
+prerequisites: []
 ---
 
 # 🌳 Structures d'Arbres

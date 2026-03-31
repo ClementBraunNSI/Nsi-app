@@ -1,10 +1,12 @@
 ---
-title: "Interactions Web : JavaScript"
-description: "Rendre les pages web dynamiques et interactives avec le DOM et les événements."
+title: 'Interactions Web : JavaScript'
+description: Rendre les pages web dynamiques et interactives avec le DOM et les événements.
 level: premiere
-chapter: "Web et Interaction"
-icon: "⚡"
-badgeId: "js_interactions"
+chapter: Web et Interaction
+icon: ⚡
+badgeId: js_interactions
+prerequisites:
+  - algo_galerie_art
 ---
 
 # ⚡ Interactions Web : JavaScript

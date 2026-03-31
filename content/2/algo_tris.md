@@ -1,11 +1,13 @@
 ---
-title: "TP : Algorithmes de Tri"
-description: "Comprendre et implémenter les tris par sélection et insertion"
+title: 'TP : Algorithmes de Tri'
+description: Comprendre et implémenter les tris par sélection et insertion
 level: premiere
-chapter: "Algorithmique"
-icon: "📶"
-badgeId: "premiere_tris"
-meta: "Durée : 2 heures · Objectif : Implémenter les algorithmes classiques"
+chapter: Algorithmique
+icon: "\U0001F4F6"
+badgeId: premiere_tris
+meta: 'Durée : 2 heures · Objectif : Implémenter les algorithmes classiques'
+prerequisites:
+  - algo_dichotomie
 ---
 
 <ExerciseTabs courseId="premiere_tris" courseTitle="TP Algorithmes de Tri">
