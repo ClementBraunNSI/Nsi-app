@@ -132,6 +132,48 @@ Pour qu'un réseau soit accessible sur Internet, chaque machine doit posséder u
 
 > **Exemple** : `127.0.0.1` (localhost)
 
+### 🎭 Les Masques de Sous-réseau (version simple)
+
+Une adresse IP ne suffit pas a elle seule : on a aussi besoin d'un **masque** pour savoir quelle partie correspond au **reseau** et quelle partie correspond a la **machine**.
+
+> **🧠 Idee cle**
+> Le masque sert a separer :
+> - la partie "quartier" (le reseau)
+> - la partie "maison" (l'appareil)
+
+Par exemple, avec l'adresse `192.168.1.42` et le masque `255.255.255.0` :
+- `192.168.1` represente le reseau local
+- `42` represente la machine dans ce reseau
+
+Cela permet de repondre simplement a la question :
+- **"Cette machine est-elle dans mon reseau local ou faut-il passer par le routeur ?"**
+
+> **Exemple courant en maison/ecole** : `255.255.255.0` (aussi note `/24`)
+
+#### 🧮 Calcul de l'adresse reseau avec `&` (ET binaire)
+
+Pour retrouver l'adresse reseau, on fait un **ET binaire** entre l'IP et le masque :
+- `1 & 1 = 1`
+- `1 & 0 = 0`
+- `0 & 1 = 0`
+- `0 & 0 = 0`
+
+Exemple :
+- IP : `192.168.1.42`
+- Masque : `255.255.255.0`
+
+En binaire (sur le dernier octet) :
+- `42`  -> `00101010`
+- `0`   -> `00000000`
+
+Calcul :
+- `00101010`
+- `00000000`
+- `-------- &`
+- `00000000` -> `0`
+
+Donc l'adresse reseau est : **`192.168.1.0`**
+
 ## 🌐 Le Protocole TCP/IP
 
 Maintenant que nous savons comment les machines se reconnaissent sur Internet grâce aux adresses, découvrons comment les données transitent réellement d'une machine à une autre à travers le monde.
