@@ -95,6 +95,59 @@ Créez une classe `Dresseur` pour représenter le joueur.
 - De quelles propriétés a-t-il besoin ? (Son nom, et surtout ses coordonnées `X` et `Y`).
 - Comment le déplacer ? Vous devrez créer une méthode `Deplacer(...)` qui modifie `X` ou `Y` en fonction de la touche pressée, **tout en vérifiant** via la `Carte` si le déplacement est autorisé.
 
+### 2.b Organisation des fichiers C# (important)
+
+Pour garder un code propre, utilisez **un fichier par classe**, mais dans le **meme namespace**.
+
+Exemple de structure minimale :
+
+```text
+FoxMon/
+  Program.cs
+  Carte.cs
+  Dresseur.cs
+```
+
+- `Dresseur.cs` contient la classe `Dresseur`.
+- `Carte.cs` contient la classe `Carte` et peut utiliser un `Dresseur` (ex: pour l'affichage du `@`).
+- `Program.cs` contient le point d'entree `Main` pour lancer vos tests.
+
+Exemple simplifie de namespace partage :
+
+```csharp
+// Dresseur.cs
+namespace FoxMon;
+public class Dresseur
+{
+  public string Nom { get; set; } = "Joueur";
+  public int X { get; set; } = 2;
+  public int Y { get; set; } = 2;
+}
+```
+
+```csharp
+// Carte.cs
+namespace FoxMon;
+public class Carte
+{
+  public void Afficher(Dresseur dresseur)
+  {
+    // On peut utiliser dresseur.X et dresseur.Y ici
+  }
+}
+```
+
+```csharp
+// Program.cs
+using FoxMon;
+
+var carte = new Carte();
+var dresseur = new Dresseur();
+carte.Afficher(dresseur);
+```
+
+Avec cette organisation, vous n'avez pas besoin d'import complexe entre classes du projet tant qu'elles sont dans le meme namespace.
+
 ### 3. Le Moteur de Jeu (La Boucle Principale)
 Dans votre `Main`, le jeu va tourner en continu jusqu'à ce qu'on le quitte.
 

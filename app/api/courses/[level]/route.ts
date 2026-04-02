@@ -1,41 +1,36 @@
-import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ level: string }> }
-) {
+type CourseItem = {
+  title: string;
+  slug: string;
+  chapter: string;
+  badgeId: string;
+  level: string;
+};
+
+export async function GET(_: Request, { params }: { params: Promise<{ level: string }> }) {
   const { level } = await params;
+  const levelDir = path.join(process.cwd(), "content", level);
+  if (!fs.existsSync(levelDir)) return NextResponse.json({ courses: [] });
 
-  try {
-    const contentPath = path.join(process.cwd(), 'content', level);
+  const files = fs.readdirSync(levelDir).filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
+  const courses: CourseItem[] = files.map((file) => {
+    const raw = fs.readFileSync(path.join(levelDir, file), "utf8");
+    const { data } = matter(raw);
+    const slug = file.replace(/\.mdx?$/, "");
+    return {
+      title: String(data.title || slug),
+      slug,
+      chapter: String(data.chapter || "Cours"),
+      badgeId: String(data.badgeId || slug),
+      level,
+    };
+  });
 
-    if (!fs.existsSync(contentPath)) {
-      return NextResponse.json({ courses: [] });
-    }
-
-    const files = fs.readdirSync(contentPath);
-    const mdxFiles = files.filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
-
-    const courses = mdxFiles.map(fileName => {
-      const filePath = path.join(contentPath, fileName);
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      const { data } = matter(fileContent);
-
-      return {
-        slug: fileName.replace(/\.mdx?$/, ''),
-        title: String(data.title || fileName.replace(/\.mdx?$/, '')),
-        description: String(data.description || "Consulter la leçon"),
-        chapter: String(data.chapter || "Général"),
-        badgeId: String(data.badgeId || ""),
-        icon: String(data.icon || '📘'),
-      };
-    });
-
-    return NextResponse.json({ courses });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to load courses' }, { status: 500 });
-  }
+  courses.sort((a, b) => a.chapter.localeCompare(b.chapter, "fr") || a.title.localeCompare(b.title, "fr"));
+  return NextResponse.json({ courses });
 }
+

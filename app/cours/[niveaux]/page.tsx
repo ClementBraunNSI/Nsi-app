@@ -5,6 +5,7 @@ import { GraduationCap } from 'lucide-react';
 import { createClient } from '@/utils/supabase/server';
 import { getReservedCourses } from '@/app/actions/getReservedCourses';
 import BentoChaptersView from './BentoChaptersView';
+import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
 
 interface CoursData {
   slug: string;
@@ -15,6 +16,7 @@ interface CoursData {
   icon: string;
   href?: string;
   isPrivate?: boolean;
+  allowedStudents?: string[];
 }
 
 export default async function PageNiveau({ params }: { params: Promise<{ niveaux: string }> }) {
@@ -23,15 +25,25 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
   // Récupérer la session et les cours privés potentiels
   const supabase = await createClient();
   const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
   
   let privateCourses: CoursData[] = [];
+  let profileFullName: string | null = null;
+  let elevated = false;
   
   if (session) {
     const { data: profile } = await supabase
       .from('profiles')
-      .select('level, full_name, has_private_lessons')
+      .select('level, full_name, has_private_lessons, role')
       .eq('id', session.user.id)
       .single();
+    profileFullName = profile?.full_name || null;
+    const userRole =
+      (user?.app_metadata?.role as string | undefined) ||
+      (user?.user_metadata?.role as string | undefined) ||
+      (profile?.role as string | undefined) ||
+      null;
+    elevated = isElevatedUser(userRole);
       
     const LEVEL_CODE_MAP: Record<string, string> = {
       'SNI': '0',
@@ -82,9 +94,23 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         description: String(data.description || ""),
         level: String(data.level || niveaux),
         chapter: String(data.chapter || "Général"), 
-        icon: String(data.icon || '📘')
+        icon: String(data.icon || '📘'),
+        isPrivate: String(data.access || '').toLowerCase() === 'private',
+        allowedStudents: Array.isArray(data.allowedStudents) ? data.allowedStudents.map((s: unknown) => String(s)) : undefined
       };
-    });
+    }).filter((course) =>
+      canAccessCourse(
+        {
+          access: course.isPrivate ? 'private' : 'public',
+          allowedStudents: course.allowedStudents,
+        },
+        {
+          isElevated: elevated,
+          isAuthenticated: Boolean(session),
+          userFullName: profileFullName,
+        }
+      )
+    );
   }
   
   // Fusionner les cours

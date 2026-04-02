@@ -1,42 +1,61 @@
-import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const query = searchParams.get('q')?.toLowerCase() || '';
-  
-  const contentDir = path.join(process.cwd(), 'content');
-  const results: any[] = [];
+type SearchResult = {
+  title: string;
+  slug: string;
+  level: string;
+  category: string;
+  score: number;
+};
 
-  if (query.length < 2) return NextResponse.json([]);
-
-  // On parcourt les dossiers de niveaux (0, 1, 2...)
-  const levels = fs.readdirSync(contentDir);
-
-  levels.forEach((level) => {
-    const levelPath = path.join(contentDir, level);
-    if (fs.statSync(levelPath).isDirectory()) {
-      const files = fs.readdirSync(levelPath).filter(f => f.endsWith('.md'));
-
-      files.forEach((file) => {
-        const fileContent = fs.readFileSync(path.join(levelPath, file), 'utf8');
-        const { data } = matter(fileContent);
-        const title = data.title || file.replace('.md', '').replace(/[_-]/g, ' ');
-
-        // Si le titre ou le contenu correspond à la recherche
-        if (title.toLowerCase().includes(query)) {
-          results.push({
-            title,
-            level,
-            slug: file.replace('.md', ''),
-            category: level === '1' ? 'SNT' : level === '2' ? '1ère NSI' : level === '3' ? 'Terminale NSI' : `Niveau ${level}`
-          });
-        }
-      });
-    }
-  });
-
-  return NextResponse.json(results.slice(0, 8)); // On limite à 8 résultats
+function scoreQuery(query: string, title: string, chapter: string, content: string) {
+  const q = query.toLowerCase();
+  let score = 0;
+  if (title.toLowerCase().includes(q)) score += 5;
+  if (chapter.toLowerCase().includes(q)) score += 3;
+  if (content.toLowerCase().includes(q)) score += 1;
+  return score;
 }
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const q = (searchParams.get("q") || "").trim();
+  if (!q) return NextResponse.json([]);
+
+  const contentRoot = path.join(process.cwd(), "content");
+  if (!fs.existsSync(contentRoot)) return NextResponse.json([]);
+
+  const levels = fs
+    .readdirSync(contentRoot)
+    .filter((d) => fs.statSync(path.join(contentRoot, d)).isDirectory());
+
+  const results: SearchResult[] = [];
+  for (const level of levels) {
+    const levelDir = path.join(contentRoot, level);
+    const files = fs.readdirSync(levelDir).filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
+    for (const file of files) {
+      const filePath = path.join(levelDir, file);
+      const raw = fs.readFileSync(filePath, "utf8");
+      const { data, content } = matter(raw);
+      const title = String(data.title || file.replace(/\.mdx?$/, ""));
+      const chapter = String(data.chapter || "Cours");
+      const score = scoreQuery(q, title, chapter, content.slice(0, 2500));
+      if (score > 0) {
+        results.push({
+          title,
+          slug: file.replace(/\.mdx?$/, ""),
+          level,
+          category: chapter,
+          score,
+        });
+      }
+    }
+  }
+
+  results.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title, "fr"));
+  return NextResponse.json(results.slice(0, 25).map(({ score, ...rest }) => rest));
+}
+

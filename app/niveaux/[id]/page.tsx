@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronRight, GraduationCap, GitBranch, Lock, ShieldCheck } from 'lucide-react';
 import { createClient } from '@/utils/supabase/server';
+import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
 
 type CourseNode = {
   slug: string;
@@ -93,10 +94,8 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
   // 1. Récupérer l'utilisateur
   const { data: { user } } = await supabase.auth.getUser();
 
-  // 2. RÉCUPÉRATION DU RÔLE (On teste les deux endroits standards de Supabase)
-  // Souvent c'est dans app_metadata (défini par l'admin) ou user_metadata (profil)
-  const role = user?.app_metadata?.role || user?.user_metadata?.role || "";
-  const isAdmin = role.toLowerCase() === 'admin' || role.toLowerCase() === 'enseignant';
+  const role = (user?.app_metadata?.role || user?.user_metadata?.role || "") as string;
+  const isAdmin = isElevatedUser(role);
 
   // 3. IDENTIFIANT POUR L'ÉLÈVE
   const studentName = user?.user_metadata?.full_name || user?.email || "";
@@ -119,19 +118,16 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
       allowedStudents: data.allowedStudents,
       prerequisites: parsePrerequisites(data.prerequisites),
     };
-  }).filter(cours => {
-    // --- LA LOGIQUE QUE VOUS DEMANDEZ ---
-    
-    // SI ADMIN : On affiche tout, point final.
-    if (isAdmin) return true;
-
-    // SI ÉLÈVE :
-    // Si le cours n'est pas "private", tout le monde le voit
-    if (cours.access !== 'private') return true;
-
-    // Si le cours est "private", l'élève doit être dans la liste
-    return user && cours.allowedStudents?.includes(studentName);
-  });
+  }).filter((cours) =>
+    canAccessCourse(
+      { access: cours.access, allowedStudents: cours.allowedStudents },
+      {
+        isElevated: isAdmin,
+        isAuthenticated: Boolean(user),
+        userFullName: studentName || null,
+      }
+    )
+  );
 
   // Groupement par chapitre
   const chapitres: Record<string, CourseNode[]> = {};

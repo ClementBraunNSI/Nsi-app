@@ -114,6 +114,7 @@ import CourseNavigation from '@/components/CourseNavigation';
 import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { getAdjacentCourses } from '@/lib/course-utils';
+import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
 
 import Breadcrumbs from '@/components/experimental/Breadcrumbs';
 
@@ -148,8 +149,13 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   // Access Control Logic
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const profileRole =
+    (user?.app_metadata?.role as string | undefined) ||
+    (user?.user_metadata?.role as string | undefined) ||
+    null;
+  const isElevated = isElevatedUser(profileRole);
   
-  if (data.allowedStudents) {
+  if (String(data.access || '').toLowerCase() === 'private') {
     if (!user) {
       return (
         <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center p-8">
@@ -161,13 +167,6 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             <p className="text-slate-500 mb-6">
               Connecte-toi pour débloquer ce cours, sauvegarder ta progression et gagner des badges exclusifs.
             </p>
-            
-            {/* Debug Info */}
-            <div className="bg-gray-100 p-4 rounded-lg mb-6 text-left text-xs text-gray-600 overflow-auto">
-               <p><strong>Debug Info:</strong></p>
-               <p>User: Not Logged In</p>
-               <p>Auth Check Method: supabase.auth.getUser()</p>
-            </div>
 
             <Link 
               href="/login" 
@@ -186,11 +185,13 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
       .eq('id', user.id)
       .single();
     
-    const allowedStudents = data.allowedStudents;
-    const normalize = (str: string) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ' ').trim();
-
-    const hasAccess = Array.isArray(allowedStudents) && profile?.full_name && allowedStudents.some(name => 
-      normalize(name) === normalize(profile.full_name)
+    const hasAccess = canAccessCourse(
+      { access: data.access, allowedStudents: data.allowedStudents },
+      {
+        isElevated,
+        isAuthenticated: Boolean(user),
+        userFullName: profile?.full_name || null,
+      }
     );
 
     if (!hasAccess) {
@@ -202,16 +203,6 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             </div>
             <h2 className="text-xl font-black text-slate-900 mb-2">Accès restreint</h2>
             <p className="text-slate-500 mb-6">Vous n'avez pas la permission d'accéder à ce cours.</p>
-            
-            {/* Debug Info */}
-            <div className="bg-gray-100 p-4 rounded-lg mb-6 text-left text-xs text-gray-600 overflow-auto">
-              <p><strong>Debug Info:</strong></p>
-              <p>User ID: {user.id}</p>
-              <p>Profile Name: {profile?.full_name}</p>
-              <p>Normalized Profile: {profile?.full_name ? normalize(profile.full_name) : 'N/A'}</p>
-              <p>Allowed: {JSON.stringify(allowedStudents)}</p>
-              <p>Normalized Allowed: {JSON.stringify(allowedStudents.map((s: string) => normalize(s)))}</p>
-            </div>
 
             <Link 
               href="/student/dashboard" 
