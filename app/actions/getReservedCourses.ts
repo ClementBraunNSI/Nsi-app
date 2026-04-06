@@ -47,6 +47,10 @@ export async function getReservedCourses(studentName: string): Promise<ReservedC
           const isAllowedFallback = !isAllowed && data.allowedStudents.includes(studentName);
 
           if (isAllowed || isAllowedFallback) {
+            // Fiches de révision : listées via getRevisionSheets, pas dans les modules privés
+            if (data.revisionSheet === true) {
+              continue;
+            }
             // Determine relative path parts for URL construction
             const relativePath = path.relative(contentDir, fullPath);
             const pathParts = relativePath.split(path.sep);

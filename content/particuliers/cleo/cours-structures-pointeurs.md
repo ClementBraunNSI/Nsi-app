@@ -1,10 +1,11 @@
 ---
 title: "Introduction aux Structures en C"
 description: "Les bases de la programmation structurée en C : struct, typedef et pointeurs."
-level: "1"
-chapter: "C : Programmation Structurée"
+level: particuliers
+chapter: "Programmation en C"
 icon: "🏗️"
-allowedStudents: ["Cléo"]
+allowedStudents:
+  - Cléo
 ---
 
 ## 🌟 Introduction

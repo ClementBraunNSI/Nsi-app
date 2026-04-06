@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { getReservedCourses } from '@/app/actions/getReservedCourses';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
-import { GraduationCap, Zap, BookOpen, ArrowRight, Clock, Award, X, Calendar, Trophy, Target, Lock } from 'lucide-react';
+import { GraduationCap, Zap, BookOpen, ArrowRight, Clock, Award, X, Calendar, Trophy, Target, Lock, FileText } from 'lucide-react';
+import { getRevisionSheets } from '@/app/actions/getRevisionSheets';
 
 // Mapping des niveaux selon tes spécifications
 const LEVEL_MAP: Record<string, { label: string; code: string }> = {
@@ -35,6 +36,7 @@ export default function StudentDashboard() {
   const [profile, setProfile] = useState<any>(null);
   const [courses, setCourses] = useState<any[]>([]);
   const [privateCourses, setPrivateCourses] = useState<any[]>([]);
+  const [revisionSheets, setRevisionSheets] = useState<{ title: string; path: string; description?: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [badgesCount, setBadgesCount] = useState(0);
   const [exercisesCount, setExercisesCount] = useState(0);
@@ -65,6 +67,8 @@ export default function StudentDashboard() {
           if (data.has_private_lessons) {
             const reserved = await getReservedCourses(data.full_name);
             setPrivateCourses(reserved || []);
+            const revisions = await getRevisionSheets(data.full_name);
+            setRevisionSheets(revisions || []);
           }
 
           // Fetch badges
@@ -232,6 +236,43 @@ export default function StudentDashboard() {
                   </Link>
                 ))
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Fiches de révision (cours avec revisionSheet: true + allowedStudents) */}
+        {profile?.has_private_lessons && revisionSheets.length > 0 && (
+          <div className="space-y-6">
+            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-violet-600 flex items-center gap-3">
+              <FileText size={16} className="text-violet-500" /> Fiches de révision
+            </h2>
+            <p className="text-sm text-slate-500 font-medium -mt-2">
+              Synthèses courtes pour réviser avant un contrôle — en complément des cours détaillés.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {revisionSheets.map((sheet) => (
+                <Link href={sheet.path} key={sheet.path} className="group">
+                  <div className="bg-white border border-violet-100 p-6 rounded-3xl flex items-start justify-between hover:border-violet-300 hover:shadow-md hover:shadow-violet-50 transition-all h-full">
+                    <div className="flex items-start gap-4 min-w-0">
+                      <div className="w-10 h-10 bg-violet-50 rounded-xl flex items-center justify-center text-violet-600 shrink-0 group-hover:bg-violet-100 transition-colors">
+                        <FileText size={18} />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[8px] font-black uppercase tracking-widest text-violet-500/80 block mb-1">
+                          Révision
+                        </span>
+                        <h3 className="font-bold text-slate-800 group-hover:text-violet-700 transition-colors leading-tight">
+                          {sheet.title}
+                        </h3>
+                        {sheet.description ? (
+                          <p className="text-xs text-slate-500 mt-2 line-clamp-2">{sheet.description}</p>
+                        ) : null}
+                      </div>
+                    </div>
+                    <ArrowRight className="text-slate-300 group-hover:text-violet-500 shrink-0 mt-1 transition-colors" size={20} />
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         )}
