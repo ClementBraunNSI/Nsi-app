@@ -1,7 +1,8 @@
 ---
 title: Récursivité
 description: Principe des fonctions récursives et pile d'exécution.
-level: terminale
+level: TNSI
+order: 90
 chapter: Langages et Programmation
 icon: "\U0001F504"
 badgeId: terminale_recursivite

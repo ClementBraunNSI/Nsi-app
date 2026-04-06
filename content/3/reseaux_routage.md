@@ -1,7 +1,8 @@
 ---
 title: 'Réseaux : Protocoles de Routage'
 description: 'Comment les paquets trouvent leur chemin sur Internet (RIP, OSPF).'
-level: terminale
+level: TNSI
+order: 30
 chapter: 'Architectures matérielles, OS & Réseaux'
 icon: "\U0001F310"
 badgeId: terminale_routage

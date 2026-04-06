@@ -1,10 +1,12 @@
 ---
 title: "Bases de Données : Modèle Relationnel"
 description: "Théorie des bases de données : tables, clés, schéma."
-level: terminale
+level: TNSI
+order: 50
 chapter: "Bases de Données"
 icon: "🗄️"
 badgeId: "terminale_bdd_modele"
+prerequisites: []
 ---
 
 # 🗄️ Modèle Relationnel

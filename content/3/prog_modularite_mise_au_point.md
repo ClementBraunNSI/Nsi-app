@@ -3,7 +3,8 @@ title: Modularité et Mise au Point
 description: >-
   Apprenez à structurer vos programmes, gérer les erreurs et valider votre code
   avec des tests.
-level: terminale
+level: TNSI
+order: 80
 chapter: Langages et Programmation
 icon: BugAntIcon
 badgeId: prog_modularite

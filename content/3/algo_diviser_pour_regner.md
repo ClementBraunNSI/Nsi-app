@@ -1,7 +1,8 @@
 ---
 title: 'Algorithmique : Diviser pour Régner'
 description: 'Méthode de résolution par décomposition (Tri fusion, etc.).'
-level: terminale
+level: TNSI
+order: 120
 chapter: Algorithmique
 icon: "\U0001F52A"
 badgeId: terminale_diviser_regner

@@ -2,7 +2,8 @@
 title: SQL & Bases de Données - Exercices
 description: Exercices pratiques sur SQL et les bases de données
 level: TNSI
-chapter: Dictionnaires et Tables
+order: 70
+chapter: Bases de Données
 icon: "\U0001F4BE"
 prerequisites:
   - sql-bases-donnees

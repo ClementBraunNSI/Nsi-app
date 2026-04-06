@@ -1,11 +1,13 @@
 ---
 title: Arbres et Arbres Binaires
 description: 'Structures hiérarchiques, vocabulaire et algorithmes de base.'
-level: terminale
+level: TNSI
+order: 160
 chapter: Structures de données
 icon: "\U0001F333"
 badgeId: terminale_arbres
-prerequisites: []
+prerequisites:
+  - structures_lineaires
 ---
 
 # 🌳 Structures d'Arbres

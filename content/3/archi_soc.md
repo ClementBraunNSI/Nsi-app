@@ -1,10 +1,12 @@
 ---
 title: "Architecture : SoC et Processus"
 description: "Architecture matérielle (SoC) et Système d'Exploitation (Processus)."
-level: terminale
+level: TNSI
+order: 20
 chapter: "Architectures matérielles, OS & Réseaux"
 icon: "⚙️"
 badgeId: "terminale_archi_os"
+prerequisites: []
 ---
 
 # ⚙️ Architecture & OS

@@ -1,7 +1,8 @@
 ---
 title: 'Structures Linéaires : Listes, Piles, Files'
 description: Implémentation et utilisation des structures de données linéaires.
-level: terminale
+level: TNSI
+order: 150
 chapter: Structures de données
 icon: "\U0001F4DA"
 badgeId: terminale_structures_lineaires

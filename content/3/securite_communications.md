@@ -1,7 +1,8 @@
 ---
 title: Sécurité des Communications
 description: 'Chiffrement symétrique, asymétrique et protocoles sécurisés.'
-level: terminale
+level: TNSI
+order: 40
 chapter: 'Architectures matérielles, OS & Réseaux'
 icon: "\U0001F512"
 badgeId: terminale_securite

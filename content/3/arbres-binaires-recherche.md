@@ -1,10 +1,13 @@
 ---
 title: "Arbres binaires de recherche et Algorithmes"
 description: "Révision ABR, implémentations et complexité"
-level: "TNSI"
-chapter: "Structures avancées"
+level: TNSI
+order: 170
+chapter: "Structures de données"
 icon: "🌳"
-meta: "Révision ABR, implémentations et complexité"
+badgeId: terminale_abr
+prerequisites:
+  - structures_arbres
 ---
 
 # 🌳 Arbres binaires de recherche et Algorithmes

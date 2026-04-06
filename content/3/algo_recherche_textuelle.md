@@ -1,7 +1,8 @@
 ---
 title: Algorithmes de Recherche Textuelle
 description: 'Recherche de motifs dans un texte : Naïf et Boyer-Moore.'
-level: terminale
+level: TNSI
+order: 110
 chapter: Algorithmique
 icon: "\U0001F50D"
 badgeId: terminale_algo_texte

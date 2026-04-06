@@ -1,7 +1,8 @@
 ---
 title: Programmation Dynamique
 description: 'Optimisation de problèmes complexes (Rendu de monnaie, Fibonacci).'
-level: terminale
+level: TNSI
+order: 130
 chapter: Algorithmique
 icon: ⚡
 badgeId: terminale_prog_dynamique

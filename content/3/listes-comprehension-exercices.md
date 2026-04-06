@@ -4,9 +4,11 @@ description: >-
   Série d'exercices gradués pour maîtriser les listes par compréhension en
   Python.
 level: TNSI
-chapter: Programmation Python
+order: 85
+chapter: Langages et Programmation
 icon: "\U0001F40D"
-prerequisites: []
+prerequisites:
+  - prog_modularite_mise_au_point
 ---
 
 # 🐍 Listes par compréhension

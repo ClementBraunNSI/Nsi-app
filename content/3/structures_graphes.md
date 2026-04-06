@@ -1,7 +1,8 @@
 ---
 title: Graphes
 description: 'Modélisation de réseaux, sommets, arêtes et algorithmes.'
-level: terminale
+level: TNSI
+order: 180
 chapter: Structures de données
 icon: "\U0001F578️"
 badgeId: terminale_graphes

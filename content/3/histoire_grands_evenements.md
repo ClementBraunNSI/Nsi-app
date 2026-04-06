@@ -1,10 +1,12 @@
 ---
 title: "Histoire de l'Informatique"
 description: "Les grandes étapes, de l'Antiquité à l'IA moderne."
-level: terminale
+level: TNSI
+order: 10
 chapter: "Histoire"
 icon: "📜"
 badgeId: "terminale_histoire"
+prerequisites: []
 ---
 
 # 📜 Histoire de l'Informatique

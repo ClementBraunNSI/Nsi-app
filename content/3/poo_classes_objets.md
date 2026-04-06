@@ -1,12 +1,13 @@
 ---
 title: 'POO : Classes et Objets'
 description: Comprendre et appliquer la Programmation Orientée Objet en Python.
-level: terminale
+level: TNSI
+order: 140
 chapter: Structures de données
 icon: "\U0001F3D7️"
 badgeId: terminale_poo
 prerequisites:
-  - structures_graphes
+  - prog_modularite_mise_au_point
 ---
 
 # 🏗️ Programmation Orientée Objet (POO)
