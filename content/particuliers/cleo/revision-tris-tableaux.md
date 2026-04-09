@@ -4,8 +4,6 @@ description: "Bulles, cocktail, sélection, insertion : idées, code et complexi
 level: particuliers
 chapter: "Programmation en C — Révisions"
 icon: "🔄"
-allowedStudents:
-  - Cléo
 revisionSheet: true
 ---
 

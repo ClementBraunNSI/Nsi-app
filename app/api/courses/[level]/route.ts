@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { NextResponse } from "next/server";
+import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
 
 type CourseItem = {
   title: string;
@@ -16,11 +17,10 @@ export async function GET(_: Request, { params }: { params: Promise<{ level: str
   const levelDir = path.join(process.cwd(), "content", level);
   if (!fs.existsSync(levelDir)) return NextResponse.json({ courses: [] });
 
-  const files = fs.readdirSync(levelDir).filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
-  const courses: CourseItem[] = files.map((file) => {
-    const raw = fs.readFileSync(path.join(levelDir, file), "utf8");
+  const entries = listMarkdownFilesForContentLevel(level);
+  const courses: CourseItem[] = entries.map(({ filePath, slug }) => {
+    const raw = fs.readFileSync(filePath, "utf8");
     const { data } = matter(raw);
-    const slug = file.replace(/\.mdx?$/, "");
     return {
       title: String(data.title || slug),
       slug,

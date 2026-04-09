@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { NextResponse } from "next/server";
+import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
 
 type SearchResult = {
   title: string;
@@ -34,19 +35,17 @@ export async function GET(req: Request) {
 
   const results: SearchResult[] = [];
   for (const level of levels) {
-    const levelDir = path.join(contentRoot, level);
-    const files = fs.readdirSync(levelDir).filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
-    for (const file of files) {
-      const filePath = path.join(levelDir, file);
+    const entries = listMarkdownFilesForContentLevel(level);
+    for (const { filePath, slug } of entries) {
       const raw = fs.readFileSync(filePath, "utf8");
       const { data, content } = matter(raw);
-      const title = String(data.title || file.replace(/\.mdx?$/, ""));
+      const title = String(data.title || slug);
       const chapter = String(data.chapter || "Cours");
       const score = scoreQuery(q, title, chapter, content.slice(0, 2500));
       if (score > 0) {
         results.push({
           title,
-          slug: file.replace(/\.mdx?$/, ""),
+          slug,
           level,
           category: chapter,
           score,

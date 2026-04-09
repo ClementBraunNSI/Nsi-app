@@ -4,8 +4,6 @@ description: "Fiche synthèse : if / else, switch, for, while"
 level: particuliers
 chapter: "Programmation en C — Révisions"
 icon: "🔀"
-allowedStudents:
-  - Cléo
 revisionSheet: true
 ---
 

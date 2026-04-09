@@ -4,8 +4,6 @@ description: Exercices pratiques sur les variables et opérateurs en C
 level: particuliers
 chapter: Programmation en C
 icon: "\U0001F4DD"
-allowedStudents:
-  - Cléo
 prerequisites:
   - cours-structures-controle
 ---

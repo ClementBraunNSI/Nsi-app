@@ -8,46 +8,65 @@ export interface CourseSummary {
   order: number;
 }
 
-export function getCoursesForLevel(level: string): CourseSummary[] {
+/** Fichiers .md/.mdx sous content/{level} : plat sauf `particuliers` (sous-dossiers élèves / thèmes). */
+export function listMarkdownFilesForContentLevel(level: string): { filePath: string; slug: string }[] {
   const contentDir = path.join(process.cwd(), 'content', level);
-  
-  if (!fs.existsSync(contentDir)) {
-    return [];
+  if (!fs.existsSync(contentDir)) return [];
+
+  if (level === 'particuliers') {
+    const out: { filePath: string; slug: string }[] = [];
+    const walk = (dir: string, rel: string) => {
+      for (const name of fs.readdirSync(dir)) {
+        const full = path.join(dir, name);
+        const st = fs.statSync(full);
+        if (st.isDirectory()) {
+          walk(full, rel ? `${rel}/${name}` : name);
+        } else if (name.endsWith('.md') || name.endsWith('.mdx')) {
+          const base = name.replace(/\.mdx?$/, '');
+          out.push({ filePath: full, slug: rel ? `${rel}/${base}` : base });
+        }
+      }
+    };
+    walk(contentDir, '');
+    return out;
   }
 
-  const files = fs.readdirSync(contentDir);
+  return fs
+    .readdirSync(contentDir)
+    .filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
+    .map((file) => ({
+      filePath: path.join(contentDir, file),
+      slug: file.replace(/\.mdx?$/, ''),
+    }));
+}
+
+export function getCoursesForLevel(level: string): CourseSummary[] {
+  const entries = listMarkdownFilesForContentLevel(level);
   const courses: CourseSummary[] = [];
 
-  files.forEach(file => {
-    if (!file.endsWith('.md') && !file.endsWith('.mdx')) return;
-    
-    const filePath = path.join(contentDir, file);
+  for (const { filePath, slug } of entries) {
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const { data } = matter(fileContent);
-    const slug = file.replace(/\.mdx?$/, '');
+    const fileName = path.basename(filePath);
 
     let order = 999;
-    
-    // Check frontmatter 'order' first
+
     if (data.order !== undefined) {
-      order = parseInt(data.order);
-    } 
-    // Fallback: Check filename prefix (e.g., "01_Introduction.md")
-    else {
-      const match = file.match(/^(\d+)_/);
+      order = parseInt(String(data.order), 10);
+    } else {
+      const match = fileName.match(/^(\d+)_/);
       if (match) {
-        order = parseInt(match[1]);
+        order = parseInt(match[1], 10);
       }
     }
 
     courses.push({
-      title: data.title || slug.replace(/[_-]/g, ' '),
-      slug: slug,
-      order: order
+      title: (data.title as string) || slug.replace(/[_-]/g, ' '),
+      slug,
+      order,
     });
-  });
+  }
 
-  // Sort by order first, then by title (or filename if needed)
   courses.sort((a, b) => {
     if (a.order !== b.order) return a.order - b.order;
     return a.title.localeCompare(b.title);

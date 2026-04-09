@@ -6,6 +6,7 @@ import { createClient } from '@/utils/supabase/server';
 import { getReservedCourses } from '@/app/actions/getReservedCourses';
 import BentoChaptersView from './BentoChaptersView';
 import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
+import { listMarkdownFilesForContentLevel } from '@/lib/course-utils';
 
 interface CoursData {
   slug: string;
@@ -80,20 +81,18 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
   let standardCourses: CoursData[] = [];
 
   if (fs.existsSync(folderPath)) {
-    const files = fs.readdirSync(folderPath);
-    const mdxFiles = files.filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+    const mdEntries = listMarkdownFilesForContentLevel(niveaux);
 
-    standardCourses = mdxFiles.map(fileName => {
-      const filePath = path.join(folderPath, fileName);
+    standardCourses = mdEntries.map(({ filePath, slug }) => {
       const fileContent = fs.readFileSync(filePath, 'utf-8');
       const { data } = matter(fileContent);
-      
-      return { 
-        slug: fileName.replace(/\.mdx?$/, ''), 
-        title: String(data.title || fileName),
+
+      return {
+        slug,
+        title: String(data.title || slug),
         description: String(data.description || ""),
         level: String(data.level || niveaux),
-        chapter: String(data.chapter || "Général"), 
+        chapter: String(data.chapter || "Général"),
         icon: String(data.icon || '📘'),
         isPrivate: String(data.access || '').toLowerCase() === 'private',
         allowedStudents: Array.isArray(data.allowedStudents) ? data.allowedStudents.map((s: unknown) => String(s)) : undefined
@@ -141,7 +140,8 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
     '1': 'SNT',
     '2': 'Première NSI',
     '3': 'Terminale NSI',
-    '4': 'BTS SIO'
+    '4': 'BTS SIO',
+    particuliers: 'Programmation en C',
   };
 
   // Mapping des couleurs pour l'affichage (respectant la charte graphique de la landing page)
@@ -151,6 +151,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
     '2': { main: 'bg-orange-500', icon: 'text-orange-500', border: 'hover:border-orange-500', text: 'group-hover:text-orange-500', light: 'group-hover:bg-orange-50' }, // 1NSI (Orange)
     '3': { main: 'bg-purple-500', icon: 'text-purple-500', border: 'hover:border-purple-500', text: 'group-hover:text-purple-500', light: 'group-hover:bg-purple-50' }, // TNSI (Violet)
     '4': { main: 'bg-emerald-500', icon: 'text-emerald-500', border: 'hover:border-emerald-500', text: 'group-hover:text-emerald-500', light: 'group-hover:bg-emerald-50' }, // SIO (Emeraude)
+    particuliers: { main: 'bg-amber-600', icon: 'text-amber-600', border: 'hover:border-amber-600', text: 'group-hover:text-amber-600', light: 'group-hover:bg-amber-50' },
   };
 
   const theme = LEVEL_THEME[niveaux.trim()] || LEVEL_THEME['2']; // Fallback to orange-500

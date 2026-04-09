@@ -4,8 +4,6 @@ description: "Fiche synthèse : prototype, paramètres, return, void"
 level: particuliers
 chapter: "Programmation en C — Révisions"
 icon: "⚙️"
-allowedStudents:
-  - Cléo
 revisionSheet: true
 ---
 

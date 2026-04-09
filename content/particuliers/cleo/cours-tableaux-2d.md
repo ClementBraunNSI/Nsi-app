@@ -4,8 +4,6 @@ description: Manipuler des matrices statiques et dynamiques
 level: particuliers
 chapter: Programmation en C
 icon: "\U0001F3D7️"
-allowedStudents:
-  - Cléo
 prerequisites:
   - cours-tableaux
 ---

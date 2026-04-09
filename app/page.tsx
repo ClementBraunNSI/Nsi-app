@@ -15,6 +15,19 @@ const LEVELS = [
   { id: 4, title: "BTS SIO", desc: "Services Informatiques aux Organisations.", img: "/images/fox_4.png", color: "bg-emerald-500", tag: "Niveau 4" },
 ];
 
+// Ressources publiques (hors parcours NSI classique)
+const PUBLIC_RESOURCES = [
+  {
+    id: 'public-c-lang',
+    title: 'Programmation en C',
+    desc: 'Cours et exercices en langage C : types, tableaux, fonctions, structures, tris… Accessible sans compte.',
+    img: '/images/fox_2.png',
+    color: 'bg-amber-600',
+    tag: 'Langage C',
+    href: '/cours/particuliers',
+  },
+];
+
 // Jeux et Outils
 const GAMES = [
   { 
@@ -256,6 +269,13 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {LEVELS.map((lvl) => (
             <CourseCard key={lvl.id} {...lvl} href={`/cours/${lvl.id}`} />
+          ))}
+        </div>
+
+        <h2 className="text-2xl font-black text-slate-800 mt-20 mb-10">Ressources <span className="text-amber-600">ouvertes</span></h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {PUBLIC_RESOURCES.map((item) => (
+            <CourseCard key={item.id} {...item} />
           ))}
         </div>
 

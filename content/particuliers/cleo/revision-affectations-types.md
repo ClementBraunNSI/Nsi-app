@@ -4,8 +4,6 @@ description: "Fiche synthèse : variables, opérateurs, printf / scanf"
 level: particuliers
 chapter: "Programmation en C — Révisions"
 icon: "🔧"
-allowedStudents:
-  - Cléo
 revisionSheet: true
 ---
 

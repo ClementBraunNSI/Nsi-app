@@ -4,8 +4,6 @@ description: "Fiche synthèse : grille, double boucle, indices [i][j]"
 level: particuliers
 chapter: "Programmation en C — Révisions"
 icon: "🏗️"
-allowedStudents:
-  - Cléo
 revisionSheet: true
 ---
 

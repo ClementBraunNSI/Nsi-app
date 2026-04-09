@@ -4,8 +4,6 @@ description: 'Exercices guidés sur les tris : sélection, insertion et dénombr
 level: particuliers
 chapter: Programmation en C
 icon: "\U0001F504"
-allowedStudents:
-  - Cléo
 prerequisites:
   - exercices-affectations-types
 ---

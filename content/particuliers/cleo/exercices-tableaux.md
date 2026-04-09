@@ -4,8 +4,6 @@ description: Exercices pratiques sur les tableaux en C
 level: particuliers
 chapter: Programmation en C
 icon: "\U0001F4CA"
-allowedStudents:
-  - Cléo
 prerequisites:
   - exercices-fonctions
 ---

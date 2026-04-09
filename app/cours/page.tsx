@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronRight, BookOpen, GraduationCap, GitBranch } from 'lucide-react';
+import { listMarkdownFilesForContentLevel } from '@/lib/course-utils';
 
 interface CoursData {
   slug: string;
@@ -20,6 +21,7 @@ const LEVELS_INFO: Record<string, { title: string; color: string }> = {
   '2': { title: 'Première NSI', color: 'bg-orange-500' },
   '3': { title: 'Terminale NSI', color: 'bg-purple-500' },
   '4': { title: 'BTS SIO', color: 'bg-emerald-500' },
+  particuliers: { title: 'Programmation en C', color: 'bg-amber-600' },
 };
 
 function parsePrerequisites(value: unknown): string[] {
@@ -90,23 +92,19 @@ export default async function PageTousLesCours() {
   // 2. Collecter tous les cours de tous les niveaux
   const tousLesCours: CoursData[] = [];
 
-  levels.forEach(level => {
-    const levelPath = path.join(contentPath, level);
-    const files = fs.readdirSync(levelPath);
-    const mdxFiles = files.filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
-
-    mdxFiles.forEach(fileName => {
-      const filePath = path.join(levelPath, fileName);
+  levels.forEach((level) => {
+    const entries = listMarkdownFilesForContentLevel(level);
+    entries.forEach(({ filePath, slug }) => {
       const fileContent = fs.readFileSync(filePath, 'utf-8');
       const { data } = matter(fileContent);
 
       tousLesCours.push({
-        slug: fileName.replace(/\.mdx?$/, ''),
-        title: String(data.title || fileName.replace(/\.mdx?$/, '')),
+        slug,
+        title: String(data.title || slug),
         description: String(data.description || "Consulter la leçon"),
         chapter: String(data.chapter || "Général"),
         icon: String(data.icon || '📘'),
-        level: level,
+        level,
         prerequisites: parsePrerequisites(data.prerequisites),
       });
     });
@@ -142,7 +140,18 @@ export default async function PageTousLesCours() {
       </div>
 
       {/* Affichage par niveau et chapitre */}
-      {Object.entries(coursParNiveau).sort(([a], [b]) => parseInt(a) - parseInt(b)).map(([niveau, chapitres]) => (
+      {Object.entries(coursParNiveau)
+        .sort(([a], [b]) => {
+          const na = parseInt(a, 10);
+          const nb = parseInt(b, 10);
+          const aNum = !Number.isNaN(na);
+          const bNum = !Number.isNaN(nb);
+          if (aNum && bNum) return na - nb;
+          if (aNum && !bNum) return -1;
+          if (!aNum && bNum) return 1;
+          return a.localeCompare(b, 'fr');
+        })
+        .map(([niveau, chapitres]) => (
         <section key={niveau} className="mb-12">
           {/* En-tête du niveau */}
           <div className="flex items-center gap-4 mb-8 pb-4 border-b-2 border-orange-100">

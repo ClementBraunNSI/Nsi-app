@@ -4,8 +4,6 @@ description: "Fiche synthèse : déclaration, indices, parcours for"
 level: particuliers
 chapter: "Programmation en C — Révisions"
 icon: "📦"
-allowedStudents:
-  - Cléo
 revisionSheet: true
 ---
 

@@ -4,8 +4,6 @@ description: Stocker et manipuler plusieurs variables ensemble
 level: particuliers
 chapter: Programmation en C
 icon: "\U0001F4E6"
-allowedStudents:
-  - Cléo
 prerequisites:
   - cours-fonctions
 ---

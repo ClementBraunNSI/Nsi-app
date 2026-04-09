@@ -4,8 +4,6 @@ description: Exercices progressifs sur les matrices
 level: particuliers
 chapter: Programmation en C
 icon: "\U0001F4AA"
-allowedStudents:
-  - Cléo
 prerequisites:
   - exercices-tris
 ---

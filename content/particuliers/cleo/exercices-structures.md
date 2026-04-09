@@ -1,10 +1,9 @@
 ---
 title: 'TP : Structures et Pointeurs en C'
+level: particuliers
 chapter: 'C : Programmation Structurée'
 badgeId: c_structs
 meta: 'Struct, Typedef, Pointeurs, Allocation Dynamique'
-allowedStudents:
-  - Cléo
 prerequisites:
   - cours-structures-pointeurs
 ---
