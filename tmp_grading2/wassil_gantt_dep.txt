@@ -1,0 +1,18 @@
+2.3 Travail à réaliser 
+
+	1.	La méthodologie qui serait la plus adaptée pour la réalisation de ce projet et la méthode agile.
+Cette approche est idéale pour ce projet car elle offre à la fois la prévisibilité nécessaire pour respecter les 85 jours de délai, tout en permettant la flexibilité pendant le développement.
+Les Avantages de la méthode agile :  Flexibilité pour ajuster les fonctionnalités, Tests continus et feedback rapide, Collaboration avec le client, Des coûts réduits   
+
+ 
+
+LES JALONS : Validation conception (D) : Le client approuve les maquettes et l’architecture avant investissement 
+Recette client (L) : Vérification que le produit répond aux spécifications initiales 
+Fin du développement (H) :  Application complète avec tous les modules ( Backend, Frontend, Authentification) 
+Mise en production (N) : Déploiement final
+		
+
+
+
+
+

@@ -1,0 +1,244 @@
+
+Catégorie
+Quantité
+Description
+Prix unitaire HT
+Prix total HT
+MATÉRIEL INFORMATIQUE
+
+
+
+
+Postes développeurs
+12
+PC fixe performant (Intel i7-13700, 32 GB RAM DDR4, SSD 1TB NVMe, GTX 1650)
+950 €
+11 400 €
+Postes designers
+3
+PC haute performance (Intel i9-13900K, 64 GB RAM, SSD 2TB, RTX 4060 Ti)
+1 800 €
+5 400 €
+Postes standards
+8
+PC standard (Intel i5-13400, 16 GB RAM, SSD 512GB)
+650€
+5 200 €
+Laptops direction
+2
+Dell XPS 15 (i7-13700H, 32GB RAM, SSD 1TB, écran tactile)
+1 900 €
+3 800 €
+PÉRIPHÉRIQUES
+
+
+
+
+Écrans standards
+32
+Écran 24" Full HD (Dell P2423DE ou équivalent)
+180 €
+5 760 €
+Écrans designers
+6
+Écran 27" 4K OLED (Dell U2723DE, 2 par designer)
+450 €
+2 700 €
+Périphériques complets
+25
+Ensemble clavier + souris ergonomiques Logitech
+45 €
+1 125 €
+LICENCES LOGICIELLES
+
+
+
+
+Licences Office 365
+25
+Microsoft 365 Business Premium (abonnement annuel/utilisateur)
+20 €
+500 €
+Licences JetBrains
+12
+IntelliJ IDEA Ultimate (licence annuelle individuelle)
+169 €
+2 028 €
+Licences Adobe CC
+3
+
+Creative Cloud All Apps (abonnement annuel)
+60 €
+180 €
+SÉCURITÉ
+
+
+
+
+Antivirus entreprise
+25
+Bitdefender GravityZone Business Security (licence annuelle)
+35 €
+875 €
+INFRASTRUCTURE
+
+Dell PowerEdge T350 (Xeon E-2334, 32GB RAM, 4TB RAID, Windows Server 2022)
+2 500 €
+2 500 €
+Serveur
+1
+
+
+
+TOTAUX
+
+
+
+
+
+
+TOTAL HT
+
+41 468 €
+
+
+TVA (20%)
+
+8 294 €
+
+
+TOTAL TTC
+
+49 762 €
+
+
+Tâche
+Durée
+Début au plus tôt
+Fin au plus tôt
+Début au plus tard
+Fin au plus tard
+Marge totale
+Critique ?
+A
+5
+0
+5
+0
+5
+0
+OUI
+B
+4
+5
+9
+7
+11
+2
+NON
+C
+6
+5
+11
+5
+11
+0
+OUI
+D
+2
+11
+13
+11
+13
+0
+OUI
+E
+12
+13
+25
+13
+25
+0
+OUI
+F
+10
+13
+23
+15
+25
+2
+NON
+G
+5
+13
+23
+15
+25
+2
+OUI
+H
+4
+25
+30
+25
+30
+0
+NON
+I
+6
+30
+36
+30
+36
+0
+OUI
+J
+5
+36
+41
+36
+41
+0
+OUI
+K
+4
+41
+45
+41
+45
+0
+OUI
+L
+3
+45
+48
+45
+48
+0
+OUI
+M
+2
+48
+50
+48
+50
+0
+OUI
+N
+2
+50
+52
+50
+52
+0
+OUI
+
+Chemin critique : A->C -> D -> E -> G -> I -> J -> K -> L -> M -> N
+52j
+
+
+
+
+
+
+

@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronRight, X, Palette, Home } from 'lucide-react';
 import Breadcrumbs from '@/components/experimental/Breadcrumbs';
 
+type EditionTab = '2024-2025' | '2025-2026';
+
 const artworks = [
   { 
     src: '/images/chasse/2024_2025/raw.png', 
@@ -128,9 +130,25 @@ const artworks = [
   }
 ];
 
+const suggestions2025_2026 = [
+  'Le Cri — Edvard Munch (1893)',
+  'La Nuit étoilée — Vincent van Gogh (1889)',
+  'Le Baiser — Gustav Klimt (1907-1908)',
+  'La Naissance de Vénus — Sandro Botticelli (vers 1485)',
+  'Les Nymphéas — Claude Monet (série, 1897-1926)',
+  "Le Radeau de La Méduse — Théodore Géricault (1818-1819)",
+  "La Liberté guidant le peuple — Eugène Delacroix (1830)",
+  "Napoléon franchissant les Alpes — Jacques-Louis David (1801-1805)",
+  "American Gothic — Grant Wood (1930)",
+  "La Persistance de la mémoire — Salvador Dalí (1931)",
+  "Le Déjeuner sur l'herbe — Édouard Manet (1863)",
+  "La Danse — Henri Matisse (1910)",
+];
+
 export default function ChasseAuxRenards() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeEdition, setActiveEdition] = useState<EditionTab>('2024-2025');
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % artworks.length);
@@ -152,6 +170,13 @@ export default function ChasseAuxRenards() {
   }, [nextSlide, prevSlide]);
 
   const currentArtwork = artworks[currentIndex];
+  const originalArtworks = Array.from(
+    new Set(
+      artworks
+        .map((art) => art.original)
+        .filter((o) => !o.toLowerCase().includes('création originale'))
+    )
+  );
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600">
@@ -163,7 +188,19 @@ export default function ChasseAuxRenards() {
             <Home size={18} /> Retour à l'accueil
           </Link>
           <div className="flex items-center gap-2 text-orange-500 font-black tracking-widest uppercase text-sm">
-            <Palette size={18} /> Édition 24-25
+            <Palette size={18} />
+            <button
+              onClick={() => setActiveEdition('2024-2025')}
+              className={`px-2 py-1 rounded-md transition-colors ${activeEdition === '2024-2025' ? 'bg-orange-100 text-orange-600' : 'text-slate-500 hover:text-orange-500'}`}
+            >
+              Édition 2024-2025
+            </button>
+            <button
+              onClick={() => setActiveEdition('2025-2026')}
+              className={`px-2 py-1 rounded-md transition-colors ${activeEdition === '2025-2026' ? 'bg-orange-100 text-orange-600' : 'text-slate-500 hover:text-orange-500'}`}
+            >
+              Édition 2025-2026
+            </button>
           </div>
         </div>
       </nav>
@@ -178,6 +215,22 @@ export default function ChasseAuxRenards() {
           <p className="text-slate-500 text-lg max-w-3xl font-medium leading-relaxed">
             Découvrez les créations artistiques de nos élèves qui ont revisité les grands classiques de l'art en y intégrant notre mascotte renard !
           </p>
+        </div>
+
+        <div className="bg-white rounded-2xl border border-slate-100 p-4 md:p-5 mb-8">
+          <h2 className="text-base md:text-lg font-black text-slate-800 mb-3">
+            {activeEdition === '2024-2025'
+              ? 'Liste des tableaux originaux (édition 2024-2025)'
+              : "Exemples de tableaux utilisables (édition 2025-2026)"}
+          </h2>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1.5 text-slate-600 text-xs md:text-sm leading-snug">
+            {(activeEdition === '2024-2025' ? originalArtworks : suggestions2025_2026).map((item) => (
+              <li key={item} className="flex items-start gap-2 min-w-0">
+                <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Gallery Section */}

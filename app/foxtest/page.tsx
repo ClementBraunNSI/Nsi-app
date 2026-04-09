@@ -23,6 +23,58 @@ const FoxLogo = ({ className = "w-8 h-8 drop-shadow-sm" }: { className?: string 
 );
 
 type AllowedCommand = { code: string; description: string };
+type HelpTab = 'guide' | 'memo';
+type CommandTab = 'deplacements' | 'logique' | 'avance';
+type ObstacleKind = 'rock' | 'bush' | 'log';
+
+type SavedProgress = {
+  resumeCode: string;
+  levelId: number;
+  codeByLevel: Record<number, string>;
+  attemptsByLevel: Record<number, number>;
+  totalRuns: number;
+  updatedAt: number;
+};
+
+type RuntimeVariant = {
+  obstacles: Position[];
+  obstacleKinds: Record<string, ObstacleKind>;
+  goal: Position;
+  signalWord: 'gauche' | 'droite';
+  measureValue: number;
+};
+
+const STORAGE_PREFIX = 'foxtest-progress-v1';
+
+const generateResumeCode = () => {
+  if (typeof window === 'undefined' || !window.crypto) {
+    return `FOX-${Date.now().toString(36).toUpperCase()}`;
+  }
+  const bytes = new Uint8Array(4);
+  window.crypto.getRandomValues(bytes);
+  const raw = Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+  return `FOX-${raw.toUpperCase()}`;
+};
+
+const normalizePythonError = (errorMessage: string): string => {
+  const msg = (errorMessage || '').toLowerCase();
+  if (msg.includes('syntaxerror')) {
+    return "❌ Syntaxe invalide. Vérifie les parenthèses, les deux-points ':' et l'indentation.";
+  }
+  if (msg.includes('indentationerror') || msg.includes('expected an indented block')) {
+    return "❌ Problème d'indentation. Après `for`, `while`, `if`, `else` ou `def`, il faut un bloc indenté.";
+  }
+  if (msg.includes('nameerror')) {
+    return "❌ Nom inconnu. Vérifie l'orthographe des fonctions (`avancer`, `tourner_gauche`, etc.) et des variables.";
+  }
+  if (msg.includes('typeerror')) {
+    return "❌ Type de donnée inattendu. Vérifie les paramètres passés à tes fonctions.";
+  }
+  if (msg.includes('while true') || msg.includes('maximum recursion depth exceeded')) {
+    return "❌ Ton programme semble bloquer (boucle infinie ou récursion). Ajoute une condition d'arrêt.";
+  }
+  return `❌ Erreur Python : ${errorMessage}`;
+};
 
 const getAllowedCommands = (levelId: number): AllowedCommand[] => {
   const base: AllowedCommand[] = [
@@ -44,8 +96,91 @@ const getAllowedCommands = (levelId: number): AllowedCommand[] => {
   if (levelId >= 16) {
     base.push({ code: 'def ma_fonction():', description: 'Définition de fonctions autorisée' });
   }
+  if (levelId >= 21) {
+    base.push(
+      { code: 'obstacle_devant()', description: "Vrai si un obstacle est devant" },
+      { code: 'hauteur_devant()', description: "Donne une hauteur (0, 1 ou 2)" },
+      { code: 'lire_balise()', description: "Renvoie 'gauche' ou 'droite'" },
+      { code: 'bondir()', description: 'Saute par-dessus un obstacle' },
+      { code: 'casser_obstacle()', description: 'Retire un buisson ou un tronc devant toi' },
+    );
+  }
 
   return base;
+};
+
+const getCommandsForTab = (commands: AllowedCommand[], tab: CommandTab): AllowedCommand[] => {
+  if (tab === 'deplacements') {
+    return commands.filter((c) =>
+      ['avancer()', 'tourner_gauche()', 'tourner_droite()'].includes(c.code)
+    );
+  }
+  if (tab === 'logique') {
+    return commands.filter((c) =>
+      ['mur_devant()', 'mur_gauche()', 'mur_droite()', 'sur_objectif()', 'while / if / else', 'def ma_fonction():', 'obstacle_devant()', 'hauteur_devant()', 'lire_balise()'].includes(c.code)
+    );
+  }
+  return commands.filter((c) =>
+    ['bondir()', 'casser_obstacle()'].includes(c.code)
+  );
+};
+
+const seededRandom = (seed: number) => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+
+const posKey = (p: Position) => `${p.x},${p.y}`;
+
+const createRuntimeVariant = (lvl: LevelConfig): RuntimeVariant => {
+  const seedBase = Date.now() + lvl.id * 97;
+  const obstacles: Position[] = [];
+
+  if (!lvl.randomize) {
+    return {
+      obstacles: lvl.obstacles,
+      obstacleKinds: Object.fromEntries(lvl.obstacles.map((o) => [posKey(o), 'rock' as ObstacleKind])),
+      goal: lvl.goal,
+      signalWord: 'gauche',
+      measureValue: 1,
+    };
+  }
+
+  if (lvl.id === 21) {
+    const positions = [2, 4, 6];
+    positions.forEach((x, idx) => {
+      const dice = seededRandom(seedBase + idx);
+      if (dice > 0.33) obstacles.push({ x, y: 0 });
+    });
+  } else if (lvl.id === 22) {
+    const middleRow = 2;
+    for (let x = 1; x < 6; x++) {
+      if (x % 2 === 1) {
+        const y = seededRandom(seedBase + x) > 0.5 ? middleRow - 1 : middleRow + 1;
+        obstacles.push({ x, y });
+      }
+    }
+  } else if (lvl.id === 23) {
+    for (let x = 1; x < 8; x++) {
+      if (seededRandom(seedBase + x * 3) > 0.45) obstacles.push({ x, y: 0 });
+    }
+  } else if (lvl.id === 24) {
+    for (let y = 1; y < 5; y++) {
+      for (let x = 1; x < 7; x++) {
+        const r = seededRandom(seedBase + x * 11 + y * 17);
+        if (r > 0.84) obstacles.push({ x, y });
+      }
+    }
+  }
+
+  const signalWord: 'gauche' | 'droite' = seededRandom(seedBase + 401) > 0.5 ? 'gauche' : 'droite';
+  const measureValue = 1 + Math.floor(seededRandom(seedBase + 701) * 2);
+  const obstacleKinds: Record<string, ObstacleKind> = {};
+  obstacles.forEach((obs, idx) => {
+    const roll = seededRandom(seedBase + 901 + idx);
+    obstacleKinds[posKey(obs)] = roll > 0.55 ? 'rock' : roll > 0.25 ? 'bush' : 'log';
+  });
+  return { obstacles, obstacleKinds, goal: lvl.goal, signalWord, measureValue };
 };
 
 const stripCommandHeader = (rawCode: string): string => {
@@ -134,14 +269,51 @@ const RockBlock = () => (
   </svg>
 );
 
+const BushBlock = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" className="w-[141.4%] h-[188.5%] absolute" style={{
+    left: '-20.7%',
+    top: '-43%',
+    transform: 'translateZ(10px) rotateZ(45deg) rotateX(-60deg)',
+    transformStyle: 'preserve-3d'
+  }}>
+    <ellipse cx="64" cy="96" rx="40" ry="16" fill="#1e293b" opacity="0.16" />
+    <ellipse cx="64" cy="78" rx="34" ry="22" fill="#65a30d" />
+    <ellipse cx="48" cy="68" rx="20" ry="16" fill="#84cc16" />
+    <ellipse cx="80" cy="68" rx="20" ry="16" fill="#84cc16" />
+    <ellipse cx="64" cy="60" rx="18" ry="14" fill="#a3e635" />
+    <line x1="52" y1="84" x2="46" y2="92" stroke="#4d7c0f" strokeWidth="3" strokeLinecap="round" />
+    <line x1="74" y1="84" x2="80" y2="92" stroke="#4d7c0f" strokeWidth="3" strokeLinecap="round" />
+  </svg>
+);
+
+const LogBlock = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" className="w-[141.4%] h-[188.5%] absolute" style={{
+    left: '-20.7%',
+    top: '-43%',
+    transform: 'translateZ(10px) rotateZ(45deg) rotateX(-60deg)',
+    transformStyle: 'preserve-3d'
+  }}>
+    <ellipse cx="64" cy="94" rx="36" ry="14" fill="#1e293b" opacity="0.16" />
+    <ellipse cx="38" cy="72" rx="12" ry="18" fill="#7c2d12" />
+    <ellipse cx="90" cy="72" rx="12" ry="18" fill="#7c2d12" />
+    <rect x="38" y="54" width="52" height="36" rx="16" fill="#92400e" />
+    <line x1="48" y1="58" x2="48" y2="88" stroke="#7c2d12" strokeWidth="3" />
+    <line x1="62" y1="56" x2="62" y2="90" stroke="#7c2d12" strokeWidth="3" />
+    <line x1="76" y1="58" x2="76" y2="88" stroke="#7c2d12" strokeWidth="3" />
+    <circle cx="38" cy="72" r="4" fill="#fbbf24" opacity="0.45" />
+  </svg>
+);
+
 const IsoGrid = ({
   level,
   foxPos,
   foxDir,
+  obstacleKinds,
 }: {
   level: LevelConfig;
   foxPos: Position;
   foxDir: Direction;
+  obstacleKinds: Record<string, ObstacleKind>;
 }) => {
     const MAX_GRID_DIM = Math.max(level.gridSize.cols, level.gridSize.rows);
     const CELL_SIZE = Math.min(64, 400 / MAX_GRID_DIM); 
@@ -178,7 +350,11 @@ const IsoGrid = ({
 
                             {/* Obstacle (Rocher SVG de la maquette) */}
                             {isObstacle && (
-                                <RockBlock />
+                                obstacleKinds[`${x},${y}`] === 'log'
+                                  ? <LogBlock />
+                                  : obstacleKinds[`${x},${y}`] === 'bush'
+                                    ? <BushBlock />
+                                    : <RockBlock />
                             )}
 
                             {/* Objectif (La Poule ! - Affichée en billboard 2D face caméra) */}
@@ -235,24 +411,143 @@ export default function FoxGame() {
   const [gameStatus, setGameStatus] = useState<'idle' | 'playing' | 'won' | 'lost'>('idle');
   const [stars, setStars] = useState<number>(0);
   const [code, setCode] = useState('');
+  const [resumeCode, setResumeCode] = useState('');
+  const [resumeInput, setResumeInput] = useState('');
+  const [loadStatus, setLoadStatus] = useState('');
+  const [helpTab, setHelpTab] = useState<HelpTab>('guide');
+  const [commandTab, setCommandTab] = useState<CommandTab>('deplacements');
+  const [attemptsByLevel, setAttemptsByLevel] = useState<Record<number, number>>({});
+  const [totalRuns, setTotalRuns] = useState(0);
+  const [runtimeVariantByLevel, setRuntimeVariantByLevel] = useState<Record<number, RuntimeVariant>>({});
 
   const pyodideRef = useRef<any>(null);
   const pyodideLoadingRef = useRef(false);
   const [isPyodideReady, setIsPyodideReady] = useState(false);
+  const hydratingRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const created = generateResumeCode();
+    setResumeCode(created);
+    setResumeInput(created);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !resumeCode) return;
+    const storageKey = `${STORAGE_PREFIX}-${resumeCode}`;
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return;
+
+    try {
+      hydratingRef.current = true;
+      const data: SavedProgress = JSON.parse(raw);
+      if (data.levelId && LEVELS.some((l) => l.id === data.levelId)) {
+        setCurrentLevelId(data.levelId);
+      }
+      setAttemptsByLevel(data.attemptsByLevel || {});
+      setTotalRuns(data.totalRuns || 0);
+      setCode(data.codeByLevel?.[data.levelId || 1] || '');
+      setLoadStatus('Progression chargée automatiquement.');
+    } catch {
+      setLoadStatus('Code de reprise invalide ou données corrompues.');
+    } finally {
+      setTimeout(() => {
+        hydratingRef.current = false;
+      }, 0);
+    }
+  }, [resumeCode]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !resumeCode || hydratingRef.current) return;
+    const storageKey = `${STORAGE_PREFIX}-${resumeCode}`;
+    const raw = localStorage.getItem(storageKey);
+    let previous: SavedProgress = {
+      resumeCode,
+      levelId: currentLevelId,
+      codeByLevel: {},
+      attemptsByLevel: {},
+      totalRuns: 0,
+      updatedAt: Date.now(),
+    };
+
+    if (raw) {
+      try {
+        previous = JSON.parse(raw);
+      } catch {
+        // Si le localStorage est corrompu, on repart sur une base propre.
+        previous = {
+          resumeCode,
+          levelId: currentLevelId,
+          codeByLevel: {},
+          attemptsByLevel: {},
+          totalRuns: 0,
+          updatedAt: Date.now(),
+        };
+      }
+    }
+
+    const next: SavedProgress = {
+      ...previous,
+      resumeCode,
+      levelId: currentLevelId,
+      codeByLevel: { ...previous.codeByLevel, [currentLevelId]: code },
+      attemptsByLevel,
+      totalRuns,
+      updatedAt: Date.now(),
+    };
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(next));
+    } catch {
+      // Echec silencieux (quota/cookie policy) sans bloquer le jeu.
+    }
+  }, [resumeCode, currentLevelId, code, attemptsByLevel, totalRuns]);
 
   useEffect(() => {
     const lvl = LEVELS.find(l => l.id === currentLevelId) || LEVELS[0];
     setLevel(lvl);
+    setRuntimeVariantByLevel(prev => {
+      if (prev[lvl.id]) return prev;
+      return { ...prev, [lvl.id]: createRuntimeVariant(lvl) };
+    });
     resetLevel(lvl);
   }, [currentLevelId]);
 
+  const runtimeVariant = runtimeVariantByLevel[level.id] || {
+    obstacles: level.obstacles,
+    obstacleKinds: Object.fromEntries(level.obstacles.map((o) => [posKey(o), 'rock' as ObstacleKind])),
+    goal: level.goal,
+    signalWord: 'gauche' as const,
+    measureValue: 1,
+  };
+  const runtimeObstacles = level.randomize ? runtimeVariant.obstacles : level.obstacles;
+  const runtimeObstacleKinds = level.randomize
+    ? runtimeVariant.obstacleKinds
+    : Object.fromEntries(level.obstacles.map((o) => [posKey(o), 'rock' as ObstacleKind]));
+  const runtimeGoal = level.randomize ? runtimeVariant.goal : level.goal;
+  const renderLevel = { ...level, obstacles: runtimeObstacles, goal: runtimeGoal };
+
   const resetLevel = (lvl: LevelConfig) => {
+    if (lvl.randomize) {
+      setRuntimeVariantByLevel(prev => ({ ...prev, [lvl.id]: createRuntimeVariant(lvl) }));
+    }
     setFoxPos(lvl.start.pos);
     setFoxDir(lvl.start.dir);
     setGameStatus('idle');
     setStars(0);
     setLogs([]);
-    setCode(stripCommandHeader(lvl.initialCode || ''));
+    const defaultCode = stripCommandHeader(lvl.initialCode || '');
+    if (typeof window !== 'undefined' && resumeCode) {
+      const storageKey = `${STORAGE_PREFIX}-${resumeCode}`;
+      const raw = localStorage.getItem(storageKey);
+      if (raw) {
+        try {
+          const data: SavedProgress = JSON.parse(raw);
+          setCode(data.codeByLevel?.[lvl.id] || defaultCode);
+          return;
+        } catch {}
+      }
+    }
+    setCode(defaultCode);
   };
 
   useEffect(() => {
@@ -301,13 +596,20 @@ export default function FoxGame() {
     setLogs([]);
     setFoxPos(level.start.pos);
     setFoxDir(level.start.dir);
+    setAttemptsByLevel(prev => ({ ...prev, [level.id]: (prev[level.id] || 0) + 1 }));
+    setTotalRuns(prev => prev + 1);
 
     try {
       const gridSizeJson = JSON.stringify(level.gridSize);
-      const obstaclesJson = JSON.stringify(level.obstacles);
+      const obstaclesJson = JSON.stringify(runtimeObstacles);
+      const destructibleJson = JSON.stringify(
+        runtimeObstacles.filter((o) => runtimeObstacleKinds[posKey(o)] !== 'rock')
+      );
       const startPosJson = JSON.stringify(level.start.pos);
       const startDirJson = JSON.stringify(level.start.dir);
-      const goalPosJson = JSON.stringify(level.goal);
+      const goalPosJson = JSON.stringify(runtimeGoal);
+      const signalWordJson = JSON.stringify(runtimeVariant.signalWord);
+      const measureValueJson = JSON.stringify(runtimeVariant.measureValue);
 
       const pythonBridge = `
 import js
@@ -315,9 +617,12 @@ import json
 
 grid_size = json.loads('${gridSizeJson}')
 obstacles = json.loads('${obstaclesJson}')
+destructible_positions = json.loads('${destructibleJson}')
 current_pos = json.loads('${startPosJson}')
 current_dir = json.loads('${startDirJson}')
 goal_pos = json.loads('${goalPosJson}')
+signal_word = json.loads('${signalWordJson}')
+measure_value = json.loads('${measureValueJson}')
 actions_queue = []
 
 def get_next_pos(pos, direction):
@@ -343,6 +648,9 @@ def mur_gauche():
     dirs = ['N', 'E', 'S', 'W']
     return is_blocked(get_next_pos(current_pos, dirs[(dirs.index(current_dir) + 3) % 4]))
 def sur_objectif(): return current_pos['x'] == goal_pos['x'] and current_pos['y'] == goal_pos['y']
+def obstacle_devant(): return mur_devant()
+def hauteur_devant(): return measure_value
+def lire_balise(): return signal_word
 
 def avancer():
     global current_pos
@@ -366,6 +674,25 @@ def tourner(direction):
     if direction == 'gauche': tourner_gauche()
     elif direction == 'droite': tourner_droite()
 
+def bondir():
+    global current_pos
+    next_p = get_next_pos(current_pos, current_dir)
+    if is_blocked(next_p):
+        landing = get_next_pos(next_p, current_dir)
+        if not is_blocked(landing):
+            current_pos = landing
+    elif not is_blocked(next_p):
+        current_pos = next_p
+    actions_queue.append("JUMP")
+
+def casser_obstacle():
+    global obstacles
+    next_p = get_next_pos(current_pos, current_dir)
+    can_break = any(d['x'] == next_p['x'] and d['y'] == next_p['y'] for d in destructible_positions)
+    if can_break:
+        obstacles = [o for o in obstacles if not (o['x'] == next_p['x'] and o['y'] == next_p['y'])]
+        actions_queue.append("ATTACK")
+
 def av(): avancer()
 def tg(): tourner_gauche()
 def td(): tourner_droite()
@@ -388,16 +715,34 @@ def td(): tourner_droite()
       await animateActions(actions);
 
     } catch (e: any) {
-      setLogs([`❌ Erreur : ${e.message || e.toString()}`]);
+      setLogs([normalizePythonError(e.message || e.toString())]);
       setGameStatus('lost');
     } finally {
       setIsRunning(false);
     }
   };
 
+  const handleLoadFromCode = () => {
+    const candidate = resumeInput.trim().toUpperCase();
+    if (!candidate) {
+      setLoadStatus('Saisis un code de reprise.');
+      return;
+    }
+    if (typeof window === 'undefined') return;
+    const storageKey = `${STORAGE_PREFIX}-${candidate}`;
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) {
+      setLoadStatus("Aucune sauvegarde trouvée pour ce code.");
+      return;
+    }
+    setResumeCode(candidate);
+    setLoadStatus('Code chargé. Progression restaurée.');
+  };
+
   const animateActions = async (actions: string[]) => {
     let currentPos = { ...level.start.pos };
     let currentDir = level.start.dir;
+    let currentObstacles = [...runtimeObstacles];
     const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
 
     for (let i = 0; i < actions.length; i++) {
@@ -406,7 +751,7 @@ def td(): tourner_droite()
 
       if (action === "MOVE") {
         const nextPos = getNextPos(currentPos, currentDir);
-        if (isBlocked(nextPos)) {
+        if (isBlocked(nextPos, currentObstacles)) {
             setLogs([`⚠️ Aïe ! Mur percuté.`]);
             setGameStatus('lost');
             return;
@@ -414,6 +759,19 @@ def td(): tourner_droite()
         currentPos = nextPos;
         setFoxPos({ ...currentPos });
       } 
+      else if (action === "JUMP") {
+        const nextPos = getNextPos(currentPos, currentDir);
+        if (isBlocked(nextPos, currentObstacles)) {
+          const landing = getNextPos(nextPos, currentDir);
+          if (!isBlocked(landing, currentObstacles)) {
+            currentPos = landing;
+            setFoxPos({ ...currentPos });
+          }
+        } else {
+          currentPos = nextPos;
+          setFoxPos({ ...currentPos });
+        }
+      }
       else if (action === "TURN_LEFT") {
         currentDir = rotate(currentDir, 'LEFT');
         setFoxDir(currentDir);
@@ -421,6 +779,14 @@ def td(): tourner_droite()
       else if (action === "TURN_RIGHT") {
         currentDir = rotate(currentDir, 'RIGHT');
         setFoxDir(currentDir);
+      } else if (action === "ATTACK") {
+        const target = getNextPos(currentPos, currentDir);
+        const targetKind = runtimeObstacleKinds[posKey(target)];
+        if (targetKind && targetKind !== 'rock') {
+          currentObstacles = currentObstacles.filter(o => !(o.x === target.x && o.y === target.y));
+        } else {
+          setLogs(prev => [...prev, "🪨 Impossible de casser un rocher. Essaie de contourner ou bondir."]);
+        }
       }
     }
     await wait(300);
@@ -442,13 +808,13 @@ def td(): tourner_droite()
     return turn === 'RIGHT' ? dirs[(idx + 1) % 4] : dirs[(idx + 3) % 4];
   };
 
-  const isBlocked = (pos: Position): boolean => {
+  const isBlocked = (pos: Position, obstaclesRef: Position[] = runtimeObstacles): boolean => {
     if (pos.x < 0 || pos.x >= level.gridSize.cols || pos.y < 0 || pos.y >= level.gridSize.rows) return true;
-    return level.obstacles.some(o => o.x === pos.x && o.y === pos.y);
+    return obstaclesRef.some(o => o.x === pos.x && o.y === pos.y);
   };
 
   const checkWin = async (pos: Position) => {
-    if (pos.x === level.goal.x && pos.y === level.goal.y) {
+    if (pos.x === runtimeGoal.x && pos.y === runtimeGoal.y) {
       setGameStatus('won');
       const lines = code.split('\n').filter(l => l.trim().length > 0 && !l.trim().startsWith('#')).length;
       const earnedStars = lines <= level.bestLineCount ? 3 : lines <= level.bestLineCount + 2 ? 2 : 1;
@@ -465,6 +831,7 @@ def td(): tourner_droite()
 
   const instructionsUsed = code.split('\n').filter(l => l.trim().length > 0 && !l.trim().startsWith('#')).length;
   const allowedCommands = getAllowedCommands(level.id);
+  const commandsForCurrentTab = getCommandsForTab(allowedCommands, commandTab);
   const maxInstr = level.maxInstructions || 10;
 
   return (
@@ -516,9 +883,29 @@ def td(): tourner_droite()
                 </div>
                 
                 <div className="px-5 pt-5 pb-5 flex flex-col gap-6">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCommandTab('deplacements')}
+                      className={`px-2.5 py-1 text-[11px] rounded-md font-semibold ${commandTab === 'deplacements' ? 'bg-[#457b7b] text-white' : 'bg-slate-100 text-slate-700'}`}
+                    >
+                      Déplacements
+                    </button>
+                    <button
+                      onClick={() => setCommandTab('logique')}
+                      className={`px-2.5 py-1 text-[11px] rounded-md font-semibold ${commandTab === 'logique' ? 'bg-[#457b7b] text-white' : 'bg-slate-100 text-slate-700'}`}
+                    >
+                      Logique
+                    </button>
+                    <button
+                      onClick={() => setCommandTab('avance')}
+                      className={`px-2.5 py-1 text-[11px] rounded-md font-semibold ${commandTab === 'avance' ? 'bg-[#457b7b] text-white' : 'bg-slate-100 text-slate-700'}`}
+                    >
+                      Avancé
+                    </button>
+                  </div>
                   {/* Liste des commandes */}
                   <div className="flex flex-col gap-4">
-                    {allowedCommands.map((cmd, idx) => (
+                    {commandsForCurrentTab.map((cmd, idx) => (
                       <div key={cmd.code} className="flex items-start gap-4">
                         <div className="mt-0.5 w-7 flex justify-center">
                           {idx === 0 ? (
@@ -533,6 +920,11 @@ def td(): tourner_droite()
                         </div>
                       </div>
                     ))}
+                    {commandsForCurrentTab.length === 0 && (
+                      <div className="text-[12px] text-slate-500 bg-slate-50 border border-slate-100 rounded-md p-3">
+                        Aucune commande disponible dans cet onglet pour ce niveau.
+                      </div>
+                    )}
                   </div>
 
                   {/* Bouton Exécuter */}
@@ -554,6 +946,63 @@ def td(): tourner_droite()
                 </div>
              </div>
 
+             {/* Guide + mémo + reprise */}
+             <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-slate-800 tracking-widest flex items-center gap-2">
+                    <HelpCircle size={16} />
+                    AIDE & REPRISE
+                  </h3>
+                  <div className="text-[11px] text-slate-500 uppercase font-semibold">Code: {resumeCode || '...'}</div>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setHelpTab('guide')}
+                    className={`px-3 py-1.5 text-xs rounded-md font-semibold ${helpTab === 'guide' ? 'bg-[#457b7b] text-white' : 'bg-slate-100 text-slate-700'}`}
+                  >
+                    Guide
+                  </button>
+                  <button
+                    onClick={() => setHelpTab('memo')}
+                    className={`px-3 py-1.5 text-xs rounded-md font-semibold ${helpTab === 'memo' ? 'bg-[#457b7b] text-white' : 'bg-slate-100 text-slate-700'}`}
+                  >
+                    Mémo Python
+                  </button>
+                </div>
+
+                {helpTab === 'guide' ? (
+                  <div className="text-[13px] text-slate-600 space-y-2">
+                    <p>Objectif: atteindre la poule en écrivant un programme Python.</p>
+                    <p>Commence simple: teste 2-3 lignes, exécute, puis améliore.</p>
+                    <p>Astuce: si tu bloques, reformule avec une boucle `for` ou `while`.</p>
+                  </div>
+                ) : (
+                  <div className="text-[13px] text-slate-600 space-y-2">
+                    <p><code>for _ in range(3):</code> répète un bloc un nombre connu de fois.</p>
+                    <p><code>while not mur_devant():</code> répète tant qu'une condition est vraie.</p>
+                    <p><code>if mur_devant(): ... else: ...</code> choisit une action selon la situation.</p>
+                    <p><code>def action():</code> crée une action réutilisable.</p>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
+                  <input
+                    value={resumeInput}
+                    onChange={(e) => setResumeInput(e.target.value.toUpperCase())}
+                    className="border border-slate-200 rounded-md px-3 py-2 text-xs font-mono uppercase"
+                    placeholder="Code de reprise (ex: FOX-12AB34CD)"
+                  />
+                  <button
+                    onClick={handleLoadFromCode}
+                    className="px-3 py-2 text-xs rounded-md bg-slate-800 text-white font-semibold"
+                  >
+                    Reprendre
+                  </button>
+                </div>
+                {loadStatus && <p className="text-[12px] text-slate-500">{loadStatus}</p>}
+             </div>
+
           </div>
 
           {/* COLONNE DROITE: Rendu Isométrique et Statut */}
@@ -569,7 +1018,7 @@ def td(): tourner_droite()
                   </div>
 
                   {/* Grille Isométrique */}
-                  <IsoGrid level={level} foxPos={foxPos} foxDir={foxDir} />
+                  <IsoGrid level={renderLevel} foxPos={foxPos} foxDir={foxDir} obstacleKinds={runtimeObstacleKinds} />
                   
                   {/* Message de victoire superposé */}
                   {gameStatus === 'won' && (
@@ -597,6 +1046,7 @@ def td(): tourner_droite()
                   <div className="flex gap-8 mt-3 sm:mt-0">
                       <div>COMMANDES RESTANTES: {Math.max(0, maxInstr - instructionsUsed)}/{maxInstr}</div>
                       <div>TRÉSORS TROUVÉS: {gameStatus === 'won' ? '1' : '0'}</div>
+                      <div>TENTATIVES: {attemptsByLevel[level.id] || 0}</div>
                   </div>
               </div>
               

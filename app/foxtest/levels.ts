@@ -19,6 +19,7 @@ export interface LevelConfig {
   initialCode?: string;
   hint?: string;
   bestLineCount: number; // Target for 3 stars (beginner friendly optimal)
+  randomize?: boolean;
 }
 
 const HEADER_SEQ = `# --- Commandes disponibles ---
@@ -53,6 +54,14 @@ const HEADER_FUNC = `# --- Commandes disponibles ---
 #     actions...
 #
 # + Toutes les commandes précédentes
+# -----------------------------
+
+`;
+
+const HEADER_ADVANCED = `# --- Commandes disponibles ---
+# avancer(), tourner_gauche(), tourner_droite()
+# obstacle_devant(), lire_balise(), hauteur_devant()
+# bondir(), casser_obstacle(), valider_objectif()
 # -----------------------------
 
 `;
@@ -335,5 +344,57 @@ export const LEVELS: LevelConfig[] = [
     initialCode: HEADER_FUNC,
     hint: "Combine tout ce que tu sais !",
     bestLineCount: 8 // while not obj: algo de contournement ou simple
+  },
+  {
+    id: 21,
+    title: "21. Les Barils Variables",
+    description: "La hauteur des obstacles varie. Mesure puis adapte ton action.",
+    gridSize: { cols: 8, rows: 1 },
+    start: { pos: { x: 0, y: 0 }, dir: 'E' },
+    goal: { x: 7, y: 0 },
+    obstacles: [],
+    initialCode: HEADER_ADVANCED,
+    hint: "Avec hauteur_devant() puis if/elif, ton code reste robuste.",
+    bestLineCount: 9,
+    randomize: true
+  },
+  {
+    id: 22,
+    title: "22. Le Signal Secret",
+    description: "Lis le signal puis choisis la bonne direction à chaque carrefour.",
+    gridSize: { cols: 7, rows: 5 },
+    start: { pos: { x: 0, y: 2 }, dir: 'E' },
+    goal: { x: 6, y: 2 },
+    obstacles: [],
+    initialCode: HEADER_ADVANCED,
+    hint: "Utilise lire_balise() avec if/else.",
+    bestLineCount: 10,
+    randomize: true
+  },
+  {
+    id: 23,
+    title: "23. Nettoyage de Quai",
+    description: "Détecte et détruis les obstacles avant d'avancer.",
+    gridSize: { cols: 9, rows: 1 },
+    start: { pos: { x: 0, y: 0 }, dir: 'E' },
+    goal: { x: 8, y: 0 },
+    obstacles: [],
+    initialCode: HEADER_ADVANCED,
+    hint: "Boucle while + obstacle_devant() + casser_obstacle().",
+    bestLineCount: 8,
+    randomize: true
+  },
+  {
+    id: 24,
+    title: "24. Finale Adaptative",
+    description: "Niveau mixte avec obstacles aléatoires et conditions.",
+    gridSize: { cols: 8, rows: 6 },
+    start: { pos: { x: 0, y: 5 }, dir: 'E' },
+    goal: { x: 7, y: 0 },
+    obstacles: [],
+    initialCode: HEADER_ADVANCED,
+    hint: "Combine capteurs, conditions, boucles et fonctions.",
+    bestLineCount: 12,
+    randomize: true
   }
 ];

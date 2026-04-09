@@ -1,0 +1,852 @@
+Budget total : 50 000€
+Quantité
+Description
+Ref
+Prix unitaire HT
+Prix total HT
+Postes développeurs
+12
+PC fixe performant (i7, 32 GB RAM, SSD 1TB)
+DT.BLSEH.00N
+1 099,00 €
+13 188,00 €
+Postes designers
+3
+PC haute performance graphique (i9, 64GB RAM, CPU dédié)
+13BGCTO1WWFR3
+2 508,01 €
+7 524,03 €
+Postes standards
+8
+PC standard (i5, 16GB RAM, SSD 512GB)
+https://www.dell.com/fr-fr/shop/notre-gamme-pro/dell-slim-desktop/spd/dell-ecs1250-slim-desktop
+
+599,00 €
+4 792,00 €
+Laptops direction
+2
+Laptop premium (Dell XPS ou équivalent)
+Ordinateur portable Dell 15 (choix d’un modèle de poste)
+429,00 €
+858,00 €
+Écrans
+35
+Écrans 24’’ Full HD
+63F4MAT1EU
+99,00 €
+3 465,00 €
+Écrans designers
+3
+Écrans 27’’ 4K
+https://www.boulanger.com/ref/1217128
+279,99 €
+839,97 €
+Périphériques
+25
+Claviers + souris
+4X31R64411
+39,00 €
+975,00 €
+Licences Office 365
+25
+Abonnement annuel Business Premium
+Business Premium
+20,60 €
+515,00 €
+Licences JetBrains
+12
+IntelliJ IDEA Ultimate (annuel)
+199,00 €
+2 388,00 €
+Licences Adobe CC
+3
+Creative Cloud All Apps (annuel)
+522,00 €
+1 566,00 €
+Antivirus entreprise
+25
+Licence annuelle
+GravityZone Small Business Security - Bitdefender 
+734,99 €
+Serveur
+1
+Serveur Dell PowerEdge ou équivalent
+PowerEdge T160 Serveur
+Tour Smart Selection
+1 628,40 €
+1 628,40 €
+TOTAL HT
+38 474,39 €
+TVA (20%)
+7 694,88 €
+TOTAL TCC
+46 169,27 €
+Identifiant unique
+Type et modèle
+Localisation
+Utilisateur/propriétaire
+Date d'acquisition
+État (en service, en panne, obsolète)
+Informations de maintenance
+1
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+2
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+3
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+4
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+5
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+6
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+7
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+8
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+9
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+10
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+11
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+12
+ThinkVision P2RRi
+open space
+développeurs
+25/11/25
+en service
+13
+ThinkVision P2RRi
+open space
+support technique
+25/11/25
+en service
+14
+ThinkVision P2RRi
+open space
+support technique
+25/11/25
+en service
+15
+ThinkVision P2RRi
+open space
+support technique
+25/11/25
+en service
+16
+ThinkVision P2RRi
+open space
+support technique
+25/11/25
+en service
+17
+ThinkVision P2RRi
+open space
+support technique
+25/11/25
+en service
+18
+ThinkVision P2RRi
+open space
+support technique
+25/11/25
+en service
+19
+ThinkVision P2RRi
+open space
+support technique
+25/11/25
+en service
+20
+ThinkVision P2RRi
+open space
+support technique
+25/11/25
+en service
+21
+ThinkVision P2RRi
+25/11/25
+en stock
+22
+ThinkVision P2RRi
+25/11/25
+en stock
+23
+ThinkVision P2RRi
+25/11/25
+en stock
+24
+ThinkVision P2RRi
+25/11/25
+en stock
+25
+ThinkVision P2RRi
+25/11/25
+en stock
+26
+ThinkVision P2RRi
+25/11/25
+en stock
+27
+ThinkVision P2RRi
+25/11/25
+en stock
+28
+ThinkVision P2RRi
+25/11/25
+en stock
+29
+ThinkVision P2RRi
+25/11/25
+en stock
+30
+ThinkVision P2RRi
+25/11/25
+en stock
+31
+IIYAMA PROLITE XUB2792UHSU-B6 Plat IPS
+open space
+designers
+25/11/25
+en service
+32
+IIYAMA PROLITE XUB2792UHSU-B6 Plat IPS
+open space
+designers
+25/11/25
+en service
+33
+IIYAMA PROLITE XUB2792UHSU-B6 Plat IPS
+open space
+designers
+25/11/25
+en service
+34
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+35
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+36
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+37
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+38
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+39
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+40
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+41
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+42
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+43
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+44
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+45
+Clavier Lenovo
+open space
+développeurs
+25/11/25
+en service
+46
+Clavier Lenovo
+open space
+designers
+25/11/25
+en service
+47
+Clavier Lenovo
+open space
+designers
+25/11/25
+en service
+48
+Clavier Lenovo
+open space
+designers
+25/11/25
+en service
+49
+Clavier Lenovo
+open space
+support technique
+25/11/25
+en service
+50
+Clavier Lenovo
+open space
+support technique
+25/11/25
+en service
+51
+Clavier Lenovo
+open space
+support technique
+25/11/25
+en service
+52
+Clavier Lenovo
+open space
+support technique
+25/11/25
+en service
+53
+Clavier Lenovo
+open space
+support technique
+25/11/25
+en service
+54
+Clavier Lenovo
+open space
+support technique
+25/11/25
+en service
+55
+Clavier Lenovo
+open space
+support technique
+25/11/25
+en service
+56
+Clavier Lenovo
+open space
+support technique
+25/11/25
+en service
+57
+Clavier Lenovo
+open space
+direction
+25/11/25
+en service
+58
+Clavier Lenovo
+open space
+direction
+25/11/25
+en service
+59
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+60
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+61
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+62
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+63
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+64
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+65
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+66
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+67
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+68
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+69
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+70
+Souris Lenovo
+open space
+développeurs
+25/11/25
+en service
+71
+Souris Lenovo
+open space
+designers
+25/11/25
+en service
+72
+Souris Lenovo
+open space
+designers
+25/11/25
+en service
+73
+Souris Lenovo
+open space
+designers
+25/11/25
+en service
+74
+Souris Lenovo
+open space
+support technique
+25/11/25
+en service
+75
+Souris Lenovo
+open space
+support technique
+25/11/25
+en service
+76
+Souris Lenovo
+open space
+support technique
+25/11/25
+en service
+77
+Souris Lenovo
+open space
+support technique
+25/11/25
+en service
+78
+Souris Lenovo
+open space
+support technique
+25/11/25
+en service
+79
+Souris Lenovo
+open space
+support technique
+25/11/25
+en service
+80
+Souris Lenovo
+open space
+support technique
+25/11/25
+en service
+81
+Souris Lenovo
+open space
+support technique
+25/11/25
+en service
+82
+Souris Lenovo
+open space
+direction
+25/11/25
+en service
+83
+Souris Lenovo
+open space
+direction
+25/11/25
+en service
+84
+Dell Slim Desktop
+open space
+support technique
+25/11/25
+en service
+85
+Dell Slim Desktop
+open space
+support technique
+25/11/25
+en service
+86
+Dell Slim Desktop
+open space
+support technique
+25/11/25
+en service
+87
+Dell Slim Desktop
+open space
+support technique
+25/11/25
+en service
+88
+Dell Slim Desktop
+open space
+support technique
+25/11/25
+en service
+89
+Dell Slim Desktop
+open space
+support technique
+25/11/25
+en service
+90
+Dell Slim Desktop
+open space
+support technique
+25/11/25
+en service
+91
+Dell Slim Desktop
+open space
+support technique
+25/11/25
+en service
+92
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+93
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+94
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+95
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+96
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+97
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+98
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+99
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+100
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+101
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+102
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+103
+Acer Aspire XC
+open space
+développeurs
+25/11/25
+en service
+104
+ThinkCenter Neo ultra Gen 2
+open space
+designers
+25/11/25
+en service
+105
+ThinkCenter Neo ultra Gen 2
+open space
+designers
+25/11/25
+en service
+106
+ThinkCenter Neo ultra Gen 2
+open space
+designers
+25/11/25
+en service
+107
+Dell 15
+A1
+direction
+25/11/25
+en service
+108
+Dell 15
+A2
+direction
+25/11/25
+en service
+109
+Licences Office 365
+aucun
+Tout
+25/11/25
+en service
+aucun
+110
+Licences JetBrains
+aucun
+Tout
+25/11/25
+en service
+aucun
+111
+Licences Adobe CC
+aucun
+Tout
+25/11/25
+en service
+aucun
+112
+Bitdefeder
+aucun
+Tout
+25/11/25
+en service
+aucun
+113
+PowerEdge T160 Serveur Tour Smart Selection
+open space
+25/11/25
+
+Question réponse :
+
+Expliquer pourquoi ces tâches sont critiques ?
+
+Ces tâches sont critiques, car elles ne permettent aucune marge totale sur la durée. Un retard dans l’une de ces tâches, retarde tout le projet.
+
+Indiquer les conséquences d'un retard sur une tâche critique ?
+
+Les conséquences sur un chemin critique retardent l’ensemble du projet, ce qui peut amener à revoir le temps de chaque projet, ce qui peut nuire à la qualité finale du projet qui peut être accélérée avec de possibles pertes financières.
+
+Proposer 2-3 mesures pour sécuriser le chemin critique ?
+
+Les mesures peuvent être :
+- Utiliser des outils tels que le diagramme de Gantt pour avoir une vision claire de l’avancement du projet ;
+- Réaliser une analyse des risques pour le projet ;
+- Réaliser une estimation des délais, du chemin critique et des marges.
+
+
+
+Tâche
+Durée
+Début au plus tôt
+Début au plus tard
+Marge totale
+Critique ?
+
+A
+5
+0
+0
+0
+oui
+B
+4
+5
+7
+2
+non
+C
+6
+5
+0
+oui
+D
+2
+11
+11
+0
+oui
+E
+12
+13
+0
+oui
+F
+10
+13
+16
+3
+non
+G
+5
+25
+0
+oui
+H
+4
+25
+26
+1
+non
+I
+6
+30
+0
+oui
+J
+5
+36
+0
+oui
+K
+4
+41
+0
+oui
+L
+3
+45
+0
+oui
+M
+2
+48
+0
+oui
+N
+2
+50
+0
+oui
