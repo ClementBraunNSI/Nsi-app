@@ -4,6 +4,7 @@ description: "Les bases de la programmation structurée en C : struct, typedef e
 level: particuliers
 chapter: "Programmation en C"
 icon: "🏗️"
+---
 
 ## 🌟 Introduction
 
