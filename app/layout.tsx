@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 import ClientLayoutShell from "@/components/layout/ClientLayoutShell";
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-slate-900`}>
         <ClientLayoutShell>{children}</ClientLayoutShell>
+        <SpeedInsights />
       </body>
     </html>
   );
