@@ -1,0 +1,73 @@
+/* Fond et police generale */
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #1f2a44;
+}
+
+/* Texte du titre*/
+.mt {
+    font-size: 60px;
+    text-align: center;
+    margin-top: 20px;
+    color :#BA8E23;
+}
+
+/* Div de présentation */
+.image_principale {
+    width: 400px;
+    height: 400px;
+    display: block;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.nom_eleve{
+    font-size: 40px;
+    margin-left: 45%;
+}
+
+.nom_eleve h1{
+    color: #f8f2d7;
+    font-size: 42px;
+}
+
+.presentation{
+    display: flex;
+    gap : 16px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    background-image: linear-gradient(135deg, #1f2a44, #2c3e66);
+    color: #f7f7f7;
+  }
+
+.image_rival{
+    width: 15%;
+}
+
+.div_tableau_description{
+    padding-left:20%;
+    color: #e8ecff;
+    line-height: 1.4;
+}
+
+.image h3{
+    color: #ffd88a;
+}
+
+.caracteristiques{
+    display: flex;
+    flex-direction : column;
+    gap: 16px;
+    text-align: center;
+}
+
+.caracteristiques ul{
+    color: #ffffff;
+}
+
+

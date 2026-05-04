@@ -96,8 +96,6 @@ export default function ClientLayoutShell({ children }: { children: React.ReactN
             <Link href="/" className={pathname === "/" ? "text-orange-500" : "text-slate-500 hover:text-orange-500 transition-colors"}>Accueil</Link>
             <Link href="/lab" className={pathname === "/lab" ? "text-orange-500" : "text-slate-500 hover:text-orange-500 transition-colors"}>Lab</Link>
             <Link href="/a-propos" className={pathname === "/a-propos" ? "text-orange-500" : "text-slate-500 hover:text-orange-500 transition-colors"}>À propos</Link>
-            <Link href="/manuels" className={pathname === "/manuels" ? "text-orange-500" : "text-slate-500 hover:text-orange-500 transition-colors"}>Manuels</Link>
-
             <div className="flex items-center gap-4 relative">
               <button
                 onClick={() => setShowA11yMenu(!showA11yMenu)}

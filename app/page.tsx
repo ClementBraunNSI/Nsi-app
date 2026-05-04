@@ -287,12 +287,12 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <section className="bg-gradient-to-b from-slate-50 to-white py-24 border-t border-slate-100 relative z-10">
+      <section className="bg-gradient-to-b from-slate-50 to-white py-28 border-t border-slate-100 relative z-10">
         {/* Section collègues identique... */}
         <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Sites de collègues</h2>
-            <p className="text-slate-500 font-medium max-w-2xl mx-auto italic">
+          <div className="text-center mb-18">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Sites de collègues</h2>
+            <p className="text-slate-500 font-medium max-w-2xl mx-auto italic text-base">
               Découvrez les ressources exceptionnelles de mes collègues enseignants NSI à travers la France.
             </p>
           </div>
@@ -304,7 +304,7 @@ export default function LandingPage() {
                   setTimeout(() => { setCurrentIndex(Math.max(0, currentIndex - itemsPerPage)); setIsAnimating(false); }, 200);
                 }}
                 disabled={currentIndex === 0}
-                className="p-3 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="p-3 bg-white border border-slate-200 rounded-2xl shadow-[0_10px_30px_-22px_rgba(15,23,42,0.65)] hover:shadow-[0_16px_38px_-22px_rgba(15,23,42,0.7)] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 <ChevronLeft size={20} className="text-slate-600" />
               </button>
@@ -314,25 +314,25 @@ export default function LandingPage() {
                   setTimeout(() => { setCurrentIndex(Math.min(maxIndex, currentIndex + itemsPerPage)); setIsAnimating(false); }, 200);
                 }}
                 disabled={currentIndex >= maxIndex}
-                className="p-3 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="p-3 bg-white border border-slate-200 rounded-2xl shadow-[0_10px_30px_-22px_rgba(15,23,42,0.65)] hover:shadow-[0_16px_38px_-22px_rgba(15,23,42,0.7)] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 <ChevronRight size={20} className="text-slate-600" />
               </button>
             </div>
             <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 transition-opacity duration-200 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
               {colleagues.slice(currentIndex, currentIndex + itemsPerPage).map((colleague, i) => (
-                <div key={i} className="bg-white/95 p-8 rounded-[2rem] shadow-[0_12px_30px_-20px_rgba(15,23,42,0.35)] border border-slate-100 hover:border-orange-200 hover:shadow-[0_24px_50px_-22px_rgba(15,23,42,0.45)] transition-all duration-300 group backdrop-blur-sm">
+                <div key={i} className="bg-white p-9 rounded-[2rem] shadow-[0_16px_42px_-24px_rgba(15,23,42,0.5)] border border-slate-200 hover:border-orange-300 hover:shadow-[0_28px_56px_-24px_rgba(15,23,42,0.52)] transition-all duration-300 group backdrop-blur-sm flex flex-col min-h-[300px]">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-orange-500 group-hover:text-white transition-all shadow-inner">
+                    <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-orange-500 group-hover:text-white transition-all shadow-inner">
                       👨‍🏫
                     </div>
                     <div>
-                      <h3 className="font-black text-slate-800 text-lg">{colleague.name}</h3>
-                      <p className="text-orange-600 font-bold text-xs uppercase tracking-widest">Enseignant NSI</p>
+                      <h3 className="font-black text-slate-900 text-xl leading-tight">{colleague.name}</h3>
+                      <p className="text-orange-600 font-bold text-[11px] uppercase tracking-widest mt-1">Enseignant NSI</p>
                     </div>
                   </div>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-6 italic">{colleague.phrase}</p>
-                  <a href={colleague.site} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-orange-200 text-sm">
+                  <p className="text-slate-600 text-sm leading-relaxed mb-8 italic">{colleague.phrase}</p>
+                  <a href={colleague.site} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-orange-500 text-white rounded-2xl font-extrabold hover:scale-[1.02] hover:bg-orange-600 transition-all shadow-[0_14px_28px_-16px_rgba(249,115,22,0.75)] text-sm">
                     Visiter le site <ChevronRight size={16} />
                   </a>
                 </div>
