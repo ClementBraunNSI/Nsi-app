@@ -149,6 +149,10 @@ function chapterImageFromData(niveaux: string, chapterName: string): string {
     web: "/images/chapitres/1/chap_web.png",
     "reseaux sociaux": "/images/chapitres/1/chap_rsx_sociaux.png",
     "reseaux social": "/images/chapitres/1/chap_rsx_sociaux.png",
+    "programmation python": "/images/chapitres/1/chap_python.png",
+    "donnees structurees": "/images/chapitres/1/chap_donnees.png",
+    "micro-controleurs": "/images/chapitres/1/chap_microcontrol.png",
+    microcontroleurs: "/images/chapitres/1/chap_microcontrol.png",
   };
 
   return chapterMap[key] ?? levelFoxFromNiveau(niveaux);
