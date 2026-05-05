@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { GraduationCap } from 'lucide-react';
 import { createClient } from '@/utils/supabase/server';
 import { getReservedCourses } from '@/app/actions/getReservedCourses';
-import BentoChaptersView from './BentoChaptersView';
+import ChaptersPreviewTabs from './ChaptersPreviewTabs';
 import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
 import { listMarkdownFilesForContentLevel } from '@/lib/course-utils';
 
@@ -167,9 +167,9 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         </h1>
       </div>
 
-      <BentoChaptersView
+      <ChaptersPreviewTabs
         niveaux={niveaux}
-        theme={{ border: theme.border, text: theme.text, light: theme.light }}
+        theme={{ icon: theme.icon, border: theme.border, text: theme.text, light: theme.light }}
         chapters={orderedChapitres.map(([name, courses]) => ({
           name,
           isPrivate: name.includes('Particuliers'),

@@ -2,7 +2,7 @@
 title: "Atelier Réseaux Sociaux : Graphe"
 description: "Visualiser les liens entre les utilisateurs d'un réseau social."
 level: "2"
-chapter: "Réseaux Sociaux"
+chapter: "Réseaux sociaux"
 icon: "🕸️"
 ---
 
