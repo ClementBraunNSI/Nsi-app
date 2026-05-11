@@ -143,8 +143,10 @@ export async function getAllExercises(): Promise<LabExercise[]> {
           // One final trim
           exerciseContent = exerciseContent.trim();
 
-          // Normalize level
-          const rawLevel = data.level || level;
+          // Normalize level.
+          // For numeric content folders (0..4), the folder is the source of truth.
+          // This avoids inconsistencies when frontmatter `level` drifts from the directory.
+          const rawLevel = /^[0-4]$/.test(level) ? level : (data.level || level);
           const normalizedLevel = LEVEL_MAPPING[String(rawLevel).toLowerCase()] || rawLevel;
 
           // Determine type based on courseId or title

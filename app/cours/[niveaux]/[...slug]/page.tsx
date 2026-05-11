@@ -276,12 +276,12 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB]">
+    <div className="min-h-screen course-shell">
       <MobileBlocker />
       <ReadingProgressBar />
       
       {/* Barre de navigation haute */}
-      <nav className="border-b border-slate-100 bg-white/50 backdrop-blur-md sticky top-20 z-30">
+      <nav className="course-topnav sticky top-20 z-30">
         <div className="max-w-5xl mx-auto px-6 py-4">
           <Link href={`/cours/${niveaux}`} className="flex items-center gap-2 text-slate-400 hover:text-orange-600 transition-colors text-xs font-black uppercase tracking-widest">
             <ChevronLeft size={16} /> Retour au niveau {niveaux}
@@ -289,8 +289,13 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
         </div>
       </nav>
 
-      <main className="max-w-5xl mx-auto px-6 py-8">
-        
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <button
+          type="button"
+          data-fox-easter-id="cours"
+          aria-label="Secret renard cours"
+          className="fox-secret-spot absolute top-32 right-8 z-20"
+        />
         <Breadcrumbs customItems={[
           { label: 'Cours', href: '/cours' },
           { label: niveaux.charAt(0).toUpperCase() + niveaux.slice(1), href: `/cours/${niveaux}` },
@@ -298,10 +303,9 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
           { label: data.title || slugStr, href: '#' }
         ]} />
 
-        {/* En-tête style "Orange Fox" */}
-        <div className="bg-orange-50/50 rounded-[2.5rem] p-10 text-center border border-orange-100 mb-12 relative overflow-hidden mt-6">
-          <div className="relative z-10">
-            <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-3 italic uppercase tracking-tighter">
+        <div className="mt-6">
+          <div className="course-hero mb-8 text-center">
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-3 italic uppercase tracking-tighter">
               {data.title || slugStr.replace(/[_-]/g, ' ')}
             </h1>
             {data.chapter && (
@@ -310,48 +314,33 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
               </p>
             )}
             {data.meta && (
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 bg-white/80 inline-block px-6 py-2 rounded-full border border-orange-100 shadow-sm italic">
+              <div className="course-meta-pill">
                 {data.meta}
               </div>
             )}
           </div>
-          <div className="absolute top-[-20%] right-[-5%] text-[12rem] opacity-[0.03] select-none pointer-events-none">🦊</div>
-        </div>
 
-        <article className="prose prose-slate max-w-none 
-          prose-headings:italic prose-headings:uppercase prose-headings:font-black
-          prose-p:text-slate-600 prose-p:leading-relaxed
-          prose-strong:text-slate-900
-          prose-a:text-orange-600 prose-a:font-bold prose-a:no-underline hover:prose-a:underline
-          
-          /* RESTAURATION DES COULEURS DE CODE CLAIRES */
-          prose-code:text-orange-700 prose-code:bg-orange-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-          prose-pre:bg-[#FFFBF5] prose-pre:border-l-4 prose-pre:border-orange-400 prose-pre:text-orange-900 prose-pre:shadow-sm prose-pre:rounded-r-xl
-          
-          prose-table:border-collapse prose-table:border prose-table:border-slate-200 prose-table:rounded-xl prose-table:overflow-hidden
-          prose-th:bg-slate-50 prose-th:text-slate-900 prose-th:p-4 prose-th:border prose-th:border-slate-200
-          prose-td:p-4 prose-td:border prose-td:border-slate-100
-          
-          /* STYLES DES IMAGES */
-          prose-img:rounded-3xl prose-img:shadow-md prose-img:border prose-img:border-slate-100 prose-img:mx-auto prose-img:my-10 prose-img:max-h-[500px] prose-img:w-auto
-          ">
-          <MDXRemote 
-            source={contentWithAdmonitions}
-            components={mdxComponents}
-            options={{
-              mdxOptions: {
-                remarkPlugins: [remarkGfm, remarkMath],
-                rehypePlugins: [rehypeKatex],
-              },
-            }}
+          <div className="course-content">
+            <article className="prose prose-slate max-w-none course-prose course-prose-wide">
+              <MDXRemote 
+                source={contentWithAdmonitions}
+                components={mdxComponents}
+                options={{
+                  mdxOptions: {
+                    remarkPlugins: [remarkGfm, remarkMath],
+                    rehypePlugins: [rehypeKatex],
+                  },
+                }}
+              />
+            </article>
+          </div>
+
+          <CourseNavigation 
+            prevCourse={prev || undefined} 
+            nextCourse={next || undefined} 
+            currentLevel={niveaux} 
           />
-        </article>
-
-        <CourseNavigation 
-          prevCourse={prev || undefined} 
-          nextCourse={next || undefined} 
-          currentLevel={niveaux} 
-        />
+        </div>
       </main>
     </div>
   );

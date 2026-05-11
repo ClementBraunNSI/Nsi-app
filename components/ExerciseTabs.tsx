@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Check, Trophy, Star, Lock, Unlock, PartyPopper, Target, X } from 'lucide-react';
+import { Check, Trophy } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from './AchievementUnlockedModal';
@@ -254,21 +254,31 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
 
       {/* ProgressBar removed as requested */}
 
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="rounded-[1.6rem] border border-slate-200 bg-white/90 p-3 mb-4 shadow-[0_14px_30px_-24px_rgba(15,23,42,0.4)]">
+        <p className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Filtrer les exercices</p>
+        <div className="flex flex-wrap gap-2">
         {categories.map(cat => (
           <button
             key={cat}
             onClick={() => setActiveGroup(cat)}
-            className={`px-3 py-2 rounded-xl text-xs font-black tracking-widest uppercase border ${
-              activeGroup === cat ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-white'
+            className={`px-3 py-2 rounded-xl text-[11px] font-black tracking-widest uppercase border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
+              activeGroup === cat
+                ? 'bg-orange-500 text-white border-orange-500 shadow-[0_12px_22px_-18px_rgba(249,115,22,0.95)]'
+                : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-white hover:border-slate-300'
             }`}
           >
             {cat}
           </button>
         ))}
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-3 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 mb-8">
+        {filteredChildren.length === 0 && (
+          <div className="col-span-full rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+            Aucun exercice dans cette catégorie.
+          </div>
+        )}
         {filteredChildren.map((child) => {
           const isDone = completedIds.includes(child.props.id);
           const isActive = activeTab === child.props.id;
@@ -276,17 +286,26 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
             <div
               key={child.key}
               onClick={() => setActiveTab(child.props.id)}
-              className={`flex-1 min-w-[160px] py-4 px-4 rounded-2xl text-xs font-black transition-all duration-300 uppercase tracking-tighter border-b-4 cursor-pointer flex items-center justify-between gap-3 ${
-                isActive ? 'bg-orange-500 text-white border-orange-700 shadow-lg scale-[1.02]' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-white'
+              className={`group py-4 px-4 rounded-2xl text-xs font-black transition-all duration-300 uppercase tracking-tighter cursor-pointer border focus-within:ring-2 focus-within:ring-orange-300 ${
+                isActive
+                  ? 'bg-orange-500 text-white border-orange-600 shadow-[0_18px_32px_-20px_rgba(249,115,22,0.95)] scale-[1.01]'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-orange-200 hover:bg-orange-50/50'
               }`}
             >
-              <span className="truncate">{child.props.label}</span>
+              <div className="flex items-center justify-between gap-2">
+                <span className="truncate">{child.props.label}</span>
+                {isDone && (
+                  <span className={`inline-flex items-center justify-center rounded-full p-1 ${isActive ? 'bg-white/25' : 'bg-emerald-100'}`}>
+                    <Check size={12} className={isActive ? 'text-white' : 'text-emerald-600'} />
+                  </span>
+                )}
+              </div>
             </div>
           );
         })}
       </div>
 
-      <div className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-orange-50 shadow-sm min-h-[350px]">
+      <div className="bg-white rounded-[2rem] p-6 md:p-10 border border-slate-200 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)] min-h-[350px]">
         {childrenArray.find((child) => child.props.id === activeTab)}
       </div>
     </div>

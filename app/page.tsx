@@ -189,6 +189,12 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600 relative overflow-hidden">
+      <button
+        type="button"
+        data-fox-easter-id="home"
+        aria-label="Secret renard accueil"
+        className="fox-secret-spot absolute top-24 right-8 z-20"
+      />
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-20 -left-24 h-72 w-72 rounded-full bg-orange-200/35 blur-3xl" />
         <div className="absolute top-[20%] -right-16 h-80 w-80 rounded-full bg-blue-200/25 blur-3xl" />

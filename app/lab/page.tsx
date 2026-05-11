@@ -1,10 +1,10 @@
 
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Editor from '@monaco-editor/react';
 import { getAllExercises, LabExercise } from '@/app/actions/getExercises';
-import { Play, CheckCircle, BookOpen, ChevronRight, Trophy, RotateCcw, Terminal } from 'lucide-react';
+import { Play, CheckCircle, BookOpen, ChevronDown, RotateCcw, Terminal } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -47,8 +47,9 @@ export default function LabPage() {
   const [sqlJs, setSqlJs] = useState<any>(null);
   const [sqlResults, setSqlResults] = useState<{columns: string[], values: any[][]} | null>(null);
 
-  const [expandedFiches, setExpandedFiches] = useState<string[]>([]);
-  const [expandedChapters, setExpandedChapters] = useState<string[]>([]);
+  const [selectedLevel, setSelectedLevel] = useState<string>('');
+  const [selectedChapter, setSelectedChapter] = useState<string>('');
+  const [isExerciseGridOpen, setIsExerciseGridOpen] = useState(false);
 
   // Filter exercises based on allowedStudents
   const filteredExercises = exercises.filter(ex => {
@@ -78,17 +79,36 @@ export default function LabPage() {
     return acc;
   }, {} as Record<string, Record<string, Record<string, LabExercise[]>>>);
 
-  const toggleFiche = (id: string) => {
-    setExpandedFiches(prev => 
-      prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]
-    );
-  };
+  const availableLevels = useMemo(
+    () => Object.keys(groupedExercises).sort((a, b) => a.localeCompare(b, 'fr')),
+    [groupedExercises]
+  );
 
-  const toggleChapter = (id: string) => {
-    setExpandedChapters(prev => 
-      prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]
-    );
-  };
+  const availableChapters = useMemo(() => {
+    if (!selectedLevel || !groupedExercises[selectedLevel]) return [];
+    return Object.keys(groupedExercises[selectedLevel]).sort((a, b) => a.localeCompare(b, 'fr'));
+  }, [groupedExercises, selectedLevel]);
+
+  const availableExercises = useMemo(() => {
+    if (!selectedLevel || !selectedChapter) return [];
+    const chapterData = groupedExercises[selectedLevel]?.[selectedChapter];
+    if (!chapterData) return [];
+
+    return Object.values(chapterData)
+      .flat()
+      .sort((a, b) => a.label.localeCompare(b.label, 'fr'));
+  }, [groupedExercises, selectedLevel, selectedChapter]);
+
+  useEffect(() => {
+    setSelectedChapter('');
+    setSelectedExercise(null);
+    setIsExerciseGridOpen(false);
+  }, [selectedLevel]);
+
+  useEffect(() => {
+    setSelectedExercise(null);
+    setIsExerciseGridOpen(false);
+  }, [selectedChapter]);
 
   useEffect(() => {
     // 0. Load Pyodide
@@ -508,88 +528,112 @@ export default function LabPage() {
   };
 
   return (
-    <div className="flex h-screen bg-slate-50 font-sans overflow-hidden">
-      {/* SIDEBAR */}
-      <div className="w-80 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10">
-        <div className="p-5 border-b border-slate-100 bg-slate-50/50">
-          <h1 className="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-            <Terminal className="text-orange-500" />
-            La Tanière <span className="text-slate-400 font-medium text-sm">Lab</span>
-          </h1>
-        </div>
-        
-        <div className="flex-1 overflow-y-auto p-4 space-y-6">
-          {Object.entries(groupedExercises).sort(([a], [b]) => a.localeCompare(b)).map(([level, chapters]) => (
-            <div key={level}>
-              <h3 className="text-xs font-black text-orange-500 uppercase tracking-widest mb-4 pl-2 border-l-4 border-orange-500">
-                {LEVEL_MAP[level]?.label || `Niveau ${level}`}
-              </h3>
-              
-              <div className="space-y-3">
-                {Object.entries(chapters).map(([chapter, fiches]) => (
-                  <div key={chapter} className="pl-2">
-                    <button 
-                      onClick={() => toggleChapter(chapter)}
-                      className="flex items-center gap-2 w-full text-left text-sm font-bold text-slate-700 hover:text-orange-600 transition-colors mb-2"
-                    >
-                      <ChevronRight size={16} className={`transition-transform ${expandedChapters.includes(chapter) ? 'rotate-90' : ''}`} />
-                      {chapter}
-                    </button>
+    <div className="flex h-screen flex-col bg-slate-50 font-sans overflow-hidden">
+      <button
+        type="button"
+        data-fox-easter-id="lab"
+        aria-label="Secret renard lab"
+        className="fox-secret-spot absolute top-24 right-8 z-30"
+      />
+      <div className="border-b border-slate-200 bg-white px-6 py-4">
+        <h1 className="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+          <Terminal className="text-orange-500" />
+          La Tanière <span className="text-slate-400 font-medium text-sm">Lab</span>
+        </h1>
+        <div className="mt-4 grid gap-4 lg:grid-cols-3">
+          <div>
+            <p className="mb-2 text-xs font-black uppercase tracking-wider text-slate-500">1. Niveau</p>
+            <select
+              value={selectedLevel}
+              onChange={(e) => setSelectedLevel(e.target.value)}
+              className={`w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100 ${
+                selectedLevel ? 'font-semibold text-slate-700' : 'font-medium italic text-slate-400'
+              }`}
+            >
+              <option value="">Choisir un niveau</option>
+              {availableLevels.map((level) => (
+                <option key={level} value={level}>
+                  {LEVEL_MAP[level]?.label || `Niveau ${level}`}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                    {expandedChapters.includes(chapter) && (
-                      <div className="pl-4 space-y-2 border-l border-slate-200 ml-2 animate-in slide-in-from-left-2 fade-in duration-200">
-                        {Object.entries(fiches).map(([ficheTitle, exercises]) => (
-                          <div key={ficheTitle}>
-                            <button
-                              onClick={() => toggleFiche(ficheTitle)}
-                              className="flex items-center gap-2 w-full text-left text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors py-1"
-                            >
-                              <ChevronRight size={14} className={`transition-transform ${expandedFiches.includes(ficheTitle) ? 'rotate-90' : ''}`} />
-                              {ficheTitle}
-                            </button>
+          <div>
+            <p className="mb-2 text-xs font-black uppercase tracking-wider text-slate-500">2. Chapitre</p>
+            <select
+              value={selectedChapter}
+              onChange={(e) => setSelectedChapter(e.target.value)}
+              disabled={!selectedLevel}
+              className={`w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 focus:border-orange-400 focus:ring-2 focus:ring-orange-100 ${
+                selectedChapter ? 'font-semibold text-slate-700' : 'font-medium italic text-slate-400'
+              }`}
+            >
+              <option value="">
+                {selectedLevel ? 'Choisir un chapitre' : "Choisis d'abord un niveau"}
+              </option>
+              {availableChapters.map((chapter) => (
+                <option key={chapter} value={chapter}>
+                  {chapter}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                            {expandedFiches.includes(ficheTitle) && (
-                              <div className="pl-4 mt-1 space-y-0.5 border-l border-slate-100 ml-1.5 animate-in slide-in-from-top-1 fade-in duration-200">
-                                {exercises.map(ex => {
-                                  const isCompleted = completedExercises.includes(ex.id);
-                                  const isSelected = selectedExercise?.id === ex.id;
-                                  
-                                  return (
-                                    <button
-                                      key={ex.id}
-                                      onClick={() => setSelectedExercise(ex)}
-                                      className={`w-full text-left px-3 py-1.5 rounded-md text-xs font-medium transition-all flex items-center justify-between group ${
-                                        isSelected 
-                                          ? 'bg-orange-50 text-orange-700 font-bold' 
-                                          : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-                                      }`}
-                                    >
-                                      <span className="truncate pr-2">{ex.label}</span>
-                                      {isCompleted && <CheckCircle size={12} className="text-emerald-500 flex-shrink-0" />}
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
+          <div>
+            <p className="mb-2 text-xs font-black uppercase tracking-wider text-slate-500">3. Exercice</p>
+            <div className="relative">
+              <button
+                type="button"
+                disabled={!selectedChapter}
+                onClick={() => setIsExerciseGridOpen((prev) => !prev)}
+                className={`w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 hover:bg-slate-50 flex items-center justify-between ${
+                  selectedExercise ? 'font-semibold text-slate-700' : 'font-medium italic text-slate-400'
+                }`}
+              >
+                <span className="truncate">
+                  {selectedExercise?.label || (selectedChapter ? 'Choisir un exercice' : "Choisis d'abord un chapitre")}
+                </span>
+                <ChevronDown size={16} className={`shrink-0 transition-transform ${isExerciseGridOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {selectedChapter && isExerciseGridOpen && (
+                <div className="absolute z-20 mt-2 w-full rounded-xl border border-slate-200 bg-white p-2 shadow-lg max-h-56 overflow-y-auto">
+                  <div className="grid grid-cols-1 gap-1.5">
+                    {availableExercises.map((ex) => {
+                      const isCompleted = completedExercises.includes(ex.id);
+                      const isSelected = selectedExercise?.id === ex.id;
+                      return (
+                        <button
+                          key={ex.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedExercise(ex);
+                            setIsExerciseGridOpen(false);
+                          }}
+                          className={`w-full rounded-md px-2.5 py-2 text-left text-xs font-semibold transition flex items-center justify-between ${
+                            isSelected ? 'bg-orange-100 text-orange-700' : 'text-slate-700 hover:bg-slate-100'
+                          }`}
+                        >
+                          <span className="truncate pr-2">{ex.label}</span>
+                          {isCompleted && <CheckCircle size={12} className="text-emerald-500 shrink-0" />}
+                        </button>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 min-h-0">
         {selectedExercise ? (
-          <>
-            {/* Header / Instructions */}
-            <div className="h-[30%] bg-white border-b border-slate-200 flex flex-col">
-              <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/30">
+          <div className="h-full min-h-0 grid grid-cols-1 xl:grid-cols-2">
+            <div className="border-r border-slate-200 bg-white min-h-0 flex flex-col">
+              <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/30 shrink-0">
                 <div>
                    <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
                      <BookOpen size={18} className="text-slate-400" />
@@ -605,7 +649,7 @@ export default function LabPage() {
                   </span>
                 )}
               </div>
-              <div className="flex-1 overflow-y-auto p-5 prose prose-slate prose-lg max-w-none bg-white
+              <div className="flex-1 min-h-0 overflow-y-auto p-5 prose prose-slate prose-lg max-w-none bg-white
                 prose-headings:italic prose-headings:uppercase prose-headings:font-black
                 prose-p:text-slate-700 prose-p:leading-relaxed
                 prose-strong:text-slate-900
@@ -632,8 +676,7 @@ export default function LabPage() {
               </div>
             </div>
 
-            {/* Editor Area */}
-            <div className="h-[70%] flex flex-col bg-[#1e1e1e]">
+            <div className="min-h-0 flex flex-col bg-[#1e1e1e]">
               <div className="flex items-center justify-between px-4 py-2 bg-[#2d2d2d] border-b border-[#3e3e3e]">
                 <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
                   <span>{selectedExercise.type === 'sql' ? 'main.sql' : 'main.py'}</span>
@@ -661,8 +704,8 @@ export default function LabPage() {
                 </div>
               </div>
               
-              <div className="flex-1 flex">
-                <div className="w-1/2 border-r border-[#3e3e3e]">
+              <div className="flex-1 min-h-0 flex flex-col">
+                <div className="h-[55%] min-h-[250px] border-b border-[#3e3e3e]">
                    <Editor
                      height="100%"
                      defaultLanguage="python"
@@ -679,11 +722,11 @@ export default function LabPage() {
                      }}
                    />
                 </div>
-                <div className="w-1/2 flex flex-col bg-[#1e1e1e]">
+                <div className="flex-1 min-h-0 flex flex-col bg-[#1e1e1e]">
                   <div className="px-4 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-[#3e3e3e]">
                     Console / Sortie
                   </div>
-                  <div className="flex-1 p-4 font-mono text-sm text-slate-300 overflow-y-auto space-y-1">
+                  <div className="flex-1 min-h-0 p-4 font-mono text-sm text-slate-300 overflow-y-auto space-y-1">
                     {selectedExercise.type === 'sql' && sqlResults ? (
                        <div className="bg-white rounded-lg overflow-hidden text-slate-900 shadow-sm overflow-x-auto">
                           <table className="min-w-full text-xs text-left">
@@ -718,15 +761,15 @@ export default function LabPage() {
                 </div>
               </div>
             </div>
-          </>
+          </div>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center text-slate-400 p-8 text-center">
+          <div className="h-full flex flex-col items-center justify-center text-slate-400 p-8 text-center">
             <div className="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center mb-6 text-slate-300">
               <Terminal size={40} />
             </div>
             <h2 className="text-2xl font-black text-slate-800 mb-2">Prêt à coder ?</h2>
             <p className="max-w-md mx-auto mb-8">
-              Sélectionnez un exercice dans le menu de gauche pour charger l'énoncé et l'éditeur de code.
+              Sélectionne un niveau, puis un chapitre, puis un exercice pour afficher l'énoncé à gauche et l'IDE à droite.
             </p>
           </div>
         )}

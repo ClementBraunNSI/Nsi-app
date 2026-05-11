@@ -6,6 +6,10 @@ meta: 'Durée : Web'
 prerequisites: []
 ---
 
+## Telechargement
+
+- [Telecharger le projet eleve (ZIP)](/content/1/projet_site_eleve.zip)
+
 ```html
 <!DOCTYPE html>
 <html>

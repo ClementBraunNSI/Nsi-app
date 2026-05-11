@@ -54,7 +54,9 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
             >
               <button
                 type="button"
-                onClick={() => setActiveChapter(chapter.name)}
+                onClick={() =>
+                  setActiveChapter((prev) => (prev === chapter.name ? "" : chapter.name))
+                }
                 className="w-full text-left"
                 aria-expanded={isOpen}
               >
@@ -137,12 +139,8 @@ function levelFoxFromNiveau(niveaux: string): string {
 
 function chapterImageFromData(niveaux: string, chapterName: string): string {
   const normalizedLevel = niveaux.trim();
-  if (normalizedLevel !== "1") {
-    return levelFoxFromNiveau(niveaux);
-  }
-
   const key = normalizeChapterName(chapterName);
-  const chapterMap: Record<string, string> = {
+  const chapterMapLevel1: Record<string, string> = {
     "photographie numerique": "/images/chapitres/1/chap_photo.png",
     internet: "/images/chapitres/1/chap_internet.png",
     localisation: "/images/chapitres/1/chap_geoloc.png",
@@ -155,7 +153,25 @@ function chapterImageFromData(niveaux: string, chapterName: string): string {
     microcontroleurs: "/images/chapitres/1/chap_microcontrol.png",
   };
 
-  return chapterMap[key] ?? levelFoxFromNiveau(niveaux);
+  const chapterMapLevel2: Record<string, string> = {
+    "systemes d'exploitation": "/images/chapitres/2/chap_sys.png",
+    "systemes d exploitation": "/images/chapitres/2/chap_sys.png",
+    "systemes exploitation": "/images/chapitres/2/chap_sys.png",
+    "architecture materielle": "/images/chapitres/2/chap_archi.png",
+    "dictionnaires et tables": "/images/chapitres/2/chap_dictio.png",
+    "reseaux et internet": "/images/chapitres/2/chap_res.png",
+    "web et interaction": "/images/chapitres/2/chap_web.png",
+    web: "/images/chapitres/2/chap_web.png",
+  };
+
+  if (normalizedLevel === "1") {
+    return chapterMapLevel1[key] ?? levelFoxFromNiveau(niveaux);
+  }
+  if (normalizedLevel === "2") {
+    return chapterMapLevel2[key] ?? levelFoxFromNiveau(niveaux);
+  }
+
+  return levelFoxFromNiveau(niveaux);
 }
 
 function normalizeChapterName(value: string): string {

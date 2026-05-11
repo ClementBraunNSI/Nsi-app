@@ -20,6 +20,12 @@ const TIMELINE = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100">
+      <button
+        type="button"
+        data-fox-easter-id="apropos"
+        aria-label="Secret renard a propos"
+        className="fox-secret-spot absolute top-28 right-8 z-20"
+      />
       
       {/* Hero Section - Identité Professionnelle */}
       <header className="max-w-7xl mx-auto px-8 pt-24 pb-16">
@@ -87,15 +93,30 @@ export default function AboutPage() {
         </div>
 
         <div className="relative">
-          {/* Ligne centrale (Desktop) */}
-          <div className="hidden md:block absolute left-1/2 h-full w-0.5 bg-slate-100 -translate-x-1/2" />
+          {/* Tracé serpentin desktop */}
+          <svg
+            className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[320px] -translate-x-1/2 md:block"
+            viewBox="0 0 320 1200"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M160 20 C 300 120, 20 240, 160 360 C 300 480, 20 620, 160 760 C 300 900, 30 1040, 160 1180"
+              fill="none"
+              stroke="#FDBA74"
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeDasharray="2 22"
+              opacity="0.8"
+            />
+          </svg>
 
-          <div className="space-y-12">
+          <div className="space-y-14">
             {TIMELINE.map((step, i) => (
               <div key={i} className={`flex flex-col md:flex-row items-center gap-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                 {/* Bloc Contenu */}
                 <div className="flex-1 w-full md:w-auto">
-                  <div className={`p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                  <div className={`relative p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                     <span className="text-orange-500 font-black text-sm uppercase tracking-widest">{step.year}</span>
                     <h3 className="text-xl font-black text-slate-800 mt-2">{step.place}</h3>
                     <p className="text-slate-500 flex items-center gap-2 justify-center md:justify-start mt-1">

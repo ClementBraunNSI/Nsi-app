@@ -1,10 +1,17 @@
-/* Fond et police generale */
-body{
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #1f2a44;
+/*Fond*/
+.container{
+    border: solid;
+    border-color: beige;
 }
 
+.localisation{
+    border:solid;
+    border-color:turquoise;
+}
+.image{
+    border: solid;
+    border-color: pink;
+}
 /* Texte du titre*/
 .mt {
     font-size: 60px;
@@ -25,24 +32,23 @@ body{
 .nom_eleve{
     font-size: 40px;
     margin-left: 45%;
-}
-
-.nom_eleve h1{
-    color: #f8f2d7;
-    font-size: 42px;
+    border: solid;
+    border-color: purple;
 }
 
 .presentation{
     display: flex;
     gap : 16px;
+    border: solid;
+    border-color: yellow;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     gap: 13px;
-    background-image: linear-gradient(135deg, #1f2a44, #2c3e66);
-    color: #f7f7f7;
+    border: solid;
+    border-color: green;
   }
 
 .image_rival{
@@ -51,23 +57,14 @@ body{
 
 .div_tableau_description{
     padding-left:20%;
-    color: #e8ecff;
-    line-height: 1.4;
+    border: solid;
+    border-color: red;
 }
-
-.image h3{
-    color: #ffd88a;
-}
-
 .caracteristiques{
     display: flex;
     flex-direction : column;
     gap: 16px;
     text-align: center;
+    border: solid;
+    border-color: blue;
 }
-
-.caracteristiques ul{
-    color: #ffffff;
-}
-
-
