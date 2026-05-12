@@ -12,6 +12,8 @@ prerequisites:
 
 > **📖 Préparation**
 
+Avant de commencer le projet, il est conseillé de relire la [notice sur HTML](Cours_html.md), notamment les parties sur les titres, les paragraphes, les listes et les images.
+
 ## Téléchargement des ressources
 
 Pour la création du site, vous aurez besoin du code pré-fourni disponible ici (./Cours_Web.md)[code fourni].
