@@ -8,7 +8,7 @@ prerequisites:
   - activite_web_interactive
 ---
 
-# 📚 Projet : Création du Bestiaire
+# 📚 Projet : Chasse aux Ren'Arts
 
 > **📖 Préparation**
 

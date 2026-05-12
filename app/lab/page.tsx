@@ -2,18 +2,19 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import Editor from '@monaco-editor/react';
 import { getAllExercises, LabExercise } from '@/app/actions/getExercises';
-import { Play, CheckCircle, BookOpen, ChevronDown, RotateCcw, Terminal } from 'lucide-react';
+import { Terminal } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from '@/components/AchievementUnlockedModal';
 import SuccessModal from '@/components/SuccessModal';
+import { EmptyState } from '@/components/ui';
+import { LabSelector } from '@/components/lab/LabSelector';
+import { ExercisePicker } from '@/components/lab/ExercisePicker';
+import { ExerciseStatement } from '@/components/lab/ExerciseStatement';
+import { LabEditor } from '@/components/lab/LabEditor';
+import { LabOutput } from '@/components/lab/LabOutput';
 
 
 const LEVEL_MAP: Record<string, { label: string; code: string }> = {
@@ -541,90 +542,27 @@ export default function LabPage() {
           La Tanière <span className="text-slate-400 font-medium text-sm">Lab</span>
         </h1>
         <div className="mt-4 grid gap-4 lg:grid-cols-3">
-          <div>
-            <p className="mb-2 text-xs font-black uppercase tracking-wider text-slate-500">1. Niveau</p>
-            <select
-              value={selectedLevel}
-              onChange={(e) => setSelectedLevel(e.target.value)}
-              className={`w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100 ${
-                selectedLevel ? 'font-semibold text-slate-700' : 'font-medium italic text-slate-400'
-              }`}
-            >
-              <option value="">Choisir un niveau</option>
-              {availableLevels.map((level) => (
-                <option key={level} value={level}>
-                  {LEVEL_MAP[level]?.label || `Niveau ${level}`}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <p className="mb-2 text-xs font-black uppercase tracking-wider text-slate-500">2. Chapitre</p>
-            <select
-              value={selectedChapter}
-              onChange={(e) => setSelectedChapter(e.target.value)}
-              disabled={!selectedLevel}
-              className={`w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 focus:border-orange-400 focus:ring-2 focus:ring-orange-100 ${
-                selectedChapter ? 'font-semibold text-slate-700' : 'font-medium italic text-slate-400'
-              }`}
-            >
-              <option value="">
-                {selectedLevel ? 'Choisir un chapitre' : "Choisis d'abord un niveau"}
-              </option>
-              {availableChapters.map((chapter) => (
-                <option key={chapter} value={chapter}>
-                  {chapter}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <p className="mb-2 text-xs font-black uppercase tracking-wider text-slate-500">3. Exercice</p>
-            <div className="relative">
-              <button
-                type="button"
-                disabled={!selectedChapter}
-                onClick={() => setIsExerciseGridOpen((prev) => !prev)}
-                className={`w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 hover:bg-slate-50 flex items-center justify-between ${
-                  selectedExercise ? 'font-semibold text-slate-700' : 'font-medium italic text-slate-400'
-                }`}
-              >
-                <span className="truncate">
-                  {selectedExercise?.label || (selectedChapter ? 'Choisir un exercice' : "Choisis d'abord un chapitre")}
-                </span>
-                <ChevronDown size={16} className={`shrink-0 transition-transform ${isExerciseGridOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {selectedChapter && isExerciseGridOpen && (
-                <div className="absolute z-20 mt-2 w-full rounded-xl border border-slate-200 bg-white p-2 shadow-lg max-h-56 overflow-y-auto">
-                  <div className="grid grid-cols-1 gap-1.5">
-                    {availableExercises.map((ex) => {
-                      const isCompleted = completedExercises.includes(ex.id);
-                      const isSelected = selectedExercise?.id === ex.id;
-                      return (
-                        <button
-                          key={ex.id}
-                          type="button"
-                          onClick={() => {
-                            setSelectedExercise(ex);
-                            setIsExerciseGridOpen(false);
-                          }}
-                          className={`w-full rounded-md px-2.5 py-2 text-left text-xs font-semibold transition flex items-center justify-between ${
-                            isSelected ? 'bg-orange-100 text-orange-700' : 'text-slate-700 hover:bg-slate-100'
-                          }`}
-                        >
-                          <span className="truncate pr-2">{ex.label}</span>
-                          {isCompleted && <CheckCircle size={12} className="text-emerald-500 shrink-0" />}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          <LabSelector
+            availableLevels={availableLevels}
+            availableChapters={availableChapters}
+            selectedLevel={selectedLevel}
+            selectedChapter={selectedChapter}
+            levelMap={LEVEL_MAP}
+            onLevelChange={setSelectedLevel}
+            onChapterChange={setSelectedChapter}
+          />
+          <ExercisePicker
+            selectedChapter={selectedChapter}
+            selectedExercise={selectedExercise}
+            availableExercises={availableExercises}
+            completedExercises={completedExercises}
+            isOpen={isExerciseGridOpen}
+            onToggle={() => setIsExerciseGridOpen((prev) => !prev)}
+            onSelect={(exercise) => {
+              setSelectedExercise(exercise);
+              setIsExerciseGridOpen(false);
+            }}
+          />
         </div>
       </div>
 
@@ -632,145 +570,35 @@ export default function LabPage() {
       <div className="flex-1 min-h-0">
         {selectedExercise ? (
           <div className="h-full min-h-0 grid grid-cols-1 xl:grid-cols-2">
-            <div className="border-r border-slate-200 bg-white min-h-0 flex flex-col">
-              <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/30 shrink-0">
-                <div>
-                   <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                     <BookOpen size={18} className="text-slate-400" />
-                     {selectedExercise.label}
-                   </h2>
-                   <p className="text-xs text-slate-500 font-medium mt-0.5 ml-7">
-                     {selectedExercise.courseTitle}
-                   </p>
-                </div>
-                {completedExercises.includes(selectedExercise.id) && (
-                  <span className="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-bold rounded-full border border-emerald-100 flex items-center gap-1.5">
-                    <CheckCircle size={12} /> Validé
-                  </span>
-                )}
-              </div>
-              <div className="flex-1 min-h-0 overflow-y-auto p-5 prose prose-slate prose-lg max-w-none bg-white
-                prose-headings:italic prose-headings:uppercase prose-headings:font-black
-                prose-p:text-slate-700 prose-p:leading-relaxed
-                prose-strong:text-slate-900
-                prose-a:text-orange-600 prose-a:font-bold prose-a:no-underline hover:prose-a:underline
-                
-                prose-code:text-orange-700 prose-code:bg-orange-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-                prose-pre:bg-[#FFFBF5] prose-pre:border-l-4 prose-pre:border-orange-400 prose-pre:text-orange-900 prose-pre:shadow-sm prose-pre:rounded-r-xl
-                
-                prose-table:border-collapse prose-table:border prose-table:border-slate-200 prose-table:rounded-xl prose-table:overflow-hidden
-                prose-th:bg-slate-50 prose-th:text-slate-900 prose-th:p-4 prose-th:border prose-th:border-slate-200
-                prose-td:p-4 prose-td:border prose-td:border-slate-100
-              ">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm, remarkMath]}
-                  rehypePlugins={[rehypeKatex]}
-                  components={{
-                    // We remove custom renderers to rely on the prose classes, matching the Course page design
-                    // except for maybe keeping some basic structure if needed.
-                    // But standard markdown elements should be styled by the prose-* classes above.
-                  }}
-                >
-                  {getCleanContent(selectedExercise.content, selectedExercise.label)}
-                </ReactMarkdown>
-              </div>
-            </div>
+            <ExerciseStatement
+              exercise={selectedExercise}
+              isCompleted={completedExercises.includes(selectedExercise.id)}
+              content={getCleanContent(selectedExercise.content, selectedExercise.label)}
+            />
 
             <div className="min-h-0 flex flex-col bg-[#1e1e1e]">
-              <div className="flex items-center justify-between px-4 py-2 bg-[#2d2d2d] border-b border-[#3e3e3e]">
-                <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-                  <span>{selectedExercise.type === 'sql' ? 'main.sql' : 'main.py'}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <button 
-                    onClick={() => setCode('')}
-                    className="p-1.5 hover:bg-[#3e3e3e] rounded-md text-slate-400 transition-colors"
-                    title="Reset"
-                  >
-                    <RotateCcw size={14} />
-                  </button>
-                  <button
-                    onClick={handleRun}
-                    disabled={isRunning}
-                    className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-xs font-bold transition-all ${
-                      isRunning 
-                        ? 'bg-slate-600 text-slate-400 cursor-wait'
-                        : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/20'
-                    }`}
-                  >
-                    <Play size={14} fill="currentColor" />
-                    {isRunning ? 'Exécution...' : 'Exécuter & Valider'}
-                  </button>
-                </div>
-              </div>
-              
               <div className="flex-1 min-h-0 flex flex-col">
-                <div className="h-[55%] min-h-[250px] border-b border-[#3e3e3e]">
-                   <Editor
-                     height="100%"
-                     defaultLanguage="python"
-                     language={selectedExercise.type === 'sql' ? 'sql' : 'python'}
-                     theme="orange-dark"
-                     beforeMount={handleEditorWillMount}
-                     value={code}
-                     onChange={(value) => setCode(value || '')}
-                     options={{
-                       minimap: { enabled: false },
-                       fontSize: 14,
-                       scrollBeyondLastLine: false,
-                       padding: { top: 16, bottom: 16 }
-                     }}
-                   />
-                </div>
-                <div className="flex-1 min-h-0 flex flex-col bg-[#1e1e1e]">
-                  <div className="px-4 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-[#3e3e3e]">
-                    Console / Sortie
-                  </div>
-                  <div className="flex-1 min-h-0 p-4 font-mono text-sm text-slate-300 overflow-y-auto space-y-1">
-                    {selectedExercise.type === 'sql' && sqlResults ? (
-                       <div className="bg-white rounded-lg overflow-hidden text-slate-900 shadow-sm overflow-x-auto">
-                          <table className="min-w-full text-xs text-left">
-                            <thead className="bg-slate-100 font-bold border-b border-slate-200">
-                              <tr>
-                                {sqlResults.columns.map((col, idx) => (
-                                  <th key={idx} className="px-3 py-2">{col}</th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-100">
-                              {sqlResults.values.map((row, rIdx) => (
-                                <tr key={rIdx} className="hover:bg-slate-50">
-                                  {row.map((cell: any, cIdx: number) => (
-                                     <td key={cIdx} className="px-3 py-2 font-mono">{String(cell)}</td>
-                                  ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                       </div>
-                     ) : (
-                      output.length > 0 ? (
-                        output.map((line, i) => (
-                          <div key={i} className="border-b border-transparent hover:border-[#333]">{line}</div>
-                        ))
-                      ) : (
-                        <div className="text-slate-600 italic">En attente d'exécution...</div>
-                      )
-                    )}
-                  </div>
-                </div>
+                <LabEditor
+                  exercise={selectedExercise}
+                  code={code}
+                  isRunning={isRunning}
+                  onCodeChange={setCode}
+                  onReset={() => setCode('')}
+                  onRun={handleRun}
+                  beforeMount={handleEditorWillMount}
+                />
+                <LabOutput exercise={selectedExercise} output={output} sqlResults={sqlResults} />
               </div>
             </div>
           </div>
         ) : (
-          <div className="h-full flex flex-col items-center justify-center text-slate-400 p-8 text-center">
-            <div className="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center mb-6 text-slate-300">
-              <Terminal size={40} />
-            </div>
-            <h2 className="text-2xl font-black text-slate-800 mb-2">Prêt à coder ?</h2>
-            <p className="max-w-md mx-auto mb-8">
-              Sélectionne un niveau, puis un chapitre, puis un exercice pour afficher l'énoncé à gauche et l'IDE à droite.
-            </p>
+          <div className="h-full flex items-center justify-center p-8">
+            <EmptyState
+              icon={<Terminal size={40} />}
+              title="Prêt à coder ?"
+              description="Sélectionne un niveau, puis un chapitre, puis un exercice pour afficher l'énoncé à gauche et l'IDE à droite."
+              className="max-w-xl"
+            />
           </div>
         )}
       </div>

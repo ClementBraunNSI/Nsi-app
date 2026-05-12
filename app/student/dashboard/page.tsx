@@ -6,6 +6,7 @@ import { getReservedCourses } from '@/app/actions/getReservedCourses';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import { GraduationCap, Zap, BookOpen, ArrowRight, Clock, Award, X, Calendar, Trophy, Target, Lock, FileText } from 'lucide-react';
 import { getRevisionSheets } from '@/app/actions/getRevisionSheets';
+import { PageHeader } from '@/components/ui';
 
 // Mapping des niveaux selon tes spécifications
 const LEVEL_MAP: Record<string, { label: string; code: string }> = {
@@ -155,21 +156,12 @@ export default function StudentDashboard() {
     <div className="min-h-screen bg-[#FDFCFB] p-4 md:p-8 text-slate-900 font-sans">
       <div className="max-w-5xl mx-auto space-y-8">
         
-        {/* Header Profil */}
-        <div className="flex items-center justify-between bg-white p-6 md:p-8 rounded-[2rem] border border-slate-100 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-orange-200">
-              <GraduationCap size={24} />
-            </div>
-            <div>
-              <h1 className="text-xl font-black uppercase italic leading-none">{profile?.full_name || "Élève"}</h1>
-              <p className="text-[10px] font-bold text-orange-500 uppercase tracking-[0.2em] mt-1">
-                {currentLevelInfo ? `${currentLevelInfo.label} (Niveau ${currentLevelInfo.code})` : "Niveau non défini"}
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex gap-3">
+        <PageHeader
+          eyebrow={<span className="inline-flex items-center gap-2"><GraduationCap size={14} /> Espace élève</span>}
+          title={profile?.full_name || "Élève"}
+          description={currentLevelInfo ? `${currentLevelInfo.label} (Niveau ${currentLevelInfo.code})` : "Niveau non défini"}
+          actions={
+            <div className="flex gap-3">
             <button 
               onClick={() => setShowAchievementsModal(true)}
               className="flex items-center gap-3 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100 hover:bg-purple-50 hover:border-purple-200 hover:scale-105 transition-all cursor-pointer group"
@@ -191,8 +183,9 @@ export default function StudentDashboard() {
                 <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider group-hover:text-orange-400 transition-colors">Badges</div>
               </div>
             </button>
-          </div>
-        </div>
+            </div>
+          }
+        />
 
         {/* SECTION COURS PARTICULIERS (Si activé dans Supabase) */}
         {profile?.has_private_lessons && (

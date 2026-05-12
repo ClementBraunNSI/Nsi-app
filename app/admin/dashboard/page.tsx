@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { Users, Award, CheckCircle, Search, Filter, AlertCircle, TrendingUp, Clock, X, Download, Star, ChevronRight, Lock } from 'lucide-react';
 import React from 'react';
 import { getReservedCourses } from '@/app/actions/getReservedCourses';
+import { PageHeader } from '@/components/ui';
 
 // Mapping des niveaux pour l'affichage et le filtrage
 const LEVELS = [
@@ -124,20 +125,13 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-[#FDFCFB] p-8 font-sans">
       <div className="max-w-7xl mx-auto space-y-8">
         
-        {/* --- EN-TÊTE --- */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-          <div>
-            <h1 className="text-4xl font-black text-slate-900 italic uppercase tracking-tighter">
-              Pilotage <span className="text-orange-500">Pédagogique</span>
-            </h1>
-            <p className="text-slate-500 font-medium mt-2 text-lg">
-              Vue d'ensemble et suivi des élèves par niveau.
-            </p>
-          </div>
-          
-          {/* Global Stats Badges (Visible tout le temps) */}
-          <div className="flex gap-4">
-             <div className="bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3">
+        <PageHeader
+          eyebrow="Administration"
+          title={<span>Pilotage <span className="text-orange-500">Pédagogique</span></span>}
+          description="Vue d'ensemble et suivi des élèves par niveau."
+          actions={
+            <div className="flex gap-4">
+              <div className="bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3">
                 <div className="p-2 bg-orange-50 rounded-lg text-orange-500">
                   <Award size={20} />
                 </div>
@@ -145,9 +139,10 @@ export default function AdminDashboard() {
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Badges</p>
                   <p className="text-xl font-black text-slate-800">{totalBadges}</p>
                 </div>
-             </div>
-          </div>
-        </div>
+              </div>
+            </div>
+          }
+        />
 
         {/* --- BARRE DE NAVIGATION (TABS) --- */}
         <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-1">

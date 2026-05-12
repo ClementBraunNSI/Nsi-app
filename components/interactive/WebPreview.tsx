@@ -5,7 +5,19 @@ import React, { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 
 export default function WebPreview() {
-  const [html, setHtml] = useState('<h1>Salut !</h1>\n<p>Ceci est un paragraphe.</p>\n<style>\n  h1 { color: orange; }\n  p { font-family: sans-serif; }\n</style>');
+  const [html, setHtml] = useState(`<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Titre de la page</title>
+  </head>
+
+  <body>
+
+  </body>
+
+</html>`);
   
   return (
     <div className="flex flex-col md:flex-row h-96 border rounded-xl overflow-hidden shadow-lg my-8">

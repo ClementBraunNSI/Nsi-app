@@ -115,6 +115,7 @@ import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { getAdjacentCourses } from '@/lib/course-utils';
 import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
+import { PageHeader } from '@/components/ui';
 
 import Breadcrumbs from '@/components/experimental/Breadcrumbs';
 
@@ -304,21 +305,13 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
         ]} />
 
         <div className="mt-6">
-          <div className="course-hero mb-8 text-center">
-            <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-3 italic uppercase tracking-tighter">
-              {data.title || slugStr.replace(/[_-]/g, ' ')}
-            </h1>
-            {data.chapter && (
-              <p className="text-orange-600 text-sm font-black mb-4 uppercase tracking-widest">
-                {data.chapter}
-              </p>
-            )}
-            {data.meta && (
-              <div className="course-meta-pill">
-                {data.meta}
-              </div>
-            )}
-          </div>
+          <PageHeader
+            className="mb-8"
+            eyebrow={data.chapter || 'Cours'}
+            title={data.title || slugStr.replace(/[_-]/g, ' ')}
+            description={data.description}
+            actions={data.meta ? <span className="course-meta-pill">{data.meta}</span> : undefined}
+          />
 
           <div className="course-content">
             <article className="prose prose-slate max-w-none course-prose course-prose-wide">

@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronRight, BookOpen, GraduationCap, GitBranch } from 'lucide-react';
 import { listMarkdownFilesForContentLevel } from '@/lib/course-utils';
+import { Badge, Card, PageHeader } from '@/components/ui';
 
 interface CoursData {
   slug: string;
@@ -128,16 +129,12 @@ export default async function PageTousLesCours() {
 
   return (
     <main className="max-w-6xl mx-auto p-8 min-h-screen bg-[#FDFCFB]">
-      {/* En-tête de la page */}
-      <div className="flex items-center gap-4 mb-16">
-        <div className="p-3 bg-orange-600 rounded-2xl text-white shadow-lg">
-          <BookOpen size={32} />
-        </div>
-        <div>
-          <h1 className="text-4xl font-black text-slate-900 tracking-tight">Tous les Cours</h1>
-          <p className="text-slate-500 mt-2">Liste complète de toutes les leçons, triées par niveau puis par chapitre</p>
-        </div>
-      </div>
+      <PageHeader
+        className="mb-16"
+        eyebrow={<span className="inline-flex items-center gap-2"><BookOpen size={16} /> Catalogue</span>}
+        title="Tous les Cours"
+        description="Liste complète de toutes les leçons, triées par niveau puis par chapitre."
+      />
 
       {/* Affichage par niveau et chapitre */}
       {Object.entries(coursParNiveau)
@@ -168,14 +165,14 @@ export default async function PageTousLesCours() {
 
           {/* Arbre de compétences par chapitre */}
           {Object.entries(chapitres).sort(([a], [b]) => a.localeCompare(b)).map(([nomChapitre, coursDuChapitre]) => (
-            <section key={nomChapitre} className="mb-6 bg-white border border-slate-100 rounded-2xl overflow-hidden p-6">
+            <Card key={nomChapitre} className="mb-6 overflow-hidden">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
                   <GitBranch className="text-orange-500" size={20} />
                   <h3 className="text-xl font-bold text-slate-800">{nomChapitre}</h3>
-                  <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
+                  <Badge>
                     {coursDuChapitre.length} cours
-                  </span>
+                  </Badge>
                 </div>
               </div>
 
@@ -229,7 +226,7 @@ export default async function PageTousLesCours() {
                   ))}
                 </div>
               </div>
-            </section>
+            </Card>
           ))}
         </section>
       ))}

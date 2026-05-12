@@ -27,7 +27,11 @@ export default function MentionsLegales() {
               <strong>Vercel Inc.</strong><br />
               440 N Barranca Ave #4133<br />
               Covina, CA 91723<br />
-              États-Unis
+              États-Unis<br />
+              <br />
+              Les données utilisateur nécessaires au fonctionnement de la plateforme sont sauvegardées et hébergées
+              via <strong>Supabase</strong>. Supabase s'appuie sur une infrastructure cloud basée sur AWS, avec un
+              hébergement des données en Irlande, au sein de l'Union européenne.
             </p>
           </section>
 
@@ -131,7 +135,8 @@ export default function MentionsLegales() {
             <p>
               Nous mettons en œuvre toutes les mesures techniques et organisationnelles appropriées afin de garantir 
               un niveau de sécurité adapté au risque, conformément aux exigences du RGPD. Les données sont stockées 
-              de manière sécurisée et ne sont accessibles qu'à l'enseignant responsable du site.
+              de manière sécurisée via Supabase, sur une infrastructure AWS localisée en Irlande, et ne sont
+              accessibles qu'à l'enseignant responsable du site.
             </p>
 
             <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">Liens externes</h3>
