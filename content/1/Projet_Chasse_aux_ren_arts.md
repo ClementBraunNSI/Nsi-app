@@ -1,5 +1,5 @@
 ---
-title: 'Projet : Chassse aux Ren Arts'
+title: 'Projet : Chasse aux Ren Arts'
 description: 'Création d''un site web : La chasse aux Ren-Arts'
 level: '2'
 chapter: Web
