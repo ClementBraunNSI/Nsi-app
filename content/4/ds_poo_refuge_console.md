@@ -27,10 +27,11 @@ prerequisites:
 Le refuge associatif **« La Tanière du Renard »** accueille des animaux en attente d'adoption. Chaque animal possède des informations communes (identifiant, nom, âge, état de santé) et des caractéristiques propres à son espèce.
 
 Le refuge souhaite une **application console C#** permettant au responsable de :
-- enregistrer les animaux du refuge ;
-- consulter les fiches ;
-- filtrer les animaux adoptables ;
-- calculer une estimation des coûts mensuels d'entretien.
+- **charger** les animaux depuis un fichier CSV fourni par l'association ;
+- **enregistrer** de nouveaux animaux (saisie console) ;
+- consulter les fiches et filtrer les animaux adoptables ;
+- calculer une estimation des coûts mensuels d'entretien ;
+- **exporter** les données mises à jour vers un ou plusieurs fichiers CSV.
 
 ---
 
@@ -76,7 +77,7 @@ NAC (IdAnimal, Espece, DureeVieMoyenne)
 | Classe | Rôle |
 |---|---|
 | `Animal` (+ `Chien`, `Chat`, `Nac`) | Modéliser **un** animal et son comportement propre |
-| `Refuge` | Gérer **l'ensemble** des animaux du refuge (la `List<Animal>` est ici) |
+| `Refuge` | Gérer **l'ensemble** des animaux du refuge (la `List<Animal>` est ici) + lecture/écriture CSV |
 | `Program` | Afficher le menu console et appeler les méthodes de `Refuge` |
 
 **Méthodes à implémenter dans `Animal` (et redéfinir si nécessaire dans les classes filles) :**
@@ -93,10 +94,13 @@ NAC (IdAnimal, Espece, DureeVieMoyenne)
 
 | Attribut | Description |
 |---|---|
-| `public List<Animal> _animaux` | Liste polymorphique de tous les animaux du refuge |
+| `private List<Animal> _animaux` | Liste polymorphique de tous les animaux du refuge |
 
 | Méthode | Description |
 |---|---|
+| `void ChargerDepuisCsv(string cheminFichier)` | Lit le CSV et instancie les objets (`Chien`, `Chat`, `Nac`) selon la colonne `Type` |
+| `void ExporterVersCsv(string cheminFichier)` | Exporte **tous** les animaux du refuge vers un fichier CSV |
+| `void ExporterAdoptablesVersCsv(string cheminFichier)` | Exporte uniquement les animaux adoptables |
 | `void AjouterAnimal(Animal animal)` | Ajoute un animal si l'identifiant n'existe pas déjà |
 | `void AfficherTous()` | Affiche toutes les fiches (en parcourant `_animaux`) |
 | `void AfficherAdoptables()` | Affiche uniquement les animaux avec `EstAdoptable() == true` |
@@ -105,6 +109,8 @@ NAC (IdAnimal, Espece, DureeVieMoyenne)
 | `int CompterParType(string type)` | Compte les animaux d'un type donné (via `ObtenirType()`) |
 | `int CompterTotal()` | Retourne le nombre total d'animaux |
 | `bool IdExiste(int id)` | Vérifie si un identifiant est déjà utilisé |
+
+> **Instanciation depuis le CSV :** la colonne `Type` détermine quelle classe créer (`Chien`, `Chat`, `Nac`). Les colonnes `Divers1` et `Divers2` changent de sens selon le type (voir format CSV ci-dessous).
 
 **Contraintes POO obligatoires :**
 
@@ -133,21 +139,60 @@ NAC (IdAnimal, Espece, DureeVieMoyenne)
 | `Chat` | 45 € (+ 10 € si non stérilisé) |
 | `Nac` | 30 € (+ 0,5 € × `DureeVieMoyenne`) |
 
-### B. Gestion du refuge (logique métier)
+### B. Gestion des fichiers CSV
+
+L'application doit lire et écrire des fichiers CSV au format suivant (séparateur **`;`**) :
+
+```csv
+Type;Id;Nom;Age;Etat;Divers1;Divers2
+Chien;101;Rusty;4;Disponible;Border Collie;Oui
+Chat;102;Mimi;2;EnSoin;Poil long;Oui
+Nac;103;Crackers;1;Disponible;Hamster;3
+```
+
+**Signification des colonnes `Divers1` et `Divers2` selon le type :**
+
+| Type | Divers1 | Divers2 |
+|---|---|---|
+| `Chien` | Race | EstEducateur (`Oui` / `Non`) |
+| `Chat` | Pelage | EstSterilise (`Oui` / `Non`) |
+| `Nac` | Espece | DureeVieMoyenne (entier) |
+
+**Fichiers attendus :**
+
+| Fichier | Rôle |
+|---|---|
+| `refuge.csv` | Fichier source chargé **au démarrage** de l'application |
+| `refuge_export.csv` | Export complet du refuge (tous les animaux en mémoire) |
+| `adoptables.csv` | Export des animaux dont l'état est `Disponible` |
+
+**Règles de traitement CSV :**
+
+- Ignorer la première ligne (en-têtes).
+- Refuser une ligne incomplète ou avec un `Type` inconnu (message d'erreur, sans planter).
+- Lors du chargement, ne pas ajouter un animal si son `Id` existe déjà.
+- Lors de l'export, réécrire toutes les colonnes dans le même format que le fichier source.
+
+**Fichier fourni pour le DS :** [refuge.csv](/assets/ds-refuge/refuge.csv)
+
+### C. Gestion du refuge (logique métier)
 
 L'application doit permettre :
 
-1. **Ajouter un animal** (choix du type : Chien / Chat / Nac, puis saisie des informations).
-2. **Afficher tous les animaux** (triés par type, puis par nom).
-3. **Afficher les animaux adoptables**.
-4. **Rechercher un animal par identifiant**.
-5. **Afficher les statistiques** :
+1. **Charger automatiquement** `refuge.csv` au démarrage (si le fichier est présent dans le dossier du projet).
+2. **Ajouter un animal** (choix du type : Chien / Chat / Nac, puis saisie des informations).
+3. **Afficher tous les animaux** (triés par type, puis par nom).
+4. **Afficher les animaux adoptables**.
+5. **Rechercher un animal par identifiant**.
+6. **Afficher les statistiques** :
    - nombre total d'animaux ;
    - nombre par type ;
    - coût mensuel total estimé du refuge (somme des `CalculerCoutMensuel()`).
-6. **Quitter** l'application.
+7. **Exporter tout le refuge** vers `refuge_export.csv`.
+8. **Exporter les adoptables** vers `adoptables.csv`.
+9. **Quitter** l'application.
 
-### C. Robustesse
+### D. Robustesse
 
 - Le menu ne doit **pas planter** en cas de saisie invalide.
 - Les erreurs de saisie doivent afficher un message explicite et revenir au menu.
@@ -156,6 +201,13 @@ L'application doit permettre :
 ---
 
 ## 3) Fonctionnement attendu de l'application console
+
+**Au démarrage :**
+
+```text
+Chargement de refuge.csv...
+4 animaux chargés.
+```
 
 Scénario type :
 
@@ -166,6 +218,8 @@ Scénario type :
 3. Afficher les animaux adoptables
 4. Rechercher par identifiant
 5. Afficher les statistiques
+6. Exporter tout le refuge (refuge_export.csv)
+7. Exporter les adoptables (adoptables.csv)
 0. Quitter
 Votre choix : 1
 
@@ -204,20 +258,23 @@ Cout mensuel estime : 55,00 EUR
 **Travail à réaliser :**
 
 1. Créer un projet Console C# (`RefugeTaniere`).
-2. Implémenter la hiérarchie `Animal` → `Chien`, `Chat`, `Nac`.
-3. Implémenter la classe `Refuge` avec la `List<Animal>` et les méthodes de gestion.
-4. Implémenter le menu dans `Program` en s'appuyant sur un objet `Refuge`.
-5. Initialiser le refuge avec **au moins 4 animaux de types différents** (saisie au démarrage ou données de test dans le code).
+2. Placer le fichier `refuge.csv` dans le dossier du projet (ou copier depuis `/assets/ds-refuge/refuge.csv`).
+3. Implémenter la hiérarchie `Animal` → `Chien`, `Chat`, `Nac`.
+4. Implémenter la classe `Refuge` avec la `List<Animal>`, les méthodes de gestion et les méthodes CSV.
+5. Implémenter le menu dans `Program` en s'appuyant sur un objet `Refuge`.
 6. Tester au minimum les cas suivants :
+   - chargement de `refuge.csv` au démarrage ;
    - affichage global ;
    - filtre adoptables ;
    - recherche par id existant / inexistant ;
-   - statistiques avec coût total.
+   - statistiques avec coût total ;
+   - export vers `refuge_export.csv` et `adoptables.csv`.
 
 > **Conseil temps :**  
-> - 35 min : classes + encapsulation  
-> - 35 min : héritage + polymorphisme  
-> - 25 min : menu + tests  
+> - 30 min : classes + encapsulation + héritage  
+> - 25 min : polymorphisme + `List<Animal>`  
+> - 35 min : lecture/écriture CSV + menu + tests  
+> - 5 min : relecture et captures  
 
 ---
 
@@ -226,18 +283,22 @@ Cout mensuel estime : 55,00 EUR
 À rendre en fin de DS :
 
 1. **Feuille de conception** (schéma relationnel + réponses Partie 1)
-2. **Projet C# complet** (au minimum les fichiers `.cs` principaux)
-3. **Captures console** ou copie des sorties de test (3 exécutions minimum)
+2. **Projet C# complet** (fichiers `.cs` + `refuge.csv` dans le projet)
+3. **Fichiers CSV générés** (`refuge_export.csv`, `adoptables.csv`)
+4. **Captures console** ou copie des sorties de test (chargement, export, statistiques)
 
 ---
 
-## 6) Données de test fournies
+## 6) Fichier CSV source fourni
 
-Les données suivantes peuvent être préchargées dans le programme pour faciliter les tests :
+Contenu attendu de `refuge.csv` :
 
-| Type | Id | Nom | Age | Etat | Spécificités |
-|---|---:|---|---:|---|---|
-| Chien | 101 | Rusty | 4 | Disponible | Border Collie, éducateur |
-| Chat | 102 | Mimi | 2 | EnSoin | Poil long, stérilisée |
-| Nac | 103 | Crackers | 1 | Disponible | Hamster, 3 ans |
-| Chien | 104 | Rex | 8 | Adopte | Berger, non éducateur |
+```csv
+Type;Id;Nom;Age;Etat;Divers1;Divers2
+Chien;101;Rusty;4;Disponible;Border Collie;Oui
+Chat;102;Mimi;2;EnSoin;Poil long;Oui
+Nac;103;Crackers;1;Disponible;Hamster;3
+Chien;104;Rex;8;Adopte;Berger;Non
+```
+
+[Télécharger refuge.csv](/assets/ds-refuge/refuge.csv)
