@@ -116,6 +116,7 @@ import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { getAdjacentCourses } from '@/lib/course-utils';
 import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
 import { PageHeader } from '@/components/ui';
+import ResourceNotFound from '@/components/ResourceNotFound';
 
 import Breadcrumbs from '@/components/experimental/Breadcrumbs';
 
@@ -136,11 +137,12 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
 
   if (!fs.existsSync(filePath)) {
     return (
-      <div className="p-10 text-center">
-        <h1 className="text-2xl font-bold">Cours non trouvé</h1>
-        <p className="text-slate-500 mb-4">Le fichier {slugStr}.md est introuvable.</p>
-        <Link href={`/`} className="text-orange-600 underline">Retour à l'accueil</Link>
-      </div>
+      <ResourceNotFound
+        title="Cours non trouvé"
+        description={`La ressource "${slugStr}" est introuvable pour ce niveau.`}
+        actionHref={`/cours/${niveaux}`}
+        actionLabel="Retour aux chapitres"
+      />
     );
   }
 

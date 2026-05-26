@@ -2,19 +2,19 @@ import React from 'react';
 import { Mail, GraduationCap, Code2, Heart, Trees, MapPin, Globe } from 'lucide-react';
 
 const CONTRIBUTORS = [
-  { name: "Clément Braun", role: "Auteur Principal", avatar: "🦊", desc: "Enseignant NSI et concepteur de la plateforme." },
+  { name: "Clément Braun", role: "Auteur principal", avatar: "🦊", desc: "Enseignant NSI et concepteur de la plateforme." },
   { name: "Nicolas DELPLACE", role: "Lycée de l'Escaut", avatar: "🏢", desc: "Enseignant d'informatique à Valenciennes." },
   { name: "Stéphane RAMSTEIN", role: "Lycée Raymond Queneau", avatar: "📚", desc: "Enseignant d'informatique à Villeneuve-d'Ascq." },
-  { name: "Benoit PAPEGAY", role: "Université de Lille", avatar: "🎓", desc: "Enseignant chercheur et contributeur pédagogique." },
+  { name: "Benoit PAPEGAY", role: "Université de Lille", avatar: "🎓", desc: "Enseignant-chercheur et contributeur pédagogique." },
   { name: "Mathieu MARCHAND", role: "Lycée Benjamin Franklin", avatar: "🌊", desc: "Enseignant d'informatique à Auray." }
 ];
 
 const TIMELINE = [
   { year: "2021 - 2022", place: "Lycée Pasteur", city: "Hénin-Beaumont (62)", icon: "🎒" },
-  { year: "2022 - 2024", place: "Lycée Raymond Queneau", city: "Villeneuve d'Ascq (59)", icon: "🏛️" },
+  { year: "2022 - 2024", place: "Lycée Raymond Queneau", city: "Villeneuve-d'Ascq (59)", icon: "🏛️" },
   { year: "2024 - 2025", place: "Lycée Charles de Gaulle", city: "Vannes (56)", icon: "⛵" },
   { year: "2025 - 2026", place: "Lycée Paul Duez", city: "Cambrai (59)", icon: "🏫" },
-  { year: "2026 - 2027", place: "Quelque part...", city: "...dans la tanière", icon: "🕵️‍♂️" },
+  { year: "2026 - 2027", place: "Prochaine tanière pédagogique", city: "Nouvelle affectation en préparation", icon: "🧭" },
 ];
 
 export default function AboutPage() {

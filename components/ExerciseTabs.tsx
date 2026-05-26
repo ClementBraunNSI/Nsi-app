@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Check, Trophy } from 'lucide-react';
+import { Check, CheckCircle2, Code2, Trophy } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from './AchievementUnlockedModal';
@@ -19,6 +19,275 @@ const LEVEL_MAP: Record<string, { label: string; code: string }> = {
   'TNSI': { label: 'Terminale NSI', code: '3' },
   'SIO': { label: 'BTS SIO', code: '4' }
 };
+
+type ExerciseDifficulty = 'Introduction' | 'Facile' | 'Moyen' | 'Difficile' | 'Autres';
+
+function getExerciseDifficulty(label: string): ExerciseDifficulty {
+  const raw = label.toLowerCase();
+  const left = raw.split('-')[0].trim();
+
+  if (raw.includes('introduction') || left.includes('intro')) return 'Introduction';
+  if (raw.includes('difficile') || raw.includes('hard')) return 'Difficile';
+  if (raw.includes('moyen') || raw.includes('intermédiaire') || raw.includes('intermediaire') || raw.includes('medium') || left.includes('med')) return 'Moyen';
+  if (raw.includes('facile') || raw.includes('easy')) return 'Facile';
+  return 'Autres';
+}
+
+function cleanExerciseLabel(label: string): string {
+  return label
+    .replace(/\((Introduction|Facile|Moyen|Difficile|Intermédiaire|Intermediaire)\)/gi, '')
+    .replace(/^(Introduction|Facile|Moyen|Difficile|Easy|Medium|Med|Hard)\s*/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractTextFromNode(node: React.ReactNode): string {
+  if (node === null || node === undefined || typeof node === 'boolean') return '';
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(extractTextFromNode).join('');
+  if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
+    return extractTextFromNode(node.props.children);
+  }
+  return '';
+}
+
+function normalizeVerificationCode(node: React.ReactNode): string {
+  return extractTextFromNode(node)
+    .replace(/```python/g, '')
+    .replace(/```/g, '')
+    .trim();
+}
+
+function splitTopLevel(value: string, separator: string): [string, string] | null {
+  let depth = 0;
+  let quote: string | null = null;
+
+  for (let i = 0; i <= value.length - separator.length; i += 1) {
+    const char = value[i];
+    const previous = value[i - 1];
+
+    if ((char === '"' || char === "'") && previous !== '\\') {
+      quote = quote === char ? null : quote || char;
+      continue;
+    }
+
+    if (quote) continue;
+    if (['(', '[', '{'].includes(char)) depth += 1;
+    if ([')', ']', '}'].includes(char)) depth -= 1;
+
+    if (depth === 0 && value.slice(i, i + separator.length) === separator) {
+      return [value.slice(0, i).trim(), value.slice(i + separator.length).trim()];
+    }
+  }
+
+  return null;
+}
+
+function stripAssertMessage(assertion: string): string {
+  return splitTopLevel(assertion, ',')?.[0] ?? assertion;
+}
+
+const IGNORED_FUNCTION_NAMES = new Set([
+  'abs',
+  'all',
+  'any',
+  'bool',
+  'callable',
+  'dict',
+  'float',
+  'int',
+  'isinstance',
+  'len',
+  'list',
+  'locals',
+  'max',
+  'min',
+  'print',
+  'range',
+  'set',
+  'str',
+  'sum',
+  'tuple',
+]);
+
+function extractFunctionCallAt(value: string, startIndex: number): string | null {
+  const openIndex = value.indexOf('(', startIndex);
+  if (openIndex === -1) return null;
+
+  let depth = 0;
+  let quote: string | null = null;
+
+  for (let i = startIndex; i < value.length; i += 1) {
+    const char = value[i];
+    const previous = value[i - 1];
+
+    if ((char === '"' || char === "'") && previous !== '\\') {
+      quote = quote === char ? null : quote || char;
+      continue;
+    }
+
+    if (quote) continue;
+    if (char === '(') depth += 1;
+    if (char === ')') {
+      depth -= 1;
+      if (depth === 0) return value.slice(startIndex, i + 1).trim();
+    }
+  }
+
+  return null;
+}
+
+function findStudentFunctionCall(value: string): string | null {
+  const functionNameRegex = /\b([A-Za-z_]\w*)\s*\(/g;
+  let match: RegExpExecArray | null;
+
+  while ((match = functionNameRegex.exec(value)) !== null) {
+    const functionName = match[1];
+    if (value[match.index - 1] === '.') continue;
+    if (IGNORED_FUNCTION_NAMES.has(functionName)) continue;
+
+    const call = extractFunctionCallAt(value, match.index);
+    if (call) return call;
+  }
+
+  return null;
+}
+
+function isCallableCheck(assertion: string): string | null {
+  const match = assertion.match(/^callable\(([^)]+)\)$/);
+  return match?.[1]?.trim() ?? null;
+}
+
+function isLocalsDefinitionCheck(assertion: string): string | null {
+  const match = assertion.match(/^['"](.+)['"]\s+in\s+locals\(\)$/);
+  return match?.[1]?.trim() ?? null;
+}
+
+function describeAssertion(line: string, previousFunctionCall: string | null): string | null {
+  const assertIndex = line.indexOf('assert ');
+  if (assertIndex === -1) return null;
+
+  const assertion = stripAssertMessage(line.slice(assertIndex + 'assert '.length).trim());
+  const callableName = isCallableCheck(assertion);
+  if (callableName) {
+    return `On attend que \`${callableName}\` soit une fonction appelable.`;
+  }
+
+  const localsName = isLocalsDefinitionCheck(assertion);
+  if (localsName) {
+    return `On attend qu'une fonction \`${localsName}\` soit définie.`;
+  }
+
+  const equality = splitTopLevel(assertion, '==');
+  if (equality) {
+    const functionCall = findStudentFunctionCall(equality[0]) || findStudentFunctionCall(equality[1]);
+    if (functionCall) {
+      return `Avec \`${functionCall}\`, résultat attendu : \`${equality[1]}\`.`;
+    }
+    if (previousFunctionCall) {
+      return `Après l'appel \`${previousFunctionCall}\`, résultat attendu : \`${equality[0]} == ${equality[1]}\`.`;
+    }
+    return null;
+  }
+
+  const inequality = splitTopLevel(assertion, '!=');
+  if (inequality) {
+    const functionCall = findStudentFunctionCall(inequality[0]) || findStudentFunctionCall(inequality[1]);
+    if (functionCall) {
+      return `Avec \`${functionCall}\`, résultat attendu : une valeur différente de \`${inequality[1]}\`.`;
+    }
+    if (previousFunctionCall) {
+      return `Après l'appel \`${previousFunctionCall}\`, résultat attendu : \`${inequality[0]} != ${inequality[1]}\`.`;
+    }
+    return null;
+  }
+
+  const strictFalsy = splitTopLevel(assertion, ' is not ');
+  if (strictFalsy) {
+    const functionCall = findStudentFunctionCall(strictFalsy[0]) || findStudentFunctionCall(strictFalsy[1]);
+    if (functionCall) {
+      return `Avec \`${functionCall}\`, résultat attendu : une valeur différente de \`${strictFalsy[1]}\`.`;
+    }
+    if (previousFunctionCall) {
+      return `Après l'appel \`${previousFunctionCall}\`, résultat attendu : \`${strictFalsy[0]} is not ${strictFalsy[1]}\`.`;
+    }
+    return null;
+  }
+
+  const strictTruthy = splitTopLevel(assertion, ' is ');
+  if (strictTruthy) {
+    const functionCall = findStudentFunctionCall(strictTruthy[0]) || findStudentFunctionCall(strictTruthy[1]);
+    if (functionCall) {
+      return `Avec \`${functionCall}\`, résultat attendu : \`${strictTruthy[1]}\`.`;
+    }
+    if (previousFunctionCall) {
+      return `Après l'appel \`${previousFunctionCall}\`, résultat attendu : \`${strictTruthy[0]} is ${strictTruthy[1]}\`.`;
+    }
+    return null;
+  }
+
+  const absence = assertion.match(/^(.+)\s+not\s+in\s+(.+)$/);
+  if (absence) {
+    const functionCall = findStudentFunctionCall(absence[1]) || findStudentFunctionCall(absence[2]);
+    if (functionCall) {
+      return `Avec \`${functionCall}\`, on attend que \`${absence[1].trim()}\` soit absent du résultat.`;
+    }
+    if (previousFunctionCall) {
+      return `Après l'appel \`${previousFunctionCall}\`, on attend que \`${absence[1].trim()}\` soit absent de \`${absence[2].trim()}\`.`;
+    }
+    return null;
+  }
+
+  const presence = assertion.match(/^(.+)\s+in\s+(.+)$/);
+  if (presence) {
+    const functionCall = findStudentFunctionCall(presence[1]) || findStudentFunctionCall(presence[2]);
+    if (functionCall) {
+      return `Avec \`${functionCall}\`, on attend que \`${presence[1].trim()}\` soit présent dans le résultat.`;
+    }
+    if (previousFunctionCall) {
+      return `Après l'appel \`${previousFunctionCall}\`, on attend que \`${presence[1].trim()}\` soit présent dans \`${presence[2].trim()}\`.`;
+    }
+    return null;
+  }
+
+  const functionCall = findStudentFunctionCall(assertion);
+  if (functionCall) {
+    return `Avec \`${functionCall}\`, la condition \`${assertion}\` doit être vraie.`;
+  }
+
+  return previousFunctionCall
+    ? `Après l'appel \`${previousFunctionCall}\`, la condition \`${assertion}\` doit être vraie.`
+    : null;
+}
+
+function buildReadableTests(verificationCode: string): string[] {
+  const lines = verificationCode
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith('#'));
+
+  const isFunctionExercise = lines.some((line) =>
+    findStudentFunctionCall(line) || isCallableCheck(stripAssertMessage(line.replace(/^assert\s+/, '')))
+  );
+
+  if (!isFunctionExercise) return [];
+
+  let previousFunctionCall: string | null = null;
+  const readableTests: string[] = [];
+
+  lines.forEach((line) => {
+    if (!line.startsWith('assert ')) {
+      const functionCall = findStudentFunctionCall(line);
+      if (functionCall) previousFunctionCall = functionCall;
+      return;
+    }
+
+    const description = describeAssertion(line, previousFunctionCall);
+    if (description) readableTests.push(description);
+  });
+
+  return readableTests;
+}
 
 // --- BARRE DE PROGRESSION ---
 function ExerciseProgressBar({ total, completed }: { total: number, completed: number }) {
@@ -52,7 +321,15 @@ function ExerciseProgressBar({ total, completed }: { total: number, completed: n
 
 
 
-export function ExerciseTabs({ children, courseId, courseTitle }: { children: React.ReactNode, courseId: string, courseTitle: string }) {
+export function ExerciseTabs({
+  children,
+  courseId,
+  courseTitle,
+}: {
+  children: React.ReactNode,
+  courseId: string,
+  courseTitle: string,
+}) {
   // Filter only valid React elements to avoid text nodes (whitespace) causing issues
   const childrenArray = React.Children.toArray(children).filter(React.isValidElement) as React.ReactElement<TabProps>[];
   const [activeTab, setActiveTab] = useState(childrenArray[0]?.props.id);
@@ -61,22 +338,10 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
   const [showModal, setShowModal] = useState(false);
   const [hasBadge, setHasBadge] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
-  const categories = Array.from(new Set(childrenArray.map(c => {
-    const raw = (c.props.label || '').toString();
-    const left = raw.split('-')[0].trim();
-    if (left.toLowerCase().includes('introduction')) return 'Introduction';
-    if (left.toLowerCase().includes('facile')) return 'Facile';
-    if (left.toLowerCase().includes('intermédiaire')) return 'Intermédiaire';
-    return 'Autres';
-  })));
+  const categories = Array.from(new Set(childrenArray.map(c => getExerciseDifficulty((c.props.label || '').toString()))));
   const [activeGroup, setActiveGroup] = useState(categories.includes('Introduction') ? 'Introduction' : (categories[0] || 'Tous'));
   const filteredChildren = childrenArray.filter(c => {
-    const raw = (c.props.label || '').toString();
-    const left = raw.split('-')[0].trim();
-    const cat = left.toLowerCase().includes('introduction') ? 'Introduction'
-      : left.toLowerCase().includes('facile') ? 'Facile'
-      : left.toLowerCase().includes('intermédiaire') ? 'Intermédiaire'
-      : 'Autres';
+    const cat = getExerciseDifficulty((c.props.label || '').toString());
     return cat === activeGroup;
   });
   useEffect(() => {
@@ -254,22 +519,26 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
 
       {/* ProgressBar removed as requested */}
 
-      <div className="rounded-[1.6rem] border border-slate-200 bg-white/90 p-3 mb-4 shadow-[0_14px_30px_-24px_rgba(15,23,42,0.4)]">
-        <p className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Filtrer les exercices</p>
-        <div className="flex flex-wrap gap-2">
-        {categories.map(cat => (
-          <button
-            key={cat}
-            onClick={() => setActiveGroup(cat)}
-            className={`px-3 py-2 rounded-xl text-[11px] font-black tracking-widest uppercase border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
-              activeGroup === cat
-                ? 'bg-orange-500 text-white border-orange-500 shadow-[0_12px_22px_-18px_rgba(249,115,22,0.95)]'
-                : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-white hover:border-slate-300'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+      <div className="mb-5 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_18px_42px_-34px_rgba(15,23,42,0.55)]">
+        <div className="border-b border-slate-100 bg-slate-50/80 px-5 py-4">
+          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">Choisir une difficulté</p>
+          <p className="mt-1 text-sm text-slate-500">Sélectionne d'abord un niveau, puis l'exercice à résoudre.</p>
+        </div>
+        <div className="flex flex-wrap gap-2 p-4">
+          {categories.map(cat => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setActiveGroup(cat)}
+              className={`rounded-2xl border px-4 py-3 text-sm font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
+                activeGroup === cat
+                  ? 'bg-orange-500 text-white border-orange-500 shadow-[0_16px_28px_-18px_rgba(249,115,22,0.95)]'
+                  : 'bg-white text-slate-600 border-slate-200 hover:bg-orange-50 hover:border-orange-200 hover:text-orange-700'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -286,14 +555,14 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
             <div
               key={child.key}
               onClick={() => setActiveTab(child.props.id)}
-              className={`group py-4 px-4 rounded-2xl text-xs font-black transition-all duration-300 uppercase tracking-tighter cursor-pointer border focus-within:ring-2 focus-within:ring-orange-300 ${
+              className={`group rounded-2xl border px-4 py-4 text-left text-sm transition-all duration-300 cursor-pointer focus-within:ring-2 focus-within:ring-orange-300 ${
                 isActive
                   ? 'bg-orange-500 text-white border-orange-600 shadow-[0_18px_32px_-20px_rgba(249,115,22,0.95)] scale-[1.01]'
-                  : 'bg-white text-slate-600 border-slate-200 hover:border-orange-200 hover:bg-orange-50/50'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-orange-200 hover:bg-orange-50/50'
               }`}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="truncate">{child.props.label}</span>
+                <span className="truncate font-black">{cleanExerciseLabel(child.props.label)}</span>
                 {isDone && (
                   <span className={`inline-flex items-center justify-center rounded-full p-1 ${isActive ? 'bg-white/25' : 'bg-emerald-100'}`}>
                     <Check size={12} className={isActive ? 'text-white' : 'text-emerald-600'} />
@@ -305,15 +574,28 @@ export function ExerciseTabs({ children, courseId, courseTitle }: { children: Re
         })}
       </div>
 
-      <div className="bg-white rounded-[2rem] p-6 md:p-10 border border-slate-200 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)] min-h-[350px]">
-        {childrenArray.find((child) => child.props.id === activeTab)}
+      <div className="bg-white rounded-[2rem] p-5 md:p-8 border border-slate-200 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)] min-h-[350px]">
+        {(() => {
+          const activeChild = childrenArray.find((child) => child.props.id === activeTab);
+          return activeChild ?? null;
+        })()}
       </div>
     </div>
   );
 }
 
 export function Enonce({ children }: { children: React.ReactNode }) {
-  return <div className="enonce">{children}</div>;
+  return (
+    <div className="rounded-[1.6rem] border border-orange-100 bg-orange-50/35 p-5 md:p-7">
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-orange-100 bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-orange-500">
+        <Code2 size={13} />
+        Énoncé
+      </div>
+      <div className="prose prose-slate max-w-none">
+        {children}
+      </div>
+    </div>
+  );
 }
 
 export function Correction({ children }: { children: React.ReactNode }) {
@@ -321,9 +603,37 @@ export function Correction({ children }: { children: React.ReactNode }) {
 }
 
 export function Verification({ children }: { children: React.ReactNode }) {
-  return null; // Invisible in the Course view
+  const verificationCode = normalizeVerificationCode(children);
+  const readableTests = buildReadableTests(verificationCode);
+
+  if (!verificationCode || readableTests.length === 0) return null;
+
+  return (
+    <div className="mt-6 overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_16px_36px_-30px_rgba(15,23,42,0.5)]">
+      <div className="flex items-center gap-3 border-b border-slate-100 bg-slate-50 px-5 py-4">
+        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+          <CheckCircle2 size={20} />
+        </div>
+        <div>
+          <h4 className="text-sm font-black uppercase tracking-[0.18em] text-slate-900">
+            Résultats attendus
+          </h4>
+        </div>
+      </div>
+      <ol className="space-y-3 bg-white p-5">
+        {readableTests.map((test, index) => (
+          <li key={`${test}-${index}`} className="flex gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 text-sm leading-6 text-slate-700">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-black text-orange-600">
+              {index + 1}
+            </span>
+            <span>{test}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
 }
 
 export function ExerciseSection({ children }: TabProps) {
-  return <>{children}</>;
+  return <div>{children}</div>;
 }
