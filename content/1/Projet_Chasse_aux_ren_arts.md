@@ -288,3 +288,27 @@ Exemple avec une ombre sur le texte :
 Laissez parler votre créativité. On peut attendre un rendu proche de celui-ci :
 
 ![base](/content/1/etape_3.png)
+
+## Rendu du projet
+
+Pour rendre votre travail, vous devez envoyer une archive compressée de votre dossier `projet_site_eleve`.
+
+Avant de créer l'archive, vérifiez que votre dossier contient bien :
+
+- le fichier `index.html` ;
+- le fichier `style.css` ;
+- le dossier `images` avec toutes les images utilisées dans votre site.
+
+### Créer l'archive sous Windows 11
+
+1. Ouvrez l'explorateur de fichiers.
+2. Retrouvez le dossier `projet_site_eleve`.
+3. Faites un clic droit sur le dossier `projet_site_eleve`.
+4. Cliquez sur **Compresser dans un fichier ZIP**.
+5. Si cette option n'apparaît pas, cliquez sur **Afficher plus d'options**, puis sur **Envoyer vers** > **Dossier compressé**.
+6. Windows crée alors un fichier nommé `projet_site_eleve.zip`.
+7. Renommez l'archive avec votre nom et votre prénom, par exemple `NOM_Prenom_projet_site_eleve.zip`.
+R
+7. Rendre le projet sur Pronote.
+Attention : il faut compresser le dossier entier `projet_site_eleve`, pas seulement le fichier `index.html`. Sinon, les images et le fichier CSS risquent de manquer.
+
