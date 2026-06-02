@@ -232,18 +232,6 @@ export default function ChasseAuxRenards() {
           </p>
         </div>
 
-        {activeEdition === '2025-2026' && (
-          <div className="bg-white rounded-2xl border border-slate-100 p-4 md:p-5 mb-8">
-            <h2 className="text-base md:text-lg font-black text-slate-800 mb-3">
-              Édition 2025-2026 — {artworks2025.length} œuvres
-            </h2>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              Parcourez les œuvres au carrousel. Le texte en italique est extrait du mini-site de chaque élève.
-              Les prénoms sont affichés uniquement sous forme d&apos;initiales. Cliquez sur le tableau pour ouvrir le site.
-            </p>
-          </div>
-        )}
-
         <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-slate-100">
           <div className="flex justify-between items-center mb-8">
             <button
