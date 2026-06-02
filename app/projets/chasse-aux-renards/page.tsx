@@ -344,30 +344,41 @@ export default function ChasseAuxRenards() {
           </div>
 
           <div className="mt-12 flex gap-3 overflow-x-auto pb-4 px-2 snap-x snap-mandatory">
-            {(activeEdition === '2024-2025' ? artworks2024 : artworks2025).map((art, idx) => (
-              <button
-                key={activeEdition === '2024-2025' ? art.src : art.id}
-                type="button"
-                onClick={() => setCurrentIndex(idx)}
-                className={`relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-2xl overflow-hidden snap-center transition-all duration-300 ${
-                  currentIndex === idx
-                    ? 'ring-2 ring-orange-500 ring-offset-4 scale-105 opacity-100'
-                    : 'opacity-40 hover:opacity-100 border border-slate-100'
-                }`}
-              >
-                <Image
-                  src={art.src}
-                  alt={
-                    activeEdition === '2024-2025'
-                      ? art.title
-                      : cleanDisplayTitle(art.title)
-                  }
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </button>
-            ))}
+            {activeEdition === '2024-2025'
+              ? artworks2024.map((art, idx) => (
+                  <button
+                    key={art.src}
+                    type="button"
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-2xl overflow-hidden snap-center transition-all duration-300 ${
+                      currentIndex === idx
+                        ? 'ring-2 ring-orange-500 ring-offset-4 scale-105 opacity-100'
+                        : 'opacity-40 hover:opacity-100 border border-slate-100'
+                    }`}
+                  >
+                    <Image src={art.src} alt={art.title} fill className="object-cover" unoptimized />
+                  </button>
+                ))
+              : artworks2025.map((art, idx) => (
+                  <button
+                    key={art.id}
+                    type="button"
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-2xl overflow-hidden snap-center transition-all duration-300 ${
+                      currentIndex === idx
+                        ? 'ring-2 ring-orange-500 ring-offset-4 scale-105 opacity-100'
+                        : 'opacity-40 hover:opacity-100 border border-slate-100'
+                    }`}
+                  >
+                    <Image
+                      src={art.src}
+                      alt={cleanDisplayTitle(art.title)}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </button>
+                ))}
           </div>
         </div>
       </main>
