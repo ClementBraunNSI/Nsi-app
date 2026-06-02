@@ -1,0 +1,70 @@
+/*Fond*/
+.container{
+    border: solid;
+    border-color: beige;
+}
+
+.localisation{
+    border:solid;
+    border-color:turquoise;
+}
+.image{
+    border: solid;
+    border-color: pink;
+}
+/* Texte du titre*/
+.mt {
+    font-size: 60px;
+    text-align: center;
+    margin-top: 20px;
+    color :#BA8E23;
+}
+
+/* Div de présentation */
+.image_principale {
+    width: 400px;
+    height: 400px;
+    display: block;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.nom_eleve{
+    font-size: 40px;
+    margin-left: 45%;
+    border: solid;
+    border-color: purple;
+}
+
+.presentation{
+    display: flex;
+    gap : 16px;
+    border: solid;
+    border-color: yellow;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    border: solid;
+    border-color: green;
+  }
+
+.image_rival{
+    width: 15%;
+}
+
+.div_tableau_description{
+    padding-left:20%;
+    border: solid;
+    border-color: red;
+}
+.caracteristiques{
+    display: flex;
+    flex-direction : column;
+    gap: 16px;
+    text-align: center;
+    border: solid;
+    border-color: blue;
+}

@@ -1,0 +1,69 @@
+/*Fond*/
+.container{
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	
+	background-color: #f5aa42; /* fond de couleur uni */
+	color: white; /* couleur du texte */
+	font-family: Arial, sans-serif; /* police d'écriture*/
+	text-align: center;
+}
+
+.localisation{
+}
+.image{
+}
+/* Texte du titre*/
+.mt {
+    font-size: 60px;
+    text-align: center;
+    margin-top: 20px;
+    color :#BA8E23;
+	text-align: center;
+}
+
+/* Div de présentation */
+.image_principale {
+    width: 400px;
+    height: 400px;
+    display: block;
+    object-fit: cover;
+    margin: 0 auto;
+	text-align: center;
+}
+
+.nom_eleve{
+    font-size: 40px;
+    margin-left: 45%;
+	text-align: center;
+}
+
+.presentation{
+    display: flex;
+    gap : 16px;
+	text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+	text-align: center;
+  }
+
+.image_rival{
+    width: 15%;
+	text-align: center;
+}
+
+.div_tableau_description{
+    padding-left:20%;
+	text-align: center;
+}
+.caracteristiques{
+    display: flex;
+    flex-direction : column;
+    gap: 16px;
+	text-align: center;
+}

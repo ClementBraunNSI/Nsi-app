@@ -1,0 +1,65 @@
+/*Fond*/
+.container{
+
+}
+
+.localisation{
+
+}
+.image{
+
+}
+/* Texte du titre*/
+.mt {
+    font-size: 60px;
+    text-align: center;
+    margin-top: 20px;
+    color :#BA8E23;
+}
+
+/* Div de présentation */
+.image_principale {
+    width: 500px;
+    display: block;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.nom_eleve{
+    font-size: 40px;
+    margin-left: 45%;
+
+}
+
+.presentation{
+    display: flex;
+    gap : 16px;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+
+    background-color: blue;
+    color: white;
+}
+
+  
+
+.image_rival{
+    width: 15%;
+}
+
+.div_tableau_description{
+    padding-left:20%;
+
+}
+.caracteristiques{
+    display: flex;
+    flex-direction : column;
+    gap: 16px;
+    text-align: center;
+
+}
