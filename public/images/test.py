@@ -9,6 +9,8 @@ while temp != mot and compteur < 10:
             if mot[i] == lettre :
                 temp = temp[:i] + lettre + temp[i+1:]
     else:
+
+
         
         compteur += 1
     print(temp)
