@@ -6,6 +6,7 @@ export interface CourseSummary {
   title: string;
   slug: string;
   order: number;
+  chapter: string;
 }
 
 /** Fichiers .md/.mdx sous content/{level} : plat sauf `particuliers` (sous-dossiers élèves / thèmes). */
@@ -64,25 +65,45 @@ export function getCoursesForLevel(level: string): CourseSummary[] {
       title: (data.title as string) || slug.replace(/[_-]/g, ' '),
       slug,
       order,
+      chapter: String(data.chapter || 'Général'),
     });
   }
 
   courses.sort((a, b) => {
+    if (a.chapter !== b.chapter) {
+      return a.chapter.localeCompare(b.chapter, 'fr');
+    }
     if (a.order !== b.order) return a.order - b.order;
-    return a.title.localeCompare(b.title);
+    return a.title.localeCompare(b.title, 'fr');
   });
 
   return courses;
 }
 
+function normalizeChapterKey(chapter: string): string {
+  return chapter
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
 export function getAdjacentCourses(level: string, currentSlug: string) {
   const courses = getCoursesForLevel(level);
-  const currentIndex = courses.findIndex(c => c.slug === currentSlug);
+  const current = courses.find((c) => c.slug === currentSlug);
+
+  if (!current) return { prev: null, next: null };
+
+  const chapterKey = normalizeChapterKey(current.chapter);
+  const inChapter = courses.filter((c) => normalizeChapterKey(c.chapter) === chapterKey);
+  const pool = inChapter.length > 1 ? inChapter : courses;
+  const currentIndex = pool.findIndex((c) => c.slug === currentSlug);
 
   if (currentIndex === -1) return { prev: null, next: null };
 
   return {
-    prev: currentIndex > 0 ? courses[currentIndex - 1] : null,
-    next: currentIndex < courses.length - 1 ? courses[currentIndex + 1] : null
+    prev: currentIndex > 0 ? pool[currentIndex - 1] : null,
+    next: currentIndex < pool.length - 1 ? pool[currentIndex + 1] : null,
   };
 }

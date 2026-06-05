@@ -1,9 +1,11 @@
 ---
 title: "Constructions élémentaires en Python"
 description: "Les types fondamentaux pour structurer vos données : booléens, nombres et chaînes."
-level : premiere
-chapter: "Introduction à Python"
+level: premiere
+chapter: Introduction à Python
 icon: "🧱"
+badgeId: premiere_python_intro
+prerequisites: []
 ---
 
 ## 🤖 Qu'est-ce qu'un programme ?

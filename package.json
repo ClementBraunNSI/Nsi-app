@@ -4,7 +4,8 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint",
-    "rebuild:chasse-2025": "node scripts/rebuild-chasse-edition-2025.mjs"
+    "rebuild:chasse-2025": "node scripts/rebuild-chasse-edition-2025.mjs",
+    "audit:courses": "node scripts/audit-courses.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

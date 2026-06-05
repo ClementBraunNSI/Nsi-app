@@ -7,6 +7,7 @@ import { getReservedCourses } from '@/app/actions/getReservedCourses';
 import ChaptersPreviewTabs from './ChaptersPreviewTabs';
 import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
 import { listMarkdownFilesForContentLevel } from '@/lib/course-utils';
+import { nsiLevelLabel } from '@/lib/nsi-levels';
 
 interface CoursData {
   slug: string;
@@ -116,7 +117,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
   const tousLesCours = [...privateCourses, ...standardCourses];
 
   if (tousLesCours.length === 0) {
-    return <div className="p-10 text-center text-slate-500">Aucun contenu trouvé pour le niveau {niveaux}</div>;
+    return <div className="p-10 text-center text-slate-500">Aucun contenu trouvé pour {nsiLevelLabel(niveaux)}</div>;
   }
 
   // Logique de tri par chapitre
@@ -133,16 +134,6 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
     if (!aPrivate && bPrivate) return -1;
     return a.localeCompare(b, 'fr');
   });
-
-  // Mapping des noms de niveaux pour l'affichage
-  const DISPLAY_LEVEL_MAP: Record<string, string> = {
-    '0': 'SNI',
-    '1': 'SNT',
-    '2': 'Première NSI',
-    '3': 'Terminale NSI',
-    '4': 'BTS SIO',
-    particuliers: 'Programmation en C',
-  };
 
   // Mapping des couleurs pour l'affichage (respectant la charte graphique de la landing page)
   const LEVEL_THEME: Record<string, { main: string, icon: string, border: string, text: string, light: string }> = {
@@ -163,7 +154,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
           <GraduationCap size={32} />
         </div>
         <h1 className="text-4xl font-black text-gray-900 capitalize">
-          {DISPLAY_LEVEL_MAP[niveaux] || `Niveau ${niveaux}`}
+          {nsiLevelLabel(niveaux)}
         </h1>
       </div>
 

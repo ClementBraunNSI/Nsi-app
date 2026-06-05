@@ -123,3 +123,7 @@ Les formulaires HTML permettent aux utilisateurs d'envoyer des données au serve
 *   **method** : Méthode HTTP utilisée pour envoyer les données.
     *   **GET** : Les données sont ajoutées à l'URL (visible, limité en taille).
     *   **POST** : Les données sont envoyées dans le corps de la requête (invisible, pas de limite de taille).
+
+## Suite du parcours Web
+
+Une fois la structure HTML maîtrisée, poursuivez avec [Introduction au CSS](/cours/2/web_css_introduction) pour la mise en forme, puis [Interactions JavaScript](/cours/2/web_javascript_interactions).

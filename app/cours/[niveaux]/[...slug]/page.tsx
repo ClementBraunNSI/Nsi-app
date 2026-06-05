@@ -114,6 +114,7 @@ import CourseNavigation from '@/components/CourseNavigation';
 import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { getAdjacentCourses } from '@/lib/course-utils';
+import { nsiLevelLabel } from '@/lib/nsi-levels';
 import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
 import { PageHeader } from '@/components/ui';
 import ResourceNotFound from '@/components/ResourceNotFound';
@@ -287,7 +288,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
       <nav className="course-topnav sticky top-20 z-30">
         <div className="max-w-5xl mx-auto px-6 py-4">
           <Link href={`/cours/${niveaux}`} className="flex items-center gap-2 text-slate-400 hover:text-orange-600 transition-colors text-xs font-black uppercase tracking-widest">
-            <ChevronLeft size={16} /> Retour au niveau {niveaux}
+            <ChevronLeft size={16} /> Retour à {nsiLevelLabel(niveaux)}
           </Link>
         </div>
       </nav>

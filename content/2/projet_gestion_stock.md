@@ -11,9 +11,6 @@ prerequisites:
   - projet_gestion_bibliotheque
 ---
 
-import ExerciseTabs from '../../components/interactive/ExerciseTabs';
-import { Enonce } from '../../components/interactive/ExerciseTabs';
-
 # 📦 Projet - Système de Gestion de Stock
 
 Ce projet a pour but de simuler un système simple de gestion de stock pour un petit commerce.

@@ -18,6 +18,14 @@ const LEVEL_MAP: Record<string, { label: string; code: string }> = {
 };
 
 // Contenu des cours particuliers
+/** Durée indicative affichée sur le dashboard (pas de champ frontmatter dédié). */
+function estimateLessonDuration(slug: string): string {
+  if (/projet/i.test(slug)) return '~1 h';
+  if (/exercice|exo|entrainement|tris|fusion/i.test(slug)) return '~30 min';
+  if (/activite/i.test(slug)) return '~20 min';
+  return '~25 min';
+}
+
 const PRIVATE_LESSONS = [
   { 
     title: "Suivi Individuel - Perfectionnement", 
@@ -283,7 +291,7 @@ export default function StudentDashboard() {
                 <CourseCard 
                   key={course.slug}
                   title={course.title}
-                  duration="À déterminer" 
+                  duration={estimateLessonDuration(course.slug)}
                   tag={course.chapter}
                   slug={course.slug}
                   levelCode={currentLevelInfo?.code}

@@ -5,6 +5,7 @@ level: TNSI
 order: 70
 chapter: Bases de Données
 icon: "\U0001F4BE"
+badgeId: terminale_sql_exos
 prerequisites:
   - sql-bases-donnees
 ---

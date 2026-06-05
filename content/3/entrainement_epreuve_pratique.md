@@ -42,9 +42,22 @@ prerequisites:
 - Écrire deux requêtes SQL.
 - Exploiter les résultats dans un script Python.
 
-## 6. Auto-évaluation
+## 6. Grille de compétences (épreuve pratique)
+
+| Compétence | Ressources sur le site |
+| --- | --- |
+| Lire / compléter du Python | [Modularité et mise au point](/cours/3/prog_modularite_mise_au_point), [Récursivité](/cours/3/prog_recursivite) |
+| Structures (listes, piles, files) | [Structures linéaires](/cours/3/structures_lineaires) |
+| Arbres & ABR | [Arbres](/cours/3/structures_arbres), [ABR](/cours/3/arbres-binaires-recherche) |
+| Graphes (BFS / Dijkstra) | [Graphes](/cours/3/structures_graphes), [Graphes pondérés](/cours/3/graphes_ponderes_dijkstra) |
+| SQL & jointures | [SQL](/cours/3/sql-bases-donnees), [Exercices SQL](/cours/3/sql-bases-donnees-exercices) |
+| POO | [Classes et objets](/cours/3/poo_classes_objets), [Héritage](/cours/3/poo_heritage_polymorphisme) |
+| Sujets fondamentaux | [Exercices Terminale fondamentaux](/cours/3/exercices_terminale_fondamentaux) |
+
+## 7. Auto-évaluation
 
 - Mon code s'exécute-t-il ?
 - Ai-je traité les cas limites ?
 - Ai-je ajouté des tests ?
 - Puis-je expliquer mes choix ?
+- Suis-je capable d'écrire un `JOIN` et une boucle sur une structure de données ?

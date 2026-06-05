@@ -6,13 +6,10 @@ description: >-
 level: TNSI
 order: 80
 chapter: Langages et Programmation
-icon: BugAntIcon
-badgeId: prog_modularite
+icon: "🐛"
+badgeId: terminale_modularite
 prerequisites: []
 ---
-
-import ExerciseTabs from '../../components/interactive/ExerciseTabs';
-import { Enonce } from '../../components/interactive/ExerciseTabs';
 
 # 🧩 Modularité et Mise au Point
 

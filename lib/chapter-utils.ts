@@ -48,6 +48,25 @@ export function chapterImageFromData(niveaux: string, chapterName: string): stri
     "reseaux et internet": "/images/chapitres/2/chap_res.png",
     "web et interaction": "/images/chapitres/2/chap_web.png",
     web: "/images/chapitres/2/chap_web.png",
+    algorithmique: "/images/chapitres/2/chap_algo.png",
+    "programmation orientee objet": "/images/chapitres/1/chap_python.png",
+    projets: "/images/chapitres/2/chap_web.png",
+    "representation des donnees": "/images/chapitres/1/chap_donnees.png",
+    "structures de donnees lineaires": "/images/chapitres/2/chap_dictio.png",
+    histoire: "/images/chapitres/2/chap_archi.png",
+    "introduction a python": "/images/chapitres/1/chap_python.png",
+  };
+
+  const chapterMapLevel3: Record<string, string> = {
+    algorithmique: "/images/chapitres/2/chap_algo.png",
+    "structures de donnees": "/images/chapitres/2/chap_dictio.png",
+    "langages et programmation": "/images/chapitres/1/chap_python.png",
+    "bases de donnees": "/images/chapitres/2/chap_dictio.png",
+    "architectures materielles os reseaux": "/images/chapitres/2/chap_res.png",
+    "architectures materielles, os & reseaux": "/images/chapitres/2/chap_res.png",
+    histoire: "/images/chapitres/2/chap_archi.png",
+    entrainement: "/images/chapitres/2/chap_algo.png",
+    projets: "/images/chapitres/2/chap_web.png",
   };
 
   if (normalizedLevel === "1") {
@@ -55,6 +74,9 @@ export function chapterImageFromData(niveaux: string, chapterName: string): stri
   }
   if (normalizedLevel === "2") {
     return chapterMapLevel2[key] ?? levelFoxFromNiveau(niveaux);
+  }
+  if (normalizedLevel === "3") {
+    return chapterMapLevel3[key] ?? levelFoxFromNiveau(niveaux);
   }
 
   return levelFoxFromNiveau(niveaux);

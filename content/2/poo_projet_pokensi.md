@@ -9,9 +9,6 @@ prerequisites:
   - projet_jeux_video
 ---
 
-import ExerciseTabs from '../../components/interactive/ExerciseTabs';
-import { Enonce } from '../../components/interactive/ExerciseTabs';
-
 # 👾 Projet - PokéNSI (Partie 1)
 
 Le but de ce projet est de créer un jeu inspiré de Pokémon en utilisant Python.

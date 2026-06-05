@@ -9,9 +9,6 @@ prerequisites:
   - projet_application_bancaire
 ---
 
-import ExerciseTabs from '../../components/interactive/ExerciseTabs';
-import { Enonce } from '../../components/interactive/ExerciseTabs';
-
 # 🎮 Projet - Gestionnaire de Jeux Vidéo
 
 Le but de ce projet est de reproduire le fonctionnement d’un gestionnaire de collection, appliqué ici à une collection de jeux vidéo.

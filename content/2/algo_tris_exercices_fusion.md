@@ -2,7 +2,7 @@
 title: 'Exercices : Tri et Fusion'
 description: 'Cours sur Exercices : Tri et Fusion'
 level: premiere
-chapter: Dictionnaires et Tables
+chapter: Algorithmique
 icon: "\U0001F500"
 badgeId: premiere_fiche_exercices_tri_fusion
 prerequisites:

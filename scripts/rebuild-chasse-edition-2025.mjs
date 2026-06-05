@@ -11,6 +11,7 @@ const DEST = path.join(
 );
 const SITES_DIR = path.join(DEST, 'sites');
 const TABLEAUX_DIR = path.join(DEST, 'tableaux');
+const LEVELS = ['secondes', '3e'];
 
 const IMAGE_EXT = /\.(png|jpe?g|webp|jfif)$/i;
 const SKIP_NAMES = /^\._/;
@@ -182,14 +183,68 @@ function sanitizeStudentHtml(html, initial) {
   return output;
 }
 
-function sanitizeAllSites(slugs) {
-  for (const slug of slugs) {
-    const htmlPath = path.join(SITES_DIR, slug, 'index.html');
+function sanitizeAllSites(siteEntries) {
+  for (const { slug, siteDir } of siteEntries) {
+    const htmlPath = path.join(siteDir, 'index.html');
     if (!fs.existsSync(htmlPath)) continue;
     const initial = toInitial(slug.split('-')[0]);
     const sanitized = sanitizeStudentHtml(fs.readFileSync(htmlPath, 'utf8'), initial);
     fs.writeFileSync(htmlPath, sanitized, 'utf8');
   }
+}
+
+/** Déplace les dossiers élèves à la racine de sites/ vers sites/secondes/ (une seule fois). */
+function ensureLevelFolders() {
+  const secondesDir = path.join(SITES_DIR, 'secondes');
+  const troisiemeDir = path.join(SITES_DIR, '3e');
+  fs.mkdirSync(secondesDir, { recursive: true });
+  fs.mkdirSync(troisiemeDir, { recursive: true });
+
+  const flatDirs = fs
+    .readdirSync(SITES_DIR, { withFileTypes: true })
+    .filter(
+      (e) =>
+        e.isDirectory() &&
+        !SKIP_NAMES.test(e.name) &&
+        !LEVELS.includes(e.name)
+    )
+    .map((e) => e.name);
+
+  for (const name of flatDirs) {
+    const dest = path.join(secondesDir, name);
+    if (!fs.existsSync(dest)) {
+      fs.renameSync(path.join(SITES_DIR, name), dest);
+    }
+  }
+}
+
+function listSiteEntries() {
+  ensureLevelFolders();
+  const entries = [];
+
+  for (const level of LEVELS) {
+    const levelDir = path.join(SITES_DIR, level);
+    if (!fs.existsSync(levelDir)) continue;
+
+    const slugs = fs
+      .readdirSync(levelDir, { withFileTypes: true })
+      .filter((e) => e.isDirectory() && !SKIP_NAMES.test(e.name))
+      .map((e) => e.name);
+
+    for (const slug of slugs) {
+      entries.push({
+        slug,
+        level,
+        siteDir: path.join(levelDir, slug),
+      });
+    }
+  }
+
+  return entries.sort((a, b) => {
+    const levelOrder = LEVELS.indexOf(a.level) - LEVELS.indexOf(b.level);
+    if (levelOrder !== 0) return levelOrder;
+    return a.slug.localeCompare(b.slug, 'fr');
+  });
 }
 
 function createPlaceholderSvg() {
@@ -210,7 +265,11 @@ function createPlaceholderSvg() {
   return 'tableau_placeholder.svg';
 }
 
-function rebuildTableaux(slugs) {
+function tableauKey(entry) {
+  return `${entry.level}/${entry.slug}`;
+}
+
+function rebuildTableaux(siteEntries) {
   fs.mkdirSync(TABLEAUX_DIR, { recursive: true });
 
   for (const file of fs.readdirSync(TABLEAUX_DIR)) {
@@ -221,30 +280,29 @@ function rebuildTableaux(slugs) {
   }
 
   const placeholderFile = createPlaceholderSvg();
-  const copiedBySlug = {};
+  const copiedByKey = {};
 
-  for (const slug of slugs) {
-    const siteDir = path.join(SITES_DIR, slug);
-    const artwork = findStudentArtwork(siteDir, slug);
+  for (const entry of siteEntries) {
+    const artwork = findStudentArtwork(entry.siteDir, entry.slug);
     if (!artwork) continue;
 
     const ext = path.extname(artwork).toLowerCase() || '.png';
-    const destName = `tableau_${slug}${ext}`;
+    const destName = `tableau_${entry.level}_${entry.slug}${ext}`;
     fs.copyFileSync(artwork, path.join(TABLEAUX_DIR, destName));
-    copiedBySlug[slug] = destName;
+    copiedByKey[tableauKey(entry)] = destName;
   }
 
-  return { copiedBySlug, placeholderFile };
+  return { copiedByKey, placeholderFile };
 }
 
-function buildManifest(slugs, copiedBySlug, placeholderFile) {
-  const artworks = slugs.map((slug, index) => {
-    const file = copiedBySlug[slug] ?? placeholderFile;
+function buildManifest(siteEntries, copiedByKey, placeholderFile) {
+  const artworks = siteEntries.map((entry, index) => {
+    const key = tableauKey(entry);
+    const file = copiedByKey[key] ?? placeholderFile;
     const isPlaceholder = file === placeholderFile;
-    const siteDir = path.join(SITES_DIR, slug);
-    const htmlPath = path.join(siteDir, 'index.html');
+    const htmlPath = path.join(entry.siteDir, 'index.html');
     const siteExists = fs.existsSync(htmlPath);
-    const initial = toInitial(slug.split('-')[0]);
+    const initial = toInitial(entry.slug.split('-')[0]);
 
     let title = isPlaceholder ? `Projet de ${initial}.` : `Œuvre de ${initial}.`;
     let original = isPlaceholder ? 'Tableau non fourni' : 'Tableau original';
@@ -261,14 +319,15 @@ function buildManifest(slugs, copiedBySlug, placeholderFile) {
       id: `2025-${index + 1}`,
       src: `/projets/chasse-aux-renards/edition_2025_2026/tableaux/${encodeURIComponent(file)}`,
       file,
-      slug,
+      slug: entry.slug,
+      level: entry.level,
       artist: initial,
       title,
       original,
       story,
       isPlaceholder,
       siteUrl: siteExists
-        ? `/projets/chasse-aux-renards/edition_2025_2026/sites/${slug}/index.html`
+        ? `/projets/chasse-aux-renards/edition_2025_2026/sites/${entry.level}/${entry.slug}/index.html`
         : null,
     };
   });
@@ -276,9 +335,13 @@ function buildManifest(slugs, copiedBySlug, placeholderFile) {
   const manifestPath = path.join(DEST, 'manifest.json');
   fs.writeFileSync(manifestPath, JSON.stringify(artworks, null, 2), 'utf8');
 
+  const secondes = artworks.filter((a) => a.level === 'secondes').length;
+  const troisieme = artworks.filter((a) => a.level === '3e').length;
   const withImage = artworks.filter((a) => !a.isPlaceholder).length;
   const placeholders = artworks.filter((a) => a.isPlaceholder).length;
-  console.log(`Manifest: ${artworks.length} œuvres (${withImage} tableaux, ${placeholders} placeholders)`);
+  console.log(
+    `Manifest: ${artworks.length} œuvres (secondes: ${secondes}, 3e: ${troisieme}, ${withImage} tableaux, ${placeholders} placeholders)`
+  );
 }
 
 function main() {
@@ -287,15 +350,10 @@ function main() {
     process.exit(1);
   }
 
-  const slugs = fs
-    .readdirSync(SITES_DIR, { withFileTypes: true })
-    .filter((e) => e.isDirectory() && !SKIP_NAMES.test(e.name))
-    .map((e) => e.name)
-    .sort((a, b) => a.localeCompare(b, 'fr'));
-
-  sanitizeAllSites(slugs);
-  const { copiedBySlug, placeholderFile } = rebuildTableaux(slugs);
-  buildManifest(slugs, copiedBySlug, placeholderFile);
+  const siteEntries = listSiteEntries();
+  sanitizeAllSites(siteEntries);
+  const { copiedByKey, placeholderFile } = rebuildTableaux(siteEntries);
+  buildManifest(siteEntries, copiedByKey, placeholderFile);
 }
 
 main();

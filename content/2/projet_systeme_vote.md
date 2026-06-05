@@ -8,9 +8,6 @@ badgeId: premiere_projet_vote
 prerequisites: []
 ---
 
-import ExerciseTabs from '../../components/interactive/ExerciseTabs';
-import { Enonce } from '../../components/interactive/ExerciseTabs';
-
 # 🗳️ Projet - Simulateur de Système de Vote
 
 Dans ce projet, nous allons programmer un système de dépouillement de vote. Nous verrons que le mode de scrutin (la règle du jeu) peut changer le vainqueur, même avec les mêmes votes !

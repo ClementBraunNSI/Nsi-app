@@ -5,6 +5,7 @@ level: TNSI
 order: 60
 chapter: Bases de Données
 icon: "\U0001F4BE"
+badgeId: terminale_sql_cours
 prerequisites:
   - bdd_modele_relationnel
 ---
@@ -153,6 +154,31 @@ SELECT e.nom, e.prenom, n.matiere, n.note
 FROM etudiants e, notes n
 WHERE e.id = n.etudiant_id;
 ```
+
+## 5. Jointures (`JOIN`)
+
+La syntaxe avec virgule dans le `FROM` (jointure implicite) fonctionne, mais on préfère **`JOIN`** pour la lisibilité :
+
+```sql
+-- INNER JOIN : uniquement les lignes qui ont une correspondance des deux côtés
+SELECT e.nom, e.prenom, n.matiere, n.note
+FROM etudiants e
+INNER JOIN notes n ON e.id = n.etudiant_id;
+
+-- LEFT JOIN : tous les étudiants, même sans note
+SELECT e.nom, n.matiere, n.note
+FROM etudiants e
+LEFT JOIN notes n ON e.id = n.etudiant_id;
+```
+
+| Type | Résultat |
+| --- | --- |
+| `INNER JOIN` | Intersection : lignes appariées |
+| `LEFT JOIN` | Toutes les lignes de la table de gauche + correspondances à droite |
+| `RIGHT JOIN` | Symétrique de `LEFT JOIN` |
+
+!!! tip "Programme Terminale"
+    Savoir lire et écrire un `JOIN` sur deux tables liées par une clé étrangère est attendu à l'épreuve pratique.
 
 !!! info "Bonnes pratiques"
     - Toujours spécifier les colonnes dans INSERT

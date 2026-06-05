@@ -9,9 +9,6 @@ prerequisites:
   - projet_simulation_propagation
 ---
 
-import ExerciseTabs from '../../components/interactive/ExerciseTabs';
-import { Enonce } from '../../components/interactive/ExerciseTabs';
-
 # 🏦 Projet - Application Bancaire Simple
 
 Le but de ce projet est de créer une application bancaire simple en utilisant Python.

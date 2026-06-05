@@ -7,6 +7,7 @@ level: TNSI
 order: 85
 chapter: Langages et Programmation
 icon: "\U0001F40D"
+badgeId: terminale_listes_comp
 prerequisites:
   - prog_modularite_mise_au_point
 ---

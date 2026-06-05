@@ -116,9 +116,9 @@ export default function ExperimentalLab() {
               <div className="p-6 border border-slate-100 rounded-xl bg-slate-50">
                 <p className="text-xs text-slate-400 uppercase font-bold mb-2">Exemple 2 : Simulation Profonde</p>
                 <Breadcrumbs customItems={[
-                  { label: 'Première', href: '/niveaux/premiere' },
-                  { label: 'Algorithmique', href: '/niveaux/premiere/algo' },
-                  { label: 'Dichotomie', href: '/cours/premiere/algo_dichotomie' }
+                  { label: 'Première NSI', href: '/cours/2' },
+                  { label: 'Algorithmique', href: '/cours/2/algo_dichotomie' },
+                  { label: 'Dichotomie', href: '/cours/2/algo_dichotomie' }
                 ]} />
               </div>
 

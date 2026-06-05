@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, X, Palette, Home, ExternalLink } from 'lucide-react';
-import { artworks2025, type ChasseArtwork2025 } from '@/lib/chasse-edition-2025-2026';
+import {
+  artworks2025,
+  LEVEL_LABELS,
+  type ChasseArtwork2025,
+  type ChasseLevel2025,
+} from '@/lib/chasse-edition-2025-2026';
 
 type EditionTab = '2024-2025' | '2025-2026';
 
@@ -146,17 +151,33 @@ export default function ChasseAuxRenards() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [activeEdition, setActiveEdition] = useState<EditionTab>('2025-2026');
+  const [activeLevel2025, setActiveLevel2025] = useState<ChasseLevel2025>('secondes');
   const [selected2025, setSelected2025] = useState<ChasseArtwork2025 | null>(null);
   const [siteViewerOpen, setSiteViewerOpen] = useState(false);
 
+  const artworks2025ByLevel = useMemo(
+    () => artworks2025.filter((art) => art.level === activeLevel2025),
+    [activeLevel2025]
+  );
+
+  const countByLevel = useMemo(
+    () => ({
+      secondes: artworks2025.filter((a) => a.level === 'secondes').length,
+      '3e': artworks2025.filter((a) => a.level === '3e').length,
+    }),
+    []
+  );
+
   const editionLength =
-    activeEdition === '2024-2025' ? artworks2024.length : artworks2025.length;
+    activeEdition === '2024-2025' ? artworks2024.length : artworks2025ByLevel.length;
 
   const nextSlide = useCallback(() => {
+    if (editionLength === 0) return;
     setCurrentIndex((prev) => (prev + 1) % editionLength);
   }, [editionLength]);
 
   const prevSlide = useCallback(() => {
+    if (editionLength === 0) return;
     setCurrentIndex((prev) => (prev - 1 + editionLength) % editionLength);
   }, [editionLength]);
 
@@ -165,7 +186,13 @@ export default function ChasseAuxRenards() {
     setSiteViewerOpen(false);
     setSelected2025(null);
     setIsImageModalOpen(false);
-  }, [activeEdition]);
+  }, [activeEdition, activeLevel2025]);
+
+  useEffect(() => {
+    if (currentIndex >= editionLength && editionLength > 0) {
+      setCurrentIndex(0);
+    }
+  }, [currentIndex, editionLength]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -184,7 +211,7 @@ export default function ChasseAuxRenards() {
   }, [nextSlide, prevSlide]);
 
   const currentArtwork2024 = artworks2024[currentIndex];
-  const currentArtwork2025 = artworks2025[currentIndex];
+  const currentArtwork2025 = artworks2025ByLevel[currentIndex];
 
   const openArtwork2025 = (artwork: ChasseArtwork2025) => {
     setSelected2025(artwork);
@@ -218,6 +245,26 @@ export default function ChasseAuxRenards() {
             >
               Édition 2025-2026
             </button>
+            {activeEdition === '2025-2026' && (
+              <>
+                <span className="text-slate-300">|</span>
+                {(['secondes', '3e'] as const).map((level) => (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() => setActiveLevel2025(level)}
+                    className={`px-2 py-1 rounded-md transition-colors ${
+                      activeLevel2025 === level
+                        ? 'bg-orange-100 text-orange-600'
+                        : 'text-slate-500 hover:text-orange-500'
+                    }`}
+                  >
+                    {LEVEL_LABELS[level]}
+                    <span className="ml-1 opacity-70">({countByLevel[level]})</span>
+                  </button>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -233,6 +280,19 @@ export default function ChasseAuxRenards() {
         </div>
 
         <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-slate-100">
+          {activeEdition === '2025-2026' && editionLength === 0 ? (
+            <div className="py-16 text-center">
+              <p className="text-lg font-black text-slate-800 mb-2">
+                {LEVEL_LABELS[activeLevel2025]} — édition 2025-2026
+              </p>
+              <p className="text-slate-500 text-sm max-w-md mx-auto">
+                {activeLevel2025 === '3e'
+                  ? 'Les projets des élèves de 3e seront publiés prochainement.'
+                  : 'Aucun projet disponible pour ce niveau.'}
+              </p>
+            </div>
+          ) : (
+            <>
           <div className="flex justify-between items-center mb-8">
             <button
               type="button"
@@ -297,11 +357,18 @@ export default function ChasseAuxRenards() {
 
             <div className="lg:col-span-2 space-y-6">
               <div>
-                <div className="inline-block px-4 py-1.5 bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-6 border border-orange-100">
-                  Artiste :{' '}
-                  {activeEdition === '2024-2025'
-                    ? currentArtwork2024.artist
-                    : `${currentArtwork2025.artist}.`}
+                <div className="flex flex-wrap items-center gap-2 mb-6">
+                  <div className="inline-block px-4 py-1.5 bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest rounded-full border border-orange-100">
+                    Artiste :{' '}
+                    {activeEdition === '2024-2025'
+                      ? currentArtwork2024.artist
+                      : `${currentArtwork2025.artist}.`}
+                  </div>
+                  {activeEdition === '2025-2026' && currentArtwork2025 && (
+                    <div className="inline-block px-4 py-1.5 bg-slate-100 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-full border border-slate-200">
+                      {LEVEL_LABELS[currentArtwork2025.level]}
+                    </div>
+                  )}
                 </div>
                 <h2 className="text-3xl font-black text-slate-800 mb-4 leading-tight">
                   {activeEdition === '2024-2025'
@@ -359,7 +426,7 @@ export default function ChasseAuxRenards() {
                     <Image src={art.src} alt={art.title} fill className="object-cover" unoptimized />
                   </button>
                 ))
-              : artworks2025.map((art, idx) => (
+              : artworks2025ByLevel.map((art, idx) => (
                   <button
                     key={art.id}
                     type="button"
@@ -380,6 +447,8 @@ export default function ChasseAuxRenards() {
                   </button>
                 ))}
           </div>
+            </>
+          )}
         </div>
       </main>
 

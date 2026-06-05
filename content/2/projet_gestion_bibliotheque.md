@@ -9,9 +9,6 @@ prerequisites:
   - projet_tournoi_esport
 ---
 
-import ExerciseTabs from '../../components/interactive/ExerciseTabs';
-import { Enonce } from '../../components/interactive/ExerciseTabs';
-
 # 📚 Projet - Système de Gestion de Bibliothèque Numérique
 
 Le but de ce projet est de créer un système en Python pour gérer une collection de livres numériques.

@@ -6,6 +6,7 @@ description: >-
 level: premiere
 chapter: Introduction à Python
 icon: "\U0001F40D"
+badgeId: premiere_python_fonctions
 prerequisites:
   - python_types_base
 ---
