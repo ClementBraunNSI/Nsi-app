@@ -323,5 +323,83 @@
     "story": "Ce tableau faisant partie d'une longue série de tableaux représente un renard un matin à l'aube, se fondant un peu dans le décor. Cette oeuvre, unique car étant l'une des rares représentant un renard. De plus,la raison de cette oeuvre est très spéciale:effectivement,la légende raconte qu'Edvard Munch avait peint son tableau un matin après avoir été cherché du pain. En rentrant chez lui par le chemin habituel, il aurait vu un renard , affolé après s'être vu dans l'eau le matin au réveil.",
     "isPlaceholder": false,
     "siteUrl": "/projets/chasse-aux-renards/edition_2025_2026/sites/secondes/zoe/index.html"
+  },
+  {
+    "id": "2025-26",
+    "src": "/projets/chasse-aux-renards/edition_2025_2026/tableaux/tableau_3e_emma.jpg",
+    "file": "tableau_3e_emma.jpg",
+    "slug": "emma",
+    "level": "3e",
+    "artist": "E",
+    "title": "La Renarde à la perle",
+    "original": "La Jeune Fille à la perle\"-Johannes Vermeer, 1665",
+    "story": "Une renarde qui rêvait de devenir célèbre, s’habillait tous les jours comme une grande dame de la haute société mais ne parvint jamais à attirer l’attention. Lorsqu’un jour elle trouva au bord de l’océan une perle aussi blanche que la neige. Elle la mit en guise de boucle d’oreille et soudain tous regards se tournèrent vers elle. Elle fit la couverture de plusieurs magazines et a été représenté dans de nombreux tableaux dont le plus connu « La Renarde à la perle ».",
+    "isPlaceholder": false,
+    "siteUrl": "/projets/chasse-aux-renards/edition_2025_2026/sites/3e/emma/index.html"
+  },
+  {
+    "id": "2025-27",
+    "src": "/projets/chasse-aux-renards/edition_2025_2026/tableaux/tableau_3e_fatima.jpeg",
+    "file": "tableau_3e_fatima.jpeg",
+    "slug": "fatima",
+    "level": "3e",
+    "artist": "F",
+    "title": "Portrait de la journaliste renarde",
+    "original": "Portrait de la journaliste Sylvia von Harden, Otto dix, 1926",
+    "story": "Le portrait de la journaliste, représente une journaliste de l'époque appelée Sylvia von Harden. Ce tableau fait parti des Expressionnistes puis de la Nouvelle Objectivité",
+    "isPlaceholder": false,
+    "siteUrl": "/projets/chasse-aux-renards/edition_2025_2026/sites/3e/fatima/index.html"
+  },
+  {
+    "id": "2025-28",
+    "src": "/projets/chasse-aux-renards/edition_2025_2026/tableaux/tableau_3e_marie.png",
+    "file": "tableau_3e_marie.png",
+    "slug": "marie",
+    "level": "3e",
+    "artist": "M",
+    "title": "Les renards fondants",
+    "original": "persistance de la mémoire - Salvador Dalí - 1931",
+    "story": "La Persistance de la Mémoire est un tableau peint par Salvador Dalí en 1931 souvent appelé montres molles. C’est une huile sur toile surréaliste mesurant 24x33 cm qui est exposé a New York au Museum of Modern Art",
+    "isPlaceholder": false,
+    "siteUrl": "/projets/chasse-aux-renards/edition_2025_2026/sites/3e/marie/index.html"
+  },
+  {
+    "id": "2025-29",
+    "src": "/projets/chasse-aux-renards/edition_2025_2026/tableaux/tableau_3e_sabah.png",
+    "file": "tableau_3e_sabah.png",
+    "slug": "sabah",
+    "level": "3e",
+    "artist": "S",
+    "title": "Renard sous le soleil couchant",
+    "original": "Impression, soleil levant - Claude Monet - 13 novembre 1872",
+    "story": "Le renard esaye de chercher d'autre renard pour parler avec eux. Mais le renard n'en aperçoit aucun et il se rend compte qu'il n'y a personne. Et du coup le renard se sent seul parce qu'il a personne à qui parler.",
+    "isPlaceholder": false,
+    "siteUrl": "/projets/chasse-aux-renards/edition_2025_2026/sites/3e/sabah/index.html"
+  },
+  {
+    "id": "2025-30",
+    "src": "/projets/chasse-aux-renards/edition_2025_2026/tableaux/tableau_3e_sarah.jpg",
+    "file": "tableau_3e_sarah.jpg",
+    "slug": "sarah",
+    "level": "3e",
+    "artist": "S",
+    "title": "Le bassin du Renard aux nymphéas",
+    "original": "Tableau original",
+    "story": "Au bord d’un lac couvert de nymphéas, là où l’eau brillait comme un miroir sous le soleil du matin, vivait un petit renard. Son terrier se cachait derrière de grands roseaux, tout près d’un vieux saule qui penchait doucement ses branches vers l’eau. Le lac ressemblait à un tableau vivant : des fleurs roses et blanches flottaient calmement à la surface, des libellules bleues dansaient dans l’air, et les reflets du ciel se mélangeaient aux couleurs des nénuphars comme dans un rêve. on pouvait voir un petit renard nager doucement entre les nymphéas, sous la lumière paisible du lac.",
+    "isPlaceholder": false,
+    "siteUrl": "/projets/chasse-aux-renards/edition_2025_2026/sites/3e/sarah/index.html"
+  },
+  {
+    "id": "2025-31",
+    "src": "/projets/chasse-aux-renards/edition_2025_2026/tableaux/tableau_3e_suzie.png",
+    "file": "tableau_3e_suzie.png",
+    "slug": "suzie",
+    "level": "3e",
+    "artist": "S",
+    "title": "Le renard consolateur",
+    "original": "La femme qui pleure - Pablo Picasso - 1937",
+    "story": "La Femme qui pleure de Pablo Picasso est une protestation contre le bombardement de Guernica. Ce tableau, achevé en 1937, est une expression vibrante de la douleur ressentie en ces temps d'horreur. les yeux noirs perçants expriment la détresse d'une femme.",
+    "isPlaceholder": false,
+    "siteUrl": "/projets/chasse-aux-renards/edition_2025_2026/sites/3e/suzie/index.html"
   }
 ]
