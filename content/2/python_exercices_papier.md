@@ -1,6 +1,6 @@
 ---
 title: 'Exercices : Listes et tuples'
-description: 'Cours sur Exercices : Listes et tuples'
+description: "Fiche d'exercices papier sur les listes et tuples"
 level: premiere
 chapter: Structures de données linéaires
 icon: "\U0001F4DD"
