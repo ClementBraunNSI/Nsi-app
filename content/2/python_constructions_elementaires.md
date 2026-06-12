@@ -87,6 +87,8 @@ else:
     print('Vous êtes mineur')
 ```
 
+> **Pour aller plus loin :** entraînez-vous avec la fiche [Exercices : Les Conditions](/cours/2/python_exercices_conditions).
+
 ## 🔄 Boucles
 
 ### Boucle for

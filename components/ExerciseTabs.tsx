@@ -20,23 +20,98 @@ const LEVEL_MAP: Record<string, { label: string; code: string }> = {
   'SIO': { label: 'BTS SIO', code: '4' }
 };
 
-type ExerciseDifficulty = 'Introduction' | 'Facile' | 'Moyen' | 'Difficile' | 'Autres';
+const DIFFICULTY_LEVELS = [
+  'Introduction',
+  'Facile',
+  'Moyen',
+  'Avancé',
+  'Difficile',
+  'Expert',
+] as const;
 
-function getExerciseDifficulty(label: string): ExerciseDifficulty {
-  const raw = label.toLowerCase();
-  const left = raw.split('-')[0].trim();
+type ExerciseDifficulty = (typeof DIFFICULTY_LEVELS)[number];
 
-  if (raw.includes('introduction') || left.includes('intro')) return 'Introduction';
+const DIFFICULTY_STYLES: Record<ExerciseDifficulty, { active: string; idle: string }> = {
+  Introduction: {
+    active: 'bg-sky-500 text-white border-sky-500 shadow-[0_16px_28px_-18px_rgba(14,165,233,0.95)]',
+    idle: 'hover:bg-sky-50 hover:border-sky-200 hover:text-sky-700',
+  },
+  Facile: {
+    active: 'bg-emerald-500 text-white border-emerald-500 shadow-[0_16px_28px_-18px_rgba(16,185,129,0.95)]',
+    idle: 'hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700',
+  },
+  Moyen: {
+    active: 'bg-amber-500 text-white border-amber-500 shadow-[0_16px_28px_-18px_rgba(245,158,11,0.95)]',
+    idle: 'hover:bg-amber-50 hover:border-amber-200 hover:text-amber-700',
+  },
+  Avancé: {
+    active: 'bg-orange-500 text-white border-orange-500 shadow-[0_16px_28px_-18px_rgba(249,115,22,0.95)]',
+    idle: 'hover:bg-orange-50 hover:border-orange-200 hover:text-orange-700',
+  },
+  Difficile: {
+    active: 'bg-rose-500 text-white border-rose-500 shadow-[0_16px_28px_-18px_rgba(244,63,94,0.95)]',
+    idle: 'hover:bg-rose-50 hover:border-rose-200 hover:text-rose-700',
+  },
+  Expert: {
+    active: 'bg-violet-600 text-white border-violet-600 shadow-[0_16px_28px_-18px_rgba(124,58,237,0.95)]',
+    idle: 'hover:bg-violet-50 hover:border-violet-200 hover:text-violet-700',
+  },
+};
+
+function normalizeDifficultyText(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+function extractSectionNumber(label: string, id?: string): number | null {
+  const fromLabel = label.match(/^(\d+)\./);
+  if (fromLabel) return Number(fromLabel[1]);
+
+  const fromId = id?.match(/-(\d+)-\d+$/);
+  if (fromId) return Number(fromId[1]);
+
+  return null;
+}
+
+function difficultyFromSection(section: number): ExerciseDifficulty {
+  if (section <= 1) return 'Introduction';
+  if (section === 2) return 'Facile';
+  if (section === 3) return 'Moyen';
+  if (section === 4) return 'Avancé';
+  if (section === 5) return 'Difficile';
+  return 'Expert';
+}
+
+function getExerciseDifficulty(label: string, id?: string): ExerciseDifficulty {
+  const raw = normalizeDifficultyText(label);
+
+  if (raw.includes('introduction') || /\bintro\b/.test(raw)) return 'Introduction';
+  if (raw.includes('expert')) return 'Expert';
   if (raw.includes('difficile') || raw.includes('hard')) return 'Difficile';
-  if (raw.includes('moyen') || raw.includes('intermédiaire') || raw.includes('intermediaire') || raw.includes('medium') || left.includes('med')) return 'Moyen';
+  if (raw.includes('avance') || raw.includes('advanced')) return 'Avancé';
+  if (
+    raw.includes('moyen') ||
+    raw.includes('intermediaire') ||
+    raw.includes('medium') ||
+    /\bmed\b/.test(raw)
+  ) {
+    return 'Moyen';
+  }
   if (raw.includes('facile') || raw.includes('easy')) return 'Facile';
-  return 'Autres';
+
+  const section = extractSectionNumber(label, id);
+  if (section !== null) return difficultyFromSection(section);
+
+  return 'Introduction';
 }
 
 function cleanExerciseLabel(label: string): string {
   return label
-    .replace(/\((Introduction|Facile|Moyen|Difficile|Intermédiaire|Intermediaire)\)/gi, '')
-    .replace(/^(Introduction|Facile|Moyen|Difficile|Easy|Medium|Med|Hard)\s*/i, '')
+    .replace(/\[(Introduction|Facile|Moyen|Avancé|Difficile|Expert)\]/gi, '')
+    .replace(/\((Introduction|Facile|Moyen|Avancé|Difficile|Expert|Intermédiaire|Intermediaire)\)/gi, '')
+    .replace(/^(Introduction|Facile|Moyen|Avancé|Difficile|Expert|Easy|Medium|Med|Hard)\s*[-–]?\s*/i, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -338,15 +413,34 @@ export function ExerciseTabs({
   const [showModal, setShowModal] = useState(false);
   const [hasBadge, setHasBadge] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
-  const categories = Array.from(new Set(childrenArray.map(c => getExerciseDifficulty((c.props.label || '').toString()))));
-  const [activeGroup, setActiveGroup] = useState(categories.includes('Introduction') ? 'Introduction' : (categories[0] || 'Tous'));
-  const filteredChildren = childrenArray.filter(c => {
-    const cat = getExerciseDifficulty((c.props.label || '').toString());
-    return cat === activeGroup;
-  });
+
+  const difficultyByChild = React.useMemo(() => {
+    const map = new Map<string, ExerciseDifficulty>();
+    childrenArray.forEach((child) => {
+      const label = (child.props.label || '').toString();
+      map.set(child.props.id, getExerciseDifficulty(label, child.props.id));
+    });
+    return map;
+  }, [childrenArray]);
+
+  const categories = React.useMemo(() => {
+    const present = new Set(childrenArray.map((child) => difficultyByChild.get(child.props.id)!));
+    return DIFFICULTY_LEVELS.filter((level) => present.has(level));
+  }, [childrenArray, difficultyByChild]);
+
+  const [activeGroup, setActiveGroup] = useState<ExerciseDifficulty>('Introduction');
+
+  useEffect(() => {
+    if (categories.length > 0 && !categories.includes(activeGroup)) {
+      setActiveGroup(categories[0]);
+    }
+  }, [categories, activeGroup]);
+
+  const filteredChildren = childrenArray.filter((child) => difficultyByChild.get(child.props.id) === activeGroup);
+
   useEffect(() => {
     const first = filteredChildren[0]?.props.id || childrenArray[0]?.props.id;
-    if (first && first !== activeTab) setActiveTab(first);
+    if (first) setActiveTab(first);
   }, [activeGroup, childrenArray.length]);
 
   useEffect(() => {
@@ -519,26 +613,36 @@ export function ExerciseTabs({
 
       {/* ProgressBar removed as requested */}
 
-      <div className="mb-5 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_18px_42px_-34px_rgba(15,23,42,0.55)]">
+      <div className="sticky top-4 z-20 mb-5 overflow-hidden rounded-[2rem] border border-slate-200 bg-white/95 shadow-[0_18px_42px_-34px_rgba(15,23,42,0.55)] backdrop-blur">
         <div className="border-b border-slate-100 bg-slate-50/80 px-5 py-4">
-          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">Choisir une difficulté</p>
-          <p className="mt-1 text-sm text-slate-500">Sélectionne d'abord un niveau, puis l'exercice à résoudre.</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">Niveaux de difficulté</p>
+          <p className="mt-1 text-sm text-slate-500">
+            Introduction, Facile, Moyen, Avancé, Difficile, Expert — puis choisis l'exercice.
+          </p>
         </div>
         <div className="flex flex-wrap gap-2 p-4">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setActiveGroup(cat)}
-              className={`rounded-2xl border px-4 py-3 text-sm font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
-                activeGroup === cat
-                  ? 'bg-orange-500 text-white border-orange-500 shadow-[0_16px_28px_-18px_rgba(249,115,22,0.95)]'
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-orange-50 hover:border-orange-200 hover:text-orange-700'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const count = childrenArray.filter((child) => difficultyByChild.get(child.props.id) === cat).length;
+            const styles = DIFFICULTY_STYLES[cat];
+            const isActive = activeGroup === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActiveGroup(cat)}
+                className={`rounded-2xl border px-4 py-3 text-sm font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
+                  isActive
+                    ? styles.active
+                    : `bg-white text-slate-600 border-slate-200 ${styles.idle}`
+                }`}
+              >
+                <span>{cat}</span>
+                <span className={`ml-2 text-[10px] font-black uppercase tracking-wider ${isActive ? 'text-white/80' : 'text-slate-400'}`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
