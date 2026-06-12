@@ -9,7 +9,6 @@ import {
   FileText,
   FlaskConical,
   FolderKanban,
-  LayoutGrid,
   X,
   Zap,
 } from "lucide-react";
@@ -56,6 +55,39 @@ const FILTERS: Array<{ key: FilterKind; label: string }> = [
   { key: "tp", label: "TP" },
   { key: "projet", label: "Projet" },
 ];
+
+/** Grille 6 colonnes : alternance large / paire / pleine largeur / triple (style mosaïque). */
+const MOSAIC_SPANS = [
+  "md:col-span-4",
+  "md:col-span-2",
+  "md:col-span-3",
+  "md:col-span-3",
+  "md:col-span-6",
+  "md:col-span-2",
+  "md:col-span-2",
+  "md:col-span-2",
+] as const;
+
+/** Nuances d'orange pâle pour la mosaïque. */
+const MOSAIC_BACKGROUNDS = [
+  "bg-[#FFF7ED]",
+  "bg-[#FFEDD5]",
+  "bg-[#FEF3E8]",
+  "bg-[#FFE8D1]",
+  "bg-[#FFF4E8]",
+  "bg-[#FDEBD6]",
+  "bg-[#FFF0E0]",
+  "bg-[#FFE4CC]",
+] as const;
+
+function mosaicSpan(index: number): string {
+  return MOSAIC_SPANS[index % MOSAIC_SPANS.length];
+}
+
+function mosaicBackground(index: number, isPrivate: boolean): string {
+  if (isPrivate) return "bg-[#FFE0C2]";
+  return MOSAIC_BACKGROUNDS[index % MOSAIC_BACKGROUNDS.length];
+}
 
 const KIND_META: Record<ResourceKind, { label: string; icon: typeof BookOpen; className: string }> = {
   cours: {
@@ -121,59 +153,72 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
 
   return (
     <section className="relative">
-      <div className="pointer-events-none absolute -top-8 -left-6 h-36 w-36 rounded-full bg-orange-200/35 blur-3xl" />
-      <div className="pointer-events-none absolute -top-4 -right-4 h-40 w-40 rounded-full bg-blue-200/30 blur-3xl" />
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 pb-10">
-        {chapters.map((chapter) => (
+      <div className="grid grid-cols-6 gap-4 pb-10">
+        {chapters.map((chapter, index) => {
+          const span = mosaicSpan(index);
+          const titleSize =
+            span === "md:col-span-6"
+              ? "text-2xl sm:text-3xl"
+              : span === "md:col-span-4"
+                ? "text-xl sm:text-2xl"
+                : "text-lg sm:text-xl";
+          const imageSize =
+            span === "md:col-span-4" || span === "md:col-span-6"
+              ? "h-24 w-28 sm:h-32 sm:w-36"
+              : "h-20 w-24 sm:h-24 sm:w-28";
+
+          return (
           <article
             key={chapter.name}
-            className={`group rounded-[1.8rem] border overflow-hidden transition-all duration-300 ${
+            className={`group col-span-6 ${span} overflow-hidden rounded-[1.75rem] border transition-all duration-300 ${
               chapter.isPrivate
-                ? "border-orange-200 bg-orange-50/70 shadow-[0_16px_34px_-24px_rgba(249,115,22,0.55)]"
-                : "border-slate-200 bg-white shadow-[0_14px_30px_-24px_rgba(15,23,42,0.45)] hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_rgba(15,23,42,0.5)]"
-            }`}
+                ? "border-orange-200/80 hover:border-orange-300"
+                : "border-orange-100/70 hover:border-orange-200"
+            } ${mosaicBackground(index, chapter.isPrivate)} hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-28px_rgba(249,115,22,0.15)]`}
           >
             <button
               type="button"
               onClick={() => openChapter(chapter)}
-              className="block h-full w-full text-left"
+              className="flex h-full min-h-[9.5rem] w-full items-stretch justify-between gap-3 p-5 text-left sm:min-h-[10.5rem] sm:gap-4 sm:p-6"
             >
-              <div className="relative h-36 bg-gradient-to-br from-slate-50 via-white to-slate-50/80 p-3">
-                <div className="pointer-events-none absolute -top-8 -right-6 h-24 w-24 rounded-full bg-orange-100/60 blur-2xl" />
+              <div className="flex min-w-0 flex-1 flex-col justify-center pr-2">
+                <div className="mb-2 flex items-center gap-2">
+                  {chapter.isPrivate ? (
+                    <Zap size={15} className="shrink-0 text-orange-500" fill="currentColor" />
+                  ) : null}
+                  <h2
+                    className={`font-black leading-[1.1] tracking-tight ${titleSize} ${
+                      chapter.isPrivate ? "text-orange-900" : "text-slate-900"
+                    }`}
+                  >
+                    {chapter.name}
+                  </h2>
+                </div>
+                <p className="text-sm font-semibold text-slate-500">
+                  {chapter.courses.length} ressource{chapter.courses.length > 1 ? "s" : ""}
+                </p>
+                <span className={`mt-3 inline-flex items-center gap-1 text-xs font-bold text-slate-400 transition-colors ${theme.text}`}>
+                  Ouvrir
+                  <ChevronRight
+                    size={14}
+                    className="transition-transform duration-300 group-hover:translate-x-0.5"
+                  />
+                </span>
+              </div>
+
+              <div className={`relative shrink-0 self-center ${imageSize}`}>
                 <Image
                   src={chapterImageFromData(niveaux, chapter.name)}
                   alt={`Illustration ${chapter.name}`}
                   fill
-                  className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
-                  sizes="(max-width:768px) 100vw, 33vw"
+                  className="object-contain object-right transition-transform duration-300 group-hover:scale-[1.04]"
+                  sizes="(max-width: 768px) 40vw, 20vw"
                 />
-                <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-600 border border-slate-100">
-                  {chapter.courses.length} ressource{chapter.courses.length > 1 ? "s" : ""}
-                </span>
-              </div>
-
-              <div className="p-4">
-                <div className="mb-1 flex items-center justify-between gap-2">
-                  <div className="flex min-w-0 items-center gap-2">
-                    {chapter.isPrivate ? (
-                      <Zap size={16} className="shrink-0 text-orange-500" fill="currentColor" />
-                    ) : (
-                      <LayoutGrid size={16} className="shrink-0 text-slate-500" />
-                    )}
-                    <h2 className={`truncate font-black text-lg leading-tight ${chapter.isPrivate ? "text-orange-700" : "text-slate-900"}`}>
-                      {chapter.name}
-                    </h2>
-                  </div>
-                  <ChevronRight
-                    size={18}
-                    className={`shrink-0 text-slate-400 transition-transform duration-300 group-hover:translate-x-1 ${theme.text}`}
-                  />
-                </div>
-                <p className="text-xs text-slate-500">Ouvrir le chapitre et ses ressources</p>
               </div>
             </button>
           </article>
-        ))}
+          );
+        })}
       </div>
 
       {activeChapter && (

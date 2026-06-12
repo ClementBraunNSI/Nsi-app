@@ -9,12 +9,49 @@ const CONTRIBUTORS = [
   { name: "Mathieu MARCHAND", role: "Lycée Benjamin Franklin", avatar: "🌊", desc: "Enseignant d'informatique à Auray." }
 ];
 
-const TIMELINE = [
-  { year: "2021 - 2022", place: "Lycée Pasteur", city: "Hénin-Beaumont (62)", icon: "🎒" },
-  { year: "2022 - 2024", place: "Lycée Raymond Queneau", city: "Villeneuve-d'Ascq (59)", icon: "🏛️" },
-  { year: "2024 - 2025", place: "Lycée Charles de Gaulle", city: "Vannes (56)", icon: "⛵" },
-  { year: "2025 - 2026", place: "Lycée Paul Duez", city: "Cambrai (59)", icon: "🏫" },
-  { year: "2026 - 2027", place: "Prochaine tanière pédagogique", city: "Nouvelle affectation en préparation", icon: "🧭" },
+type TimelineEstablishment = {
+  place: string;
+  city: string;
+};
+
+type TimelineStep = {
+  year: string;
+  icon: string;
+  establishments: TimelineEstablishment[];
+};
+
+const TIMELINE: TimelineStep[] = [
+  {
+    year: "2021 - 2022",
+    icon: "🎒",
+    establishments: [{ place: "Lycée Pasteur", city: "Hénin-Beaumont (62)" }],
+  },
+  {
+    year: "2022 - 2024",
+    icon: "🏛️",
+    establishments: [{ place: "Lycée Raymond Queneau", city: "Villeneuve-d'Ascq (59)" }],
+  },
+  {
+    year: "2024 - 2025",
+    icon: "⛵",
+    establishments: [{ place: "Lycée Charles de Gaulle", city: "Vannes (56)" }],
+  },
+  {
+    year: "2025 - 2026",
+    icon: "🏫",
+    establishments: [
+      { place: "Lycée Paul Duez", city: "Cambrai (59)" },
+      { place: "Lycée Henri Wallon", city: "Valenciennes (59)" },
+      { place: "Lycée Montebello", city: "Lille (59)" }
+    ],
+  },
+  {
+    year: "2026 - 2027",
+    icon: "🧭",
+    establishments: [
+      { place: "Lycée Paul Duez", city: "Cambrai (59)" },
+    ],
+  },
 ];
 
 export default function AboutPage() {
@@ -32,13 +69,13 @@ export default function AboutPage() {
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 text-orange-600 rounded-full text-xs font-black uppercase tracking-widest mb-6">
-              <GraduationCap size={14} fill="currentColor" /> Enseignant Certifié
+              <GraduationCap size={14} fill="currentColor" /> Enseignant certifié · TZR
             </div>
             <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tight">
               Clément <span className="text-orange-500">Braun</span>
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed mb-8">
-              Enseignant certifié de NSI, mon parcours m'a mené dans des lycées du <span className="font-bold text-slate-800">Nord</span> et du <span className="font-bold text-slate-800">Pas-de-Calais</span> jusqu'aux côtes du <span className="font-bold text-slate-800">Morbihan</span>. 
+              Enseignant certifié de NSI en <span className="font-bold text-slate-800">TZR</span>, mon parcours m'a mené dans des lycées du <span className="font-bold text-slate-800">Nord</span> et du <span className="font-bold text-slate-800">Pas-de-Calais</span> jusqu'aux côtes du <span className="font-bold text-slate-800">Morbihan</span>. Selon les années, j'interviens dans un ou plusieurs établissements.
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <span className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-100 rounded-xl text-sm font-medium text-slate-500 shadow-sm">
@@ -89,7 +126,7 @@ export default function AboutPage() {
       <section className="max-w-7xl mx-auto px-8 py-24">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-black text-slate-900 mb-4">L'itinéraire du renard</h2>
-          <p className="text-slate-500">Un parcours entre terrils, métropole et océan.</p>
+          <p className="text-slate-500">Un parcours entre terrils, métropole et océan — une carte peut regrouper plusieurs lycées sur la même période.</p>
         </div>
 
         <div className="relative">
@@ -113,15 +150,30 @@ export default function AboutPage() {
 
           <div className="space-y-14">
             {TIMELINE.map((step, i) => (
-              <div key={i} className={`flex flex-col md:flex-row items-center gap-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+              <div key={step.year} className={`flex flex-col md:flex-row items-center gap-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                 {/* Bloc Contenu */}
                 <div className="flex-1 w-full md:w-auto">
                   <div className={`relative p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                     <span className="text-orange-500 font-black text-sm uppercase tracking-widest">{step.year}</span>
-                    <h3 className="text-xl font-black text-slate-800 mt-2">{step.place}</h3>
-                    <p className="text-slate-500 flex items-center gap-2 justify-center md:justify-start mt-1">
-                      <MapPin size={14} /> {step.city}
-                    </p>
+                    {step.establishments.length > 1 ? (
+                      <p className={`mt-2 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                        {step.establishments.length} établissements
+                      </p>
+                    ) : null}
+                    <div className={`mt-3 space-y-4 ${i % 2 === 0 ? 'md:items-end' : 'md:items-start'} flex flex-col`}>
+                      {step.establishments.map((establishment) => (
+                        <div
+                          key={`${step.year}-${establishment.place}`}
+                          className={`${step.establishments.length > 1 ? 'rounded-2xl border border-orange-100/80 bg-orange-50/40 px-4 py-3' : ''}`}
+                        >
+                          <h3 className="text-xl font-black text-slate-800">{establishment.place}</h3>
+                          <p className={`text-slate-500 flex items-center gap-2 mt-1 ${i % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
+                            <MapPin size={14} className="shrink-0 text-orange-500" />
+                            <span>{establishment.city}</span>
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

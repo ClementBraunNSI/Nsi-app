@@ -6,7 +6,7 @@ chapter: Structures de données linéaires
 icon: "\U0001F4DD"
 badgeId: premiere_fiche_exercices_papier
 prerequisites:
-  - python_exercices_interactifs
+  - python_exercices_listes
 ---
 
 

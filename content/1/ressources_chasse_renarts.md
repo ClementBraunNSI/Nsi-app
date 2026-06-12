@@ -1,6 +1,6 @@
 ---
 title: 'Ressouces : Fichiers Chasse aux Ren-Arts'
-chapter: Ressources nécessaires
+chapter: Web
 badgeId: seconde_ressources_renards
 meta: 'Durée : Web'
 prerequisites: []

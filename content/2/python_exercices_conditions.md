@@ -397,14 +397,17 @@ assert mot_de_passe_valide("abc1") is False
   <ExerciseSection id="conditions-3-2" label="3.2 [Avancé] - Triangle rectangle">
     <Enonce>
     ### Exercice 3.2 [Avancé] : Triangle rectangle
-    **Écrire une fonction `est_triangle_rectangle` qui prend trois longueurs `a`, `b`, `c` (flottants positifs) et renvoie `True` si elles forment un triangle rectangle (théorème de Pythagore : $a^2 + b^2 = c^2$ en testant les trois combinaisons), `False` sinon.**
+    **Écrire une fonction `est_triangle_rectangle` qui prend trois longueurs `a`, `b`, `c` (flottants positifs) et renvoie `True` si elles forment un triangle rectangle (théorème de Pythagore), `False` sinon. Testez les trois combinaisons possibles pour l'hypoténuse, sans utiliser de liste.**
 
     <Correction>
     ```python
     def est_triangle_rectangle(a: float, b: float, c: float) -> bool:
-        cotes = sorted([a, b, c])
-        petit1, petit2, hypotenuse = cotes
-        return abs(petit1 ** 2 + petit2 ** 2 - hypotenuse ** 2) < 0.0001
+        a2, b2, c2 = a * a, b * b, c * c
+        return (
+            abs(a2 + b2 - c2) < 0.0001
+            or abs(a2 + c2 - b2) < 0.0001
+            or abs(b2 + c2 - a2) < 0.0001
+        )
     ```
     </Correction>
     </Enonce>
@@ -612,9 +615,9 @@ assert quadrant(2, -3) == 4
     def date_valide(jour: int, mois: int, annee: int) -> bool:
         if mois < 1 or mois > 12 or annee < 1:
             return False
-        if mois in (1, 3, 5, 7, 8, 10, 12):
+        if mois == 1 or mois == 3 or mois == 5 or mois == 7 or mois == 8 or mois == 10 or mois == 12:
             max_jour = 31
-        elif mois in (4, 6, 9, 11):
+        elif mois == 4 or mois == 6 or mois == 9 or mois == 11:
             max_jour = 30
         else:
             max_jour = 28
@@ -636,12 +639,15 @@ assert date_valide(29, 2, 2026) is False
     <Enonce>
     ### Exercice 4.4 [Difficile] : Pierre-feuille-ciseaux
     **Écrire une fonction `pfc` qui prend les choix de deux joueurs (`"pierre"`, `"feuille"` ou `"ciseaux"`) et renvoie `1` si le joueur 1 gagne, `2` si le joueur 2 gagne, `0` en cas d'égalité. Renvoie `-1` si un choix est invalide.**
+    *Rappel : on peut aussi tester l'appartenance d'un caractère à une chaîne avec `in` (ex. `"a" in "abc"` → `True`). Ici, validez chaque choix avec des comparaisons `==`.*
 
     <Correction>
     ```python
+    def choix_valide(choix: str) -> bool:
+        return choix == "pierre" or choix == "feuille" or choix == "ciseaux"
+
     def pfc(j1: str, j2: str) -> int:
-        choix = {"pierre", "feuille", "ciseaux"}
-        if j1 not in choix or j2 not in choix:
+        if not choix_valide(j1) or not choix_valide(j2):
             return -1
         if j1 == j2:
             return 0
