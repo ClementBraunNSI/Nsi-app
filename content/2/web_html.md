@@ -8,18 +8,24 @@ badgeId: premiere_langage_html
 prerequisites: []
 ---
 
-
 # Le langage HTML
 
-## Introduction
+## Objectifs
 
-**HTML** (HyperText Markup Language) est le langage de balisage standard utilisé pour créer et structurer le contenu des pages web. Créé par Tim Berners-Lee en 1991, HTML utilise un système de balises pour définir la structure et le contenu d'une page web.
+- Expliquer le rôle du HTML dans une page web.
+- Lire et écrire la structure de base d'un document HTML5.
+- Utiliser les balises sémantiques, de texte, de lien, de liste et de formulaire.
+- Distinguer le contenu (HTML) de la mise en forme (CSS) et du comportement (JS).
 
-## Structure d'un document HTML
+## Idée clé
+
+Le **HTML** (HyperText Markup Language) décrit la **structure** et le **sens** du contenu : titres, paragraphes, liens, images… Ce ne sont pas des instructions de dessin, mais des **balises** que le navigateur interprète pour construire la page.
+
+## Anatomie d'un document
 
 <HtmlStructureExplorer />
 
-Voici la structure de base d'un document HTML :
+Structure minimale :
 
 ```html
 <!DOCTYPE html>
@@ -37,93 +43,101 @@ Voici la structure de base d'un document HTML :
             <ul>
                 <li><a href="#">Accueil</a></li>
                 <li><a href="#">À propos</a></li>
-                <li><a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
-    
+
     <main>
         <section>
             <h2>Section 1</h2>
             <p>Contenu de la section 1.</p>
         </section>
-        
-        <section>
-            <h2>Section 2</h2>
-            <p>Contenu de la section 2.</p>
-        </section>
     </main>
-    
+
     <footer>
-        <p>&copy; 2023 Mon Site Web</p>
+        <p>&copy; 2024 Mon Site Web</p>
     </footer>
 </body>
 </html>
 ```
 
-## Les principales balises HTML
+- `<!DOCTYPE html>` : document HTML5.
+- `<head>` : métadonnées (titre onglet, encodage, CSS) — **pas** le contenu visible.
+- `<body>` : ce que l'utilisateur voit.
 
-Les balises HTML sont organisées en différentes catégories selon leur fonction.
+## Balises essentielles
 
-### Balises de structure
-*   `<!DOCTYPE html>` : Déclare le type de document (HTML5).
-*   `<html>` : Élément racine du document.
-*   `<head>` : Contient les métadonnées (titre, encodage, liens CSS).
-*   `<body>` : Contient le contenu visible de la page.
-*   `<header>`, `<main>`, `<footer>` : Balises sémantiques définissant les grandes zones de la page.
-*   `<section>`, `<article>`, `<nav>` : Balises pour structurer le contenu.
+### Structure sémantique
 
-### Balises de texte
-*   `<h1>` à `<h6>` : Titres de différents niveaux (h1 étant le plus important).
-*   `<p>` : Paragraphe.
-*   `<strong>` : Texte important (généralement affiché en **gras**).
-*   `<em>` : Texte mis en emphase (généralement affiché en *italique*).
+| Balise | Rôle |
+| --- | --- |
+| `<header>`, `<main>`, `<footer>` | Grandes zones de la page |
+| `<nav>` | Navigation |
+| `<section>`, `<article>` | Blocs de contenu |
 
-### Balises de lien et média
-*   `<a href="url">` : Lien hypertexte.
-*   `<img src="image.jpg" alt="description">` : Image.
-*   `<video>`, `<audio>` : Éléments multimédias.
+Utiliser ces balises plutôt que des `<div>` partout : le sens aide l'accessibilité et le référencement.
 
-### Balises de liste
-*   `<ul>` : Liste non ordonnée (à puces).
-*   `<ol>` : Liste ordonnée (numérotée).
-*   `<li>` : Élément de liste.
+### Texte
 
-### Balises de tableau
-*   `<table>` : Définit un tableau.
-*   `<tr>` : Ligne de tableau (Table Row).
-*   `<th>` : Cellule d'en-tête (Table Header).
-*   `<td>` : Cellule de données (Table Data).
+- `<h1>` … `<h6>` : titres (un seul `<h1>` principal en général).
+- `<p>` : paragraphe.
+- `<strong>` : importance (souvent gras) ; `<em>` : emphase (souvent italique).
+
+### Liens, médias, listes
+
+```html
+<a href="https://exemple.fr">Un lien</a>
+<img src="photo.jpg" alt="Description courte">
+<ul><li>puce</li></ul>
+<ol><li>étape 1</li></ol>
+```
+
+L'attribut `alt` d'une image décrit le contenu pour l'accessibilité.
+
+### Tableaux (rappel)
+
+`<table>` → lignes `<tr>` → cellules `<th>` (en-tête) ou `<td>` (donnée).
 
 <WebPreview />
 
-## Formulaires et transmission de données
+## Formulaires
 
-Les formulaires HTML permettent aux utilisateurs d'envoyer des données au serveur. Ils sont définis par la balise `<form>` et contiennent divers éléments interactifs.
-
-### Structure d'un formulaire
+Un formulaire envoie des données au serveur via `<form>`.
 
 ```html
-<form action="/traitement.php" method="post">
+<form action="/traitement" method="post">
     <label for="nom">Nom :</label>
     <input type="text" id="nom" name="nom" required>
-    
+
     <label for="email">Email :</label>
     <input type="email" id="email" name="email" required>
-    
+
     <label for="message">Message :</label>
     <textarea id="message" name="message"></textarea>
-    
+
     <button type="submit">Envoyer</button>
 </form>
 ```
 
-### Attributs importants de la balise `<form>`
-*   **action** : URL où les données du formulaire seront envoyées pour être traitées.
-*   **method** : Méthode HTTP utilisée pour envoyer les données.
-    *   **GET** : Les données sont ajoutées à l'URL (visible, limité en taille).
-    *   **POST** : Les données sont envoyées dans le corps de la requête (invisible, pas de limite de taille).
+- **`action`** : URL de traitement.
+- **`method="get"`** : données dans l'URL (visibles, limitées).
+- **`method="post"`** : données dans le corps de la requête (plus adaptées aux formulaires).
 
-## Suite du parcours Web
+`name` identifie le champ côté serveur ; `id` + `for` lient le label pour l'accessibilité.
 
-Une fois la structure HTML maîtrisée, poursuivez avec [Introduction au CSS](/cours/2/web_css_introduction) pour la mise en forme, puis [Interactions JavaScript](/cours/2/web_javascript_interactions).
+## Piège fréquent
+
+Oublier de fermer une balise, ou mettre du contenu visible dans `<head>`. Autre classique : confondre **structure** (HTML) et **style** (CSS) — ne pas « styler » avec des balises obsolètes comme `<font>`.
+
+## À retenir
+
+- HTML = structure et sémantique ; le navigateur affiche d'après les balises.
+- Document type + `<html>` → `<head>` (méta) + `<body>` (contenu).
+- Préférer les balises sémantiques (`header`, `main`, `nav`…).
+- Liens (`<a>`), images (`<img alt="…">`), listes (`ul`/`ol`/`li`).
+- Formulaire : `action`, `method` (GET/POST), `name` sur les champs.
+- HTML ne remplace ni le CSS ni le JavaScript.
+
+## Pour s'entraîner / Suite
+
+Testez la structure avec l'explorateur et l'aperçu ci-dessus, puis passez à [Introduction au CSS](/cours/2/web_css_introduction) pour la mise en forme, puis [Interactions JavaScript](/cours/2/web_javascript_interactions).

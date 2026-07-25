@@ -107,6 +107,8 @@ const SortingComparator = dynamic(() => import('@/components/interactive/Sorting
 const BinarySearchVisualizer = dynamic(() => import('@/components/interactive/BinarySearchVisualizer'), { loading: () => null });
 const LinearVsBinarySearch = dynamic(() => import('@/components/interactive/LinearVsBinarySearch'), { loading: () => null });
 const PythonPlayground = dynamic(() => import('@/components/interactive/PythonPlayground'), { loading: () => null });
+const CarteGpsPlayground = dynamic(() => import('@/components/interactive/CarteGpsPlayground'), { loading: () => null });
+const MonstersGallery = dynamic(() => import('@/components/interactive/MonstersGallery'), { loading: () => null });
 const CallStackVisualizer = dynamic(() => import('@/components/interactive/CallStackVisualizer'), { loading: () => null });
 const TreeVisualizer = dynamic(() => import('@/components/interactive/TreeVisualizer'), { loading: () => null });
 const GraphVisualizer = dynamic(() => import('@/components/interactive/GraphVisualizer'), { loading: () => null });
@@ -274,6 +276,8 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     BinarySearchVisualizer,
     LinearVsBinarySearch,
     PythonPlayground,
+    CarteGpsPlayground,
+    MonstersGallery,
     CallStackVisualizer,
     TreeVisualizer,
     GraphVisualizer,
@@ -302,7 +306,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
         />
         <Breadcrumbs customItems={[
           { label: 'Cours', href: '/cours' },
-          { label: niveaux.charAt(0).toUpperCase() + niveaux.slice(1), href: `/cours/${niveaux}` },
+          { label: nsiLevelLabel(niveaux), href: `/cours/${niveaux}` },
           { label: data.chapter || 'Cours', href: '#' },
           { label: data.title || slugStr, href: '#' }
         ]} />

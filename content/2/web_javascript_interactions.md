@@ -6,99 +6,105 @@ chapter: Web et Interaction
 icon: ⚡
 badgeId: js_interactions
 prerequisites:
-  - algo_galerie_art
+  - web_html
+  - web_css_introduction
 ---
 
-# ⚡ Interactions Web : JavaScript
+# Interactions Web : JavaScript
 
-## 1. Introduction
+## Objectifs
 
-HTML définit la **structure**, CSS définit l'**apparence**. Le **JavaScript** (JS) est le langage de programmation qui permet de rendre la page **dynamique** et **interactive**.
+- Situer le rôle du JavaScript par rapport au HTML et au CSS.
+- Sélectionner un élément du DOM et modifier son contenu ou son style.
+- Réagir à un événement (`click`, `input`…) avec `addEventListener`.
+- Réaliser un petit script interactif (compteur, miroir de saisie).
 
-> **Note Historique** : Créé en 10 jours par Brendan Eich en 1995, JavaScript est aujourd'hui le langage le plus utilisé au monde pour le web (côté client et serveur).
+## Idée clé
 
-## 2. Syntaxe de base
+Le navigateur expose la page sous forme d'arbre : le **DOM**. Le JavaScript **sélectionne** des nœuds, les **modifie**, et s'**abonne** aux événements utilisateur.
 
-Contrairement au Python, la syntaxe du JavaScript utilise des accolades `{}` pour les blocs de code et des points-virgules `;` (optionnels mais recommandés) à la fin des instructions.
+## HTML, CSS, JS
 
-### Variables
-On utilise `let` pour une variable modifiable et `const` pour une constante.
+| Langage | Rôle |
+| --- | --- |
+| HTML | Structure |
+| CSS | Apparence |
+| JavaScript | Comportement dynamique |
+
+Le JS côté client s'exécute dans le navigateur (créé en 1995 par Brendan Eich ; aujourd'hui omniprésent sur le Web).
+
+## Syntaxe minimale
+
+Blocs avec `{}` ; `let` (modifiable), `const` (constante).
 
 ```javascript
-let score = 0;        // Variable modifiable
-const viesMax = 3;    // Constante (ne peut pas changer)
-let nom = "Alice";    // Chaîne de caractères
-```
+let score = 0;
+const viesMax = 3;
 
-### Fonctions
-```javascript
 function direBonjour(prenom) {
     return "Bonjour " + prenom;
 }
 
-// Appel
 console.log(direBonjour("Thomas"));
 ```
 
-## 3. Le DOM (Document Object Model)
+## Le DOM
 
-Pour que le JavaScript puisse modifier la page HTML, le navigateur crée une représentation de la page sous forme d'arbre : le **DOM**.
-
-### 🔍 Sélectionner un élément
-Pour agir sur un élément HTML, il faut d'abord le "récupérer".
+### Sélectionner
 
 ```javascript
-// Par son ID (le plus rapide)
 let titre = document.getElementById("mon-titre");
-
-// Par sélecteur CSS (plus polyvalent)
 let bouton = document.querySelector(".btn-rouge");
 ```
 
-### ✏️ Modifier le contenu
-```javascript
-// Changer le texte
-titre.textContent = "Nouveau Titre !";
-
-// Changer le HTML (attention aux failles XSS !)
-titre.innerHTML = "Titre en <em>Italique</em>";
-```
-
-### 🎨 Modifier le style
-On accède aux propriétés CSS via l'objet `.style`. Notez le CamelCase (`backgroundColor` au lieu de `background-color`).
+### Modifier contenu et style
 
 ```javascript
+titre.textContent = "Nouveau titre";
 titre.style.color = "orange";
-titre.style.fontSize = "24px";
+titre.style.fontSize = "24px"; // camelCase : backgroundColor, etc.
 ```
 
-## 4. Les Événements
+`innerHTML` interprète du HTML : à éviter avec du texte utilisateur (risque XSS). Préférer `textContent` quand c'est possible.
 
-Un événement est un signal envoyé par le système : un clic, un appui sur une touche, le chargement de la page, etc.
-On utilise la méthode `addEventListener` pour "écouter" ces signaux.
+## Événements
 
 ```javascript
 let monBouton = document.getElementById("btn-action");
 
-function reaction() {
+monBouton.addEventListener("click", function() {
     alert("Bouton cliqué !");
-}
-
-// Syntaxe : élément.addEventListener(type_événement, fonction_a_lancer)
-monBouton.addEventListener("click", reaction);
+});
 ```
 
-### Principaux événements
+| Événement | Quand |
+| --- | --- |
+| `click` | Clic |
+| `mouseover` | Survol |
+| `keydown` | Touche enfoncée |
+| `input` | Champ qui change |
+| `submit` | Envoi de formulaire |
 
-| Événement | Description |
-|-----------|-------------|
-| `click` | Clic de souris sur l'élément |
-| `mouseover` | La souris passe au-dessus de l'élément |
-| `keydown` | Une touche du clavier est enfoncée |
-| `submit` | Un formulaire est envoyé |
-| `input` | La valeur d'un champ texte change |
+Schéma mental : **sélectionner → écouter → réagir**.
 
-## 5. Exercices Pratiques
+## Piège fréquent
+
+Appeler `getElementById` **avant** que le HTML existe (script trop haut dans la page) : l'élément est `null`. Placer le script en fin de `<body>`, ou écouter l'événement `DOMContentLoaded`. Autre erreur : oublier que `.value` lit un champ, pas `.textContent`.
+
+## À retenir
+
+- JS = interactions ; DOM = représentation de la page.
+- `getElementById` / `querySelector` pour cibler.
+- `textContent` et `.style` pour mettre à jour.
+- `addEventListener(type, fonction)` pour réagir.
+- `input` + `.value` pour suivre une saisie.
+- Toujours vérifier que l'élément existe avant de l'utiliser.
+
+## Pour s'entraîner / Suite
+
+Entraînez-vous avec les exercices ci-dessous. Ensuite, le cours [Web et HTTP](/cours/2/web_protocoles) situe ces pages dans le modèle client-serveur.
+
+## Exercices pratiques
 
 <ExerciseTabs courseId="js_interactions" courseTitle="Le Compteur Interactif">
 

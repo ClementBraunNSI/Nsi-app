@@ -7,89 +7,70 @@ icon: "🗄️"
 badgeId: "premiere_intro_bases_donnees_sql"
 ---
 
-
 # Introduction aux bases de données et au langage SQL
 
-## Introduction aux Bases de Données
+## Objectifs
 
-### Qu'est-ce qu'une Base de Données ?
+- Expliquer ce qu'est une base de données relationnelle (tables, lignes, colonnes).
+- Distinguer **projection** (`SELECT` colonnes) et **sélection** (`WHERE`).
+- Écrire des requêtes `SELECT … FROM …` simples, avec ou sans `WHERE`.
+- Pratiquer avec l'éditeur intégré et une enquête SQL.
 
-Une **base de données** est un ensemble organisé d'informations structurées de manière à pouvoir être facilement accessible, gérée et mise à jour.
-On peut associer cela à un grand tableau organisé en colonnes, nommées attributs (à l'instar des fichiers CSV).
+## Idée clé
 
-### Pourquoi utiliser une Base de Données ?
+Une base relationnelle organise les données en **tables**. Une requête SQL **extrait** un résultat : on choisit **quelles colonnes** garder (**projection**) et **quelles lignes** garder (**sélection**).
 
-Le but principal des bases de données est de faciliter :
+## Pourquoi une base de données ?
 
-*   **Le stockage organisé** : Les informations sont rangées de façon structurée, souvent sous forme de tables, ce qui facilite la gestion.
-*   **La recherche efficace** : On peut rapidement trouver des données spécifiques grâce à des requêtes.
-*   **La maintenance** : On peut mettre à jour ou supprimer des informations de façon sécurisée.
-*   **L'intégrité et la sécurité des données** : Les bases de données relationnelles assurent que les données sont fiables et protégées.
+Par rapport à un simple fichier, une BDD facilite le stockage structuré, la recherche, la mise à jour et le contrôle d'intégrité. On peut la comparer à des **tableaux** (comme en CSV), mais gérés par un moteur de requêtes.
 
-## Historique des Bases de Données Relationnelles
+En 1970, **Edgar F. Codd** propose le **modèle relationnel** : tables reliées par des relations logiques.
 
-### Origines
+### Table = lignes + colonnes
 
-Dans les années 1960, les bases de données étaient très basiques et souvent peu optimisées.
-En 1970, **Edgar F. Codd** propose le **modèle relationnel**. Son idée était de simplifier la gestion des données en les organisant sous forme de tables reliées par des relations logiques.
-
-### Le modèle relationnel
-
-Dans ce modèle, les données sont organisées en **tables**.
-Une table est constituée de :
-
-*   **Lignes** (ou enregistrements) : Chaque ligne représente un élément unique (par exemple, un étudiant).
-*   **Colonnes** (ou attributs) : Chaque colonne décrit une caractéristique de cet élément (par exemple, le nom, l'âge, la classe).
-
-#### Exemple d'une table `Etudiants`
+- **Ligne** (enregistrement) : un objet (un étudiant…).
+- **Colonne** (attribut) : une caractéristique (nom, âge…).
 
 <SqlTable 
   tableName="Etudiants" 
   initialSql="CREATE TABLE Etudiants (id INTEGER PRIMARY KEY, nom TEXT, age INTEGER, classe TEXT); INSERT INTO Etudiants VALUES (1, 'Alice', 17, 'Terminale'); INSERT INTO Etudiants VALUES (2, 'Bob', 16, 'Première'); INSERT INTO Etudiants VALUES (3, 'Charlie', 18, 'Terminale');"
 />
 
-## Introduction au SQL
+## SQL : parler à la base
 
-### Qu'est-ce que le SQL ?
+Le **SQL** (Structured Query Language) sert à interroger et manipuler ces tables. Une **requête** produit en général une table résultat.
 
-Le **SQL** (Structured Query Language) est le langage utilisé pour interagir avec une base de données relationnelle. Il permet de **poser des questions** à la base de données et d'obtenir des réponses sous forme de tables. On parle de **requêtes SQL** pour désigner ces questions.
+### Projection : choisir les colonnes (`SELECT`)
 
-Le SQL permet de réaliser des requêtes de demande de données suivant des critères plus facilement et de manière plus sécurisée en communiquant avec une base de données normalisée.
-
-### Projeter des données : SELECT
-
-La commande `SELECT` permet de **récupérer des lignes spécifiques** (appelés **enregistrements**) d'une table.
-
-!!! warning "Attention"
-    Il ne faut pas confondre la commande SELECT avec la sélection. Sélectionner des données revient à réaliser une projection **avec des contraintes**.
-
-#### Exemple : Obtenir toutes les informations des étudiants
+La **projection** consiste à ne garder que certaines **colonnes**.
 
 ```sql
 SELECT * FROM Etudiants;
 ```
-`SELECT *` signifie "retourner toutes les colonnes". `FROM Etudiants` indique que l'on travaille avec la table Etudiants.
 
-#### Exemple : Afficher uniquement le nom et l'âge
+`*` = toutes les colonnes. Pour n'afficher que le nom et l'âge :
 
 ```sql
 SELECT nom, age FROM Etudiants;
 ```
 
-## Sélectionner des attributs avec WHERE
+### Sélection : filtrer les lignes (`WHERE`)
 
-Pour sélectionner les valeurs suivant des contraintes / conditions, on doit ajouter à notre requête le mot-clef `WHERE` avec une condition à la suite.
-
-#### Exemple : Étudiants de plus de 17 ans
+La **sélection** (au sens relationnel) filtre les **lignes** selon une condition, avec `WHERE` :
 
 ```sql
 SELECT nom FROM Etudiants WHERE age > 17;
 ```
-Ici, on veut afficher le nom des étudiants avec l'instruction `SELECT nom FROM Etudiants` mais en ajoutant la contrainte `WHERE age > 17` permet d'obtenir tous les noms uniquement de ceux ayant plus de 17 ans.
 
-## Pratiquer le SQL
+Ici : projection sur `nom` **et** sélection des lignes où `age > 17`.
 
-Voici un éditeur SQL interactif pour tester vos requêtes sur la table `Etudiants`.
+On peut combiner les deux :
+
+```sql
+SELECT nom, classe FROM Etudiants WHERE classe = 'Terminale';
+```
+
+## Pratiquer
 
 <SqlEditor 
   title="Éditeur SQL Interactif" 
@@ -98,9 +79,30 @@ Voici un éditeur SQL interactif pour tester vos requêtes sur la table `Etudian
   defaultQuery="SELECT * FROM Etudiants WHERE age >= 17;"
 />
 
-## Activité : SQL Murder Mystery
+### Activité : SQL Murder Mystery
 
-Pour appliquer cela, vous pouvez vous diriger vers le site "SQL Murder Mystery" qui permet de résoudre une enquête d'un crime à l'aide de bases de données et de requête en langage SQL.
-*(Attention, le site est uniquement en anglais)*.
+Résolvez une enquête en écrivant des requêtes SQL (site en anglais) :
 
 [Accéder à SQL Murder Mystery](https://mystery.knightlab.com)
+
+## Piège fréquent
+
+Appeler « sélection » le simple `SELECT colonne`. En vocabulaire relationnel :
+
+- **`SELECT` colonnes** → **projection** ;
+- **`WHERE`** → **sélection** (filtrage des lignes).
+
+Le mot `SELECT` du SQL est trompeur : il lance la requête, mais le filtrage des lignes, c'est `WHERE`.
+
+## À retenir
+
+- Table = lignes (enregistrements) + colonnes (attributs).
+- SQL = langage de requêtes sur une BDD relationnelle.
+- Projection = choisir les colonnes (`SELECT nom, age`).
+- Sélection = filtrer les lignes (`WHERE condition`).
+- `SELECT * FROM Table` lit toute la table.
+- On combine souvent projection et sélection dans une même requête.
+
+## Pour s'entraîner / Suite
+
+Utilisez l'éditeur ci-dessus, puis l'enquête Murder Mystery. Plus tard : jointures, agrégats, et liens avec les dictionnaires / tables déjà vus en Python.

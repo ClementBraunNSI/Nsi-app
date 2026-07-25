@@ -8,75 +8,83 @@ chapter: Systèmes d'exploitation
 icon: "\U0001F4BB"
 badgeId: premiere_systemes_exploitation
 prerequisites:
-  - os_linux_commandes
+  - archi_von_neumann
 ---
 
+# Systèmes d'exploitation
 
-# Introduction aux Systèmes d'Exploitation
+## Objectifs
 
-## Définition
+- Définir le rôle d'un **système d'exploitation** (OS)
+- Distinguer noyau, système de fichiers, permissions, interfaces
+- Comparer logiciel libre et propriétaire
 
-Un **Système d'Exploitation** (SE ou *OS* pour *Operating System*) est un ensemble de programmes qui permet :
-1.  La liaison entre le matériel (hardware) et les logiciels (software).
-2.  La gestion des ressources de l'ordinateur (mémoire, processeur, disques).
-3.  De fournir une interface à l'utilisateur pour interagir avec la machine.
+## Idée clé
 
-Sans OS, un ordinateur ne serait qu'un amas de composants électroniques inertes.
+L'OS est la couche qui **gère le matériel** et **offre des services** aux programmes et à l'utilisateur : sans lui, chaque application devrait parler directement au processeur, à la mémoire et aux périphériques.
 
-## Contexte Historique
+## À quoi sert un OS ?
 
-Au début de l'informatique, les utilisateurs devaient configurer physiquement la machine ou écrire des instructions très bas niveau pour chaque tâche. Les systèmes d'exploitation sont nés du besoin de simplifier et d'automatiser ces tâches répétitives (gestion des fichiers, exécution de programmes).
+1. Relier **matériel** et **logiciels**
+2. Partager les ressources (CPU, RAM, disques)
+3. Fournir une **interface** (graphique ou terminal)
 
-### Types de Systèmes
+Historiquement, les OS automatisent des tâches autrefois manuelles : lancer un programme, gérer les fichiers, partager la machine entre utilisateurs.
 
-| Type | Description | Exemples |
+| Type | Idée | Exemples |
 | :--- | :--- | :--- |
-| **Système Libre** | Code source ouvert, modifiable et partageable gratuitement. | **Linux** (Ubuntu, Debian), FreeBSD |
-| **Système Propriétaire** | Code source fermé, propriété d'une entreprise, utilisation sous licence. | **Windows**, **macOS**, iOS |
+| **Libre** | Code ouvert, modifiable, redistribuable | Linux (Ubuntu, Debian), FreeBSD |
+| **Propriétaire** | Code fermé, licence commerciale | Windows, macOS, iOS |
 
-## Composants d'un OS
+## Le noyau (kernel)
 
-L'architecture d'un OS s'articule autour de plusieurs couches, dont la plus critique est le **Noyau**.
+Cœur de l'OS, avec un accès privilégié au matériel :
 
-### Le Noyau (Kernel)
+- **Mémoire** : allouer / libérer la RAM
+- **Processeur** : choisir quel processus tourne (*ordonnancement*)
+- **Périphériques** : pilotes (*drivers*) pour clavier, écran, disque…
 
-C'est le cœur du système. Il a les pleins pouvoirs sur le matériel et gère :
-*   **La Mémoire (RAM)** : Il alloue de l'espace aux programmes.
-*   **Le Processeur (CPU)** : Il décide quel programme s'exécute à quel moment (ordonnancement).
-*   **Les Périphériques** : Il communique avec le clavier, l'écran, le disque dur via des pilotes (*drivers*).
+## Système de fichiers
 
-### Le Système de Fichiers
+Organisation **arborescente** des données.
 
-C'est la méthode d'organisation des données sur le disque dur. La structure est **arborescente** (comme un arbre inversé), partant d'une **racine**.
+- **Linux / UNIX** : une seule racine `/`
+  - `/home` utilisateurs, `/etc` config, `/bin` exécutables
+- **Windows** : racines par lecteur (`C:\`, …)
+  - `C:\Users`, `C:\Windows`, `C:\Program Files`
 
-*   **Sous UNIX / Linux** : La racine est notée `/`. Tout est fichier ou dossier à partir de cette racine.
-    *   `/home` : Dossiers des utilisateurs.
-    *   `/etc` : Fichiers de configuration.
-    *   `/bin` : Programmes exécutables.
-*   **Sous Windows** : La racine est souvent `C:\`. Chaque lecteur a sa propre lettre.
-    *   `C:\Users` : Dossiers des utilisateurs.
-    *   `C:\Windows` : Système.
-    *   `C:\Program Files` : Logiciels installés.
+Tout chemin se lit depuis la racine jusqu'au fichier.
 
-## Les Permissions
+## Permissions (modèle UNIX)
 
-Pour la sécurité, un OS moderne est **multi-utilisateurs**. Chaque fichier possède des permissions définissant qui peut faire quoi.
+OS multi-utilisateurs : chaque fichier a des droits **UGO** (User, Group, Others) :
 
-Le modèle UNIX utilise le système **UGO** (User, Group, Others) avec 3 droits :
-*   **Read (r)** : Lecture.
-*   **Write (w)** : Écriture (modification/suppression).
-*   **Execute (x)** : Exécution (lancer un programme).
+| Droit | Lettre | Effet |
+|---|:---:|---|
+| Lecture | `r` | Lire / lister |
+| Écriture | `w` | Modifier / supprimer |
+| Exécution | `x` | Lancer un programme / traverser un dossier |
 
-## Les Interfaces Utilisateur
+## Interfaces : CLI et GUI
 
-Comment l'humain parle-t-il à la machine ?
+- **CLI** (ligne de commande) : terminal, scripts, peu de ressources, très précis
+- **GUI** (interface graphique) : fenêtres, souris, plus accessible, plus lourd
 
-### 1. Interface en Ligne de Commande (CLI)
-*   **Principe** : L'utilisateur tape des commandes textuelles dans un terminal (*shell*).
-*   **Avantages** : Très rapide, puissant, automatisable (scripts), peu gourmand en ressources.
-*   **Utilisation** : Serveurs, administration système, développement.
+Les deux coexistent : on administre souvent un serveur en CLI, on utilise un PC en GUI.
 
-### 2. Interface Graphique (GUI)
-*   **Principe** : Fenêtres, icônes, souris, menus.
-*   **Avantages** : Intuitif, visuel, facile d'accès pour les débutants.
-*   **Inconvénients** : Plus lourd, parfois moins précis pour des tâches complexes.
+## Piège fréquent
+
+Confondre **application** et **système d'exploitation**. Un navigateur tourne *sur* l'OS ; c'est l'OS qui lui alloue CPU et mémoire et qui parle au disque.
+
+## À retenir
+
+- OS = intermédiaire matériel ↔ logiciels / utilisateur
+- Noyau : CPU, RAM, périphériques
+- Fichiers organisés en arbre (racine `/` ou `C:\`)
+- Permissions `rwx` pour propriétaire, groupe, autres
+- Libre vs propriétaire : ouverture du code et licence
+- CLI et GUI sont deux façons de piloter le même OS
+
+## Pour s'entraîner
+
+Passer aux [commandes Linux](/cours/2/os_linux_commandes) pour manipuler fichiers et permissions en pratique.

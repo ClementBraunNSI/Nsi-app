@@ -15,6 +15,7 @@ import { ExercisePicker } from '@/components/lab/ExercisePicker';
 import { ExerciseStatement } from '@/components/lab/ExerciseStatement';
 import { LabEditor } from '@/components/lab/LabEditor';
 import { LabOutput } from '@/components/lab/LabOutput';
+import { loadPythonPackages } from '@/lib/pyodide-packages';
 
 
 const LEVEL_MAP: Record<string, { label: string; code: string }> = {
@@ -285,6 +286,11 @@ export default function LabPage() {
 
     try {
       setOutput(['> Exécution du script...']);
+
+      if (selectedExercise.pythonPackages?.length) {
+        setOutput((prev) => [...prev, `> Chargement des modules : ${selectedExercise.pythonPackages!.join(', ')}...`]);
+        await loadPythonPackages(pyodideRef.current, selectedExercise.pythonPackages);
+      }
       
       const logs: string[] = [];
       // Capture stdout/stderr

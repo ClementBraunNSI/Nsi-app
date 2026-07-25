@@ -1,8 +1,7 @@
 ---
 title: Fonctions en Python
 description: >-
-  Apprendre à modulariser et réutiliser son code pour créer des programmes plus
-  clairs et efficaces.
+  Définir, appeler et documenter des fonctions pour modulariser un programme.
 level: premiere
 chapter: Introduction à Python
 icon: "\U0001F40D"
@@ -11,72 +10,85 @@ prerequisites:
   - python_types_base
 ---
 
-## 🎯 Définitions
+## Objectifs
 
-Une fonction est un bloc de code réutilisable qui effectue une tâche spécifique. Elle permet de **modulariser** le code et d'éviter les répétitions inutiles.
+- Définir une fonction avec `def` et l'appeler.
+- Distinguer **paramètres** (définition) et **arguments** (appel).
+- Utiliser `return` pour renvoyer un résultat.
+- Expliquer la différence entre variable locale et variable globale.
+- Rédiger une docstring courte pour documenter une fonction.
 
-* ⚙️ **Fonction** : Bloc de code réutilisable effectuant une tâche précise, pouvant recevoir des données et retourner un résultat.
-* 📥 **Paramètre** : Variable d'entrée permettant à la fonction de recevoir des données pour son fonctionnement.
-* 📤 **Valeur de Retour** : Résultat que la fonction renvoie à l'utilisateur après avoir effectué ses traitements.
+## Idée clé
 
-### 📋 Structure d'une Fonction
+Une **fonction** est une boîte noire réutilisable : on lui donne des entrées (arguments), elle calcule, puis **renvoie** un résultat. Cela évite de copier-coller du code et clarifie le rôle de chaque partie du programme.
 
-```python
-def nom_de_fonction(variable_1: type, variable_2: type) -> type_renvoi:
-    """
-    Documentation de la fonction (Docstring) :
-    - Explications du rôle de la fonction
-    - Description des paramètres et du retour
-    """
-    # Corps de la fonction
-    resultat = # calculs ou traitements
-    return resultat 
-
-```
-
-> ⚠️ **Attention :** Une fonction sans instruction `return` renvoie la valeur `None` par défaut.
-
----
-
-## 🌍 Variables Locales et Globales
-
-En Python, la **portée** d'une variable détermine la zone du programme où elle est accessible.
-
-* 🏠 **Variable Locale** : Définie **à l'intérieur** d'une fonction, elle n'est accessible que dans celle-ci.
-* 🌐 **Variable Globale** : Définie **en dehors** de toute fonction, elle est accessible partout dans le programme.
-
-### 🔧 Modification avec `global`
-
-Pour modifier une variable globale depuis l'intérieur d'une fonction, il est obligatoire d'utiliser le mot-clé `global`.
+## Définir et appeler
 
 ```python
-compteur = 0  # Variable globale
-
-def incrementer():
-    global compteur  # Autorise la modification de la variable globale
-    compteur += 1
-
-```
-
----
-
-## 💡 Bonnes Pratiques
-
-Pour écrire du code professionnel et maintenable, suivez ces règles :
-
-* 📝 **Documentation** : Utilisez systématiquement des **docstrings** (triples guillemets) pour expliquer le rôle de vos fonctions.
-* 🏷️ **Noms Explicites** : Choisissez des noms décrivant clairement l'action réalisée (ex: `calculer_moyenne` plutôt que `calc`).
-* 🎯 **Spécialisation** : Une fonction doit être courte et n'accomplir qu'**une seule tâche** à la fois.
-
-### Exemple de fonction bien structurée
-
-```python
-def calculer_aire_rectangle(longueur: float, largeur: float) -> float:
-    """
-    Calcule l'aire d'un rectangle à partir de sa longueur et largeur.
-    """
+def aire_rectangle(longueur: float, largeur: float) -> float:
+    """Calcule l'aire d'un rectangle."""
     return longueur * largeur
 
+a = aire_rectangle(5, 3)  # a vaut 15.0
+print(a)
 ```
 
-> 🚀 **Conseil :** Une fonction bien écrite est beaucoup plus facile à tester et à réutiliser dans d'autres projets !
+| Mot | Rôle |
+| --- | --- |
+| Paramètre | Nom dans la définition (`longueur`, `largeur`) |
+| Argument | Valeur fournie à l'appel (`5`, `3`) |
+| `return` | Renvoie le résultat à l'appelant |
+
+Sans `return`, la fonction renvoie `None`.
+
+!!! warning "`print` n'est pas `return`"
+    `print` affiche à l'écran. `return` transmet une valeur utilisable ensuite (`x = ma_fonction()`). Les deux rôles sont différents.
+
+## Portée des variables
+
+- **Locale** : créée dans la fonction, invisible à l'extérieur.
+- **Globale** : créée hors de toute fonction ; lisible partout, mais à modifier avec prudence.
+
+```python
+compteur = 0  # globale
+
+def incrementer():
+    global compteur
+    compteur = compteur + 1
+
+incrementer()
+print(compteur)  # 1
+```
+
+En Première, on préfère **passer des paramètres** et **retourner un résultat** plutôt que d'abuser de `global`.
+
+## Bonnes pratiques
+
+1. Un nom qui décrit l'action : `calculer_moyenne`, pas `f`.
+2. Une fonction = **une** responsabilité claire.
+3. Une docstring en début de corps pour expliquer le rôle.
+
+```python
+def est_pair(n: int) -> bool:
+    """Renvoie True si n est pair, False sinon."""
+    return n % 2 == 0
+```
+
+## Piège fréquent
+
+- Oublier les parenthèses à l'appel : `aire_rectangle` (la fonction elle-même) ≠ `aire_rectangle(2, 3)` (le résultat).
+- Croire qu'une variable locale modifie automatiquement la globale du même nom — sans `global` ou sans `return`, non.
+
+## À retenir
+
+- `def nom(...):` définit ; `nom(...)` appelle.
+- Paramètres ≠ arguments.
+- `return` fournit le résultat ; sans `return` → `None`.
+- Variables locales limitées au corps de la fonction.
+- Préférer paramètres + `return` à `global`.
+- Docstring + nom explicite = code plus lisible.
+
+## Pour s'entraîner
+
+- [Exercices : Les fonctions](/cours/2/python_exercices_fonctions)
+- [Exercices : Spécifications](/cours/2/python_exercices_specifications)

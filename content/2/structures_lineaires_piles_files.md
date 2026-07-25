@@ -1,8 +1,7 @@
 ---
 title: Piles et Files
 description: >-
-  Structures de données linéaires avancées. Piles (LIFO) et Files (FIFO).
-  Implémentation POO.
+  Piles (LIFO) et files (FIFO) : principe, opérations, et implantation avec des listes.
 level: premiere
 chapter: Structures de données linéaires
 icon: "\U0001F95E"
@@ -11,110 +10,118 @@ prerequisites:
   - structures_lineaires_cours
 ---
 
+## Objectifs
 
-# Piles et Files
+- Expliquer les principes **LIFO** (pile) et **FIFO** (file).
+- Citer les opérations d'une pile et d'une file.
+- Simuler une suite d'empilements / dépilements (ou enfilements / défilements).
+- Implanter ces structures avec une liste Python.
 
-## 1. Introduction
+## Idée clé
 
-Les listes Python sont très souples, mais en informatique, on a souvent besoin de structures plus contraintes pour gérer des données de manière spécifique.
-Deux structures fondamentales sont :
+Les listes Python autorisent presque tout. Une **pile** ou une **file** restreint volontairement les opérations pour respecter une règle d'accès : seulement le sommet (pile) ou seulement la tête (file). La contrainte clarifie l'algorithme (historique « undo », file d'attente, parcours, etc.).
 
-*   La **Pile** (Stack)
-*   La **File** (Queue)
+## La pile — LIFO
 
-## 2. La Pile (Stack) - LIFO
+**LIFO** (*Last In, First Out*) : dernier entré, premier sorti.  
+Analogie : une **pile d'assiettes** — on ne prend que celle du dessus.
 
-!!! info "Principe LIFO"
-    **LIFO** = **L**ast **I**n, **F**irst **O**ut (Dernier Entré, Premier Sorti).
-    
-    *Imaginez une pile d'assiettes : vous ne pouvez prendre que celle du dessus (la dernière posée).*
-
-### Opérations (Interface)
-
-Une Pile doit permettre de :
-
-*   `empiler(e)` (push) : Ajouter un élément au sommet.
-*   `depiler()` (pop) : Retirer l'élément du sommet.
-*   `sommet()` (peek) : Regarder l'élément du sommet sans le retirer.
-*   `est_vide()` : Savoir si la pile est vide.
-
-### Exemple d'exécution
+| Opération | Rôle |
+| --- | --- |
+| `empiler(e)` | ajoute au sommet |
+| `depiler()` | retire et renvoie le sommet |
+| `sommet()` | lit le sommet sans retirer |
+| `est_vide()` | indique si la pile est vide |
 
 ```text
-P = Pile()      # []
-P.empiler(10)   # [10]
-P.empiler(20)   # [10, 20] (Sommet = 20)
-x = P.depiler() # x vaut 20, P redevient [10]
+P vide        →  []
+empiler(10)   →  [10]        sommet = 10
+empiler(20)   →  [10, 20]    sommet = 20
+depiler()     →  20 ; reste [10]
 ```
 
-## 3. La File (Queue) - FIFO
+## La file — FIFO
 
-!!! info "Principe FIFO"
-    **FIFO** = **F**irst **I**n, **F**irst **O**ut (Premier Entré, Premier Sorti).
-    
-    *Imaginez une file d'attente à la caisse : le premier arrivé est le premier servi.*
+**FIFO** (*First In, First Out*) : premier entré, premier sorti.  
+Analogie : une **file d'attente** à la caisse.
 
-### Opérations (Interface)
-
-Une File doit permettre de :
-
-*   `enfiler(e)` (enqueue) : Ajouter un élément à la queue.
-*   `defiler()` (dequeue) : Retirer l'élément de la tête.
-*   `tete()` : Regarder le premier élément.
-*   `est_vide()` : Savoir si la file est vide.
-
-### Exemple d'exécution
+| Opération | Rôle |
+| --- | --- |
+| `enfiler(e)` | ajoute en queue |
+| `defiler()` | retire et renvoie la tête |
+| `tete()` | lit le premier sans retirer |
+| `est_vide()` | indique si la file est vide |
 
 ```text
-F = File()      # []
-F.enfiler(A)    # [A]
-F.enfiler(B)    # [A, B] (Tête = A, Queue = B)
-x = F.defiler() # x vaut A, F devient [B]
+F vide        →  []
+enfiler(A)    →  [A]         tête = A
+enfiler(B)    →  [A, B]      tête = A, queue = B
+defiler()     →  A ; reste [B]
 ```
 
-## 4. Implémentation en Python (POO)
+## Implantation avec des listes
 
-Bien que les listes Python puissent servir de piles/files, il est pédagogique de créer nos propres classes pour respecter strictement l'interface.
-
-### Classe Pile
+On peut respecter l'interface **sans** écrire de classe : une liste + des fonctions. Le sommet de pile (ou la queue de file) correspond à la **fin** de la liste, ce qui rend `append` / `pop()` efficaces.
 
 ```python
-class Pile:
-    def __init__(self):
-        self.data = []
-        
-    def est_vide(self):
-        return len(self.data) == 0
-        
-    def empiler(self, element):
-        self.data.append(element)
-        
-    def depiler(self):
-        if not self.est_vide():
-            return self.data.pop()
-        return None
+# --- Pile via une liste ---
+def pile_vide():
+    return []
+
+def est_vide(p):
+    return len(p) == 0
+
+def empiler(p, e):
+    p.append(e)
+
+def depiler(p):
+    return p.pop()          # sommet = fin de liste
+
+def sommet(p):
+    return p[-1]
+
+
+# --- File via une liste ---
+def file_vide():
+    return []
+
+def enfiler(f, e):
+    f.append(e)             # queue = fin
+
+def defiler(f):
+    return f.pop(0)         # tête = début
 ```
 
-### Classe File
+Exemple d'usage :
 
 ```python
-class File:
-    def __init__(self):
-        self.data = []
-        
-    def est_vide(self):
-        return len(self.data) == 0
-        
-    def enfiler(self, element):
-        self.data.append(element)
-        
-    def defiler(self):
-        if not self.est_vide():
-            # pop(0) retire le premier élément (indice 0)
-            return self.data.pop(0) 
-        return None
+p = pile_vide()
+empiler(p, 10)
+empiler(p, 20)
+print(depiler(p))  # 20
 ```
 
-!!! warning "Note sur la performance"
-    `pop(0)` sur une liste Python est lent ($O(n)$) car il faut décaler tous les autres éléments.
-    Pour une vraie File performante en Python, on utilise `collections.deque`.
+!!! tip "Variante avec classes"
+    Si le chapitre POO est déjà vu, on peut encapsuler la même liste dans une classe `Pile` / `File` (`self.data = []`). Le principe LIFO/FIFO ne change pas — seule l'organisation du code change.
+
+!!! warning "Coût de `pop(0)`"
+    Retirer en tête d'une liste coûte cher (décalage des éléments). Pour une file performante en Python, on utilise `collections.deque` ; en cours, `pop(0)` suffit pour comprendre le modèle.
+
+## Piège fréquent
+
+- Utiliser `pop()` (fin) pour défiler alors que la tête est au début → ordre FIFO cassé.
+- Dépiler / défiler une structure vide : toujours tester `est_vide()` avant.
+
+## À retenir
+
+- Pile = **LIFO** (assiettes) ; file = **FIFO** (file d'attente).
+- Pile : `empiler`, `depiler`, `sommet`, `est_vide`.
+- File : `enfiler`, `defiler`, `tete`, `est_vide`.
+- Une liste Python peut servir de support si on respecte l'interface.
+- Sommet / queue en fin de liste → `append` et `pop()` naturels pour la pile.
+- Ne pas accéder aux éléments du « milieu » : ce n'est plus une pile ni une file.
+
+## Pour s'entraîner
+
+- [TP structures linéaires](/cours/2/structures_lineaires_tp)
+- Révisions listes : [Structures de données linéaires](/cours/2/structures_lineaires_cours)

@@ -1,6 +1,6 @@
 ---
 title: Dictionnaires en Python
-description: Comprendre et manipuler la structure de données clé-valeur
+description: "Structure clé-valeur : créer, lire, modifier et parcourir un dictionnaire."
 level: premiere
 chapter: Dictionnaires et Tables
 icon: "\U0001F5DD️"
@@ -8,117 +8,87 @@ badgeId: premiere_dictionnaires
 prerequisites: []
 ---
 
+## Objectifs
 
-# Dictionnaires en Python
+- Créer un dictionnaire avec des **clés** et des **valeurs**.
+- Accéder, ajouter, modifier ou supprimer une entrée.
+- Tester la présence d'une clé avec `in`.
+- Parcourir les clés (et les valeurs associées) avec une boucle `for`.
 
-## Définition et Structure
+## Idée clé
 
-### Le dictionnaire
+Une **liste** se lit par un **indice** (`notes[0]`). Un **dictionnaire** se lit par une **clé** (`eleve["prenom"]`). La clé nomme l'information ; la valeur la contient. On ne parle pas d'« attributs » ici : ce vocabulaire appartient à la POO.
 
-Une des nombreuses structures de Python est **le dictionnaire**.
-Le dictionnaire est une structure de données qui n'est pas indexée mais organisée suivant des éléments que l'on nomme **attributs (ou descripteur)**.
-Ces attributs correspondent à des **propriétés** sur l'élément que l'on souhaite modéliser.
+## Créer un dictionnaire
 
-!!! example "Exemple : Modèle de voiture"
-    On souhaite modéliser un modèle de voiture. Lors de la conception d'une voiture, on peut modifier des éléments pour en créer des déclinaisons.
-
-    **Propriétés d'un modèle de voiture :**
-    
-    *   **Couleurs** : rouge, bleu, vert, noir, blanc, gris
-    *   **Motorisations (en ch)** : 100, 110, 120, 200
-    *   **Taille de jantes** : 16, 17, 18, 19
-
-    Pour créer ce genre d'objets, on utilise donc la **structure des dictionnaires**.
-
-### Syntaxe de création
-
-Pour créer un dictionnaire, on utilise les **accolades `{}`** (à la différence des tableaux (parenthèses `()`) ou des listes (crochets `[]`)).
-À l'intérieur de ces accolades, on utilise la syntaxe `attribut : valeurs possibles`.
-
-!!! note "Caractéristiques des attributs"
-    *   Un **attribut** correspond à une propriété d'un objet que l'on cherche à modéliser
-    *   Il est représenté par une **chaîne de caractères**
-    *   Les valeurs peuvent être de types **simples** (entier, chaînes de caractère, booléen) ou **complexes** (listes, dictionnaires, tuples)
-    *   Chaque couple *attributs : valeurs* est séparé par des **virgules**
-
-De base, un dictionnaire lorsqu'on le crée de cette manière, est **dépourvu d'attributs**.
-Pour créer un dictionnaire avec des attributs déjà connus, il existe **deux méthodes** :
-
-#### Méthode 1 : Écrire les propriétés à l'instanciation
+Syntaxe : accolades `{ }`, couples `clé: valeur` séparés par des virgules. Les clés sont souvent des chaînes.
 
 ```python
-modele_voiture = {
-    "couleurs" : ["rouge", "bleu", "vert", "noir", "blanc", "gris"],
-    "motorisation_en_ch" : [100, 110, 120, 200],
-    "taille_jantes" : [16, 17, 18, 19]
+eleve = {
+    "prenom": "Léa",
+    "classe": "1ère NSI",
+    "moyenne": 14.5
 }
+
+# ou construction progressive
+voiture = {}
+voiture["couleur"] = "bleu"
+voiture["puissance"] = 110
 ```
 
-#### Méthode 2 : Rajouter petit à petit les propriétés
+| Structure | Délimiteurs | Accès |
+| --- | --- | --- |
+| Liste | `[ ]` | indice entier |
+| Tuple | `( )` | indice entier |
+| Dictionnaire | `{ }` | clé |
+
+## Lire, modifier, supprimer
 
 ```python
-modele_voiture = {}
-
-modele_voiture["couleurs"] = ["rouge", "bleu", "vert", "noir", "blanc", "gris"]
-modele_voiture["motorisation_en_ch"] = [100, 110, 120, 200]
-modele_voiture["taille_jantes"] = [16, 17, 18, 19]
+print(eleve["prenom"])       # Léa
+eleve["moyenne"] = 15.0      # modification
+eleve["option"] = "Maths"    # ajout
+eleve.pop("classe")          # suppression de la clé "classe"
 ```
 
-## Accès et manipulation
-
-### Accès aux attributs
-
-Pour accéder à un attribut du dictionnaire, on utilise la **structure à crochets** comme pour les listes, mais au lieu d'indiquer un indice, on indique l'**attribut** s'il est déjà renseigné.
+Si la valeur associée à une clé est une liste, on la manipule comme une liste :
 
 ```python
-# Pour afficher le dictionnaire complet
-print(modele_voiture)
-
-# Pour afficher les couleurs disponibles pour le modèle
-print(modele_voiture["couleurs"])
-
-# Pour rajouter des couleurs à celles existantes
-# Attention aux types : ici concaténation de listes
-modele_voiture["couleurs"] = modele_voiture["couleurs"] + ["beige"]
-
-# Pour retirer une clef et ses valeurs d'un dictionnaire
-modele_voiture.pop("taille_jantes")
+options = {"langues": ["anglais", "espagnol"]}
+options["langues"].append("allemand")
 ```
 
-!!! warning "Ajout de valeurs"
-    Pour rajouter des valeurs à un attribut d'un dictionnaire, il faut bien faire attention aux **types**.
-    Par exemple, si nos valeurs sont contenues dans des **listes**, il faut opérer par concaténation de liste avec l'opérateur `+` ou la méthode `.append(valeur)`.
+!!! tip "Tester avant d'accéder"
+    `eleve["absent"]` lève une `KeyError` si la clé n'existe pas. Vérifier avec `"absent" in eleve`.
 
-## Opérations sur les dictionnaires
+## Parcourir un dictionnaire
 
-### Itérations sur un dictionnaire
-
-Tout comme les listes et les tableaux, on peut itérer sur les valeurs d'un dictionnaire. Cela permet de retrouver des valeurs, de faire des traitements sur des bases de données ou retrouver des valeurs suivant certaines conditions.
-Le plus simple est d'itérer à l'aide d'une boucle **for**.
-Un dictionnaire est une structure sur laquelle on peut itérer sur les clefs (à l'instar des tuples ou listes où l'on itère sur les indices).
+Par défaut, `for cle in dico` itère sur les **clés**.
 
 ```python
-# Afficher les clefs du dictionnaire
-for clef in modele_voiture:
-    print(clef)
+for cle in eleve:
+    print(cle, "→", eleve[cle])
 
-# Afficher toutes les valeurs d'un dictionnaire
-for clef in modele_voiture:
-    print(clef)
-    for valeur in modele_voiture[clef]:
-        print(valeur)
+# variante explicite
+for cle, valeur in eleve.items():
+    print(cle, valeur)
 ```
 
-### Vérification de la présence d'une clef
+## Piège fréquent
 
-L'opérateur **in** permet de vérifier si une clef existe dans le dictionnaire.
+- Confondre clé et indice : `eleve[0]` ne marche que si `0` est vraiment une clé.
+- Dire « attribut » pour une clé de dictionnaire — réserver « attribut » aux objets (POO).
 
-```python
-if "couleurs" in modele_voiture:
-    print("La clé 'couleurs' existe dans le dictionnaire")
-else:
-    print("La clé 'couleurs' n'existe pas dans le dictionnaire")
-```
+## À retenir
 
-!!! tip "Utilité pratique"
-    Cela permet de savoir si, par exemple on modifie une base de données pour la rendre plus conséquente, la modification a bien été réalisée.
+- Un dictionnaire associe des **clés** à des **valeurs**.
+- Création : `{ "cle": valeur }` ou `d["cle"] = valeur`.
+- Accès / modification : `d["cle"]`.
+- `"cle" in d` teste la présence ; `d.pop("cle")` retire.
+- `for cle in d` parcourt les clés.
+- Listes = indices ; dictionnaires = clés nommées.
+
+## Pour s'entraîner
+
+- [Exercices : Dictionnaires](/cours/2/python_exercices_dictionnaires)
+- Suite logique : [Traitement de données en tables (CSV)](/cours/2/python_csv)

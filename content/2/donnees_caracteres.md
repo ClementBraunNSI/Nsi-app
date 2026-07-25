@@ -6,106 +6,86 @@ chapter: Représentation des données
 icon: "\U0001F524"
 badgeId: premiere_caracteres
 prerequisites:
-  - donnees_reels
+  - donnees_entiers_positifs
 ---
 
+# Représentation des caractères
 
-# 📝 La représentation des caractères
+## Objectifs
 
-## 🎯 Objectif du cours
+- Comprendre qu'un caractère est un **entier** associé à un symbole
+- Connaître les limites d'**ASCII** (7 bits)
+- Situer **Unicode** / **UTF-8** comme standard actuel
 
-### 📚 Ce que vous allez apprendre
+## Idée clé
 
-Cette leçon permettra de savoir comment **représenter en binaire** des caractères textuels.
+La machine ne stocke que des bits. Un caractère est donc un **code numérique** (souvent affiché en décimal ou hexadécimal) relié à un glyphe : « A », « é », « 字 », etc. Le système de règles qui fait ce lien s'appelle un **codage**.
 
-Nous découvrirons les différents systèmes de codage et leurs évolutions.
+## Qu'est-ce qu'un caractère ?
 
-## 📖 Définition
+Lettre, chiffre, ponctuation, symbole, emoji… Pour la machine, c'est un **nombre**.
 
-### 🔤 Qu'est-ce qu'un caractère ?
+Exemple : en ASCII / Unicode, la lettre **A** a le code **65** ($41_{(16)}$).
 
-Un caractère est un **symbole** d'écriture représentant en général :
+## ASCII (7 bits)
 
-- Une **lettre** (A, b, C)
-- Un **chiffre** (1, 2, 3, ...)
-- Un **symbole** (字, Д, @, #)
+**ASCII** (*American Standard Code for Information Interchange*) code un caractère sur **7 bits** → $2^7 = 128$ symboles.
 
-!!! info "Problème informatique"
-    En informatique, on ne peut pas représenter directement un caractère car **elle ne comprend que des 0 et des 1**. Il faut donc les coder pour la machine.
+Cela couvre notamment :
 
-### 🔧 Système de codage
+- lettres latines a–z, A–Z
+- chiffres 0–9
+- ponctuation et caractères de contrôle (espace, retour à la ligne…)
 
-**Le codage d'un caractère** est une association entre celui-ci et une représentation binaire.
+| Caractère | Décimal | Hex |
+|:---------:|:-------:|:---:|
+| espace | 32 | 20 |
+| `0` | 48 | 30 |
+| `@` | 64 | 40 |
+| `A` | 65 | 41 |
+| `a` | 97 | 61 |
 
-Un **système de codage** est un ensemble de règles pour convertir une information par une autre (ici un caractère avec sa représentation binaire).
+**Limite :** pas d'accents français (`é`), ni d'alphabets non latins. D'où l'extension vers Unicode.
 
-## 🇺🇸 Un système de codage de caractère : ASCII
+## Unicode et UTF-8
 
-### 📋 ASCII (American Standard Code for Information Interchange)
+**Unicode** attribue à chaque symbole un **point de code** unique, noté souvent `U+XXXX` (hexadécimal).
 
-L'**ASCII** est un codage qui utilise **7 bits** pour représenter des caractères alpha-numériques et d'autres caractères réservés (comme l'espace ou le retour chariot).
+Exemples :
 
-En ayant 7 bits pour représenter un caractère, on peut représenter **2⁷ = 128 caractères**.
+- `A` → U+0041
+- `é` → U+00E9
+- `字` → U+5B57
 
-### 📊 Capacité d'ASCII
+**UTF-8** est un **encodage** de ces points de code en une suite d'**octets** (1 à 4 octets selon le caractère). C'est le format dominant sur le Web et en Python.
 
-**7 bits = 128 caractères possibles**
+- Les caractères ASCII restent sur **1 octet** (compatibilité)
+- Les caractères plus « riches » prennent plusieurs octets
 
-Cela inclut :
+```python
+>>> ord("A")
+65
+>>> hex(ord("é"))
+'0xe9'
+>>> "é".encode("utf-8")
+b'\xc3\xa9'   # deux octets en UTF-8
+```
 
-- 26 lettres minuscules (a-z)
-- 26 lettres majuscules (A-Z)
-- 10 chiffres (0-9)
-- Symboles de ponctuation
-- Caractères de contrôle
+Table de référence : [charset.org/utf-8](https://www.charset.org/utf-8)
 
-### 🔢 Exemples de codes ASCII
+## Piège fréquent
 
-- **A** : 65 (décimal)
-- **a** : 97 (décimal)
-- **0** : 48 (décimal)
-- **@** : 64 (décimal)
+Confondre **point de code Unicode** et **suite d'octets UTF-8**. Le point de code de `é` est U+00E9 ; en UTF-8, ce n'est pas un seul octet `E9`, mais `\xc3\xa9`.
 
-### 📋 Table de correspondance ASCII (extrait)
+## À retenir
 
-| Déc | Hex | Car | Déc | Hex | Car | Déc | Hex | Car | Déc | Hex | Car |
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| 32 | 20 | (espace) | 48 | 30 | 0 | 64 | 40 | @ | 80 | 50 | P |
-| 33 | 21 | ! | 49 | 31 | 1 | 65 | 41 | A | 81 | 51 | Q |
-| 34 | 22 | " | 50 | 32 | 2 | 66 | 42 | B | 82 | 52 | R |
-| 97 | 61 | a | 113 | 71 | q | 122 | 7A | z | 126 | 7E | ~ |
+- Caractère = symbole ↔ nombre (code)
+- ASCII : 7 bits, 128 caractères, alphabet latin de base
+- Unicode : catalogue universel de points de code
+- UTF-8 : encodage variable (1 à 4 octets), compatible ASCII
+- En Python : `ord`, `chr`, `.encode("utf-8")`
+- Toujours connaître l'encodage d'un fichier texte (UTF-8 de préférence)
 
-!!! warning "Limitation d'ASCII"
-    À la vue de cette table, on remarque une chose importante : il n'y a que des symboles d'**alphabets latins**.
+## Pour s'entraîner
 
-    Or, il n'existe pas uniquement les alphabets latins mais aussi le **cyrillique** ou bien les symboles des alphabets **chinois** ou **japonais**.
-
-    💡 **Solution :** On a besoin d'un codage permettant de représenter **davantage de caractères**.
-
-## 🌍 Un système plus inclusif : Unicode
-
-### 🔤 Unicode - Le standard universel
-
-**Unicode** est un système de codage de caractère qui utilise un certain nombre de bits en fonction de sa version, plus connu sous le nom de **UTF**.
-
-On utilise plus souvent le système **UTF-8** qui utilise 8 bits pour représenter des caractères. Il peut cependant utiliser 1, 2 voire même 3 groupes de 8 bits (octets) pour représenter davantage de caractères.
-
-### 🎯 Principe des points de code
-
-Chaque symbole possède un **point de code**, qui est l'ensemble des bits permettant sa représentation, souvent représenté en **hexadécimal**.
-
-### 🐍 Utilisation en Python
-
-**Python** utilise l'encodage UTF-8 pour coder ses symboles et les représenter.
-
-Il est possible d'observer un encodage spécial sur une chaîne de caractère en utilisant la méthode `encode` des chaînes de caractères.
-
-### Exemples Unicode
-
-- **풪** : U+052A (Caractère coréen)
-- **A** : U+0041 (Lettre latine majuscule)
-- **ᛒ** : U+16D2 (Lettre B runique)
-- **字** : U+5B57 (Caractère chinois)
-
-!!! tip "Ressource utile"
-    On retrouvera la table UTF-8 complète à cette adresse : [Table UTF-8](https://www.charset.org/utf-8)
+[Exercices — données binaires](/cours/2/donnees_binaires_exercices)

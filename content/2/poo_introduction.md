@@ -1,8 +1,7 @@
 ---
 title: Introduction POO
 description: >-
-  Découverte de la Programmation Orientée Objet (POO) en Python. Classes,
-  Objets, Attributs et Méthodes.
+  Classes, objets, attributs et méthodes : premiers pas en programmation orientée objet.
 level: premiere
 chapter: Programmation Orientée Objet
 icon: "\U0001F4E6"
@@ -10,88 +9,90 @@ badgeId: premiere_introduction_poo
 prerequisites: []
 ---
 
+## Objectifs
 
-# Introduction à la Programmation Orientée Objet (POO)
+- Définir une **classe** et créer une **instance** (objet).
+- Distinguer **attributs** (données) et **méthodes** (actions).
+- Expliquer le rôle de `__init__` et de `self`.
+- Accéder à un attribut et appeler une méthode sur un objet.
 
-## 1. Qu'est-ce que la POO ?
+## Idée clé
 
-La **Programmation Orientée Objet (POO)** est un paradigme de programmation (une manière de penser et de structurer le code).
+En POO, on regroupe dans un même **objet** ce qu'il **est** (attributs) et ce qu'il **sait faire** (méthodes). La **classe** est le moule ; l'**instanciation** produit un objet concret à partir de ce moule. Ici, le mot « attribut » est à sa place — contrairement aux clés d'un dictionnaire.
 
-Au lieu de penser uniquement en termes de fonctions et de procédures (programmation impérative/procédurale), on pense en termes d'**objets**.
+## Objet et classe
 
-!!! info "Définition : Objet"
-    Un **objet** est une entité qui regroupe :
-    
-    *   Des **attributs** (données/variables) qui le caractérisent.
-    *   Des **méthodes** (fonctions/actions) qu'il peut effectuer.
+Un **objet** combine :
 
-## 2. Les Classes : Le "Moule" des Objets
+- des **attributs** : variables propres à l'objet ;
+- des **méthodes** : fonctions liées à l'objet.
 
-Pour créer des objets, on définit d'abord une **classe**.
-Une classe est un plan, un modèle ou un "moule" qui définit la structure et le comportement des futurs objets.
-
-### Exemple : La classe `Voiture`
-
-Imaginons que nous voulons représenter des voitures.
+Une **classe** décrit la structure commune de tous les objets du même type.
 
 ```python
-class Voiture:
-    # Le constructeur (__init__) est appelé à la création de l'objet
-    def __init__(self, immatriculation, marque, modele, annee, couleur):
-        # Initialisation des attributs
-        self.immatriculation = immatriculation
-        self.marque = marque
-        self.modele = modele
-        self.annee = annee
-        self.couleur = couleur
-        self.est_demarre = False # Attribut avec valeur par défaut
-    
-    # Méthode spéciale pour l'affichage (print)
-    def __str__(self):
-        return f"Voiture {self.immatriculation} : {self.marque} {self.modele}"
+class Compte:
+    def __init__(self, titulaire: str, solde: float = 0.0):
+        self.titulaire = titulaire
+        self.solde = solde
 
-    # Une méthode (action) pour démarrer
-    def demarrer(self):
-        self.est_demarre = True
-        print(f"La voiture {self.immatriculation} démarre.")
+    def deposer(self, montant: float) -> None:
+        self.solde = self.solde + montant
 
-    # Une méthode pour arrêter
-    def arreter(self):
-        self.est_demarre = False
-        print(f"La voiture {self.immatriculation} s'arrête.")
+    def __str__(self) -> str:
+        return f"Compte de {self.titulaire} : {self.solde} €"
 ```
 
-!!! abstract "Vocabulaire essentiel"
-    *   **`class Voiture:`** : Définit la classe. Par convention, le nom commence par une majuscule.
-    *   **`__init__`** : Le **constructeur**. Méthode spéciale exécutée automatiquement à la création d'une instance.
-    *   **`self`** : Représente l'objet lui-même (l'instance courante) à l'intérieur de la classe. Il permet d'accéder aux attributs et méthodes de l'objet.
-    *   **`self.attribut = valeur`** : Définit un attribut pour l'objet.
+| Terme | Sens |
+| --- | --- |
+| `class Compte` | définit le moule (nom en `CamelCase`) |
+| `__init__` | **constructeur**, appelé à la création |
+| `self` | l'instance courante, dans les méthodes |
+| `self.solde` | attribut de l'instance |
 
-## 3. Créer et Utiliser des Objets (Instanciation)
+## Instanciation et utilisation
 
-Une fois la classe définie, on peut créer des objets concrets. On appelle cela l'**instanciation**.
+Créer un objet = **instancier** la classe (appeler le nom de la classe comme une fonction).
 
 ```python
-# 1. Création d'objets (Instances)
-ma_clio = Voiture("AB-123-CD", "Renault", "Clio", 2020, "Bleu")
-ta_peugeot = Voiture("XY-999-ZZ", "Peugeot", "208", 2022, "Rouge")
+c1 = Compte("Alice", 100)
+c2 = Compte("Bob")          # solde par défaut = 0.0
 
-# 2. Accès aux attributs
-print(ma_clio.couleur)      # Affiche : Bleu
-print(ta_peugeot.annee)     # Affiche : 2022
-
-# 3. Appel des méthodes
-ma_clio.demarrer()          # Affiche : La voiture AB-123-CD démarre.
-print(ma_clio.est_demarre)  # Affiche : True
-
-ta_peugeot.arreter()        # Affiche : La voiture XY-999-ZZ s'arrête.
+print(c1.titulaire)         # Alice
+c1.deposer(50)
+print(c1.solde)             # 150.0
+print(c1)                   # via __str__
 ```
 
-## 4. Pourquoi utiliser la POO ?
+Chaque instance a sa **propre** copie des attributs : modifier `c1` ne change pas `c2`.
 
-| Avantage | Description |
-| :--- | :--- |
-| **Organisation** | Regroupe logiquement les données et les traitements liés. |
-| **Réutilisabilité** | Une classe peut être utilisée pour créer une infinité d'objets. |
-| **Modularité** | Chaque objet est indépendant. On peut modifier le fonctionnement interne d'une classe sans casser tout le programme. |
-| **Abstraction** | On utilise des objets complexes (comme `voiture.demarrer()`) sans avoir besoin de connaître tous les détails mécaniques internes. |
+!!! tip "Dictionnaire vs objet"
+    Un dictionnaire `{"titulaire": "Alice", "solde": 100}` stocke des données sous des **clés**.  
+    Un objet `Compte` ajoute des **méthodes** (`deposer`) et un typage clair via la classe.
+
+## Pourquoi la POO ?
+
+| Intérêt | En pratique |
+| --- | --- |
+| Organisation | données + comportements au même endroit |
+| Réutilisation | une classe → beaucoup d'instances |
+| Modularité | on peut faire évoluer une classe sans tout casser |
+| Abstraction | `c1.deposer(50)` cache les détails internes |
+
+## Piège fréquent
+
+- Oublier `self` comme premier paramètre d'une méthode → erreur à l'appel.
+- Confondre la classe `Compte` et l'instance `c1` : les méthodes s'appellent sur l'**objet**.
+
+## À retenir
+
+- Classe = moule ; objet = instance créée par instanciation.
+- Attributs = données ; méthodes = actions (`self` obligatoire).
+- `__init__` initialise les attributs à la création.
+- Accès : `objet.attribut` ; appel : `objet.methode(...)`.
+- Chaque instance a ses propres valeurs d'attributs.
+- « Attribut » = POO ; « clé » = dictionnaire ; « affectation » = `x = ...`.
+
+## Pour s'entraîner
+
+- [Exercices POO](/cours/2/poo_exercices)
+- Projet : [Pokénsi](/cours/2/poo_projet_pokensi)

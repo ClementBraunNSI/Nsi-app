@@ -12,9 +12,20 @@ order: 25
 
 # Introduction au CSS
 
-Le **CSS** (Cascading Style Sheets) complète le HTML : il définit l'**apparence** (couleurs, polices, espacements, disposition) sans changer la structure du document.
+## Objectifs
 
-## 1. Lier une feuille de style
+- Lier une feuille de style à une page HTML.
+- Cibler des éléments avec les sélecteurs de base (élément, classe, id).
+- Appliquer couleurs, polices, marges et une mise en page simple (Flexbox).
+- Comprendre en une phrase la cascade et le modèle de boîte.
+
+## Idée clé
+
+Le **CSS** (Cascading Style Sheets) contrôle l'**apparence** : couleurs, polices, espacements, disposition. Le HTML reste la structure ; le CSS la habille.
+
+## Lier le CSS
+
+Feuille externe (recommandé) :
 
 ```html
 <head>
@@ -22,7 +33,7 @@ Le **CSS** (Cascading Style Sheets) complète le HTML : il définit l'**apparenc
 </head>
 ```
 
-Ou en interne pour un prototype :
+Ou, pour un prototype, un bloc interne :
 
 ```html
 <style>
@@ -30,11 +41,11 @@ Ou en interne pour un prototype :
 </style>
 ```
 
-## 2. Sélecteurs essentiels
+## Sélecteurs essentiels
 
 | Sélecteur | Exemple | Cible |
 | --- | --- | --- |
-| Élément | `p { }` | Tous les paragraphes |
+| Élément | `p { }` | Tous les `<p>` |
 | Classe | `.carte { }` | `class="carte"` |
 | Identifiant | `#entete { }` | `id="entete"` (unique) |
 
@@ -47,7 +58,9 @@ Ou en interne pour un prototype :
 .bandeau { text-align: center; }
 ```
 
-## 3. Propriétés courantes
+**Cascade (en une phrase)** : si plusieurs règles s'appliquent, le navigateur combine les propriétés ; en cas de conflit, la règle la plus **spécifique** (ou la dernière écrite) l'emporte.
+
+## Propriétés courantes
 
 ```css
 body {
@@ -67,7 +80,15 @@ body {
 }
 ```
 
-## 4. Flexbox (mise en page simple)
+## Modèle de boîte (bref)
+
+Chaque élément est une **boîte** avec, de l'intérieur vers l'extérieur :
+
+**contenu** → `padding` (remplissage) → `border` (bordure) → `margin` (marge extérieure).
+
+`width` / `height` concernent le contenu (sauf si `box-sizing: border-box`, qui inclut padding et border dans la largeur — pratique en mise en page).
+
+## Flexbox (mise en page simple)
 
 ```css
 .menu {
@@ -78,9 +99,24 @@ body {
 }
 ```
 
-## 5. Lien avec la suite du parcours
+`display: flex` aligne les enfants sur une ligne (ou une colonne) ; `gap`, `justify-content` et `flex-wrap` gèrent l'espace et le retour à la ligne.
 
-Après ce cours, vous pouvez enchaîner avec [Interactions JavaScript](/cours/2/web_javascript_interactions) pour rendre la page dynamique.
+## Piège fréquent
+
+Mettre trop de styles en ligne (`style="..."`) ou utiliser un `id` là où une **classe** suffirait (réutilisation). Autre classique : oublier que `margin` pousse **à l'extérieur** et `padding` **à l'intérieur**.
+
+## À retenir
+
+- CSS = présentation ; HTML = structure.
+- Lier via `<link rel="stylesheet" href="…">`.
+- Sélecteurs : élément, `.classe`, `#id`.
+- Cascade : spécificité + ordre décident en cas de conflit.
+- Boîte = contenu + padding + border + margin.
+- Flexbox facilite les alignements simples.
+
+## Pour s'entraîner / Suite
+
+Appliquez une feuille de style à une page HTML déjà structurée, puis enchaînez avec [Interactions JavaScript](/cours/2/web_javascript_interactions) pour rendre la page dynamique.
 
 !!! info "Programme Première"
     Le BO attend la capacité à structurer une page (HTML) et à en contrôler la présentation (CSS), avant d'ajouter des scripts côté client.

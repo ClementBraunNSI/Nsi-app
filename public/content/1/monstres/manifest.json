@@ -1,0 +1,1479 @@
+{
+  "years": [
+    {
+      "id": "2024_2025",
+      "label": "2024-2025",
+      "classes": [
+        {
+          "id": "2DE1",
+          "label": "2DE1",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "acelya.webp",
+              "name": "Acelya",
+              "src": "/content/1/monstres/2024_2025/2DE1/acelya.webp"
+            },
+            {
+              "file": "alexa.webp",
+              "name": "Alexa",
+              "src": "/content/1/monstres/2024_2025/2DE1/alexa.webp"
+            },
+            {
+              "file": "clea.webp",
+              "name": "Clea",
+              "src": "/content/1/monstres/2024_2025/2DE1/clea.webp"
+            },
+            {
+              "file": "clemence.webp",
+              "name": "Clemence",
+              "src": "/content/1/monstres/2024_2025/2DE1/clemence.webp"
+            },
+            {
+              "file": "emlyne.webp",
+              "name": "Emlyne",
+              "src": "/content/1/monstres/2024_2025/2DE1/emlyne.webp"
+            },
+            {
+              "file": "Hayrunnisa.webp",
+              "name": "Hayrunnisa",
+              "src": "/content/1/monstres/2024_2025/2DE1/Hayrunnisa.webp"
+            },
+            {
+              "file": "joan.webp",
+              "name": "Joan",
+              "src": "/content/1/monstres/2024_2025/2DE1/joan.webp"
+            },
+            {
+              "file": "lina.webp",
+              "name": "Lina",
+              "src": "/content/1/monstres/2024_2025/2DE1/lina.webp"
+            },
+            {
+              "file": "louna.webp",
+              "name": "Louna",
+              "src": "/content/1/monstres/2024_2025/2DE1/louna.webp"
+            },
+            {
+              "file": "lylian.webp",
+              "name": "Lylian",
+              "src": "/content/1/monstres/2024_2025/2DE1/lylian.webp"
+            },
+            {
+              "file": "maelle.webp",
+              "name": "Maelle",
+              "src": "/content/1/monstres/2024_2025/2DE1/maelle.webp"
+            },
+            {
+              "file": "maxime.webp",
+              "name": "Maxime",
+              "src": "/content/1/monstres/2024_2025/2DE1/maxime.webp"
+            },
+            {
+              "file": "naome.webp",
+              "name": "Naome",
+              "src": "/content/1/monstres/2024_2025/2DE1/naome.webp"
+            },
+            {
+              "file": "noor.webp",
+              "name": "Noor",
+              "src": "/content/1/monstres/2024_2025/2DE1/noor.webp"
+            },
+            {
+              "file": "quentin.webp",
+              "name": "Quentin",
+              "src": "/content/1/monstres/2024_2025/2DE1/quentin.webp"
+            },
+            {
+              "file": "salome.webp",
+              "name": "Salome",
+              "src": "/content/1/monstres/2024_2025/2DE1/salome.webp"
+            },
+            {
+              "file": "sofia.webp",
+              "name": "Sofia",
+              "src": "/content/1/monstres/2024_2025/2DE1/sofia.webp"
+            },
+            {
+              "file": "thibault.webp",
+              "name": "Thibault",
+              "src": "/content/1/monstres/2024_2025/2DE1/thibault.webp"
+            }
+          ]
+        },
+        {
+          "id": "2DE2",
+          "label": "2DE2",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "alyssia.webp",
+              "name": "Alyssia",
+              "src": "/content/1/monstres/2024_2025/2DE2/alyssia.webp"
+            },
+            {
+              "file": "antoine.webp",
+              "name": "Antoine",
+              "src": "/content/1/monstres/2024_2025/2DE2/antoine.webp"
+            },
+            {
+              "file": "aya.webp",
+              "name": "Aya",
+              "src": "/content/1/monstres/2024_2025/2DE2/aya.webp"
+            },
+            {
+              "file": "baptiste.webp",
+              "name": "Baptiste",
+              "src": "/content/1/monstres/2024_2025/2DE2/baptiste.webp"
+            },
+            {
+              "file": "binti.webp",
+              "name": "Binti",
+              "src": "/content/1/monstres/2024_2025/2DE2/binti.webp"
+            },
+            {
+              "file": "camille.webp",
+              "name": "Camille",
+              "src": "/content/1/monstres/2024_2025/2DE2/camille.webp"
+            },
+            {
+              "file": "elise.webp",
+              "name": "Elise",
+              "src": "/content/1/monstres/2024_2025/2DE2/elise.webp"
+            },
+            {
+              "file": "ethan.webp",
+              "name": "Ethan",
+              "src": "/content/1/monstres/2024_2025/2DE2/ethan.webp"
+            },
+            {
+              "file": "gabriel.webp",
+              "name": "Gabriel",
+              "src": "/content/1/monstres/2024_2025/2DE2/gabriel.webp"
+            },
+            {
+              "file": "ilona.webp",
+              "name": "Ilona",
+              "src": "/content/1/monstres/2024_2025/2DE2/ilona.webp"
+            },
+            {
+              "file": "kaila.webp",
+              "name": "Kaila",
+              "src": "/content/1/monstres/2024_2025/2DE2/kaila.webp"
+            },
+            {
+              "file": "kylian.webp",
+              "name": "Kylian",
+              "src": "/content/1/monstres/2024_2025/2DE2/kylian.webp"
+            },
+            {
+              "file": "kyllian.webp",
+              "name": "Kyllian",
+              "src": "/content/1/monstres/2024_2025/2DE2/kyllian.webp"
+            },
+            {
+              "file": "leo.webp",
+              "name": "Leo",
+              "src": "/content/1/monstres/2024_2025/2DE2/leo.webp"
+            },
+            {
+              "file": "lise-anne.webp",
+              "name": "Lise Anne",
+              "src": "/content/1/monstres/2024_2025/2DE2/lise-anne.webp"
+            },
+            {
+              "file": "lison.webp",
+              "name": "Lison",
+              "src": "/content/1/monstres/2024_2025/2DE2/lison.webp"
+            },
+            {
+              "file": "loeiz.webp",
+              "name": "Loeiz",
+              "src": "/content/1/monstres/2024_2025/2DE2/loeiz.webp"
+            },
+            {
+              "file": "lola.webp",
+              "name": "Lola",
+              "src": "/content/1/monstres/2024_2025/2DE2/lola.webp"
+            },
+            {
+              "file": "maelys.webp",
+              "name": "Maelys",
+              "src": "/content/1/monstres/2024_2025/2DE2/maelys.webp"
+            },
+            {
+              "file": "maxime.webp",
+              "name": "Maxime",
+              "src": "/content/1/monstres/2024_2025/2DE2/maxime.webp"
+            },
+            {
+              "file": "melina.webp",
+              "name": "Melina",
+              "src": "/content/1/monstres/2024_2025/2DE2/melina.webp"
+            },
+            {
+              "file": "oscar.webp",
+              "name": "Oscar",
+              "src": "/content/1/monstres/2024_2025/2DE2/oscar.webp"
+            },
+            {
+              "file": "sirine.webp",
+              "name": "Sirine",
+              "src": "/content/1/monstres/2024_2025/2DE2/sirine.webp"
+            },
+            {
+              "file": "youn.webp",
+              "name": "Youn",
+              "src": "/content/1/monstres/2024_2025/2DE2/youn.webp"
+            },
+            {
+              "file": "zoe_emma.webp",
+              "name": "Zoe Emma",
+              "src": "/content/1/monstres/2024_2025/2DE2/zoe_emma.webp"
+            },
+            {
+              "file": "zyan.webp",
+              "name": "Zyan",
+              "src": "/content/1/monstres/2024_2025/2DE2/zyan.webp"
+            }
+          ]
+        },
+        {
+          "id": "2DE3",
+          "label": "2DE3",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "anouk.webp",
+              "name": "Anouk",
+              "src": "/content/1/monstres/2024_2025/2DE3/anouk.webp"
+            },
+            {
+              "file": "chloe.webp",
+              "name": "Chloe",
+              "src": "/content/1/monstres/2024_2025/2DE3/chloe.webp"
+            },
+            {
+              "file": "eline_batterie.webp",
+              "name": "Eline Batterie",
+              "src": "/content/1/monstres/2024_2025/2DE3/eline_batterie.webp"
+            },
+            {
+              "file": "eline_guitare.webp",
+              "name": "Eline Guitare",
+              "src": "/content/1/monstres/2024_2025/2DE3/eline_guitare.webp"
+            },
+            {
+              "file": "eline_piano.webp",
+              "name": "Eline Piano",
+              "src": "/content/1/monstres/2024_2025/2DE3/eline_piano.webp"
+            },
+            {
+              "file": "eline_trompette.webp",
+              "name": "Eline Trompette",
+              "src": "/content/1/monstres/2024_2025/2DE3/eline_trompette.webp"
+            },
+            {
+              "file": "elisa.webp",
+              "name": "Elisa",
+              "src": "/content/1/monstres/2024_2025/2DE3/elisa.webp"
+            },
+            {
+              "file": "enora.webp",
+              "name": "Enora",
+              "src": "/content/1/monstres/2024_2025/2DE3/enora.webp"
+            },
+            {
+              "file": "gabin.webp",
+              "name": "Gabin",
+              "src": "/content/1/monstres/2024_2025/2DE3/gabin.webp"
+            },
+            {
+              "file": "ilhan.webp",
+              "name": "Ilhan",
+              "src": "/content/1/monstres/2024_2025/2DE3/ilhan.webp"
+            },
+            {
+              "file": "joseph.webp",
+              "name": "Joseph",
+              "src": "/content/1/monstres/2024_2025/2DE3/joseph.webp"
+            },
+            {
+              "file": "laureline.webp",
+              "name": "Laureline",
+              "src": "/content/1/monstres/2024_2025/2DE3/laureline.webp"
+            },
+            {
+              "file": "leo.webp",
+              "name": "Leo",
+              "src": "/content/1/monstres/2024_2025/2DE3/leo.webp"
+            },
+            {
+              "file": "madeg.webp",
+              "name": "Madeg",
+              "src": "/content/1/monstres/2024_2025/2DE3/madeg.webp"
+            },
+            {
+              "file": "mathys.webp",
+              "name": "Mathys",
+              "src": "/content/1/monstres/2024_2025/2DE3/mathys.webp"
+            },
+            {
+              "file": "mila.webp",
+              "name": "Mila",
+              "src": "/content/1/monstres/2024_2025/2DE3/mila.webp"
+            },
+            {
+              "file": "niev.webp",
+              "name": "Niev",
+              "src": "/content/1/monstres/2024_2025/2DE3/niev.webp"
+            },
+            {
+              "file": "nil.webp",
+              "name": "Nil",
+              "src": "/content/1/monstres/2024_2025/2DE3/nil.webp"
+            },
+            {
+              "file": "rose.webp",
+              "name": "Rose",
+              "src": "/content/1/monstres/2024_2025/2DE3/rose.webp"
+            },
+            {
+              "file": "sasha.webp",
+              "name": "Sasha",
+              "src": "/content/1/monstres/2024_2025/2DE3/sasha.webp"
+            },
+            {
+              "file": "sebastian.webp",
+              "name": "Sebastian",
+              "src": "/content/1/monstres/2024_2025/2DE3/sebastian.webp"
+            },
+            {
+              "file": "shannon.webp",
+              "name": "Shannon",
+              "src": "/content/1/monstres/2024_2025/2DE3/shannon.webp"
+            }
+          ]
+        },
+        {
+          "id": "2DE5",
+          "label": "2DE5",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "agathe_maiwen.webp",
+              "name": "Agathe Maiwen",
+              "src": "/content/1/monstres/2024_2025/2DE5/agathe_maiwen.webp"
+            },
+            {
+              "file": "alan.webp",
+              "name": "Alan",
+              "src": "/content/1/monstres/2024_2025/2DE5/alan.webp"
+            },
+            {
+              "file": "allyson_thea.webp",
+              "name": "Allyson Thea",
+              "src": "/content/1/monstres/2024_2025/2DE5/allyson_thea.webp"
+            },
+            {
+              "file": "anais.webp",
+              "name": "Anais",
+              "src": "/content/1/monstres/2024_2025/2DE5/anais.webp"
+            },
+            {
+              "file": "camille_etoile.webp",
+              "name": "Camille Etoile",
+              "src": "/content/1/monstres/2024_2025/2DE5/camille_etoile.webp"
+            },
+            {
+              "file": "camille_nuage.webp",
+              "name": "Camille Nuage",
+              "src": "/content/1/monstres/2024_2025/2DE5/camille_nuage.webp"
+            },
+            {
+              "file": "camille_pluie.webp",
+              "name": "Camille Pluie",
+              "src": "/content/1/monstres/2024_2025/2DE5/camille_pluie.webp"
+            },
+            {
+              "file": "camille_soleil.webp",
+              "name": "Camille Soleil",
+              "src": "/content/1/monstres/2024_2025/2DE5/camille_soleil.webp"
+            },
+            {
+              "file": "eliott.webp",
+              "name": "Eliott",
+              "src": "/content/1/monstres/2024_2025/2DE5/eliott.webp"
+            },
+            {
+              "file": "eva.webp",
+              "name": "Eva",
+              "src": "/content/1/monstres/2024_2025/2DE5/eva.webp"
+            },
+            {
+              "file": "guewen.webp",
+              "name": "Guewen",
+              "src": "/content/1/monstres/2024_2025/2DE5/guewen.webp"
+            },
+            {
+              "file": "ilan.webp",
+              "name": "Ilan",
+              "src": "/content/1/monstres/2024_2025/2DE5/ilan.webp"
+            },
+            {
+              "file": "jules.webp",
+              "name": "Jules",
+              "src": "/content/1/monstres/2024_2025/2DE5/jules.webp"
+            },
+            {
+              "file": "maxence.webp",
+              "name": "Maxence",
+              "src": "/content/1/monstres/2024_2025/2DE5/maxence.webp"
+            },
+            {
+              "file": "milan.webp",
+              "name": "Milan",
+              "src": "/content/1/monstres/2024_2025/2DE5/milan.webp"
+            },
+            {
+              "file": "patricia_zelie.webp",
+              "name": "Patricia Zelie",
+              "src": "/content/1/monstres/2024_2025/2DE5/patricia_zelie.webp"
+            },
+            {
+              "file": "romane.webp",
+              "name": "Romane",
+              "src": "/content/1/monstres/2024_2025/2DE5/romane.webp"
+            },
+            {
+              "file": "timeo_g.webp",
+              "name": "Timeo G",
+              "src": "/content/1/monstres/2024_2025/2DE5/timeo_g.webp"
+            },
+            {
+              "file": "timeo.webp",
+              "name": "Timeo",
+              "src": "/content/1/monstres/2024_2025/2DE5/timeo.webp"
+            },
+            {
+              "file": "tino.webp",
+              "name": "Tino",
+              "src": "/content/1/monstres/2024_2025/2DE5/tino.webp"
+            }
+          ]
+        },
+        {
+          "id": "2DE6",
+          "label": "2DE6",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "aela.webp",
+              "name": "Aela",
+              "src": "/content/1/monstres/2024_2025/2DE6/aela.webp"
+            },
+            {
+              "file": "alwena.webp",
+              "name": "Alwena",
+              "src": "/content/1/monstres/2024_2025/2DE6/alwena.webp"
+            },
+            {
+              "file": "elianor.webp",
+              "name": "Elianor",
+              "src": "/content/1/monstres/2024_2025/2DE6/elianor.webp"
+            },
+            {
+              "file": "elsa.webp",
+              "name": "Elsa",
+              "src": "/content/1/monstres/2024_2025/2DE6/elsa.webp"
+            },
+            {
+              "file": "emma.webp",
+              "name": "Emma",
+              "src": "/content/1/monstres/2024_2025/2DE6/emma.webp"
+            },
+            {
+              "file": "ethel.webp",
+              "name": "Ethel",
+              "src": "/content/1/monstres/2024_2025/2DE6/ethel.webp"
+            },
+            {
+              "file": "ferdinand.webp",
+              "name": "Ferdinand",
+              "src": "/content/1/monstres/2024_2025/2DE6/ferdinand.webp"
+            },
+            {
+              "file": "haizia.webp",
+              "name": "Haizia",
+              "src": "/content/1/monstres/2024_2025/2DE6/haizia.webp"
+            },
+            {
+              "file": "jade.webp",
+              "name": "Jade",
+              "src": "/content/1/monstres/2024_2025/2DE6/jade.webp"
+            },
+            {
+              "file": "jeanne.webp",
+              "name": "Jeanne",
+              "src": "/content/1/monstres/2024_2025/2DE6/jeanne.webp"
+            },
+            {
+              "file": "joris.webp",
+              "name": "Joris",
+              "src": "/content/1/monstres/2024_2025/2DE6/joris.webp"
+            },
+            {
+              "file": "juliette.webp",
+              "name": "Juliette",
+              "src": "/content/1/monstres/2024_2025/2DE6/juliette.webp"
+            },
+            {
+              "file": "leandre.webp",
+              "name": "Leandre",
+              "src": "/content/1/monstres/2024_2025/2DE6/leandre.webp"
+            },
+            {
+              "file": "lena.webp",
+              "name": "Lena",
+              "src": "/content/1/monstres/2024_2025/2DE6/lena.webp"
+            },
+            {
+              "file": "lise.webp",
+              "name": "Lise",
+              "src": "/content/1/monstres/2024_2025/2DE6/lise.webp"
+            },
+            {
+              "file": "ludmila.webp",
+              "name": "Ludmila",
+              "src": "/content/1/monstres/2024_2025/2DE6/ludmila.webp"
+            },
+            {
+              "file": "mael.webp",
+              "name": "Mael",
+              "src": "/content/1/monstres/2024_2025/2DE6/mael.webp"
+            },
+            {
+              "file": "mayane.webp",
+              "name": "Mayane",
+              "src": "/content/1/monstres/2024_2025/2DE6/mayane.webp"
+            },
+            {
+              "file": "merlin.webp",
+              "name": "Merlin",
+              "src": "/content/1/monstres/2024_2025/2DE6/merlin.webp"
+            },
+            {
+              "file": "nathan.webp",
+              "name": "Nathan",
+              "src": "/content/1/monstres/2024_2025/2DE6/nathan.webp"
+            },
+            {
+              "file": "nina.webp",
+              "name": "Nina",
+              "src": "/content/1/monstres/2024_2025/2DE6/nina.webp"
+            },
+            {
+              "file": "noah.webp",
+              "name": "Noah",
+              "src": "/content/1/monstres/2024_2025/2DE6/noah.webp"
+            },
+            {
+              "file": "nolan.webp",
+              "name": "Nolan",
+              "src": "/content/1/monstres/2024_2025/2DE6/nolan.webp"
+            },
+            {
+              "file": "rival_leandre.webp",
+              "name": "Rival Leandre",
+              "src": "/content/1/monstres/2024_2025/2DE6/rival_leandre.webp"
+            },
+            {
+              "file": "rozenn.webp",
+              "name": "Rozenn",
+              "src": "/content/1/monstres/2024_2025/2DE6/rozenn.webp"
+            },
+            {
+              "file": "salomee.webp",
+              "name": "Salomee",
+              "src": "/content/1/monstres/2024_2025/2DE6/salomee.webp"
+            },
+            {
+              "file": "sarah.webp",
+              "name": "Sarah",
+              "src": "/content/1/monstres/2024_2025/2DE6/sarah.webp"
+            },
+            {
+              "file": "timoté.webp",
+              "name": "Timoté",
+              "src": "/content/1/monstres/2024_2025/2DE6/timoté.webp"
+            }
+          ]
+        },
+        {
+          "id": "2DE7",
+          "label": "2DE7",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "alan.webp",
+              "name": "Alan",
+              "src": "/content/1/monstres/2024_2025/2DE7/alan.webp"
+            },
+            {
+              "file": "alice.webp",
+              "name": "Alice",
+              "src": "/content/1/monstres/2024_2025/2DE7/alice.webp"
+            },
+            {
+              "file": "alou.webp",
+              "name": "Alou",
+              "src": "/content/1/monstres/2024_2025/2DE7/alou.webp"
+            },
+            {
+              "file": "charline.webp",
+              "name": "Charline",
+              "src": "/content/1/monstres/2024_2025/2DE7/charline.webp"
+            },
+            {
+              "file": "dalila.webp",
+              "name": "Dalila",
+              "src": "/content/1/monstres/2024_2025/2DE7/dalila.webp"
+            },
+            {
+              "file": "eloa.webp",
+              "name": "Eloa",
+              "src": "/content/1/monstres/2024_2025/2DE7/eloa.webp"
+            },
+            {
+              "file": "emma.webp",
+              "name": "Emma",
+              "src": "/content/1/monstres/2024_2025/2DE7/emma.webp"
+            },
+            {
+              "file": "ethan.webp",
+              "name": "Ethan",
+              "src": "/content/1/monstres/2024_2025/2DE7/ethan.webp"
+            },
+            {
+              "file": "hugo.webp",
+              "name": "Hugo",
+              "src": "/content/1/monstres/2024_2025/2DE7/hugo.webp"
+            },
+            {
+              "file": "ilan.webp",
+              "name": "Ilan",
+              "src": "/content/1/monstres/2024_2025/2DE7/ilan.webp"
+            },
+            {
+              "file": "jade.webp",
+              "name": "Jade",
+              "src": "/content/1/monstres/2024_2025/2DE7/jade.webp"
+            },
+            {
+              "file": "jules.webp",
+              "name": "Jules",
+              "src": "/content/1/monstres/2024_2025/2DE7/jules.webp"
+            },
+            {
+              "file": "karim.webp",
+              "name": "Karim",
+              "src": "/content/1/monstres/2024_2025/2DE7/karim.webp"
+            },
+            {
+              "file": "lilie-rose.webp",
+              "name": "Lilie Rose",
+              "src": "/content/1/monstres/2024_2025/2DE7/lilie-rose.webp"
+            },
+            {
+              "file": "lilou.webp",
+              "name": "Lilou",
+              "src": "/content/1/monstres/2024_2025/2DE7/lilou.webp"
+            },
+            {
+              "file": "mael.webp",
+              "name": "Mael",
+              "src": "/content/1/monstres/2024_2025/2DE7/mael.webp"
+            },
+            {
+              "file": "maelys.webp",
+              "name": "Maelys",
+              "src": "/content/1/monstres/2024_2025/2DE7/maelys.webp"
+            },
+            {
+              "file": "mathilde.webp",
+              "name": "Mathilde",
+              "src": "/content/1/monstres/2024_2025/2DE7/mathilde.webp"
+            },
+            {
+              "file": "maxime.webp",
+              "name": "Maxime",
+              "src": "/content/1/monstres/2024_2025/2DE7/maxime.webp"
+            },
+            {
+              "file": "milo.webp",
+              "name": "Milo",
+              "src": "/content/1/monstres/2024_2025/2DE7/milo.webp"
+            },
+            {
+              "file": "moncef.webp",
+              "name": "Moncef",
+              "src": "/content/1/monstres/2024_2025/2DE7/moncef.webp"
+            },
+            {
+              "file": "nolan.webp",
+              "name": "Nolan",
+              "src": "/content/1/monstres/2024_2025/2DE7/nolan.webp"
+            },
+            {
+              "file": "orlane.webp",
+              "name": "Orlane",
+              "src": "/content/1/monstres/2024_2025/2DE7/orlane.webp"
+            },
+            {
+              "file": "soan.webp",
+              "name": "Soan",
+              "src": "/content/1/monstres/2024_2025/2DE7/soan.webp"
+            },
+            {
+              "file": "talel.webp",
+              "name": "Talel",
+              "src": "/content/1/monstres/2024_2025/2DE7/talel.webp"
+            },
+            {
+              "file": "timeo.webp",
+              "name": "Timeo",
+              "src": "/content/1/monstres/2024_2025/2DE7/timeo.webp"
+            },
+            {
+              "file": "youen.webp",
+              "name": "Youen",
+              "src": "/content/1/monstres/2024_2025/2DE7/youen.webp"
+            },
+            {
+              "file": "younes.webp",
+              "name": "Younes",
+              "src": "/content/1/monstres/2024_2025/2DE7/younes.webp"
+            }
+          ]
+        },
+        {
+          "id": "2DE9",
+          "label": "2DE9",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "aidie.webp",
+              "name": "Aidie",
+              "src": "/content/1/monstres/2024_2025/2DE9/aidie.webp"
+            },
+            {
+              "file": "alice.webp",
+              "name": "Alice",
+              "src": "/content/1/monstres/2024_2025/2DE9/alice.webp"
+            },
+            {
+              "file": "charlotte.webp",
+              "name": "Charlotte",
+              "src": "/content/1/monstres/2024_2025/2DE9/charlotte.webp"
+            },
+            {
+              "file": "eliott.webp",
+              "name": "Eliott",
+              "src": "/content/1/monstres/2024_2025/2DE9/eliott.webp"
+            },
+            {
+              "file": "elise.webp",
+              "name": "Elise",
+              "src": "/content/1/monstres/2024_2025/2DE9/elise.webp"
+            },
+            {
+              "file": "elsa.webp",
+              "name": "Elsa",
+              "src": "/content/1/monstres/2024_2025/2DE9/elsa.webp"
+            },
+            {
+              "file": "iwen.webp",
+              "name": "Iwen",
+              "src": "/content/1/monstres/2024_2025/2DE9/iwen.webp"
+            },
+            {
+              "file": "janelle.webp",
+              "name": "Janelle",
+              "src": "/content/1/monstres/2024_2025/2DE9/janelle.webp"
+            },
+            {
+              "file": "jeanne.webp",
+              "name": "Jeanne",
+              "src": "/content/1/monstres/2024_2025/2DE9/jeanne.webp"
+            },
+            {
+              "file": "lena.webp",
+              "name": "Lena",
+              "src": "/content/1/monstres/2024_2025/2DE9/lena.webp"
+            },
+            {
+              "file": "lina.webp",
+              "name": "Lina",
+              "src": "/content/1/monstres/2024_2025/2DE9/lina.webp"
+            },
+            {
+              "file": "maelys.webp",
+              "name": "Maelys",
+              "src": "/content/1/monstres/2024_2025/2DE9/maelys.webp"
+            },
+            {
+              "file": "marisa.webp",
+              "name": "Marisa",
+              "src": "/content/1/monstres/2024_2025/2DE9/marisa.webp"
+            },
+            {
+              "file": "marko.webp",
+              "name": "Marko",
+              "src": "/content/1/monstres/2024_2025/2DE9/marko.webp"
+            },
+            {
+              "file": "mathys.webp",
+              "name": "Mathys",
+              "src": "/content/1/monstres/2024_2025/2DE9/mathys.webp"
+            },
+            {
+              "file": "maxence.webp",
+              "name": "Maxence",
+              "src": "/content/1/monstres/2024_2025/2DE9/maxence.webp"
+            },
+            {
+              "file": "mylan_ilyess.webp",
+              "name": "Mylan Ilyess",
+              "src": "/content/1/monstres/2024_2025/2DE9/mylan_ilyess.webp"
+            },
+            {
+              "file": "nathael.webp",
+              "name": "Nathael",
+              "src": "/content/1/monstres/2024_2025/2DE9/nathael.webp"
+            },
+            {
+              "file": "sylvia.webp",
+              "name": "Sylvia",
+              "src": "/content/1/monstres/2024_2025/2DE9/sylvia.webp"
+            },
+            {
+              "file": "theo.webp",
+              "name": "Theo",
+              "src": "/content/1/monstres/2024_2025/2DE9/theo.webp"
+            },
+            {
+              "file": "yael.webp",
+              "name": "Yael",
+              "src": "/content/1/monstres/2024_2025/2DE9/yael.webp"
+            }
+          ]
+        },
+        {
+          "id": "2DE10",
+          "label": "2DE10",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "abigael.webp",
+              "name": "Abigael",
+              "src": "/content/1/monstres/2024_2025/2DE10/abigael.webp"
+            },
+            {
+              "file": "alexis.webp",
+              "name": "Alexis",
+              "src": "/content/1/monstres/2024_2025/2DE10/alexis.webp"
+            },
+            {
+              "file": "anna-rose.webp",
+              "name": "Anna Rose",
+              "src": "/content/1/monstres/2024_2025/2DE10/anna-rose.webp"
+            },
+            {
+              "file": "esther.webp",
+              "name": "Esther",
+              "src": "/content/1/monstres/2024_2025/2DE10/esther.webp"
+            },
+            {
+              "file": "eyaelle.webp",
+              "name": "Eyaelle",
+              "src": "/content/1/monstres/2024_2025/2DE10/eyaelle.webp"
+            },
+            {
+              "file": "ilyan.webp",
+              "name": "Ilyan",
+              "src": "/content/1/monstres/2024_2025/2DE10/ilyan.webp"
+            },
+            {
+              "file": "jade.webp",
+              "name": "Jade",
+              "src": "/content/1/monstres/2024_2025/2DE10/jade.webp"
+            },
+            {
+              "file": "johan.webp",
+              "name": "Johan",
+              "src": "/content/1/monstres/2024_2025/2DE10/johan.webp"
+            },
+            {
+              "file": "louise.webp",
+              "name": "Louise",
+              "src": "/content/1/monstres/2024_2025/2DE10/louise.webp"
+            },
+            {
+              "file": "lucas.webp",
+              "name": "Lucas",
+              "src": "/content/1/monstres/2024_2025/2DE10/lucas.webp"
+            },
+            {
+              "file": "mailys.webp",
+              "name": "Mailys",
+              "src": "/content/1/monstres/2024_2025/2DE10/mailys.webp"
+            },
+            {
+              "file": "margaux.webp",
+              "name": "Margaux",
+              "src": "/content/1/monstres/2024_2025/2DE10/margaux.webp"
+            },
+            {
+              "file": "mathys_1.webp",
+              "name": "Mathys 1",
+              "src": "/content/1/monstres/2024_2025/2DE10/mathys_1.webp"
+            },
+            {
+              "file": "mathys_2.webp",
+              "name": "Mathys 2",
+              "src": "/content/1/monstres/2024_2025/2DE10/mathys_2.webp"
+            },
+            {
+              "file": "mathys_3.webp",
+              "name": "Mathys 3",
+              "src": "/content/1/monstres/2024_2025/2DE10/mathys_3.webp"
+            },
+            {
+              "file": "mathys_4.webp",
+              "name": "Mathys 4",
+              "src": "/content/1/monstres/2024_2025/2DE10/mathys_4.webp"
+            },
+            {
+              "file": "mathys_5.webp",
+              "name": "Mathys 5",
+              "src": "/content/1/monstres/2024_2025/2DE10/mathys_5.webp"
+            },
+            {
+              "file": "mathys_s.webp",
+              "name": "Mathys S",
+              "src": "/content/1/monstres/2024_2025/2DE10/mathys_s.webp"
+            },
+            {
+              "file": "melina.webp",
+              "name": "Melina",
+              "src": "/content/1/monstres/2024_2025/2DE10/melina.webp"
+            },
+            {
+              "file": "naomée.webp",
+              "name": "Naomée",
+              "src": "/content/1/monstres/2024_2025/2DE10/naomée.webp"
+            },
+            {
+              "file": "nassim.webp",
+              "name": "Nassim",
+              "src": "/content/1/monstres/2024_2025/2DE10/nassim.webp"
+            },
+            {
+              "file": "nina.webp",
+              "name": "Nina",
+              "src": "/content/1/monstres/2024_2025/2DE10/nina.webp"
+            },
+            {
+              "file": "pierre.webp",
+              "name": "Pierre",
+              "src": "/content/1/monstres/2024_2025/2DE10/pierre.webp"
+            },
+            {
+              "file": "roxanne.webp",
+              "name": "Roxanne",
+              "src": "/content/1/monstres/2024_2025/2DE10/roxanne.webp"
+            },
+            {
+              "file": "samira.webp",
+              "name": "Samira",
+              "src": "/content/1/monstres/2024_2025/2DE10/samira.webp"
+            },
+            {
+              "file": "semih.webp",
+              "name": "Semih",
+              "src": "/content/1/monstres/2024_2025/2DE10/semih.webp"
+            },
+            {
+              "file": "telio.webp",
+              "name": "Telio",
+              "src": "/content/1/monstres/2024_2025/2DE10/telio.webp"
+            }
+          ]
+        },
+        {
+          "id": "2DE11",
+          "label": "2DE11",
+          "group": "Classe de seconde",
+          "monsters": [
+            {
+              "file": "aaron.webp",
+              "name": "Aaron",
+              "src": "/content/1/monstres/2024_2025/2DE11/aaron.webp"
+            },
+            {
+              "file": "alice.webp",
+              "name": "Alice",
+              "src": "/content/1/monstres/2024_2025/2DE11/alice.webp"
+            },
+            {
+              "file": "anais.webp",
+              "name": "Anais",
+              "src": "/content/1/monstres/2024_2025/2DE11/anais.webp"
+            },
+            {
+              "file": "anouk.webp",
+              "name": "Anouk",
+              "src": "/content/1/monstres/2024_2025/2DE11/anouk.webp"
+            },
+            {
+              "file": "hanae.webp",
+              "name": "Hanae",
+              "src": "/content/1/monstres/2024_2025/2DE11/hanae.webp"
+            },
+            {
+              "file": "ilann.webp",
+              "name": "Ilann",
+              "src": "/content/1/monstres/2024_2025/2DE11/ilann.webp"
+            },
+            {
+              "file": "jeanne.webp",
+              "name": "Jeanne",
+              "src": "/content/1/monstres/2024_2025/2DE11/jeanne.webp"
+            },
+            {
+              "file": "jorys.webp",
+              "name": "Jorys",
+              "src": "/content/1/monstres/2024_2025/2DE11/jorys.webp"
+            },
+            {
+              "file": "jules_r.webp",
+              "name": "Jules R",
+              "src": "/content/1/monstres/2024_2025/2DE11/jules_r.webp"
+            },
+            {
+              "file": "jules.webp",
+              "name": "Jules",
+              "src": "/content/1/monstres/2024_2025/2DE11/jules.webp"
+            },
+            {
+              "file": "lucas.webp",
+              "name": "Lucas",
+              "src": "/content/1/monstres/2024_2025/2DE11/lucas.webp"
+            },
+            {
+              "file": "lysa.webp",
+              "name": "Lysa",
+              "src": "/content/1/monstres/2024_2025/2DE11/lysa.webp"
+            },
+            {
+              "file": "madyar.webp",
+              "name": "Madyar",
+              "src": "/content/1/monstres/2024_2025/2DE11/madyar.webp"
+            },
+            {
+              "file": "mailye.webp",
+              "name": "Mailye",
+              "src": "/content/1/monstres/2024_2025/2DE11/mailye.webp"
+            },
+            {
+              "file": "maria.webp",
+              "name": "Maria",
+              "src": "/content/1/monstres/2024_2025/2DE11/maria.webp"
+            },
+            {
+              "file": "maylane.webp",
+              "name": "Maylane",
+              "src": "/content/1/monstres/2024_2025/2DE11/maylane.webp"
+            },
+            {
+              "file": "melia.webp",
+              "name": "Melia",
+              "src": "/content/1/monstres/2024_2025/2DE11/melia.webp"
+            },
+            {
+              "file": "nhayla.webp",
+              "name": "Nhayla",
+              "src": "/content/1/monstres/2024_2025/2DE11/nhayla.webp"
+            },
+            {
+              "file": "quentin.webp",
+              "name": "Quentin",
+              "src": "/content/1/monstres/2024_2025/2DE11/quentin.webp"
+            },
+            {
+              "file": "servane.webp",
+              "name": "Servane",
+              "src": "/content/1/monstres/2024_2025/2DE11/servane.webp"
+            },
+            {
+              "file": "sham.webp",
+              "name": "Sham",
+              "src": "/content/1/monstres/2024_2025/2DE11/sham.webp"
+            },
+            {
+              "file": "shanice.webp",
+              "name": "Shanice",
+              "src": "/content/1/monstres/2024_2025/2DE11/shanice.webp"
+            },
+            {
+              "file": "tess.webp",
+              "name": "Tess",
+              "src": "/content/1/monstres/2024_2025/2DE11/tess.webp"
+            },
+            {
+              "file": "titouan.webp",
+              "name": "Titouan",
+              "src": "/content/1/monstres/2024_2025/2DE11/titouan.webp"
+            },
+            {
+              "file": "yoann.webp",
+              "name": "Yoann",
+              "src": "/content/1/monstres/2024_2025/2DE11/yoann.webp"
+            },
+            {
+              "file": "zoe.webp",
+              "name": "Zoe",
+              "src": "/content/1/monstres/2024_2025/2DE11/zoe.webp"
+            }
+          ]
+        },
+        {
+          "id": "S01",
+          "label": "S01",
+          "group": "Seconde",
+          "monsters": [
+            {
+              "file": "awena.webp",
+              "name": "Awena",
+              "src": "/content/1/monstres/2024_2025/S01/awena.webp"
+            },
+            {
+              "file": "charlotte.webp",
+              "name": "Charlotte",
+              "src": "/content/1/monstres/2024_2025/S01/charlotte.webp"
+            },
+            {
+              "file": "clea.webp",
+              "name": "Clea",
+              "src": "/content/1/monstres/2024_2025/S01/clea.webp"
+            },
+            {
+              "file": "honore.webp",
+              "name": "Honore",
+              "src": "/content/1/monstres/2024_2025/S01/honore.webp"
+            },
+            {
+              "file": "jade_2.webp",
+              "name": "Jade 2",
+              "src": "/content/1/monstres/2024_2025/S01/jade_2.webp"
+            },
+            {
+              "file": "jade.webp",
+              "name": "Jade",
+              "src": "/content/1/monstres/2024_2025/S01/jade.webp"
+            },
+            {
+              "file": "junon.webp",
+              "name": "Junon",
+              "src": "/content/1/monstres/2024_2025/S01/junon.webp"
+            },
+            {
+              "file": "louise_2.webp",
+              "name": "Louise 2",
+              "src": "/content/1/monstres/2024_2025/S01/louise_2.webp"
+            },
+            {
+              "file": "louise.webp",
+              "name": "Louise",
+              "src": "/content/1/monstres/2024_2025/S01/louise.webp"
+            },
+            {
+              "file": "louna_2.webp",
+              "name": "Louna 2",
+              "src": "/content/1/monstres/2024_2025/S01/louna_2.webp"
+            },
+            {
+              "file": "maiann.webp",
+              "name": "Maiann",
+              "src": "/content/1/monstres/2024_2025/S01/maiann.webp"
+            },
+            {
+              "file": "melanie.webp",
+              "name": "Melanie",
+              "src": "/content/1/monstres/2024_2025/S01/melanie.webp"
+            },
+            {
+              "file": "melwynn.webp",
+              "name": "Melwynn",
+              "src": "/content/1/monstres/2024_2025/S01/melwynn.webp"
+            },
+            {
+              "file": "molene.webp",
+              "name": "Molene",
+              "src": "/content/1/monstres/2024_2025/S01/molene.webp"
+            },
+            {
+              "file": "nora-lea.webp",
+              "name": "Nora Lea",
+              "src": "/content/1/monstres/2024_2025/S01/nora-lea.webp"
+            },
+            {
+              "file": "olivia.webp",
+              "name": "Olivia",
+              "src": "/content/1/monstres/2024_2025/S01/olivia.webp"
+            },
+            {
+              "file": "rose.webp",
+              "name": "Rose",
+              "src": "/content/1/monstres/2024_2025/S01/rose.webp"
+            },
+            {
+              "file": "thomas.webp",
+              "name": "Thomas",
+              "src": "/content/1/monstres/2024_2025/S01/thomas.webp"
+            },
+            {
+              "file": "tiago.webp",
+              "name": "Tiago",
+              "src": "/content/1/monstres/2024_2025/S01/tiago.webp"
+            },
+            {
+              "file": "yves.webp",
+              "name": "Yves",
+              "src": "/content/1/monstres/2024_2025/S01/yves.webp"
+            },
+            {
+              "file": "zoe.webp",
+              "name": "Zoe",
+              "src": "/content/1/monstres/2024_2025/S01/zoe.webp"
+            }
+          ]
+        },
+        {
+          "id": "S16",
+          "label": "S16",
+          "group": "Seconde",
+          "monsters": [
+            {
+              "file": "alex.webp",
+              "name": "Alex",
+              "src": "/content/1/monstres/2024_2025/S16/alex.webp"
+            },
+            {
+              "file": "eliz.webp",
+              "name": "Eliz",
+              "src": "/content/1/monstres/2024_2025/S16/eliz.webp"
+            },
+            {
+              "file": "emmy.webp",
+              "name": "Emmy",
+              "src": "/content/1/monstres/2024_2025/S16/emmy.webp"
+            },
+            {
+              "file": "gabin.webp",
+              "name": "Gabin",
+              "src": "/content/1/monstres/2024_2025/S16/gabin.webp"
+            },
+            {
+              "file": "gaspard.webp",
+              "name": "Gaspard",
+              "src": "/content/1/monstres/2024_2025/S16/gaspard.webp"
+            },
+            {
+              "file": "julia.webp",
+              "name": "Julia",
+              "src": "/content/1/monstres/2024_2025/S16/julia.webp"
+            },
+            {
+              "file": "liam.webp",
+              "name": "Liam",
+              "src": "/content/1/monstres/2024_2025/S16/liam.webp"
+            },
+            {
+              "file": "louise_r.webp",
+              "name": "Louise R",
+              "src": "/content/1/monstres/2024_2025/S16/louise_r.webp"
+            },
+            {
+              "file": "lylia.webp",
+              "name": "Lylia",
+              "src": "/content/1/monstres/2024_2025/S16/lylia.webp"
+            },
+            {
+              "file": "maely.webp",
+              "name": "Maely",
+              "src": "/content/1/monstres/2024_2025/S16/maely.webp"
+            },
+            {
+              "file": "maelys.webp",
+              "name": "Maelys",
+              "src": "/content/1/monstres/2024_2025/S16/maelys.webp"
+            },
+            {
+              "file": "marie_ellynn.webp",
+              "name": "Marie Ellynn",
+              "src": "/content/1/monstres/2024_2025/S16/marie_ellynn.webp"
+            },
+            {
+              "file": "marina.webp",
+              "name": "Marina",
+              "src": "/content/1/monstres/2024_2025/S16/marina.webp"
+            },
+            {
+              "file": "maxime.webp",
+              "name": "Maxime",
+              "src": "/content/1/monstres/2024_2025/S16/maxime.webp"
+            },
+            {
+              "file": "noah.webp",
+              "name": "Noah",
+              "src": "/content/1/monstres/2024_2025/S16/noah.webp"
+            },
+            {
+              "file": "noe.webp",
+              "name": "Noe",
+              "src": "/content/1/monstres/2024_2025/S16/noe.webp"
+            },
+            {
+              "file": "robin.webp",
+              "name": "Robin",
+              "src": "/content/1/monstres/2024_2025/S16/robin.webp"
+            },
+            {
+              "file": "romane.webp",
+              "name": "Romane",
+              "src": "/content/1/monstres/2024_2025/S16/romane.webp"
+            },
+            {
+              "file": "theo.webp",
+              "name": "Theo",
+              "src": "/content/1/monstres/2024_2025/S16/theo.webp"
+            },
+            {
+              "file": "titouan.webp",
+              "name": "Titouan",
+              "src": "/content/1/monstres/2024_2025/S16/titouan.webp"
+            },
+            {
+              "file": "tom.webp",
+              "name": "Tom",
+              "src": "/content/1/monstres/2024_2025/S16/tom.webp"
+            }
+          ]
+        },
+        {
+          "id": "S18",
+          "label": "S18",
+          "group": "Seconde",
+          "monsters": [
+            {
+              "file": "anae.webp",
+              "name": "Anae",
+              "src": "/content/1/monstres/2024_2025/S18/anae.webp"
+            },
+            {
+              "file": "baptiste.webp",
+              "name": "Baptiste",
+              "src": "/content/1/monstres/2024_2025/S18/baptiste.webp"
+            },
+            {
+              "file": "calie.webp",
+              "name": "Calie",
+              "src": "/content/1/monstres/2024_2025/S18/calie.webp"
+            },
+            {
+              "file": "emma.webp",
+              "name": "Emma",
+              "src": "/content/1/monstres/2024_2025/S18/emma.webp"
+            },
+            {
+              "file": "ethan.webp",
+              "name": "Ethan",
+              "src": "/content/1/monstres/2024_2025/S18/ethan.webp"
+            },
+            {
+              "file": "gabin.webp",
+              "name": "Gabin",
+              "src": "/content/1/monstres/2024_2025/S18/gabin.webp"
+            },
+            {
+              "file": "joan.webp",
+              "name": "Joan",
+              "src": "/content/1/monstres/2024_2025/S18/joan.webp"
+            },
+            {
+              "file": "lilou.webp",
+              "name": "Lilou",
+              "src": "/content/1/monstres/2024_2025/S18/lilou.webp"
+            },
+            {
+              "file": "lilwenn.webp",
+              "name": "Lilwenn",
+              "src": "/content/1/monstres/2024_2025/S18/lilwenn.webp"
+            },
+            {
+              "file": "lola.webp",
+              "name": "Lola",
+              "src": "/content/1/monstres/2024_2025/S18/lola.webp"
+            },
+            {
+              "file": "manon.webp",
+              "name": "Manon",
+              "src": "/content/1/monstres/2024_2025/S18/manon.webp"
+            },
+            {
+              "file": "mathurin.webp",
+              "name": "Mathurin",
+              "src": "/content/1/monstres/2024_2025/S18/mathurin.webp"
+            },
+            {
+              "file": "maxence.webp",
+              "name": "Maxence",
+              "src": "/content/1/monstres/2024_2025/S18/maxence.webp"
+            },
+            {
+              "file": "nathan.webp",
+              "name": "Nathan",
+              "src": "/content/1/monstres/2024_2025/S18/nathan.webp"
+            },
+            {
+              "file": "renzo.webp",
+              "name": "Renzo",
+              "src": "/content/1/monstres/2024_2025/S18/renzo.webp"
+            },
+            {
+              "file": "romane.webp",
+              "name": "Romane",
+              "src": "/content/1/monstres/2024_2025/S18/romane.webp"
+            },
+            {
+              "file": "sofia.webp",
+              "name": "Sofia",
+              "src": "/content/1/monstres/2024_2025/S18/sofia.webp"
+            },
+            {
+              "file": "tahyna.webp",
+              "name": "Tahyna",
+              "src": "/content/1/monstres/2024_2025/S18/tahyna.webp"
+            },
+            {
+              "file": "thais.webp",
+              "name": "Thais",
+              "src": "/content/1/monstres/2024_2025/S18/thais.webp"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

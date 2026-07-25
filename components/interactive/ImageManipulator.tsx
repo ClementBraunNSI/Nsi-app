@@ -6,7 +6,7 @@ interface ImageManipulatorProps {
   src?: string;
 }
 
-export default function ImageManipulator({ src = '/2928B642-6655-413A-9D95-A1F0D6F3A868_1_105_c.jpeg' }: ImageManipulatorProps) {
+export default function ImageManipulator({ src = '/content/1/maya.png' }: ImageManipulatorProps) {
   const [rFactor, setRFactor] = useState(100);
   const [gFactor, setGFactor] = useState(100);
   const [bFactor, setBFactor] = useState(100);

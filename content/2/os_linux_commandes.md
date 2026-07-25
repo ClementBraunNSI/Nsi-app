@@ -5,59 +5,87 @@ level: premiere
 chapter: "Systèmes d'exploitation"
 icon: "⌨️"
 badgeId: "premiere_commandes_linux"
+prerequisites:
+  - os_systemes
 ---
 
+# Commandes Linux essentielles
 
-# Commandes Linux Essentielles
+## Objectifs
 
-L'interface en ligne de commande (CLI) est l'outil de prédilection des administrateurs système et des développeurs. Voici les commandes fondamentales à connaître.
+- Se déplacer dans l'arborescence (`pwd`, `ls`, `cd`)
+- Créer, copier, déplacer, supprimer fichiers et dossiers
+- Lire un fichier et modifier des **permissions** (`chmod`)
+- Se connecter à une machine distante (`ssh`, `scp`)
 
-## Navigation dans les répertoires
+## Idée clé
 
-| Commande | Signification | Description | Exemples |
-| :--- | :--- | :--- | :--- |
-| `pwd` | Print Working Directory | Affiche le chemin absolu du dossier actuel. | `pwd` -> `/home/eleve` |
-| `ls` | List | Liste les fichiers et dossiers du répertoire. | `ls -l` (détails), `ls -a` (cachés) |
-| `cd` | Change Directory | Change de répertoire courant. | `cd Documents`, `cd ..` (remonter), `cd ~` (maison) |
+Le **shell** exécute des commandes textuelles : on indique *quoi faire*, éventuellement avec des options (`-l`, `-a`, `-r`…) et des chemins. Tout part de la racine `/` (voir le cours sur les OS).
 
-## Manipulation des fichiers
+## Se repérer et se déplacer
 
-| Commande | Description | Exemples |
+| Commande | Rôle | Exemples |
 | :--- | :--- | :--- |
-| `mkdir` | Crée un nouveau dossier (Make Directory). | `mkdir NSI` |
-| `touch` | Crée un fichier vide ou met à jour sa date. | `touch script.py` |
-| `cp` | Copie un fichier ou un dossier. | `cp source.txt dest.txt`, `cp -r dossier/ backup/` |
-| `mv` | Déplace ou renomme un fichier. | `mv ancien.txt nouveau.txt` (renommer), `mv fichier.txt dossier/` (déplacer) |
-| `rm` | Supprime définitivement des fichiers. | `rm fichier.txt`, `rm -r dossier/` (supprimer dossier) |
-| `cat` | Affiche le contenu d'un fichier dans le terminal. | `cat README.md` |
+| `pwd` | Affiche le dossier courant | `pwd` → `/home/eleve` |
+| `ls` | Liste le contenu | `ls`, `ls -l` (détails), `ls -a` (cachés) |
+| `cd` | Change de dossier | `cd Documents`, `cd ..`, `cd ~` |
+
+`~` = dossier personnel ; `..` = dossier parent ; `.` = dossier courant.
+
+## Créer et manipuler des fichiers
+
+| Commande | Rôle | Exemples |
+| :--- | :--- | :--- |
+| `mkdir` | Créer un dossier | `mkdir NSI` |
+| `touch` | Créer un fichier vide | `touch script.py` |
+| `cp` | Copier | `cp a.txt b.txt`, `cp -r dossier/ backup/` |
+| `mv` | Déplacer ou renommer | `mv old.txt new.txt`, `mv f.txt dossier/` |
+| `rm` | Supprimer | `rm f.txt`, `rm -r dossier/` |
+| `cat` | Afficher le contenu | `cat README.md` |
 
 !!! warning "Attention avec `rm`"
-    La commande `rm` supprime les fichiers **définitivement**. Il n'y a pas de corbeille dans le terminal. Soyez très prudents, surtout avec `rm -r`.
+    `rm` efface **sans corbeille**. `rm -r` supprime un dossier entier : à utiliser avec prudence.
 
-## Gestion des Permissions (`chmod`)
+## Gérer les permissions (`chmod`)
 
-La commande `chmod` (Change Mode) permet de modifier les droits d'accès d'un fichier.
+Notation octale courante (propriétaire / groupe / autres) :
 
-Les permissions peuvent s'écrire en notation symbolique (`rwx`) ou octale (chiffres).
-
-| Chiffre | Permissions | Signification |
+| Chiffre | Droits | Signification |
 | :---: | :--- | :--- |
-| **7** | `rwx` | Lecture, Écriture, Exécution |
-| **6** | `rw-` | Lecture, Écriture |
-| **5** | `r-x` | Lecture, Exécution |
-| **4** | `r--` | Lecture seule |
-| **0** | `---` | Aucun droit |
+| 7 | `rwx` | tout |
+| 6 | `rw-` | lecture + écriture |
+| 5 | `r-x` | lecture + exécution |
+| 4 | `r--` | lecture seule |
+| 0 | `---` | rien |
 
-**Exemple :** `chmod 755 script.sh`
-*   Propriétaire (7) : `rwx` (Tout faire)
-*   Groupe (5) : `r-x` (Lire et exécuter)
-*   Autres (5) : `r-x` (Lire et exécuter)
+Exemple : `chmod 755 script.sh`
 
-## Connexion à Distance (SSH)
+- propriétaire : `7` (`rwx`)
+- groupe et autres : `5` (`r-x`)
 
-Le protocole **SSH** (Secure Shell) permet de se connecter de manière sécurisée à un ordinateur distant.
+## Travailler à distance
 
-*   **Se connecter** : `ssh utilisateur@adresse_ip`
-    *   Exemple : `ssh eleve@192.168.1.10`
-*   **Copier vers le serveur (SCP)** : `scp fichier_local utilisateur@serveur:destination`
-    *   Exemple : `scp TP1.py eleve@192.168.1.10:/home/eleve/`
+**SSH** — connexion sécurisée :
+
+```bash
+ssh eleve@192.168.1.10
+```
+
+**SCP** — copie de fichiers via SSH :
+
+```bash
+scp TP1.py eleve@192.168.1.10:/home/eleve/
+```
+
+## Piège fréquent
+
+Confondre `cp` et `mv` : `cp` **duplique**, `mv` **déplace** (ou renomme). Oublier `-r` pour un dossier (`cp -r`, `rm -r`) provoque une erreur ou un refus.
+
+## À retenir
+
+- `pwd` / `ls` / `cd` : se situer et naviguer
+- `mkdir`, `touch`, `cp`, `mv`, `rm`, `cat` : cycle de vie des fichiers
+- `rm` est définitif ; `-r` agit sur les dossiers
+- `chmod` règle `rwx` (souvent en octal : `755`, `644`…)
+- `ssh` pour se connecter ; `scp` pour transférer
+- Chemins relatifs (depuis le dossier courant) vs absolus (depuis `/`)

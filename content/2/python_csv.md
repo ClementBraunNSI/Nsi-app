@@ -1,6 +1,6 @@
 ---
 title: Traitement de données en tables
-description: Manipulation et analyse de fichiers CSV avec Python
+description: "Charger un CSV en liste de dictionnaires, puis projeter et sélectionner des données."
 level: premiere
 chapter: Dictionnaires et Tables
 icon: "\U0001F4CA"
@@ -9,130 +9,118 @@ prerequisites:
   - python_dictionnaires
 ---
 
+## Objectifs
 
-# Traitement de données en tables
+- Expliquer le format CSV (séparateur, une ligne = un enregistrement).
+- Charger un fichier avec `csv.DictReader` en liste de dictionnaires.
+- Distinguer **projection** (quelles colonnes) et **sélection** (quelles lignes).
+- Écrire une boucle qui filtre ou extrait des champs.
 
-## Introduction au format CSV
+## Idée clé
 
-### Traitement de données
+Une **table** (fichier CSV) se lit comme une liste de fiches : chaque ligne devient un **dictionnaire** dont les clés sont les noms de colonnes (descripteurs). Ensuite, deux opérations classiques : garder certaines **colonnes** (projection) ou certaines **lignes** (sélection).
 
-Les **dictionnaires** de Python permettent de réaliser des traitements sur des données. Ces traitements permettent notamment de **trier**, **organiser**, **sélectionner** des données en fonction de critères.
+## Format CSV et chargement
 
-*   **Fichiers CSV** : Le format **CSV** (*Comma Separated Values*) correspond à un format où les données sont structurées par des **virgules** (ou des **points-virgules**).
-*   **Tableurs** : Ces formats CSV sont manipulables via des logiciels **tableurs** (Excel, Libre Office, etc.) mais on peut également réaliser des traitements sur ces fichiers à l'aide de bibliothèques *Python*.
+CSV (*Comma-Separated Values*) : texte tabulaire, champs séparés par `,` ou `;`.
 
-## La bibliothèque CSV
-
-La bibliothèque **csv** permet de charger des fichiers et stocke les données sous forme de **listes**.
-On ne traitera que de la fonction **DictReader** qui permet de traduire chaque ligne de notre fichier CSV dans des **dictionnaires**, eux-mêmes stockés dans une **liste**.
-
-### Structure d'ouverture
-
-Voici la structure de l'ouverture d'un fichier CSV et du remplissage d'une liste organisant nos données :
+`csv.DictReader` transforme chaque ligne en dictionnaire. Les clés viennent de la **première ligne** (en-têtes).
 
 ```python
 import csv
 
-liste_a_remplir = []
-with open('communes.csv', newline='') as fichier_csv:
-   lecteur = csv.DictReader(fichier_csv, delimiter=',')   # Objet DictReader (itérateur)
-   for ligne in lecteur:
-      liste_a_remplir.append(dict(ligne))
+def creer_liste_villes(nom_de_fichier: str) -> list:
+    villes = []
+    with open(nom_de_fichier, newline="", encoding="utf-8") as fichier_csv:
+        lecteur = csv.DictReader(fichier_csv, delimiter=";")
+        for ligne in lecteur:
+            villes.append(dict(ligne))
+    return villes
+
+villes = creer_liste_villes("communes.csv")
 ```
 
-### Exemple pratique : Communes de France
+!!! example "Aperçu"
+    ```csv
+    code_commune_INSEE;nom_commune;code_departement;nom_departement
+    01001;L'Abergement-Clémenciat;01;Ain
+    59000;Lille;59;Nord
+    ```
+    Après chargement, `villes[0]["nom_commune"]` vaut `"L'Abergement-Clémenciat"`.
 
-Le fichier CSV **communes.csv** représente l'ensemble des communes de France, associée à leur code postal, département, etc.
+Descripteurs utiles du fichier communes : `nom_commune`, `code_postal`, `code_departement`, `nom_departement`, `latitude`, `longitude`, etc.
 
-Pour "ouvrir" ce fichier CSV et structurer toutes les données le comportant, on utilisera l'exemple de code suivant :
+## Projection : choisir des colonnes
+
+La **projection** extrait une ou plusieurs **clés** pour chaque enregistrement, **sans filtrer** les lignes.
 
 ```python
-import csv
+# Tous les noms de communes (une colonne)
+for ligne in villes:
+    print(ligne["nom_commune"])
 
-def creer_liste_villes(nom_de_fichier : str) -> list:
-   villes = []
-   with open('communes.csv', newline='') as fichier_csv:
-      # Méthode DictReader qui permet de structurer les données contenues dans le fichier CSV 
-      # en liste de dictionnaires où chaque descripteur (ou attribut) est renseigné.
-      lecteur = csv.DictReader(fichier_csv, delimiter=';')   
-      for ligne in lecteur:
-         villes.append(dict(ligne))
+# Deux colonnes : nom + département
+for ligne in villes:
+    print(ligne["nom_commune"], "→", ligne["nom_departement"])
 ```
 
-!!! info "Descripteurs disponibles"
-    Pour ce fichier CSV, il y a les descripteurs suivants :
-    `code_commune_INSEE`, `nom_commune_postal`, `code_postal`, `latitude`, `longitude`, `code_commune`, `nom_commune`, `nom_commune_complet`, `code_departement`, `nom_departement`, `code_region`, `nom_region`
+En résumé : on décide **quelles informations** afficher ou garder, pour **toutes** les lignes.
 
-**Aperçu du fichier CSV :**
-```csv
-code_commune_INSEE;nom_commune_postal;code_postal;latitude;longitude;code_commune;nom_commune;nom_departement
-01001;L'Abergement-Clémenciat;01400;46.1667;4.9;1;L'Abergement-Clémenciat;Ain
-01002;L'Abergement-de-Varey;01640;46.05;5.4833;1;L'Abergement-de-Varey;Ain
-...
-```
+## Sélection : filtrer des lignes
 
-!!! note "Rappel important"
-    La fonction **DictReader** permet de créer une liste de dictionnaires et chaque dictionnaire correspond à une ligne du fichier CSV à laquelle on associe chacun des attributs à chacune des valeurs de la ligne.
-
-## Projection de données
-
-On appelle **projection** le fait d'obtenir les valeurs de certains ou tous les attributs d'une table / base de données / fichiers CSV.
+La **sélection** garde uniquement les enregistrements qui vérifient une **condition**.
 
 ```python
-# Exemple : Afficher le nom des villes
-for ligne in villes:  # Pour chaque ligne dans la liste des villes
-   print(ligne["nom_commune"])  # Affiche la valeur associée à la clé 'nom_commune'
-
-# Afficher le nom de toutes les villes
+# Communes du département 59
 for ligne in villes:
-   print(ligne["nom_commune"])
+    if ligne["code_departement"] == "59":
+        print(ligne["nom_commune"])
 
-# Afficher le département de chaque ville
+# Noms commençant par C
 for ligne in villes:
-   print("La ville ", ligne["nom_commune"], " est dans le département : ", ligne["nom_departement"])
+    if ligne["nom_commune"].startswith("C"):
+        print(ligne["nom_commune"])
 ```
 
-Cela permet donc d'obtenir dans notre exemple de villes, le nom de celle-ci, le département, etc. de toutes les villes **sans aucune contrainte**.
+On peut **combiner** les deux : sélectionner des lignes, puis ne projeter que certains champs.
 
-## Sélection de données
+| Opération | Question | Exemple |
+| --- | --- | --- |
+| Projection | Quelles **colonnes** ? | afficher seulement `nom_commune` |
+| Sélection | Quelles **lignes** ? | garder `code_departement == "59"` |
 
-On appelle **sélection** le fait de sélectionner des valeurs suivant certains critères ou condition.
-Cela permet donc d'obtenir des informations ou de réaliser des traitements sur les données d'un fichier suivant divers critères (par exemple sur les villes).
-
-```python
-# Afficher le nom des villes qui sont dans le département 59
-for ligne in villes:
-   if ligne['code_departement'] == '59':
-      print(ligne["nom_commune"])
-
-# Afficher les noms des villes commençant par la lettre C
-for ligne in villes:
-   if ligne["nom_commune"][0] == "C":
-      print(ligne["nom_commune"])
-```
-
-## Exercices pratiques
+## Atelier interactif
 
 <DataProcessor />
 
-### Exercices faciles
+### Exercices guidés
 
-1.  **Afficher les noms des communes**
-    Écrire une fonction `afficher_noms_communes` qui prend une liste de dictionnaires `villes` en paramètre et affiche le nom de toutes les communes.
+**Faciles**
 
-2.  **Communes par code postal**
-    Écrire une fonction `afficher_communes_par_code_postal` qui prend une liste de dictionnaires `villes` et une chaîne `code_postal` en paramètre, et affiche les noms des communes ayant ce code postal.
+1. `afficher_noms_communes(villes)` — affiche tous les noms (projection).
+2. `afficher_communes_par_code_postal(villes, code_postal)` — filtre par code postal (sélection).
+3. `afficher_communes_avec_coordonnees(villes)` — nom, latitude, longitude (projection).
 
-3.  **Communes avec coordonnées**
-    Écrire une fonction `afficher_communes_avec_coordonnees` qui prend une liste de dictionnaires `villes` et affiche pour chaque commune son nom, sa latitude et sa longitude.
+**Intermédiaires**
 
-### Exercices intermédiaires
+1. `afficher_communes_par_departement(villes, departement)` — sélection sur le département.
+2. `afficher_noms_longueur_min(villes, longueur)` — renvoie les noms assez longs.
+3. `afficher_communes_par_latitude(villes, max_latitude)` — latitude inférieure au seuil (penser à convertir en `float`).
 
-1.  **Communes par département**
-    Écrire une fonction `afficher_communes_par_departement` qui prend une liste de dictionnaires `villes` et une chaîne `departement` en paramètre, et affiche les noms des communes du département donné.
+## Piège fréquent
 
-2.  **Noms avec longueur minimale**
-    Écrire une fonction `afficher_noms_longueur_min` qui prend une liste de dictionnaires `villes` et un entier `longueur` en paramètre, et renvoie la liste des noms des communes ayant un nom d'au moins `longueur` caractères.
+- Ouvrir un fichier en dur (`open("communes.csv")`) alors que la fonction reçoit `nom_de_fichier` : utiliser le **paramètre**.
+- Comparer une latitude (`str` issue du CSV) à un nombre sans `float(...)`.
 
-3.  **Communes par latitude**
-    Écrire une fonction `afficher_communes_par_latitude` qui prend une liste de dictionnaires `villes` et une latitude maximale `max_latitude` en paramètre, et affiche les noms des communes ayant une latitude inférieure à `max_latitude`.
+## À retenir
+
+- CSV = table texte ; `DictReader` → liste de dictionnaires.
+- Clés = noms de colonnes (descripteurs).
+- **Projection** = choisir des colonnes ; **sélection** = filtrer des lignes.
+- Les valeurs lues sont des `str` : convertir pour comparer des nombres.
+- `with open(...)` ferme le fichier proprement.
+- On enchaîne souvent sélection puis projection.
+
+## Pour s'entraîner
+
+- [Exercices : Traitement CSV](/cours/2/python_csv_exercices)

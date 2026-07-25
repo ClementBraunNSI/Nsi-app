@@ -10,50 +10,49 @@ badgeId: premiere_cours
 prerequisites: []
 ---
 
+## Objectifs
 
-# Algorithme des K Plus Proches Voisins (KNN)
+- Comprendre l'idée « un objet ressemble à ses voisins »
+- Calculer une distance entre deux points (formule et code Python)
+- Classer un nouvel élément en regardant ses $K$ voisins
+- Choisir $K$ de façon raisonnable, sans jargon inutile
 
-## 1. Introduction
+## Idée clé
 
-!!! info "Qu'est-ce que l'algorithme KNN ?"
-    L'algorithme des **K Plus Proches Voisins** (K-Nearest Neighbors ou **KNN**) est une méthode d'**apprentissage supervisé** simple et intuitive, utilisée principalement pour des problèmes de :
-    
-    *   **Classification** : Prédire à quelle catégorie appartient un nouvel élément (ex: email spam ou non).
-    *   **Régression** : Prédire une valeur continue pour un nouvel élément (ex: estimer le prix d'une maison).
+Pour classer un nouvel élément, on regarde les **$K$ exemples déjà connus les plus proches**, puis on suit la majorité (ou on moyenne leurs valeurs). Pas de formule magique : proximité = similarité.
 
-### Concepts clés
+## À quoi ça sert ?
 
-*   **Apprentissage supervisé** : L'algorithme apprend à partir d'un ensemble de données où les "bonnes réponses" (étiquettes ou valeurs) sont déjà connues.
-*   **Principe fondamental** : Des éléments similaires ont tendance à se trouver à proximité les uns des autres. Un nouvel élément sera probablement similaire à ses voisins les plus proches dans l'espace des données.
+On part d'exemples **déjà étiquetés** (on connaît la bonne réponse) :
 
-## 2. Fonctionnement de l'algorithme
+- **Classification** : prédire une catégorie (spam / pas spam, pomme / orange)
+- **Régression** : prédire un nombre (prix d'une maison)
 
-L'algorithme suit une procédure simple en 4 étapes :
+Principe : des éléments proches dans l'espace des données ont tendance à partager la même étiquette.
 
-1.  **Choisir le nombre K** : On définit $K$, le nombre de voisins les plus proches à considérer. C'est un hyperparamètre du modèle.
-2.  **Calculer les distances** : Pour un nouvel élément à classer, on calcule la distance entre cet élément et **tous** les autres éléments de l'ensemble d'entraînement.
-3.  **Identifier les K voisins** : On sélectionne les $K$ éléments de l'ensemble d'entraînement qui ont la distance la plus faible avec le nouvel élément.
-4.  **Prendre une décision** :
-    *   **Classification** : On attribue la classe majoritaire parmi les $K$ voisins.
-    *   **Régression** : On calcule la moyenne des valeurs des $K$ voisins.
+## Les 4 étapes
 
-!!! example "Exemple simple de classification"
-    Imaginons des points de deux catégories (**A** et **B**) et un point inconnu **X**. Si nous choisissons $K=3$ :
-    
-    1.  On calcule la distance entre X et tous les autres points.
-    2.  On trouve les 3 points les plus proches de X.
-    3.  Si 2 voisins sont **A** et 1 voisin est **B**, alors X sera classifié comme **A** (majorité).
+1. Choisir $K$ (nombre de voisins à consulter)
+2. Calculer la distance entre le nouvel élément et **tous** les exemples connus
+3. Garder les $K$ plus proches
+4. Décider :
+   - classification → **vote majoritaire**
+   - régression → **moyenne** des valeurs
 
-## 3. La mesure de distance
+!!! example "Exemple"
+    Points de classes **A** et **B**, point inconnu **X**, $K = 3$.
+    Si parmi les 3 plus proches on a 2 A et 1 B → on classe X comme **A**.
 
-La mesure de distance la plus couramment utilisée est la **distance euclidienne**.
+## Mesurer la distance
 
-!!! abstract "Distance Euclidienne"
-    Pour deux points $P(p_1, p_2, ..., p_n)$ et $Q(q_1, q_2, ..., q_n)$ dans un espace à $n$ dimensions, la distance euclidienne est donnée par la formule :
-    
-    $$ d(P, Q) = \sqrt{(p_1-q_1)^2 + (p_2-q_2)^2 + ... + (p_n-q_n)^2} $$
+En Première, on utilise surtout la **distance euclidienne** (la « règle » du plan) :
 
-En Python, pour deux points en 2D $(x_1, y_1)$ et $(x_2, y_2)$ :
+$$
+d(P, Q) = \sqrt{(p_1-q_1)^2 + (p_2-q_2)^2 + \cdots + (p_n-q_n)^2}
+$$
+
+En 2D, avec Python :
+
 ```python
 import math
 
@@ -61,34 +60,49 @@ def distance_euclidienne(p1, p2):
     return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 ```
 
-!!! warning "Attention : Normalisation des données"
-    Si les caractéristiques (dimensions) ont des échelles très différentes (ex: âge 0-100 vs salaire 0-100000), celles avec de grandes valeurs domineront le calcul de la distance.
-    
-    Il est donc **crucial de normaliser** les données (les mettre sur une même échelle, souvent entre 0 et 1) avant d'appliquer KNN.
+!!! warning "Échelles différentes"
+    Si une coordonnée va de 0 à 100 et une autre de 0 à 100 000, la seconde **écrase** la distance.
+    Avant de comparer, on met souvent les valeurs sur une même échelle (par exemple entre 0 et 1).
 
-## 4. Choisir la valeur de K
+## Choisir K
 
-Le choix de $K$ est déterminant pour la performance du modèle.
-
-| Valeur de K | Effet sur le modèle |
+| Valeur de K | Effet |
 | :--- | :--- |
-| **K petit (ex: K=1)** | Très sensible au bruit et aux points aberrants. Risque de **surapprentissage** (overfitting). Les frontières de décision sont très morcelées. |
-| **K grand** | Plus robuste au bruit, mais les frontières de décision deviennent trop lisses. Risque de sous-apprentissage. Si $K$ est trop grand, la classe majoritaire globale l'emporte toujours. |
+| **K petit** (ex. $K=1$) | Très sensible aux points aberrants : un voisin « bizarre » peut décider seul |
+| **K grand** | Plus stable, mais on peut mélanger des voisins trop éloignés ; à l'extrême, c'est toujours la classe la plus fréquente globalement qui gagne |
 
-!!! tip "Conseils pratiques"
-    *   Il n'y a pas de "meilleur" $K$ universel. On utilise souvent la **validation croisée** pour le trouver.
-    *   Pour une classification binaire (2 classes), on choisit souvent un $K$ **impair** pour éviter les égalités lors du vote majoritaire.
+Conseils simples :
 
-## 5. Avantages et Inconvénients
+- Pas de $K$ universel : on teste quelques valeurs sur des exemples connus
+- Pour 2 classes, un $K$ **impair** évite les égalités au vote (2 contre 2)
 
-=== "✅ Avantages"
-    *   **Simple** à comprendre et à implémenter.
-    *   **Non paramétrique** : Ne suppose aucune distribution spécifique des données (comme la loi normale).
-    *   **Polyvalent** : Fonctionne pour la classification et la régression.
-    *   **Apprentissage paresseux (Lazy learning)** : Pas de phase d'entraînement coûteuse (le modèle stocke juste les données). L'ajout de nouvelles données est instantané.
+## Forces et limites
 
-=== "❌ Inconvénients"
-    *   **Coûteux en prédiction** : Pour chaque nouveau point, il faut calculer la distance avec **tous** les points d'entraînement. Lent sur de gros datasets.
-    *   **Gourmand en mémoire** : Doit stocker tout le dataset.
-    *   **Sensible à la dimensionnalité** : La performance se dégrade quand le nombre de dimensions augmente ("fléau de la dimensionnalité").
-    *   **Sensible à l'échelle** : Nécessite une normalisation rigoureuse des données.
+**Forces**
+
+- Simple à comprendre et à coder
+- Aucune hypothèse forte sur la forme des données
+- Classifie et estime des valeurs numériques
+
+**Limites**
+
+- Pour chaque nouveau point, il faut calculer la distance avec **tous** les exemples → lent si beaucoup de données
+- Il faut stocker tout le jeu d'exemples
+- Sensible à l'échelle des coordonnées
+
+## Piège fréquent
+
+Confondre « proche » avec « même classe » sans calculer réellement les distances, ou prendre $K=1$ sans vérifier : un seul point bruité fausse alors toute la prédiction.
+
+## À retenir
+
+- KNN : classer grâce aux **$K$ voisins les plus proches**
+- Distance usuelle : **euclidienne**
+- Classification = vote ; régression = moyenne
+- $K$ trop petit → sensible au bruit ; $K$ trop grand → décision trop « floue »
+- Les coordonnées doivent être **comparables** (même ordre de grandeur)
+- Méthode simple, mais coûteuse si le jeu d'exemples est très grand
+
+## Pour s'entraîner
+
+Mettre en pratique sur des jeux de données concrets : [TP KNN](/cours/2/algo_knn) et [exercices KNN](/cours/2/algo_knn_exercices).

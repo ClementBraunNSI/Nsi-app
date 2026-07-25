@@ -6,89 +6,89 @@ chapter: Représentation des données
 icon: "\U0001F321️"
 badgeId: premiere_entiers_relatifs
 prerequisites:
-  - donnees_booleens
+  - donnees_entiers_positifs
 ---
 
+# Entiers négatifs en binaire
 
-# Entiers négatifs en Binaire
+## Objectifs
 
-## Les entiers négatifs
+- Comprendre pourquoi un simple « bit de signe » ne suffit pas
+- Représenter un entier négatif en **complément à deux**
+- Vérifier qu'une addition binaire donne le bon résultat
 
-Le cours précédent a permis d'expliquer comment représenter les **nombres entiers positifs** en base 2. Cependant, toutes les grandeurs ne sont pas exclusivement positives (température, coordonnées, etc.). Pour pouvoir réaliser des simulations ou des traitements, il va falloir pouvoir représenter les **nombres négatifs**.
+## Idée clé
 
-## Première tentative : le bit de signe
+Sur $n$ bits, les ordinateurs codent les entiers relatifs en **complément à deux** : le bit de poids fort vaut $-2^{n-1}$, les autres bits restent positifs. L'addition marche alors **comme pour les positifs** (sans circuit spécial pour la soustraction).
 
-Une première technique de représentation des nombres négatifs est d'ajouter un **bit de poids fort** (tout à gauche) qui représente le signe :
-*   **0** représente un nombre **positif**
-*   **1** représente un nombre **négatif**
+## Pourquoi coder les négatifs ?
 
-**Exemples :**
-*   $1001_{2}$ représente sur 4 bits signés le chiffre -1
-*   $0100_{2}$ représente sur 4 bits signés le chiffre +4
+Températures, scores, coordonnées… Il faut des nombres **signés**. On fixe d'abord la taille : 4 bits, 8 bits, 32 bits, etc. Le domaine représentable dépend de $n$.
 
-### Problèmes identifiés
+Sur 8 bits en complément à deux : de $-128$ à $+127$.
 
-Cela pourrait sembler être une bonne tentative, cependant **deux problèmes majeurs** se posent :
+## Première idée : bit de signe
 
-1.  **Double représentation du zéro :**
-    *   $1000_{2}$ (zéro "négatif")
-    *   $0000_{2}$ (zéro "positif")
-    Avoir 2 représentations pour un même chiffre n'est pas concevable.
+Le bit le plus à gauche code le signe : **0** = positif, **1** = négatif ; le reste code la valeur absolue.
 
-2.  **Opérations incorrectes :**
-    Les opérations arithmétiques ne donnent pas les bons résultats.
-    Exemple : $-13 + 13$ sur 5 bits.
-    $11101_{2} (-13) + 01101_{2} (13) = 01010_{2} (+10)$
-    Résultat attendu : 0. Résultat obtenu : 10. ❌
+Exemples sur 4 bits : $0100_{(2)} = +4$, $1001_{(2)} = -1$.
 
-> **Conclusion :** Cette représentation n'est pas utilisable pour les calculs informatiques.
+Deux problèmes :
 
-## Seconde tentative : le complément à 2
+1. **Deux zéros** : $0000$ et $1000$
+2. **Additions fausses** : $-13 + 13$ ne donne pas 0 avec cette convention
 
-Le **complément à 2** est une technique qui a été proposée pour représenter les nombres négatifs de manière efficace et sans ambiguïté.
+Cette représentation n'est donc pas utilisée pour l'arithmétique machine.
 
-### Analogie : le compteur kilométrique
+## Complément à deux
 
-On peut illustrer cela comme un **compteur kilométrique de vieille voiture** :
-*   Si on recule au kilomètre 000000, le compteur étant circulaire, en reculant d'un kilomètre de plus, ce compteur va afficher : 999999.
-*   Cette valeur 999999 peut donc représenter le kilomètre -1.
+### Analogie
 
-**Principe de représentation :**
-$1_{10} = 0001_{2} \rightarrow 0_{10} = 0000_{2} \rightarrow -1_{10} = 1111_{2} \rightarrow -2_{10} = 1110_{2} \rightarrow ...$
+Comme un compteur kilométrique : après $0000$, en reculant on obtient $1111$, $1110$, … qui jouent le rôle de $-1$, $-2$, …
 
-### Méthode de conversion
+### Méthode (nombre négatif)
 
-**Étapes pour convertir un nombre négatif :**
-1.  Convertir la valeur absolue du nombre en base 2.
-2.  Inverser chaque bit : 0 devient 1 et inversement (Complément à 1).
-3.  Ajouter 1 à la représentation binaire du nombre inversé.
+1. Écrire la **valeur absolue** en binaire (sur $n$ bits)
+2. **Inverser** tous les bits (complément à 1)
+3. **Ajouter 1**
 
-**Exemple : Représenter -14 en base 2 (sur 8 bits)**
-1.  $14_{10} = 00001110_{2}$
-2.  Inversion : $11110001_{2}$
-3.  Ajout de 1 : $11110001_{2} + 1_{2} = 11110010_{2}$
-Donc $-14_{10} = 11110010_{2}$ (en complément à 2 sur 8 bits).
+Exemple : $-14$ sur 8 bits
 
-### Vérification des opérations
+1. $14 = 00001110_{(2)}$
+2. Inversion : $11110001_{(2)}$
+3. $+1$ : $11110010_{(2)}$
 
-Testons si cette méthode résout le problème des opérations.
-**Test : 14 + (-4) sur 4 bits**
-$-4_{10} = 1100_{2}$ (complément à 2)
-$14_{10} = 1110_{2}$
+Donc $-14_{(10)} = 11110010_{(2)}$ (complément à 2, 8 bits).
 
-Calcul : $1110_{2} + 1100_{2} = 11010_{2}$
+### Vérification par addition
 
-Sur 4 bits : on garde les 4 derniers bits : $1010_{2}$
-Résultat : $1010_{2} = 10_{10}$ ✅
-Vérification : $14 + (-4) = 10$
+Sur 4 bits : $14$ ne tient pas, prenons plutôt $6 + (-4)$.
 
-> **Succès !** Le complément à 2 permet de réaliser toutes les opérations possibles sans erreur. C'est la méthode utilisée dans tous les ordinateurs modernes.
+- $6 = 0110_{(2)}$
+- $-4$ : $0100$ → invert $1011$ → $+1$ → $1100_{(2)}$
+- Somme : $0110 + 1100 = 10010$ → on garde 4 bits : $0010_{(2)} = 2$ ✓
 
-### Comparaison des méthodes
+Les retenues hors des $n$ bits sont **ignorées**.
 
 | Critère | Bit de signe | Complément à 2 |
 |---|---|---|
-| Représentation unique du zéro | ❌ Non (deux représentations) | ✅ Oui (une seule) |
-| Opérations arithmétiques correctes | ❌ Non | ✅ Oui |
-| Simplicité d'implémentation | ⚠️ Complexe | ✅ Simple |
-| Utilisation actuelle | ❌ Abandonnée | ✅ Standard universel |
+| Un seul zéro | Non | Oui |
+| Addition correcte | Non | Oui |
+| Usage actuel | Non | Standard |
+
+## Piège fréquent
+
+Oublier d'**ajouter 1** après l'inversion : on obtient alors le complément à 1, pas le complément à 2. Autre erreur : changer de taille de bits en cours de calcul (4 bits vs 8 bits).
+
+## À retenir
+
+- Le bit de signe seul crée un double zéro et casse l'arithmétique
+- Complément à 2 : inverser les bits, puis $+1$
+- Sur $n$ bits : plage $[-2^{n-1}\,;\,2^{n-1}-1]$
+- L'addition se fait comme pour les positifs ; on tronque à $n$ bits
+- Le bit de poids fort vaut $-2^{n-1}$ en complément à 2
+- C'est la représentation utilisée par les processeurs modernes
+
+## Pour s'entraîner
+
+[Exercices — données binaires](/cours/2/donnees_binaires_exercices)

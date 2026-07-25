@@ -8,38 +8,38 @@ badgeId: premiere_booleens
 prerequisites: []
 ---
 
+# Booléens et fonctions booléennes
 
-# 🔢 Booléens et Fonctions booléennes
+## Objectifs
 
-## 🎯 Définitions Fondamentales
+- Définir une variable et une fonction booléenne
+- Lire et construire une **table de vérité**
+- Utiliser NOT, AND, OR, XOR (et les opérateurs Python)
 
-**Variable booléenne :** Une variable qui peut prendre **deux états** : **Vrai ou Faux**. Ces états peuvent être équivalents à des valeurs numériques : Vrai = 1 et Faux = 0.
+## Idée clé
 
-**Fonction booléenne :** Une fonction qui prend en paramètre **des variables booléennes** et en ressort un résultat.
+Un booléen ne prend que deux valeurs : **Vrai / Faux** (ou **1 / 0**). En machine, cela correspond à la présence ou non d'un signal. Les **portes logiques** et une grande partie des conditions en programmation reposent sur ces opérations.
 
-**Équation booléenne :** Un ensemble de fonctions booléenne prenant en paramètre un certain nombre de variables et renvoie un résultat en sortie.
+## Variables et tables de vérité
 
-!!! info "En machine"
-    Ces états correspondent **à la présence du courant ou non**.
+**Variable booléenne** : `True` ou `False` (1 ou 0).
 
-## 🔧 Fonctions booléennes
+**Fonction booléenne** : prend une ou plusieurs variables booléennes et renvoie un booléen.
 
-### 📚 Concept des Tables de Vérité
+La **table de vérité** liste toutes les combinaisons d'entrées et le résultat associé.
 
-Il existe un certain nombre d'opérations booléennes. Ces fonctions donnent un résultat fini dépendant de l'état des variables en paramètre. On appelle cet ensemble de couples états/résultat **une table de vérité**.
+## Les quatre opérations de base
 
-### Fonction NOT (NON)
-
-La fonction NOT prend en paramètre une variable booléenne et renvoie son opposé.
+### NOT (non) — $\overline{a}$ ou `not`
 
 | a | s |
 |:-:|:-:|
 | 0 | 1 |
 | 1 | 0 |
 
-### Fonction AND (ET)
+### AND (et) — $a \cdot b$ ou `and`
 
-La fonction AND prend en paramètre deux variables booléennes et renvoie en sortie si les deux variables sont à l'état 1. L'opérateur est $\times$ ou $\cdot$.
+Vrai **seulement** si les deux entrées sont vraies.
 
 | a | b | s |
 |:-:|:-:|:-:|
@@ -48,9 +48,9 @@ La fonction AND prend en paramètre deux variables booléennes et renvoie en sor
 | 1 | 0 | 0 |
 | 1 | 1 | 1 |
 
-### Fonction OR (OU)
+### OR (ou) — $a + b$ ou `or`
 
-La fonction OR prend en paramètre deux variables et renvoie 1 si l'une ou les deux variables booléennes sont à l'état 1. L'opérateur est $+$.
+Vrai si **au moins une** entrée est vraie.
 
 | a | b | s |
 |:-:|:-:|:-:|
@@ -59,9 +59,9 @@ La fonction OR prend en paramètre deux variables et renvoie 1 si l'une ou les d
 | 1 | 0 | 1 |
 | 1 | 1 | 1 |
 
-### Fonction XOR (OU Exclusif)
+### XOR (ou exclusif) — $a \oplus b$
 
-La fonction XOR correspond à une fonction booléenne OR mais qui renvoie 1 uniquement si un des deux paramètre est à l'état 1.
+Vrai si **exactement une** entrée est vraie.
 
 | a | b | s |
 |:-:|:-:|:-:|
@@ -70,52 +70,50 @@ La fonction XOR correspond à une fonction booléenne OR mais qui renvoie 1 uniq
 | 1 | 0 | 1 |
 | 1 | 1 | 0 |
 
-## 🧮 Équations booléennes
+## Évaluer une expression
 
-### 📖 L'Algèbre de George Boole
+Notation classique : $+$ pour OU, $\times$ (ou $\cdot$) pour ET, barre pour NON.
 
-Une équation booléenne est un ensemble de fonctions booléennes. Ces fonctions répondent à l'algèbre booléenne créée par **George Boole** à la fin du XIXème siècle.
+Exemple : $S = (a + b) \times c$ avec $a=1$, $b=0$, $c=0$.
 
-!!! tip "Priorités opératoires"
-    Les équations booléennes se lisent de gauche à droite et dépendent des priorités opératoires PEMDAS comme en mathématiques.
+1. $a + b = 1 + 0 = 1$
+2. $1 \times 0 = 0$
+3. $S = 0$
 
-### 🔍 Exemple d'Évaluation
+Priorité usuelle : NON > ET > OU (les parenthèses clarifient toujours).
 
-**Équation :** $S = (a + b) \times c$ se lit "a ou b et c".
-
-**Avec :** a = 1, b = 0 et c = 0
-
-**Évaluation :**
-
-1. On évalue d'abord l'opération OU : $(1+0) = 1$
-2. Puis l'opération ET : $1 \times 0 = 0$
-3. **Résultat :** $S = 0$
-
-## 🐍 Implémentation en Python
-
-### 💻 Opérateurs Python
-
-Sur Python, on peut évaluer des équations booléennes avec des opérateurs transparents et des valeurs **True** (Vrai) et **False** (Faux).
-
-- **or** : Fonction OU (Équivalent de +)
-- **and** : Fonction ET (Équivalent de ×)
-- **not** : Fonction NON (Négation logique)
-
-### 💻 Exemple Pratique en Python
+## En Python
 
 ```python
 a = True
 b = False
 c = False
 
-# Évaluation de l'équation S = (a or b) and c
-S = (a or b) and c
-print(f"Résultat : {S}")  # Affiche : False
-
-# Détail de l'évaluation
-print(f"a or b = {a or b}")     # True
-print(f"(a or b) and c = {S}")  # False
+S = (a or b) and c   # False
+print(not a)         # False
+print(a and b)       # False
+print(a or b)        # True
 ```
 
-!!! success "Correspondance"
-    True = 1 (Vrai) et False = 0 (Faux) - Python gère automatiquement la conversion entre les valeurs booléennes et numériques.
+| Math / logique | Python |
+|---|---|
+| ET | `and` |
+| OU | `or` |
+| NON | `not` |
+
+## Piège fréquent
+
+Confondre **OU** et **XOR** : avec OR, `True or True` vaut `True` ; avec XOR, ce serait `False`. En Python, `^` sur des booléens fait un XOR, mais on utilise surtout `and` / `or` / `not`.
+
+## À retenir
+
+- Booléen = deux états (Vrai/Faux ou 1/0)
+- Table de vérité = toutes les combinaisons d'entrées
+- AND : les deux à 1 ; OR : au moins un à 1 ; XOR : exactement un à 1
+- NOT inverse une valeur
+- En Python : `and`, `or`, `not` (et `True` / `False`)
+- Les parenthèses évitent les ambiguïtés de priorité
+
+## Pour s'entraîner
+
+[Exercices — booléens](/cours/2/donnees_booleens_exercices)

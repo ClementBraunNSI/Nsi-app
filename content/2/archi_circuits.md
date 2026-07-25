@@ -7,35 +7,35 @@ icon: "\U0001F50C"
 badgeId: premiere_circuits
 prerequisites:
   - archi_von_neumann
+  - donnees_booleens
 ---
 
+# Circuits électroniques
 
-# Les circuits électroniques
+## Objectifs
 
-## Définitions
+- Relier **transistor**, **porte logique** et table de vérité
+- Maîtriser NOT, AND, OR, XOR et leurs notations
+- Lire une équation logique simple
+- Appliquer la logique à un circuit (simulateur IoT)
 
-### Circuits logiques
+## Idée clé
 
-Les circuits logiques sont des **éléments fondamentaux de l'informatique**, qui permettent de traiter l'information de manière numérique. Ils sont utilisés dans une multitude d'applications, allant des ordinateurs et des téléphones portables aux dispositifs de contrôle de la circulation et des systèmes de sécurité.
-
-*   **Transistors** : Dispositifs électroniques qui permettent de **contrôler le flux de courant électrique**. Ils peuvent être utilisés pour amplifier un signal ou pour activer ou désactiver un circuit.
-*   **Portes logiques** : Circuits électroniques qui effectuent des **opérations logiques de base**, telles que la conjonction, la disjonction, l'inversion, etc. Elles sont construites à partir de transistors.
-*   **Circuits complexes** : Les portes logiques peuvent être **combinées pour former des circuits logiques plus complexes** qui réalisent des fonctions avancées.
+Le processeur est un assemblage de **portes logiques**, elles-mêmes réalisées avec des **transistors** (interrupteurs commandés). Chaque porte calcule une fonction booléenne sur des signaux 0/1.
 
 ![transistor](transistor.png)
 
-## Les portes logiques
+## Du transistor à la porte
 
-Une porte logique est un **composant électronique** qui effectue une opération logique sur un ou plusieurs signaux d'entrée pour produire un signal de sortie. Les portes logiques sont les briques de base des circuits logiques, et sont utilisées pour construire des circuits plus complexes.
+- **Transistor** : contrôle le passage du courant
+- **Porte logique** : opération booléenne (ET, OU, NON…)
+- **Circuit** : combinaison de portes pour une fonction plus riche
 
-!!! info "Table de vérité"
-    On peut associer à une porte logique une **table de vérité**. Elle retranscrit les résultats de l'opération suivant chaque combinaison possible des variables d'entrée.
+À chaque porte on associe une **table de vérité**.
 
-### Porte NOT (Non)
+## Portes de base
 
-Cette porte logique produit un signal de sortie qui est l'**inverse du signal d'entrée**. Si le signal d'entrée est "1", le signal de sortie est "0", et vice versa.
-
-**Équation :** $S = \overline{A}$
+### NOT — $S = \overline{A}$
 
 | Entrée | Sortie |
 | :---: | :---: |
@@ -44,11 +44,9 @@ Cette porte logique produit un signal de sortie qui est l'**inverse du signal d'
 
 ![rprnot](repr_not.png)
 
-### Porte AND (Et)
+### AND (et) — $S = A \wedge B$ (aussi $A \cdot B$ ou $A \times B$)
 
-Cette porte logique produit un signal de sortie "1" **uniquement si tous les signaux d'entrée sont "1"**. Sinon, le signal de sortie est "0".
-
-**Équation :** $S = A \vee B$ ou $S = A \times B$
+Sortie à 1 **seulement** si toutes les entrées sont à 1.
 
 | A | B | Sortie |
 | :---: | :---: | :---: |
@@ -59,11 +57,9 @@ Cette porte logique produit un signal de sortie "1" **uniquement si tous les sig
 
 ![rprand](repr_and.png)
 
-### Porte OR (Ou)
+### OR (ou) — $S = A \vee B$ (aussi $A + B$)
 
-Cette porte logique produit un signal de sortie "1" si **l'un des signaux d'entrée est "1"** ou si les deux signaux d'entrée sont "1". Si tous les signaux d'entrée sont "0", le signal de sortie est "0".
-
-**Équation :** $S = A \wedge B$ ou $S = A + B$
+Sortie à 1 si **au moins une** entrée est à 1.
 
 | A | B | Sortie |
 | :---: | :---: | :---: |
@@ -74,11 +70,11 @@ Cette porte logique produit un signal de sortie "1" si **l'un des signaux d'entr
 
 ![rpror](repr_or.png)
 
-### Porte XOR (Ou exclusif)
+### XOR (ou exclusif) — $S = A \oplus B$
 
-Cette porte logique produit un signal de sortie "1" si **un seul des signaux d'entrée est "1"**. Si tous les signaux d'entrée sont "0" ou "1", le signal de sortie est "0".
+Sortie à 1 si **exactement une** entrée est à 1.
 
-**Équation :** $S = \overline{A}B + A \overline{B}$ ou $A \oplus B$
+$$S = \overline{A}B + A\overline{B}$$
 
 | A | B | Sortie |
 | :---: | :---: | :---: |
@@ -89,17 +85,33 @@ Cette porte logique produit un signal de sortie "1" si **un seul des signaux d'e
 
 ![rprxor](repr_xor.png)
 
-## Les équations logiques
+## Équations logiques
 
-Une équation logique est une expression algébrique qui représente une fonction logique en utilisant des variables logiques, des opérateurs logiques et des constantes logiques. L'équation logique permet de décrire le comportement d'un circuit logique ou d'une fonction logique de manière formelle.
-Les équations logiques suivent des règles de priorité d'opérations similaires à PEMDAS.
+On compose les opérateurs. Priorité usuelle : NON > ET > OU ; les parenthèses clarifient.
 
-Par exemple, une équation logique simple pourrait être $S = A \vee B \oplus C$.
-Elle se lit "A et B ou C".
+Exemple : $S = (A \vee B) \wedge C$ se lit « (A ou B) et C ».
 
-## Application : Logique combinatoire (IoT)
+Avec $A=1$, $B=0$, $C=0$ : $(1 \vee 0) \wedge 0 = 1 \wedge 0 = 0$.
 
-Voici un simulateur de système d'alarme utilisant des capteurs et une porte logique ET.
-Essayez de comprendre la condition logique nécessaire pour déclencher l'alarme.
+## Application : logique combinatoire (IoT)
+
+Simulateur d'alarme : capteurs + porte ET. Quelle combinaison déclenche l'alarme ?
 
 <IotSimulator />
+
+## Piège fréquent
+
+Inverser les symboles : **AND = $\wedge$ (et)**, **OR = $\vee$ (ou)**. Autre erreur : lire $A \vee B \wedge C$ sans parenthèses — le ET est prioritaire, ce n'est pas « (A ou B) et C » sauf si on écrit $(A \vee B) \wedge C$.
+
+## À retenir
+
+- Portes = briques booléennes du CPU
+- NOT inverse ; AND = $\wedge$ ; OR = $\vee$ ; XOR = $\oplus$
+- Table de vérité = comportement complet de la porte
+- Les portes se combinent en équations / circuits
+- Priorité : parenthèses > NON > ET > OU
+- Un même comportement peut s'écrire de plusieurs façons équivalentes
+
+## Pour s'entraîner
+
+[Exercices — circuits](/cours/2/archi_circuits_exercices)

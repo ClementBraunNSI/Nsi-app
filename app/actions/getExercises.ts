@@ -12,6 +12,7 @@ export interface LabExercise {
   courseTitle: string;
   content: string; // The markdown content of the exercise
   verificationCode?: string; // The hidden python code for verification
+  pythonPackages?: string[]; // Pyodide packages to load before execution
   chapter: string;
   level: string;
   fileName: string;
@@ -103,15 +104,29 @@ export async function getAllExercises(): Promise<LabExercise[]> {
       if (tabsMatch) {
         const courseId = tabsMatch[1];
         const courseTitle = tabsMatch[2];
+        const coursePackagesMatch = content.match(/<ExerciseTabs[^>]*packages="([^"]*)"[^>]*>/);
+        const coursePackages = coursePackagesMatch
+          ? coursePackagesMatch[1].split(',').map((pkg) => pkg.trim()).filter(Boolean)
+          : [];
 
         // Now we look for <ExerciseSection ...> blocks
         // This regex tries to capture id, label and the content inside
         // It's a simple regex and might fail on nested components, but sufficient for this structure
-        const sectionRegex = /<ExerciseSection[^>]*id="([^"]*)"[^>]*label="([^"]*)"[^>]*>([\s\S]*?)<\/ExerciseSection>/g;
+        const sectionRegex = /<ExerciseSection\b([^>]*)>([\s\S]*?)<\/ExerciseSection>/g;
         
         let match;
         while ((match = sectionRegex.exec(content)) !== null) {
-          const rawContent = match[3]; // Don't trim yet to preserve relative indentation for dedent
+          const sectionAttrs = match[1];
+          const sectionId = sectionAttrs.match(/\bid="([^"]*)"/)?.[1];
+          const sectionLabel = sectionAttrs.match(/\blabel="([^"]*)"/)?.[1];
+          const sectionPackagesMatch = sectionAttrs.match(/\bpackages="([^"]*)"/)?.[1];
+          if (!sectionId || !sectionLabel) continue;
+
+          const sectionPackages = sectionPackagesMatch
+            ? sectionPackagesMatch.split(',').map((pkg) => pkg.trim()).filter(Boolean)
+            : [];
+          const pythonPackages = [...new Set([...coursePackages, ...sectionPackages])];
+          const rawContent = match[2]; // Don't trim yet to preserve relative indentation for dedent
           
           // Try to find <Enonce> content
           const enonceRegex = /<Enonce>([\s\S]*?)<\/Enonce>/;
@@ -154,12 +169,13 @@ export async function getAllExercises(): Promise<LabExercise[]> {
                         (courseTitle && courseTitle.toLowerCase().includes('sql'));
 
           exercises.push({
-            id: match[1],
-            label: match[2],
+            id: sectionId,
+            label: sectionLabel,
             courseId: courseId,
             courseTitle: courseTitle,
             content: exerciseContent, // The markdown content inside <Enonce> or the section
             verificationCode: verificationCode,
+            pythonPackages: pythonPackages.length > 0 ? pythonPackages : undefined,
             chapter: data.chapter || 'Divers',
             level: normalizedLevel,
             fileName: fileName.replace(/\.mdx?$/, ''),

@@ -8,57 +8,77 @@ badgeId: histoire_info
 prerequisites: []
 ---
 
-# 📜 Histoire de l'Informatique
+# Histoire de l'informatique
 
-L'informatique est une science jeune, mais ses racines remontent à l'Antiquité. Elle est le fruit de la convergence entre les **mathématiques** (la logique, le calcul) et la **technologie** (mécanique, puis électronique).
+## Objectifs
 
-## 1. Les Précurseurs (Avant 1940)
+- Situer quelques jalons majeurs de l'histoire de l'informatique.
+- Relier figures (Lovelace, Turing, von Neumann…) et idées (programme, machine universelle, architecture).
+- Distinguer Internet et Web dans le récit contemporain.
+- Identifier la continuité : automatiser le calcul → miniaturiser → démocratiser.
 
-Avant l'électronique, l'homme cherchait déjà à automatiser le calcul.
+## Idée clé
 
-### 🧮 L'ère Mécanique
-*   **1642 - La Pascaline** : Blaise Pascal, à 19 ans, invente la première machine à calculer mécanique pour aider son père. Elle ne fait que des additions et soustractions.
-*   **1801 - Le Métier Jacquard** : Joseph Marie Jacquard utilise des **cartes perforées** pour programmer des motifs complexes sur des métiers à tisser. C'est la première fois qu'une machine est "programmée" par un support externe.
-*   **1834 - La Machine Analytique** : Charles Babbage imagine une machine capable d'enchaîner des opérations. Bien que jamais construite de son vivant, elle possède déjà une mémoire et une unité de calcul.
+L'informatique naît de la rencontre entre **logique / mathématiques** et **technologie** (mécanique, puis électronique). Les concepts (algorithme, programme stocké, réseau) précèdent souvent les machines grand public.
 
-> **👩‍💻 Ada Lovelace (1815-1852)**
-> Fille du poète Lord Byron, elle travaille avec Babbage. Elle écrit le premier algorithme destiné à être exécuté par une machine (le calcul des nombres de Bernoulli). Elle est considérée comme la **première programmeuse de l'histoire**.
+## Précurseurs (avant 1940)
 
-## 2. La Naissance de l'Ordinateur (1940-1950)
+Avant l'électronique, on cherche déjà à automatiser le calcul.
 
-La Seconde Guerre Mondiale accélère la recherche. Il faut calculer des trajectoires balistiques et décrypter les messages ennemis.
+- **1642 — Pascaline** (Blaise Pascal) : machine à calculer mécanique (addition, soustraction).
+- **1801 — Métier Jacquard** : motifs pilotés par **cartes perforées** — idée de « programme » externe.
+- **1834 — Machine analytique** (Charles Babbage) : vision d'une machine à enchaîner des opérations (mémoire + calcul), jamais construite de son vivant.
 
-### 🧠 Les Fondations Théoriques
-*   **1936 - Alan Turing** : Il publie un article fondateur décrivant la "Machine de Turing", un modèle abstrait capable d'exécuter n'importe quel algorithme. Il définit ce qui est "calculable".
-*   **1945 - L'Architecture de Von Neumann** : John von Neumann décrit l'organisation interne des ordinateurs modernes : une mémoire unique pour les données et le programme, et une unité de calcul.
+**Ada Lovelace** (1815–1852) collabore avec Babbage et décrit un algorithme pour la machine (nombres de Bernoulli) : souvent présentée comme la **première programmeuse**.
 
-### ⚡ Les Premiers Monstres
-*   **1945 - ENIAC** : Le premier ordinateur entièrement électronique. Il pèse 30 tonnes, occupe 167 m² et se programme en branchant des câbles manuellement.
+## Naissance de l'ordinateur (1940–1950)
 
-## 3. La Révolution Électronique (1950-1980)
+La Seconde Guerre mondiale accélère calcul et cryptanalyse.
 
-*   **1947 - Le Transistor** : Invention majeure qui remplace les tubes à vide (ampoules). Il est plus petit, plus fiable et consomme moins.
-*   **1971 - Le Microprocesseur (Intel 4004)** : Tous les composants du processeur sont gravés sur une seule puce de silicium. C'est le début de la miniaturisation.
+- **1936 — Alan Turing** : modèle de la **machine de Turing** — ce qui est calculable.
+- **1945 — Architecture de von Neumann** : mémoire unique pour données **et** programme + unité de calcul — schéma des ordinateurs modernes.
+- **1945 — ENIAC** : premier grand ordinateur entièrement électronique (tonnes, m², programmation par câblage).
 
-> **🚀 La Loi de Moore**
-> Gordon Moore (cofondateur d'Intel) prédit en 1965 que le nombre de transistors sur une puce doublera tous les 2 ans. Cette loi s'est vérifiée pendant 50 ans, expliquant l'explosion de la puissance de calcul.
+## Révolution électronique (1950–1980)
 
-## 4. L'Informatique pour Tous (1980-Aujourd'hui)
+- **1947 — Transistor** : remplace les tubes à vide (plus petit, plus fiable).
+- **1971 — Microprocesseur** (Intel 4004) : le processeur sur une puce — miniaturisation.
 
-*   **1984 - Le Macintosh** : Apple popularise l'interface graphique (fenêtres, souris, icônes), inventée initialement par Xerox. L'ordinateur devient accessible au grand public.
-*   **1989 - Le Web** : Tim Berners-Lee, chercheur au CERN, invente le HTML et le protocole HTTP. Internet (le réseau) existait déjà, mais le Web (les pages) le rend utilisable par tous.
-*   **1998** : Création de Google.
-*   **2007** : Lancement de l'iPhone. L'informatique devient mobile et tactile.
+**Loi de Moore** (1965) : observation / prédiction que le nombre de transistors sur une puce double environ tous les deux ans — moteur de la hausse de puissance pendant des décennies.
 
-## 📅 Frise Chronologique
+## Informatique pour tous (1980–aujourd'hui)
 
-| Date | Événement | Description |
+- **1984 — Macintosh** : interface graphique grand public (fenêtres, souris), héritée notamment de travaux Xerox.
+- **1989 — Web** (Tim Berners-Lee, CERN) : HTML et HTTP — Internet existait déjà ; le Web le rend navigable par hyperliens.
+- **1998** : Google.
+- **2007** : iPhone — informatique mobile et tactile.
+
+## Frise chronologique
+
+| Date | Événement | Idée à retenir |
 | :--- | :--- | :--- |
-| 1843 | Ada Lovelace | Premier programme informatique théorique |
-| 1936 | Alan Turing | Concept de machine universelle |
-| 1945 | Von Neumann | Architecture des ordinateurs modernes |
-| 1947 | Transistor | Révolution électronique (Bell Labs) |
-| 1969 | ARPANET | Naissance d'Internet (militaire) |
-| 1971 | Microprocesseur | Intel 4004 : l'ordinateur sur une puce |
-| 1989 | Le Web | Tim Berners-Lee invente le WWW au CERN |
-| 2007 | Smartphone | L'iPhone lance l'ère de l'internet mobile |
+| 1843 | Ada Lovelace | Premier programme théorique |
+| 1936 | Alan Turing | Machine universelle / calculabilité |
+| 1945 | Von Neumann | Architecture à programme stocké |
+| 1947 | Transistor | Base de l'électronique moderne |
+| 1969 | ARPANET | Racines d'Internet |
+| 1971 | Microprocesseur | Ordinateur sur une puce |
+| 1989 | Web | Pages et hyperliens au CERN |
+| 2007 | Smartphone | Internet mobile |
+
+## Piège fréquent
+
+Confondre **Internet** (réseau de réseaux, années 1960–70) et **Web** (application d'hypertexte, 1989). Autre simplification : croire que « l'informatique commence avec le PC » — les concepts clés sont antérieurs.
+
+## À retenir
+
+- Racines : automatiser le calcul (Pascal, Jacquard, Babbage / Lovelace).
+- Turing formalise le calculable ; von Neumann structure l'ordinateur moderne.
+- Transistor puis microprocesseur : miniaturisation et démocratisation.
+- Internet ≠ Web : le réseau précède les pages hypertexte.
+- Interfaces graphiques et smartphones ont ouvert l'informatique au grand public.
+- L'histoire mêle idées abstraites et sauts technologiques.
+
+## Pour s'entraîner / Suite
+
+Reliez chaque ligne de la frise à un cours du programme (architecture, réseaux, Web). Pour approfondir une figure, une courte biographie ou un documentaire sur Turing / Lovelace / Berners-Lee complète utilement ce panorama.

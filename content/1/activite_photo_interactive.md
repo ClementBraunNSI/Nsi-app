@@ -24,7 +24,7 @@ Utilise les curseurs ci-dessous pour mélanger les couleurs.
 ## 📸 Traitement d'Image
 Maintenant, appliquons ces concepts sur une vraie image. Tu peux modifier les canaux Rouge, Vert et Bleu de l'image ci-dessous, ou appliquer des filtres.
 
-<ImageManipulator src="/2928B642-6655-413A-9D95-A1F0D6F3A868_1_105_c.jpeg" />
+<ImageManipulator src="/content/1/maya.png" />
 
 ### 🧠 Questions
 1. Si tu mets le canal **Rouge** à 0%, que devient l'image ?

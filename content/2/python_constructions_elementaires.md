@@ -1,6 +1,6 @@
 ---
 title: "Constructions élémentaires en Python"
-description: "Les types fondamentaux pour structurer vos données : booléens, nombres et chaînes."
+description: "Variables, opérateurs, entrées-sorties, conditions et boucles : les briques de base d'un programme."
 level: premiere
 chapter: Introduction à Python
 icon: "🧱"
@@ -8,105 +8,115 @@ badgeId: premiere_python_intro
 prerequisites: []
 ---
 
-## 🤖 Qu'est-ce qu'un programme ?
+## Objectifs
 
-Un **programme** est une suite d'instructions élémentaires destinées à être exécutées par un ordinateur.
+- Affecter une valeur à une variable avec `=`.
+- Utiliser les opérateurs arithmétiques et de comparaison.
+- Lire une entrée avec `input()` et l'afficher avec `print()`.
+- Écrire une condition `if` / `elif` / `else`.
+- Répéter des instructions avec `for` et `while`.
 
-* **Langage Python** : Python est un langage de **haut niveau**, plus proche de l'utilisateur que du processeur.
-* **Exécution Séquentielle** : Les instructions sont réalisées de manière **séquentielle**, les unes après les autres.
+## Idée clé
 
-> **Définition :** Un **opérateur** est un caractère ou un ensemble de caractères qui correspond à une opération réalisée par le processeur.
+Un programme Python exécute des **instructions dans l'ordre**. Les constructions élémentaires — affectation, calcul, test, boucle — sont les briques que l'on combine ensuite dans des fonctions et des structures de données.
 
----
+## Programme et affectation
 
-## 💾 Instanciation
+Un **programme** est une suite d'instructions exécutées **séquentiellement**.
 
-L'**instanciation** est une instruction qui permet d'associer une **valeur** à une **variable**. 
-
-* **Opérateur d'Assignation** : L'instanciation utilise l'opérateur **`=`**.
-* **Espace mémoire** : Pour la machine, cela revient à associer un espace mémoire à la valeur désignée.
+L'**affectation** associe une valeur à un nom de variable grâce à l'opérateur `=`. Ce n'est ni une égalité mathématique, ni une « instanciation » (terme réservé à la POO).
 
 ```python
-# Instancier a à la valeur 42
-a = 42
-
-# Instancier ma_chaine_de_caractere à la valeur 'Hello World!'
-ma_chaine_de_caractere = 'Hello World!'
+score = 0
+score = score + 10   # réaffectation : score vaut maintenant 10
+message = "Bonjour"
 ```
 
-## 🧮 Opérations Mathématiques
+## Opérateurs arithmétiques
 
-Python permet de réaliser des opérations mathématiques classiques grâce à des opérateurs utilisant deux valeurs.
-
-|Opérateur|Opération|Description|
-|-|-|-|
-|+|Addition|Additionne deux nombres|
-|-|Soustraction|Soustrait le second du premier|
-|*|Multiplication|Multiplie deux nombres|
-|/|Division|Divise le premier par le second|
+| Opérateur | Opération | Exemple |
+| --- | --- | --- |
+| `+` | Addition | `3 + 2` → `5` |
+| `-` | Soustraction | `5 - 3` → `2` |
+| `*` | Multiplication | `4 * 3` → `12` |
+| `/` | Division réelle | `7 / 2` → `3.5` |
+| `//` | Division entière | `7 // 2` → `3` |
+| `%` | Reste (modulo) | `7 % 2` → `1` |
+| `**` | Puissance | `2 ** 3` → `8` |
 
 ```python
-    a = 3 + 2  # Addition : a = 5
-    b = 5 - 3  # Soustraction : b = 2
-    c = a * b  # Multiplication : c = 10
-    d = b / a  # Division : d = 0.4
+a = 3 + 2
+b = 10 % 3   # 1
 ```
 
-⚠️ Important : Les opérations mathématiques sont réservées aux variables de type entiers ou nombres réels.
+## Comparaisons et conditions
 
-## ⚖️ Opérations de Comparaisons
-Elles permettent d'évaluer des relations d'ordre ou d'égalité. Attention : on ne peut comparer que des éléments du même type.
+Les comparaisons renvoient un booléen. Attention : `==` teste l'égalité ; `=` affecte.
 
-* `a>b` : Supérieur
-* `a<b` : Inférieur
-* `a==b` : Égalité (à ne pas confondre avec = l'assignation)
-* `a!=b` : Différence
-  
-## 💬 Affichage et Entrées
-print() : Affiche des informations à l'écran.
-
-input() : Capture les données saisies par l'utilisateur sous forme de chaîne de caractères.
+| Opérateur | Signification |
+| --- | --- |
+| `>` / `<` | supérieur / inférieur |
+| `>=` / `<=` | supérieur ou égal / inférieur ou égal |
+| `==` | égal |
+| `!=` | différent |
 
 ```python
-nom = input("Quel est votre nom ? ")
-print("Bonjour", nom)
-
-# Conversion nécessaire pour les calculs
 age = int(input("Quel est votre âge ? "))
-```
-
-## 🔀 Conditions (if, elif, else)
-Les conditions permettent d'exécuter du code selon des critères spécifiques.
-
-```python
-age = int(input('Quel est votre âge ? '))
 
 if age >= 18:
-    print('Vous êtes majeur')
+    print("Majeur")
+elif age >= 13:
+    print("Adolescent")
 else:
-    print('Vous êtes mineur')
+    print("Enfant")
 ```
 
-> **Pour aller plus loin :** entraînez-vous avec la fiche [Exercices : Les Conditions](/cours/2/python_exercices_conditions).
+L'indentation (4 espaces) délimite le bloc exécuté sous chaque branche.
 
-## 🔄 Boucles
+## Entrées et sorties
 
-### Boucle for
-
-Répète un code un nombre défini de fois, souvent avec la fonction range().
+- `print(...)` affiche à l'écran.
+- `input(...)` lit une **chaîne** saisie par l'utilisateur.
 
 ```python
-for i in range(1, 31):
-    print(i) # Affiche de 1 à 30
+nom = input("Nom : ")
+print("Bonjour", nom)
+age = int(input("Âge : "))  # conversion obligatoire pour calculer
 ```
 
-### Boucle while
+## Boucles `for` et `while`
 
-Répète un code tant qu'une condition reste vraie. L'incrémentation manuelle est obligatoire pour éviter une boucle infinie.
+`for` répète un nombre de fois connu (souvent avec `range`).  
+`while` répète **tant qu'une condition** reste vraie — penser à faire évoluer la variable de contrôle.
 
 ```python
-i = 1
-while i <= 30:
-    print(i)
-    i = i + 1
+for i in range(1, 6):
+    print(i)   # 1, 2, 3, 4, 5
+
+n = 1
+while n <= 5:
+    print(n)
+    n = n + 1
 ```
+
+!!! tip "`range`"
+    `range(5)` produit `0, 1, 2, 3, 4`. `range(1, 6)` produit `1` à `5` (la borne de droite est exclue).
+
+## Piège fréquent
+
+- Oublier `int(input(...))` : `"18" >= 18` provoque une erreur de types.
+- Boucle `while` sans mise à jour de la variable → boucle infinie.
+
+## À retenir
+
+- `=` = affectation ; `==` = comparaison.
+- `input()` renvoie toujours une `str` ; convertir si besoin.
+- `if` / `elif` / `else` choisissent un chemin selon des booléens.
+- `for` : répétition bornée ; `while` : répétition conditionnelle.
+- L'indentation structure les blocs.
+- Les instructions s'exécutent de haut en bas, sauf branchement ou boucle.
+
+## Pour s'entraîner
+
+- [Exercices : Les conditions](/cours/2/python_exercices_conditions)
+- [Exercices : Les boucles](/cours/2/python_exercices_boucles)

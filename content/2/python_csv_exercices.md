@@ -6,7 +6,7 @@ chapter: Dictionnaires et Tables
 icon: "\U0001F4D1"
 badgeId: premiere_fiche_exercices_csv
 prerequisites:
-  - python_dictionnaires_exercices_interactifs
+  - python_exercices_dictionnaires
 ---
 
 
