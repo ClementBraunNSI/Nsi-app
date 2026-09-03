@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   BookOpen,
   ChevronRight,
@@ -60,22 +61,22 @@ const KIND_META: Record<ResourceKind, { label: string; icon: typeof BookOpen; cl
   cours: {
     label: "Cours",
     icon: BookOpen,
-    className: "bg-orange-50 text-orange-600 border-orange-100",
+    className: "bg-[var(--accent-soft)] text-[var(--accent)] border-[var(--border)]",
   },
   exercices: {
     label: "Exercices",
     icon: FileText,
-    className: "bg-amber-50 text-amber-700 border-amber-100",
+    className: "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]",
   },
   tp: {
     label: "TP",
     icon: FlaskConical,
-    className: "bg-slate-100 text-slate-700 border-slate-200",
+    className: "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]",
   },
   projet: {
     label: "Projet",
     icon: FolderKanban,
-    className: "bg-zinc-100 text-zinc-800 border-zinc-200",
+    className: "bg-[var(--surface-2)] text-[var(--fg)] border-[var(--border)]",
   },
 };
 
@@ -92,27 +93,27 @@ function ChapterThumbnail({
 }) {
   return (
     <article
-      className={`group overflow-hidden rounded-[1.8rem] border transition-all duration-300 ${
+      className={`group overflow-hidden rounded-[var(--radius)] border transition-colors duration-150 ${
         chapter.isPrivate
-          ? "border-orange-200 bg-orange-50/70 shadow-[0_16px_34px_-24px_rgba(249,115,22,0.55)]"
-          : "border-slate-200 bg-white shadow-[0_14px_30px_-24px_rgba(15,23,42,0.45)] hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_rgba(15,23,42,0.5)]"
+          ? "border-[var(--accent)]/40 bg-[var(--accent-soft)]"
+          : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)]"
       }`}
+      style={{ boxShadow: "var(--shadow)" }}
     >
       <button
         type="button"
         onClick={onSelect}
         className="block h-full w-full text-left"
       >
-        <div className="relative h-32 bg-gradient-to-br from-slate-50 via-white to-slate-50/80 p-3 sm:h-36">
-          <div className="pointer-events-none absolute -top-8 -right-6 h-24 w-24 rounded-full bg-orange-100/60 blur-2xl" />
+        <div className="relative h-32 bg-[var(--surface-2)] p-3 sm:h-36">
           <Image
             src={chapterImageFromData(niveaux, chapter.name)}
             alt={`Illustration ${chapter.name}`}
             fill
-            className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+            className="object-contain p-2"
             sizes="(max-width:768px) 100vw, 33vw"
           />
-          <span className="absolute right-3 top-3 rounded-full border border-slate-100 bg-white/90 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-600">
+          <span className="absolute right-3 top-3 rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-xs font-semibold text-[var(--muted)]">
             {chapter.courses.length} ressource{chapter.courses.length > 1 ? "s" : ""}
           </span>
         </div>
@@ -121,13 +122,13 @@ function ChapterThumbnail({
           <div className="mb-1 flex items-center justify-between gap-2">
             <div className="flex min-w-0 items-center gap-2">
               {chapter.isPrivate ? (
-                <Zap size={16} className="shrink-0 text-orange-500" fill="currentColor" />
+                <Zap size={16} className="shrink-0 text-[var(--accent)]" fill="currentColor" />
               ) : (
-                <LayoutGrid size={16} className="shrink-0 text-slate-500" />
+                <LayoutGrid size={16} className="shrink-0 text-[var(--muted)]" />
               )}
               <h2
-                className={`truncate font-black text-lg leading-tight ${
-                  chapter.isPrivate ? "text-orange-700" : "text-slate-900"
+                className={`truncate font-semibold text-lg leading-tight tracking-tight ${
+                  chapter.isPrivate ? "text-[var(--accent)]" : "text-[var(--fg)]"
                 }`}
               >
                 {chapter.name}
@@ -135,10 +136,10 @@ function ChapterThumbnail({
             </div>
             <ChevronRight
               size={18}
-              className={`shrink-0 text-slate-400 transition-transform duration-300 group-hover:translate-x-1 ${theme.text}`}
+              className={`shrink-0 text-[var(--subtle)] transition-transform duration-150 group-hover:translate-x-1 ${theme.text}`}
             />
           </div>
-          <p className="text-xs text-slate-500">Afficher ce chapitre</p>
+          <p className="text-xs text-[var(--muted)]">Afficher ce chapitre</p>
         </div>
       </button>
     </article>
@@ -148,6 +149,7 @@ function ChapterThumbnail({
 export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props) {
   const [selectedName, setSelectedName] = useState(chapters[0]?.name ?? "");
   const [activeFilter, setActiveFilter] = useState<FilterKind>("all");
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (!chapters.some((chapter) => chapter.name === selectedName)) {
@@ -206,40 +208,36 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
 
   return (
     <section className="relative space-y-10 pb-10">
-      <div className="pointer-events-none absolute -top-8 -left-6 h-36 w-36 rounded-full bg-orange-200/35 blur-3xl" />
-      <div className="pointer-events-none absolute top-24 -right-4 h-40 w-40 rounded-full bg-blue-200/30 blur-3xl" />
-
       {/* Chapitre sélectionné — panneau principal */}
       <article
-        className={`relative overflow-hidden rounded-[2rem] border transition-all duration-500 ${
+        className={`relative overflow-hidden rounded-[var(--radius)] border transition-colors duration-150 ${
           selectedChapter.isPrivate
-            ? "border-orange-200 bg-orange-50/40 shadow-[0_24px_60px_-32px_rgba(249,115,22,0.35)]"
-            : "border-slate-200 bg-white shadow-[0_24px_60px_-36px_rgba(15,23,42,0.35)]"
+            ? "border-[var(--accent)]/40 bg-[var(--accent-soft)]"
+            : "border-[var(--border)] bg-[var(--surface)]"
         }`}
+        style={{ boxShadow: "var(--shadow)" }}
       >
-        <div className="relative overflow-hidden border-b border-orange-100/80 bg-gradient-to-br from-slate-50 via-white to-orange-50/30">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(251,146,60,0.14),transparent_42%),radial-gradient(circle_at_100%_20%,rgba(15,23,42,0.06),transparent_30%)]" />
-
+        <div className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--surface-2)]">
           <div className="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_minmax(220px,320px)] lg:items-center">
             <div className="min-w-0">
-              <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-orange-500">
+              <p className="mb-2 text-xs font-semibold text-[var(--accent)]">
                 Chapitre sélectionné
               </p>
               <div className="mb-3 flex items-center gap-2">
                 {selectedChapter.isPrivate ? (
-                  <Zap size={18} className="text-orange-500" fill="currentColor" />
+                  <Zap size={18} className="text-[var(--accent)]" fill="currentColor" />
                 ) : (
-                  <LayoutGrid size={18} className="text-slate-500" />
+                  <LayoutGrid size={18} className="text-[var(--muted)]" />
                 )}
                 <h2
-                  className={`text-3xl font-black tracking-tight sm:text-4xl ${
-                    selectedChapter.isPrivate ? "text-orange-900" : "text-slate-950"
+                  className={`text-3xl font-semibold tracking-tight sm:text-4xl ${
+                    selectedChapter.isPrivate ? "text-[var(--accent)]" : "text-[var(--fg)]"
                   }`}
                 >
                   {selectedChapter.name}
                 </h2>
               </div>
-              <p className="max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+              <p className="max-w-2xl text-sm leading-6 text-[var(--muted)] sm:text-base">
                 {selectedChapter.courses.length} ressource
                 {selectedChapter.courses.length > 1 ? "s" : ""} — cours, exercices, TP et projets de ce
                 chapitre.
@@ -251,7 +249,7 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
                 src={chapterImageFromData(niveaux, selectedChapter.name)}
                 alt={`Illustration ${selectedChapter.name}`}
                 fill
-                className="object-contain p-2 transition-transform duration-500"
+                className="object-contain p-2"
                 sizes="(max-width: 1024px) 80vw, 320px"
                 priority
               />
@@ -261,7 +259,7 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
 
         <div className="p-4 sm:p-6 lg:p-8">
           <div
-            className="mb-5 flex gap-2 overflow-x-auto pb-1"
+            className="mb-5 flex gap-1 overflow-x-auto pb-1 rounded-full border border-[var(--border)] bg-[var(--surface-2)] p-1 w-fit max-w-full"
             aria-label="Filtres des ressources"
           >
             {FILTERS.map((filter) => {
@@ -271,15 +269,25 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
                   key={filter.key}
                   type="button"
                   onClick={() => setActiveFilter(filter.key)}
-                  className={`shrink-0 rounded-xl border px-4 py-2 text-sm font-black transition ${
+                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-150 ${
                     isActive
-                      ? "border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-100"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-700"
+                      ? "text-[var(--fg)]"
+                      : "text-[var(--muted)] hover:text-[var(--accent)]"
                   }`}
                 >
-                  {filter.label}
-                  <span className={`ml-2 text-xs ${isActive ? "text-orange-100" : "text-slate-400"}`}>
-                    {counts[filter.key]}
+                  {isActive && (
+                    <motion.span
+                      layoutId={reduceMotion ? undefined : "chapter-filter-pill"}
+                      className="absolute inset-0 rounded-full bg-[var(--surface)] border border-[var(--border)]"
+                      style={{ boxShadow: "var(--shadow)" }}
+                      transition={{ type: "spring", stiffness: 420, damping: 36, mass: 0.4 }}
+                    />
+                  )}
+                  <span className="relative z-10">
+                    {filter.label}
+                    <span className={`ml-2 text-xs ${isActive ? "text-[var(--accent)]" : "text-[var(--subtle)]"}`}>
+                      {counts[filter.key]}
+                    </span>
                   </span>
                 </button>
               );
@@ -287,7 +295,7 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
           </div>
 
           {filteredResources.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center text-sm font-semibold text-slate-500">
+            <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-8 text-center text-sm font-semibold text-[var(--muted)]">
               Aucun contenu dans cette catégorie pour le moment.
             </div>
           ) : (
@@ -299,10 +307,10 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
                   <Link
                     key={`${course.href}-${course.kind}`}
                     href={course.href || `/cours/${niveaux}/${course.slug}`}
-                    className={`group flex items-center justify-between gap-4 rounded-2xl border p-4 transition-all hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50/45 hover:shadow-[0_18px_40px_-32px_rgba(15,23,42,0.6)] ${
+                    className={`group flex items-center justify-between gap-4 rounded-2xl border p-4 transition-colors duration-150 hover:border-[var(--accent)] ${
                       course.isPrivate
-                        ? "border-orange-200 bg-orange-50/60"
-                        : "border-slate-200 bg-white"
+                        ? "border-[var(--accent)]/40 bg-[var(--accent-soft)]"
+                        : "border-[var(--border)] bg-[var(--surface)]"
                     }`}
                   >
                     <div className="flex min-w-0 items-center gap-3">
@@ -314,20 +322,20 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
                       <div className="min-w-0">
                         <div className="mb-1 flex items-center gap-2">
                           <span className="text-lg leading-none">{course.icon}</span>
-                          <span className="text-[11px] font-black uppercase tracking-[0.15em] text-orange-500">
+                          <span className="text-[11px] font-semibold text-[var(--accent)]">
                             {meta.label}
                           </span>
                         </div>
-                        <h3 className="truncate text-base font-black text-slate-950 transition-colors group-hover:text-orange-700">
+                        <h3 className="truncate text-base font-semibold text-[var(--fg)] transition-colors duration-150 group-hover:text-[var(--accent)]">
                           {course.title}
                         </h3>
-                        <p className="mt-0.5 line-clamp-2 text-sm text-slate-500">
+                        <p className="mt-0.5 line-clamp-2 text-sm text-[var(--muted)]">
                           {course.description || "Ouvrir cette ressource"}
                         </p>
                       </div>
                     </div>
                     <ChevronRight
-                      className="shrink-0 text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-orange-500"
+                      className="shrink-0 text-[var(--subtle)] transition-transform duration-150 group-hover:translate-x-1 group-hover:text-[var(--accent)]"
                       size={20}
                     />
                   </Link>
@@ -343,14 +351,14 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
         <div>
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+              <p className="text-xs font-semibold text-[var(--subtle)]">
                 Autres chapitres
               </p>
-              <h3 className="mt-1 text-xl font-black text-slate-900">
+              <h3 className="mt-1 text-xl font-semibold text-[var(--fg)] tracking-tight">
                 Choisir un autre thème
               </h3>
             </div>
-            <p className="hidden text-sm text-slate-500 sm:block">
+            <p className="hidden text-sm text-[var(--muted)] sm:block">
               Clique sur une carte pour l&apos;afficher en haut.
             </p>
           </div>

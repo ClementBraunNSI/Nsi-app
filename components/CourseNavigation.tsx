@@ -13,17 +13,17 @@ export default function CourseNavigation({ prevCourse, nextCourse, currentLevel 
   if (!prevCourse && !nextCourse) return null;
 
   return (
-    <div className="mt-16 pt-8 border-t border-slate-100 not-prose">
+    <div className="mt-16 pt-8 border-t border-[var(--border)] not-prose">
       <div className="flex flex-col md:flex-row justify-between gap-4">
         {prevCourse ? (
           <Link 
             href={`/cours/${currentLevel}/${prevCourse.slug}`}
-            className="group flex-1 p-6 rounded-2xl border-2 border-slate-100 hover:border-orange-200 hover:bg-orange-50/50 transition-all text-left"
+            className="group flex-1 p-6 rounded-[var(--radius)] border border-[var(--border)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] transition-colors duration-150 text-left"
           >
-            <div className="flex items-center gap-2 text-slate-400 text-xs font-black uppercase tracking-widest mb-2 group-hover:text-orange-500">
+            <div className="flex items-center gap-2 text-[var(--subtle)] text-xs font-semibold mb-2 group-hover:text-[var(--accent)]">
               <ChevronLeft size={14} /> Chapitre Précédent
             </div>
-            <div className="text-lg font-bold text-slate-800 group-hover:text-orange-700 line-clamp-2">
+            <div className="text-lg font-semibold text-[var(--fg)] group-hover:text-[var(--accent)] line-clamp-2 tracking-tight">
               {prevCourse.title}
             </div>
           </Link>
@@ -34,12 +34,12 @@ export default function CourseNavigation({ prevCourse, nextCourse, currentLevel 
         {nextCourse ? (
           <Link 
             href={`/cours/${currentLevel}/${nextCourse.slug}`}
-            className="group flex-1 p-6 rounded-2xl border-2 border-slate-100 hover:border-orange-200 hover:bg-orange-50/50 transition-all text-right"
+            className="group flex-1 p-6 rounded-[var(--radius)] border border-[var(--border)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] transition-colors duration-150 text-right"
           >
-            <div className="flex items-center justify-end gap-2 text-slate-400 text-xs font-black uppercase tracking-widest mb-2 group-hover:text-orange-500">
+            <div className="flex items-center justify-end gap-2 text-[var(--subtle)] text-xs font-semibold mb-2 group-hover:text-[var(--accent)]">
               Chapitre Suivant <ChevronRight size={14} />
             </div>
-            <div className="text-lg font-bold text-slate-800 group-hover:text-orange-700 line-clamp-2">
+            <div className="text-lg font-semibold text-[var(--fg)] group-hover:text-[var(--accent)] line-clamp-2 tracking-tight">
               {nextCourse.title}
             </div>
           </Link>
@@ -51,7 +51,7 @@ export default function CourseNavigation({ prevCourse, nextCourse, currentLevel 
       <div className="text-center mt-8">
         <Link 
           href={`/cours/${currentLevel}`}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition-colors text-sm"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--surface-2)] text-[var(--muted)] font-semibold hover:bg-[var(--border)] transition-colors text-sm"
         >
           <BookOpen size={16} /> Retour au sommaire
         </Link>

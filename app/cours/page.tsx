@@ -76,8 +76,8 @@ export default async function PageTousLesCours() {
   const contentPath = path.join(process.cwd(), 'content');
   if (!fs.existsSync(contentPath)) {
     return (
-      <main className="max-w-6xl mx-auto p-8 min-h-screen bg-[#FDFCFB]">
-        <div className="text-center text-slate-500">
+      <main className="max-w-6xl mx-auto p-8 min-h-screen bg-[var(--bg)]">
+        <div className="text-center text-[var(--muted)]">
           Dossier de contenu introuvable.
         </div>
       </main>
@@ -128,7 +128,7 @@ export default async function PageTousLesCours() {
   });
 
   return (
-    <main className="max-w-6xl mx-auto p-8 min-h-screen bg-[#FDFCFB]">
+    <main className="max-w-6xl mx-auto p-8 min-h-screen bg-[var(--bg)]">
       <PageHeader
         className="mb-16"
         eyebrow={<span className="inline-flex items-center gap-2"><BookOpen size={16} /> Catalogue</span>}
@@ -151,15 +151,15 @@ export default async function PageTousLesCours() {
         .map(([niveau, chapitres]) => (
         <section key={niveau} className="mb-12">
           {/* En-tête du niveau */}
-          <div className="flex items-center gap-4 mb-8 pb-4 border-b-2 border-orange-100">
-            <div className={`w-12 h-12 ${LEVELS_INFO[niveau]?.color || 'bg-gray-500'} rounded-2xl flex items-center justify-center text-white shadow-lg`}>
+          <div className="flex items-center gap-4 mb-8 pb-4 border-b border-[var(--border)]">
+            <div className={`w-12 h-12 ${LEVELS_INFO[niveau]?.color || 'bg-gray-500'} rounded-[var(--radius-sm)] flex items-center justify-center text-white shadow-[var(--shadow)]`}>
               <GraduationCap size={24} />
             </div>
             <div>
-              <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+              <h2 className="text-3xl font-semibold text-[var(--fg)] tracking-tight">
                 {LEVELS_INFO[niveau]?.title || `Niveau ${niveau}`}
               </h2>
-              <p className="text-slate-500 mt-1">Tous les chapitres de ce niveau</p>
+              <p className="text-[var(--muted)] mt-1">Tous les chapitres de ce niveau</p>
             </div>
           </div>
 
@@ -168,8 +168,8 @@ export default async function PageTousLesCours() {
             <Card key={nomChapitre} className="mb-6 overflow-hidden">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
-                  <GitBranch className="text-orange-500" size={20} />
-                  <h3 className="text-xl font-bold text-slate-800">{nomChapitre}</h3>
+                  <GitBranch className="text-[var(--accent)]" size={20} />
+                  <h3 className="text-xl font-semibold tracking-tight text-[var(--fg)]">{nomChapitre}</h3>
                   <Badge>
                     {coursDuChapitre.length} cours
                   </Badge>
@@ -181,9 +181,9 @@ export default async function PageTousLesCours() {
                   {buildSkillTiers(coursDuChapitre).map((tier, tierIndex, arr) => (
                     <div key={`${nomChapitre}-${tier.depth}`} className="relative">
                       {tierIndex < arr.length - 1 && (
-                        <div className="absolute top-7 -right-2 h-0.5 w-4 bg-orange-200" />
+                        <div className="absolute top-7 -right-2 h-0.5 w-4 bg-[var(--border)]" />
                       )}
-                      <div className="mb-2 text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                      <div className="mb-2 text-[10px] font-semibold text-[var(--subtle)]">
                         Étape {tier.depth + 1}
                       </div>
                       <div className="space-y-3">
@@ -191,23 +191,23 @@ export default async function PageTousLesCours() {
                           <Link
                             key={cours.slug}
                             href={`/cours/${niveau}/${cours.slug}`}
-                            className="group flex items-start justify-between p-4 bg-slate-50 border border-slate-100 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition-all duration-300"
+                            className="group flex items-start justify-between p-4 bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] transition-colors duration-150"
                           >
                             <div className="flex items-start gap-3">
-                              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-2xl group-hover:bg-orange-50 transition-colors shrink-0">
+                              <div className="w-10 h-10 bg-[var(--surface)] rounded-lg flex items-center justify-center text-2xl transition-colors duration-150 shrink-0">
                                 {cours.icon}
                               </div>
                               <div>
-                                <h4 className="font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+                                <h4 className="font-semibold text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors duration-150">
                                   {cours.title}
                                 </h4>
-                                <p className="text-sm text-slate-500 line-clamp-2">{cours.description}</p>
+                                <p className="text-sm text-[var(--muted)] line-clamp-2">{cours.description}</p>
                                 {cours.prerequisites.length > 0 && (
                                   <div className="mt-2 flex flex-wrap gap-1.5">
                                     {cours.prerequisites.map((pr) => (
                                       <span
                                         key={`${cours.slug}-${pr}`}
-                                        className="text-[10px] font-bold text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded-full"
+                                        className="text-[10px] font-medium text-[var(--muted)] bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full"
                                       >
                                         {pr}
                                       </span>
@@ -216,7 +216,7 @@ export default async function PageTousLesCours() {
                                 )}
                               </div>
                             </div>
-                            <div className="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all mt-1">
+                            <div className="text-[var(--subtle)] group-hover:text-[var(--accent)] group-hover:translate-x-1 transition-all duration-150 mt-1">
                               <ChevronRight size={18} />
                             </div>
                           </Link>

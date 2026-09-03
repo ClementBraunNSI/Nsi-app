@@ -27,29 +27,29 @@ export default function AccessibilityMenu({
   const { found, total, setShowCollection } = useFoxEasterEgg();
 
   return (
-    <div className="absolute top-16 right-0 w-64 bg-white border border-slate-100 rounded-2xl shadow-xl p-4 z-[110]">
-      <div className="flex justify-between items-center mb-4 pb-2 border-b border-slate-50">
-        <span className="text-xs font-black uppercase text-slate-400 tracking-widest">Accessibilité</span>
+    <div className="absolute top-16 right-0 w-64 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] shadow-[var(--shadow)] p-4 z-[110]">
+      <div className="flex justify-between items-center mb-4 pb-2 border-b border-[var(--border)]">
+        <span className="text-xs font-semibold text-[var(--subtle)]">Accessibilité</span>
         <button onClick={onClose}>
-          <X size={16} className="text-slate-300 hover:text-slate-500" />
+          <X size={16} className="text-[var(--subtle)] hover:text-[var(--fg)]" />
         </button>
       </div>
       <div className="space-y-2">
         <button
           onClick={() => setShowCollection((prev) => !prev)}
-          className="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all"
+          className="w-full flex items-center justify-between p-3 rounded-xl bg-[var(--surface-2)] text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
         >
-          <span className="font-bold text-sm">Renards trouvés</span>
-          <span className="text-xs font-black text-orange-600">{found.length}/{total}</span>
+          <span className="font-semibold text-sm">Renards trouvés</span>
+          <span className="text-xs font-semibold text-[var(--accent)]">{found.length}/{total}</span>
         </button>
-        <button onClick={() => onToggle("dyslexic", "dyslexicMode", !dyslexicMode, setDyslexicMode)} className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${dyslexicMode ? "bg-orange-50 text-orange-600 border border-orange-100" : "bg-slate-50 text-slate-600 hover:bg-slate-100"}`}>
-          <div className="flex items-center gap-3"><Type size={18} /><span className="font-bold text-sm">Dyslexie</span></div>{dyslexicMode && <Check size={16} />}
+        <button onClick={() => onToggle("dyslexic", "dyslexicMode", !dyslexicMode, setDyslexicMode)} className={`w-full flex items-center justify-between p-3 rounded-xl transition-colors ${dyslexicMode ? "bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--border)]" : "bg-[var(--surface-2)] text-[var(--muted)] hover:text-[var(--fg)]"}`}>
+          <div className="flex items-center gap-3"><Type size={18} /><span className="font-semibold text-sm">Dyslexie</span></div>{dyslexicMode && <Check size={16} />}
         </button>
-        <button onClick={() => onToggle("dark", "darkMode", !darkMode, setDarkMode)} className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${darkMode ? "bg-orange-50 text-orange-600 border border-orange-100" : "bg-slate-50 text-slate-600 hover:bg-slate-100"}`}>
-          <div className="flex items-center gap-3"><Moon size={18} /><span className="font-bold text-sm">Mode Sombre</span></div>{darkMode && <Check size={16} />}
+        <button onClick={() => onToggle("dark", "darkMode", !darkMode, setDarkMode)} className={`w-full flex items-center justify-between p-3 rounded-xl transition-colors ${darkMode ? "bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--border)]" : "bg-[var(--surface-2)] text-[var(--muted)] hover:text-[var(--fg)]"}`}>
+          <div className="flex items-center gap-3"><Moon size={18} /><span className="font-semibold text-sm">Mode Sombre</span></div>{darkMode && <Check size={16} />}
         </button>
-        <button onClick={() => onToggle("high-contrast", "highContrastMode", !highContrastMode, setHighContrastMode)} className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${highContrastMode ? "bg-orange-50 text-orange-600 border border-orange-100" : "bg-slate-50 text-slate-600 hover:bg-slate-100"}`}>
-          <div className="flex items-center gap-3"><Zap size={18} /><span className="font-bold text-sm">Contraste</span></div>{highContrastMode && <Check size={16} />}
+        <button onClick={() => onToggle("high-contrast", "highContrastMode", !highContrastMode, setHighContrastMode)} className={`w-full flex items-center justify-between p-3 rounded-xl transition-colors ${highContrastMode ? "bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--border)]" : "bg-[var(--surface-2)] text-[var(--muted)] hover:text-[var(--fg)]"}`}>
+          <div className="flex items-center gap-3"><Zap size={18} /><span className="font-semibold text-sm">Contraste</span></div>{highContrastMode && <Check size={16} />}
         </button>
       </div>
     </div>

@@ -164,19 +164,19 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   if (String(data.access || '').toLowerCase() === 'private') {
     if (!user) {
       return (
-        <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center p-8">
+        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-8">
           <div className="text-center max-w-md">
-            <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-red-600 mx-auto mb-4">
+            <div className="w-16 h-16 bg-red-100 rounded-[var(--radius-sm)] flex items-center justify-center text-red-600 mx-auto mb-4">
               <Lock size={32} />
             </div>
-            <h2 className="text-xl font-black text-slate-900 mb-2">Réservé aux Explorateurs !</h2>
-            <p className="text-slate-500 mb-6">
+            <h2 className="text-xl font-semibold tracking-tight text-[var(--fg)] mb-2">Réservé aux Explorateurs !</h2>
+            <p className="text-[var(--muted)] mb-6">
               Connecte-toi pour débloquer ce cours, sauvegarder ta progression et gagner des badges exclusifs.
             </p>
 
             <Link 
               href="/login" 
-              className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl inline-block transition-colors"
+              className="bg-[var(--accent)] text-[var(--accent-fg)] font-semibold py-3 px-6 rounded-[var(--radius-sm)] inline-block transition-colors duration-150"
             >
               Se connecter
             </Link>
@@ -202,17 +202,17 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
 
     if (!hasAccess) {
       return (
-        <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center p-8">
+        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-8">
           <div className="text-center max-w-md">
-            <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-red-600 mx-auto mb-4">
+            <div className="w-16 h-16 bg-red-100 rounded-[var(--radius-sm)] flex items-center justify-center text-red-600 mx-auto mb-4">
               <Lock size={32} />
             </div>
-            <h2 className="text-xl font-black text-slate-900 mb-2">Accès restreint</h2>
-            <p className="text-slate-500 mb-6">Vous n'avez pas la permission d'accéder à ce cours.</p>
+            <h2 className="text-xl font-semibold tracking-tight text-[var(--fg)] mb-2">Accès restreint</h2>
+            <p className="text-[var(--muted)] mb-6">Vous n'avez pas la permission d'accéder à ce cours.</p>
 
             <Link 
               href="/student/dashboard" 
-              className="text-orange-600 hover:text-orange-700 font-bold"
+              className="text-[var(--accent)] font-semibold"
             >
               Retour au tableau de bord
             </Link>
@@ -291,7 +291,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
       {/* Barre de navigation haute */}
       <nav className="course-topnav sticky top-20 z-30">
         <div className="max-w-5xl mx-auto px-6 py-4">
-          <Link href={`/cours/${niveaux}`} className="flex items-center gap-2 text-slate-400 hover:text-orange-600 transition-colors text-xs font-black uppercase tracking-widest">
+          <Link href={`/cours/${niveaux}`} className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--accent)] transition-colors duration-150 text-xs font-semibold">
             <ChevronLeft size={16} /> Retour à {nsiLevelLabel(niveaux)}
           </Link>
         </div>

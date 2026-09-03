@@ -117,7 +117,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
   const tousLesCours = [...privateCourses, ...standardCourses];
 
   if (tousLesCours.length === 0) {
-    return <div className="p-10 text-center text-slate-500">Aucun contenu trouvé pour {nsiLevelLabel(niveaux)}</div>;
+    return <div className="p-10 text-center text-[var(--muted)]">Aucun contenu trouvé pour {nsiLevelLabel(niveaux)}</div>;
   }
 
   // Logique de tri par chapitre
@@ -150,10 +150,10 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
   return (
     <main className="max-w-7xl mx-auto p-8 min-h-screen">
       <div className="flex items-center gap-4 mb-12">
-        <div className={`p-3 rounded-2xl text-white shadow-lg ${theme.main}`}>
+        <div className={`p-3 rounded-[var(--radius-sm)] text-white shadow-[var(--shadow)] ${theme.main}`}>
           <GraduationCap size={32} />
         </div>
-        <h1 className="text-4xl font-black text-gray-900 capitalize">
+        <h1 className="text-4xl font-semibold tracking-tight text-[var(--fg)] capitalize">
           {nsiLevelLabel(niveaux)}
         </h1>
       </div>

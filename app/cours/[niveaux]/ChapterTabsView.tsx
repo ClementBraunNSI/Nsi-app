@@ -41,7 +41,7 @@ export default function ChapterTabsView({ chapters, niveaux, theme }: Props) {
   return (
     <>
       <div className="mb-8 overflow-x-auto">
-        <div className="inline-flex min-w-full md:min-w-0 gap-2 rounded-2xl border border-slate-200 bg-white p-2">
+        <div className="inline-flex min-w-full md:min-w-0 gap-2 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-2">
           {chapters.map((chapter) => {
             const isActive = chapter.name === activeChapter.name;
             return (
@@ -49,12 +49,12 @@ export default function ChapterTabsView({ chapters, niveaux, theme }: Props) {
                 key={chapter.name}
                 type="button"
                 onClick={() => setActiveTab(chapter.name)}
-                className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 ${
                   isActive
                     ? chapter.isPrivate
-                      ? 'bg-orange-500 text-white shadow'
-                      : 'bg-slate-900 text-white shadow'
-                    : 'text-slate-600 hover:bg-slate-100'
+                      ? 'bg-[var(--accent)] text-[var(--accent-fg)] shadow-[var(--shadow)]'
+                      : 'bg-[var(--fg)] text-[var(--bg)] shadow-[var(--shadow)]'
+                    : 'text-[var(--muted)] hover:bg-[var(--surface-2)]'
                 }`}
               >
                 {chapter.name}
@@ -67,11 +67,11 @@ export default function ChapterTabsView({ chapters, niveaux, theme }: Props) {
       <section className="mb-14">
         <div className="flex items-center gap-3 mb-6">
           {activeChapter.isPrivate ? (
-            <Zap className="text-orange-500" size={20} fill="currentColor" />
+            <Zap className="text-[var(--accent)]" size={20} fill="currentColor" />
           ) : (
             <LayoutGrid className={`${theme.icon}`} size={20} />
           )}
-          <h2 className={`text-2xl font-bold ${activeChapter.isPrivate ? 'text-orange-600' : 'text-gray-800'}`}>
+          <h2 className={`text-2xl font-semibold tracking-tight ${activeChapter.isPrivate ? 'text-[var(--accent)]' : 'text-[var(--fg)]'}`}>
             {activeChapter.name}
           </h2>
         </div>
@@ -81,36 +81,36 @@ export default function ChapterTabsView({ chapters, niveaux, theme }: Props) {
             <Link
               key={cours.slug}
               href={cours.href || `/cours/${niveaux}/${cours.slug}`}
-              className={`group flex items-center justify-between p-6 rounded-3xl transition-all duration-300 ${
+              className={`group flex items-center justify-between p-6 rounded-[var(--radius)] border border-[var(--border)] shadow-[var(--shadow)] transition-colors duration-150 hover:border-[var(--accent)] ${
                 cours.isPrivate
-                  ? 'bg-orange-50 border border-orange-200 hover:border-orange-500 hover:shadow-xl hover:shadow-orange-100 hover:-translate-y-1'
-                  : `bg-white border border-gray-100 ${theme.border} hover:shadow-xl hover:-translate-y-1`
+                  ? 'bg-[var(--accent-soft)]'
+                  : `bg-[var(--surface)] ${theme.border}`
               }`}
             >
               <div className="flex items-start gap-5 min-w-0">
-                <span className={`text-4xl transition-transform duration-300 ${cours.isPrivate ? 'text-orange-500' : ''} group-hover:scale-110 group-hover:-rotate-3`}>
+                <span className={`text-4xl ${cours.isPrivate ? 'text-[var(--accent)]' : ''}`}>
                   {cours.icon}
                 </span>
                 <div className="min-w-0">
-                  <h3 className={`font-bold text-lg transition-colors truncate ${
+                  <h3 className={`font-semibold tracking-tight text-lg transition-colors duration-150 truncate ${
                     cours.isPrivate
-                      ? 'text-gray-900 group-hover:text-orange-600'
-                      : `text-gray-900 ${theme.text}`
+                      ? 'text-[var(--fg)] group-hover:text-[var(--accent)]'
+                      : `text-[var(--fg)] ${theme.text}`
                   }`}>
                     {cours.title}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-1 line-clamp-1 group-hover:line-clamp-none transition-all">
+                  <p className="text-sm text-[var(--muted)] mt-1 line-clamp-1 group-hover:line-clamp-none">
                     {cours.description}
                   </p>
-                  <p className="text-xs text-slate-400 mt-2 opacity-0 max-h-0 overflow-hidden transition-all duration-300 group-hover:opacity-100 group-hover:max-h-10">
+                  <p className="text-xs text-[var(--subtle)] mt-2 opacity-0 max-h-0 overflow-hidden transition-opacity duration-150 group-hover:opacity-100 group-hover:max-h-10">
                     Clique pour ouvrir le cours et commencer.
                   </p>
                 </div>
               </div>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shrink-0 ${
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-150 shrink-0 ${
                 cours.isPrivate
-                  ? 'bg-orange-100 text-orange-400 group-hover:bg-orange-500 group-hover:text-white'
-                  : `bg-slate-50 text-slate-400 ${theme.light} ${theme.text}`
+                  ? 'bg-[var(--accent-soft)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-[var(--accent-fg)]'
+                  : 'bg-[var(--surface-2)] text-[var(--subtle)] group-hover:bg-[var(--accent)] group-hover:text-[var(--accent-fg)]'
               }`}>
                 <ChevronRight size={20} />
               </div>

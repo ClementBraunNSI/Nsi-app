@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import SiteHeader from "./SiteHeader";
+import FluidNavigation from "./FluidNavigation";
 import { FoxEasterEggProvider } from "./FoxEasterEggProvider";
 import { useAuthSession } from "./useAuthSession";
 
@@ -40,6 +41,7 @@ export default function ClientLayoutShell({ children }: { children: React.ReactN
 
   return (
     <FoxEasterEggProvider>
+      <FluidNavigation />
       <SiteHeader
         pathname={pathname}
         user={user}
@@ -55,7 +57,7 @@ export default function ClientLayoutShell({ children }: { children: React.ReactN
         setHighContrastMode={setHighContrastMode}
       />
       <CommandPalette />
-      <main>{children}</main>
+      <main id="contenu" className="page-main">{children}</main>
     </FoxEasterEggProvider>
   );
 }

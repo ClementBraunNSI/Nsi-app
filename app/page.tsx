@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon, ChevronLeft, Zap, Palette } from 'lucide-react';
+import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon, Zap } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import SplashText from '@/components/SplashText';
+import ColleagueSites from '@/components/ColleagueSites';
 
 // Niveaux classiques
 const LEVELS = [
@@ -63,29 +64,29 @@ const PRIVATE_LESSONS = [
   },
 ];
 
-const CourseCard = ({ title, desc, img, tag, color, href, isPrivate = false }: any) => (
-  <Link href={href} className="group flex flex-col">
-    <div className={`rounded-[2rem] overflow-hidden border transition-all duration-500 flex flex-col h-full backdrop-blur-sm ${isPrivate ? 'border-orange-200 bg-orange-50/60 shadow-[0_12px_35px_-20px_rgba(251,146,60,0.55)] hover:shadow-[0_22px_45px_-20px_rgba(251,146,60,0.6)]' : 'bg-white/90 border-slate-100 shadow-[0_12px_30px_-20px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_50px_-22px_rgba(15,23,42,0.45)]'} hover:-translate-y-2`}>
-      <div className="relative h-56 w-full bg-gradient-to-br from-slate-50 via-white to-slate-50/70 p-4 overflow-hidden">
-        <div className="absolute -top-12 -right-10 h-32 w-32 rounded-full bg-orange-100/50 blur-2xl pointer-events-none" />
-        <Image src={img} alt={title} fill className="object-contain p-2 transition-transform duration-700 group-hover:scale-110" />
-        <div className={`absolute top-5 right-5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter shadow-sm border ${isPrivate ? 'bg-orange-500 text-white border-orange-400' : 'bg-white/90 backdrop-blur-md text-slate-800 border-slate-100'}`}>
+const CourseCard = ({ title, desc, img, tag, color, href, isPrivate = false, featured = false }: any) => (
+  <Link href={href} className={`group flex flex-col ${featured ? 'lg:col-span-2 lg:row-span-2' : ''}`}>
+    <div className={`home-card overflow-hidden flex flex-col h-full ${isPrivate ? 'is-private' : ''} ${featured ? 'is-featured' : ''}`}>
+      <div className={`relative w-full bg-[var(--surface-2)] p-4 ${featured ? 'h-56 lg:h-80' : 'h-40'}`}>
+        <Image src={img} alt={title} fill className="object-contain p-2" sizes={featured ? '(max-width: 1024px) 100vw, 50vw' : '(max-width: 1024px) 50vw, 25vw'} />
+        <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold border ${isPrivate ? 'bg-[var(--accent)] text-[var(--accent-fg)] border-transparent' : 'bg-[var(--surface)] text-[var(--muted)] border-[var(--border)]'}`}>
           {tag}
         </div>
       </div>
-      <div className="p-8 flex flex-col flex-1">
-        <h3 className="text-2xl font-black text-slate-800 mb-3 group-hover:text-orange-500 transition-colors flex items-center gap-2">
-          {isPrivate && <Zap size={20} className="text-orange-500" fill="currentColor" />}
+      <div className={`flex flex-col flex-1 ${featured ? 'p-7' : 'p-6'}`}>
+        <h3 className={`font-semibold tracking-tight text-[var(--fg)] mb-2 group-hover:text-[var(--accent)] transition-colors flex items-center gap-2 ${featured ? 'text-2xl' : 'text-lg'}`}>
+          {isPrivate && <Zap size={18} className="text-[var(--accent)]" fill="currentColor" />}
           {title}
         </h3>
-        <p className="text-slate-500 text-sm leading-relaxed mb-8 line-clamp-2">{desc}</p>
-        <div className="mt-auto pt-6 border-t border-slate-50 flex justify-between items-center">
-          <span className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+        <p className={`text-[var(--muted)] text-sm leading-relaxed mb-6 ${featured ? '' : 'line-clamp-2'}`}>{desc}</p>
+        <div className="mt-auto pt-4 border-t border-[var(--border)] flex justify-between items-center">
+          <span className="flex items-center gap-2 text-xs font-semibold text-[var(--subtle)]">
             <Book size={14} /> Ouvrir l'espace
           </span>
-          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${color} text-white shadow-lg transform group-hover:rotate-12 transition-transform`}>
-            <ChevronRight size={24} />
-          </div>
+          <span className="flex items-center gap-2">
+            <span className={`h-2 w-2 rounded-full ${color}`} aria-hidden="true" />
+            <ChevronRight size={18} className="text-[var(--subtle)] group-hover:text-[var(--accent)] transition-colors" />
+          </span>
         </div>
       </div>
     </div>
@@ -97,23 +98,6 @@ export default function LandingPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const colleagues = [
-    { name: "Lucas Relmy", site: "http://lucasrelmynsi.gitlab.io/site_cours/", phrase: "Explorez l'informatique avec clarté et structure grâce aux cours organisés de Lucas Relmy." },
-    { name: "Erwan Demerville", site: "https://nsi.erwandemerville.fr/", phrase: "Maîtrisez la NSI avec des ressources complètes et interactives pour Première et Terminale." },
-    { name: "Stéphane Ramstein", site: "https://stephane_ramstein.gitlab.io/nsi/", phrase: "Le portail complet pour la NSI : cours, outils, orientation et concours." },
-    { name: "Mathieu Marchand", site: "https://mmarchand-nsi.github.io/", phrase: "Explorez l'informatique scientifique avec des projets concrets et des outils professionnels." },
-    { name: "Nicolas Leal", site: "http://www.prof-leal.fr/", phrase: "Découvrez le numérique avec curiosité et rigueur pour SNT et NSI." },
-    { name: "Théo Quertier", site: "https://ge0rgi0.github.io/TAQ/", phrase: "TAQ : votre guide structuré pour maîtriser NSI et SNT étape par étape." },
-    { name: "Mathieu Cardoso", site: "https://profcardoso.github.io/", phrase: "Cours NSI-SNT complets avec ressources pratiques et club informatique." },
-    { name: "Nicolas Mathieu", site: "https://nsi.rocks/nsi", phrase: "Une mine d'or de ressources NSI : cours, exercices et projets pour progresser solide comme un roc." }
-  ];
-
-  const itemsPerPage = 3;
-  const maxIndex = Math.max(0, colleagues.length - itemsPerPage);
-
   useEffect(() => {
     const checkAccess = async (session: any) => {
       if (session?.user) {
@@ -188,62 +172,57 @@ export default function LandingPage() {
   }, [searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600 relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--bg)] font-sans selection:bg-[var(--accent-soft)] selection:text-[var(--accent)] relative">
       <button
         type="button"
         data-fox-easter-id="home"
         aria-label="Secret renard accueil"
         className="fox-secret-spot absolute top-24 right-8 z-20"
       />
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-24 h-72 w-72 rounded-full bg-orange-200/35 blur-3xl" />
-        <div className="absolute top-[20%] -right-16 h-80 w-80 rounded-full bg-blue-200/25 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-purple-200/20 blur-3xl" />
-      </div>
       
       <header className="max-w-7xl mx-auto px-8 pt-20 pb-24 text-center relative z-10">
         <div className="relative inline-block">
-          <h1 className="text-7xl md:text-8xl font-black text-slate-900 mb-10 tracking-tight drop-shadow-[0_10px_35px_rgba(15,23,42,0.12)]">
-            Maîtrisez le <span className="text-orange-500">Code.</span><br />
+          <h1 className="home-title text-[var(--fg)] mb-10 tracking-tight">
+            Maîtrisez le <span className="text-[var(--accent)]">Code.</span><br />
             Devenez un <span className="relative inline-block">
               Renard.
-              <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
-                <path d="M0 5C20 2 80 2 100 5" stroke="#F97316" strokeWidth="4" fill="none" strokeLinecap="round" />
+              <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 5C20 2 80 2 100 5" stroke="currentColor" className="text-[var(--accent)]" strokeWidth="4" fill="none" strokeLinecap="round" />
               </svg>
             </span>
           </h1>
         </div>
-        <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+        <p className="text-xl text-[var(--muted)] max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
           La plateforme de référence pour la NSI. Des cours épurés, des illustrations uniques et un parcours de progression jusqu'au BTS.
         </p>
 
         <SplashText />
 
         <div className="relative max-w-xl mx-auto z-50">
-          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" size={24} />
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--subtle)] pointer-events-none" size={24} />
           <input 
             type="text" 
             placeholder="Rechercher une notion (ex: boucles, listes...)" 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-16 pr-8 py-6 bg-white/90 border-2 border-slate-100 rounded-[2rem] shadow-[0_20px_45px_-25px_rgba(15,23,42,0.45)] focus:border-orange-500 focus:ring-0 outline-none transition-all text-lg font-medium text-slate-800 backdrop-blur-sm" 
+            className="w-full pl-16 pr-8 py-6 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] focus:border-[var(--accent)] outline-none transition-colors text-lg font-medium text-[var(--fg)]" 
           />
           {searchQuery.length > 1 && (
-            <div className="absolute top-full left-0 right-0 mt-4 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden text-left animate-in fade-in slide-in-from-top-2">
+            <div className="absolute top-full left-0 right-0 mt-4 bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] overflow-hidden text-left" style={{ boxShadow: 'var(--shadow)' }}>
               {isSearching ? (
-                <div className="p-8 text-center text-slate-400">Recherche dans les cours... 🦊</div>
+                <div className="p-8 text-center text-[var(--muted)]">Recherche dans les cours... 🦊</div>
               ) : results.length > 0 ? (
                 results.map((course: any, i) => (
-                  <Link key={i} href={`/cours/${course.level}/${course.slug}`} className="flex items-center justify-between p-5 hover:bg-orange-50 transition-colors border-b border-slate-50 last:border-0">
+                  <Link key={i} href={`/cours/${course.level}/${course.slug}`} className="flex items-center justify-between p-5 hover:bg-[var(--surface-2)] transition-colors border-b border-[var(--border)] last:border-0">
                     <div>
-                      <div className="font-bold text-slate-800">{course.title}</div>
-                      <div className="text-[10px] text-orange-500 font-black uppercase tracking-widest">{course.category}</div>
+                      <div className="font-semibold text-[var(--fg)]">{course.title}</div>
+                      <div className="text-xs text-[var(--accent)] font-semibold">{course.category}</div>
                     </div>
-                    <ChevronRightIcon className="text-slate-300" size={18} />
+                    <ChevronRightIcon className="text-[var(--subtle)]" size={18} />
                   </Link>
                 ))
               ) : (
-                <div className="p-8 text-center text-slate-400 italic">Aucun cours trouvé pour cette notion.</div>
+                <div className="p-8 text-center text-[var(--muted)] italic">Aucun cours trouvé pour cette notion.</div>
               )}
             </div>
           )}
@@ -253,109 +232,56 @@ export default function LandingPage() {
       <main className="max-w-7xl mx-auto px-8 pb-32 relative z-10">
         {/* SECTION PRIVÉE DYNAMIQUE */}
         {hasPrivateAccess && (
-          <div className="mb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+          <div className="mb-20">
             <div className="flex items-center gap-3 mb-10">
-              <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-orange-200">
+              <div className="w-10 h-10 bg-[var(--accent)] rounded-xl flex items-center justify-center text-[var(--accent-fg)]">
                 <Zap size={20} fill="currentColor" />
               </div>
-              <h2 className="text-2xl font-black text-slate-800 uppercase italic tracking-tight">
-                Mon Accompagnement <span className="text-orange-500">Privé</span>
+              <h2 className="text-2xl font-semibold text-[var(--fg)] tracking-tight">
+                Mon Accompagnement <span className="text-[var(--accent)]">Privé</span>
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {PRIVATE_LESSONS.map((lesson) => (
                 <CourseCard key={lesson.id} {...lesson} isPrivate={true} />
               ))}
             </div>
-            <div className="mt-16 border-b border-slate-100"></div>
+            <div className="mt-16 border-b border-[var(--border)]"></div>
           </div>
         )}
 
-        <h2 className="text-2xl font-black text-slate-800 mb-10">Parcourir par niveaux</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <h2 className="text-2xl font-semibold text-[var(--fg)] mb-6 tracking-tight">Parcourir par niveaux</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {LEVELS.map((lvl) => (
-            <CourseCard key={lvl.id} {...lvl} href={`/cours/${lvl.id}`} />
+            <CourseCard key={lvl.id} {...lvl} href={`/cours/${lvl.id}`} featured={lvl.id === 2} />
           ))}
         </div>
 
-        <h2 className="text-2xl font-black text-slate-800 mt-20 mb-10">Ressources <span className="text-amber-600">ouvertes</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <h2 className="text-2xl font-semibold text-[var(--fg)] mt-16 mb-6 tracking-tight">Ressources <span className="text-[var(--accent)]">ouvertes</span></h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {PUBLIC_RESOURCES.map((item) => (
             <CourseCard key={item.id} {...item} />
           ))}
         </div>
 
-        <h2 className="text-2xl font-black text-slate-800 mt-20 mb-10">Un peu plus de <span className="text-orange-500">Renards</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <h2 className="text-2xl font-semibold text-[var(--fg)] mt-16 mb-6 tracking-tight">Un peu plus de <span className="text-[var(--accent)]">Renards</span></h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {GAMES.map((game) => (
             <CourseCard key={game.id} {...game} />
           ))}
         </div>
       </main>
 
-      <section className="bg-gradient-to-b from-slate-50 to-white py-28 border-t border-slate-100 relative z-10">
-        {/* Section collègues identique... */}
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-18">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Sites de collègues</h2>
-            <p className="text-slate-500 font-medium max-w-2xl mx-auto italic text-base">
-              Découvrez les ressources exceptionnelles de mes collègues enseignants NSI à travers la France.
-            </p>
-          </div>
-          <div className="relative max-w-6xl mx-auto">
-            <div className="flex justify-center gap-4 mb-8">
-              <button 
-                onClick={() => {
-                  setIsAnimating(true);
-                  setTimeout(() => { setCurrentIndex(Math.max(0, currentIndex - itemsPerPage)); setIsAnimating(false); }, 200);
-                }}
-                disabled={currentIndex === 0}
-                className="p-3 bg-white border border-slate-200 rounded-2xl shadow-[0_10px_30px_-22px_rgba(15,23,42,0.65)] hover:shadow-[0_16px_38px_-22px_rgba(15,23,42,0.7)] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-              >
-                <ChevronLeft size={20} className="text-slate-600" />
-              </button>
-              <button 
-                onClick={() => {
-                  setIsAnimating(true);
-                  setTimeout(() => { setCurrentIndex(Math.min(maxIndex, currentIndex + itemsPerPage)); setIsAnimating(false); }, 200);
-                }}
-                disabled={currentIndex >= maxIndex}
-                className="p-3 bg-white border border-slate-200 rounded-2xl shadow-[0_10px_30px_-22px_rgba(15,23,42,0.65)] hover:shadow-[0_16px_38px_-22px_rgba(15,23,42,0.7)] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-              >
-                <ChevronRight size={20} className="text-slate-600" />
-              </button>
-            </div>
-            <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 transition-opacity duration-200 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
-              {colleagues.slice(currentIndex, currentIndex + itemsPerPage).map((colleague, i) => (
-                <div key={i} className="bg-white p-9 rounded-[2rem] shadow-[0_16px_42px_-24px_rgba(15,23,42,0.5)] border border-slate-200 hover:border-orange-300 hover:shadow-[0_28px_56px_-24px_rgba(15,23,42,0.52)] transition-all duration-300 group backdrop-blur-sm flex flex-col min-h-[300px]">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-orange-500 group-hover:text-white transition-all shadow-inner">
-                      👨‍🏫
-                    </div>
-                    <div>
-                      <h3 className="font-black text-slate-900 text-xl leading-tight">{colleague.name}</h3>
-                      <p className="text-orange-600 font-bold text-[11px] uppercase tracking-widest mt-1">Enseignant NSI</p>
-                    </div>
-                  </div>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-8 italic">{colleague.phrase}</p>
-                  <a href={colleague.site} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-orange-500 text-white rounded-2xl font-extrabold hover:scale-[1.02] hover:bg-orange-600 transition-all shadow-[0_14px_28px_-16px_rgba(249,115,22,0.75)] text-sm">
-                    Visiter le site <ChevronRight size={16} />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <ColleagueSites />
 
-      <footer className="bg-white border-t border-slate-100 py-16">
-        <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="text-slate-400 font-bold text-sm tracking-widest uppercase">© 2026 Clément Braun — NSI</div>
-          <div className="flex items-center gap-8">
-            <Link href="/mentions-legales" className="text-slate-400 hover:text-slate-600 transition-colors text-sm font-medium">
+      <footer className="border-t border-[var(--border)] py-12">
+        <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-[var(--subtle)] text-sm">© 2026 Clément Braun — NSI</div>
+          <div className="flex items-center gap-6">
+            <Link href="/mentions-legales" className="text-[var(--muted)] hover:text-[var(--fg)] transition-colors text-sm font-medium">
               Mentions légales
             </Link>
-            <Github className="text-slate-300 hover:text-slate-900 cursor-pointer transition-colors" />
+            <Github className="text-[var(--subtle)] hover:text-[var(--fg)] cursor-pointer transition-colors" />
           </div>
         </div>
       </footer>

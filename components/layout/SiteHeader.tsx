@@ -22,6 +22,13 @@ type Props = {
   setHighContrastMode: (value: boolean) => void;
 };
 
+const NAV = [
+  { href: "/", label: "Accueil", match: (path: string) => path === "/" },
+  { href: "/cours", label: "Cours", match: (path: string) => path.startsWith("/cours") },
+  { href: "/lab", label: "Lab", match: (path: string) => path === "/lab" || path.startsWith("/lab/") },
+  { href: "/a-propos", label: "À propos", match: (path: string) => path === "/a-propos" },
+];
+
 export default function SiteHeader({
   pathname,
   user,
@@ -42,46 +49,48 @@ export default function SiteHeader({
   const logoClickCountRef = useRef(0);
   const { unlockFox } = useFoxEasterEgg();
 
-  const navLinkClass = (href: string) =>
-    pathname === href ? "text-orange-500" : "text-slate-500 hover:text-orange-500 transition-colors";
-
   return (
-    <header className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-[100] h-20 print:hidden">
-      <nav className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between relative">
-        <div className="flex items-center gap-4">
-          <Link
-            href="/"
-            className="flex items-center gap-3 group"
-            onClick={() => {
-              logoClickCountRef.current += 1;
-              if (clickResetRef.current) window.clearTimeout(clickResetRef.current);
-              clickResetRef.current = window.setTimeout(() => {
-                logoClickCountRef.current = 0;
-              }, 1600);
-              if (logoClickCountRef.current >= 5) {
-                logoClickCountRef.current = 0;
-                unlockFox("logo");
-              }
-            }}
-          >
-            <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-200 group-hover:rotate-12 transition-transform">
-              <span className="text-2xl">🦊</span>
-            </div>
-            <span className="text-lg font-bold text-slate-900 uppercase tracking-wider">
-              <span style={{ color: "#F97316" }}>La tanière du Code</span> <span style={{ color: "#374151" }}>par Clément BRAUN</span>
-            </span>
-          </Link>
-        </div>
+    <header className="site-header print:hidden">
+      <nav className="site-header-inner">
+        <Link
+          href="/"
+          className="flex items-center gap-3 min-w-0"
+          onClick={() => {
+            logoClickCountRef.current += 1;
+            if (clickResetRef.current) window.clearTimeout(clickResetRef.current);
+            clickResetRef.current = window.setTimeout(() => {
+              logoClickCountRef.current = 0;
+            }, 1600);
+            if (logoClickCountRef.current >= 5) {
+              logoClickCountRef.current = 0;
+              unlockFox("logo");
+            }
+          }}
+        >
+          <div className="site-logo">
+            <span className="text-2xl leading-none">🦊</span>
+          </div>
+          <span className="text-base font-semibold tracking-tight truncate">
+            <span className="text-[var(--accent)]">La tanière du Code</span>{" "}
+            <span className="text-[var(--muted)] hidden md:inline">par Clément BRAUN</span>
+          </span>
+        </Link>
 
-        <div className="flex items-center gap-8 text-sm font-bold tracking-widest uppercase">
-          <Link href="/" className={navLinkClass("/")}>Accueil</Link>
-          <Link href="/cours" className={pathname.startsWith("/cours") ? "text-orange-500" : "text-slate-500 hover:text-orange-500 transition-colors"}>Cours</Link>
-          <Link href="/lab" className={navLinkClass("/lab")}>Lab</Link>
-          <Link href="/a-propos" className={navLinkClass("/a-propos")}>À propos</Link>
-          <div className="flex items-center gap-4 relative">
+        <div className="flex items-center gap-5 lg:gap-7 text-sm font-semibold">
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={item.match(pathname) ? "text-[var(--accent)]" : "text-[var(--muted)] hover:text-[var(--accent)] transition-colors"}
+            >
+              {item.label}
+            </Link>
+          ))}
+
+          <div className="flex items-center gap-2 relative">
             <button
               onClick={() => setShowA11yMenu(!showA11yMenu)}
-              className={`p-2.5 rounded-xl transition-all ${showA11yMenu ? "bg-orange-100 text-orange-500" : "bg-slate-50 text-slate-400 hover:bg-slate-100"}`}
+              className={`p-2.5 rounded-xl transition-colors ${showA11yMenu ? "bg-[var(--accent-soft)] text-[var(--accent)]" : "text-[var(--muted)] hover:bg-[var(--surface-2)]"}`}
               title="Accessibilité"
             >
               <Eye size={20} />
@@ -102,20 +111,20 @@ export default function SiteHeader({
 
             {user ? (
               <>
-                <Link href="/student/courses" className="hidden xl:inline-flex px-3 py-2 rounded-xl bg-orange-50 text-orange-600 hover:bg-orange-100 transition-all text-[10px] font-black tracking-widest">
+                <Link href="/student/courses" className="hidden xl:inline-flex px-3 py-2 rounded-xl bg-[var(--accent-soft)] text-[var(--accent)] hover:opacity-80 transition-opacity text-xs font-semibold">
                   Reprendre
                 </Link>
-                <Link href={role === "admin" ? "/admin/dashboard" : "/student/dashboard"} className={`flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 transition-all ${pathname.includes("dashboard") ? "text-orange-500" : "text-slate-500"}`}>
+                <Link href={role === "admin" ? "/admin/dashboard" : "/student/dashboard"} className={`flex items-center gap-2 p-2.5 rounded-xl hover:bg-[var(--surface-2)] transition-colors ${pathname.includes("dashboard") ? "text-[var(--accent)]" : "text-[var(--muted)]"}`}>
                   <LayoutDashboard size={18} />
-                  <span className="hidden md:inline text-[10px] font-black tracking-widest">Espace</span>
+                  <span className="hidden md:inline text-xs font-semibold">Espace</span>
                 </Link>
-                <button onClick={signOut} className="flex items-center gap-2 p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all cursor-pointer relative z-[110]">
+                <button onClick={signOut} className="flex items-center gap-2 p-2.5 text-[var(--muted)] hover:text-red-600 hover:bg-[var(--surface-2)] rounded-xl transition-colors cursor-pointer relative z-[110]">
                   <LogOut size={18} />
-                  <span className="hidden md:inline text-[10px] font-black tracking-widest">Déconnexion</span>
+                  <span className="hidden md:inline text-xs font-semibold">Déconnexion</span>
                 </button>
               </>
             ) : (
-              <button onClick={() => setShowLogin(!showLogin)} className="px-5 py-2.5 bg-slate-900 text-white rounded-xl font-black text-xs hover:bg-orange-500 transition-all shadow-lg shadow-slate-200 uppercase tracking-widest">
+              <button onClick={() => setShowLogin(!showLogin)} className="px-5 py-2.5 bg-[var(--fg)] text-[var(--bg)] rounded-xl font-semibold text-sm hover:bg-[var(--accent)] hover:text-[var(--accent-fg)] transition-colors">
                 Connexion
               </button>
             )}

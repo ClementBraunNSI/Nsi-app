@@ -13,7 +13,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>La tanière du code par Clément BRAUN</title>
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-slate-900`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}>
+        <a href="#contenu" className="skip-link">Aller au contenu</a>
         <ClientLayoutShell>{children}</ClientLayoutShell>
         <SpeedInsights />
       </body>
