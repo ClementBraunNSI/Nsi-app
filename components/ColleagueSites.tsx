@@ -110,7 +110,11 @@ export default function ColleagueSites() {
         <div className="mb-8 flex flex-wrap gap-2" aria-label="Filtrer les sites de collègues">
           {FILTERS.map((item) => {
             const active = filter === item.key;
-            const count = item.key === "all" ? COLLEAGUES.length : COLLEAGUES.filter((c) => c.tags.includes(item.key)).length;
+            const tag = item.key;
+            const count =
+              tag === "all"
+                ? COLLEAGUES.length
+                : COLLEAGUES.filter((colleague) => colleague.tags.includes(tag)).length;
             return (
               <button
                 key={item.key}
