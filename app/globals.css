@@ -733,3 +733,21 @@ input, textarea {
   -ms-user-select: text !important;
   user-select: text !important;
 }
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.cours-sticky-nav {
+  position: sticky;
+  top: 5rem;
+  z-index: 30;
+  padding: 0.75rem 0 0.85rem;
+  margin-bottom: 0.25rem;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(14px);
+}

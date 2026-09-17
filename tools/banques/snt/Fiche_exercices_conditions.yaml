@@ -1,0 +1,205 @@
+slug: Fiche_exercices_conditions
+title: 'Fiche d''''exercices : Les conditions en Python'
+niveau: snt
+source: content/1/Fiche_exercices_conditions.md
+questions:
+  - id: conditions-1
+    label: Important ⚠️ - Consignes importantes
+    content: |-
+      ### Important ⚠️ - Consignes importantes
+
+            **Pour tous les exercices :**
+
+            - N'oubliez pas les deux points `:` après la condition
+            - Faites attention à l'indentation dans les blocs if/else
+            - Testez votre code avec différentes valeurs
+            - Créez un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
+            - Recopiez vos programmes sur votre cahier pour pouvoir les réviser plus tard
+    difficulty: moyen
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-2
+    label: "Introduction \U0001F98A - Majorité"
+    content: "### Introduction \U0001F98A - Majorité\n\n      **Écrire un programme qui :**\n\n      - Demande l'âge d'une personne\n      - Affiche \"Vous êtes majeur\" si l'âge est supérieur ou égal à 18\n      - Affiche \"Vous êtes mineur\" sinon\n\n      *Pour la vérification, stockez l'âge saisi dans une variable `age` et le message affiché dans une variable `message`.*"
+    difficulty: introduction
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'age' in locals(), "La variable 'age' n'est pas définie."
+      assert 'message' in locals(), "La variable 'message' n'est pas définie."
+      if age >= 18:
+          assert "majeur" in message.lower(), f"Pour age={age}, le message doit contenir 'majeur'."
+      else:
+          assert "mineur" in message.lower(), f"Pour age={age}, le message doit contenir 'mineur'."
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-3
+    label: "Introduction \U0001F98A - Nombre positif ou négatif"
+    content: "### Introduction \U0001F98A - Nombre positif ou négatif\n\n      **Écrire un programme qui :**\n\n      - Demande un nombre\n      - Affiche si le nombre est positif, négatif ou nul\n\n      *Pour la vérification, stockez le nombre dans `n` et le message affiché dans `message`.*"
+    difficulty: introduction
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'n' in locals(), "La variable 'n' n'est pas définie."
+      assert 'message' in locals(), "La variable 'message' n'est pas définie."
+      if n > 0:
+          assert "positif" in message.lower(), f"Pour n={n}, le message doit indiquer positif."
+      elif n < 0:
+          assert "négatif" in message.lower(), f"Pour n={n}, le message doit indiquer négatif."
+      else:
+          assert "nul" in message.lower(), f"Pour n={n}, le message doit indiquer nul."
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-4
+    label: "Introduction \U0001F98A - Comparaison de deux nombres"
+    content: "### Introduction \U0001F98A - Comparaison de deux nombres\n\n      **Écrire un programme qui :**\n\n      - Demande deux nombres\n      - Affiche lequel est le plus grand (ou s'ils sont égaux)\n\n      *Pour la vérification, stockez les deux nombres dans `a` et `b`, et stockez la valeur la plus grande dans une variable `maximum` (ou `a` ou `b` si égaux).*"
+    difficulty: introduction
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'a' in locals() and 'b' in locals(), "Les variables 'a' et 'b' doivent être définies."
+      assert 'maximum' in locals(), "La variable 'maximum' n'est pas définie."
+      assert maximum == max(a, b), f"Le maximum entre {a} et {b} devrait être {max(a, b)}."
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-5
+    label: "Introduction \U0001F98A - Mot de passe"
+    content: "### Introduction \U0001F98A - Mot de passe\n\n      **Écrire un programme qui :**\n\n      - Demande un mot de passe\n      - Affiche \"Accès autorisé\" si le mot de passe est \"secret123\"\n      - Affiche \"Accès refusé\" sinon\n\n      *Pour la vérification, stockez le mot de passe entré dans `mdp` et le message final dans `message`.*"
+    difficulty: introduction
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'mdp' in locals(), "La variable 'mdp' n'est pas définie."
+      assert 'message' in locals(), "La variable 'message' n'est pas définie."
+      if mdp == "secret123":
+          assert "autorisé" in message.lower(), "Le message doit indiquer 'Accès autorisé'."
+      else:
+          assert "refusé" in message.lower(), "Le message doit indiquer 'Accès refusé'."
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-6
+    label: "Introduction \U0001F98A - Nombre pair ou impair"
+    content: "### Introduction \U0001F98A - Nombre pair ou impair\n\n      **Écrire un programme qui :**\n\n      - Demande un nombre entier\n      - Affiche si le nombre est pair ou impair\n\n      *Astuce : Un nombre est pair si le reste de sa division par 2 est égal à 0. En Python, on utilise l'opérateur `%` pour obtenir le reste d'une division.*\n\n      *Pour la vérification, stockez le nombre dans `n` et le message dans `message`.*"
+    difficulty: introduction
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'n' in locals(), "La variable 'n' n'est pas définie."
+      assert 'message' in locals(), "La variable 'message' n'est pas définie."
+      if n % 2 == 0:
+          assert "pair" in message.lower() and "impair" not in message.lower(), f"{n} est pair."
+      else:
+          assert "impair" in message.lower(), f"{n} est impair."
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-7
+    label: "Introduction \U0001F98A - Calculatrice simple"
+    content: "### Introduction \U0001F98A - Calculatrice simple\n\n      **Écrire un programme qui :**\n\n      - Demande deux nombres et une opération (+, -, *, /)\n      - Affiche le résultat de l'opération\n      - Gère le cas de la division par zéro\n\n      ## \U0001F31F Niveau Facile\n\n      *Pour la vérification, stockez les deux nombres dans `a` et `b`, l'opération dans `op` (chaine de caractères) et le résultat calculé dans `resultat`. En cas d'erreur (division par zéro), `resultat` peut valoir `None` ou un message d'erreur.*"
+    difficulty: introduction
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'a' in locals() and 'b' in locals(), "Variables 'a' et 'b' requises."
+      assert 'op' in locals(), "Variable 'op' requise."
+      assert 'resultat' in locals(), "Variable 'resultat' requise."
+
+      if op == '+':
+          assert resultat == a + b
+      elif op == '-':
+          assert resultat == a - b
+      elif op == '*':
+          assert resultat == a * b
+      elif op == '/':
+          if b != 0:
+              assert abs(resultat - (a / b)) < 0.0001
+          else:
+              # Just check that it didn't crash and maybe handled it
+              pass
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-8
+    label: "Facile \U0001F98A - Note et mention"
+    content: "### Facile \U0001F98A - Note et mention\n\n      **Écrire un programme qui :**\n\n      - Demande une note sur 20\n      - Affiche la mention correspondante :\n        - Note >= 16 : \"Très bien\"\n        - Note >= 14 : \"Bien\"\n        - Note >= 12 : \"Assez bien\"\n        - Note >= 10 : \"Passable\"\n        - Note < 10 : \"Insuffisant\"\n\n      *Pour la vérification, stockez la note dans `note` et la mention dans `mention`.*"
+    difficulty: facile
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'note' in locals(), "La variable 'note' n'est pas définie."
+      assert 'mention' in locals(), "La variable 'mention' n'est pas définie."
+      m = mention.lower()
+      if note >= 16: assert "très bien" in m
+      elif note >= 14: assert "bien" in m and "très" not in m and "assez" not in m
+      elif note >= 12: assert "assez bien" in m
+      elif note >= 10: assert "passable" in m
+      else: assert "insuffisant" in m
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-9
+    label: "Facile \U0001F98A - Température et conseil"
+    content: "### Facile \U0001F98A - Température et conseil\n\n      **Écrire un programme qui :**\n\n      - Demande la température extérieure\n      - Donne un conseil vestimentaire :\n        - Moins de 0°C : \"Portez un manteau d'hiver\"\n        - De 0 à 15°C : \"Portez une veste\"\n        - De 16 à 25°C : \"Un pull suffit\"\n        - Plus de 25°C : \"T-shirt recommandé\"\n\n      *Pour la vérification, stockez la température dans `temp` et le conseil dans `conseil`.*"
+    difficulty: facile
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'temp' in locals(), "La variable 'temp' n'est pas définie."
+      assert 'conseil' in locals(), "La variable 'conseil' n'est pas définie."
+      c = conseil.lower()
+      if temp < 0: assert "manteau" in c or "hiver" in c
+      elif 0 <= temp <= 15: assert "veste" in c
+      elif 16 <= temp <= 25: assert "pull" in c
+      else: assert "t-shirt" in c
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-10
+    label: "Facile \U0001F98A - Jours du mois"
+    content: "### Facile \U0001F98A - Jours du mois\n\n      **Écrire un programme qui :**\n\n      - Demande un numéro de mois (1-12)\n      - Affiche le nombre de jours dans ce mois\n      - Considère février avec 28 jours\n\n      *Pour la vérification, stockez le numéro du mois dans `mois` et le nombre de jours dans `jours`.*"
+    difficulty: facile
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'mois' in locals(), "La variable 'mois' n'est pas définie."
+      assert 'jours' in locals(), "La variable 'jours' n'est pas définie."
+      if mois == 2:
+          assert jours == 28
+      elif mois in [4, 6, 9, 11]:
+          assert jours == 30
+      else:
+          assert jours == 31
+      ```
+    niveau: snt
+    notion: Programmation Python
+  - id: conditions-11
+    label: "Facile \U0001F98A - Triangle possible"
+    content: "### Facile \U0001F98A - Triangle possible\n\n      **Écrire un programme qui :**\n\n      - Demande trois longueurs\n      - Vérifie si on peut former un triangle avec ces longueurs\n\n      *Pour la vérification, stockez les trois longueurs dans `a`, `b`, `c` et une variable booléenne `possible` (True si possible, False sinon).*"
+    difficulty: facile
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'a' in locals() and 'b' in locals() and 'c' in locals(), "Variables a, b, c requises."
+      assert 'possible' in locals(), "Variable 'possible' requise."
+      correct = (a < b + c) and (b < a + c) and (c < a + b)
+      assert possible == correct, f"Pour {a}, {b}, {c}, le résultat devrait être {correct}."
+      ```
+    niveau: snt
+    notion: Programmation Python

@@ -1,0 +1,41 @@
+slug: activite_donnees_interactive
+title: 'Atelier Données : Le Détective CSV'
+niveau: snt
+source: content/1/activite_donnees_interactive.md
+questions:
+  - id: enquete-1
+    label: Enquête 1 - Le Vol du Musée
+    content: "### \U0001F3A8 Enquête 1 : Le Vol du Musée\n\nUn tableau de valeur a disparu du Musée des Beaux-Arts. Le voleur s'est glissé parmi les visiteurs et le personnel.\n\n**Votre mission :** Retrouver le coupable en utilisant les indices laissés par les témoins et les caméras de surveillance.\n\n**Le fichier contient plus de 100 suspects. Suivez les étapes de l'enquête ci-dessous pour filtrer la liste et trouver le coupable.**\n\n<CsvDetective />"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: snt
+    notion: Données structurées
+  - id: enquete-2
+    label: Enquête 2 - L
+    content: "### \U0001F4BB Enquête 2 : L'Attaque Fantôme\n\nUne intrusion informatique a été détectée sur les serveurs de l'école. L'adresse IP a été tracée jusqu'en Asie.\n\n**Votre mission :** Identifier le hacker responsable de l'attaque parmi les nombreux profils suspects.\n\n**Utilisez les outils de filtrage pour réduire la liste des suspects étape par étape.**\n\n<CsvDetective scenario=\"scenario2\" />"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: snt
+    notion: Données structurées
+  - id: enquete-3
+    label: Enquête 3 - L
+    content: "### \U0001F9EA Enquête 3 : L'Affaire du Poison (Difficile)\n\nDes produits chimiques dangereux ont été dérobés dans un laboratoire du Sud-Ouest de la France.\n\n**Votre mission :** Retrouver le voleur parmi le personnel médical. Soyez attentif aux détails.\n\n<CsvDetective scenario=\"scenario3\" />"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: snt
+    notion: Données structurées
+  - id: enquete-4
+    label: Enquête 4 - Le Réseau Portuaire
+    content: "### \U0001F6A2 Enquête 4 : Le Réseau Portuaire (Expert)\n\nUn réseau de contrebande utilise les grands ports européens. Nous devons intercepter le passeur.\n\n**Votre mission :** Croiser les informations pour identifier la cible dans cette base de données complexe.\n\n<CsvDetective scenario=\"scenario4\" />"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: snt
+    notion: Données structurées

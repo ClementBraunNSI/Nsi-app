@@ -1,0 +1,18 @@
+slug: prog_calculabilite
+title: Calculabilité et Décidabilité
+niveau: terminale
+source: content/3/prog_calculabilite.md
+questions:
+  - id: calc-ex-1
+    label: Vrai ou Faux
+    content: |-
+      ### Questions de compréhension
+          1.  Une machine de Turing est moins puissante qu'un PC moderne. (Vrai/Faux)
+          2.  Le problème de l'arrêt est indécidable. (Vrai/Faux)
+          3.  Un problème indécidable le sera toujours, même avec un ordinateur quantique surpuissant. (Vrai/Faux)
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Langages et Programmation

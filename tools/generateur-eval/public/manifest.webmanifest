@@ -1,0 +1,10 @@
+{
+  "name": "SujetLab",
+  "short_name": "SujetLab",
+  "description": "Générateur de sujets DS & bac blanc",
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#4f46e5",
+  "background_color": "#f5f3ff",
+  "lang": "fr"
+}

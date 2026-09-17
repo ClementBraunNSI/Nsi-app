@@ -1,6 +1,5 @@
 import React from 'react';
 import fs from 'fs';
-import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
@@ -9,8 +8,11 @@ import dynamic from 'next/dynamic';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
-import { createClient } from '@/utils/supabase/server';
 import { Metadata } from 'next';
+import { contentFolderFromParam, coursePath, nsiLevelLabel } from '@/lib/nsi-levels';
+import { resolveCourseFile } from '@/lib/content-path';
+import { getAuthContext } from '@/lib/auth';
+import { canAccessCourse, isRestrictedCourse } from '@/lib/course-access';
 
 export async function generateMetadata({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }): Promise<Metadata> {
   const { niveaux, slug } = await params;
@@ -19,14 +21,10 @@ export async function generateMetadata({ params }: { params: Promise<{ niveaux: 
     ? slug.map(s => decodeURIComponent(s)).join('/') 
     : decodeURIComponent(slug);
 
-  const dossierPhysique = niveaux; 
-  let filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slugStr}.md`);
-  
-  if (!fs.existsSync(filePath)) {
-    filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slugStr}.mdx`);
-  }
+  const folder = contentFolderFromParam(niveaux);
+  const filePath = folder ? resolveCourseFile(folder, slugStr) : null;
 
-  if (!fs.existsSync(filePath)) {
+  if (!filePath) {
     return {
       title: 'Cours non trouvé',
     };
@@ -116,34 +114,62 @@ import CourseNavigation from '@/components/CourseNavigation';
 import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { getAdjacentCourses } from '@/lib/course-utils';
-import { nsiLevelLabel } from '@/lib/nsi-levels';
-import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
 import { PageHeader } from '@/components/ui';
 import ResourceNotFound from '@/components/ResourceNotFound';
+import InteractiveShell from '@/components/interactive/InteractiveShell';
 
 import Breadcrumbs from '@/components/experimental/Breadcrumbs';
+
+const SNT_WIDGET_META: Record<string, { title: string; description: string }> = {
+  WebPreview: { title: 'Terrier HTML', description: 'Modifie le code et observe la page se construire en direct.' },
+  PixelManipulator: { title: 'Loupe à pixels', description: 'Explore comment une image est stockée et transformée.' },
+  ImageManipulator: { title: 'Atelier image', description: 'Manipule les couleurs comme le ferait un programme.' },
+  ImageCompression: { title: 'Laboratoire de compression', description: 'Compare poids, qualité et détails visibles.' },
+  ImageRights: { title: 'Enquête sur les images', description: 'Apprends à publier des images de manière responsable.' },
+  SocialGraph: { title: 'Réseau du renard', description: 'Explore les relations, voisins et chemins dans un graphe social.' },
+  GraphMetricsExplorer: { title: 'Mesures d’un réseau', description: 'Observe comment quelques indicateurs décrivent un graphe.' },
+  FilterBubble: { title: 'Dans la bulle', description: 'Teste comment les recommandations modifient ce que tu vois.' },
+  ReflectionInput: { title: 'Carnet d’observation', description: 'Formule ton explication avec tes propres mots.' },
+  PacketTracer: { title: 'Pisteur de paquets', description: 'Suis un paquet de machine en machine jusqu’à sa destination.' },
+  TcpIpLayers: { title: 'Les couches du réseau', description: 'Reconstitue le voyage d’une information sur Internet.' },
+  EncapsulationVisualizer: { title: 'Poupées russes du réseau', description: 'Observe les enveloppes ajoutées à chaque couche.' },
+  GpsCoordinates: { title: 'Boussole GPS', description: 'Déplace le repère et lis latitude et longitude.' },
+  TrilaterationMap: { title: 'À la recherche du renard', description: 'Croise les distances des satellites pour le localiser.' },
+  NmeaDecoder: { title: 'Décodeur GPS', description: 'Transforme une trame brute en informations compréhensibles.' },
+  CookieManager: { title: 'Boîte à cookies', description: 'Distingue les cookies utiles de ceux qui suivent ta navigation.' },
+  DnsResolver: { title: 'Annuaire du Web', description: 'Suis la résolution d’un nom de domaine vers une adresse IP.' },
+  UrlBuilder: { title: 'Constructeur d’URL', description: 'Assemble chaque partie d’une adresse web.' },
+  HttpMethodVisualizer: { title: 'Messager HTTP', description: 'Compare les requêtes envoyées par un navigateur.' },
+  HttpsSimulator: { title: 'Le tunnel sécurisé', description: 'Observe ce que le chiffrement protège pendant le trajet.' },
+  PageRankVisualizer: { title: 'Classement des terriers', description: 'Découvre comment les liens influencent un moteur de recherche.' },
+  HtmlStructureExplorer: { title: 'Arbre HTML', description: 'Explore les balises et leurs relations dans le document.' },
+  DataProcessor: { title: 'Atelier des données', description: 'Filtre, trie et résume un tableau structuré.' },
+  CsvDetective: { title: 'Le renard détective', description: 'Croise les indices en filtrant une base de suspects.' },
+  CloudArchitecture: { title: 'Où vivent les données ?', description: 'Relie appareils, services et stockage dans le nuage.' },
+  RgpdRights: { title: 'Les droits du renard', description: 'Identifie les bons réflexes pour protéger les données personnelles.' },
+  IotSimulator: { title: 'Fabrique d’objet connecté', description: 'Assemble capteur, logique et actionneur.' },
+  IotInterface: { title: 'Maison connectée', description: 'Pilote les objets et observe leurs réactions.' },
+  FilterPlayground: { title: 'Filtres photographiques', description: 'Modifie la lumière et les couleurs d’une image.' },
+  MonstersGallery: { title: 'Bestiaire numérique', description: 'Observe comment des données décrivent une collection.' },
+  CarteGpsPlayground: { title: 'Carte du renard', description: 'Programme une carte et visualise immédiatement le résultat.' },
+};
 
 export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
   const { niveaux, slug } = await params;
   
-  // Reconstruct slug string from array and decode
   const slugStr = Array.isArray(slug) 
     ? slug.map(s => decodeURIComponent(s)).join('/') 
     : decodeURIComponent(slug);
 
-  const dossierPhysique = niveaux; 
-  let filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slugStr}.md`);
-  
-  if (!fs.existsSync(filePath)) {
-    filePath = path.join(process.cwd(), 'content', dossierPhysique, `${slugStr}.mdx`);
-  }
+  const folder = contentFolderFromParam(niveaux);
+  const filePath = folder ? resolveCourseFile(folder, slugStr) : null;
 
-  if (!fs.existsSync(filePath)) {
+  if (!filePath) {
     return (
       <ResourceNotFound
         title="Cours non trouvé"
         description={`La ressource "${slugStr}" est introuvable pour ce niveau.`}
-        actionHref={`/cours/${niveaux}`}
+        actionHref={coursePath(niveaux)}
         actionLabel="Retour aux chapitres"
       />
     );
@@ -152,17 +178,10 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { content, data } = matter(fileContent);
 
-  // Access Control Logic
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const profileRole =
-    (user?.app_metadata?.role as string | undefined) ||
-    (user?.user_metadata?.role as string | undefined) ||
-    null;
-  const isElevated = isElevatedUser(profileRole);
+  const auth = await getAuthContext();
   
-  if (String(data.access || '').toLowerCase() === 'private') {
-    if (!user) {
+  if (isRestrictedCourse(data)) {
+    if (!auth.user) {
       return (
         <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-8">
           <div className="text-center max-w-md">
@@ -175,7 +194,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             </p>
 
             <Link 
-              href="/login" 
+              href={`/connexion?next=${encodeURIComponent(coursePath(niveaux, slugStr))}`}
               className="bg-[var(--accent)] text-[var(--accent-fg)] font-semibold py-3 px-6 rounded-[var(--radius-sm)] inline-block transition-colors duration-150"
             >
               Se connecter
@@ -185,18 +204,12 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
       );
     }
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('full_name')
-      .eq('id', user.id)
-      .single();
-    
     const hasAccess = canAccessCourse(
       { access: data.access, allowedStudents: data.allowedStudents },
       {
-        isElevated,
-        isAuthenticated: Boolean(user),
-        userFullName: profile?.full_name || null,
+        isElevated: auth.isElevated,
+        isAuthenticated: true,
+        userFullName: auth.fullName,
       }
     );
 
@@ -211,10 +224,10 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             <p className="text-[var(--muted)] mb-6">Vous n'avez pas la permission d'accéder à ce cours.</p>
 
             <Link 
-              href="/student/dashboard" 
+              href="/espace" 
               className="text-[var(--accent)] font-semibold"
             >
-              Retour au tableau de bord
+              Retour à l'espace
             </Link>
           </div>
         </div>
@@ -226,9 +239,9 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   const contentWithAdmonitions = transformAdmonitions(content);
 
   // Navigation entre les cours
-  const { prev, next } = getAdjacentCourses(dossierPhysique, slugStr);
+  const { prev, next } = getAdjacentCourses(folder, slugStr);
 
-  const mdxComponents = {
+  const baseMdxComponents = {
     ExerciseTabs,
     ExerciseSection,
     Correction,
@@ -283,6 +296,21 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     GraphVisualizer,
   };
 
+  const mdxComponents = Object.fromEntries(
+    Object.entries(baseMdxComponents).map(([name, Component]) => {
+      const meta = folder === '1' ? SNT_WIDGET_META[name] : undefined;
+      if (!meta) return [name, Component];
+
+      const FramedSntWidget = (props: Record<string, unknown>) => (
+        <InteractiveShell title={meta.title} description={meta.description}>
+          {React.createElement(Component as React.ElementType, props)}
+        </InteractiveShell>
+      );
+      FramedSntWidget.displayName = `Framed${name}`;
+      return [name, FramedSntWidget];
+    }),
+  );
+
   return (
     <div className="min-h-screen course-shell">
       <MobileBlocker />
@@ -291,13 +319,13 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
       {/* Barre de navigation haute */}
       <nav className="course-topnav sticky top-20 z-30">
         <div className="max-w-5xl mx-auto px-6 py-4">
-          <Link href={`/cours/${niveaux}`} className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--accent)] transition-colors duration-150 text-xs font-semibold">
+          <Link href={coursePath(niveaux)} className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--accent)] transition-colors duration-150 text-xs font-semibold">
             <ChevronLeft size={16} /> Retour à {nsiLevelLabel(niveaux)}
           </Link>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <button
           type="button"
           data-fox-easter-id="cours"
@@ -305,8 +333,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
           className="fox-secret-spot absolute top-32 right-8 z-20"
         />
         <Breadcrumbs customItems={[
-          { label: 'Cours', href: '/cours' },
-          { label: nsiLevelLabel(niveaux), href: `/cours/${niveaux}` },
+          { label: nsiLevelLabel(niveaux), href: coursePath(niveaux) },
           { label: data.chapter || 'Cours', href: '#' },
           { label: data.title || slugStr, href: '#' }
         ]} />
@@ -341,7 +368,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             currentLevel={niveaux} 
           />
         </div>
-      </main>
+      </div>
     </div>
   );
 }

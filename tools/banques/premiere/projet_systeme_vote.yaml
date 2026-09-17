@@ -1,0 +1,117 @@
+slug: projet_systeme_vote
+title: 'Algorithmes : Système de Vote'
+niveau: premiere
+source: content/2/projet_systeme_vote.md
+questions:
+  - id: vote-maj-1
+    label: Modélisation
+    content: |-
+      On représente les votes par une liste de candidats choisis par les électeurs.
+            
+            Exemple : `urnes = ["Alice", "Bob", "Alice", "Charlie", "Bob", "Alice"]`
+            
+            Créez une fonction `depouiller_majoritaire(urnes)` qui :
+            1. Compte les voix pour chaque candidat (utilisez un dictionnaire).
+            2. Affiche les résultats.
+            3. Renvoie le nom du vainqueur.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: vote-maj2-1
+    label: Premier Tour
+    content: |-
+      Modifiez votre fonction précédente pour qu'elle renvoie les pourcentages de chaque candidat.
+            
+            Si un candidat a > 50%, il gagne.
+            Sinon, identifiez les deux candidats ayant le plus de voix (les "finalistes").
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: vote-maj2-2
+    label: Second Tour
+    content: |-
+      Pour le second tour, nous avons besoin des préférences des électeurs.
+            Au lieu d'un seul nom, chaque électeur donne son classement.
+            
+            Exemple de bulletin : `["Alice", "Charlie", "Bob"]` (Alice préférée à Charlie, lui-même préféré à Bob).
+            
+            Créez une fonction `duel(bulletins, candidat1, candidat2)` qui :
+            1. Parcourt tous les bulletins.
+            2. Pour chaque bulletin, regarde qui est classé avant l'autre (entre candidat1 et candidat2).
+            3. Compte les points.
+            4. Détermine le gagnant du duel.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: vote-condorcet-1
+    label: Matrice de Duels
+    content: |-
+      Créez une fonction `matrice_duels(bulletins, candidats)` qui organise tous les duels possibles.
+            
+            Exemple : Alice vs Bob, Alice vs Charlie, Bob vs Charlie.
+            
+            Pour chaque paire, utilisez votre fonction `duel` pour voir qui l'emporte.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: vote-condorcet-2
+    label: Vainqueur de Condorcet
+    content: |-
+      Analysez les résultats :
+            Existe-t-il un candidat qui a gagné **tous** ses duels ?
+            
+            Si oui, c'est le vainqueur de Condorcet. Affichez-le.
+            Si non, on est dans une situation de "Paradoxe de Condorcet" (Pierre bat Feuille, Feuille bat Ciseaux, Ciseaux bat Pierre).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: vote-borda-1
+    label: Calcul des points
+    content: |-
+      On suppose qu'il y a $N$ candidats.
+            Pour chaque bulletin de vote (qui est un classement) :
+            *   Le 1er candidat reçoit $N-1$ points.
+            *   Le 2ème reçoit $N-2$ points.
+            *   ...
+            *   Le dernier reçoit 0 point.
+
+            Créez une fonction `calculer_borda(bulletins, candidats)` qui :
+            1. Initialise les scores à 0.
+            2. Parcourt chaque bulletin.
+            3. Attribue les points correspondants.
+            4. Renvoie le dictionnaire des scores.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: vote-borda-2
+    label: Comparaison
+    content: |-
+      Utilisez vos trois méthodes (Majoritaire, Condorcet, Borda) sur le même ensemble de bulletins.
+            
+            Trouvez un exemple de votes où le vainqueur est différent selon la méthode utilisée !
+            
+            C'est ce qu'on appelle un **paradoxe électoral**.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets

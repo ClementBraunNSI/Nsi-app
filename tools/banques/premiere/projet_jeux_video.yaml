@@ -1,0 +1,128 @@
+slug: projet_jeux_video
+title: 'Dictionnaires : Collection Jeux'
+niveau: premiere
+source: content/2/projet_jeux_video.md
+questions:
+  - id: pjv-struct-1
+    label: Modélisation
+    content: |-
+      Nous allons utiliser un **dictionnaire de dictionnaires**.
+            La clé principale sera le **titre du jeu**, et la valeur sera un autre dictionnaire contenant les détails.
+
+            Exemple :
+            ```python
+            ludotheque = {
+                'The Legend of Zelda : Breath of the Wild' : {
+                    'plateforme' : "Switch",
+                    'annee' : 2017,
+                    'genre' : "Aventure",
+                    'statut' : "possédé"
+                },
+                'Elden Ring': {
+                    'plateforme': "PC",
+                    'annee': 2022,
+                    'genre': "RPG",
+                    'statut': "souhaité"
+                }
+            }
+            ```
+            Initialisez votre variable `ludotheque` avec quelques jeux de votre choix.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: pjv-base-1
+    label: Ajouter un jeu
+    content: >-
+      Créez une fonction `ajouter_jeu(ludotheque)` qui demande à l'utilisateur de saisir les informations (Titre,
+      Plateforme, Année, Genre, Statut) et ajoute le jeu au dictionnaire `ludotheque`.
+            
+            *Indice : Utilisez `input()` pour récupérer les saisies.*
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: pjv-base-2
+    label: Afficher un jeu
+    content: |-
+      Créez une fonction `afficher_jeu(ludotheque, titre)` qui prend en paramètre la ludothèque et un titre de jeu.
+            
+            Si le jeu existe, elle doit afficher ses détails proprement, par exemple :
+            ```text
+            Titre : The Legend of Zelda: Breath of the Wild
+            Plateforme : Switch
+            Année : 2017
+            Genre : Aventure
+            Statut : Possédé
+            ```
+            Sinon, elle affiche un message d'erreur.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: pjv-base-3
+    label: Rechercher
+    content: >-
+      Créez une fonction `rechercher_jeu(ludotheque)` qui demande un titre à l'utilisateur et appelle la fonction
+      `afficher_jeu` précédente.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: pjv-adv-1
+    label: Modifier un jeu
+    content: |-
+      Créez une fonction `modifier_jeu(ludotheque)` qui :
+            1. Demande quel jeu modifier.
+            2. Si le jeu existe, demande quel champ modifier (statut, genre, etc.).
+            3. Demande la nouvelle valeur.
+            4. Met à jour le dictionnaire.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: pjv-adv-2
+    label: Supprimer un jeu
+    content: >-
+      Créez une fonction `supprimer_jeu(ludotheque)` qui demande le nom d'un jeu et le retire de la collection s'il
+      existe (utilisez `del` ou `.pop()`).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: pjv-menu-1
+    label: Menu Interactif
+    content: >-
+      Créez une fonction `menu_principal()` qui affiche les choix possibles et boucle indéfiniment jusqu'à ce que
+      l'utilisateur choisisse de quitter.
+
+            ```text
+            ############### Gestionnaire de Jeux Vidéo ###############
+            # Application réalisée par : Votre Nom                   #
+            ##########################################################
+
+            1. Ajouter un jeu  
+            2. Afficher la collection complète  
+            3. Rechercher un jeu  
+            4. Modifier un jeu  
+            5. Supprimer un jeu  
+            6. Quitter  
+            ```
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets

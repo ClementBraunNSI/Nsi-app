@@ -1,0 +1,21 @@
+slug: reseaux_routage
+title: 'Réseaux : Protocoles de Routage'
+niveau: terminale
+source: content/3/reseaux_routage.md
+questions:
+  - id: routage-ex-1
+    label: Comparaison RIP/OSPF
+    content: |-
+      ### Choix du chemin
+          On veut aller de A à B.
+          *   Chemin 1 : Passe par R1 (1 saut), débit 56 kbps (très lent).
+          *   Chemin 2 : Passe par R2 et R3 (2 sauts), débit 1 Gbps (fibre optique).
+          
+          1.  Quel chemin choisit RIP ?
+          2.  Quel chemin choisit OSPF ?
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: 'Architectures matérielles, OS & Réseaux'

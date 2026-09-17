@@ -3,6 +3,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { getAuthContext } from '@/lib/auth';
+import { contentRoot } from '@/lib/content-path';
+import { coursePath } from '@/lib/nsi-levels';
 
 export interface RevisionSheet {
   title: string;
@@ -23,47 +26,51 @@ function isStudentAllowed(data: Record<string, unknown>, studentName: string): b
   const list = data.allowedStudents;
   if (!Array.isArray(list)) return false;
   const n = normalizeName(studentName);
-  const ok = list.some((name: string) => normalizeName(String(name)) === n);
-  const fallback = !ok && list.includes(studentName);
-  return ok || fallback;
+  return list.some((name) => normalizeName(String(name)) === n);
 }
 
-/**
- * Fiches avec frontmatter revisionSheet: true (même logique allowedStudents que les cours réservés).
- */
-export async function getRevisionSheets(studentName: string): Promise<RevisionSheet[]> {
-  if (!studentName) return [];
+export async function getRevisionSheets(studentName?: string): Promise<RevisionSheet[]> {
+  const auth = await getAuthContext();
+  if (!auth.user) return [];
 
-  const contentDir = path.join(process.cwd(), 'content');
+  let name = auth.fullName;
+  if (studentName && normalizeName(studentName) !== normalizeName(name || '')) {
+    if (!auth.isElevated) return [];
+    name = studentName;
+  }
+  if (!name) return [];
+
+  const contentDir = contentRoot();
   if (!fs.existsSync(contentDir)) return [];
 
   const out: RevisionSheet[] = [];
 
   function scanDirectory(dir: string) {
-    const items = fs.readdirSync(dir);
-    for (const item of items) {
+    for (const item of fs.readdirSync(dir)) {
+      if (item.startsWith('.') || item === 'build' || item === 'node_modules') continue;
       const fullPath = path.join(dir, item);
       const stat = fs.statSync(fullPath);
       if (stat.isDirectory()) {
-        if (!item.startsWith('.')) scanDirectory(fullPath);
-      } else if (item.endsWith('.md') || item.endsWith('.mdx')) {
-        const fileContent = fs.readFileSync(fullPath, 'utf-8');
-        const { data } = matter(fileContent) as { data: Record<string, unknown> };
-        if (data.revisionSheet !== true) continue;
-        if (!isStudentAllowed(data, studentName)) continue;
-
-        const relativePath = path.relative(contentDir, fullPath);
-        const pathParts = relativePath.split(path.sep);
-        if (pathParts[0] !== 'particuliers') continue;
-
-        const level = pathParts[0];
-        const slug = pathParts.slice(1).join('/').replace(/\.mdx?$/, '');
-        out.push({
-          title: String(data.title || slug),
-          path: `/cours/${level}/${slug}`,
-          description: data.description ? String(data.description) : undefined,
-        });
+        scanDirectory(fullPath);
+        continue;
       }
+      if (!item.endsWith('.md') && !item.endsWith('.mdx')) continue;
+
+      const fileContent = fs.readFileSync(fullPath, 'utf-8');
+      const { data } = matter(fileContent) as { data: Record<string, unknown> };
+      if (data.revisionSheet !== true) continue;
+      if (!isStudentAllowed(data, name!)) continue;
+
+      const relativePath = path.relative(contentDir, fullPath);
+      const pathParts = relativePath.split(path.sep);
+      if (pathParts[0] !== 'particuliers') continue;
+
+      const slug = pathParts.slice(1).join('/').replace(/\.mdx?$/, '');
+      out.push({
+        title: String(data.title || slug),
+        path: coursePath('particuliers', slug),
+        description: data.description ? String(data.description) : undefined,
+      });
     }
   }
 

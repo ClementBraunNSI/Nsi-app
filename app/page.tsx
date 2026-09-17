@@ -9,11 +9,11 @@ import ColleagueSites from '@/components/ColleagueSites';
 
 // Niveaux classiques
 const LEVELS = [
-  { id: 0, title: "SNI", desc: "Sciences Numériques et Informatique : les bases.", img: "/images/fox_0.png", color: "bg-slate-500", tag: "Niveau 0" },
-  { id: 1, title: "SNT", desc: "Sciences Numériques et Technologie (2nde).", img: "/images/fox_1.png", color: "bg-blue-500", tag: "Niveau 1" },
-  { id: 2, title: "Première NSI", desc: "Algorithmique, Python et structures de données.", img: "/images/fox_2.png", color: "bg-orange-500", tag: "Niveau 2" },
-  { id: 3, title: "Terminale NSI", desc: "Récursivité, SQL et architectures réseaux.", img: "/images/fox_3.png", color: "bg-purple-500", tag: "Niveau 3" },
-  { id: 4, title: "BTS SIO", desc: "Services Informatiques aux Organisations.", img: "/images/fox_4.png", color: "bg-emerald-500", tag: "Niveau 4" },
+  { id: "sni", title: "SNI", desc: "Sciences Numériques et Informatique : les bases.", img: "/images/fox_0.png", color: "bg-slate-500", tag: "Découverte" },
+  { id: "snt", title: "SNT", desc: "Sciences Numériques et Technologie (2nde).", img: "/images/fox_1.png", color: "bg-blue-500", tag: "Seconde" },
+  { id: "1nsi", title: "Première NSI", desc: "Algorithmique, Python et structures de données.", img: "/images/fox_2.png", color: "bg-orange-500", tag: "Première" },
+  { id: "tnsi", title: "Terminale NSI", desc: "Récursivité, SQL et architectures réseaux.", img: "/images/fox_3.png", color: "bg-purple-500", tag: "Terminale" },
+  { id: "sio", title: "BTS SIO", desc: "Services Informatiques aux Organisations.", img: "/images/fox_4.png", color: "bg-emerald-500", tag: "Post-bac" },
 ];
 
 // Ressources publiques (hors parcours NSI classique)
@@ -25,7 +25,7 @@ const PUBLIC_RESOURCES = [
     img: '/images/fox_2.png',
     color: 'bg-amber-600',
     tag: 'Langage C',
-    href: '/cours/particuliers',
+    href: '/cours/c',
   },
 ];
 
@@ -34,11 +34,11 @@ const GAMES = [
   { 
     id: 'fox-3d-test', 
     title: "Académie des Renards", 
-    desc: "Prototype isométrique avec grille 3D, sprites renard/poule et obstacles. Prévisualisation technique.", 
+    desc: "Guide le renard jusqu'à la poule en Python : fonctions, variables, conditions et boucles.",
     img: "/images/fox_act.png", 
     color: "bg-teal-500", 
     tag: "Apprentissage Python", 
-    href: "/foxtest" 
+    href: "/academie" 
   },
   { 
     id: 'fox-art', 
@@ -60,7 +60,7 @@ const PRIVATE_LESSONS = [
     img: "/images/fox_3.png", 
     color: "bg-orange-600", 
     tag: "Privé", 
-    href: "/student/dashboard" 
+    href: "/espace" 
   },
 ];
 
@@ -253,7 +253,7 @@ export default function LandingPage() {
         <h2 className="text-2xl font-semibold text-[var(--fg)] mb-6 tracking-tight">Parcourir par niveaux</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {LEVELS.map((lvl) => (
-            <CourseCard key={lvl.id} {...lvl} href={`/cours/${lvl.id}`} featured={lvl.id === 2} />
+            <CourseCard key={lvl.id} {...lvl} href={`/cours/${lvl.id}`} featured={lvl.id === "1nsi"} />
           ))}
         </div>
 
@@ -278,6 +278,9 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-[var(--subtle)] text-sm">© 2026 Clément Braun — NSI</div>
           <div className="flex items-center gap-6">
+            <Link href="/outils-enseignants" className="text-[var(--muted)] hover:text-[var(--fg)] transition-colors text-sm font-medium">
+              Outils enseignants
+            </Link>
             <Link href="/mentions-legales" className="text-[var(--muted)] hover:text-[var(--fg)] transition-colors text-sm font-medium">
               Mentions légales
             </Link>

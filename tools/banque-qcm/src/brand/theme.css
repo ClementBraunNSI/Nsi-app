@@ -1,0 +1,9 @@
+@theme {
+  --color-primary: #f97316;
+  --color-bg: #fff7ed;
+  --color-text: #7c2d12;
+  --color-border: #fed7aa;
+  --color-primary-hover: #ea580c;
+  --color-surface: #ffffff;
+  --font-sans: "Segoe UI", system-ui, sans-serif;
+}

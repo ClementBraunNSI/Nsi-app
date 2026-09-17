@@ -1,0 +1,10 @@
+:root {
+  --app-primary: #4f46e5;
+  --app-primary-dark: #3730a3;
+  --app-accent: #8b5cf6;
+  --app-bg: #f5f3ff;
+  --app-surface: #fff;
+  --app-text: #1e1b4b;
+  --app-muted: #6366f1;
+  --app-border: #c7d2fe;
+}

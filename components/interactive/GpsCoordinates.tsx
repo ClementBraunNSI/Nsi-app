@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'leaflet/dist/leaflet.css';
-import { Globe, MapPin, Navigation } from 'lucide-react';
+import { Globe } from 'lucide-react';
 
 // Dynamic imports for Leaflet
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
@@ -29,14 +29,13 @@ export default function GpsCoordinates() {
 
   useEffect(() => {
     import('leaflet').then(L => {
-      // Default marker icon fix for Next.js
-      const DefaultIcon = L.icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
+      const foxMarker = L.icon({
+        iconUrl: '/images/interactive/fox-guide.png',
+        iconSize: [52, 52],
+        iconAnchor: [26, 46],
+        popupAnchor: [0, -42],
       });
-      setIcon(DefaultIcon);
+      setIcon(foxMarker);
     });
   }, []);
 

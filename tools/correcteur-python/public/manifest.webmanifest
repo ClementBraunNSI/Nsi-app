@@ -1,0 +1,10 @@
+{
+  "name": "CorrectPy",
+  "short_name": "CorrectPy",
+  "description": "Correction Python en masse",
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#14532d",
+  "background_color": "#0a0f0a",
+  "lang": "fr"
+}

@@ -1,0 +1,127 @@
+slug: poo_projet_pokensi
+title: 'Dictionnaires : PokéNSI'
+niveau: premiere
+source: content/2/poo_projet_pokensi.md
+questions:
+  - id: poke-dex-1
+    label: Initialisation
+    content: Créez une liste vide `pokedex` qui contiendra tous les dictionnaires de Pokémon.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: poke-dex-2
+    label: Import CSV
+    content: >-
+      On dispose de la fonction `remplir_pokedex` suivante. Elle permet de récupérer toutes les informations des
+      pokemons pour en faire une liste de dictionnaires.
+
+            Copiez cette fonction dans votre code :
+
+            ```python
+            import csv
+
+            def remplir_pokedex(filename):
+                pokedex = []
+                with open(filename, 'r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f, delimiter=',') # Vérifiez le délimiteur de votre CSV
+                    for row in reader:
+                        # On convertit les types (tout est str dans un CSV)
+                        pokemon = {
+                            "nom": row["nom"],
+                            "hp": int(row["hp"]),
+                            "atq": int(row["atq"]),
+                            "def": int(row["def"]),
+                            "attaques": row["attaques"].split(";"), # Sépare les attaques
+                            "evolution": row["evolution"],
+                            "niveau_evolution": int(row["niveau_evolution"]),
+                            "niveau": 1, 
+                            "xp": 0
+                        }
+                        pokedex.append(pokemon)
+                return pokedex
+            ```
+
+            Utilisez cette fonction avec le fichier `pokedex.csv` pour remplir votre liste.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: poke-dex-3
+    label: Recherche
+    content: >-
+      Créez une fonction `recuperer_pokemon(nom)` qui cherche un Pokémon par son nom dans le `pokedex` et renvoie son
+      dictionnaire.
+            Si le Pokémon n'est pas trouvé, renvoyez `None`.
+
+            *Testez avec "Pikachu" et "Mewtwo".*
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: poke-fight-1
+    label: Charger les attaques
+    content: >-
+      Créez une fonction `charger_attaques()` similaire à `remplir_pokedex` qui lit `attaques.csv` et renvoie un
+      dictionnaire où :
+            *   Clé = Nom de l'attaque
+            *   Valeur = Dégâts (int)
+
+            ```python
+            # Exemple de structure attendue
+            attaques = {
+                "Charge": 10,
+                "Tonnerre": 40,
+                "Flammeche": 25
+            }
+            ```
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: poke-fight-2
+    label: Formule de Dégâts
+    content: "Lors d'un combat, les dégâts sont calculés ainsi :\n\n      $$\n      \\texttt{degats} = \\frac{(((N \\times 0.4)+2) \\times \\texttt{Atq} \\times \\texttt{Puissance})}{\\texttt{Def} \\times 50} + 2\n      $$\n\n      Avec :\n      - $N$ : Niveau du Pokémon attaquant \U0001F4CA\n      - $Atq$ : Points d'attaque de l'attaquant ⚔️\n      - $Puissance$ : Puissance de l'attaque utilisée \U0001F4A5\n      - $Def$ : Points de défense de la cible \U0001F6E1️\n\n      Implémentez la fonction `calculer_degats(attaquant, defenseur, nom_attaque, dico_attaques)`."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: poke-fight-3
+    label: Attaquer !
+    content: |-
+      Créez la fonction `attaquer(attaquant, defenseur, nom_attaque, dico_attaques)` qui :
+            1. Calcule les dégâts.
+            2. Soustrait les dégâts aux `hp` du défenseur.
+            3. Affiche un message de combat (ex: "Pikachu lance Tonnerre sur Carapuce ! Il inflige 15 dégâts.").
+            
+            *Attention : Les PV ne peuvent pas être négatifs.*
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: poke-sim-1
+    label: Duel
+    content: |-
+      Écrivez un script principal qui :
+            1. Charge le Pokédex et les Attaques.
+            2. Récupère "Pikachu" et "Bulbizarre".
+            3. Fait attaquer Pikachu avec "Tonnerre".
+            4. Affiche les PV restants de Bulbizarre.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets

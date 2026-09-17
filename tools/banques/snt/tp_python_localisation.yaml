@@ -1,0 +1,177 @@
+slug: tp_python_localisation
+title: 'TP Python : Géolocalisation'
+niveau: snt
+source: content/1/tp_python_localisation.md
+questions:
+  - id: loc-0
+    label: Important ⚠️ - Avant de commencer
+    content: |-
+      ### Important ⚠️ - Avant de commencer
+
+            Ce TP utilise des **bibliothèques Python** pour travailler sur la géolocalisation :
+
+            | Bibliothèque | Usage |
+            |-------------|-------|
+            | **pandas** | Tableau de lieux avec latitude / longitude |
+            | **folium** | Créer une carte interactive (comme Google Maps) |
+            | **geopy** | Calculer une distance entre deux coordonnées GPS |
+
+            **Dans le Lab NSI**, les modules sont chargés automatiquement avant l'exécution.
+
+            **Rappel SNT :** une position GPS = **latitude** (Nord/Sud) + **longitude** (Est/Ouest), en degrés.
+
+            **Exemple folium :**
+
+            ```python
+            import folium
+
+            carte = folium.Map(location=[46.5, 2.5], zoom_start=6)
+            folium.Marker([48.8566, 2.3522], popup="Paris").add_to(carte)
+            print("Carte créée avec 1 marqueur")
+            ```
+    difficulty: moyen
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert True, "Consignes lues."
+      ```
+    niveau: snt
+    notion: Localisation
+  - id: loc-1
+    label: "Introduction \U0001F98A - Tableau de villes"
+    content: "### Introduction \U0001F98A - Tableau de villes\n\n      On peut stocker des lieux dans un **tableau pandas**, comme un fichier Excel de coordonnées GPS.\n\n      **Mission :** Créez un DataFrame `villes` à partir des données ci-dessous, puis stockez la **latitude de Lyon** dans `latitude_lyon`.\n\n      | Ville | Latitude | Longitude |\n      |-------|----------|-----------|\n      | Paris | 48.8566 | 2.3522 |\n      | Lyon | 45.7640 | 4.8357 |\n      | Marseille | 43.2965 | 5.3698 |\n\n      *Indice :* `pd.DataFrame({...})` ou une liste de dictionnaires. Pour lire une ville : `villes[villes[\"Ville\"] == \"Lyon\"]`."
+    difficulty: introduction
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: >-
+      ```python
+
+      import pandas as pd
+
+
+      villes_ref = pd.DataFrame({
+          "Ville": ["Paris", "Lyon", "Marseille"],
+          "Latitude": [48.8566, 45.7640, 43.2965],
+          "Longitude": [2.3522, 4.8357, 5.3698],
+      })
+
+
+      assert 'villes' in locals(), "Créez le DataFrame villes."
+
+      assert 'latitude_lyon' in locals(), "Créez la variable latitude_lyon."
+
+      assert len(villes) == 3, "Le tableau doit contenir 3 villes."
+
+      assert abs(float(latitude_lyon) - float(villes_ref.loc[villes_ref["Ville"] == "Lyon", "Latitude"].iloc[0])) <
+      0.001
+
+      ```
+    niveau: snt
+    notion: Localisation
+  - id: loc-2
+    label: "Introduction \U0001F98A - Distance GPS"
+    content: "### Introduction \U0001F98A - Distance GPS\n\n      La bibliothèque **geopy** calcule la distance réelle entre deux points GPS (en kilomètres).\n\n      **Mission :** Calculez la distance en kilomètres entre **Paris** et **Marseille** (coordonnées dans le tableau ci-dessous). Stockez le résultat arrondi à **1 décimale** dans `distance_km`.\n\n      | Ville | Latitude | Longitude |\n      |-------|----------|-----------|\n      | Paris | 48.8566 | 2.3522 |\n      | Marseille | 43.2965 | 5.3698 |\n\n      *Indice :*\n\n      ```python\n      from geopy.distance import geodesic\n\n      distance = geodesic((lat1, lon1), (lat2, lon2)).km\n      ```"
+    difficulty: introduction
+    type: sql
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      from geopy.distance import geodesic
+
+      paris = (48.8566, 2.3522)
+      marseille = (43.2965, 5.3698)
+      attendu = round(geodesic(paris, marseille).km, 1)
+
+      assert 'distance_km' in locals(), "Créez la variable distance_km."
+      assert abs(float(distance_km) - attendu) < 1.0, "Calculez la distance Paris → Marseille avec geopy."
+      ```
+    niveau: snt
+    notion: Localisation
+  - id: loc-3
+    label: "Introduction \U0001F98A - Créer une carte"
+    content: "### Introduction \U0001F98A - Créer une carte\n\n      **folium** permet de créer une **carte interactive** centrée sur des coordonnées.\n\n      **Mission :** Créez une carte `carte` centrée sur la France (`location=[46.5, 2.5]`, `zoom_start=6`).\n\n      Vérifiez que la carte est bien créée en stockant son niveau de zoom dans `zoom` (`carte.options['zoom']`).\n\n      *Indice :* `import folium` puis `folium.Map(location=[...], zoom_start=...)`"
+    difficulty: introduction
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'carte' in locals(), "Créez une carte folium nommée carte."
+      assert type(carte).__name__ == "Map", "carte doit être un objet folium.Map."
+      assert 'zoom' in locals(), "Stockez le zoom dans la variable zoom."
+      assert int(zoom) == 6, "Le zoom initial doit être 6."
+      ```
+    niveau: snt
+    notion: Localisation
+  - id: loc-4
+    label: "Facile \U0001F98A - Placer des marqueurs"
+    content: "### Facile \U0001F98A - Placer des marqueurs\n\n      On peut **placer des marqueurs** sur une carte folium, comme des points GPS.\n\n      **Mission :** Partez d'une carte centrée sur `[46.5, 2.5]` (zoom 6). Ajoutez **deux marqueurs** :\n\n      - Paris : `[48.8566, 2.3522]`, popup `\"Paris\"`\n      - Lyon : `[45.7640, 4.8357]`, popup `\"Lyon\"`\n\n      Stockez la carte dans `carte` et le **nombre de marqueurs ajoutés** dans `nb_marqueurs` (comptez les objets `Marker` dans `carte._children`).\n\n      *Indice :* `folium.Marker([lat, lon], popup=\"...\").add_to(carte)`"
+    difficulty: facile
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'carte' in locals(), "Créez la variable carte."
+      assert 'nb_marqueurs' in locals(), "Comptez les marqueurs dans nb_marqueurs."
+      assert type(carte).__name__ == "Map", "carte doit être une folium.Map."
+      assert nb_marqueurs == 2, "Ajoutez exactement 2 marqueurs (Paris et Lyon)."
+      ```
+    niveau: snt
+    notion: Localisation
+  - id: loc-5
+    label: "Facile \U0001F98A - Carte depuis un tableau"
+    content: "### Facile \U0001F98A - Carte depuis un tableau\n\n      **Mission :** Créez le DataFrame `villes` ci-dessous, puis une carte `carte` avec un marqueur pour **chaque ville** du tableau (utilisez une boucle `for`).\n\n      | Ville | Latitude | Longitude |\n      |-------|----------|-----------|\n      | Paris | 48.8566 | 2.3522 |\n      | Lyon | 45.7640 | 4.8357 |\n      | Marseille | 43.2965 | 5.3698 |\n\n      Stockez le nombre de marqueurs dans `nb_marqueurs`.\n\n      *Indice :* parcourez le DataFrame avec `for _, ligne in villes.iterrows():`"
+    difficulty: facile
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      import pandas as pd
+
+      assert 'villes' in locals(), "Créez le DataFrame villes."
+      assert 'carte' in locals(), "Créez la carte."
+      assert 'nb_marqueurs' in locals(), "Comptez les marqueurs."
+      assert len(villes) == 3, "Le tableau contient 3 villes."
+      assert nb_marqueurs == 3, "Placez un marqueur par ville."
+      ```
+    niveau: snt
+    notion: Localisation
+  - id: loc-6
+    label: "Facile \U0001F98A - Ville la plus au nord"
+    content: "### Facile \U0001F98A - Ville la plus au nord\n\n      La **latitude** indique la position Nord/Sud : plus elle est élevée, plus on est au nord.\n\n      **Mission :** À partir du DataFrame `villes` fourni, trouvez la ville la plus au **nord** (latitude maximale) et stockez son nom dans `ville_nord`.\n\n      ```python\n      import pandas as pd\n\n      villes = pd.DataFrame({\n          \"Ville\": [\"Paris\", \"Lyon\", \"Marseille\", \"Lille\"],\n          \"Latitude\": [48.8566, 45.7640, 43.2965, 50.6292],\n          \"Longitude\": [2.3522, 4.8357, 5.3698, 3.0573],\n      })\n      ```\n\n      *Indice :* `villes.loc[villes[\"Latitude\"].idxmax(), \"Ville\"]`"
+    difficulty: facile
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      import pandas as pd
+
+      villes = pd.DataFrame({
+          "Ville": ["Paris", "Lyon", "Marseille", "Lille"],
+          "Latitude": [48.8566, 45.7640, 43.2965, 50.6292],
+          "Longitude": [2.3522, 4.8357, 5.3698, 3.0573],
+      })
+      attendu = villes.loc[villes["Latitude"].idxmax(), "Ville"]
+
+      assert 'ville_nord' in locals(), "Créez la variable ville_nord."
+      assert ville_nord == attendu, "Trouvez la ville avec la latitude la plus élevée."
+      ```
+    niveau: snt
+    notion: Localisation
+  - id: loc-7
+    label: "Facile \U0001F98A - Exporter la carte en HTML"
+    content: "### Facile \U0001F98A - Exporter la carte en HTML\n\n      Une carte folium peut être **exportée en HTML**, comme une page web.\n\n      **Mission :** Créez une carte avec un marqueur sur la Tour Eiffel (`[48.8584, 2.2945]`, popup `\"Tour Eiffel\"`). Sauvegardez-la dans la variable texte `html_carte` avec `carte._repr_html_()`.\n\n      Vérifiez que le HTML contient bien le mot `\"Tour Eiffel\"` dans une variable booléenne `contient_nom`.\n\n      *Indice :* `html_carte = carte._repr_html_()` puis `\"Tour Eiffel\" in html_carte`"
+    difficulty: facile
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: |-
+      ```python
+      assert 'carte' in locals(), "Créez une carte folium."
+      assert 'html_carte' in locals(), "Exportez la carte dans html_carte."
+      assert 'contient_nom' in locals(), "Vérifiez le contenu dans contient_nom."
+      assert isinstance(html_carte, str), "html_carte doit être une chaîne de caractères."
+      assert contient_nom == True, "Le HTML de la carte doit mentionner Tour Eiffel."
+      assert "Tour Eiffel" in html_carte, "Exportez correctement la carte avec le popup."
+      ```
+    niveau: snt
+    notion: Localisation

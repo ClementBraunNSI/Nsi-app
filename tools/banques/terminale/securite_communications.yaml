@@ -1,0 +1,20 @@
+slug: securite_communications
+title: Sécurité des Communications
+niveau: terminale
+source: content/3/securite_communications.md
+questions:
+  - id: secu-ex-1
+    label: Alice et Bob
+    content: |-
+      ### Scénario RSA
+          Alice veut envoyer un message secret à Bob.
+          Chacun possède sa paire de clés (Publique/Privée).
+          
+          1.  Quelle clé Alice doit-elle utiliser pour chiffrer le message ?
+          2.  Quelle clé Bob doit-il utiliser pour lire le message ?
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: 'Architectures matérielles, OS & Réseaux'

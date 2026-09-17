@@ -1,0 +1,40 @@
+slug: recursivite
+title: Récursivité — QCM
+niveau: terminale
+questions:
+  - id: rec-qcm-1
+    label: Cas de base
+    content: Pourquoi une fonction récursive doit-elle avoir un cas de base ?
+    type: qcm
+    difficulty: facile
+    choices:
+      - Pour arrêter la récursion
+      - Pour accélérer le processeur
+      - Pour éviter les paramètres
+      - Pour utiliser une boucle for
+    answer: 0
+    notion: Récursivité
+  - id: rec-qcm-2
+    label: Pile d’exécution
+    content: Que se produit-il si une récursion est trop profonde en Python ?
+    type: qcm
+    difficulty: moyen
+    choices:
+      - RecursionError / stack overflow
+      - SyntaxError
+      - ImportError
+      - Le programme retourne None automatiquement
+    answer: 0
+    notion: Récursivité
+  - id: rec-qcm-3
+    label: Factorielle
+    content: Quelle est la valeur de factorielle(0) dans l’exemple classique ?
+    type: qcm
+    difficulty: facile
+    choices:
+      - '1'
+      - '0'
+      - '-1'
+      - Indéfini
+    answer: 0
+    notion: Récursivité

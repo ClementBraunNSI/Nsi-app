@@ -1,0 +1,43 @@
+slug: structures_lineaires
+title: 'Structures Linéaires : Listes, Piles, Files'
+niveau: terminale
+source: content/3/structures_lineaires.md
+questions:
+  - id: struct-ex-1
+    label: Parenthésage
+    content: |-
+      ### Vérification de parenthèses (Pile)
+          On veut vérifier si une expression est bien parenthésée : `(a + b) * (c)` est bon, `(a + b` est mauvais.
+          
+          **Algorithme :**
+          1.  Parcourir la chaîne caractère par caractère.
+          2.  Si on voit `(`, on l'empile.
+          3.  Si on voit `)`, on dépile.
+              *   Si la pile est vide avant de dépiler -> Erreur (trop de fermantes).
+          4.  À la fin, la pile doit être vide.
+          
+          Écrivez la fonction `verifier_parentheses(expression)`.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Structures de données
+  - id: struct-ex-2
+    label: Croisement Routier
+    content: |-
+      ### Simulation de croisement (File)
+          On modélise un feu rouge avec une File. Les voitures arrivent et s'ajoutent à la file. Quand le feu passe au vert, la première voiture part.
+          
+          Utilisez `collections.deque` (plus efficace que list pour les files).
+          1.  Créez une file vide.
+          2.  Ajoutez "Voiture A", "Voiture B".
+          3.  Faites partir une voiture.
+          4.  Ajoutez "Voiture C".
+          5.  Affichez la prochaine voiture à partir.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Structures de données

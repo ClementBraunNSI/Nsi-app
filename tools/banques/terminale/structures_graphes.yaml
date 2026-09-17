@@ -1,0 +1,34 @@
+slug: structures_graphes
+title: Graphes
+niveau: terminale
+source: content/3/structures_graphes.md
+questions:
+  - id: graphe-ex-1
+    label: Implémentation
+    content: |-
+      ### Création de Graphe
+          On considère le graphe suivant (réseau social) :
+          *   Alice est amie avec Bob et Charlie.
+          *   Bob est ami avec Alice et David.
+          *   Charlie est ami avec Alice.
+          *   David est ami avec Bob.
+          
+          1.  Représentez ce graphe sous forme de dictionnaire d'adjacence.
+          2.  Écrivez une fonction `sont_amis(graphe, p1, p2)` qui renvoie True s'ils sont connectés directement.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Structures de données
+  - id: graphe-ex-2
+    label: Voisins
+    content: |-
+      ### Trouver les voisins
+          Écrivez une fonction `nb_amis(graphe, personne)` qui renvoie le nombre d'amis d'une personne.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Structures de données

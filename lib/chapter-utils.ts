@@ -49,24 +49,25 @@ export function chapterImageFromData(niveaux: string, chapterName: string): stri
     "web et interaction": "/images/chapitres/2/chap_web.png",
     web: "/images/chapitres/2/chap_web.png",
     algorithmique: "/images/chapitres/2/chap_algo.png",
-    "programmation orientee objet": "/images/chapitres/1/chap_python.png",
+    "programmation orientee objet": "/images/chapitres/2/chap_poo.png",
     projets: "/images/chapitres/2/chap_web.png",
-    "representation des donnees": "/images/chapitres/1/chap_donnees.png",
+    "representation des donnees": "/images/chapitres/2/chap_types.png",
+    "representation des types de base": "/images/chapitres/2/chap_types.png",
     "structures de donnees lineaires": "/images/chapitres/2/chap_dictio.png",
     histoire: "/images/chapitres/2/chap_archi.png",
-    "introduction a python": "/images/chapitres/1/chap_python.png",
+    "introduction a python": "/images/chapitres/2/chap_python.png",
   };
 
   const chapterMapLevel3: Record<string, string> = {
-    algorithmique: "/images/chapitres/2/chap_algo.png",
-    "structures de donnees": "/images/chapitres/2/chap_dictio.png",
-    "langages et programmation": "/images/chapitres/1/chap_python.png",
-    "bases de donnees": "/images/chapitres/2/chap_dictio.png",
-    "architectures materielles os reseaux": "/images/chapitres/2/chap_res.png",
-    "architectures materielles, os & reseaux": "/images/chapitres/2/chap_res.png",
-    histoire: "/images/chapitres/2/chap_archi.png",
-    entrainement: "/images/chapitres/2/chap_algo.png",
-    projets: "/images/chapitres/2/chap_web.png",
+    algorithmique: "/images/chapitres/3/chap_algo.png",
+    "structures de donnees": "/images/chapitres/3/chap_structures.png",
+    "langages et programmation": "/images/chapitres/3/chap_langages.png",
+    "bases de donnees": "/images/chapitres/3/chap_bdd.png",
+    "architectures materielles os reseaux": "/images/chapitres/3/chap_archi.png",
+    "architectures materielles, os & reseaux": "/images/chapitres/3/chap_archi.png",
+    histoire: "/images/chapitres/3/chap_histoire.png",
+    entrainement: "/images/chapitres/3/chap_entrainement.png",
+    projets: "/images/chapitres/3/chap_projets.png",
   };
 
   if (normalizedLevel === "1") {

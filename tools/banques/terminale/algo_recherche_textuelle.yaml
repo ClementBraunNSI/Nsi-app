@@ -1,0 +1,25 @@
+slug: algo_recherche_textuelle
+title: Algorithmes de Recherche Textuelle
+niveau: terminale
+source: content/3/algo_recherche_textuelle.md
+questions:
+  - id: texte-ex-1
+    label: Prétraitement
+    content: |-
+      ### Table des sauts
+          Pour Boyer-Moore, on pré-calcule un dictionnaire donnant la dernière position de chaque lettre dans le motif.
+          
+          Motif : `"BANANA"`
+          Longueur : 6
+          
+          Remplissez la table :
+          *   `"A"` : dernière position ?
+          *   `"N"` : dernière position ?
+          *   `"B"` : dernière position ?
+          *   Autres lettres : -1
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Algorithmique

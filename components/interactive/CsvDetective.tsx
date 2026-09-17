@@ -47,19 +47,27 @@ const CITIES_WORLD = ["Londres", "New York", "Berlin", "Tokyo", "Shanghai", "Sé
 const JOBS = ["Étudiant", "Banquier", "Avocate", "Boulanger", "Médecin", "Ingénieur", "Architecte", "Retraité", "Professeure", "Designer", "Hacker", "Développeuse", "SysAdmin", "Consultant", "Gamer", "Data Analyst", "Chimiste", "Pharmacien", "Biologiste", "Vendeuse", "Infirmier", "Vendeur", "Marin", "Docker", "Importateur", "Douanière", "Pêcheur", "Comptable", "Journaliste", "Artiste", "Serveur", "Cuisinier"];
 const SIGNS = ["Lunettes", "Gaucher", "Tatouage", "Cheveux rouges", "Boiteux", "Sac à dos vert", "Chapeau", "Canne", "Sac à dos bleu", "Casquette rouge", "Vélo", "Écharpe jaune", "Casque audio", "Capuche noire", "Tatouage binaire", "Lunettes AR", "Sac à dos LED", "Montre connectée", "Cravate rouge", "Cicatrice", "Cheveux bleus", "Piercing", "Masque", "Barbe", "T-shirt Linux", "Casque VR", "Gants en latex", "Blouse blanche", "Stéthoscope", "Chauve", "Montre", "Cheveux courts", "Bague", "Valise", "Foulard", "Sac à main", "Cravate", "Badge", "Mallette", "Bracelets", "Tatouage ancre", "Gilet jaune", "Pipe", "Casque", "Sac", "Bottes", "Tatouage dragon", "Bandana", "Cigarette", "Talon", "Lunettes de soleil", "Barbe rousse", "Boucle d'oreille", "Filet", "Bonnet rouge"];
 
-function getRandom(arr: any[]) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
 function generateSuspects(count: number, startId: number, config: { cities?: string[], jobs?: string[], signs?: string[], ageRange?: [number, number] } = {}) {
+  // Génération déterministe : le serveur et le navigateur obtiennent exactement
+  // la même enquête, ce qui évite les erreurs d'hydratation.
+  let seed = (startId * 2654435761 + count * 1013904223) >>> 0;
+  const random = () => {
+    seed += 0x6D2B79F5;
+    let value = seed;
+    value = Math.imul(value ^ (value >>> 15), value | 1);
+    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+  const getRandom = <T,>(values: T[]): T => values[Math.floor(random() * values.length)];
+
   const suspects: Person[] = [];
   for (let i = 0; i < count; i++) {
-    const city = config.cities && Math.random() > 0.4 ? getRandom(config.cities) : getRandom([...CITIES_FR, ...CITIES_WORLD]); 
-    const job = config.jobs && Math.random() > 0.4 ? getRandom(config.jobs) : getRandom(JOBS);
-    const sign = config.signs && Math.random() > 0.4 ? getRandom(config.signs) : getRandom(SIGNS);
+    const city = config.cities && random() > 0.4 ? getRandom(config.cities) : getRandom([...CITIES_FR, ...CITIES_WORLD]);
+    const job = config.jobs && random() > 0.4 ? getRandom(config.jobs) : getRandom(JOBS);
+    const sign = config.signs && random() > 0.4 ? getRandom(config.signs) : getRandom(SIGNS);
     const minAge = config.ageRange ? config.ageRange[0] : 18;
     const maxAge = config.ageRange ? config.ageRange[1] : 90;
-    const age = Math.floor(Math.random() * (maxAge - minAge + 1)) + minAge;
+    const age = Math.floor(random() * (maxAge - minAge + 1)) + minAge;
 
     suspects.push({
       id: startId + i,

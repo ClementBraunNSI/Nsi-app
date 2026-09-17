@@ -1,0 +1,41 @@
+slug: activite_mentions_legales
+title: 'TP : Audit RGPD d''''un site web réel'
+niveau: sio
+source: content/4/activite_mentions_legales.md
+questions:
+  - id: tp-rgpd-partie1
+    label: 1. Outils & Découverte
+    content: "## \U0001F50D Partie 1 : Découverte des outils d'audit (20 min)\n\n    ### Contexte\n    Avant de réaliser un audit complet, vous devez prendre en main les outils qui permettent d'analyser la conformité technique d'un site web.\n\n    ### \U0001F6E0 Outils à utiliser\n\n    **1. Extension navigateur : Cookie-Editor**\n    - **Installation :** Recherchez \"Cookie-Editor\" sur le Web Store de votre navigateur.\n    - **Usage :** Permet d'observer en temps réel les cookies déposés, leur nom et leur durée de vie.\n\n    **2. Outil en ligne : Cookiebot Cookie Scanner**\n    - **Lien :** https://www.cookiebot.com/fr/cookie-checker/\n    - **Usage :** Génère un rapport automatique sur la conformité du bandeau de consentement et la classification des cookies.\n\n    ### \U0001F4CB Exercice de prise en main\n    **Site de démonstration :** `https://www.lemonde.fr`\n\n    **Étape 1 : Analyse manuelle (Cookie-Editor)**\n    - Ouvrez le site en navigation privée.\n    - Listez le nombre de cookies déposés avant toute interaction.\n    - Identifiez 3 cookies (Nom et Durée de vie).\n\n    **Étape 2 : Analyse automatisée (Cookiebot)**\n    - Lancez un scan sur l'URL du site.\n    - Relevez le nombre de cookies par catégorie : Essentiels, Analytiques, Marketing."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B3 - CyberSécurité'
+  - id: tp-rgpd-partie2
+    label: 2. Audit Complet
+    content: "## \U0001F6E1️ Partie 2 : Audit complet d'un site web (50 min)\n\n    ### Contexte\n    Choisissez un site parmi la liste suivante pour réaliser votre audit :\n    - *E-commerce :* fnac.com, cdiscount.com\n    - *Média :* 20minutes.fr, lequipe.fr\n    - *Institutionnel :* ameli.fr, service-public.fr\n\n    ### \U0001F4CB Grille d'audit à compléter\n\n    #### A. Inventaire des Cookies\n    | Critère | Résultat |\n    | :--- | :--- |\n    | Nombre total de cookies | |\n    | Cookies essentiels | |\n    | Cookies marketing/publicitaires | |\n\n    #### B. Analyse du Bandeau de Consentement\n    - Un bandeau apparaît-il dès l'arrivée ?\n    - Le bouton \"Refuser\" est-il aussi visible que le bouton \"Accepter\" ?\n    - Peut-on personnaliser ses choix par catégorie ?\n\n    #### C. Formulaires et Collecte\n    Trouvez un formulaire (contact ou inscription) et vérifiez :\n    - La présence d'une mention d'information RGPD.\n    - Si les cases de consentement (newsletter) sont pré-cochées (Interdit).\n    - La présence d'un lien vers la politique de confidentialité.\n\n    #### D. Politique de Confidentialité\n    - Le document est-il accessible en moins de 2 clics ?\n    - L'identité du responsable de traitement est-elle précisée ?\n    - La durée de conservation des données est-elle indiquée ?"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B3 - CyberSécurité'
+  - id: tp-rgpd-partie3
+    label: 3. Recommandations
+    content: "## \U0001F4CB Partie 3 : Recommandations de mise en conformité (40 min)\n\n    ### Contexte\n    Suite à votre audit, vous devez proposer des solutions techniques et organisationnelles pour corriger les violations identifiées.\n\n    ### \U0001F4A1 Catalogue des solutions\n    | Violation détectée | Solution recommandée | Complexité |\n    | :--- | :--- | :--- |\n    | Cookies déposés avant consentement | Implémenter une CMP (Axeptio, Didomi) | Moyenne |\n    | Pas de protocole HTTPS | Installer un certificat SSL (Let's Encrypt) | Faible |\n    | Case newsletter pré-cochée | Modifier le formulaire (décoché par défaut) | Faible |\n    | Conservation illimitée | Définir une politique de rétention + purge | Moyenne |\n\n    ### \U0001F4CB Travail à faire\n    **Sélectionnez les 3 violations les plus graves** constatées lors de votre audit et complétez pour chacune :\n    1. **Nature de la violation**\n    2. **Risque associé** (pour l'entreprise ou l'utilisateur)\n    3. **Solution préconisée** (issue du catalogue)\n    4. **Priorité** (Haute / Moyenne / Basse)"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B3 - CyberSécurité'
+  - id: tp-rgpd-partie4
+    label: 4. Mentions Légales
+    content: "## ⚖️ Partie 4 : Rédaction des mentions légales (30 min)\n\n    ### Contexte\n    Votre client, l'association **\"Le Refuge des Renards Polaires\"**, lance son site. Vous devez rédiger la structure HTML de ses mentions légales.\n\n    **Informations Client :**\n    - **Statut :** Association loi 1901\n    - **Siège :** Port-aux-Français, 98417 Îles Kerguelen, TAAF\n    - **Directrice :** Marie Dubois\n    - **Hébergeur :** OVH, 2 rue Kellermann, 59100 Roubaix\n\n    ### \U0001F4CB Exercice de Code\n    Rédigez le code HTML5 sémantique de la page.\n\n    **Structure attendue :**\n    - `<header>` avec le titre principal.\n    - `<section>` pour l'identité de l'éditeur.\n    - `<section>` pour les coordonnées de l'hébergeur.\n    - `<section>` pour la protection des données (RGPD).\n\n    ```html\n    <article>\n      <h1>Mentions Légales</h1>\n      <section>\n        <h2>Éditeur du site</h2>\n        <address>\n          </address>\n      </section>\n    </article>\n    ```"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B3 - CyberSécurité'

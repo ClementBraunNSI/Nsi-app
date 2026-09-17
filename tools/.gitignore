@@ -1,0 +1,6 @@
+node_modules
+dist
+*.tsbuildinfo
+gh-pages
+dist-offline
+*.zip

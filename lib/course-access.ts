@@ -16,6 +16,11 @@ export function isElevatedUser(role?: string | null) {
   return normalized === "admin" || normalized === "enseignant";
 }
 
+export function isRestrictedCourse(course: AccessInput) {
+  if (String(course.access || "").toLowerCase() === "private") return true;
+  return Array.isArray(course.allowedStudents) && course.allowedStudents.length > 0;
+}
+
 export function canAccessCourse(
   course: AccessInput,
   opts: {
@@ -25,12 +30,10 @@ export function canAccessCourse(
   }
 ) {
   if (opts.isElevated) return true;
-
-  const isPrivate = String(course.access || "").toLowerCase() === "private";
-  if (!isPrivate) return true;
+  if (!isRestrictedCourse(course)) return true;
 
   if (!opts.isAuthenticated) return false;
-  if (!Array.isArray(course.allowedStudents)) return false;
+  if (!Array.isArray(course.allowedStudents) || course.allowedStudents.length === 0) return false;
   if (!opts.userFullName) return false;
 
   const current = normalizeName(opts.userFullName);
@@ -38,4 +41,3 @@ export function canAccessCourse(
     .map((name) => String(name))
     .some((name) => normalizeName(name) === current);
 }
-

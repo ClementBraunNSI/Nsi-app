@@ -1,0 +1,37 @@
+slug: structures_arbres
+title: Arbres et Arbres Binaires
+niveau: terminale
+source: content/3/structures_arbres.md
+questions:
+  - id: arbre-ex-1
+    label: Taille et Hauteur
+    content: |-
+      ### Calculer la Taille et la Hauteur
+          Écrivez deux fonctions récursives :
+          1.  `taille(arbre)` : Renvoie le nombre de nœuds.
+          2.  `hauteur(arbre)` : Renvoie la hauteur (0 pour un arbre vide, 1 pour racine seule, etc.).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Structures de données
+  - id: arbre-ex-2
+    label: Parcours Infixe
+    content: |-
+      ### Affichage Infixe
+          Écrivez une fonction récursive `afficher_infixe(noeud)` qui affiche les valeurs de l'arbre dans l'ordre infixe (Gauche - Racine - Droite).
+          
+          Testez avec l'arbre :
+          ```
+                10
+               /  \
+              5    15
+          ```
+          Cela devrait afficher : `5 10 15`
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Structures de données

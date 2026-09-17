@@ -1,0 +1,59 @@
+slug: tp_remediation_poo
+title: 'TP Remédiation : Les Bases Absolues de la POO en C#'
+niveau: sio
+source: content/4/tp_remediation_poo.md
+questions:
+  - id: tp-remed-exo1
+    label: Étape 1 - La Syntaxe de Base
+    content: "## \U0001F9F1 Étape 1 : Syntaxe C# et Création de Classe\n\n    La première étape pour réussir en C# est de maîtriser sa syntaxe stricte. Une classe est un **plan de construction** (un moule).\n\n    ### Les règles d'or (à lire attentivement) :\n    1. **Les Propriétés :** On utilise `get; set;` pour définir une propriété accessible de l'extérieur.\n    2. **Le Constructeur :** Il porte **exactement le même nom que la classe**. Il n'a **pas de type de retour** (ni `void`, ni `int`).\n    3. **Pas de `static` partout :** Le mot clé `static` signifie \"appartient au moule global\". Or, en POO, on veut que chaque objet ait ses propres valeurs. **Retirez le mot `static` de vos méthodes et propriétés !**\n\n    ### \U0001F4CB Travail à faire\n\n    Créez une classe `Joueur` dans un fichier C# propre :\n\n    1. Déclarez les propriétés suivantes (avec `{ get; set; }`) :\n       - `Pseudo` (texte)\n       - `Niveau` (entier)\n       - `EstPremium` (booléen)\n\n    2. Créez le constructeur :\n       - Il doit prendre en paramètre le `pseudo` et le `niveau`.\n       - Il doit initialiser `EstPremium` à `false` par défaut.\n\n    3. Créez une méthode `AfficherProfil()` :\n       - Elle ne prend **aucun paramètre**.\n       - Elle affiche dans la console : *\"Joueur [Pseudo] - Niveau [Niveau]\"*."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B2 - Développement (SLAM)'
+  - id: tp-remed-exo2
+    label: Étape 2 - L
+    content: "## \U0001FA84 Étape 2 : L'Instanciation (Donner vie au code)\n\n    Une classe est juste un plan. Pour l'utiliser, il faut créer des **Objets** à partir de ce plan. C'est ce qu'on appelle l'**Instanciation**.\n    En C#, cela nécessite obligatoirement l'utilisation du mot-clé `new`.\n\n    <Admonition type=\"danger\" title=\"L'erreur classique\">\n    `Joueur j1 = Joueur(\"Alex\", 10);` ❌ **FAUX !** (C'est du Python, pas du C#).\n    `Joueur j1 = new Joueur(\"Alex\", 10);` ✅ **VRAI !**\n    </Admonition>\n\n    ### \U0001F4CB Travail à faire\n\n    Dans votre méthode `Main` :\n    1. Créez un joueur nommé \"Shadow\" de niveau 5.\n    2. Créez un deuxième joueur nommé \"Light\" de niveau 42.\n    3. Passez le joueur \"Light\" en Premium (`EstPremium = true`).\n    4. Appelez la méthode `AfficherProfil()` sur vos deux joueurs."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B2 - Développement (SLAM)'
+  - id: tp-remed-exo3
+    label: 'Étape 3 - Interaction entre Objets (Le mot '
+    content: "## ⚔️ Étape 3 : Interaction entre Objets\n\n    Le but de la POO est de faire interagir des objets entre eux. \n    Lorsqu'un objet A interagit avec un objet B, l'objet A est représenté par le mot-clé `this` (moi-même), et l'objet B est passé en paramètre.\n\n    <Admonition type=\"warning\" title=\"La règle du 'this'\">\n    Ne confondez jamais la classe (`Joueur`) et l'instance (`this`).\n    Pour lire le pseudo du joueur actuel, on écrit `this.Pseudo` (ou juste `Pseudo`), mais **JAMAIS** `Joueur.Pseudo`.\n    </Admonition>\n\n    ### \U0001F4CB Travail à faire\n\n    Retournez dans votre classe `Joueur` et ajoutez une méthode `Attaquer` :\n    \n    1. La méthode s'appelle `Attaquer(Joueur cible)`.\n    2. Elle compare le niveau du joueur actuel (`this.Niveau`) avec le niveau de la cible (`cible.Niveau`).\n    3. Si le joueur actuel a un niveau strictement supérieur à la cible :\n       - Afficher : *\"[Mon Pseudo] écrase [Pseudo de la cible] !\"*\n    4. Sinon :\n       - Afficher : *\"[Mon Pseudo] a perdu contre [Pseudo de la cible]...\"*\n\n    Testez cette méthode dans le `Main` en faisant attaquer \"Shadow\" contre \"Light\", puis \"Light\" contre \"Shadow\"."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B2 - Développement (SLAM)'
+  - id: tp-remed-exo4
+    label: Étape 4 - Les Listes d
+    content: "## \U0001F4E6 Étape 4 : Stocker des objets dans une Liste\n\n    Dans le DS, beaucoup ont bloqué sur la notion de `List<Renard>`.\n    Une liste est un objet de la classe `List`. Pour l'utiliser, il faut donc l'instancier avec `new` !\n\n    ### \U0001F4CB Travail à faire\n\n    Créez une nouvelle classe `Guilde` :\n    \n    1. Ajoutez une propriété `NomGuilde` (texte).\n    2. Ajoutez une propriété privée `_membres` de type `List<Joueur>`.\n    3. Créez le constructeur de la Guilde (il prend le nom en paramètre, et **doit initialiser la liste à vide avec `new List<Joueur>()`**).\n    4. Créez une méthode `AjouterMembre(Joueur j)` qui utilise `_membres.Add(j)`.\n    5. Créez une méthode `AfficherMembres()` qui fait un `foreach` pour afficher le pseudo de chaque joueur de la guilde.\n\n    Dans le `Main`, créez une guilde \"Les Phénix\", ajoutez-y vos joueurs, et affichez les membres."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B2 - Développement (SLAM)'
+  - id: tp-remed-exo5
+    label: Étape 5 - Algorithmes de recherche dans une Liste
+    content: "## \U0001F50D Étape 5 : Explorer et analyser une Liste\n\n    Maintenant que vous savez ajouter des éléments dans une liste, il faut savoir exploiter ces données. Dans le DS, c'était le rôle des méthodes `PeutAccueillir` ou `VerifierHarmonie`.\n\n    ### \U0001F4CB Travail à faire\n\n    Dans votre classe `Guilde`, ajoutez les méthodes suivantes :\n\n    1. **`CalculerNiveauMoyen()`** : \n       - Retourne un `double`.\n       - Calcule et retourne la moyenne des niveaux de tous les membres de la guilde. \n       - *Attention : gérez le cas où la guilde est vide (retournez 0).*\n\n    2. **`TrouverMeilleurJoueur()`** :\n       - Retourne un objet `Joueur`.\n       - Parcourt la liste pour trouver le joueur avec le niveau le plus élevé et le retourne.\n       - *Astuce : créez une variable temporaire `Joueur meilleur = _membres[0];` avant votre boucle.*\n\n    3. **`ExclureMembre(string pseudoCible)`** :\n       - Retourne un `bool` (`true` si le joueur a été trouvé et exclu, `false` sinon).\n       - Cherche le joueur par son pseudo dans la liste et le supprime (utilisez `_membres.Remove(joueur)`).\n\n    Testez ces méthodes dans votre `Main`."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B2 - Développement (SLAM)'
+  - id: tp-remed-exo6
+    label: Étape 6 - Interaction entre Guildes (Le Boss Final)
+    content: "## \U0001F3F0 Étape 6 : GvG (Guilde vs Guilde)\n\n    C'est l'épreuve finale. Vous allez faire interagir deux objets `Guilde` entre eux, en utilisant les méthodes que vous venez de créer !\n\n    ### \U0001F4CB Travail à faire\n\n    Dans la classe `Guilde`, créez la méthode suivante :\n\n    **`DeclarerGuerre(Guilde guildeAdverse)`** :\n    - La méthode ne retourne rien (`void`).\n    - Elle compare le niveau moyen de la guilde actuelle (`this`) avec celui de la `guildeAdverse`.\n    - La guilde avec le niveau moyen le plus bas **perd son meilleur joueur** ! Ce joueur est exclu de la guilde perdante, et rejoint automatiquement la guilde gagnante.\n    - Affichez dans la console un résumé épique du combat (qui gagne, qui est transféré).\n\n    Dans le `Main`, créez deux guildes, remplissez-les de joueurs de niveaux différents, et lancez la guerre !"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: sio
+    notion: 'BTS SIO 1 : B2 - Développement (SLAM)'

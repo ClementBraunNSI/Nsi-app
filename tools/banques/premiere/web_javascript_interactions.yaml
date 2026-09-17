@@ -1,0 +1,65 @@
+slug: web_javascript_interactions
+title: 'Interactions Web : JavaScript'
+niveau: premiere
+source: content/2/web_javascript_interactions.md
+questions:
+  - id: js-compteur
+    label: Le Compteur
+    content: "### Objectif : Créer un compteur de likes\n    \n    Nous allons créer un bouton qui incrémente un compteur affiché à l'écran.\n    \n    **Code HTML fourni :**\n    ```html\n    <p>Likes : <span id=\"compteur\">0</span></p>\n    <button id=\"btn-like\">J'aime \U0001F44D</button>\n    ```\n    \n    **Consignes :**\n    1.  Sélectionner l'élément `span` (le nombre) et le bouton dans des variables.\n    2.  Créer une variable `nombre` initialisée à 0.\n    3.  Ajouter un écouteur d'événement `click` sur le bouton.\n    4.  Dans la fonction :\n        *   Augmenter `nombre` de 1.\n        *   Mettre à jour le texte du `span`.\n        *   **Bonus** : Si le nombre dépasse 10, changer la couleur du texte en rouge."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: |-
+      ```javascript
+          // 1. Sélection des éléments
+          let spanCompteur = document.getElementById("compteur");
+          let btnLike = document.getElementById("btn-like");
+          
+          // 2. Variable d'état
+          let nombre = 0;
+          
+          // 3. Écouteur d'événement
+          btnLike.addEventListener("click", function() {
+              // 4. Logique
+              nombre = nombre + 1;
+              spanCompteur.textContent = nombre;
+              
+              // Bonus
+              if (nombre > 10) {
+                  spanCompteur.style.color = "red";
+              }
+          });
+          ```
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Web et Interaction
+  - id: js-input
+    label: Champ Miroir
+    content: |-
+      ### Objectif : Recopier du texte en direct
+          
+          Créer un champ de texte qui affiche ce que l'utilisateur tape en temps réel dans un paragraphe en dessous.
+          
+          **Code HTML :**
+          ```html
+          <input type="text" id="saisie" placeholder="Tapez ici...">
+          <p id="miroir"></p>
+          ```
+          
+          **Consignes :**
+          Utiliser l'événement `input` sur le champ de texte pour mettre à jour le `textContent` du paragraphe `#miroir` à chaque frappe.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: |-
+      ```javascript
+          let champ = document.getElementById("saisie");
+          let paragraphe = document.getElementById("miroir");
+          
+          champ.addEventListener("input", function() {
+              // On récupère la valeur actuelle du champ avec .value
+              let texte = champ.value;
+              paragraphe.textContent = texte;
+          });
+          ```
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Web et Interaction

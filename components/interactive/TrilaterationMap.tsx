@@ -68,9 +68,9 @@ export default function TrilaterationMap() {
   useEffect(() => {
     import('leaflet').then(L => {
       setFoxIcon(L.icon({
-        iconUrl: '/images/fox_1.png',
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
+        iconUrl: '/images/interactive/fox-guide.png',
+        iconSize: [52, 52],
+        iconAnchor: [26, 46],
       }));
     });
     // Initial target

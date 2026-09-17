@@ -1,0 +1,10 @@
+{
+  "name": "ProjetSuivi",
+  "short_name": "ProjetSuivi",
+  "description": "Suivi projets et TP NSI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#475569",
+  "lang": "fr"
+}

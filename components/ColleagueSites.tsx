@@ -67,6 +67,12 @@ const COLLEAGUES: Colleague[] = [
     phrase: "Cours, TP et entraînements de Terminale NSI, avec des sujets d'épreuve pratique corrigés.",
     tags: ["Terminale", "Bac"],
   },
+  {
+    name : "Perrine Clabau",
+    site : "https://nsi_clabau.gitlab.io/",
+    phrase:"Cours de première NSI et SNT",
+    tags:["Première", "SNT"]
+  }
 ];
 
 const FILTERS: Array<{ key: "all" | ColleagueTag; label: string }> = [

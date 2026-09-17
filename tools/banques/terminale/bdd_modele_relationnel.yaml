@@ -1,0 +1,20 @@
+slug: bdd_modele_relationnel
+title: 'Bases de Données : Modèle Relationnel'
+niveau: terminale
+source: content/3/bdd_modele_relationnel.md
+questions:
+  - id: bdd-ex-1
+    label: Bibliothèque
+    content: |-
+      ### Modéliser une Bibliothèque
+          On veut gérer des **Livres** et des **Auteurs**.
+          *   Un auteur a un nom, un prénom et une date de naissance.
+          *   Un livre a un titre, une année de parution et un auteur.
+          
+          1.  Proposez un schéma relationnel avec les clés primaires et étrangères.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Bases de Données

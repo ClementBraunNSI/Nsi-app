@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import Editor, { useMonaco } from '@monaco-editor/react';
 import { Play, RotateCcw, Terminal, AlertTriangle, Loader2 } from 'lucide-react';
+import SimpleCodeEditor from './SimpleCodeEditor';
 
 interface PythonPlaygroundProps {
   initialCode?: string;
@@ -158,20 +158,13 @@ export default function PythonPlayground({ initialCode = "print('Hello NSI !')",
       <div className="grid grid-cols-1 md:grid-cols-2 h-[400px]">
         {/* Editor */}
         <div className="border-r border-slate-200 h-full">
-          <Editor
+          <SimpleCodeEditor
             height="100%"
-            defaultLanguage="python"
+            language="python"
             value={code}
-            onChange={(value) => setCode(value || "")}
-            theme="light"
-            options={{
-              minimap: { enabled: false },
-              fontSize: 14,
-              lineNumbers: 'on',
-              scrollBeyondLastLine: false,
-              automaticLayout: true,
-              padding: { top: 16, bottom: 16 },
-            }}
+            onChange={setCode}
+            ariaLabel="Code Python"
+            dark={false}
           />
         </div>
 

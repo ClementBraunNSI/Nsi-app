@@ -1,0 +1,45 @@
+slug: prog_modularite_mise_au_point
+title: Modularité et Mise au Point
+niveau: terminale
+source: content/3/prog_modularite_mise_au_point.md
+questions:
+  - id: mod-import-1
+    label: Variantes d
+    content: |-
+      Il existe plusieurs façons d'importer. Que font les commandes suivantes ?
+            1. `import geometrie`
+            2. `from geometrie import aire_cercle`
+            3. `from geometrie import *`
+            4. `import geometrie as geo`
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: sql
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Langages et Programmation
+  - id: mod-assert-1
+    label: Pratique
+    content: |-
+      Écrivez une fonction `racine_carree(x)` qui utilise `math.sqrt`.
+            Ajoutez une assertion pour vérifier que `x` est positif ou nul.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Langages et Programmation
+  - id: mod-doctest-1
+    label: Écrire un doctest
+    content: |-
+      Ajoutez des doctests à la fonction suivante qui vérifie si un nombre est pair.
+            ```python
+            def est_pair(n):
+                return n % 2 == 0
+            ```
+            Testez avec 4 (True), 5 (False) et 0 (True).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Langages et Programmation

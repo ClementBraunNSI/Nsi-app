@@ -22,37 +22,42 @@ export default function Quiz({ question, options = [], answer, explanation }: Qu
     }
   };
 
+  const reset = () => {
+    setSelected(null);
+    setIsSubmitted(false);
+  };
+
   const isCorrect = selected === answer;
 
   return (
-    <div className="my-8 bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm not-prose">
-      <div className="bg-slate-50 p-6 border-b border-slate-100">
+    <div className="my-8 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] not-prose">
+      <div className="border-b border-[var(--border)] bg-[var(--surface-2)] p-5 sm:p-6">
         <div className="flex items-center gap-3 mb-2">
-          <div className="bg-orange-100 p-2 rounded-lg text-orange-600">
+          <div className="rounded-xl bg-[var(--accent-soft)] p-2 text-[var(--accent)]">
             <HelpCircle size={20} />
           </div>
-          <h3 className="text-lg font-bold text-slate-800 m-0">Quiz Express</h3>
+          <h3 className="m-0 text-lg font-semibold tracking-tight text-[var(--fg)]">Question</h3>
         </div>
-        <p className="text-slate-600 font-medium m-0">{question}</p>
+        <p className="m-0 font-medium leading-6 text-[var(--muted)]">{question}</p>
       </div>
       
-      <div className="p-6 space-y-3">
+      <div className="space-y-2.5 p-4 sm:p-6">
         {safeOptions.map((option, index) => {
-          let optionClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex justify-between items-center group ";
+          let optionClass = "group flex w-full items-center justify-between rounded-xl border p-3.5 text-left transition-all duration-150 ";
           
           if (isSubmitted) {
             if (index === answer) {
-              optionClass += "border-green-500 bg-green-50 text-green-900";
+              optionClass += "border-emerald-400 bg-emerald-50 text-emerald-900";
             } else if (index === selected) {
-              optionClass += "border-red-500 bg-red-50 text-red-900";
+              optionClass += "border-red-400 bg-red-50 text-red-900";
             } else {
-              optionClass += "border-slate-100 bg-slate-50 text-slate-400 opacity-50";
+              optionClass += "border-[var(--border)] bg-[var(--surface-2)] text-[var(--subtle)] opacity-55";
             }
           } else {
             if (selected === index) {
-              optionClass += "border-orange-500 bg-orange-50 text-orange-900 shadow-md transform scale-[1.01]";
+              optionClass += "border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--fg)] shadow-sm";
             } else {
-              optionClass += "border-slate-100 hover:border-orange-200 hover:bg-slate-50 text-slate-600";
+              optionClass += "border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--accent)] hover:bg-[var(--surface-2)]";
             }
           }
 
@@ -66,28 +71,28 @@ export default function Quiz({ question, options = [], answer, explanation }: Qu
               <span className="font-medium">{option}</span>
               {isSubmitted && index === answer && <Check size={20} className="text-green-600" />}
               {isSubmitted && index === selected && index !== answer && <X size={20} className="text-red-600" />}
-              {!isSubmitted && selected === index && <div className="w-4 h-4 rounded-full bg-orange-500" />}
-              {!isSubmitted && selected !== index && <div className="w-4 h-4 rounded-full border-2 border-slate-200 group-hover:border-orange-300" />}
+              {!isSubmitted && selected === index && <div className="h-4 w-4 rounded-full bg-[var(--accent)]" />}
+              {!isSubmitted && selected !== index && <div className="h-4 w-4 rounded-full border-2 border-[var(--border)] group-hover:border-[var(--accent)]" />}
             </button>
           );
         })}
       </div>
 
-      <div className="p-6 bg-slate-50 border-t border-slate-100 flex justify-between items-center">
+      <div className="flex items-center justify-between gap-3 border-t border-[var(--border)] bg-[var(--surface-2)] p-4 sm:p-6">
         {!isSubmitted ? (
           <button
             onClick={handleSubmit}
             disabled={selected === null}
-            className={`px-6 py-2 rounded-xl font-bold text-white transition-all ${
+            className={`rounded-xl px-5 py-2.5 font-semibold text-white transition-all ${
               selected !== null 
-                ? 'bg-orange-500 hover:bg-orange-600 shadow-md hover:shadow-lg transform hover:-translate-y-0.5' 
-                : 'bg-slate-300 cursor-not-allowed'
+                ? 'bg-[var(--accent)] shadow-sm hover:-translate-y-0.5'
+                : 'cursor-not-allowed bg-[var(--subtle)] opacity-45'
             }`}
           >
             Vérifier
           </button>
         ) : (
-          <div className={`flex-1 p-4 rounded-xl ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+          <div className={`flex-1 rounded-xl p-4 ${isCorrect ? 'bg-emerald-100 text-emerald-900' : 'bg-red-100 text-red-900'}`}>
             <p className="font-bold mb-1 flex items-center gap-2">
               {isCorrect ? <><Check size={18} /> Correct !</> : <><X size={18} /> Incorrect</>}
             </p>
@@ -95,6 +100,15 @@ export default function Quiz({ question, options = [], answer, explanation }: Qu
               {explanation || (isCorrect ? "Bravo, c'est la bonne réponse." : `La bonne réponse était : ${safeOptions[answer]}`)}
             </p>
           </div>
+        )}
+        {isSubmitted && (
+          <button
+            type="button"
+            onClick={reset}
+            className="shrink-0 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--fg)]"
+          >
+            Rejouer
+          </button>
         )}
       </div>
     </div>

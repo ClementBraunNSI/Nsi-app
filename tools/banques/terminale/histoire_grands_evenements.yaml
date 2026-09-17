@@ -1,0 +1,18 @@
+slug: histoire_grands_evenements
+title: Histoire de l'Informatique
+niveau: terminale
+source: content/3/histoire_grands_evenements.md
+questions:
+  - id: hist-ex-1
+    label: Qui suis-je ?
+    content: |-
+      ### Retrouvez le personnage
+          1.  J'ai écrit le premier programme informatique pour la machine de Babbage.
+          2.  J'ai décrypté le code Enigma et formalisé le concept d'ordinateur.
+          3.  J'ai inventé le Web.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Histoire

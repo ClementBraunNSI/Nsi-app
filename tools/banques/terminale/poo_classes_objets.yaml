@@ -1,0 +1,30 @@
+slug: poo_classes_objets
+title: 'POO : Classes et Objets'
+niveau: terminale
+source: content/3/poo_classes_objets.md
+questions:
+  - id: poo-ex-1
+    label: Création de Classe
+    content: "### La Classe `Chien` \U0001F436\n    1.  Créez une classe `Chien` avec les attributs `nom` et `race`.\n    2.  Ajoutez une méthode `aboyer()` qui affiche \"Wouaf ! Je suis [nom] !\".\n    3.  Créez un chien nommé \"Rex\", de race \"Berger Allemand\", et faites-le aboyer."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Structures de données
+  - id: poo-ex-2
+    label: RPG Simple
+    content: |-
+      ### Personnage de Jeu ⚔️
+          Créez une classe `Personnage` :
+          1.  Attributs : `pseudo`, `pv` (points de vie, defaut 100), `force`.
+          2.  Méthode `attaquer(self, cible)` : Enlève `self.force` aux PV de la `cible`.
+          3.  Méthode `est_vivant(self)` : Renvoie `True` si PV > 0, sinon `False`.
+
+          Simulez un combat entre deux personnages.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Structures de données

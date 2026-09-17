@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "./brand/theme.css";
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+}

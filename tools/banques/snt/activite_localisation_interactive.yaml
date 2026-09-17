@@ -1,0 +1,14 @@
+slug: activite_localisation_interactive
+title: 'Atelier Localisation : Trilateration'
+niveau: snt
+source: content/1/activite_localisation_interactive.md
+questions:
+  - id: mission-gps
+    label: 'Mission : Retrouver le Renard'
+    content: "### \U0001F4E1 Mission : Retrouver le Renard\n\nPour calculer ta position, ton téléphone écoute les signaux d'au moins 3 satellites. C'est le principe de la **trilatération**.\n\n**Objectif :** Le renard se cache. Utilise les signaux des satellites Galileo pour trianguler sa position exacte.\n\n1.  **Lance la mission** pour activer le premier satellite.\n2.  **Ajuste le rayon** (cercle) de chaque satellite en fonction du temps mis par le signal pour arriver.\n    *   *Rappel : Distance = Vitesse × Temps*\n    *   *Vitesse du signal = 300 m / µs (300 000 km/s)*\n3.  L'intersection des 3 cercles te donnera la position exacte du renard.\n\n<TrilaterationMap />"
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: snt
+    notion: Localisation

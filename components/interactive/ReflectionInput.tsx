@@ -16,19 +16,19 @@ export default function ReflectionInput({
 
   return (
     <div className="my-6 not-prose">
-      {label && <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">{label}</label>}
+      {label && <label className="mb-2 block text-sm font-semibold text-[var(--fg)]">{label}</label>}
       <textarea
-        className="w-full p-4 rounded-xl border-2 border-slate-200 bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition-all outline-none text-slate-700 resize-y shadow-sm placeholder:text-slate-400"
+        className="w-full resize-y rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 text-[var(--fg)] shadow-sm outline-none transition placeholder:text-[var(--subtle)] focus:border-[var(--accent)] focus:ring-4 focus:ring-[var(--accent-soft)]"
         rows={rows}
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <div className="flex justify-between mt-2">
-        <span className="text-xs text-slate-400 font-medium italic">
+      <div className="mt-2 flex items-center justify-between gap-3">
+        <span className="text-xs font-medium text-[var(--subtle)]">
           Vos réponses sont personnelles et ne sont pas enregistrées sur le serveur.
         </span>
-        <span className="text-xs font-bold text-orange-400 bg-orange-50 px-2 py-1 rounded-md">
+        <span className="shrink-0 rounded-md bg-[var(--accent-soft)] px-2 py-1 text-xs font-bold text-[var(--accent)]">
           {value.length} caractères
         </span>
       </div>

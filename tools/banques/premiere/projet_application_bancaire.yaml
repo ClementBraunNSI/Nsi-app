@@ -1,0 +1,111 @@
+slug: projet_application_bancaire
+title: 'Dictionnaires : App Bancaire'
+niveau: premiere
+source: content/2/projet_application_bancaire.md
+questions:
+  - id: bank-struct-1
+    label: Base de données
+    content: |-
+      Créez un dictionnaire vide `comptes` qui servira de base de données.
+            La clé sera le **numéro de compte** (ex: "FR76..."), et la valeur sera le dictionnaire des détails du compte.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: bank-struct-2
+    label: Création de compte
+    content: |-
+      Créez la fonction `creer_compte(numero, nom, solde_initial)` qui :
+            1. Vérifie si le numéro de compte n'existe pas déjà.
+            2. Crée un dictionnaire avec `nom`, `solde` et une liste `transactions` vide.
+            3. Ajoute ce dictionnaire dans `comptes`.
+            
+            Exemple d'appel :
+            ```python
+            creer_compte("12345", "Alice", 100.0)
+            ```
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: python
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: bank-ops-1
+    label: Dépôt
+    content: |-
+      Créez la fonction `deposer(numero, montant)` qui :
+            1. Vérifie que le compte existe.
+            2. Ajoute le montant au solde.
+            3. Enregistre la transaction dans la liste `transactions` (ex: `"+ 50.0"`).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: bank-ops-2
+    label: Retrait
+    content: |-
+      Créez la fonction `retirer(numero, montant)` qui :
+            1. Vérifie que le compte existe.
+            2. Vérifie que le solde est suffisant.
+            3. Retire le montant.
+            4. Enregistre la transaction (ex: `"- 20.0"`).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: bank-ops-3
+    label: Consultation
+    content: |-
+      Créez deux fonctions :
+            *   `verifier_solde(numero)` : Affiche le solde actuel.
+            *   `voir_transactions(numero)` : Affiche l'historique des opérations.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: bank-ui-1
+    label: Menu Principal
+    content: |-
+      Créez une fonction `main()` avec une boucle infinie qui affiche le menu suivant :
+
+            ```text
+            --- MENU BANQUE ---
+            1. Créer un compte
+            2. Faire un dépôt
+            3. Faire un retrait
+            4. Vérifier le solde
+            5. Voir les transactions
+            6. Quitter
+            ```
+
+            Utilisez `input()` pour récupérer le choix et demander les informations nécessaires (numéro de compte, montant...).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: bank-test-1
+    label: Scénario de test
+    content: |-
+      Testez votre application avec le scénario suivant :
+            1. Créer un compte pour Alice avec 1000€.
+            2. Créer un compte pour Bob avec 500€.
+            3. Faire un dépôt de 200€ sur le compte d'Alice.
+            4. Faire un retrait de 50€ sur le compte d'Alice.
+            5. Vérifier le solde d'Alice (devrait être 1150€).
+            6. Tenter un retrait de 2000€ (doit être refusé).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets

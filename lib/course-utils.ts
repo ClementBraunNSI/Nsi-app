@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { resolveContentLevelDir } from '@/lib/content-path';
 
 export interface CourseSummary {
   title: string;
@@ -9,15 +10,18 @@ export interface CourseSummary {
   chapter: string;
 }
 
+const SKIP_DIRS = new Set(['build', 'node_modules', '.git']);
+
 /** Fichiers .md/.mdx sous content/{level} : plat sauf `particuliers` (sous-dossiers élèves / thèmes). */
 export function listMarkdownFilesForContentLevel(level: string): { filePath: string; slug: string }[] {
-  const contentDir = path.join(process.cwd(), 'content', level);
-  if (!fs.existsSync(contentDir)) return [];
+  const contentDir = resolveContentLevelDir(level);
+  if (!contentDir) return [];
 
   if (level === 'particuliers') {
     const out: { filePath: string; slug: string }[] = [];
     const walk = (dir: string, rel: string) => {
       for (const name of fs.readdirSync(dir)) {
+        if (name.startsWith('.') || SKIP_DIRS.has(name)) continue;
         const full = path.join(dir, name);
         const st = fs.statSync(full);
         if (st.isDirectory()) {

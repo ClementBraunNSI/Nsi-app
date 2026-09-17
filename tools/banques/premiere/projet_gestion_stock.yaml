@@ -1,0 +1,103 @@
+slug: projet_gestion_stock
+title: 'Structures : Gestion Stock'
+niveau: premiere
+source: content/2/projet_gestion_stock.md
+questions:
+  - id: stock-cat-1
+    label: Initialisation
+    content: Créez une liste `catalogue` qui contiendra les produits.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: stock-cat-2
+    label: Ajouter Produit
+    content: |-
+      Créez une fonction `ajouter_produit(catalogue, id, nom, prix, stock, seuil)` :
+            1. Vérifie si l'ID n'existe pas déjà.
+            2. Ajoute le dictionnaire produit au catalogue.
+            3. Renvoie `True` si succès, `False` sinon.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: stock-cat-3
+    label: Modifier
+    content: >-
+      Créez une fonction `modifier_produit(catalogue, id, nouveau_prix)` qui met à jour le prix d'un produit donné par
+      son ID.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: stock-mvt-1
+    label: Mise à jour
+    content: |-
+      Créez une fonction `maj_stock(catalogue, id, quantite)` :
+            *   `quantite` peut être positive (réapprovisionnement) ou négative (perte/vente).
+            *   La fonction doit mettre à jour le stock du produit.
+            *   **Attention** : Le stock ne peut pas être négatif. Si la quantité à retirer est trop grande, l'opération doit être annulée (renvoyer `False`).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: stock-mvt-2
+    label: Alerte
+    content: >-
+      Créez une fonction `verifier_alertes(catalogue)` qui affiche la liste des produits dont le stock est inférieur ou
+      égal au seuil.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: stock-sell-1
+    label: Calcul du total
+    content: |-
+      Créez une fonction `calculer_total(catalogue, panier)` qui :
+            1. Parcourt le panier.
+            2. Récupère le prix de chaque produit dans le catalogue.
+            3. Calcule le montant total.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: stock-sell-2
+    label: Valider Vente
+    content: |-
+      Créez une fonction `valider_vente(catalogue, panier)` qui :
+            1. Vérifie si tous les produits sont en stock suffisant.
+            2. Si oui, déduit les quantités du stock (appel à `maj_stock`).
+            3. Affiche le ticket de caisse avec le total.
+            4. Si non, affiche un message d'erreur indiquant quel produit manque.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets
+  - id: stock-ui-1
+    label: Menu Principal
+    content: |-
+      Créez une interface textuelle pour tester votre application :
+            1. Gestion Catalogue (Ajout/Modif)
+            2. Gestion Stock (Réappro/Alertes)
+            3. Caisse (Saisir une vente)
+            4. Quitter
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets

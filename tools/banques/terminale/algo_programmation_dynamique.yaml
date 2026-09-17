@@ -1,0 +1,23 @@
+slug: algo_programmation_dynamique
+title: Programmation Dynamique
+niveau: terminale
+source: content/3/algo_programmation_dynamique.md
+questions:
+  - id: dyn-ex-1
+    label: Rendu de Monnaie
+    content: |-
+      ### Rendu de Monnaie (Approche Bottom-Up)
+          On a un système de pièces `P = [1, 3, 4]`.
+          On veut rendre `S = 6`.
+          
+          On construit un tableau `min_pieces` où `min_pieces[i]` est le nombre minimal de pièces pour rendre la somme `i`.
+          *   `min_pieces[0] = 0`
+          *   Pour `i` de 1 à 6, on cherche `min(min_pieces[i - piece]) + 1`.
+          
+          Remplissez le tableau à la main.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Algorithmique

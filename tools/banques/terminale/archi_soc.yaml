@@ -1,0 +1,32 @@
+slug: archi_soc
+title: 'Architecture : SoC et Processus'
+niveau: terminale
+source: content/3/archi_soc.md
+questions:
+  - id: os-ex-1
+    label: Commandes Unix
+    content: |-
+      ### Gestion des processus sous Linux
+          Quelles commandes permettent de :
+          1.  Voir les processus en cours ?
+          2.  Tuer un processus bloqué ?
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: 'Architectures matérielles, OS & Réseaux'
+  - id: os-ex-2
+    label: Ordonnancement
+    content: |-
+      ### Round Robin (Tourniquet)
+          Imaginez 3 processus P1, P2, P3 prêts. L'OS leur donne le CPU chacun leur tour pendant 10ms (quantum).
+          P1 a besoin de 25ms, P2 de 15ms, P3 de 30ms.
+          
+          Décrivez l'ordre d'exécution.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: 'Architectures matérielles, OS & Réseaux'

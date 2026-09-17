@@ -4,6 +4,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { getAuthContext, type AuthContext } from '@/lib/auth';
+import { canAccessCourse } from '@/lib/course-access';
+import { contentRoot } from '@/lib/content-path';
 
 export interface LabExercise {
   id: string;
@@ -26,6 +29,7 @@ function getFilesRecursively(dir: string): string[] {
   const list = fs.readdirSync(dir);
   
   list.forEach(file => {
+    if (file.startsWith('.') || file === 'build' || file === 'node_modules') return;
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
     
@@ -39,8 +43,22 @@ function getFilesRecursively(dir: string): string[] {
   return results;
 }
 
-export async function getAllExercises(): Promise<LabExercise[]> {
-  const contentDir = path.join(process.cwd(), 'content');
+function exerciseIsAccessible(ex: LabExercise, auth: AuthContext) {
+  return canAccessCourse(
+    {
+      access: ex.allowedStudents?.length ? 'private' : 'public',
+      allowedStudents: ex.allowedStudents,
+    },
+    {
+      isElevated: auth.isElevated,
+      isAuthenticated: Boolean(auth.user),
+      userFullName: auth.fullName,
+    },
+  );
+}
+
+function buildExerciseCatalog(): LabExercise[] {
+  const contentDir = contentRoot();
   if (!fs.existsSync(contentDir)) return [];
 
   const exercises: LabExercise[] = [];
@@ -194,9 +212,8 @@ export async function getAllExercises(): Promise<LabExercise[]> {
   for (const ex of exercises) {
     let finalId = ex.id;
     
-    // If ID is missing or empty, generate one
     if (!finalId) {
-      finalId = `ex-${ex.fileName}-${Math.random().toString(36).substr(2, 5)}`;
+      finalId = `ex-${ex.fileName}`;
     }
 
     // While ID exists, generate a new one to resolve collision
@@ -212,4 +229,21 @@ export async function getAllExercises(): Promise<LabExercise[]> {
   }
 
   return uniqueExercises;
+}
+
+export async function getAllExercises(): Promise<LabExercise[]> {
+  const auth = await getAuthContext();
+  return buildExerciseCatalog()
+    .filter((ex) => exerciseIsAccessible(ex, auth))
+    .map(({ allowedStudents: _allowed, verificationCode: _hidden, ...ex }) => ex);
+}
+
+export async function getExerciseVerification(exerciseId: string): Promise<string | null> {
+  const id = String(exerciseId || '').trim();
+  if (!id || id.length > 200) return null;
+
+  const auth = await getAuthContext();
+  const exercise = buildExerciseCatalog().find((item) => item.id === id);
+  if (!exercise || !exerciseIsAccessible(exercise, auth)) return null;
+  return exercise.verificationCode ?? null;
 }

@@ -5,8 +5,8 @@ export default function NotFound() {
     <ResourceNotFound
       title="Page introuvable"
       description="La page demandée n'existe pas ou a été déplacée."
-      actionHref="/cours"
-      actionLabel="Voir les cours"
+      actionHref="/"
+      actionLabel="Retour à l'accueil"
     />
   );
 }

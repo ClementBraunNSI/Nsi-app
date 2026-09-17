@@ -1,0 +1,16 @@
+slug: projet_tournoi_esport
+title: 'Listes : Tournoi E-Sport'
+niveau: premiere
+source: content/2/projet_tournoi_esport.md
+questions:
+  - id: proj-esport-1
+    label: À vous de jouer !
+    content: |-
+      À vous de coder ! Suivez les étapes ci-dessus pour réaliser votre propre gestionnaire de tournoi.
+          Commencez simple, puis essayez d'ajouter des fonctionnalités bonus.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets

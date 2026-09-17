@@ -1,0 +1,1240 @@
+{
+  "levels": [
+    {
+      "id": "sni",
+      "label": "SNI",
+      "chapters": [
+        "Cybersecurite",
+        "Cybersécurite",
+        "Données Structurées",
+        "Programmation_Python",
+        "Representation_de_base"
+      ],
+      "courses": [
+        {
+          "slug": "activite_cyber_interactive",
+          "title": "Atelier Cybersécurité : Brute Force",
+          "chapter": "Cybersécurite",
+          "level": "sni",
+          "description": "Comprendre pourquoi un mot de passe complexe est essentiel."
+        },
+        {
+          "slug": "activite_binaire_interactive",
+          "title": "Atelier Données : Pixel Art Binaire",
+          "chapter": "Données Structurées",
+          "level": "sni",
+          "description": "Comprendre comment une image est codée en 0 et 1."
+        },
+        {
+          "slug": "cybersecurite",
+          "title": "Cybersécurité",
+          "chapter": "Cybersecurite",
+          "level": "sni",
+          "description": "Introduction aux enjeux de la sécurité informatique, chiffrement et bonnes pratiques."
+        },
+        {
+          "slug": "booleens",
+          "title": "Logique booléenne",
+          "chapter": "Representation_de_base",
+          "level": "sni",
+          "description": "Les valeurs Vrai/Faux et les opérateurs logiques (ET, OU, NON)."
+        },
+        {
+          "slug": "images",
+          "title": "Représentation des images en binaire",
+          "chapter": "Representation_de_base",
+          "level": "sni",
+          "description": "Comment les images sont codées en binaire."
+        },
+        {
+          "slug": "binaire",
+          "title": "Représentation des nombres en bases",
+          "chapter": "Representation_de_base",
+          "level": "sni",
+          "description": "Comprendre les bases 2, 10, 16 et la conversion entre elles."
+        },
+        {
+          "slug": "texte",
+          "title": "Représentation du texte en binaire",
+          "chapter": "Representation_de_base",
+          "level": "sni",
+          "description": "Codage des caractères (ASCII, Unicode)."
+        },
+        {
+          "slug": "types_base",
+          "title": "Valeur et type des données",
+          "chapter": "Programmation_Python",
+          "level": "sni",
+          "description": "Découverte des types fondamentaux en Python : nombres, chaînes et booléens."
+        }
+      ]
+    },
+    {
+      "id": "snt",
+      "label": "SNT",
+      "chapters": [
+        "Données structurées",
+        "Internet",
+        "Localisation",
+        "Micro-controleurs",
+        "Photographie Numérique",
+        "Programmation Python",
+        "Réseaux sociaux",
+        "Web"
+      ],
+      "courses": [
+        {
+          "slug": "activite_objets_connectes",
+          "title": "Activité : Composer un système connecté",
+          "chapter": "Micro-controleurs",
+          "level": "snt",
+          "description": "Assembler capteurs, logique et actionneurs pour simuler une alarme IoT."
+        },
+        {
+          "slug": "activite_blockly",
+          "title": "Activité : Manipuler des données en tableau",
+          "chapter": "Données structurées",
+          "level": "snt",
+          "description": "Découvrir le tri, le filtre et les statistiques sur un tableur avant l'enquête CSV."
+        },
+        {
+          "slug": "atelier_editeur_html",
+          "title": "Atelier : éditeur HTML en direct",
+          "chapter": "Web",
+          "level": "snt",
+          "description": "Écrire du code HTML et observer immédiatement le rendu dans le navigateur."
+        },
+        {
+          "slug": "activite_donnees_interactive",
+          "title": "Atelier Données : Le Détective CSV",
+          "chapter": "Données structurées",
+          "level": "snt",
+          "description": "Apprendre à filtrer et trier des données structurées."
+        },
+        {
+          "slug": "activite_internet_interactive",
+          "title": "Atelier Internet : Le Routage",
+          "chapter": "Internet",
+          "level": "snt",
+          "description": "Simuler l'envoi d'un paquet à travers le réseau Internet."
+        },
+        {
+          "slug": "activite_localisation_interactive",
+          "title": "Atelier Localisation : Trilateration",
+          "chapter": "Localisation",
+          "level": "snt",
+          "description": "Comprendre le fonctionnement du GPS avec les satellites."
+        },
+        {
+          "slug": "activite_photo_interactive",
+          "title": "Atelier Photo : Le modèle RVB",
+          "chapter": "Photographie Numérique",
+          "level": "snt",
+          "description": "Comprendre comment les couleurs sont formées avec Rouge, Vert et Bleu."
+        },
+        {
+          "slug": "activite_reseaux_sociaux_interactive",
+          "title": "Atelier Réseaux Sociaux : Graphe",
+          "chapter": "Réseaux sociaux",
+          "level": "snt",
+          "description": "Visualiser les liens entre les utilisateurs d'un réseau social."
+        },
+        {
+          "slug": "activite_web_interactive",
+          "title": "Atelier Web : Éditeur HTML",
+          "chapter": "Web",
+          "level": "snt",
+          "description": "Expérimente avec le code HTML et CSS en temps réel."
+        },
+        {
+          "slug": "donnees_structurees",
+          "title": "Données Structurées",
+          "chapter": "Données structurées",
+          "level": "snt",
+          "description": "Comprendre les formats de données (CSV, JSON) et les bases de données"
+        },
+        {
+          "slug": "exercices_donnees_structurees",
+          "title": "Exercices - Données Structurées",
+          "chapter": "Données structurées",
+          "level": "snt",
+          "description": "Exercices sur les formats CSV, JSON et les bases de données"
+        },
+        {
+          "slug": "Fiche_exercices_boucles",
+          "title": "Fiche d'exercices : Les boucles en Python",
+          "chapter": "Programmation Python",
+          "level": "snt",
+          "description": "Exercices sur les boucles (for/while) en Python."
+        },
+        {
+          "slug": "Fiche_exercices_conditions",
+          "title": "Fiche d'exercices : Les conditions en Python",
+          "chapter": "Programmation Python",
+          "level": "snt",
+          "description": "Exercices sur les conditions (if/else) en Python."
+        },
+        {
+          "slug": "Fiche_exercices_python",
+          "title": "Fiche d'exercices : Python",
+          "chapter": "Programmation Python",
+          "level": "snt",
+          "description": "Premiers pas avec Python : variables, input/output, et calculs simples."
+        },
+        {
+          "slug": "monstres",
+          "title": "Galerie des Monstres",
+          "chapter": "Web",
+          "level": "snt",
+          "description": "Découvrez les créations des élèves du projet bestiaire Web (année 2024-2025)."
+        },
+        {
+          "slug": "Cours_Internet",
+          "title": "Internet",
+          "chapter": "Internet",
+          "level": "snt",
+          "description": "L'histoire et le fonctionnement du réseau mondial, des pionniers à la révolution TCP/IP."
+        },
+        {
+          "slug": "Cours_Localisation",
+          "title": "La Géolocalisation",
+          "chapter": "Localisation",
+          "level": "snt",
+          "description": "Fonctionnement du GPS, enjeux de vie privée et cartographie numérique."
+        },
+        {
+          "slug": "Binaire_Decimal",
+          "title": "Le binaire : Définition",
+          "chapter": "Internet",
+          "level": "snt",
+          "description": "Comprendre la base 2, les bits, octets et les conversions avec le décimal."
+        },
+        {
+          "slug": "Cours_Reseaux_Sociaux",
+          "title": "Les Réseaux Sociaux : Définitions et Enjeux",
+          "chapter": "Réseaux sociaux",
+          "level": "snt",
+          "description": "Comprendre les réseaux sociaux, leur modèle économique, les enjeux de cyberviolence et leur modélisation par les graphes."
+        },
+        {
+          "slug": "metadonnees",
+          "title": "Métadonnées et Formats",
+          "chapter": "Photographie Numérique",
+          "level": "snt",
+          "description": "Comprendre les formats de fichiers image, la compression et les métadonnées EXIF"
+        },
+        {
+          "slug": "projet_carte_gps",
+          "title": "Mini-projet : Carte GPS du Renard",
+          "chapter": "Localisation",
+          "level": "snt",
+          "description": "Modifier du code Python pour placer des points sur une carte interactive avec folium."
+        },
+        {
+          "slug": "Cours_html",
+          "title": "Notice sur HTML",
+          "chapter": "Web",
+          "level": "snt",
+          "description": "Introduction au HTML, structure d'un fichier et principales balises."
+        },
+        {
+          "slug": "objets_connectes",
+          "title": "Objets Connectés",
+          "chapter": "Micro-controleurs",
+          "level": "snt",
+          "description": "Comprendre l'Internet des Objets (IoT), les capteurs et les protocoles"
+        },
+        {
+          "slug": "photographie_couleur",
+          "title": "Photographie Couleur",
+          "chapter": "Photographie Numérique",
+          "level": "snt",
+          "description": "Comprendre la synthèse additive, le modèle RGB et la profondeur de couleur"
+        },
+        {
+          "slug": "photographie_noir_et_blanc",
+          "title": "Photographie Noir et Blanc",
+          "chapter": "Photographie Numérique",
+          "level": "snt",
+          "description": "Comprendre la numérisation des images en noir et blanc, les pixels et la définition"
+        },
+        {
+          "slug": "Projet_Chasse_aux_ren_arts",
+          "title": "Projet : Chasse aux Ren Arts",
+          "chapter": "Web",
+          "level": "snt",
+          "description": "Création d'un site web : La chasse aux Ren-Arts"
+        },
+        {
+          "slug": "Projet_creation_site",
+          "title": "Projet : Création du Bestiaire",
+          "chapter": "Web",
+          "level": "snt",
+          "description": "Création d'un site web de bestiaire en 3 parties : HTML, CSS, et finalisation."
+        },
+        {
+          "slug": "ressources_chasse_renarts",
+          "title": "Ressources : Fichiers Chasse aux Ren-Arts",
+          "chapter": "Web",
+          "level": "snt",
+          "description": "Modèles HTML/CSS et archive ZIP pour le projet Chasse aux Ren-Arts."
+        },
+        {
+          "slug": "simulateur_microbit",
+          "title": "Simulateur Micro:bit",
+          "chapter": "Micro-controleurs",
+          "level": "snt",
+          "description": "Programmer la carte Micro:bit avec le simulateur en ligne officiel."
+        },
+        {
+          "slug": "Activite",
+          "title": "Simulation d'un Réseau Informatique",
+          "chapter": "Internet",
+          "level": "snt",
+          "description": "Découverte du logiciel Filius pour simuler des réseaux et comprendre les échanges de données."
+        },
+        {
+          "slug": "Activite_2",
+          "title": "Simulation de Serveurs WEB et DNS",
+          "chapter": "Internet",
+          "level": "snt",
+          "description": "Mise en place de serveurs WEB et DNS dans un réseau simulé avec Filius."
+        },
+        {
+          "slug": "tp_microbit",
+          "title": "TP - Micro:bit",
+          "chapter": "Micro-controleurs",
+          "level": "snt",
+          "description": "S'initier à la programmation embarquée avec la carte Micro:bit"
+        },
+        {
+          "slug": "tp_python_donnees_structurees",
+          "title": "TP Python : Données structurées",
+          "chapter": "Données structurées",
+          "level": "snt",
+          "description": "Manipuler des CSV, JSON et tableaux type Excel avec pandas et le module json."
+        },
+        {
+          "slug": "tp_python_localisation",
+          "title": "TP Python : Géolocalisation",
+          "chapter": "Localisation",
+          "level": "snt",
+          "description": "Manipuler des coordonnées GPS avec pandas, folium (cartes) et geopy (distances). Puis mini-projet carte interactive."
+        },
+        {
+          "slug": "tp_python_photographie",
+          "title": "TP Python : Photographie numérique",
+          "chapter": "Photographie Numérique",
+          "level": "snt",
+          "description": "Manipuler des pixels et des images avec la bibliothèque Pillow (PIL)."
+        },
+        {
+          "slug": "tp_python_reseaux_sociaux",
+          "title": "TP Python : Réseaux sociaux",
+          "chapter": "Réseaux sociaux",
+          "level": "snt",
+          "description": "Modéliser un réseau d'amis avec networkx (graphes) et pandas."
+        },
+        {
+          "slug": "Cours_WEB",
+          "title": "Web",
+          "chapter": "Web",
+          "level": "snt",
+          "description": "L'évolution du World Wide Web et ses technologies fondamentales : Client-Serveur, HTTP, HTML et DNS."
+        }
+      ]
+    },
+    {
+      "id": "premiere",
+      "label": "Première NSI",
+      "chapters": [
+        "Algorithmique",
+        "Architecture matérielle",
+        "Dictionnaires et Tables",
+        "Histoire",
+        "Introduction à Python",
+        "Programmation Orientée Objet",
+        "Projets",
+        "Représentation des données",
+        "Réseaux et Internet",
+        "Structures de données linéaires",
+        "Systèmes d'exploitation",
+        "Web et Interaction"
+      ],
+      "courses": [
+        {
+          "slug": "algo_knn_cours",
+          "title": "Algorithme des K Plus Proches Voisins",
+          "chapter": "Algorithmique",
+          "level": "premiere",
+          "description": "Comprendre l'algorithme KNN, son fonctionnement, la distance euclidienne et ses applications en classification et régression."
+        },
+        {
+          "slug": "projet_systeme_vote",
+          "title": "Algorithmes : Système de Vote",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Implémentation de différents systèmes de scrutin (Majoritaire, Condorcet)"
+        },
+        {
+          "slug": "algo_gloutons",
+          "title": "Algorithmes Gloutons",
+          "chapter": "Algorithmique",
+          "level": "premiere",
+          "description": "Introduction aux stratégies d'optimisation gloutonnes (Rendu de monnaie, Sac à dos)"
+        },
+        {
+          "slug": "activite_algo_interactive",
+          "title": "Atelier Algo : La Course au Tri",
+          "chapter": "Algorithmique",
+          "level": "premiere",
+          "description": "Visualiser comment un algorithme trie des données."
+        },
+        {
+          "slug": "bdd_sql_introduction",
+          "title": "Bases de données et SQL",
+          "chapter": "Dictionnaires et Tables",
+          "level": "premiere",
+          "description": "Introduction aux bases de données relationnelles et au langage de requête SQL"
+        },
+        {
+          "slug": "donnees_booleens",
+          "title": "Booléens et Fonctions booléennes",
+          "chapter": "Représentation des données",
+          "level": "premiere",
+          "description": "L'algèbre de George Boole et la logique binaire"
+        },
+        {
+          "slug": "projet_simulation_propagation",
+          "title": "Boucles : Simulation de Propagation",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Modéliser la propagation d'une rumeur ou d'un virus dans une population."
+        },
+        {
+          "slug": "archi_circuits",
+          "title": "Circuits électroniques",
+          "chapter": "Architecture matérielle",
+          "level": "premiere",
+          "description": "Portes logiques, transistors et tables de vérité"
+        },
+        {
+          "slug": "os_linux_commandes",
+          "title": "Commandes Linux",
+          "chapter": "Systèmes d'exploitation",
+          "level": "premiere",
+          "description": "Guide des commandes essentielles pour naviguer et gérer un système Linux."
+        },
+        {
+          "slug": "python_constructions_elementaires",
+          "title": "Constructions élémentaires en Python",
+          "chapter": "Introduction à Python",
+          "level": "premiere",
+          "description": "Variables, opérateurs, entrées-sorties, conditions et boucles : les briques de base d'un programme."
+        },
+        {
+          "slug": "projet_application_bancaire",
+          "title": "Dictionnaires : App Bancaire",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Création d'une application bancaire simple en Python"
+        },
+        {
+          "slug": "projet_jeux_video",
+          "title": "Dictionnaires : Collection Jeux",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Création d'un gestionnaire de collection de jeux vidéo en Python"
+        },
+        {
+          "slug": "poo_projet_pokensi",
+          "title": "Dictionnaires : PokéNSI",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Création d'un jeu inspiré de Pokémon en Python"
+        },
+        {
+          "slug": "python_dictionnaires",
+          "title": "Dictionnaires en Python",
+          "chapter": "Dictionnaires et Tables",
+          "level": "premiere",
+          "description": "Structure clé-valeur : créer, lire, modifier et parcourir un dictionnaire."
+        },
+        {
+          "slug": "donnees_entiers_relatifs",
+          "title": "Entiers négatifs en Binaire",
+          "chapter": "Représentation des données",
+          "level": "premiere",
+          "description": "Représentation des nombres signés et complément à 2"
+        },
+        {
+          "slug": "donnees_entiers_positifs",
+          "title": "Entiers Positifs en Binaire et Hexadécimal",
+          "chapter": "Représentation des données",
+          "level": "premiere",
+          "description": "Comprendre les systèmes de numération et les conversions entre bases"
+        },
+        {
+          "slug": "archi_circuits_exercices",
+          "title": "Exercices : Circuits Logiques",
+          "chapter": "Architecture matérielle",
+          "level": "premiere",
+          "description": "Cours sur Exercices : Circuits Logiques"
+        },
+        {
+          "slug": "python_exercices_dictionnaires",
+          "title": "Exercices : Dictionnaires",
+          "chapter": "Dictionnaires et Tables",
+          "level": "premiere",
+          "description": "Création, accès, modification et parcours des dictionnaires — fiche progressive par niveau."
+        },
+        {
+          "slug": "python_exercices_boucles",
+          "title": "Exercices : Les Boucles",
+          "chapter": "Introduction à Python",
+          "level": "premiere",
+          "description": "for, while, range et parcours de chaînes — fiche progressive par niveau."
+        },
+        {
+          "slug": "python_exercices_conditions",
+          "title": "Exercices : Les Conditions",
+          "chapter": "Introduction à Python",
+          "level": "premiere",
+          "description": "if, if/else, if/elif/else et opérateurs logiques"
+        },
+        {
+          "slug": "python_exercices_fonctions",
+          "title": "Exercices : Les Fonctions",
+          "chapter": "Introduction à Python",
+          "level": "premiere",
+          "description": "Définition, Paramètres et Valeurs de retour"
+        },
+        {
+          "slug": "python_exercices_listes",
+          "title": "Exercices : Les listes",
+          "chapter": "Structures de données linéaires",
+          "level": "premiere",
+          "description": "Création, parcours, modification et algorithmes sur les listes — fiche progressive par niveau."
+        },
+        {
+          "slug": "python_exercices_papier",
+          "title": "Exercices : Listes et tuples",
+          "chapter": "Structures de données linéaires",
+          "level": "premiere",
+          "description": "Fiche d'exercices papier sur les listes et tuples"
+        },
+        {
+          "slug": "python_exercices_specifications",
+          "title": "Exercices : Spécification",
+          "chapter": "Introduction à Python",
+          "level": "premiere",
+          "description": "Docstrings, Type Hinting et Documentation"
+        },
+        {
+          "slug": "python_csv_exercices",
+          "title": "Exercices : Traitement CSV",
+          "chapter": "Dictionnaires et Tables",
+          "level": "premiere",
+          "description": "Cours sur Exercices : Traitement CSV"
+        },
+        {
+          "slug": "algo_tris_exercices_fusion",
+          "title": "Exercices : Tri et Fusion",
+          "chapter": "Algorithmique",
+          "level": "premiere",
+          "description": "Cours sur Exercices : Tri et Fusion"
+        },
+        {
+          "slug": "python_exercices_types",
+          "title": "Exercices : Types en Python",
+          "chapter": "Introduction à Python",
+          "level": "premiere",
+          "description": "Variables, Types, Opérateurs et Conditions"
+        },
+        {
+          "slug": "donnees_binaires_exercices",
+          "title": "Exercices Binaire et Hexadécimal",
+          "chapter": "Représentation des données",
+          "level": "premiere",
+          "description": "Exercices sur la représentation des nombres en binaire et hexadécimal, opérations arithmétiques et complément à deux."
+        },
+        {
+          "slug": "donnees_booleens_exercices",
+          "title": "Exercices Booléens",
+          "chapter": "Représentation des données",
+          "level": "premiere",
+          "description": "Exercices sur les booléens, les opérateurs de comparaison et les opérateurs logiques en Python."
+        },
+        {
+          "slug": "algo_knn_exercices",
+          "title": "Exercices KNN",
+          "chapter": "Algorithmique",
+          "level": "premiere",
+          "description": "Exercices pratiques sur l'algorithme des K Plus Proches Voisins (calculs manuels, implémentation Python, analyse)."
+        },
+        {
+          "slug": "poo_exercices",
+          "title": "Exercices POO",
+          "chapter": "Programmation Orientée Objet",
+          "level": "premiere",
+          "description": "Exercices pratiques sur la POO. Création de classes, méthodes, héritage et encapsultation."
+        },
+        {
+          "slug": "web_http_exercices",
+          "title": "Fiche d'exercices - Web et HTTP",
+          "chapter": "Web et Interaction",
+          "level": "premiere",
+          "description": "Exercices sur le protocole HTTP, les URLs, le HTML, le CSS et JavaScript."
+        },
+        {
+          "slug": "python_fonctions",
+          "title": "Fonctions en Python",
+          "chapter": "Introduction à Python",
+          "level": "premiere",
+          "description": "Définir, appeler et documenter des fonctions pour modulariser un programme."
+        },
+        {
+          "slug": "algo_galerie_art",
+          "title": "Galerie d'images en HTML",
+          "chapter": "Web et Interaction",
+          "level": "premiere",
+          "description": "Mini-activité pour intégrer des images dans une page HTML (balise img, alt, chemins) — ressource liée au chapitre Web."
+        },
+        {
+          "slug": "histoire_informatique",
+          "title": "Histoire de l'Informatique",
+          "chapter": "Histoire",
+          "level": "premiere",
+          "description": "Les grandes étapes, figures et machines qui ont façonné le monde numérique."
+        },
+        {
+          "slug": "web_javascript_interactions",
+          "title": "Interactions Web : JavaScript",
+          "chapter": "Web et Interaction",
+          "level": "premiere",
+          "description": "Rendre les pages web dynamiques et interactives avec le DOM et les événements."
+        },
+        {
+          "slug": "web_css_introduction",
+          "title": "Introduction au CSS",
+          "chapter": "Web et Interaction",
+          "level": "premiere",
+          "description": "Mise en forme des pages web — sélecteurs, couleurs et mise en page de base."
+        },
+        {
+          "slug": "reseaux_cours",
+          "title": "Introduction aux réseaux",
+          "chapter": "Réseaux et Internet",
+          "level": "premiere",
+          "description": "Comprendre les fondements de la communication numérique, le modèle TCP/IP et l'adressage"
+        },
+        {
+          "slug": "poo_introduction",
+          "title": "Introduction POO",
+          "chapter": "Programmation Orientée Objet",
+          "level": "premiere",
+          "description": "Classes, objets, attributs et méthodes : premiers pas en programmation orientée objet."
+        },
+        {
+          "slug": "web_html",
+          "title": "Le langage HTML",
+          "chapter": "Web et Interaction",
+          "level": "premiere",
+          "description": "Introduction au langage HTML, structure d'une page et principales balises."
+        },
+        {
+          "slug": "web_protocoles",
+          "title": "Le Web et HTTP",
+          "chapter": "Web et Interaction",
+          "level": "premiere",
+          "description": "Introduction au Web, architecture client-serveur, protocole HTTP et URL."
+        },
+        {
+          "slug": "projet_tournoi_esport",
+          "title": "Listes : Tournoi E-Sport",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Gérer les scores et le classement d'un tournoi de jeu vidéo."
+        },
+        {
+          "slug": "archi_von_neumann",
+          "title": "Modèle de Von Neumann",
+          "chapter": "Architecture matérielle",
+          "level": "premiere",
+          "description": "Comprendre les fondements de l'architecture informatique moderne et le modèle séquentiel"
+        },
+        {
+          "slug": "donnees_reels",
+          "title": "Nombres réels en Binaire",
+          "chapter": "Représentation des données",
+          "level": "premiere",
+          "description": "Représentation en virgule fixe et flottante (IEEE754)"
+        },
+        {
+          "slug": "structures_lineaires_piles_files",
+          "title": "Piles et Files",
+          "chapter": "Structures de données linéaires",
+          "level": "premiere",
+          "description": "Piles (LIFO) et files (FIFO) : principe, opérations, et implantation avec des listes."
+        },
+        {
+          "slug": "algo_dichotomie",
+          "title": "Recherche Dichotomique",
+          "chapter": "Algorithmique",
+          "level": "premiere",
+          "description": "Algorithme de recherche efficace dans une liste triée"
+        },
+        {
+          "slug": "donnees_caracteres",
+          "title": "Représentation des caractères",
+          "chapter": "Représentation des données",
+          "level": "premiere",
+          "description": "Codage ASCII et Unicode (UTF-8)"
+        },
+        {
+          "slug": "projet_gestion_bibliotheque",
+          "title": "Structures : Bibliothèque",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Système de gestion d'une collection de livres numériques en Python"
+        },
+        {
+          "slug": "projet_gestion_stock",
+          "title": "Structures : Gestion Stock",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Simulation d'un système de gestion de stock et de ventes pour un petit commerce"
+        },
+        {
+          "slug": "structures_lineaires_cours",
+          "title": "Structures de données linéaires",
+          "chapter": "Structures de données linéaires",
+          "level": "premiere",
+          "description": "Listes et tuples : accès par indice, parcours, et modifications des listes."
+        },
+        {
+          "slug": "os_systemes",
+          "title": "Systèmes d'Exploitation",
+          "chapter": "Systèmes d'exploitation",
+          "level": "premiere",
+          "description": "Introduction aux systèmes d'exploitation (OS), leur histoire, composants et fonctionnement."
+        },
+        {
+          "slug": "python_structures_imbriquees",
+          "title": "TP - Structures Imbriquées (Spotify)",
+          "chapter": "Dictionnaires et Tables",
+          "level": "premiere",
+          "description": "Manipuler des listes de dictionnaires contenant des listes"
+        },
+        {
+          "slug": "algo_tris",
+          "title": "TP : Algorithmes de Tri",
+          "chapter": "Algorithmique",
+          "level": "premiere",
+          "description": "Comprendre et implémenter les tris par sélection et insertion"
+        },
+        {
+          "slug": "algo_knn",
+          "title": "TP KNN",
+          "chapter": "Algorithmique",
+          "level": "premiere",
+          "description": "Travaux pratiques pour implémenter l'algorithme KNN sur des cas concrets (Fruits, Iris, Spam)."
+        },
+        {
+          "slug": "structures_lineaires_tp",
+          "title": "TP Piles et Files",
+          "chapter": "Structures de données linéaires",
+          "level": "premiere",
+          "description": "Implémentation de Piles et Files et applications (parenthésage, file d'attente)."
+        },
+        {
+          "slug": "python_csv",
+          "title": "Traitement de données en tables",
+          "chapter": "Dictionnaires et Tables",
+          "level": "premiere",
+          "description": "Charger un CSV en liste de dictionnaires, puis projeter et sélectionner des données."
+        },
+        {
+          "slug": "python_types_base",
+          "title": "Types de données en Python",
+          "chapter": "Introduction à Python",
+          "level": "premiere",
+          "description": "Booléens, entiers, flottants et chaînes : reconnaître un type et l'utiliser correctement."
+        },
+        {
+          "slug": "projet_empreinte_carbone",
+          "title": "Variables : Calculateur d'Empreinte Carbone",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Créer un outil pour estimer l'impact écologique d'un trajet."
+        },
+        {
+          "slug": "web_projet",
+          "title": "Web : Site Personnel",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Créer une page web sur un tableau revisité avec des renards."
+        }
+      ]
+    },
+    {
+      "id": "terminale",
+      "label": "Terminale NSI",
+      "chapters": [
+        "Algorithmique",
+        "Architectures matérielles, OS & Réseaux",
+        "Bases de Données",
+        "Entrainement",
+        "Histoire",
+        "Langages et Programmation",
+        "Projets",
+        "Structures de données"
+      ],
+      "courses": [
+        {
+          "slug": "algo_recherche_textuelle",
+          "title": "Algorithmes de Recherche Textuelle",
+          "chapter": "Algorithmique",
+          "level": "terminale",
+          "description": "Recherche de motifs dans un texte : Naïf et Boyer-Moore."
+        },
+        {
+          "slug": "algo_diviser_pour_regner",
+          "title": "Algorithmique : Diviser pour Régner",
+          "chapter": "Algorithmique",
+          "level": "terminale",
+          "description": "Méthode de résolution par décomposition (Tri fusion, etc.)."
+        },
+        {
+          "slug": "algo_complexite_analyse",
+          "title": "Analyse de complexité",
+          "chapter": "Algorithmique",
+          "level": "terminale",
+          "description": "Évaluer et comparer l'efficacité des algorithmes en temps et en mémoire"
+        },
+        {
+          "slug": "prog_api_evenementielle",
+          "title": "API et programmation événementielle",
+          "chapter": "Langages et Programmation",
+          "level": "terminale",
+          "description": "Connecter interface utilisateur, événements et requêtes réseau"
+        },
+        {
+          "slug": "arbres-binaires-recherche",
+          "title": "Arbres binaires de recherche et Algorithmes",
+          "chapter": "Structures de données",
+          "level": "terminale",
+          "description": "Révision ABR, implémentations et complexité"
+        },
+        {
+          "slug": "structures_arbres",
+          "title": "Arbres et Arbres Binaires",
+          "chapter": "Structures de données",
+          "level": "terminale",
+          "description": "Structures hiérarchiques, vocabulaire et algorithmes de base."
+        },
+        {
+          "slug": "archi_soc",
+          "title": "Architecture : SoC et Processus",
+          "chapter": "Architectures matérielles, OS & Réseaux",
+          "level": "terminale",
+          "description": "Architecture matérielle (SoC) et Système d'Exploitation (Processus)."
+        },
+        {
+          "slug": "bdd_modele_relationnel",
+          "title": "Bases de Données : Modèle Relationnel",
+          "chapter": "Bases de Données",
+          "level": "terminale",
+          "description": "Théorie des bases de données : tables, clés, schéma."
+        },
+        {
+          "slug": "prog_calculabilite",
+          "title": "Calculabilité et Décidabilité",
+          "chapter": "Langages et Programmation",
+          "level": "terminale",
+          "description": "Limites de l'informatique : ce qui peut être calculé ou non."
+        },
+        {
+          "slug": "entrainement_epreuve_pratique",
+          "title": "Entraînement épreuve pratique",
+          "chapter": "Entrainement",
+          "level": "terminale",
+          "description": "Sujets chronométrés de type bac pratique NSI"
+        },
+        {
+          "slug": "exercices_terminale_fondamentaux",
+          "title": "Exercices fondamentaux - Terminale NSI",
+          "chapter": "Entrainement",
+          "level": "terminale",
+          "description": "Série d'exercices guidés sur les notions clés du programme"
+        },
+        {
+          "slug": "structures_graphes",
+          "title": "Graphes",
+          "chapter": "Structures de données",
+          "level": "terminale",
+          "description": "Modélisation de réseaux, sommets, arêtes et algorithmes."
+        },
+        {
+          "slug": "graphes_ponderes_dijkstra",
+          "title": "Graphes pondérés et plus court chemin",
+          "chapter": "Structures de données",
+          "level": "terminale",
+          "description": "Comprendre et appliquer l'algorithme de Dijkstra"
+        },
+        {
+          "slug": "histoire_grands_evenements",
+          "title": "Histoire de l'Informatique",
+          "chapter": "Histoire",
+          "level": "terminale",
+          "description": "Les grandes étapes, de l'Antiquité à l'IA moderne."
+        },
+        {
+          "slug": "listes-comprehension-exercices",
+          "title": "Listes par compréhension - Exercices",
+          "chapter": "Langages et Programmation",
+          "level": "terminale",
+          "description": "Série d'exercices gradués pour maîtriser les listes par compréhension en Python."
+        },
+        {
+          "slug": "mini_projets_synthese",
+          "title": "Mini-projets de synthèse",
+          "chapter": "Projets",
+          "level": "terminale",
+          "description": "Mobiliser plusieurs notions du programme sur des projets courts"
+        },
+        {
+          "slug": "prog_modularite_mise_au_point",
+          "title": "Modularité et Mise au Point",
+          "chapter": "Langages et Programmation",
+          "level": "terminale",
+          "description": "Apprenez à structurer vos programmes, gérer les erreurs et valider votre code avec des tests."
+        },
+        {
+          "slug": "poo_classes_objets",
+          "title": "POO : Classes et Objets",
+          "chapter": "Structures de données",
+          "level": "terminale",
+          "description": "Comprendre et appliquer la Programmation Orientée Objet en Python."
+        },
+        {
+          "slug": "poo_heritage_polymorphisme",
+          "title": "POO : Héritage et polymorphisme",
+          "chapter": "Langages et Programmation",
+          "level": "terminale",
+          "description": "Réutiliser et spécialiser des classes avec héritage, surcharge et redéfinition."
+        },
+        {
+          "slug": "algo_programmation_dynamique",
+          "title": "Programmation Dynamique",
+          "chapter": "Algorithmique",
+          "level": "terminale",
+          "description": "Optimisation de problèmes complexes (Rendu de monnaie, Fibonacci)."
+        },
+        {
+          "slug": "prog_recursivite",
+          "title": "Récursivité",
+          "chapter": "Langages et Programmation",
+          "level": "terminale",
+          "description": "Principe des fonctions récursives et pile d'exécution."
+        },
+        {
+          "slug": "reseaux_routage",
+          "title": "Réseaux : Protocoles de Routage",
+          "chapter": "Architectures matérielles, OS & Réseaux",
+          "level": "terminale",
+          "description": "Comment les paquets trouvent leur chemin sur Internet (RIP, OSPF)."
+        },
+        {
+          "slug": "securite_communications",
+          "title": "Sécurité des Communications",
+          "chapter": "Architectures matérielles, OS & Réseaux",
+          "level": "terminale",
+          "description": "Chiffrement symétrique, asymétrique et protocoles sécurisés."
+        },
+        {
+          "slug": "sql-bases-donnees",
+          "title": "SQL & Bases de Données",
+          "chapter": "Bases de Données",
+          "level": "terminale",
+          "description": "Interroger et manipuler les données relationnelles"
+        },
+        {
+          "slug": "sql-bases-donnees-exercices",
+          "title": "SQL & Bases de Données - Exercices",
+          "chapter": "Bases de Données",
+          "level": "terminale",
+          "description": "Exercices pratiques sur SQL et les bases de données"
+        },
+        {
+          "slug": "structures_lineaires",
+          "title": "Structures Linéaires : Listes, Piles, Files",
+          "chapter": "Structures de données",
+          "level": "terminale",
+          "description": "Implémentation et utilisation des structures de données linéaires."
+        },
+        {
+          "slug": "os_ordonnancement_memoire",
+          "title": "Systèmes d'exploitation : ordonnancement et mémoire",
+          "chapter": "Architectures matérielles, OS & Réseaux",
+          "level": "terminale",
+          "description": "Approfondir processus, CPU, mémoire virtuelle et appels système"
+        }
+      ]
+    },
+    {
+      "id": "sio",
+      "label": "BTS SIO",
+      "chapters": [
+        "BTS SIO 1 : B2 - Développement (SLAM)",
+        "BTS SIO 1 : B3 - CyberSécurité",
+        "BTS SIO 1 SLAM",
+        "BTS SIO 1 SLAM AP",
+        "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques",
+        "BTS SIO 2 : E4 - Support et mise à disposition de services informatiques",
+        "Ressources nécessaires"
+      ],
+      "courses": [
+        {
+          "slug": "activite_veille_e6",
+          "title": "Activité — Recherche documentaire (liste de sujets) — préparation E6",
+          "chapter": "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques",
+          "level": "sio",
+          "description": "Séance de 2 h : chaque étudiant ou binôme travaille un sujet imposé ou tiré au sort, et rend une fiche de synthèse"
+        },
+        {
+          "slug": "rgpd_cnil",
+          "title": "Attendus RGPD & CNIL",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Politique de collecte et protection des données personnelles : RGPD, CNIL et droits des citoyens"
+        },
+        {
+          "slug": "csharp_csv_bdd",
+          "title": "C# et les Données : Fichiers CSV et Bases de Données",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Apprendre à persister des données en C# : du fichier CSV simple à la base de données MariaDB."
+        },
+        {
+          "slug": "chiffrement_hachage",
+          "title": "Chiffrement et Hachage",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Fondamentaux de la cryptographie : chiffrement, hachage et signatures numériques"
+        },
+        {
+          "slug": "guideline_portefolio",
+          "title": "Construire son Portfolio Professionnel",
+          "chapter": "BTS SIO 2 : E4 - Support et mise à disposition de services informatiques",
+          "level": "sio",
+          "description": "Méthodologie pour l'épreuve E4 : Structure, Méthode STAR et choix technologiques."
+        },
+        {
+          "slug": "ds_poo_refuge_console",
+          "title": "DS : Gestion d'un refuge animalier (C# / POO)",
+          "chapter": "BTS SIO 1 SLAM",
+          "level": "sio",
+          "description": "Devoir surveillé de 2h — application console C# (encapsulation, héritage, polymorphisme)."
+        },
+        {
+          "slug": "Gestion_projet",
+          "title": "Gestion de Projet Informatique",
+          "chapter": "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques",
+          "level": "sio",
+          "description": "Fondamentaux de la gestion de projet, rôles, méthodes et outils"
+        },
+        {
+          "slug": "Gestion_risques",
+          "title": "Gestion des Risques",
+          "chapter": "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques",
+          "level": "sio",
+          "description": "Identification, analyse et traitement des risques en projet informatique"
+        },
+        {
+          "slug": "ITIL",
+          "title": "Introduction à ITIL",
+          "chapter": "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques",
+          "level": "sio",
+          "description": "Gestion des services informatiques et bonnes pratiques (ITIL v4)"
+        },
+        {
+          "slug": "introduction_cybersecurite",
+          "title": "Introduction à la cybersécurité",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Introduction aux concepts fondamentaux de la cybersécurité, les piliers CIA, les menaces courantes et la gestion des risques."
+        },
+        {
+          "slug": "introduction_poo",
+          "title": "Introduction à la POO en C#",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Les bases de la Programmation Orientée Objet : concepts, classes et objets."
+        },
+        {
+          "slug": "cours_heritage_csharp",
+          "title": "L'Héritage et le Polymorphisme en C#",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Approfondissement sur l'héritage, les classes abstraites et le polymorphisme."
+        },
+        {
+          "slug": "Chemin_critique",
+          "title": "Le Chemin Critique",
+          "chapter": "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques",
+          "level": "sio",
+          "description": "Méthode de planification et d'optimisation de projets"
+        },
+        {
+          "slug": "cours_interfaces_csharp",
+          "title": "Les interfaces en C#",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Cours détaillé sur les interfaces, l’injection de dépendances et l’architecture en couches."
+        },
+        {
+          "slug": "cours_tests_unitaires_csharp",
+          "title": "Les tests unitaires en C#",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Cours détaillé sur la démarche AAA, les tests nominaux/limites/exceptions et l’isolation de la logique métier."
+        },
+        {
+          "slug": "cours_linq_json_csharp",
+          "title": "LINQ et JSON en C#",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Cours détaillé sur les requêtes LINQ, la sérialisation JSON et la robustesse des traitements."
+        },
+        {
+          "slug": "Methodes_agiles",
+          "title": "Méthodes Agiles",
+          "chapter": "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques",
+          "level": "sio",
+          "description": "Introduction aux méthodes agiles (Scrum, Kanban) et à la gestion de projet moderne"
+        },
+        {
+          "slug": "missionap1",
+          "title": "Mission AP1",
+          "chapter": "BTS SIO 1 SLAM AP",
+          "level": "sio",
+          "description": "Construction d'un SITE pour le GEI (HTML PHP)"
+        },
+        {
+          "slug": "missionap2",
+          "title": "Mission AP2",
+          "chapter": "BTS SIO 1 SLAM AP",
+          "level": "sio",
+          "description": "Développement d'une application de gestion de flotte (C# / CSV / Web)"
+        },
+        {
+          "slug": "missionap3",
+          "title": "Mission AP3",
+          "chapter": "BTS SIO 1 SLAM AP",
+          "level": "sio",
+          "description": "Evolution de la mission AP2 vers une architecture MVC et une application graphique C#"
+        },
+        {
+          "slug": "Patrimoine_informatique",
+          "title": "Patrimoine Informatique",
+          "chapter": "BTS SIO 2 : B1 - Support et mise à disposition de services informatiques",
+          "level": "sio",
+          "description": "Recensement et identification des ressources numériques (SIO Bloc 1)"
+        },
+        {
+          "slug": "premiers_pas_csharp",
+          "title": "Premiers pas en C#",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Syntaxe, Conditions, Boucles et Listes"
+        },
+        {
+          "slug": "premiers_pas_python",
+          "title": "Premiers pas en Python",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Variables, Conditions, Fonctions, Boucles et Listes"
+        },
+        {
+          "slug": "projet_rpg_csharp",
+          "title": "Projet Fil Rouge : Création d'un jeu 'FoxMon' (Type Pokémon)",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "C#, Projet, POO, Héritage, Polymorphisme, Console, Pokemon"
+        },
+        {
+          "slug": "ressources_vehicules",
+          "title": "Ressouces : Flotte de véhicules",
+          "chapter": "Ressources nécessaires",
+          "level": "sio",
+          "description": "Durée : AP2"
+        },
+        {
+          "slug": "lab_cybersecurite",
+          "title": "Ressouces : Lab vulnérable",
+          "chapter": "Ressources nécessaires",
+          "level": "sio",
+          "description": "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
+        },
+        {
+          "slug": "cours_owasp_web",
+          "title": "Sécurité Web : OWASP, SQLi & XSS",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Cours complet sur le Top 10 OWASP, avec un focus technique sur les injections SQL et XSS (Préparation E5/E6)."
+        },
+        {
+          "slug": "tp_cesar_vigenere",
+          "title": "TP - Chiffrement et Déchiffrement",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Implémentation des chiffrements de César, Vigenère et RSA en Python."
+        },
+        {
+          "slug": "injections_sql",
+          "title": "TP - Sécurité Web : Injections SQL",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
+        },
+        {
+          "slug": "activite_mentions_legales",
+          "title": "TP : Audit RGPD d'un site web réel",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Durée : 2 heures · Objectif : Comprendre pour mieux protéger"
+        },
+        {
+          "slug": "exercices_poo",
+          "title": "TP : Les Bases de la POO en C#",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Classes, Objets, Propriétés, Constructeurs, Héritage"
+        },
+        {
+          "slug": "tp_remediation_poo",
+          "title": "TP Remédiation : Les Bases Absolues de la POO en C#",
+          "chapter": "BTS SIO 1 : B2 - Développement (SLAM)",
+          "level": "sio",
+          "description": "Classes, Objets, Constructeurs, Instance, Static"
+        },
+        {
+          "slug": "tp_injections_web",
+          "title": "TP SISR : Audit et Sécurisation d'une Application Web",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
+        },
+        {
+          "slug": "tp_blockchain_python",
+          "title": "TP SLAM : Création d'une mini blockchain",
+          "chapter": "BTS SIO 1 : B3 - CyberSécurité",
+          "level": "sio",
+          "description": "Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer"
+        }
+      ]
+    }
+  ],
+  "generatedAt": "2026-09-14T06:45:47.202Z"
+}

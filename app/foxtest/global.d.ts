@@ -4,5 +4,6 @@ export {};
 declare global {
   interface Window {
     loadPyodide?: (config?: { indexURL?: string }) => Promise<any>;
+    pyodide?: any;
   }
 }

@@ -1,0 +1,40 @@
+slug: web-qcm
+title: Web — QCM
+niveau: snt
+questions:
+  - id: web-qcm-1
+    label: Protocole HTTP
+    content: Quelle méthode HTTP est utilisée pour récupérer une ressource sans la modifier ?
+    type: qcm
+    difficulty: facile
+    choices:
+      - GET
+      - POST
+      - DELETE
+      - PATCH
+    answer: 0
+    notion: Web
+  - id: web-qcm-2
+    label: Code de statut
+    content: Que signifie le code HTTP 404 ?
+    type: qcm
+    difficulty: facile
+    choices:
+      - Ressource non trouvée
+      - Accès interdit
+      - Erreur serveur
+      - Redirection permanente
+    answer: 0
+    notion: Web
+  - id: web-qcm-3
+    label: URL
+    content: 'Dans une URL, quel composant identifie le protocole ?'
+    type: qcm
+    difficulty: moyen
+    choices:
+      - Le schéma (ex. https)
+      - Le port
+      - Le fragment
+      - Le chemin
+    answer: 0
+    notion: Web

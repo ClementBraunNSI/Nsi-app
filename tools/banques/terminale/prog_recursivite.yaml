@@ -1,0 +1,47 @@
+slug: prog_recursivite
+title: Récursivité
+niveau: terminale
+source: content/3/prog_recursivite.md
+questions:
+  - id: rec-ex-1
+    label: Somme Récursive
+    content: |-
+      ### Somme des entiers
+          Écrivez une fonction récursive `somme(n)` qui calcule la somme des entiers de 0 à `n`.
+          *   Exemple : `somme(4)` doit renvoyer `4 + 3 + 2 + 1 + 0 = 10`.
+          
+          **Indices :**
+          *   Cas de base : Quelle est la somme si n = 0 ?
+          *   Récursion : `somme(n) = n + somme(...)` ?
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Langages et Programmation
+  - id: rec-ex-2
+    label: Fibonacci
+    content: "### Suite de Fibonacci \U0001F430\n    La suite est définie par :\n    *   $F_0 = 0$\n    *   $F_1 = 1$\n    *   $F_n = F_{n-1} + F_{n-2}$ pour $n \\ge 2$\n    \n    Écrivez la fonction récursive `fibonacci(n)`."
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Langages et Programmation
+  - id: rec-ex-3
+    label: Palindrome
+    content: |-
+      ### Détection de Palindrome
+          Un palindrome se lit pareil dans les deux sens (ex: "LAVAL", "RADAR").
+          Écrivez une fonction récursive `est_palindrome(mot)` qui renvoie `True` ou `False`.
+          
+          **Principe :**
+          *   Si le mot a 0 ou 1 lettre -> C'est un palindrome (Base).
+          *   Si la première et la dernière lettre sont différentes -> Faux.
+          *   Sinon -> On teste le sous-mot sans la première ni la dernière lettre.
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: terminale
+    notion: Langages et Programmation

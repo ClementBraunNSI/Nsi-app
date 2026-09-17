@@ -1,0 +1,29 @@
+{
+  "name": "nsi-outils-enseignants",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "workspaces": [
+    "shared",
+    "generateur-eval",
+    "correcteur-python",
+    "conseil-classe",
+    "planificateur",
+    "banque-qcm",
+    "suivi-projets"
+  ],
+  "scripts": {
+    "extract": "node shared/extract-notions.mjs && node shared/extract-banks.mjs",
+    "dev:sujetlab": "npm run dev -w sujetlab",
+    "dev:correctpy": "npm run dev -w correctpy",
+    "dev:conseilnote": "npm run dev -w conseilnote",
+    "dev:plannsi": "npm run dev -w plannsi",
+    "dev:qcmforge": "npm run dev -w qcmforge",
+    "dev:projetsuivi": "npm run dev -w projetsuivi",
+    "build:shared": "npm run build -w @nsi-tools/shared",
+    "build:all": "npm run build:shared && npm run build --workspaces --if-present",
+    "pack:offline": "node scripts/pack-offline.mjs",
+    "prepare:pages": "node scripts/prepare-gh-pages.mjs",
+    "deploy:prepare": "npm run build:all && npm run prepare:pages && npm run pack:offline"
+  }
+}

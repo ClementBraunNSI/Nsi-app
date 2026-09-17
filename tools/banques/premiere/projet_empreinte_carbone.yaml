@@ -1,0 +1,16 @@
+slug: projet_empreinte_carbone
+title: 'Variables : Calculateur d''''Empreinte Carbone'
+niveau: premiere
+source: content/2/projet_empreinte_carbone.md
+questions:
+  - id: proj-carb-1
+    label: À vous de jouer !
+    content: |-
+      À vous de coder ! Suivez les étapes ci-dessus pour réaliser votre propre calculateur.
+          N'hésitez pas à ajouter votre touche personnelle (couleurs, messages drôles, etc.).
+    difficulty: !<tag:yaml.org,2002:js/undefined> ''
+    type: ouvert
+    correction: !<tag:yaml.org,2002:js/undefined> ''
+    verificationCode: !<tag:yaml.org,2002:js/undefined> ''
+    niveau: premiere
+    notion: Projets

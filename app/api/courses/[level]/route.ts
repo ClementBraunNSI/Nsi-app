@@ -1,8 +1,9 @@
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
 import { NextResponse } from "next/server";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
+import { contentFolderFromParam, urlSlugFromFolder } from "@/lib/nsi-levels";
+import { isRestrictedCourse } from "@/lib/course-access";
 
 type CourseItem = {
   title: string;
@@ -14,23 +15,25 @@ type CourseItem = {
 
 export async function GET(_: Request, { params }: { params: Promise<{ level: string }> }) {
   const { level } = await params;
-  const levelDir = path.join(process.cwd(), "content", level);
-  if (!fs.existsSync(levelDir)) return NextResponse.json({ courses: [] });
+  const folder = contentFolderFromParam(level);
+  if (!folder) return NextResponse.json({ courses: [] });
 
-  const entries = listMarkdownFilesForContentLevel(level);
-  const courses: CourseItem[] = entries.map(({ filePath, slug }) => {
-    const raw = fs.readFileSync(filePath, "utf8");
-    const { data } = matter(raw);
-    return {
+  const entries = listMarkdownFilesForContentLevel(folder);
+  const courses: CourseItem[] = entries
+    .map(({ filePath, slug }) => {
+      const raw = fs.readFileSync(filePath, "utf8");
+      const { data } = matter(raw);
+      return { data, slug };
+    })
+    .filter(({ data }) => !isRestrictedCourse(data))
+    .map(({ slug, data }) => ({
       title: String(data.title || slug),
       slug,
       chapter: String(data.chapter || "Cours"),
       badgeId: String(data.badgeId || slug),
-      level,
-    };
-  });
+      level: urlSlugFromFolder(folder),
+    }));
 
   courses.sort((a, b) => a.chapter.localeCompare(b.chapter, "fr") || a.title.localeCompare(b.title, "fr"));
   return NextResponse.json({ courses });
 }
-

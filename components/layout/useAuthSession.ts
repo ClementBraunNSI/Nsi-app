@@ -27,7 +27,13 @@ export function useAuthSession() {
       setUser(session?.user ?? null);
       if (event === "SIGNED_IN" && session) {
         const nextRole = await loadRole(session.user.id);
-        router.push(nextRole === "admin" ? "/admin/dashboard" : "/student/dashboard");
+        if (window.location.pathname === "/connexion") {
+          const next = new URLSearchParams(window.location.search).get("next");
+          const safe = next && next.startsWith("/") && !next.startsWith("//") ? next : null;
+          router.push(safe || (nextRole === "admin" || nextRole === "enseignant" ? "/admin" : "/espace"));
+        } else {
+          router.refresh();
+        }
       }
       if (event === "SIGNED_OUT") {
         setRole(null);

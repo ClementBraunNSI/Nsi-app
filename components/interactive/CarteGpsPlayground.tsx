@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import Editor from '@monaco-editor/react';
 import { Play, RotateCcw, MapPin, Terminal, AlertTriangle, Loader2 } from 'lucide-react';
 import { loadPythonPackages } from '@/lib/pyodide-packages';
+import SimpleCodeEditor from './SimpleCodeEditor';
 
 interface CarteGpsPlaygroundProps {
   initialCode?: string;
@@ -197,20 +197,13 @@ else:
       </div>
 
       <div className="border-b border-slate-200" style={{ height: editorHeight }}>
-        <Editor
+        <SimpleCodeEditor
           height="100%"
-          defaultLanguage="python"
+          language="python"
           value={code}
-          onChange={(value) => setCode(value || '')}
-          theme="light"
-          options={{
-            minimap: { enabled: false },
-            fontSize: 14,
-            lineNumbers: 'on',
-            scrollBeyondLastLine: false,
-            automaticLayout: true,
-            padding: { top: 16, bottom: 16 },
-          }}
+          onChange={setCode}
+          ariaLabel="Code Python de la carte GPS"
+          dark={false}
         />
       </div>
 

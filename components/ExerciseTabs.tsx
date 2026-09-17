@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from './AchievementUnlockedModal';
 import SuccessModal from './SuccessModal';
+import InteractiveShell from './interactive/InteractiveShell';
 
 interface TabProps {
   id: string;
@@ -601,7 +602,11 @@ export function ExerciseTabs({
   };
 
   return (
-    <div className="w-full mt-10">
+    <InteractiveShell
+      title={courseTitle || "Parcours d'exercices"}
+      description="Le renard garde ta progression : choisis une difficulté, puis avance exercice par exercice."
+    >
+    <div className="w-full">
       {showModal && <SuccessModal courseTitle={courseTitle} onConfirm={handleValidateBadge} />}
 
       {unlockedAchievement && (
@@ -685,6 +690,7 @@ export function ExerciseTabs({
         })()}
       </div>
     </div>
+    </InteractiveShell>
   );
 }
 
