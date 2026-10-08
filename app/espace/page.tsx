@@ -66,8 +66,8 @@ export default function StudentDashboard() {
           setProfile(data);
           // Fetch cours standards pour ce niveau
           if (LEVEL_MAP[data.level]) {
-            const code = LEVEL_MAP[data.level].code;
-            const res = await fetch(`/api/courses/${code}`);
+            const slug = LEVEL_MAP[data.level].slug;
+            const res = await fetch(`/api/courses/${slug}`);
             const courseData = await res.json();
             setCourses(courseData.courses || []);
           }
@@ -167,7 +167,7 @@ export default function StudentDashboard() {
         <PageHeader
           eyebrow={<span className="inline-flex items-center gap-2"><GraduationCap size={14} /> Espace élève</span>}
           title={profile?.full_name || "Élève"}
-          description={currentLevelInfo ? `${currentLevelInfo.label} (Niveau ${currentLevelInfo.code})` : "Niveau non défini"}
+          description={currentLevelInfo ? currentLevelInfo.label : "Niveau non défini"}
           actions={
             <div className="flex gap-3">
             <button 
@@ -294,7 +294,7 @@ export default function StudentDashboard() {
                   duration={estimateLessonDuration(course.slug)}
                   tag={course.chapter}
                   slug={course.slug}
-                  levelCode={currentLevelInfo?.code}
+                  levelCode={currentLevelInfo?.slug}
                 />
               ))
             ) : (

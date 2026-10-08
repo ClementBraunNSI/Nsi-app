@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ niveaux: 
   const folder = contentFolderFromParam(niveaux);
   const filePath = folder ? resolveCourseFile(folder, slugStr) : null;
 
-  if (!filePath) {
+  if (!folder || !filePath) {
     return {
       title: 'Cours non trouvé',
     };
@@ -164,7 +164,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   const folder = contentFolderFromParam(niveaux);
   const filePath = folder ? resolveCourseFile(folder, slugStr) : null;
 
-  if (!filePath) {
+  if (!folder || !filePath) {
     return (
       <ResourceNotFound
         title="Cours non trouvé"
