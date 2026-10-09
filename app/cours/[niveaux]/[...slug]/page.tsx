@@ -62,6 +62,7 @@ export async function generateMetadata({ params }: { params: Promise<{ niveaux: 
 import { ExerciseTabs, ExerciseSection, Correction, Enonce, Verification } from '@/components/ExerciseTabs';
 import { Admonition } from '@/components/Admonition';
 import { transformAdmonitions } from '@/lib/admonition-utils';
+import { markEmbeddableSections } from '@/lib/exercise-classification';
 // Widgets interactifs MDX: lazy-load pour réduire le bundle "cours"
 // (beaucoup de ces composants chargent des lib lourdes: Monaco, Pyodide, Leaflet, ReactFlow, etc.)
 const SqlEditor = dynamic(() => import('@/components/SqlEditor'), { loading: () => null });
@@ -238,7 +239,7 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   }
 
   // Transformation des admonitions (!!! type "titre") en composants React (<Admonition>)
-  const contentWithAdmonitions = transformAdmonitions(content);
+  const contentWithAdmonitions = transformAdmonitions(markEmbeddableSections(content, folder));
 
   // Navigation entre les cours
   const { prev, next } = getAdjacentCourses(folder, slugStr);

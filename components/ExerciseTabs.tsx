@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Check, CheckCircle2, Code2, Trophy } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, Check, CheckCircle2, Code2, Trophy } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from './AchievementUnlockedModal';
@@ -397,6 +398,8 @@ function ExerciseProgressBar({ total, completed }: { total: number, completed: n
 
 
 
+const PracticeContext = React.createContext(false);
+
 export function ExerciseTabs({
   children,
   courseId,
@@ -411,6 +414,7 @@ export function ExerciseTabs({
   const [activeTab, setActiveTab] = useState(childrenArray[0]?.props.id);
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
+  const [canPractice, setCanPractice] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [hasBadge, setHasBadge] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
@@ -449,6 +453,8 @@ export function ExerciseTabs({
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
         setUserId(session.user.id);
+        const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).maybeSingle();
+        setCanPractice(profile?.role === 'student' || profile?.role === 'invite');
         
         // Récupération de la progression
         const { data: progressData } = await supabase
@@ -472,43 +478,6 @@ export function ExerciseTabs({
     };
     fetchProgress();
   }, [courseId]);
-
-  const toggleComplete = async (e: React.MouseEvent, exerciseId: string) => {
-    e.preventDefault(); e.stopPropagation();
-    if (!userId) {
-      console.log("Utilisateur non connecté");
-      return;
-    }
-
-    const isDone = completedIds.includes(exerciseId);
-    if (isDone) {
-      const { error } = await supabase.from('user_progress').delete().eq('exercise_id', exerciseId).eq('user_id', userId);
-      if (error) {
-        console.error("Erreur suppression progression:", error);
-      } else {
-        setCompletedIds(prev => prev.filter(id => id !== exerciseId));
-      }
-    } else {
-      // Utilisation de upsert pour éviter les erreurs de doublons (onConflict sur user_id, exercise_id)
-      const { error } = await supabase.from('user_progress').upsert(
-        { exercise_id: exerciseId, user_id: userId, course_id: courseId },
-        { onConflict: 'user_id, exercise_id' }
-      );
-      
-      if (error) {
-        console.error("Erreur insertion progression:", error);
-        alert("Impossible de sauvegarder la progression. Vérifiez vos droits d'accès.");
-      } else {
-        const newCompleted = [...completedIds, exerciseId];
-        setCompletedIds(newCompleted);
-        
-        // DÉCLENCHEMENT DE LA MODAL SI 100% ET PAS ENCORE DE BADGE
-        if (newCompleted.length === childrenArray.length && !hasBadge) {
-          setShowModal(true);
-        }
-      }
-    }
-  };
 
   const handleValidateBadge = async () => {
     if (!userId) return;
@@ -602,12 +571,15 @@ export function ExerciseTabs({
   };
 
   return (
+    <PracticeContext.Provider value={canPractice}>
     <InteractiveShell
       title={courseTitle || "Parcours d'exercices"}
       description="Le renard garde ta progression : choisis une difficulté, puis avance exercice par exercice."
     >
     <div className="w-full">
-      {showModal && <SuccessModal courseTitle={courseTitle} onConfirm={handleValidateBadge} />}
+      {showModal && (
+        <SuccessModal courseTitle={courseTitle} courseId={courseId} onConfirm={handleValidateBadge} />
+      )}
 
       {unlockedAchievement && (
         <AchievementUnlockedModal 
@@ -691,6 +663,7 @@ export function ExerciseTabs({
       </div>
     </div>
     </InteractiveShell>
+    </PracticeContext.Provider>
   );
 }
 
@@ -744,6 +717,26 @@ export function Verification({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function ExerciseSection({ children }: TabProps) {
-  return <div>{children}</div>;
+export function ExerciseSection({ id, children, embeddable = 'yes' }: TabProps & { embeddable?: boolean | string }) {
+  const canPractice = React.useContext(PracticeContext);
+  const nodes = React.Children.toArray(children);
+  const showEditor = embeddable !== false && embeddable !== 'no';
+  if (canPractice && id && showEditor) {
+    const button = (
+      <Link
+        key="realiser"
+        href={`/exercice/${encodeURIComponent(id)}`}
+        className="exercise-start"
+      >
+        Réaliser l’exercice
+        <ArrowRight size={16} aria-hidden="true" />
+      </Link>
+    );
+    const enonceIndex = nodes.findIndex(
+      (node) => React.isValidElement(node) && node.type === Enonce
+    );
+    if (enonceIndex >= 0) nodes.splice(enonceIndex + 1, 0, button);
+    else nodes.push(button);
+  }
+  return <div>{nodes}</div>;
 }

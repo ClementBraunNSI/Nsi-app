@@ -23,7 +23,6 @@ type Props = {
 const NAV = [
   { href: "/", label: "Accueil", match: (path: string) => path === "/" },
   { href: "/cours", label: "Cours", match: (path: string) => path === "/cours" || path.startsWith("/cours/") },
-  { href: "/lab", label: "Lab", match: (path: string) => path === "/lab" || path.startsWith("/lab/") },
   { href: "/academie", label: "Académie", match: (path: string) => path.startsWith("/academie") || path.startsWith("/foxtest") },
   { href: "/a-propos", label: "À propos", match: (path: string) => path === "/a-propos" },
 ];

@@ -8,13 +8,13 @@ import {
   Calendar,
   CheckCircle2,
   ClipboardList,
-  FlaskConical,
   MessageSquare,
   Send,
   Target,
   Trophy,
 } from "lucide-react";
 import { Badge, Button, Card, EmptyState, PageHeader, SectionTitle } from "@/components/ui";
+import { SheetBadgeFox } from "@/components/fox/SheetBadgeFox";
 import {
   markHomeworkDone,
   sendStudentMessage,
@@ -51,7 +51,6 @@ function formatDay(iso: string) {
 
 function homeworkHref(item: EspaceHomework) {
   if (item.page_path && item.page_path.startsWith("/")) return item.page_path;
-  if (item.course_id) return `/lab?fiche=${encodeURIComponent(item.course_id)}`;
   return null;
 }
 
@@ -170,7 +169,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                       </div>
                       {item.status === "done" ? (
                         <Badge tone="emerald">Fait</Badge>
-                      ) : (
+                      ) : item.exerciseTotal === 0 ? (
                         <Button
                           size="sm"
                           variant="ghost"
@@ -186,10 +185,15 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                             });
                           }}
                         >
-                          Fait
+                          J’ai terminé
                         </Button>
-                      )}
+                      ) : null}
                     </div>
+                    {item.exerciseTotal > 0 && item.status !== "done" && (
+                      <p className="mt-2 text-xs font-semibold text-[var(--muted)]">
+                        {item.exerciseDone}/{item.exerciseTotal} exercices validés
+                      </p>
+                    )}
                     {homeworkHref(item) && (
                       <Link
                         href={homeworkHref(item)!}
@@ -285,7 +289,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
         <section>
           <SectionTitle
             title="Travail en cours"
-            description="Les chapitres travaillés ensemble. Chaque exercice se valide dans le Lab avec son jeu de tests."
+            description="Les chapitres travaillés ensemble. Chaque exercice se valide en passant ses tests."
           />
 
           {chapters.length === 0 ? (
@@ -301,10 +305,18 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                   <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--muted)]">{chapter}</h3>
                   {sheets.map((sheet) => {
                     const percent = sheet.total ? Math.round((sheet.completedCount / sheet.total) * 100) : 0;
+                    const nextExercise = sheet.exercises.find((exercise) => !exercise.completed) || sheet.exercises[0];
                     return (
                       <Card key={sheet.courseId} padding="md">
                         <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-                          <div>
+                          <div className="flex items-start gap-3">
+                            <SheetBadgeFox
+                              courseId={sheet.courseId}
+                              title={sheet.courseTitle}
+                              earned={sheet.badgeUnlocked}
+                              size={64}
+                            />
+                            <div>
                             <div className="flex items-center gap-2">
                               <h4 className="font-semibold text-lg">{sheet.courseTitle}</h4>
                               {sheet.badgeUnlocked && <Badge tone="orange">Badge</Badge>}
@@ -313,14 +325,16 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                               {sheet.completedCount}/{sheet.total || "?"} exercices
                               {percent ? ` · ${percent}%` : ""}
                             </p>
+                            </div>
                           </div>
-                          <Link
-                            href={`/lab?fiche=${encodeURIComponent(sheet.courseId)}`}
-                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-[var(--accent-fg)]"
-                          >
-                            <FlaskConical size={14} />
-                            Continuer dans le Lab
-                          </Link>
+                          {nextExercise && (
+                            <Link
+                              href={`/exercice/${encodeURIComponent(nextExercise.id)}`}
+                              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-[var(--accent-fg)]"
+                            >
+                              Continuer l’exercice
+                            </Link>
+                          )}
                         </div>
                         <div className="h-1.5 rounded-full bg-[var(--surface-2)] mb-4">
                           <div
@@ -348,10 +362,10 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                                     </span>
                                   ) : (
                                     <Link
-                                      href={`/lab?fiche=${encodeURIComponent(sheet.courseId)}&ex=${encodeURIComponent(exercise.id)}`}
+                                      href={`/exercice/${encodeURIComponent(exercise.id)}`}
                                       className="text-xs font-semibold text-orange-600 hover:underline"
                                     >
-                                      Faire l’exercice
+                                      Réaliser l’exercice
                                     </Link>
                                   )}
                                 </div>
@@ -394,8 +408,13 @@ export function EspacePanel({ data }: { data: EspaceData }) {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {data.badges.map((badge) => (
                 <div key={badge.id} className="rounded-2xl border border-[var(--border)] p-4 text-center">
-                  <Award className="mx-auto text-orange-500 mb-2" size={22} />
-                  <p className="font-semibold text-sm">{badge.badge_name}</p>
+                  <SheetBadgeFox
+                    courseId={badge.course_id}
+                    title={badge.badge_name}
+                    size={84}
+                    className="mx-auto"
+                  />
+                  <p className="font-semibold text-sm mt-2">{badge.badge_name}</p>
                 </div>
               ))}
             </div>

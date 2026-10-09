@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Command, ArrowRight, Zap, Hash, FileText } from 'lucide-react';
+import { Search, Command, ArrowRight, Hash, FileText } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
 interface CommandItem {
@@ -22,10 +22,8 @@ export default function CommandPalette() {
   // Mock Data (To be replaced with real data fetch)
   const commands: CommandItem[] = [
     { id: 'home', title: 'Aller à l\'Accueil', category: 'Pages', icon: <Hash size={16} />, action: () => router.push('/') },
-    { id: 'lab', title: 'Aller au Lab', category: 'Pages', icon: <Zap size={16} />, action: () => router.push('/lab') },
     { id: 'dicho', title: 'Cours : Dichotomie', category: 'Cours', icon: <FileText size={16} />, action: () => router.push('/cours/2/algo_dichotomie') },
     { id: 'python', title: 'Cours : Python — Constructions', category: 'Cours', icon: <FileText size={16} />, action: () => router.push('/cours/2/python_constructions_elementaires') },
-    { id: 'sort', title: 'Visualiseur de Tris', category: 'Actions', icon: <Zap size={16} />, action: () => router.push('/lab/sorting') },
   ];
 
   const filteredCommands = commands.filter(cmd => 

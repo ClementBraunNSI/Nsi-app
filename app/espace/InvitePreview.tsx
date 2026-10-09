@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { BookOpen, FlaskConical, GraduationCap } from "lucide-react";
+import { BookOpen, GraduationCap } from "lucide-react";
 import { Card, PageHeader } from "@/components/ui";
 
 const LINKS = [
-  { href: "/cours", label: "Cours", text: "Parcourir les parcours publics.", icon: BookOpen },
-  { href: "/lab", label: "Lab", text: "Ouvrir les exercices ouverts.", icon: FlaskConical },
+  { href: "/cours", label: "Cours", text: "Parcourir les parcours publics. Chaque exercice s’ouvre depuis sa fiche.", icon: BookOpen },
   { href: "/academie", label: "Académie", text: "Explorer l’académie.", icon: GraduationCap },
 ];
 
@@ -17,7 +16,7 @@ export function InvitePreview({ name }: { name: string }) {
           title={name}
           description="Tu peux te promener dans les pages publiques du site."
         />
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2">
           {LINKS.map((item) => (
             <Link key={item.href} href={item.href}>
               <Card className="h-full hover:border-[var(--accent)] transition-colors">

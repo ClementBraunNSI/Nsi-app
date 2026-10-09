@@ -5,6 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import { getAuthContext } from '@/lib/auth';
 import { achievementForSheet, type Achievement } from '@/lib/achievements';
 import { getExercisesForCourses } from '@/app/actions/getExercises';
+import { syncMyHomework } from '@/app/actions/homeworkCompletion';
 
 export type ValidationResult = {
   error: string | null;
@@ -27,6 +28,9 @@ export async function saveValidatedExercise(input: {
 
   const auth = await getAuthContext();
   if (!auth.user) return { ...empty, error: 'unauthenticated' };
+  if (auth.role !== 'student' && auth.role !== 'invite') {
+    return { ...empty, error: 'forbidden' };
+  }
 
   const exerciseId = String(input.exerciseId || '').trim();
   const courseId = String(input.courseId || '').trim();
@@ -47,7 +51,12 @@ export async function saveValidatedExercise(input: {
 
   if (error) return { ...empty, error: 'save_failed' };
 
+  await syncMyHomework();
+
   const sheetExercises = await getExercisesForCourses([courseId]);
+  if (!sheetExercises.some((exercise) => exercise.id === exerciseId)) {
+    return { ...empty, error: 'invalid' };
+  }
   const { data: progress } = await supabase
     .from('user_progress')
     .select('exercise_id')

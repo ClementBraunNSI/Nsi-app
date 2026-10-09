@@ -7,6 +7,8 @@ import matter from 'gray-matter';
 import { getAuthContext, type AuthContext } from '@/lib/auth';
 import { canAccessCourse } from '@/lib/course-access';
 import { contentRoot } from '@/lib/content-path';
+import { classifySection, type ExternalRuntime } from '@/lib/exercise-classification';
+import { coursePath } from '@/lib/nsi-levels';
 
 export interface LabExercise {
   id: string;
@@ -23,7 +25,18 @@ export interface LabExercise {
   access?: 'private' | 'public';
   type: 'python' | 'sql';
   hasVerification: boolean;
+  pagePath?: string;
 }
+
+export type ExternalExercise = {
+  id: string;
+  label: string;
+  courseTitle: string;
+  pagePath?: string;
+  runtime: ExternalRuntime;
+  access?: 'private' | 'public';
+  allowedStudents?: string[];
+};
 
 export type ExerciseSheet = {
   courseId: string;
@@ -61,7 +74,7 @@ function getFilesRecursively(dir: string): string[] {
   return results;
 }
 
-function exerciseIsAccessible(ex: LabExercise, auth: AuthContext) {
+function exerciseIsAccessible(ex: { access?: 'private' | 'public'; allowedStudents?: string[] }, auth: AuthContext) {
   return canAccessCourse(
     {
       access: ex.access || (ex.allowedStudents?.length ? 'private' : 'public'),
@@ -76,11 +89,12 @@ function exerciseIsAccessible(ex: LabExercise, auth: AuthContext) {
   );
 }
 
-function buildExerciseCatalog(): LabExercise[] {
+function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalExercise[] } {
   const contentDir = contentRoot();
-  if (!fs.existsSync(contentDir)) return [];
+  if (!fs.existsSync(contentDir)) return { exercises: [], external: [] };
 
   const exercises: LabExercise[] = [];
+  const external: ExternalExercise[] = [];
   const levels = fs.readdirSync(contentDir).filter(f => !f.startsWith('.'));
 
   const LEVEL_MAPPING: Record<string, string> = {
@@ -118,9 +132,6 @@ function buildExerciseCatalog(): LabExercise[] {
   };
 
   for (const level of levels) {
-    // Filter out level 4 (BTS SIO) as requested
-    if (level === '4') continue;
-
     const levelPath = path.join(contentDir, level);
     if (!fs.statSync(levelPath).isDirectory()) continue;
 
@@ -164,6 +175,18 @@ function buildExerciseCatalog(): LabExercise[] {
             : [];
           const pythonPackages = [...new Set([...coursePackages, ...sectionPackages])];
           const rawContent = match[2]; // Don't trim yet to preserve relative indentation for dedent
+          const beforeSection = content.slice(0, match.index);
+          const tabOpenings = [...beforeSection.matchAll(/<ExerciseTabs\b([^>]*)>/g)];
+          const nearestTabs = tabOpenings.at(-1)?.[1] ?? '';
+          const nearestCourseId = nearestTabs.match(/\bcourseId="([^"]*)"/)?.[1] || courseId;
+          const nearestCourseTitle = nearestTabs.match(/\bcourseTitle="([^"]*)"/)?.[1] || courseTitle;
+          const kind = classifySection({
+            label: sectionLabel,
+            body: rawContent,
+            levelFolder: level,
+            courseId: nearestCourseId,
+            courseTitle: nearestCourseTitle,
+          });
           
           // Try to find <Enonce> content
           const enonceRegex = /<Enonce>([\s\S]*?)<\/Enonce>/;
@@ -201,12 +224,25 @@ function buildExerciseCatalog(): LabExercise[] {
           const rawLevel = /^[0-4]$/.test(level) ? level : (data.level || level);
           const normalizedLevel = LEVEL_MAPPING[String(rawLevel).toLowerCase()] || rawLevel;
 
-          // Determine type based on courseId or title
-          const isSql = (courseId && courseId.toLowerCase().includes('sql')) || 
-                        (courseTitle && courseTitle.toLowerCase().includes('sql'));
           const relParts = path.relative(contentDir, filePath).split(path.sep);
           const privateLesson = relParts[0] === 'particuliers' && relParts.length >= 3;
           const markedPrivate = String(data.access || '').toLowerCase() === 'private';
+          const access = privateLesson || markedPrivate ? 'private' as const : 'public' as const;
+          const pagePath = coursePath(relParts[0], relParts.slice(1).join('/').replace(/\.mdx?$/, ''));
+
+          if (kind.role === 'external') {
+            external.push({
+              id: sectionId,
+              label: sectionLabel,
+              courseTitle: nearestCourseTitle,
+              pagePath,
+              runtime: kind.runtime,
+              allowedStudents: data.allowedStudents,
+              access,
+            });
+            continue;
+          }
+          if (kind.role !== 'exercise') continue;
 
           exercises.push({
             id: sectionId,
@@ -220,9 +256,10 @@ function buildExerciseCatalog(): LabExercise[] {
             level: normalizedLevel,
             fileName: fileName.replace(/\.mdx?$/, ''),
             allowedStudents: data.allowedStudents,
-            access: privateLesson || markedPrivate ? 'private' : 'public',
-            type: isSql ? 'sql' : 'python',
+            access,
+            type: kind.runtime,
             hasVerification: Boolean(verificationCode),
+            pagePath,
           });
         }
       }
@@ -252,12 +289,12 @@ function buildExerciseCatalog(): LabExercise[] {
     uniqueExercises.push({ ...ex, id: finalId });
   }
 
-  return uniqueExercises;
+  return { exercises: uniqueExercises, external };
 }
 
 export async function getAllExercises(): Promise<LabExercise[]> {
   const auth = await getAuthContext();
-  return buildExerciseCatalog()
+  return buildExerciseCatalog().exercises
     .filter((ex) => exerciseIsAccessible(ex, auth))
     .map(toPublicExercise);
 }
@@ -268,9 +305,33 @@ export async function getExercisesForCourses(courseIds: string[]): Promise<LabEx
 
   const allowed = new Set(ids);
   const auth = await getAuthContext();
-  return buildExerciseCatalog()
+  return buildExerciseCatalog().exercises
     .filter((ex) => allowed.has(ex.courseId) && exerciseIsAccessible(ex, auth))
     .map(toPublicExercise);
+}
+
+export type TrackedExercise = {
+  id: string;
+  label: string;
+  courseId: string;
+  courseTitle: string;
+  chapter: string;
+  level: string;
+};
+
+/** Exercices Python/SQL suivis. Les points de cours et le BTS (hors éditeur) n'y figurent pas. */
+export async function listTrackedExercises(): Promise<TrackedExercise[]> {
+  const auth = await getAuthContext();
+  if (!auth.user || !auth.isElevated) return [];
+
+  return buildExerciseCatalog().exercises.map((exercise) => ({
+    id: exercise.id,
+    label: exercise.label,
+    courseId: exercise.courseId,
+    courseTitle: exercise.courseTitle,
+    chapter: exercise.chapter,
+    level: exercise.level,
+  }));
 }
 
 export async function listExerciseSheets(): Promise<ExerciseSheet[]> {
@@ -278,7 +339,7 @@ export async function listExerciseSheets(): Promise<ExerciseSheet[]> {
   if (!auth.isElevated) return [];
 
   const sheets = new Map<string, ExerciseSheet>();
-  for (const ex of buildExerciseCatalog()) {
+  for (const ex of buildExerciseCatalog().exercises) {
     const current = sheets.get(ex.courseId);
     if (current) {
       current.exerciseCount += 1;
@@ -301,12 +362,42 @@ export async function listExerciseSheets(): Promise<ExerciseSheet[]> {
   );
 }
 
+export async function getExerciseById(exerciseId: string): Promise<LabExercise | null> {
+  const id = String(exerciseId || '').trim();
+  if (!id || id.length > 200) return null;
+
+  const auth = await getAuthContext();
+  if (!auth.user || auth.isElevated) return null;
+
+  const exercise = buildExerciseCatalog().exercises.find((item) => item.id === id);
+  if (!exercise || !exerciseIsAccessible(exercise, auth)) return null;
+  return toPublicExercise(exercise);
+}
+
+/** Exercice présent sur une fiche, mais pas réalisable dans l'éditeur Python/SQL. */
+export async function getExternalExercise(exerciseId: string): Promise<ExternalExercise | null> {
+  const id = String(exerciseId || '').trim();
+  if (!id || id.length > 200) return null;
+
+  const auth = await getAuthContext();
+  if (!auth.user || auth.isElevated) return null;
+
+  const exercise = buildExerciseCatalog().external.find((item) => item.id === id);
+  if (!exercise || !exerciseIsAccessible(exercise, auth)) {
+    return null;
+  }
+  const { allowedStudents: _allowed, access: _access, ...rest } = exercise;
+  return rest;
+}
+
 export async function getExerciseVerification(exerciseId: string): Promise<string | null> {
   const id = String(exerciseId || '').trim();
   if (!id || id.length > 200) return null;
 
   const auth = await getAuthContext();
-  const exercise = buildExerciseCatalog().find((item) => item.id === id);
+  if (!auth.user || (auth.role !== 'student' && auth.role !== 'invite')) return null;
+
+  const exercise = buildExerciseCatalog().exercises.find((item) => item.id === id);
   if (!exercise || !exerciseIsAccessible(exercise, auth)) return null;
   return exercise.verificationCode ?? null;
 }

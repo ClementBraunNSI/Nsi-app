@@ -4,6 +4,8 @@ import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
 import { getAuthContext } from '@/lib/auth';
 import { getExercisesForCourses } from '@/app/actions/getExercises';
+import { syncMyHomework } from '@/app/actions/homeworkCompletion';
+import { exerciseIdsForPage } from '@/lib/page-exercises';
 import { ACHIEVEMENTS } from '@/lib/achievements';
 
 export type EspaceHomework = {
@@ -16,6 +18,8 @@ export type EspaceHomework = {
   page_title: string | null;
   status: 'assigned' | 'done';
   shared: boolean;
+  exerciseDone: number;
+  exerciseTotal: number;
 };
 
 export type EspaceLesson = {
@@ -92,6 +96,7 @@ async function findTeacher(
 export async function getStudentEspaceData(): Promise<EspaceData | null> {
   const auth = await getAuthContext();
   if (!auth.user || auth.role === 'invite') return null;
+  if (auth.role === 'student') await syncMyHomework();
   const userId = auth.user.id;
 
   const supabase = await createClient();
@@ -157,29 +162,40 @@ export async function getStudentEspaceData(): Promise<EspaceData | null> {
     .eq('user_id', userId);
   const doneShared = new Set((completionRes.data || []).map((row) => row.homework_id));
 
+  const completedExerciseIds = new Set((progressRes.data || []).map((row) => row.exercise_id));
+  const withProgress = (row: {
+    id: string;
+    title: string;
+    description: string | null;
+    due_at: string | null;
+    course_id: string | null;
+    page_path: string | null;
+    page_title: string | null;
+    status: string;
+  }, shared: boolean): EspaceHomework => {
+    const ids = exerciseIdsForPage(row.page_path);
+    const exerciseDone = ids.filter((id) => completedExerciseIds.has(id)).length;
+    const finished = ids.length > 0 && exerciseDone === ids.length;
+    return {
+      id: row.id,
+      title: row.title,
+      description: row.description,
+      due_at: row.due_at,
+      course_id: row.course_id,
+      page_path: row.page_path,
+      page_title: row.page_title,
+      status: (finished || row.status === 'done' ? 'done' : 'assigned') as 'assigned' | 'done',
+      shared,
+      exerciseDone,
+      exerciseTotal: ids.length,
+    };
+  };
+
   const homework: EspaceHomework[] = [
-    ...(homeworkRes.data || []).map((row) => ({
-      id: row.id,
-      title: row.title,
-      description: row.description,
-      due_at: row.due_at,
-      course_id: row.course_id,
-      page_path: row.page_path,
-      page_title: row.page_title,
-      status: row.status as 'assigned' | 'done',
-      shared: false,
-    })),
-    ...(classHomeworkRes.data || []).map((row) => ({
-      id: row.id,
-      title: row.title,
-      description: row.description,
-      due_at: row.due_at,
-      course_id: row.course_id,
-      page_path: row.page_path,
-      page_title: row.page_title,
-      status: (doneShared.has(row.id) ? 'done' : 'assigned') as 'assigned' | 'done',
-      shared: true,
-    })),
+    ...(homeworkRes.data || []).map((row) => withProgress(row, false)),
+    ...(classHomeworkRes.data || []).map((row) =>
+      withProgress({ ...row, status: doneShared.has(row.id) ? 'done' : 'assigned' }, true),
+    ),
   ].sort((a, b) => (a.due_at || '9999').localeCompare(b.due_at || '9999'));
 
   let messages: EspaceMessage[] = [];
@@ -326,10 +342,11 @@ export async function markHomeworkDone(homeworkId: string): Promise<{ error: str
   const supabase = await createClient();
   const { data: row } = await supabase
     .from('homework')
-    .select('id, student_id, classe')
+    .select('id, student_id, classe, page_path')
     .eq('id', id)
     .maybeSingle();
   if (!row) return { error: 'invalid' };
+  if (exerciseIdsForPage(row.page_path).length > 0) return { error: 'has_exercises' };
 
   if (row.student_id === auth.user.id) {
     const { error } = await supabase

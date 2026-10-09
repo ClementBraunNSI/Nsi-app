@@ -889,7 +889,9 @@
 
 .foxIdle {
   background-position-x: 0%;
-  animation: fox-idle 2.8s ease-in-out infinite;
+  animation:
+    fox-idle-bob 2.8s ease-in-out infinite,
+    fox-idle-blink 2.8s step-end infinite;
 }
 
 .foxWalk {
@@ -1140,23 +1142,25 @@
   50% { opacity: 0.75; transform: scale(1.15); }
 }
 
-@keyframes fox-idle {
+@keyframes fox-idle-bob {
   0%, 62%, 100% {
-    background-position-x: 0%;
     transform: translateY(0) rotate(0) scale(1);
   }
   70% {
-    background-position-x: 33.333%;
     transform: translateY(-2.5%) rotate(-0.5deg) scale(1.012);
   }
   80% {
-    background-position-x: 33.333%;
     transform: translateY(-1%) rotate(0.5deg) scale(1.006);
   }
   88% {
-    background-position-x: 0%;
     transform: translateY(0) rotate(0) scale(1);
   }
+}
+
+@keyframes fox-idle-blink {
+  0%, 62% { background-position-x: 0%; }
+  70%, 80% { background-position-x: 33.333%; }
+  88%, 100% { background-position-x: 0%; }
 }
 
 @keyframes shadow-breathe {

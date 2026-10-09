@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useMemo } from 'react';
-import { Users, Award, CheckCircle, Search, Filter, AlertCircle, TrendingUp, Clock, X, Download, Star, ChevronRight, Lock } from 'lucide-react';
+import { Users, Award, CheckCircle, Search, Filter, AlertCircle, TrendingUp, Clock, X, Download, ChevronRight, Lock } from 'lucide-react';
 import React from 'react';
 import { getAdminDashboardData, getStudentAdminDetails, type AdminStudent } from '@/app/actions/admin';
 import { getStudentWorkDetail, type StudentWorkDetail } from '@/app/actions/activity';
@@ -8,6 +8,8 @@ import { StudentWorkBlocks } from '@/components/admin/StudentWorkBlocks';
 import { PageHeader } from '@/components/ui';
 import { PrivateLessonDates } from '@/components/admin/PrivateLessonDates';
 import { StudentFollowup } from '@/components/admin/StudentFollowup';
+import { StudentProgressModal } from '@/components/admin/StudentProgressModal';
+import { SheetBadgeFox } from '@/components/fox/SheetBadgeFox';
 import { DeleteStudentDialog, StudentAccountDialog } from '@/components/admin/StudentAccounts';
 import { isAbortError } from '@/lib/is-abort-error';
 
@@ -32,6 +34,7 @@ export default function AdminDashboard() {
   const [audience, setAudience] = useState<'particuliers' | 'classe'>('particuliers');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStudent, setSelectedStudent] = useState<any>(null);
+  const [progressStudent, setProgressStudent] = useState<AdminStudent | null>(null);
   const [accountMode, setAccountMode] = useState<'create' | 'edit' | null>(null);
   const [accountStudent, setAccountStudent] = useState<AdminStudent | null>(null);
   const [studentToDelete, setStudentToDelete] = useState<AdminStudent | null>(null);
@@ -277,7 +280,14 @@ export default function AdminDashboard() {
                               {(s.full_name || s.email || '?')[0]}
                             </div>
                             <div>
-                              <p className="font-bold text-slate-800">{s.full_name || 'Sans nom'}</p>
+                              <button
+                                type="button"
+                                onClick={() => setProgressStudent(s)}
+                                className="cursor-pointer text-left font-bold text-slate-800 hover:text-orange-600 hover:underline decoration-orange-300 underline-offset-2"
+                                aria-label={`Voir la progression de ${s.full_name || 'cet élève'}`}
+                              >
+                                {s.full_name || 'Sans nom'}
+                              </button>
                               <p className="text-xs text-slate-400 font-medium">{s.email}</p>
                               <span className={`mt-1 inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide ${
                                 s.has_private_lessons
@@ -365,6 +375,12 @@ export default function AdminDashboard() {
           onClose={() => setSelectedStudent(null)} 
         />
       )}
+      {progressStudent && (
+        <StudentProgressModal
+          student={progressStudent}
+          onClose={() => setProgressStudent(null)}
+        />
+      )}
       {accountMode && (
         <StudentAccountDialog
           mode={accountMode}
@@ -379,6 +395,7 @@ export default function AdminDashboard() {
           onClose={() => setStudentToDelete(null)}
           onDeleted={() => {
             if (selectedStudent?.id === studentToDelete.id) setSelectedStudent(null);
+            if (progressStudent?.id === studentToDelete.id) setProgressStudent(null);
             fetchData();
           }}
         />
@@ -515,9 +532,11 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {details.badges.map((b: any) => (
                       <div key={b.id} className="flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-white hover:border-orange-200 transition-colors group">
-                        <div className="p-2 bg-yellow-50 text-yellow-500 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                          <Star size={18} fill="currentColor" className="opacity-80" />
-                        </div>
+                        <SheetBadgeFox
+                          courseId={b.course_id || b.badge_id || ''}
+                          title={b.badge_name}
+                          size={52}
+                        />
                         <div className="overflow-hidden">
                           <p className="font-bold text-slate-700 text-sm truncate">
                             {b.badge_name

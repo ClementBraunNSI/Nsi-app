@@ -1,0 +1,202 @@
+export const FOX_POSES = ["sit", "cheer", "think", "read", "side", "wink"] as const;
+export const FOX_SCENES = ["clearing", "parchment", "night", "desk"] as const;
+export const FOX_PROPS = [
+  "alert",
+  "ballot",
+  "bars",
+  "binary",
+  "blocks",
+  "books",
+  "boxarrow",
+  "boxes",
+  "braces",
+  "brackets",
+  "branch",
+  "camera",
+  "cards",
+  "chart",
+  "check",
+  "classbox",
+  "coin",
+  "counter",
+  "crest",
+  "database",
+  "disk",
+  "equals",
+  "exchange",
+  "gamepad",
+  "gate",
+  "gear",
+  "grid",
+  "hash",
+  "hex",
+  "hourglass",
+  "infinity",
+  "key",
+  "layers",
+  "leaf",
+  "lines",
+  "lock",
+  "loop",
+  "magnifier",
+  "menu",
+  "merge",
+  "nest",
+  "nodes",
+  "note",
+  "pin",
+  "router",
+  "row",
+  "satellite",
+  "scroll",
+  "shield",
+  "spark",
+  "speech",
+  "spiral",
+  "stack",
+  "stamp",
+  "struct",
+  "swords",
+  "table",
+  "tags",
+  "terminal",
+  "toggle",
+  "tree",
+  "trophy",
+  "warning",
+  "wheel",
+  "window",
+  "split",
+] as const;
+
+export type FoxPose = (typeof FOX_POSES)[number];
+export type FoxScene = (typeof FOX_SCENES)[number];
+export type FoxProp = (typeof FOX_PROPS)[number];
+
+export type SheetFoxArt = {
+  pose: FoxPose;
+  prop: FoxProp;
+  scene: FoxScene;
+};
+
+/** One illustration per exercise sheet, keyed by course id. Pose, prop and scene together stay unique. */
+export const SHEET_FOX_ASSIGNMENTS: Record<string, SheetFoxArt> = {
+  "binaire-base": { pose: "sit", prop: "binary", scene: "parchment" },
+  "types-base": { pose: "read", prop: "tags", scene: "parchment" },
+  "cybersecurite-intro": { pose: "think", prop: "lock", scene: "night" },
+  "booleens-logique": { pose: "wink", prop: "toggle", scene: "desk" },
+  "tp-python-localisation": { pose: "side", prop: "pin", scene: "clearing" },
+  "fiche-python": { pose: "sit", prop: "terminal", scene: "clearing" },
+  "fiche-boucles": { pose: "cheer", prop: "loop", scene: "clearing" },
+  "tp-python-donnees": { pose: "read", prop: "table", scene: "desk" },
+  "trilateration-gps": { pose: "think", prop: "satellite", scene: "night" },
+  "tp-python-photo": { pose: "wink", prop: "camera", scene: "clearing" },
+  "tp-python-reseaux": { pose: "side", prop: "nodes", scene: "night" },
+  "csv-detective": { pose: "think", prop: "magnifier", scene: "parchment" },
+  "fiche-conditions": { pose: "sit", prop: "branch", scene: "clearing" },
+  "bts_cyber_rgpd_audit": { pose: "read", prop: "stamp", scene: "desk" },
+  "tp-cesar-vigenere": { pose: "wink", prop: "wheel", scene: "night" },
+  "bts_poo_basics": { pose: "sit", prop: "classbox", scene: "desk" },
+  "bts_poo_remediation": { pose: "think", prop: "classbox", scene: "parchment" },
+  "bts_sql_injection": { pose: "side", prop: "warning", scene: "night" },
+  "bts_sql_audit_rgpd": { pose: "cheer", prop: "stamp", scene: "night" },
+  "bts_owasp_web": { pose: "think", prop: "shield", scene: "night" },
+  "bts_sql_blockchain": { pose: "sit", prop: "blocks", scene: "night" },
+  "bts_python_intro": { pose: "cheer", prop: "terminal", scene: "desk" },
+  "bts_csharp_intro": { pose: "read", prop: "hash", scene: "desk" },
+  "bts_csharp_poo": { pose: "side", prop: "hash", scene: "night" },
+  "sql-bases-donnees-exos": { pose: "sit", prop: "database", scene: "desk" },
+  "terminale_algo_texte": { pose: "side", prop: "magnifier", scene: "parchment" },
+  "terminale_histoire": { pose: "read", prop: "hourglass", scene: "parchment" },
+  "listes-comprehension-exos": { pose: "wink", prop: "brackets", scene: "clearing" },
+  "terminale_securite": { pose: "think", prop: "key", scene: "night" },
+  "terminale_bdd_modele": { pose: "read", prop: "table", scene: "parchment" },
+  "terminale_structures_lineaires": { pose: "sit", prop: "stack", scene: "desk" },
+  "terminale_recursivite": { pose: "think", prop: "spiral", scene: "night" },
+  "terminale_calculabilite": { pose: "wink", prop: "infinity", scene: "parchment" },
+  "terminale_graphes": { pose: "side", prop: "nodes", scene: "clearing" },
+  "terminale_diviser_regner": { pose: "cheer", prop: "split", scene: "clearing" },
+  "terminale_poo": { pose: "side", prop: "classbox", scene: "clearing" },
+  "terminale_archi_os": { pose: "sit", prop: "gear", scene: "night" },
+  "terminale_arbres": { pose: "read", prop: "tree", scene: "clearing" },
+  "prog_mod_import": { pose: "wink", prop: "boxarrow", scene: "desk" },
+  "prog_mod_assert": { pose: "think", prop: "alert", scene: "parchment" },
+  "prog_mod_doctest": { pose: "read", prop: "lines", scene: "desk" },
+  "terminale_prog_dynamique": { pose: "side", prop: "layers", scene: "parchment" },
+  "terminale_routage": { pose: "cheer", prop: "router", scene: "night" },
+  "js_interactions": { pose: "wink", prop: "counter", scene: "desk" },
+  "les-conditions-python": { pose: "think", prop: "branch", scene: "parchment" },
+  "les-dictionnaires-python": { pose: "sit", prop: "cards", scene: "desk" },
+  "proj_stock_cat": { pose: "read", prop: "boxes", scene: "desk" },
+  "proj_stock_mvt": { pose: "side", prop: "exchange", scene: "clearing" },
+  "proj_stock_sell": { pose: "cheer", prop: "coin", scene: "desk" },
+  "proj_stock_ui": { pose: "wink", prop: "menu", scene: "parchment" },
+  "premiere_fiche_exercices_bool": { pose: "side", prop: "toggle", scene: "parchment" },
+  "proj_bank_struct": { pose: "sit", prop: "coin", scene: "parchment" },
+  "proj_bank_ops": { pose: "read", prop: "exchange", scene: "desk" },
+  "proj_bank_ui": { pose: "think", prop: "window", scene: "desk" },
+  "proj_bank_test": { pose: "cheer", prop: "check", scene: "parchment" },
+  "proj_lib_struct": { pose: "sit", prop: "books", scene: "parchment" },
+  "proj_lib_data": { pose: "side", prop: "disk", scene: "desk" },
+  "proj_lib_ui": { pose: "read", prop: "menu", scene: "desk" },
+  "listes-tuples": { pose: "side", prop: "brackets", scene: "parchment" },
+  "premiere_projet_carbone": { pose: "sit", prop: "leaf", scene: "clearing" },
+  "les-boucles-python": { pose: "side", prop: "loop", scene: "night" },
+  "types-python": { pose: "wink", prop: "tags", scene: "desk" },
+  "proj_vote_maj": { pose: "sit", prop: "ballot", scene: "parchment" },
+  "proj_vote_maj2": { pose: "cheer", prop: "ballot", scene: "night" },
+  "proj_vote_condorcet": { pose: "think", prop: "nodes", scene: "parchment" },
+  "proj_vote_borda": { pose: "read", prop: "bars", scene: "desk" },
+  "premiere_fiche_exercices_binaires": { pose: "cheer", prop: "hex", scene: "parchment" },
+  "tp_spotify_1": { pose: "sit", prop: "nest", scene: "night" },
+  "tp_spotify_2": { pose: "wink", prop: "note", scene: "night" },
+  "tp_spotify_3": { pose: "cheer", prop: "note", scene: "clearing" },
+  "tp_spotify_4": { pose: "read", prop: "chart", scene: "desk" },
+  "proj_jv_struct": { pose: "sit", prop: "gamepad", scene: "night" },
+  "proj_jv_base": { pose: "read", prop: "braces", scene: "desk" },
+  "proj_jv_adv": { pose: "side", prop: "spark", scene: "night" },
+  "proj_jv_menu": { pose: "wink", prop: "window", scene: "night" },
+  "premiere_projet_esport": { pose: "cheer", prop: "trophy", scene: "clearing" },
+  "csv": { pose: "think", prop: "table", scene: "desk" },
+  "tri-fusion": { pose: "side", prop: "merge", scene: "parchment" },
+  "les-listes-python": { pose: "sit", prop: "brackets", scene: "desk" },
+  "premiere_projet_virus": { pose: "wink", prop: "speech", scene: "night" },
+  "proj_poke_dex": { pose: "sit", prop: "crest", scene: "clearing" },
+  "proj_poke_fight": { pose: "cheer", prop: "swords", scene: "night" },
+  "proj_poke_sim": { pose: "read", prop: "spark", scene: "clearing" },
+  "specifications-python": { pose: "think", prop: "scroll", scene: "parchment" },
+  "premiere_tris": { pose: "side", prop: "bars", scene: "clearing" },
+  "circuits-logiques": { pose: "wink", prop: "gate", scene: "desk" },
+  "les-fonctions-python": { pose: "cheer", prop: "braces", scene: "clearing" },
+  "c-affectations-types-exos": { pose: "read", prop: "equals", scene: "parchment" },
+  "c_structs": { pose: "sit", prop: "struct", scene: "desk" },
+  "c-fonctions": { pose: "think", prop: "braces", scene: "night" },
+  "c-tableaux-exos": { pose: "side", prop: "row", scene: "desk" },
+  "c-tableaux-2d-levels": { pose: "read", prop: "grid", scene: "parchment" },
+  "c-tableaux-2d-exos": { pose: "wink", prop: "grid", scene: "night" },
+  "c-tris-exos": { pose: "cheer", prop: "bars", scene: "night" },
+};
+
+function hashString(value: string) {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+export function sheetFoxArt(courseId: string): SheetFoxArt {
+  const known = SHEET_FOX_ASSIGNMENTS[courseId];
+  if (known) return known;
+  const hash = hashString(courseId || "fiche");
+  return {
+    pose: FOX_POSES[hash % FOX_POSES.length],
+    prop: FOX_PROPS[Math.floor(hash / FOX_POSES.length) % FOX_PROPS.length],
+    scene: FOX_SCENES[Math.floor(hash / (FOX_POSES.length * FOX_PROPS.length)) % FOX_SCENES.length],
+  };
+}
+
+export function sheetCourseIdFromAchievement(achievementId: string) {
+  return achievementId.startsWith("fiche:") ? achievementId.slice("fiche:".length) : null;
+}
