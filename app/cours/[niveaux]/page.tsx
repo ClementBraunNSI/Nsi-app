@@ -5,9 +5,9 @@ import Link from "next/link";
 import { ArrowLeft, GraduationCap } from "lucide-react";
 import { getReservedCourses } from "@/app/actions/getReservedCourses";
 import ChaptersPreviewTabs from "./ChaptersPreviewTabs";
-import { canAccessCourse } from "@/lib/course-access";
+import { canAccessCourse, courseVisibility, isRestrictedCourse } from "@/lib/course-access";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
-import { contentFolderFromParam, coursePath, getNsiLevel, profileCodeToLevelId } from "@/lib/nsi-levels";
+import { contentFolderFromParam, coursePath, getNsiLevel } from "@/lib/nsi-levels";
 import { getAuthContext } from "@/lib/auth";
 import { EmptyState, PageHeader } from "@/components/ui";
 import ResourceNotFound from "@/components/ResourceNotFound";
@@ -52,9 +52,11 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
       .eq("id", auth.user.id)
       .single();
 
-    if (profile?.has_private_lessons && profileCodeToLevelId(profile.level) === folder) {
+    if (profile?.has_private_lessons) {
       const reserved = await getReservedCourses();
-      privateCourses = reserved.map((rc) => ({
+      privateCourses = reserved
+        .filter((rc) => (contentFolderFromParam(rc.level) ?? rc.level) === folder)
+        .map((rc) => ({
         slug: rc.slug,
         title: rc.title,
         description: "Cours particulier réservé",
@@ -69,11 +71,12 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
 
   const mdEntries = listMarkdownFilesForContentLevel(folder);
 
-  const standardCourses: CoursData[] = mdEntries
+  const standardCourses = mdEntries
     .map(({ filePath, slug }) => {
       const fileContent = fs.readFileSync(filePath, "utf-8");
       const { data } = matter(fileContent);
 
+      const visibility = courseVisibility(data, folder, slug);
       return {
         slug,
         title: String(data.title || slug),
@@ -81,25 +84,25 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         level: String(data.level || folder),
         chapter: String(data.chapter || "Général"),
         icon: String(data.icon || "📘"),
-        isPrivate: String(data.access || "").toLowerCase() === "private",
+        isPrivate: isRestrictedCourse(visibility),
         allowedStudents: Array.isArray(data.allowedStudents)
           ? data.allowedStudents.map((s: unknown) => String(s))
           : undefined,
+        visibility,
       };
     })
     .filter((course) =>
       canAccessCourse(
-        {
-          access: course.isPrivate ? "private" : "public",
-          allowedStudents: course.allowedStudents,
-        },
+        course.visibility,
         {
           isElevated: auth.isElevated,
           isAuthenticated: Boolean(auth.user),
           userFullName: auth.fullName,
+          hasPrivateLessons: auth.hasPrivateLessons,
         }
       )
-    );
+    )
+    .map(({ visibility: _visibility, ...course }) => course);
 
   const tousLesCours = [...privateCourses, ...standardCourses];
 

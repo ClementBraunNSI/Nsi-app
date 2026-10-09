@@ -20,7 +20,25 @@ export interface LabExercise {
   level: string;
   fileName: string;
   allowedStudents?: string[];
+  access?: 'private' | 'public';
   type: 'python' | 'sql';
+  hasVerification: boolean;
+}
+
+export type ExerciseSheet = {
+  courseId: string;
+  courseTitle: string;
+  chapter: string;
+  level: string;
+  exerciseCount: number;
+};
+
+function toPublicExercise(ex: LabExercise): LabExercise {
+  const { allowedStudents: _allowed, verificationCode, access: _access, ...rest } = ex;
+  return {
+    ...rest,
+    hasVerification: Boolean(verificationCode),
+  };
 }
 
 // Helper to recursively get files
@@ -46,13 +64,14 @@ function getFilesRecursively(dir: string): string[] {
 function exerciseIsAccessible(ex: LabExercise, auth: AuthContext) {
   return canAccessCourse(
     {
-      access: ex.allowedStudents?.length ? 'private' : 'public',
+      access: ex.access || (ex.allowedStudents?.length ? 'private' : 'public'),
       allowedStudents: ex.allowedStudents,
     },
     {
       isElevated: auth.isElevated,
       isAuthenticated: Boolean(auth.user),
       userFullName: auth.fullName,
+      hasPrivateLessons: auth.hasPrivateLessons,
     },
   );
 }
@@ -185,6 +204,9 @@ function buildExerciseCatalog(): LabExercise[] {
           // Determine type based on courseId or title
           const isSql = (courseId && courseId.toLowerCase().includes('sql')) || 
                         (courseTitle && courseTitle.toLowerCase().includes('sql'));
+          const relParts = path.relative(contentDir, filePath).split(path.sep);
+          const privateLesson = relParts[0] === 'particuliers' && relParts.length >= 3;
+          const markedPrivate = String(data.access || '').toLowerCase() === 'private';
 
           exercises.push({
             id: sectionId,
@@ -198,7 +220,9 @@ function buildExerciseCatalog(): LabExercise[] {
             level: normalizedLevel,
             fileName: fileName.replace(/\.mdx?$/, ''),
             allowedStudents: data.allowedStudents,
+            access: privateLesson || markedPrivate ? 'private' : 'public',
             type: isSql ? 'sql' : 'python',
+            hasVerification: Boolean(verificationCode),
           });
         }
       }
@@ -235,7 +259,46 @@ export async function getAllExercises(): Promise<LabExercise[]> {
   const auth = await getAuthContext();
   return buildExerciseCatalog()
     .filter((ex) => exerciseIsAccessible(ex, auth))
-    .map(({ allowedStudents: _allowed, verificationCode: _hidden, ...ex }) => ex);
+    .map(toPublicExercise);
+}
+
+export async function getExercisesForCourses(courseIds: string[]): Promise<LabExercise[]> {
+  const ids = [...new Set(courseIds.map((id) => String(id || '').trim()).filter(Boolean))];
+  if (ids.length === 0) return [];
+
+  const allowed = new Set(ids);
+  const auth = await getAuthContext();
+  return buildExerciseCatalog()
+    .filter((ex) => allowed.has(ex.courseId) && exerciseIsAccessible(ex, auth))
+    .map(toPublicExercise);
+}
+
+export async function listExerciseSheets(): Promise<ExerciseSheet[]> {
+  const auth = await getAuthContext();
+  if (!auth.isElevated) return [];
+
+  const sheets = new Map<string, ExerciseSheet>();
+  for (const ex of buildExerciseCatalog()) {
+    const current = sheets.get(ex.courseId);
+    if (current) {
+      current.exerciseCount += 1;
+      continue;
+    }
+    sheets.set(ex.courseId, {
+      courseId: ex.courseId,
+      courseTitle: ex.courseTitle,
+      chapter: ex.chapter,
+      level: ex.level,
+      exerciseCount: 1,
+    });
+  }
+
+  return [...sheets.values()].sort(
+    (a, b) =>
+      a.level.localeCompare(b.level, 'fr') ||
+      a.chapter.localeCompare(b.chapter, 'fr') ||
+      a.courseTitle.localeCompare(b.courseTitle, 'fr'),
+  );
 }
 
 export async function getExerciseVerification(exerciseId: string): Promise<string | null> {

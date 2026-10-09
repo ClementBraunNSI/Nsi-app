@@ -9,6 +9,7 @@ export type AdminStudent = {
   full_name: string | null;
   email: string | null;
   level: string | null;
+  classe: string | null;
   updated_at: string | null;
   has_private_lessons: boolean | null;
 };
@@ -23,9 +24,9 @@ export async function getAdminDashboardData() {
   const [{ data: studentsData }, { count: countEx }, { count: countBadges }] = await Promise.all([
     supabase
       .from('profiles')
-      .select('id, full_name, email, level, updated_at, has_private_lessons')
-      .neq('role', 'admin')
-      .order('updated_at', { ascending: false }),
+      .select('id, full_name, email, level, classe, updated_at, has_private_lessons')
+      .eq('role', 'student')
+      .order('full_name', { ascending: true }),
     supabase.from('user_progress').select('*', { count: 'exact', head: true }),
     supabase.from('badges').select('*', { count: 'exact', head: true }),
   ]);
@@ -54,7 +55,7 @@ export async function getStudentAdminDetails(studentId: string) {
   const supabase = await createClient();
   const [{ data: profile }, { data: badges }, { count }] = await Promise.all([
     supabase.from('profiles').select('id, full_name, has_private_lessons').eq('id', id).maybeSingle(),
-    supabase.from('badges').select('id, course_id, badge_name, created_at, unlocked_at').eq('user_id', id),
+    supabase.from('badges').select('id, course_id, badge_name, unlocked_at').eq('user_id', id),
     supabase.from('user_progress').select('*', { count: 'exact', head: true }).eq('user_id', id),
   ]);
 

@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { isAbortError } from '@/lib/is-abort-error'
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
@@ -25,8 +26,8 @@ export async function updateSession(request: NextRequest) {
           try {
             return await fetch(url, options);
           } catch (error) {
-            console.warn('Supabase fetch failed in middleware:', error);
-            // On retourne une réponse d'erreur HTTP classique au lieu de laisser crash le runtime
+            if (isAbortError(error)) throw error;
+            console.warn('Supabase fetch failed in middleware:', error instanceof Error ? error.message : 'network');
             return new Response(JSON.stringify({ error: 'Network error' }), {
               status: 502,
               headers: { 'Content-Type': 'application/json' }
@@ -56,7 +57,7 @@ export async function updateSession(request: NextRequest) {
   try {
     await supabase.auth.getUser()
   } catch (error) {
-    // Si l'URL Supabase n'est pas définie ou accessible (ex: build time), on ignore l'erreur
+    if (isAbortError(error)) return response
     console.error("Middleware Auth Error:", error)
   }
 

@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { isAbortError } from '@/lib/is-abort-error';
 
 export async function createClient() {
   const cookieStore = await cookies();
@@ -16,7 +17,8 @@ export async function createClient() {
           try {
             return await fetch(url, options);
           } catch (error) {
-            console.warn('Supabase fetch failed in server.ts:', error);
+            if (isAbortError(error)) throw error;
+            console.warn('Supabase fetch failed in server.ts:', error instanceof Error ? error.message : 'network');
             return new Response(JSON.stringify({ error: 'Network error' }), {
               status: 502,
               headers: { 'Content-Type': 'application/json' }

@@ -7,6 +7,7 @@ export type AuthContext = {
   role: string | null;
   fullName: string | null;
   isElevated: boolean;
+  hasPrivateLessons: boolean;
 };
 
 function safeNextPath(next?: string | null): string {
@@ -18,12 +19,12 @@ export async function getAuthContext(): Promise<AuthContext> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    return { user: null, role: null, fullName: null, isElevated: false };
+    return { user: null, role: null, fullName: null, isElevated: false, hasPrivateLessons: false };
   }
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("role, full_name")
+    .select("role, full_name, has_private_lessons")
     .eq("id", user.id)
     .single();
 
@@ -33,6 +34,7 @@ export async function getAuthContext(): Promise<AuthContext> {
     role,
     fullName: profile?.full_name || null,
     isElevated: isElevatedUser(role),
+    hasPrivateLessons: Boolean(profile?.has_private_lessons),
   };
 }
 

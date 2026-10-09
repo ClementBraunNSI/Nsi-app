@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon, Zap } from 'lucide-react';
+import { ChevronRight, Search, Github, Book, ChevronRight as ChevronRightIcon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getLandingPrivateCard, type LandingPrivateCard } from '@/app/actions/coursePages';
+import { isAbortError } from '@/lib/is-abort-error';
 import SplashText from '@/components/SplashText';
 import ColleagueSites from '@/components/ColleagueSites';
 
@@ -51,34 +53,23 @@ const GAMES = [
   },
 ];
 
-// Données des cours particuliers
-const PRIVATE_LESSONS = [
-  { 
-    id: 'private-1', 
-    title: "Coaching Particulier", 
-    desc: "Accès à tes ressources personnalisées, exercices spécifiques et suivi individuel.", 
-    img: "/images/fox_3.png", 
-    color: "bg-orange-600", 
-    tag: "Privé", 
-    href: "/espace" 
-  },
-];
+const emptyPrivateCard: LandingPrivateCard = { show: false, grouped: false, groups: [] };
 
-const CourseCard = ({ title, desc, img, tag, color, href, isPrivate = false, featured = false }: any) => (
-  <Link href={href} className={`group flex flex-col ${featured ? 'lg:col-span-2 lg:row-span-2' : ''}`}>
-    <div className={`home-card overflow-hidden flex flex-col h-full ${isPrivate ? 'is-private' : ''} ${featured ? 'is-featured' : ''}`}>
+const CourseCard = ({ title, desc, img, tag, color, href, featured = false, children }: any) => {
+  const shell = (
+    <div className={`home-card overflow-hidden flex flex-col h-full ${featured ? 'is-featured' : ''}`}>
       <div className={`relative w-full bg-[var(--surface-2)] p-4 ${featured ? 'h-56 lg:h-80' : 'h-40'}`}>
         <Image src={img} alt={title} fill className="object-contain p-2" sizes={featured ? '(max-width: 1024px) 100vw, 50vw' : '(max-width: 1024px) 50vw, 25vw'} />
-        <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold border ${isPrivate ? 'bg-[var(--accent)] text-[var(--accent-fg)] border-transparent' : 'bg-[var(--surface)] text-[var(--muted)] border-[var(--border)]'}`}>
+        <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold border bg-[var(--surface)] text-[var(--muted)] border-[var(--border)]">
           {tag}
         </div>
       </div>
       <div className={`flex flex-col flex-1 ${featured ? 'p-7' : 'p-6'}`}>
-        <h3 className={`font-semibold tracking-tight text-[var(--fg)] mb-2 group-hover:text-[var(--accent)] transition-colors flex items-center gap-2 ${featured ? 'text-2xl' : 'text-lg'}`}>
-          {isPrivate && <Zap size={18} className="text-[var(--accent)]" fill="currentColor" />}
+        <h3 className={`font-semibold tracking-tight text-[var(--fg)] mb-2 group-hover:text-[var(--accent)] transition-colors ${featured ? 'text-2xl' : 'text-lg'}`}>
           {title}
         </h3>
-        <p className={`text-[var(--muted)] text-sm leading-relaxed mb-6 ${featured ? '' : 'line-clamp-2'}`}>{desc}</p>
+        <p className={`text-[var(--muted)] text-sm leading-relaxed mb-6 ${featured || children ? '' : 'line-clamp-2'}`}>{desc}</p>
+        {children}
         <div className="mt-auto pt-4 border-t border-[var(--border)] flex justify-between items-center">
           <span className="flex items-center gap-2 text-xs font-semibold text-[var(--subtle)]">
             <Book size={14} /> Ouvrir l'espace
@@ -90,54 +81,58 @@ const CourseCard = ({ title, desc, img, tag, color, href, isPrivate = false, fea
         </div>
       </div>
     </div>
-  </Link>
-);
+  );
+  const frame = `group flex flex-col ${featured ? 'lg:col-span-2 lg:row-span-2' : ''}`;
+  if (!href) return <div className={frame}>{shell}</div>;
+  return <Link href={href} className={frame}>{shell}</Link>;
+};
 
 export default function LandingPage() {
-  const [hasPrivateAccess, setHasPrivateAccess] = useState(false);
+  const [privateCard, setPrivateCard] = useState<LandingPrivateCard>(emptyPrivateCard);
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   useEffect(() => {
     const checkAccess = async (session: any) => {
+      try {
       if (session?.user) {
-        const { data } = await supabase
-          .from('profiles')
-          .select('has_private_lessons, level')
-          .eq('id', session.user.id)
-          .single();
-        
-        console.log("Niveau de l'utilisateur connecté :", data?.level);
-
-        setHasPrivateAccess(data?.has_private_lessons || false);
+        setPrivateCard(await getLandingPrivateCard());
       } else {
-        setHasPrivateAccess(false);
+        setPrivateCard(emptyPrivateCard);
+      }
+      } catch (error) {
+        if (!isAbortError(error)) console.error(error);
       }
     };
 
     // Vérification initiale
-    supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session));
+    supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session)).catch((error) => {
+      if (!isAbortError(error)) console.error(error);
+    });
 
     // Écoute des changements d'auth (login / logout)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT') {
-        setHasPrivateAccess(false);
-      } else if (event === 'SIGNED_IN' && session) {
+      if (event === 'SIGNED_OUT' || !session) {
+        setPrivateCard(emptyPrivateCard);
+      }
+      if (event === 'SIGNED_IN' && session) {
         checkAccess(session);
-      } else if (!session) {
-        setHasPrivateAccess(false);
       }
     });
 
     // Re-vérification lors du focus et de la visibilité de la page
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session));
+        supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session)).catch((error) => {
+      if (!isAbortError(error)) console.error(error);
+    });
       }
     };
 
     const handleFocus = () => {
-      supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session));
+      supabase.auth.getSession().then(({ data: { session } }) => checkAccess(session)).catch((error) => {
+      if (!isAbortError(error)) console.error(error);
+    });
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -230,32 +225,57 @@ export default function LandingPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-8 pb-32 relative z-10">
-        {/* SECTION PRIVÉE DYNAMIQUE */}
-        {hasPrivateAccess && (
-          <div className="mb-20">
-            <div className="flex items-center gap-3 mb-10">
-              <div className="w-10 h-10 bg-[var(--accent)] rounded-xl flex items-center justify-center text-[var(--accent-fg)]">
-                <Zap size={20} fill="currentColor" />
-              </div>
-              <h2 className="text-2xl font-semibold text-[var(--fg)] tracking-tight">
-                Mon Accompagnement <span className="text-[var(--accent)]">Privé</span>
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {PRIVATE_LESSONS.map((lesson) => (
-                <CourseCard key={lesson.id} {...lesson} isPrivate={true} />
-              ))}
-            </div>
-            <div className="mt-16 border-b border-[var(--border)]"></div>
-          </div>
-        )}
-
         <h2 className="text-2xl font-semibold text-[var(--fg)] mb-6 tracking-tight">Parcourir par niveaux</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {LEVELS.map((lvl) => (
             <CourseCard key={lvl.id} {...lvl} href={`/cours/${lvl.id}`} featured={lvl.id === "1nsi"} />
           ))}
         </div>
+
+        {privateCard.show && (
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <CourseCard
+              title="Cours particuliers"
+              desc="Cours réservés à l’accompagnement individuel."
+              img="/images/fox_2.png"
+              tag="Particuliers"
+              color="bg-amber-600"
+            >
+              {privateCard.groups.length === 0 ? (
+                <p className="text-sm text-[var(--muted)] mb-6">Aucun cours particulier pour le moment.</p>
+              ) : (
+                <div className="mb-6 space-y-4">
+                  {privateCard.grouped
+                    ? privateCard.groups.map((group) => (
+                        <section key={group.student}>
+                          <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">{group.student}</h4>
+                          <ul className="space-y-1">
+                            {group.courses.map((course) => (
+                              <li key={`${group.student}-${course.path}`}>
+                                <Link href={course.path} className="text-sm font-medium text-[var(--fg)] hover:text-[var(--accent)]">
+                                  {course.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </section>
+                      ))
+                    : (
+                      <ul className="space-y-1">
+                        {privateCard.groups.flatMap((group) => group.courses).map((course) => (
+                          <li key={course.path}>
+                            <Link href={course.path} className="text-sm font-medium text-[var(--fg)] hover:text-[var(--accent)]">
+                              {course.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                </div>
+              )}
+            </CourseCard>
+          </div>
+        )}
 
         <h2 className="text-2xl font-semibold text-[var(--fg)] mt-16 mb-6 tracking-tight">Ressources <span className="text-[var(--accent)]">ouvertes</span></h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">

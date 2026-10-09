@@ -26,7 +26,7 @@ export default async function StudentCoursesPage() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <Link 
-            href="/student/dashboard"
+            href="/espace"
             className="inline-flex items-center text-sm font-bold text-slate-500 hover:text-orange-600 transition-colors"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />

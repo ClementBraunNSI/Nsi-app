@@ -17,6 +17,17 @@ export interface AchievementStats {
   completedChapters: string[];
 }
 
+export function achievementForSheet(courseId: string, courseTitle: string): Achievement {
+  return {
+    id: `fiche:${courseId}`,
+    title: courseTitle,
+    description: `Tous les exercices de la fiche « ${courseTitle} » sont validés.`,
+    icon: BookOpen,
+    color: 'text-orange-500 bg-orange-100',
+    condition: (stats) => stats.badges.some((badge) => badge.course_id === courseId),
+  };
+}
+
 export const ACHIEVEMENTS: Achievement[] = [
   {
     id: 'first_badge',

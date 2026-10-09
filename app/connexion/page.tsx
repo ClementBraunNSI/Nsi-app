@@ -33,12 +33,17 @@ function ConnexionForm() {
     const { data: profile } = user
       ? await supabase.from("profiles").select("role").eq("id", user.id).single()
       : { data: null };
+    const elevated = profile?.role === "admin" || profile?.role === "enseignant";
     const next = safeNext(searchParams.get("next"));
+    if (elevated && (next === "/espace" || next.startsWith("/espace/"))) {
+      router.push("/admin");
+      return;
+    }
     if (next !== "/espace") {
       router.push(next);
       return;
     }
-    router.push(profile?.role === "admin" || profile?.role === "enseignant" ? "/admin" : "/espace");
+    router.push(elevated ? "/admin" : "/espace");
   };
 
   return (

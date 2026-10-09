@@ -3,7 +3,7 @@ import matter from "gray-matter";
 import { NextResponse } from "next/server";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
 import { contentFolderFromParam, urlSlugFromFolder } from "@/lib/nsi-levels";
-import { isRestrictedCourse } from "@/lib/course-access";
+import { courseVisibility, isRestrictedCourse } from "@/lib/course-access";
 
 type CourseItem = {
   title: string;
@@ -25,7 +25,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ level: str
       const { data } = matter(raw);
       return { data, slug };
     })
-    .filter(({ data }) => !isRestrictedCourse(data))
+    .filter(({ data, slug }) => !isRestrictedCourse(courseVisibility(data, folder, slug)))
     .map(({ slug, data }) => ({
       title: String(data.title || slug),
       slug,

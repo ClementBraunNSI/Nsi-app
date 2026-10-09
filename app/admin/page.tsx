@@ -2,8 +2,14 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Users, Award, CheckCircle, Search, Filter, AlertCircle, TrendingUp, Clock, X, Download, Star, ChevronRight, Lock } from 'lucide-react';
 import React from 'react';
-import { getAdminDashboardData, getStudentAdminDetails } from '@/app/actions/admin';
+import { getAdminDashboardData, getStudentAdminDetails, type AdminStudent } from '@/app/actions/admin';
+import { getStudentWorkDetail, type StudentWorkDetail } from '@/app/actions/activity';
+import { StudentWorkBlocks } from '@/components/admin/StudentWorkBlocks';
 import { PageHeader } from '@/components/ui';
+import { PrivateLessonDates } from '@/components/admin/PrivateLessonDates';
+import { StudentFollowup } from '@/components/admin/StudentFollowup';
+import { DeleteStudentDialog, StudentAccountDialog } from '@/components/admin/StudentAccounts';
+import { isAbortError } from '@/lib/is-abort-error';
 
 // Mapping des niveaux pour l'affichage et le filtrage
 const LEVELS = [
@@ -23,19 +29,28 @@ export default function AdminDashboard() {
   
   // États pour les filtres
   const [selectedLevel, setSelectedLevel] = useState('ALL');
+  const [audience, setAudience] = useState<'particuliers' | 'classe'>('particuliers');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStudent, setSelectedStudent] = useState<any>(null);
+  const [accountMode, setAccountMode] = useState<'create' | 'edit' | null>(null);
+  const [accountStudent, setAccountStudent] = useState<AdminStudent | null>(null);
+  const [studentToDelete, setStudentToDelete] = useState<AdminStudent | null>(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
       const data = await getAdminDashboardData();
       setStudents(data.students);
       setTotalExercises(data.totalExercises);
       setTotalBadges(data.totalBadges);
+    } catch (error) {
+      if (!isAbortError(error)) console.error(error);
+    } finally {
       setLoading(false);
     }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -43,11 +58,13 @@ export default function AdminDashboard() {
 
   const filteredStudents = useMemo(() => {
     return students.filter(s => {
+      const isPrivate = Boolean(s.has_private_lessons);
+      const matchesAudience = audience === 'particuliers' ? isPrivate : !isPrivate;
       const matchesSearch = (s.full_name || s.email || '').toLowerCase().includes(searchQuery.toLowerCase());
       const matchesLevel = selectedLevel === 'ALL' || s.level === selectedLevel;
-      return matchesSearch && matchesLevel;
+      return matchesAudience && matchesSearch && matchesLevel;
     });
-  }, [students, selectedLevel, searchQuery]);
+  }, [students, selectedLevel, searchQuery, audience]);
 
   // Calcul des stats pour la vue actuelle
   const stats = useMemo(() => {
@@ -68,7 +85,7 @@ export default function AdminDashboard() {
   }, [filteredStudents]);
 
   const exportData = () => {
-    const headers = ['Nom', 'Email', 'Niveau', 'Dernière Activité', 'Statut'];
+    const headers = ['Nom', 'Email', 'Niveau', 'Classe', 'Dernière Activité', 'Statut'];
     const csvContent = [
       headers.join(','),
       ...filteredStudents.map(s => {
@@ -78,6 +95,7 @@ export default function AdminDashboard() {
           `"${s.full_name || 'Sans nom'}"`,
           s.email,
           s.level || 'N/A',
+          s.classe || '',
           lastActive,
           isInactive ? 'Inactif' : 'Actif'
         ].join(',');
@@ -121,6 +139,29 @@ export default function AdminDashboard() {
             </div>
           }
         />
+
+        <div className="flex flex-wrap gap-2">
+          {([
+            ['particuliers', 'Cours particuliers'],
+            ['classe', 'Élèves de classe'],
+          ] as const).map(([id, label]) => {
+            const count = students.filter((s) => (id === 'particuliers' ? s.has_private_lessons : !s.has_private_lessons)).length;
+            return (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setAudience(id)}
+                className={`px-5 py-3 rounded-2xl font-bold text-sm ${
+                  audience === id ? 'bg-orange-500 text-white' : 'bg-white text-slate-500 border border-slate-200'
+                }`}
+              >
+                {label} · {count}
+              </button>
+            );
+          })}
+        </div>
+
+        {audience === 'particuliers' && <PrivateLessonDates />}
 
         {/* --- BARRE DE NAVIGATION (TABS) --- */}
         <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-1">
@@ -187,6 +228,15 @@ export default function AdminDashboard() {
               />
             </div>
             <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
+              <button
+                onClick={() => {
+                  setAccountStudent(null);
+                  setAccountMode('create');
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-all font-bold shadow-sm"
+              >
+                Ajouter un élève
+              </button>
               <button 
                 onClick={exportData}
                 className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-600 font-bold shadow-sm"
@@ -207,6 +257,7 @@ export default function AdminDashboard() {
                 <tr>
                   <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Élève</th>
                   <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Niveau</th>
+                  <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Classe</th>
                   <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Dernière Activité</th>
                   <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Statut</th>
                   <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic text-right">Action</th>
@@ -228,6 +279,13 @@ export default function AdminDashboard() {
                             <div>
                               <p className="font-bold text-slate-800">{s.full_name || 'Sans nom'}</p>
                               <p className="text-xs text-slate-400 font-medium">{s.email}</p>
+                              <span className={`mt-1 inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide ${
+                                s.has_private_lessons
+                                  ? 'bg-orange-50 text-orange-700 border border-orange-100'
+                                  : 'bg-slate-100 text-slate-600'
+                              }`}>
+                                {s.has_private_lessons ? 'Cours particuliers' : 'Élève de classe'}
+                              </span>
                             </div>
                           </div>
                         </td>
@@ -235,6 +293,9 @@ export default function AdminDashboard() {
                           <span className="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wide">
                             {LEVELS.find(l => l.id === s.level)?.label || s.level || 'N/A'}
                           </span>
+                        </td>
+                        <td className="px-6 py-5 text-sm font-medium text-slate-600">
+                          {s.classe || (s.has_private_lessons ? 'Particulier' : '—')}
                         </td>
                         <td className="px-6 py-5">
                           <div className="flex items-center gap-2 text-slate-500 text-sm font-medium">
@@ -256,19 +317,36 @@ export default function AdminDashboard() {
                           )}
                         </td>
                         <td className="px-6 py-5 text-right">
-                          <button 
-                            onClick={() => setSelectedStudent(s)}
-                            className="flex items-center gap-1 ml-auto text-sm font-bold text-orange-500 hover:text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-all"
-                          >
-                            Voir détails <ChevronRight size={16} />
-                          </button>
+                          <div className="flex items-center justify-end gap-1">
+                            <button
+                              onClick={() => {
+                                setAccountStudent(s);
+                                setAccountMode('edit');
+                              }}
+                              className="text-sm font-bold text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg"
+                            >
+                              Modifier
+                            </button>
+                            <button
+                              onClick={() => setStudentToDelete(s)}
+                              className="text-sm font-bold text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-lg"
+                            >
+                              Supprimer
+                            </button>
+                            <button 
+                              onClick={() => setSelectedStudent(s)}
+                              className="flex items-center gap-1 text-sm font-bold text-orange-500 hover:text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-all"
+                            >
+                              Suivi <ChevronRight size={16} />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );
                   })
                 ) : (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-slate-400 italic">
+                    <td colSpan={6} className="px-6 py-12 text-center text-slate-400 italic">
                       Aucun élève trouvé pour ce filtre.
                     </td>
                   </tr>
@@ -287,6 +365,24 @@ export default function AdminDashboard() {
           onClose={() => setSelectedStudent(null)} 
         />
       )}
+      {accountMode && (
+        <StudentAccountDialog
+          mode={accountMode}
+          student={accountStudent}
+          onClose={() => setAccountMode(null)}
+          onSaved={() => { fetchData(); }}
+        />
+      )}
+      {studentToDelete && (
+        <DeleteStudentDialog
+          student={studentToDelete}
+          onClose={() => setStudentToDelete(null)}
+          onDeleted={() => {
+            if (selectedStudent?.id === studentToDelete.id) setSelectedStudent(null);
+            fetchData();
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -294,13 +390,18 @@ export default function AdminDashboard() {
 function StudentDetailsModal({ student, onClose }: { student: any, onClose: () => void }) {
   const [details, setDetails] = useState<any>(null);
   const [reservedCourses, setReservedCourses] = useState<any[]>([]);
+  const [work, setWork] = useState<StudentWorkDetail | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchDetails() {
-      const data = await getStudentAdminDetails(student.id);
+      const [data, workDetail] = await Promise.all([
+        getStudentAdminDetails(student.id),
+        getStudentWorkDetail(student.id),
+      ]);
       setDetails({ badges: data.badges || [], exercisesCount: data.exercisesCount || 0 });
       setReservedCourses(data.reservedCourses || []);
+      setWork(workDetail);
       setLoading(false);
     }
     fetchDetails();
@@ -309,7 +410,7 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 duration-200"
+        className="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -323,6 +424,11 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
               <div className="flex items-center gap-2 mt-1">
                 <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wide">
                    {LEVELS.find(l => l.id === student.level)?.label || student.level || 'N/A'}
+                </span>
+                <span className={`px-2 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide ${
+                  student.has_private_lessons ? 'bg-orange-50 text-orange-700' : 'bg-slate-100 text-slate-600'
+                }`}>
+                  {student.has_private_lessons ? 'Cours particuliers' : 'Élève de classe'}
                 </span>
                 <span className="text-slate-400 text-sm font-medium">{student.email}</span>
               </div>
@@ -393,6 +499,10 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
                   </div>
                 </div>
               )}
+
+              {work && <StudentWorkBlocks detail={work} />}
+
+              <StudentFollowup studentId={student.id} />
 
               {/* Badges List */}
               <div>

@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { NextResponse } from "next/server";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
 import { contentFolderFromParam, urlSlugFromFolder, sortLevelIds } from "@/lib/nsi-levels";
-import { isRestrictedCourse } from "@/lib/course-access";
+import { courseVisibility, isRestrictedCourse } from "@/lib/course-access";
 import { contentRoot } from "@/lib/content-path";
 
 type SearchResult = {
@@ -44,7 +44,7 @@ export async function GET(req: Request) {
     for (const { filePath, slug } of entries) {
       const raw = fs.readFileSync(filePath, "utf8");
       const { data } = matter(raw);
-      if (isRestrictedCourse(data)) continue;
+      if (isRestrictedCourse(courseVisibility(data, folder, slug))) continue;
       const title = String(data.title || slug);
       const chapter = String(data.chapter || "Cours");
       const score = scoreQuery(q, title, chapter);

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { isAbortError } from "@/lib/is-abort-error";
 
 export function useAuthSession() {
   const [user, setUser] = useState<any>(null);
@@ -17,9 +18,13 @@ export function useAuthSession() {
     };
 
     const initAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-      if (session?.user) await loadRole(session.user.id);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setUser(session?.user ?? null);
+        if (session?.user) await loadRole(session.user.id);
+      } catch (error) {
+        if (!isAbortError(error)) console.error(error);
+      }
     };
     initAuth();
 
@@ -30,7 +35,9 @@ export function useAuthSession() {
         if (window.location.pathname === "/connexion") {
           const next = new URLSearchParams(window.location.search).get("next");
           const safe = next && next.startsWith("/") && !next.startsWith("//") ? next : null;
-          router.push(safe || (nextRole === "admin" || nextRole === "enseignant" ? "/admin" : "/espace"));
+          const elevated = nextRole === "admin" || nextRole === "enseignant";
+          const dest = safe || (elevated ? "/admin" : "/espace");
+          router.push(elevated && dest.startsWith("/espace") ? "/admin" : dest);
         } else {
           router.refresh();
         }

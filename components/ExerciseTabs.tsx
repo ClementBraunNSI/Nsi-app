@@ -568,7 +568,7 @@ export function ExerciseTabs({
       course_id: courseId,
       badge_name: badgeName,
       unlocked_at: new Date().toISOString()
-    });
+    }, { onConflict: 'user_id, course_id' });
 
     if (error) {
       console.error("Erreur lors de l'enregistrement du badge:", error);

@@ -108,7 +108,7 @@ export default function SiteHeader({
 
             {user ? (
               <>
-                <Link href="/espace/cours" className="hidden xl:inline-flex px-3 py-2 rounded-xl bg-[var(--accent-soft)] text-[var(--accent)] hover:opacity-80 transition-opacity text-xs font-semibold">
+                <Link href={role === "admin" || role === "enseignant" ? "/admin" : "/espace"} className="hidden xl:inline-flex px-3 py-2 rounded-xl bg-[var(--accent-soft)] text-[var(--accent)] hover:opacity-80 transition-opacity text-xs font-semibold">
                   Reprendre
                 </Link>
                 <Link href={role === "admin" || role === "enseignant" ? "/admin" : "/espace"} className={`flex items-center gap-2 p-2.5 rounded-xl hover:bg-[var(--surface-2)] transition-colors ${pathname.startsWith("/espace") || pathname.startsWith("/admin") ? "text-[var(--accent)]" : "text-[var(--muted)]"}`}>

@@ -1,12 +1,13 @@
-
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { getAllExercises, LabExercise } from '@/app/actions/getExercises';
+import React, { Suspense, useState, useEffect, useRef, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { getAllExercises, getExerciseVerification, LabExercise } from '@/app/actions/getExercises';
+import { saveValidatedExercise } from '@/app/actions/progress';
 import { Terminal } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import 'katex/dist/katex.min.css';
-import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
+import { Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from '@/components/AchievementUnlockedModal';
 import SuccessModal from '@/components/SuccessModal';
 import { EmptyState } from '@/components/ui';
@@ -27,6 +28,15 @@ const LEVEL_MAP: Record<string, { label: string; code: string }> = {
 };
 
 export default function LabPage() {
+  return (
+    <Suspense fallback={<div className="p-10 text-center font-semibold">Chargement du Lab…</div>}>
+      <LabWorkspace />
+    </Suspense>
+  );
+}
+
+function LabWorkspace() {
+  const searchParams = useSearchParams();
   const [exercises, setExercises] = useState<LabExercise[]>([]);
   const [selectedExercise, setSelectedExercise] = useState<LabExercise | null>(null);
   const [code, setCode] = useState('print("Hello World")');
@@ -101,16 +111,37 @@ export default function LabPage() {
       .sort((a, b) => a.label.localeCompare(b.label, 'fr'));
   }, [groupedExercises, selectedLevel, selectedChapter]);
 
+  const queryApplied = useRef(false);
+
   useEffect(() => {
+    if (selectedExercise?.level === selectedLevel) return;
     setSelectedChapter('');
     setSelectedExercise(null);
     setIsExerciseGridOpen(false);
-  }, [selectedLevel]);
+  }, [selectedLevel, selectedExercise]);
 
   useEffect(() => {
+    if (selectedExercise?.chapter === selectedChapter) return;
     setSelectedExercise(null);
     setIsExerciseGridOpen(false);
-  }, [selectedChapter]);
+  }, [selectedChapter, selectedExercise]);
+
+  useEffect(() => {
+    if (!exercises.length || queryApplied.current) return;
+    const exerciseId = searchParams.get('ex');
+    const ficheId = searchParams.get('fiche');
+    const target = exerciseId
+      ? exercises.find((item) => item.id === exerciseId)
+      : ficheId
+        ? exercises.find((item) => item.courseId === ficheId && !completedExercises.includes(item.id)) ||
+          exercises.find((item) => item.courseId === ficheId)
+        : null;
+    if (!target) return;
+    queryApplied.current = true;
+    setSelectedLevel(target.level);
+    setSelectedChapter(target.chapter);
+    setSelectedExercise(target);
+  }, [exercises, searchParams, completedExercises]);
 
   useEffect(() => {
     // 0. Load Pyodide
@@ -169,6 +200,7 @@ export default function LabPage() {
   }, []);
 
   const prevCourseIdRef = useRef<string | null>(null);
+  const pendingAchievementRef = useRef<Achievement | null>(null);
 
   useEffect(() => {
     if (selectedExercise) {
@@ -236,11 +268,20 @@ export default function LabPage() {
             setOutput(prev => [...prev, '> Commande exécutée avec succès.']);
          }
 
-         // Run Verification if exists
-         if (selectedExercise.verificationCode) {
+         const sqlTests = selectedExercise.hasVerification
+           ? await getExerciseVerification(selectedExercise.id)
+           : null;
+
+         if (selectedExercise.hasVerification && !sqlTests) {
+            setOutput(prev => [...prev, '[Erreur] Impossible de charger le jeu de tests.']);
+            setIsRunning(false);
+            return;
+         }
+
+         if (sqlTests) {
             setOutput(prev => [...prev, '> Vérification...']);
             try {
-                const verifRes = sqlDb.exec(selectedExercise.verificationCode);
+                const verifRes = sqlDb.exec(sqlTests);
                 
                 // If user code didn't return result (e.g. INSERT), show verification result (e.g. SELECT *)
                 if (results.length === 0 && verifRes.length > 0) {
@@ -303,10 +344,19 @@ export default function LabPage() {
       setOutput(['> Exécution du script...', ...logs, `[Succès] Programme terminé.`]);
 
       // --- VERIFICATION STEP ---
-      if (selectedExercise && selectedExercise.verificationCode) {
+      const pythonTests = selectedExercise?.hasVerification
+        ? await getExerciseVerification(selectedExercise.id)
+        : null;
+
+      if (selectedExercise?.hasVerification && !pythonTests) {
+        setOutput(prev => [...prev, '[Erreur] Impossible de charger le jeu de tests.']);
+        return;
+      }
+
+      if (selectedExercise && pythonTests) {
          try {
             setOutput(prev => [...prev, '> Lancement de la vérification...']);
-            await pyodideRef.current.runPythonAsync(selectedExercise.verificationCode);
+            await pyodideRef.current.runPythonAsync(pythonTests);
             setOutput(prev => [...prev, '✅ Tous les tests sont passés ! Bravo !']);
             
             // Save progress only if verification passes
@@ -360,129 +410,29 @@ export default function LabPage() {
   const saveProgress = async (exercise: LabExercise) => {
     if (!user) return;
 
-    // 1. Save Progress
-    const { error } = await supabase.from('user_progress').upsert(
-      { exercise_id: exercise.id, user_id: user.id, course_id: exercise.courseId },
-      { onConflict: 'user_id, exercise_id' }
-    );
+    const result = await saveValidatedExercise({
+      exerciseId: exercise.id,
+      courseId: exercise.courseId,
+      courseTitle: exercise.courseTitle,
+    });
 
-    if (!error) {
-      setCompletedExercises(prev => [...prev, exercise.id]);
-      checkBadgeCompletion(exercise);
-    }
-  };
+    if (result.error) return;
 
-  const checkBadgeCompletion = async (exercise: LabExercise) => {
-    // Find all exercises for this badge
-    const badgeExercises = exercises.filter(e => e.courseId === exercise.courseId);
-    
-    // Check if user has completed all of them (including the one just finished)
-    // We fetch fresh progress to be sure, or use local state optimistically
-    const { data: progress } = await supabase
-        .from('user_progress')
-        .select('exercise_id')
-        .eq('user_id', user.id)
-        .eq('course_id', exercise.courseId);
-    
-    const completedIds = progress?.map(p => p.exercise_id) || [];
-    const allDone = badgeExercises.every(e => completedIds.includes(e.id));
+    setCompletedExercises((prev) => (prev.includes(exercise.id) ? prev : [...prev, exercise.id]));
 
-    // Check if badge is already awarded
-    const { data: existingBadge } = await supabase
-        .from('badges')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('course_id', exercise.courseId)
-        .single();
-
-    if (allDone && !existingBadge) {
+    if (result.sheetComplete) {
+      pendingAchievementRef.current = result.newAchievement;
       setPendingBadge({ courseId: exercise.courseId, courseTitle: exercise.courseTitle });
       setShowSuccessModal(true);
     }
   };
 
-  const handleAwardBadge = async () => {
-    if (!pendingBadge || !user) return;
-    
-    const { courseId, courseTitle } = pendingBadge;
-    const badgeName = courseTitle || courseId || "Badge";
-    
-    // 1. Fetch CURRENT stats (before insertion)
-    const { data: profile } = await supabase.from('profiles').select('level').eq('id', user.id).single();
-    const { count: currentBadgesCount, data: currentBadges } = await supabase.from('badges').select('*', { count: 'exact' }).eq('user_id', user.id);
-    const { count: currentExercisesCount } = await supabase.from('user_progress').select('*', { count: 'exact', head: true }).eq('user_id', user.id);
-    
-    // Fetch courses for chapter calculation
-    let courses: any[] = [];
-    if (profile && profile.level && LEVEL_MAP[profile.level]) {
-        try {
-          const res = await fetch(`/api/courses/${LEVEL_MAP[profile.level].code}`);
-          const data = await res.json();
-          courses = data.courses || [];
-        } catch (e) {
-          console.error("Erreur fetching courses:", e);
-        }
-    }
-
-    // Helper to calculate completed chapters
-    const getCompletedChapters = (badgesList: any[]) => {
-        if (!courses.length) return [];
-        const chapterCourses: Record<string, string[]> = {};
-        courses.forEach(c => {
-            if (c.chapter && c.badgeId) {
-                if (!chapterCourses[c.chapter]) chapterCourses[c.chapter] = [];
-                chapterCourses[c.chapter].push(c.badgeId);
-            }
-        });
-        const completed: string[] = [];
-        const userBadgeIds = new Set(badgesList.map(b => b.course_id));
-        Object.entries(chapterCourses).forEach(([chapter, badgeIds]) => {
-            if (badgeIds.length > 0 && badgeIds.every(id => userBadgeIds.has(id))) {
-                completed.push(chapter);
-            }
-        });
-        return completed;
-    };
-
-    // Calculate PREVIOUS unlocked
-    const prevStats = {
-        badgesCount: currentBadgesCount || 0,
-        exercisesCount: currentExercisesCount || 0,
-        badges: currentBadges || [],
-        completedChapters: getCompletedChapters(currentBadges || [])
-    };
-    const prevUnlocked = ACHIEVEMENTS.filter(a => a.condition(prevStats));
-
-    // Award Badge
-    const { error } = await supabase.from('badges').upsert({
-      user_id: user.id,
-      course_id: courseId,
-      badge_name: badgeName,
-      unlocked_at: new Date().toISOString()
-    }, { onConflict: 'user_id, course_id' });
-
-    if (!error) {
-      setShowSuccessModal(false);
-      setPendingBadge(null);
-
-      // 3. Calculate NEW stats (Simulated)
-      const newBadge = { course_id: courseId, badge_name: badgeName, user_id: user.id, unlocked_at: new Date().toISOString() };
-      const newBadgesList = [...(currentBadges || []), newBadge];
-      
-      const newStats = {
-          badgesCount: (currentBadgesCount || 0) + 1,
-          exercisesCount: currentExercisesCount || 0,
-          badges: newBadgesList,
-          completedChapters: getCompletedChapters(newBadgesList)
-      };
-      const newUnlocked = ACHIEVEMENTS.filter(a => a.condition(newStats));
-
-      // 4. Find difference
-      const newlyUnlocked = newUnlocked.filter(na => !prevUnlocked.some(pa => pa.id === na.id));
-
-      if (newlyUnlocked.length > 0) {
-          setUnlockedAchievement(newlyUnlocked[0]); 
-      }
+  const handleAwardBadge = () => {
+    setShowSuccessModal(false);
+    setPendingBadge(null);
+    if (pendingAchievementRef.current) {
+      setUnlockedAchievement(pendingAchievementRef.current);
+      pendingAchievementRef.current = null;
     }
   };
 

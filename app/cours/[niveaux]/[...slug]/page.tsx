@@ -12,7 +12,7 @@ import { Metadata } from 'next';
 import { contentFolderFromParam, coursePath, nsiLevelLabel } from '@/lib/nsi-levels';
 import { resolveCourseFile } from '@/lib/content-path';
 import { getAuthContext } from '@/lib/auth';
-import { canAccessCourse, isRestrictedCourse } from '@/lib/course-access';
+import { canAccessCourse, courseVisibility, isRestrictedCourse } from '@/lib/course-access';
 
 export async function generateMetadata({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }): Promise<Metadata> {
   const { niveaux, slug } = await params;
@@ -179,8 +179,9 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
   const { content, data } = matter(fileContent);
 
   const auth = await getAuthContext();
+  const accessInput = courseVisibility(data, folder, slugStr);
   
-  if (isRestrictedCourse(data)) {
+  if (isRestrictedCourse(accessInput)) {
     if (!auth.user) {
       return (
         <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-8">
@@ -205,11 +206,12 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
     }
 
     const hasAccess = canAccessCourse(
-      { access: data.access, allowedStudents: data.allowedStudents },
+      accessInput,
       {
         isElevated: auth.isElevated,
         isAuthenticated: true,
         userFullName: auth.fullName,
+        hasPrivateLessons: auth.hasPrivateLessons,
       }
     );
 

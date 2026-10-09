@@ -2,10 +2,13 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
+import { canAccessCourse, courseVisibility } from "@/lib/course-access";
+import { getAuthContext } from "@/lib/auth";
 import { getNsiLevel, sortLevelIds, urlSlugFromFolder } from "@/lib/nsi-levels";
 import CoursHub, { type HubLevel } from "./CoursHub";
 
 export default async function PageTousLesCours() {
+  const auth = await getAuthContext();
   const contentPath = path.join(process.cwd(), "content");
   if (!fs.existsSync(contentPath)) {
     return (
@@ -29,6 +32,13 @@ export default async function PageTousLesCours() {
 
     listMarkdownFilesForContentLevel(levelId).forEach(({ filePath, slug }) => {
       const { data } = matter(fs.readFileSync(filePath, "utf-8"));
+      const visible = canAccessCourse(courseVisibility(data, levelId, slug), {
+        isElevated: auth.isElevated,
+        isAuthenticated: Boolean(auth.user),
+        userFullName: auth.fullName,
+        hasPrivateLessons: auth.hasPrivateLessons,
+      });
+      if (!visible) return;
       const chapter = String(data.chapter || "Général");
       chapterCounts.set(chapter, (chapterCounts.get(chapter) || 0) + 1);
       courses.push({

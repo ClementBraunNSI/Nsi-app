@@ -17,14 +17,15 @@ export default function SuccessModal({ courseTitle, onConfirm }: SuccessModalPro
         </div>
         <h2 className="text-3xl font-black text-slate-900 mb-4 italic uppercase tracking-tighter">Félicitations !</h2>
         <p className="text-slate-500 mb-8 leading-relaxed font-medium">
-          Vous avez validé la fiche d'exercice : <br/>
+          Tous les exercices de la fiche sont validés : <br/>
           <span className="font-bold text-orange-600 text-lg italic underline decoration-orange-200">"{courseTitle}"</span>
+          <br />Tu obtiens le badge, et un succès lié à cette fiche.
         </p>
         <button
           onClick={onConfirm}
           className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-black uppercase tracking-widest transition-all shadow-lg shadow-orange-100 active:scale-95 flex items-center justify-center gap-3"
         >
-          Valider & recevoir mon badge <PartyPopper size={20} />
+          Super ! <PartyPopper size={20} />
         </button>
       </div>
     </div>
