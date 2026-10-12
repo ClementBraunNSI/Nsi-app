@@ -2,17 +2,29 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Terminal } from 'lucide-react';
-import { getExerciseVerification, type LabExercise } from '@/app/actions/getExercises';
+import { ArrowLeft, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { getExerciseVerification, type ExerciseSheetNav, type LabExercise } from '@/app/actions/getExercises';
 import { saveValidatedExercise } from '@/app/actions/progress';
 import { supabase } from '@/lib/supabase';
 import { loadPythonPackages } from '@/lib/pyodide-packages';
+import {
+  SAVE_WARNING,
+  buildPythonCheckSource,
+  everyTestPassed,
+  parsePythonCheckResult,
+  reportFromQuery,
+  testsUnavailableReport,
+  unexpectedRunReport,
+  type RunReport,
+} from '@/lib/python-check';
 import { Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from '@/components/AchievementUnlockedModal';
 import SuccessModal from '@/components/SuccessModal';
 import { ExerciseStatement } from '@/components/lab/ExerciseStatement';
 import { LabEditor } from '@/components/lab/LabEditor';
-import { LabOutput } from '@/components/lab/LabOutput';
+import { LabOutput, type ConsoleState } from '@/components/lab/LabOutput';
+
+const IDLE_CONSOLE: ConsoleState = { tone: 'idle', text: 'En attente d’exécution…' };
 
 function cleanStatement(content: string) {
   if (!content) return '';
@@ -23,20 +35,43 @@ function cleanStatement(content: string) {
   return [...lines.slice(0, firstLineIndex), ...lines.slice(firstLineIndex + 1)].join('\n');
 }
 
-export function ExerciseWorkspace({ exercise }: { exercise: LabExercise }) {
+function consoleFromReport(report: RunReport, emptyLine: string): ConsoleState {
+  const prints = report.prints.replace(/\s+$/g, '');
+  const testPrints = report.testPrints.replace(/\s+$/g, '');
+  const stderr = report.stderr.replace(/\s+$/g, '');
+  const parts = [prints];
+  if (testPrints && testPrints !== prints) parts.push(testPrints);
+  if (stderr) parts.push(stderr);
+  const text = parts.filter(Boolean).join('\n\n');
+  if (report.error) {
+    return {
+      tone: 'error',
+      text: [report.error, text].filter(Boolean).join('\n\n'),
+      detail: report.errorDetail,
+    };
+  }
+  if (!text) return { tone: 'ok', text: emptyLine };
+  return { tone: 'ok', text };
+}
+
+export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; nav: ExerciseSheetNav | null }) {
   const [code, setCode] = useState('');
-  const [output, setOutput] = useState<string[]>([]);
-  const [isRunning, setIsRunning] = useState(false);
+  const [running, setRunning] = useState<'execute' | 'test' | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
   const [pendingBadge, setPendingBadge] = useState<{ courseId: string; courseTitle: string } | null>(null);
   const [sqlResults, setSqlResults] = useState<{ columns: string[]; values: any[][] } | null>(null);
+  const [report, setReport] = useState<RunReport | null>(null);
+  const [statusLine, setStatusLine] = useState<string | null>(null);
+  const [consoleState, setConsoleState] = useState<ConsoleState>(IDLE_CONSOLE);
+  const [tab, setTab] = useState<'console' | 'tests'>('console');
   const [sqlDb, setSqlDb] = useState<any>(null);
   const [sqlJs, setSqlJs] = useState<any>(null);
   const pyodideRef = useRef<any>(null);
-  const pendingAchievementRef = useRef<Achievement | null>(null);
+  const pendingQueueRef = useRef<Achievement[]>([]);
+  const emptyLine = exercise.type === 'sql' ? 'Requête exécutée.' : '>>> Programme terminé.';
 
   useEffect(() => {
     const bootPyodide = async () => {
@@ -44,7 +79,9 @@ export function ExerciseWorkspace({ exercise }: { exercise: LabExercise }) {
         // @ts-ignore
         if (!window.loadPyodide) return;
         // @ts-ignore
-        pyodideRef.current = await window.loadPyodide();
+        pyodideRef.current = await window.loadPyodide({
+          indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/',
+        });
       } catch (error) {
         console.error('Failed to load Pyodide', error);
       }
@@ -90,158 +127,189 @@ export function ExerciseWorkspace({ exercise }: { exercise: LabExercise }) {
   useEffect(() => {
     setCode('');
     setSqlResults(null);
-    if (exercise.type === 'sql') {
-      if (sqlJs) {
-        setSqlDb(new sqlJs.Database());
-        setOutput(['> Base de données SQL initialisée.']);
-      }
-    } else {
-      setOutput(['> Environnement Python prêt.']);
+    setReport(null);
+    setStatusLine(null);
+    setConsoleState(IDLE_CONSOLE);
+    setTab('console');
+    if (exercise.type === 'sql' && sqlJs) {
+      setSqlDb(new sqlJs.Database());
     }
   }, [exercise.id, exercise.type, sqlJs]);
 
-  const saveProgress = async () => {
+  const saveProgress = async (): Promise<boolean> => {
     let id = userId;
     if (!id) {
       const { data: { session } } = await supabase.auth.getSession();
       id = session?.user?.id ?? null;
       if (id) setUserId(id);
     }
-    if (!id) return;
+    if (!id) return false;
     const result = await saveValidatedExercise({
       exerciseId: exercise.id,
       courseId: exercise.courseId,
       courseTitle: exercise.courseTitle,
     });
-    if (result.error) {
-      setOutput((prev) => [...prev, '[Erreur] La validation n’a pas pu être enregistrée.']);
-      return;
-    }
+    if (result.error) return false;
     setIsCompleted(true);
-    if (result.newBadge && result.newAchievement) {
-      pendingAchievementRef.current = result.newAchievement;
+    const unlocked = result.newAchievements ?? (result.newAchievement ? [result.newAchievement] : []);
+    if (result.newBadge) {
+      pendingQueueRef.current = unlocked;
       setPendingBadge({ courseId: exercise.courseId, courseTitle: exercise.courseTitle });
       setShowSuccessModal(true);
+    } else if (unlocked.length > 0) {
+      const [first, ...rest] = unlocked;
+      pendingQueueRef.current = rest;
+      setUnlockedAchievement(first);
+    }
+    return true;
+  };
+
+  const publishIfPassed = async (next: RunReport) => {
+    setConsoleState(consoleFromReport(next, emptyLine));
+    if (!everyTestPassed(next)) {
+      setReport(next);
+      return;
+    }
+    const saved = await saveProgress();
+    setReport(saved ? next : { ...next, saveWarning: SAVE_WARNING });
+  };
+
+  const ensurePython = async () => {
+    if (pyodideRef.current) return pyodideRef.current;
+    setStatusLine('Chargement de Python…');
+    const started = Date.now();
+    while (!pyodideRef.current && Date.now() - started < 20000) {
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+    if (!pyodideRef.current) {
+      throw new Error('Impossible de charger Python. Vérifiez votre connexion.');
+    }
+    return pyodideRef.current;
+  };
+
+  const runPython = async (tests: string | null) => {
+    const pyodide = await ensurePython();
+    if (exercise.pythonPackages?.length) {
+      setStatusLine(`Chargement des modules : ${exercise.pythonPackages.join(', ')}…`);
+      await loadPythonPackages(pyodide, exercise.pythonPackages);
+    }
+    const leaked: string[] = [];
+    pyodide.setStdout({ batched: (msg: string) => leaked.push(String(msg)) });
+    pyodide.setStderr({ batched: (msg: string) => leaked.push(String(msg)) });
+    const raw = await pyodide.runPythonAsync(buildPythonCheckSource(code, tests));
+    const next = parsePythonCheckResult(raw);
+    if (!next.prints.trim() && leaked.length > 0) next.prints = leaked.join('\n');
+    return next;
+  };
+
+  const handleExecute = async () => {
+    setRunning('execute');
+    setTab('console');
+    setStatusLine(exercise.type === 'sql' ? 'Exécution de la requête SQL…' : 'Exécution du programme…');
+    try {
+      if (exercise.type === 'sql') {
+        if (!sqlDb) {
+          setConsoleState(consoleFromReport(unexpectedRunReport('Base de données non initialisée'), emptyLine));
+          return;
+        }
+        setSqlResults(null);
+        try {
+          const results = sqlDb.exec(code);
+          if (results.length > 0) {
+            const lastResult = results[results.length - 1];
+            setSqlResults({ columns: lastResult.columns, values: lastResult.values });
+          }
+          setConsoleState({ tone: 'ok', text: results.length > 0 ? 'Requête exécutée.' : emptyLine });
+        } catch (error: any) {
+          setConsoleState(consoleFromReport(reportFromQuery({ phase: 'student-error', message: error?.message }), emptyLine));
+        }
+        return;
+      }
+
+      const next = await runPython(null);
+      setConsoleState(consoleFromReport(next, emptyLine));
+    } catch (error: any) {
+      setConsoleState(consoleFromReport(unexpectedRunReport(error?.message || 'Erreur inattendue.'), emptyLine));
+    } finally {
+      setStatusLine(null);
+      setRunning(null);
     }
   };
 
-  const handleRun = async () => {
-    setIsRunning(true);
-
-    if (exercise.type === 'sql') {
-      if (!sqlDb) {
-        setOutput(['[Erreur] Base de données non initialisée']);
-        setIsRunning(false);
-        return;
-      }
-
-      setOutput(['> Exécution de la requête SQL...']);
-      setSqlResults(null);
-
-      try {
-        let results: any[] = [];
-        try {
-          results = sqlDb.exec(code);
-        } catch (error: any) {
-          setOutput((prev) => [...prev, `[Erreur SQL] ${error.message}`]);
-          setIsRunning(false);
+  const handleTest = async () => {
+    setRunning('test');
+    setTab('tests');
+    setReport(null);
+    setStatusLine(exercise.type === 'sql' ? 'Vérification de la requête…' : 'Vérification…');
+    try {
+      if (exercise.type === 'sql') {
+        if (!sqlDb) {
+          const next = unexpectedRunReport('Base de données non initialisée');
+          setConsoleState(consoleFromReport(next, emptyLine));
+          setReport(next);
           return;
         }
-
-        if (results.length > 0) {
-          const lastResult = results[results.length - 1];
-          setSqlResults({ columns: lastResult.columns, values: lastResult.values });
-          setOutput((prev) => [...prev, `> ${results.length} requête(s) exécutée(s).`]);
-        } else {
-          setOutput((prev) => [...prev, '> Commande exécutée avec succès.']);
+        setSqlResults(null);
+        try {
+          const results = sqlDb.exec(code);
+          if (results.length > 0) {
+            const lastResult = results[results.length - 1];
+            setSqlResults({ columns: lastResult.columns, values: lastResult.values });
+          }
+        } catch (error: any) {
+          const next = reportFromQuery({ phase: 'student-error', message: error?.message });
+          setConsoleState(consoleFromReport(next, emptyLine));
+          setReport(next);
+          return;
         }
 
         const sqlTests = exercise.hasVerification ? await getExerciseVerification(exercise.id) : null;
-        if (exercise.hasVerification && !sqlTests) {
-          setOutput((prev) => [...prev, '[Erreur] Impossible de charger le jeu de tests.']);
-          setIsRunning(false);
+        if (!sqlTests) {
+          const next = testsUnavailableReport();
+          setConsoleState(consoleFromReport(next, emptyLine));
+          setReport(next);
           return;
         }
-
-        if (sqlTests) {
-          setOutput((prev) => [...prev, '> Vérification...']);
-          try {
-            const verifRes = sqlDb.exec(sqlTests);
-            if (results.length === 0 && verifRes.length > 0) {
-              const lastResult = verifRes[verifRes.length - 1];
-              setSqlResults({ columns: lastResult.columns, values: lastResult.values });
-            }
-            await saveProgress();
-            setOutput((prev) => [...prev, '✅ Exercice validé !']);
-          } catch (error: any) {
-            setOutput((prev) => [...prev, `[Erreur Vérification] ${error.message}`]);
+        try {
+          const verifRes = sqlDb.exec(sqlTests);
+          if (verifRes.length > 0) {
+            const lastResult = verifRes[verifRes.length - 1];
+            setSqlResults({ columns: lastResult.columns, values: lastResult.values });
           }
-        } else {
-          await saveProgress();
+          await publishIfPassed(reportFromQuery({ phase: 'verified' }));
+        } catch (error: any) {
+          const next = reportFromQuery({ phase: 'verification-error', message: error?.message });
+          setConsoleState(consoleFromReport(next, emptyLine));
+          setReport(next);
         }
-      } catch (error: any) {
-        setOutput((prev) => [...prev, `[Erreur] ${error.message}`]);
-      } finally {
-        setIsRunning(false);
-      }
-      return;
-    }
-
-    setOutput(['> Initialisation...']);
-    if (!pyodideRef.current) {
-      setOutput(['[Info] Environnement Python en cours de chargement... Veuillez patienter.']);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      if (!pyodideRef.current) {
-        setOutput(['[Erreur] Impossible de charger Python. Vérifiez votre connexion.']);
-        setIsRunning(false);
         return;
       }
-    }
-
-    try {
-      setOutput(['> Exécution du script...']);
-      if (exercise.pythonPackages?.length) {
-        setOutput((prev) => [...prev, `> Chargement des modules : ${exercise.pythonPackages!.join(', ')}...`]);
-        await loadPythonPackages(pyodideRef.current, exercise.pythonPackages);
-      }
-
-      const logs: string[] = [];
-      pyodideRef.current.setStdout({ batched: (msg: string) => logs.push(msg) });
-      pyodideRef.current.setStderr({ batched: (msg: string) => logs.push(`[Erreur] ${msg}`) });
-      await pyodideRef.current.runPythonAsync(code);
-      setOutput(['> Exécution du script...', ...logs, '[Succès] Programme terminé.']);
 
       const pythonTests = exercise.hasVerification ? await getExerciseVerification(exercise.id) : null;
-      if (exercise.hasVerification && !pythonTests) {
-        setOutput((prev) => [...prev, '[Erreur] Impossible de charger le jeu de tests.']);
+      if (!pythonTests) {
+        const next = testsUnavailableReport();
+        setConsoleState(consoleFromReport(next, emptyLine));
+        setReport(next);
         return;
       }
-
-      if (pythonTests) {
-        try {
-          setOutput((prev) => [...prev, '> Lancement de la vérification...']);
-          await pyodideRef.current.runPythonAsync(pythonTests);
-          setOutput((prev) => [...prev, '✅ Tous les tests sont passés ! Bravo !']);
-          await saveProgress();
-        } catch (error: any) {
-          const msg = error.message || '';
-          const assertionMatch = msg.match(/AssertionError: (.*)/);
-          const userMsg = assertionMatch?.[1]
-            ? `❌ ${assertionMatch[1].trim()}`
-            : msg.includes('AssertionError')
-              ? '❌ Échec de la vérification. Une condition n’est pas remplie. Vérifiez votre code.'
-              : `❌ Échec de la vérification. ${msg}`;
-          setOutput((prev) => [...prev, userMsg]);
-          return;
-        }
-      } else {
-        await saveProgress();
-      }
+      const next = await runPython(pythonTests);
+      await publishIfPassed(next);
     } catch (error: any) {
-      setOutput(['> Exécution du script...', `[Erreur] ${error.message}`]);
+      const next = unexpectedRunReport(error?.message || 'Erreur inattendue.');
+      setConsoleState(consoleFromReport(next, emptyLine));
+      setReport(next);
     } finally {
-      setIsRunning(false);
+      setStatusLine(null);
+      setRunning(null);
     }
+  };
+
+  const handleClear = () => {
+    setConsoleState(IDLE_CONSOLE);
+    setSqlResults(null);
+    setReport(null);
+    setStatusLine(null);
+    setTab('console');
   };
 
   const handleEditorWillMount = (monaco: any) => {
@@ -255,16 +323,18 @@ export function ExerciseWorkspace({ exercise }: { exercise: LabExercise }) {
         { token: 'comment', foreground: '525252' },
       ],
       colors: {
-        'editor.background': '#0f0f0f',
+        'editor.background': '#1e1e1e',
         'editor.foreground': '#ffffff',
         'editorCursor.foreground': '#F97316',
-        'editor.lineHighlightBackground': '#1f1f1f',
+        'editor.lineHighlightBackground': '#2a2a2a',
       },
     });
   };
 
+  const backHref = exercise.pagePath || '/cours';
+
   return (
-    <div className="flex min-h-[calc(100vh-5rem)] flex-col bg-slate-50">
+    <div className="exercise-workspace">
       {showSuccessModal && pendingBadge && (
         <SuccessModal
           courseTitle={pendingBadge.courseTitle}
@@ -272,57 +342,93 @@ export function ExerciseWorkspace({ exercise }: { exercise: LabExercise }) {
           onConfirm={() => {
             setShowSuccessModal(false);
             setPendingBadge(null);
-            if (pendingAchievementRef.current) {
-              setUnlockedAchievement(pendingAchievementRef.current);
-              pendingAchievementRef.current = null;
-            }
+            const [first, ...rest] = pendingQueueRef.current;
+            pendingQueueRef.current = rest;
+            setUnlockedAchievement(first ?? null);
           }}
           onDismiss={() => {
             setShowSuccessModal(false);
             setPendingBadge(null);
-            pendingAchievementRef.current = null;
+            pendingQueueRef.current = [];
           }}
         />
       )}
       {unlockedAchievement && (
-        <AchievementUnlockedModal achievement={unlockedAchievement} onClose={() => setUnlockedAchievement(null)} />
+        <AchievementUnlockedModal
+          achievement={unlockedAchievement}
+          onClose={() => {
+            const [first, ...rest] = pendingQueueRef.current;
+            pendingQueueRef.current = rest;
+            setUnlockedAchievement(first ?? null);
+          }}
+        />
       )}
 
-      <div className="border-b border-slate-200 bg-white px-4 py-4 md:px-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <Link
-            href={exercise.pagePath || '/cours'}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700"
-          >
-            <ArrowLeft size={16} />
-            Retour à la fiche
-          </Link>
-          <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500">
-            <Terminal size={16} className="text-orange-500" />
-            {exercise.courseTitle}
-          </p>
+      <header className="exercise-toolbar">
+        <Link href={backHref} className="exercise-back">
+          <ArrowLeft size={16} aria-hidden />
+          Retour au chapitre
+        </Link>
+        <div className="exercise-toolbar-center">
+          <h1 title={exercise.label}>{exercise.label}</h1>
+          {isCompleted ? (
+            <span className="exercise-validated">
+              <CheckCircle size={13} aria-hidden />
+              Validé
+            </span>
+          ) : null}
         </div>
-      </div>
+        {nav && nav.total > 0 ? (
+          <div className="exercise-nav">
+            <span className="exercise-nav-count">{nav.marker} / {nav.total}</span>
+            <span className="exercise-nav-track" aria-hidden>
+              <span style={{ width: `${(nav.index / nav.total) * 100}%` }} />
+            </span>
+            {nav.previous ? (
+              <Link href={`/exercice/${encodeURIComponent(nav.previous.id)}`} className="exercise-nav-arrow" aria-label={`Exercice précédent : ${nav.previous.label}`}>
+                <ChevronLeft size={16} />
+              </Link>
+            ) : (
+              <button type="button" className="exercise-nav-arrow" disabled aria-label="Pas d’exercice précédent">
+                <ChevronLeft size={16} />
+              </button>
+            )}
+            {nav.next ? (
+              <Link href={`/exercice/${encodeURIComponent(nav.next.id)}`} className="exercise-nav-arrow" aria-label={`Exercice suivant : ${nav.next.label}`}>
+                <ChevronRight size={16} />
+              </Link>
+            ) : (
+              <button type="button" className="exercise-nav-arrow" disabled aria-label="Pas d’exercice suivant">
+                <ChevronRight size={16} />
+              </button>
+            )}
+          </div>
+        ) : null}
+      </header>
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2 lg:min-h-[70vh]">
-        <div className="min-h-[24rem] border-b border-slate-200 lg:border-b-0 lg:border-r">
-          <ExerciseStatement
-            exercise={exercise}
-            isCompleted={isCompleted}
-            content={cleanStatement(exercise.content)}
-          />
-        </div>
-        <div className="flex min-h-[32rem] flex-col bg-[#1e1e1e] lg:min-h-0">
+      <div className="exercise-body">
+        <ExerciseStatement label={exercise.label} content={cleanStatement(exercise.content)} />
+        <div className="exercise-work">
           <LabEditor
             exercise={exercise}
             code={code}
-            isRunning={isRunning}
+            running={running}
             onCodeChange={setCode}
             onReset={() => setCode('')}
-            onRun={handleRun}
+            onExecute={handleExecute}
+            onTest={handleTest}
             beforeMount={handleEditorWillMount}
           />
-          <LabOutput exercise={exercise} output={output} sqlResults={sqlResults} />
+          <LabOutput
+            exercise={exercise}
+            tab={tab}
+            onTab={setTab}
+            onClear={handleClear}
+            consoleState={consoleState}
+            sqlResults={sqlResults}
+            report={report}
+            statusLine={statusLine}
+          />
         </div>
       </div>
     </div>

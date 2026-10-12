@@ -1,4 +1,5 @@
 import {
+  sheetBadgeSrc,
   sheetFoxArt,
   type FoxPose,
   type FoxProp,
@@ -619,6 +620,22 @@ export function SheetBadgeFox({
   const art = sheetFoxArt(courseId);
   const name = title?.trim() || "fiche";
   const label = earned ? `Badge ${name}` : `Badge ${name}, pas encore obtenu`;
+  const src = sheetBadgeSrc(courseId);
+  const tone = `${earned ? "shrink-0" : "shrink-0 opacity-60 grayscale"} ${className}`;
+
+  if (src) {
+    return (
+      <img
+        src={src}
+        alt={label}
+        width={size}
+        height={size}
+        draggable={false}
+        className={`${tone} object-contain`}
+        style={{ width: size, height: size }}
+      />
+    );
+  }
 
   return (
     <svg
@@ -627,7 +644,7 @@ export function SheetBadgeFox({
       viewBox="0 0 120 120"
       role="img"
       aria-label={label}
-      className={`${earned ? "shrink-0" : "shrink-0 opacity-60 grayscale"} ${className}`}
+      className={tone}
     >
       <Scene scene={art.scene} />
       <g transform="translate(4 16) scale(0.86)">

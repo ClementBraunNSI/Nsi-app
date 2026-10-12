@@ -247,8 +247,8 @@ function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalE
           exercises.push({
             id: sectionId,
             label: sectionLabel,
-            courseId: courseId,
-            courseTitle: courseTitle,
+            courseId: nearestCourseId,
+            courseTitle: nearestCourseTitle,
             content: exerciseContent, // The markdown content inside <Enonce> or the section
             verificationCode: verificationCode,
             pythonPackages: pythonPackages.length > 0 ? pythonPackages : undefined,
@@ -290,6 +290,28 @@ function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalE
   }
 
   return { exercises: uniqueExercises, external };
+}
+
+export type SheetSummary = {
+  courseId: string;
+  courseTitle: string;
+  chapter: string;
+};
+
+/** Fiches Python/SQL que l’élève peut terminer, une ligne par course id. */
+export async function listAccessibleSheetSummaries(): Promise<SheetSummary[]> {
+  const auth = await getAuthContext();
+  const sheets = new Map<string, SheetSummary>();
+  for (const exercise of buildExerciseCatalog().exercises) {
+    if (!exerciseIsAccessible(exercise, auth)) continue;
+    if (sheets.has(exercise.courseId)) continue;
+    sheets.set(exercise.courseId, {
+      courseId: exercise.courseId,
+      courseTitle: exercise.courseTitle,
+      chapter: exercise.chapter,
+    });
+  }
+  return [...sheets.values()];
 }
 
 export async function getAllExercises(): Promise<LabExercise[]> {
@@ -360,6 +382,45 @@ export async function listExerciseSheets(): Promise<ExerciseSheet[]> {
       a.chapter.localeCompare(b.chapter, 'fr') ||
       a.courseTitle.localeCompare(b.courseTitle, 'fr'),
   );
+}
+
+export type ExerciseSheetNav = {
+  index: number;
+  total: number;
+  marker: string;
+  previous: { id: string; label: string } | null;
+  next: { id: string; label: string } | null;
+};
+
+function sheetMarker(label: string, index: number) {
+  const match = label.match(/^(\d+(?:\.\d+)*)\b/);
+  return match?.[1] ?? String(index);
+}
+
+/** Editor exercises of the same sheet, in fiche order. Course points and non-editor sections are already absent from the catalog. */
+export async function getExerciseSheetNav(exerciseId: string): Promise<ExerciseSheetNav | null> {
+  const id = String(exerciseId || '').trim();
+  if (!id || id.length > 200) return null;
+
+  const auth = await getAuthContext();
+  if (!auth.user || auth.isElevated) return null;
+
+  const { exercises } = buildExerciseCatalog();
+  const current = exercises.find((item) => item.id === id);
+  if (!current || !exerciseIsAccessible(current, auth)) return null;
+
+  const sheet = exercises.filter((item) => item.courseId === current.courseId && exerciseIsAccessible(item, auth));
+  const position = sheet.findIndex((item) => item.id === current.id);
+  if (position < 0 || sheet.length === 0) return null;
+
+  const index = position + 1;
+  return {
+    index,
+    total: sheet.length,
+    marker: sheetMarker(current.label, index),
+    previous: position > 0 ? { id: sheet[position - 1].id, label: sheet[position - 1].label } : null,
+    next: position < sheet.length - 1 ? { id: sheet[position + 1].id, label: sheet[position + 1].label } : null,
+  };
 }
 
 export async function getExerciseById(exerciseId: string): Promise<LabExercise | null> {

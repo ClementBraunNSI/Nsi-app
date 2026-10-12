@@ -104,7 +104,11 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
     )
     .map(({ visibility: _visibility, ...course }) => course);
 
-  const tousLesCours = [...privateCourses, ...standardCourses];
+  const standardSlugs = new Set(standardCourses.map((course) => course.slug));
+  const tousLesCours = [
+    ...standardCourses,
+    ...privateCourses.filter((course) => !standardSlugs.has(course.slug)),
+  ];
 
   if (tousLesCours.length === 0) {
     return (

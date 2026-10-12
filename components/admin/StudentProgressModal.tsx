@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Award, CheckCircle2, ChevronLeft, ChevronRight, Circle, X } from 'lucide-react';
 import { SheetBadgeFox } from '@/components/fox/SheetBadgeFox';
+import { AchievementMark } from '@/components/fox/AchievementMark';
 import { getStudentSheetProgress, type StudentSheetProgress, type StudentProgressSheet } from '@/app/actions/studentProgress';
 import { isAbortError } from '@/lib/is-abort-error';
 import { levelLabel, pickDefaultLevel, sortLevels, validatedPhrase, type SheetProgressStatus } from '@/lib/student-progress';
@@ -190,6 +191,22 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
               <p className="text-sm text-slate-500">
                 Un exercice compte comme validé seulement si les tests sont réussis.
               </p>
+
+              {data.achievements.length > 0 && (
+                <div>
+                  <p className="mb-2 text-sm font-semibold text-slate-600">
+                    {data.achievements.length === 1 ? '1 succès débloqué' : `${data.achievements.length} succès débloqués`}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {data.achievements.map((achievement) => (
+                      <div key={achievement.id} className="flex items-center gap-2 rounded-2xl border border-slate-100 bg-slate-50 px-2 py-1.5">
+                        <AchievementMark id={achievement.id} title={achievement.title} size={36} />
+                        <span className="max-w-[12rem] truncate text-xs font-semibold text-slate-700">{achievement.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {levels.length > 0 && (
                 <div className="flex flex-wrap gap-2" role="group" aria-label="Niveau">

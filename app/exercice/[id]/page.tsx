@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { getAuthContext } from '@/lib/auth';
-import { getExerciseById, getExternalExercise } from '@/app/actions/getExercises';
+import { getExerciseById, getExerciseSheetNav, getExternalExercise } from '@/app/actions/getExercises';
 import { ExerciseWorkspace } from '@/components/lab/ExerciseWorkspace';
 
 export default async function ExercisePage({ params }: { params: Promise<{ id: string }> }) {
@@ -13,7 +13,10 @@ export default async function ExercisePage({ params }: { params: Promise<{ id: s
   if (auth.isElevated) redirect('/admin');
 
   const exercise = await getExerciseById(id);
-  if (exercise) return <ExerciseWorkspace exercise={exercise} />;
+  if (exercise) {
+    const nav = await getExerciseSheetNav(id);
+    return <ExerciseWorkspace exercise={exercise} nav={nav} />;
+  }
 
   const external = await getExternalExercise(id);
   if (!external) notFound();

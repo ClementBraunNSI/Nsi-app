@@ -57,13 +57,16 @@ export async function getReservedCourses(studentName?: string): Promise<Reserved
       }
       if (!item.endsWith('.md') && !item.endsWith('.mdx')) continue;
 
+      const relativePath = path.relative(contentDir, fullPath);
+      const pathParts = relativePath.split(path.sep);
+      const privateLesson = pathParts[0] === 'particuliers' && pathParts.length >= 3;
+      if (privateLesson && !auth.isElevated && !auth.hasPrivateLessons) continue;
+
       const fileContent = fs.readFileSync(fullPath, 'utf-8');
       const { data } = matter(fileContent);
       if (!isStudentAllowed(data.allowedStudents, name!)) continue;
       if (data.revisionSheet === true) continue;
 
-      const relativePath = path.relative(contentDir, fullPath);
-      const pathParts = relativePath.split(path.sep);
       const level = pathParts[0];
       const slug = pathParts.slice(1).join('/').replace(/\.mdx?$/, '');
 

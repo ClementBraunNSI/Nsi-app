@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Badge, Button, Card, EmptyState, PageHeader, SectionTitle } from "@/components/ui";
 import { SheetBadgeFox } from "@/components/fox/SheetBadgeFox";
+import { AchievementMark } from "@/components/fox/AchievementMark";
 import {
   markHomeworkDone,
   sendStudentMessage,
@@ -125,7 +126,9 @@ export function EspacePanel({ data }: { data: EspaceData }) {
               >
                 <Target className="text-purple-500" size={22} />
                 <div className="text-left">
-                  <div className="text-2xl font-semibold leading-none">{data.achievements.length}</div>
+                  <div className="text-2xl font-semibold leading-none">
+                    {data.achievements.filter((achievement) => achievement.earned).length}
+                  </div>
                   <div className="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)]">Succès</div>
                 </div>
               </button>
@@ -390,9 +393,27 @@ export function EspacePanel({ data }: { data: EspaceData }) {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {data.achievements.map((achievement) => (
-                <div key={achievement.id} className="rounded-2xl border border-[var(--border)] p-4">
-                  <p className="font-semibold">{achievement.title}</p>
-                  <p className="text-sm text-[var(--muted)] mt-1">{achievement.description}</p>
+                <div
+                  key={achievement.id}
+                  className={`flex items-start gap-3 rounded-2xl border p-4 ${
+                    achievement.earned ? "border-[var(--border)]" : "border-dashed border-[var(--border)]"
+                  }`}
+                >
+                  <AchievementMark
+                    id={achievement.id}
+                    title={achievement.title}
+                    earned={achievement.earned}
+                    size={64}
+                  />
+                  <div className="min-w-0">
+                    <p className={`font-semibold ${achievement.earned ? "" : "text-[var(--muted)]"}`}>{achievement.title}</p>
+                    <p className="text-sm text-[var(--muted)] mt-1">{achievement.description}</p>
+                    {!achievement.earned && (
+                      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)] mt-2">
+                        Pas encore obtenu
+                      </p>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

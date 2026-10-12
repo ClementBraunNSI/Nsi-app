@@ -3,10 +3,10 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
 import { getAuthContext } from '@/lib/auth';
-import { getExercisesForCourses } from '@/app/actions/getExercises';
+import { getExercisesForCourses, listAccessibleSheetSummaries } from '@/app/actions/getExercises';
 import { syncMyHomework } from '@/app/actions/homeworkCompletion';
 import { exerciseIdsForPage } from '@/lib/page-exercises';
-import { ACHIEVEMENTS } from '@/lib/achievements';
+import { ACHIEVEMENTS, completedChapterNames } from '@/lib/achievements';
 
 export type EspaceHomework = {
   id: string;
@@ -60,6 +60,7 @@ export type EspaceAchievement = {
   title: string;
   description: string;
   source: 'fiche' | 'global';
+  earned: boolean;
 };
 
 export type EspaceData = {
@@ -126,6 +127,7 @@ export async function getStudentEspaceData(): Promise<EspaceData | null> {
     achievementsRes,
     progressRes,
     teacher,
+    sheets,
   ] = await Promise.all([
     supabase
       .from('homework')
@@ -154,6 +156,7 @@ export async function getStudentEspaceData(): Promise<EspaceData | null> {
       .order('unlocked_at', { ascending: false }),
     supabase.from('user_progress').select('exercise_id, course_id').eq('user_id', userId),
     findTeacher(supabase),
+    listAccessibleSheetSummaries(),
   ]);
 
   const completionRes = await supabase
@@ -257,34 +260,56 @@ export async function getStudentEspaceData(): Promise<EspaceData | null> {
 
   const badges = badgesRes.data || [];
   const exercisesCount = progressRes.data?.length || 0;
-  const globalUnlocked = ACHIEVEMENTS.filter((achievement) =>
-    achievement.condition({
-      badgesCount: badges.length,
-      exercisesCount,
-      badges,
-      completedChapters: [],
-    }),
-  ).map((achievement) => ({
-    id: achievement.id,
-    title: achievement.title,
-    description: achievement.description,
-    source: 'global' as const,
-  }));
+  const badgeCourseIds = new Set(badges.map((badge) => badge.course_id));
+  const storedAchievements = new Map(
+    (achievementsRes.data || []).map((row) => [row.achievement_id, row]),
+  );
+  const stats = {
+    badgesCount: badges.length,
+    exercisesCount,
+    badges,
+    completedChapters: completedChapterNames(sheets, badgeCourseIds),
+  };
 
-  const ficheUnlocked = (achievementsRes.data || []).map((row) => ({
-    id: row.achievement_id,
-    title: row.title,
-    description: row.description || 'Tous les exercices de cette fiche sont validés.',
-    source: 'fiche' as const,
-  }));
-
-  const seen = new Set<string>();
   const achievements: EspaceAchievement[] = [];
-  for (const item of [...ficheUnlocked, ...globalUnlocked]) {
-    if (seen.has(item.id)) continue;
-    seen.add(item.id);
-    achievements.push(item);
+  const seen = new Set<string>();
+  for (const sheet of sheets) {
+    const id = `fiche:${sheet.courseId}`;
+    const stored = storedAchievements.get(id);
+    seen.add(id);
+    achievements.push({
+      id,
+      title: stored?.title || sheet.courseTitle,
+      description: stored?.description || `Tous les exercices de la fiche « ${sheet.courseTitle} » sont validés.`,
+      source: 'fiche',
+      earned: badgeCourseIds.has(sheet.courseId) || Boolean(stored),
+    });
   }
+  for (const row of storedAchievements.values()) {
+    if (!row.achievement_id.startsWith('fiche:') || seen.has(row.achievement_id)) continue;
+    seen.add(row.achievement_id);
+    achievements.push({
+      id: row.achievement_id,
+      title: row.title,
+      description: row.description || 'Tous les exercices de cette fiche sont validés.',
+      source: 'fiche',
+      earned: true,
+    });
+  }
+  for (const achievement of ACHIEVEMENTS) {
+    if (seen.has(achievement.id)) continue;
+    seen.add(achievement.id);
+    achievements.push({
+      id: achievement.id,
+      title: achievement.title,
+      description: achievement.description,
+      source: 'global',
+      earned: Boolean(storedAchievements.get(achievement.id)) || achievement.condition(stats),
+    });
+  }
+  achievements.sort(
+    (a, b) => Number(b.earned) - Number(a.earned) || a.title.localeCompare(b.title, 'fr'),
+  );
 
   return {
     profile: {

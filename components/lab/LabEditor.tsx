@@ -1,45 +1,45 @@
 "use client";
 
 import Editor from "@monaco-editor/react";
-import { Play, RotateCcw } from "lucide-react";
+import { Check, Play, RotateCcw } from "lucide-react";
 import type { LabExercise } from "@/app/actions/getExercises";
 
 type Props = {
   exercise: LabExercise;
   code: string;
-  isRunning: boolean;
+  running: "execute" | "test" | null;
   onCodeChange: (value: string) => void;
   onReset: () => void;
-  onRun: () => void;
+  onExecute: () => void;
+  onTest: () => void;
   beforeMount: (monaco: any) => void;
 };
 
-export function LabEditor({ exercise, code, isRunning, onCodeChange, onReset, onRun, beforeMount }: Props) {
+export function LabEditor({ exercise, code, running, onCodeChange, onReset, onExecute, onTest, beforeMount }: Props) {
+  const busy = running !== null;
   return (
-    <>
-      <div className="flex items-center justify-between px-4 py-2 bg-[#2d2d2d] border-b border-[#3e3e3e]">
-        <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-          <span>{exercise.type === "sql" ? "main.sql" : "main.py"}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <button onClick={onReset} className="p-1.5 hover:bg-[#3e3e3e] rounded-md text-slate-400 transition-colors" title="Reset">
+    <div className="exercise-editor">
+      <div className="exercise-editor-bar">
+        <span className="exercise-file">{exercise.type === "sql" ? "main.sql" : "main.py"}</span>
+        <div className="exercise-editor-actions">
+          <button type="button" onClick={onReset} className="exercise-icon-button" title="Réinitialiser le code" disabled={busy}>
             <RotateCcw size={14} />
           </button>
-          <button
-            onClick={onRun}
-            disabled={isRunning}
-            className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-xs font-bold transition-all ${
-              isRunning
-                ? "bg-slate-600 text-slate-400 cursor-wait"
-                : "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/20"
-            }`}
-          >
-            <Play size={14} fill="currentColor" />
-            {isRunning ? "Exécution..." : "Exécuter & Valider"}
+          <span className="exercise-runtime">{exercise.type === "sql" ? "SQL" : "Python 3"}</span>
+          <button type="button" onClick={onExecute} disabled={busy} className="exercise-run">
+            <Play size={14} fill="currentColor" aria-hidden />
+            {running === "execute" ? "Exécution…" : "Exécuter"}
           </button>
+          {exercise.hasVerification ? (
+            <button type="button" onClick={onTest} disabled={busy} className="exercise-test">
+              <Check size={14} aria-hidden />
+              {running === "test" ? "Vérification…" : "Tester ma solution"}
+            </button>
+          ) : null}
         </div>
       </div>
-      <div className="h-[55%] min-h-[250px] border-b border-[#3e3e3e]">
+      <div className="exercise-editor-frame">
+        <div className="exercise-editor-fill">
         <Editor
           height="100%"
           defaultLanguage="python"
@@ -52,10 +52,14 @@ export function LabEditor({ exercise, code, isRunning, onCodeChange, onReset, on
             minimap: { enabled: false },
             fontSize: 14,
             scrollBeyondLastLine: false,
-            padding: { top: 16, bottom: 16 },
+            wordWrap: "on",
+            automaticLayout: true,
+            padding: { top: 12, bottom: 12 },
+            overviewRulerLanes: 0,
           }}
         />
+        </div>
       </div>
-    </>
+    </div>
   );
 }

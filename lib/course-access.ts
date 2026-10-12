@@ -50,6 +50,10 @@ export function canAccessCourse(
 
   if (!opts.isAuthenticated) return false;
 
+  // Fiche privée : un homonyme de classe (même prénom, sans cours particuliers) n'y entre pas.
+  const markedPrivate = String(course.access || "").toLowerCase() === "private";
+  if (markedPrivate && !opts.hasPrivateLessons) return false;
+
   const named = Array.isArray(course.allowedStudents) && course.allowedStudents.length > 0;
   if (!named) {
     return Boolean(opts.hasPrivateLessons);

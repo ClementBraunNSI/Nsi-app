@@ -186,6 +186,12 @@ function hashString(value: string) {
   return hash >>> 0;
 }
 
+/** Public URL for a generated sheet badge. Null when this course has no dedicated file. */
+export function sheetBadgeSrc(courseId: string): string | null {
+  if (!Object.prototype.hasOwnProperty.call(SHEET_FOX_ASSIGNMENTS, courseId)) return null;
+  return `/images/badges/${courseId}.png`;
+}
+
 export function sheetFoxArt(courseId: string): SheetFoxArt {
   const known = SHEET_FOX_ASSIGNMENTS[courseId];
   if (known) return known;

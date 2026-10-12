@@ -1,42 +1,83 @@
 "use client";
 
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import { BookOpen, CheckCircle } from "lucide-react";
-import type { LabExercise } from "@/app/actions/getExercises";
+import { BookOpen, ChevronDown, Lightbulb } from "lucide-react";
+import { splitStatement } from "@/lib/exercise-statement";
 
 type Props = {
-  exercise: LabExercise;
-  isCompleted: boolean;
+  label: string;
   content: string;
 };
 
-export function ExerciseStatement({ exercise, isCompleted, content }: Props) {
+function Markdown({ children }: { children: string }) {
   return (
-    <div className="border-r border-slate-200 bg-white min-h-0 flex flex-col">
-      <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/30 shrink-0">
-        <div>
-          <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-            <BookOpen size={18} className="text-slate-400" />
-            {exercise.label}
-          </h2>
-          <p className="text-xs text-slate-500 font-medium mt-0.5 ml-7">
-            {exercise.courseTitle}
-          </p>
+    <div className="lab-prose prose prose-slate max-w-none">
+      <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
+        {children}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
+function Fold({
+  title,
+  hint = false,
+  defaultOpen = false,
+  children,
+}: {
+  title: string;
+  hint?: boolean;
+  defaultOpen?: boolean;
+  children: string;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <section className={hint ? "exercise-fold is-hint" : "exercise-fold"}>
+      <button
+        type="button"
+        className="exercise-fold-toggle"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        {hint ? <Lightbulb size={16} className="exercise-fold-icon" aria-hidden /> : null}
+        <span>{title}</span>
+        <ChevronDown size={16} className={open ? "exercise-fold-chevron is-open" : "exercise-fold-chevron"} aria-hidden />
+      </button>
+      {open ? (
+        <div className="exercise-fold-body">
+          <Markdown>{children}</Markdown>
         </div>
-        {isCompleted && (
-          <span className="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-bold rounded-full border border-emerald-100 flex items-center gap-1.5">
-            <CheckCircle size={12} /> Validé
-          </span>
-        )}
-      </div>
-      <div className="flex-1 min-h-0 overflow-y-auto p-5 prose prose-slate prose-lg max-w-none bg-white lab-prose">
-        <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
-          {content}
-        </ReactMarkdown>
-      </div>
+      ) : null}
+    </section>
+  );
+}
+
+export function ExerciseStatement({ label, content }: Props) {
+  const parts = splitStatement(content, label);
+  return (
+    <div className="exercise-statement">
+      <section>
+        <h2 className="exercise-enonce-title">
+          <BookOpen size={16} aria-hidden />
+          Énoncé
+        </h2>
+        {parts.enonce ? <Markdown>{parts.enonce}</Markdown> : null}
+      </section>
+      {parts.consignes ? (
+        <Fold title="Consignes" defaultOpen>
+          {parts.consignes}
+        </Fold>
+      ) : null}
+      {parts.indice ? (
+        <Fold title={parts.indiceTitle || "Indice"} hint>
+          {parts.indice}
+        </Fold>
+      ) : null}
+      {parts.exemples ? <Fold title="Exemples">{parts.exemples}</Fold> : null}
     </div>
   );
 }

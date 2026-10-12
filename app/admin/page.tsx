@@ -10,6 +10,7 @@ import { PrivateLessonDates } from '@/components/admin/PrivateLessonDates';
 import { StudentFollowup } from '@/components/admin/StudentFollowup';
 import { StudentProgressModal } from '@/components/admin/StudentProgressModal';
 import { SheetBadgeFox } from '@/components/fox/SheetBadgeFox';
+import { AchievementMark } from '@/components/fox/AchievementMark';
 import { DeleteStudentDialog, StudentAccountDialog } from '@/components/admin/StudentAccounts';
 import { isAbortError } from '@/lib/is-abort-error';
 
@@ -416,7 +417,11 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
         getStudentAdminDetails(student.id),
         getStudentWorkDetail(student.id),
       ]);
-      setDetails({ badges: data.badges || [], exercisesCount: data.exercisesCount || 0 });
+      setDetails({
+        badges: data.badges || [],
+        achievements: data.achievements || [],
+        exercisesCount: data.exercisesCount || 0,
+      });
       setReservedCourses(data.reservedCourses || []);
       setWork(workDetail);
       setLoading(false);
@@ -468,7 +473,7 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
           ) : (
             <>
               {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="p-5 bg-gradient-to-br from-orange-50 to-white rounded-2xl border border-orange-100 shadow-sm">
                   <div className="flex items-center gap-2 mb-2 text-orange-600">
                     <Award size={20} />
@@ -482,6 +487,13 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
                     <p className="text-xs font-bold uppercase tracking-wider">Exercices Terminés</p>
                   </div>
                   <p className="text-4xl font-black text-slate-800">{details?.exercisesCount}</p>
+                </div>
+                <div className="p-5 bg-gradient-to-br from-purple-50 to-white rounded-2xl border border-purple-100 shadow-sm">
+                  <div className="flex items-center gap-2 mb-2 text-purple-600">
+                    <Award size={20} />
+                    <p className="text-xs font-bold uppercase tracking-wider">Succès</p>
+                  </div>
+                  <p className="text-4xl font-black text-slate-800">{details?.achievements?.length || 0}</p>
                 </div>
               </div>
 
@@ -559,6 +571,31 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
                     </div>
                     <p className="text-slate-500 font-bold">Aucun badge débloqué</p>
                     <p className="text-slate-400 text-sm">Cet élève n'a pas encore remporté de trophées.</p>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  Succès
+                  <span className="bg-slate-100 text-slate-500 text-xs px-2 py-1 rounded-full">{details?.achievements?.length || 0}</span>
+                </h3>
+                {details?.achievements?.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {details.achievements.map((achievement: { id: string; achievement_id: string; title: string; description: string | null; unlocked_at: string }) => (
+                      <div key={achievement.id} className="flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-white">
+                        <AchievementMark id={achievement.achievement_id} title={achievement.title} size={52} />
+                        <div className="overflow-hidden">
+                          <p className="font-bold text-slate-700 text-sm truncate">{achievement.title}</p>
+                          <p className="text-xs text-slate-400 mt-0.5 truncate">{achievement.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-10 text-center bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
+                    <p className="text-slate-500 font-bold">Aucun succès débloqué</p>
+                    <p className="text-slate-400 text-sm">Les succès de fiche et les paliers apparaîtront ici.</p>
                   </div>
                 )}
               </div>

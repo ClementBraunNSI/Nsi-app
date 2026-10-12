@@ -17,6 +17,33 @@ export interface AchievementStats {
   completedChapters: string[];
 }
 
+export type SheetChapterRef = {
+  courseId: string;
+  chapter: string;
+};
+
+/** Chapitres dont chaque fiche validable dans l’éditeur a déjà son badge. */
+export function completedChapterNames(sheets: SheetChapterRef[], badgeCourseIds: Iterable<string>): string[] {
+  const owned = new Set(badgeCourseIds);
+  const byChapter = new Map<string, Set<string>>();
+  for (const sheet of sheets) {
+    const chapter = sheet.chapter?.trim();
+    const courseId = sheet.courseId?.trim();
+    if (!chapter || !courseId) continue;
+    const ids = byChapter.get(chapter) ?? new Set<string>();
+    ids.add(courseId);
+    byChapter.set(chapter, ids);
+  }
+  return [...byChapter.entries()]
+    .filter(([, ids]) => [...ids].every((id) => owned.has(id)))
+    .map(([chapter]) => chapter);
+}
+
+export function globalAchievementsUnlockedBetween(before: AchievementStats, after: AchievementStats): Achievement[] {
+  const previous = new Set(ACHIEVEMENTS.filter((item) => item.condition(before)).map((item) => item.id));
+  return ACHIEVEMENTS.filter((item) => item.condition(after) && !previous.has(item.id));
+}
+
 export function achievementForSheet(courseId: string, courseTitle: string): Achievement {
   return {
     id: `fiche:${courseId}`,

@@ -22,10 +22,16 @@ export type StudentProgressSheet = {
   exercises: StudentProgressExercise[];
 };
 
+export type StudentProgressAchievement = {
+  id: string;
+  title: string;
+};
+
 export type StudentSheetProgress = {
   fullName: string;
   profileLevel: string | null;
   sheets: StudentProgressSheet[];
+  achievements: StudentProgressAchievement[];
 };
 
 export async function getStudentSheetProgress(studentId: string): Promise<StudentSheetProgress | null> {
@@ -45,7 +51,7 @@ export async function getStudentSheetProgress(studentId: string): Promise<Studen
       .maybeSingle(),
     supabase.from('user_progress').select('exercise_id').eq('user_id', id),
     supabase.from('badges').select('course_id').eq('user_id', id),
-    supabase.from('user_achievements').select('achievement_id').eq('user_id', id),
+    supabase.from('user_achievements').select('achievement_id, title').eq('user_id', id),
     listTrackedExercises(),
   ]);
 
@@ -105,5 +111,9 @@ export async function getStudentSheetProgress(studentId: string): Promise<Studen
     fullName: profileRes.data.full_name || 'Élève',
     profileLevel: profileRes.data.level,
     sheets: list,
+    achievements: (achievementsRes.data || []).map((row) => ({
+      id: row.achievement_id,
+      title: row.title,
+    })),
   };
 }

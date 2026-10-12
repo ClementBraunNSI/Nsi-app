@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Eye, LayoutDashboard, LogOut } from "lucide-react";
 import AccessibilityMenu from "./AccessibilityMenu";
@@ -50,7 +51,7 @@ export default function SiteHeader({
       <nav className="site-header-inner">
         <Link
           href="/"
-          className="flex items-center gap-3 min-w-0"
+          className="flex min-w-0 max-w-[46%] shrink-0 items-center gap-2 overflow-hidden sm:max-w-none sm:gap-3 sm:overflow-visible"
           onClick={() => {
             logoClickCountRef.current += 1;
             if (clickResetRef.current) window.clearTimeout(clickResetRef.current);
@@ -63,27 +64,37 @@ export default function SiteHeader({
             }
           }}
         >
-          <div className="site-logo">
-            <span className="text-2xl leading-none">🦊</span>
-          </div>
-          <span className="text-base font-semibold tracking-tight truncate">
+          <Image
+            src="/images/fox_3_mark.png"
+            alt=""
+            width={720}
+            height={391}
+            priority
+            sizes="(max-width: 767px) 80px, 168px"
+            quality={90}
+            className="site-logo"
+            style={{ width: "var(--site-fox-w)", height: "var(--site-fox-h)" }}
+          />
+          <span className="min-w-0 text-base font-semibold tracking-tight truncate">
             <span className="text-[var(--accent)]">La tanière du Code</span>{" "}
-            <span className="text-[var(--muted)] hidden md:inline">par Clément BRAUN</span>
+            <span className="text-[var(--muted)] hidden lg:inline">par Clément BRAUN</span>
           </span>
         </Link>
 
-        <div className="flex items-center gap-5 lg:gap-7 text-sm font-semibold">
+        <div className="flex min-w-0 flex-1 items-center justify-end gap-2 text-sm font-semibold sm:gap-3 lg:gap-7">
+          <div className="hide-scrollbar flex min-w-0 items-center gap-3 overflow-x-auto sm:gap-5">
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={item.match(pathname) ? "text-[var(--accent)]" : "text-[var(--muted)] hover:text-[var(--accent)] transition-colors"}
+              className={`shrink-0 whitespace-nowrap ${item.match(pathname) ? "text-[var(--accent)]" : "text-[var(--muted)] hover:text-[var(--accent)] transition-colors"}`}
             >
               {item.label}
             </Link>
           ))}
+          </div>
 
-          <div className="flex items-center gap-2 relative">
+          <div className="relative flex shrink-0 items-center gap-2">
             <button
               onClick={() => setShowA11yMenu(!showA11yMenu)}
               className={`p-2.5 rounded-xl transition-colors ${showA11yMenu ? "bg-[var(--accent-soft)] text-[var(--accent)]" : "text-[var(--muted)] hover:bg-[var(--surface-2)]"}`}

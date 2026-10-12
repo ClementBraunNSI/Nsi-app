@@ -42,6 +42,7 @@ export async function getAdminDashboardData() {
 export async function getStudentAdminDetails(studentId: string) {
   const empty = {
     badges: [] as Record<string, unknown>[],
+    achievements: [] as { id: string; achievement_id: string; title: string; description: string | null; unlocked_at: string }[],
     exercisesCount: 0,
     reservedCourses: [] as ReservedCourse[],
   };
@@ -53,9 +54,14 @@ export async function getStudentAdminDetails(studentId: string) {
   if (!id || id.length > 80) return { error: 'invalid' as const, ...empty };
 
   const supabase = await createClient();
-  const [{ data: profile }, { data: badges }, { count }] = await Promise.all([
+  const [{ data: profile }, { data: badges }, { data: achievements }, { count }] = await Promise.all([
     supabase.from('profiles').select('id, full_name, has_private_lessons').eq('id', id).maybeSingle(),
     supabase.from('badges').select('id, course_id, badge_name, unlocked_at').eq('user_id', id),
+    supabase
+      .from('user_achievements')
+      .select('id, achievement_id, title, description, unlocked_at')
+      .eq('user_id', id)
+      .order('unlocked_at', { ascending: false }),
     supabase.from('user_progress').select('*', { count: 'exact', head: true }).eq('user_id', id),
   ]);
 
@@ -68,6 +74,7 @@ export async function getStudentAdminDetails(studentId: string) {
   return {
     error: null as null,
     badges: badges || [],
+    achievements: achievements || [],
     exercisesCount: count || 0,
     reservedCourses,
   };
