@@ -54,18 +54,24 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
 
     if (profile?.has_private_lessons) {
       const reserved = await getReservedCourses();
+      // Fiches sous content/particuliers/<élève>/ : les afficher aussi sur le niveau du profil
+      // (TNSI, etc.), pas seulement sur la page du dossier particuliers.
+      const onStudentLevel = Boolean(profile.level) && profile.level === level.profileCode;
       privateCourses = reserved
-        .filter((rc) => (contentFolderFromParam(rc.level) ?? rc.level) === folder)
+        .filter((rc) => {
+          const courseFolder = contentFolderFromParam(rc.level) ?? rc.level;
+          return courseFolder === folder || onStudentLevel;
+        })
         .map((rc) => ({
-        slug: rc.slug,
-        title: rc.title,
-        description: "Cours particulier réservé",
-        level: rc.level,
-        chapter: "Cours particuliers",
-        icon: "🎓",
-        href: rc.path,
-        isPrivate: true,
-      }));
+          slug: rc.slug,
+          title: rc.title,
+          description: "Cours particulier réservé",
+          level: rc.level,
+          chapter: "Cours particuliers",
+          icon: "🎓",
+          href: rc.path,
+          isPrivate: true,
+        }));
     }
   }
 
