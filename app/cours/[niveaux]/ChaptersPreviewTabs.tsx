@@ -18,6 +18,8 @@ import {
   getResourceKind,
   type ResourceKind,
 } from "@/lib/chapter-utils";
+import { isChasseProjectSlug } from "@/lib/chasse-project-editions";
+import ChasseEditionPicker from "@/components/chasse/ChasseEditionPicker";
 
 type CourseItem = {
   slug: string;
@@ -196,6 +198,8 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
 
   const filteredResources =
     activeFilter === "all" ? resources : resources.filter((course) => course.kind === activeFilter);
+  const showChasseEditions = filteredResources.some((course) => isChasseProjectSlug(course.slug));
+  const listedResources = filteredResources.filter((course) => !isChasseProjectSlug(course.slug));
 
   const selectChapter = (chapter: ChapterItem) => {
     setSelectedName(chapter.name);
@@ -300,7 +304,8 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-              {filteredResources.map((course) => {
+              {showChasseEditions ? <ChasseEditionPicker niveaux={niveaux} layout="card" /> : null}
+              {listedResources.map((course) => {
                 const meta = KIND_META[course.kind];
                 const Icon = meta.icon;
                 return (

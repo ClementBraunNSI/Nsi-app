@@ -10,6 +10,8 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import { Metadata } from 'next';
 import { contentFolderFromParam, coursePath, nsiLevelLabel } from '@/lib/nsi-levels';
+import { isChasseProjectSlug } from '@/lib/chasse-project-editions';
+import ChasseEditionPicker from '@/components/chasse/ChasseEditionPicker';
 import { resolveCourseFile } from '@/lib/content-path';
 import { getAuthContext } from '@/lib/auth';
 import { canAccessCourse, courseVisibility, isRestrictedCourse } from '@/lib/course-access';
@@ -155,8 +157,15 @@ const SNT_WIDGET_META: Record<string, { title: string; description: string }> = 
   CarteGpsPlayground: { title: 'Carte du renard', description: 'Programme une carte et visualise immédiatement le résultat.' },
 };
 
-export default async function CoursePage({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }) {
+export default async function CoursePage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ niveaux: string, slug: string[] }>;
+  searchParams: Promise<{ edition?: string }>;
+}) {
   const { niveaux, slug } = await params;
+  const { edition } = await searchParams;
   
   const slugStr = Array.isArray(slug) 
     ? slug.map(s => decodeURIComponent(s)).join('/') 
@@ -349,6 +358,15 @@ export default async function CoursePage({ params }: { params: Promise<{ niveaux
             description={data.description}
             actions={data.meta ? <span className="course-meta-pill">{data.meta}</span> : undefined}
           />
+
+          {isChasseProjectSlug(slugStr) && (
+            <ChasseEditionPicker
+              niveaux={niveaux}
+              activeSlug={slugStr}
+              edition={edition}
+              layout="page"
+            />
+          )}
 
           <div className="course-content">
             <article className="prose prose-slate max-w-none course-prose course-prose-wide">

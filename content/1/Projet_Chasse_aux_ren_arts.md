@@ -8,7 +8,7 @@ prerequisites:
   - activite_web_interactive
 ---
 
-# 📚 Projet : Chasse aux Ren'Arts
+# 🦊 Projet : Chasse aux Ren'Arts
 
 > **📖 Préparation**
 
