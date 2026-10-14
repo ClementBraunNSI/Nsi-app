@@ -75,7 +75,7 @@ const COLLEAGUES: Colleague[] = [
   },
   {
     name : "Corentin Dupont",
-    site : "https://nsi_clabau.gitlab.io/",
+    site : "https://www.lycode.xyz/",
     phrase:"Cours seconde SNT et de première et Terminale NSI",
     tags:["Première", "SNT", "Terminale"]
   }
