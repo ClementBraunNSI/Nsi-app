@@ -72,6 +72,12 @@ const COLLEAGUES: Colleague[] = [
     site : "https://nsi_clabau.gitlab.io/",
     phrase:"Cours de première NSI et SNT",
     tags:["Première", "SNT"]
+  },
+  {
+    name : "Corentin Dupont",
+    site : "https://nsi_clabau.gitlab.io/",
+    phrase:"Cours seconde SNT et de première et Terminale NSI",
+    tags:["Première", "SNT", "Terminale"]
   }
 ];
 
