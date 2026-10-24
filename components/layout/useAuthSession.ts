@@ -8,12 +8,14 @@ import { isAbortError } from "@/lib/is-abort-error";
 export function useAuthSession() {
   const [user, setUser] = useState<any>(null);
   const [role, setRole] = useState<string | null>(null);
+  const [fullName, setFullName] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const loadRole = async (userId: string) => {
-      const { data } = await supabase.from("profiles").select("role").eq("id", userId).single();
+      const { data } = await supabase.from("profiles").select("role, full_name").eq("id", userId).single();
       setRole(data?.role ?? null);
+      setFullName(typeof data?.full_name === "string" && data.full_name.trim() ? data.full_name.trim() : null);
       return data?.role ?? null;
     };
 
@@ -44,6 +46,7 @@ export function useAuthSession() {
       }
       if (event === "SIGNED_OUT") {
         setRole(null);
+        setFullName(null);
         router.push("/");
       }
     });
@@ -60,5 +63,5 @@ export function useAuthSession() {
     await supabase.auth.signOut();
   };
 
-  return { user, role, signIn, signOut };
+  return { user, role, fullName, signIn, signOut };
 }

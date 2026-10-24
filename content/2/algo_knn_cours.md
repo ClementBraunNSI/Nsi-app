@@ -9,6 +9,8 @@ icon: "\U0001F9E0"
 badgeId: premiere_cours
 prerequisites: []
 audience: public
+groupe: knn
+groupeTitre: "k plus proches voisins (KNN)"
 ---
 
 # Algorithme des k plus proches voisins

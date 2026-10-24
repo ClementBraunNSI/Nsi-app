@@ -9,6 +9,8 @@ badgeId: premiere_piles_files
 prerequisites:
   - structures_lineaires_cours
 audience: public
+groupe: piles-files
+groupeTitre: "Piles et files"
 ---
 
 # Piles et files

@@ -10,6 +10,8 @@ badgeId: premiere_fiche_exercices_binaires
 prerequisites:
   - donnees_booleens_exercices
 audience: public
+groupe: binaire-hexadecimal
+groupeTitre: "Entiers en binaire et hexadécimal"
 ---
 
 

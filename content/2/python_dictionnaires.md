@@ -7,6 +7,8 @@ icon: "\U0001F5DD️"
 badgeId: premiere_dictionnaires
 prerequisites: []
 audience: public
+groupe: dictionnaires
+groupeTitre: "Dictionnaires"
 ---
 
 # Dictionnaires en Python

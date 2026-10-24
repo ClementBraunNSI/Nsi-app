@@ -8,6 +8,8 @@ badgeId: premiere_fiche_exercices_web_http
 prerequisites:
   - web_protocoles
 audience: public
+groupe: web-http
+groupeTitre: "Le Web et HTTP"
 ---
 
 

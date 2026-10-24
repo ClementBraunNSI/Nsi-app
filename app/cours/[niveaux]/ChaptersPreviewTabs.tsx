@@ -1,25 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  BookOpen,
-  ChevronRight,
-  FileText,
-  FlaskConical,
-  FolderKanban,
-  LayoutGrid,
-  Zap,
-} from "lucide-react";
-import {
-  chapterImageFromData,
-  getResourceKind,
-  type ResourceKind,
-} from "@/lib/chapter-utils";
-import { isChasseProjectSlug } from "@/lib/chasse-project-editions";
-import ChasseEditionPicker from "@/components/chasse/ChasseEditionPicker";
+import { BookOpen, ChevronRight, FileText, FlaskConical, FolderKanban, Layers, X, Zap } from "lucide-react";
+import { chapterImageFromData, getResourceKind, type ResourceKind } from "@/lib/chapter-utils";
+import { GROUP_EXTRA_LINKS, type CourseGroupRef } from "@/lib/course-groups";
+import { CHASSE_BASE_IMAGE } from "@/lib/chasse-project-editions";
 
 type CourseItem = {
   slug: string;
@@ -28,6 +16,7 @@ type CourseItem = {
   icon: string;
   href: string;
   isPrivate?: boolean;
+  group?: CourseGroupRef | null;
 };
 
 type ChapterItem = {
@@ -36,20 +25,23 @@ type ChapterItem = {
   isPrivate: boolean;
 };
 
-type Theme = {
-  icon: string;
-  border: string;
-  text: string;
-  light: string;
-};
-
 type Props = {
   chapters: ChapterItem[];
   niveaux: string;
-  theme: Theme;
+  /** Dossier de contenu du niveau : donne sa couleur (data-level). */
+  folder?: string;
 };
 
 type FilterKind = "all" | ResourceKind;
+type Resource = CourseItem & { kind: ResourceKind };
+type GroupEntry = {
+  id: string;
+  title: string;
+  versions: boolean;
+  members: Resource[];
+  annexes: Resource[];
+};
+type Entry = { kinds: ResourceKind[] } & ({ course: Resource } | { group: GroupEntry });
 
 const FILTERS: Array<{ key: FilterKind; label: string }> = [
   { key: "all", label: "Tous" },
@@ -59,102 +51,127 @@ const FILTERS: Array<{ key: FilterKind; label: string }> = [
   { key: "projet", label: "Projet" },
 ];
 
+const KIND_ORDER: ResourceKind[] = ["cours", "exercices", "tp", "projet"];
+
 const KIND_META: Record<ResourceKind, { label: string; icon: typeof BookOpen; className: string }> = {
-  cours: {
-    label: "Cours",
-    icon: BookOpen,
-    className: "bg-[var(--accent-soft)] text-[var(--accent)] border-[var(--border)]",
-  },
-  exercices: {
-    label: "Exercices",
-    icon: FileText,
-    className: "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]",
-  },
-  tp: {
-    label: "TP",
-    icon: FlaskConical,
-    className: "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]",
-  },
-  projet: {
-    label: "Projet",
-    icon: FolderKanban,
-    className: "bg-[var(--surface-2)] text-[var(--fg)] border-[var(--border)]",
-  },
+  cours: { label: "Cours", icon: BookOpen, className: "bg-[var(--accent-soft)] text-[var(--accent)]" },
+  exercices: { label: "Exercices", icon: FileText, className: "bg-[var(--surface-2)] text-[var(--muted)]" },
+  tp: { label: "TP", icon: FlaskConical, className: "bg-[var(--surface-2)] text-[var(--muted)]" },
+  projet: { label: "Projet", icon: FolderKanban, className: "bg-[var(--surface-2)] text-[var(--fg)]" },
 };
 
-function ChapterThumbnail({
-  chapter,
-  niveaux,
-  theme,
-  onSelect,
-}: {
-  chapter: ChapterItem;
-  niveaux: string;
-  theme: Theme;
-  onSelect: () => void;
-}) {
-  const imageSrc = chapterImageFromData(niveaux, chapter.name);
+/** Une tuile par fiche, sauf les fiches d'un même groupe qui partagent une tuile. */
+function buildEntries(resources: Resource[]): Entry[] {
+  const groups = new Map<string, GroupEntry>();
+  for (const course of resources) {
+    const ref = course.group;
+    if (!ref) continue;
+    const group = groups.get(ref.id) || { id: ref.id, title: ref.title, versions: false, members: [], annexes: [] };
+    if (ref.annex) group.annexes.push(course);
+    else group.members.push(course);
+    if (ref.code) group.versions = true;
+    groups.set(ref.id, group);
+  }
+
+  const entries: Entry[] = [];
+  const placed = new Set<string>();
+  for (const course of resources) {
+    const group = course.group ? groups.get(course.group.id) : undefined;
+    if (!group || group.members.length < 2) {
+      entries.push({ course, kinds: [course.kind] });
+      continue;
+    }
+    if (course.group?.annex || placed.has(group.id)) continue;
+    placed.add(group.id);
+    entries.push({ group, kinds: [...new Set(group.members.map((member) => member.kind))] });
+  }
+  return entries;
+}
+
+function memberLabel(member: Resource) {
+  return member.group?.version || KIND_META[member.kind].label;
+}
+
+function GroupPicker({ group, onClose }: { group: GroupEntry; onClose: () => void }) {
+  const firstOption = useRef<HTMLAnchorElement>(null);
+  const extras = GROUP_EXTRA_LINKS[group.id] || [];
+
+  useEffect(() => {
+    const previous = document.activeElement as HTMLElement | null;
+    firstOption.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      previous?.focus();
+    };
+  }, [onClose]);
+
   return (
-    <article
-      className={`group overflow-hidden rounded-[var(--radius)] border transition-colors duration-150 ${
-        chapter.isPrivate
-          ? "border-[var(--accent)]/40 bg-[var(--accent-soft)]"
-          : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)]"
-      }`}
-      style={{ boxShadow: "var(--shadow)" }}
-    >
-      <button
-        type="button"
-        onClick={onSelect}
-        className="block h-full w-full text-left"
-      >
-        <div className="relative h-32 bg-[var(--surface-2)] p-3 sm:h-36">
-          {imageSrc ? (
-            <Image
-              src={imageSrc}
-              alt={`Illustration ${chapter.name}`}
-              fill
-              className="object-contain p-2"
-              sizes="(max-width:768px) 100vw, 33vw"
-            />
-          ) : null}
-          <span className="absolute right-3 top-3 rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-xs font-semibold text-[var(--muted)]">
-            {chapter.courses.length} ressource{chapter.courses.length > 1 ? "s" : ""}
-          </span>
+    <div className="lvl-modal-bg" onClick={(event) => event.target === event.currentTarget && onClose()}>
+      <div className="lvl-modal" role="dialog" aria-modal="true" aria-labelledby="lvl-modal-title">
+        <button type="button" className="lvl-modal-x" onClick={onClose} aria-label="Fermer">
+          <X size={18} />
+        </button>
+        <p className="text-xs font-semibold text-[var(--accent)]">
+          {group.versions ? "Choisis ta version" : "Que veux-tu ouvrir ?"}
+        </p>
+        <h2 id="lvl-modal-title" className="mt-1 text-2xl font-semibold tracking-tight text-[var(--fg)]">
+          {group.title}
+        </h2>
+
+        <div className={`lvl-pick ${group.versions ? "is-versions" : ""}`}>
+          {group.members.map((member, index) => {
+            const meta = KIND_META[member.kind];
+            const Icon = meta.icon;
+            return (
+              <Link key={member.href} href={member.href} ref={index === 0 ? firstOption : undefined} className="lvl-pick-opt" onClick={onClose}>
+                {group.versions ? (
+                  <span className="lvl-pick-pic">
+                    <Image src={member.group?.image || CHASSE_BASE_IMAGE} alt="" fill className="object-contain p-1" sizes="200px" />
+                    {member.group?.code ? <i>{member.group.code}</i> : null}
+                  </span>
+                ) : (
+                  <span className={`lvl-pick-ic ${meta.className}`}>
+                    <Icon size={20} />
+                  </span>
+                )}
+                <span className="min-w-0">
+                  <b>{memberLabel(member)}</b>
+                  <small>{member.title}</small>
+                </span>
+              </Link>
+            );
+          })}
         </div>
 
-        <div className="p-4">
-          <div className="mb-1 flex items-center justify-between gap-2">
-            <div className="flex min-w-0 items-center gap-2">
-              {chapter.isPrivate ? (
-                <Zap size={16} className="shrink-0 text-[var(--accent)]" fill="currentColor" />
-              ) : (
-                <LayoutGrid size={16} className="shrink-0 text-[var(--muted)]" />
-              )}
-              <h2
-                className={`truncate font-semibold text-lg leading-tight tracking-tight ${
-                  chapter.isPrivate ? "text-[var(--accent)]" : "text-[var(--fg)]"
-                }`}
-              >
-                {chapter.name}
-              </h2>
-            </div>
-            <ChevronRight
-              size={18}
-              className={`shrink-0 text-[var(--subtle)] transition-transform duration-150 group-hover:translate-x-1 ${theme.text}`}
-            />
+        {group.annexes.length > 0 || extras.length > 0 ? (
+          <div className="lvl-pick-extras">
+            {group.annexes.map((annex) => (
+              <Link key={annex.href} href={annex.href} onClick={onClose}>
+                📦 {annex.group?.version || annex.title}
+              </Link>
+            ))}
+            {extras.map((extra) => (
+              <Link key={extra.href} href={extra.href} onClick={onClose}>
+                🖼️ {extra.label}
+              </Link>
+            ))}
           </div>
-          <p className="text-xs text-[var(--muted)]">Afficher ce chapitre</p>
-        </div>
-      </button>
-    </article>
+        ) : null}
+      </div>
+    </div>
   );
 }
 
-export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props) {
+export default function ChaptersPreviewTabs({ chapters, niveaux, folder }: Props) {
   const [selectedName, setSelectedName] = useState(chapters[0]?.name ?? "");
   const [activeFilter, setActiveFilter] = useState<FilterKind>("all");
+  const [openGroup, setOpenGroup] = useState<GroupEntry | null>(null);
   const reduceMotion = useReducedMotion();
+  const closeGroup = useCallback(() => setOpenGroup(null), []);
 
   useEffect(() => {
     if (!chapters.some((chapter) => chapter.name === selectedName)) {
@@ -168,46 +185,21 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
     [chapters, selectedName]
   );
 
-  const otherChapters = useMemo(
-    () => chapters.filter((chapter) => chapter.name !== selectedChapter?.name),
-    [chapters, selectedChapter]
-  );
-
-  const resources = useMemo(() => {
+  const entries = useMemo(() => {
     if (!selectedChapter) return [];
-
-    return selectedChapter.courses
-      .map((course) => ({
-        ...course,
-        kind: getResourceKind(course),
-      }))
-      .sort((a, b) => {
-        const order: ResourceKind[] = ["cours", "exercices", "tp", "projet"];
-        const kindDiff = order.indexOf(a.kind) - order.indexOf(b.kind);
-        return kindDiff || a.title.localeCompare(b.title, "fr");
-      });
+    const resources = selectedChapter.courses
+      .map((course) => ({ ...course, kind: getResourceKind(course) }))
+      .sort((a, b) => KIND_ORDER.indexOf(a.kind) - KIND_ORDER.indexOf(b.kind) || a.title.localeCompare(b.title, "fr"));
+    return buildEntries(resources);
   }, [selectedChapter]);
 
   const counts = useMemo(() => {
-    return resources.reduce<Record<FilterKind, number>>(
-      (acc, course) => {
-        acc.all += 1;
-        acc[course.kind] += 1;
-        return acc;
-      },
-      { all: 0, cours: 0, exercices: 0, tp: 0, projet: 0 }
-    );
-  }, [resources]);
+    const result: Record<FilterKind, number> = { all: entries.length, cours: 0, exercices: 0, tp: 0, projet: 0 };
+    for (const entry of entries) for (const kind of entry.kinds) result[kind] += 1;
+    return result;
+  }, [entries]);
 
-  const filteredResources =
-    activeFilter === "all" ? resources : resources.filter((course) => course.kind === activeFilter);
-  const showChasseEditions = filteredResources.some((course) => isChasseProjectSlug(course.slug));
-  const listedResources = filteredResources.filter((course) => !isChasseProjectSlug(course.slug));
-
-  const selectChapter = (chapter: ChapterItem) => {
-    setSelectedName(chapter.name);
-    setActiveFilter("all");
-  };
+  const visible = activeFilter === "all" ? entries : entries.filter((entry) => entry.kinds.includes(activeFilter));
 
   if (!selectedChapter) {
     return null;
@@ -216,178 +208,155 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
   const selectedImage = chapterImageFromData(niveaux, selectedChapter.name);
 
   return (
-    <section className="relative space-y-10 pb-10">
-      {/* Chapitre sélectionné — panneau principal */}
-      <article
-        className={`relative overflow-hidden rounded-[var(--radius)] border transition-colors duration-150 ${
-          selectedChapter.isPrivate
-            ? "border-[var(--accent)]/40 bg-[var(--accent-soft)]"
-            : "border-[var(--border)] bg-[var(--surface)]"
-        }`}
-        style={{ boxShadow: "var(--shadow)" }}
-      >
-        <div className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--surface-2)]">
-          <div className="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_minmax(220px,320px)] lg:items-center">
+    <section className="lvl-layout pb-10" data-level={folder}>
+      <nav className="lvl-chapters" aria-label="Chapitres">
+        <p className="px-2 pb-1 text-xs font-semibold text-[var(--subtle)]">Chapitres</p>
+        {chapters.map((chapter) => {
+          const image = chapterImageFromData(niveaux, chapter.name);
+          const active = chapter.name === selectedChapter.name;
+          return (
+            <button
+              key={chapter.name}
+              type="button"
+              aria-current={active ? "true" : undefined}
+              onClick={() => {
+                setSelectedName(chapter.name);
+                setActiveFilter("all");
+              }}
+              className={`lvl-chapter ${active ? "is-active" : ""} ${chapter.isPrivate ? "is-private" : ""}`}
+            >
+              <span className="lvl-thumb">
+                {image ? <Image src={image} alt="" fill className="object-cover" sizes="48px" /> : null}
+              </span>
+              <span className="min-w-0 flex-1">
+                <b className="flex items-center gap-1">
+                  {chapter.isPrivate ? <Zap size={13} className="shrink-0 text-[var(--accent)]" fill="currentColor" /> : null}
+                  <span className="truncate">{chapter.name}</span>
+                </b>
+                <small>
+                  {chapter.courses.length} ressource{chapter.courses.length > 1 ? "s" : ""}
+                </small>
+              </span>
+            </button>
+          );
+        })}
+      </nav>
+
+      <div className="min-w-0">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="lvl-thumb is-large">
+              {selectedImage ? <Image src={selectedImage} alt="" fill className="object-cover" sizes="64px" priority /> : null}
+            </span>
             <div className="min-w-0">
-              <p className="mb-2 text-xs font-semibold text-[var(--accent)]">
-                Chapitre sélectionné
-              </p>
-              <div className="mb-3 flex items-center gap-2">
-                {selectedChapter.isPrivate ? (
-                  <Zap size={18} className="text-[var(--accent)]" fill="currentColor" />
-                ) : (
-                  <LayoutGrid size={18} className="text-[var(--muted)]" />
-                )}
-                <h2
-                  className={`text-3xl font-semibold tracking-tight sm:text-4xl ${
-                    selectedChapter.isPrivate ? "text-[var(--accent)]" : "text-[var(--fg)]"
-                  }`}
-                >
-                  {selectedChapter.name}
-                </h2>
-              </div>
-              <p className="max-w-2xl text-sm leading-6 text-[var(--muted)] sm:text-base">
-                {selectedChapter.courses.length} ressource
-                {selectedChapter.courses.length > 1 ? "s" : ""} — cours, exercices, TP et projets de ce
-                chapitre.
+              <h2 className="truncate text-2xl font-semibold tracking-tight text-[var(--fg)]">{selectedChapter.name}</h2>
+              <p className="text-sm text-[var(--subtle)]">
+                {selectedChapter.courses.length} ressource{selectedChapter.courses.length > 1 ? "s" : ""}
               </p>
             </div>
-
-            {selectedImage ? (
-              <div className="relative mx-auto h-44 w-full max-w-sm sm:h-52 lg:mx-0 lg:h-56 lg:max-w-none">
-                <Image
-                  src={selectedImage}
-                  alt={`Illustration ${selectedChapter.name}`}
-                  fill
-                  className="object-contain p-2"
-                  sizes="(max-width: 1024px) 80vw, 320px"
-                  priority
-                />
-              </div>
-            ) : null}
           </div>
-        </div>
 
-        <div className="p-4 sm:p-6 lg:p-8">
           <div
-            className="mb-5 flex gap-1 overflow-x-auto pb-1 rounded-full border border-[var(--border)] bg-[var(--surface-2)] p-1 w-fit max-w-full"
+            className="flex w-fit max-w-full gap-1 overflow-x-auto rounded-full border border-[var(--border)] bg-[var(--surface-2)] p-1"
             aria-label="Filtres des ressources"
           >
-            {FILTERS.map((filter) => {
+            {FILTERS.filter((filter) => filter.key === "all" || counts[filter.key] > 0).map((filter) => {
               const isActive = activeFilter === filter.key;
               return (
                 <button
                   key={filter.key}
                   type="button"
                   onClick={() => setActiveFilter(filter.key)}
-                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-150 ${
-                    isActive
-                      ? "text-[var(--fg)]"
-                      : "text-[var(--muted)] hover:text-[var(--accent)]"
+                  className={`relative shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors duration-150 ${
+                    isActive ? "text-[var(--fg)]" : "text-[var(--muted)] hover:text-[var(--accent)]"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId={reduceMotion ? undefined : "chapter-filter-pill"}
-                      className="absolute inset-0 rounded-full bg-[var(--surface)] border border-[var(--border)]"
+                      className="absolute inset-0 rounded-full border border-[var(--border)] bg-[var(--surface)]"
                       style={{ boxShadow: "var(--shadow)" }}
                       transition={{ type: "spring", stiffness: 420, damping: 36, mass: 0.4 }}
                     />
                   )}
                   <span className="relative z-10">
                     {filter.label}
-                    <span className={`ml-2 text-xs ${isActive ? "text-[var(--accent)]" : "text-[var(--subtle)]"}`}>
-                      {counts[filter.key]}
-                    </span>
+                    <span className={`ml-1.5 text-xs ${isActive ? "text-[var(--accent)]" : "text-[var(--subtle)]"}`}>{counts[filter.key]}</span>
                   </span>
                 </button>
               );
             })}
           </div>
+        </div>
 
-          {filteredResources.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-8 text-center text-sm font-semibold text-[var(--muted)]">
-              Aucun contenu dans cette catégorie pour le moment.
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-              {showChasseEditions ? <ChasseEditionPicker niveaux={niveaux} layout="card" /> : null}
-              {listedResources.map((course) => {
-                const meta = KIND_META[course.kind];
-                const Icon = meta.icon;
+        {visible.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-8 text-center text-sm font-semibold text-[var(--muted)]">
+            Aucun contenu dans cette catégorie pour le moment.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+            {visible.map((entry) => {
+              if ("group" in entry) {
+                const { group } = entry;
+                const first = group.members[0];
+                const meta = KIND_META[first.kind];
                 return (
-                  <Link
-                    key={`${course.href}-${course.kind}`}
-                    href={course.href || `/cours/${niveaux}/${course.slug}`}
-                    className={`group flex items-center justify-between gap-4 rounded-2xl border p-4 transition-colors duration-150 hover:border-[var(--accent)] ${
-                      course.isPrivate
-                        ? "border-[var(--accent)]/40 bg-[var(--accent-soft)]"
-                        : "border-[var(--border)] bg-[var(--surface)]"
-                    }`}
+                  <button
+                    key={`groupe-${group.id}`}
+                    type="button"
+                    onClick={() => setOpenGroup(group)}
+                    title={group.versions ? "Plusieurs versions : choisis la tienne" : "Cours, exercices et TP de cette notion"}
+                    className="lvl-tile is-group"
                   >
-                    <div className="flex min-w-0 items-center gap-3">
-                      <span
-                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${meta.className}`}
-                      >
-                        <Icon size={22} />
+                    {group.versions ? (
+                      <span className="lvl-tile-ic relative overflow-hidden bg-[var(--surface-2)]">
+                        <Image src={first.group?.image || CHASSE_BASE_IMAGE} alt="" fill className="object-cover" sizes="40px" />
                       </span>
-                      <div className="min-w-0">
-                        <div className="mb-1 flex items-center gap-2">
-                          <span className="text-lg leading-none">{course.icon}</span>
-                          <span className="text-[11px] font-semibold text-[var(--accent)]">
-                            {meta.label}
-                          </span>
-                        </div>
-                        <h3 className="truncate text-base font-semibold text-[var(--fg)] transition-colors duration-150 group-hover:text-[var(--accent)]">
-                          {course.title}
-                        </h3>
-                        <p className="mt-0.5 line-clamp-2 text-sm text-[var(--muted)]">
-                          {course.description || "Ouvrir cette ressource"}
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight
-                      className="shrink-0 text-[var(--subtle)] transition-transform duration-150 group-hover:translate-x-1 group-hover:text-[var(--accent)]"
-                      size={20}
-                    />
-                  </Link>
+                    ) : (
+                      <span className={`lvl-tile-ic relative ${meta.className}`}>
+                        <Layers size={18} />
+                        <em>{group.members.length}</em>
+                      </span>
+                    )}
+                    <span className="min-w-0 flex-1">
+                      <b>{group.title}</b>
+                      <span className="lvl-tags">
+                        {group.members.map((member) => (
+                          <i key={member.href}>{group.versions ? member.group?.code || memberLabel(member) : memberLabel(member)}</i>
+                        ))}
+                      </span>
+                    </span>
+                    <ChevronRight size={16} className="shrink-0 text-[var(--subtle)]" />
+                  </button>
                 );
-              })}
-            </div>
-          )}
-        </div>
-      </article>
+              }
 
-      {/* Autres chapitres — cartes compactes */}
-      {otherChapters.length > 0 ? (
-        <div>
-          <div className="mb-5 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-semibold text-[var(--subtle)]">
-                Autres chapitres
-              </p>
-              <h3 className="mt-1 text-xl font-semibold text-[var(--fg)] tracking-tight">
-                Choisir un autre thème
-              </h3>
-            </div>
-            <p className="hidden text-sm text-[var(--muted)] sm:block">
-              Clique sur une carte pour l&apos;afficher en haut.
-            </p>
+              const { course } = entry;
+              const meta = KIND_META[course.kind];
+              const Icon = meta.icon;
+              return (
+                <Link
+                  key={`${course.href}-${course.kind}`}
+                  href={course.href || `/cours/${niveaux}/${course.slug}`}
+                  title={course.description || undefined}
+                  className={`lvl-tile ${course.isPrivate ? "is-private" : ""}`}
+                >
+                  <span className={`lvl-tile-ic ${meta.className}`}>
+                    <Icon size={18} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <b>{course.title}</b>
+                    <small>{meta.label}</small>
+                  </span>
+                  <ChevronRight size={16} className="shrink-0 text-[var(--subtle)]" />
+                </Link>
+              );
+            })}
           </div>
+        )}
+      </div>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {otherChapters.map((chapter) => (
-              <ChapterThumbnail
-                key={chapter.name}
-                chapter={chapter}
-                niveaux={niveaux}
-                theme={theme}
-                onSelect={() => selectChapter(chapter)}
-              />
-            ))}
-          </div>
-        </div>
-      ) : null}
+      {openGroup ? <GroupPicker group={openGroup} onClose={closeGroup} /> : null}
     </section>
   );
 }

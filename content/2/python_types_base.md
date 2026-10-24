@@ -9,6 +9,8 @@ badgeId: premiere_types_base
 prerequisites:
   - python_constructions_elementaires
 audience: public
+groupe: types-python
+groupeTitre: "Types de données en Python"
 ---
 
 # Types de données en Python

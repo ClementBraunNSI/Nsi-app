@@ -9,6 +9,8 @@ badgeId: terminale_sql_cours
 prerequisites:
   - bdd_modele_relationnel
 audience: public
+groupe: sql
+groupeTitre: "SQL et bases de données"
 ---
 
 # SQL

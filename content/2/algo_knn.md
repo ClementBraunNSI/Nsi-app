@@ -10,6 +10,9 @@ badgeId: premiere_tp_knn
 prerequisites:
   - algo_tris
 audience: public
+groupe: knn
+groupeTitre: "k plus proches voisins (KNN)"
+version: "TP"
 ---
 
 

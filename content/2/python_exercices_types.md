@@ -8,6 +8,8 @@ level: premiere
 prerequisites:
   - python_fonctions
 audience: public
+groupe: types-python
+groupeTitre: "Types de données en Python"
 ---
 
 <ExerciseTabs courseId="types-python" courseTitle="Types en Python">

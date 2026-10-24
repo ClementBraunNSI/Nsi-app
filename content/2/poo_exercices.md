@@ -10,6 +10,8 @@ badgeId: premiere_exercices_poo
 prerequisites:
   - poo_introduction
 audience: public
+groupe: poo
+groupeTitre: "Programmation orientée objet"
 ---
 
 

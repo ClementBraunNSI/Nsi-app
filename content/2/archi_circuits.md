@@ -9,6 +9,8 @@ prerequisites:
   - archi_von_neumann
   - donnees_booleens
 audience: public
+groupe: circuits-logiques
+groupeTitre: "Circuits logiques"
 ---
 
 # Circuits électroniques

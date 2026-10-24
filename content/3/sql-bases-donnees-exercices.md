@@ -9,6 +9,8 @@ badgeId: terminale_sql_exos
 prerequisites:
   - sql-bases-donnees
 audience: public
+groupe: sql
+groupeTitre: "SQL et bases de données"
 ---
 
 <ExerciseTabs courseId="sql-bases-donnees-exos" courseTitle="SQL & Bases de Données - Exercices">

@@ -8,6 +8,8 @@ badgeId: premiere_fiche_exercices_csv
 prerequisites:
   - python_exercices_dictionnaires
 audience: public
+groupe: csv
+groupeTitre: "Données en tables (CSV)"
 ---
 
 

@@ -8,6 +8,8 @@ icon: "\U0001F4E6"
 badgeId: premiere_introduction_poo
 prerequisites: []
 audience: public
+groupe: poo
+groupeTitre: "Programmation orientée objet"
 ---
 
 # Introduction à la programmation orientée objet

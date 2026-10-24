@@ -6,11 +6,13 @@ import Link from "next/link";
 import { Eye, LayoutDashboard, LogOut } from "lucide-react";
 import AccessibilityMenu from "./AccessibilityMenu";
 import { useFoxEasterEgg } from "./FoxEasterEggProvider";
+import { firstNameOf } from "@/lib/first-name";
 
 type Props = {
   pathname: string;
   user: any;
   role: string | null;
+  fullName: string | null;
   signOut: () => Promise<void>;
   dyslexicMode: boolean;
   darkMode: boolean;
@@ -30,6 +32,7 @@ export default function SiteHeader({
   pathname,
   user,
   role,
+  fullName,
   signOut,
   dyslexicMode,
   darkMode,
@@ -43,6 +46,7 @@ export default function SiteHeader({
   const clickResetRef = useRef<number | null>(null);
   const logoClickCountRef = useRef(0);
   const { unlockFox } = useFoxEasterEgg();
+  const firstName = firstNameOf(fullName);
 
   return (
     <header className="site-header print:hidden">
@@ -119,9 +123,19 @@ export default function SiteHeader({
                 <Link href={role === "admin" || role === "enseignant" ? "/admin" : "/espace"} className="hidden xl:inline-flex px-3 py-2 rounded-xl bg-[var(--accent-soft)] text-[var(--accent)] hover:opacity-80 transition-opacity text-xs font-semibold">
                   Reprendre
                 </Link>
-                <Link href={role === "admin" || role === "enseignant" ? "/admin" : "/espace"} className={`flex items-center gap-2 p-2.5 rounded-xl hover:bg-[var(--surface-2)] transition-colors ${pathname.startsWith("/espace") || pathname.startsWith("/admin") ? "text-[var(--accent)]" : "text-[var(--muted)]"}`}>
-                  <LayoutDashboard size={18} />
-                  <span className="hidden md:inline text-xs font-semibold">Espace</span>
+                <Link
+                  href={role === "admin" || role === "enseignant" ? "/admin" : "/espace"}
+                  title={role === "admin" || role === "enseignant" ? "Administration" : "Mon espace"}
+                  className={`flex items-center gap-2 rounded-xl border py-1.5 pl-1.5 pr-2 md:pr-3 transition-colors hover:bg-[var(--surface-2)] ${pathname.startsWith("/espace") || pathname.startsWith("/admin") ? "border-[var(--accent)] text-[var(--fg)]" : "border-[var(--border)] text-[var(--fg)]"}`}
+                >
+                  {firstName ? (
+                    <span aria-hidden="true" className="grid h-7 w-7 place-items-center rounded-full bg-[var(--accent)] text-xs font-bold text-[var(--accent-fg)]">
+                      {firstName.charAt(0).toUpperCase()}
+                    </span>
+                  ) : (
+                    <LayoutDashboard size={18} className="m-1" />
+                  )}
+                  <span className="hidden md:inline text-sm font-semibold">{firstName ?? "Espace"}</span>
                 </Link>
                 <button onClick={signOut} className="flex items-center gap-2 p-2.5 text-[var(--muted)] hover:text-red-600 hover:bg-[var(--surface-2)] rounded-xl transition-colors cursor-pointer relative z-[110]">
                   <LogOut size={18} />

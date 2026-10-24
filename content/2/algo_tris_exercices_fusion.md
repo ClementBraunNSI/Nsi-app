@@ -8,6 +8,8 @@ badgeId: premiere_fiche_exercices_tri_fusion
 prerequisites:
   - python_csv_exercices
 audience: public
+groupe: algorithmes-de-tri
+groupeTitre: "Algorithmes de tri"
 ---
 
 

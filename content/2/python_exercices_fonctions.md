@@ -8,6 +8,8 @@ level: premiere
 prerequisites:
   - python_exercices_boucles
 audience: public
+groupe: fonctions-python
+groupeTitre: "Fonctions en Python"
 ---
 
 {/* L'id 'les-fonctions-python' doit correspondre à l'identifiant 

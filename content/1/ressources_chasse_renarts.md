@@ -7,6 +7,10 @@ icon: "\U0001F4E6"
 badgeId: seconde_ressources_renards
 prerequisites: []
 audience: public
+groupe: chasse-renarts
+groupeTitre: "Projet : Chasse aux Ren'Arts"
+groupeRole: "annexe"
+version: "Fichiers du projet (ZIP)"
 ---
 
 ## Téléchargement

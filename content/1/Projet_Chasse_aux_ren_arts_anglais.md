@@ -8,6 +8,10 @@ icon: "\U0001F409"
 prerequisites:
   - activite_web_interactive
 audience: public
+groupe: chasse-renarts
+groupeTitre: "Projet : Chasse aux Ren'Arts"
+version: "Anglais"
+versionCode: "EN"
 ---
 
 # 🦊 Projet : Out'Foxed in the Gallery

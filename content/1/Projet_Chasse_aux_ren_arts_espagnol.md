@@ -8,6 +8,10 @@ icon: "\U0001F409"
 prerequisites:
   - activite_web_interactive
 audience: public
+groupe: chasse-renarts
+groupeTitre: "Projet : Chasse aux Ren'Arts"
+version: "Espagnol"
+versionCode: "ES"
 ---
 
 # 🦊 Projet : Zor'prendido en el cuadro
