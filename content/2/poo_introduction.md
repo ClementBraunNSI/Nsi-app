@@ -7,27 +7,18 @@ chapter: Programmation Orientée Objet
 icon: "\U0001F4E6"
 badgeId: premiere_introduction_poo
 prerequisites: []
+audience: public
 ---
 
-## Objectifs
+# Introduction à la programmation orientée objet
 
-- Définir une **classe** et créer une **instance** (objet).
-- Distinguer **attributs** (données) et **méthodes** (actions).
-- Expliquer le rôle de `__init__` et de `self`.
-- Accéder à un attribut et appeler une méthode sur un objet.
+Jusqu'ici, une donnée d'un côté et une fonction de l'autre vivaient séparées. On passait la donnée à la fonction quand on en avait besoin. En programmation orientée objet, on change de geste : ce qu'une chose *est* et ce qu'elle *sait faire* voyagent ensemble. Aujourd'hui, on apprend à écrire ce regroupement, et à ne pas le confondre avec un dictionnaire.
 
-## Idée clé
+En POO, un **objet** réunit des **attributs**, ses données, et des **méthodes**, ses actions. La **classe** est le moule. L'**instanciation** produit un objet concret à partir de ce moule. Le mot « attribut » a ici son sens propre. Ce n'est pas une clé de dictionnaire, et ce n'est pas non plus une simple variable posée au milieu du programme.
 
-En POO, on regroupe dans un même **objet** ce qu'il **est** (attributs) et ce qu'il **sait faire** (méthodes). La **classe** est le moule ; l'**instanciation** produit un objet concret à partir de ce moule. Ici, le mot « attribut » est à sa place — contrairement aux clés d'un dictionnaire.
+## La classe décrit, l'objet existe
 
-## Objet et classe
-
-Un **objet** combine :
-
-- des **attributs** : variables propres à l'objet ;
-- des **méthodes** : fonctions liées à l'objet.
-
-Une **classe** décrit la structure commune de tous les objets du même type.
+Une classe décrit la structure commune de tous les objets du même type. Elle ne *est* pas un compte bancaire : elle dit de quoi un compte est fait. L'objet, lui, est un compte particulier, avec un titulaire et un solde.
 
 ```python
 class Compte:
@@ -42,16 +33,11 @@ class Compte:
         return f"Compte de {self.titulaire} : {self.solde} €"
 ```
 
-| Terme | Sens |
-| --- | --- |
-| `class Compte` | définit le moule (nom en `CamelCase`) |
-| `__init__` | **constructeur**, appelé à la création |
-| `self` | l'instance courante, dans les méthodes |
-| `self.solde` | attribut de l'instance |
+`class Compte` ouvre le moule. Par convention, le nom prend une majuscule à chaque mot, le *CamelCase*. `__init__` est le **constructeur** : Python l'appelle au moment où l'objet naît, pour remplir ses attributs. `self` désigne l'instance en cours. Dans le corps des méthodes, c'est par lui qu'on atteint `self.solde` plutôt qu'une variable locale qui disparaîtrait à la fin de la fonction.
 
-## Instanciation et utilisation
+## Créer, puis s'en servir
 
-Créer un objet = **instancier** la classe (appeler le nom de la classe comme une fonction).
+Instancier, c'est appeler le nom de la classe comme une fonction. Les arguments vont à `__init__`, sauf `self`, que Python passe tout seul.
 
 ```python
 c1 = Compte("Alice", 100)
@@ -63,34 +49,23 @@ print(c1.solde)             # 150.0
 print(c1)                   # via __str__
 ```
 
-Chaque instance a sa **propre** copie des attributs : modifier `c1` ne change pas `c2`.
+`c1` et `c2` sont deux objets. Modifier le solde d'Alice ne touche pas celui de Bob : chaque instance a sa propre copie des attributs. On lit un attribut avec `objet.attribut`, on appelle une méthode avec `objet.methode(...)`. `print(c1)` n'affiche pas une adresse mémoire illisible parce que `__str__` a dit à Python quelle phrase produire.
 
 !!! tip "Dictionnaire vs objet"
     Un dictionnaire `{"titulaire": "Alice", "solde": 100}` stocke des données sous des **clés**.  
     Un objet `Compte` ajoute des **méthodes** (`deposer`) et un typage clair via la classe.
 
-## Pourquoi la POO ?
+Le dictionnaire répond à « quelle est la valeur associée à cette clé ? ». L'objet répond aussi à « que sait faire ce compte ? ». `deposer` vérifie, dans une version plus complète, que le montant a un sens, et met à jour le solde. L'appelant n'a pas à connaître la ligne qui fait l'addition.
 
-| Intérêt | En pratique |
-| --- | --- |
-| Organisation | données + comportements au même endroit |
-| Réutilisation | une classe → beaucoup d'instances |
-| Modularité | on peut faire évoluer une classe sans tout casser |
-| Abstraction | `c1.deposer(50)` cache les détails internes |
+## Pourquoi se donner cette peine
 
-## Piège fréquent
+On range les données et les comportements au même endroit, donc on sait où modifier le solde : dans la classe, pas dans dix fonctions éparpillées. Une seule classe donne autant d'instances qu'on veut, sans recopier le code. On peut faire évoluer `deposer` sans réécrire le reste du programme, tant que l'appel `c1.deposer(50)` garde le même sens. C'est cela, l'abstraction : le reste du code ne voit pas l'addition, il voit un dépôt.
 
-- Oublier `self` comme premier paramètre d'une méthode → erreur à l'appel.
-- Confondre la classe `Compte` et l'instance `c1` : les méthodes s'appellent sur l'**objet**.
+## Deux erreurs qui reviennent
 
-## À retenir
+Oublier `self` en premier paramètre d'une méthode provoque une erreur à l'appel, parce que Python passe quand même l'instance, et elle atterrit dans le mauvais paramètre. L'autre confusion est de prendre la classe pour l'objet. `Compte.deposer(50)` n'a pas de compte sur lequel travailler. C'est `c1.deposer(50)` : la méthode s'appelle sur l'instance.
 
-- Classe = moule ; objet = instance créée par instanciation.
-- Attributs = données ; méthodes = actions (`self` obligatoire).
-- `__init__` initialise les attributs à la création.
-- Accès : `objet.attribut` ; appel : `objet.methode(...)`.
-- Chaque instance a ses propres valeurs d'attributs.
-- « Attribut » = POO ; « clé » = dictionnaire ; « affectation » = `x = ...`.
+Pour fermer le vocabulaire : la classe est le moule, l'objet est l'instance, les attributs sont les données, les méthodes sont les actions. `__init__` les initialise. « Attribut » appartient à la POO, « clé » au dictionnaire, « affectation » à une ligne comme `x = ...`.
 
 ## Pour s'entraîner
 

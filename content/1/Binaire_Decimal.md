@@ -6,29 +6,30 @@ chapter: Internet
 icon: "\U0001F522"
 prerequisites:
   - Cours_Internet
+audience: public
 ---
 
-Nous comptons généralement en base 10, cela veut dire que nous utilisons 10 symboles pour représenter les chiffres. Combiner ces chiffres permet de créer des nombres.
-Pour représenter des chiffres en informatique, on n’utilise que 2 symboles : 0 et 1.
-On nomme ces symboles des **bits**.
-Un ensemble de 8 bits se nomme un **octet**.
+Nous comptons d'habitude en base 10. Cela veut dire que nous disposons de dix symboles, de 0 à 9, et que la position d'un chiffre change sa valeur. L'informatique n'a pas dix symboles. Elle en a deux : 0 et 1. On les appelle des **bits**. Huit bits regroupés forment un **octet**.
 
-## Rappel : Comment compter en base 10
+Pourquoi deux seulement ? Parce qu'un circuit est à l'aise avec une question fermée : le courant passe, ou il ne passe pas. Tout le reste, les nombres, le texte, les images, se reconstruit à partir de cette alternative.
 
-Pour compter, on utilise la notation en colonne, dite positionnelle.
-La colonne la plus à droite correspond à celle des unités, suivie à gauche par celle des dizaines, puis des centaines et ainsi de suite.
+## Compter en base 10, pour s'en souvenir
 
-Par exemple, on peut décomposer le nombre $154=10^2\times1 + 10^1\times5 + 10^0\times4$.
-On appelle cela la **décomposition par base avec ici la base valant 10**.
+En base 10, la colonne de droite est celle des unités, puis viennent les dizaines, les centaines. Le nombre 154 se décompose ainsi :
 
-## Conversion binaire vers décimal
+$$154 = 10^2 \times 1 + 10^1 \times 5 + 10^0 \times 4$$
 
-Un nombre écrit en base 2 est écrit en notation positionnelle.
+C'est une décomposition selon la base. Ici, la base vaut 10. Le même geste va servir en base 2. Seule la base change.
 
-Pour convertir un nombre binaire en base décimale, on opère comme la décomposition précédente avec la base valant 2 :
+## Du binaire vers le décimal
 
-$11001$ est un nombre représenté en base 2. On peut le décomposer de cette manière :
-$11001_2 = 1 \times 2^4 + 1 \times 2^3 + 0 \times 2^2 + 0 \times 2^1 + 1 \times 2^0 = 16 + 8 + 1 = 25_{10}$.
+Un nombre binaire est lui aussi positionnel. La colonne de droite vaut \(2^0\), celle d'à côté \(2^1\), puis \(2^2\), et ainsi de suite vers la gauche.
+
+Prenons \(11001\) en base 2 :
+
+$$11001_2 = 1 \times 2^4 + 1 \times 2^3 + 0 \times 2^2 + 0 \times 2^1 + 1 \times 2^0 = 16 + 8 + 0 + 0 + 1 = 25_{10}$$
+
+On n'additionne que les puissances de 2 dont le bit vaut 1. Les 0 occupent une place, ils comptent dans la position des autres, mais ils n'ajoutent rien.
 
 > **Exercice**
 > Convertir les nombres binaires suivant en base 10 :
@@ -37,14 +38,12 @@ $11001_2 = 1 \times 2^4 + 1 \times 2^3 + 0 \times 2^2 + 0 \times 2^1 + 1 \times 
 > c. $111000_2$
 > d. $10010_2$
 
-## Conversion décimal vers binaire
+## Du décimal vers le binaire
 
-Pour passer de la base 10 à la base 2, on peut utiliser la méthode que l'on appelle des **divisions successives**.
+Dans l'autre sens, on utilise les **divisions successives** par 2.
 
-On divise successivement le nombre à convertir par 2.
-Chaque **reste** correspond au nombre dans la représentation et chaque **quotient** est à diviser à la suite par 2.
-On répète ces opération jusqu'à ce que le quotient soit 0 et le reste 1.
+On divise le nombre par 2. Le reste, 0 ou 1, est un bit du résultat. Le quotient est divisé à nouveau par 2, et on recommence. On s'arrête lorsque le quotient vaut 0. Le dernier reste vaut alors 1, sauf si le nombre de départ était 0.
 
 ![div_succ](/content/1/div_succ.png)
 
-La représentation du nombre binaire s’obtient en écrivant les restes dans le sens de la flèche ci dessus.
+L'ordre compte. Le premier reste obtenu est le bit de droite, le bit de poids faible. On lit ensuite les restes dans le sens de la flèche du schéma, du dernier calcul vers le premier. Si vous les recopiez dans l'ordre où ils apparaissent, le nombre est écrit à l'envers.

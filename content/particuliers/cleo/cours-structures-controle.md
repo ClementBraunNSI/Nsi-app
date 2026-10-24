@@ -6,6 +6,8 @@ chapter: Programmation en C
 icon: "\U0001F500"
 prerequisites:
   - cours-tableaux-2d
+audience:
+  accounts: []
 ---
 
 # 🔀 C — Structures de Contrôle

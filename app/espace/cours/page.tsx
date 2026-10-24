@@ -13,13 +13,7 @@ export default async function StudentCoursesPage() {
     redirect('/auth/login');
   }
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('full_name')
-    .eq('id', session.user.id)
-    .single();
-
-  const courses = await getReservedCourses(profile?.full_name || '');
+  const courses = await getReservedCourses();
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] py-12 px-4 sm:px-6 lg:px-8">

@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { createStudent, deleteStudent, updateStudent } from "@/app/actions/students";
+import { classTemporaryPassword } from "@/lib/class-password";
 import { Button } from "@/components/ui";
 import type { AdminStudent } from "@/app/actions/admin";
 
@@ -126,13 +127,24 @@ export function StudentAccountDialog({
           <input
             type="password"
             autoComplete="new-password"
-            required={mode === "create"}
+            required={mode === "create" && draft.hasPrivateLessons}
             value={draft.password}
             onChange={(event) => set({ password: event.target.value })}
-            placeholder={mode === "edit" ? "Laisser vide pour conserver" : ""}
+            placeholder={
+              mode === "edit"
+                ? "Laisser vide pour conserver"
+                : draft.hasPrivateLessons
+                  ? ""
+                  : "Vide : Nsi-prenom26"
+            }
             className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 font-medium"
           />
         </label>
+        {mode === "create" && !draft.hasPrivateLessons && classTemporaryPassword(draft.fullName) ? (
+          <p className="text-sm text-slate-600">
+            Mot de passe initial : <strong>{classTemporaryPassword(draft.fullName)}</strong>. Il sera à changer dès la première connexion.
+          </p>
+        ) : null}
         <div className="grid grid-cols-2 gap-3">
           <label className="block text-sm font-semibold text-slate-600">
             Classe

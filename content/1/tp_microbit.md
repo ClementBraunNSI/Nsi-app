@@ -6,6 +6,7 @@ chapter: Micro-controleurs
 icon: "\U0001F916"
 prerequisites:
   - activite_objets_connectes
+audience: public
 ---
 
 # Travail Pratique : Cartes Micro:bit

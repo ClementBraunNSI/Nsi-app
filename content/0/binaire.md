@@ -4,10 +4,11 @@ description: "Comprendre les bases 2, 10, 16 et la conversion entre elles."
 level: SNI
 chapter: "Representation_de_base"
 icon: "🔢"
+audience: public
 ---
 
 <ExerciseTabs courseId="binaire-base" courseTitle="Binaire">
-  <ExerciseSection id="binaire-1" label="1. Comprendre les bases">
+  <ExerciseSection id="binaire-1" label="1. Comprendre les bases" type="lecture">
     <Enonce>
 ## Différencier comptage et dénombrement
 
@@ -74,7 +75,7 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="binaire-2" label="2. Exercice : Conversions">
+  <ExerciseSection id="binaire-2" label="2. Exercice : Conversions" type="python">
     <Enonce>
 ### Exercice
 
@@ -111,7 +112,7 @@ assert n5 == 23, "n5 incorrect. 10111_2 = 16+4+2+1"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="binaire-3" label="3. Décimal vers Binaire">
+  <ExerciseSection id="binaire-3" label="3. Décimal vers Binaire" type="lecture">
     <Enonce>
 ### Obtenir la représentation en base 2 d'un nombre en base 10
 

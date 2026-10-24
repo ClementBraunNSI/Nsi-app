@@ -3,17 +3,14 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
-import { getExerciseVerification, type ExerciseSheetNav, type LabExercise } from '@/app/actions/getExercises';
-import { saveValidatedExercise } from '@/app/actions/progress';
+import { checkExerciseSolution, type ExerciseCheckResult, type ExerciseSheetNav, type LabExercise } from '@/app/actions/getExercises';
 import { supabase } from '@/lib/supabase';
 import { loadPythonPackages } from '@/lib/pyodide-packages';
 import {
-  SAVE_WARNING,
   buildPythonCheckSource,
   everyTestPassed,
   parsePythonCheckResult,
   reportFromQuery,
-  testsUnavailableReport,
   unexpectedRunReport,
   type RunReport,
 } from '@/lib/python-check';
@@ -57,7 +54,6 @@ function consoleFromReport(report: RunReport, emptyLine: string): ConsoleState {
 export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; nav: ExerciseSheetNav | null }) {
   const [code, setCode] = useState('');
   const [running, setRunning] = useState<'execute' | 'test' | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
@@ -113,7 +109,6 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.user) return;
-      setUserId(session.user.id);
       const { data } = await supabase
         .from('user_progress')
         .select('exercise_id')
@@ -136,42 +131,24 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     }
   }, [exercise.id, exercise.type, sqlJs]);
 
-  const saveProgress = async (): Promise<boolean> => {
-    let id = userId;
-    if (!id) {
-      const { data: { session } } = await supabase.auth.getSession();
-      id = session?.user?.id ?? null;
-      if (id) setUserId(id);
-    }
-    if (!id) return false;
-    const result = await saveValidatedExercise({
-      exerciseId: exercise.id,
-      courseId: exercise.courseId,
-      courseTitle: exercise.courseTitle,
-    });
-    if (result.error) return false;
+  const presentCheck = (outcome: ExerciseCheckResult) => {
+    const next = outcome.report;
+    setConsoleState(consoleFromReport(next, emptyLine));
+    setReport(next);
+    if (!outcome.recorded || !everyTestPassed(next) || next.saveWarning) return;
     setIsCompleted(true);
-    const unlocked = result.newAchievements ?? (result.newAchievement ? [result.newAchievement] : []);
-    if (result.newBadge) {
+    const unlocked = outcome.newAchievements ?? [];
+    if (outcome.newBadge) {
       pendingQueueRef.current = unlocked;
       setPendingBadge({ courseId: exercise.courseId, courseTitle: exercise.courseTitle });
       setShowSuccessModal(true);
-    } else if (unlocked.length > 0) {
+      return;
+    }
+    if (unlocked.length > 0) {
       const [first, ...rest] = unlocked;
       pendingQueueRef.current = rest;
       setUnlockedAchievement(first);
     }
-    return true;
-  };
-
-  const publishIfPassed = async (next: RunReport) => {
-    setConsoleState(consoleFromReport(next, emptyLine));
-    if (!everyTestPassed(next)) {
-      setReport(next);
-      return;
-    }
-    const saved = await saveProgress();
-    setReport(saved ? next : { ...next, saveWarning: SAVE_WARNING });
   };
 
   const ensurePython = async () => {
@@ -187,7 +164,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     return pyodideRef.current;
   };
 
-  const runPython = async (tests: string | null) => {
+  const runPython = async () => {
     const pyodide = await ensurePython();
     if (exercise.pythonPackages?.length) {
       setStatusLine(`Chargement des modules : ${exercise.pythonPackages.join(', ')}…`);
@@ -196,7 +173,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     const leaked: string[] = [];
     pyodide.setStdout({ batched: (msg: string) => leaked.push(String(msg)) });
     pyodide.setStderr({ batched: (msg: string) => leaked.push(String(msg)) });
-    const raw = await pyodide.runPythonAsync(buildPythonCheckSource(code, tests));
+    const raw = await pyodide.runPythonAsync(buildPythonCheckSource(code, null));
     const next = parsePythonCheckResult(raw);
     if (!next.prints.trim() && leaked.length > 0) next.prints = leaked.join('\n');
     return next;
@@ -226,7 +203,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
         return;
       }
 
-      const next = await runPython(null);
+      const next = await runPython();
       setConsoleState(consoleFromReport(next, emptyLine));
     } catch (error: any) {
       setConsoleState(consoleFromReport(unexpectedRunReport(error?.message || 'Erreur inattendue.'), emptyLine));
@@ -242,13 +219,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     setReport(null);
     setStatusLine(exercise.type === 'sql' ? 'Vérification de la requête…' : 'Vérification…');
     try {
-      if (exercise.type === 'sql') {
-        if (!sqlDb) {
-          const next = unexpectedRunReport('Base de données non initialisée');
-          setConsoleState(consoleFromReport(next, emptyLine));
-          setReport(next);
-          return;
-        }
+      if (exercise.type === 'sql' && sqlDb) {
         setSqlResults(null);
         try {
           const results = sqlDb.exec(code);
@@ -256,44 +227,11 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
             const lastResult = results[results.length - 1];
             setSqlResults({ columns: lastResult.columns, values: lastResult.values });
           }
-        } catch (error: any) {
-          const next = reportFromQuery({ phase: 'student-error', message: error?.message });
-          setConsoleState(consoleFromReport(next, emptyLine));
-          setReport(next);
-          return;
+        } catch {
+          setSqlResults(null);
         }
-
-        const sqlTests = exercise.hasVerification ? await getExerciseVerification(exercise.id) : null;
-        if (!sqlTests) {
-          const next = testsUnavailableReport();
-          setConsoleState(consoleFromReport(next, emptyLine));
-          setReport(next);
-          return;
-        }
-        try {
-          const verifRes = sqlDb.exec(sqlTests);
-          if (verifRes.length > 0) {
-            const lastResult = verifRes[verifRes.length - 1];
-            setSqlResults({ columns: lastResult.columns, values: lastResult.values });
-          }
-          await publishIfPassed(reportFromQuery({ phase: 'verified' }));
-        } catch (error: any) {
-          const next = reportFromQuery({ phase: 'verification-error', message: error?.message });
-          setConsoleState(consoleFromReport(next, emptyLine));
-          setReport(next);
-        }
-        return;
       }
-
-      const pythonTests = exercise.hasVerification ? await getExerciseVerification(exercise.id) : null;
-      if (!pythonTests) {
-        const next = testsUnavailableReport();
-        setConsoleState(consoleFromReport(next, emptyLine));
-        setReport(next);
-        return;
-      }
-      const next = await runPython(pythonTests);
-      await publishIfPassed(next);
+      presentCheck(await checkExerciseSolution(exercise.id, code));
     } catch (error: any) {
       const next = unexpectedRunReport(error?.message || 'Erreur inattendue.');
       setConsoleState(consoleFromReport(next, emptyLine));
@@ -331,7 +269,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     });
   };
 
-  const backHref = exercise.pagePath || '/cours';
+  const backHref = exercise.pagePath || '/';
 
   return (
     <div className="exercise-workspace">

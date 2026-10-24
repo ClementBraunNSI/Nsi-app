@@ -7,70 +7,103 @@ icon: "\U0001F331"
 badgeId: premiere_projet_carbone
 prerequisites:
   - projet_gestion_stock
+audience: public
 ---
 
 # 🌱 Projet - Calculateur d'Empreinte Carbone
 
-L'objectif de ce projet est de créer un programme interactif capable de calculer les émissions de CO2 d'un trajet en fonction du mode de transport choisi. C'est un excellent moyen de pratiquer les **variables**, les **entrées utilisateurs (`input`)**, et les **conditions (`if/elif/else`)**.
+Le but de ce projet est de créer un programme qui estime les émissions de CO2 d'un trajet selon le mode de transport.
+Dans ce projet, nous allons travailler les variables, `input`, les conversions de type et les conditions.
 
-## 1. Cahier des Charges
+Les facteurs ci-dessous sont des ordres de grandeur pour l'exercice, pas un bilan carbone officiel.
 
-Le programme doit :
-1.  Demander à l'utilisateur la distance du trajet en kilomètres.
-2.  Demander le mode de transport (Voiture, Train, Avion, Vélo).
-3.  Calculer les émissions totales de CO2.
-4.  Afficher le résultat avec un message de sensibilisation personnalisé.
+## 1. Les facteurs 🚲
 
-### Données de référence (hypoyhétiques pour l'exercice)
-*   🚗 **Voiture** : 120 g de CO2 / km
-*   ✈️ **Avion** : 250 g de CO2 / km
-*   🚄 **Train** : 10 g de CO2 / km
-*   🚲 **Vélo** : 0 g de CO2 / km
+| Choix | Mode | Facteur |
+| --- | --- | --- |
+| `"1"` | Voiture | 120 g de CO2 / km |
+| `"2"` | Train | 10 g de CO2 / km |
+| `"3"` | Avion | 250 g de CO2 / km |
+| `"4"` | Vélo | 0 g de CO2 / km |
 
-## 2. Étapes de réalisation
+Émissions en grammes = distance × facteur. Pour passer en kilogrammes, on divise par 1000.
 
-### Étape 1 : Saisie des données
-Utilisez la fonction `input()` pour récupérer la distance.
-⚠️ **Attention** : `input()` renvoie toujours une chaîne de caractères (`str`). Pensez à convertir la distance en nombre (`float` ou `int`) pour faire des calculs !
+Messages, selon les kilogrammes :
 
-```python
-# Exemple
-distance_str = input("Quelle est la distance en km ? ")
-distance = float(distance_str)
-```
-
-### Étape 2 : Le Menu de choix
-Affichez les options disponibles et demandez à l'utilisateur de choisir (par exemple en tapant 1, 2, 3 ou 4).
-
-### Étape 3 : La Logique (Conditions)
-Utilisez une structure conditionnelle pour définir le facteur d'émission.
-
-```python
-facteur = 0
-
-if choix == "1":
-    # Voiture
-    facteur = 120
-elif choix == "2":
-    # ...
-```
-
-### Étape 4 : Calcul et Affichage
-Multipliez la distance par le facteur. Si le résultat est en grammes, il peut être judicieux de le convertir en kilogrammes (diviser par 1000) pour l'affichage si la valeur est grande.
-
-## 3. Pour aller plus loin (Bonus) 🚀
-
-*   **Comparateur** : Affichez la différence avec le train si l'utilisateur choisit l'avion ou la voiture ("En prenant le train, vous auriez économisé X kg de CO2").
-*   **Aller-Retour** : Demandez si c'est un aller simple ou un aller-retour.
-*   **Covoiturage** : Si c'est une voiture, demandez le nombre de passagers et divisez les émissions par ce nombre.
-
----
+*   0 kg : `Bravo, pas d'émission directe sur ce trajet.`
+*   plus de 0 et strictement moins de 10 kg : `Trajet raisonnable.`
+*   10 kg ou plus : `Trajet émetteur.`
 
 <ExerciseTabs courseId="premiere_projet_carbone" courseTitle="Calculateur Carbone">
-  <ExerciseSection id="proj-carb-1" label="À vous de jouer !">
+  <ExerciseSection id="proj-carb-1" label="Les fonctions" type="python">
     <Enonce>
-    À vous de coder ! Suivez les étapes ci-dessus pour réaliser votre propre calculateur.
-    N'hésitez pas à ajouter votre touche personnelle (couleurs, messages drôles, etc.).
+      Écrivez les quatre fonctions, et vérifiez-les avec des appels directs, avant d'écrire le dialogue.
+
+      ```python
+      def facteur_emission(choix: str) -> float:
+          """Grammes de CO2 par km. Renvoie -1.0 si le choix est inconnu."""
+
+      def emissions_g(distance: float, choix: str) -> float:
+          """Grammes émis. Renvoie -1.0 si le choix est inconnu
+          ou si la distance est inférieure ou égale à 0."""
+
+      def emissions_kg(grammes: float) -> float:
+          """Convertit des grammes en kilogrammes."""
+
+      def message(kg: float) -> str:
+          """Renvoie l'une des trois phrases, selon le barème."""
+      ```
+
+      Le choix `"1"` donne le facteur 120, `"2"` donne 10, `"3"` donne 250, `"4"` donne 0. Tout autre texte donne `-1.0`.
+
+      `emissions_g` renvoie `distance * facteur`, ou `-1.0` si le facteur est inconnu ou si la distance est inférieure ou égale à 0.
+
+      Contrôles : `facteur_emission("3")` vaut `250`, `facteur_emission("9")` vaut `-1.0`, `emissions_g(100, "1")` vaut `12000`, `emissions_kg(12000)` vaut `12.0`. `message(0)` renvoie la phrase du vélo, `message(0.5)` renvoie `Trajet raisonnable.`, `message(12)` renvoie `Trajet émetteur.`
+
+      | Distance | Choix | Grammes | Kilogrammes | Message |
+      | --- | --- | --- | --- | --- |
+      | 100 | `"1"` voiture | 12 000 | 12 | Trajet émetteur. |
+      | 100 | `"4"` vélo | 0 | 0 | Bravo, pas d'émission directe sur ce trajet. |
+      | 250 | `"3"` avion | 62 500 | 62,5 | Trajet émetteur. |
+      | 50 | `"2"` train | 500 | 0,5 | Trajet raisonnable. |
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="proj-carb-2" label="Le dialogue" type="python">
+    <Enonce>
+      Écrivez le programme principal du fichier `carbone.py`.
+
+      1. Demandez `Distance (km) : `. `input` renvoie un `str` : convertissez-le en `float`. Tant que la distance est inférieure ou égale à 0, reposez la question. Une distance `-3` ou `0` ne passe pas.
+      2. Affichez les quatre lignes du menu, puis lisez `Votre choix : `. Tant que `facteur_emission(choix)` vaut `-1.0`, réaffichez le menu. Un choix `"9"` ne passe pas.
+      3. Calculez les grammes, puis les kilogrammes.
+      4. Affichez `Émissions : X.XX kg de CO2.` puis la phrase renvoyée par `message`.
+
+      Le trajet 100 km / choix `1` produit :
+
+      ```text
+      Distance (km) : 100
+      1. Voiture
+      2. Train
+      3. Avion
+      4. Vélo
+      Votre choix : 1
+      Émissions : 12.00 kg de CO2.
+      Trajet émetteur.
+      ```
+
+      Le trajet 100 km / choix `4` affiche `0.00` kg et la phrase du vélo.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="proj-carb-3" label="Bonus" type="lecture">
+    <Enonce>
+      Trois ajouts, chacun dans une fonction, une fois le dialogue juste.
+
+      - `distance_effective(distance, aller_retour)` : si `aller_retour` vaut `True`, renvoyez le double. Question : `Aller-retour ? (oui/non)`. Seul `oui` met le booléen à `True`. 100 km en voiture aller-retour donnent 24 kg.
+      - `economie_train(distance, choix)` : kilogrammes que l'on éviterait en prenant le train à la place. Pour 250 km en avion, le train émet 2,5 kg, l'avion 62,5 kg, l'économie affichée est `60.00 kg`. Pour le train et le vélo, affichez `Déjà le mode le plus sobre du comparateur.` et ne donnez pas une économie négative.
+      - `part_voiture(kg, passagers)` : uniquement si le choix est la voiture. `passagers` compte le conducteur et vaut au moins 1, sinon on redemande. 100 km en voiture à 4 donnent `3.00 kg` par personne.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
+
+**Ce qu'on rend.** Un fichier `carbone.py` : commentaire d'en-tête avec le nom et la classe, les quatre fonctions, et le programme principal qui reproduit le dialogue. Les bonus viennent après, dans le même fichier.

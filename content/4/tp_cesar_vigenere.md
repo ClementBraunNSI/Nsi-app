@@ -6,11 +6,12 @@ chapter: 'BTS SIO 1 : B3 - CyberSécurité'
 icon: "\U0001F510"
 prerequisites:
   - chiffrement_hachage
+audience: public
 ---
 
 <ExerciseTabs courseId="tp-cesar-vigenere" courseTitle="TP Chiffrement">
 
-  <ExerciseSection id="intro" label="Introduction & Rappels">
+  <ExerciseSection id="intro" label="Introduction & Rappels" type="autre">
     <Enonce>
       ## Introduction
       Le chiffrement est une technique fondamentale en cybersécurité qui permet de protéger des informations en les rendant illisibles sans une clé de déchiffrement. Ce TP présente deux méthodes historiques de chiffrement par substitution et une méthode moderne de chiffrement asymétrique.
@@ -43,7 +44,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="partie-1-cesar" label="Partie 1 : César">
+  <ExerciseSection id="partie-1-cesar" label="Partie 1 : César" type="autre">
     <Enonce>
       ## Partie 1 : Chiffrement de César
 
@@ -114,7 +115,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="partie-2-vigenere" label="Partie 2 : Vigenère">
+  <ExerciseSection id="partie-2-vigenere" label="Partie 2 : Vigenère" type="autre">
     <Enonce>
       ## Partie 2 : Chiffrement de Vigenère
 
@@ -166,7 +167,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="partie-3-rsa" label="Partie 3 : RSA">
+  <ExerciseSection id="partie-3-rsa" label="Partie 3 : RSA" type="autre">
     <Enonce>
       ## Partie 3 : Chiffrement RSA
 

@@ -5,6 +5,7 @@ badgeId: bts_poo_remediation
 meta: 'Classes, Objets, Constructeurs, Instance, Static'
 prerequisites:
   - premiers_pas_csharp
+audience: public
 ---
 
 <Admonition type="warning" title="Objectif de cette séance">
@@ -13,7 +14,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
 <ExerciseTabs courseId="bts_poo_remediation" courseTitle="Remédiation POO">
   
-  <ExerciseSection id="tp-remed-exo1" label="Étape 1 - La Syntaxe de Base">
+  <ExerciseSection id="tp-remed-exo1" label="Étape 1 - La Syntaxe de Base" type="autre">
     <Enonce>
     ## 🧱 Étape 1 : Syntaxe C# et Création de Classe
 
@@ -43,7 +44,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-remed-exo2" label="Étape 2 - L'Instanciation (Le mot 'new')">
+  <ExerciseSection id="tp-remed-exo2" label="Étape 2 - L'Instanciation (Le mot 'new')" type="autre">
     <Enonce>
     ## 🪄 Étape 2 : L'Instanciation (Donner vie au code)
 
@@ -65,7 +66,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-remed-exo3" label="Étape 3 - Interaction entre Objets (Le mot 'this')">
+  <ExerciseSection id="tp-remed-exo3" label="Étape 3 - Interaction entre Objets (Le mot 'this')" type="autre">
     <Enonce>
     ## ⚔️ Étape 3 : Interaction entre Objets
 
@@ -92,7 +93,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-remed-exo4" label="Étape 4 - Les Listes d'Objets">
+  <ExerciseSection id="tp-remed-exo4" label="Étape 4 - Les Listes d'Objets" type="autre">
     <Enonce>
     ## 📦 Étape 4 : Stocker des objets dans une Liste
 
@@ -113,7 +114,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-remed-exo5" label="Étape 5 - Algorithmes de recherche dans une Liste">
+  <ExerciseSection id="tp-remed-exo5" label="Étape 5 - Algorithmes de recherche dans une Liste" type="autre">
     <Enonce>
     ## 🔍 Étape 5 : Explorer et analyser une Liste
 
@@ -141,7 +142,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-remed-exo6" label="Étape 6 - Interaction entre Guildes (Le Boss Final)">
+  <ExerciseSection id="tp-remed-exo6" label="Étape 6 - Interaction entre Guildes (Le Boss Final)" type="autre">
     <Enonce>
     ## 🏰 Étape 6 : GvG (Guilde vs Guilde)
 

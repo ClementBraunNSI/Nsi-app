@@ -8,41 +8,32 @@ icon: "\U0001F52A"
 badgeId: terminale_diviser_regner
 prerequisites:
   - algo_recherche_textuelle
+audience: public
 ---
 
-# 🔪 Diviser pour Régner (Divide and Conquer)
+# Diviser pour régner
 
-C'est une méthode algorithmique puissante qui consiste à :
-1.  **Diviser** le problème en sous-problèmes plus petits.
-2.  **Régner** (Résoudre) les sous-problèmes (souvent récursivement).
-3.  **Combiner** les solutions des sous-problèmes pour obtenir la solution globale.
+**Diviser pour régner**, c'est refuser de résoudre le gros problème d'un coup. On le **découpe** en sous-problèmes de la même nature, plus petits. On **résout** ces sous-problèmes, en général par le même algorithme, donc par un appel récursif, jusqu'à des cas assez petits pour répondre directement. On **combine** ensuite les solutions partielles pour obtenir la solution du problème de départ. Les trois verbes comptent. Un découpage qui ne se recombine pas n'a pas fini le travail.
 
-## 1. Exemple phare : Le Tri Fusion (Merge Sort)
+## Le tri fusion
 
-Pour trier une liste de 100 nombres :
-1.  **Diviser** : On coupe la liste en deux listes de 50.
-2.  **Régner** : On trie récursivement ces deux moitiés. (On recoupe jusqu'à avoir des listes de 1 élément, qui sont déjà triées !).
-3.  **Combiner** : On fusionne les deux listes triées pour en faire une grande liste triée.
+Pour trier une liste, le **tri fusion** coupe la liste en deux moitiés. Il trie la moitié gauche par un appel récursif, puis la moitié droite. Une liste d'un seul élément, ou une liste vide, est déjà triée : c'est le cas de base, on ne coupe plus. Reste à **fusionner** deux listes triées en une seule liste triée.
 
-### Complexité
-Le tri fusion est très efficace : sa complexité est toujours en **O(n log n)**, contrairement au tri par insertion ou sélection qui sont en O(n²) dans le pire des cas.
+La fusion ne retrie pas tout. Elle compare les têtes des deux listes, prend la plus petite, et recommence. Chaque élément est regardé une fois. Fusionner deux listes de taille $n/2$ coûte donc un temps proportionnel à $n$.
 
-## 2. Exemple : Rotation d'image
+Le coût total suit le découpage. Il y a environ $\log_2 n$ étages de coupes, et à chaque étage l'ensemble des fusions parcourt les $n$ éléments. La complexité est **toujours** $O(n \log n)$, dans le meilleur des cas comme dans le pire. Le tri par insertion et le tri par sélection, eux, sont en $O(n^2)$ dans le pire des cas : ils recommencent des comparaisons sur des portions déjà vues. Le tri fusion paie le prix d'une liste auxiliaire pour la fusion, et gagne la régularité du $n \log n$.
 
-Pour faire tourner une image carrée de 90° :
-1.  On découpe l'image en 4 quadrants (Haut-Gauche, Haut-Droit, Bas-Gauche, Bas-Droit).
-2.  On tourne récursivement chaque quadrant.
-3.  On déplace les quadrants à leur nouvelle place (HG -> HD, HD -> BD, BD -> BG, BG -> HG).
+## Tourner une image carrée
 
-## 3. Recherche Dichotomique
+Le même schéma s'applique à une image carrée qu'on veut tourner de 90 degrés. On la découpe en quatre quadrants : haut-gauche, haut-droit, bas-gauche, bas-droit. On tourne chaque quadrant par un appel récursif. Puis on déplace les quatre blocs : le haut-gauche va en haut-droite, le haut-droit en bas-droite, le bas-droit en bas-gauche, le bas-gauche en haut-gauche. Le cas de base est un quadrant d'un pixel, qu'il n'y a pas à tourner. Diviser, régner, combiner : le déplacement des quadrants est l'étape qui recompose l'image.
 
-La recherche dichotomique (vue en 1ère) est aussi un algorithme "Diviser pour Régner" (mais sans l'étape "Combiner" car on ne garde qu'une moitié).
+## La dichotomie, presque
 
----
+La recherche dichotomique vue en Première est du même esprit, avec une économie. On coupe la zone en deux, et l'on **jette** une moitié au lieu de résoudre les deux. Il n'y a rien à combiner : la réponse est celle de la moitié conservée. On parle encore de diviser pour régner, en notant que l'étape « combiner » est vide. Ce n'est pas le cas du tri fusion, où les deux moitiés travaillent et où la fusion est indispensable.
 
 <ExerciseTabs courseId="terminale_diviser_regner" courseTitle="Exos Diviser Régner">
 
-  <ExerciseSection id="div-ex-1" label="Fusion de listes">
+  <ExerciseSection id="div-ex-1" label="Fusion de listes" type="python">
     <Enonce>
     ### Algorithme de Fusion
     On dispose de deux listes **déjà triées** :

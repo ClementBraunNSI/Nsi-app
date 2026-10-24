@@ -6,33 +6,20 @@ chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiq
 icon: ⚠️
 prerequisites:
   - ITIL
+audience: public
 ---
 
-# ⚠️ Gestion des Risques
-**BTS SIO SLAM - Bloc 1 : Gestion des risques en projet informatique**
+# Gestion des risques
 
-## 🎯 Fondamentaux de la Gestion des Risques
+**BTS SIO — Bloc 1 : gestion des risques en projet informatique**
 
-> **Qu'est-ce qu'un Risque Projet ?**
->
-> Un risque projet est un **événement incertain** qui, s'il se produit, peut avoir un **impact positif ou négatif** sur les objectifs du projet (délais, coûts, qualité, périmètre). La gestion des risques consiste à les **identifier**, les **analyser**, les **traiter** et les **surveiller**.
+Un **risque de projet** est un événement incertain. S'il se produit, il écarte le projet de ses objectifs : délai, coût, qualité, périmètre. L'écart peut être négatif, un développeur absent la semaine de la livraison. Il peut être positif, une bibliothèque qui fait gagner dix jours : on parle alors d'opportunité, et on la traite aussi, pour ne pas la laisser passer. Gérer les risques, c'est les identifier, les analyser, les traiter, puis les surveiller. Un registre qu'on ne rouvre plus n'est pas une gestion.
 
-En gestion de projet informatique, la gestion des risques est cruciale pour anticiper les problèmes et assurer le succès des projets. Elle démontre la maturité professionnelle et la capacité à gérer l'incertitude dans un environnement technologique complexe.
+Le déroulement tient en quatre temps. On **identifie** ce qui pourrait arriver, avec l'équipe, pas seulement dans le bureau du chef de projet. On **analyse** : quelle vraisemblance, quel impact. On **traite** : quelle stratégie, qui en est responsable, pour quelle date. On **surveille** : le risque a-t-il changé, la parade a-t-elle été faite. Un risque nouveau en cours de sprint entre dans le même circuit. Il n'attend pas le bilan de fin.
 
-### Processus de Gestion des Risques
+## La criticité, pour savoir par quoi commencer
 
-1. **Identification** : Détecter les risques potentiels
-2. **Analyse** : Évaluer probabilité et impact
-3. **Traitement** : Définir les stratégies
-4. **Surveillance** : Suivre et contrôler
-
-## 📊 Matrice des Risques
-
-> **Évaluation Probabilité × Impact**
->
-> La matrice des risques permet de **prioriser** les risques en croisant leur **probabilité d'occurrence** avec leur **impact** sur le projet. Cette visualisation aide à concentrer les efforts sur les risques les plus critiques.
-
-### Matrice Simplifiée (Impact vs Probabilité)
+On croise une probabilité et un impact, chacun noté de 1 à 5. La **criticité** est le produit. Elle ne mesure pas une probabilité au sens des mathématiques. Elle classe les risques pour décider où passer le temps.
 
 | Probabilité \ Impact | 1 - Très Faible | 2 - Faible | 3 - Moyen | 4 - Fort | 5 - Très Fort |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -42,32 +29,22 @@ En gestion de projet informatique, la gestion des risques est cruciale pour anti
 | **2 - Faible** | Faible (2) | Faible (4) | Faible (6) | Moyen (8) | Élevé (10) |
 | **1 - Très Faible** | Faible (1) | Faible (2) | Faible (3) | Faible (4) | Moyen (5) |
 
-### 📐 Règles de Calcul de la Criticité
+**Criticité = probabilité × impact.**
 
-**Formule :** Criticité = Probabilité × Impact
+Les produits utiles vont de 1 à 25. Les seuils du cours :
 
-**Seuils de criticité :**
-* **Risque Faible :** 1 à 6 points
-* **Risque Moyen :** 8 à 9 points
-* **Risque Élevé :** 10 à 16 points
-* **Risque Critique :** 20 à 25 points
+- risque **faible** : 1 à 6, surveillance passive
+- risque **moyen** : 8 à 9, un plan de contingence
+- risque **élevé** : 10 à 16, des actions préventives obligatoires
+- risque **critique** : 20 à 25, un traitement immédiat
 
-**Actions recommandées :**
-* **Faible (1-6) :** Surveillance passive
-* **Moyen (8-9) :** Plan de contingence
-* **Élevé (10-16) :** Actions préventives obligatoires
-* **Critique (20-25) :** Traitement immédiat prioritaire
+7 n'apparaît pas : ce n'est pas un produit de deux entiers entre 1 et 5. On ne « arrondit » pas un 6 vers le moyen pour le faire entrer dans une case.
 
-### Échelle de Probabilité
-* **1 - Très Faible** : Très improbable
-* **2 - Faible** : Peu probable
-* **3 - Moyenne** : Possible
-* **4 - Forte** : Probable
-* **5 - Très Forte** : Très probable
+L'échelle de probabilité se lit ainsi. 1, très improbable. 2, peu probable. 3, possible. 4, probable. 5, très probable. L'impact suit la même graduation, du très faible au très fort, selon ce que l'événement ferait au délai, au coût, à la qualité ou au périmètre. Deux personnes qui notent seules ne trouvent pas toujours le même chiffre. On note ensemble, et l'on écrit pourquoi.
 
-## 📝 Travaux Dirigés : Calcul de Risques
+## Travaux dirigés : calcul de risques
 
-### Exercice 1 : Calcul de la Criticité
+### Exercice 1 : Calcul de la criticité
 
 Pour chacun des risques suivants, calculez la criticité et déterminez le niveau de risque.
 
@@ -91,7 +68,7 @@ Pour chacun des risques suivants, calculez la criticité et déterminez le nivea
 | B | 4 × 2 | 8 | **Moyen** |
 | C | 3 × 5 | 15 | **Élevé** |
 
-### Exercice 2 : Stratégies de Mitigation
+### Exercice 2 : Stratégies de mitigation
 
 Proposez une action préventive (avant l'incident) et une action corrective (après l'incident) pour le risque suivant :
 
@@ -100,35 +77,35 @@ Le serveur de fichiers principal subit une défaillance matérielle de son disqu
 
 #### Pistes de solution
 
-**Préventif (Réduire la probabilité ou l'impact avant) :**
-* Mise en place d'un système RAID (Redondance de disques)
-* Surveillance SMART des disques pour anticiper les pannes
-* Planification de sauvegardes automatiques régulières
+**Préventif (réduire la probabilité ou l'impact avant) :**
+- Mise en place d'un système RAID (redondance de disques)
+- Surveillance SMART des disques pour anticiper les pannes
+- Planification de sauvegardes automatiques régulières
 
-**Correctif (Réduire l'impact après survenance) :**
-* Restauration des données depuis la dernière sauvegarde
-* Basculement sur un serveur de secours (Failover)
-* Remplacement à chaud du disque défectueux (Hot Swap)
+**Correctif (réduire l'impact après survenance) :**
+- Restauration des données depuis la dernière sauvegarde
+- Basculement sur un serveur de secours (failover)
+- Remplacement à chaud du disque défectueux (hot swap)
 
-### Exercice 3 : Analyse de Cas Concret
+### Exercice 3 : Analyse de cas concret
 
 Vous êtes chef de projet sur le développement d'une application mobile. Le lancement est prévu dans 2 semaines.
 Votre développeur principal tombe malade pour une durée indéterminée.
 
-1. Qualifiez ce risque (Type, Probabilité, Impact).
+1. Qualifiez ce risque (type, probabilité, impact).
 2. Quelle est la criticité si aucun backup n'est prévu ?
 3. Quelle action immédiate proposez-vous ?
 
 #### Analyse
 
-1. **Type :** Risque Humain / Ressource
-   **Probabilité :** 3 (Moyenne - cela arrive)
-   **Impact :** 5 (Très Fort - blocage du projet critique)
+1. **Type :** risque humain / ressource.
+   **Probabilité :** 3 (moyenne, cela arrive).
+   **Impact :** 5 (très fort, blocage du projet à un moment critique).
 
-2. **Criticité :** 3 × 5 = 15 => **Risque Élevé**
+2. **Criticité :** 3 × 5 = 15, donc un risque **élevé**.
 
 3. **Actions possibles :**
-   * Redistribuer les tâches critiques aux autres développeurs (surcharge temporaire).
-   * Faire appel à un freelance ou un prestataire en urgence (coût supplémentaire).
-   * Réduire le périmètre fonctionnel pour la V1 (dégrader la qualité/contenu pour tenir le délai).
-   * Négocier un report de la date de lancement (dégrader le délai).
+   - Redistribuer les tâches critiques aux autres développeurs, au prix d'une surcharge temporaire.
+   - Faire appel à un freelance ou à un prestataire, au prix d'un coût supplémentaire.
+   - Réduire le périmètre de la première version, pour tenir la date avec moins de fonctionnalités.
+   - Négocier un report de la date de lancement.

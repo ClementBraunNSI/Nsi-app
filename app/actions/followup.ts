@@ -289,7 +289,8 @@ export async function setStudentClasse(studentId: string, classe: string): Promi
     .from("profiles")
     .update({ classe: next || null })
     .eq("id", id)
-    .eq("role", "student");
+    .eq("role", "student")
+    .select("id");
 
   if (error) return { error: "save_failed" };
   revalidateFollowup();

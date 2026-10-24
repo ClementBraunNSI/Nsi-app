@@ -8,24 +8,14 @@ chapter: Architecture matérielle
 icon: ⚙️
 badgeId: premiere_von_neumann
 prerequisites: []
+audience: public
 ---
 
 # Modèle de Von Neumann
 
-## Objectifs
+Ouvrez un ordinateur, même en pensée : il y a un processeur, de la mémoire, des câbles, un clavier, un écran. Le modèle de von Neumann est la façon de nommer ces blocs, et surtout de dire dans quel ordre ils travaillent. Un ordinateur moderne exécute un programme **stocké en mémoire**, données et instructions au même endroit, **une instruction après l'autre**. C'est l'unité de contrôle qui mène ce défilé.
 
-- Identifier les **quatre blocs** du modèle de von Neumann
-- Décrire le rôle de l'UAL, de l'UC, de la mémoire et des bus
-- Comprendre le cycle **fetch → decode → execute → store**
-- Situer la limite du modèle (goulot d'étranglement)
-
-## Idée clé
-
-Un ordinateur moderne exécute des programmes **stockés en mémoire** (données **et** instructions au même endroit), de façon **séquentielle** : une instruction après l'autre, pilotée par l'unité de contrôle.
-
-## Quatre composants
-
-John von Neumann formalise une architecture reprise par l'EDVAC : calcul en binaire + **programme en mémoire**.
+John von Neumann formalise cette architecture pour l'EDVAC, à la fin des années 1940. Deux idées tiennent tout : on calcule en binaire, et le programme n'est plus câblé dans la machine, il est écrit dans la mémoire, comme les données. On peut donc changer de programme sans ressouder.
 
 ```mermaid
 graph TD
@@ -53,59 +43,34 @@ graph TD
 
 ![edvac](edvac.jpeg)
 
-### Processeur : UAL + UC
+## Dans le processeur
 
-- **UAL** : opérations arithmétiques, logiques, comparaisons, décalages ; s'appuie sur des **registres** (mémoire ultra-rapide interne)
-- **UC** : orchestre le déroulement — lit l'instruction, la décode, commande l'UAL, écrit le résultat
+Le processeur réunit deux unités qu'il ne faut pas échanger. L'**unité arithmétique et logique**, l'UAL, fait les opérations : additions, comparaisons, décalages, opérations logiques. Elle s'appuie sur des **registres**, une toute petite mémoire interne, beaucoup plus rapide que la RAM, où elle pose les valeurs en cours de calcul.
 
-Cycle de l'UC :
-
-1. **Fetch** — lire l'instruction en mémoire
-2. **Decode** — interpréter l'opcode / les opérandes
-3. **Execute** — faire calculer l'UAL
-4. **Store** — ranger le résultat (registre ou mémoire)
-
-La cadence est donnée par l'horloge (souvent en **GHz**).
+L'**unité de contrôle**, l'UC, ne calcule pas le résultat. Elle décide quoi faire maintenant. Son cycle tient en quatre temps. Elle **lit** l'instruction en mémoire (*fetch*), elle la **décode** pour savoir quel opcode et quels opérandes elle contient (*decode*), elle **fait calculer** l'UAL (*execute*), puis elle **range** le résultat dans un registre ou en mémoire (*store*). L'horloge cadence ce cycle. Quand on vous dit qu'un processeur tourne à plusieurs gigahertz, on vous dit combien de ces battements il enchaîne par seconde, pas combien de travail utile il abat.
 
 ![proco](intelamd.jpeg)
 
-### Mémoire
+## Plusieurs mémoires, pas une
 
 | Type | Rôle |
 |---|---|
-| **Cache** | Très proche du CPU, accélère les accès répétés |
-| **RAM** | Volatile, programmes et données en cours |
-| **ROM** | Non volatile, démarrage (firmware / BIOS) |
-| **Stockage** | Disque, SSD, USB — long terme |
+| **Cache** | Tout près du processeur, il accélère les accès répétés |
+| **RAM** | Volatile : programmes et données en cours, perdus hors tension |
+| **ROM** | Non volatile : ce qu'il faut pour démarrer (firmware, BIOS) |
+| **Stockage** | Disque, SSD, clé USB : le long terme |
 
-Dans le modèle, instructions et données cohabitent en RAM : c'est le **programme enregistré**.
+Dans le modèle, instructions et données cohabitent en RAM. C'est le **programme enregistré**. On peut donc, en théorie, traiter une instruction comme une donnée. C'est aussi ce qui permet à un programme d'en écrire un autre.
 
-### Bus et périphériques
-
-- **Bus de données** : transporte les valeurs
-- **Bus d'adresses** : indique *où* lire / écrire
-- **Bus de contrôle** : signaux lecture, écriture, etc.
-
-Entrées (clavier…), sorties (écran…), ou les deux (écran tactile, disque).
+Le processeur ne va pas chercher une valeur « quelque part ». Il passe par des **bus**. Le bus de données transporte les valeurs. Le bus d'adresses dit où lire ou écrire. Le bus de contrôle porte les signaux : lecture, écriture, et le reste. Autour, les périphériques entrent des informations (clavier, souris), en sortent (écran, imprimante), ou font les deux (écran tactile, disque).
 
 ![bus](bus.png)
 
-## Limite : le goulot d'étranglement
+## Le tuyau le plus étroit
 
-CPU, mémoire et bus n'ont pas les mêmes débits. Le plus lent **bride** l'ensemble (bottleneck) — comme un tuyau trop étroit dans une canalisation. Exemple : un CPU très rapide freiné par une mémoire ou un bus trop lents.
+Le processeur, la mémoire et les bus n'avancent pas au même rythme. Le plus lent bride tous les autres. On appelle cela le **goulot d'étranglement**, le *bottleneck* : comme un tuyau trop fin au milieu d'une canalisation, il impose son débit à l'ensemble. Un processeur très rapide devant une mémoire lente passe son temps à attendre la prochaine instruction. Ajouter des gigahertz ne sert alors à rien.
 
-## Piège fréquent
-
-Croire que « plus de GHz » suffit toujours. Sans mémoire et bus adaptés, le processeur attend : le modèle séquentiel reste limité par les transferts.
-
-## À retenir
-
-- Quatre blocs : processeur (UC + UAL), mémoire, bus, entrées/sorties
-- Programme et données en mémoire (von Neumann)
-- Cycle UC : fetch → decode → execute → store
-- UAL calcule ; UC séquence
-- RAM volatile vs stockage / ROM non volatiles
-- Bottleneck = composant le plus lent qui limite le système
+Les quatre blocs à retenir sont le processeur (UC et UAL), la mémoire, les bus, et les entrées-sorties. Le cycle de l'UC est fetch, decode, execute, store. La RAM s'efface sans courant. La ROM et le stockage, non.
 
 ## Pour s'entraîner
 

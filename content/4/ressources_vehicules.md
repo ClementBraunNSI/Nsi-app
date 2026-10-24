@@ -4,6 +4,7 @@ chapter: Ressources nécessaires
 badgeId: bts_sql_ressources_vehicules
 meta: 'Durée : AP2'
 prerequisites: []
+audience: public
 ---
 
 ```csv

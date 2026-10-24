@@ -6,6 +6,8 @@ chapter: Programmation en C
 icon: "\U0001F3D7️"
 prerequisites:
   - cours-tableaux
+audience:
+  accounts: []
 ---
 
 # 🏗️ C — Les Tableaux à 2 Dimensions (Matrices)

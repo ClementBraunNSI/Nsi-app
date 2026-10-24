@@ -6,26 +6,18 @@ chapter: Web et Interaction
 icon: "\U0001F4C4"
 badgeId: premiere_langage_html
 prerequisites: []
+audience: public
 ---
 
 # Le langage HTML
 
-## Objectifs
+Une page web n'est pas un dessin. C'est un texte balisé, que le navigateur interprète. Le **HTML** (*HyperText Markup Language*) décrit la **structure** et le **sens** du contenu : ceci est un titre, ceci un paragraphe, ceci un lien. Il ne dit pas la couleur, et il ne réagit pas au clic. La couleur viendra du CSS, le clic du JavaScript. Mélanger les trois rôles, c'est ce qui rend une page impossible à maintenir.
 
-- Expliquer le rôle du HTML dans une page web.
-- Lire et écrire la structure de base d'un document HTML5.
-- Utiliser les balises sémantiques, de texte, de lien, de liste et de formulaire.
-- Distinguer le contenu (HTML) de la mise en forme (CSS) et du comportement (JS).
-
-## Idée clé
-
-Le **HTML** (HyperText Markup Language) décrit la **structure** et le **sens** du contenu : titres, paragraphes, liens, images… Ce ne sont pas des instructions de dessin, mais des **balises** que le navigateur interprète pour construire la page.
-
-## Anatomie d'un document
+## Le squelette d'un document
 
 <HtmlStructureExplorer />
 
-Structure minimale :
+Un document HTML5 commence par `<!DOCTYPE html>`, qui dit au navigateur quelle grammaire lire. Puis `<html>` enveloppe deux parties. `<head>` porte les métadonnées : le titre de l'onglet, l'encodage, le lien vers la feuille de style. Rien de ce qui est dans `<head>` n'est le contenu de la page. `<body>` est ce que la personne voit.
 
 ```html
 <!DOCTYPE html>
@@ -61,13 +53,11 @@ Structure minimale :
 </html>
 ```
 
-- `<!DOCTYPE html>` : document HTML5.
-- `<head>` : métadonnées (titre onglet, encodage, CSS) — **pas** le contenu visible.
-- `<body>` : ce que l'utilisateur voit.
+`charset="UTF-8"` évite les accents cassés. `viewport` dit au téléphone de ne pas afficher la page comme un bureau miniature. `lang="fr"` indique la langue, utile aux lecteurs d'écran.
 
-## Balises essentielles
+## Des balises qui veulent dire quelque chose
 
-### Structure sémantique
+On pourrait tout mettre dans des `<div>`. Le navigateur afficherait quand même. Mais une balise **sémantique** dit le rôle de la zone. `<header>`, `<main>` et `<footer>` découpent la page. `<nav>` est la navigation. `<section>` et `<article>` sont des blocs de contenu. Un lecteur d'écran, et un moteur de recherche, s'appuient sur ces noms. Une `<div>` ne dit rien.
 
 | Balise | Rôle |
 | --- | --- |
@@ -75,15 +65,9 @@ Structure minimale :
 | `<nav>` | Navigation |
 | `<section>`, `<article>` | Blocs de contenu |
 
-Utiliser ces balises plutôt que des `<div>` partout : le sens aide l'accessibilité et le référencement.
+Les titres vont de `<h1>` à `<h6>`. On n'en saute pas les niveaux pour « faire plus petit » : la taille, c'est le CSS. En général, une page a un seul `<h1>`. `<p>` est un paragraphe. `<strong>` marque une importance, que le navigateur rend souvent en gras. `<em>` marque une emphase, souvent en italique. Gras et italique sont l'apparence. L'importance et l'emphase sont le sens.
 
-### Texte
-
-- `<h1>` … `<h6>` : titres (un seul `<h1>` principal en général).
-- `<p>` : paragraphe.
-- `<strong>` : importance (souvent gras) ; `<em>` : emphase (souvent italique).
-
-### Liens, médias, listes
+Un lien s'écrit `<a href="...">`. L'adresse est dans l'attribut `href`. Une image s'écrit `<img src="photo.jpg" alt="Description courte">`. `alt` décrit l'image pour qui ne la voit pas, et pour qui le fichier n'a pas chargé. Une liste non ordonnée est un `<ul>` de `<li>`. Une liste d'étapes est un `<ol>`.
 
 ```html
 <a href="https://exemple.fr">Un lien</a>
@@ -92,17 +76,15 @@ Utiliser ces balises plutôt que des `<div>` partout : le sens aide l'accessibil
 <ol><li>étape 1</li></ol>
 ```
 
-L'attribut `alt` d'une image décrit le contenu pour l'accessibilité.
-
-### Tableaux (rappel)
-
-`<table>` → lignes `<tr>` → cellules `<th>` (en-tête) ou `<td>` (donnée).
+Un tableau se lit en lignes. `<table>` contient des `<tr>`. Chaque ligne contient des `<th>` pour les en-têtes, ou des `<td>` pour les données.
 
 <WebPreview />
 
-## Formulaires
+Oublier de fermer une balise, ou glisser du texte visible dans `<head>`, casse la lecture que fait le navigateur. L'autre réflexe à perdre : styler avec des balises comme `<font>`. Elles sont obsolètes. La structure reste dans le HTML.
 
-Un formulaire envoie des données au serveur via `<form>`.
+## Un formulaire envoie des données
+
+`<form>` rassemble des champs et les envoie à une URL. `action` est cette URL. `method` dit comment les données voyagent.
 
 ```html
 <form action="/traitement" method="post">
@@ -119,24 +101,11 @@ Un formulaire envoie des données au serveur via `<form>`.
 </form>
 ```
 
-- **`action`** : URL de traitement.
-- **`method="get"`** : données dans l'URL (visibles, limitées).
-- **`method="post"`** : données dans le corps de la requête (plus adaptées aux formulaires).
+`method="get"` place les données dans l'URL. Elles sont visibles, elles restent dans l'historique, et leur longueur est limitée. Cela convient à une recherche. `method="post"` place les données dans le corps de la requête. C'est le bon choix pour un formulaire qui crée ou modifie quelque chose.
 
-`name` identifie le champ côté serveur ; `id` + `for` lient le label pour l'accessibilité.
+`name` est le nom du champ côté serveur : c'est la clé que le programme lira. `id` sert au document. `for` sur le `<label>` reprend cet `id`, pour que cliquer sur le texte « Nom » place le curseur dans le champ. `required` empêche l'envoi si le champ est vide. Le navigateur fait ce contrôle avant même d'appeler le serveur.
 
-## Piège fréquent
-
-Oublier de fermer une balise, ou mettre du contenu visible dans `<head>`. Autre classique : confondre **structure** (HTML) et **style** (CSS) — ne pas « styler » avec des balises obsolètes comme `<font>`.
-
-## À retenir
-
-- HTML = structure et sémantique ; le navigateur affiche d'après les balises.
-- Document type + `<html>` → `<head>` (méta) + `<body>` (contenu).
-- Préférer les balises sémantiques (`header`, `main`, `nav`…).
-- Liens (`<a>`), images (`<img alt="…">`), listes (`ul`/`ol`/`li`).
-- Formulaire : `action`, `method` (GET/POST), `name` sur les champs.
-- HTML ne remplace ni le CSS ni le JavaScript.
+Pour fermer : le HTML dit la structure et le sens, le navigateur construit la page à partir des balises. Un document, c'est un type, puis `<head>` pour les métadonnées et `<body>` pour le contenu. On préfère les balises qui nomment les zones. Liens, images avec `alt`, listes, tableaux et formulaires sont le vocabulaire de base. Le HTML ne remplace ni le CSS ni le JavaScript.
 
 ## Pour s'entraîner / Suite
 

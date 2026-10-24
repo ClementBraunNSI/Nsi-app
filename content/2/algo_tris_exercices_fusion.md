@@ -7,12 +7,13 @@ icon: "\U0001F500"
 badgeId: premiere_fiche_exercices_tri_fusion
 prerequisites:
   - python_csv_exercices
+audience: public
 ---
 
 
 <ExerciseTabs courseId="tri-fusion" courseTitle="Tri et Fusion de Données">
 
-  <ExerciseSection id="tri-tables" label="Tri de Tables">
+  <ExerciseSection id="tri-tables" label="Tri de Tables" type="python">
     <Enonce>
     ### Tri de données
     
@@ -81,7 +82,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fusion-tables" label="Fusion de Tables">
+  <ExerciseSection id="fusion-tables" label="Fusion de Tables" type="python">
     <Enonce>
     ### Fusion de données (Jointure)
     
@@ -137,7 +138,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
   
-  <ExerciseSection id="algo-fusion" label="Algo - Fusion">
+  <ExerciseSection id="algo-fusion" label="Algo - Fusion" type="python">
     <Enonce>
     ### Algorithme de Fusion (Listes triées)
     

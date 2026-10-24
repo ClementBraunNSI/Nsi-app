@@ -5,11 +5,12 @@ badgeId: bts_sql_blockchain
 meta: 'Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer'
 prerequisites:
   - tp_injections_web
+audience: public
 ---
 
 <ExerciseTabs courseId="bts_sql_blockchain" courseTitle="TP Blockchain">
 
-  <ExerciseSection id="tp-blockchain-hashing" label="Partie 1 - Hachage">
+  <ExerciseSection id="tp-blockchain-hashing" label="Partie 1 - Hachage" type="autre">
     <Enonce>
     ## Objectifs Pédagogiques
     1.  **Cybersécurité :**
@@ -75,7 +76,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-blockchain-block" label="Partie 2 - Le Bloc">
+  <ExerciseSection id="tp-blockchain-block" label="Partie 2 - Le Bloc" type="autre">
     <Enonce>
     ## Partie 2 : La Brique Élémentaire (Classe `Block`)
 
@@ -110,7 +111,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-blockchain-chain" label="Partie 3 - La Chaîne">
+  <ExerciseSection id="tp-blockchain-chain" label="Partie 3 - La Chaîne" type="autre">
     <Enonce>
     ## Partie 3 : La Chaîne (Classe `Blockchain`)
 
@@ -140,7 +141,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-blockchain-security" label="Partie 4 - Sécurité">
+  <ExerciseSection id="tp-blockchain-security" label="Partie 4 - Sécurité" type="autre">
     <Enonce>
     ## Partie 4 : Sécurité et Attaque (Le cœur du sujet)
 
@@ -174,7 +175,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-blockchain-mining" label="Partie 5 - Minage">
+  <ExerciseSection id="tp-blockchain-mining" label="Partie 5 - Minage" type="autre">
     <Enonce>
     ## Partie 5 : Proof of Work (Le Minage)
 

@@ -9,6 +9,7 @@ icon: "\U0001F3A8"
 badgeId: premiere_galerie_d_art
 prerequisites:
   - web_html
+audience: public
 ---
 
 ## Objectifs

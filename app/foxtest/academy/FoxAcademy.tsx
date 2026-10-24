@@ -357,8 +357,8 @@ export default function FoxAcademy() {
             <Sparkles size={20} />
           </div>
           <div className="min-w-0">
-            <p className={styles.eyebrow}>L'académie des renards · {chapter.label}</p>
-            <h1 className={styles.title}>{level.id}. {level.title}</h1>
+            <h1 className={styles.eyebrow}>Le renard dans le poulailler · {chapter.label}</h1>
+            <p className={styles.title}>{level.id}. {level.title}</p>
           </div>
         </div>
         <div className={styles.levelNav}>

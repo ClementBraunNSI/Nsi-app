@@ -1,5 +1,28 @@
 import React from 'react';
+import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Mail, GraduationCap, Code2, Heart, Trees, MapPin, Globe } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Clément Braun, enseignant NSI',
+  description:
+    'Clément Braun, enseignant certifié de NSI, propose des cours et des exercices de Python et de SQL pour la SNT, la Première et la Terminale.',
+  alternates: {
+    canonical: '/a-propos',
+  },
+};
+
+const ABOUT_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  url: 'https://www.clementbraun.info/a-propos',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Clément Braun',
+    jobTitle: 'Enseignant de NSI',
+    url: 'https://www.clementbraun.info',
+  },
+};
 
 const CONTRIBUTORS = [
   { name: "Clément Braun", role: "Auteur principal", avatar: "🦊", desc: "Enseignant NSI et concepteur de la plateforme." },
@@ -17,28 +40,25 @@ type TimelineEstablishment = {
 type TimelineStep = {
   year: string;
   icon: string;
+  subject: string;
+  current?: boolean;
   establishments: TimelineEstablishment[];
 };
 
 const TIMELINE: TimelineStep[] = [
   {
-    year: "2021 - 2022",
-    icon: "🎒",
-    establishments: [{ place: "Lycée Pasteur", city: "Hénin-Beaumont (62)" }],
-  },
-  {
-    year: "2022 - 2024",
-    icon: "🏛️",
-    establishments: [{ place: "Lycée Raymond Queneau", city: "Villeneuve-d'Ascq (59)" }],
-  },
-  {
-    year: "2024 - 2025",
-    icon: "⛵",
-    establishments: [{ place: "Lycée Charles de Gaulle", city: "Vannes (56)" }],
+    year: "2026 - 2027",
+    icon: "🧭",
+    subject: "SNT / NSI",
+    current: true,
+    establishments: [
+      { place: "Lycée Yves Kernanec", city: "Marcq-en-Baroeul (59)" },
+    ],
   },
   {
     year: "2025 - 2026",
     icon: "🏫",
+    subject: "SNT / BTS SIO",
     establishments: [
       { place: "Lycée Paul Duez", city: "Cambrai (59)" },
       { place: "Lycée Henri Wallon", city: "Valenciennes (59)" },
@@ -46,17 +66,32 @@ const TIMELINE: TimelineStep[] = [
     ],
   },
   {
-    year: "2026 - 2027",
-    icon: "🧭",
-    establishments: [
-      { place: "Lycée Yves Kernanec", city: "Marcq-en-Baroeul (59)" },
-    ],
+    year: "2024 - 2025",
+    icon: "⛵",
+    subject: "SNT / NSI",
+    establishments: [{ place: "Lycée Charles de Gaulle", city: "Vannes (56)" }, {place : "Lycée Benjamin Franklin", city: "Auray (56)"}],
+  },
+  {
+    year: "2022 - 2024",
+    icon: "🏛️",
+    subject: "SNT / NSI",
+    establishments: [{ place: "Lycée Raymond Queneau", city: "Villeneuve-d'Ascq (59)" }],
+  },
+  {
+    year: "2021 - 2022",
+    icon: "🎒",
+    subject: "SNT / NSI",
+    establishments: [{ place: "Lycée Louis Pasteur", city: "Hénin-Beaumont (62)" }],
   },
 ];
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)] font-sans selection:bg-[var(--accent-soft)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ABOUT_JSON_LD) }}
+      />
       <button
         type="button"
         data-fox-easter-id="apropos"
@@ -68,25 +103,51 @@ export default function AboutPage() {
       <header className="max-w-7xl mx-auto px-8 pt-24 pb-16">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--accent-soft)] text-[var(--accent)] rounded-full text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--accent-soft)] text-[var(--accent)] rounded-full text-xs font-semibold mb-3">
               <GraduationCap size={14} fill="currentColor" /> Enseignant certifié · TZR
             </div>
+            <p className="mb-6 text-sm font-semibold text-[var(--fg)]">Certifié de NSI</p>
             <h1 className="text-5xl md:text-7xl font-semibold text-[var(--fg)] mb-8 tracking-tight">
               Clément <span className="text-[var(--accent)]">Braun</span>
+              <span className="mt-3 block text-2xl font-medium tracking-normal text-[var(--muted)] md:text-3xl">
+                Enseignant de NSI
+              </span>
             </h1>
-            <p className="text-xl text-[var(--muted)] leading-relaxed mb-8">
-              Enseignant certifié de NSI en <span className="font-semibold text-[var(--fg)]">TZR</span>, mon parcours m'a mené dans des lycées du <span className="font-semibold text-[var(--fg)]">Nord</span> et du <span className="font-semibold text-[var(--fg)]">Pas-de-Calais</span> jusqu'aux côtes du <span className="font-semibold text-[var(--fg)]">Morbihan</span>. Selon les années, j'interviens dans un ou plusieurs établissements.
+            <p className="mb-8 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] px-5 py-4 text-base leading-relaxed text-[var(--muted)]">
+              Bonjour à tous,
+              Je suis Clément BRAUN, <strong className="font-semibold text-[var(--accent)]">enseignant certifié de sciences informatiques</strong> dans l'académie de Lille, passioné d'informatique, de programmation et des nouvelles technologies. <br/>
+              Certains se demanderont pourquoi j'ai choisi le renard comme mascotte? C'est simple, c'est un animal intelligent, malin et très curieux. Mais c'est aussi un animal qui est attaché à son groupe lorsque les ressources sont abondantes.
+              Ce site contient toutes les ressources necessaires à la réussite des élèves en <strong className="font-semibold text-[var(--accent)]">seconde, première et terminale</strong> et plus encore. 
+              Choisir le renard a dont été une évidence, les ressources étant présentes en nombre, tous peuvent donc progresser et réussir en mettant à l'honneur l'entraide et la solidarité.
             </p>
-            <div className="flex flex-wrap justify-center md:justify-start gap-4">
-              <span className="flex items-center gap-2 px-4 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-sm font-medium text-[var(--muted)]">
-                <MapPin size={16} className="text-[var(--accent)]" /> Pas-de-Calais (62)
-              </span>
-              <span className="flex items-center gap-2 px-4 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-sm font-medium text-[var(--muted)]">
-                <MapPin size={16} className="text-[var(--accent)]" /> Nord (59)
-              </span>
-              <span className="flex items-center gap-2 px-4 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-sm font-medium text-[var(--muted)]">
-                <MapPin size={16} className="text-[var(--accent)]" /> Morbihan (56)
-              </span>
+            <div className="mb-8 space-y-2 text-lg leading-relaxed text-[var(--muted)]">
+              <p>La <strong className="font-semibold text-[var(--accent)]">SNT</strong> s'adresse à tous les élèves de <strong className="font-semibold text-[var(--accent)]">seconde</strong>.</p>
+              <p>La <strong className="font-semibold text-[var(--accent)]">NSI</strong> est la spécialité de <strong className="font-semibold text-[var(--accent)]">Première</strong> et de <strong className="font-semibold text-[var(--accent)]">Terminale</strong>.</p>
+              <p>Ce site est d'abord destiné à <strong className="font-semibold text-[var(--accent)]">mes classes</strong>.</p>
+            </div>
+            <nav aria-label="Niveaux" className="flex flex-wrap justify-center md:justify-start gap-4">
+              <Link href="/cours/snt" className="flex items-center gap-2 px-4 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-sm font-medium text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">
+                SNT
+              </Link>
+              <Link href="/cours/1nsi" className="flex items-center gap-2 px-4 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-sm font-medium text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">
+                Première NSI
+              </Link>
+              <Link href="/cours/tnsi" className="flex items-center gap-2 px-4 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-sm font-medium text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">
+                Terminale NSI
+              </Link>
+            </nav>
+            <div className="mt-10">
+              <p className="text-sm font-semibold text-[var(--fg)]">Mail professionnel</p>
+              <p className="mt-2 text-base leading-relaxed text-[var(--muted)]">
+                Un élève de mes classes, un parent ou un collègue peut m'écrire.
+              </p>
+              <p className="mt-2 text-base font-medium text-[var(--fg)]">clementbraun@ac-lille.fr</p>
+              <a
+                href="mailto:clementbraun@ac-lille.fr"
+                className="mt-6 inline-flex items-center gap-3 px-10 py-5 bg-[var(--accent)] text-[var(--accent-fg)] rounded-[var(--radius)] font-semibold hover:opacity-90 transition-opacity"
+              >
+                <Mail size={24} /> Me contacter par mail
+              </a>
             </div>
           </div>
           <div className="w-64 h-64 bg-[var(--accent)] rounded-[var(--radius)] flex items-center justify-center text-[8rem]">
@@ -126,7 +187,7 @@ export default function AboutPage() {
       <section className="max-w-7xl mx-auto px-8 py-24">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-semibold text-[var(--fg)] mb-4 tracking-tight">L'itinéraire du renard</h2>
-          <p className="text-[var(--muted)]">Un parcours entre terrils, métropole et océan — une carte peut regrouper plusieurs lycées sur la même période.</p>
+          <p className="text-[var(--muted)]">Parcours d'enseignant de NSI, entre terrils, métropole et océan.</p>
         </div>
 
         <div className="relative">
@@ -154,7 +215,15 @@ export default function AboutPage() {
                 {/* Bloc Contenu */}
                 <div className="flex-1 w-full md:w-auto">
                   <div className={`relative p-8 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                    <span className="text-[var(--accent)] font-semibold text-sm">{step.year}</span>
+                    <div className={`flex flex-wrap items-center gap-2 ${i % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
+                      <span className="text-[var(--accent)] font-semibold text-sm">{step.year}</span>
+                      {step.current ? (
+                        <span className="inline-flex items-center rounded-full bg-[var(--accent-soft)] px-2.5 py-0.5 text-xs font-semibold text-[var(--accent)]">
+                          en poste
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-2 text-sm font-medium text-[var(--fg)]">{step.subject}</p>
                     {step.establishments.length > 1 ? (
                       <p className={`mt-2 text-xs font-semibold text-[var(--subtle)] ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                         {step.establishments.length} établissements
@@ -198,6 +267,15 @@ export default function AboutPage() {
             <p className="text-[var(--muted)] font-medium max-w-2xl italic">
               "Seul on va plus vite, ensemble on va plus loin." Ce projet mutualise les travaux de collègues passionnés rencontrés au fil de mon parcours.
             </p>
+            <p className="mt-4 max-w-2xl text-[var(--muted)] leading-relaxed">
+              À côté de ce projet, d’autres enseignants de SNT et de NSI publient leurs propres cours.
+            </p>
+            <Link
+              href="/autres-cours-nsi"
+              className="mt-3 inline-block font-semibold text-[var(--accent)] hover:underline"
+            >
+              Voir les autres cours NSI
+            </Link>
           </div>
 
           <div className="flex flex-wrap justify-center gap-6">
@@ -215,19 +293,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="max-w-4xl mx-auto px-8 py-32 text-center">
-        <h2 className="text-3xl font-semibold text-[var(--fg)] mb-6 tracking-tight">Restons en contact</h2>
-        <p className="text-[var(--muted)] mb-10 text-lg">
-          Que vous soyez élève, parent ou enseignant, n'hésitez pas à me contacter pour échanger sur le projet.
-        </p>
-        <a 
-          href="mailto:clementbraun@supwallon.fr"
-          className="inline-flex items-center gap-3 px-10 py-5 bg-[var(--accent)] text-[var(--accent-fg)] rounded-[var(--radius)] font-semibold hover:opacity-90 transition-opacity"
-        >
-          <Mail size={24} /> Me contacter par mail
-        </a>
-      </section>
     </div>
   );
 }

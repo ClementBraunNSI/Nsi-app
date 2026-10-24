@@ -1,68 +1,95 @@
-type AccessInput = {
-  access?: unknown;
-  allowedStudents?: unknown;
+/**
+ * Audience écrite sur chaque cours.
+ *
+ * - `audience: public`
+ * - `audience: { class: "1NSI1" }` — correspond à `profiles.classe`
+ * - `audience: { accounts: ["<user id ou email>"] }`
+ *
+ * Le dossier, le nom affiché et la partie locale de l'e-mail ne donnent aucun accès.
+ */
+
+export type CourseAudience =
+  | { kind: "public" }
+  | { kind: "class"; classe: string }
+  | { kind: "accounts"; accounts: string[] };
+
+export type CourseViewer = {
+  isElevated: boolean;
+  isAuthenticated: boolean;
+  userId?: string | null;
+  userEmail?: string | null;
+  hasPrivateLessons?: boolean;
+  classe?: string | null;
 };
 
-const normalizeName = (value: string) =>
-  value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+const text = (value: unknown) => String(value ?? "").trim();
+const token = (value: unknown) => text(value).toLowerCase();
 
 export function isElevatedUser(role?: string | null) {
   const normalized = (role || "").toLowerCase().trim();
   return normalized === "admin" || normalized === "enseignant";
 }
 
-export function isRestrictedCourse(course: AccessInput) {
-  if (String(course.access || "").toLowerCase() === "private") return true;
-  return Array.isArray(course.allowedStudents) && course.allowedStudents.length > 0;
+function asRecord(value: unknown): Record<string, unknown> | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  return value as Record<string, unknown>;
 }
 
-/** Cours sous content/particuliers/<eleve>/… : réservés aux cours particuliers. */
-export function isPrivateLessonPath(levelFolder: string, slug: string) {
-  if (levelFolder.trim() !== "particuliers") return false;
-  return slug.split("/").filter(Boolean).length >= 2;
+function accountList(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((entry) => text(entry)).filter(Boolean);
 }
 
-export function courseVisibility(data: AccessInput, levelFolder: string, slug: string): AccessInput {
-  const privateLesson = isPrivateLessonPath(levelFolder, slug);
-  const markedPrivate = String(data.access || "").toLowerCase() === "private";
-  return {
-    access: privateLesson || markedPrivate ? "private" : data.access,
-    allowedStudents: data.allowedStudents,
-  };
-}
-
-export function canAccessCourse(
-  course: AccessInput,
-  opts: {
-    isElevated: boolean;
-    isAuthenticated: boolean;
-    userFullName?: string | null;
-    hasPrivateLessons?: boolean;
+/**
+ * Lit `audience: public`, `{ class }`, ou `{ accounts }`.
+ * Toute autre forme, y compris un champ vide, n'est visible que des comptes élevés.
+ */
+export function parseAudience(data: { audience?: unknown } | null | undefined): CourseAudience {
+  const audience = data?.audience;
+  if (typeof audience === "string" && audience.trim().toLowerCase() === "public") {
+    return { kind: "public" };
   }
-) {
-  if (opts.isElevated) return true;
-  if (!isRestrictedCourse(course)) return true;
-
-  if (!opts.isAuthenticated) return false;
-
-  // Fiche privée : un homonyme de classe (même prénom, sans cours particuliers) n'y entre pas.
-  const markedPrivate = String(course.access || "").toLowerCase() === "private";
-  if (markedPrivate && !opts.hasPrivateLessons) return false;
-
-  const named = Array.isArray(course.allowedStudents) && course.allowedStudents.length > 0;
-  if (!named) {
-    return Boolean(opts.hasPrivateLessons);
+  const record = asRecord(audience);
+  if (record) {
+    const classe = text(record.class);
+    if (classe) return { kind: "class", classe };
+    if ("accounts" in record) return { kind: "accounts", accounts: accountList(record.accounts) };
   }
-  if (!opts.userFullName) return false;
+  return { kind: "accounts", accounts: [] };
+}
 
-  const current = normalizeName(opts.userFullName);
-  const names = Array.isArray(course.allowedStudents) ? course.allowedStudents : [];
-  return names
-    .map((name) => String(name))
-    .some((name) => normalizeName(name) === current);
+export function isPublicCourse(data: { audience?: unknown } | null | undefined) {
+  return parseAudience(data).kind === "public";
+}
+
+export function isRestrictedCourse(data: { audience?: unknown } | null | undefined) {
+  return !isPublicCourse(data);
+}
+
+function accountListed(audience: CourseAudience, viewer: CourseViewer) {
+  if (audience.kind !== "accounts" || !viewer.isAuthenticated) return false;
+  const id = token(viewer.userId);
+  const email = token(viewer.userEmail);
+  return audience.accounts.some((entry) => {
+    const key = token(entry);
+    if (!key) return false;
+    return (Boolean(id) && key === id) || (Boolean(email) && key === email);
+  });
+}
+
+export function canAccessCourse(data: { audience?: unknown } | null | undefined, viewer: CourseViewer) {
+  if (viewer.isElevated) return true;
+  const audience = parseAudience(data);
+
+  if (viewer.hasPrivateLessons) {
+    return accountListed(audience, viewer);
+  }
+
+  if (audience.kind === "public") return true;
+  if (!viewer.isAuthenticated) return false;
+  if (audience.kind === "class") {
+    const classe = text(viewer.classe);
+    return Boolean(classe) && classe === audience.classe;
+  }
+  return accountListed(audience, viewer);
 }

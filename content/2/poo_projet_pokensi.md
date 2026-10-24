@@ -7,6 +7,7 @@ icon: "\U0001F47E"
 badgeId: premiere_pokensi
 prerequisites:
   - projet_jeux_video
+audience: public
 ---
 
 # 👾 Projet - PokéNSI (Partie 1)
@@ -34,13 +35,13 @@ Le Pokédex est une base de données qui contient tous les Pokémon du jeu. Chaq
 - `xp` (int) ⭐
 
 <ExerciseTabs courseId="proj_poke_dex" courseTitle="Création du Pokédex">
-  <ExerciseSection id="poke-dex-1" label="Initialisation">
+  <ExerciseSection id="poke-dex-1" label="Initialisation" type="python">
     <Enonce>
       Créez une liste vide `pokedex` qui contiendra tous les dictionnaires de Pokémon.
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="poke-dex-2" label="Import CSV">
+  <ExerciseSection id="poke-dex-2" label="Import CSV" type="lecture">
     <Enonce>
       On dispose de la fonction `remplir_pokedex` suivante. Elle permet de récupérer toutes les informations des pokemons pour en faire une liste de dictionnaires.
 
@@ -74,7 +75,7 @@ Le Pokédex est une base de données qui contient tous les Pokémon du jeu. Chaq
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="poke-dex-3" label="Recherche">
+  <ExerciseSection id="poke-dex-3" label="Recherche" type="python">
     <Enonce>
       Créez une fonction `recuperer_pokemon(nom)` qui cherche un Pokémon par son nom dans le `pokedex` et renvoie son dictionnaire.
       Si le Pokémon n'est pas trouvé, renvoyez `None`.
@@ -91,7 +92,7 @@ Le Pokédex est une base de données qui contient tous les Pokémon du jeu. Chaq
 L'ensemble des attaques est disponible dans `attaques.csv`.
 
 <ExerciseTabs courseId="proj_poke_fight" courseTitle="Système de Combat">
-  <ExerciseSection id="poke-fight-1" label="Charger les attaques">
+  <ExerciseSection id="poke-fight-1" label="Charger les attaques" type="python">
     <Enonce>
       Créez une fonction `charger_attaques()` similaire à `remplir_pokedex` qui lit `attaques.csv` et renvoie un dictionnaire où :
       *   Clé = Nom de l'attaque
@@ -108,7 +109,7 @@ L'ensemble des attaques est disponible dans `attaques.csv`.
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="poke-fight-2" label="Formule de Dégâts">
+  <ExerciseSection id="poke-fight-2" label="Formule de Dégâts" type="python">
     <Enonce>
       Lors d'un combat, les dégâts sont calculés ainsi :
 
@@ -126,7 +127,7 @@ L'ensemble des attaques est disponible dans `attaques.csv`.
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="poke-fight-3" label="Attaquer !">
+  <ExerciseSection id="poke-fight-3" label="Attaquer !" type="python">
     <Enonce>
       Créez la fonction `attaquer(attaquant, defenseur, nom_attaque, dico_attaques)` qui :
       1. Calcule les dégâts.
@@ -141,7 +142,7 @@ L'ensemble des attaques est disponible dans `attaques.csv`.
 ## 3. Simulation ⚡
 
 <ExerciseTabs courseId="proj_poke_sim" courseTitle="Simulation">
-  <ExerciseSection id="poke-sim-1" label="Duel">
+  <ExerciseSection id="poke-sim-1" label="Duel" type="python">
     <Enonce>
       Écrivez un script principal qui :
       1. Charge le Pokédex et les Attaques.

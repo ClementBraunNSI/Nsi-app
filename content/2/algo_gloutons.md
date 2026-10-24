@@ -9,43 +9,21 @@ icon: "\U0001F36A"
 badgeId: premiere_introduction_gloutons
 prerequisites:
   - activite_algo_interactive
+audience: public
 ---
 
-## Objectifs
+# Algorithmes gloutons
 
-- Comprendre le principe « meilleur choix local à chaque étape »
-- Appliquer une stratégie gloutonne au rendu de monnaie, au sac à dos et à la planification de tâches
-- Savoir qu'un glouton n'est **pas toujours** optimal — et reconnaître un contre-exemple
+Un algorithme **glouton** prend, à chaque étape, le choix qui paraît le meilleur **maintenant**, et il ne revient pas dessus. Il est simple à écrire et souvent rapide. Il ne garantit pas la meilleure solution globale. Un alpiniste qui grimpe toujours la pente la plus raide devant lui atteint un sommet. Rien ne dit que c'est le plus haut de la chaîne : un col plus bas, un peu à côté, menait plus haut.
 
-## Idée clé
-
-Un algorithme **glouton** prend, à chaque étape, le choix qui paraît le meilleur **maintenant**, sans revenir en arrière. Simple et rapide… mais ce n'est pas toujours la meilleure solution globale.
+Le travail de ce chapitre est double. Savoir appliquer le geste. Savoir reconnaître un **contre-exemple**, c'est-à-dire un cas où ce geste rate l'optimum.
 
 !!! quote "Analogie"
     Un alpiniste qui grimpe toujours la pente la plus raide peut atteindre un pic local, pas forcément le plus haut sommet de la chaîne.
 
-## Rendu de monnaie
+## Rendre la monnaie
 
-**Problème :** rendre une somme avec le **minimum** de pièces (ou billets).
-
-**Stratégie gloutonne :**
-
-1. Prendre la plus grande pièce ≤ montant restant
-2. L'ajouter au rendu, diminuer le montant
-3. Recommencer jusqu'à zéro
-
-Avec le système euro (`1, 2, 5, 10, 20, 50…`), le glouton est **toujours** optimal : on dit que le système est **canonique**.
-
-### Contre-exemple (système non canonique)
-
-Pièces `{1, 3, 4}`, montant **6** :
-
-| Stratégie | Pièces | Nombre |
-| :--- | :--- | :---: |
-| Glouton | 4 + 1 + 1 | **3** |
-| Optimal | 3 + 3 | **2** |
-
-Le glouton prend d'abord 4 (le « meilleur » local) et rate la solution à 2 pièces.
+On veut rendre une somme avec le **moins de pièces** possible. La stratégie gloutonne est : tant qu'il reste quelque chose à rendre, prendre la plus grande pièce qui ne dépasse pas le reste, la poser, diminuer le montant.
 
 ```python
 def rendu_monnaie(montant, systeme):
@@ -62,17 +40,24 @@ print(rendu_monnaie(49, systeme_euro))
 # [20, 20, 5, 2, 2]
 ```
 
-## Sac à dos
+Le système est parcouru du plus grand au plus petit. Pour 49 euros, 50 est trop grand. On pose deux billets de 20, il reste 9. Une pièce de 5, il reste 4. Deux pièces de 2. Quatre pièces et un billet, et c'est optimal. Avec les pièces et billets de l'euro, ce glouton est **toujours** optimal. On dit que le système est **canonique**.
 
-**Problème :** capacité max (ex. 15 kg), objets avec **poids** et **valeur**. Maximiser la valeur sans dépasser le poids.
+Ce n'est pas vrai de tous les systèmes. Avec les pièces `{1, 3, 4}` et un montant de **6** :
 
-Plusieurs critères gloutons possibles :
+| Stratégie | Pièces | Nombre |
+| :--- | :--- | :---: |
+| Glouton | 4 + 1 + 1 | **3** |
+| Optimal | 3 + 3 | **2** |
 
-1. Plus précieux d'abord (risque : objets lourds)
-2. Plus légers d'abord (risque : faible valeur)
-3. Meilleur rapport valeur / poids (souvent le plus raisonnable)
+Le glouton prend 4 parce que c'est la plus grosse pièce qui tient. Il lui reste 2, qu'il ne peut faire qu'avec deux pièces de 1. Deux pièces de 3 auraient suffi. Le choix local a fermé la porte au meilleur total.
 
-### Contre-exemple
+## Remplir un sac
+
+On dispose d'une capacité, par exemple 15 kg, et d'objets qui ont un poids et une valeur. On veut la plus grande valeur sans dépasser le poids. Plusieurs « meilleurs choix » sont possibles, et ils ne donnent pas le même sac.
+
+1. Le plus précieux d'abord. Risque : un objet lourd bloque la capacité.
+2. Le plus léger d'abord. Risque : on remplit avec ce qui vaut peu.
+3. Le meilleur rapport valeur / poids. C'est souvent le plus raisonnable, et ce n'est toujours pas une garantie.
 
 Capacité : 15 kg.
 
@@ -83,22 +68,13 @@ Capacité : 15 kg.
 | C | 4 | 40 | 10 |
 | D | 4 | 40 | 10 |
 
-- **Glouton (valeur max)** : prend A → 100 €, reste 3 kg, plus rien ne rentre → **100 €**
-- **Optimal** : B + C + D → **120 €**
+Le glouton qui prend d'abord la plus grande valeur choisit A, 100 euros, et il reste 3 kg. Plus rien ne rentre. Total : **100 €**. B, C et D pèsent 12 kg ensemble et valent **120 €**. Le glouton a donné une réponse rapide, pas la meilleure. Le rapport valeur / poids, ici, aurait pris B, C et D d'abord, et aurait trouvé l'optimum. Sur un autre sac, ce rapport-là rate aussi. On le verra en exercice. Aucun de ces trois critères n'est une preuve.
 
-Le glouton donne une approximation rapide, pas une garantie d'optimum.
+## Choisir des tâches qui ne se chevauchent pas
 
-## Planification de tâches
+Des tâches ont une heure de début et une heure de fin. On ne peut en faire qu'une à la fois. On veut le plus grand **nombre** de tâches compatibles, pas la plus longue durée.
 
-**Problème :** tâches avec début et fin, une seule à la fois. Maximiser le **nombre** de tâches compatibles.
-
-**Stratégie efficace :** toujours choisir la tâche qui **se termine le plus tôt** parmi celles encore possibles.
-
-1. Trier les tâches par **heure de fin croissante**
-2. Prendre la première
-3. Ajouter chaque suivante si elle commence après la fin de la dernière choisie
-
-Pour ce critère précis, le glouton est optimal. Choisir d'abord la tâche la plus longue, ou celle qui commence le plus tôt, peut au contraire être sous-optimal.
+La stratégie qui marche : trier par **heure de fin croissante**, prendre la première, puis prendre chaque suivante qui commence après la fin de la dernière choisie. Pour ce critère, le glouton est optimal. Choisir d'abord la tâche la plus longue, ou celle qui commence le plus tôt, peut laisser un trou et rater deux tâches courtes qui tenaient à la place.
 
 ```python
 def planification_taches(taches):
@@ -116,18 +92,9 @@ def planification_taches(taches):
     return selection
 ```
 
-## Piège fréquent
+`x[2]` est la fin, le troisième élément du triplet. `sorted` ne modifie pas la liste d'origine. `debut >= derniere_fin` autorise une tâche qui commence à l'instant où la précédente finit. On suppose ici que les horaires sont des nombres, et que 0 est avant toutes les fins.
 
-Croire que « glouton » = « toujours optimal ». C'est vrai pour certains problèmes (euro, tâches triées par fin), **faux** pour d'autres (monnaie non canonique, sac à dos). Toujours se demander : *existe-t-il un contre-exemple ?*
-
-## À retenir
-
-- Glouton = meilleur choix **local** à chaque étape, sans regret
-- Avantage : simple et souvent rapide
-- Inconvénient : pas toujours la solution globale optimale
-- Les **contre-exemples** (monnaie `{1,3,4}`, sac à dos A vs BCD) sont essentiels
-- Pour les tâches, trier par **fin croissante** est la bonne heuristique
-- Un système monétaire **canonique** rend le glouton optimal
+Pour fermer : un glouton choisit le meilleur local et ne regrette pas. C'est simple. Ce n'est optimal que pour certains problèmes : la monnaie canonique de l'euro, les tâches triées par fin. Ailleurs, un contre-exemple suffit à le dire. Ceux à connaître sont la monnaie `{1, 3, 4}` pour un montant de 6, et le sac où A vaut 100 mais où B, C et D ensemble valent plus. La question à se poser à chaque nouvel énoncé : existe-t-il un cas où ce choix immédiat rate mieux ?
 
 ## Pour s'entraîner
 

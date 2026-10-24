@@ -6,10 +6,12 @@ chapter: Programmation en C
 icon: "\U0001F4CA"
 prerequisites:
   - exercices-fonctions
+audience:
+  accounts: []
 ---
 
 <ExerciseTabs courseId="c-tableaux-exos" courseTitle="C - Tableaux - Exercices">
-  <ExerciseSection id="exo-1-1" label="1.1 - Déclaration et initialisation">
+  <ExerciseSection id="exo-1-1" label="1.1 - Déclaration et initialisation" type="autre">
     <Enonce>
     ### Exercice 1.1 : Créer et afficher un tableau
     **Créez un programme qui :**
@@ -45,7 +47,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-1-2" label="1.2 - Recherche du maximum">
+  <ExerciseSection id="exo-1-2" label="1.2 - Recherche du maximum" type="autre">
     <Enonce>
     ### Exercice 1.2 : Trouver le maximum
     **Créez un programme qui :**
@@ -84,7 +86,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-1-3" label="1.3 - Inversion d'un tableau">
+  <ExerciseSection id="exo-1-3" label="1.3 - Inversion d'un tableau" type="autre">
     <Enonce>
     ### Exercice 1.3 : Inverser un tableau
     **Créez un programme qui :**

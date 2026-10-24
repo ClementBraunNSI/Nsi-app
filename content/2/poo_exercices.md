@@ -9,6 +9,7 @@ icon: "\U0001F3D7️"
 badgeId: premiere_exercices_poo
 prerequisites:
   - poo_introduction
+audience: public
 ---
 
 

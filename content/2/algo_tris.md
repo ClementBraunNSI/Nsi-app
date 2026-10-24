@@ -8,6 +8,7 @@ badgeId: premiere_tris
 meta: 'Durée : 2 heures · Objectif : Implémenter les algorithmes classiques'
 prerequisites:
   - algo_dichotomie
+audience: public
 ---
 
 ## Objectifs
@@ -23,7 +24,7 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
 
 <ExerciseTabs courseId="premiere_tris" courseTitle="TP Algorithmes de Tri">
 
-  <ExerciseSection id="tri-selection" label="Tri par Sélection">
+  <ExerciseSection id="tri-selection" label="Tri par Sélection" type="python">
     <Enonce>
     ## Le Tri par Sélection
 
@@ -115,7 +116,7 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="tri-insertion" label="Tri par Insertion">
+  <ExerciseSection id="tri-insertion" label="Tri par Insertion" type="python">
     <Enonce>
     ## Le Tri par Insertion
 
@@ -206,7 +207,7 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="tri-denombrement" label="Bonus : Dénombrement">
+  <ExerciseSection id="tri-denombrement" label="Bonus : Dénombrement" type="python">
     <Enonce>
     ## Pour aller plus loin : Le Tri par Dénombrement
 
@@ -250,7 +251,7 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="tri-bonus" label="Bonus : Visualisation">
+  <ExerciseSection id="tri-bonus" label="Bonus : Visualisation" type="lecture">
     <Enonce>
     ## Bonus : Visualisation et Comparaison
     

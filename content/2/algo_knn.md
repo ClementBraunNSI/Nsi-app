@@ -9,6 +9,7 @@ icon: "\U0001F3AF"
 badgeId: premiere_tp_knn
 prerequisites:
   - algo_tris
+audience: public
 ---
 
 

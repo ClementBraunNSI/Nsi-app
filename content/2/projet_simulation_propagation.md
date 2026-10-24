@@ -7,59 +7,93 @@ icon: "\U0001F9A0"
 badgeId: premiere_projet_virus
 prerequisites:
   - projet_systeme_vote
+audience: public
 ---
 
 # 🦠 Projet - Simulation de Propagation
 
-Ce projet vise à simuler, tour par tour, comment une information (rumeur) ou un agent pathogène (virus) se propage dans une population fermée. C'est une application concrète des **boucles `while` ou `for`** et de la mise à jour de variables.
+Le but de ce projet est de simuler, jour après jour, la propagation d'une rumeur dans une population fermée.
+Dans ce projet, nous allons écrire une boucle `while` qui s'arrête quand tout le monde est au courant, sans jamais dépasser la population.
 
-## 1. Le Scénario
+Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelles personnes. Les « infectés » du programme sont les personnes qui connaissent la rumeur et la transmettent encore. Dans la version de base, personne n'oublie.
 
-Imaginez une classe de 30 élèves.
-*   Au jour 0, 1 seul élève connaît la rumeur.
-*   Chaque jour, chaque élève qui connaît la rumeur la répète à **2 nouvelles personnes** (taux de propagation `R = 2`).
-*   Combien de jours faut-il pour que toute la classe (ou tout le lycée) soit au courant ?
+## 1. Le modèle 📣
 
-## 2. Cahier des Charges
+*   Au jour 0, une seule personne connaît la rumeur (`infectes = 1`).
+*   Chaque jour, les nouveaux cas valent `infectes * taux`.
+*   Ces nouveaux cas s'ajoutent aux personnes déjà au courant.
+*   Le nombre de personnes au courant ne dépasse jamais la population.
+*   On recommence tant que `infectes` est strictement inférieur à la population.
 
-Le programme doit :
-1.  Demander la taille de la population totale (ex: 1000 personnes).
-2.  Demander le taux de propagation (combien de nouvelles personnes sont contaminées par chaque malade chaque jour).
-3.  Simuler jour après jour l'évolution.
-4.  S'arrêter quand tout le monde est touché.
-
-## 3. Étapes de réalisation
-
-### Étape 1 : Variables d'état
-Il nous faut suivre :
-*   `jours` : le compteur de temps (commence à 0).
-*   `infectes` : le nombre de personnes touchées (commence à 1).
-*   `population_totale` : la limite à ne pas dépasser.
-
-### Étape 2 : La Boucle de Simulation
-Tant que (`while`) le nombre d'`infectes` est inférieur à la `population_totale`, on continue la simulation.
-
-### Étape 3 : Calcul du tour
-Dans la boucle :
-1.  On calcule les nouveaux cas : `nouveaux = infectes * taux`.
-2.  On met à jour le total : `infectes = infectes + nouveaux`.
-3.  ⚠️ **Attention** : On ne peut pas dépasser la population totale ! Il faut utiliser `min()` ou une condition `if` pour plafonner `infectes`.
-4.  On incrémente le jour : `jours = jours + 1`.
-5.  On affiche l'état du jour.
-
-## 4. Pour aller plus loin (Bonus) 🚀
-
-*   **Immunité / Oubli** : Introduire une variable qui fait que chaque jour, un certain nombre de personnes "guérissent" ou "oublient" la rumeur et ne la transmettent plus.
-*   **Visualisation textuelle** : Afficher une barre de progression avec des caractères `#` pour visualiser la proportion de la population atteinte.
-    Exemple : `Jour 3 : [######..............] 30%`
-
----
+`taux` vaut 2 quand chaque personne informée en informe deux nouvelles.
 
 <ExerciseTabs courseId="premiere_projet_virus" courseTitle="Simulation Rumeur">
-  <ExerciseSection id="proj-virus-1" label="À vous de jouer !">
+  <ExerciseSection id="proj-virus-1" label="Le plafond" type="lecture">
     <Enonce>
-    À vous de coder ! Suivez les étapes ci-dessus pour réaliser votre propre simulateur.
-    Essayez de visualiser la propagation jour par jour.
+      Écrivez `nouveaux_cas(infectes, taux)` et `plafonner(infectes, population)`.
+
+      ```python
+      def nouveaux_cas(infectes: float, taux: float) -> float:
+          """Renvoie infectes * taux."""
+
+      def plafonner(infectes: float, population: int) -> float:
+          """Renvoie infectes, ou population si infectes la dépasse."""
+      ```
+
+      `nouveaux_cas(27, 2)` renvoie `54`. `plafonner(81, 30)` renvoie `30`. `plafonner(27, 30)` renvoie `27`. On peut utiliser `min`, ou un `if`.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="proj-virus-2" label="La boucle" type="python">
+    <Enonce>
+      Écrivez `simuler(population, taux)`. Elle affiche chaque jour et renvoie le nombre de jours écoulés.
+
+      - `jours` commence à 0, `infectes` commence à 1.
+      - Affichez `Jour 0 : 1 / ...` avant la boucle.
+      - Tant que `infectes` est inférieur à `population` : calculez les nouveaux cas, ajoutez-les, plafonnez, augmentez `jours` de 1, affichez la ligne du jour.
+      - Après la boucle, affichez `Toute la population est touchée en X jour(s).`
+      - Renvoyez `jours`.
+
+      *Attention : si la population vaut 1 dès le départ, la boucle ne tourne pas et la fonction renvoie 0.*
+
+      Vérifiez les trois exemples par des appels directs, avant d'ajouter `input`.
+
+      Population 30, taux 2. Le jour 4 : 27 × 2 = 54 nouveaux cas, 27 + 54 = 81, ramené à 30. `simuler(30, 2)` renvoie `4`.
+
+      ```text
+      Jour 0 : 1 / 30
+      Jour 1 : 3 / 30
+      Jour 2 : 9 / 30
+      Jour 3 : 27 / 30
+      Jour 4 : 30 / 30
+      Toute la population est touchée en 4 jour(s).
+      ```
+
+      Population 8, taux 1 : la population double à chaque jour (1, 2, 4, 8). `simuler(8, 1)` renvoie `3`.
+
+      Population 1, taux 2 : `simuler(1, 2)` renvoie `0`.
+
+      ```text
+      Jour 0 : 1 / 1
+      Toute la population est touchée en 0 jour(s).
+      ```
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="proj-virus-3" label="La saisie" type="python">
+    <Enonce>
+      Écrivez le programme principal du fichier `rumeur.py`.
+
+      1. Demandez `Population totale : `. `input` renvoie un texte : convertissez-le en `int`. Reposez la question tant que la valeur est inférieure à 1.
+      2. Demandez `Taux de propagation : `. Convertissez-le en `float`. Reposez la question tant que la valeur est inférieure ou égale à 0. Un taux nul figerait la boucle : le programme ne doit pas l'accepter.
+      3. Appelez `simuler` avec ces deux valeurs.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
+
+**Ce qu'on rend.** Un fichier `rumeur.py` : commentaire d'en-tête avec le nom et la classe, les trois fonctions, la saisie protégée par des `while`, et un appel qui lance la simulation avec les valeurs tapées.
+
+## 2. Pour aller plus loin
+
+*   **Oubli.** Chaque jour, après les nouveaux cas, une personne informée oublie la rumeur et ne la transmet plus, tant qu'il reste au moins deux transmetteurs. Elle compte encore dans un total `deja_au_courant` (elle l'a entendue). La boucle s'arrête quand `deja_au_courant` atteint la population. Deux variables suffisent : on ne stocke pas les noms.
+*   **Barre.** Sur 20 caractères, affichez la part déjà touchée, par exemple `Jour 3 : [##################..] 27/30`. Le nombre de `#` vaut `int(20 * infectes / population)`.

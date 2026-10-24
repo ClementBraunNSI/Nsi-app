@@ -5,76 +5,43 @@ level: '4'
 chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
 icon: "\U0001F9ED"
 prerequisites: []
+audience: public
 ---
 
 # Introduction à ITIL
 
-> Gestion des services informatiques et bonnes pratiques
+Un projet se termine le jour de la mise en service. Le serveur, lui, continue. Il faut surveiller, corriger, mettre à jour, répondre aux personnes qui s'en servent. Cette phase n'est plus de la gestion de projet : c'est de la **gestion des services informatiques**. **ITIL** (*Information Technology Infrastructure Library*) est le référentiel de bonnes pratiques le plus utilisé pour l'organiser. La version du cours est **ITIL 4**.
 
-## 🔄 De la gestion de projet à la gestion de services
+ITIL ne dit pas quelle commande taper, ni quel logiciel choisir. Il dit quoi mettre en place pour qu'un service reste fiable : qui est prévenu en cas de panne, comment on enregistre un incident, comment on améliore le service d'une année sur l'autre. La norme **ISO/CEI 20000** certifie un système de gestion des services. Elle s'est appuyée sur ces pratiques, après le standard britannique BS 15000. ITIL est le référentiel. La norme est le cadre qu'on peut faire auditer.
 
-> **Contexte**
->
-> Une fois qu'un **projet informatique est terminé**, le travail ne s'arrête pas. Il faut **maintenir** le service livré, **corriger les pannes**, **faire les mises à jour** et **répondre aux utilisateurs**.
+Trois intentions reviennent. La **continuité** : le service fonctionne, de façon prévisible. La **réaction** : un incident est pris en charge vite, pour que l'impact sur les utilisateurs reste court. L'**amélioration continue** : on ne se contente pas de réparer la même panne, on change le processus qui l'a laissée revenir.
 
-> **🧠 Exemple concret**
->
-> Après le développement d'un site web, il faut ensuite surveiller le serveur, corriger les bugs, gérer les utilisateurs et appliquer les mises à jour de sécurité.
+## Livrer, puis faire vivre
 
-> 💡 Cette phase s'appelle **la gestion des services informatiques**. C'est là qu'intervient **ITIL** : une collection de **bonnes pratiques** utilisées dans le monde entier pour **organiser et améliorer les services IT**.
-
-## 📚 Qu'est-ce qu'ITIL ?
-
-> **Définition**
->
-> **ITIL** (*Information Technology Infrastructure Library*) est un **ensemble de bonnes pratiques (dérivés de la norme BS15000 ou ISO/CEI 20000 pour les systèmes informatiques)** pour la **gestion des services informatiques**.
-
-- **🔄 Continuité des services** : Assurer que les services informatiques fonctionnent de manière continue et fiable.
-- **⚡ Réaction rapide** : Réagir rapidement en cas d'incident pour minimiser l'impact sur les utilisateurs.
-- **📈 Amélioration continue** : Améliorer la qualité de service sur la durée grâce à des processus optimisés.
-
-> 💡 ITIL ne dit pas *comment* faire techniquement, mais *quoi mettre en place* pour qu'un service fonctionne bien au quotidien.
-
-## ⚖️ Gestion de projet vs Gestion de service
-
-> **Complémentarité**
->
-> Ces deux approches **ne s'opposent pas**, elles **se complètent**.
-
-- **🚀 Gestion de projet** : Sert à **concevoir** et **livrer** un nouveau service (ex : créer une application, un site, un outil).
-- **🔧 Gestion de service** : Sert à **faire vivre** ce service sur la durée (maintenance, support, mises à jour…).
-
-> **🧩 Exemple concret**
->
-> Une équipe développe une application mobile pendant 6 mois → c'est la **gestion de projet**.
->
-> Une fois publiée sur le Play Store, il faut corriger les bugs, répondre aux utilisateurs et déployer des mises à jour → c'est la **gestion de service**.
+La gestion de projet et la gestion de service ne se remplacent pas. L'une **conçoit et livre**. L'autre **fait durer**. Une équipe qui développe une application mobile pendant six mois est dans un projet : il y a un début, une fin, un chef de projet, des développeurs. Le jour où l'application est sur le store, le projet est livré. Corriger les bugs, répondre aux avis, déployer les mises à jour de sécurité : c'est le service. Même partage pour un site. Le développer, c'est le projet. Surveiller le serveur et appliquer les correctifs, c'est le service.
 
 | Critère | Gestion de projet | Gestion de service (ITIL) |
 | :--- | :--- | :--- |
-| 🎯 **Objectif** | Créer un nouveau produit ou service | Faire fonctionner et améliorer un service existant |
-| ⏱️ **Durée** | Limitée (le projet a un début et une fin) | Continue (le service reste actif en permanence) |
-| 🧑‍💻 **Acteurs principaux** | Chef de projet, développeurs, testeurs | Techniciens, administrateurs, support utilisateur |
-| 🛠️ **Type d'activité** | Conception, développement, livraison | Maintenance, support, mise à jour, amélioration |
-| 🗓️ **Période d'action** | Avant la mise en service | Après la mise en service |
-| 💡 **Exemple** | Développer un site e-commerce | Corriger les pannes du site, le mettre à jour |
-| ⚙️ **Méthodes associées** | Gantt, PERT, Agile, Scrum | ITIL, supervision, gestion d'incidents |
+| Objectif | Créer un nouveau produit ou service | Faire fonctionner et améliorer un service existant |
+| Durée | Limitée (le projet a un début et une fin) | Continue (le service reste actif) |
+| Acteurs | Chef de projet, développeurs, testeurs | Techniciens, administrateurs, support |
+| Activité | Conception, développement, livraison | Maintenance, support, mise à jour |
+| Période | Avant la mise en service | Après la mise en service |
+| Exemple | Développer un site e-commerce | Corriger ses pannes, le mettre à jour |
+| Méthodes | Gantt, PERT, Agile, Scrum | ITIL, supervision, gestion d'incidents |
 
-> 🧠 **À retenir :** La **gestion de projet** crée le service. **ITIL** fait vivre le service dans le temps.
+Le projet crée le service. ITIL le fait vivre. Un beau livrable sans procédure d'incident redevient une panne dès la première semaine.
 
-## 🏗️ Les quatre dimensions d'ITIL
+## Quatre dimensions
 
-> **Les quatre piliers**
->
-> ITIL considère qu'un bon service repose sur **quatre piliers**. Si l'un d'eux est négligé, le service devient instable.
+ITIL 4 considère qu'un service tient sur **quatre dimensions**. En négliger une suffit à l'arrêter, même si les trois autres sont solides.
 
-1. **🧑‍💼 Organisation & personnes** : Les rôles, compétences et communication au sein de l'équipe.
-   *Ex : Support technique, helpdesk, chef de projet, responsables réseau.*
-2. **💻 Information & technologie** : Les outils, logiciels et infrastructures utilisés.
-   *Ex : Serveurs, bases de données, outils de ticketing (ex : GLPI).*
-3. **🤝 Partenaires & fournisseurs** : Les prestataires et contrats externes.
-   *Ex : Hébergeur, éditeur de logiciel, sous-traitants.*
-4. **🔄 Flux de valeur & processus** : Les méthodes et étapes de travail pour délivrer le service.
-   *Ex : Procédure de gestion des incidents, sauvegardes planifiées.*
+Les **organisations et les personnes** : les rôles, les compétences, la façon de se parler. Le support, le helpdesk, l'administrateur réseau. Un serveur peut être parfait. S'il tombe et que personne ne sait qui a le droit de le redémarrer, le service est déjà arrêté.
 
-> ⚠️ **Exemple :** Si le serveur du lycée tombe (technologie), que personne ne sait le réparer (organisation), et que le contrat d'hébergement a expiré (fournisseur), le service est à l'arrêt. Les quatre dimensions doivent donc être équilibrées.
+L'**information et la technologie** : les serveurs, les bases, les outils. Un logiciel de tickets comme GLPI fait partie de cette dimension. Il ne répare rien tout seul. Il rend visible ce qui est en cours.
+
+Les **partenaires et les fournisseurs** : l'hébergeur, l'éditeur, le sous-traitant, et les contrats qui disent jusqu'où ils s'engagent. Un contrat d'hébergement expiré n'est pas une panne technique. C'est une dimension oubliée, et le site est tout aussi inaccessible.
+
+Les **flux de valeur et les processus** : l'enchaînement du travail. Comment un incident est qualifié, qui le prend, comment les sauvegardes sont planifiées. Sans ce flux, les trois autres dimensions travaillent chacune dans leur coin.
+
+Le serveur du lycée qui tombe illustre le croisement. La technologie a failli. Si personne n'est désigné pour intervenir, l'organisation a failli aussi. Si le contrat d'hébergement est périmé, le fournisseur n'est plus là. Les quatre dimensions se compensent. Elles ne se remplacent pas.

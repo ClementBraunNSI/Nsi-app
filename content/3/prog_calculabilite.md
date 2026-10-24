@@ -8,59 +8,52 @@ icon: "\U0001F6D1"
 badgeId: terminale_calculabilite
 prerequisites:
   - prog_recursivite
+audience: public
 ---
 
-# 🛑 Calculabilité et Décidabilité
+# Calculabilité et décidabilité
 
-L'ordinateur est-il tout puissant ? Peut-il résoudre n'importe quel problème mathématique ou logique ?
-Alan Turing a prouvé en 1936 que la réponse est **NON**.
+On a parfois l'impression qu'un ordinateur assez puissant finira par répondre à n'importe quelle question, pourvu qu'on lui laisse du temps. Alan Turing, en 1936, montre que non. Il existe des problèmes pour lesquels aucun algorithme ne donnera la réponse. Ce n'est pas une question de mémoire ou de vitesse. C'est une limite du calcul lui-même.
 
-## 1. La Machine de Turing
+## Une machine très pauvre, et pourtant suffisante
 
-C'est un modèle théorique d'ordinateur, très simple mais capable de calculer tout ce qui est calculable.
-Elle est composée de :
-*   Un **ruban infini** (mémoire) divisé en cases.
-*   Une **tête de lecture/écriture** qui se déplace sur le ruban.
-*   Un **registre d'état** (mémoire interne).
-*   Une **table de transition** (le programme).
+La **machine de Turing** est un modèle théorique, volontairement simple. Elle a un **ruban** infini, découpé en cases, qui lui sert de mémoire. Une **tête** lit et écrit une case, puis se déplace d'un cran. Un **état** interne retient où elle en est dans son raisonnement. Une **table de transition** dit, pour chaque état et chaque symbole lu, quoi écrire, de quel côté bouger, et dans quel état passer. Cette table est le programme.
 
-Thèse de Church-Turing : **Tout algorithme peut être exécuté par une machine de Turing.**
+La thèse de Church-Turing affirme que tout ce qu'un algorithme peut calculer, une machine de Turing peut le calculer. Votre ordinateur n'est pas « plus puissant » qu'elle au sens de ce qu'il peut finir par obtenir. Il est seulement plus commode, et plus rapide. S'il existe un problème qu'aucune machine de Turing ne résout, aucun langage de programmation ne le résoudra non plus.
 
-## 2. Calculabilité
+## Calculable, décidable
 
-Un problème est **calculable** s'il existe un algorithme (une machine de Turing) qui donne la réponse en un temps fini.
-*   *Exemple calculable* : Trier une liste, trouver le plus court chemin.
+Un problème est **calculable** s'il existe un algorithme, donc une machine de Turing, qui produit la réponse en un temps fini. Trier une liste, trouver un plus court chemin : on connaît des algorithmes qui s'arrêtent. Le problème est calculable, même si, pour de très grandes données, on n'a pas envie d'attendre.
 
-## 3. Décidabilité
+Un problème de **décision** ne demande qu'un oui ou un non. Il est **décidable** s'il existe un algorithme qui, pour n'importe quelle entrée, répond correctement et s'arrête. Décidable est donc plus précis que « on saurait peut-être » : il faut une méthode qui termine toujours.
 
-Un problème de décision (réponse OUI/NON) est **décidable** s'il existe un algorithme qui répond OUI ou NON correctement pour n'importe quelle entrée.
+## Le problème de l'arrêt
 
-### Le Problème de l'Arrêt (Halting Problem)
-Question : *Peut-on écrire un programme `TestArret(P, E)` qui prend un programme P et une entrée E, et qui dit si P va s'arrêter ou boucler à l'infini ?*
+La question est la suivante. Peut-on écrire un programme `TestArret(P, E)` qui reçoit un programme `P` et une entrée `E`, et qui dit si `P`, lancé sur `E`, va s'arrêter, ou s'il va boucler indéfiniment ?
 
-**Réponse : NON.** Ce problème est **indécidable**.
+La réponse est non. Ce problème est **indécidable**.
 
-### Preuve par l'absurde (Paradoxe)
-Imaginons que `TestArret` existe.
-Créons un programme vicieux `Paradoxe(P)` :
-1.  Il appelle `TestArret(P, P)`.
-2.  Si `TestArret` dit "P s'arrête" -> `Paradoxe` entre dans une boucle infinie `while True: pass`.
-3.  Si `TestArret` dit "P boucle" -> `Paradoxe` s'arrête immédiatement.
+On le montre par l'absurde. Supposons que `TestArret` existe, et qu'il se trompe jamais. On construit alors un programme `Paradoxe(P)` qui s'en sert contre lui-même :
 
-Maintenant, lançons `Paradoxe(Paradoxe)`.
-*   S'il s'arrête -> Il devrait boucler.
-*   S'il boucle -> Il devrait s'arrêter.
-*   **Contradiction !** Donc `TestArret` ne peut pas exister.
+1. Il appelle `TestArret(P, P)`.
+2. Si `TestArret` annonce que `P` s'arrête, `Paradoxe` entre dans une boucle infinie, `while True: pass`.
+3. Si `TestArret` annonce que `P` boucle, `Paradoxe` s'arrête tout de suite.
 
-## 4. Conclusion
+Lançons `Paradoxe(Paradoxe)`. `TestArret(Paradoxe, Paradoxe)` doit dire soit « il s'arrête », soit « il boucle ».
 
-Il existe des problèmes insolubles par ordinateur. L'informatique a des limites théoriques absolues.
+Si elle dit « il s'arrête », la règle 2 fait entrer `Paradoxe` dans une boucle. Il ne s'arrête donc pas. La réponse était fausse.
+
+Si elle dit « il boucle », la règle 3 fait s'arrêter `Paradoxe` immédiatement. Il ne boucle donc pas. La réponse était fausse aussi.
+
+Les deux branches se contredisent. L'hypothèse de départ tombe : `TestArret` ne peut pas exister. Aucun programme ne peut, pour tous les programmes et toutes les entrées, prédire l'arrêt.
+
+Un ordinateur plus rapide, ou quantique, ne contourne pas cela. Il exécuterait le même genre d'algorithmes. Le problème n'est pas la durée du calcul. C'est qu'aucune procédure générale ne termine en donnant toujours la bonne réponse.
 
 ---
 
 <ExerciseTabs courseId="terminale_calculabilite" courseTitle="Quiz Turing">
 
-  <ExerciseSection id="calc-ex-1" label="Vrai ou Faux">
+  <ExerciseSection id="calc-ex-1" label="Vrai ou Faux" type="lecture">
     <Enonce>
     ### Questions de compréhension
     1.  Une machine de Turing est moins puissante qu'un PC moderne. (Vrai/Faux)

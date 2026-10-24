@@ -6,49 +6,24 @@ chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
 icon: "\U0001F3AF"
 prerequisites:
   - csharp_csv_bdd
+audience: public
 ---
 
-## 🌟 Introduction
+# Introduction à la POO en C#
 
-La Programmation Orientée Objet (POO) est un paradigme de programmation qui organise le code autour du concept d'**objets** plutôt que de fonctions et de logique. C'est une approche naturelle qui reflète la façon dont nous pensons au monde réel.
+Jusqu'ici, un programme est une suite de fonctions qui se passent des variables. Cela tient pour un calcul. Cela se défait dès que le même « client » possède un nom, un solde, et trois opérations qui doivent rester cohérentes entre elles. La **programmation orientée objet** range ces données et ces opérations dans un **objet**. On pense alors comme on décrit une chose : ce qu'elle est, ce qu'elle sait faire.
 
-> **Pourquoi la POO ?**
->
-> - ✅ **Réutilisabilité** : Le code peut être réutilisé dans différents contextes
-> - ✅ **Maintenabilité** : Plus facile à comprendre et à modifier
-> - ✅ **Modularité** : Le code est organisé en modules logiques
-> - ✅ **Abstraction** : Cache la complexité et montre seulement l'essentiel
+On y gagne en réutilisation, parce qu'une classe écrite pour un écran sert au suivant. En maintenance, parce qu'un changement de règle se fait dans la classe, pas dans dix fonctions éparpillées. En modularité, parce que chaque classe a un sujet. Et en abstraction : celui qui utilise un compte appelle `Deposer`, il n'a pas à savoir comment le solde est rangé.
 
+## L'objet et la classe
 
-## 📦 Les Concepts Fondamentaux
+Un **objet** réunit des **données**, ce qu'il est, et des **comportements**, ce qu'il fait. Les données s'appellent attributs ou propriétés. Les comportements s'appellent méthodes. Un chien a un nom, une race, un âge, une couleur, un poids. Il aboie, mange, court, dort. Les deux vont ensemble : `Manger` peut modifier le poids, parce que les deux appartiennent au même objet.
 
-### Qu'est-ce qu'un Objet ?
+Une **classe** est le modèle. Le plan d'architecte n'est pas une maison. La classe `Chien` n'est pas un chien. On construit autant d'objets qu'on veut à partir du même plan. Rex et Bella sont deux objets. Ils ont les mêmes propriétés, pas les mêmes valeurs.
 
-Un **objet** est une entité qui combine :
+## Écrire la classe
 
-- Des **données** (ce qu'il EST) → appelées **attributs** ou **propriétés**
-- Des **comportements** (ce qu'il FAIT) → appelées **méthodes**
-
-**Analogie du monde réel :** Prenons l'exemple d'un **chien** :
-
-- **Données** : nom, race, âge, couleur, poids
-- **Comportements** : aboyer(), manger(), courir(), dormir()
-
-### Qu'est-ce qu'une Classe ?
-
-Une **classe** est un **modèle** (blueprint) qui définit la structure et le comportement des objets.
-
-**Analogie :**
-
-- La classe = le plan d'architecte d'une maison
-- L'objet = la maison construite d'après ce plan
-
-On peut construire **plusieurs maisons** (objets) à partir du **même plan** (classe).
-
-
-## 🏗️ Créer sa Première Classe
-
-### Syntaxe de Base
+Une classe se lit en trois bandes : les propriétés, le constructeur qui les remplit à la naissance, les méthodes.
 
 ```csharp
 public class NomDeLaClasse
@@ -61,7 +36,7 @@ public class NomDeLaClasse
 }
 ```
 
-### Exemple Concret : La Classe `Chien`
+Voici un chien complet. Les propriétés sont en syntaxe automatique : `{ get; set; }` crée, derrière, une variable que vous n'écrivez pas. Le **constructeur** porte le même nom que la classe. Il n'a pas de type de retour. Il s'exécute au `new`, et c'est le moment de donner un nom, une race, un âge, un poids. Les méthodes utilisent ces valeurs. `Manger` augmente un peu le poids : l'action modifie l'état, et l'état reste dans l'objet.
 
 ```csharp
 using System;
@@ -115,18 +90,9 @@ public class Chien
 }
 ```
 
-**Explications :**
+## Deux chiens, deux mémoires
 
-- **`public class Chien`** : Définit le modèle
-- **Propriétés** : `Nom`, `Race`, `Age`, `Poids` définissent l'état de l'objet
-- **Constructeur** : `public Chien(...)` permet d'initialiser les propriétés lors de la création
-- **Méthodes** : `Aboyer`, `SePresenter` définissent le comportement
-
----
-
-## 🎮 Utiliser la Classe (Créer des Objets)
-
-Une fois la classe définie, on peut créer des **instances** (des objets spécifiques) dans le programme principal.
+`new` fabrique une **instance**. `monChien` et `autreChien` sont deux objets distincts, même s'ils sont du type `Chien`. Faire vieillir Rex ne change pas l'âge de Bella.
 
 ```csharp
 public class Program
@@ -156,20 +122,11 @@ public class Program
 }
 ```
 
-## 🔐 Les Propriétés en C#
+## Décider qui a le droit de modifier
 
-### Propriétés Auto-implémentées
+`public string Nom { get; set; }` est la forme la plus courte. `get` lit, `set` écrit, et n'importe quel code qui voit l'objet peut changer le nom.
 
-```csharp
-public string Nom { get; set; }
-```
-
-C'est la syntaxe la plus simple. C# crée automatiquement une variable privée en arrière-plan.
-
-- **`get`** : permet de **lire** la valeur
-- **`set`** : permet de **modifier** la valeur
-
-### Contrôler l'Accès
+On serre cela quand la donnée ne doit pas être libre. `Solde` se lit de l'extérieur, mais seul le compte le modifie : `{ get; private set; }`. `NumeroCompte` n'a pas de `set`. On peut encore l'affecter dans le constructeur, ensuite il est figé. `Deposer` est le seul chemin pour augmenter le solde, et il refuse un montant négatif.
 
 ```csharp
 public class CompteBancaire
@@ -197,9 +154,7 @@ public class CompteBancaire
 }
 ```
 
-### Propriétés avec Validation (Full Properties)
-
-Parfois, on veut valider les valeurs avant de les accepter.
+Quand la règle est plus précise qu'un simple `private set`, on écrit la propriété en entier, avec un champ privé derrière, le *backing field*. Ici, un âge hors de 0 à 150 est refusé. `value` est le nom que C# donne à ce qu'on essaie d'affecter.
 
 ```csharp
 public class Personne
@@ -220,11 +175,9 @@ public class Personne
 }
 ```
 
-## 🏗️ Les Constructeurs
+## Plusieurs façons de construire
 
-### Constructeur par Défaut
-
-Si vous ne définissez AUCUN constructeur, C# en crée un automatiquement (vide).
+Si vous n'écrivez aucun constructeur, C# en fournit un, vide, sans paramètre. Dès que vous en écrivez un, celui-là disparaît. Il faut le remettre à la main si vous en avez encore besoin.
 
 ```csharp
 public class Point
@@ -235,7 +188,7 @@ public class Point
 }
 ```
 
-### Surcharge de Constructeurs
+Deux constructeurs du même nom, avec des paramètres différents, c'est une **surcharge**. Un rectangle se construit avec une largeur et une hauteur, ou avec un seul côté quand c'est un carré.
 
 ```csharp
 public class Rectangle
@@ -259,7 +212,7 @@ public class Rectangle
 }
 ```
 
-### Chaînage de Constructeurs
+Le second répète l'affectation. `: this(cote, cote)` le fait appeler le premier. La règle « largeur et hauteur sont posées ensemble » n'est écrite qu'une fois.
 
 ```csharp
 public class Rectangle
@@ -282,12 +235,9 @@ public class Rectangle
 }
 ```
 
-## ⚙️ Les Méthodes
+## Ce qu'une méthode rend
 
-### Types de Méthodes
-
-- **`void`** : La méthode effectue une action mais ne retourne rien
-- **Type (int, string, ...)** : La méthode retourne un résultat
+Une méthode `void` agit et ne renvoie rien. Une méthode typée `int`, `string`, ou autre, calcule une valeur et la rend avec `return`. L'appelant décide ensuite de l'afficher, de la stocker, de la passer plus loin.
 
 ```csharp
 public class Calculatrice
@@ -306,9 +256,7 @@ public class Calculatrice
 }
 ```
 
-### Surcharge de Méthodes (Overloading)
-
-Même nom, paramètres différents.
+La **surcharge** existe aussi pour les méthodes. Même nom, paramètres différents. Le compilateur choisit celle qui correspond à l'appel. `Afficher(3)` n'est pas `Afficher("3")`.
 
 ```csharp
 public class Afficheur
@@ -330,18 +278,9 @@ public class Afficheur
 }
 ```
 
+## Trois piliers
 
-## 🎯 Les Piliers de la POO
-
-### 1. L'Encapsulation
-
-**Définition :** Cacher les détails internes et exposer seulement ce qui est nécessaire.
-
-**Modificateurs d'accès :**
-
-- **`public`** : Accessible de partout
-- **`private`** : Accessible seulement dans la classe
-- **`protected`** : Accessible dans la classe et ses classes dérivées
+L'**encapsulation** cache le détail et n'expose que ce qui est utile. Trois niveaux reviennent sans cesse. `public` est visible partout. `private` ne l'est que dans la classe. `protected` l'est dans la classe et dans ses filles. Le solde privé ne se touche que par `Deposer`, qui vérifie le montant. Personne de l'extérieur ne peut écrire `_solde = -1000`.
 
 ```csharp
 public class CompteBancaire
@@ -362,9 +301,7 @@ public class CompteBancaire
 }
 ```
 
-### 2. L'Héritage
-
-**Définition :** Une classe peut hériter des propriétés et méthodes d'une autre classe.
+L'**héritage** fait qu'une classe reçoit les propriétés et les méthodes d'une autre. `:` se lit « hérite de ». `base(nom)` appelle le constructeur de la mère avant le corps de la fille. `Chien` sait `Manger` sans l'avoir écrit, et `Aboyer` lui appartient en propre. Le cours suivant reprend ce mécanisme en détail.
 
 ```csharp
 // CLASSE MÈRE
@@ -401,26 +338,13 @@ public class Chien : Animal  // ":" signifie "hérite de"
 }
 ```
 
-**Utilisation :**
-
 ```csharp
 Chien monChien = new Chien("Rex", "Berger Allemand");
 monChien.Manger();  // Méthode héritée de Animal
 monChien.Aboyer();  // Méthode propre à Chien
 ```
 
-### 3. Le Polymorphisme et Méthodes Virtuelles
-
-**Définition :** Le polymorphisme est la capacité d'objets de classes différentes à répondre à la même méthode de manière spécifique. Cela est rendu possible grâce aux **méthodes virtuelles**.
-
-#### Le couple `virtual` / `override`
-
-Pour permettre la redéfinition d'une méthode, C# impose une règle explicite :
-
-1. **Dans la classe mère** : On ajoute le mot-clé **`virtual`** pour autoriser les enfants à modifier la méthode.
-2. **Dans la classe fille** : On utilise le mot-clé **`override`** pour indiquer qu'on remplace le comportement d'origine.
-
-> 💡 **Note :** Contrairement à d'autres langages (comme Java), en C#, les méthodes ne sont pas virtuelles par défaut. Il faut explicitement donner la permission de les modifier.
+Le **polymorphisme** veut que des objets de classes différentes répondent à la même méthode, chacun à sa façon. En C#, il faut l'autoriser. Dans la mère, `virtual` dit que les filles ont le droit de remplacer la méthode. Dans la fille, `override` dit qu'elles le font. Contrairement à Java, une méthode C# n'est pas virtuelle toute seule. Sans `virtual`, la fille ne redéfinit pas : elle cache, et l'appel via une variable `Animal` garderait le comportement de la mère.
 
 ```csharp
 public class Animal
@@ -448,7 +372,7 @@ public class Chat : Animal
 }
 ```
 
-**Utilisation avec polymorphisme :**
+On range alors un chien et un chat dans une `List<Animal>`. La boucle ne connaît que `Animal`. À l'exécution, c'est la méthode de l'objet réel qui part.
 
 ```csharp
 List<Animal> animaux = new List<Animal>();
@@ -463,3 +387,5 @@ foreach (Animal animal in animaux)
 // Wouf wouf !
 // Miaou !
 ```
+
+Encapsulation, héritage, polymorphisme. Le premier protège l'état. Le deuxième partage ce qui est commun. Le troisième laisse chaque fille décider du geste, sans que le code qui appelle ait à connaître la fille.

@@ -93,6 +93,7 @@ function ChapterThumbnail({
   theme: Theme;
   onSelect: () => void;
 }) {
+  const imageSrc = chapterImageFromData(niveaux, chapter.name);
   return (
     <article
       className={`group overflow-hidden rounded-[var(--radius)] border transition-colors duration-150 ${
@@ -108,13 +109,15 @@ function ChapterThumbnail({
         className="block h-full w-full text-left"
       >
         <div className="relative h-32 bg-[var(--surface-2)] p-3 sm:h-36">
-          <Image
-            src={chapterImageFromData(niveaux, chapter.name)}
-            alt={`Illustration ${chapter.name}`}
-            fill
-            className="object-contain p-2"
-            sizes="(max-width:768px) 100vw, 33vw"
-          />
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt={`Illustration ${chapter.name}`}
+              fill
+              className="object-contain p-2"
+              sizes="(max-width:768px) 100vw, 33vw"
+            />
+          ) : null}
           <span className="absolute right-3 top-3 rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-xs font-semibold text-[var(--muted)]">
             {chapter.courses.length} ressource{chapter.courses.length > 1 ? "s" : ""}
           </span>
@@ -210,6 +213,8 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
     return null;
   }
 
+  const selectedImage = chapterImageFromData(niveaux, selectedChapter.name);
+
   return (
     <section className="relative space-y-10 pb-10">
       {/* Chapitre sélectionné — panneau principal */}
@@ -248,16 +253,18 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, theme }: Props)
               </p>
             </div>
 
-            <div className="relative mx-auto h-44 w-full max-w-sm sm:h-52 lg:mx-0 lg:h-56 lg:max-w-none">
-              <Image
-                src={chapterImageFromData(niveaux, selectedChapter.name)}
-                alt={`Illustration ${selectedChapter.name}`}
-                fill
-                className="object-contain p-2"
-                sizes="(max-width: 1024px) 80vw, 320px"
-                priority
-              />
-            </div>
+            {selectedImage ? (
+              <div className="relative mx-auto h-44 w-full max-w-sm sm:h-52 lg:mx-0 lg:h-56 lg:max-w-none">
+                <Image
+                  src={selectedImage}
+                  alt={`Illustration ${selectedChapter.name}`}
+                  fill
+                  className="object-contain p-2"
+                  sizes="(max-width: 1024px) 80vw, 320px"
+                  priority
+                />
+              </div>
+            ) : null}
           </div>
         </div>
 

@@ -6,6 +6,7 @@ chapter: Web
 icon: "\U0001F4BB"
 prerequisites:
   - Cours_html
+audience: public
 ---
 
 # Atelier : éditeur HTML en direct

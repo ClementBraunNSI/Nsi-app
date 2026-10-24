@@ -8,31 +8,20 @@ icon: "\U0001F3D7️"
 badgeId: terminale_poo
 prerequisites:
   - prog_modularite_mise_au_point
+audience: public
 ---
 
-# 🏗️ Programmation Orientée Objet (POO)
+# Classes et objets
 
-La **Programmation Orientée Objet (POO)** est un paradigme de programmation qui consiste à structurer ses programmes autour d'entités appelées **objets**, qui interagissent entre elles. C'est le standard dans l'industrie (Java, C++, C#, Python, etc.).
+La programmation orientée objet organise un programme autour d'**objets** qui se parlent, plutôt qu'autour d'une longue suite de fonctions auxquelles on repasse les mêmes données. C'est le style dominant en Java, en C++, en C# et, pour une grande partie du code, en Python. L'idée n'est pas nouvelle pour vous si vous avez vu le cours de Première. On la reprend ici avec le vocabulaire de Terminale, et avec une question de plus : qu'est-ce qu'on a le droit de toucher depuis l'extérieur de l'objet.
 
-## 1. Concepts Fondamentaux
+Une **classe** est le moule. Elle décrit ce que tous les objets de cette famille ont en commun. Le plan d'une voiture ne roule pas. Une **instance**, l'objet, est une réalisation de ce plan : la voiture rouge de M. Dupont n'est pas la voiture bleue de Mme Martin, même si les deux sortent du même moule.
 
-### 1.1 Classe vs Objet
-*   **Classe (`class`)** : C'est le **moule** ou le **plan**. Elle définit les caractéristiques communes.
-    *   *Exemple* : Le plan de fabrication d'une voiture.
-*   **Objet** (ou **Instance**) : C'est une **réalisation concrète** de la classe.
-    *   *Exemple* : La voiture rouge de M. Dupont, la voiture bleue de Mme Martin.
+Les **attributs** sont les données attachées à l'objet, son état : une couleur, une vitesse, une marque. Les **méthodes** sont les fonctions attachées à l'objet, ce qu'il sait faire : démarrer, freiner, klaxonner. On les appelle sur l'objet, pas à côté.
 
-### 1.2 Attributs et Méthodes
-*   **Attributs** : Ce sont les **variables** liées à l'objet (son état).
-    *   *Exemple* : `couleur`, `vitesse`, `marque`.
-*   **Méthodes** : Ce sont les **fonctions** liées à l'objet (son comportement).
-    *   *Exemple* : `demarrer()`, `freiner()`, `klaxonner()`.
+## Écrire la classe
 
-## 2. Syntaxe Python
-
-### 2.1 Définir une classe
-
-On utilise le mot-clé `class`. Par convention, le nom d'une classe commence par une **Majuscule** (PascalCase).
+Le mot-clé est `class`. Par convention, le nom commence par une majuscule, en PascalCase, pour qu'on le distingue d'une fonction ou d'une variable.
 
 ```python
 class Voiture:
@@ -48,7 +37,9 @@ class Voiture:
         print(f"La {self.marque} accélère à {self.vitesse} km/h.")
 ```
 
-### 2.2 Créer et utiliser un objet
+`__init__` s'exécute à la naissance de l'objet. C'est là qu'on donne une valeur initiale aux attributs. `vitesse` n'est pas un paramètre : toute voiture neuve part de zéro, donc la classe le décide elle-même.
+
+Créer l'objet, c'est appeler la classe. Python fabrique l'instance et appelle `__init__` pour vous.
 
 ```python
 # Instanciation (Création de l'objet)
@@ -61,19 +52,15 @@ print(ma_voiture.marque)  # Affiche "Peugeot"
 ma_voiture.accelerer(50)  # Affiche "La Peugeot accélère à 50 km/h."
 ```
 
-### 2.3 Le mot-clé `self`
-*   `self` représente **l'objet lui-même**.
-*   Il est **obligatoire** comme premier paramètre de toutes les méthodes d'instance.
-*   Il permet de différencier les variables de l'objet (`self.vitesse`) des variables locales de la fonction.
+`self` est l'objet en train d'exécuter la méthode. Il est obligatoire en premier paramètre, même si, à l'appel, vous ne le passez pas : `ma_voiture.accelerer(50)` fournit `ma_voiture` comme `self`, et `50` comme `gain`. C'est grâce à `self` qu'on distingue `self.vitesse`, qui survit entre deux appels, d'une variable locale qui meurt à la fin de la fonction.
 
-## 3. Encapsulation (Interface et Implémentation)
+## Cacher le mécanisme
 
-L'encapsulation est le principe de **cacher les détails internes** d'implémentation et de ne fournir qu'une **interface publique** pour interagir avec l'objet.
+L'**encapsulation** consiste à ne pas laisser le reste du programme tripoter les détails internes. On lui offre une **interface** : quelques méthodes, dont le sens est clair. Comment le solde est stocké peut changer. `deposer` doit continuer à vouloir dire la même chose.
 
-En Python, on n'a pas de "privé" strict comme en Java (`private`), mais on utilise une convention :
-*   `_attribut` (un underscore) : Signifie "Ne touchez pas à ça directement, c'est interne".
+Python n'a pas de privé au sens strict de Java. La convention est un underscore : `_solde` signifie « n'y touchez pas directement, passez par les méthodes ». Rien ne l'empêche techniquement. Le underscore est un avertissement, pas un verrou.
 
-Pour accéder proprement aux attributs protégés, on utilise des **Assesseurs (Getters)** et des **Mutateurs (Setters)**.
+On parle d'**accesseur** pour une méthode qui donne la valeur, et de **mutateur** pour une méthode qui la modifie en vérifiant que la modification a un sens.
 
 ```python
 class CompteBancaire:
@@ -88,11 +75,13 @@ class CompteBancaire:
             self._solde += montant
 ```
 
+`deposer` refuse un montant négatif. Si le reste du programme faisait `compte._solde += montant` directement, cette vérification disparaîtrait. L'encapsulation n'est pas une coquetterie de syntaxe. C'est l'endroit où l'objet protège ses invariants.
+
 ---
 
 <ExerciseTabs courseId="terminale_poo" courseTitle="Exercices POO">
 
-  <ExerciseSection id="poo-ex-1" label="Création de Classe">
+  <ExerciseSection id="poo-ex-1" label="Création de Classe" type="python">
     <Enonce>
     ### La Classe `Chien` 🐶
     1.  Créez une classe `Chien` avec les attributs `nom` et `race`.
@@ -102,7 +91,7 @@ class CompteBancaire:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="poo-ex-2" label="RPG Simple">
+  <ExerciseSection id="poo-ex-2" label="RPG Simple" type="python">
     <Enonce>
     ### Personnage de Jeu ⚔️
     Créez une classe `Personnage` :

@@ -6,10 +6,12 @@ chapter: Programmation en C
 icon: "\U0001F4DD"
 prerequisites:
   - cours-structures-controle
+audience:
+  accounts: []
 ---
 
 <ExerciseTabs courseId="c-affectations-types-exos" courseTitle="C - Affectations & Types - Exercices">
-  <ExerciseSection id="exo-1-1" label="1.1 - Variables et types">
+  <ExerciseSection id="exo-1-1" label="1.1 - Variables et types" type="autre">
     <Enonce>
     ### Exercice 1.1 : Déclaration de variables
     **Déclarez et initialisez les variables suivantes :**
@@ -43,7 +45,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-1-2" label="1.2 - Opérateurs arithmétiques">
+  <ExerciseSection id="exo-1-2" label="1.2 - Opérateurs arithmétiques" type="autre">
     <Enonce>
     ### Exercice 1.2 : Calculs simples
     **Créez un programme qui :**
@@ -77,7 +79,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-1-3" label="1.3 - Entrées utilisateur">
+  <ExerciseSection id="exo-1-3" label="1.3 - Entrées utilisateur" type="autre">
     <Enonce>
     ### Exercice 1.3 : Saisie et calcul
     **Créez un programme qui :**

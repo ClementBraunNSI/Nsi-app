@@ -8,67 +8,52 @@ chapter: Photographie Numérique
 icon: "\U0001F5BC️"
 prerequisites:
   - activite_photo_interactive
+audience: public
 ---
 
-# 1. Les formats de fichiers
+# Métadonnées et formats
 
-Une image brute (RAW) prend beaucoup de place. Pour stocker et transmettre les images efficacement, on utilise différents formats de fichiers, qui peuvent compresser les données.
+Une image « brute », au format RAW, garde à peu près tout ce que le capteur a vu. Elle est fidèle, et elle est énorme. Pour la stocker ou l'envoyer, on choisit un format de fichier, et ce choix décide de ce qu'on accepte de perdre.
 
-Il existe deux types de compression :
-1.  **Compression sans perte** (*lossless*) : L'image restituée est identique à l'originale.
-2.  **Compression avec perte** (*lossy*) : On supprime des informations peu visibles pour l'œil humain afin de réduire drastiquement la taille du fichier.
+Il y a deux familles de compression. **Sans perte**, l'image qu'on rouvre est identique à celle qu'on a comprimée : on a seulement rangé les mêmes informations plus serré. **Avec perte**, on retire des détails que l'œil remarque peu, et le fichier maigrit beaucoup. La photo reste convaincante. Elle n'est plus exactement la même.
 
 | Format | Extension | Compression | Transparence | Usage principal |
 |--------|-----------|-------------|--------------|------------------|
 | **JPEG** | .jpg, .jpeg | Avec perte | Non | Photos, web, réseaux sociaux |
-| **PNG** | .png | Sans perte | Oui | Logos, illustrations, graphiques |
-| **GIF** | .gif | Sans perte (256 couleurs max) | Oui | Animations simples |
-| **TIFF** | .tiff | Sans perte | Oui | Impression professionnelle, archivage |
-| **WEBP** | .webp | Avec ou sans perte | Oui | Web moderne (Google) |
+| **PNG** | .png | Sans perte | Oui | Logos, schémas, illustrations |
+| **GIF** | .gif | Sans perte, 256 couleurs au plus | Oui | Petites animations |
+| **TIFF** | .tiff | Sans perte | Oui | Impression, archivage |
+| **WEBP** | .webp | Avec ou sans perte | Oui | Web actuel |
 
-# 2. Les Métadonnées (EXIF)
+Le JPEG convient aux photos parce que l'œil pardonne un ciel un peu simplifié. Il convient mal à un logo : les aplats et le texte se dégradent, et il ne sait pas faire de transparence. Le PNG garde chaque pixel et peut avoir un fond transparent, au prix d'un fichier plus lourd. Le GIF est ancien : 256 couleurs, ce qui suffit à un petit dessin animé, pas à un portrait. Le TIFF sert quand on archive ou qu'on imprime, et qu'on ne veut rien jeter. Le WebP, poussé par Google, reprend les deux logiques, avec ou sans perte, y compris la transparence.
 
-Un fichier image ne contient pas que les pixels. Il contient aussi des informations sur l'image elle-même, appelées **métadonnées**.
+## Ce que le fichier sait en plus des pixels
 
-Pour les photographies, la norme standard est l'**EXIF** (Exchangeable Image File Format).
+Un fichier image ne contient pas seulement la grille de couleurs. Il contient aussi des informations sur la photo elle-même. On les appelle des **métadonnées** : des données sur les données.
 
-Ces données sont inscrites par l'appareil photo au moment de la prise de vue et peuvent contenir :
-
-- **Date et heure** de la prise de vue
-- **Modèle de l'appareil** et marque
-- **Réglages techniques** :
-    - Temps d'exposition (vitesse d'obturation)
-    - Ouverture du diaphragme (f/...)
-    - Sensibilité ISO
-    - Longueur focale
-    - Utilisation du flash
-- **Géolocalisation** (coordonnées GPS : latitude, longitude, altitude)
-- **Auteur** / Copyright
+Pour la photographie, la norme courante est l'**EXIF** (*Exchangeable Image File Format*). L'appareil les écrit au moment de la prise de vue. On y trouve la date et l'heure, la marque et le modèle, et les réglages : temps de pose, ouverture, sensibilité ISO, focale, usage du flash. On y trouve souvent aussi l'auteur, et, si le téléphone ou l'appareil avait le GPS allumé, la latitude, la longitude et l'altitude.
 
 ![Exemple de données EXIF](/content/1/exif.png)
 
-> **Attention à la vie privée** : Lorsque vous partagez une photo sur internet, vous partagez potentiellement ces informations (notamment votre localisation précise). La plupart des réseaux sociaux les effacent automatiquement, mais pas tous les services de partage.
+Quand vous partagez la photo, vous partagez potentiellement tout cela, y compris l'endroit précis où vous étiez. Beaucoup de réseaux sociaux effacent ces champs avant de republier l'image. Tous les services de transfert ne le font pas. Si la photo ne doit pas dire où vous habitez, il faut vérifier, ou retirer ces données avant l'envoi.
 
-## 2.1 Lire les métadonnées
+## Les lire
 
-Sur ordinateur, on peut souvent lire ces informations via les propriétés du fichier :
-- **Windows** : Clic droit > Propriétés > Détails
-- **macOS** : Clic droit > Lire les informations (ou Cmd+I)
-- **Linux** : Clic droit > Propriétés > Image
+Sur un ordinateur, le système les affiche souvent dans les propriétés du fichier. Sous Windows : clic droit, Propriétés, puis Détails. Sous macOS : clic droit, Lire les informations, ou Cmd+I. Sous Linux : clic droit, Propriétés, puis Image.
 
-On peut aussi utiliser des outils en ligne de commande comme `exiftool` ou des scripts Python (bibliothèque `PIL` / `Pillow`).
+En ligne de commande, `exiftool` lit ces champs directement. En Python, la bibliothèque `PIL` (Pillow) permet de les ouvrir dans un script, ce qui devient utile dès qu'on a plus que deux ou trois photos.
 
 ![Exemple de script PIL](/content/1/prog_pil.png)
 
-# 3. Exercice
+# Exercice
 
 Reliez chaque format à sa description :
 
 ![Exercice - Relier les formats](/content/1/exo_relier.png)
 
-## 4. Pour s'entraîner
+## Pour s'entraîner
 
-Voici quelques images originales que vous pouvez télécharger pour analyser leurs métadonnées :
+Ces images peuvent être téléchargées pour en lire les métadonnées :
 
 - [Photo Nikon COOLPIX P1](/content/1/Nikon_COOLPIX_P1.jpg)
 - [Photo iPhone X](/content/1/IMG_0716.jpeg)

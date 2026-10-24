@@ -7,12 +7,13 @@ icon: ⚡
 badgeId: premiere_fiche_exo_circuits
 prerequisites:
   - archi_circuits
+audience: public
 ---
 
 
 <ExerciseTabs courseId="circuits-logiques" courseTitle="Circuits Logiques">
 
-  <ExerciseSection id="exo-1" label="1 - Identification">
+  <ExerciseSection id="exo-1" label="1 - Identification" type="lecture">
     <Enonce>
     ### Exercice 1 : Circuits et portes
 
@@ -70,7 +71,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-2" label="2 - Équations">
+  <ExerciseSection id="exo-2" label="2 - Équations" type="lecture">
     <Enonce>
     ### Exercice 2 : Circuits vers équations
 
@@ -105,7 +106,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-4" label="4 - Simplification">
+  <ExerciseSection id="exo-4" label="4 - Simplification" type="lecture">
     <Enonce>
     ### Exercice 4 : Simplification de circuits
 
@@ -159,7 +160,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-5" label="5 - Analyse">
+  <ExerciseSection id="exo-5" label="5 - Analyse" type="lecture">
     <Enonce>
     ### Exercice 5 : Analyse de circuits complexes
 
@@ -218,7 +219,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-6" label="6 - Additionneur">
+  <ExerciseSection id="exo-6" label="6 - Additionneur" type="lecture">
     <Enonce>
     ### Exercice 6 : Conception d'un additionneur
 
@@ -285,7 +286,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-7" label="7 - Multiplexeur">
+  <ExerciseSection id="exo-7" label="7 - Multiplexeur" type="lecture">
     <Enonce>
     ### Exercice 7 : Multiplexeur
 

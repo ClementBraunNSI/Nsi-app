@@ -6,10 +6,11 @@ chapter: Programmation Python
 icon: "\U0001F504"
 prerequisites:
   - structures_conditionnelles
+audience: public
 ---
 
 <ExerciseTabs courseId="fiche-boucles" courseTitle="Fiche Boucles">
-  <ExerciseSection id="boucles-1" label="Important ⚠️ - Consignes importantes">
+  <ExerciseSection id="boucles-1" label="Important ⚠️ - Consignes importantes" type="lecture">
     <Enonce>
       ### Important ⚠️ - Consignes importantes
 
@@ -23,7 +24,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-2" label="Introduction 🦊 - Compte à rebours">
+  <ExerciseSection id="boucles-2" label="Introduction 🦊 - Compte à rebours" type="python">
     <Enonce>
       ### Introduction 🦊 - Compte à rebours
 
@@ -44,7 +45,7 @@ assert rebours == list(range(n, -1, -1)), f"Le compte à rebours est incorrect p
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-3" label="Introduction 🦊 - Tables de multiplication">
+  <ExerciseSection id="boucles-3" label="Introduction 🦊 - Tables de multiplication" type="python">
     <Enonce>
       ### Introduction 🦊 - Tables de multiplication
 
@@ -67,7 +68,7 @@ assert table == expected, f"La table de multiplication pour {n} est incorrecte."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-4" label="Introduction 🦊 - Escalier d'étoiles">
+  <ExerciseSection id="boucles-4" label="Introduction 🦊 - Escalier d'étoiles" type="python">
     <Enonce>
       ### Introduction 🦊 - Escalier d'étoiles
 
@@ -107,7 +108,7 @@ assert lignes == expected, f"L'escalier est incorrect pour n={n}."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-5" label="Introduction 🦊 - Somme des nombres">
+  <ExerciseSection id="boucles-5" label="Introduction 🦊 - Somme des nombres" type="python">
     <Enonce>
       ### Introduction 🦊 - Somme des nombres
 
@@ -129,7 +130,7 @@ assert somme == expected, f"La somme des nombres de 1 à {n} doit être {expecte
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-6" label="Introduction 🦊 - Puissance de 2">
+  <ExerciseSection id="boucles-6" label="Introduction 🦊 - Puissance de 2" type="python">
     <Enonce>
       ### Introduction 🦊 - Puissance de 2
 
@@ -151,7 +152,7 @@ assert puissances == expected, f"Les puissances de 2 jusqu'à 2^{n} sont incorre
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-7" label="Introduction 🦊 - Message répété">
+  <ExerciseSection id="boucles-7" label="Introduction 🦊 - Message répété" type="python">
     <Enonce>
       ### Introduction 🦊 - Message répété
 
@@ -177,7 +178,7 @@ assert all(r == phrase for r in resultats), "Tous les éléments doivent être �
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-8" label="Facile 🦊 - Calculatrice continue">
+  <ExerciseSection id="boucles-8" label="Facile 🦊 - Calculatrice continue" type="python">
     <Enonce>
       ### Facile 🦊 - Calculatrice continue
 
@@ -200,7 +201,7 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-9" label="Intermédiaire 🦊🦊 - Devinette avec limite">
+  <ExerciseSection id="boucles-9" label="Intermédiaire 🦊🦊 - Devinette avec limite" type="python">
     <Enonce>
       ### Intermédiaire 🦊🦊 - Devinette avec limite
 
@@ -219,7 +220,7 @@ assert 'essais_restants' in locals() or 'essais' in locals(), "Utilisez une vari
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-10" label="Intermédiaire 🦊🦊 - Caisse enregistreuse">
+  <ExerciseSection id="boucles-10" label="Intermédiaire 🦊🦊 - Caisse enregistreuse" type="python">
     <Enonce>
       ### Intermédiaire 🦊🦊 - Caisse enregistreuse
 

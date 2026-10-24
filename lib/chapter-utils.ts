@@ -1,3 +1,5 @@
+import { contentFolderFromParam, NSI_LEVELS, type NsiLevelId } from "@/lib/nsi-levels";
+
 export type ResourceKind = "cours" | "exercices" | "tp" | "projet";
 
 export function normalizeChapterName(value: string): string {
@@ -15,16 +17,16 @@ export function slugifyChapterName(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-export function levelFoxFromNiveau(niveaux: string): string {
-  const normalized = niveaux.trim();
-  if (["0", "1", "2", "3", "4"].includes(normalized)) {
-    return `/images/fox_${normalized}.png`;
-  }
-  return "/images/fox_2.png";
+/** Fox of a known level (folder id or public slug). Null when that level has no file of its own. */
+export function levelFoxFromNiveau(niveaux: string): string | null {
+  const folder = contentFolderFromParam(niveaux.trim());
+  if (!folder || !(folder in NSI_LEVELS)) return null;
+  if (folder === "particuliers") return null;
+  return NSI_LEVELS[folder as NsiLevelId].image;
 }
 
-export function chapterImageFromData(niveaux: string, chapterName: string): string {
-  const normalizedLevel = niveaux.trim();
+export function chapterImageFromData(niveaux: string, chapterName: string): string | null {
+  const folder = contentFolderFromParam(niveaux.trim());
   const key = normalizeChapterName(chapterName);
   const chapterMapLevel1: Record<string, string> = {
     "photographie numerique": "/images/chapitres/1/chap_photo.png",
@@ -70,17 +72,11 @@ export function chapterImageFromData(niveaux: string, chapterName: string): stri
     projets: "/images/chapitres/3/chap_projets.png",
   };
 
-  if (normalizedLevel === "1") {
-    return chapterMapLevel1[key] ?? levelFoxFromNiveau(niveaux);
-  }
-  if (normalizedLevel === "2") {
-    return chapterMapLevel2[key] ?? levelFoxFromNiveau(niveaux);
-  }
-  if (normalizedLevel === "3") {
-    return chapterMapLevel3[key] ?? levelFoxFromNiveau(niveaux);
-  }
-
-  return levelFoxFromNiveau(niveaux);
+  const levelFox = levelFoxFromNiveau(niveaux);
+  if (folder === "1") return chapterMapLevel1[key] ?? levelFox;
+  if (folder === "2") return chapterMapLevel2[key] ?? levelFox;
+  if (folder === "3") return chapterMapLevel3[key] ?? levelFox;
+  return levelFox;
 }
 
 export function getResourceKind(course: {

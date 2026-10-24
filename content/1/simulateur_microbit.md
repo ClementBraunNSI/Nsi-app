@@ -6,6 +6,7 @@ chapter: Micro-controleurs
 icon: "\U0001F5A5️"
 prerequisites:
   - objets_connectes
+audience: public
 ---
 
 # Simulateur BBC Micro:bit

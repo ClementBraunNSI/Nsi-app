@@ -6,10 +6,11 @@ chapter: Programmation Python
 icon: "\U0001F40D"
 prerequisites:
   - Fiche_exercices_conditions
+audience: public
 ---
 
 <ExerciseTabs courseId="fiche-python" courseTitle="Fiche Python">
-  <ExerciseSection id="python-1" label="Important ⚠️ - Consignes importantes">
+  <ExerciseSection id="python-1" label="Important ⚠️ - Consignes importantes" type="lecture">
     <Enonce>
       ### Important ⚠️ - Consignes importantes
 
@@ -27,7 +28,7 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-2" label="Introduction 🦊 - Premier programme">
+  <ExerciseSection id="python-2" label="Introduction 🦊 - Premier programme" type="python">
     <Enonce>
       ### Introduction 🦊 - Premier programme
 
@@ -43,7 +44,7 @@ assert message == "Bonjour le monde !", "Le message doit être 'Bonjour le monde
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-3" label="Introduction 🦊 - Affichage simple">
+  <ExerciseSection id="python-3" label="Introduction 🦊 - Affichage simple" type="python">
     <Enonce>
       ### Introduction 🦊 - Affichage simple
 
@@ -61,7 +62,7 @@ assert isinstance(age, int), "L'âge doit être un nombre entier."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-4" label="Introduction 🦊 - Calcul simple">
+  <ExerciseSection id="python-4" label="Introduction 🦊 - Calcul simple" type="python">
     <Enonce>
       ### Introduction 🦊 - Calcul simple
 
@@ -77,7 +78,7 @@ assert resultat == 42, "Le calcul 15 + 27 devrait donner 42."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-5" label="Introduction 🦊 - Variables">
+  <ExerciseSection id="python-5" label="Introduction 🦊 - Variables" type="python">
     <Enonce>
       ### Introduction 🦊 - Variables
 
@@ -97,7 +98,7 @@ assert isinstance(age, int), "La variable 'age' doit être un nombre entier (int
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-6" label="Introduction 🦊 - Première interaction">
+  <ExerciseSection id="python-6" label="Introduction 🦊 - Première interaction" type="python">
     <Enonce>
       ### Introduction 🦊 - Première interaction
 
@@ -113,7 +114,7 @@ assert isinstance(prenom, str), "La variable 'prenom' doit être du texte."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-7" label="Introduction 🦊 - Calcul avec variables">
+  <ExerciseSection id="python-7" label="Introduction 🦊 - Calcul avec variables" type="python">
     <Enonce>
       ### Introduction 🦊 - Calcul avec variables
 
@@ -137,7 +138,7 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-8" label="Facile 🦊 - Addition de deux nombres">
+  <ExerciseSection id="python-8" label="Facile 🦊 - Addition de deux nombres" type="python">
     <Enonce>
       ### Facile 🦊 - Addition de deux nombres
 
@@ -158,7 +159,7 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-9" label="Facile 🦊 - Calcul de périmètre">
+  <ExerciseSection id="python-9" label="Facile 🦊 - Calcul de périmètre" type="python">
     <Enonce>
       ### Facile 🦊 - Calcul de périmètre
 
@@ -179,7 +180,7 @@ assert perimetre == 2 * (longueur + largeur), "Le calcul du périmètre est inco
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-10" label="Facile 🦊 - Calcul d'aire">
+  <ExerciseSection id="python-10" label="Facile 🦊 - Calcul d'aire" type="python">
     <Enonce>
       ### Facile 🦊 - Calcul d'aire
 
@@ -198,7 +199,7 @@ assert abs(aire - (3.14 * rayon ** 2)) < 0.01, "Le calcul de l'aire est incorrec
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-11" label="Facile 🦊 - Conversion de température">
+  <ExerciseSection id="python-11" label="Facile 🦊 - Conversion de température" type="python">
     <Enonce>
       ### Facile 🦊 - Conversion de température
 
@@ -217,7 +218,7 @@ assert abs(fahrenheit - (celsius * 9/5 + 32)) < 0.01, "Le calcul de la conversio
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-12" label="Facile 🦊 - Calcul de TVA">
+  <ExerciseSection id="python-12" label="Facile 🦊 - Calcul de TVA" type="python">
     <Enonce>
       ### Facile 🦊 - Calcul de TVA
 
@@ -239,7 +240,7 @@ assert abs(prix_ttc - (prix_ht + montant_tva)) < 0.01, "Le calcul du prix TTC es
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-13" label="Facile 🦊 - Manipulation de chaînes">
+  <ExerciseSection id="python-13" label="Facile 🦊 - Manipulation de chaînes" type="python">
     <Enonce>
       ### Facile 🦊 - Manipulation de chaînes
 
@@ -260,7 +261,7 @@ assert nom_complet == (prenom + " " + nom).upper() or nom_complet == (prenom + n
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-14" label="Intermédiaire 🦊🦊 - Calculatrice simple">
+  <ExerciseSection id="python-14" label="Intermédiaire 🦊🦊 - Calculatrice simple" type="python">
     <Enonce>
       ### Intermédiaire 🦊🦊 - Calculatrice simple
 
@@ -284,7 +285,7 @@ assert quotient == a / b, "Erreur dans le quotient."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="python-15" label="Intermédiaire 🦊🦊 - Conversion d'unités">
+  <ExerciseSection id="python-15" label="Intermédiaire 🦊🦊 - Conversion d'unités" type="python">
     <Enonce>
       ### Intermédiaire 🦊🦊 - Conversion d'unités
 

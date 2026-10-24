@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
+import { createAdminClient } from '@/utils/supabase/admin';
 import { getAuthContext } from '@/lib/auth';
 import { getExercisesForCourses, listAccessibleSheetSummaries } from '@/app/actions/getExercises';
 import { syncMyHomework } from '@/app/actions/homeworkCompletion';
@@ -373,8 +374,12 @@ export async function markHomeworkDone(homeworkId: string): Promise<{ error: str
   if (!row) return { error: 'invalid' };
   if (exerciseIdsForPage(row.page_path).length > 0) return { error: 'has_exercises' };
 
-  if (row.student_id === auth.user.id) {
-    const { error } = await supabase
+  const admin = createAdminClient();
+  if (!admin) return { error: 'save_failed' };
+
+  if (row.student_id) {
+    if (row.student_id !== auth.user.id) return { error: 'forbidden' };
+    const { error } = await admin
       .from('homework')
       .update({ status: 'done' })
       .eq('id', id)
@@ -384,15 +389,18 @@ export async function markHomeworkDone(homeworkId: string): Promise<{ error: str
     return { error: null };
   }
 
-  if (row.classe) {
-    const { error } = await supabase.from('homework_completions').insert({
-      homework_id: id,
-      user_id: auth.user.id,
-    });
-    if (error && !error.message.toLowerCase().includes('duplicate')) return { error: 'save_failed' };
-    revalidatePath('/espace');
-    return { error: null };
-  }
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('classe')
+    .eq('id', auth.user.id)
+    .maybeSingle();
+  if (!row.classe || !profile?.classe || profile.classe !== row.classe) return { error: 'forbidden' };
 
-  return { error: 'forbidden' };
+  const { error } = await admin.from('homework_completions').insert({
+    homework_id: id,
+    user_id: auth.user.id,
+  });
+  if (error && !error.message.toLowerCase().includes('duplicate')) return { error: 'save_failed' };
+  revalidatePath('/espace');
+  return { error: null };
 }

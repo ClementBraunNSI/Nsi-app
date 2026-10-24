@@ -62,6 +62,14 @@ function TestCard({ test, index }: { test: RunTest; index: number }) {
   );
 }
 
+function joinedPrints(report: RunReport) {
+  const prints = report.prints.replace(/\s+$/g, "");
+  const testPrints = report.testPrints.replace(/\s+$/g, "");
+  const parts = [prints];
+  if (testPrints && testPrints !== prints) parts.push(testPrints);
+  return parts.filter(Boolean).join("\n\n");
+}
+
 export function RunResultPanel({ report }: { report: RunReport }) {
   const passed = report.tests.filter((test) => test.ok).length;
   const total = report.tests.length;
@@ -70,6 +78,7 @@ export function RunResultPanel({ report }: { report: RunReport }) {
   const summary = total > 0
     ? ratioText(passed, total)
     : (report.error || "Les tests n’ont pas été lancés.");
+  const prints = joinedPrints(report);
 
   return (
     <div id="exercice-resultat" className="exercise-test-panel" role="status" aria-live="polite">
@@ -77,11 +86,18 @@ export function RunResultPanel({ report }: { report: RunReport }) {
         {allOk ? <Check size={16} aria-hidden /> : <X size={16} aria-hidden />}
         <span>{summary}</span>
       </p>
+      {report.validationNote ? <p className="exercise-validation-note">{report.validationNote}</p> : null}
       {total > 0 && report.error ? <p className="exercise-test-detail">{report.error}</p> : null}
       {total > 0 ? (
         <ul className="exercise-test-row">
           {report.tests.map((test, index) => <TestCard key={`${test.label}-${index}`} test={test} index={index} />)}
         </ul>
+      ) : null}
+      {report.validationNote && prints ? (
+        <div className="exercise-test-prints">
+          <p>Affichage</p>
+          <pre>{prints}</pre>
+        </div>
       ) : null}
       {report.saveWarning ? <p className="exercise-save-warning">{report.saveWarning}</p> : null}
     </div>

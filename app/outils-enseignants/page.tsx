@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Outils enseignants | La tanière du code',
+  title: { absolute: 'Outils enseignants | La tanière du code' },
   description:
     'Applications web indépendantes pour préparer des évaluations, corriger des copies Python, rédiger les conseils de classe et planifier l’année NSI/SNT.',
 };

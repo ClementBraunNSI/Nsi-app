@@ -9,6 +9,7 @@ icon: "\U0001F3CB️"
 badgeId: premiere_exercices
 prerequisites:
   - algo_knn
+audience: public
 ---
 
 

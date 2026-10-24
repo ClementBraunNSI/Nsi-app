@@ -4,6 +4,7 @@ description: "Comprendre comment une image est codée en 0 et 1."
 level: "SNI"
 chapter: "Données Structurées"
 icon: "👾"
+audience: public
 ---
 
 # 👾 Atelier Données : Pixel Art Binaire

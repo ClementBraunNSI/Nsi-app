@@ -6,10 +6,12 @@ chapter: Programmation en C
 icon: ⚙️
 prerequisites:
   - exercices-tableaux-2d
+audience:
+  accounts: []
 ---
 
 <ExerciseTabs courseId="c-fonctions" courseTitle="C - Fonctions">
-  <ExerciseSection id="fonctions-1-1" label="1.1 - Introduction">
+  <ExerciseSection id="fonctions-1-1" label="1.1 - Introduction" type="autre">
     <Enonce>
     ### Exercice 1.1 : Afficher Bonjour
     **Écrire une fonction `void dire_bonjour()` qui affiche simplement "Bonjour tout le monde !" suivi d'un saut de ligne.**
@@ -37,7 +39,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-1-2" label="1.2 - Fonctions avec paramètres">
+  <ExerciseSection id="fonctions-1-2" label="1.2 - Fonctions avec paramètres" type="autre">
     <Enonce>
     ### Exercice 1.2 : Calcul de l'aire
     **Écrire une fonction `float aire_rectangle(float longueur, float largeur)` qui renvoie l'aire du rectangle.**
@@ -65,7 +67,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-1-3" label="1.3 - Fonctions avec retour">
+  <ExerciseSection id="fonctions-1-3" label="1.3 - Fonctions avec retour" type="autre">
     <Enonce>
     ### Exercice 1.3 : Somme de deux entiers
     **Écrire une fonction `int somme(int a, int b)` qui renvoie la somme de a et b.**

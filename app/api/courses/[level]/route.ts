@@ -3,7 +3,8 @@ import matter from "gray-matter";
 import { NextResponse } from "next/server";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
 import { contentFolderFromParam, urlSlugFromFolder } from "@/lib/nsi-levels";
-import { courseVisibility, isRestrictedCourse } from "@/lib/course-access";
+import { canAccessCourse } from "@/lib/course-access";
+import { getAuthContext, viewerFromAuth } from "@/lib/auth";
 
 type CourseItem = {
   title: string;
@@ -18,6 +19,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ level: str
   const folder = contentFolderFromParam(level);
   if (!folder) return NextResponse.json({ courses: [] });
 
+  const viewer = viewerFromAuth(await getAuthContext());
   const entries = listMarkdownFilesForContentLevel(folder);
   const courses: CourseItem[] = entries
     .map(({ filePath, slug }) => {
@@ -25,7 +27,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ level: str
       const { data } = matter(raw);
       return { data, slug };
     })
-    .filter(({ data, slug }) => !isRestrictedCourse(courseVisibility(data, folder, slug)))
+    .filter(({ data }) => canAccessCourse(data, viewer))
     .map(({ slug, data }) => ({
       title: String(data.title || slug),
       slug,

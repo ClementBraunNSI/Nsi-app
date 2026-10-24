@@ -7,12 +7,13 @@ icon: "\U0001F4DD"
 badgeId: premiere_fiche_exercices_papier
 prerequisites:
   - python_exercices_listes
+audience: public
 ---
 
 
 <ExerciseTabs courseId="listes-tuples" courseTitle="Listes et tuples">
 
-  <ExerciseSection id="exo-1-1" label="1.1 - Création de tuple">
+  <ExerciseSection id="exo-1-1" label="1.1 - Création de tuple" type="python">
     <Enonce>
     ### Exercice 1.1 : Création de tuple
     **Créer un tuple nommé `mon_tuple` contenant les éléments suivants : `"pomme"`, `"banane"`, `"cerise"`.**
@@ -32,7 +33,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-1-2" label="1.2 - Accès élément tuple">
+  <ExerciseSection id="exo-1-2" label="1.2 - Accès élément tuple" type="python">
     <Enonce>
     ### Exercice 1.2 : Accès à un élément
     **Afficher l'élément à l'indice 1 du tuple `mon_tuple`.**
@@ -56,7 +57,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-2-1" label="2.1 - Création de liste">
+  <ExerciseSection id="exo-2-1" label="2.1 - Création de liste" type="python">
     <Enonce>
     ### Exercice 2.1 : Création de liste
     **Créer une liste nommée `ma_liste` avec les éléments suivants : `"chien"`, `"chat"`, `"lapin"`.**
@@ -76,7 +77,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-2-2" label="2.2 - Accès élément liste">
+  <ExerciseSection id="exo-2-2" label="2.2 - Accès élément liste" type="python">
     <Enonce>
     ### Exercice 2.2 : Accès à un élément
     **Afficher l'élément à l'indice 2 de la liste `ma_liste`.**
@@ -100,7 +101,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-2-3" label="2.3 - Modification liste">
+  <ExerciseSection id="exo-2-3" label="2.3 - Modification liste" type="python">
     <Enonce>
     ### Exercice 2.3 : Modification d'un élément
     **Remplacer l'élément `"lapin"` par `"hamster"` dans `ma_liste`. Afficher la liste mise à jour.**
@@ -121,7 +122,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-2-4" label="2.4 - Ajout élément">
+  <ExerciseSection id="exo-2-4" label="2.4 - Ajout élément" type="python">
     <Enonce>
     ### Exercice 2.4 : Ajout d'un élément
     **Ajouter l'élément `"oiseau"` à la fin de la liste `ma_liste`. Afficher la liste.**
@@ -142,7 +143,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-2-5" label="2.5 - Ajout multiple">
+  <ExerciseSection id="exo-2-5" label="2.5 - Ajout multiple" type="python">
     <Enonce>
     ### Exercice 2.5 : Ajout de plusieurs éléments
     **Ajouter les éléments `"poisson"` et `"tortue"` à la liste en une seule opération (concaténation).**
@@ -166,7 +167,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-3-1" label="3.1 - Création liste nombres">
+  <ExerciseSection id="exo-3-1" label="3.1 - Création liste nombres" type="python">
     <Enonce>
     ### Exercice 3.1 : Liste de nombres
     **Créer une liste de nombres `nombres` contenant : `3, 8, 12, 5, 10`.**
@@ -185,7 +186,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-3-2" label="3.2 - Premier et dernier">
+  <ExerciseSection id="exo-3-2" label="3.2 - Premier et dernier" type="python">
     <Enonce>
     ### Exercice 3.2 : Premier et dernier élément
     **Afficher le premier et le dernier élément de la liste `nombres` en utilisant les indices.**
@@ -211,7 +212,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-3-3" label="3.3 - Parcours liste">
+  <ExerciseSection id="exo-3-3" label="3.3 - Parcours liste" type="python">
     <Enonce>
     ### Exercice 3.3 : Parcours avec indices
     **Utiliser une boucle pour afficher tous les éléments de la liste `nombres` avec leur indice correspondant.**
@@ -231,7 +232,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-3-4" label="3.4 - Ajout fin">
+  <ExerciseSection id="exo-3-4" label="3.4 - Ajout fin" type="python">
     <Enonce>
     ### Exercice 3.4 : Ajout à la fin
     **Ajouter le nombre `15` à la fin de la liste `nombres`, puis afficher la liste.**
@@ -251,7 +252,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-3-5" label="3.5 - Insertion">
+  <ExerciseSection id="exo-3-5" label="3.5 - Insertion" type="python">
     <Enonce>
     ### Exercice 3.5 : Insertion
     **Insérer le nombre `7` à l'indice 1 dans `nombres`. Afficher la nouvelle liste.**
@@ -271,7 +272,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-3-6" label="3.6 - Suppression">
+  <ExerciseSection id="exo-3-6" label="3.6 - Suppression" type="python">
     <Enonce>
     ### Exercice 3.6 : Suppression
     **Supprimer l'élément à l'indice 3 de la liste `nombres`. Afficher la liste mise à jour.**
@@ -298,7 +299,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-4-1" label="4.1 - Concaténation">
+  <ExerciseSection id="exo-4-1" label="4.1 - Concaténation" type="python">
     <Enonce>
     ### Exercice 4.1 : Concaténation
     **1. Créer deux listes : `liste_A = ["rouge", "bleu", "vert"]` et `liste_B = ["jaune", "noir"]`.**
@@ -322,7 +323,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="exo-4-3" label="4.3 - Répétition">
+  <ExerciseSection id="exo-4-3" label="4.3 - Répétition" type="python">
     <Enonce>
     ### Exercice 4.3 : Répétition
     **Multiplier la liste `liste_A` par 2 pour obtenir une liste répétée deux fois. Afficher le résultat.**

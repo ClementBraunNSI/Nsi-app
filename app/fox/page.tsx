@@ -396,7 +396,7 @@ def td(): tourner_droite()
             <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
                 <div>
                     <h1 className="text-3xl font-black text-orange-700 mb-1 flex items-center gap-2">
-                        🦊 L'Académie des Renards
+                        🦊 Le renard dans le poulailler
                     </h1>
                     <h2 className="text-xl font-bold text-orange-900">{level.id}. {level.title}</h2>
                     <p className="text-orange-800/80 max-w-md mt-2">{level.description}</p>

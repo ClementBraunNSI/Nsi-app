@@ -6,5 +6,6 @@ chapter: Representation_de_base
 icon: "\U0001F5BC️"
 prerequisites:
   - booleens
+audience: public
 ---
 

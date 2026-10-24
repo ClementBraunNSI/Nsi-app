@@ -5,6 +5,7 @@ level: premiere
 chapter: Dictionnaires et Tables
 icon: "🎧"
 badgeId: "tp_spotify"
+audience: public
 ---
 
 # 🎧 TP : Structures Imbriquées (Spotify)
@@ -86,7 +87,7 @@ spotify_db (Liste)
 
 <ExerciseTabs courseId="tp_spotify_1" courseTitle="Structures Imbriquées">
 
-<ExerciseSection id="ex-1-lecture" label="1. Lecture simple">
+<ExerciseSection id="ex-1-lecture" label="1. Lecture simple" type="python">
 <Enonce>
 Sans utiliser de boucle, écrire les instructions pour afficher :
 
@@ -111,7 +112,7 @@ print(spotify_db[1]["top_titres"][1]["ecoutes"])
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-2-parcours" label="2. Parcours simple">
+<ExerciseSection id="ex-2-parcours" label="2. Parcours simple" type="python">
 <Enonce>
 On veut afficher le nom de chaque artiste suivi de son genre musical.
 Le format attendu :
@@ -144,7 +145,7 @@ Rappelez-vous : **Si c'est une liste, il faut (souvent) une boucle pour la parco
 
 <ExerciseTabs courseId="tp_spotify_2" courseTitle="Niveau Avancé">
 
-<ExerciseSection id="ex-3-albums" label="3. Lister les albums">
+<ExerciseSection id="ex-3-albums" label="3. Lister les albums" type="python">
 <Enonce>
 L'objectif est d'afficher **tous les albums** présents dans la base de données, peu importe l'artiste.
 
@@ -164,7 +165,7 @@ for artiste in spotify_db:
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-4-populaire" label="4. Le plus écouté">
+<ExerciseSection id="ex-4-populaire" label="4. Le plus écouté" type="python">
 <Enonce>
 On cherche le titre de la chanson qui a le plus d'écoutes **tous artistes confondus**.
 
@@ -194,7 +195,7 @@ print(f"Le titre le plus écouté est {meilleur_titre} avec {max_ecoutes} écout
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-5-ajout" label="5. Ajouter un album">
+<ExerciseSection id="ex-5-ajout" label="5. Ajouter un album" type="python">
 <Enonce>
 Orelsan vient de sortir un nouvel album : "Épilogue".
 Ajouter cet album à la liste des albums d'Orelsan **en modifiant la structure**.
@@ -222,7 +223,7 @@ Maintenant, on mélange tout : conditions `if`, boucles `for` et accès aux dict
 
 <ExerciseTabs courseId="tp_spotify_3" courseTitle="Niveau Expert">
 
-<ExerciseSection id="ex-6-filtrage" label="6. Filtrage par genre">
+<ExerciseSection id="ex-6-filtrage" label="6. Filtrage par genre" type="python">
 <Enonce>
 Afficher le nom de tous les artistes dont le genre est **"Pop"**.
 
@@ -240,7 +241,7 @@ for artiste in spotify_db:
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-7-total" label="7. Total des écoutes">
+<ExerciseSection id="ex-7-total" label="7. Total des écoutes" type="python">
 <Enonce>
 Calculer le nombre **total** d'écoutes cumulées pour **The Weeknd**.
 
@@ -264,7 +265,7 @@ print(f"Total écoutes The Weeknd : {total}")
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-8-recherche" label="8. Qui a fait cet album ?">
+<ExerciseSection id="ex-8-recherche" label="8. Qui a fait cet album ?" type="python">
 <Enonce>
 On cherche l'artiste qui a sorti l'album **"Civilisation"**.
 Le programme doit parcourir la base et afficher : `C'est Orelsan qui a fait Civilisation`.
@@ -284,7 +285,7 @@ for artiste in spotify_db:
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-9-ajout-complexe" label="9. Ajouter un titre (Dur !)">
+<ExerciseSection id="ex-9-ajout-complexe" label="9. Ajouter un titre (Dur !)" type="python">
 <Enonce>
 Angèle vient de sortir "Démons" (30 000 000 écoutes).
 Ajouter cette chanson à sa liste `top_titres`.
@@ -317,7 +318,7 @@ Ici, on ne rigole plus. On va faire de la vraie analyse de données comme un Dat
 
 <ExerciseTabs courseId="tp_spotify_4" courseTitle="Niveau Data Analyst">
 
-<ExerciseSection id="ex-10-moyenne" label="10. Moyenne d'écoutes">
+<ExerciseSection id="ex-10-moyenne" label="10. Moyenne d'écoutes" type="python">
 <Enonce>
 Calculer la **moyenne** des écoutes par chanson pour **Angèle**.
 
@@ -342,7 +343,7 @@ print(f"Moyenne d'écoutes pour Angèle : {moyenne}")
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-11-playlist" label="11. Générer une Playlist">
+<ExerciseSection id="ex-11-playlist" label="11. Générer une Playlist" type="python">
 <Enonce>
 On veut créer une "Playlist de Soirée" avec uniquement les tubes.
 Créer une nouvelle liste `playlist_soiree` qui contient **tous les titres** (de tous les artistes) ayant **plus de 50 000 000 d'écoutes**.
@@ -368,7 +369,7 @@ print("Ma Playlist de Soirée :", playlist_soiree)
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-12-populaire-artiste" label="12. L'Artiste N°1">
+<ExerciseSection id="ex-12-populaire-artiste" label="12. L'Artiste N°1" type="python">
 <Enonce>
 Qui est l'artiste le plus populaire au total ?
 Calculer le cumul des écoutes pour **chaque** artiste, et afficher celui qui a le plus gros score.
@@ -397,7 +398,7 @@ print(f"L'artiste N°1 est {meilleur_artiste} avec {max_ecoutes_global} écoutes
 </Correction>
 </ExerciseSection>
 
-<ExerciseSection id="ex-13-nettoyage" label="13. Nettoyage (Suppression)">
+<ExerciseSection id="ex-13-nettoyage" label="13. Nettoyage (Suppression)" type="python">
 <Enonce>
 Orelsan renie son album "La fête est finie". Il veut le supprimer de la base.
 Trouver Orelsan dans la base, et supprimer "La fête est finie" de sa liste d'albums.

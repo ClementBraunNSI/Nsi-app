@@ -4,6 +4,7 @@ description: "Méthodologie pour l'épreuve E4 : Structure, Méthode STAR et cho
 level: "4"
 chapter: "BTS SIO 2 : E4 - Support et mise à disposition de services informatiques"
 icon: "💼"
+audience: public
 ---
 
 # Préparation à l'épreuve E4 : Construire son Portfolio Professionnel

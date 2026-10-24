@@ -7,6 +7,7 @@ icon: "\U0001F43A"
 prerequisites:
   - introduction_poo
   - exercices_poo
+audience: public
 ---
 
 # DS Pratique — Refuge animalier « La Tanière du Renard »

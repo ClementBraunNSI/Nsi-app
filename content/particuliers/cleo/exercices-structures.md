@@ -6,11 +6,13 @@ badgeId: c_structs
 meta: 'Struct, Typedef, Pointeurs, Allocation Dynamique'
 prerequisites:
   - cours-structures-pointeurs
+audience:
+  accounts: []
 ---
 
 <ExerciseTabs courseId="c_structs" courseTitle="TP C - Structures">
 
-  <ExerciseSection id="tp-c-exo1" label="1. Le Temps qui passe">
+  <ExerciseSection id="tp-c-exo1" label="1. Le Temps qui passe" type="autre">
     <Enonce>
     ## 🕒 Exercice 1 : Gestion du Temps (Débutant)
 
@@ -48,7 +50,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo2" label="2. Distance Points">
+  <ExerciseSection id="tp-c-exo2" label="2. Distance Points" type="autre">
     <Enonce>
     ## 📍 Exercice 2 : Géométrie (Débutant)
 
@@ -88,7 +90,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo3" label="3. Nombres Complexes">
+  <ExerciseSection id="tp-c-exo3" label="3. Nombres Complexes" type="autre">
     <Enonce>
     ## 🌀 Exercice 3 : Nombres Complexes (Débutant)
 
@@ -129,7 +131,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo4" label="4. Passage par Pointeur">
+  <ExerciseSection id="tp-c-exo4" label="4. Passage par Pointeur" type="autre">
     <Enonce>
     ## 🔄 Exercice 4 : Modification d'État (Intermédiaire)
 
@@ -180,7 +182,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo5" label="5. Rectangle & Pointeur">
+  <ExerciseSection id="tp-c-exo5" label="5. Rectangle & Pointeur" type="autre">
     <Enonce>
     ## ▭ Exercice 5 : Rectangle (Intermédiaire)
 
@@ -229,7 +231,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo6" label="6. Tableau de Structures">
+  <ExerciseSection id="tp-c-exo6" label="6. Tableau de Structures" type="autre">
     <Enonce>
     ## 👥 Exercice 6 : Classe d'Étudiants (Intermédiaire)
 
@@ -279,7 +281,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo7" label="7. Produit Vectoriel">
+  <ExerciseSection id="tp-c-exo7" label="7. Produit Vectoriel" type="autre">
     <Enonce>
     ## 🏹 Exercice 7 : Vecteurs 3D (Intermédiaire)
 
@@ -326,7 +328,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo8" label="8. RPG : Héros">
+  <ExerciseSection id="tp-c-exo8" label="8. RPG : Héros" type="autre">
     <Enonce>
     ## ⚔️ Exercice 8 : Mini RPG (Avancé)
 
@@ -386,7 +388,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo9" label="9. Gestion Bibliothèque">
+  <ExerciseSection id="tp-c-exo9" label="9. Gestion Bibliothèque" type="autre">
     <Enonce>
     ## 📚 Exercice 9 : Bibliothèque (Avancé)
 
@@ -464,7 +466,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo10" label="10. Structures Imbriquées">
+  <ExerciseSection id="tp-c-exo10" label="10. Structures Imbriquées" type="autre">
     <Enonce>
     ## 🏠 Exercice 10 : Structures dans Structures (Expert)
 
@@ -531,7 +533,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo11" label="11. Allocation Dynamique">
+  <ExerciseSection id="tp-c-exo11" label="11. Allocation Dynamique" type="autre">
     <Enonce>
     ## 🧠 Exercice 11 : Allocation Dynamique (Expert)
 
@@ -588,7 +590,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo12" label="12. Tableau Dynamique">
+  <ExerciseSection id="tp-c-exo12" label="12. Tableau Dynamique" type="autre">
     <Enonce>
     ## 📈 Exercice 12 : Tableau Dynamique de Structures (Expert +)
 
@@ -648,7 +650,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo13" label="13. Inventaire Jeu">
+  <ExerciseSection id="tp-c-exo13" label="13. Inventaire Jeu" type="autre">
     <Enonce>
     ## 🎒 Exercice 13 : Inventaire de Jeu Vidéo (Expert)
 
@@ -731,7 +733,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo14" label="14. Liste Chaînée (Playlist)">
+  <ExerciseSection id="tp-c-exo14" label="14. Liste Chaînée (Playlist)" type="autre">
     <Enonce>
     ## 🎵 Exercice 14 : Playlist Musicale (Expert +)
 
@@ -801,7 +803,7 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-c-exo15" label="15. Gestionnaire de Tâches">
+  <ExerciseSection id="tp-c-exo15" label="15. Gestionnaire de Tâches" type="autre">
     <Enonce>
     ## ✅ Exercice 15 : Todo List Prioritaire (Bonus)
 

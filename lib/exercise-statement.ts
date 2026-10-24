@@ -49,10 +49,15 @@ function stripRepeatedTitle(enonce: string, label: string) {
   return enonce.trim();
 }
 
-function withoutHiddenSolution(content: string) {
-  return (content || '')
+/** Drop solution and test source before markdown is sent to the browser. The énoncé stays. */
+export function stripHiddenExerciseBlocks(markdown: string) {
+  return (markdown || '')
     .replace(/<Correction>[\s\S]*?<\/Correction>/gi, '')
     .replace(/<Verification>[\s\S]*?<\/Verification>/gi, '');
+}
+
+function withoutHiddenSolution(content: string) {
+  return stripHiddenExerciseBlocks(content);
 }
 
 /** Split an énoncé into the blocks the sheet actually wrote. Correction and hidden solutions are dropped. */

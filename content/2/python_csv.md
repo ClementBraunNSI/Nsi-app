@@ -7,24 +7,16 @@ icon: "\U0001F4CA"
 badgeId: premiere_traitement_tables_csv
 prerequisites:
   - python_dictionnaires
+audience: public
 ---
 
-## Objectifs
+# Traitement de données en tables
 
-- Expliquer le format CSV (séparateur, une ligne = un enregistrement).
-- Charger un fichier avec `csv.DictReader` en liste de dictionnaires.
-- Distinguer **projection** (quelles colonnes) et **sélection** (quelles lignes).
-- Écrire une boucle qui filtre ou extrait des champs.
+Un tableur et un fichier texte racontent souvent la même chose : des lignes, des colonnes, un en-tête. Le format **CSV** (*Comma-Separated Values*) est ce texte. Chaque ligne est un enregistrement, les champs sont séparés par une virgule ou, très souvent en France, par un point-virgule. Une fois chargé, le fichier devient une liste de dictionnaires. Les clés sont les noms de colonnes, qu'on appelle les **descripteurs**. Ensuite, deux questions reviennent : quelles colonnes garder, quelles lignes garder.
 
-## Idée clé
+## Charger le fichier
 
-Une **table** (fichier CSV) se lit comme une liste de fiches : chaque ligne devient un **dictionnaire** dont les clés sont les noms de colonnes (descripteurs). Ensuite, deux opérations classiques : garder certaines **colonnes** (projection) ou certaines **lignes** (sélection).
-
-## Format CSV et chargement
-
-CSV (*Comma-Separated Values*) : texte tabulaire, champs séparés par `,` ou `;`.
-
-`csv.DictReader` transforme chaque ligne en dictionnaire. Les clés viennent de la **première ligne** (en-têtes).
+`csv.DictReader` lit chaque ligne et en fait un dictionnaire. Les clés viennent de la **première ligne**, les en-têtes. `delimiter=";"` dit au lecteur que le séparateur n'est pas la virgule. `with open(...)` ouvre le fichier et le ferme à la sortie du bloc, même si quelque chose échoue au milieu.
 
 ```python
 import csv
@@ -40,6 +32,8 @@ def creer_liste_villes(nom_de_fichier: str) -> list:
 villes = creer_liste_villes("communes.csv")
 ```
 
+`newline=""` évite que le module `csv` se batte avec les fins de ligne. `encoding="utf-8"` lit correctement les accents. `dict(ligne)` copie la ligne lue dans un vrai dictionnaire, que l'on range dans la liste.
+
 !!! example "Aperçu"
     ```csv
     code_commune_INSEE;nom_commune;code_departement;nom_departement
@@ -48,11 +42,13 @@ villes = creer_liste_villes("communes.csv")
     ```
     Après chargement, `villes[0]["nom_commune"]` vaut `"L'Abergement-Clémenciat"`.
 
-Descripteurs utiles du fichier communes : `nom_commune`, `code_postal`, `code_departement`, `nom_departement`, `latitude`, `longitude`, etc.
+Sur le fichier des communes, les descripteurs utiles sont notamment `nom_commune`, `code_postal`, `code_departement`, `nom_departement`, `latitude`, `longitude`. Tout ce que `DictReader` renvoie est une **chaîne**. `"59"` n'est pas l'entier 59, et une latitude n'est pas encore un `float`. On convertit au moment de comparer des nombres.
 
-## Projection : choisir des colonnes
+Une erreur de débutant : la fonction reçoit `nom_de_fichier`, et le corps ouvre quand même `"communes.csv"` en dur. Le paramètre ne sert plus à rien. C'est `nom_de_fichier` qu'il faut passer à `open`.
 
-La **projection** extrait une ou plusieurs **clés** pour chaque enregistrement, **sans filtrer** les lignes.
+## Choisir des colonnes : la projection
+
+La **projection** extrait une ou plusieurs clés pour chaque enregistrement. On ne jette aucune ligne. On décide seulement quelles informations montrer.
 
 ```python
 # Tous les noms de communes (une colonne)
@@ -64,11 +60,11 @@ for ligne in villes:
     print(ligne["nom_commune"], "→", ligne["nom_departement"])
 ```
 
-En résumé : on décide **quelles informations** afficher ou garder, pour **toutes** les lignes.
+La première boucle ne garde que le nom. La seconde en garde deux. Dans les deux cas, Lille et L'Abergement-Clémenciat passent toutes les deux.
 
-## Sélection : filtrer des lignes
+## Choisir des lignes : la sélection
 
-La **sélection** garde uniquement les enregistrements qui vérifient une **condition**.
+La **sélection** garde les enregistrements qui vérifient une condition. Les autres disparaissent du résultat.
 
 ```python
 # Communes du département 59
@@ -82,7 +78,9 @@ for ligne in villes:
         print(ligne["nom_commune"])
 ```
 
-On peut **combiner** les deux : sélectionner des lignes, puis ne projeter que certains champs.
+On compare `code_departement` à la chaîne `"59"`, pas à l'entier `59`, parce que le CSV a tout lu comme du texte. Pour une latitude, il faut `float(ligne["latitude"])` avant de la comparer à un nombre. Sinon Python compare une chaîne et un flottant, et l'ordre n'a pas le sens que vous croyez.
+
+On enchaîne souvent les deux opérations : d'abord les lignes du Nord, ensuite seulement le nom et la latitude.
 
 | Opération | Question | Exemple |
 | --- | --- | --- |
@@ -107,19 +105,7 @@ On peut **combiner** les deux : sélectionner des lignes, puis ne projeter que c
 2. `afficher_noms_longueur_min(villes, longueur)` — renvoie les noms assez longs.
 3. `afficher_communes_par_latitude(villes, max_latitude)` — latitude inférieure au seuil (penser à convertir en `float`).
 
-## Piège fréquent
-
-- Ouvrir un fichier en dur (`open("communes.csv")`) alors que la fonction reçoit `nom_de_fichier` : utiliser le **paramètre**.
-- Comparer une latitude (`str` issue du CSV) à un nombre sans `float(...)`.
-
-## À retenir
-
-- CSV = table texte ; `DictReader` → liste de dictionnaires.
-- Clés = noms de colonnes (descripteurs).
-- **Projection** = choisir des colonnes ; **sélection** = filtrer des lignes.
-- Les valeurs lues sont des `str` : convertir pour comparer des nombres.
-- `with open(...)` ferme le fichier proprement.
-- On enchaîne souvent sélection puis projection.
+Pour fermer : un CSV est une table en texte, `DictReader` en fait une liste de dictionnaires, les clés sont les descripteurs. La projection choisit les colonnes, la sélection filtre les lignes. Les valeurs lues sont des chaînes. `with` ferme le fichier. Le geste habituel est : sélectionner, puis projeter.
 
 ## Pour s'entraîner
 

@@ -8,6 +8,7 @@ icon: "🎯"
 badgeId: terminale_entrainement_bac
 prerequisites:
   - exercices_terminale_fondamentaux
+audience: public
 ---
 
 # Entraînement épreuve pratique

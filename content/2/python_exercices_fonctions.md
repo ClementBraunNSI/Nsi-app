@@ -7,6 +7,7 @@ meta: 'Définition, Paramètres et Valeurs de retour'
 level: premiere
 prerequisites:
   - python_exercices_boucles
+audience: public
 ---
 
 {/* L'id 'les-fonctions-python' doit correspondre à l'identifiant 
@@ -18,7 +19,7 @@ prerequisites:
   {/* CPTÉGORIE 1 : FACILE (1.1 à 1.6)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonctions-1-1" label="1.1 [Facile] - Calcul de la moyenne">
+  <ExerciseSection id="fonctions-1-1" label="1.1 [Facile] - Calcul de la moyenne" type="python">
     <Enonce>
     ### Exercice 1.1 [Facile] : Calcul de la moyenne
     **Écrire une fonction `moyenne` qui prend deux nombres en paramètres et renvoie leur moyenne.**
@@ -40,7 +41,7 @@ assert moyenne(0, 10) == 5, "moyenne(0, 10) devrait renvoyer 5."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-1-2" label="1.2 [Facile] - Fonction est_pair (En-tête)">
+  <ExerciseSection id="fonctions-1-2" label="1.2 [Facile] - Fonction est_pair (En-tête)" type="python">
     <Enonce>
     ### Exercice 1.2 [Facile] : Fonction est_pair (En-tête)
     **Écrire l'en-tête d'une fonction `est_pair` qui prend en paramètre un nombre entier et renvoie un booléen.**
@@ -63,7 +64,7 @@ assert est_pair(5) is False, "est_pair(5) doit renvoyer False."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-1-3" label="1.3 [Facile] - Afficher la somme">
+  <ExerciseSection id="fonctions-1-3" label="1.3 [Facile] - Afficher la somme" type="python">
     <Enonce>
     ### Exercice 1.3 [Facile] : Afficher la somme
     **Écrire l'en-tête d'une fonction `afficher_somme` qui prend deux nombres en paramètres et ne renvoie rien (procédure).**
@@ -84,7 +85,7 @@ assert afficher_somme(2, 3) is None, "La fonction ne doit rien renvoyer (None)."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-1-4" label="1.4 [Facile] - Fonction parité">
+  <ExerciseSection id="fonctions-1-4" label="1.4 [Facile] - Fonction parité" type="python">
     <Enonce>
     ### Exercice 1.4 [Facile] : Fonction parité
     **Écrire une fonction `parite` qui prend un entier un paramètre et renvoie `True` si le nombre est pair, `False` sinon. Utilisez le type hinting.**
@@ -107,7 +108,7 @@ assert parite(7) is False, "parite(7) doit renvoyer False."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-1-5" label="1.5 [Facile] - Aire d'un triangle">
+  <ExerciseSection id="fonctions-1-5" label="1.5 [Facile] - Aire d'un triangle" type="python">
     <Enonce>
     ### Exercice 1.5 [Facile] : Aire d'un triangle
     **Écrire une fonction `aire_triangle` qui prend en paramètres la base et la hauteur d'un triangle (nombres flottants) et renvoie son aire.**
@@ -128,7 +129,7 @@ assert aire_triangle(10.0, 5.0) == 25.0, "aire_triangle(10.0, 5.0) devrait renvo
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-1-6" label="1.6 [Facile] - Salutation">
+  <ExerciseSection id="fonctions-1-6" label="1.6 [Facile] - Salutation" type="python">
     <Enonce>
     ### Exercice 1.6 [Facile] : Salutation
     **Écrire une fonction `saluer` qui prend une chaîne de caractères `nom` en paramètre et renvoie une salutation de la forme `"Bonjour, ... !"`.**
@@ -152,7 +153,7 @@ assert saluer("Alice") == "Bonjour, Alice !", "Le format de salutation est incor
   {/* CATÉGORIE 2 : MOYEN (2.1 à 2.6)             */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonctions-2-1" label="2.1 [Moyen] - Signe d'un nombre">
+  <ExerciseSection id="fonctions-2-1" label="2.1 [Moyen] - Signe d'un nombre" type="python">
     <Enonce>
     ### Exercice 2.1 [Moyen] : Signe d'un nombre
     **Écrire une fonction `signe` qui prend un nombre entier en paramètre et renvoie `"positif"` s'il est strictement supérieur à 0, `"negatif"` s'il est strictement inférieur à 0, et `"nul"` sinon.**
@@ -179,7 +180,7 @@ assert signe(0) == "nul", "signe(0) devrait renvoyer 'nul'."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-2-2" label="2.2 [Moyen] - Tarif cinéma">
+  <ExerciseSection id="fonctions-2-2" label="2.2 [Moyen] - Tarif cinéma" type="python">
     <Enonce>
     ### Exercice 2.2 [Moyen] : Tarif cinéma
     **Écrire une fonction `prix_ticket` qui prend l'âge d'un spectateur (entier) et renvoie le prix en euros : `5` si moins de 14 ans, `8` si moins de 26 ans, et `11` sinon.**
@@ -206,7 +207,7 @@ assert prix_ticket(35) == 11, "prix_ticket(35) devrait renvoyer 11."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-2-3" label="2.3 [Moyen] - Année bissextile">
+  <ExerciseSection id="fonctions-2-3" label="2.3 [Moyen] - Année bissextile" type="python">
     <Enonce>
     ### Exercice 2.3 [Moyen] : Année bissextile
     **Écrire une fonction `est_bissextile` qui prend une année en paramètre et renvoie `True` si elle est bissextile, `False` sinon. (Rappel : divisible par 4 mais pas par 100, ou divisible par 400).**
@@ -228,7 +229,7 @@ assert est_bissextile(2000) is True, "2000 est bissextile."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-2-4" label="2.4 [Moyen] - Maximum de deux nombres">
+  <ExerciseSection id="fonctions-2-4" label="2.4 [Moyen] - Maximum de deux nombres" type="python">
     <Enonce>
     ### Exercice 2.4 [Moyen] : Maximum de deux nombres
     **Écrire une fonction `maximum_deux` qui renvoie le plus grand de deux nombres passés en arguments, sans utiliser la fonction native `max()`.**
@@ -251,7 +252,7 @@ assert maximum_deux(-5, -1) == -1, "Le maximum entre -5 et -1 est -1."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-2-5" label="2.5 [Moyen] - Conversion de secondes">
+  <ExerciseSection id="fonctions-2-5" label="2.5 [Moyen] - Conversion de secondes" type="python">
     <Enonce>
     ### Exercice 2.5 [Moyen] : Conversion de secondes
     **Écrire une fonction `minutes_restantes` qui prend un nombre total de secondes en paramètre et renvoie le nombre de secondes restantes après avoir extrait les minutes complètes (opérateur modulo).**
@@ -272,7 +273,7 @@ assert minutes_restantes(60) == 0, "60 secondes correspondent à 1 minute pile."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-2-6" label="2.6 [Moyen] - Mention au Baccalauréat">
+  <ExerciseSection id="fonctions-2-6" label="2.6 [Moyen] - Mention au Baccalauréat" type="python">
     <Enonce>
     ### Exercice 2.6 [Moyen] : Mention au Baccalauréat
     **Écrire une fonction `mention` qui prend une note (flottant entre 0 et 20) et renvoie `"Très Bien"` si la note est supérieure ou égale à 16, `"Bien"` si elle est entre 14 et 16 (exclu), `"Assez Bien"` entre 12 et 14 (exclu), et `"Pas de mention"` sinon.**
@@ -305,7 +306,7 @@ assert mention(11.5) == "Pas de mention"
   {/* CATÉGORIE 3 : AVANCÉ (3.1 à 3.6)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonctions-3-1" label="3.1 [Avancé] - Compter une lettre">
+  <ExerciseSection id="fonctions-3-1" label="3.1 [Avancé] - Compter une lettre" type="python">
     <Enonce>
     ### Exercice 3.1 [Avancé] : Compter une lettre
     **Écrire une fonction `compter_lettre` qui prend en paramètres une chaîne de caractères `chaine` et un caractère `lettre`, puis renvoie le nombre de fois où cette lettre apparaît.**
@@ -330,7 +331,7 @@ assert compter_lettre("gagner", "g") == 2, "La lettre g apparaît 2 fois."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-3-2" label="3.2 [Avancé] - Inverser une chaîne">
+  <ExerciseSection id="fonctions-3-2" label="3.2 [Avancé] - Inverser une chaîne" type="python">
     <Enonce>
     ### Exercice 3.2 [Avancé] : Inverser une chaîne
     **Écrire une fonction `inverser` qui prend une chaîne de caractères en paramètre et renvoie cette même chaîne écrite à l'envers, en utilisant une accumulation dans une boucle.**
@@ -354,7 +355,7 @@ assert inverser("radar") == "radar", "'radar' est un palindrome."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-3-3" label="3.3 [Avancé] - Détection d'espace">
+  <ExerciseSection id="fonctions-3-3" label="3.3 [Avancé] - Détection d'espace" type="python">
     <Enonce>
     ### Exercice 3.3 [Avancé] : Détection d'espace
     **Écrire une fonction `a_espace` qui prend une chaîne de caractères en paramètre et renvoie `True` si elle contient au moins un espace, et `False` sinon.**
@@ -378,7 +379,7 @@ assert a_espace("Hello World") is True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-3-4" label="3.4 [Avancé] - Somme des impairs">
+  <ExerciseSection id="fonctions-3-4" label="3.4 [Avancé] - Somme des impairs" type="python">
     <Enonce>
     ### Exercice 3.4 [Avancé] : Somme des impairs
     **Écrire une fonction `somme_impairs` qui prend un entier `n` en paramètre et renvoie la somme de tous les entiers impairs positifs inférieurs ou égaux à `n`.**
@@ -402,7 +403,7 @@ assert somme_impairs(6) == 9, "1 + 3 + 5 = 9."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-3-5" label="3.5 [Avancé] - Calcul de factorielle">
+  <ExerciseSection id="fonctions-3-5" label="3.5 [Avancé] - Calcul de factorielle" type="python">
     <Enonce>
     ### Exercice 3.5 [Avancé] : Calcul de factorielle
     **Écrire une fonction `factorielle` qui prend un entier positif `n` en paramètre et renvoie son produit factoriel ($n! = 1 \times 2 \times \dots \times n$). On rappelle que `factorielle(0)` vaut 1.**
@@ -426,7 +427,7 @@ assert factorielle(4) == 24, "1 * 2 * 3 * 4 = 24."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-3-6" label="3.6 [Avancé] - Répéter une chaîne">
+  <ExerciseSection id="fonctions-3-6" label="3.6 [Avancé] - Répéter une chaîne" type="python">
     <Enonce>
     ### Exercice 3.6 [Avancé] : Répéter une chaîne
     **Écrire une fonction `repeter` qui prend une chaîne `texte` et un entier `n` en paramètres, et renvoie une nouvelle chaîne contenant `n` fois le `texte` d'origine séparé par un tiret `"-"`.**
@@ -457,7 +458,7 @@ assert repeter("A", 1) == "A"
   {/* CATÉGORIE 4 : DIFFICILE (4.1 à 4.4)         */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonctions-4-1" label="4.1 [Difficile] - Syracuse (Temps de vol)">
+  <ExerciseSection id="fonctions-4-1" label="4.1 [Difficile] - Syracuse (Temps de vol)" type="python">
     <Enonce>
     ### Exercice 4.1 [Difficile] : Syracuse (Temps de vol)
     **Écrire une fonction `syracuse_vol` qui applique la conjecture de Syracuse à un entier `n`. Tant que la valeur n'atteint pas 1, si le nombre est pair on le divise par 2, s'il est impair on le multiplie par 3 et on ajoute 1. La fonction doit renvoyer le nombre d'étapes (le temps de vol) pour atteindre 1.**
@@ -485,7 +486,7 @@ assert syracuse_vol(3) == 7, "Le temps de vol pour 3 est de 7 étapes."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-4-2" label="4.2 [Difficile] - Placement financier">
+  <ExerciseSection id="fonctions-4-2" label="4.2 [Difficile] - Placement financier" type="python">
     <Enonce>
     ### Exercice 4.2 [Difficile] : Placement financier
     **Écrire une fonction `temps_doublement` qui prend un capital initial et un taux d'intérêt annuel (ex: `0.03` pour 3%). À l'aide d'une boucle `while`, calculez et renvoyez le nombre d'années nécessaires pour que le capital double.**
@@ -510,7 +511,7 @@ assert temps_doublement(1000, 0.05) == 15, "À 5%, un capital double en 15 ans."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-4-3" label="4.3 [Difficile] - Chiffrement de César (Lettre)">
+  <ExerciseSection id="fonctions-4-3" label="4.3 [Difficile] - Chiffrement de César (Lettre)" type="python">
     <Enonce>
     ### Exercice 4.3 [Difficile] : Chiffrement de César (Lettre)
     **Écrire une fonction `decaler_lettre` qui prend une lettre minuscule (caractère unique) et un entier `decalage`, puis renvoie la nouvelle lettre minuscule après décalage circulaire dans l'alphabet. On utilisera `ord()` et `chr()`.**
@@ -533,7 +534,7 @@ assert decaler_lettre("z", 1) == "a", "Le décalage doit être circulaire."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-4-4" label="4.4 [Difficile] - Physique (Chute libre)">
+  <ExerciseSection id="fonctions-4-4" label="4.4 [Difficile] - Physique (Chute libre)" type="python">
     <Enonce>
     ### Exercice 4.4 [Difficile] : Physique (Chute libre)
     **En physique, la vitesse d'un objet en chute libre sans frottements après un temps $t$ (en secondes) est donnée par la formule $v = g \times t$ avec $g = 9.81$ m/s². Écrire une fonction `vitesse_chute` qui prend le temps `t` (flottant) en paramètre et renvoie la vitesse arrondie à deux décimales grâce à la fonction `round(valeur, 2)`.**
@@ -560,7 +561,7 @@ assert vitesse_chute(0) == 0.0
   {/* CATÉGORIE 5 : EXPERT (5.1 à 5.3)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonctions-5-1" label="5.1 [Expert] - Algorithme d'Euclide (PGCD)">
+  <ExerciseSection id="fonctions-5-1" label="5.1 [Expert] - Algorithme d'Euclide (PGCD)" type="python">
     <Enonce>
     ### Exercice 5.1 [Expert] : Algorithme d'Euclide (PGCD)
     **Écrire une fonction `pgcd` qui calcule le Plus Grand Commun Diviseur de deux entiers positifs `a` et `b` à l'aide de l'algorithme d'Euclide itératif (boucle `while` exploitant les restes successifs).**
@@ -583,7 +584,7 @@ assert pgcd(7, 5) == 1, "7 et 5 sont premiers entre eux."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-5-2" label="5.2 [Expert] - Test de primalité">
+  <ExerciseSection id="fonctions-5-2" label="5.2 [Expert] - Test de primalité" type="python">
     <Enonce>
     ### Exercice 5.2 [Expert] : Test de primalité
     **Écrire une fonction `est_premier` qui prend un entier `n` en paramètre et renvoie `True` si le nombre est premier, et `False` sinon. On rappelle que les nombres inférieurs ou égaux à 1 ne sont pas premiers.**
@@ -610,7 +611,7 @@ assert est_premier(15) is False, "15 est divisible par 3 et 5."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonctions-5-3" label="5.3 [Expert] - Conversion en binaire (Chaîne)">
+  <ExerciseSection id="fonctions-5-3" label="5.3 [Expert] - Conversion en binaire (Chaîne)" type="python">
     <Enonce>
     ### Exercice 5.3 [Expert] : Conversion en binaire (Chaîne)
     **Écrire une fonction `vers_binaire` qui prend un entier positif `n` et renvoie sa représentation binaire sous forme de chaîne de caractères (`str`), obtenue par divisions successives par 2. On gérera le cas particulier où `n == 0`.**

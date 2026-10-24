@@ -6,11 +6,12 @@ chapter: Données structurées
 icon: "🐍"
 prerequisites:
   - donnees_structurees
+audience: public
 ---
 
 <ExerciseTabs courseId="tp-python-donnees" courseTitle="TP Python : Données structurées" packages="pandas">
 
-  <ExerciseSection id="donnees-0" label="Important ⚠️ - Avant de commencer">
+  <ExerciseSection id="donnees-0" label="Important ⚠️ - Avant de commencer" type="lecture">
     <Enonce>
       ### Important ⚠️ - Avant de commencer
 
@@ -45,7 +46,7 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-1" label="Introduction 🦊 - Lire un CSV avec pandas">
+  <ExerciseSection id="donnees-1" label="Introduction 🦊 - Lire un CSV avec pandas" type="python">
     <Enonce>
       ### Introduction 🦊 - Lire un CSV avec pandas
 
@@ -85,7 +86,7 @@ assert nb_renards == len(attendu), "nb_renards doit correspondre au nombre de li
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-2" label="Introduction 🦊 - Les colonnes du tableau">
+  <ExerciseSection id="donnees-2" label="Introduction 🦊 - Les colonnes du tableau" type="python">
     <Enonce>
       ### Introduction 🦊 - Les colonnes du tableau
 
@@ -129,7 +130,7 @@ assert "Poids_kg" in colonnes, "Le fichier contient une colonne Poids_kg."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-3" label="Introduction 🦊 - Lire une cellule">
+  <ExerciseSection id="donnees-3" label="Introduction 🦊 - Lire une cellule" type="python">
     <Enonce>
       ### Introduction 🦊 - Lire une cellule
 
@@ -171,7 +172,7 @@ assert float(poids_fennec) == attendu, "Lisez le poids du Fennec dans le tableau
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-4" label="Facile 🦊 - Filtrer un tableau">
+  <ExerciseSection id="donnees-4" label="Facile 🦊 - Filtrer un tableau" type="python">
     <Enonce>
       ### Facile 🦊 - Filtrer un tableau
 
@@ -215,7 +216,7 @@ assert nb_resultats == len(attendu), "nb_resultats doit correspondre au filtre."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-5" label="Facile 🦊 - Trier un tableau">
+  <ExerciseSection id="donnees-5" label="Facile 🦊 - Trier un tableau" type="python">
     <Enonce>
       ### Facile 🦊 - Trier un tableau
 
@@ -259,7 +260,7 @@ assert plus_lourd == attendu.iloc[-1]["Nom"], "plus_lourd est le renard le plus 
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-6" label="Facile 🦊 - Lire un JSON">
+  <ExerciseSection id="donnees-6" label="Facile 🦊 - Lire un JSON" type="python">
     <Enonce>
       ### Facile 🦊 - Lire un JSON
 
@@ -314,7 +315,7 @@ assert nb_aliments == len(fiche_ref["renard"]["alimentation"]), "Comptez les ali
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-7" label="Facile 🦊 - Statistique sur une colonne">
+  <ExerciseSection id="donnees-7" label="Facile 🦊 - Statistique sur une colonne" type="python">
     <Enonce>
       ### Facile 🦊 - Statistique sur une colonne
 

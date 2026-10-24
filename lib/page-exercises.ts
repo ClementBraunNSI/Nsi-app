@@ -2,31 +2,20 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { contentRoot } from "@/lib/content-path";
-import { classifySection } from "@/lib/exercise-classification";
+import { isEditorExercise, readExerciseType } from "@/lib/exercise-type";
 import { coursePath } from "@/lib/nsi-levels";
 
 const SKIP = new Set(["build", "node_modules", ".git"]);
 
-function exerciseIdsIn(content: string, levelFolder: string): string[] {
+function exerciseIdsIn(content: string): string[] {
   const ids: string[] = [];
   const sectionRegex = /<ExerciseSection\b([^>]*)>([\s\S]*?)<\/ExerciseSection>/g;
   let match: RegExpExecArray | null;
   while ((match = sectionRegex.exec(content)) !== null) {
     const attrs = match[1];
     const id = attrs.match(/\bid="([^"]*)"/)?.[1];
-    const label = attrs.match(/\blabel="([^"]*)"/)?.[1];
-    if (!id || !label) continue;
-    const before = content.slice(0, match.index);
-    const openings = [...before.matchAll(/<ExerciseTabs\b([^>]*)>/g)];
-    const tabAttrs = openings.at(-1)?.[1] ?? "";
-    const section = classifySection({
-      label,
-      body: match[2],
-      levelFolder,
-      courseId: tabAttrs.match(/\bcourseId="([^"]*)"/)?.[1],
-      courseTitle: tabAttrs.match(/\bcourseTitle="([^"]*)"/)?.[1],
-    });
-    if (section.role === "exercise") ids.push(id);
+    if (!id || !isEditorExercise(readExerciseType(attrs))) continue;
+    ids.push(id);
   }
   return ids;
 }
@@ -61,7 +50,7 @@ export function exercisesByPage(): Map<string, string[]> {
     const slug = parts.slice(1).join("/").replace(/\.mdx?$/, "");
     if (!folder || !slug) continue;
     const { content } = matter(fs.readFileSync(filePath, "utf8"));
-    map.set(coursePath(folder, slug), exerciseIdsIn(content, folder));
+    map.set(coursePath(folder, slug), exerciseIdsIn(content));
   }
   cache = map;
   return map;

@@ -5,13 +5,14 @@ badgeId: bts_sql_injection
 meta: 'Durée : 2 heures · Objectif : Comprendre pour mieux protéger'
 prerequisites:
   - tp_cesar_vigenere
+audience: public
 ---
 
 ### Contexte
 Les injections SQL restent l'une des vulnérabilités les plus critiques du web (Top 10 OWASP). Ce TP vous place dans la peau d'un attaquant éthique pour comprendre les mécanismes, puis dans celle d'un administrateur système pour analyser les traces et sécuriser l'infrastructure.
 
 <ExerciseTabs courseId="bts_sql_injection" courseTitle="Badge Injection SQL">
-  <ExerciseSection id="part1" label="1. Découverte (25')">
+  <ExerciseSection id="part1" label="1. Découverte (25')" type="autre">
     ## Partie 1 : Découverte de l'injection SQL
     Objectif : Manipuler une base de données via un formulaire web vulnérable.
 
@@ -42,7 +43,7 @@ Les injections SQL restent l'une des vulnérabilités les plus critiques du web 
     3. **Expliquer le fonctionnement (avec vos mots) :** Pourquoi l'ajout de caractères spéciaux modifie le comportement de la requête SQL ?
   </ExerciseSection>
 
-  <ExerciseSection id="part2" label="2. Analyse Logs (40')">
+  <ExerciseSection id="part2" label="2. Analyse Logs (40')" type="autre">
     ## Partie 2 : Analyse de logs d'attaque
     Objectif : Repérer les traces d'une attaque dans les fichiers journaux du serveur web (Apache/Nginx).
 
@@ -90,7 +91,7 @@ Les injections SQL restent l'une des vulnérabilités les plus critiques du web 
     * [ ] Redémarrer le serveur
   </ExerciseSection>
 
-  <ExerciseSection id="part3" label="3. Protection (40')">
+  <ExerciseSection id="part3" label="3. Protection (40')" type="autre">
     ## Partie 3 : Solutions de protection
     Objectif : Mettre en place des contre-mesures techniques (WAF) et organisationnelles.
 
@@ -146,7 +147,7 @@ Les injections SQL restent l'une des vulnérabilités les plus critiques du web 
     2. Comment s'appelle le mécanisme utilisé par cet outil pour repérer les motifs d'attaque (ex: "UNION SELECT") dans les fichiers logs ?
   </ExerciseSection>
 
-  <ExerciseSection id="part4" label="4. Rapport (15')">
+  <ExerciseSection id="part4" label="4. Rapport (15')" type="autre">
     ## Partie 4 : Mini-rapport (15 min)
     Objectif : Rédiger un rapport professionnel synthétique pour la direction technique.
 
@@ -173,7 +174,7 @@ Les injections SQL restent l'une des vulnérabilités les plus critiques du web 
     **5. RECOMMANDATIONS À MOYEN TERME**
   </ExerciseSection>
 
-  <ExerciseSection id="livrables" label="Livrables & Barème">
+  <ExerciseSection id="livrables" label="Livrables & Barème" type="autre">
     ## Livrables à rendre
     **Format :** Fichier PDF unique nommé `NOM_Prenom_TP_B3_SQL.pdf`
     * Réponses Partie 1 (capture tutoriel + questions)

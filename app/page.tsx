@@ -7,7 +7,7 @@ import { supabase } from '@/lib/supabase';
 import { getLandingPrivateCard, type LandingPrivateCard } from '@/app/actions/coursePages';
 import { isAbortError } from '@/lib/is-abort-error';
 import SplashText from '@/components/SplashText';
-import ColleagueSites from '@/components/ColleagueSites';
+import ColleagueTeaser from '@/components/ColleagueTeaser';
 
 // Niveaux classiques
 const LEVELS = [
@@ -35,7 +35,7 @@ const PUBLIC_RESOURCES = [
 const GAMES = [
   { 
     id: 'fox-3d-test', 
-    title: "Académie des Renards", 
+    title: "Le renard dans le poulailler", 
     desc: "Guide le renard jusqu'à la poule en Python : fonctions, variables, conditions et boucles.",
     img: "/images/fox_act.png", 
     color: "bg-teal-500", 
@@ -53,7 +53,7 @@ const GAMES = [
   },
 ];
 
-const emptyPrivateCard: LandingPrivateCard = { show: false, grouped: false, groups: [] };
+const emptyPrivateCard: LandingPrivateCard = { show: false, courses: [] };
 
 const CourseCard = ({ title, desc, img, tag, color, href, featured = false, children }: any) => {
   const shell = (
@@ -241,37 +241,18 @@ export default function LandingPage() {
               tag="Particuliers"
               color="bg-amber-600"
             >
-              {privateCard.groups.length === 0 ? (
+              {privateCard.courses.length === 0 ? (
                 <p className="text-sm text-[var(--muted)] mb-6">Aucun cours particulier pour le moment.</p>
               ) : (
-                <div className="mb-6 space-y-4">
-                  {privateCard.grouped
-                    ? privateCard.groups.map((group) => (
-                        <section key={group.student}>
-                          <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">{group.student}</h4>
-                          <ul className="space-y-1">
-                            {group.courses.map((course) => (
-                              <li key={`${group.student}-${course.path}`}>
-                                <Link href={course.path} className="text-sm font-medium text-[var(--fg)] hover:text-[var(--accent)]">
-                                  {course.title}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </section>
-                      ))
-                    : (
-                      <ul className="space-y-1">
-                        {privateCard.groups.flatMap((group) => group.courses).map((course) => (
-                          <li key={course.path}>
-                            <Link href={course.path} className="text-sm font-medium text-[var(--fg)] hover:text-[var(--accent)]">
-                              {course.title}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                </div>
+                <ul className="mb-6 space-y-1">
+                  {privateCard.courses.map((course) => (
+                    <li key={course.path}>
+                      <Link href={course.path} className="text-sm font-medium text-[var(--fg)] hover:text-[var(--accent)]">
+                        {course.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               )}
             </CourseCard>
           </div>
@@ -292,7 +273,7 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <ColleagueSites />
+      <ColleagueTeaser />
 
       <footer className="border-t border-[var(--border)] py-12">
         <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">

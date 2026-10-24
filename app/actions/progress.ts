@@ -1,7 +1,6 @@
-'use server';
-
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
+import { createAdminClient } from '@/utils/supabase/admin';
 import { getAuthContext } from '@/lib/auth';
 import {
   achievementForSheet,
@@ -49,7 +48,15 @@ export async function saveValidatedExercise(input: {
     return { ...empty, error: 'invalid' };
   }
 
+  const sheetExercises = await getExercisesForCourses([courseId]);
+  if (!sheetExercises.some((exercise) => exercise.id === exerciseId)) {
+    return { ...empty, error: 'invalid' };
+  }
+
   const supabase = await createClient();
+  const admin = createAdminClient();
+  if (!admin) return { ...empty, error: 'save_failed' };
+
   const { data: priorRow } = await supabase
     .from('user_progress')
     .select('id')
@@ -58,7 +65,7 @@ export async function saveValidatedExercise(input: {
     .maybeSingle();
   const alreadyValidated = Boolean(priorRow);
 
-  const { error } = await supabase.from('user_progress').upsert(
+  const { error } = await admin.from('user_progress').upsert(
     {
       exercise_id: exerciseId,
       user_id: userId,
@@ -70,11 +77,6 @@ export async function saveValidatedExercise(input: {
   if (error) return { ...empty, error: 'save_failed' };
 
   await syncMyHomework();
-
-  const sheetExercises = await getExercisesForCourses([courseId]);
-  if (!sheetExercises.some((exercise) => exercise.id === exerciseId)) {
-    return { ...empty, error: 'invalid' };
-  }
   const [progressRes, badgesRes, achievementsRes, exerciseCountRes, sheets] = await Promise.all([
     supabase
       .from('user_progress')
@@ -97,7 +99,7 @@ export async function saveValidatedExercise(input: {
   const newBadge = sheetComplete && !alreadyBadge;
 
   if (newBadge) {
-    const { error: badgeError } = await supabase.from('badges').upsert(
+    const { error: badgeError } = await admin.from('badges').upsert(
       {
         user_id: userId,
         course_id: courseId,
@@ -145,7 +147,7 @@ export async function saveValidatedExercise(input: {
   }
   const missing = desired.filter((item) => !stored.has(item.id));
   if (missing.length > 0) {
-    await supabase.from('user_achievements').upsert(
+    await admin.from('user_achievements').upsert(
       missing.map((item) => ({
         user_id: userId,
         achievement_id: item.id,

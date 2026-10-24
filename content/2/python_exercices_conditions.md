@@ -7,6 +7,7 @@ meta: 'if, if/else, if/elif/else et opérateurs logiques'
 level: premiere
 prerequisites:
   - python_constructions_elementaires
+audience: public
 ---
 
 <ExerciseTabs courseId="les-conditions-python" courseTitle="Les Conditions">
@@ -15,7 +16,7 @@ prerequisites:
   {/* CATÉGORIE 1 : FACILE (1.1 à 1.6)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="conditions-1-1" label="1.1 [Facile] - Majeur ou mineur">
+  <ExerciseSection id="conditions-1-1" label="1.1 [Facile] - Majeur ou mineur" type="python">
     <Enonce>
     ### Exercice 1.1 [Facile] : Majeur ou mineur
     **Écrire une fonction `est_majeur` qui prend un âge (entier) en paramètre et renvoie `True` si la personne est majeure (âge supérieur ou égal à 18), `False` sinon. Utilisez un `if` / `else`.**
@@ -40,7 +41,7 @@ assert est_majeur(18) is True, "18 ans : majeur."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-1-2" label="1.2 [Facile] - Nombre positif">
+  <ExerciseSection id="conditions-1-2" label="1.2 [Facile] - Nombre positif" type="python">
     <Enonce>
     ### Exercice 1.2 [Facile] : Nombre positif
     **Écrire une fonction `est_positif` qui prend un nombre (entier ou flottant) et renvoie `True` s'il est strictement supérieur à 0, `False` sinon.**
@@ -65,7 +66,7 @@ assert est_positif(-2) is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-1-3" label="1.3 [Facile] - Parité">
+  <ExerciseSection id="conditions-1-3" label="1.3 [Facile] - Parité" type="python">
     <Enonce>
     ### Exercice 1.3 [Facile] : Parité
     **Écrire une fonction `parite` qui prend un entier `n` et renvoie la chaîne `"pair"` si `n` est pair, `"impair"` sinon.**
@@ -90,7 +91,7 @@ assert parite(0) == "pair"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-1-4" label="1.4 [Facile] - Salutation selon l'heure">
+  <ExerciseSection id="conditions-1-4" label="1.4 [Facile] - Salutation selon l'heure" type="python">
     <Enonce>
     ### Exercice 1.4 [Facile] : Salutation selon l'heure
     **Écrire une fonction `salutation` qui prend une heure (entier entre 0 et 23) et renvoie `"Bonjour"` si l'heure est strictement inférieure à 18, `"Bonsoir"` sinon.**
@@ -115,7 +116,7 @@ assert salutation(22) == "Bonsoir"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-1-5" label="1.5 [Facile] - Maximum de deux nombres">
+  <ExerciseSection id="conditions-1-5" label="1.5 [Facile] - Maximum de deux nombres" type="python">
     <Enonce>
     ### Exercice 1.5 [Facile] : Maximum de deux nombres
     **Écrire une fonction `maximum` qui prend deux nombres `a` et `b` et renvoie le plus grand des deux, sans utiliser la fonction native `max()`.**
@@ -140,7 +141,7 @@ assert maximum(7, 7) == 7
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-1-6" label="1.6 [Facile] - Tarif musée">
+  <ExerciseSection id="conditions-1-6" label="1.6 [Facile] - Tarif musée" type="python">
     <Enonce>
     ### Exercice 1.6 [Facile] : Tarif musée
     **Écrire une fonction `tarif_musee` qui prend un âge et renvoie `0` si l'âge est strictement inférieur à 12 ans, `8` sinon.**
@@ -169,7 +170,7 @@ assert tarif_musee(25) == 8
   {/* CATÉGORIE 2 : MOYEN (2.1 à 2.6)             */}
   {/* ========================================== */}
 
-  <ExerciseSection id="conditions-2-1" label="2.1 [Moyen] - Signe d'un nombre">
+  <ExerciseSection id="conditions-2-1" label="2.1 [Moyen] - Signe d'un nombre" type="python">
     <Enonce>
     ### Exercice 2.1 [Moyen] : Signe d'un nombre
     **Écrire une fonction `signe` qui prend un entier et renvoie `"positif"` s'il est strictement supérieur à 0, `"negatif"` s'il est strictement inférieur à 0, `"nul"` sinon. Utilisez `if` / `elif` / `else`.**
@@ -196,7 +197,7 @@ assert signe(0) == "nul"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-2-2" label="2.2 [Moyen] - Mention au collège">
+  <ExerciseSection id="conditions-2-2" label="2.2 [Moyen] - Mention au collège" type="python">
     <Enonce>
     ### Exercice 2.2 [Moyen] : Mention au collège
     **Écrire une fonction `mention` qui prend une note sur 20 et renvoie :**
@@ -233,7 +234,7 @@ assert mention(8) == "Insuffisant"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-2-3" label="2.3 [Moyen] - Tarif cinéma">
+  <ExerciseSection id="conditions-2-3" label="2.3 [Moyen] - Tarif cinéma" type="python">
     <Enonce>
     ### Exercice 2.3 [Moyen] : Tarif cinéma
     **Écrire une fonction `prix_cinema` qui prend un âge et renvoie le prix en euros : `5` si moins de 14 ans, `8` si moins de 26 ans, `11` sinon.**
@@ -260,7 +261,7 @@ assert prix_cinema(30) == 11
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-2-4" label="2.4 [Moyen] - Catégorie IMC">
+  <ExerciseSection id="conditions-2-4" label="2.4 [Moyen] - Catégorie IMC" type="python">
     <Enonce>
     ### Exercice 2.4 [Moyen] : Catégorie IMC
     **Écrire une fonction `categorie_imc` qui prend un IMC (flottant) et renvoie :**
@@ -294,7 +295,7 @@ assert categorie_imc(32) == "obesite"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-2-5" label="2.5 [Moyen] - Jour de la semaine">
+  <ExerciseSection id="conditions-2-5" label="2.5 [Moyen] - Jour de la semaine" type="python">
     <Enonce>
     ### Exercice 2.5 [Moyen] : Jour de la semaine
     **Écrire une fonction `jour_semaine` qui prend un entier `n` entre 1 et 7 et renvoie le nom du jour : `1 → "lundi"`, `2 → "mardi"`, …, `7 → "dimanche"`. Si `n` est hors de cette plage, renvoyer `"invalide"`.**
@@ -331,7 +332,7 @@ assert jour_semaine(0) == "invalide"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-2-6" label="2.6 [Moyen] - Trimestre de l'année">
+  <ExerciseSection id="conditions-2-6" label="2.6 [Moyen] - Trimestre de l'année" type="python">
     <Enonce>
     ### Exercice 2.6 [Moyen] : Trimestre de l'année
     **Écrire une fonction `trimestre` qui prend un numéro de mois (1 à 12) et renvoie `1`, `2`, `3` ou `4` selon le trimestre. Renvoyer `0` si le mois est invalide.**
@@ -367,7 +368,7 @@ assert trimestre(13) == 0
   {/* CATÉGORIE 3 : AVANCÉ (3.1 à 3.6)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="conditions-3-1" label="3.1 [Avancé] - Mot de passe valide">
+  <ExerciseSection id="conditions-3-1" label="3.1 [Avancé] - Mot de passe valide" type="python">
     <Enonce>
     ### Exercice 3.1 [Avancé] : Mot de passe valide
     **Écrire une fonction `mot_de_passe_valide` qui prend une chaîne `mdp` et renvoie `True` si sa longueur est au moins 8 **et** qu'elle contient au moins un chiffre (`"0"` à `"9"`), `False` sinon.**
@@ -394,7 +395,7 @@ assert mot_de_passe_valide("abc1") is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-3-2" label="3.2 [Avancé] - Triangle rectangle">
+  <ExerciseSection id="conditions-3-2" label="3.2 [Avancé] - Triangle rectangle" type="python">
     <Enonce>
     ### Exercice 3.2 [Avancé] : Triangle rectangle
     **Écrire une fonction `est_triangle_rectangle` qui prend trois longueurs `a`, `b`, `c` (flottants positifs) et renvoie `True` si elles forment un triangle rectangle (théorème de Pythagore), `False` sinon. Testez les trois combinaisons possibles pour l'hypoténuse, sans utiliser de liste.**
@@ -420,7 +421,7 @@ assert est_triangle_rectangle(3, 4, 6) is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-3-3" label="3.3 [Avancé] - Année bissextile">
+  <ExerciseSection id="conditions-3-3" label="3.3 [Avancé] - Année bissextile" type="python">
     <Enonce>
     ### Exercice 3.3 [Avancé] : Année bissextile
     **Écrire une fonction `est_bissextile` qui prend une année et renvoie `True` si elle est bissextile : divisible par 400, ou divisible par 4 mais pas par 100.**
@@ -449,7 +450,7 @@ assert est_bissextile(2000) is True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-3-4" label="3.4 [Avancé] - Accès au serveur">
+  <ExerciseSection id="conditions-3-4" label="3.4 [Avancé] - Accès au serveur" type="python">
     <Enonce>
     ### Exercice 3.4 [Avancé] : Accès au serveur
     **Écrire une fonction `acces_autorise` qui prend un nom d'utilisateur (`str`) et un mot de passe (`str`). Renvoie `True` uniquement si l'utilisateur est `"admin"` **et** le mot de passe est `"nsi2026"`, sinon `False`.**
@@ -474,7 +475,7 @@ assert acces_autorise("eleve", "nsi2026") is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-3-5" label="3.5 [Avancé] - Plage de température">
+  <ExerciseSection id="conditions-3-5" label="3.5 [Avancé] - Plage de température" type="python">
     <Enonce>
     ### Exercice 3.5 [Avancé] : Plage de température
     **Écrire une fonction `alerte_temperature` qui prend une température en °C et renvoie :**
@@ -504,7 +505,7 @@ assert alerte_temperature(20) == "ok"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-3-6" label="3.6 [Avancé] - Type de triangle">
+  <ExerciseSection id="conditions-3-6" label="3.6 [Avancé] - Type de triangle" type="python">
     <Enonce>
     ### Exercice 3.6 [Avancé] : Type de triangle
     **Écrire une fonction `type_triangle` qui prend trois côtés `a`, `b`, `c`. Si les trois côtés ne peuvent pas former un triangle (inégalité triangulaire), renvoyer `"invalide"`. Sinon renvoyer `"equilateral"`, `"isocele"` ou `"scalene"`.**
@@ -538,7 +539,7 @@ assert type_triangle(1, 2, 5) == "invalide"
   {/* CATÉGORIE 4 : DIFFICILE (4.1 à 4.4)         */}
   {/* ========================================== */}
 
-  <ExerciseSection id="conditions-4-1" label="4.1 [Difficile] - FizzBuzz">
+  <ExerciseSection id="conditions-4-1" label="4.1 [Difficile] - FizzBuzz" type="python">
     <Enonce>
     ### Exercice 4.1 [Difficile] : FizzBuzz
     **Écrire une fonction `fizzbuzz` qui prend un entier `n` et renvoie :**
@@ -572,7 +573,7 @@ assert fizzbuzz(7) == "7"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-4-2" label="4.2 [Difficile] - Quadrant">
+  <ExerciseSection id="conditions-4-2" label="4.2 [Difficile] - Quadrant" type="python">
     <Enonce>
     ### Exercice 4.2 [Difficile] : Quadrant
     **Écrire une fonction `quadrant` qui prend les coordonnées `(x, y)` d'un point (flottants). Renvoie `0` si le point est sur un axe, sinon `1`, `2`, `3` ou `4` selon le quadrant cartésien.**
@@ -605,7 +606,7 @@ assert quadrant(2, -3) == 4
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-4-3" label="4.3 [Difficile] - Validité d'une date">
+  <ExerciseSection id="conditions-4-3" label="4.3 [Difficile] - Validité d'une date" type="python">
     <Enonce>
     ### Exercice 4.3 [Difficile] : Validité d'une date
     **Écrire une fonction `date_valide` qui prend un jour, un mois et une année. Renvoie `True` si la date est valide, `False` sinon. On suppose 28 jours en février (sans gérer les années bissextiles).**
@@ -635,7 +636,7 @@ assert date_valide(29, 2, 2026) is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-4-4" label="4.4 [Difficile] - Pierre-feuille-ciseaux">
+  <ExerciseSection id="conditions-4-4" label="4.4 [Difficile] - Pierre-feuille-ciseaux" type="python">
     <Enonce>
     ### Exercice 4.4 [Difficile] : Pierre-feuille-ciseaux
     **Écrire une fonction `pfc` qui prend les choix de deux joueurs (`"pierre"`, `"feuille"` ou `"ciseaux"`) et renvoie `1` si le joueur 1 gagne, `2` si le joueur 2 gagne, `0` en cas d'égalité. Renvoie `-1` si un choix est invalide.**
@@ -673,7 +674,7 @@ assert pfc("dragon", "pierre") == -1
   {/* CATÉGORIE 5 : EXPERT (5.1 à 5.3)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="conditions-5-1" label="5.1 [Expert] - Impôt progressif">
+  <ExerciseSection id="conditions-5-1" label="5.1 [Expert] - Impôt progressif" type="python">
     <Enonce>
     ### Exercice 5.1 [Expert] : Impôt progressif
     **Écrire une fonction `impot` qui calcule l'impôt sur un revenu annuel `r` (entier positif) selon les tranches :**
@@ -705,7 +706,7 @@ assert impot(30000) == 2500
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-5-2" label="5.2 [Expert] - Nombre premier">
+  <ExerciseSection id="conditions-5-2" label="5.2 [Expert] - Nombre premier" type="python">
     <Enonce>
     ### Exercice 5.2 [Expert] : Nombre premier
     **Écrire une fonction `est_premier` qui prend un entier `n` et renvoie `True` si `n` est premier, `False` sinon. Les nombres inférieurs ou égaux à 1 ne sont pas premiers.**
@@ -733,7 +734,7 @@ assert est_premier(17) is True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-5-3" label="5.3 [Expert] - Résolution ax² + bx + c = 0">
+  <ExerciseSection id="conditions-5-3" label="5.3 [Expert] - Résolution ax² + bx + c = 0" type="python">
     <Enonce>
     ### Exercice 5.3 [Expert] : Résolution ax² + bx + c = 0
     **Écrire une fonction `discriminant` qui prend `a`, `b`, `c` (flottants) et renvoie :**

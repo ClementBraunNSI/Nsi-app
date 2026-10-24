@@ -8,29 +8,24 @@ icon: "\U0001F578️"
 badgeId: terminale_graphes
 prerequisites:
   - structures_arbres
+audience: public
 ---
 
-# 🕸️ Les Graphes
+# Graphes
 
-Les graphes sont des structures relationnelles permettant de modéliser des réseaux complexes : réseaux sociaux, cartes routières, réseaux informatiques, liens web, etc.
+Un arbre a une racine, et un seul chemin entre deux nœuds. Beaucoup de situations refusent cette discipline. Deux villes sont reliées par plusieurs routes, deux comptes se suivent sans qu'il y ait de « sommet du réseau », une page web pointe vers une autre qui finit par revenir vers elle. On modélise cela par un **graphe**.
 
-## 1. Définitions
+> Un graphe \(G = (S, A)\) est un ensemble \(S\) de **sommets** et un ensemble \(A\) de liaisons entre ces sommets.
 
-Un graphe $G = (S, A)$ est composé de :
-*   **S (Sommets)** : Les nœuds du réseau (ex: Villes, Utilisateurs).
-*   **A (Arêtes/Arcs)** : Les liaisons entre les sommets.
+Les sommets sont les entités : des villes, des comptes, des machines. Les liaisons sont de plusieurs natures, et le vocabulaire change avec elles.
 
-### Types de Graphes
-*   **Non orienté** : Les liaisons sont bidirectionnelles (ex: "est ami avec"). On parle d'**arêtes**.
-*   **Orienté** : Les liaisons ont un sens (ex: "suit sur Twitter"). On parle d'**arcs**.
-*   **Pondéré** : Les liaisons ont un poids/coût (ex: distance en km).
+Si la relation va dans les deux sens, « est ami avec », « est relié par une route sans sens unique », le graphe est **non orienté** et les liaisons s'appellent des **arêtes**. Si la relation a un sens, « suit tel compte », « lien hypertexte vers », le graphe est **orienté** et l'on parle d'**arcs**. Si la liaison a un coût, des kilomètres, un temps, un prix, le graphe est **pondéré**. On peut être orienté et pondéré à la fois : une rue en sens unique, avec une longueur.
 
-## 2. Représentations en mémoire
+## Ranger un graphe en mémoire
 
-Comment stocker un graphe dans un ordinateur ? Deux méthodes principales.
+Il faut choisir une structure, et le bon choix dépend du nombre de liaisons.
 
-### 2.1 Matrice d'Adjacence
-Un tableau 2D (grille) où `M[i][j] = 1` s'il y a une arête entre i et j, sinon 0.
+La **matrice d'adjacence** est un tableau à deux dimensions. `M[i][j]` vaut 1 s'il existe une arête entre i et j, et 0 sinon. Sur un graphe non orienté, la matrice est symétrique.
 
 | | A | B | C |
 |---|---|---|---|
@@ -38,11 +33,9 @@ Un tableau 2D (grille) où `M[i][j] = 1` s'il y a une arête entre i et j, sinon
 | **B** | 1 | 0 | 1 |
 | **C** | 0 | 1 | 0 |
 
-*   ✅ Accès rapide pour vérifier une liaison `(i, j)`.
-*   ❌ Gourmand en mémoire si le graphe est creux (peu d'arêtes).
+Savoir si A et B sont reliés est immédiat : on lit une case. En revanche, un graphe de mille sommets et de quelques arêtes remplit presque entièrement la matrice de zéros. On paie un carré en mémoire pour peu d'information. On dit alors que le graphe est creux, et la matrice est un mauvais réflexe.
 
-### 2.2 Liste d'Adjacence (Dictionnaire)
-Un dictionnaire où chaque clé est un sommet, et la valeur est la liste de ses voisins.
+La **liste d'adjacence** ne stocke que les voisins. En Python, un dictionnaire dont les clés sont les sommets convient très bien.
 
 ```python
 graphe = {
@@ -52,26 +45,25 @@ graphe = {
 }
 ```
 
-*   ✅ Économe en mémoire.
-*   ✅ Facile de parcourir les voisins d'un sommet.
+La mémoire suit le nombre réel d'arêtes. Parcourir les amis de B, c'est parcourir une liste courte. Vérifier une liaison précise demande de chercher dans cette liste, ce qui est un peu moins direct que lire `M[i][j]`. Pour les graphes que vous manipulerez, presque toujours creux, on préfère cette forme.
 
 <GraphVisualizer />
 
-## 3. Algorithmes de Parcours
+## Parcourir sans tourner en rond
 
-Comme pour les arbres, on peut parcourir un graphe. Attention aux **cycles** (boucles) : il faut noter les sommets déjà visités pour ne pas tourner en rond !
+On parcourt un graphe un peu comme un arbre, avec une différence qui casse les algorithmes naïfs : il peut y avoir un **cycle**. Si l'on ne note pas les sommets déjà vus, on revient indéfiniment sur ses pas.
 
-### 3.1 Parcours en Largeur (BFS - Breadth First Search)
-On explore en "ondes concentriques". Utile pour trouver le **plus court chemin** dans un graphe non pondéré (GPS simple).
+Le parcours en **largeur** (*breadth-first search*, BFS) explore par vagues. D'abord les voisins du départ, puis les voisins des voisins. Dans un graphe non pondéré, la première fois qu'on atteint un sommet, on y est arrivé par un plus court chemin, en nombre d'arêtes. C'est le GPS le plus simple, celui qui compte les carrefours et pas les kilomètres.
 
-### 3.2 Parcours en Profondeur (DFS - Depth First Search)
-On part le plus loin possible avant de revenir. Utile pour résoudre des labyrinthes ou détecter des cycles.
+Le parcours en **profondeur** (*depth-first search*, DFS) s'enfonce le plus loin possible, puis revient en arrière quand il est bloqué. Il convient aux labyrinthes, et c'est avec lui qu'on détecte souvent un cycle : on retombe sur un sommet encore « en cours de visite », pas seulement déjà terminé.
+
+Les deux ont besoin d'un ensemble de sommets marqués. Sans cette marque, la structure du graphe, pas celle de l'algorithme, les fait boucler.
 
 ---
 
 <ExerciseTabs courseId="terminale_graphes" courseTitle="Exercices Graphes">
 
-  <ExerciseSection id="graphe-ex-1" label="Implémentation">
+  <ExerciseSection id="graphe-ex-1" label="Implémentation" type="python">
     <Enonce>
     ### Création de Graphe
     On considère le graphe suivant (réseau social) :
@@ -86,7 +78,7 @@ On part le plus loin possible avant de revenir. Utile pour résoudre des labyrin
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="graphe-ex-2" label="Voisins">
+  <ExerciseSection id="graphe-ex-2" label="Voisins" type="python">
     <Enonce>
     ### Trouver les voisins
     Écrivez une fonction `nb_amis(graphe, personne)` qui renvoie le nombre d'amis d'une personne.

@@ -9,220 +9,158 @@ badgeId: bts_owasp_web
 icon: "\U0001F6E1️"
 prerequisites:
   - premiers_pas_python
+audience: public
 ---
 
-# Sécurité des Applications Web : OWASP & Attaques Majeures
+# Sécurité des applications web : OWASP
 
 <ExerciseTabs courseId="bts_owasp_web" courseTitle="Badge Sécurité Web">
 
-  <ExerciseSection id="owasp_top10" label="1. OWASP Top 10">
-    ## 1. Le Standard OWASP Top 10 (2021) - Analyse Approfondie
+  <ExerciseSection id="owasp_top10" label="1. OWASP Top 10" type="autre">
+    ## Le Top 10 OWASP, édition 2021
 
-    L'**OWASP** (Open Web Application Security Project) publie le "Top 10" des vulnérabilités critiques, basé sur l'analyse de plus de **500 000 applications**.
-    
-    Ci-dessous, chaque vulnérabilité est décortiquée avec son contexte historique et son impact financier.
+    L'**OWASP** (*Open Web Application Security Project*) publie un classement des familles de failles les plus graves dans les applications web. L'édition 2021 s'appuie sur l'analyse de plus de 500 000 applications. Ce n'est pas une liste de bugs à copier. C'est l'ordre dans lequel une application réelle se fait prendre, et ce que cela a déjà coûté. Chaque entrée ci-dessous dit le mécanisme, un cas, et ce qui aurait fermé la porte.
 
-    ### A01:2021 - Broken Access Control (Contrôle d'accès défaillant)
-    **Mécanisme :** La faille survient quand les restrictions d'accès ne sont pas appliquées côté serveur. L'attaquant peut agir en tant qu'administrateur ou accéder aux données d'autrui (IDOR).
-    
-    > **💡 Cas Historique : Facebook (2018)**
-    > Une faille dans la fonctionnalité "Voir en tant que" a permis de voler les tokens d'accès de **50 millions de comptes**.
-    > 💰 **Coût estimé :** Facebook a risqué une amende RGPD de **1,6 milliard de dollars** (4% de son CA mondial). L'action a chuté de 3% immédiatement après l'annonce.
+    ### A01:2021 — Contrôle d'accès défaillant
 
-    **Comment s'en prémunir ?**
-    *   Ne jamais faire confiance aux ID dans l'URL (`/user/123`).
-    *   Vérifier systématiquement les droits d'accès côté serveur (ex: `if (user.id != resource.owner_id) deny()`).
-    *   Désactiver l'accès direct aux répertoires et fichiers sensibles (`.git`, `backup`).
+    Le contrôle d'accès casse quand le serveur ne vérifie pas le droit, et se contente de cacher un bouton. L'attaquant change un identifiant, rejoue une requête, et agit comme un administrateur ou lit les données de quelqu'un d'autre. On appelle **IDOR** le cas précis où l'objet est désigné par un identifiant que l'on peut deviner : `/facture/123` devient `/facture/124`, et la facture d'un autre client s'affiche.
 
-    **Questions de compréhension :**
-    1.  Si je change `id=123` par `id=124` dans l'URL et que j'accède à la facture d'un autre client, comment s'appelle cette vulnérabilité spécifique ?
-    2.  Quelle est la différence entre l'**authentification** (qui je suis) et l'**autorisation** (ce que j'ai le droit de faire) ?
-    3.  Pourquoi cacher un bouton "Admin" dans l'interface (CSS `display: none`) n'est-il pas une mesure de sécurité suffisante ?
+    En 2018, une faille dans la fonction « Voir en tant que » de Facebook a permis de voler les jetons d'accès d'environ **50 millions de comptes**. L'entreprise a risqué une amende RGPD de l'ordre de **1,6 milliard de dollars**, soit 4 % de son chiffre d'affaires mondial. L'action a perdu 3 % dès l'annonce.
 
-    ---
+    On ne fait pas confiance à l'identifiant qui arrive dans l'URL. À chaque lecture, le serveur vérifie que l'utilisateur authentifié a le droit sur cette ressource : si `user.id` n'est pas le propriétaire, on refuse. On coupe aussi l'accès direct aux fichiers qui n'ont rien à faire en ligne, `.git`, sauvegardes, dumps.
 
-    ### A02:2021 - Cryptographic Failures (Défaillances cryptographiques)
-    **Mécanisme :** Protection insuffisante des données sensibles (mots de passe, CB, santé) au repos ou en transit (HTTP, algorithmes faibles).
-    
-    > **💡 Cas Historique : Adobe (2013)**
-    > **153 millions** de comptes compromis car les mots de passe étaient chiffrés (réversibles) au lieu d'être hachés.
-    > 💰 **Coût estimé :** Adobe a payé **1,1 million de dollars** en frais juridiques et une somme non divulguée pour régler les plaintes des clients, sans compter l'impact massif sur sa réputation.
+    **Questions**
+    1. Si je change `id=123` par `id=124` dans l'URL et que j'accède à la facture d'un autre client, comment s'appelle cette vulnérabilité spécifique ?
+    2. Quelle est la différence entre l'**authentification** (qui je suis) et l'**autorisation** (ce que j'ai le droit de faire) ?
+    3. Pourquoi cacher un bouton « Admin » dans l'interface (CSS `display: none`) n'est-il pas une mesure de sécurité suffisante ?
 
-    **Comment s'en prémunir ?**
-    *   Stocker les mots de passe avec des algorithmes de hachage lents et robustes (Argon2, bcrypt).
-    *   Utiliser systématiquement HTTPS (TLS) pour tous les échanges.
-    *   Ne jamais stocker de données sensibles (CB) si ce n'est pas indispensable.
+    ### A02:2021 — Défaillances cryptographiques
 
-    **Questions de compréhension :**
-    1.  Pourquoi l'algorithme de hachage MD5 est-il considéré comme obsolète pour stocker des mots de passe ?
-    2.  Quel protocole sécurisé (utilisant le port 443) doit impérativement remplacer HTTP ?
-    3.  Qu'est-ce que le "Salt" (sel) et pourquoi est-il indispensable lors du hachage des mots de passe ?
+    Les données sensibles — mots de passe, cartes, santé — sont mal protégées au repos ou pendant le transport. HTTP au lieu de HTTPS. Un algorithme trop faible. Un mot de passe qu'on peut revenir en clair parce qu'on l'a chiffré au lieu de le hacher.
 
-    ---
+    En 2013, environ **153 millions** de comptes Adobe ont été compromis : les mots de passe étaient chiffrés, donc réversibles, et non hachés. Adobe a payé **1,1 million de dollars** de frais juridiques, plus un règlement dont le montant n'a pas été publié, sans compter l'atteinte à la réputation.
 
-    ### A03:2021 - Injection
-    **Mécanisme :** Des données non fiables sont envoyées à un interpréteur (SQL, OS, LDAP) comme une commande. L'interpréteur ne distingue pas la donnée du code.
-    
-    > **💡 Cas Historique : TalkTalk (2015)**
-    > Une injection SQL sur une page web obsolète a permis le vol des données de **157 000 clients**.
-    > 💰 **Coût estimé :** L'entreprise a perdu **101 000 clients** et a dû payer une amende record de **400 000 £** à l'époque, pour un coût total de remédiation de **77 millions de livres**.
+    Les mots de passe se stockent avec un hachage lent et salé : Argon2 ou bcrypt. Tout échange passe en HTTPS, donc TLS. On ne stocke pas un numéro de carte si l'on peut s'en passer.
 
-    **Comment s'en prémunir ?**
-    *   Utiliser des **requêtes préparées** (Prepared Statements) en SQL.
-    *   Valider strictement les entrées utilisateurs (Allowlist).
-    *   Utiliser un ORM (Entity Framework, Hibernate, Eloquent) qui gère l'échappement automatiquement.
+    **Questions**
+    1. Pourquoi l'algorithme de hachage MD5 est-il considéré comme obsolète pour stocker des mots de passe ?
+    2. Quel protocole sécurisé (port 443) doit remplacer HTTP ?
+    3. Qu'est-ce que le sel (*salt*), et pourquoi est-il indispensable quand on hache un mot de passe ?
 
-    **Questions de compréhension :**
-    1.  Dans l'expression `' OR '1'='1`, quel est le rôle des guillemets simples ?
-    2.  Quelle instruction SQL permet souvent de combiner les résultats de deux tables lors d'une injection ?
-    3.  Pourquoi la validation côté client (Javascript) ne protège-t-elle pas contre les injections SQL ?
+    ### A03:2021 — Injection
 
-    ---
+    Une donnée venue de l'utilisateur est recollée dans une commande, SQL, système ou LDAP. L'interpréteur ne distingue plus la donnée du code. Ce qui devait être une valeur devient une instruction.
 
-    ### A04:2021 - Insecure Design (Conception non sécurisée)
-    **Mécanisme :** Lacune dans l'architecture ou les règles métier. "On ne peut pas coder de manière sécurisée une conception défaillante".
-    
-    > **💡 Cas Historique : Parler (2021)**
-    > Des hacktivistes ont aspiré **99% des données** du site car les posts avaient des IDs séquentiels non protégés.
-    > 💰 **Coût estimé :** Fermeture complète du service pendant plusieurs semaines, perte totale de confiance des investisseurs et retrait des stores Apple/Google.
+    En 2015, une injection SQL sur une page obsolète de TalkTalk a exposé les données d'environ **157 000 clients**. L'opérateur a perdu **101 000 clients**, payé une amende de **400 000 livres** — record à l'époque — et le coût total de la remédiation a été estimé à **77 millions de livres**.
 
-    **Comment s'en prémunir ?**
-    *   Adopter une approche "Security by Design" dès le début du projet.
-    *   Modéliser les menaces (Threat Modeling) avant de coder.
-    *   Éviter les ID séquentiels prévisibles (utiliser des UUID).
+    En SQL, la défense qui tient est la **requête préparée** : la commande est fixée, les valeurs voyagent à part. On valide les entrées par une liste de ce qui est autorisé, pas par une liste de ce qu'on espère interdire. Un ORM (Entity Framework, Hibernate, Eloquent) fait cet échappement s'il est utilisé pour ce qu'il sait faire, pas si on lui passe une requête déjà concaténée.
 
-    **Questions de compréhension :**
-    1.  Quel est le principe de la "défense en profondeur" (Defense in Depth) ?
-    2.  Donnez un exemple de fonctionnalité "pratique" pour l'utilisateur mais dangereuse par conception (ex: récupération de compte).
-    3.  Qu'est-ce que le "Rate Limiting" et quelle attaque de conception permet-il d'atténuer ?
+    **Questions**
+    1. Dans l'expression `' OR '1'='1`, quel est le rôle des guillemets simples ?
+    2. Quelle instruction SQL permet souvent de combiner les résultats de deux tables lors d'une injection ?
+    3. Pourquoi la validation côté client, en JavaScript, ne protège-t-elle pas contre les injections SQL ?
 
-    ---
+    ### A04:2021 — Conception non sécurisée
 
-    ### A05:2021 - Security Misconfiguration (Mauvaise configuration)
-    **Mécanisme :** Systèmes installés avec les paramètres par défaut, stockage cloud ouvert, messages d'erreurs verbeux.
-    
-    > **💡 Cas Historique : Twitch (2021)**
-    > Une erreur de configuration serveur a exposé **125 Go de données**, incluant tout le code source et les revenus des streamers.
-    > 💰 **Coût estimé :** Impact inestimable sur la propriété intellectuelle. Les revenus des streamers étant publics, cela a créé des tensions majeures au sein de la communauté.
+    La faille est dans les règles métier, avant la première ligne. Une conception fragile ne devient pas sûre parce qu'on l'a bien codée. Le principe souvent cité : on ne sécurise pas par le code une conception qui est déjà fausse.
 
-    **Comment s'en prémunir ?**
-    *   Désactiver les comptes et services par défaut inutilisés.
-    *   Configurer les headers de sécurité HTTP (HSTS, X-Frame-Options).
-    *   Ne jamais exposer les messages d'erreur détaillés (Stack Trace) en production.
+    En 2021, des données de Parler ont été aspirées en masse — de l'ordre de **99 %** du contenu — parce que les publications portaient des identifiants séquentiels, sans contrôle d'accès. Le service a fermé plusieurs semaines, la confiance des investisseurs a disparu, les boutiques Apple et Google ont retiré l'application.
 
-    **Questions de compréhension :**
-    1.  Pourquoi est-il crucial de changer les mots de passe par défaut des équipements (routeurs, serveurs) ?
-    2.  Quelle est la règle d'or concernant les messages d'erreur affichés aux utilisateurs ?
-    3.  Citez une "bonne pratique" simple pour sécuriser l'accès à un dossier d'administration.
+    On pense la sécurité au moment du besoin, pas à la recette. On modélise les menaces avant de coder. On évite les identifiants qu'on devine en ajoutant un : un UUID ne se parcourt pas comme une suite d'entiers.
 
-    ---
+    **Questions**
+    1. Quel est le principe de la défense en profondeur ?
+    2. Donnez un exemple de fonctionnalité commode pour l'utilisateur et dangereuse par conception (la récupération de compte, par exemple).
+    3. Qu'est-ce que le *rate limiting*, et quelle attaque de conception atténue-t-il ?
 
-    ### A06:2021 - Vulnerable and Outdated Components
-    **Mécanisme :** Utilisation de bibliothèques tierces contenant des failles connues (CVE).
-    
-    > **💡 Cas Historique : Equifax (2017)**
-    > **147 millions de clients** impactés par une faille dans le framework Apache Struts, patchée 2 mois avant l'attaque mais non appliquée.
-    > 💰 **Coût estimé :** Equifax a accepté de payer jusqu'à **700 millions de dollars** pour régler les poursuites judiciaires liées à cette négligence.
+    ### A05:2021 — Mauvaise configuration
 
-    **Comment s'en prémunir ?**
-    *   Faire un inventaire des composants (SCA - Software Composition Analysis).
-    *   Automatiser la détection des vulnérabilités (ex: `npm audit`, `OWASP Dependency Check`).
-    *   Mettre à jour régulièrement les dépendances.
+    Le système est resté tel que l'installeur l'a livré. Compte d'administration par défaut. Stockage cloud ouvert au monde. Message d'erreur qui imprime la pile d'appels, les chemins, la version.
 
-    **Questions de compréhension :**
-    1.  Qu'est-ce qu'une CVE (Common Vulnerabilities and Exposures) ?
-    2.  Pourquoi faut-il maintenir son système (OS et logiciels) à jour régulièrement ?
-    3.  Quel fichier liste souvent les dépendances d'un projet web (PHP ou JS) ?
+    En 2021, une erreur de configuration a exposé environ **125 Go** de données Twitch, dont le code source et les revenus des streamers. Le préjudice sur la propriété intellectuelle est difficile à chiffrer. Rendre les revenus publics a, en plus, tendu la communauté.
 
-    ---
+    On désactive comptes et services inutiles. On pose les en-têtes qui limitent ce que le navigateur accepte de faire : HSTS, `X-Frame-Options`. En production, l'utilisateur voit un message court. La trace technique reste dans le journal, pas dans la page.
 
-    ### A07:2021 - Identification and Authentication Failures
-    **Mécanisme :** Faiblesses dans la vérification de l'identité : mots de passe faibles, absence de MFA, gestion de session.
-    
-    > **💡 Cas Historique : Nintendo (2020)**
-    > **300 000 comptes** piratés via du "Credential Stuffing" (utilisation de mots de passe volés sur d'autres sites).
-    > 💰 **Coût estimé :** Remboursement massif des achats frauduleux effectués sur l'eShop et coût de support technique pour réinitialiser les comptes manuellement.
+    **Questions**
+    1. Pourquoi changer les mots de passe par défaut des routeurs et des serveurs ?
+    2. Quelle est la règle sur les messages d'erreur montrés à l'utilisateur ?
+    3. Citez une pratique simple pour protéger l'accès à un dossier d'administration.
 
-    **Comment s'en prémunir ?**
-    *   Mettre en place l'authentification multifacteur (MFA/2FA).
-    *   Interdire les mots de passe faibles ou compromis (liste des 10 000 pires mots de passe).
-    *   Limiter le nombre de tentatives de connexion (Rate Limiting).
+    ### A06:2021 — Composants vulnérables ou obsolètes
 
-    **Questions de compréhension :**
-    1.  Qu'est-ce que l'attaque par "Credential Stuffing" ?
-    2.  Pourquoi limiter le nombre de tentatives de connexion (ex: 5 essais max) est-il crucial ?
-    3.  Quel mécanisme (souvent via smartphone) ajoute une couche de sécurité au-delà du mot de passe ?
+    L'application embarque une bibliothèque dont la faille est déjà publique, un CVE. Le correctif existe. Il n'est pas appliqué.
 
-    ---
+    En 2017, Equifax a exposé les données d'environ **147 millions** de personnes à cause d'une faille d'Apache Struts, corrigée deux mois avant l'attaque, et non installée. Le règlement des poursuites a été accepté jusqu'à **700 millions de dollars**.
 
-    ### A08:2021 - Software and Data Integrity Failures
-    **Mécanisme :** Mises à jour non signées, pipelines CI/CD compromis, désérialisation non sécurisée.
-    
-    > **💡 Cas Historique : SolarWinds (2020)**
-    > Une mise à jour officielle corrompue a infecté **18 000 clients**, dont le Trésor américain et Microsoft.
-    > 💰 **Coût estimé :** Coût global de remédiation pour les entreprises et gouvernements estimé à plus de **100 milliards de dollars**.
+    On tient l'inventaire de ce qu'on embarque — c'est l'analyse de composition logicielle. On automatise la détection : `npm audit`, OWASP Dependency-Check. On met à jour. Une dépendance qu'on ne sait pas nommer est une dépendance qu'on ne saura pas corriger.
 
-    **Comment s'en prémunir ?**
-    *   Signer numériquement tout code ou artefact produit.
-    *   Vérifier l'intégrité des logiciels téléchargés (checksums, signatures GPG).
-    *   Sécuriser la chaîne CI/CD (intégration continue).
+    **Questions**
+    1. Qu'est-ce qu'une CVE (*Common Vulnerabilities and Exposures*) ?
+    2. Pourquoi maintenir le système et les logiciels à jour ?
+    3. Quel fichier liste souvent les dépendances d'un projet web, en PHP ou en JavaScript ?
 
-    **Questions de compréhension :**
-    1.  Pourquoi est-il important de vérifier la signature numérique (GPG) d'un logiciel avant de l'installer ?
-    2.  Dans une attaque "Supply Chain" (chaîne d'approvisionnement), qui est la cible initiale de l'attaquant ?
-    3.  Qu'est-ce que la désérialisation d'un objet ?
+    ### A07:2021 — Identification et authentification défaillantes
 
-    ---
+    L'identité est mal vérifiée. Mots de passe trop courts. Pas de second facteur. Session qui ne meurt pas. Ou l'inverse : on accepte un mot de passe déjà volé ailleurs.
 
-    ### A09:2021 - Security Logging and Monitoring Failures
-    **Mécanisme :** Absence de logs sur les événements critiques ou logs inexploitables.
-    
-    > **💡 Cas Historique : Marriott (2018)**
-    > Des attaquants ont eu accès aux données de **500 millions de clients** pendant **4 ans** sans être détectés.
-    > 💰 **Coût estimé :** Marriott a été condamné à une amende de **18,4 millions de livres** par l'ICO (UK) et a dépensé des dizaines de millions en frais de justice.
+    En 2020, environ **300 000 comptes** Nintendo ont été repris par *credential stuffing* : des couples identifiant / mot de passe volés sur d'autres sites, rejoués ici, parce que les gens réutilisent le même secret. Le coût a été le remboursement des achats frauduleux sur l'eShop, et le support pour rendre les comptes à la main.
 
-    **Comment s'en prémunir ?**
-    *   Centraliser les logs sur un serveur sécurisé et indépendant.
-    *   Logger les événements critiques (échecs de connexion, accès admin).
-    *   Mettre en place des alertes en temps réel.
+    On ajoute un second facteur. On refuse les mots de passe trop faibles ou déjà compromis, à commencer par les listes des plus courants. On limite les essais de connexion.
 
-    **Questions de compréhension :**
-    1.  Quels sont les 4 éléments clés qu'un bon log doit contenir (Qui... ?) ?
-    2.  Pourquoi faut-il envoyer les logs vers un serveur externe sécurisé plutôt que de les garder uniquement en local ?
-    3.  Quel est le risque principal si une intrusion n'est pas détectée rapidement ?
+    **Questions**
+    1. Qu'est-ce que le *credential stuffing* ?
+    2. Pourquoi limiter le nombre de tentatives de connexion, par exemple à cinq ?
+    3. Quel mécanisme, souvent sur le téléphone, ajoute une preuve au-delà du mot de passe ?
 
-    ---
+    ### A08:2021 — Intégrité du logiciel et des données
 
-    ### A10:2021 - Server-Side Request Forgery (SSRF)
-    **Mécanisme :** L'attaquant force le serveur à effectuer des requêtes HTTP vers une destination interne non exposée.
-    
-    > **💡 Cas Historique : Capital One (2019)**
-    > Une faille SSRF a permis de voler les données de **100 millions de clients** sur des serveurs AWS S3.
-    > 💰 **Coût estimé :** L'entreprise a écopé d'une amende de **80 millions de dollars** et a dépensé environ **150 millions** en frais de remédiation et de notification.
+    On exécute une mise à jour, un paquet, un objet désérialisé, sans avoir vérifié qu'il est bien celui qu'on croit. Le pipeline qui construit le logiciel peut être le point d'entrée.
 
-    **Comment s'en prémunir ?**
-    *   Valider et filtrer toutes les URL fournies par l'utilisateur.
-    *   Utiliser une liste blanche (Allowlist) de domaines autorisés.
-    *   Désactiver les redirections HTTP sur le serveur qui effectue les requêtes.
+    En 2020, une mise à jour officielle de SolarWinds, déjà corrompue, a atteint environ **18 000 clients**, dont des administrations américaines et Microsoft. Le coût global de remédiation pour les entreprises et les États a été estimé à plus de **100 milliards de dollars**.
 
-    **Questions de compréhension :**
-    1.  Dans une faille SSRF, qui effectue la requête malveillante : le navigateur du client ou le serveur web ?
-    2.  Citez une ressource interne sensible qu'un attaquant pourrait viser via SSRF (ex: Cloud).
-    3.  Comment le filtrage des URL en entrée (Allowlist) peut-il protéger contre cette faille ?
+    On signe le code et les artefacts. On vérifie l'intégrité de ce qu'on télécharge, par une empreinte ou une signature. On protège la chaîne d'intégration continue comme on protège la production : un attaquant qui y entre n'a plus besoin de forcer l'application.
 
+    **Questions**
+    1. Pourquoi vérifier la signature (GPG, par exemple) d'un logiciel avant de l'installer ?
+    2. Dans une attaque de la chaîne d'approvisionnement, qui est visé en premier ?
+    3. Qu'est-ce que la désérialisation d'un objet ?
+
+    ### A09:2021 — Journalisation et surveillance insuffisantes
+
+    L'intrusion a eu lieu. Personne ne l'a vue, parce qu'aucun journal ne garde les événements utiles, ou parce que les journaux existent et ne sont jamais lus.
+
+    Entre 2014 et 2018, des attaquants ont accédé aux données d'environ **500 millions** de clients Marriott pendant quatre ans sans être détectés. L'ICO britannique a infligé une amende de **18,4 millions de livres**. Les frais de procédure se sont ajoutés, en dizaines de millions.
+
+    On centralise les journaux sur une machine qui n'est pas celle qu'on surveille : un attaquant qui efface les traces locales ne les efface pas toutes. On y écrit les échecs de connexion, les accès d'administration, les changements de droits. On alerte quand le motif sort de l'ordinaire, pas seulement quand on y repense le lundi.
+
+    **Questions**
+    1. Quels sont les quatre éléments qu'un journal utile doit porter (qui, et ensuite) ?
+    2. Pourquoi envoyer les journaux vers un serveur distinct plutôt que de les laisser seulement sur la machine ?
+    3. Quel est le risque principal si une intrusion n'est pas détectée vite ?
+
+    ### A10:2021 — Falsification de requête côté serveur (SSRF)
+
+    L'application accepte une URL, et c'est le **serveur** qui va la chercher. L'attaquant lui donne une adresse interne, que lui ne peut pas joindre depuis l'extérieur : un service d'administration, les métadonnées d'un cloud, un port qui n'écoute que sur localhost.
+
+    En 2019, une SSRF chez Capital One a permis d'emporter les données d'environ **100 millions** de clients stockées sur AWS S3. L'amende a été de **80 millions de dollars**, et les frais de remédiation et de notification d'environ **150 millions**.
+
+    Toute URL fournie par l'utilisateur se valide. On n'autorise que des domaines prévus, une liste blanche. On coupe les redirections sur le composant qui fait la requête, pour qu'une adresse autorisée ne renvoie pas ensuite vers une adresse interne.
+
+    **Questions**
+    1. Dans une SSRF, qui envoie la requête : le navigateur du client, ou le serveur web ?
+    2. Citez une ressource interne qu'un attaquant viserait ainsi, dans un cloud par exemple.
+    3. Comment une liste blanche d'URL limite-t-elle cette faille ?
   </ExerciseSection>
 
-  <ExerciseSection id="tech_focus" label="2. Focus Technique (E5)">
-    ## 2. Injections SQL et XSS (Préparation E5)
+  <ExerciseSection id="tech_focus" label="2. Focus Technique (E5)" type="autre">
+    ## Injections SQL, XSS, CSRF
 
-    Cette partie se concentre sur l'identification technique, l'exploitation et la correction des deux failles les plus emblématiques.
+    Trois failles reviennent dans les sujets, parce qu'on peut les voir dans une ligne de code et dans un journal. On les reconnaît, on mesure ce qu'elles permettent, on les ferme.
 
-    ### A. Injection SQL (SQLi)
+    ### Injection SQL
 
-    **1. Le Mécanisme**
-    L'injection SQL se produit lorsqu'une donnée utilisateur est concaténée directement dans une requête SQL sans validation. L'attaquant peut alors manipuler la structure de la requête.
+    Elle apparaît quand une saisie est concaténée dans la requête. L'attaquant ne remplit plus un champ. Il réécrit la commande.
 
-    *Code vulnérable (PHP) :*
     ```php
     $id = $_GET['id'];
     // L'utilisateur entre : 1 OR 1=1
@@ -231,76 +169,53 @@ prerequisites:
     // La condition 1=1 est toujours vraie -> Toute la table est retournée.
     ```
 
-    **2. Identification & Logs**
-    Comment repérer une SQLi dans les logs du serveur ? Cherchez des motifs suspects dans les paramètres d'URL ou les formulaires :
-    *   Caractères spéciaux : `'`, `"`, `--`, `#`, `;`
-    *   Mots-clés SQL : `UNION`, `SELECT`, `DROP`, `OR 1=1`, `SLEEP()`
-    *   Erreurs SQL visibles dans les réponses HTTP (Code 500).
+    `1 OR 1=1` n'est plus une valeur d'`id`. C'est une condition toujours vraie, collée à la suite du `WHERE`. La requête renvoie la table.
 
-    *Exemple de log suspect :*
-    `GET /products.php?category=Gifts'--`
+    Dans les journaux, on cherche les paramètres qui ne ressemblent pas à une saisie : guillemets, `--`, `#`, `;`, et les mots `UNION`, `SELECT`, `DROP`, `OR 1=1`, `SLEEP()`. Une réponse HTTP 500 qui affiche une erreur SQL confirme que le serveur a exécuté quelque chose qu'il n'a pas compris jusqu'au bout. Une ligne comme `GET /products.php?category=Gifts'--` suffit à ouvrir une investigation.
 
-    **3. Défense : Requêtes Préparées**
-    La seule défense robuste est l'utilisation de **requêtes préparées**. La structure SQL est définie à l'avance, et les données sont traitées strictement comme des valeurs, jamais comme du code.
+    La parade est la requête préparée. La phrase SQL est fixée. La valeur arrive à part, et ne peut plus changer la phrase.
 
-    *Code sécurisé (PDO) :*
     ```php
     $stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');
     $stmt->execute(['id' => $_GET['id']]);
     ```
-    
-    ### Questions E5 (SQLi)
-    1.  Écrivez un payload SQL permettant de contourner une authentification (`WHERE user='...' AND pass='...'`).
-    2.  Expliquez pourquoi la fonction `htmlspecialchars()` ne protège PAS contre les injections SQL.
-    3.  Dans une requête `UNION SELECT`, quelle est la contrainte principale concernant les colonnes ?
 
-    ---
+    **Questions**
+    1. Écrivez un payload SQL permettant de contourner une authentification (`WHERE user='...' AND pass='...'`).
+    2. Expliquez pourquoi `htmlspecialchars()` ne protège pas contre les injections SQL.
+    3. Dans une requête `UNION SELECT`, quelle contrainte porte sur les colonnes ?
 
-    ### B. Cross-Site Scripting (XSS)
+    ### Cross-site scripting (XSS)
 
-    **1. Le Mécanisme**
-    Une faille XSS permet à un attaquant d'injecter du code JavaScript malveillant dans une page web consultée par d'autres utilisateurs.
+    Une XSS injecte du JavaScript dans une page lue par d'autres personnes. Le navigateur de la victime exécute ce script comme s'il venait du site.
 
-    *   **XSS Reflected** : Le script est dans l'URL et exécuté immédiatement (piège à clic).
-    *   **XSS Stored** : Le script est stocké en base de données (ex: commentaire) et exécuté à chaque affichage.
+    La XSS **réfléchie** est dans l'URL. Le serveur renvoie le script dans la page de réponse, et il s'exécute tout de suite. Il faut attirer la personne vers ce lien. La XSS **stockée** est enregistrée, dans un commentaire par exemple. Elle s'exécute à chaque affichage, sans nouveau lien.
 
-    **2. Impact Technique**
-    *   **Vol de session** : Récupération du cookie `PHPSESSID` via `document.cookie`.
-    *   **Redirection** : Renvoyer l'utilisateur vers un site de phishing.
-    *   **Actions à l'insu de l'utilisateur** : Changer un mot de passe, poster un message.
+    Avec ce script, on lit le cookie de session (`document.cookie`, par exemple `PHPSESSID`) et on l'envoie ailleurs : la session est volée. On peut rediriger vers une page d'hameçonnage. On peut aussi faire agir le navigateur déjà connecté : changer un mot de passe, publier un message.
 
-    **3. Défense**
-    *   **Échappement (Escaping)** : Convertir les caractères spéciaux en entités HTML (`<` devient `&lt;`).
-    *   **Content Security Policy (CSP)** : En-tête HTTP qui restreint les sources de scripts autorisées.
+    À l'affichage, on **échappe** : `<` devient `&lt;`, et le navigateur montre le texte au lieu de l'exécuter. Une **Content-Security-Policy** dit au navigateur de quelles origines un script a le droit de venir. Un script injecté dans la page n'est plus exécuté s'il n'est pas dans la liste.
 
-    ### Questions E5 (XSS)
-    1.  Quelle fonction PHP native permet de se protéger efficacement contre les XSS à l'affichage ?
-    2.  Écrivez un petit script JS malveillant qui affiche le cookie de l'utilisateur dans une alerte.
-    3.  Quelle est la différence fondamentale entre une XSS Stored et une XSS Reflected en termes de persistance ?
+    **Questions**
+    1. Quelle fonction PHP native protège efficacement contre la XSS au moment de l'affichage ?
+    2. Écrivez un court script JavaScript qui affiche le cookie de l'utilisateur dans une alerte.
+    3. Quelle différence de persistance y a-t-il entre une XSS stockée et une XSS réfléchie ?
 
-    ---
+    ### Cross-site request forgery (CSRF)
 
-    ### C. Cross-Site Request Forgery (CSRF)
+    Le CSRF force le navigateur d'une personne **déjà connectée** à envoyer une requête que le site acceptera, parce qu'il reconnaît la session. L'attaquant n'a pas besoin du mot de passe. Il a besoin que la session soit encore vivante.
 
-    **1. Le Mécanisme**
-    Le CSRF (parfois prononcé "Sea-Surf") force l'utilisateur à exécuter des actions indésirables sur une application web où il est actuellement authentifié. L'attaquant n'a pas besoin de connaître les identifiants de la victime, il utilise simplement sa session active.
+    La personne est connectée à `ma-banque.com`. Elle ouvre `site-piege.com`, qui contient une image de taille nulle :
 
-    *Exemple :*
-    1.  L'utilisateur est connecté sur sa banque (`ma-banque.com`).
-    2.  Il visite un site malveillant (`site-piege.com`) qui contient une image invisible :
-        `<img src="http://ma-banque.com/virement?to=hacker&amount=1000" width="0" height="0" />`
-    3.  Le navigateur de l'utilisateur charge l'image, envoyant ainsi la requête de virement à la banque. Comme l'utilisateur est connecté, la banque accepte la requête (si elle ne vérifie pas l'origine).
+    ```html
+    <img src="http://ma-banque.com/virement?to=hacker&amount=1000" width="0" height="0" />
+    ```
 
-    **2. Impact Technique**
-    *   Modification de mot de passe.
-    *   Achats ou virements frauduleux.
-    *   Changement d'adresse email de récupération.
+    Le navigateur charge l'image. Il envoie donc la requête de virement, avec le cookie de session. Si la banque ne vérifie pas d'où vient la requête, elle l'exécute. Le même schéma change un mot de passe, passe une commande, ou remplace l'adresse de récupération.
 
-    **3. Défense : Le Jeton (Token) Anti-CSRF**
-    Le serveur doit générer un jeton aléatoire unique pour chaque session (ou chaque formulaire) et l'inclure dans les formulaires HTML en tant que champ caché.
-    Lors de la soumission, le serveur vérifie si le jeton envoyé correspond à celui attendu. Le site de l'attaquant ne peut pas connaître ce jeton.
+    Un `GET` qui modifie des données rend l'attaque triviale : une image, un lien, suffisent. Une action sensible se fait en `POST`, et le `POST` ne suffit pas tout seul.
 
-    *Code sécurisé (Concept) :*
+    Le serveur émet un **jeton** aléatoire, lié à la session ou au formulaire, et le place dans un champ caché. À la soumission, il vérifie que le jeton reçu est celui qu'il attend. Le site piège peut déclencher la requête. Il ne peut pas lire le jeton d'un autre site, donc il ne peut pas le renvoyer.
+
     ```html
     <form action="/virement" method="POST">
         <input type="hidden" name="csrf_token" value="aF87d...3jK9" />
@@ -308,63 +223,58 @@ prerequisites:
     </form>
     ```
 
-    ### Questions E5 (CSRF)
-    1.  Pour qu'une attaque CSRF fonctionne, quelle est la condition préalable concernant l'état de l'utilisateur sur le site cible ?
-    2.  Pourquoi l'utilisation de `GET` pour des actions sensibles (suppression, virement) facilite-t-elle les attaques CSRF ?
-    3.  Expliquez brièvement comment le Token Anti-CSRF empêche l'attaque.
+    **Questions**
+    1. Pour qu'un CSRF fonctionne, dans quel état l'utilisateur doit-il être sur le site visé ?
+    2. Pourquoi un `GET` sur une action sensible (suppression, virement) facilite-t-il le CSRF ?
+    3. Comment le jeton anti-CSRF empêche-t-il l'attaque ?
   </ExerciseSection>
 
-  <ExerciseSection id="risk_analysis" label="3. Analyse Risques (E6)">
-    ## 3. Analyse des Risques et Aspects Légaux (Préparation E6)
+  <ExerciseSection id="risk_analysis" label="3. Analyse Risques (E6)" type="autre">
+    ## Impact, et ce que la loi demande ensuite
 
-    En mission professionnelle, vous devez évaluer l'impact métier et gérer la conformité.
+    En situation professionnelle, nommer la faille ne suffit pas. Il faut dire ce qu'elle coûte à l'activité, et quelles obligations s'ouvrent le jour où les données sont parties.
 
-    ### A. Caractérisation des Risques (Critères DIC/CIA)
+    On reprend la triade **DIC** (disponibilité, intégrité, confidentialité), le CIA des textes en anglais. Une injection SQL et une XSS ne pèsent pas le même poids sur chaque branche.
 
-    L'impact d'une attaque s'évalue selon trois critères fondamentaux (Triade CIA) :
-
-    | Critère | Impact d'une Injection SQL (SQLi) | Impact d'une faille XSS |
+    | Critère | Impact d'une injection SQL | Impact d'une XSS |
     | :--- | :--- | :--- |
-    | **Confidentialité** | **Critique** : Vol de toute la base de données (clients, mots de passe). | **Élevé** : Vol de cookies de session, données personnelles affichées à l'écran. |
-    | **Intégrité** | **Critique** : Modification de prix, suppression de tables (`DROP`), ajout d'admin. | **Moyen** : Modification de l'apparence de la page (Defacement), fausses informations. |
-    | **Disponibilité** | **Élevé** : Suppression de données vitales, déni de service via requêtes lourdes. | **Faible** : Généralement pas d'impact serveur, mais peut bloquer le client. |
+    | **Confidentialité** | **Critique** : vol de la base (clients, mots de passe). | **Élevé** : vol de cookies de session, données affichées à l'écran. |
+    | **Intégrité** | **Critique** : prix modifiés, tables supprimées (`DROP`), compte administrateur ajouté. | **Moyen** : page défigurée, fausses informations affichées. |
+    | **Disponibilité** | **Élevé** : données vitales supprimées, requêtes assez lourdes pour saturer le service. | **Faible** : le serveur tient en général ; le navigateur du client peut être bloqué. |
 
-    ### B. Scénario de Crise & Obligations Légales
+    La SQL touche les trois, parce qu'elle parle à la base. La XSS touche d'abord le navigateur de celui qui lit la page. Elle devient grave quand ce navigateur est celui d'un administrateur, ou quand le cookie volé ouvre le compte.
 
-    **Scénario :**
-    Suite à une injection SQL, la base de données clients (noms, emails, mots de passe hashés) de votre entreprise a été exfiltrée et publiée sur un forum.
+    **Scénario.** Une injection SQL a exfiltré la base clients — noms, adresses, mots de passe déjà hachés — et le dump est sur un forum. Les articles 33 et 34 du RGPD s'appliquent. On notifie la CNIL, au plus tard sous **72 heures**, parce que les droits des personnes sont en jeu. On notifie les personnes si le risque pour elles est élevé : un mot de passe haché avec un algorithme faible, ou réutilisé ailleurs, l'est souvent. On inscrit la violation au registre. Le hachage ne dispense pas de la notification. Il change l'analyse du risque, il ne l'annule pas.
 
-    **Obligations RGPD (Articles 33 & 34) :**
-    1.  **Notification à l'autorité (CNIL)** : Obligatoire (72h max) car risque pour les droits et libertés.
-    2.  **Notification aux personnes concernées** : Obligatoire si le risque est élevé.
-    3.  **Documentation** : Inscrire l'incident au registre des violations.
+    ### Exercice 1 — Alerte au DSI
 
-    ### Exercice TD 1 : Rédaction d'une alerte
-    Rédigez le mail d'alerte technique à envoyer au DSI suite à la découverte d'une faille XSS Stored dans le module de commentaires du site e-commerce.
-    *   **Objet :** Alerte Sécurité Critique - Faille XSS Module Commentaires
-    *   **Description :** Script malveillant persistant détecté.
-    *   **Impact :** Risque de vol de session pour tous les visiteurs (clients et admins).
-    *   **Recommandation immédiate :** Désactiver le module de commentaires / Purger les entrées suspectes.
+    Rédigez le message technique au directeur des systèmes d'information après la découverte d'une XSS stockée dans les commentaires d'un site de vente.
 
-    ### Exercice TD 2 : Analyse de Contexte (Score CVSS)
-    **Contexte :** Une faille d'Injection SQL (SQLi) est découverte sur le site "vitrine" de la boulangerie du quartier. Le site présente uniquement des photos de pains et les horaires. Il n'y a pas de compte client, pas d'espace membre, et pas de données personnelles stockées. La base de données ne contient que la table `produits` et `horaires`.
+    - **Objet :** Alerte sécurité critique — faille XSS, module commentaires
+    - **Description :** un script malveillant persistant a été détecté
+    - **Impact :** vol de session possible pour les visiteurs, clients et administrateurs
+    - **Tout de suite :** désactiver le module de commentaires, purger les entrées suspectes
 
-    ### Exercice TD 3 : Analyse de Logs (Identification)
-    Voici un extrait de logs d'un serveur web Apache. Pour chaque ligne, identifiez s'il s'agit d'une tentative d'attaque et si oui, laquelle.
+    ### Exercice 2 — Le score dépend du contexte
 
-    1.  `192.168.1.15 - - [12/Mar/2024:10:00:00] "GET /login.php?user=admin'-- HTTP/1.1" 200 1542`
-    2.  `192.168.1.15 - - [12/Mar/2024:10:01:00] "GET /search.php?q=<script>alert(1)</script> HTTP/1.1" 200 542`
-    3.  `192.168.1.15 - - [12/Mar/2024:10:02:00] "GET /admin/config.xml HTTP/1.1" 403 202`
-    4.  `192.168.1.15 - - [12/Mar/2024:10:03:00] "POST /upload.php HTTP/1.1" 200 1542` (Le fichier envoyé s'appelle `shell.php`)
+    Une injection SQL est découverte sur le site vitrine de la boulangerie du quartier. Le site montre des photos de pains et les horaires. Pas de compte client, pas d'espace membre, pas de donnée personnelle. La base ne contient que les tables `produits` et `horaires`.
 
-    ### Exercice TD 4 : Politique de Mots de Passe (Audit)
-    Vous auditez la politique de sécurité d'une PME. Voici leurs règles actuelles :
-    *   Longueur minimale : 6 caractères.
-    *   Complexité : Aucune (chiffres/lettres non obligatoires).
-    *   Renouvellement : Obligatoire tous les 30 jours.
-    *   Verrouillage : Aucun blocage après échecs.
+    Discutez le score CVSS de cette faille à partir de ce contexte : la même injection, sur une base clients, n'a pas le même impact.
 
-    **Question :** Identifiez 3 faiblesses critiques dans cette politique et proposez une version corrigée conforme aux recommandations de l'ANSSI.
+    ### Exercice 3 — Lire un journal
+
+    Extrait Apache. Pour chaque ligne, dites s'il s'agit d'une tentative d'attaque et, si oui, laquelle.
+
+    1. `192.168.1.15 - - [12/Mar/2024:10:00:00] "GET /login.php?user=admin'-- HTTP/1.1" 200 1542`
+    2. `192.168.1.15 - - [12/Mar/2024:10:01:00] "GET /search.php?q=<script>alert(1)</script> HTTP/1.1" 200 542`
+    3. `192.168.1.15 - - [12/Mar/2024:10:02:00] "GET /admin/config.xml HTTP/1.1" 403 202`
+    4. `192.168.1.15 - - [12/Mar/2024:10:03:00] "POST /upload.php HTTP/1.1" 200 1542` (le fichier envoyé s'appelle `shell.php`)
+
+    ### Exercice 4 — Une politique de mots de passe
+
+    Règles actuelles d'une PME : 6 caractères minimum, aucune règle de composition, renouvellement obligatoire tous les 30 jours, aucun blocage après des échecs.
+
+    Relevez trois faiblesses critiques, et proposez une version corrigée, conforme aux recommandations de l'ANSSI.
   </ExerciseSection>
 
 </ExerciseTabs>

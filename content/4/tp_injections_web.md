@@ -5,11 +5,12 @@ badgeId: bts_sql_audit_rgpd
 meta: 'Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer'
 prerequisites:
   - injections_sql
+audience: public
 ---
 
 <ExerciseTabs courseId="bts_sql_audit_rgpd" courseTitle="TP Audit Web">
 
-  <ExerciseSection id="tp-audit-context" label="Contexte & Installation">
+  <ExerciseSection id="tp-audit-context" label="Contexte & Installation" type="autre">
     <Enonce>
     ## Contexte du TP
 
@@ -37,7 +38,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-audit-sqli" label="Injection SQL">
+  <ExerciseSection id="tp-audit-sqli" label="Injection SQL" type="autre">
     <Enonce>
     ## Partie 2 : Injection SQL (SQLi) - "L'Effraction"
 
@@ -64,7 +65,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-audit-xss" label="XSS">
+  <ExerciseSection id="tp-audit-xss" label="XSS" type="autre">
     <Enonce>
     ## Partie 3 : Cross-Site Scripting (XSS) - "Le Piège"
 
@@ -105,7 +106,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-audit-csrf" label="CSRF">
+  <ExerciseSection id="tp-audit-csrf" label="CSRF" type="autre">
     <Enonce>
     ## Partie 4 : Cross-Site Request Forgery (CSRF) - "La Marionnette"
 
@@ -141,7 +142,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-audit-patching" label="Remédiation">
+  <ExerciseSection id="tp-audit-patching" label="Remédiation" type="autre">
     <Enonce>
     ## Partie 5 : Remédiation (Patching)
 
@@ -231,7 +232,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-audit-ctf" label="Challenges (Bonus)">
+  <ExerciseSection id="tp-audit-ctf" label="Challenges (Bonus)" type="autre">
     <Enonce>
     ## Partie 6 : Challenges CTF (Bonus)
 
@@ -261,7 +262,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-audit-report" label="Rapport d'Audit">
+  <ExerciseSection id="tp-audit-report" label="Rapport d'Audit" type="autre">
     <Enonce>
     ## Partie 7 : Le Rapport d'Audit
 

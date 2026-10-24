@@ -6,6 +6,7 @@ chapter: Web
 icon: "\U0001F310"
 prerequisites:
   - monstres
+audience: public
 ---
 
 # 🌐 Atelier Web : Crée ta première page

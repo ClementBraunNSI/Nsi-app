@@ -8,24 +8,14 @@ icon: "\U0001F4BE"
 badgeId: terminale_sql_cours
 prerequisites:
   - bdd_modele_relationnel
+audience: public
 ---
 
-# 💾 SQL & Bases de Données
+# SQL
 
-## Interroger et manipuler les données relationnelles
+Le modèle relationnel a posé les tables, les clés, les contraintes. **SQL** est le langage qui les crée, les remplit et les interroge. On ne parcourt pas la table avec une boucle dans le programme : on décrit le résultat voulu, et le SGBD décide comment le calculer.
 
-## 1. Introduction aux Bases de Données Relationnelles
-
-### Structure d'une Table
-
-Une base de données relationnelle organise l'information sous forme de **tables** (ou relations).
-Chaque table est composée de :
-
-- **Colonnes** (attributs) : définissent le type de données
-- **Lignes** (enregistrements) : contiennent les données
-- **Clé primaire** : identifie de manière unique chaque ligne
-
-### Exemple de table "Etudiants"
+Une table a des **colonnes**, les attributs, et des **lignes**, les enregistrements. La **clé primaire** identifie chaque ligne. Voici une table d'élèves sur laquelle toutes les requêtes de la page vont s'appuyer.
 
 | id | nom | prenom | age | classe |
 |----|-----|--------|-----|--------|
@@ -33,9 +23,9 @@ Chaque table est composée de :
 | 2 | Dupont | Bob | 18 | 1ère |
 | 3 | Durand | Claire | 17 | Terminale |
 
-## 2. Langage SQL - Commandes de base
+## Créer, insérer, lire, modifier, supprimer
 
-### CREATE TABLE - Créer une table
+`CREATE TABLE` déclare les colonnes et leurs domaines. `INTEGER` est un entier, `VARCHAR(50)` un texte d'au plus 50 caractères. `PRIMARY KEY` désigne la clé primaire : le SGBD refusera deux lignes avec le même `id`.
 
 ```sql
 CREATE TABLE etudiants (
@@ -47,7 +37,7 @@ CREATE TABLE etudiants (
 );
 ```
 
-### INSERT - Ajouter des données
+`INSERT` ajoute une ligne. On nomme les colonnes, puis les valeurs dans le même ordre. Nommer les colonnes évite qu'une valeur atterrisse dans le mauvais champ le jour où l'ordre de la table change. Ici `id` n'est pas dans la liste : selon le SGBD, il peut être attribué automatiquement, ou devoir être fourni. Dans les exemples qui suivent, Alice a l'id 1 et Bob l'id 2, comme dans la table ci-dessus.
 
 ```sql
 INSERT INTO etudiants (nom, prenom, age, classe)
@@ -57,7 +47,7 @@ INSERT INTO etudiants (nom, prenom, age, classe)
 VALUES ('Dupont', 'Bob', 18, '1ère');
 ```
 
-### SELECT - Lire des données
+`SELECT` lit. L'étoile demande toutes les colonnes. Une liste de noms n'en garde que quelques-unes : c'est une projection. `WHERE` filtre les lignes : c'est une sélection. `ORDER BY` trie le résultat, sans modifier la table.
 
 ```sql
 -- Tous les étudiants
@@ -73,7 +63,9 @@ SELECT * FROM etudiants WHERE age > 17;
 SELECT * FROM etudiants ORDER BY nom;
 ```
 
-### UPDATE - Modifier des données
+Les chaînes se comparent entre quotes simples. `age > 17` ne garde que Bob dans la table d'exemple. Alice et Claire ont 17 ans, la condition est stricte.
+
+`UPDATE` modifie les lignes qui passent le `WHERE`. Sans `WHERE`, toutes les lignes sont modifiées. On relit la clause avant d'exécuter.
 
 ```sql
 UPDATE etudiants 
@@ -81,16 +73,14 @@ SET age = 18
 WHERE nom = 'Martin' AND prenom = 'Alice';
 ```
 
-### DELETE - Supprimer des données
+`DELETE` retire des lignes. Ici, seulement celle dont l'id vaut 3. Sans `WHERE`, la table se vide, et la structure, elle, reste.
 
 ```sql
 DELETE FROM etudiants 
 WHERE id = 3;
 ```
 
-## 3. Requêtes Avancées
-
-### Opérateurs de comparaison
+## Comparer et combiner
 
 | Opérateur | Description | Exemple |
 |-----------|-------------|---------|
@@ -101,7 +91,7 @@ WHERE id = 3;
 | `>=` | Supérieur ou égal | `WHERE age >= 18` |
 | `<=` | Inférieur ou égal | `WHERE age <= 17` |
 
-### Opérateurs logiques
+`AND` exige les deux conditions. `OR` en exige une. `NOT` inverse. Les parenthèses lèvent le doute quand `AND` et `OR` se mélangent : `AND` est prioritaire, comme le ET logique devant le OU.
 
 ```sql
 -- ET logique (AND)
@@ -117,7 +107,7 @@ SELECT * FROM etudiants
 WHERE NOT age = 17;
 ```
 
-### Fonctions d'agrégation
+Les fonctions d'agrégation résument une colonne au lieu de renvoyer les lignes. `COUNT(*)` compte les lignes. `AVG` moyenne, `MIN` et `MAX` cherchent les extrêmes, `SUM` additionne. Le résultat est une seule ligne, sauf si un `GROUP BY` redécoupe la table en groupes. On n'en a pas besoin pour les requêtes ci-dessous.
 
 ```sql
 -- Nombre total d'étudiants
@@ -133,7 +123,9 @@ SELECT MIN(age), MAX(age) FROM etudiants;
 SELECT SUM(age) FROM etudiants;
 ```
 
-## 4. Exemple pratique
+## Relier deux tables
+
+Une note ne recopie pas le nom de l'élève. Elle porte `etudiant_id`, clé étrangère vers `etudiants(id)`. `DECIMAL(4,2)` est un décimal : quatre chiffres au plus, dont deux après la virgule. 15,50 tient. 100,00 ne tient pas.
 
 ```sql
 -- Créer une table de notes
@@ -155,9 +147,7 @@ FROM etudiants e, notes n
 WHERE e.id = n.etudiant_id;
 ```
 
-## 5. Jointures (`JOIN`)
-
-La syntaxe avec virgule dans le `FROM` (jointure implicite) fonctionne, mais on préfère **`JOIN`** pour la lisibilité :
+La dernière requête est une **jointure implicite**. La virgule dans le `FROM` fabrique toutes les combinaisons d'une ligne d'élève et d'une ligne de note, et le `WHERE` ne garde que celles où les clés coïncident. On préfère l'écrire avec `JOIN`, qui montre le lien dans la requête au lieu de le cacher parmi les filtres.
 
 ```sql
 -- INNER JOIN : uniquement les lignes qui ont une correspondance des deux côtés
@@ -171,11 +161,15 @@ FROM etudiants e
 LEFT JOIN notes n ON e.id = n.etudiant_id;
 ```
 
+`INNER JOIN` ne garde que les appariements. Un élève sans note disparaît. `LEFT JOIN` garde **toutes** les lignes de la table de gauche, ici les élèves. S'il n'y a pas de note, les colonnes de `notes` valent `NULL`. `RIGHT JOIN` fait le symétrique : toutes les lignes de la table de droite, et `NULL` à gauche quand rien ne correspond.
+
 | Type | Résultat |
 | --- | --- |
 | `INNER JOIN` | Intersection : lignes appariées |
 | `LEFT JOIN` | Toutes les lignes de la table de gauche + correspondances à droite |
 | `RIGHT JOIN` | Symétrique de `LEFT JOIN` |
+
+L'alias `e` pour `etudiants` et `n` pour `notes` évite de réécrire le nom de la table devant chaque colonne. Il devient indispensable quand les deux tables ont une colonne `id`.
 
 !!! tip "Programme Terminale"
     Savoir lire et écrire un `JOIN` sur deux tables liées par une clé étrangère est attendu à l'épreuve pratique.

@@ -7,53 +7,43 @@ chapter: "Bases de Données"
 icon: "🗄️"
 badgeId: "terminale_bdd_modele"
 prerequisites: []
+audience: public
 ---
 
-# 🗄️ Modèle Relationnel
+# Modèle relationnel
 
-Une **Base de Données (BDD)** sert à stocker de grandes quantités d'informations de manière structurée, pérenne et efficace. Le modèle le plus utilisé est le **modèle relationnel** (inventé par E.F. Codd en 1970).
+Une **base de données** stocke beaucoup d'informations, de façon structurée, durable, et exploitable par plusieurs programmes. Le modèle le plus répandu est le **modèle relationnel**, proposé par E. F. Codd en 1970. L'idée est de tout ranger dans des tables, et de lier les tables par des valeurs communes, pas par des pointeurs cachés dans le programme.
 
-## 1. Concepts Clés
+## Tables, lignes, colonnes
 
-### 1.1 La Relation (Table)
-Une **relation** est un ensemble de données organisées en tableau.
-*   En informatique, on l'appelle souvent une **Table**.
-*   Chaque colonne est un **Attribut** (avec un domaine de valeurs précis : entier, texte, date...).
-*   Chaque ligne est un **Enregistrement** (ou Tuplet/uplet).
+Une **relation** est un ensemble d'enregistrements de même forme. En pratique, on dit une **table**. Une colonne est un **attribut** : elle a un nom et un **domaine**, l'ensemble des valeurs autorisées, par exemple les entiers, les textes, les dates. Une ligne est un **enregistrement**, aussi appelé n-uplet. Deux lignes identiques n'ont pas de place dans une relation au sens strict : un ensemble ne contient pas de doublon. C'est la clé qui rend cette promesse vérifiable.
 
-### 1.2 La Clé Primaire (Primary Key - PK)
-Pour distinguer chaque enregistrement sans ambiguïté, on choisit un (ou plusieurs) attributs comme **Clé Primaire**.
-*   **Propriété** : Elle doit être **UNIQUE** et non nulle.
-*   *Exemple* : Numéro de Sécurité Sociale, ID client, ISBN d'un livre.
+La **clé primaire** est un attribut, ou un petit groupe d'attributs, qui identifie chaque ligne sans ambiguïté. Elle est **unique** et jamais vide. Un numéro d'élève, un ISBN, un identifiant client jouent ce rôle. Le nom et le prénom n'y suffisent presque jamais : deux personnes les partagent.
 
-### 1.3 La Clé Étrangère (Foreign Key - FK)
-Pour relier deux tables entre elles, on utilise une **Clé Étrangère**. C'est un attribut dans une table qui fait référence à la clé primaire d'une autre table.
-C'est le "lien" relationnel.
+La **clé étrangère** est un attribut d'une table qui reprend la clé primaire d'une autre table. C'est le lien. Dans `Commandes`, la colonne `id_client` ne décrit pas le client : elle désigne la ligne de `Clients` dont la clé primaire a cette valeur. On évite ainsi de recopier le nom, l'adresse et le téléphone dans chaque commande. On les écrit une fois, et l'on pointe.
 
-*   *Exemple* : Dans une table `Commandes`, on a une colonne `id_client` qui pointe vers l'id de la table `Clients`.
+## Écrire le schéma
 
-## 2. Schéma Relationnel
+Le **schéma relationnel** décrit la structure, sans les données. On souligne la clé primaire. On marque la clé étrangère d'un `#`.
 
-Le schéma décrit la structure de la base. On l'écrit souvent ainsi :
+- **Eleves** (<u>id_eleve</u>, nom, prenom, classe)
+- **Notes** (<u>id_note</u>, valeur, matiere, #id_eleve)
 
-*   **Eleves** (<u>id_eleve</u>, nom, prenom, classe)
-*   **Notes** (<u>id_note</u>, valeur, matiere, #id_eleve)
+`id_note` identifie une note. `id_eleve` dans `Notes` doit correspondre à un `id_eleve` qui existe dans `Eleves`. Le schéma ne dit pas encore quelles lignes sont présentes. Il dit quelles colonnes existent, et quelles valeurs ont le droit de se référencer.
 
-*Légende : Souligné = Clé Primaire, # = Clé Étrangère.*
+## Ce que le SGBD refuse
 
-## 3. Contraintes d'Intégrité
+Le **système de gestion de base de données** applique des contraintes d'intégrité. On ne compte pas sur le programme pour « faire attention ».
 
-Pour garder des données cohérentes, le SGBD (Système de Gestion de Bases de Données) applique des règles :
+L'**intégrité de domaine** impose le type. Une note est un nombre. La chaîne `"vingt"` n'entre pas dans une colonne numérique.
 
-1.  **Intégrité de domaine** : Une note doit être un nombre, pas "vingt".
-2.  **Intégrité de relation** : Pas de doublon de clé primaire.
-3.  **Intégrité de référence** : On ne peut pas mettre une note à un élève qui n'existe pas (la clé étrangère doit pointer vers une clé primaire existante).
+L'**intégrité de relation**, ou intégrité d'entité, impose la clé primaire : pas de doublon, pas de valeur vide. Deux lignes ne peuvent pas prétendre être le même élève.
 
----
+L'**intégrité référentielle** impose la clé étrangère. On ne peut pas saisir une note pour un `id_eleve` absent de `Eleves`. Selon la règle choisie, supprimer un élève peut être refusé tant qu'il a des notes, ou entraîner la suppression de ses notes. Dans les deux cas, la base ne laisse pas un lien pointer dans le vide.
 
 <ExerciseTabs courseId="terminale_bdd_modele" courseTitle="Exercices Modélisation">
 
-  <ExerciseSection id="bdd-ex-1" label="Bibliothèque">
+  <ExerciseSection id="bdd-ex-1" label="Bibliothèque" type="lecture">
     <Enonce>
     ### Modéliser une Bibliothèque
     On veut gérer des **Livres** et des **Auteurs**.

@@ -8,38 +8,32 @@ icon: "🌳"
 badgeId: terminale_abr
 prerequisites:
   - structures_arbres
+audience: public
 ---
 
-# 🌳 Arbres binaires de recherche et Algorithmes
+# Arbres binaires de recherche
 
-## Révision ABR, implémentations et complexité
+Un arbre binaire range des nœuds avec un gauche et un droit. Un **arbre binaire de recherche** ajoute une règle sur les valeurs. Pour tout nœud, les valeurs du sous-arbre gauche sont **strictement inférieures** à la sienne, et les valeurs du sous-arbre droit sont **supérieures ou égales**. Les doublons, dans cette convention, partent à droite. La règle vaut pour chaque nœud, pas seulement pour la racine : un petit-enfant à gauche reste inférieur à tous ses ancêtres sur le chemin.
 
-## 1. Rappels théoriques
+Le vocabulaire est celui des arbres. Un **nœud** porte une clé. La **racine** est le nœud sans parent. Une **feuille** n'a pas d'enfant. La **taille** compte les nœuds. La **hauteur**, ici, est le nombre d'**arêtes** du plus long chemin de la racine à une feuille : une racine seule a donc une hauteur 0. Ce n'est pas le décompte de la page précédente, où l'exercice comptait 1 pour une racine seule. On le fixe maintenant, et on s'y tient pour les complexités.
 
-### 1.1 Définitions
-
-**Un arbre binaire de recherche (ABR) est un arbre binaire qui respecte la propriété suivante :**
-
-- Pour tout nœud, toutes les valeurs du sous-arbre gauche sont strictement inférieures à la valeur du nœud
-- Pour tout nœud, toutes les valeurs du sous-arbre droit sont supérieures ou égales à la valeur du nœud
-
-**Vocabulaire important :**
-
-- **Nœud** : élément de l'arbre contenant une valeur (clé)
-- **Racine** : nœud au sommet de l'arbre
-- **Feuille** : nœud sans enfants
-- **Taille** : nombre total de nœuds dans l'arbre
-- **Hauteur** : longueur du plus long chemin de la racine à une feuille
-
-### 1.2 Complexité
-
-Dans un ABR équilibré, les opérations de recherche, insertion et suppression ont une complexité en **O(log₂ n)**.
-
-Dans le pire des cas (arbre dégénéré en liste chaînée), la complexité devient **O(n)**.
+Cette règle rend le parcours infixe trié. Gauche, puis nœud, puis droit : tout ce qui est plus petit sort avant, tout ce qui est plus grand ou égal sort après. Si l'on affiche un arbre dans cet ordre et que les valeurs ne croissent pas, ce n'est pas un ABR, même si « ça ressemble » à un arbre bien dessiné.
 
 <TreeVisualizer />
 
-## 2. Exercice 1 : Construction et propriétés
+## Chercher, insérer, et ce que ça coûte
+
+Pour chercher une clé, on la compare à la racine. Plus petite : on descend à gauche. Plus grande ou égale : on descend à droite. On s'arrête quand on trouve la clé, ou quand le lien vaut `None`. On n'explore pas l'autre côté. Chaque comparaison élimine un sous-arbre entier.
+
+L'insertion suit le même chemin. On descend jusqu'à un lien vide, et l'on y accroche un nouveau nœud. On ne réorganise rien. C'est pour cela que l'ordre d'arrivée des clés change la forme de l'arbre. Insérer 5, puis 3, puis 8 donne une racine 5 avec 3 à gauche et 8 à droite. Insérer déjà trié, 1 puis 2 puis 3 puis 4, descend toujours à droite : l'arbre dégénère en liste chaînée.
+
+Dans un ABR **équilibré**, la hauteur est de l'ordre de $\log_2 n$. Recherche, insertion et suppression coûtent alors $O(\log_2 n)$ : un nombre de comparaisons proportionnel à la hauteur. Dans le pire des cas, l'arbre-liste, la hauteur vaut $n - 1$ et le coût redevient $O(n)$, comme un parcours de liste. L'équilibrage — arbres AVL, arbres rouge-noir — réorganise après les insertions pour que la hauteur reste logarithmique. On n'en écrit pas le code ici. On retient pourquoi il existe : sans lui, le coût annoncé n'est qu'un espoir sur l'ordre des données.
+
+Le minimum est le nœud qu'on atteint en descendant toujours à gauche. Le maximum, toujours à droite. Leur recherche coûte aussi la hauteur, pas la taille : on suit un seul chemin.
+
+Supprimer dépend du nœud visé. Une feuille se décroche. Un nœud avec un seul enfant se fait remplacer par cet enfant. Un nœud avec deux enfants se fait remplacer par son **prédécesseur infixe**, le plus grand nœud de son sous-arbre gauche, qui a au plus un enfant, et que l'on sait donc retirer. La règle gauche-inférieur, droit-supérieur doit rester vraie après coup. Le parcours infixe croissant est le test : s'il décroît quelque part, la suppression a cassé l'ABR.
+
+## Exercice 1 : Construction et propriétés
 
 ### Question 1 : Dessiner l'arbre
 
@@ -55,7 +49,7 @@ Dans le pire des cas (arbre dégénéré en liste chaînée), la complexité dev
 
 **Donnez l'ordre de visite des nœuds pour les parcours suivants :**
 - **Parcours préfixe** (racine, gauche, droite)
-- **Parcours infixe** (gauche, racine, droite) 
+- **Parcours infixe** (gauche, racine, droite)
 - **Parcours postfixe** (gauche, droite, racine)
 
 ### Question 3 : Recherche
@@ -64,9 +58,9 @@ Dans le pire des cas (arbre dégénéré en liste chaînée), la complexité dev
 
 **Quelle est la complexité de cette recherche dans le meilleur et le pire des cas ?**
 
-## 3. Exercice 2 : Implémentation Python
+## Exercice 2 : Implémentation Python
 
-### 3.1 Classe Noeud
+### Classe Noeud
 
 **Implémentez une classe `Noeud` représentant un nœud d'ABR avec :**
 - Un attribut `valeur`
@@ -81,7 +75,7 @@ class Noeud:
         self.droit = None
 ```
 
-### 3.2 Classe ABR
+### Classe ABR
 
 **Implémentez une classe `ABR` avec les méthodes suivantes :**
 
@@ -117,9 +111,9 @@ def hauteur(self):
     pass
 ```
 
-## 4. Exercice 3 : Applications avancées
+## Exercice 3 : Applications avancées
 
-### 4.1 Trouver le minimum et le maximum
+### Trouver le minimum et le maximum
 
 **Implémentez deux méthodes pour trouver :**
 - La valeur minimale dans l'ABR
@@ -127,7 +121,7 @@ def hauteur(self):
 
 **Quelle est la complexité de ces opérations ?**
 
-### 4.2 Suppression d'un nœud
+### Suppression d'un nœud
 
 **Implémentez la méthode de suppression d'un nœud en tenant compte des 3 cas :**
 1. Le nœud est une feuille
@@ -136,37 +130,37 @@ def hauteur(self):
 
 **Pour le cas 3, utilisez la méthode du prédécesseur infixe.**
 
-### 4.3 Validation d'ABR
+### Validation d'ABR
 
 **Écrivez une fonction qui vérifie qu'un arbre binaire donné est bien un ABR.**
 
 **Indice :** Utilisez un parcours infixe et vérifiez que les valeurs sont dans l'ordre croissant.
 
-## 5. Exercice 4 : Complexité et optimisation
+## Exercice 4 : Complexité et optimisation
 
-### 5.1 Cas dégénéré
+### Cas dégénéré
 
 **Donnez un exemple de séquence d'insertions qui produit un ABR dégénéré (en liste chaînée).**
 
 **Quelle est la hauteur de cet arbre ? Quelle est sa complexité pour les opérations ?**
 
-### 5.2 Arbres équilibrés
+### Arbres équilibrés
 
 **Expliquez pourquoi l'équilibrage est important pour maintenir de bonnes performances.**
 
 **Nommez deux types d'arbres équilibrés et leurs caractéristiques principales.**
 
-## 6. Pour aller plus loin
+## Pour aller plus loin
 
-### 6.1 Parcours par niveau
+### Parcours par niveau
 
 **Implémentez un parcours en largeur (BFS) pour visiter tous les nœuds niveau par niveau.**
 
-### 6.2 Conversion en liste chaînée
+### Conversion en liste chaînée
 
 **Écrivez une fonction qui "aplatit" un ABR en une liste chaînée triée en utilisant uniquement les pointeurs existants.**
 
-### 6.3 Arbre miroir
+### Arbre miroir
 
 **Créez une fonction qui génère l'arbre miroir d'un ABR donné (gauche et droite inversés).**
 

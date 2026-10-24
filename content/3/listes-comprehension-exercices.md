@@ -10,6 +10,7 @@ icon: "\U0001F40D"
 badgeId: terminale_listes_comp
 prerequisites:
   - prog_modularite_mise_au_point
+audience: public
 ---
 
 # 🐍 Listes par compréhension
@@ -22,7 +23,7 @@ Syntaxe de base : `[expression for element in sequence if condition]`
 
 <ExerciseTabs courseId="listes-comprehension-exos" courseTitle="Maitre de la compréhension">
 
-  <ExerciseSection id="level-1-facile" label="Niveau 1 - Facile">
+  <ExerciseSection id="level-1-facile" label="Niveau 1 - Facile" type="python">
     <Enonce>
     ### Exercices d'échauffement (4 exercices)
 
@@ -66,7 +67,7 @@ Syntaxe de base : `[expression for element in sequence if condition]`
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="level-2-moyen" label="Niveau 2 - Moyen">
+  <ExerciseSection id="level-2-moyen" label="Niveau 2 - Moyen" type="python">
     <Enonce>
     ### Exercices intermédiaires (5 exercices)
 
@@ -118,7 +119,7 @@ Syntaxe de base : `[expression for element in sequence if condition]`
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="level-3-difficile" label="Niveau 3 - Difficile">
+  <ExerciseSection id="level-3-difficile" label="Niveau 3 - Difficile" type="python">
     <Enonce>
     ### Exercices avancés (6 exercices)
 

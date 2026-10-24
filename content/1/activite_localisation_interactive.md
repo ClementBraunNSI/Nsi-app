@@ -6,10 +6,11 @@ chapter: Localisation
 icon: "\U0001F4E1"
 prerequisites:
   - Cours_Localisation
+audience: public
 ---
 
 <ExerciseTabs courseId="trilateration-gps" courseTitle="Atelier GPS : La Trilateration">
-  <ExerciseSection id="mission-gps" label="Mission : Retrouver le Renard">
+  <ExerciseSection id="mission-gps" label="Mission : Retrouver le Renard" type="lecture">
     <Enonce>
 ### 📡 Mission : Retrouver le Renard
 

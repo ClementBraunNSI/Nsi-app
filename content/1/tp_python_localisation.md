@@ -6,11 +6,12 @@ chapter: Localisation
 icon: "🐍"
 prerequisites:
   - Cours_Localisation
+audience: public
 ---
 
 <ExerciseTabs courseId="tp-python-localisation" courseTitle="TP Python : Géolocalisation" packages="pandas,folium,geopy">
 
-  <ExerciseSection id="loc-0" label="Important ⚠️ - Avant de commencer">
+  <ExerciseSection id="loc-0" label="Important ⚠️ - Avant de commencer" type="lecture">
     <Enonce>
       ### Important ⚠️ - Avant de commencer
 
@@ -43,7 +44,7 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-1" label="Introduction 🦊 - Tableau de villes">
+  <ExerciseSection id="loc-1" label="Introduction 🦊 - Tableau de villes" type="python">
     <Enonce>
       ### Introduction 🦊 - Tableau de villes
 
@@ -77,7 +78,7 @@ assert abs(float(latitude_lyon) - float(villes_ref.loc[villes_ref["Ville"] == "L
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-2" label="Introduction 🦊 - Distance GPS">
+  <ExerciseSection id="loc-2" label="Introduction 🦊 - Distance GPS" type="python">
     <Enonce>
       ### Introduction 🦊 - Distance GPS
 
@@ -112,7 +113,7 @@ assert abs(float(distance_km) - attendu) < 1.0, "Calculez la distance Paris → 
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-3" label="Introduction 🦊 - Créer une carte">
+  <ExerciseSection id="loc-3" label="Introduction 🦊 - Créer une carte" type="python">
     <Enonce>
       ### Introduction 🦊 - Créer une carte
 
@@ -134,7 +135,7 @@ assert int(zoom) == 6, "Le zoom initial doit être 6."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-4" label="Facile 🦊 - Placer des marqueurs">
+  <ExerciseSection id="loc-4" label="Facile 🦊 - Placer des marqueurs" type="python">
     <Enonce>
       ### Facile 🦊 - Placer des marqueurs
 
@@ -159,7 +160,7 @@ assert nb_marqueurs == 2, "Ajoutez exactement 2 marqueurs (Paris et Lyon)."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-5" label="Facile 🦊 - Carte depuis un tableau">
+  <ExerciseSection id="loc-5" label="Facile 🦊 - Carte depuis un tableau" type="python">
     <Enonce>
       ### Facile 🦊 - Carte depuis un tableau
 
@@ -188,7 +189,7 @@ assert nb_marqueurs == 3, "Placez un marqueur par ville."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-6" label="Facile 🦊 - Ville la plus au nord">
+  <ExerciseSection id="loc-6" label="Facile 🦊 - Ville la plus au nord" type="python">
     <Enonce>
       ### Facile 🦊 - Ville la plus au nord
 
@@ -225,7 +226,7 @@ assert ville_nord == attendu, "Trouvez la ville avec la latitude la plus élevé
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-7" label="Facile 🦊 - Exporter la carte en HTML">
+  <ExerciseSection id="loc-7" label="Facile 🦊 - Exporter la carte en HTML" type="python">
     <Enonce>
       ### Facile 🦊 - Exporter la carte en HTML
 

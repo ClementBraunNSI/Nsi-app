@@ -7,35 +7,20 @@ icon: "\U0001F524"
 badgeId: premiere_caracteres
 prerequisites:
   - donnees_entiers_positifs
+audience: public
 ---
 
 # Représentation des caractères
 
-## Objectifs
+La machine ne stocke que des bits. Une lettre n'est donc pas un dessin : c'est un **nombre**, qu'on affiche ensuite comme un glyphe. « A », « é », « 字 » sont trois symboles, et chacun a un code. Le système de règles qui relie le nombre au symbole s'appelle un **codage**.
 
-- Comprendre qu'un caractère est un **entier** associé à un symbole
-- Connaître les limites d'**ASCII** (7 bits)
-- Situer **Unicode** / **UTF-8** comme standard actuel
+## Un caractère est un entier
 
-## Idée clé
+Lettre, chiffre, ponctuation, espace, emoji : pour le processeur, ce sont des entiers. En ASCII comme en Unicode, la lettre **A** a le code **65**, qu'on écrit aussi $41_{(16)}$. Changer de symbole, c'est changer de nombre. Le glyphe que vous voyez à l'écran est le dessin que la police associe à ce nombre.
 
-La machine ne stocke que des bits. Un caractère est donc un **code numérique** (souvent affiché en décimal ou hexadécimal) relié à un glyphe : « A », « é », « 字 », etc. Le système de règles qui fait ce lien s'appelle un **codage**.
+## ASCII, cent vingt-huit places
 
-## Qu'est-ce qu'un caractère ?
-
-Lettre, chiffre, ponctuation, symbole, emoji… Pour la machine, c'est un **nombre**.
-
-Exemple : en ASCII / Unicode, la lettre **A** a le code **65** ($41_{(16)}$).
-
-## ASCII (7 bits)
-
-**ASCII** (*American Standard Code for Information Interchange*) code un caractère sur **7 bits** → $2^7 = 128$ symboles.
-
-Cela couvre notamment :
-
-- lettres latines a–z, A–Z
-- chiffres 0–9
-- ponctuation et caractères de contrôle (espace, retour à la ligne…)
+**ASCII** (*American Standard Code for Information Interchange*) code un caractère sur **7 bits**. Sept bits donnent $2^7 = 128$ codes, de 0 à 127. Cela suffit pour l'alphabet latin sans accent, les chiffres, la ponctuation, et quelques caractères de contrôle comme l'espace ou le retour à la ligne.
 
 | Caractère | Décimal | Hex |
 |:---------:|:-------:|:---:|
@@ -45,22 +30,13 @@ Cela couvre notamment :
 | `A` | 65 | 41 |
 | `a` | 97 | 61 |
 
-**Limite :** pas d'accents français (`é`), ni d'alphabets non latins. D'où l'extension vers Unicode.
+Le chiffre `0` n'est pas le nombre 0 : son code est 48. `A` et `a` ne partagent pas le même code. Trente-deux places les séparent, de 65 à 97. La limite arrive vite. Il n'y a pas de place pour `é`, ni pour un alphabet non latin. C'est pour cela qu'on est passé à un catalogue plus grand.
 
-## Unicode et UTF-8
+## Unicode nomme, UTF-8 range
 
-**Unicode** attribue à chaque symbole un **point de code** unique, noté souvent `U+XXXX` (hexadécimal).
+**Unicode** attribue à chaque symbole un **point de code** unique, noté `U+XXXX` en hexadécimal. `A` est U+0041, le même 65 qu'en ASCII. `é` est U+00E9. `字` est U+5B57. Le point de code est un numéro dans le catalogue. Il ne dit pas encore combien d'octets occuperont le fichier.
 
-Exemples :
-
-- `A` → U+0041
-- `é` → U+00E9
-- `字` → U+5B57
-
-**UTF-8** est un **encodage** de ces points de code en une suite d'**octets** (1 à 4 octets selon le caractère). C'est le format dominant sur le Web et en Python.
-
-- Les caractères ASCII restent sur **1 octet** (compatibilité)
-- Les caractères plus « riches » prennent plusieurs octets
+**UTF-8** est un **encodage** : il transforme le point de code en une suite d'octets, de un à quatre selon le caractère. C'est le format dominant sur le Web, et celui que Python utilise par défaut pour les chaînes qu'on écrit dans un fichier en `utf-8`. Les caractères ASCII tiennent sur **un octet**, ce qui garde les vieux fichiers lisibles. Les caractères plus riches en prennent plusieurs.
 
 ```python
 >>> ord("A")
@@ -71,20 +47,11 @@ Exemples :
 b'\xc3\xa9'   # deux octets en UTF-8
 ```
 
+`ord` donne le point de code. `chr` fait le chemin inverse, du nombre vers le caractère. `.encode("utf-8")` produit les octets réellement écrits. Le point de code de `é` est U+00E9, mais en UTF-8 ce n'est pas l'octet `E9` tout seul : ce sont les deux octets `\xc3\xa9`. Confondre le numéro du catalogue et la suite d'octets est le piège du chapitre. Un fichier dont on ignore l'encodage s'affiche avec de mauvais accents, parce qu'on regroupe les octets selon la mauvaise règle. En pratique, on choisit UTF-8 et on le dit.
+
 Table de référence : [charset.org/utf-8](https://www.charset.org/utf-8)
 
-## Piège fréquent
-
-Confondre **point de code Unicode** et **suite d'octets UTF-8**. Le point de code de `é` est U+00E9 ; en UTF-8, ce n'est pas un seul octet `E9`, mais `\xc3\xa9`.
-
-## À retenir
-
-- Caractère = symbole ↔ nombre (code)
-- ASCII : 7 bits, 128 caractères, alphabet latin de base
-- Unicode : catalogue universel de points de code
-- UTF-8 : encodage variable (1 à 4 octets), compatible ASCII
-- En Python : `ord`, `chr`, `.encode("utf-8")`
-- Toujours connaître l'encodage d'un fichier texte (UTF-8 de préférence)
+Pour fermer : un caractère est un symbole relié à un nombre. ASCII en code 128 sur 7 bits, alphabet latin de base. Unicode numérote tous les symboles par des points de code. UTF-8 range ces numéros sur 1 à 4 octets, en restant compatible avec ASCII. En Python, `ord`, `chr` et `.encode("utf-8")` font voir la différence.
 
 ## Pour s'entraîner
 

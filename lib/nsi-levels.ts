@@ -115,6 +115,13 @@ export function nsiLevelLabel(niveaux: string): string {
   return entry?.label ?? `Niveau ${niveaux}`;
 }
 
+/** Nom de niveau dans les titres des pages publiques (le modèle du layout ajoute la marque). */
+export function seoLevelName(niveaux: string): string {
+  const folder = contentFolderFromParam(niveaux);
+  if (folder === "1") return "SNT seconde";
+  return nsiLevelLabel(niveaux);
+}
+
 export function getNsiLevel(niveaux: string): NsiLevelMeta {
   const folder = contentFolderFromParam(niveaux) ?? niveaux.trim();
   const entry = NSI_LEVELS[folder as NsiLevelId];
@@ -156,7 +163,7 @@ export function profileCodeToLevelId(code: string): string | null {
 export function canonicalAppPath(pathname: string): string | null {
   const path = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
 
-  if (path === "/niveaux") return "/cours";
+  if (path === "/niveaux") return "/";
   if (path === "/login" || path === "/auth/login") return "/connexion";
   if (path === "/fox" || path === "/foxtest") return "/academie";
   if (path === "/admin/dashboard") return "/admin";

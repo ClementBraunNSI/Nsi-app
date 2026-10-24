@@ -6,6 +6,7 @@ chapter: Données structurées
 icon: "\U0001F4CB"
 prerequisites:
   - activite_donnees_interactive
+audience: public
 ---
 
 # Exercice 1 : Découverte des formats de données

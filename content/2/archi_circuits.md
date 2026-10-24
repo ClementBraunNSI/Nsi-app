@@ -8,34 +8,20 @@ badgeId: premiere_circuits
 prerequisites:
   - archi_von_neumann
   - donnees_booleens
+audience: public
 ---
 
 # Circuits électroniques
 
-## Objectifs
-
-- Relier **transistor**, **porte logique** et table de vérité
-- Maîtriser NOT, AND, OR, XOR et leurs notations
-- Lire une équation logique simple
-- Appliquer la logique à un circuit (simulateur IoT)
-
-## Idée clé
-
-Le processeur est un assemblage de **portes logiques**, elles-mêmes réalisées avec des **transistors** (interrupteurs commandés). Chaque porte calcule une fonction booléenne sur des signaux 0/1.
+Le cours sur les booléens a calculé avec vrai et faux. Le processeur fait le même calcul avec des tensions. Un **transistor** est un interrupteur commandé : une tension sur la grille laisse passer le courant, ou le bloque. En assemblant quelques transistors, on obtient une **porte logique**, qui réalise ET, OU ou NON sur des signaux notés 0 et 1. Un **circuit** est un assemblage de portes. L'additionneur d'un processeur, au fond, n'est que cela : des portes, et les retenues qu'elles se passent.
 
 ![transistor](transistor.png)
 
-## Du transistor à la porte
+À chaque porte correspond une **table de vérité**, la liste complète de ses sorties. Deux entrées donnent quatre lignes. On ne devine pas le comportement sur un exemple : on le lit dans la table.
 
-- **Transistor** : contrôle le passage du courant
-- **Porte logique** : opération booléenne (ET, OU, NON…)
-- **Circuit** : combinaison de portes pour une fonction plus riche
+## Quatre portes
 
-À chaque porte on associe une **table de vérité**.
-
-## Portes de base
-
-### NOT — $S = \overline{A}$
+Le **NON**, $S = \overline{A}$, inverse son unique entrée. 0 devient 1, 1 devient 0.
 
 | Entrée | Sortie |
 | :---: | :---: |
@@ -44,9 +30,7 @@ Le processeur est un assemblage de **portes logiques**, elles-mêmes réalisées
 
 ![rprnot](repr_not.png)
 
-### AND (et) — $S = A \wedge B$ (aussi $A \cdot B$ ou $A \times B$)
-
-Sortie à 1 **seulement** si toutes les entrées sont à 1.
+Le **ET**, noté $S = A \wedge B$, et aussi $A \cdot B$ ou $A \times B$, ne vaut 1 que si **toutes** les entrées valent 1. Une seule à 0 suffit à bloquer la sortie. C'est la porte exigeante.
 
 | A | B | Sortie |
 | :---: | :---: | :---: |
@@ -57,9 +41,7 @@ Sortie à 1 **seulement** si toutes les entrées sont à 1.
 
 ![rprand](repr_and.png)
 
-### OR (ou) — $S = A \vee B$ (aussi $A + B$)
-
-Sortie à 1 si **au moins une** entrée est à 1.
+Le **OU**, noté $S = A \vee B$, et aussi $A + B$, vaut 1 dès qu'**au moins une** entrée vaut 1. Les deux à 1 restent à 1 : ce n'est pas un choix exclusif. Le symbole $+$ ici n'est pas l'addition des entiers. $1 + 1$ en logique vaut 1.
 
 | A | B | Sortie |
 | :---: | :---: | :---: |
@@ -70,9 +52,7 @@ Sortie à 1 si **au moins une** entrée est à 1.
 
 ![rpror](repr_or.png)
 
-### XOR (ou exclusif) — $S = A \oplus B$
-
-Sortie à 1 si **exactement une** entrée est à 1.
+Le **OU exclusif**, le XOR, noté $S = A \oplus B$, vaut 1 quand **exactement une** entrée vaut 1. Deux 0 : la sortie est 0. Deux 1 : la sortie est 0 aussi. On peut l'écrire avec les portes précédentes :
 
 $$S = \overline{A}B + A\overline{B}$$
 
@@ -85,32 +65,21 @@ $$S = \overline{A}B + A\overline{B}$$
 
 ![rprxor](repr_xor.png)
 
-## Équations logiques
+Le piège de notation est d'échanger les symboles. **ET** s'écrit $\wedge$. **OU** s'écrit $\vee$. Le rond ou la barre, c'est le NON. Le signe $\oplus$, c'est le XOR.
 
-On compose les opérateurs. Priorité usuelle : NON > ET > OU ; les parenthèses clarifient.
+## Lire une équation
 
-Exemple : $S = (A \vee B) \wedge C$ se lit « (A ou B) et C ».
+On compose les opérateurs comme on compose des calculs. La priorité usuelle est : parenthèses, puis NON, puis ET, puis OU. $A \vee B \wedge C$ se lit donc $A \vee (B \wedge C)$, parce que le ET passe avant le OU. Si l'on veut « (A ou B) et C », il faut écrire les parenthèses : $S = (A \vee B) \wedge C$.
 
-Avec $A=1$, $B=0$, $C=0$ : $(1 \vee 0) \wedge 0 = 1 \wedge 0 = 0$.
+Avec $A = 1$, $B = 0$, $C = 0$ : $(1 \vee 0) \wedge 0 = 1 \wedge 0 = 0$. On calcule d'abord l'intérieur des parenthèses, puis le ET. Deux écritures différentes peuvent décrire le même circuit. On le vérifie en comparant les tables de vérité, ligne par ligne, pas en comparant les symboles.
 
-## Application : logique combinatoire (IoT)
+## Une alarme, pour voir la table devenir un montage
 
-Simulateur d'alarme : capteurs + porte ET. Quelle combinaison déclenche l'alarme ?
+Le simulateur ci-dessous assemble des capteurs et une porte ET. La question est la même que devant une table : quelle combinaison d'entrées met la sortie à 1, et donc déclenche l'alarme ?
 
 <IotSimulator />
 
-## Piège fréquent
-
-Inverser les symboles : **AND = $\wedge$ (et)**, **OR = $\vee$ (ou)**. Autre erreur : lire $A \vee B \wedge C$ sans parenthèses — le ET est prioritaire, ce n'est pas « (A ou B) et C » sauf si on écrit $(A \vee B) \wedge C$.
-
-## À retenir
-
-- Portes = briques booléennes du CPU
-- NOT inverse ; AND = $\wedge$ ; OR = $\vee$ ; XOR = $\oplus$
-- Table de vérité = comportement complet de la porte
-- Les portes se combinent en équations / circuits
-- Priorité : parenthèses > NON > ET > OU
-- Un même comportement peut s'écrire de plusieurs façons équivalentes
+Pour fermer : les portes sont les briques booléennes du processeur, réalisées avec des transistors. NON inverse, ET s'écrit $\wedge$, OU s'écrit $\vee$, XOR s'écrit $\oplus$. La table de vérité dit tout le comportement. On combine les portes en équations, avec la priorité parenthèses, NON, ET, OU. Un même comportement admet plusieurs écritures équivalentes.
 
 ## Pour s'entraîner
 

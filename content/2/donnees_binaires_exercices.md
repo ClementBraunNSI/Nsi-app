@@ -9,6 +9,7 @@ icon: "\U0001F4BE"
 badgeId: premiere_fiche_exercices_binaires
 prerequisites:
   - donnees_booleens_exercices
+audience: public
 ---
 
 
@@ -18,7 +19,7 @@ Cette fiche couvre les conversions entre bases, les opérations arithmétiques b
 
 <ExerciseTabs courseId="premiere_fiche_exercices_binaires" courseTitle="Exercices Binaire et Hexadécimal">
 
-<ExerciseSection title="1. Conversions de base" difficulty="easy">
+<ExerciseSection title="1. Conversions de base" difficulty="easy" type="lecture">
 <Enonce>
 
 **1. Conversion Binaire vers Décimal**
@@ -102,7 +103,7 @@ assert int('2A', 16) == 42
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="2. Opérations Binaires" difficulty="medium">
+<ExerciseSection title="2. Opérations Binaires" difficulty="medium" type="lecture">
 <Enonce>
 
 Effectuez les opérations suivantes sans convertir en décimal (posez les opérations) :
@@ -169,7 +170,7 @@ assert 0b1111 * 0b10 == 0b11110
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="3. Complément à deux" difficulty="important">
+<ExerciseSection title="3. Complément à deux" difficulty="important" type="lecture">
 <Enonce>
 
 **1. Trouver le complément à deux (sur 8 bits) des nombres binaires suivants :**
@@ -229,7 +230,7 @@ assert c2_8bit_to_int(0b11101110) == -18
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="4. Implémentation Python" difficulty="hard">
+<ExerciseSection title="4. Implémentation Python" difficulty="hard" type="python">
 <Enonce>
 
 **Exercice 1 :**

@@ -4,10 +4,11 @@ description: "Introduction aux enjeux de la sécurité informatique, chiffrement
 level: SNI
 chapter: "Cybersecurite"
 icon: "🔒"
+audience: public
 ---
 
 <ExerciseTabs courseId="cybersecurite-intro" courseTitle="Cybersécurité">
-  <ExerciseSection id="cyber-1" label="1. Cours : Introduction">
+  <ExerciseSection id="cyber-1" label="1. Cours : Introduction" type="lecture">
     <Enonce>
 ## Introduction
 
@@ -112,7 +113,7 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="cyber-2" label="2. Exercice : Déchiffrement">
+  <ExerciseSection id="cyber-2" label="2. Exercice : Déchiffrement" type="python">
     <Enonce>
 ### Activité pratique : Déchiffrement
 

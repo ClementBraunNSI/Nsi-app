@@ -4,11 +4,15 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { getAuthContext, type AuthContext } from '@/lib/auth';
+import { getAuthContext, viewerFromAuth } from '@/lib/auth';
 import { canAccessCourse } from '@/lib/course-access';
 import { contentRoot } from '@/lib/content-path';
-import { classifySection, type ExternalRuntime } from '@/lib/exercise-classification';
+import { canOpenExerciseIde, isEditorExercise, readExerciseType } from '@/lib/exercise-type';
+import { stripHiddenExerciseBlocks } from '@/lib/exercise-statement';
 import { coursePath } from '@/lib/nsi-levels';
+import { SAVE_WARNING, everyTestPassed, testsUnavailableReport, unexpectedRunReport, type RunReport } from '@/lib/python-check';
+import { runPythonCheck, runSqlCheck } from '@/lib/run-exercise-check';
+import type { Achievement } from '@/lib/achievements';
 
 export interface LabExercise {
   id: string;
@@ -16,26 +20,27 @@ export interface LabExercise {
   courseId: string; // The Badge ID associated with the sheet
   courseTitle: string;
   content: string; // The markdown content of the exercise
-  verificationCode?: string; // The hidden python code for verification
   pythonPackages?: string[]; // Pyodide packages to load before execution
   chapter: string;
   level: string;
   fileName: string;
-  allowedStudents?: string[];
-  access?: 'private' | 'public';
   type: 'python' | 'sql';
   hasVerification: boolean;
   pagePath?: string;
 }
+
+type CatalogExercise = LabExercise & {
+  verificationCode?: string;
+  audience?: unknown;
+};
 
 export type ExternalExercise = {
   id: string;
   label: string;
   courseTitle: string;
   pagePath?: string;
-  runtime: ExternalRuntime;
-  access?: 'private' | 'public';
-  allowedStudents?: string[];
+  runtime: 'autre';
+  audience?: unknown;
 };
 
 export type ExerciseSheet = {
@@ -46,11 +51,20 @@ export type ExerciseSheet = {
   exerciseCount: number;
 };
 
-function toPublicExercise(ex: LabExercise): LabExercise {
-  const { allowedStudents: _allowed, verificationCode, access: _access, ...rest } = ex;
+function toPublicExercise(ex: CatalogExercise): LabExercise {
   return {
-    ...rest,
-    hasVerification: Boolean(verificationCode),
+    id: ex.id,
+    label: ex.label,
+    courseId: ex.courseId,
+    courseTitle: ex.courseTitle,
+    content: ex.content,
+    pythonPackages: ex.pythonPackages,
+    chapter: ex.chapter,
+    level: ex.level,
+    fileName: ex.fileName,
+    type: ex.type,
+    hasVerification: Boolean(ex.verificationCode),
+    pagePath: ex.pagePath,
   };
 }
 
@@ -74,26 +88,11 @@ function getFilesRecursively(dir: string): string[] {
   return results;
 }
 
-function exerciseIsAccessible(ex: { access?: 'private' | 'public'; allowedStudents?: string[] }, auth: AuthContext) {
-  return canAccessCourse(
-    {
-      access: ex.access || (ex.allowedStudents?.length ? 'private' : 'public'),
-      allowedStudents: ex.allowedStudents,
-    },
-    {
-      isElevated: auth.isElevated,
-      isAuthenticated: Boolean(auth.user),
-      userFullName: auth.fullName,
-      hasPrivateLessons: auth.hasPrivateLessons,
-    },
-  );
-}
-
-function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalExercise[] } {
+function buildExerciseCatalog(): { exercises: CatalogExercise[]; external: ExternalExercise[] } {
   const contentDir = contentRoot();
   if (!fs.existsSync(contentDir)) return { exercises: [], external: [] };
 
-  const exercises: LabExercise[] = [];
+  const exercises: CatalogExercise[] = [];
   const external: ExternalExercise[] = [];
   const levels = fs.readdirSync(contentDir).filter(f => !f.startsWith('.'));
 
@@ -180,13 +179,7 @@ function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalE
           const nearestTabs = tabOpenings.at(-1)?.[1] ?? '';
           const nearestCourseId = nearestTabs.match(/\bcourseId="([^"]*)"/)?.[1] || courseId;
           const nearestCourseTitle = nearestTabs.match(/\bcourseTitle="([^"]*)"/)?.[1] || courseTitle;
-          const kind = classifySection({
-            label: sectionLabel,
-            body: rawContent,
-            levelFolder: level,
-            courseId: nearestCourseId,
-            courseTitle: nearestCourseTitle,
-          });
+          const writtenType = readExerciseType(sectionAttrs);
           
           // Try to find <Enonce> content
           const enonceRegex = /<Enonce>([\s\S]*?)<\/Enonce>/;
@@ -210,10 +203,7 @@ function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalE
               .trim();
           }
 
-          // Remove <Correction> and <Verification> blocks from the content shown to user
-          exerciseContent = exerciseContent
-            .replace(/<Correction>[\s\S]*?<\/Correction>/g, '')
-            .replace(/<Verification>[\s\S]*?<\/Verification>/g, '');
+          exerciseContent = stripHiddenExerciseBlocks(exerciseContent);
           
           // One final trim
           exerciseContent = exerciseContent.trim();
@@ -225,24 +215,21 @@ function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalE
           const normalizedLevel = LEVEL_MAPPING[String(rawLevel).toLowerCase()] || rawLevel;
 
           const relParts = path.relative(contentDir, filePath).split(path.sep);
-          const privateLesson = relParts[0] === 'particuliers' && relParts.length >= 3;
-          const markedPrivate = String(data.access || '').toLowerCase() === 'private';
-          const access = privateLesson || markedPrivate ? 'private' as const : 'public' as const;
           const pagePath = coursePath(relParts[0], relParts.slice(1).join('/').replace(/\.mdx?$/, ''));
 
-          if (kind.role === 'external') {
-            external.push({
-              id: sectionId,
-              label: sectionLabel,
-              courseTitle: nearestCourseTitle,
-              pagePath,
-              runtime: kind.runtime,
-              allowedStudents: data.allowedStudents,
-              access,
-            });
+          if (!isEditorExercise(writtenType)) {
+            if (writtenType === 'autre') {
+              external.push({
+                id: sectionId,
+                label: sectionLabel,
+                courseTitle: nearestCourseTitle,
+                pagePath,
+                runtime: 'autre',
+                audience: data.audience,
+              });
+            }
             continue;
           }
-          if (kind.role !== 'exercise') continue;
 
           exercises.push({
             id: sectionId,
@@ -255,9 +242,8 @@ function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalE
             chapter: data.chapter || 'Divers',
             level: normalizedLevel,
             fileName: fileName.replace(/\.mdx?$/, ''),
-            allowedStudents: data.allowedStudents,
-            access,
-            type: kind.runtime,
+            audience: data.audience,
+            type: writtenType,
             hasVerification: Boolean(verificationCode),
             pagePath,
           });
@@ -267,7 +253,7 @@ function buildExerciseCatalog(): { exercises: LabExercise[]; external: ExternalE
   }
 
   // Ensure unique IDs
-  const uniqueExercises: LabExercise[] = [];
+  const uniqueExercises: CatalogExercise[] = [];
   const seenIds = new Set<string>();
   
   for (const ex of exercises) {
@@ -303,7 +289,7 @@ export async function listAccessibleSheetSummaries(): Promise<SheetSummary[]> {
   const auth = await getAuthContext();
   const sheets = new Map<string, SheetSummary>();
   for (const exercise of buildExerciseCatalog().exercises) {
-    if (!exerciseIsAccessible(exercise, auth)) continue;
+    if (!canAccessCourse(exercise, viewerFromAuth(auth))) continue;
     if (sheets.has(exercise.courseId)) continue;
     sheets.set(exercise.courseId, {
       courseId: exercise.courseId,
@@ -317,7 +303,7 @@ export async function listAccessibleSheetSummaries(): Promise<SheetSummary[]> {
 export async function getAllExercises(): Promise<LabExercise[]> {
   const auth = await getAuthContext();
   return buildExerciseCatalog().exercises
-    .filter((ex) => exerciseIsAccessible(ex, auth))
+    .filter((ex) => canAccessCourse(ex, viewerFromAuth(auth)))
     .map(toPublicExercise);
 }
 
@@ -328,7 +314,7 @@ export async function getExercisesForCourses(courseIds: string[]): Promise<LabEx
   const allowed = new Set(ids);
   const auth = await getAuthContext();
   return buildExerciseCatalog().exercises
-    .filter((ex) => allowed.has(ex.courseId) && exerciseIsAccessible(ex, auth))
+    .filter((ex) => allowed.has(ex.courseId) && canAccessCourse(ex, viewerFromAuth(auth)))
     .map(toPublicExercise);
 }
 
@@ -403,13 +389,13 @@ export async function getExerciseSheetNav(exerciseId: string): Promise<ExerciseS
   if (!id || id.length > 200) return null;
 
   const auth = await getAuthContext();
-  if (!auth.user || auth.isElevated) return null;
+  if (!auth.user) return null;
 
   const { exercises } = buildExerciseCatalog();
   const current = exercises.find((item) => item.id === id);
-  if (!current || !exerciseIsAccessible(current, auth)) return null;
+  if (!current || !canAccessCourse(current, viewerFromAuth(auth))) return null;
 
-  const sheet = exercises.filter((item) => item.courseId === current.courseId && exerciseIsAccessible(item, auth));
+  const sheet = exercises.filter((item) => item.courseId === current.courseId && canAccessCourse(item, viewerFromAuth(auth)));
   const position = sheet.findIndex((item) => item.id === current.id);
   if (position < 0 || sheet.length === 0) return null;
 
@@ -428,10 +414,10 @@ export async function getExerciseById(exerciseId: string): Promise<LabExercise |
   if (!id || id.length > 200) return null;
 
   const auth = await getAuthContext();
-  if (!auth.user || auth.isElevated) return null;
+  if (!auth.user) return null;
 
   const exercise = buildExerciseCatalog().exercises.find((item) => item.id === id);
-  if (!exercise || !exerciseIsAccessible(exercise, auth)) return null;
+  if (!exercise || !canAccessCourse(exercise, viewerFromAuth(auth))) return null;
   return toPublicExercise(exercise);
 }
 
@@ -441,24 +427,90 @@ export async function getExternalExercise(exerciseId: string): Promise<ExternalE
   if (!id || id.length > 200) return null;
 
   const auth = await getAuthContext();
-  if (!auth.user || auth.isElevated) return null;
+  if (!auth.user) return null;
 
   const exercise = buildExerciseCatalog().external.find((item) => item.id === id);
-  if (!exercise || !exerciseIsAccessible(exercise, auth)) {
+  if (!exercise || !canAccessCourse(exercise, viewerFromAuth(auth))) {
     return null;
   }
-  const { allowedStudents: _allowed, access: _access, ...rest } = exercise;
+  const { audience: _audience, ...rest } = exercise;
   return rest;
 }
 
-export async function getExerciseVerification(exerciseId: string): Promise<string | null> {
+export type ExerciseCheckResult = {
+  report: RunReport;
+  newBadge: boolean;
+  newAchievements: Achievement[];
+  /** False for an admin or enseignant: the check is shown, nothing is stored. */
+  recorded: boolean;
+};
+
+const CHECK_CODE_LIMIT = 60_000;
+
+function unavailableCheck(): ExerciseCheckResult {
+  return { report: testsUnavailableReport(), newBadge: false, newAchievements: [], recorded: false };
+}
+
+function previewNote(report: RunReport) {
+  return everyTestPassed(report)
+    ? 'Cette solution serait validée.'
+    : 'Cette solution ne serait pas validée.';
+}
+
+/** Grade on the server. The verification source stays here; the browser receives the report only. */
+export async function checkExerciseSolution(exerciseId: string, code: string): Promise<ExerciseCheckResult> {
   const id = String(exerciseId || '').trim();
-  if (!id || id.length > 200) return null;
+  const source = String(code ?? '');
+  if (!id || id.length > 200 || source.length > CHECK_CODE_LIMIT) return unavailableCheck();
 
   const auth = await getAuthContext();
-  if (!auth.user || (auth.role !== 'student' && auth.role !== 'invite')) return null;
+  if (!auth.user || !canOpenExerciseIde(auth.role)) return unavailableCheck();
 
   const exercise = buildExerciseCatalog().exercises.find((item) => item.id === id);
-  if (!exercise || !exerciseIsAccessible(exercise, auth)) return null;
-  return exercise.verificationCode ?? null;
+  const verification = exercise?.verificationCode?.trim() || '';
+  if (!exercise || !verification || !canAccessCourse(exercise, viewerFromAuth(auth))) return unavailableCheck();
+
+  let report: RunReport;
+  try {
+    report = exercise.type === 'sql'
+      ? await runSqlCheck(source, verification)
+      : await runPythonCheck(source, verification);
+  } catch {
+    report = unexpectedRunReport('La vérification n’a pas pu être lancée.');
+  }
+
+  if (auth.isElevated) {
+    return {
+      report: { ...report, validationNote: previewNote(report) },
+      newBadge: false,
+      newAchievements: [],
+      recorded: false,
+    };
+  }
+
+  if (!everyTestPassed(report)) {
+    return { report, newBadge: false, newAchievements: [], recorded: false };
+  }
+
+  const { saveValidatedExercise } = await import('@/app/actions/progress');
+  const saved = await saveValidatedExercise({
+    exerciseId: exercise.id,
+    courseId: exercise.courseId,
+    courseTitle: exercise.courseTitle,
+  });
+  if (saved.error) {
+    return {
+      report: { ...report, saveWarning: SAVE_WARNING },
+      newBadge: false,
+      newAchievements: [],
+      recorded: false,
+    };
+  }
+
+  return {
+    report,
+    newBadge: saved.newBadge,
+    newAchievements: saved.newAchievements ?? [],
+    recorded: true,
+  };
 }

@@ -4,6 +4,7 @@ description: "Comprendre pourquoi un mot de passe complexe est essentiel."
 level: "0"
 chapter: "Cybersécurite"
 icon: "🔐"
+audience: public
 ---
 
 # 🔓 Atelier Cybersécurité : L'Attaque Brute Force

@@ -22,6 +22,8 @@ export type RunReport = {
   errorDetail?: string;
   testsSkipped?: boolean;
   saveWarning?: string;
+  /** Présent pour un essai admin ou enseignant : la solution n'est pas enregistrée. */
+  validationNote?: string;
 };
 
 export const SAVE_WARNING = 'La validation n’a pas pu être enregistrée.';
@@ -83,6 +85,31 @@ export function finalizeReport(raw: unknown): RunReport {
     error: error || undefined,
     errorDetail: errorDetail && errorDetail !== error ? errorDetail : undefined,
     testsSkipped: data.testsSkipped === true,
+  };
+}
+
+/** Fields the browser may see: pass/fail, labels, Attendu/Obtenu, and the student output. */
+export function reportForClient(report: RunReport): RunReport {
+  return {
+    status: report.status,
+    validated: report.validated,
+    tests: report.tests.map((test) => {
+      const next: RunTest = { ok: test.ok, label: test.label };
+      if (test.detail) next.detail = test.detail;
+      if (test.actual !== undefined) next.actual = test.actual;
+      if (test.expected !== undefined) next.expected = test.expected;
+      if (test.printCompare) next.printCompare = true;
+      if (test.op) next.op = test.op;
+      return next;
+    }),
+    prints: report.prints,
+    testPrints: report.testPrints,
+    stderr: report.stderr,
+    error: report.error,
+    errorDetail: report.errorDetail,
+    testsSkipped: report.testsSkipped,
+    saveWarning: report.saveWarning,
+    validationNote: report.validationNote,
   };
 }
 

@@ -4,24 +4,17 @@ description: "Comprendre les réseaux sociaux, leur modèle économique, les enj
 level: "2"
 chapter: "Réseaux sociaux"
 icon: "📱"
+audience: public
 ---
 
-# 📱 Les Réseaux Sociaux : Définitions et Enjeux
+# Les réseaux sociaux
 
-## 📖 Qu'est-ce qu'un réseau social ?
+Un réseau social numérique n'est pas « Internet », ni « le Web » en général. C'est une plateforme précise, avec un profil, des relations, et un fil de contenus. On va d'abord la définir, puis regarder comment elle gagne de l'argent, ce qu'elle choisit de vous montrer, et comment on peut la dessiner comme un graphe.
 
-> **📖 Définition**
->
-> Un **réseau social numérique** est une plateforme en ligne qui permet aux utilisateurs de créer un profil, de se connecter avec d'autres personnes et de partager du contenu (textes, images, vidéos).
+> **Définition**
+> Un **réseau social numérique** est une plateforme en ligne qui permet de créer un profil, de se relier à d'autres personnes et de partager du contenu : textes, images, vidéos.
 
-<Quiz 
-  question="Quelle est la principale caractéristique d'un réseau social numérique ?" 
-  options={["Il permet de créer un profil et d'interagir avec d'autres utilisateurs", "Il sert uniquement à envoyer des emails", "Il est toujours payant", "Il ne fonctionne que sur ordinateur"]} 
-  answer={0} 
-  explanation="La définition même d'un réseau social repose sur la création de profil, la connexion (amis/abonnés) et le partage de contenu."
-/>
-
-**Activité : Analyse comparative**
+**Activité : analyse comparative**
 
 **Choisissez un réseau social et analysez :**
 - **Fondateur(s) et date de création**
@@ -29,185 +22,85 @@ icon: "📱"
 - **Public cible et nombre d'utilisateurs**
 - **Modèle économique**
 
-## 📱 Types de contenus et spécialisations
+## Ils ne montrent pas la même chose
 
-### 🎯 Diversité des contenus numériques
+Tous ne se battent pas sur le même terrain. Le format limite déjà ce qu'on peut y dire.
 
-| Type de contenu | Caractéristiques | Réseaux spécialisés | Impact |
+| Type de contenu | Caractéristiques | Réseaux spécialisés | Ce que cela produit |
 |-----------------|------------------|---------------------|--------|
 | **Texte court** | Messages limités (280 caractères) | Twitter, Threads | Information rapide, débats |
-| **Images** | Photos, illustrations, memes | Instagram, Pinterest | Expression créative, lifestyle |
-| **Vidéos courtes** | 15s à 3min, format vertical | TikTok, YouTube Shorts, Reels | Divertissement, viralité |
-| **Vidéos longues** | Contenu éducatif, entertainment | YouTube, Twitch | Apprentissage, communautés |
-| **Audio** | Podcasts, discussions en direct | Clubhouse, Spaces, Discord | Conversations approfondies |
-| **Professionnel** | CV, articles, networking | LinkedIn | Carrière, business |
+| **Images** | Photos, illustrations, mèmes | Instagram, Pinterest | Expression visuelle |
+| **Vidéos courtes** | 15 s à 3 min, souvent verticales | TikTok, YouTube Shorts, Reels | Divertissement, circulation très rapide |
+| **Vidéos longues** | Cours, spectacles, directs | YouTube, Twitch | Apprentissage, communautés |
+| **Audio** | Podcasts, discussions | Clubhouse, Spaces, Discord | Conversations plus longues |
+| **Professionnel** | Parcours, articles | LinkedIn | Travail, mise en relation |
 
-## 📚 Histoire des réseaux sociaux
+Le choix du réseau n'est donc pas seulement un goût. Une idée qui tient en une image ne tient pas dans le même endroit qu'un cours d'une heure.
 
-Les réseaux sociaux ont vu le jour au début des années 2000, en plein dans l'expansion du numérique dans les foyers.
-Certains n'avaient pas forcément comme but d'être ceux qu'ils sont actuellement (comme Facebook qui initialement servait à relier les étudiants de Harvard).
+## Une histoire courte, et un modèle économique
 
-## 📖 Financement d'un réseau social
+Les réseaux sociaux grand public apparaissent au début des années 2000, quand les ordinateurs entrent dans les foyers. Plusieurs n'avaient pas le visage qu'on leur connaît. Facebook, au départ, ne reliait que les étudiants de Harvard.
 
-Un réseau social est associé à un modèle économique. De grandes sociétés financent des réseaux sociaux à des fins lucratives (pour créer des bénéfices).
+Ces plateformes ont un coût : serveurs, salaires, modération. Beaucoup sont gratuites à l'inscription, et pourtant des sociétés les financent pour en tirer un bénéfice. Le décalage s'explique ainsi : si le service ne vous fait pas payer, c'est en général votre attention, et les données qui la décrivent, qui sont vendues aux annonceurs.
 
-> **💰 Le modèle de la gratuité**
-> Si un service est gratuit, c'est que **vous êtes le produit** !
-> Les réseaux sociaux ne vous font pas payer l'inscription, mais ils vendent votre **attention** et vos **données personnelles** aux annonceurs publicitaires.
+Les contenus, eux, viennent des utilisateurs. Une personne partage ce qui l'intéresse, un commerce cherche des clients, une marque paie un créateur pour montrer un produit. Chacun reste responsable, pénalement, de ce qu'il publie. Le message est considéré comme public. Publier un propos discriminatoire, une diffamation ou du harcèlement n'est pas « juste un post » : ce sont des infractions.
 
-<Quiz 
-  question="Si l'utilisation d'un réseau social est gratuite, comment l'entreprise génère-t-elle des revenus ?" 
-  options={["Grâce aux dons des utilisateurs", "En vendant votre attention et vos données aux publicitaires", "Elle ne génère pas de revenus", "Uniquement via les abonnements premium"]} 
-  answer={1} 
-  explanation="C'est le modèle économique de la publicité ciblée : 'Si c'est gratuit, vous êtes le produit'. Vos données permettent de cibler les pubs."
-/>
+Tout cela laisse une trace. On appelle **e-réputation** l'image qu'une personne donne d'elle en ligne, par ses textes, ses photos, ses prises de position, ses placements de produit. Elle ne se résume pas à ce que vous vouliez montrer. Elle inclut ce que les autres peuvent encore trouver.
 
-Il existe un bon nombre de coûts liés à l'utilisation pour les particuliers de réseaux sociaux.
+## L'algorithme ne vous montre pas tout
 
-**Lister quels coûts peuvent être associés au fonctionnement d'un réseau social**
+Le fil n'est pas la liste chronologique de ce que vos contacts ont publié. Un algorithme de recommandation choisit, et il ordonne. Il s'appuie sur les mentions « j'aime », les partages, et le temps passé devant chaque vidéo. Son objectif n'est pas de vous informer au mieux. C'est de vous garder dans l'application.
 
-<ReflectionInput label="Vos idées de coûts :" placeholder="Ex: Serveurs, Salaires des ingénieurs..." />
-
-Ces entreprises doivent donc rémunérer ou financer toutes les fonctionnalités de leurs réseaux sociaux et cela avec diverses méthodes.
-
-**Lister des méthodes de financement des réseaux sociaux**
-
-<ReflectionInput label="Vos idées de financement :" placeholder="Ex: Publicité, Abonnements..." />
-
-## 📖 Contenus disponibles sur un réseau social
-
-Sur un réseau social, il existe bons nombre de contenus différents qui sont publiés pour des utilisateurs par des utilisateurs.
-
-**Lister quels contenus peuvent être présents sur un réseau social**
-
-<ReflectionInput label="Vos idées de contenus :" placeholder="Ex: Photos, Vidéos, Textes..." />
-
-Les contenus sont soumis à un réglement spécifique au réseau social et même à la loi.
-En effet,chaque utilisateur est pénalement responsable de ce qu'il poste sur un réseau social.
-Les contenus publiés sur un réseau social sont considérés publics et à visée de tous.
-*Par exemple : il est strictement interdit de publier des contenus à caractères discriminatoires, diffamant et à visée de harcèlement envers autrui.*
-
-Ces contenus peuvent être produits par des créateurs qui souhaitent partager leurs passions, des entreprises ou des magasins qui veulent étendre leur clientèle ou par des influenceurs payés par des marques pour réaliser des publicités.
-
-### Réputation de l'utilisateur en ligne
-
-Ces contenus (prises de parole, opinions, photos, vidéo, placements de produits) peuvent notamment affecter la réputation de l'utilisateur en ligne : on l'appelle **e-reputation**.
-Elle renvoie directement à tous les utilisateurs l'image de celui qui publie du contenu en ligne.
-
-Une bonne e-reputation permet de créer un sentiment de confiance à l'égard de l'utilisateur qui poste des contenus en ligne.
-
-## 🔮 Les Algorithmes et la "Bulle de Filtres"
-
-Sur les réseaux sociaux, vous ne voyez pas **tout** ce que vos amis postent, ni dans l'ordre chronologique. C'est un **algorithme** de recommandation qui décide ce qui apparaît sur votre fil d'actualité.
-
-### 🤖 Comment ça marche ?
-L'algorithme analyse vos "J'aime", vos partages et le temps que vous passez sur chaque vidéo pour comprendre ce qui vous plaît. Son but : **vous garder le plus longtemps possible** sur l'application.
-
-### 🫧 Le danger de la "Bulle de Filtres"
-Si vous aimez le football, l'algorithme ne vous montrera que du football. Si vous avez une opinion politique, il ne vous montrera que des gens d'accord avec vous.
-C'est ce qu'on appelle une **Bulle de Filtres** (ou chambre d'écho) : vous finissez par croire que tout le monde pense comme vous, et vous ne voyez plus la diversité du monde.
-
-<Quiz 
-  question="Qu'est-ce qu'une 'bulle de filtres' ?" 
-  options={["Un filtre photo populaire", "Le fait de ne voir que des contenus qui confirment nos opinions", "Un groupe de discussion privé", "Une protection contre les virus"]} 
-  answer={1} 
-  explanation="Les algorithmes nous enferment dans une bulle en nous montrant toujours plus de ce qu'on aime déjà, réduisant notre exposition à des points de vue différents."
-/>
+Si vous vous arrêtez sur le football, le fil se remplit de football. Si vous lisez surtout un bord politique, il vous renvoie des gens déjà d'accord avec vous. On appelle cela une **bulle de filtres**, ou une chambre d'écho. À force, on finit par croire que tout le monde pense comme soi, simplement parce que les avis contraires n'arrivent plus jusqu'à l'écran.
 
 <FilterBubble />
 
+Pour la percer un peu, il faut aller chercher des comptes qui ne vous ressemblent pas, au lieu d'attendre que l'algorithme les propose. Il ne le fera pas tout seul.
 
-> **💡 Conseil**
-> Pour éclater votre bulle, forcez-vous à suivre des comptes qui ont des avis différents des vôtres ou qui parlent de sujets que vous ne connaissez pas !
+## L'âge, le profil, et ce qu'on y met
 
-## 🔐 Utilisation responsable des réseaux sociaux
+> **Définition**
+> La **majorité numérique** est l'âge à partir duquel un mineur peut consentir seul au traitement de ses données personnelles sur une plateforme.
 
-### ⚖️ Cadre légal et majorité numérique
-
-> **📖 Définition**
->
-> La **majorité numérique** est l'âge à partir duquel un mineur peut consentir seul au traitement de ses données personnelles sur les plateformes numériques.
-
-| Âge | Droits et obligations | Supervision requise |
-|-----|----------------------|--------------------|
-| **< 15 ans** | Autorisation parentale obligatoire | Contrôle parental recommandé |
-| **15-18 ans** | Inscription autonome possible | Accompagnement conseillé |
-| **> 18 ans** | Autonomie complète | Responsabilité personnelle |
-
-> **⚠️ Warning**
->
-> Cette règle protège les mineurs mais n'empêche pas les risques. La sensibilisation reste essentielle à tout âge.
-
-### 👤 Création et gestion de profil
+En France, ce seuil est à 15 ans. Avant, l'inscription suppose l'accord d'un parent, et un contrôle parental reste utile. Entre 15 et 18 ans, on peut s'inscrire seul, ce qui ne veut pas dire se débrouiller seul. Après 18 ans, la responsabilité est entière. La règle protège un âge. Elle n'empêche pas les risques, à 14 ans comme à 30.
 
 ![Exemple d'inscription](/content/1/inscription.png)
 
-#### 🛠️ Étapes de création
+Créer un compte suit presque toujours les mêmes étapes, et chacune est un endroit où l'on en dit trop. On commence par un e-mail ou un téléphone, et un mot de passe : une adresse réservée à ces inscriptions limite les dégâts si elle fuite. Viennent le nom affiché et la photo : moins ils racontent votre vie réelle, mieux c'est. La biographie et les centres d'intérêt peuvent rester vagues. Les paramètres de visibilité méritent d'être réglés avant d'ajouter qui que ce soit, profil privé par défaut. Enfin, une demande de contact n'est pas une preuve d'identité.
 
-| Étape | Action | Conseils de sécurité |
-|-------|--------|---------------------|
-| **1. Inscription** | Email/téléphone + mot de passe | Utiliser une adresse email dédiée |
-| **2. Identité** | Nom d'utilisateur + photo | Éviter les informations trop personnelles |
-| **3. Profil** | Bio, centres d'intérêt | Limiter les détails privés |
-| **4. Confidentialité** | Paramètres de visibilité | Profil privé par défaut |
-| **5. Contacts** | Ajout d'amis/abonnés | Vérifier l'identité des demandes |
+## Les violences qui passent par l'écran
 
-## ⚠️ Cyberviolence et protection numérique
+Le harcèlement ne s'arrête pas à la porte du lycée. Il change seulement de support.
 
-### 🎯 Typologie des violences en ligne
-
-| Type | Description | Exemples | Conséquences |
+| Type | De quoi il s'agit | Exemples | Conséquences |
 |------|-------------|----------|-------------|
-| **Cyberharcèlement** | Attaques répétées et coordonnées | Messages d'insultes, moqueries publiques | Anxiété, dépression, isolement |
-| **Doxxing** | Publication d'informations privées | Adresse, téléphone, photos intimes | Atteinte à la vie privée, chantage |
-| **Revenge porn** | Diffusion non consentie d'images | Photos/vidéos intimes partagées | Humiliation, détresse psychologique |
-| **Cyberstalking** | Surveillance et traque numérique | Géolocalisation, espionnage | Sentiment d'insécurité permanent |
-| **Hate speech** | Discours de haine ciblé | Propos racistes, homophobes | Discrimination |
+| **Cyberharcèlement** | Attaques répétées | Insultes, moqueries publiques | Anxiété, isolement |
+| **Doxxing** | Publication d'informations privées | Adresse, téléphone, photos intimes | Chantage, atteinte à la vie privée |
+| **Revenge porn** | Diffusion d'images sans consentement | Photos ou vidéos intimes | Humiliation, détresse |
+| **Cyberstalking** | Surveillance | Géolocalisation, espionnage de comptes | Sentiment d'être suivi |
+| **Discours de haine** | Propos qui visent un groupe | Insultes racistes, homophobes | Discrimination |
 
-#### 📞 Ressources d'aide
+Si cela vous arrive, ou si vous voyez que cela arrive à quelqu'un, il existe des numéros qui répondent.
 
 | Service | Contact | Spécialité |
 |---------|---------|------------|
-| **3018** | Numéro gratuit | Violences numériques (mineurs) |
+| **3018** | Numéro gratuit | Violences numériques, pour les mineurs |
 | **3919** | Numéro national | Violences faites aux femmes |
-| **Net Écoute** | 0800 200 000 | Accompagnement jeunes |
-| **Pharos** | pharos.gouv.fr | Signalement contenus illicites |
+| **Net Écoute** | 0800 200 000 | Accompagnement des jeunes |
+| **Pharos** | pharos.gouv.fr | Signalement de contenus illicites |
 
-## 📊 Modélisation mathématique : les graphes
+Le 3018 est le réflexe pour un mineur confronté à une violence en ligne. Pharos sert à signaler un contenu, pas à remplacer une discussion avec un adulte de confiance.
 
-### 🔗 Représentation des réseaux sociaux
+## Dessiner le réseau : les graphes
 
-> **📖 Définition**
->
-> Un **graphe** est une structure mathématique qui modélise les relations entre entités. Dans le contexte des réseaux sociaux, il représente les connexions entre utilisateurs.
+> **Définition**
+> Un **graphe** est une structure mathématique qui représente des relations entre des entités. Sur un réseau social, les entités sont les comptes, et les relations sont les liens entre eux.
 
-#### 🏗️ Composants d'un graphe social
+Un **sommet** est un compte. Une **arête** est une relation : une amitié, un abonnement, une mention. Si la relation a une force, la fréquence des échanges par exemple, on lui donne un **poids**. Si elle a un sens, « je suis cette personne » sans qu'elle me suive, le graphe est **orienté**. Une amitié mutuelle, elle, se dessine sans flèche.
 
-| Élément | Représentation | Exemple concret |
-|---------|----------------|----------------|
-| **Sommets (nœuds)** | Utilisateurs du réseau | Profils Facebook, comptes Twitter |
-| **Arêtes (liens)** | Relations entre utilisateurs | Amitié, abonnement, mention |
-| **Poids** | Force de la relation | Fréquence d'interaction, proximité |
-| **Direction** | Sens de la relation | Abonnement unilatéral vs amitié mutuelle |
+Pour lire la forme du réseau, quelques mesures suffisent.
 
-### 📏 Mesures dans un graphe
-
-Pour analyser la structure d'un réseau social, on utilise plusieurs mesures mathématiques clés :
-
-> **📏 Distance**
-> La distance entre deux sommets est le **nombre minimum de liens** (arêtes) qu'il faut parcourir pour aller de l'un à l'autre.
-
-> **⭕ Écartement**
-> L'écartement d'un sommet est la distance maximale qui le sépare des autres sommets du graphe.
-
-> **🎯 Centre**
-> Le centre d'un graphe est le sommet (ou les sommets) qui a l'**écartement le plus petit**. C'est la personne la "mieux placée" pour contacter rapidement tout le monde.
-
-> **📍 Rayon**
-> Le rayon est la valeur de l'écartement du centre (la plus petite des distances maximales).
-
-> **📏 Diamètre**
-> Le diamètre est la **distance maximale** entre deux sommets quelconques du graphe. C'est la "largeur" du réseau.
+La **distance** entre deux sommets est le plus petit nombre d'arêtes qui les séparent. L'**écartement** d'un sommet est la plus grande de ces distances, entre lui et les autres. Le **centre** est le sommet dont l'écartement est le plus petit : la personne la mieux placée pour joindre tout le monde en peu d'étapes. Le **rayon** est cet écartement-là. Le **diamètre** est la plus grande distance entre deux sommets quelconques : la « largeur » du réseau.
 
 <GraphMetricsExplorer />
 
@@ -230,20 +123,12 @@ Pour analyser la structure d'un réseau social, on utilise plusieurs mesures mat
 * Donner le **rayon** de ce graphe.
 * En déduire le **diamètre** de ce graphe.
 
-## 🌍 L'expérience de Milgram et les "6 degrés de séparation"
+## Six poignées de main
 
-### 📚 Contexte historique
+En 1967, le psychologue Stanley Milgram veut mesurer à quel point deux inconnus sont proches. Il demande à des volontaires du Midwest d'envoyer une lettre à un agent de change de Boston. Contrainte : on ne la transmet qu'à une connaissance personnelle, choisie parce qu'elle a une chance de rapprocher du destinataire.
 
-En **1967**, le psychologue **Stanley Milgram** teste une hypothèse révolutionnaire : dans un monde de plus en plus connecté, quelle est la distance sociale réelle entre deux personnes quelconques ?
-
-**L'expérience :**
-Il demande à des volontaires du Midwest américain d'envoyer un courrier à une personne cible à Boston (un agent de change), mais ils ne peuvent le transmettre qu'à une connaissance personnelle susceptible de se rapprocher de la cible.
-
-**Résultat :**
-Les lettres qui sont arrivées à destination sont passées par une moyenne de **5 à 6 intermédiaires**.
-C'est la naissance de la théorie des **"6 degrés de séparation"** : toute personne sur Terre serait reliée à n'importe quelle autre par une chaîne de relations individuelles de 6 maillons environ.
+Les lettres qui arrivent passent en moyenne par cinq ou six intermédiaires. De là vient l'idée des **six degrés de séparation** : deux personnes sur Terre seraient reliées par une chaîne d'environ six relations.
 
 <SocialGraph />
 
-> **🌐 À l'ère des réseaux sociaux**
-> Avec l'avènement de Facebook, Twitter et LinkedIn, cette distance s'est considérablement réduite ! Les études récentes (Facebook Research) estiment que nous sommes désormais séparés par environ **3,5 degrés** seulement. Le monde est devenu un "petit monde".
+Avec Facebook, Twitter ou LinkedIn, les études internes de Facebook ont estimé cette distance autour de 3,5. Le réseau n'a pas rapetissé la planète. Il a raccourci les chaînes.

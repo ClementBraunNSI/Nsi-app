@@ -4,6 +4,8 @@ description: "Variables, opérateurs, entrées/sorties - bases solides"
 level: "particuliers"
 chapter: "Programmation en C"
 icon: "🔧"
+audience:
+  accounts: []
 ---
 
 # 🔧 C — Affectations & Types (débutante)

@@ -7,10 +7,11 @@ meta: 'Variables, Types, Opérateurs et Conditions'
 level: premiere
 prerequisites:
   - python_fonctions
+audience: public
 ---
 
 <ExerciseTabs courseId="types-python" courseTitle="Types en Python">
-  <ExerciseSection id="types-1-1" label="1.1 - Identification des types">
+  <ExerciseSection id="types-1-1" label="1.1 - Identification des types" type="lecture">
     <Enonce>
     ### Exercice 1.1 : Identification des types
     **Donner les types des valeurs suivantes :**
@@ -33,7 +34,7 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-1-2" label="1.2 - Table de vérité XOR">
+  <ExerciseSection id="types-1-2" label="1.2 - Table de vérité XOR" type="python">
     <Enonce>
     ### Exercice 1.2 : Table de vérité XOR
     **À l'aide de Python, écrire un programme qui affiche dans le terminal la table de vérité de la fonction booléenne `xor` (ou exclusif).**
@@ -56,7 +57,7 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-1-3" label="1.3 - Somme de deux nombres">
+  <ExerciseSection id="types-1-3" label="1.3 - Somme de deux nombres" type="python">
     <Enonce>
     ### Exercice 1.3 : Somme de deux nombres
     **Écrire un programme qui permet d'afficher la somme de deux nombres entiers de la forme `'La somme est x+y'` avec x et y définis précédemment.**
@@ -81,7 +82,7 @@ assert s == x + y, "La somme est incorrecte."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-1-4" label="1.4 - Affichage amélioré">
+  <ExerciseSection id="types-1-4" label="1.4 - Affichage amélioré" type="python">
     <Enonce>
     ### Exercice 1.4 : Affichage amélioré
     **Améliorer le programme précédent pour qu'il affiche `'La somme de x et y est x+y'`.**
@@ -106,7 +107,7 @@ assert s == x + y, "La somme est incorrecte."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-1-5" label="1.5 - Concaténation de chaînes">
+  <ExerciseSection id="types-1-5" label="1.5 - Concaténation de chaînes" type="python">
     <Enonce>
     ### Exercice 1.5 : Concaténation de chaînes
     **Écrire un programme qui instancie deux chaînes de caractères, les concatène et affiche le résultat sous la forme :**
@@ -132,7 +133,7 @@ assert resultat == chaine_a + chaine_b, "La concaténation est incorrecte."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-1-6" label="1.6 - Étude de code et Booléens">
+  <ExerciseSection id="types-1-6" label="1.6 - Étude de code et Booléens" type="lecture">
     <Enonce>
     ### Exercice 1.6 : Étude de code et Booléens
     **Partie A : Évaluer les valeurs de `result` à la fin de chaque programme :**
@@ -201,7 +202,7 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-1-7" label="1.7 - Parité d'un nombre">
+  <ExerciseSection id="types-1-7" label="1.7 - Parité d'un nombre" type="python">
     <Enonce>
     ### Exercice 1.7 : Parité d'un nombre
     **Écrire un programme qui demande un nombre à l'utilisateur et affiche dans le terminal si ce nombre est pair ou impair.**
@@ -225,7 +226,7 @@ assert 'a' in locals(), "La variable 'a' n'est pas définie."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-2-1" label="2.1 - Maximum entre trois nombres">
+  <ExerciseSection id="types-2-1" label="2.1 - Maximum entre trois nombres" type="python">
     <Enonce>
     ### Exercice 2.1 : Maximum entre trois nombres
     **Écrire un programme qui permet de trouver la valeur maximale entre trois variables entières saisies.**
@@ -261,7 +262,7 @@ assert maximum == max(val_1, val_2, val_3), "Le maximum calculé est incorrect."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-2-2" label="2.2 - Calculatrice basique">
+  <ExerciseSection id="types-2-2" label="2.2 - Calculatrice basique" type="python">
     <Enonce>
     ### Exercice 2.2 : Calculatrice basique
     **Écrire un programme qui simule une calculatrice basique.**
@@ -312,7 +313,7 @@ elif operateur == '/':
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-2-3" label="2.3 - Profit ou perte">
+  <ExerciseSection id="types-2-3" label="2.3 - Profit ou perte" type="python">
     <Enonce>
     ### Exercice 2.3 : Profit ou perte
     **Écrire un programme qui, étant donné deux valeurs `cout_de_production` et `prix_de_vente` (saisies par l'utilisateur), affiche dans le terminal :**
@@ -349,7 +350,7 @@ else: assert "marge" in message
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="types-3-1" label="3.1 - Mentions au baccalauréat">
+  <ExerciseSection id="types-3-1" label="3.1 - Mentions au baccalauréat" type="python">
     <Enonce>
     ### Exercice 3.1 : Mentions au baccalauréat
     **Écrire un programme qui prend une note sur 20 et affiche dans le terminal la mention correspondante :**

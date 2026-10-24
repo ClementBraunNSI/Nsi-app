@@ -8,6 +8,7 @@ meta: 'Listes Python : indices, parcours, méthodes et algorithmes'
 level: premiere
 prerequisites:
   - python_exercices_fonctions
+audience: public
 ---
 
 <ExerciseTabs courseId="les-listes-python" courseTitle="Les listes">
@@ -16,7 +17,7 @@ prerequisites:
   {/* CATÉGORIE 1 : INTRODUCTION (1.1 à 1.6)      */}
   {/* ========================================== */}
 
-  <ExerciseSection id="listes-1-1" label="1.1 [Introduction] - Création d'un tuple">
+  <ExerciseSection id="listes-1-1" label="1.1 [Introduction] - Création d'un tuple" type="python">
     <Enonce>
     ### Exercice 1.1 [Introduction] : Création d'un tuple
     **Écrire une fonction `creer_tuple` qui renvoie le tuple `('a', 'b', 'c', 'd')`.**
@@ -36,7 +37,7 @@ assert creer_tuple() == ('a', 'b', 'c', 'd')
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-1-2" label="1.2 [Introduction] - Création d'une liste">
+  <ExerciseSection id="listes-1-2" label="1.2 [Introduction] - Création d'une liste" type="python">
     <Enonce>
     ### Exercice 1.2 [Introduction] : Création d'une liste
     **Écrire une fonction `creer_liste` qui renvoie la liste `['a', 'b', 'c', 'd']`.**
@@ -56,7 +57,7 @@ assert creer_liste() == ['a', 'b', 'c', 'd']
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-1-3" label="1.3 [Introduction] - Accès par indice">
+  <ExerciseSection id="listes-1-3" label="1.3 [Introduction] - Accès par indice" type="python">
     <Enonce>
     ### Exercice 1.3 [Introduction] : Accès par indice
     **Écrire une fonction `deuxieme_element` qui prend une liste non vide et renvoie son deuxième élément (indice 1).**
@@ -77,7 +78,7 @@ assert deuxieme_element([10, 20, 30]) == 20
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-1-4" label="1.4 [Introduction] - Modifier un élément">
+  <ExerciseSection id="listes-1-4" label="1.4 [Introduction] - Modifier un élément" type="python">
     <Enonce>
     ### Exercice 1.4 [Introduction] : Modifier un élément
     **Écrire une fonction `remplacer_deuxieme` qui prend une liste et une valeur `nouveau`, remplace le deuxième élément par `nouveau`, et renvoie la liste modifiée.**
@@ -98,7 +99,7 @@ assert remplacer_deuxieme(['a', 'b', 'c'], 'z') == ['a', 'z', 'c']
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-1-5" label="1.5 [Introduction] - Ajouter à la fin">
+  <ExerciseSection id="listes-1-5" label="1.5 [Introduction] - Ajouter à la fin" type="python">
     <Enonce>
     ### Exercice 1.5 [Introduction] : Ajouter à la fin
     **Écrire une fonction `ajouter_fin` qui prend une liste et une valeur, ajoute la valeur à la fin avec `.append()`, et renvoie la liste.**
@@ -119,7 +120,7 @@ assert ajouter_fin(['a', 'b'], 'f') == ['a', 'b', 'f']
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-1-6" label="1.6 [Introduction] - Supprimer le premier">
+  <ExerciseSection id="listes-1-6" label="1.6 [Introduction] - Supprimer le premier" type="python">
     <Enonce>
     ### Exercice 1.6 [Introduction] : Supprimer le premier
     **Écrire une fonction `supprimer_premier` qui prend une liste non vide, supprime son premier élément avec `.pop(0)`, et renvoie la liste.**
@@ -144,7 +145,7 @@ assert supprimer_premier(['a', 'b', 'c']) == ['b', 'c']
   {/* CATÉGORIE 2 : FACILE (2.1 à 2.6)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="listes-2-1" label="2.1 [Facile] - Somme des éléments">
+  <ExerciseSection id="listes-2-1" label="2.1 [Facile] - Somme des éléments" type="python">
     <Enonce>
     ### Exercice 2.1 [Facile] : Somme des éléments
     **Écrire une fonction `somme_elements` qui prend une liste de nombres et renvoie la somme de tous ses éléments (boucle `for`).**
@@ -168,7 +169,7 @@ assert somme_elements([]) == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-2-2" label="2.2 [Facile] - Compter les pairs">
+  <ExerciseSection id="listes-2-2" label="2.2 [Facile] - Compter les pairs" type="python">
     <Enonce>
     ### Exercice 2.2 [Facile] : Compter les pairs
     **Écrire une fonction `compter_pairs` qui prend une liste d'entiers et renvoie le nombre d'éléments pairs.**
@@ -192,7 +193,7 @@ assert compter_pairs([1, 2, 3, 4, 5]) == 2
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-2-3" label="2.3 [Facile] - Longueur d'une liste">
+  <ExerciseSection id="listes-2-3" label="2.3 [Facile] - Longueur d'une liste" type="python">
     <Enonce>
     ### Exercice 2.3 [Facile] : Longueur d'une liste
     **Écrire une fonction `longueur_liste` qui prend une liste et renvoie son nombre d'éléments, sans utiliser `len()`.**
@@ -216,7 +217,7 @@ assert longueur_liste([]) == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-2-4" label="2.4 [Facile] - Dernier élément">
+  <ExerciseSection id="listes-2-4" label="2.4 [Facile] - Dernier élément" type="python">
     <Enonce>
     ### Exercice 2.4 [Facile] : Dernier élément
     **Écrire une fonction `dernier_element` qui prend une liste non vide et renvoie son dernier élément, sans utiliser d'indice négatif ni `len()`.**
@@ -240,7 +241,7 @@ assert dernier_element(['a']) == 'a'
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-2-5" label="2.5 [Facile] - Présence d'une valeur">
+  <ExerciseSection id="listes-2-5" label="2.5 [Facile] - Présence d'une valeur" type="python">
     <Enonce>
     ### Exercice 2.5 [Facile] : Présence d'une valeur
     **Écrire une fonction `contient` qui prend une liste et une valeur, et renvoie `True` si la valeur est présente, `False` sinon (parcours avec boucle, sans `in`).**
@@ -264,7 +265,7 @@ assert contient([1, 2, 3], 9) is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-2-6" label="2.6 [Facile] - Doubler les valeurs">
+  <ExerciseSection id="listes-2-6" label="2.6 [Facile] - Doubler les valeurs" type="python">
     <Enonce>
     ### Exercice 2.6 [Facile] : Doubler les valeurs
     **Écrire une fonction `doubler_valeurs` qui prend une liste de nombres et renvoie une **nouvelle** liste où chaque élément est multiplié par 2.**
@@ -292,7 +293,7 @@ assert doubler_valeurs([]) == []
   {/* CATÉGORIE 3 : MOYEN (3.1 à 3.6)             */}
   {/* ========================================== */}
 
-  <ExerciseSection id="listes-3-1" label="3.1 [Moyen] - Filtrer les positifs">
+  <ExerciseSection id="listes-3-1" label="3.1 [Moyen] - Filtrer les positifs" type="python">
     <Enonce>
     ### Exercice 3.1 [Moyen] : Filtrer les positifs
     **Écrire une fonction `filtrer_positifs` qui prend une liste de nombres et renvoie une nouvelle liste avec uniquement les nombres strictement positifs.**
@@ -316,7 +317,7 @@ assert filtrer_positifs([-1, 0, 3, -7, 8]) == [3, 8]
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-3-2" label="3.2 [Moyen] - Valeurs uniques">
+  <ExerciseSection id="listes-3-2" label="3.2 [Moyen] - Valeurs uniques" type="python">
     <Enonce>
     ### Exercice 3.2 [Moyen] : Valeurs uniques
     **Écrire une fonction `valeurs_uniques` qui prend une liste et renvoie une nouvelle liste sans doublons, en conservant l'ordre d'apparition.**
@@ -340,7 +341,7 @@ assert valeurs_uniques([1, 2, 2, 3, 4, 4]) == [1, 2, 3, 4]
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-3-3" label="3.3 [Moyen] - Concaténer des chaînes">
+  <ExerciseSection id="listes-3-3" label="3.3 [Moyen] - Concaténer des chaînes" type="python">
     <Enonce>
     ### Exercice 3.3 [Moyen] : Concaténer des chaînes
     **Écrire une fonction `concatener_chaines` qui prend une liste de chaînes et renvoie leur concaténation.**
@@ -363,7 +364,7 @@ assert concatener_chaines(["Bonjour", " ", "le", " ", "monde"]) == "Bonjour le m
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-3-4" label="3.4 [Moyen] - Inverser une liste">
+  <ExerciseSection id="listes-3-4" label="3.4 [Moyen] - Inverser une liste" type="python">
     <Enonce>
     ### Exercice 3.4 [Moyen] : Inverser une liste
     **Écrire une fonction `inverser_liste` qui prend une liste et renvoie une nouvelle liste avec les éléments dans l'ordre inverse.**
@@ -387,7 +388,7 @@ assert inverser_liste([]) == []
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-3-5" label="3.5 [Moyen] - Séparer pairs et impairs">
+  <ExerciseSection id="listes-3-5" label="3.5 [Moyen] - Séparer pairs et impairs" type="python">
     <Enonce>
     ### Exercice 3.5 [Moyen] : Séparer pairs et impairs
     **Écrire une fonction `separer_pairs_impairs` qui prend une liste d'entiers et renvoie un tuple `(pairs, impairs)`.**
@@ -414,7 +415,7 @@ assert separer_pairs_impairs([1, 2, 3, 4, 5]) == ([2, 4], [1, 3, 5])
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-3-6" label="3.6 [Moyen] - Diviseurs">
+  <ExerciseSection id="listes-3-6" label="3.6 [Moyen] - Diviseurs" type="python">
     <Enonce>
     ### Exercice 3.6 [Moyen] : Diviseurs
     **Écrire une fonction `diviseurs` qui prend un entier positif et renvoie la liste de tous ses diviseurs.**
@@ -443,7 +444,7 @@ assert diviseurs(10) == [1, 2, 5, 10]
   {/* CATÉGORIE 4 : AVANCÉ (4.1 à 4.6)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="listes-4-1" label="4.1 [Avancé] - Liste croissante">
+  <ExerciseSection id="listes-4-1" label="4.1 [Avancé] - Liste croissante" type="python">
     <Enonce>
     ### Exercice 4.1 [Avancé] : Liste croissante
     **Écrire une fonction `est_croissante` qui prend une liste d'entiers et renvoie `True` si les éléments sont en ordre croissant (non strict), `False` sinon.**
@@ -467,7 +468,7 @@ assert est_croissante([1, 3, 2, 4]) is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-4-2" label="4.2 [Avancé] - Échange de valeurs">
+  <ExerciseSection id="listes-4-2" label="4.2 [Avancé] - Échange de valeurs" type="python">
     <Enonce>
     ### Exercice 4.2 [Avancé] : Échange de valeurs
     **Écrire une fonction `echange` qui prend une liste et deux indices `i`, `j`, échange les valeurs à ces positions **en place**, et ne renvoie rien (`None`).**
@@ -488,7 +489,7 @@ assert l == [1, 3, 2, 4]
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-4-3" label="4.3 [Avancé] - Rangement par rapport à une valeur">
+  <ExerciseSection id="listes-4-3" label="4.3 [Avancé] - Rangement par rapport à une valeur" type="python">
     <Enonce>
     ### Exercice 4.3 [Avancé] : Rangement par rapport à une valeur
     **Écrire une fonction `rangement_valeurs` qui prend une liste et une valeur `seuil`, et renvoie un tuple de trois listes : éléments inférieurs, égaux, supérieurs.**
@@ -518,7 +519,7 @@ assert rangement_valeurs([1, 7, 4, 3, 6, 2, 8], 5) == ([1, 4, 3, 2], [], [7, 6, 
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-4-4" label="4.4 [Avancé] - Recherche d'un élément">
+  <ExerciseSection id="listes-4-4" label="4.4 [Avancé] - Recherche d'un élément" type="python">
     <Enonce>
     ### Exercice 4.4 [Avancé] : Recherche d'un élément
     **Écrire une fonction `presence` qui prend une valeur et une liste, et renvoie `True` si la valeur est dans la liste, `False` sinon (boucle, sans opérateur `in`).**
@@ -542,7 +543,7 @@ assert presence(5, [1, 2, 3, 4]) is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-4-5" label="4.5 [Avancé] - Minimum">
+  <ExerciseSection id="listes-4-5" label="4.5 [Avancé] - Minimum" type="python">
     <Enonce>
     ### Exercice 4.5 [Avancé] : Minimum d'une liste
     **Écrire une fonction `minimum` qui prend une liste de nombres non vide et renvoie la valeur minimale, sans utiliser `min()`.**
@@ -566,7 +567,7 @@ assert minimum([3, 1, 9, 2]) == 1
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-4-6" label="4.6 [Avancé] - Maximum">
+  <ExerciseSection id="listes-4-6" label="4.6 [Avancé] - Maximum" type="python">
     <Enonce>
     ### Exercice 4.6 [Avancé] : Maximum d'une liste
     **Écrire une fonction `maximum` qui prend une liste de nombres non vide et renvoie la valeur maximale, sans utiliser `max()`.**
@@ -594,7 +595,7 @@ assert maximum([3, 1, 9, 2]) == 9
   {/* CATÉGORIE 5 : DIFFICILE (5.1 à 5.6)         */}
   {/* ========================================== */}
 
-  <ExerciseSection id="listes-5-1" label="5.1 [Difficile] - Voyelles dans des mots">
+  <ExerciseSection id="listes-5-1" label="5.1 [Difficile] - Voyelles dans des mots" type="python">
     <Enonce>
     ### Exercice 5.1 [Difficile] : Voyelles dans des mots
     **Écrire une fonction `compter_voyelles_mots` qui prend une liste de chaînes et renvoie le nombre total de voyelles dans tous les mots.**
@@ -621,7 +622,7 @@ assert compter_voyelles_mots(["bonjour", "python"]) == 4
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-5-2" label="5.2 [Difficile] - Valeurs en double">
+  <ExerciseSection id="listes-5-2" label="5.2 [Difficile] - Valeurs en double" type="python">
     <Enonce>
     ### Exercice 5.2 [Difficile] : Valeurs en double
     **Écrire une fonction `valeurs_en_double` qui prend une liste et renvoie une nouvelle liste des éléments qui apparaissent au moins deux fois (une seule fois chacun dans le résultat).**
@@ -648,7 +649,7 @@ assert sorted(valeurs_en_double([1, 2, 2, 3, 4, 4, 5])) == [2, 4]
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-5-3" label="5.3 [Difficile] - Indice d'un élément">
+  <ExerciseSection id="listes-5-3" label="5.3 [Difficile] - Indice d'un élément" type="python">
     <Enonce>
     ### Exercice 5.3 [Difficile] : Indice d'un élément
     **Écrire une fonction `indice_element` qui prend une liste et une valeur, et renvoie l'indice de la première occurrence, ou `-1` si absente.**
@@ -672,7 +673,7 @@ assert indice_element([10, 20, 30], 40) == -1
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-5-4" label="5.4 [Difficile] - Fusion sans doublons">
+  <ExerciseSection id="listes-5-4" label="5.4 [Difficile] - Fusion sans doublons" type="python">
     <Enonce>
     ### Exercice 5.4 [Difficile] : Fusion sans doublons
     **Écrire une fonction `fusionner_sans_doublons` qui prend deux listes et renvoie une nouvelle liste avec tous les éléments des deux, sans doublons (ordre conservé).**
@@ -699,7 +700,7 @@ assert sorted(fusionner_sans_doublons([1, 2, 3], [2, 3, 4])) == [1, 2, 3, 4]
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-5-5" label="5.5 [Difficile] - Compter les occurrences">
+  <ExerciseSection id="listes-5-5" label="5.5 [Difficile] - Compter les occurrences" type="python">
     <Enonce>
     ### Exercice 5.5 [Difficile] : Compter les occurrences
     **Écrire une fonction `compter_occurrences` qui prend une liste et une valeur, et renvoie combien de fois cette valeur apparaît.**
@@ -724,7 +725,7 @@ assert compter_occurrences([1, 2, 3], 9) == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-5-6" label="5.6 [Difficile] - Supprimer une valeur">
+  <ExerciseSection id="listes-5-6" label="5.6 [Difficile] - Supprimer une valeur" type="python">
     <Enonce>
     ### Exercice 5.6 [Difficile] : Supprimer une valeur
     **Écrire une fonction `supprimer_valeur` qui prend une liste et une valeur, et renvoie une **nouvelle** liste sans aucune occurrence de cette valeur.**
@@ -752,7 +753,7 @@ assert supprimer_valeur([1, 2, 3, 2, 4], 2) == [1, 3, 4]
   {/* CATÉGORIE 6 : EXPERT (6.1 à 6.3)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="listes-6-1" label="6.1 [Expert] - Rotation à gauche">
+  <ExerciseSection id="listes-6-1" label="6.1 [Expert] - Rotation à gauche" type="python">
     <Enonce>
     ### Exercice 6.1 [Expert] : Rotation à gauche
     **Écrire une fonction `rotation_gauche` qui prend une liste non vide et renvoie une nouvelle liste où le premier élément est déplacé à la fin.**
@@ -780,7 +781,7 @@ assert rotation_gauche([7]) == [7]
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-6-2" label="6.2 [Expert] - Fusion de deux listes triées">
+  <ExerciseSection id="listes-6-2" label="6.2 [Expert] - Fusion de deux listes triées" type="python">
     <Enonce>
     ### Exercice 6.2 [Expert] : Fusion de deux listes triées
     **Écrire une fonction `fusion_triee` qui prend deux listes d'entiers déjà triées par ordre croissant et renvoie une nouvelle liste triée contenant tous les éléments, sans utiliser `sort()` ni `sorted()`.**
@@ -817,7 +818,7 @@ assert fusion_triee([], [2, 3]) == [2, 3]
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="listes-6-3" label="6.3 [Expert] - Médiane d'une liste">
+  <ExerciseSection id="listes-6-3" label="6.3 [Expert] - Médiane d'une liste" type="python">
     <Enonce>
     ### Exercice 6.3 [Expert] : Médiane d'une liste
     **Écrire une fonction `mediane` qui prend une liste de nombres **non vide** déjà triée par ordre croissant et renvoie sa médiane (élément central si la longueur est impaire).**

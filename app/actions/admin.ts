@@ -67,9 +67,7 @@ export async function getStudentAdminDetails(studentId: string) {
 
   if (!profile) return { error: 'not_found' as const, ...empty };
 
-  const reservedCourses = profile.has_private_lessons
-    ? await getReservedCourses(profile.full_name || undefined)
-    : [];
+  const reservedCourses = await getReservedCourses(id);
 
   return {
     error: null as null,

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { getAuthContext } from '@/lib/auth';
+import { exercisePageTarget } from '@/lib/exercise-type';
 import { getExerciseById, getExerciseSheetNav, getExternalExercise } from '@/app/actions/getExercises';
 import { ExerciseWorkspace } from '@/components/lab/ExerciseWorkspace';
 
@@ -9,8 +10,11 @@ export default async function ExercisePage({ params }: { params: Promise<{ id: s
   const next = `/exercice/${encodeURIComponent(id)}`;
   const auth = await getAuthContext();
 
-  if (!auth.user) redirect(`/connexion?next=${encodeURIComponent(next)}`);
-  if (auth.isElevated) redirect('/admin');
+  const target = exercisePageTarget({
+    signedIn: Boolean(auth.user),
+    exercisePath: next,
+  });
+  if (target) redirect(target);
 
   const exercise = await getExerciseById(id);
   if (exercise) {

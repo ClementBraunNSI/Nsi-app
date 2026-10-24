@@ -4,6 +4,7 @@ description: "Comprendre comment les couleurs sont formées avec Rouge, Vert et 
 level: "2"
 chapter: "Photographie Numérique"
 icon: "🎨"
+audience: public
 ---
 
 # 🎨 Atelier Photo : Le modèle RVB
@@ -25,9 +26,4 @@ Utilise les curseurs ci-dessous pour mélanger les couleurs.
 Maintenant, appliquons ces concepts sur une vraie image. Tu peux modifier les canaux Rouge, Vert et Bleu de l'image ci-dessous, ou appliquer des filtres.
 
 <ImageManipulator src="/content/1/maya.png" />
-
-### 🧠 Questions
-1. Si tu mets le canal **Rouge** à 0%, que devient l'image ?
-2. Comment obtenir une image en **Noir et Blanc** (niveaux de gris) manuellement avec les curseurs ? 
-3. Que fait le filtre **Seuil** ? À quoi cela pourrait-il servir ?
 

@@ -5,98 +5,60 @@ level: premiere
 chapter: "Réseaux et Internet"
 icon: "🕸️"
 badgeId: "premiere_cours"
+audience: public
 ---
 
 # Introduction aux réseaux
 
-## Objectifs
+En Seconde, vous avez vu un réseau comme un ensemble de machines reliées. En Première, on met des noms précis sur ce qui circule, et on sépare des mots que le langage courant mélange. Une machine a besoin d'une identité locale, l'adresse MAC, et d'une adresse logique, l'adresse IP. Les données partent en paquets. IP cherche le chemin. TCP, ou parfois UDP, s'occupe du transport entre deux programmes.
 
-- Distinguer Internet et Web, réseau local et Internet.
-- Expliquer le rôle des adresses MAC et IP, du masque et de la notation CIDR.
-- Différencier adresses privées et publiques.
-- Comprendre le modèle TCP/IP et l'encapsulation (TCP vs IP).
-
-## Idée clé
-
-Pour communiquer, une machine a besoin d'une **identité locale** (MAC) et d'une **adresse logique** (IP). Les données voyageant en **paquets** sont encapsulées couche par couche : IP s'occupe du **chemin**, TCP (ou UDP) s'occupe du **transport** entre applications.
-
-## Qu'est-ce qu'un réseau ?
-
-Un **réseau** relie des machines pour échanger des données.
-
-- **Réseau local (LAN)** : machines d'un même lieu (maison, salle) reliées via un switch / un box.
-- **Internet** : réseau de réseaux, interconnectés par des routeurs.
-
-**Internet ≠ Web.** Internet est l'infrastructure ; le **Web** est une application (pages, liens) qui s'appuie sur Internet.
-
-### Composants utiles
+Un **réseau** relie des machines pour qu'elles échangent des données. Le **réseau local**, le LAN, reste dans un même lieu, la maison ou la salle, derrière un switch ou une box. **Internet** est un réseau de réseaux, tenu par des routeurs. Le **Web** n'est ni l'un ni l'autre : c'est une application, des pages et des liens, qui a besoin d'Internet pour fonctionner, comme le mail ou le streaming. Dire « Internet » en parlant d'un site, c'est prendre le service pour la route.
 
 | Élément | Rôle |
 | --- | --- |
-| Client | Appareil qui consomme / produit des données (PC, téléphone…) |
-| Switch | Relie les machines **dans** un réseau local (travaille avec les MAC) |
-| Routeur | Relie **plusieurs** réseaux et achemine les paquets (travaille avec les IP) |
+| Client | L'appareil qui produit ou consomme les données : ordinateur, téléphone |
+| Switch | Relie les machines *dans* le réseau local, en se servant des adresses MAC |
+| Routeur | Relie *plusieurs* réseaux et achemine les paquets selon les adresses IP |
 
-Connexions possibles : câble Ethernet (RJ45), Wi-Fi, fibre optique.
+Le lien physique peut être un câble Ethernet (prise RJ45), le Wi-Fi, ou la fibre. Un **protocole** est l'ensemble des règles partagées : le format des messages, leur ordre, et ce qu'on fait quand l'autre ne répond pas. Sans protocole, le câble transporte un signal que personne ne sait lire.
 
-Un **protocole** est un ensemble de règles partagées pour communiquer (format, ordre, réactions).
+## Deux adresses, deux échelles
 
-## Adresses MAC et IP
+L'adresse **MAC** est l'adresse physique d'une interface réseau, en principe unique à la carte. Elle s'écrit en six octets hexadécimaux, par exemple `a8:9f:d9:4c:5c:d9`. Le switch s'en sert pour livrer une trame à la bonne machine du réseau local. Au-delà du routeur, elle ne sert plus à trouver le destinataire.
 
-### Adresse MAC
+L'adresse **IP** est logique. On l'attribue à une connexion, souvent automatiquement par DHCP, et elle peut changer. En **IPv4**, quatre octets suffisent, par exemple `192.168.1.42`. Cela laisse environ quatre milliards d'adresses, et ce n'est plus assez. **IPv6** passe à 128 bits, par exemple `2001:0db8:85a3::8a2e:0370:7334`, justement pour sortir de cette pénurie.
 
-Adresse **physique** d'une interface réseau, en principe unique à la carte.
-
-- Format : 6 octets en hexadécimal — ex. `a8:9f:d9:4c:5c:d9`
-- Utilisée surtout **dans le réseau local** (le switch s'en sert pour livrer la trame).
-
-### Adresse IP
-
-Adresse **logique** d'une machine sur un réseau (attribuée à la connexion, souvent par DHCP).
-
-- **IPv4** : 4 octets — ex. `192.168.1.42` (environ 4 milliards d'adresses)
-- **IPv6** : 128 bits — ex. `2001:0db8:85a3::8a2e:0370:7334` (réponse à la pénurie d'IPv4)
-
-Une adresse IP se découpe en :
-
-1. **partie réseau** — commune à toutes les machines du même réseau ;
-2. **partie hôte** — propre à chaque machine.
+Une adresse IP se coupe en deux. La **partie réseau** est commune à toutes les machines du même réseau. La **partie hôte** distingue chaque machine. Le masque dit où tombe la coupe.
 
 ## Masque et notation CIDR
 
-Le **masque** indique combien de bits appartiennent au réseau. En notation **CIDR**, on écrit l'adresse suivie de `/n` (n = nombre de bits réseau).
+En notation **CIDR**, on écrit l'adresse suivie de `/n`, où *n* est le nombre de bits réservés au réseau. Pour `123.32.41.74/16`, les 16 premiers bits sont le réseau. Le masque correspondant est `255.255.0.0`. L'adresse du réseau s'obtient par un ET bit à bit :
 
-Exemple : `123.32.41.74/16`
+```
+masque   11111111.11111111.00000000.00000000
+IP       01111011.00100000.00101001.01001010
+ET       01111011.00100000.00000000.00000000  → 123.32.0.0
+```
 
-- masque : `255.255.0.0` (16 bits à 1) ;
-- adresse réseau (ET bit à bit) : `123.32.0.0`.
+Deux adresses de chaque réseau sont réservées : l'adresse du réseau elle-même, et l'adresse de **broadcast**, qui s'adresse à toutes les machines d'un coup. Le nombre d'hôtes utilisables vaut donc à peu près \(2^{\text{bits hôtes}} - 2\).
 
-!!! example "Calcul rapide"
-    ```
-    masque   11111111.11111111.00000000.00000000
-    IP       01111011.00100000.00101001.01001010
-    ET       01111011.00100000.00000000.00000000  → 123.32.0.0
-    ```
+Les anciennes classes A, B et C fixaient des tailles de réseau une fois pour toutes. On ne s'en sert plus pour découper : le CIDR autorise des masques de longueur variable, adaptés au nombre de machines qu'on a vraiment.
 
-Deux adresses sont **réservées** dans chaque réseau : l'adresse du réseau elle-même, et l'adresse de **broadcast** (diffusion). Nombre d'hôtes utilisables ≈ \(2^{\text{bits hôtes}} - 2\).
+## Privée ou publique
 
-> Les anciennes « classes A/B/C » sont un héritage historique. Aujourd'hui on utilise le **CIDR** (masques de longueur variable).
-
-## Privé vs public
-
-Certaines plages IPv4 sont **privées** : utilisables en local, **non routées** sur Internet.
+Certaines plages IPv4 sont **privées**. On peut les utiliser chez soi ou dans une entreprise, et les routeurs d'Internet refusent de les acheminer telles quelles.
 
 | Plage | Exemple typique |
 | --- | --- |
-| `10.0.0.0/8` | grands réseaux d'entreprise |
-| `172.16.0.0/12` | réseaux privés moyens |
-| `192.168.0.0/16` | box / réseau domestique |
+| `10.0.0.0/8` | Un grand réseau d'entreprise |
+| `172.16.0.0/12` | Un réseau privé de taille moyenne |
+| `192.168.0.0/16` | La box de la maison |
 
-Une adresse **publique** est visible sur Internet. Le routeur (NAT) fait souvent le lien entre le privé du domicile et le public du FAI.
+Une adresse **publique** est visible sur Internet. À la maison, le routeur fait en général le **NAT** : il traduit les adresses privées des téléphones et des ordinateurs vers l'adresse publique fournie par le fournisseur d'accès. De l'extérieur, on ne voit qu'une adresse. Dedans, le `192.168...` peut se répéter d'un logement à l'autre, justement parce qu'il n'en sort pas.
 
-## Modèle TCP/IP et encapsulation
+## Quatre couches, et des enveloppes
 
-Le modèle TCP/IP décrit la communication en **couches**. Chaque couche ajoute (à l'envoi) ou retire (à la réception) ses informations : c'est l'**encapsulation**.
+Le modèle TCP/IP décrit la communication en couches. À l'envoi, chaque couche ajoute ses informations autour des données. À la réception, elle les retire. C'est l'**encapsulation**.
 
 ![Introduction aux réseaux](/content/2/6_Internet_Reseaux/Modele_IP.png)
 
@@ -104,31 +66,22 @@ Le modèle TCP/IP décrit la communication en **couches**. Chaque couche ajoute 
 
 | Couche | Rôle | Exemples |
 | --- | --- | --- |
-| Application | Services pour l'utilisateur | HTTP, DNS, SMTP |
-| Transport | Dialogue entre applications (ports) | **TCP** (fiable), **UDP** (rapide) |
-| Internet | Adressage et routage des paquets | **IP**, ICMP |
-| Accès réseau | Transmission locale (câble, Wi-Fi) | Ethernet, Wi-Fi (MAC) |
+| Application | Le service, du point de vue de l'utilisateur | HTTP, DNS, SMTP |
+| Transport | Le dialogue entre deux programmes, via des ports | **TCP** (fiable), **UDP** (rapide, sans garantie) |
+| Internet | L'adressage et le routage des paquets | **IP**, ICMP |
+| Accès réseau | La transmission sur le lien local | Ethernet, Wi-Fi, donc les MAC |
 
-**TCP vs IP** : IP livre des paquets d'une machine à une autre (meilleur effort) ; TCP assure, au-dessus, un flux ordonné et fiable entre deux programmes (retransmission, contrôle de flux).
+IP livre un paquet d'une machine à une autre, au mieux : si un paquet se perd, IP ne le renvoie pas. TCP, au-dessus, construit un flux ordonné et fiable entre deux programmes, avec des retransmissions et un contrôle de débit. UDP, lui, envoie sans attendre d'accusé. On le choisit quand arriver tout de suite compte plus qu'arriver complet, la voix ou la vidéo en direct par exemple.
 
 !!! info "Analogie postale"
-    Application = lettre ; Transport = enveloppe / numérotation ; Internet = adresse et acheminement ; Accès réseau = livraison physique.
+    L'application écrit la lettre. Le transport la met sous enveloppe et la numérote. La couche Internet écrit l'adresse et choisit l'acheminement. L'accès réseau fait la livraison physique, sur le câble ou dans l'air.
 
 <EncapsulationVisualizer />
 
-## Piège fréquent
+Le piège le plus courant est de traiter MAC, IP et TCP comme trois synonymes de « l'adresse ». La MAC identifie l'interface dans la pièce. L'IP situe la machine dans un réseau et permet le routage. TCP ne situe rien : il fiabilise la conversation entre deux programmes, une fois que IP a trouvé à qui parler.
 
-Confondre **MAC** et **IP** : la MAC identifie l'interface **localement** ; l'IP situe la machine dans un réseau (et permet le routage). Confondre aussi **TCP** et **IP** : IP trouve le chemin, TCP (souvent) sécurise le transport applicatif.
+IPv6 ne change pas ce découpage. Il répond seulement au manque d'adresses IPv4.
 
-## À retenir
+## Pour s'entraîner
 
-- Internet = réseaux interconnectés ; Web = service (pages, hyperliens) sur Internet.
-- MAC = adresse physique locale ; IP = adresse logique (réseau + hôte).
-- Le masque / CIDR définit où s'arrête le réseau.
-- Privé (`192.168…`, `10…`, etc.) vs public : le privé ne sort pas directement sur Internet.
-- Encapsulation : chaque couche ajoute un en-tête ; TCP ≠ IP.
-- IPv6 répond à la limite d'IPv4.
-
-## Pour s'entraîner / Suite
-
-Explorez les visualisations TCP/IP et d'encapsulation ci-dessus, puis enchaînez avec le cours sur le **Web et HTTP** pour voir ces idées à l'œuvre (URL, DNS, requêtes).
+Les visualisations ci-dessus montrent les couches et l'encapsulation. Le cours sur le Web et HTTP reprend les mêmes idées au moment où une URL, un nom DNS et une requête deviennent une page.

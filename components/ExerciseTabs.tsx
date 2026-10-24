@@ -1,12 +1,13 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Check, CheckCircle2, Code2, Trophy } from 'lucide-react';
+import { ArrowRight, Check, Code2, Trophy } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from './AchievementUnlockedModal';
 import SuccessModal from './SuccessModal';
 import InteractiveShell from './interactive/InteractiveShell';
+import { showsRealizeButton } from '@/lib/exercise-type';
 
 interface TabProps {
   id: string;
@@ -118,253 +119,6 @@ function cleanExerciseLabel(label: string): string {
     .trim();
 }
 
-function extractTextFromNode(node: React.ReactNode): string {
-  if (node === null || node === undefined || typeof node === 'boolean') return '';
-  if (typeof node === 'string' || typeof node === 'number') return String(node);
-  if (Array.isArray(node)) return node.map(extractTextFromNode).join('');
-  if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
-    return extractTextFromNode(node.props.children);
-  }
-  return '';
-}
-
-function normalizeVerificationCode(node: React.ReactNode): string {
-  return extractTextFromNode(node)
-    .replace(/```python/g, '')
-    .replace(/```/g, '')
-    .trim();
-}
-
-function splitTopLevel(value: string, separator: string): [string, string] | null {
-  let depth = 0;
-  let quote: string | null = null;
-
-  for (let i = 0; i <= value.length - separator.length; i += 1) {
-    const char = value[i];
-    const previous = value[i - 1];
-
-    if ((char === '"' || char === "'") && previous !== '\\') {
-      quote = quote === char ? null : quote || char;
-      continue;
-    }
-
-    if (quote) continue;
-    if (['(', '[', '{'].includes(char)) depth += 1;
-    if ([')', ']', '}'].includes(char)) depth -= 1;
-
-    if (depth === 0 && value.slice(i, i + separator.length) === separator) {
-      return [value.slice(0, i).trim(), value.slice(i + separator.length).trim()];
-    }
-  }
-
-  return null;
-}
-
-function stripAssertMessage(assertion: string): string {
-  return splitTopLevel(assertion, ',')?.[0] ?? assertion;
-}
-
-const IGNORED_FUNCTION_NAMES = new Set([
-  'abs',
-  'all',
-  'any',
-  'bool',
-  'callable',
-  'dict',
-  'float',
-  'int',
-  'isinstance',
-  'len',
-  'list',
-  'locals',
-  'max',
-  'min',
-  'print',
-  'range',
-  'set',
-  'str',
-  'sum',
-  'tuple',
-]);
-
-function extractFunctionCallAt(value: string, startIndex: number): string | null {
-  const openIndex = value.indexOf('(', startIndex);
-  if (openIndex === -1) return null;
-
-  let depth = 0;
-  let quote: string | null = null;
-
-  for (let i = startIndex; i < value.length; i += 1) {
-    const char = value[i];
-    const previous = value[i - 1];
-
-    if ((char === '"' || char === "'") && previous !== '\\') {
-      quote = quote === char ? null : quote || char;
-      continue;
-    }
-
-    if (quote) continue;
-    if (char === '(') depth += 1;
-    if (char === ')') {
-      depth -= 1;
-      if (depth === 0) return value.slice(startIndex, i + 1).trim();
-    }
-  }
-
-  return null;
-}
-
-function findStudentFunctionCall(value: string): string | null {
-  const functionNameRegex = /\b([A-Za-z_]\w*)\s*\(/g;
-  let match: RegExpExecArray | null;
-
-  while ((match = functionNameRegex.exec(value)) !== null) {
-    const functionName = match[1];
-    if (value[match.index - 1] === '.') continue;
-    if (IGNORED_FUNCTION_NAMES.has(functionName)) continue;
-
-    const call = extractFunctionCallAt(value, match.index);
-    if (call) return call;
-  }
-
-  return null;
-}
-
-function isCallableCheck(assertion: string): string | null {
-  const match = assertion.match(/^callable\(([^)]+)\)$/);
-  return match?.[1]?.trim() ?? null;
-}
-
-function isLocalsDefinitionCheck(assertion: string): string | null {
-  const match = assertion.match(/^['"](.+)['"]\s+in\s+locals\(\)$/);
-  return match?.[1]?.trim() ?? null;
-}
-
-function describeAssertion(line: string, previousFunctionCall: string | null): string | null {
-  const assertIndex = line.indexOf('assert ');
-  if (assertIndex === -1) return null;
-
-  const assertion = stripAssertMessage(line.slice(assertIndex + 'assert '.length).trim());
-  const callableName = isCallableCheck(assertion);
-  if (callableName) {
-    return `On attend que \`${callableName}\` soit une fonction appelable.`;
-  }
-
-  const localsName = isLocalsDefinitionCheck(assertion);
-  if (localsName) {
-    return `On attend qu'une fonction \`${localsName}\` soit définie.`;
-  }
-
-  const equality = splitTopLevel(assertion, '==');
-  if (equality) {
-    const functionCall = findStudentFunctionCall(equality[0]) || findStudentFunctionCall(equality[1]);
-    if (functionCall) {
-      return `Avec \`${functionCall}\`, résultat attendu : \`${equality[1]}\`.`;
-    }
-    if (previousFunctionCall) {
-      return `Après l'appel \`${previousFunctionCall}\`, résultat attendu : \`${equality[0]} == ${equality[1]}\`.`;
-    }
-    return null;
-  }
-
-  const inequality = splitTopLevel(assertion, '!=');
-  if (inequality) {
-    const functionCall = findStudentFunctionCall(inequality[0]) || findStudentFunctionCall(inequality[1]);
-    if (functionCall) {
-      return `Avec \`${functionCall}\`, résultat attendu : une valeur différente de \`${inequality[1]}\`.`;
-    }
-    if (previousFunctionCall) {
-      return `Après l'appel \`${previousFunctionCall}\`, résultat attendu : \`${inequality[0]} != ${inequality[1]}\`.`;
-    }
-    return null;
-  }
-
-  const strictFalsy = splitTopLevel(assertion, ' is not ');
-  if (strictFalsy) {
-    const functionCall = findStudentFunctionCall(strictFalsy[0]) || findStudentFunctionCall(strictFalsy[1]);
-    if (functionCall) {
-      return `Avec \`${functionCall}\`, résultat attendu : une valeur différente de \`${strictFalsy[1]}\`.`;
-    }
-    if (previousFunctionCall) {
-      return `Après l'appel \`${previousFunctionCall}\`, résultat attendu : \`${strictFalsy[0]} is not ${strictFalsy[1]}\`.`;
-    }
-    return null;
-  }
-
-  const strictTruthy = splitTopLevel(assertion, ' is ');
-  if (strictTruthy) {
-    const functionCall = findStudentFunctionCall(strictTruthy[0]) || findStudentFunctionCall(strictTruthy[1]);
-    if (functionCall) {
-      return `Avec \`${functionCall}\`, résultat attendu : \`${strictTruthy[1]}\`.`;
-    }
-    if (previousFunctionCall) {
-      return `Après l'appel \`${previousFunctionCall}\`, résultat attendu : \`${strictTruthy[0]} is ${strictTruthy[1]}\`.`;
-    }
-    return null;
-  }
-
-  const absence = assertion.match(/^(.+)\s+not\s+in\s+(.+)$/);
-  if (absence) {
-    const functionCall = findStudentFunctionCall(absence[1]) || findStudentFunctionCall(absence[2]);
-    if (functionCall) {
-      return `Avec \`${functionCall}\`, on attend que \`${absence[1].trim()}\` soit absent du résultat.`;
-    }
-    if (previousFunctionCall) {
-      return `Après l'appel \`${previousFunctionCall}\`, on attend que \`${absence[1].trim()}\` soit absent de \`${absence[2].trim()}\`.`;
-    }
-    return null;
-  }
-
-  const presence = assertion.match(/^(.+)\s+in\s+(.+)$/);
-  if (presence) {
-    const functionCall = findStudentFunctionCall(presence[1]) || findStudentFunctionCall(presence[2]);
-    if (functionCall) {
-      return `Avec \`${functionCall}\`, on attend que \`${presence[1].trim()}\` soit présent dans le résultat.`;
-    }
-    if (previousFunctionCall) {
-      return `Après l'appel \`${previousFunctionCall}\`, on attend que \`${presence[1].trim()}\` soit présent dans \`${presence[2].trim()}\`.`;
-    }
-    return null;
-  }
-
-  const functionCall = findStudentFunctionCall(assertion);
-  if (functionCall) {
-    return `Avec \`${functionCall}\`, la condition \`${assertion}\` doit être vraie.`;
-  }
-
-  return previousFunctionCall
-    ? `Après l'appel \`${previousFunctionCall}\`, la condition \`${assertion}\` doit être vraie.`
-    : null;
-}
-
-function buildReadableTests(verificationCode: string): string[] {
-  const lines = verificationCode
-    .split('\n')
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith('#'));
-
-  const isFunctionExercise = lines.some((line) =>
-    findStudentFunctionCall(line) || isCallableCheck(stripAssertMessage(line.replace(/^assert\s+/, '')))
-  );
-
-  if (!isFunctionExercise) return [];
-
-  let previousFunctionCall: string | null = null;
-  const readableTests: string[] = [];
-
-  lines.forEach((line) => {
-    if (!line.startsWith('assert ')) {
-      const functionCall = findStudentFunctionCall(line);
-      if (functionCall) previousFunctionCall = functionCall;
-      return;
-    }
-
-    const description = describeAssertion(line, previousFunctionCall);
-    if (description) readableTests.push(description);
-  });
-
-  return readableTests;
-}
 
 // --- BARRE DE PROGRESSION ---
 function ExerciseProgressBar({ total, completed }: { total: number, completed: number }) {
@@ -398,7 +152,7 @@ function ExerciseProgressBar({ total, completed }: { total: number, completed: n
 
 
 
-const PracticeContext = React.createContext(false);
+const PracticeContext = React.createContext<string | null>(null);
 
 export function ExerciseTabs({
   children,
@@ -414,7 +168,7 @@ export function ExerciseTabs({
   const [activeTab, setActiveTab] = useState(childrenArray[0]?.props.id);
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
-  const [canPractice, setCanPractice] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [hasBadge, setHasBadge] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
@@ -454,7 +208,7 @@ export function ExerciseTabs({
       if (session?.user) {
         setUserId(session.user.id);
         const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).maybeSingle();
-        setCanPractice(profile?.role === 'student' || profile?.role === 'invite');
+        setRole(typeof profile?.role === 'string' ? profile.role : null);
         
         // Récupération de la progression
         const { data: progressData } = await supabase
@@ -532,12 +286,7 @@ export function ExerciseTabs({
     const prevUnlocked = ACHIEVEMENTS.filter(a => a.condition(prevStats));
 
     // Enregistrement du badge dans Supabase
-    const { error } = await supabase.from('badges').upsert({
-      user_id: userId,
-      course_id: courseId,
-      badge_name: badgeName,
-      unlocked_at: new Date().toISOString()
-    }, { onConflict: 'user_id, course_id' });
+    const error = { message: "Les badges sont enregistrés sur le serveur après les tests." };
 
     if (error) {
       console.error("Erreur lors de l'enregistrement du badge:", error);
@@ -571,7 +320,7 @@ export function ExerciseTabs({
   };
 
   return (
-    <PracticeContext.Provider value={canPractice}>
+    <PracticeContext.Provider value={role}>
     <InteractiveShell
       title={courseTitle || "Parcours d'exercices"}
       description="Le renard garde ta progression : choisis une difficulté, puis avance exercice par exercice."
@@ -681,47 +430,11 @@ export function Enonce({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function Correction({ children }: { children: React.ReactNode }) {
-  return null;
-}
 
-export function Verification({ children }: { children: React.ReactNode }) {
-  const verificationCode = normalizeVerificationCode(children);
-  const readableTests = buildReadableTests(verificationCode);
-
-  if (!verificationCode || readableTests.length === 0) return null;
-
-  return (
-    <div className="mt-6 overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_16px_36px_-30px_rgba(15,23,42,0.5)]">
-      <div className="flex items-center gap-3 border-b border-slate-100 bg-slate-50 px-5 py-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
-          <CheckCircle2 size={20} />
-        </div>
-        <div>
-          <h4 className="text-sm font-black uppercase tracking-[0.18em] text-slate-900">
-            Résultats attendus
-          </h4>
-        </div>
-      </div>
-      <ol className="space-y-3 bg-white p-5">
-        {readableTests.map((test, index) => (
-          <li key={`${test}-${index}`} className="flex gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 text-sm leading-6 text-slate-700">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-black text-orange-600">
-              {index + 1}
-            </span>
-            <span>{test}</span>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
-export function ExerciseSection({ id, children, embeddable = 'yes' }: TabProps & { embeddable?: boolean | string }) {
-  const canPractice = React.useContext(PracticeContext);
+export function ExerciseSection({ id, children, type }: TabProps & { type?: string }) {
+  const role = React.useContext(PracticeContext);
   const nodes = React.Children.toArray(children);
-  const showEditor = embeddable !== false && embeddable !== 'no';
-  if (canPractice && id && showEditor) {
+  if (id && showsRealizeButton(type, role)) {
     const button = (
       <Link
         key="realiser"

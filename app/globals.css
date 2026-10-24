@@ -1369,6 +1369,33 @@ input, textarea {
   overflow-wrap: anywhere;
 }
 
+.exercise-validation-note {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.exercise-test-prints p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.exercise-test-prints pre {
+  margin: 0.2rem 0 0;
+  border-radius: 0.45rem;
+  background: var(--surface);
+  padding: 0.35rem 0.45rem;
+  color: var(--fg);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .exercise-save-warning {
   margin: 0;
   border: 1px solid color-mix(in srgb, #b45309 40%, var(--border));

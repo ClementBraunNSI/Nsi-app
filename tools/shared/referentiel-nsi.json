@@ -587,6 +587,13 @@
           "description": "Exercices sur le protocole HTTP, les URLs, le HTML, le CSS et JavaScript."
         },
         {
+          "slug": "projet_caisse_foyer",
+          "title": "Fonctions : La caisse du foyer",
+          "chapter": "Projets",
+          "level": "premiere",
+          "description": "Tenir la caisse du foyer avec des fonctions, des conditions et des boucles, sans liste ni dictionnaire."
+        },
+        {
           "slug": "python_fonctions",
           "title": "Fonctions en Python",
           "chapter": "Introduction à Python",

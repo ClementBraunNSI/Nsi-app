@@ -6,6 +6,7 @@ chapter: Internet
 icon: "\U0001F30D"
 prerequisites:
   - Activite
+audience: public
 ---
 
 > **Objectif de l'activité**
@@ -30,14 +31,7 @@ prerequisites:
 
 1. Sur la machine `192.168.2.11`, ajouter l'application **serveur DNS** et l'ouvrir.
 2. Comme nom de domaine, ajouter `www.nsi.fr` et associer l'adresse `192.168.3.12` (notre serveur WEB).
-
-> **Question 3.3**
-> Est-il possible d'accéder à la page `www.nsi.fr` ?
-
 3. Ajouter l'adresse du serveur DNS pour tous les ordinateurs.
-
-> **Question finale**
-> Est-il maintenant possible d'accéder à la page ?
 
 ## 4. 📄 Ajout de votre page web personnalisée
 

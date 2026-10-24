@@ -6,57 +6,51 @@ chapter: Photographie Numérique
 icon: "\U0001F3A8"
 prerequisites:
   - metadonnees
+audience: public
 ---
 
-# 1. La vision humaine et les couleurs
+# Photographie couleur
 
-L'œil humain perçoit la lumière grâce à deux types de cellules situées sur la rétine :
+Un écran ne peint pas. Il allume de toutes petites lumières, et c'est votre œil qui en fait une couleur. Pour comprendre le codage, il faut donc commencer par la rétine, pas par le fichier.
+
+## Ce que l'œil fait déjà
+
+Deux familles de cellules, sur la rétine, reçoivent la lumière.
 
 ![Schéma de l'oeil](/content/1/oeil.png)
 
-1.  **Les bâtonnets** : Très sensibles à la lumière (vision nocturne), ils ne perçoivent pas les couleurs (vision en niveaux de gris).
-2.  **Les cônes** : Moins sensibles, ils permettent la vision des couleurs. Il en existe trois types, sensibles respectivement au **Rouge**, au **Vert** et au **Bleu**.
+Les **bâtonnets** sont très sensibles. Ils permettent de voir quand il fait sombre, mais ils ne distinguent pas les couleurs : la nuit, le monde passe en gris. Les **cônes** demandent plus de lumière. Il en existe trois sortes, sensibles surtout au rouge, au vert et au bleu. Toute la couleur que vous percevez est une combinaison de ces trois réponses.
 
-> **Analogie** : L'appareil photo numérique fonctionne sur le même principe que l'œil.
+L'appareil photo numérique reprend la même idée : une optique qui concentre la lumière, un diaphragme qui en dose la quantité, une mise au point, puis une surface qui enregistre. Le capteur joue le rôle de la rétine.
 
 ![Comparaison Oeil - Appareil Photo](/content/1/apphoto.png)
 
 | Composant | Fonction | Équivalent photo |
 |-----------|----------|------------------|
-| **Cornée** | Convergence des rayons lumineux | Lentille frontale |
-| **Iris** | Contrôle de la quantité de lumière | Diaphragme |
-| **Cristallin**| Mise au point (accommodation) | Système de focus |
-| **Rétine** | Surface sensible captant l'image | Capteur (CCD ou CMOS) |
+| **Cornée** | Fait converger les rayons | Lentille frontale |
+| **Iris** | Dose la lumière | Diaphragme |
+| **Cristallin** | Fait la mise au point | Système de focus |
+| **Rétine** | Reçoit l'image | Capteur CCD ou CMOS |
 
-# 2. La synthèse additive (RVB)
+## Additionner des lumières
 
-Les écrans (ordinateur, smartphone, TV) utilisent la **synthèse additive** des couleurs.
-On superpose trois lumières primaires : **Rouge**, **Vert**, **Bleu** (RVB ou RGB en anglais).
+Un écran, qu'il soit d'ordinateur, de téléphone ou de télévision, fabrique les couleurs par **synthèse additive**. Il superpose trois lumières, rouge, vert et bleu. On parle de RVB, ou de RGB en anglais.
 
-- **Rouge** + **Vert** = **Jaune**
-- **Rouge** + **Bleu** = **Magenta**
-- **Vert** + **Bleu** = **Cyan**
-- **Rouge** + **Vert** + **Bleu** = **Blanc**
-- Absence de lumière = **Noir**
+Rouge et vert donnent du jaune. Rouge et bleu donnent du magenta. Vert et bleu donnent du cyan. Les trois ensemble donnent du blanc, parce qu'on additionne toute la lumière. S'il n'y a aucune lumière, il reste le noir : l'écran n'émet rien.
 
-# 3. Le codage des couleurs
+Ce n'est pas la logique de la peinture. En peinture, mélanger des pigments retire de la lumière, on parle de synthèse soustractive. Ici, on en ajoute. C'est pour cela qu'un écran éteint est noir, et qu'un projecteur sans filtre est blanc.
 
-Chaque pixel d'une image couleur est composé de 3 sous-pixels (Rouge, Vert, Bleu).
-L'intensité de chaque composante est codée généralement sur **1 octet** (8 bits), soit une valeur entre 0 et 255.
+## Comment on code un pixel
+
+Chaque pixel couleur est fait de trois composantes. L'intensité de chacune est en général codée sur un octet, donc 8 bits, ce qui donne un entier entre 0 et 255. Zéro, la composante est éteinte. 255, elle est au maximum.
 
 ![Décomposition d'un pixel](/content/1/pix_to_couleur.png)
 
-Un pixel couleur est donc codé sur **3 octets** (24 bits).
+Trois octets, cela fait 24 bits par pixel. On note la couleur `(R, V, B)`. Le vert s'écrit parfois G, pour *green*, dans les logiciels en anglais : c'est la même composante.
 
-- Composante Rouge ($R$) : 0 à 255
-- Composante Verte ($V$ ou $G$) : 0 à 255
-- Composante Bleue ($B$) : 0 à 255
+Quelques couleurs tombent juste, parce qu'elles allument une composante à fond et éteignent les autres. Le gris moyen allume les trois à mi-chemin. L'écriture hexadécimale compacte chaque octet sur deux caractères : 255 s'écrit `FF`, 0 s'écrit `00`.
 
-On note souvent la couleur d'un pixel sous la forme $(R, V, B)$.
-
-### Quelques couleurs classiques :
-
-| Couleur | Code RVB (Décimal) | Code Hexadécimal |
+| Couleur | Code RVB (décimal) | Code hexadécimal |
 |---------|-------------------|------------------|
 | **Noir** | (0, 0, 0) | #000000 |
 | **Blanc** | (255, 255, 255) | #FFFFFF |
@@ -64,48 +58,43 @@ On note souvent la couleur d'un pixel sous la forme $(R, V, B)$.
 | **Vert** | (0, 255, 0) | #00FF00 |
 | **Bleu** | (0, 0, 255) | #0000FF |
 | **Jaune** | (255, 255, 0) | #FFFF00 |
-| **Magenta**| (255, 0, 255) | #FF00FF |
+| **Magenta** | (255, 0, 255) | #FF00FF |
 | **Cyan** | (0, 255, 255) | #00FFFF |
-| **Gris moyen**| (128, 128, 128) | #808080 |
+| **Gris moyen** | (128, 128, 128) | #808080 |
 
-# 4. Poids d'une image
+## Combien pèse l'image
 
-Le poids (ou taille en mémoire) d'une image dépend de sa définition et de sa profondeur de couleur.
+Le poids dépend de deux choses : le nombre de pixels, et le nombre de bits par pixel.
 
 $$ \text{Poids (bits)} = \text{Nombre de pixels} \times \text{Taille d'un pixel (bits)} $$
 
-Pour une image couleur standard (24 bits/pixel) :
+En couleur « classique », 24 bits, chaque pixel occupe 3 octets :
 
 $$ \text{Poids (octets)} = \text{Nombre de pixels} \times 3 $$
 
-*Exemple :* Une image de $800 \times 600$ pixels en couleur pèse :
-$480 000 \times 3 = 1 440 000 \text{ octets} \approx 1,44 \text{ Mo}$ (sans compression).
+Une image de 800 par 600 fait 480 000 pixels. En couleur, sans compression, cela donne \(480\,000 \times 3 = 1\,440\,000\) octets, environ 1,44 Mo. Dès que le fichier est plus léger, c'est qu'un format a comprimé, et parfois jeté, une partie de l'information.
 
-# 4.5 Traitement d'image : Les Filtres
+## Changer les couleurs, pixel par pixel
 
-Une fois l'image numérisée, on peut modifier ses couleurs grâce à des opérations mathématiques sur chaque pixel. C'est ce que font les filtres Instagram !
+Un filtre ne « voit » pas la photo. Il applique un calcul à chaque triplet `(R, V, B)`. Pour passer en niveaux de gris, on remplace les trois composantes par leur moyenne :
 
-### Exemple : Le Noir et Blanc
-Pour passer une image couleur en noir et blanc (niveaux de gris), on remplace les valeurs R, V, B par leur moyenne.
 $$ Gris = \frac{R + V + B}{3} $$
+
+Le pixel devient alors `(Gris, Gris, Gris)`. L'œil le lit comme une nuance, parce que les trois lumières sont égales. Les filtres des applications photo sont des variantes de cette idée : une formule, répétée sur toute la grille.
 
 <FilterPlayground />
 
-# 5. La Compression d'Image
+## Compresser
 
-Pour réduire le poids des images (et les envoyer plus vite sur Internet), on utilise des algorithmes de compression.
+Envoyer 1,44 Mo pour une petite photo serait pénible. On comprime.
 
-### 💾 Comparaison des formats
-
-- **RAW / BMP** : Aucune compression. Qualité parfaite, mais fichier énorme.
-- **PNG (Portable Network Graphics)** : Compression **sans perte**. Idéal pour les graphiques, logos, schémas.
-- **JPEG (Joint Photographic Experts Group)** : Compression **destructive**. L'ordinateur supprime des nuances de couleurs invisibles à l'œil nu. Idéal pour les photos.
+Un fichier **RAW** ou **BMP** ne jette rien. La qualité est maximale, le fichier aussi. Le **PNG** comprime sans perte : on retrouve exactement les mêmes pixels, ce qui convient aux logos, aux schémas, aux aplats. Le **JPEG** comprime en acceptant de perdre des nuances que l'œil distingue mal. C'est le format des photos, pas celui d'un texte en toutes lettres sur un fond uni : là, les défauts se voient.
 
 <ImageCompression />
 
-# 5.5 Les Métadonnées (EXIF)
+## Les métadonnées voyagent avec l'image
 
-Un fichier image ne contient pas que des pixels ! Il contient aussi des informations cachées appelées **métadonnées** (format **EXIF**).
+Le fichier ne contient pas que les pixels comprimés. Un en-tête, et souvent un bloc **EXIF**, décrivent l'appareil, la date, les réglages, et parfois l'endroit.
 
 ```mermaid
 classDiagram
@@ -124,22 +113,12 @@ classDiagram
     FichierJPEG *-- EXIF : Contient
 ```
 
-Elles peuvent révéler :
-*   La marque de l'appareil photo.
-*   La date et l'heure de la prise de vue.
-*   Les réglages (flash, exposition).
-*   📍 **La géolocalisation GPS** exacte de la photo !
+La marque, l'heure et le flash sont déjà des informations. La position GPS en est une autre : elle peut dire où vous étiez au moment de la photo. Publier l'image sans retirer ces champs, c'est parfois publier une adresse. Le chapitre [Localisation](./Cours_Localisation.md) revient sur ce point.
 
-> **⚠️ Danger Vie Privée** : Si vous postez une photo prise chez vous sur un réseau social sans "nettoyer" les métadonnées, n'importe qui peut retrouver votre adresse.
-> *(Voir le chapitre [Localisation](./Cours_Localisation.md) pour en savoir plus)*.
+## Le droit à l'image
 
-# 6. Droit à l'image
-
-En France, chacun a le droit exclusif sur son image et l'utilisation qui en est faite.
-Avant de publier une photo sur un réseau social (Snapchat, Instagram...), vous devez vous poser les bonnes questions.
+En France, chacun décide de l'usage de sa propre image. Avant de publier la photo de quelqu'un, la question n'est pas seulement technique.
 
 <ImageRights />
 
-> **⚖️ La Loi**
->
-> Publier la photo de quelqu'un sans son accord (dans un lieu privé) est un délit puni d'un an d'emprisonnement et de 45 000 € d'amende (Article 226-1 du Code Pénal).
+Publier la photo d'une personne sans son accord, dans un lieu privé, est un délit. L'article 226-1 du code pénal le punit d'un an d'emprisonnement et de 45 000 euros d'amende.

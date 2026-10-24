@@ -3,8 +3,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
 import { ChevronRight, GraduationCap, GitBranch, Lock, ShieldCheck } from 'lucide-react';
-import { createClient } from '@/utils/supabase/server';
-import { canAccessCourse, isElevatedUser } from '@/lib/course-access';
+import { canAccessCourse, isPublicCourse } from '@/lib/course-access';
+import { getAuthContext, viewerFromAuth } from '@/lib/auth';
 
 type CourseNode = {
   slug: string;
@@ -12,8 +12,7 @@ type CourseNode = {
   description: string;
   chapter: string;
   icon: string;
-  access: unknown;
-  allowedStudents: string[] | undefined;
+  restricted: boolean;
   prerequisites: string[];
 };
 
@@ -78,7 +77,6 @@ function buildSkillTiers(courses: CourseNode[]): SkillTier[] {
 
 export default async function PageSommaireNiveau({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const supabase = await createClient();
 
   // Configuration des niveaux (Titres et Couleurs)
   const LEVEL_CONFIG: Record<string, { title: string; color: string }> = {
@@ -90,44 +88,30 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
   };
 
   const currentLevel = LEVEL_CONFIG[id] || { title: `Niveau ${id}`, color: 'bg-blue-500' };
-  
-  // 1. Récupérer l'utilisateur
-  const { data: { user } } = await supabase.auth.getUser();
 
-  const role = (user?.app_metadata?.role || user?.user_metadata?.role || "") as string;
-  const isAdmin = isElevatedUser(role);
-
-  // 3. IDENTIFIANT POUR L'ÉLÈVE
-  const studentName = user?.user_metadata?.full_name || user?.email || "";
+  const auth = await getAuthContext();
+  const isAdmin = auth.isElevated;
 
   const folderPath = path.join(process.cwd(), 'content', id);
   const files = fs.existsSync(folderPath) ? fs.readdirSync(folderPath) : [];
   const mdxFiles = files.filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
 
-  const tousLesCours: CourseNode[] = mdxFiles.map(fileName => {
+  const viewer = viewerFromAuth(auth);
+  const tousLesCours: CourseNode[] = mdxFiles.flatMap((fileName) => {
     const filePath = path.join(folderPath, fileName);
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const { data } = matter(fileContent);
-    return { 
-      slug: fileName.replace(/\.mdx?$/, ''), 
+    if (!canAccessCourse(data, viewer)) return [];
+    return [{
+      slug: fileName.replace(/\.mdx?$/, ''),
       title: String(data.title || fileName),
       description: String(data.description || ""),
-      chapter: String(data.chapter || "Général"), 
+      chapter: String(data.chapter || "Général"),
       icon: String(data.icon || '📘'),
-      access: data.access,
-      allowedStudents: data.allowedStudents,
+      restricted: !isPublicCourse(data),
       prerequisites: parsePrerequisites(data.prerequisites),
-    };
-  }).filter((cours) =>
-    canAccessCourse(
-      { access: cours.access, allowedStudents: cours.allowedStudents },
-      {
-        isElevated: isAdmin,
-        isAuthenticated: Boolean(user),
-        userFullName: studentName || null,
-      }
-    )
-  );
+    }];
+  });
 
   // Groupement par chapitre
   const chapitres: Record<string, CourseNode[]> = {};
@@ -182,7 +166,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
                         key={cours.slug}
                         href={`/cours/${id}/${cours.slug}`}
                         className={`group block p-5 bg-white border rounded-[1.5rem] transition-all duration-300 hover:-translate-y-0.5 ${
-                          cours.access === 'private'
+                          cours.restricted
                             ? 'border-amber-200 bg-amber-50/20'
                             : 'border-slate-100'
                         }`}
@@ -193,7 +177,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
                             <div>
                               <h3 className="font-bold text-base text-slate-900 group-hover:text-orange-600 flex items-center gap-2">
                                 {cours.title}
-                                {cours.access === 'private' && (
+                                {cours.restricted && (
                                   <span className="text-[9px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-300 font-black flex items-center gap-1">
                                     <Lock size={10} /> PRIVÉ
                                   </span>

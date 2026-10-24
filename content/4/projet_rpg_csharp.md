@@ -5,40 +5,30 @@ badgeId: projet_rpg_csharp
 meta: 'C#, Projet, POO, Héritage, Polymorphisme, Console, Pokemon'
 prerequisites:
   - tp_remediation_poo
+audience: public
 ---
 
-<Admonition type="info" title="Contexte du Projet">
-Ce projet fil rouge s'étalera sur plusieurs séances. Votre objectif est de concevoir et développer un jeu en mode Console inspiré de la célèbre licence Pokémon, mais avec pour thème exclusif : **Les Renards (FoxMons)** ! 
-En utilisant la Programmation Orientée Objet (POO) en C#, vous allez créer des espèces de renards élémentaires, vous déplacer sur une carte, et mener des combats au tour par tour pour les capturer.
-</Admonition>
+# Projet fil rouge — FoxMon
 
-## 🎯 Objectifs Pédagogiques
-- Concevoir une architecture logicielle robuste.
-- Manipuler des listes (l'équipe de renards) et des grilles (la carte 2D).
-- Appliquer les concepts avancés de la POO : **Héritage** et **Polymorphisme** (pour les types élémentaires et attaques).
-- Gérer l'interaction utilisateur dans la console.
+Le but de ce projet est de créer un jeu console, en C#, inspiré de Pokémon, dont toutes les créatures sont des renards : les FoxMons.
+Le projet s'étale sur plusieurs séances. On avance dans l'ordre : la carte, le bestiaire, l'héritage, les attaques, les objets, les dresseurs, les dégâts, l'expérience, puis la sauvegarde.
 
----
+**Organisation des fichiers.** Un fichier par classe, un seul namespace `FoxMon`.
 
-## 🗺️ Étape 1 : Le Dresseur et les Hautes Herbes (Séance 1)
+```text
+FoxMon/
+  Program.cs
+  Carte.cs
+  Dresseur.cs
+```
 
-Avant de capturer vos premiers FoxMons, vous devez pouvoir explorer la région.
+Les classes du même namespace se voient sans import supplémentaire. `Program.cs` contient `Main`.
 
-### 1. La Carte du Monde
-Vous devez créer une classe `Carte` qui gère l'environnement.
+## 1. La carte et le dresseur 🗺️
 
-**Pistes de réflexion :**
-- Comment stocker une grille en C# ? Renseignez-vous sur les **tableaux à deux dimensions** (`char[,]`).
-- Quels symboles utiliser ? Par exemple : `.` (chemin), `#` (arbres/murs impossibles à traverser), et `*` pour les hautes herbes.
-- Votre classe devra probablement contenir des méthodes comme :
-  - `public void Afficher()` : qui utilise une double boucle `for` pour dessiner la grille.
-  - `public bool EstTraversable(int x, int y)` : qui vérifie si une case donnée n'est pas un arbre.
-  - `public bool EstHauteHerbe(int x, int y)` : pour déclencher des combats plus tard.
+La région est une grille. `.` est un chemin, `#` un mur, `*` des hautes herbes. Le dresseur est dessiné par un `@`.
 
-**Exemple de carte (pour tester l'étape 1) :**
-
-Dimensions : largeur = 20, hauteur = 10.  
-Spawn conseillé : `X = 2`, `Y = 2` (case `.`).
+Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2`, une case `.`.
 
 ```text
 ####################
@@ -53,178 +43,154 @@ Spawn conseillé : `X = 2`, `Y = 2` (case `.`).
 ####################
 ```
 
-Vous pouvez charger cette carte en mémoire via un tableau `char[,]` (conversion `string[]` -> `char[,]`) :
+<ExerciseTabs courseId="sio_foxmon_carte" courseTitle="Carte">
+  <ExerciseSection id="foxmon-carte-1" label="Charger la grille" type="autre">
+    <Enonce>
+      Créez la classe `Carte`. La grille est un `char[,]`. Copiez le chargement, puis vérifiez que `grille[2, 2]` vaut `'.'` et que `grille[0, 0]` vaut `'#'`.
 
-```csharp
-string[] lignes = new[]
-{
-  "####################",
-  "#.........*....*...#",
-  "#..####....####..*.#",
-  "#.....*.....*......#",
-  "#####..####..####..#",
-  "#....*....#...*....#",
-  "#......####........#",
-  "#....#......#......#",
-  "#..*.........*.....#",
-  "####################",
-};
+      ```csharp
+      string[] lignes = new[]
+      {
+        "####################",
+        "#.........*....*...#",
+        "#..####....####..*.#",
+        "#.....*.....*......#",
+        "#####..####..####..#",
+        "#....*....#...*....#",
+        "#......####........#",
+        "#....#......#......#",
+        "#..*.........*.....#",
+        "####################",
+      };
 
-int height = lignes.Length;
-int width = lignes[0].Length;
+      int height = lignes.Length;
+      int width = lignes[0].Length;
+      char[,] grille = new char[width, height];
 
-char[,] grille = new char[width, height];
+      for (int y = 0; y < height; y++)
+      {
+        for (int x = 0; x < width; x++)
+        {
+          grille[x, y] = lignes[y][x];
+        }
+      }
+      ```
 
-for (int y = 0; y < height; y++)
-{
-  for (int x = 0; x < width; x++)
-  {
-    grille[x, y] = lignes[y][x];
-  }
-}
+      *Attention : l'indice x est la colonne, y est la ligne. `lignes[y][x]` se range dans `grille[x, y]`.*
 
-// Spawn conseillé :
-int spawnX = 2;
-int spawnY = 2;
-```
+      Écrivez `Afficher()` : une double boucle dessine la grille. Écrivez `EstTraversable(int x, int y)` : faux sur un `#`, faux hors de la grille. Écrivez `EstHauteHerbe(int x, int y)` : vrai seulement sur `*`.
 
-### 2. Le Dresseur
-Créez une classe `Dresseur` pour représenter le joueur.
+      `EstTraversable(2, 2)` vaut vrai. `EstTraversable(0, 0)` vaut faux. `EstHauteHerbe(9, 1)` vaut vrai (le premier `*` de la deuxième ligne).
+    </Enonce>
+  </ExerciseSection>
 
-**Pistes de réflexion :**
-- De quelles propriétés a-t-il besoin ? (Son nom, et surtout ses coordonnées `X` et `Y`).
-- Comment le déplacer ? Vous devrez créer une méthode `Deplacer(...)` qui modifie `X` ou `Y` en fonction de la touche pressée, **tout en vérifiant** via la `Carte` si le déplacement est autorisé.
+  <ExerciseSection id="foxmon-carte-2" label="Le dresseur" type="autre">
+    <Enonce>
+      Créez `Dresseur` : `Nom`, `X`, `Y`. Départ : nom `Joueur`, position `(2, 2)`.
 
-### 2.b Organisation des fichiers C# (important)
+      ```csharp
+      namespace FoxMon;
+      public class Dresseur
+      {
+        public string Nom { get; set; } = "Joueur";
+        public int X { get; set; } = 2;
+        public int Y { get; set; } = 2;
+      }
+      ```
 
-Pour garder un code propre, utilisez **un fichier par classe**, mais dans le **meme namespace**.
+      Écrivez `Deplacer(Carte carte, int dx, int dy)`. La méthode calcule la case d'arrivée. Si `EstTraversable` est faux, `X` et `Y` ne changent pas. Sinon ils prennent la nouvelle case.
 
-Exemple de structure minimale :
+      Depuis `(2, 2)`, un pas vers la gauche de 1 reste en `(2, 2)` si la case n'est pas traversable, et un pas vers la droite de 1 va en `(3, 2)` sur cette carte (la case est un `.`).
 
-```text
-FoxMon/
-  Program.cs
-  Carte.cs
-  Dresseur.cs
-```
+      `Afficher(Dresseur dresseur)` dessine le `@` à `(X, Y)` par-dessus la carte, sans effacer le symbole du terrain en mémoire : la grille garde son `.` ou son `*`.
+    </Enonce>
+  </ExerciseSection>
 
-- `Dresseur.cs` contient la classe `Dresseur`.
-- `Carte.cs` contient la classe `Carte` et peut utiliser un `Dresseur` (ex: pour l'affichage du `@`).
-- `Program.cs` contient le point d'entree `Main` pour lancer vos tests.
+  <ExerciseSection id="foxmon-carte-3" label="La boucle" type="autre">
+    <Enonce>
+      Dans `Main`, le jeu tourne jusqu'à la touche qui quitte (par exemple `Echap`).
 
-Exemple simplifie de namespace partage :
+      À chaque tour, dans cet ordre :
 
-```csharp
-// Dresseur.cs
-namespace FoxMon;
-public class Dresseur
-{
-  public string Nom { get; set; } = "Joueur";
-  public int X { get; set; } = 2;
-  public int Y { get; set; } = 2;
-}
-```
+      1. `Console.Clear()`
+      2. dessiner la carte
+      3. dessiner le `@`
+      4. `Console.ReadKey(true)` — la touche n'est pas recopiée à l'écran
+      5. flèche haut, bas, gauche, droite : appeler `Deplacer` avec le bon couple `(dx, dy)`
 
-```csharp
-// Carte.cs
-namespace FoxMon;
-public class Carte
-{
-  public void Afficher(Dresseur dresseur)
-  {
-    // On peut utiliser dresseur.X et dresseur.Y ici
-  }
-}
-```
+      `Console.SetCursorPosition(x, y)` place le curseur pour le `@`. Sans `Clear`, la carte s'empile vers le bas : ce n'est pas le rendu attendu.
 
-```csharp
-// Program.cs
-using FoxMon;
+      Contrôle : dix pas vers la droite ne traversent pas un `#`. Le `@` reste sur la dernière case traversable.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-var carte = new Carte();
-var dresseur = new Dresseur();
-carte.Afficher(dresseur);
-```
+## 2. Le bestiaire et le combat 🦊
 
-Avec cette organisation, vous n'avez pas besoin d'import complexe entre classes du projet tant qu'elles sont dans le meme namespace.
+<ExerciseTabs courseId="sio_foxmon_combat" courseTitle="Combat">
+  <ExerciseSection id="foxmon-combat-1" label="La classe FoxMon" type="autre">
+    <Enonce>
+      Créez `FoxMon` : nom, points de vie actuels, PV max, niveau, vitesse, et `TypeElementaire` (`"Eau"`, `"Feu"` ou `"Plante"` pour l'instant).
 
-### 3. Le Moteur de Jeu (La Boucle Principale)
-Dans votre `Main`, le jeu va tourner en continu jusqu'à ce qu'on le quitte.
+      Le dresseur a une `List<FoxMon> Equipe`, au plus 6 renards. Ajouter un septième est refusé : la liste ne dépasse pas 6, la méthode renvoie faux.
 
-**Mots-clés et fonctions C# à rechercher pour cette étape :**
-- `while(true)` : Pour créer la boucle infinie du jeu.
-- `Console.Clear()` : Pour effacer l'écran avant de redessiner la carte (évite que la carte s'imprime à l'infini vers le bas).
-- `Console.ReadKey(true)` : Pour capter une touche du clavier (les flèches directionnelles) sans l'écrire dans la console. Renseignez-vous sur l'objet `ConsoleKeyInfo`.
-- `Console.SetCursorPosition(x, y)` : Cela permet de placer le curseur de la console à un endroit précis. Utile pour dessiner le dresseur (`@`) *par-dessus* la carte sans tout casser.
+      Renard de test : `RenardEau`, 20 PV max, niveau 5, vitesse 10. Au départ, PV actuels = PV max.
+    </Enonce>
+  </ExerciseSection>
 
-<Admonition type="tip" title="Ordre d'affichage">
-Dans votre boucle, l'ordre logique est : 1. Nettoyer l'écran -> 2. Dessiner la carte -> 3. Dessiner le joueur par-dessus -> 4. Attendre une touche -> 5. Déplacer le joueur.
-</Admonition>
+  <ExerciseSection id="foxmon-combat-2" label="Les hautes herbes" type="autre">
+    <Enonce>
+      Quand le dresseur **arrive** sur une case `*`, tirez un nombre entre 0 et 99. S'il est strictement inférieur à 20, un FoxMon sauvage apparaît. Vingt pour cent, pas à chaque pas.
 
----
+      Le combat remplace la carte. Dans `Main`, un booléen `enCombat` décide de la vue.
 
-## 🦊 Étape 2 : Le Bestiaire et les Combats (Séance 2)
+      - `enCombat` faux : carte et flèches.
+      - Rencontre : `enCombat = true`, puis `Console.Clear()`.
+      - Combat fini (fuite, victoire ou capture) : `enCombat = false`, `Console.Clear()`, le dresseur est toujours sur la même case.
 
-Dans les hautes herbes, le danger guette.
+      Le dresseur envoie le premier FoxMon de son équipe dont les PV sont supérieurs à 0. S'il n'en a aucun, la rencontre affiche `Aucun FoxMon en état.` et le combat n'a pas lieu.
+    </Enonce>
+  </ExerciseSection>
 
-1. **La classe FoxMon de base :**
-   - Créez une classe `FoxMon` (Nom, Points de Vie Actuels, PV Max, Niveau, Vitesse).
-   - Ajoutez un attribut `TypeElementaire` (qui peut être un simple `string` comme "Eau", "Feu", ou "Plante" pour l'instant).
-   - Le dresseur possède un attribut `List<FoxMon> Equipe` (qui peut contenir jusqu'à 6 renards).
+  <ExerciseSection id="foxmon-combat-3" label="Le tour" type="autre">
+    <Enonce>
+      Le joueur choisit : Attaquer, Capturer, Fuir.
 
-2. **La rencontre sauvage :**
-   - À chaque fois que le dresseur marche sur une case `*` (hautes herbes), il y a **20% de chances** qu'un FoxMon sauvage apparaisse.
-   - Si c'est le cas, l'affichage de la carte disparaît temporairement pour laisser place à l'interface de combat.
+      La table simple de cette séance : Eau contre Feu multiplie les dégâts par 2, et le programme affiche `C'est super efficace !`. Les autres couples de cette séance gardent le multiplicateur 1. La formule complète est à l'étape 7 : ne l'inventez pas encore.
 
-3. **Le Mode Combat et les Types (Tour par Tour) :**
-   - Le dresseur envoie automatiquement le premier FoxMon de sa liste.
-   - Le joueur a le choix des actions : *Attaquer, Capturer (si PV de la cible bas), Fuir*.
-   - **La table des types :** L'attaque doit calculer les dégâts en fonction du type du lanceur et de la cible. Si un FoxMon Eau attaque un FoxMon Feu, les dégâts sont multipliés par 2 (afficher *"C'est super efficace !"*).
-   - Le combat boucle jusqu'à ce qu'un des deux soit KO, capturé, ou que la fuite réussisse.
+      Exemple : un RenardEau de puissance 10 attaque un RenardFeu. Dégâts affichés : 20, avec la phrase. Les PV du défenseur baissent de 20, et ne descendent pas sous 0.
 
-<Admonition type="tip" title="Gérer le changement de vue (Carte ↔ Combat)">
-Pour passer de l'exploration au combat, vous devez gérer des "États de jeu". 
-Dans votre `Main`, créez une variable `bool enCombat = false;`.
-- Si `enCombat` est `false`, la boucle affiche la carte et lit les flèches directionnelles.
-- Si le dresseur rencontre un FoxMon, passez `enCombat = true` et faites un `Console.Clear()`.
-- La boucle va alors exécuter la logique de combat (afficher les PV, demander quelle attaque utiliser) au lieu d'afficher la carte.
-- Une fois le combat terminé (fuite, victoire, capture), repassez `enCombat = false`, refaites un `Console.Clear()`, et le joueur retrouvera la carte là où il l'avait laissée !
-</Admonition>
+      Le combat s'arrête quand l'un des deux est KO (PV à 0), quand la capture réussit, ou quand la fuite est choisie. La fuite de cette séance réussit toujours : on retrouvera la carte. La capture détaillée est à l'étape 5. En attendant, Capturer affiche `Pas encore disponible.` et le tour passe.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
----
+## 3. L'héritage 🧬
 
-## 🧬 Étape 3 : Héritage et Factorisation (Séance 3)
+Les `if` sur le type se regroupent dans des classes.
 
-À l'étape précédente, vous avez probablement géré les types avec beaucoup de `if/else` (si type = feu et cible = eau...). Il est temps d'introduire l'**Héritage** pour nettoyer tout ça !
+<ExerciseTabs courseId="sio_foxmon_heritage" courseTitle="Héritage">
+  <ExerciseSection id="foxmon-heritage-1" label="Mère et filles" type="autre">
+    <Enonce>
+      `FoxMon` devient la classe mère. Elle garde les PV, le niveau, la vitesse, et une méthode qui dit si le renard est KO (`Pv <= 0`).
 
-1. **Refactorisation en classe Mère :**
-   - Rendez votre classe `FoxMon` abstraite (ou utilisez-la comme classe mère stricte). Elle gère la mécanique globale des PV, de la mort, etc.
+      Créez `RenardFeu`, `RenardEau` et `RenardPlante`. Le constructeur de chaque fille fixe le type et les statistiques de base. On ne les redemande pas à l'appel.
 
-2. **Les Sous-Classes Élémentaires :**
-   - Créez des classes qui héritent de `FoxMon` :
-     - `RenardFeu` 
-     - `RenardEau`
-     - `RenardPlante` 
-   - Le constructeur de chaque classe enfant doit forcer automatiquement son "Type" et ses statistiques de base sans qu'on ait besoin de les préciser.
+      | Classe | Type | PV max | Vitesse |
+      | --- | --- | --- | --- |
+      | RenardFeu | Feu | 18 | 12 |
+      | RenardEau | Eau | 20 | 10 |
+      | RenardPlante | Plante | 22 | 8 |
 
-3. **Le système de capture affiné :**
-   - Le taux de réussite d'une capture ne doit plus être aléatoire. Il doit dépendre des PV Max du FoxMon sauvage par rapport à ses PV actuels (plus il est blessé, plus il est facile à capturer).
+      `new RenardFeu("Flamèche")` a le type Feu, 18 PV, vitesse 12, niveau 1. Un appel qui oublie le type ne compile pas : le type n'est pas un paramètre.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
----
+## 4. Les attaques, lues dans un CSV 📄
 
-## 🎭 Étape 4 : Gestion des Attaques (Lecture de CSV) (Séance 4)
+Un FoxMon connaît jusqu'à 4 attaques. On ne les écrit pas une par une dans le code : elles viennent d'un fichier.
 
-Un FoxMon ne se contente pas d'une seule attaque. Il en possède plusieurs, avec des caractéristiques différentes (puissance, précision, type). Pour éviter de "hardcoder" (écrire en dur) des dizaines d'attaques dans votre code, vous allez les lire depuis un fichier !
-
-### 1. La classe `Attaque`
-Créez une classe `Attaque` qui représente une capacité utilisable en combat.
-
-**Pistes de réflexion :**
-- Quels sont les attributs nécessaires ? `Nom` (ex: "Crocs Feu"), `Type` ("Feu"), `Puissance` (ex: 40), `Precision` (ex: 95 pour 95% de chance de toucher).
-- Modifiez la classe mère `FoxMon` pour lui ajouter une `List<Attaque> AttaquesConnues` (un FoxMon peut connaître jusqu'à 4 attaques).
-
-### 2. Le `PanelAttaques` (Lecture de CSV)
-Créez un fichier `attaques.csv` à la racine de votre projet avec ce format :
 ```csv
 Nom,Type,Puissance,Precision
 Charge,Normal,40,100
@@ -233,161 +199,189 @@ Pistolet a O,Eau,40,100
 Tranch'Herbe,Plante,55,95
 ```
 
-Créez ensuite une classe `PanelAttaques` (ou `GestionnaireAttaques`) dont le rôle est de lire ce fichier au lancement du jeu.
+<ExerciseTabs courseId="sio_foxmon_attaques" courseTitle="Attaques">
+  <ExerciseSection id="foxmon-atk-1" label="Charger le fichier" type="autre">
+    <Enonce>
+      Créez la classe `Attaque` : `Nom`, `Type`, `Puissance`, `Precision`.
 
-**Mots-clés et fonctions C# à rechercher :**
-- `System.IO.StreamReader` ou `File.ReadAllLines()` : pour lire un fichier texte ligne par ligne.
-- `String.Split(',')` : pour découper une ligne CSV en un tableau de mots.
-- Votre classe `PanelAttaques` devra contenir une méthode (ex: `public List<Attaque> ChargerToutesLesAttaques()`) qui lit le fichier, instancie un objet `Attaque` pour chaque ligne, et les stocke dans une grande liste globale.
+      Créez `PanelAttaques` avec `ChargerToutesLesAttaques()`, qui lit `attaques.csv` à la racine du projet (`File.ReadAllLines`, puis `Split(',')`). La première ligne est l'en-tête : on ne l'instancie pas. Chaque ligne suivante devient une `Attaque`. Puissance et précision sont des entiers.
 
-### 3. Apprentissage et Choix en Combat
-- À la création d'un FoxMon (ex: `RenardFeu`), utilisez le `PanelAttaques` pour lui attribuer 2 ou 3 attaques compatibles avec son type (ou le type "Normal").
-- Lors d'un combat, au lieu d'avoir un simple bouton "Attaquer", le joueur doit maintenant choisir *quelle attaque* utiliser parmi la liste `AttaquesConnues` de son FoxMon actif.
-- Prenez en compte la `Precision` de l'attaque : générez un nombre aléatoire (avec `Random`) entre 1 et 100. S'il est supérieur à la précision de l'attaque, celle-ci échoue !
+      Après chargement du fichier ci-dessus, la liste contient 4 attaques. `Crocs Feu` a la puissance 65 et la précision 95.
 
----
+      Ajoutez `List<Attaque> AttaquesConnues` sur `FoxMon`. À la création d'un `RenardFeu`, donnez-lui `Charge` et `Crocs Feu`. Pas plus de 4. Une cinquième est refusée.
+    </Enonce>
+  </ExerciseSection>
 
-## 🧪 Étape 5 : Captures et Objets (Séance 5)
+  <ExerciseSection id="foxmon-atk-2" label="Toucher ou rater" type="autre">
+    <Enonce>
+      En combat, Attaquer affiche les attaques connues et le joueur en choisit une par son numéro. Un numéro hors liste redemande.
 
-L’exploration mène à la capture. Implémentez la mécanique de capture et introduisez les objets.
+      Tirez un entier entre 1 et 100. S'il est strictement supérieur à `Precision`, l'attaque échoue : affichez `Raté !`, les PV ne bougent pas.
 
-### 1. Classe `Objet` et hiérarchie
-- Créez une classe abstraite `Objet` avec `Nom` et `Utiliser(Dresseur lanceur, FoxMon cible)`.
-- Créez des classes filles :
-  - `Potion` : restaure des PV.
-  - `VulBall` : tente la capture d’un FoxMon sauvage.
-  - `ObjetCombat` (ex: `BoostAttaque`) : applique un bonus temporaire.
-  - `ObjetTenu` (ex: `BaieSoin`) : effet automatique si condition remplie (ex: PV < 30%).
+      `Charge` (précision 100) ne rate pas. `Crocs Feu` (95) rate quand le tir vaut 96, 97, 98, 99 ou 100.
 
-### 2. Sac à dos
-- Ajoutez un inventaire au `Dresseur`.
-- Ajoutez `AjouterObjet`, `RetirerObjet`, `AObjet`.
-- Dans le menu de combat, l’option `Objet` applique l’effet et consomme l’objet.
+      Pour le test, fixez le tir à 96 : `Crocs Feu` rate. Fixez-le à 95 : l'attaque part.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-### 3. Capture (sauvage uniquement)
-- Action `Capturer` disponible uniquement contre un FoxMon sauvage.
-- Probabilité de capture : `p = baseRate * (1 - HPactuels / HPmax) * multiplicateurBalle` (par défaut `baseRate=0.35`, `multiplicateurBalle=1.0` pour `VulBall`).
-- En cas de réussite : ajout à l’équipe (ou stockage si équipe pleine).
-- En échec : message et fin de tour.
+## 5. Objets et capture 🧪
 
-<Admonition type="warning" title="Règle">
-La capture est interdite en combat contre dresseur.
-</Admonition>
+<ExerciseTabs courseId="sio_foxmon_objets" courseTitle="Objets">
+  <ExerciseSection id="foxmon-obj-1" label="Le sac" type="autre">
+    <Enonce>
+      Créez la classe abstraite `Objet` : `Nom`, et `Utiliser(Dresseur lanceur, FoxMon cible)`.
 
----
+      - `Potion` : rend 10 PV, sans dépasser les PV max. Un renard à 15/20 passe à 20, pas à 25. Un renard KO (0 PV) n'est pas soigné : la potion n'est pas consommée.
+      - `VulBall` : tente la capture d'un sauvage.
+      - `BoostAttaque` : bonus temporaire, par exemple +5 de puissance au prochain coup, puis le bonus disparaît.
+      - `BaieSoin` : objet tenu. Si les PV passent sous 30 % du max, elle rend 10 PV une fois, puis elle est consommée.
 
-## 🤝 Étape 6 : Combats contre Dresseurs (Séance 6)
+      Le dresseur a un inventaire : `AjouterObjet`, `RetirerObjet`, `AObjet`. En combat, l'action Objet applique l'effet et retire l'objet du sac, sauf si l'usage a été refusé (potion sur un KO).
 
-### 1. PNJ Dresseurs
-- Ajoutez des PNJ avec champ de vision sur la carte.
-- Si le joueur entre dans ce champ, déclenchez un combat.
+      *Attention : la capture est interdite contre un dresseur. L'action n'apparaît pas, ou elle affiche `Capture impossible.` sans consommer la balle.*
+    </Enonce>
+  </ExerciseSection>
 
-### 2. Règles
-- Pas de capture.
-- Autoriser le `Changement` de FoxMon.
-- IA : choisit le premier FoxMon apte et attaque.
+  <ExerciseSection id="foxmon-obj-2" label="La probabilité" type="autre">
+    <Enonce>
+      Contre un sauvage seulement :
 
-### 3. Fin de combat
-- Victoire si toute l’équipe adverse est KO.
-- Récompense possible (argent, objets).
+      ```text
+      p = 0,35 * (1 - PVactuels / PVmax) * multiplicateurBalle
+      ```
 
----
+      `VulBall` a le multiplicateur 1. Un sauvage à pleine vie a `p = 0`. Un sauvage à 0 PV n'est plus capturable : le combat est déjà fini par KO.
 
-## ⚔️ Étape 7 : Dégâts, Types et Coups Critiques (Séance 7)
+      Exemple : PV max 20, PV actuels 10. `p = 0,35 * (1 - 10/20) * 1 = 0,175`. Sur un tir entre 0 et 1, la capture réussit si le tir est strictement inférieur à 0,175.
 
-### 1. Table des types (simplifiée)
-- Feu → Plante : 2.0 ; Plante → Eau : 2.0 ; Eau → Feu : 2.0.
-- Inverse défavorable : 0.5 ; même type : 1.0.
+      Réussite : le sauvage rejoint l'équipe s'il reste une place (moins de 6). Équipe pleine : il va dans une liste `Stockage`, et le message le dit. Échec : `La capture a échoué.`, la balle est consommée, le tour se termine.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-### 2. Critiques et variabilité
-- Critique : 10% de chance, multiplicateur 1.5.
-- Variabilité : facteur aléatoire 0.85–1.00.
+## 6. Les dresseurs sur la carte 🤝
 
-### 3. Formule indicative
-- `dégâts = puissanceBase * multiplicateurType * (critique ? 1.5 : 1.0) * random(0.85..1.0)`
+<ExerciseTabs courseId="sio_foxmon_pnj" courseTitle="Dresseurs">
+  <ExerciseSection id="foxmon-pnj-1" label="Champ de vision" type="autre">
+    <Enonce>
+      Un PNJ a un nom, une position, une portée de vision et une équipe. S'il regarde vers la gauche et que le joueur entre dans les cases à portée, le combat démarre. Une fois vaincu, il ne relance pas le combat.
 
----
+      Exemple : rival en `(10, 6)`, vision 4, équipe `RenardFeu` puis `RenardPlante`. Le joueur en `(8, 6)` est à distance 2 : le combat part. Le joueur en `(5, 6)` est à distance 5 : rien.
 
-## 📈 Étape 8 : Expérience et Évolution (Séance 8)
+      Règles du combat de dresseur : pas de capture. Le joueur peut changer de FoxMon, parmi ceux qui ne sont pas KO. L'adversaire envoie le premier de son équipe encore en état, et il attaque avec sa première attaque.
 
-### 1. Gain d’XP
-- Après une victoire, attribuer des XP au FoxMon actif.
-- Courbe simple : `XP nécessaire = 10 * niveau^2`.
+      Victoire quand toute l'équipe adverse est KO. Le rival laisse alors 100 pièces et une potion. Défaite quand toute l'équipe du joueur est KO : retour à la case `(2, 2)`, les PV de l'équipe repassent au max, l'argent ne descend pas.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-### 2. Niveau et évolution
-- Augmenter PV max et statistiques à chaque niveau.
-- Évolutions par paliers : Renardeau → Renard → Kitsune.
+## 7. Dégâts, types, critiques ⚔️
 
-### 3. Cartes volumineuses via JSON
-- Remplacez la carte en tableaux 2D par un chargement depuis un fichier JSON pour permettre de grandes maps.
-- Proposez une structure JSON simple :
+Table utilisée à partir de cette séance. Le type de l'attaque est comparé au type du défenseur.
 
-```json
-{
-  "width": 40,
-  "height": 25,
-  "layers": {
-    "ground": [
-      "........................................",
-      "....#########.............******........",
-      "....#.......#.............******........",
-      "....#.......#.........................#.",
-      "....#.......#.............######......#.",
-      "....#########.............#....#......#.",
-      "..........................#....#......#.",
-      "**************............#....#......#.",
-      "**************............######......#.",
-      "......................................#.",
-      "######################################."
-    ],
-    "collision": [
-      "........................................",
-      "....#########.............******........",
-      "....#.......#.............******........",
-      "....#.......#.........................#.",
-      "....#.......#.............######......#.",
-      "....#########.............#....#......#.",
-      "..........................#....#......#.",
-      "**************............#....#......#.",
-      "**************............######......#.",
-      "......................................#.",
-      "######################################."
-    ]
-  },
-  "legend": {
-    ".": "chemin",
-    "#": "mur",
-    "*": "hautes_herbes"
-  },
-  "spawn": { "x": 2, "y": 2 },
-  "pnj": [
-    { "nom": "Rival", "x": 10, "y": 6, "vision": 4, "equipe": ["RenardFeu", "RenardPlante"] }
-  ]
-}
-```
+| Attaque → défenseur | Multiplicateur |
+| --- | --- |
+| Feu → Plante, Plante → Eau, Eau → Feu | 2,0 |
+| Sens inverse (Feu → Eau, Eau → Plante, Plante → Feu) | 0,5 |
+| Même type, ou type Normal | 1,0 |
 
-- Adaptez la classe `Carte` pour charger ce JSON (`File.ReadAllText`, `System.Text.Json`), reconstruire les layers en mémoire et exposer :
-  - `EstTraversable(x, y)` en se basant sur `collision`.
-  - `EstHauteHerbe(x, y)` en se basant sur `legend`.
-  - `Afficher()` en itérant la couche `ground`.
-- Utilisez `spawn` pour positionner le dresseur au lancement et initialisez les PNJ depuis `pnj`.
-- Optionnel : découpez la carte en “chunks” pour optimiser l’affichage si la taille augmente fortement.
+<ExerciseTabs courseId="sio_foxmon_degats" courseTitle="Dégâts">
+  <ExerciseSection id="foxmon-degats-1" label="La formule" type="autre">
+    <Enonce>
+      Écrivez `CalculerDegats(Attaque attaque, FoxMon defenseur)`.
 
----
+      ```text
+      degats = puissance * multiplicateurType * critique * variable
+      ```
 
-## 💾 Étape 9 : Sauvegarde et Chargement (Séance 9)
+      - critique : 10 % de chance, alors le facteur vaut 1,5, sinon 1
+      - variable : tiré entre 0,85 et 1,00 inclus
 
-### 1. Données à persister
-- Position du dresseur, équipe, inventaire, PNJ vaincus.
+      Le résultat est un entier, arrondi à l'inférieur, au moins 1 si l'attaque touche et que la puissance est positive.
 
-### 2. Format JSON
-- Utilisez `System.Text.Json` avec une classe `Sauvegarde`.
+      Contrôles, critique forcé à non, variable forcée à 1 :
 
-### 3. Intégration
-- Ajoutez `Sauvegarder` et `Charger` au menu principal.
+      - `Crocs Feu` (65) sur un `RenardPlante` : 65 × 2 = 130, message `C'est super efficace !`
+      - `Crocs Feu` sur un `RenardEau` : 65 × 0,5 = 32, message `Ce n'est pas très efficace...`
+      - `Charge` (40) sur n'importe qui : 40
 
----
+      Les PV baissent de cette valeur et ne passent pas sous 0. À 0, le FoxMon est KO et ne rejoue pas.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-## 🌟 Aller plus loin
+## 8. Expérience, évolution, grande carte 📈
 
-- **🏆 Interface Graphique (God Tier) :** portage vers *WinForms*, *WPF* ou *MonoGame* pour des sprites.
+<ExerciseTabs courseId="sio_foxmon_xp" courseTitle="Expérience">
+  <ExerciseSection id="foxmon-xp-1" label="Niveaux" type="autre">
+    <Enonce>
+      Après une victoire, le FoxMon encore en jeu gagne 20 XP. L'XP nécessaire pour passer le niveau en cours vaut `10 * niveau * niveau`.
+
+      Au niveau 1, le seuil est 10. 20 XP font passer au niveau 2, et il reste 10 XP. Au niveau 2, le seuil est 40 : ces 10 XP ne suffisent pas.
+
+      À chaque niveau : +2 PV max, +1 vitesse. Les PV actuels gagnent aussi les 2 points (un renard à 18/18 passe à 20/20).
+
+      Évolution, selon le niveau, sans changer les PV déjà gagnés :
+
+      - niveau inférieur à 8 : le nom d'espèce affiché est Renardeau
+      - de 8 à 15 inclus : Renard
+      - à partir de 16 : Kitsune
+
+      Un `RenardFeu` niveau 8 affiche `Renard` et garde le type Feu.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="foxmon-xp-2" label="La carte JSON" type="autre">
+    <Enonce>
+      Remplacez la carte écrite dans le code par un chargement JSON (`File.ReadAllText`, `System.Text.Json`). `EstTraversable` lit la couche `collision` (`#` bloque). `EstHauteHerbe` lit `ground` (ou la légende : `*` veut dire hautes herbes). `Afficher` parcourt `ground`. Le dresseur commence aux coordonnées `spawn`. Les PNJ viennent du tableau `pnj`.
+
+      ```json
+      {
+        "width": 40,
+        "height": 25,
+        "layers": {
+          "ground": ["........................................"],
+          "collision": ["........................................"]
+        },
+        "legend": { ".": "chemin", "#": "mur", "*": "hautes_herbes" },
+        "spawn": { "x": 2, "y": 2 },
+        "pnj": [
+          { "nom": "Rival", "x": 10, "y": 6, "vision": 4, "equipe": ["RenardFeu", "RenardPlante"] }
+        ]
+      }
+      ```
+
+      Le fichier du sujet peut être plus grand : chaque chaîne de `ground` a `width` caractères, et il y a `height` chaînes. Après chargement, `spawn` place le dresseur, et le rival de l'étape 6 est bien en `(10, 6)`.
+
+      Découper la carte en morceaux pour l'affichage reste facultatif, et seulement si la grille devient lourde à redessiner.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
+
+## 9. Sauvegarde 💾
+
+<ExerciseTabs courseId="sio_foxmon_save" courseTitle="Sauvegarde">
+  <ExerciseSection id="foxmon-save-1" label="Écrire et relire" type="autre">
+    <Enonce>
+      Une classe `Sauvegarde` contient : position du dresseur, équipe (espèce, surnom, niveau, PV, XP, attaques), inventaire, argent, noms des PNJ déjà vaincus.
+
+      `Sauvegarder` écrit ce contenu en JSON avec `System.Text.Json`. `Charger` le relit. Les deux sont dans le menu, accessibles depuis la carte (touches que vous indiquez à l'écran, par exemple `S` et `C`).
+
+      Contrôle : avancez, capturez ou soignez, sauvegardez, quittez le programme, relancez, chargez. Le `@` est à la même case, l'équipe a les mêmes PV, le rival déjà vaincu ne relance pas le combat.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
+
+## 10. Ce qu'on rend 📦
+
+Le dossier `FoxMon`, qui compile, avec un fichier par classe dans le namespace `FoxMon` :
+
+- la carte de test, le dresseur qui ne traverse pas les `#`, la boucle qui efface l'écran ;
+- `RenardFeu`, `RenardEau`, `RenardPlante`, l'équipe limitée à 6 ;
+- `attaques.csv` et le chargement (4 attaques, `Crocs Feu` à 65) ;
+- la formule de dégâts, avec les trois contrôles (130, 32 et 40) ;
+- la capture `p = 0,175` sur l'exemple 10/20, interdite contre un dresseur ;
+- la sauvegarde JSON qu'on recharge après avoir quitté.
+
+En tête de `Program.cs`, un commentaire avec votre nom et la classe. Le pas suivant, seulement si ce dossier tourne : porter l'affichage vers WinForms, WPF ou MonoGame. Le métier (dégâts, capture, sauvegarde) ne se réécrit pas dans les boutons.

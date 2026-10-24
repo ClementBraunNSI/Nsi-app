@@ -6,24 +6,21 @@ chapter: Localisation
 icon: "🗺️"
 prerequisites:
   - tp_python_localisation
+audience: public
 ---
 
 # Mini-projet : Carte GPS du Renard
 
-Le renard 🦊 a laissé des traces de son passage dans plusieurs villes de France. Votre mission : **modifier le code Python** pour construire une carte interactive et y placer des marqueurs GPS.
+Le but de ce projet est de construire une carte interactive du passage du renard, en modifiant du code Python.
+Dans ce projet, nous allons afficher une carte de France, poser des marqueurs, parcourir une liste de lieux, puis ajouter votre propre endroit.
 
-> **Comment ça marche ?**
-> - Modifiez le code dans l'éditeur (décommentez les lignes, complétez les `TODO`, changez les coordonnées…)
-> - Cliquez sur **Exécuter**
-> - La carte se met à jour à droite si votre programme crée une variable nommée `carte`
+La carte se met à jour à droite quand le programme crée une variable nommée `carte`.
 
-**Règle importante :** votre programme doit toujours contenir une variable `carte` créée avec `folium.Map(...)`.
+*Attention : le programme doit toujours contenir `carte = folium.Map(...)`. Sans cette variable, rien ne s'affiche.*
 
----
+## 1. Une carte de France 🗺️
 
-## Étape 1 — Afficher une carte de France
-
-Lancez ce code sans le modifier pour vérifier que tout fonctionne.
+Lancez ce code sans le modifier. Le centre `[46.5, 2.5]` vise le milieu de la France, et `zoom_start=6` montre le pays entier. Le message `Carte de France chargée !` confirme que le programme a tourné.
 
 <CarteGpsPlayground initialCode="import folium
 
@@ -31,11 +28,11 @@ carte = folium.Map(location=[46.5, 2.5], zoom_start=6)
 
 print('Carte de France chargée !')" />
 
----
+## 2. Le marqueur de Paris 📍
 
-## Étape 2 — Ajouter Paris
+Un marqueur se pose avec `folium.Marker([latitude, longitude], popup='...', tooltip='...').add_to(carte)`.
 
-**Mission :** décommentez les lignes indiquées pour placer un marqueur sur Paris.
+Paris : latitude `48.8566`, longitude `2.3522`.
 
 <CarteGpsPlayground initialCode="import folium
 
@@ -47,16 +44,14 @@ carte = folium.Map(location=[46.5, 2.5], zoom_start=6)
 
 print('Décommentez le code pour afficher Paris')" />
 
-*Indice :* enlevez le `#` au début des lignes à activer.
+Enlevez le `#` au début des deux lignes commentées, puis exécutez. Un clic sur le marqueur affiche `Paris`. Le survol affiche `Capitale`.
 
----
+## 3. Lyon et Marseille 🏙️
 
-## Étape 3 — Compléter la carte
-
-Paris est déjà placé. **À vous de jouer :** ajoutez Lyon et Marseille en complétant les `TODO`.
+Paris est déjà placé. Ajoutez Lyon et Marseille en complétant les `TODO`, sur le même modèle que Paris.
 
 | Ville | Latitude | Longitude |
-|-------|----------|-----------|
+| --- | --- | --- |
 | Lyon | 45.7640 | 4.8357 |
 | Marseille | 43.2965 | 5.3698 |
 
@@ -71,13 +66,17 @@ folium.Marker([48.8566, 2.3522], popup='Paris').add_to(carte)
 
 print('Ajoutez Lyon et Marseille')" />
 
----
+Exemple pour Lyon, à adapter pour Marseille :
 
-## Étape 4 — Boucle sur une liste de lieux
+```python
+folium.Marker([45.7640, 4.8357], popup='Lyon').add_to(carte)
+```
 
-Plutôt que répéter le même code, on peut parcourir une **liste** de lieux avec une boucle `for`.
+Après exécution, les trois villes sont cliquables. Si un marqueur manque, relisez la latitude et la longitude : un couple inversé place la ville au mauvais endroit.
 
-**Mission :** complétez la boucle pour placer automatiquement les 4 villes du tableau `lieux`.
+## 4. Une boucle sur les lieux 🔁
+
+Plutôt que répéter le même code, on parcourt une liste de dictionnaires. `lieu['lat']` donne la latitude, `lieu['lon']` la longitude, `lieu['nom']` le nom.
 
 <CarteGpsPlayground initialCode="import folium
 
@@ -95,15 +94,18 @@ carte = folium.Map(location=[46.8, 2.5], zoom_start=6)
 
 print('Écrivez la boucle for')" />
 
-*Indice :* `lieu['lat']` donne la latitude, `lieu['nom']` le nom de la ville.
+La boucle attendue :
 
----
+```python
+for lieu in lieux:
+    folium.Marker([lieu['lat'], lieu['lon']], popup=lieu['nom']).add_to(carte)
+```
 
-## Étape 5 — Ajouter votre lieu
+Les quatre villes du tableau apparaissent : Paris, Lyon, Marseille et Lille. Ajouter une cinquième ville se fait dans la liste `lieux`, pas en recopiant un `Marker`.
 
-Personnalisez la carte en ajoutant **votre ville** ou **votre établissement scolaire**.
+## 5. Votre lieu 🏫
 
-Cherchez les coordonnées GPS sur [openstreetmap.org](https://www.openstreetmap.org) (clic droit → « Afficher l'adresse »).
+Personnalisez la carte avec votre ville ou votre établissement. Cherchez les coordonnées sur [openstreetmap.org](https://www.openstreetmap.org) : clic droit, puis « Afficher l'adresse ».
 
 <CarteGpsPlayground initialCode="import folium
 
@@ -122,13 +124,11 @@ for nom, lat, lon in villes:
 
 print('Ajoutez votre marqueur vert')" />
 
----
+Décommentez la ligne du marqueur vert et remplacez `NOM`, `LAT` et `LON`. Le marqueur vert est le vôtre : il se distingue de Paris et de Lyon. `folium.Icon(color='green')` fixe la couleur.
 
-## Étape 6 — Tracer un trajet (bonus)
+## 6. Le trajet (bonus) 🧵
 
-Un **trajet GPS** peut se dessiner avec `folium.PolyLine` : une ligne entre plusieurs coordonnées.
-
-**Mission :** décommentez la ligne pour relier Paris et Lyon.
+Un trajet se dessine avec `folium.PolyLine` : une ligne entre plusieurs coordonnées, dans l'ordre de la liste.
 
 <CarteGpsPlayground initialCode="import folium
 
@@ -147,15 +147,8 @@ folium.Marker(trajet[1], popup='Lyon').add_to(carte)
 
 print('Tracez le trajet Paris → Lyon')" />
 
----
+Décommentez la ligne `PolyLine`. Une ligne bleue relie Paris à Lyon. `weight=4` règle l'épaisseur, `opacity=0.8` la transparence.
 
-## Bilan
+**Ce qu'on rend.** Le programme de l'étape 5, avec Paris, Lyon, et votre marqueur vert aux coordonnées que vous avez cherchées. Le nom dans `popup` est celui de votre lieu. Si vous faites le bonus, le trajet Paris → Lyon est dans le même fichier.
 
-Vous savez maintenant :
-
-- créer une carte avec **folium**
-- placer des **marqueurs** à des coordonnées GPS
-- automatiser avec une **boucle** sur une liste de lieux
-- tracer un **trajet** entre des points
-
-Pour aller plus loin, exportez votre carte en fichier HTML avec `carte.save('ma_carte.html')` en Python sur votre ordinateur.
+Sur votre ordinateur, en dehors de cette page, `carte.save('ma_carte.html')` écrit la carte dans un fichier qu'on ouvre dans le navigateur.

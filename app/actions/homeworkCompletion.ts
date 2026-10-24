@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
+import { createAdminClient } from "@/utils/supabase/admin";
 import { getAuthContext } from "@/lib/auth";
 import { exerciseIdsForPage } from "@/lib/page-exercises";
 
@@ -42,6 +43,8 @@ export async function syncMyHomework(): Promise<void> {
 
   const doneIds = new Set((progressRes.data || []).map((row) => row.exercise_id));
   const already = new Set((doneRes.data || []).map((row) => row.homework_id));
+  const admin = createAdminClient();
+  if (!admin) return;
   let changed = false;
 
   const ready = (pagePath: string | null) => {
@@ -51,13 +54,13 @@ export async function syncMyHomework(): Promise<void> {
 
   for (const row of ownRes.data || []) {
     if (row.status === "done" || !ready(row.page_path)) continue;
-    const { error } = await supabase.from("homework").update({ status: "done" }).eq("id", row.id).eq("student_id", userId);
+    const { error } = await admin.from("homework").update({ status: "done" }).eq("id", row.id).eq("student_id", userId);
     if (!error) changed = true;
   }
 
   for (const row of classRes.data || []) {
     if (already.has(row.id) || !ready(row.page_path)) continue;
-    const { error } = await supabase.from("homework_completions").insert({
+    const { error } = await admin.from("homework_completions").insert({
       homework_id: row.id,
       user_id: userId,
     });

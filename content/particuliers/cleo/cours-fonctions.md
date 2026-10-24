@@ -6,6 +6,8 @@ chapter: Programmation en C
 icon: ⚙️
 prerequisites:
   - cours-affectations-types
+audience:
+  accounts: []
 ---
 
 # ⚙️ C — Fonctions

@@ -7,6 +7,7 @@ icon: "\U0001F30D"
 badgeId: premiere_fiche_exercices_web_http
 prerequisites:
   - web_protocoles
+audience: public
 ---
 
 

@@ -7,12 +7,13 @@ icon: "\U0001F4D1"
 badgeId: premiere_fiche_exercices_csv
 prerequisites:
   - python_exercices_dictionnaires
+audience: public
 ---
 
 
 <ExerciseTabs courseId="csv" courseTitle="Traitement de Tables">
 
-  <ExerciseSection id="setup" label="Configuration">
+  <ExerciseSection id="setup" label="Configuration" type="lecture">
     <Enonce>
     ### Chargement des données
     
@@ -49,7 +50,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="easy-csv" label="Easy - Affichage">
+  <ExerciseSection id="easy-csv" label="Easy - Affichage" type="python">
     <Enonce>
     ### Exercice Facile : Affichage simple
     
@@ -111,7 +112,7 @@ prerequisites:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="medium-csv" label="Medium - Filtrage">
+  <ExerciseSection id="medium-csv" label="Medium - Filtrage" type="python">
     <Enonce>
     ### Exercice Moyen : Filtrage avancé
     

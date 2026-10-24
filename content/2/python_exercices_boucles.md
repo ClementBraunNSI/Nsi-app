@@ -8,6 +8,7 @@ meta: 'for, while, range et parcours de chaînes'
 level: premiere
 prerequisites:
   - python_exercices_conditions
+audience: public
 ---
 
 <ExerciseTabs courseId="les-boucles-python" courseTitle="Les Boucles">
@@ -16,7 +17,7 @@ prerequisites:
   {/* CATÉGORIE 1 : INTRODUCTION (1.1 à 1.6)      */}
   {/* ========================================== */}
 
-  <ExerciseSection id="boucles-1-1" label="1.1 [Introduction] - Chaîne de nombres">
+  <ExerciseSection id="boucles-1-1" label="1.1 [Introduction] - Chaîne de nombres" type="python">
     <Enonce>
     ### Exercice 1.1 [Introduction] : Chaîne de nombres
     **Écrire une fonction `chaine_numeros_jusqua` qui prend un entier `limite` et renvoie une chaîne des entiers de 1 à `limite` séparés par des virgules.**
@@ -43,7 +44,7 @@ assert chaine_numeros_jusqua(1) == "1"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-1-2" label="1.2 [Introduction] - Table de multiplication">
+  <ExerciseSection id="boucles-1-2" label="1.2 [Introduction] - Table de multiplication" type="python">
     <Enonce>
     ### Exercice 1.2 [Introduction] : Table de multiplication
     **Écrire une fonction `ligne_table_multiplication` qui prend un entier `n` et renvoie une chaîne des 10 produits `n×1` à `n×10`, séparés par des virgules.**
@@ -69,7 +70,7 @@ assert ligne_table_multiplication(3) == "3,6,9,12,15,18,21,24,27,30"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-1-3" label="1.3 [Introduction] - Somme de 1 à 100">
+  <ExerciseSection id="boucles-1-3" label="1.3 [Introduction] - Somme de 1 à 100" type="python">
     <Enonce>
     ### Exercice 1.3 [Introduction] : Somme de 1 à 100
     **Écrire une fonction `somme_jusqua` qui prend un entier `limite` et renvoie la somme des entiers de 1 à `limite` inclus.**
@@ -93,7 +94,7 @@ assert somme_jusqua(10) == 55
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-1-4" label="1.4 [Introduction] - Compter de 0 à n">
+  <ExerciseSection id="boucles-1-4" label="1.4 [Introduction] - Compter de 0 à n" type="python">
     <Enonce>
     ### Exercice 1.4 [Introduction] : Compter de 0 à n
     **Écrire une fonction `compter_entiers_zero_a_n` qui prend un entier `n` (≥ 0) et renvoie combien d'entiers il y a de 0 à `n` inclus.**
@@ -117,7 +118,7 @@ assert compter_entiers_zero_a_n(0) == 1
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-1-5" label="1.5 [Introduction] - Majuscules">
+  <ExerciseSection id="boucles-1-5" label="1.5 [Introduction] - Majuscules" type="python">
     <Enonce>
     ### Exercice 1.5 [Introduction] : Majuscules
     **Écrire une fonction `en_majuscules` qui prend une chaîne `texte` et renvoie la même chaîne en majuscules, en parcourant chaque caractère avec une boucle `for` et `car.upper()`.**
@@ -141,7 +142,7 @@ assert en_majuscules("") == ""
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-1-6" label="1.6 [Introduction] - Ligne d'étoiles">
+  <ExerciseSection id="boucles-1-6" label="1.6 [Introduction] - Ligne d'étoiles" type="python">
     <Enonce>
     ### Exercice 1.6 [Introduction] : Ligne d'étoiles
     **Écrire une fonction `ligne_etoiles` qui prend un entier `n` et renvoie une chaîne de `n` caractères `*`.**
@@ -169,7 +170,7 @@ assert ligne_etoiles(0) == ""
   {/* CATÉGORIE 2 : FACILE (2.1 à 2.6)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="boucles-2-1" label="2.1 [Facile] - Compter les pairs">
+  <ExerciseSection id="boucles-2-1" label="2.1 [Facile] - Compter les pairs" type="python">
     <Enonce>
     ### Exercice 2.1 [Facile] : Compter les pairs
     **Écrire une fonction `compter_pairs_jusqua` qui prend un entier `limite` et renvoie le nombre d'entiers pairs entre 1 et `limite` inclus.**
@@ -194,7 +195,7 @@ assert compter_pairs_jusqua(7) == 3
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-2-2" label="2.2 [Facile] - Compter les voyelles">
+  <ExerciseSection id="boucles-2-2" label="2.2 [Facile] - Compter les voyelles" type="python">
     <Enonce>
     ### Exercice 2.2 [Facile] : Compter les voyelles
     **Écrire une fonction `compter_voyelles` qui prend une chaîne `phrase` et renvoie le nombre de voyelles.**
@@ -221,7 +222,7 @@ assert compter_voyelles("NSI") == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-2-3" label="2.3 [Facile] - Inverser une chaîne">
+  <ExerciseSection id="boucles-2-3" label="2.3 [Facile] - Inverser une chaîne" type="python">
     <Enonce>
     ### Exercice 2.3 [Facile] : Inverser une chaîne
     **Écrire une fonction `inverser` qui prend une chaîne `texte` et renvoie cette chaîne à l'envers avec une boucle `for`.**
@@ -245,7 +246,7 @@ assert inverser("radar") == "radar"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-2-4" label="2.4 [Facile] - Somme des chiffres">
+  <ExerciseSection id="boucles-2-4" label="2.4 [Facile] - Somme des chiffres" type="python">
     <Enonce>
     ### Exercice 2.4 [Facile] : Somme des chiffres
     **Écrire une fonction `somme_chiffres` qui prend une chaîne ou un entier représentant un nombre et renvoie la somme de ses chiffres.**
@@ -271,7 +272,7 @@ assert somme_chiffres(1001) == 2
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-2-5" label="2.5 [Facile] - Somme des pairs">
+  <ExerciseSection id="boucles-2-5" label="2.5 [Facile] - Somme des pairs" type="python">
     <Enonce>
     ### Exercice 2.5 [Facile] : Somme des pairs
     **Écrire une fonction `somme_pairs_jusqua` qui prend un entier `n` et renvoie la somme de tous les entiers pairs de 1 à `n` inclus.**
@@ -296,7 +297,7 @@ assert somme_pairs_jusqua(6) == 12
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-2-6" label="2.6 [Facile] - Compter les consonnes">
+  <ExerciseSection id="boucles-2-6" label="2.6 [Facile] - Compter les consonnes" type="python">
     <Enonce>
     ### Exercice 2.6 [Facile] : Compter les consonnes
     **Écrire une fonction `compter_consonnes` qui prend une chaîne alphabétique et renvoie le nombre de consonnes. Utilisez `lettre in voyelles` pour repérer les voyelles.**
@@ -326,7 +327,7 @@ assert compter_consonnes("aeiou") == 0
   {/* CATÉGORIE 3 : MOYEN (3.1 à 3.6)             */}
   {/* ========================================== */}
 
-  <ExerciseSection id="boucles-3-1" label="3.1 [Moyen] - Caractères avant un arrêt">
+  <ExerciseSection id="boucles-3-1" label="3.1 [Moyen] - Caractères avant un arrêt" type="python">
     <Enonce>
     ### Exercice 3.1 [Moyen] : Caractères avant un arrêt
     **Écrire une fonction `caracteres_avant` qui prend une chaîne `texte` et un caractère `arret`, et renvoie tous les caractères **avant** la première occurrence de `arret`. Si `arret` est absent, renvoyer toute la chaîne.**
@@ -352,7 +353,7 @@ assert caracteres_avant("nsi", "z") == "nsi"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-3-2" label="3.2 [Moyen] - Multiples de 3">
+  <ExerciseSection id="boucles-3-2" label="3.2 [Moyen] - Multiples de 3" type="python">
     <Enonce>
     ### Exercice 3.2 [Moyen] : Multiples de 3
     **Écrire une fonction `dernier_multiple_3` qui part d'un entier `depart`, multiplie 10 fois par 3, et renvoie la dernière valeur obtenue.**
@@ -376,7 +377,7 @@ assert dernier_multiple_3(2) == 118098
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-3-3" label="3.3 [Moyen] - Divisions par 2">
+  <ExerciseSection id="boucles-3-3" label="3.3 [Moyen] - Divisions par 2" type="python">
     <Enonce>
     ### Exercice 3.3 [Moyen] : Divisions par 2
     **Écrire une fonction `divisions_par_deux` qui prend un entier `n` et renvoie combien de divisions entières par 2 sont possibles avant d'obtenir une valeur ≤ 1 (boucle `while`).**
@@ -402,7 +403,7 @@ assert divisions_par_deux(1) == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-3-4" label="3.4 [Moyen] - Factorielle">
+  <ExerciseSection id="boucles-3-4" label="3.4 [Moyen] - Factorielle" type="python">
     <Enonce>
     ### Exercice 3.4 [Moyen] : Factorielle
     **Écrire une fonction `factorielle` qui prend un entier `n` ≥ 0 et renvoie `n!`. Par convention, `factorielle(0)` vaut 1.**
@@ -426,7 +427,7 @@ assert factorielle(5) == 120
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-3-5" label="3.5 [Moyen] - Moyenne des chiffres">
+  <ExerciseSection id="boucles-3-5" label="3.5 [Moyen] - Moyenne des chiffres" type="python">
     <Enonce>
     ### Exercice 3.5 [Moyen] : Moyenne des chiffres
     **Écrire une fonction `moyenne_chiffres` qui prend une chaîne de chiffres (ex. `"2040"`) et renvoie la moyenne de ses chiffres, sans utiliser `sum()` ni `len()`.**
@@ -453,7 +454,7 @@ assert moyenne_chiffres("55") == 5.0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-3-6" label="3.6 [Moyen] - Maximum des chiffres">
+  <ExerciseSection id="boucles-3-6" label="3.6 [Moyen] - Maximum des chiffres" type="python">
     <Enonce>
     ### Exercice 3.6 [Moyen] : Maximum des chiffres
     **Écrire une fonction `maximum_chiffres` qui prend une chaîne de chiffres non vide et renvoie le plus grand chiffre, sans utiliser `max()`.**
@@ -483,7 +484,7 @@ assert maximum_chiffres("105") == 5
   {/* CATÉGORIE 4 : AVANCÉ (4.1 à 4.6)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="boucles-4-1" label="4.1 [Avancé] - Nième Fibonacci">
+  <ExerciseSection id="boucles-4-1" label="4.1 [Avancé] - Nième Fibonacci" type="python">
     <Enonce>
     ### Exercice 4.1 [Avancé] : Nième Fibonacci
     **Écrire une fonction `fibonacci_nieme` qui prend un entier `n` ≥ 1 et renvoie le `n`-ième terme de Fibonacci (suite commençant par 1, 1, 2, 3, 5…).**
@@ -513,7 +514,7 @@ assert fibonacci_nieme(7) == 13
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-4-2" label="4.2 [Avancé] - Compter une lettre">
+  <ExerciseSection id="boucles-4-2" label="4.2 [Avancé] - Compter une lettre" type="python">
     <Enonce>
     ### Exercice 4.2 [Avancé] : Compter une lettre
     **Écrire une fonction `compter_lettre` qui prend une chaîne `texte` et un caractère `lettre`, puis renvoie le nombre d'occurrences.**
@@ -538,7 +539,7 @@ assert compter_lettre("nsi", "z") == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-4-3" label="4.3 [Avancé] - Palindrome">
+  <ExerciseSection id="boucles-4-3" label="4.3 [Avancé] - Palindrome" type="python">
     <Enonce>
     ### Exercice 4.3 [Avancé] : Palindrome
     **Écrire une fonction `est_palindrome` qui prend une chaîne `texte` et renvoie `True` si elle se lit à l'identique à l'envers (boucle sur les indices).**
@@ -562,7 +563,7 @@ assert est_palindrome("python") is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-4-4" label="4.4 [Avancé] - PGCD par soustractions">
+  <ExerciseSection id="boucles-4-4" label="4.4 [Avancé] - PGCD par soustractions" type="python">
     <Enonce>
     ### Exercice 4.4 [Avancé] : PGCD par soustractions
     **Écrire une fonction `pgcd_soustractions` qui calcule le PGCD de deux entiers positifs par soustractions successives (`while`).**
@@ -588,7 +589,7 @@ assert pgcd_soustractions(7, 5) == 1
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-4-5" label="4.5 [Avancé] - Conversion en binaire">
+  <ExerciseSection id="boucles-4-5" label="4.5 [Avancé] - Conversion en binaire" type="python">
     <Enonce>
     ### Exercice 4.5 [Avancé] : Conversion en binaire
     **Écrire une fonction `vers_binaire` qui prend un entier `n` ≥ 0 et renvoie sa représentation binaire (chaîne), par divisions successives par 2.**
@@ -616,7 +617,7 @@ assert vers_binaire(13) == "1101"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-4-6" label="4.6 [Avancé] - Première position">
+  <ExerciseSection id="boucles-4-6" label="4.6 [Avancé] - Première position" type="python">
     <Enonce>
     ### Exercice 4.6 [Avancé] : Première position
     **Écrire une fonction `premiere_position` qui prend une chaîne `texte` et un caractère `cible`, et renvoie l'indice de la première occurrence, ou `-1` si absent.**
@@ -644,7 +645,7 @@ assert premiere_position("nsi", "z") == -1
   {/* CATÉGORIE 5 : DIFFICILE (5.1 à 5.6)         */}
   {/* ========================================== */}
 
-  <ExerciseSection id="boucles-5-1" label="5.1 [Difficile] - Nombre premier">
+  <ExerciseSection id="boucles-5-1" label="5.1 [Difficile] - Nombre premier" type="python">
     <Enonce>
     ### Exercice 5.1 [Difficile] : Nombre premier
     **Écrire une fonction `est_premier` qui prend un entier `n` > 1 et renvoie `True` s'il n'a aucun diviseur strict entre 2 et `n - 1`.**
@@ -670,7 +671,7 @@ assert est_premier(15) is False
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-5-2" label="5.2 [Difficile] - Temps de vol Syracuse">
+  <ExerciseSection id="boucles-5-2" label="5.2 [Difficile] - Temps de vol Syracuse" type="python">
     <Enonce>
     ### Exercice 5.2 [Difficile] : Temps de vol Syracuse
     **Écrire une fonction `syracuse_vol` qui prend un entier `n` et renvoie le nombre d'étapes pour atteindre 1 (conjecture de Syracuse).**
@@ -699,7 +700,7 @@ assert syracuse_vol(10) == 6
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-5-3" label="5.3 [Difficile] - Compter les premiers">
+  <ExerciseSection id="boucles-5-3" label="5.3 [Difficile] - Compter les premiers" type="python">
     <Enonce>
     ### Exercice 5.3 [Difficile] : Compter les premiers
     **Écrire une fonction `compter_premiers_jusqua` qui prend un entier `n` et renvoie combien de nombres premiers il y a entre 2 et `n` inclus.**
@@ -729,7 +730,7 @@ assert compter_premiers_jusqua(2) == 1
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-5-4" label="5.4 [Difficile] - Chaîne Syracuse">
+  <ExerciseSection id="boucles-5-4" label="5.4 [Difficile] - Chaîne Syracuse" type="python">
     <Enonce>
     ### Exercice 5.4 [Difficile] : Chaîne Syracuse
     **Écrire une fonction `chaine_syracuse` qui prend un entier `depart` et renvoie la suite de Syracuse sous forme de chaîne, valeurs séparées par `>` jusqu'à `1`.**
@@ -759,7 +760,7 @@ assert chaine_syracuse(1) == "1"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-5-5" label="5.5 [Difficile] - Carré par additions impaires">
+  <ExerciseSection id="boucles-5-5" label="5.5 [Difficile] - Carré par additions impaires" type="python">
     <Enonce>
     ### Exercice 5.5 [Difficile] : Carré par additions impaires
     **Écrire une fonction `carre_par_additions` qui prend un entier `n` ≥ 0 et calcule `n²` en additionnant les `n` premiers impairs (1 + 3 + 5 + …).**
@@ -785,7 +786,7 @@ assert carre_par_additions(0) == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-5-6" label="5.6 [Difficile] - Somme des impairs">
+  <ExerciseSection id="boucles-5-6" label="5.6 [Difficile] - Somme des impairs" type="python">
     <Enonce>
     ### Exercice 5.6 [Difficile] : Somme des impairs
     **Écrire une fonction `somme_impairs_jusqua` qui prend un entier `n` et renvoie la somme des impairs positifs ≤ `n`.**
@@ -813,7 +814,7 @@ assert somme_impairs_jusqua(6) == 9
   {/* CATÉGORIE 6 : EXPERT (6.1 à 6.3)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="boucles-6-1" label="6.1 [Expert] - Plus longue série">
+  <ExerciseSection id="boucles-6-1" label="6.1 [Expert] - Plus longue série" type="python">
     <Enonce>
     ### Exercice 6.1 [Expert] : Plus longue série
     **Écrire une fonction `plus_longue_serie` qui prend une chaîne `texte` et renvoie la longueur de la plus longue série de caractères identiques consécutifs.**
@@ -846,7 +847,7 @@ assert plus_longue_serie("abc") == 1
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-6-2" label="6.2 [Expert] - Chiffrement de César">
+  <ExerciseSection id="boucles-6-2" label="6.2 [Expert] - Chiffrement de César" type="python">
     <Enonce>
     ### Exercice 6.2 [Expert] : Chiffrement de César
     **Écrire une fonction `cesar` qui prend une chaîne de lettres minuscules `texte` et un entier `decalage`, puis renvoie le texte chiffré (décalage circulaire). Utilisez `if "a" <= lettre <= "z"` pour filtrer les lettres.**
@@ -874,7 +875,7 @@ assert cesar("xyz", 3) == "abc"
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-6-3" label="6.3 [Expert] - Doublement d'un capital">
+  <ExerciseSection id="boucles-6-3" label="6.3 [Expert] - Doublement d'un capital" type="python">
     <Enonce>
     ### Exercice 6.3 [Expert] : Doublement d'un capital
     **Écrire une fonction `annees_doublement` qui prend un capital initial et un taux d'intérêt annuel, et renvoie le nombre d'années pour doubler le capital (`while`).**

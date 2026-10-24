@@ -6,6 +6,7 @@ chapter: Données structurées
 icon: "\U0001F9E9"
 prerequisites:
   - donnees_structurees
+audience: public
 ---
 
 # Activité : Manipuler des données en tableau

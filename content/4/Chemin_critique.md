@@ -6,53 +6,20 @@ chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiq
 icon: "\U0001F3AF"
 prerequisites:
   - Gestion_risques
+audience: public
 ---
 
-# Le Chemin Critique
+# Le chemin critique
 
-> Méthode de planification et d'optimisation de projets
+Un projet est un réseau de tâches qui s'attendent. Certaines peuvent prendre du retard sans décaler la livraison. D'autres, non. Le **chemin critique** est la plus longue chaîne de tâches dépendantes, en durée. Sa longueur est la **durée minimale** du projet : on ne peut pas finir plus tôt que le plus long chemin. Tout retard sur une tâche de ce chemin retarde la date de fin, d'autant. Le chef de projet les suit en priorité, parce que c'est là que le temps ne se rattrape pas.
 
-## 📊 Qu'est-ce que le Chemin Critique ?
+Une **tâche critique** a une **marge totale** nulle. La marge totale est le retard qu'une tâche peut prendre sans décaler la fin du projet. La **marge libre** est plus étroite : c'est le retard possible sans décaler le début au plus tôt de la tâche suivante. Une tâche peut avoir de la marge totale et plus de marge libre, si le successeur avait lui-même un peu de jeu. Une **dépendance** dit qu'une tâche n'a pas le droit de commencer avant la fin d'une autre.
 
-> **Définition Fondamentale**
->
-> Le **chemin critique** est la séquence de tâches qui détermine la durée minimale d'un projet. C'est le plus long chemin en termes de temps dans le réseau de tâches du projet. Tout retard sur une tâche du chemin critique retarde l'ensemble du projet.
+## Calculer
 
-### Concepts de base
+On liste les tâches, leur durée, leurs prédécesseurs. On dessine le réseau : dans le diagramme utilisé ici, un nœud est une tâche, un lien est une dépendance. On énumère tous les chemins qui vont des tâches sans prédécesseur jusqu'aux tâches sans successeur. On additionne les durées de chaque chemin. Le plus long est le chemin critique. S'il y en a deux de même longueur, les deux sont critiques.
 
-- **⏱️ Durée du Projet** : Le chemin critique détermine la durée totale minimale nécessaire pour terminer le projet.
-- **🔗 Séquence de Tâches** : Suite logique de tâches interdépendantes sans marge de manœuvre temporelle.
-- **⚠️ Risque Critique** : Tout retard sur ces tâches impacte directement la date de fin du projet.
-- **🎯 Focus Prioritaire** : Ces tâches nécessitent une attention et un suivi particuliers du chef de projet.
-
-## 🔍 Concepts Clés
-
-> **Terminologie Essentielle**
->
-> Pour comprendre le chemin critique, il faut maîtriser plusieurs concepts fondamentaux de la planification de projet.
-
-- **🎯 Tâche Critique** : Tâche dont le retard impacte directement la date de fin du projet. Marge libre = 0.
-- **⏰ Marge Libre** : Temps de retard possible d'une tâche sans affecter le début de la tâche suivante.
-- **📅 Marge Totale** : Temps de retard possible d'une tâche sans affecter la date de fin du projet.
-- **🔄 Dépendance** : Relation logique entre tâches : une tâche ne peut commencer qu'après la fin d'une autre.
-
-## 🛠️ Méthode de Calcul
-
-> **Algorithme du Chemin Critique**
->
-> Le calcul du chemin critique suit une méthode rigoureuse en plusieurs étapes.
-
-1. **Identifier les Tâches** : Lister toutes les tâches du projet avec leurs durées et dépendances.
-2. **Construire le Diagramme** : Créer le diagramme PERT avec les nœuds (tâches) et les liens (dépendances et leur durée).
-3. **Lister les chemins disponibles** : Pour chaque noeud de départ, lister les chemins possibles vers le noeud de fin.
-4. **Calculer les durées** : Calculer les durées de chacun des chemins.
-6. **Identifier le Chemin** : Le chemin critique est le chemin qui a la durée la plus longue.
-
-## 💼 Exemple Pratique
-
-### 🏗️ Projet : Développement d'une Application Mobile
-
-**Contexte :** Une entreprise souhaite développer une application mobile. Voici les tâches identifiées :
+Prenons une application mobile.
 
 | Tâche | Description | Durée (jours) | Prédécesseurs |
 | :--- | :--- | :--- | :--- |
@@ -64,29 +31,15 @@ prerequisites:
 | **F** | Tests et débogage | 7 | E |
 | **G** | Déploiement | 3 | F |
 
-## 🎯 Applications Pratiques
+A dure 5 jours et ne dépend de rien. B et C partent ensuite, en parallèle. D attend B. E attend que C **et** D soient finies : elle commence à la date la plus tardive des deux.
 
-> **Utilisation en Entreprise**
->
-> Le chemin critique est un outil essentiel pour les chefs de projet dans de nombreux domaines d'activité.
+Le chemin A, B, D, E, F, G dure $5 + 8 + 12 + 6 + 7 + 3 = 41$ jours. Le chemin A, C, E, F, G dure $5 + 15 + 6 + 7 + 3 = 36$ jours. Le plus long est le premier. Le chemin critique est A → B → D → E → F → G, et le projet ne peut pas durer moins de 41 jours. C se termine au jour 20, alors que D se termine au jour 25. E attend D. C a donc cinq jours de marge totale : un retard de C inférieur à cinq jours ne touche pas la fin. Un retard d'un jour sur B, sur D, sur E, sur F ou sur G décale la livraison d'un jour.
 
-### Domaines d'application
+Le même outil sert dès qu'un livrable dépend d'un enchaînement : un déploiement, un chantier, un lancement. On l'utilise pour savoir où mettre les gens, où un glissement est encore absorbable, et quoi dire aux parties prenantes quand elles demandent pourquoi telle tâche ne peut pas attendre.
 
-- **📱 Projets IT** : Développement logiciel, déploiement d'infrastructures, migration de systèmes.
-- **🏗️ Construction** : Planification de chantiers, coordination des corps de métier, respect des délais.
-- **🎬 Production** : Organisation d'événements, production audiovisuelle, lancement de produits.
-- **🔬 Recherche & Développement** : Projets de recherche, développement de nouveaux produits, études cliniques.
+## Exercices pratiques
 
-### Objectifs
-
-- **📊 Planification** : Optimiser l'allocation des ressources et définir les priorités du projet.
-- **⏰ Suivi** : Surveiller l'avancement et détecter rapidement les risques de retard.
-- **💰 Optimisation** : Réduire les coûts en identifiant les tâches où investir en priorité.
-- **📢 Communication** : Expliquer clairement les enjeux et priorités aux parties prenantes.
-
-## 📝 Exercices Pratiques
-
-### 🔹 Exercice 1 – Mise en place d'un serveur web
+### Exercice 1 – Mise en place d'un serveur web
 
 **Contexte :** Un projet de mise en place d'un serveur web est découpé en tâches :
 
@@ -105,4 +58,4 @@ prerequisites:
 2. **Calculer tous les chemins possibles** : Identifier tous les chemins du début à la fin et calculer leur durée.
 3. **Déterminer le chemin critique** : Trouver le chemin le plus long et la durée totale du projet.
 
-### 🔹 Exercice 2 – Développement d'une application interne
+### Exercice 2 – Développement d'une application interne

@@ -7,135 +7,160 @@ icon: "\U0001F3AE"
 badgeId: premiere_gestion_jeux_video
 prerequisites:
   - projet_application_bancaire
+audience: public
 ---
 
 # 🎮 Projet - Gestionnaire de Jeux Vidéo
 
-Le but de ce projet est de reproduire le fonctionnement d’un gestionnaire de collection, appliqué ici à une collection de jeux vidéo.
+Le but de ce projet est de créer un gestionnaire de collection de jeux vidéo, en Python.
+Dans ce projet, nous allons ajouter un jeu, afficher sa fiche, modifier un champ, supprimer un jeu, puis lister toute la collection depuis un menu.
 
-## 1. Structure des données
+Chaque jeu est un dictionnaire de détails. Le titre est la clé du dictionnaire principal : deux jeux ne peuvent pas porter le même titre. La comparaison est exacte, majuscules comprises : `"celeste"` ne trouve pas `"Celeste"`.
 
-L’objectif est de permettre à un utilisateur de gérer sa collection de jeux vidéo à travers plusieurs fonctionnalités :
-- Ajouter un jeu à la collection.
-- Rechercher un jeu pour afficher ses détails.
-- Modifier les informations d’un jeu.
-- Supprimer un jeu.
-- Afficher la liste complète des jeux dans la collection.
+## 1. La collection 🕹️
 
-Chaque jeu sera représenté par un ensemble d’informations :
-- **Titre** : le nom du jeu vidéo.
-- **Plateforme** : la console ou support (PC, PS5, Switch, etc.).
-- **Année de sortie** : l’année de publication.
-- **Genre** : le type de jeu (RPG, FPS, aventure, etc.).
-- **Statut** : "possédé" ou "souhaité".
+Au lancement, la collection contient déjà deux jeux, pour que les essais ne partent pas d'une base vide.
+
+```python
+ludotheque = {
+    "The Legend of Zelda : Breath of the Wild": {
+        "plateforme": "Switch",
+        "annee": 2017,
+        "genre": "Aventure",
+        "statut": "possédé"
+    },
+    "Elden Ring": {
+        "plateforme": "PC",
+        "annee": 2022,
+        "genre": "RPG",
+        "statut": "souhaité"
+    }
+}
+```
+
+Les quatre clés internes sont `plateforme` (`str`), `annee` (`int`), `genre` (`str`) et `statut` (`str`). Le statut vaut exactement `"possédé"` ou `"souhaité"`.
+
+Fiche attendue pour Zelda :
+
+```text
+Titre : The Legend of Zelda : Breath of the Wild
+Plateforme : Switch
+Année : 2017
+Genre : Aventure
+Statut : possédé
+```
 
 <ExerciseTabs courseId="proj_jv_struct" courseTitle="Structure de Données">
-  <ExerciseSection id="pjv-struct-1" label="Modélisation">
+  <ExerciseSection id="pjv-struct-1" label="Modélisation" type="lecture">
     <Enonce>
-      Nous allons utiliser un **dictionnaire de dictionnaires**.
-      La clé principale sera le **titre du jeu**, et la valeur sera un autre dictionnaire contenant les détails.
+      Initialisez `ludotheque` avec Zelda et Elden Ring, exactement comme ci-dessus. `annee` est un `int`, pas un texte.
 
-      Exemple :
-      ```python
-      ludotheque = {
-          'The Legend of Zelda : Breath of the Wild' : {
-              'plateforme' : "Switch",
-              'annee' : 2017,
-              'genre' : "Aventure",
-              'statut' : "possédé"
-          },
-          'Elden Ring': {
-              'plateforme': "PC",
-              'annee': 2022,
-              'genre': "RPG",
-              'statut': "souhaité"
-          }
-      }
-      ```
-      Initialisez votre variable `ludotheque` avec quelques jeux de votre choix.
+      Écrivez `afficher_jeu(ludotheque, titre)`. Jeu trouvé : les cinq lignes de la fiche, puis `True`. Jeu absent : `Jeu introuvable.` et `False`.
+
+      *Testez avec `"The Legend of Zelda : Breath of the Wild"` (la fiche) et avec `"Minecraft"` (`Jeu introuvable.`).*
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Fonctionnalités de base
+## 2. Ajouter et chercher 🔍
 
 <ExerciseTabs courseId="proj_jv_base" courseTitle="Fonctions de Base">
-  <ExerciseSection id="pjv-base-1" label="Ajouter un jeu">
+  <ExerciseSection id="pjv-base-1" label="Ajouter un jeu" type="python">
     <Enonce>
-      Créez une fonction `ajouter_jeu(ludotheque)` qui demande à l'utilisateur de saisir les informations (Titre, Plateforme, Année, Genre, Statut) et ajoute le jeu au dictionnaire `ludotheque`.
-      
-      *Indice : Utilisez `input()` pour récupérer les saisies.*
+      Écrivez `ajouter_jeu_donnees(ludotheque, titre, plateforme, annee, genre, statut)`. C'est cette fonction que le scénario automatique appelle, sans `input`.
+
+      - Titre déjà présent : `Ce jeu est déjà dans la collection.`, `False`, dictionnaire inchangé.
+      - `annee` hors de 1950 à 2100 inclus : `Année invalide.`, `False`.
+      - `statut` autre que `possédé` ou `souhaité` : `Statut invalide.`, `False`.
+      - Sinon, ajoutez le dictionnaire interne et renvoyez `True`.
+
+      Écrivez `ajouter_jeu(ludotheque)`, qui pose les questions (titre, plateforme, année, genre, statut), convertit l'année en `int`, puis appelle `ajouter_jeu_donnees`. Si l'année ou le statut est refusé, on redemande ce champ, pas tout le formulaire.
+
+      *Test :* `ajouter_jeu_donnees(ludotheque, "Celeste", "PC", 2018, "Plateforme", "possédé")` renvoie `True`. Le même titre une seconde fois renvoie `False`. Celeste n'est pas remplacé.
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="pjv-base-2" label="Afficher un jeu">
+  <ExerciseSection id="pjv-base-2" label="Afficher un jeu" type="lecture">
     <Enonce>
-      Créez une fonction `afficher_jeu(ludotheque, titre)` qui prend en paramètre la ludothèque et un titre de jeu.
-      
-      Si le jeu existe, elle doit afficher ses détails proprement, par exemple :
-      ```text
-      Titre : The Legend of Zelda: Breath of the Wild
-      Plateforme : Switch
-      Année : 2017
-      Genre : Aventure
-      Statut : Possédé
-      ```
-      Sinon, elle affiche un message d'erreur.
+      `afficher_jeu` est déjà spécifiée. Vérifiez-la sur Celeste après l'ajout : la fiche complète, avec l'année `2018` en entier, la plateforme `PC`, le genre `Plateforme` et le statut `possédé`.
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="pjv-base-3" label="Rechercher">
+  <ExerciseSection id="pjv-base-3" label="Rechercher" type="lecture">
     <Enonce>
-      Créez une fonction `rechercher_jeu(ludotheque)` qui demande un titre à l'utilisateur et appelle la fonction `afficher_jeu` précédente.
+      Écrivez `rechercher_jeu(ludotheque)`. Elle demande `Titre : `, appelle `afficher_jeu`, et renvoie le même booléen.
+
+      `"Celeste"` affiche la fiche. `"celeste"` affiche `Jeu introuvable.`
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Gestion Avancée
+## 3. Modifier et supprimer ✏️
 
 <ExerciseTabs courseId="proj_jv_adv" courseTitle="Gestion Avancée">
-  <ExerciseSection id="pjv-adv-1" label="Modifier un jeu">
+  <ExerciseSection id="pjv-adv-1" label="Modifier un jeu" type="lecture">
     <Enonce>
-      Créez une fonction `modifier_jeu(ludotheque)` qui :
-      1. Demande quel jeu modifier.
-      2. Si le jeu existe, demande quel champ modifier (statut, genre, etc.).
-      3. Demande la nouvelle valeur.
-      4. Met à jour le dictionnaire.
+      Écrivez `modifier_jeu(ludotheque)`.
+
+      1. Demandez le titre. S'il est absent : `Jeu introuvable.`, `False`.
+      2. Demandez le champ : `plateforme`, `annee`, `genre` ou `statut`. Un autre mot affiche `Champ inconnu.` et redemande.
+      3. Demandez la nouvelle valeur. L'année et le statut suivent les mêmes contrôles que l'ajout.
+      4. Mettez à jour uniquement ce champ, et renvoyez `True`.
+
+      Passez le statut de Celeste à `souhaité`. Relancez l'affichage : la ligne Statut a changé, plateforme, année et genre non.
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="pjv-adv-2" label="Supprimer un jeu">
+  <ExerciseSection id="pjv-adv-2" label="Supprimer un jeu" type="lecture">
     <Enonce>
-      Créez une fonction `supprimer_jeu(ludotheque)` qui demande le nom d'un jeu et le retire de la collection s'il existe (utilisez `del` ou `.pop()`).
+      Écrivez `supprimer_jeu(ludotheque)`. Elle demande le titre. Jeu présent : retirez la clé (`del` ou `pop`) et renvoyez `True`. Jeu absent : `Jeu introuvable.` et `False`.
+
+      La première suppression d'`Elden Ring` renvoie `True`. La seconde renvoie `False`. Zelda est toujours là.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Menu Principal
+## 4. Menu et rendu 📋
 
 <ExerciseTabs courseId="proj_jv_menu" courseTitle="Interface">
-  <ExerciseSection id="pjv-menu-1" label="Menu Interactif">
+  <ExerciseSection id="pjv-menu-1" label="Menu interactif" type="lecture">
     <Enonce>
-      Créez une fonction `menu_principal()` qui affiche les choix possibles et boucle indéfiniment jusqu'à ce que l'utilisateur choisisse de quitter.
+      Écrivez `afficher_collection(ludotheque)`. Elle appelle `afficher_jeu` pour chaque titre, avec une ligne vide entre deux fiches. Collection vide : `La collection est vide.`
+
+      Écrivez `menu_principal(ludotheque)`, qui boucle jusqu'au choix `6`.
 
       ```text
       ############### Gestionnaire de Jeux Vidéo ###############
       # Application réalisée par : Votre Nom                   #
       ##########################################################
 
-      1. Ajouter un jeu  
-      2. Afficher la collection complète  
-      3. Rechercher un jeu  
-      4. Modifier un jeu  
-      5. Supprimer un jeu  
-      6. Quitter  
+      1. Ajouter un jeu
+      2. Afficher la collection complète
+      3. Rechercher un jeu
+      4. Modifier un jeu
+      5. Supprimer un jeu
+      6. Quitter
       ```
+
+      Un choix hors de 1 à 6 affiche `Choix invalide.` Remplacez `Votre Nom` par le vôtre.
+
+      Le scénario à laisser dans le fichier, avant le menu ou derrière un commentaire que vous enlèverez le jour du rendu :
+
+      1. Ajouter Celeste (PC, 2018, Plateforme, possédé).
+      2. Afficher Celeste.
+      3. Passer son statut à `souhaité`, puis réafficher.
+      4. Supprimer Elden Ring.
+      5. Afficher toute la collection : Zelda puis Celeste. Elden Ring n'apparaît plus.
+      6. Supprimer Elden Ring une seconde fois : `Jeu introuvable.`
+      7. Chercher `celeste` en minuscules : `Jeu introuvable.`
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-## 5. Pour aller plus loin (Bonus) 🚀
+**Ce qu'on rend.** Un fichier `ludotheque.py` : commentaire d'en-tête avec le nom et la classe, la collection de départ, les fonctions, le menu, et le scénario Celeste / Elden Ring qu'on peut relire dans le fichier.
 
-*   **Sauvegarde** : Utilisez le module `json` ou `csv` pour sauvegarder votre collection dans un fichier et la recharger au lancement du programme.
-*   **Statistiques** : Ajoutez une option pour afficher le nombre de jeux par plateforme ou par genre.
-*   **Filtres** : Affichez seulement les jeux "souhaités" (Wishlist).
+## 5. Pour aller plus loin
+
+*   **Sauvegarde.** Avec le module `json`, écrivez la collection dans `ludotheque.json` au choix `6`, et rechargez-la au lancement si le fichier existe.
+*   **Comptages.** Affichez combien de jeux sont `possédé`, combien sont `souhaité`, et combien de jeux il y a par plateforme.
+*   **Liste souhaitée.** Une option du menu n'affiche que les jeux dont le statut vaut `souhaité`.

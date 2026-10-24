@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { createAdminClient } from "@/utils/supabase/admin";
 import { getAuthContext } from "@/lib/auth";
+import { classTemporaryPassword } from "@/lib/class-password";
 
 const LEVELS = new Set(["SNI", "SNT", "1NSI", "TNSI", "SIO"]);
 const TEACHER_EMAIL = "clement.braun1@outlook.fr";
@@ -35,10 +36,15 @@ function normalizeClasse(value: string | undefined) {
 function parseStudentInput(input: StudentInput, opts: { passwordRequired: boolean }) {
   const fullName = String(input.fullName || "").trim();
   const email = String(input.email || "").trim().toLowerCase();
-  const password = String(input.password || "");
   const classe = normalizeClasse(input.classe);
   const levelRaw = String(input.level || "").trim();
   const level = levelRaw ? levelRaw : null;
+  const hasPrivateLessons = Boolean(input.hasPrivateLessons);
+  const typedPassword = String(input.password || "");
+  const password =
+    opts.passwordRequired && !hasPrivateLessons && !typedPassword
+      ? classTemporaryPassword(fullName)
+      : typedPassword;
 
   if (fullName.length < 2 || fullName.length > 80) return { error: "invalid" as const };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 160) return { error: "invalid" as const };
@@ -57,7 +63,7 @@ function parseStudentInput(input: StudentInput, opts: { passwordRequired: boolea
       password,
       classe,
       level,
-      hasPrivateLessons: Boolean(input.hasPrivateLessons),
+      hasPrivateLessons,
     },
   };
 }
@@ -103,8 +109,10 @@ export async function createStudent(input: StudentInput): Promise<{ error: strin
       classe: parsed.value.classe,
       level: parsed.value.level,
       has_private_lessons: parsed.value.hasPrivateLessons,
+      must_change_password: !parsed.value.hasPrivateLessons,
     })
-    .eq("id", data.user.id);
+    .eq("id", data.user.id)
+    .select("id");
 
   if (profileError) {
     await admin.auth.admin.deleteUser(data.user.id);
@@ -156,17 +164,30 @@ export async function updateStudent(studentId: string, input: StudentInput): Pro
     return { error: "save_failed" };
   }
 
+  const profilePatch: {
+    full_name: string;
+    email: string;
+    classe: string | null;
+    level: string | null;
+    has_private_lessons: boolean;
+    must_change_password?: boolean;
+  } = {
+    full_name: parsed.value.fullName,
+    email: parsed.value.email,
+    classe: parsed.value.classe,
+    level: parsed.value.level,
+    has_private_lessons: parsed.value.hasPrivateLessons,
+  };
+  if (parsed.value.password) {
+    profilePatch.must_change_password = !parsed.value.hasPrivateLessons;
+  }
+
   const { error: profileError } = await supabase
     .from("profiles")
-    .update({
-      full_name: parsed.value.fullName,
-      email: parsed.value.email,
-      classe: parsed.value.classe,
-      level: parsed.value.level,
-      has_private_lessons: parsed.value.hasPrivateLessons,
-    })
+    .update(profilePatch)
     .eq("id", id)
-    .eq("role", "student");
+    .eq("role", "student")
+    .select("id");
 
   if (profileError) return { error: "save_failed" };
   revalidateStudents();

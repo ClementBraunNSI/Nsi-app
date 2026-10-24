@@ -5,28 +5,18 @@ level: '2'
 chapter: Web
 icon: "\U0001F4DD"
 prerequisites: []
+audience: public
 ---
 
-# 📚 Notice sur HTML et création d'un site web basique
+# Notice sur HTML
 
-## 1. Qu'est-ce que HTML ?
+Une page web que vous lisez a d'abord été un fichier texte. Ce fichier ne contient pas seulement les phrases visibles. Il contient aussi des indications qui disent au navigateur : ceci est un titre, ceci est un paragraphe, ceci est une image. Ces indications forment le HTML.
 
-> **📖 Définition**
->
-> **HTML** (HyperText Markup Language) est le langage de balisage utilisé pour structurer le contenu des pages web. Chaque page web est un fichier HTML qui contient des balises permettant de définir différents éléments comme des titres, des paragraphes, des images, des liens, etc.
+> **HTML** (*HyperText Markup Language*) est le langage de balisage qui structure le contenu d'une page. Titres, paragraphes, images et liens sont des éléments délimités par des balises.
 
-<Quiz 
-  question="Que signifie HTML ?" 
-  options={["HyperText Markup Language", "Hyper Transfer Mode Link", "Home Tool Made Language", "High Tech Machine Learning"]} 
-  answer={0} 
-  explanation="HTML est un langage de balisage (Markup Language) pour créer des pages Web."
-/>
+## À quoi ressemble un fichier
 
-## 2. Structure d'un fichier HTML
-
-> **📖 Définition**
->
-> Un fichier HTML est structuré de manière simple. Voici la structure de base d'un document HTML :
+Tout document HTML5 commence à peu près de la même façon. Le navigateur a besoin de savoir dans quelle langue est la page, comment lire les caractères, et quel titre afficher dans l'onglet. Le reste, ce que vous voyez vraiment, se trouve dans le corps du document.
 
 ```html
 <!DOCTYPE html>
@@ -44,64 +34,38 @@ prerequisites: []
 </html>
 ```
 
-Explication :
-
-- `<!DOCTYPE html>` : Indique que le document utilise HTML5.
-- `<html>` : La balise qui contient tout le contenu HTML.
-- `<head>` : Section contenant des informations sur la page (métadonnées), comme le titre.
-- `<meta charset="UTF-8">` : Spécifie l'encodage de caractères (UTF-8).
-- `<title>` : Définit le titre qui apparaît dans l'onglet du navigateur.
-- `<body>` : Contient le contenu visible par l'utilisateur (titres, paragraphes, images, etc.).
-
-<Quiz 
-  question="Quelle balise contient tout ce qui sera visible à l'écran par le visiteur ?" 
-  options={["<head>", "<body>", "<title>", "<html>"]} 
-  answer={1} 
-  explanation="La balise <body> (corps) contient les textes, images et boutons. La balise <head> contient des informations invisibles pour le visiteur (titre de l'onglet, encodage...)."
-/>
+`<!DOCTYPE html>` prévient le navigateur qu'il s'agit d'HTML5. La balise `<html>` englobe tout le document. Dans `<head>`, on range ce qui décrit la page sans s'afficher : le titre de l'onglet, l'encodage des caractères. `UTF-8` est cet encodage. Il sait représenter les accents, ce qui évite les « Ã© » à la place des « é ». `<body>` contient enfin ce que la personne devant l'écran voit : titres, paragraphes, images.
 
 <HtmlStructureExplorer />
 
-## Les principales balises HTML
+## Les balises que vous allez écrire tout de suite
 
-> **📖 Définition**
-
-### Titres
+Les titres vont de `<h1>` à `<h6>`. Le `h1` est le titre principal de la page, pas « le plus gros texte » : c'est le navigateur, ou la feuille de style, qui décide de la taille. On n'en met en général qu'un seul.
 
 ```html
 <h1>Mon titre principal</h1>
 <h2>Mon sous-titre</h2>
 ```
 
-Ces balises Titres vont de h1 à h6, où h1 est le plus grand titre.
-
-### Paragraphes
-
-Les paragraphes sont définis par la balise p.
+Un paragraphe se marque avec `<p>`. Si vous sautez une ligne dans le fichier sans balise, le navigateur l'ignore souvent. C'est `<p>` qui crée vraiment le paragraphe.
 
 ```html
 <p>Ceci est un paragraphe.</p>
 ```
 
-### Liens
-
-Les liens sont créés à l'aide de la balise a.
+Un lien utilise `<a>`, et l'adresse se place dans l'attribut `href`. Le texte entre les balises est ce qui s'affiche et se clique.
 
 ```html
 <a href="https://www.example.com">Visiter Example.com</a>
 ```
 
-### Images
-
-Les images sont insérées par la balise img.
+Une image utilise `<img>`. Elle n'a pas de balise fermante : tout tient dans les attributs. `src` indique où trouver le fichier. `alt` décrit l'image pour quelqu'un qui ne la voit pas, et pour vous le jour où le fichier manque.
 
 ```html
 <img src="source de l'image" alt="Mon image">
 ```
 
-### Listes Non ordonnées
-
-Les listes à puces ordonnées sont définies grâce à ul.
+Les listes ont deux formes, et on les mélange souvent. `<ul>` donne une liste à puces, sans ordre. `<ol>` numérote les éléments. Dans les deux cas, chaque ligne est un `<li>`.
 
 ```html
 <ul>
@@ -110,13 +74,11 @@ Les listes à puces ordonnées sont définies grâce à ul.
 </ul>
 ```
 
-### Listes Ordonnées
-
-Les listes ordonnées sont définies grâce à ol.
-
 ```html
 <ol>
     <li>Item 1</li>
     <li>Item 2</li>
 </ol>
 ```
+
+Quand vous écrirez votre première page, commencez par ce squelette, puis ajoutez un titre, un paragraphe et un lien. Le reste des balises viendra quand vous en aurez besoin.

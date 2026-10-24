@@ -6,11 +6,12 @@ chapter: Photographie Numérique
 icon: "🐍"
 prerequisites:
   - photographie_couleur
+audience: public
 ---
 
 <ExerciseTabs courseId="tp-python-photo" courseTitle="TP Python : Photographie" packages="Pillow">
 
-  <ExerciseSection id="photo-0" label="Important ⚠️ - Avant de commencer">
+  <ExerciseSection id="photo-0" label="Important ⚠️ - Avant de commencer" type="lecture">
     <Enonce>
       ### Important ⚠️ - Avant de commencer
 
@@ -40,7 +41,7 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-1" label="Introduction 🦊 - Créer une image">
+  <ExerciseSection id="photo-1" label="Introduction 🦊 - Créer une image" type="python">
     <Enonce>
       ### Introduction 🦊 - Créer une image
 
@@ -61,7 +62,7 @@ assert image.getpixel((0, 0)) == (255, 0, 0), "Le pixel doit être rouge pur."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-2" label="Introduction 🦊 - Lire un pixel">
+  <ExerciseSection id="photo-2" label="Introduction 🦊 - Lire un pixel" type="python">
     <Enonce>
       ### Introduction 🦊 - Lire un pixel
 
@@ -81,7 +82,7 @@ assert pixel_centre == (0, 255, 0), "Le pixel central doit être vert pur."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-3" label="Introduction 🦊 - Définition d'une image">
+  <ExerciseSection id="photo-3" label="Introduction 🦊 - Définition d'une image" type="python">
     <Enonce>
       ### Introduction 🦊 - Définition d'une image
 
@@ -104,7 +105,7 @@ assert definition == 480000, "800 × 600 = 480 000 pixels."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-4" label="Facile 🦊 - Passer en niveaux de gris">
+  <ExerciseSection id="photo-4" label="Facile 🦊 - Passer en niveaux de gris" type="python">
     <Enonce>
       ### Facile 🦊 - Passer en niveaux de gris
 
@@ -129,7 +130,7 @@ assert gris == attendu, "Le niveau de gris doit correspondre à la conversion Pi
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-5" label="Facile 🦊 - Filtre négatif">
+  <ExerciseSection id="photo-5" label="Facile 🦊 - Filtre négatif" type="python">
     <Enonce>
       ### Facile 🦊 - Filtre négatif
 
@@ -154,7 +155,7 @@ assert image_negatif.getpixel((0, 0)) == attendu, "L'image doit contenir le pixe
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-6" label="Facile 🦊 - Mégapixels">
+  <ExerciseSection id="photo-6" label="Facile 🦊 - Mégapixels" type="python">
     <Enonce>
       ### Facile 🦊 - Mégapixels
 
@@ -177,7 +178,7 @@ assert megapixels == 12, "Convertissez en mégapixels."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-7" label="Facile 🦊 - Bande de pixels colorés">
+  <ExerciseSection id="photo-7" label="Facile 🦊 - Bande de pixels colorés" type="python">
     <Enonce>
       ### Facile 🦊 - Bande de pixels colorés
 

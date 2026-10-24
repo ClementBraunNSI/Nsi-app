@@ -1,16 +1,40 @@
 import fs from "fs";
+import type { Metadata } from "next";
 import matter from "gray-matter";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, GraduationCap } from "lucide-react";
-import { getReservedCourses } from "@/app/actions/getReservedCourses";
 import ChaptersPreviewTabs from "./ChaptersPreviewTabs";
-import { canAccessCourse, courseVisibility, isRestrictedCourse } from "@/lib/course-access";
+import { canAccessCourse, isRestrictedCourse } from "@/lib/course-access";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
-import { contentFolderFromParam, coursePath, getNsiLevel } from "@/lib/nsi-levels";
-import { getAuthContext } from "@/lib/auth";
+import { levelFoxFromNiveau } from "@/lib/chapter-utils";
+import { contentFolderFromParam, coursePath, getNsiLevel, seoLevelName } from "@/lib/nsi-levels";
+import { getAuthContext, viewerFromAuth } from "@/lib/auth";
 import { EmptyState, PageHeader } from "@/components/ui";
 import ResourceNotFound from "@/components/ResourceNotFound";
+
+const LEVEL_DESCRIPTIONS: Record<string, string> = {
+  snt: "Cours de SNT seconde en NSI : photo, web, données, réseaux et premiers pas en Python.",
+  "1nsi": "Cours de Première NSI : algorithmique, Python et structures de données.",
+  tnsi: "Cours de Terminale NSI : récursivité, bases de données, réseaux et préparation au bac.",
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ niveaux: string }>;
+}): Promise<Metadata> {
+  const { niveaux } = await params;
+  const folder = contentFolderFromParam(niveaux);
+  if (!folder) return { title: "Parcours introuvable" };
+
+  const level = getNsiLevel(folder);
+  return {
+    title: LEVEL_DESCRIPTIONS[level.urlSlug] ? seoLevelName(folder) : level.label,
+    description: LEVEL_DESCRIPTIONS[level.urlSlug] ?? level.description,
+    alternates: { canonical: `/cours/${level.urlSlug}` },
+  };
+}
 
 interface CoursData {
   slug: string;
@@ -21,7 +45,6 @@ interface CoursData {
   icon: string;
   href?: string;
   isPrivate?: boolean;
-  allowedStudents?: string[];
 }
 
 export default async function PageNiveau({ params }: { params: Promise<{ niveaux: string }> }) {
@@ -32,46 +55,46 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
       <ResourceNotFound
         title="Parcours introuvable"
         description="Ce niveau n’existe pas."
-        actionHref="/cours"
+        actionHref="/"
         actionLabel="Tous les cours"
       />
     );
   }
 
   const level = getNsiLevel(folder);
+  const levelFox = levelFoxFromNiveau(folder);
   const auth = await getAuthContext();
+  const viewer = viewerFromAuth(auth);
 
   let privateCourses: CoursData[] = [];
 
-  if (auth.user) {
+  if (auth.user && auth.hasPrivateLessons) {
     const { createClient } = await import("@/utils/supabase/server");
     const supabase = await createClient();
     const { data: profile } = await supabase
       .from("profiles")
-      .select("level, full_name, has_private_lessons")
+      .select("level")
       .eq("id", auth.user.id)
       .single();
 
-    if (profile?.has_private_lessons) {
-      const reserved = await getReservedCourses();
-      // Fiches sous content/particuliers/<élève>/ : les afficher aussi sur le niveau du profil
-      // (TNSI, etc.), pas seulement sur la page du dossier particuliers.
-      const onStudentLevel = Boolean(profile.level) && profile.level === level.profileCode;
-      privateCourses = reserved
-        .filter((rc) => {
-          const courseFolder = contentFolderFromParam(rc.level) ?? rc.level;
-          return courseFolder === folder || onStudentLevel;
-        })
-        .map((rc) => ({
-          slug: rc.slug,
-          title: rc.title,
+    // Fiches sous content/particuliers/<élève>/ : les afficher aussi sur le niveau du profil
+    // (TNSI, etc.), pas seulement sur la page du dossier particuliers.
+    const onStudentLevel = profile?.level === level.profileCode;
+    if (onStudentLevel && folder !== "particuliers") {
+      privateCourses = listMarkdownFilesForContentLevel("particuliers").flatMap(({ filePath, slug }) => {
+        const { data } = matter(fs.readFileSync(filePath, "utf-8"));
+        if (!canAccessCourse(data, viewer)) return [];
+        return [{
+          slug,
+          title: String(data.title || slug),
           description: "Cours particulier réservé",
-          level: rc.level,
+          level: "particuliers",
           chapter: "Cours particuliers",
           icon: "🎓",
-          href: rc.path,
+          href: coursePath("particuliers", slug),
           isPrivate: true,
-        }));
+        }];
+      });
     }
   }
 
@@ -82,7 +105,6 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
       const fileContent = fs.readFileSync(filePath, "utf-8");
       const { data } = matter(fileContent);
 
-      const visibility = courseVisibility(data, folder, slug);
       return {
         slug,
         title: String(data.title || slug),
@@ -90,25 +112,12 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         level: String(data.level || folder),
         chapter: String(data.chapter || "Général"),
         icon: String(data.icon || "📘"),
-        isPrivate: isRestrictedCourse(visibility),
-        allowedStudents: Array.isArray(data.allowedStudents)
-          ? data.allowedStudents.map((s: unknown) => String(s))
-          : undefined,
-        visibility,
+        isPrivate: isRestrictedCourse(data),
+        audience: data,
       };
     })
-    .filter((course) =>
-      canAccessCourse(
-        course.visibility,
-        {
-          isElevated: auth.isElevated,
-          isAuthenticated: Boolean(auth.user),
-          userFullName: auth.fullName,
-          hasPrivateLessons: auth.hasPrivateLessons,
-        }
-      )
-    )
-    .map(({ visibility: _visibility, ...course }) => course);
+    .filter((course) => canAccessCourse(course.audience, viewer))
+    .map(({ audience: _audience, ...course }) => course);
 
   const standardSlugs = new Set(standardCourses.map((course) => course.slug));
   const tousLesCours = [
@@ -125,7 +134,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
           description="Ce parcours n’a pas encore de leçon publiée."
           action={
             <Link
-              href="/cours"
+              href="/"
               className="rounded-xl bg-[var(--fg)] px-4 py-2.5 text-sm font-semibold text-[var(--bg)]"
             >
               Tous les cours
@@ -153,7 +162,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
   return (
     <div className="mx-auto min-h-screen max-w-7xl px-6 py-8 sm:px-8">
       <Link
-        href="/cours"
+        href="/"
         className="mb-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
       >
         <ArrowLeft size={16} /> Tous les cours
@@ -168,7 +177,11 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         }
         title={level.label}
         description={level.description}
-        media={<Image src={level.image} alt="" fill className="object-contain" sizes="160px" />}
+        media={
+          levelFox ? (
+            <Image src={levelFox} alt={`Renard ${level.label}`} fill className="object-contain" sizes="160px" />
+          ) : undefined
+        }
       />
 
       <ChaptersPreviewTabs

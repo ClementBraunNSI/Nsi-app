@@ -8,23 +8,16 @@ icon: "\U0001F95E"
 badgeId: premiere_piles_files
 prerequisites:
   - structures_lineaires_cours
+audience: public
 ---
 
-## Objectifs
+# Piles et files
 
-- Expliquer les principes **LIFO** (pile) et **FIFO** (file).
-- Citer les opérations d'une pile et d'une file.
-- Simuler une suite d'empilements / dépilements (ou enfilements / défilements).
-- Implanter ces structures avec une liste Python.
+Une liste Python laisse lire, insérer et retirer à peu près n'importe quelle place. C'est pratique, et parfois trop. Une **pile** et une **file** sont des listes dont on a volontairement restreint les opérations, pour qu'une règle d'accès reste vraie du début à la fin de l'algorithme. Sur une pile, on ne touche que le sommet. Sur une file, on ajoute d'un côté et l'on retire de l'autre. L'historique d'annulation d'un éditeur, la file d'attente d'une imprimante, le parcours d'un graphe : à chaque fois, la contrainte dit dans quel ordre les éléments doivent ressortir.
 
-## Idée clé
+## La pile : dernier entré, premier sorti
 
-Les listes Python autorisent presque tout. Une **pile** ou une **file** restreint volontairement les opérations pour respecter une règle d'accès : seulement le sommet (pile) ou seulement la tête (file). La contrainte clarifie l'algorithme (historique « undo », file d'attente, parcours, etc.).
-
-## La pile — LIFO
-
-**LIFO** (*Last In, First Out*) : dernier entré, premier sorti.  
-Analogie : une **pile d'assiettes** — on ne prend que celle du dessus.
+**LIFO** (*Last In, First Out*) : le dernier déposé est le premier repris. L'image est une pile d'assiettes. On pose sur le dessus, on reprend le dessus. Aller chercher l'assiette du milieu, c'est casser la pile.
 
 | Opération | Rôle |
 | --- | --- |
@@ -40,10 +33,11 @@ empiler(20)   →  [10, 20]    sommet = 20
 depiler()     →  20 ; reste [10]
 ```
 
-## La file — FIFO
+`sommet` regarde sans prendre. `depiler` prend. Sur une pile vide, les deux n'ont rien à rendre : on teste `est_vide` avant.
 
-**FIFO** (*First In, First Out*) : premier entré, premier sorti.  
-Analogie : une **file d'attente** à la caisse.
+## La file : premier entré, premier sorti
+
+**FIFO** (*First In, First Out*) : le premier arrivé est le premier servi. L'image est la file d'attente à la caisse. On entre en queue, on sort en tête. Doubler, ce serait retirer quelqu'un au milieu.
 
 | Opération | Rôle |
 | --- | --- |
@@ -59,9 +53,11 @@ enfiler(B)    →  [A, B]      tête = A, queue = B
 defiler()     →  A ; reste [B]
 ```
 
-## Implantation avec des listes
+A est entré avant B, A sort avant B. C'est l'inverse de la pile, où 20, entré après 10, sortait avant.
 
-On peut respecter l'interface **sans** écrire de classe : une liste + des fonctions. Le sommet de pile (ou la queue de file) correspond à la **fin** de la liste, ce qui rend `append` / `pop()` efficaces.
+## Une liste, à condition de se tenir
+
+On peut respecter ces interfaces sans classe : une liste, et des fonctions qui refusent les autres gestes. On place le sommet de la pile, et la queue de la file, à la **fin** de la liste. `append` et `pop()` sans argument y sont efficaces : ils ne décalent pas les autres éléments.
 
 ```python
 # --- Pile via une liste ---
@@ -101,25 +97,17 @@ empiler(p, 20)
 print(depiler(p))  # 20
 ```
 
+`depiler` renvoie 20, pas 10. Si l'on avait fait `pop(0)`, on aurait retiré le fond de la pile, et le LIFO serait cassé. Symétriquement, `pop()` sans argument sur une file retire la queue, donc le dernier entré : l'ordre FIFO est cassé. La tête de la file, dans cette implantation, est l'indice 0.
+
 !!! tip "Variante avec classes"
     Si le chapitre POO est déjà vu, on peut encapsuler la même liste dans une classe `Pile` / `File` (`self.data = []`). Le principe LIFO/FIFO ne change pas — seule l'organisation du code change.
 
 !!! warning "Coût de `pop(0)`"
     Retirer en tête d'une liste coûte cher (décalage des éléments). Pour une file performante en Python, on utilise `collections.deque` ; en cours, `pop(0)` suffit pour comprendre le modèle.
 
-## Piège fréquent
+`pop(0)` recopie toutes les cases suivantes d'un cran. Pour quelques dizaines d'éléments, on ne le sent pas. Pour une longue file, le décalage domine. `collections.deque` retire en tête sans ce décalage. En Première, `pop(0)` suffit pour que le modèle soit juste. On n'ira pas non plus lire l'élément du milieu : à ce moment-là, ce n'est plus ni une pile ni une file, c'est redevenu une liste.
 
-- Utiliser `pop()` (fin) pour défiler alors que la tête est au début → ordre FIFO cassé.
-- Dépiler / défiler une structure vide : toujours tester `est_vide()` avant.
-
-## À retenir
-
-- Pile = **LIFO** (assiettes) ; file = **FIFO** (file d'attente).
-- Pile : `empiler`, `depiler`, `sommet`, `est_vide`.
-- File : `enfiler`, `defiler`, `tete`, `est_vide`.
-- Une liste Python peut servir de support si on respecte l'interface.
-- Sommet / queue en fin de liste → `append` et `pop()` naturels pour la pile.
-- Ne pas accéder aux éléments du « milieu » : ce n'est plus une pile ni une file.
+Pour fermer : la pile est LIFO, comme les assiettes. La file est FIFO, comme la caisse. On empile, on dépile, on regarde le sommet. On enfile, on défile, on regarde la tête. Une liste Python peut servir de support si les fonctions respectent l'interface. Sommet et queue en fin de liste rendent `append` et `pop()` naturels pour la pile. On ne dépile pas une structure vide.
 
 ## Pour s'entraîner
 

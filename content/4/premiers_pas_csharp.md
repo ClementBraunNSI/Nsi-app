@@ -5,16 +5,15 @@ badgeId: bts_csharp_intro
 meta: 'Syntaxe, Conditions, Boucles et Listes'
 prerequisites:
   - cours_heritage_csharp
+audience: public
 ---
 
 <ExerciseTabs courseId="bts_csharp_intro" courseTitle="Badge Premiers Pas en C#">
-  
-  <ExerciseSection id="csharp-variables-1" label="1. Variables & Affichage">
-    ## Variables et Méthodes simples
 
-    ### 🏗️ Structure fondamentale en C#
+  <ExerciseSection id="csharp-variables-1" label="1. Variables & Affichage" type="autre">
+    ## Variables, méthodes, affichage
 
-    En C#, toutes les fonctions (qu'on appelle alors **méthodes**) doivent être définies à l'intérieur d'une **classe**. Pour exécuter votre code, vous devez également inclure une méthode spéciale appelée `Main` qui servira de point d'entrée.
+    En C#, une fonction s'appelle une **méthode**, et elle vit dans une **classe**. Le programme démarre par une méthode précise, `Main` : c'est le point d'entrée. Le reste du code n'est exécuté que si `Main`, ou une méthode appelée depuis `Main`, le demande.
 
     ```csharp
     public class Program 
@@ -33,13 +32,9 @@ prerequisites:
     }
     ```
 
-    ### 💾 Types de variables
+    `static` veut dire que la méthode appartient à la classe, pas à un objet qu'il faudrait construire avec `new`. Pour ce chapitre, les méthodes sont statiques : on les appelle par le nom de la classe. `$"..."` est une chaîne interpolée. `{nom}` est remplacé par la valeur de la variable.
 
-    En C#, chaque variable doit avoir un **type déclaré** :
-    - `int` : nombres entiers
-    - `double` : nombres décimaux
-    - `string` : chaînes de caractères
-    - `bool` : valeurs booléennes (true/false)
+    Chaque variable a un **type**, écrit devant son nom. `int` est un entier. `double` est un nombre à virgule. `string` est un texte. `bool` est `true` ou `false`. Le compilateur refuse d'additionner un `string` et un `int` sans conversion : le type se décide à l'écriture, pas à l'exécution.
 
     ```csharp
     int age = 25;
@@ -48,16 +43,14 @@ prerequisites:
     bool estMajeur = true;
     ```
 
-    ### 💬 Affichage dans la console
-
-    La méthode `Console.WriteLine()` permet d'afficher du texte dans la console.
+    `Console.WriteLine` écrit une ligne dans la console, puis passe à la ligne. On lui passe un texte ou une variable. Il appelle la conversion en texte tout seul pour afficher.
 
     ```csharp
     Console.WriteLine("Bonjour le monde !");
     Console.WriteLine(age); // Affiche la valeur de la variable
     ```
 
-    ---
+    Une méthode se lit en trois endroits. Le type de retour, avant le nom : `void` si elle ne renvoie rien, `int` ou `double` si elle calcule. Les paramètres, entre parenthèses, avec leur type. Le corps, entre accolades. `return` sort de la méthode en rendant la valeur. Après un `return`, le reste du corps ne s'exécute pas.
 
     ### Exercice 1.1 — Message de bienvenue
     **Écrire une méthode `static void AfficherBienvenue()` qui affiche "Bienvenue en C# !" dans la console.**
@@ -120,12 +113,10 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="csharp-conditions-2" label="2. Conditions">
-    ## Les structures conditionnelles
+  <ExerciseSection id="csharp-conditions-2" label="2. Conditions" type="autre">
+    ## Décider avec `if`
 
-    ### ⚖️ Structure `if` / `else`
-
-    Les conditions permettent d'exécuter du code selon des critères spécifiques.
+    `if` n'exécute le bloc entre accolades que si la condition est vraie. `else` prend le cas contraire. Les parenthèses autour de la condition sont obligatoires. Les accolades le sont aussi dès que le bloc dépasse une ligne, et on les met même pour une ligne : on voit où le bloc s'arrête.
 
     ```csharp
     if (age >= 18) 
@@ -138,16 +129,9 @@ prerequisites:
     }
     ```
 
-    ### Opérateurs de comparaison
+    `>` et `<` comparent. `>=` et `<=` incluent l'égalité. `==` teste l'égalité, `!=` la différence. Comme en Python, `=` affecte et `==` compare. Une condition qui affecte par erreur ne dit pas ce que vous croyez.
 
-    - `a > b` : Supérieur
-    - `a < b` : Inférieur
-    - `a >= b` : Supérieur ou égal
-    - `a <= b` : Inférieur ou égal
-    - `a == b` : Égalité
-    - `a != b` : Différence
-
-    ### Structure `if` / `else if` / `else`
+    Plusieurs issues s'écrivent avec `else if`. Les tests se lisent dans l'ordre, et le premier qui est vrai gagne. Un âge de 10 satisfait aussi `<= 17`. S'il est testé en second, la branche « Enfant » ne s'exécute jamais.
 
     ```csharp
     if (age <= 12) 
@@ -164,7 +148,7 @@ prerequisites:
     }
     ```
 
-    ---
+    Une méthode qui doit rendre une catégorie fait `return` dans chaque branche. Le compilateur vérifie qu'aucune branche n'oublie de rendre une valeur, quand le type de retour n'est pas `void`.
 
     ### Exercice 2.1 — Le plus grand
     **Écrire une méthode `static int Max(int a, int b)` qui retourne le plus grand des deux nombres.**
@@ -255,12 +239,10 @@ prerequisites:
     </Correction>
   </ExerciseSection>
 
-  <ExerciseSection id="csharp-boucles-3" label="3. Boucles">
-    ## Itérations (For & While)
+  <ExerciseSection id="csharp-boucles-3" label="3. Boucles" type="autre">
+    ## Répéter avec `for` et `while`
 
-    ### 🔄 Boucle `for`
-
-    Répète un code un nombre défini de fois.
+    `for` sert quand on sait combien de tours on veut. Trois zones entre les parenthèses : l'initialisation (`int i = 0`), la condition d'arrêt (`i < 10`), et ce qui se passe à la fin de chaque tour (`i++`, qui ajoute 1). Le corps s'exécute tant que la condition est vraie. Ici, `i` prend les valeurs 0 à 9. Le 10 n'est pas affiché, parce que la condition est testée avant le tour.
 
     ```csharp
     for (int i = 0; i < 10; i++) 
@@ -269,9 +251,7 @@ prerequisites:
     }
     ```
 
-    ### 🔄 Boucle `while`
-
-    Répète un code tant qu'une condition reste vraie.
+    `while` ne compte pas tout seul. Il répète tant que la condition reste vraie. L'incrémentation est dans le corps. Si on l'oublie, `i` reste à 0, la condition reste vraie, et la boucle ne sort pas.
 
     ```csharp
     int i = 0;
@@ -282,7 +262,7 @@ prerequisites:
     }
     ```
 
-    ### Parcourir une chaîne de caractères
+    Une chaîne s'indexe comme une suite de caractères, à partir de 0. `texte.Length` donne le nombre de caractères. `texte[i]` donne celui à la position `i`. La boucle suivante affiche donc chaque lettre sur sa ligne.
 
     ```csharp
     string texte = "Bonjour";
@@ -292,7 +272,7 @@ prerequisites:
     }
     ```
 
-    ---
+    On choisit `for` quand la borne est un nombre ou une longueur. On choisit `while` quand l'arrêt dépend d'une condition qu'on ne sait pas écrire comme un compteur, une saisie, une valeur qui diminue jusqu'à un seuil.
 
     ### Exercice 3.1 — Compter jusqu'à N
     **Écrire une méthode `static void CompterJusqua(int n)` qui affiche les nombres de 1 à n.**
@@ -325,12 +305,12 @@ prerequisites:
     **Écrire une méthode `static string InverserChaine(string texte)` qui retourne la chaîne inversée.**
   </ExerciseSection>
 
-  <ExerciseSection id="csharp-listes-4" label="4. Listes">
-    ## Collections dynamiques (List)
+  <ExerciseSection id="csharp-listes-4" label="4. Listes" type="autre">
+    ## Une liste qui grandit
 
-    ### 📋 Création et manipulation
+    Un tableau a une taille fixée à la création. Une `List<T>` grandit quand on ajoute. Le `T` entre chevrons est le type des éléments : `List<int>` ne contient que des entiers, `List<string>` que des textes. Mélanger les deux, le compilateur le refuse.
 
-    Les listes sont des collections dynamiques qui peuvent contenir plusieurs éléments du même type.
+    `new List<int>()` crée une liste vide. `Add` ajoute un élément à la fin. On peut aussi remplir dès la création, avec des accolades. `AddRange` ajoute tous les éléments d'une autre liste. L'accès se fait par l'indice, à partir de 0 : `maListe[0]` est le premier. `Count` donne le nombre d'éléments. Ce n'est pas `Length`, qui est la propriété des tableaux et des chaînes.
 
     ```csharp
     // Créer une liste vide
@@ -352,7 +332,7 @@ prerequisites:
     int taille = maListe.Count;
     ```
 
-    ### Parcourir une liste
+    `for` parcourt par l'indice, utile quand on a besoin de la position. `foreach` parcourt par la valeur : plus court, et l'on ne peut pas se tromper de borne. On ne modifie pas la liste pendant un `foreach`. On la modifie dans un `for`, ou l'on construit une nouvelle liste.
 
     ```csharp
     // Parcours avec for
@@ -367,8 +347,6 @@ prerequisites:
         Console.WriteLine(nombre);
     }
     ```
-
-    ---
 
     ### Exercice 4.1 — Somme des éléments
     **Écrire une méthode `static int Somme(List<int> nombres)` qui retourne la somme des éléments.**

@@ -2,6 +2,7 @@ import React from 'react';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, Lock } from 'lucide-react';
 import dynamic from 'next/dynamic';
@@ -9,12 +10,42 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import { Metadata } from 'next';
-import { contentFolderFromParam, coursePath, nsiLevelLabel } from '@/lib/nsi-levels';
+import { contentFolderFromParam, coursePath, getNsiLevel, nsiLevelLabel, seoLevelName } from '@/lib/nsi-levels';
+import { levelFoxFromNiveau } from '@/lib/chapter-utils';
 import { isChasseProjectSlug } from '@/lib/chasse-project-editions';
 import ChasseEditionPicker from '@/components/chasse/ChasseEditionPicker';
 import { resolveCourseFile } from '@/lib/content-path';
-import { getAuthContext } from '@/lib/auth';
-import { canAccessCourse, courseVisibility, isRestrictedCourse } from '@/lib/course-access';
+import { getAuthContext, viewerFromAuth } from '@/lib/auth';
+import { canAccessCourse } from '@/lib/course-access';
+
+const RESERVED_TITLE = 'Cours réservé';
+const RESERVED_DESCRIPTION = 'Ce contenu est réservé.';
+const SITE_ORIGIN = 'https://www.clementbraun.info';
+
+function courseOgImage(title: string, chapter?: string) {
+  const ogUrl = new URL('/api/og', SITE_ORIGIN);
+  ogUrl.searchParams.set('title', title);
+  if (chapter) ogUrl.searchParams.set('chapter', chapter);
+  return {
+    url: ogUrl.toString(),
+    width: 1200,
+    height: 630,
+    alt: title,
+  };
+}
+
+function reservedCourseMetadata(): Metadata {
+  return {
+    title: RESERVED_TITLE,
+    description: RESERVED_DESCRIPTION,
+    openGraph: {
+      title: RESERVED_TITLE,
+      description: RESERVED_DESCRIPTION,
+      type: 'article',
+      images: [courseOgImage(RESERVED_TITLE, 'NSI')],
+    },
+  };
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ niveaux: string, slug: string[] }> }): Promise<Metadata> {
   const { niveaux, slug } = await params;
@@ -34,37 +65,37 @@ export async function generateMetadata({ params }: { params: Promise<{ niveaux: 
 
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const { data } = matter(fileContent);
-
-  const ogUrl = new URL('/api/og', process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
-  ogUrl.searchParams.set('title', data.title || slugStr);
-  if (data.chapter) {
-    ogUrl.searchParams.set('chapter', data.chapter);
+  const auth = await getAuthContext();
+  if (!canAccessCourse(data, viewerFromAuth(auth))) {
+    return reservedCourseMetadata();
   }
 
+  const levelName = seoLevelName(folder);
+  const courseTitle = String(data.title || slugStr);
+  const title = `${courseTitle} | ${levelName}`;
+  const description = String(data.description || `Cours de ${levelName}.`);
+
   return {
-    title: data.title || slugStr,
-    description: data.description || 'Cours de NSI sur Nsi-App',
+    title,
+    description,
+    alternates: {
+      canonical: coursePath(folder, slugStr),
+    },
     openGraph: {
-      title: data.title || slugStr,
-      description: data.description || 'Cours de NSI sur Nsi-App',
+      title,
+      description,
       type: 'article',
-      images: [
-        {
-          url: ogUrl.toString(),
-          width: 1200,
-          height: 630,
-          alt: data.title || slugStr,
-        },
-      ],
+      images: [courseOgImage(courseTitle, data.chapter ? String(data.chapter) : undefined)],
     },
   };
 }
 
 // Importation des composants pour les onglets
-import { ExerciseTabs, ExerciseSection, Correction, Enonce, Verification } from '@/components/ExerciseTabs';
+import { ExerciseTabs, ExerciseSection, Enonce } from '@/components/ExerciseTabs';
+import { Correction, Verification } from '@/components/SolutionBlocks';
 import { Admonition } from '@/components/Admonition';
 import { transformAdmonitions } from '@/lib/admonition-utils';
-import { markEmbeddableSections } from '@/lib/exercise-classification';
+import { stripHiddenExerciseBlocks } from '@/lib/exercise-statement';
 // Widgets interactifs MDX: lazy-load pour réduire le bundle "cours"
 // (beaucoup de ces composants chargent des lib lourdes: Monaco, Pyodide, Leaflet, ReactFlow, etc.)
 const SqlEditor = dynamic(() => import('@/components/SqlEditor'), { loading: () => null });
@@ -189,66 +220,43 @@ export default async function CoursePage({
   const { content, data } = matter(fileContent);
 
   const auth = await getAuthContext();
-  const accessInput = courseVisibility(data, folder, slugStr);
-  
-  if (isRestrictedCourse(accessInput)) {
-    if (!auth.user) {
-      return (
-        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-8">
-          <div className="text-center max-w-md">
-            <div className="w-16 h-16 bg-red-100 rounded-[var(--radius-sm)] flex items-center justify-center text-red-600 mx-auto mb-4">
-              <Lock size={32} />
-            </div>
-            <h2 className="text-xl font-semibold tracking-tight text-[var(--fg)] mb-2">Réservé aux Explorateurs !</h2>
-            <p className="text-[var(--muted)] mb-6">
-              Connecte-toi pour débloquer ce cours, sauvegarder ta progression et gagner des badges exclusifs.
-            </p>
+  const allowed = canAccessCourse(data, viewerFromAuth(auth));
 
-            <Link 
-              href={`/connexion?next=${encodeURIComponent(coursePath(niveaux, slugStr))}`}
-              className="bg-[var(--accent)] text-[var(--accent-fg)] font-semibold py-3 px-6 rounded-[var(--radius-sm)] inline-block transition-colors duration-150"
-            >
-              Se connecter
-            </Link>
+  if (!allowed) {
+    return (
+      <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-8">
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 bg-red-100 rounded-[var(--radius-sm)] flex items-center justify-center text-red-600 mx-auto mb-4">
+            <Lock size={32} />
           </div>
+          <h2 className="text-xl font-semibold tracking-tight text-[var(--fg)] mb-2">{RESERVED_TITLE}</h2>
+          {auth.user ? (
+            <>
+              <p className="text-[var(--muted)] mb-6">Vous n&apos;avez pas la permission d&apos;accéder à ce cours.</p>
+              <Link href="/espace" className="text-[var(--accent)] font-semibold">
+                Retour à l&apos;espace
+              </Link>
+            </>
+          ) : (
+            <>
+              <p className="text-[var(--muted)] mb-6">
+                Connecte-toi pour débloquer ce cours, sauvegarder ta progression et gagner des badges exclusifs.
+              </p>
+              <Link
+                href={`/connexion?next=${encodeURIComponent(coursePath(niveaux, slugStr))}`}
+                className="bg-[var(--accent)] text-[var(--accent-fg)] font-semibold py-3 px-6 rounded-[var(--radius-sm)] inline-block transition-colors duration-150"
+              >
+                Se connecter
+              </Link>
+            </>
+          )}
         </div>
-      );
-    }
-
-    const hasAccess = canAccessCourse(
-      accessInput,
-      {
-        isElevated: auth.isElevated,
-        isAuthenticated: true,
-        userFullName: auth.fullName,
-        hasPrivateLessons: auth.hasPrivateLessons,
-      }
+      </div>
     );
-
-    if (!hasAccess) {
-      return (
-        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-8">
-          <div className="text-center max-w-md">
-            <div className="w-16 h-16 bg-red-100 rounded-[var(--radius-sm)] flex items-center justify-center text-red-600 mx-auto mb-4">
-              <Lock size={32} />
-            </div>
-            <h2 className="text-xl font-semibold tracking-tight text-[var(--fg)] mb-2">Accès restreint</h2>
-            <p className="text-[var(--muted)] mb-6">Vous n'avez pas la permission d'accéder à ce cours.</p>
-
-            <Link 
-              href="/espace" 
-              className="text-[var(--accent)] font-semibold"
-            >
-              Retour à l'espace
-            </Link>
-          </div>
-        </div>
-      );
-    }
   }
 
-  // Transformation des admonitions (!!! type "titre") en composants React (<Admonition>)
-  const contentWithAdmonitions = transformAdmonitions(markEmbeddableSections(content, folder));
+  // Solution and test blocks are removed before MDX reaches the browser.
+  const contentWithAdmonitions = transformAdmonitions(stripHiddenExerciseBlocks(content));
 
   // Navigation entre les cours
   const { prev, next } = getAdjacentCourses(folder, slugStr);
@@ -308,6 +316,9 @@ export default async function CoursePage({
     GraphVisualizer,
   };
 
+  const level = getNsiLevel(folder);
+  const levelFox = levelFoxFromNiveau(folder);
+
   const mdxComponents = Object.fromEntries(
     Object.entries(baseMdxComponents).map(([name, Component]) => {
       const meta = folder === '1' ? SNT_WIDGET_META[name] : undefined;
@@ -353,10 +364,20 @@ export default async function CoursePage({
         <div className="mt-6">
           <PageHeader
             className="mb-8"
-            eyebrow={data.chapter || 'Cours'}
+            eyebrow={
+              <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span>{level.label}</span>
+                {data.chapter ? <span className="font-medium text-[var(--muted)]">{data.chapter}</span> : null}
+              </span>
+            }
             title={data.title || slugStr.replace(/[_-]/g, ' ')}
             description={data.description}
             actions={data.meta ? <span className="course-meta-pill">{data.meta}</span> : undefined}
+            media={
+              levelFox ? (
+                <Image src={levelFox} alt={`Renard ${level.label}`} fill className="object-contain" sizes="160px" />
+              ) : undefined
+            }
           />
 
           {isChasseProjectSlug(slugStr) && (

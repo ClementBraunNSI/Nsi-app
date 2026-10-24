@@ -6,6 +6,7 @@ chapter: Micro-controleurs
 icon: "\U0001F3AE"
 prerequisites:
   - simulateur_microbit
+audience: public
 ---
 
 # Activité : Composer un système connecté
@@ -22,12 +23,6 @@ Construisez un système d'alarme :
 4. Baissez la luminosité avec le curseur et activez l'interrupteur pour déclencher l'alarme.
 
 <IotSimulator />
-
-## Questions
-
-1. Que se passe-t-il si vous retirez la porte ET ?
-2. Pourquoi a-t-on besoin d'un capteur **et** d'un interrupteur dans cet exemple ?
-3. Donnez un exemple d'objet connecté du quotidien qui fonctionne sur le même principe.
 
 ## Programmer une vraie Micro:bit
 

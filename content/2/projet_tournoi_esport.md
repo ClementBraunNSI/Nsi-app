@@ -7,59 +7,111 @@ icon: "\U0001F3C6"
 badgeId: premiere_projet_esport
 prerequisites:
   - poo_projet_pokensi
+audience: public
 ---
 
 # 🏆 Projet - Gestionnaire de Tournoi E-Sport
 
-Dans ce projet, nous allons créer un outil pour gérer les scores d'une compétition (type League of Legends, Rocket League ou Valorant). Nous utiliserons les **listes** pour stocker les équipes et les scores, et nous apprendrons à les manipuler.
+Le but de ce projet est de créer l'outil d'une soirée tournoi (League of Legends, Rocket League, Valorant, ou un jeu du lycée).
+Dans ce projet, nous allons inscrire les équipes, saisir un score par équipe, calculer la moyenne, désigner le ou les vainqueurs, puis afficher le classement.
 
-## 1. Cahier des Charges
+Deux listes parallèles mémorisent les données : `scores[i]` est le score de `equipes[i]`.
 
-Le programme doit permettre de :
-1.  Enregistrer une liste de noms d'équipes.
-2.  Saisir les scores de chaque équipe pour une manche donnée.
-3.  Calculer la moyenne des scores.
-4.  Trouver l'équipe gagnante (score maximal).
-5.  Afficher le classement final.
-
-## 2. Étapes de réalisation
-
-### Étape 1 : Inscription des équipes
-Créez une liste vide `equipes`.
-Utilisez une boucle `while` ou `for` pour demander à l'utilisateur de saisir les noms des équipes. Arrêtez la saisie quand l'utilisateur tape "fin".
-
-```python
-equipes = []
-# ... boucle de saisie ...
-```
-
-### Étape 2 : Saisie des scores
-Une fois les équipes connues, nous devons saisir un score pour chacune.
-Nous pouvons utiliser une deuxième liste `scores` de même taille, où `scores[i]` correspondra aux points de l'équipe `equipes[i]`.
-
-Parcourez la liste des équipes et demandez le score pour chacune.
-
-### Étape 3 : Analyse des données
-*   **Moyenne** : Somme des éléments de `scores` divisée par la longueur de la liste.
-*   **Vainqueur** : Il faut trouver l'indice de la valeur maximale dans `scores` pour retrouver le nom correspondant dans `equipes`.
-    *   *Astuce* : On peut utiliser une boucle qui parcourt les indices `range(len(scores))`.
-
-### Étape 4 : Affichage du Podium
-Affichez les résultats de manière propre.
-
-## 3. Pour aller plus loin (Bonus) 🚀
-
-*   **Liste de Tuples** : Au lieu de deux listes séparées, utilisez une seule liste contenant des tuples `(nom, score)`. Ex: `[("T1", 15), ("G2", 12)]`. Cela rend le tri plus facile !
-*   **Tri automatique** : Utilisez `.sort()` ou `sorted()` pour afficher le classement du premier au dernier.
-*   **Élimination** : Supprimez les équipes ayant un score inférieur à une certaine valeur (fonction `.pop()` ou création d'une nouvelle liste filtrée).
-
----
+## 1. Les équipes 👥
 
 <ExerciseTabs courseId="premiere_projet_esport" courseTitle="Gestion Tournoi">
-  <ExerciseSection id="proj-esport-1" label="À vous de jouer !">
+  <ExerciseSection id="proj-esport-1" label="Inscription" type="python">
     <Enonce>
-    À vous de coder ! Suivez les étapes ci-dessus pour réaliser votre propre gestionnaire de tournoi.
-    Commencez simple, puis essayez d'ajouter des fonctionnalités bonus.
+      Écrivez `inscrire_equipes()`. Elle renvoie la liste des noms.
+
+      Partez de `equipes = []`. Tant que l'utilisateur n'a pas écrit exactement `fin`, demandez `Nom de l'équipe : ` et ajoutez le nom avec `append`. Un nom vide est ignoré : on repose la question. Si `fin` arrive alors que la liste est vide, affichez `Il faut au moins une équipe.` et continuez la saisie.
+
+      Un essai `Lynx`, `Hiboux`, `Renards`, `fin` produit exactement `["Lynx", "Hiboux", "Renards"]`.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="proj-esport-2" label="Scores et moyenne" type="lecture">
+    <Enonce>
+      Écrivez `saisir_scores(equipes)` et `moyenne(scores)`.
+
+      `saisir_scores` parcourt `equipes` et pose une question par nom, par exemple `Score de Hiboux : `. Le score est un entier supérieur ou égal à 0. Un texte qui n'est pas un entier, ou un entier négatif, est redemandé pour cette équipe seulement. La liste renvoyée a la même longueur que `equipes`, dans le même ordre.
+
+      `moyenne` additionne les scores dans une variable `somme` (une boucle, ou `sum`) puis divise par `len(scores)`. La moyenne affichée plus loin est arrondie avec `round(moyenne, 2)`.
+
+      *Attention : `moyenne([])` ne doit pas planter. Renvoyez `0.0` si la liste est vide.*
+
+      Sans saisie, on doit pouvoir tester :
+
+      ```python
+      equipes = ["Lynx", "Hiboux", "Renards"]
+      scores = [12, 18, 15]
+      ```
+
+      `moyenne(scores)` vaut `15.0`. La somme vaut 45, il y a 3 équipes.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="proj-esport-3" label="Vainqueur" type="lecture">
+    <Enonce>
+      Écrivez `vainqueurs(equipes, scores)`. Elle renvoie les noms des équipes dont le score est égal au maximum.
+
+      Parcourez les indices avec `range(len(scores))`. Repérez d'abord le score maximal, puis collectez tous les noms qui l'atteignent.
+
+      `[12, 18, 15]` donne `["Hiboux"]`. `[10, 14, 14]` donne `["Hiboux", "Renards"]`.
+
+      L'affichage met `Vainqueur :` au singulier s'il n'y en a qu'un, et `Vainqueurs :` suivi des noms séparés par une virgule et une espace s'il y en a plusieurs.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="proj-esport-4" label="Classement" type="python">
+    <Enonce>
+      Écrivez `classement(equipes, scores)`.
+
+      Construisez une liste de tuples `(nom, score)`. Triez-la par score décroissant. À score égal, l'équipe inscrite en premier reste devant : un tri stable, ou une boucle qui insère chaque équipe au bon endroit, conviennent.
+
+      Sur `[12, 18, 15]`, le classement est `[("Hiboux", 18), ("Renards", 15), ("Lynx", 12)]`.
+
+      Sur `[10, 14, 14]`, il vaut `[("Hiboux", 14), ("Renards", 14), ("Lynx", 10)]`. Hiboux reste devant Renards, parce qu'il a été inscrit avant.
+
+      Affichez ensuite les lignes `1. Hiboux (18)`, avec le rang qui commence à 1.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
+
+## 2. Simulation 📺
+
+Le programme principal enchaîne inscription, scores, moyenne arrondie, vainqueurs et classement.
+
+Saisies de référence : `Lynx`, `Hiboux`, `Renards`, `fin`, puis les scores 12, 18 et 15.
+
+```text
+Équipes : Lynx, Hiboux, Renards
+Scores : 12, 18, 15
+Moyenne : 15.0
+Vainqueur : Hiboux
+Classement :
+1. Hiboux (18)
+2. Renards (15)
+3. Lynx (12)
+```
+
+Égalité en tête, mêmes équipes, scores 10, 14 et 14. 38 / 3 arrondi à deux décimales vaut 12,67.
+
+```text
+Moyenne : 12.67
+Vainqueurs : Hiboux, Renards
+Classement :
+1. Hiboux (14)
+2. Renards (14)
+3. Lynx (10)
+```
+
+`round(moyenne([10, 14, 14]), 2)` vaut `12.67`.
+
+**Ce qu'on rend.** Un fichier `tournoi.py` : commentaire d'en-tête avec le nom et la classe, les cinq fonctions, et un programme principal qui reproduit le récapitulatif.
+
+## 3. Pour aller plus loin
+
+*   **Une seule liste.** Remplacez les deux listes par une liste de tuples `(nom, score)` dès la saisie. Les fonctions de moyenne et de vainqueurs lisent cette liste-là.
+*   **Seuil.** `qualifies(couples, seuil)` renvoie une nouvelle liste avec les équipes dont le score est supérieur ou égal au seuil, sans effacer la liste d'origine. Seuil 15 sur l'exemple principal : Hiboux et Renards.
+*   **Deuxième manche.** Demandez un second score par équipe, additionnez-le au premier, puis recalculez le classement.

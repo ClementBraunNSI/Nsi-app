@@ -6,19 +6,14 @@ chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
 icon: "\U0001F9EC"
 prerequisites:
   - introduction_poo
+audience: public
 ---
 
-# 🧬 L'Héritage en C#
+# L'héritage en C#
 
-## 1. Concept Fondamental
+Une classe `Voiture` et une classe `Moto` répéteraient les mêmes champs — une marque, une méthode pour démarrer — si chacune était écrite à part. L'**héritage** évite cette copie. La **classe dérivée**, la fille, reçoit les propriétés et les méthodes de la **classe de base**, la mère, et n'ajoute que ce qui lui est propre. C'est le principe **DRY** : *Don't Repeat Yourself*, on n'écrit pas deux fois le même comportement.
 
-L'héritage est un mécanisme qui permet à une classe (appelée **classe dérivée** ou *fille*) de récupérer les propriétés et méthodes d'une autre classe (appelée **classe de base** ou *mère*).
-
-Cela permet de respecter le principe **DRY** (Don't Repeat Yourself) en factorisant le code commun.
-
-### Syntaxe
-
-En C#, on utilise le symbole `:` pour indiquer l'héritage.
+En C#, le symbole `:` place la fille à droite de la mère.
 
 ```csharp
 // Classe Mère (Parent)
@@ -39,13 +34,11 @@ public class Voiture : Vehicule
 }
 ```
 
-Ici, `Voiture` possède automatiquement `Marque` et `Demarrer()`, en plus de son propre attribut `NombrePortes`.
+`Voiture` a déjà `Marque` et `Demarrer()`, plus son propre `NombrePortes`. On ne les a pas réécrits. On les a reçus.
 
----
+## Le constructeur ne s'hérite pas
 
-## 2. Le Mot-clé `base` et les Constructeurs
-
-Les constructeurs ne sont **pas hérités**. Si la classe mère a un constructeur qui prend des arguments, la classe fille **doit** l'appeler explicitement via le mot-clé `base`.
+Les constructeurs ne passent pas de la mère à la fille. Si la mère exige un argument, la fille doit appeler ce constructeur elle-même, avec `base`.
 
 ```csharp
 public class Personne
@@ -70,16 +63,11 @@ public class Etudiant : Personne
 }
 ```
 
-Si vous oubliez `: base(...)`, le compilateur essaiera d'appeler le constructeur par défaut (`Personne()`), et s'il n'existe pas, cela provoquera une erreur.
+`: base(nom)` s'exécute avant le corps du constructeur de `Etudiant`. Le nom est rangé par la mère. La classe est rangée par la fille. Si vous omettez `: base(...)`, le compilateur cherche un constructeur `Personne()` sans argument. Ici, il n'existe pas. La compilation échoue. Ce n'est pas un oubli anodin : la fille n'a pas le droit de naître sans que la mère ait initialisé ce qu'elle possède.
 
----
+## Une méthode, plusieurs comportements
 
-## 3. Le Polymorphisme : `virtual` et `override`
-
-C'est la capacité d'une méthode à se comporter différemment selon l'objet qui l'appelle, même si on manipule l'objet via son type parent.
-
-Pour qu'une méthode puisse être modifiée par les enfants, elle doit être marquée **`virtual`**.
-L'enfant utilise **`override`** pour la réécrire.
+Le **polymorphisme** permet d'appeler la même méthode sur une liste d'objets, et d'obtenir le comportement de chacun, même quand la variable est du type de la mère. En C#, une méthode n'est pas remplaçable par défaut. La mère la marque `virtual` pour autoriser la réécriture. La fille la marque `override` pour la remplacer.
 
 ```csharp
 public class Animal
@@ -107,7 +95,7 @@ public class Chien : Animal
 }
 ```
 
-### Exemple d'utilisation
+On range alors un chat et un chien dans une liste d'`Animal`. La variable de boucle est un `Animal`. L'appel `Crier()` choisit pourtant la méthode de l'objet réel, au moment de l'exécution.
 
 ```csharp
 List<Animal> mesAnimaux = new List<Animal>();
@@ -122,13 +110,11 @@ foreach (Animal a in mesAnimaux)
 }
 ```
 
----
+Sans `virtual` et `override`, la boucle appellerait `Animal.Crier` pour les deux, et l'on n'entendrait que « L'animal fait un bruit. ». Le type de la variable dirait le comportement. Avec `override`, c'est le type de l'objet qui le dit.
 
-## 4. Classes Abstraites (`abstract`)
+## Une classe qu'on ne construit pas
 
-Une classe abstraite est une classe qu'on **ne peut pas instancier** (on ne peut pas faire `new Animal()`). Elle sert uniquement de modèle pour les classes filles.
-
-Elle peut contenir des **méthodes abstraites** : des méthodes sans corps que les enfants **doivent obligatoirement** implémenter.
+Une classe **abstraite** sert de modèle. On ne peut pas écrire `new Forme()` : une forme sans précision n'existe pas dans le programme. Elle peut porter des champs et des méthodes ordinaires, et aussi des **méthodes abstraites**, déclarées sans corps. Chaque fille concrète doit les écrire.
 
 ```csharp
 public abstract class Forme
@@ -157,11 +143,11 @@ public class Carre : Forme
 }
 ```
 
----
+`AfficherCouleur` est héritée telle quelle. `CalculerAire` n'a pas de version dans `Forme` : un carré et un disque ne calculent pas la même chose, et la mère refuse d'inventer une formule. Oublier `override` dans `Carre`, et le compilateur refuse la classe. C'est le contrat. Une classe abstraite peut aussi contenir du code partagé. Une interface, vue dans le cours suivant, ne contient que des signatures.
 
-## 5. Le mot-clé `sealed` (Scellé)
+## Fermer la descendance
 
-Si vous voulez empêcher l'héritage d'une classe, utilisez `sealed`.
+`sealed` interdit d'hériter d'une classe. On s'en sert quand le type ne doit plus être étendu, par exemple un compte dont le comportement de sécurité ne doit pas être redéfini par une classe surprise.
 
 ```csharp
 public sealed class CompteSecurise
@@ -172,6 +158,4 @@ public sealed class CompteSecurise
 // public class Piratage : CompteSecurise -> ERREUR COMPILATION
 ```
 
-On peut aussi sceller une méthode pour empêcher qu'elle soit `override` plus bas dans la descendance.
-
----
+On peut aussi sceller une méthode déjà redéfinie, pour que les petites-filles ne puissent plus la remplacer. La chaîne s'arrête là où vous posez `sealed`.

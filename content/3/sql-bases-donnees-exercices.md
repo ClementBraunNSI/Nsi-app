@@ -8,10 +8,11 @@ icon: "\U0001F4BE"
 badgeId: terminale_sql_exos
 prerequisites:
   - sql-bases-donnees
+audience: public
 ---
 
 <ExerciseTabs courseId="sql-bases-donnees-exos" courseTitle="SQL & Bases de Données - Exercices">
-  <ExerciseSection id="exo-1-1" label="Niveau 0 - INSERT, UPDATE, DELETE">
+  <ExerciseSection id="exo-1-1" label="Niveau 0 - INSERT, UPDATE, DELETE" type="sql">
     <Enonce>
     ### Exercice 1.1 : Créer une table étudiants
     **Créez une table `etudiants` avec les colonnes :**
@@ -58,7 +59,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="level-1-biblio" label="Niveau 1 - La Bibliothèque">
+  <ExerciseSection id="level-1-biblio" label="Niveau 1 - La Bibliothèque" type="sql">
     <Enonce>
     ### Contexte : La Bibliothèque
     Vous gérez une petite base de données contenant une table `Livres`.
@@ -84,7 +85,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="level-2-concession" label="Niveau 2 - La Concession">
+  <ExerciseSection id="level-2-concession" label="Niveau 2 - La Concession" type="sql">
     <Enonce>
     ### Contexte : La Concession Automobile
     Vous analysez le stock d'une concession automobile.
@@ -108,7 +109,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="level-3-refuge" label="Niveau 3 - Le Refuge">
+  <ExerciseSection id="level-3-refuge" label="Niveau 3 - Le Refuge" type="sql">
     <Enonce>
     ### Contexte : Le Refuge des Renards
     Vous gérez un refuge pour renards réparti sur trois tables.

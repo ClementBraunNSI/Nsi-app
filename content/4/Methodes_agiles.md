@@ -8,141 +8,53 @@ chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiq
 icon: "\U0001F680"
 prerequisites:
   - Chemin_critique
+audience: public
 ---
 
-# Méthodes Agiles Avancées
+# Méthodes agiles
 
-> BTS SIO SLAM - Bloc 1 : Gestion de projet informatique
+BTS SIO, bloc 1. Le chemin critique suppose qu'on connaît les tâches et leurs durées assez tôt pour figer un réseau. Beaucoup de projets informatiques n'ont pas cette stabilité : le besoin se précise quand on voit le logiciel tourner. Les méthodes **agiles** organisent le travail pour livrer souvent, montrer le résultat, et changer le plan sans reprendre tout le projet.
 
-## 🎯 L'Agilité dans les Projets Informatiques
+Le **manifeste agile** (2001) pose quatre préférences. Les personnes et leurs échanges passent avant les processus et les outils. Un logiciel qui fonctionne passe avant une documentation exhaustive. La collaboration avec le client passe avant la négociation du contrat. L'adaptation au changement passe avant le suivi d'un plan. Les quatre seconds termes existent encore. Un contrat, une doc, un outil, un plan restent utiles. Ils ne remplacent pas un incrément qu'on peut essayer, ni une conversation avec la personne qui s'en servira.
 
-> **Manifeste Agile**
->
-> Les méthodes agiles privilégient **les individus et leurs interactions** plutôt que les processus et les outils, **des logiciels opérationnels** plutôt qu'une documentation exhaustive, **la collaboration avec les clients** plutôt que la négociation contractuelle, et **l'adaptation au changement** plutôt que le suivi d'un plan.
+On travaille donc par **itérations** courtes, chacune livrant quelque chose d'utilisable. On choisit d'abord ce qui a de la **valeur** pour l'utilisateur. On **collabore** en continu avec lui, et avec les parties prenantes. On **adapte** le contenu du prochain cycle à ce qu'on a appris, au lieu de protéger le planning initial.
 
-Dans le développement de projets informatiques, l'agilité permet de gérer efficacement l'incertitude, de livrer de la valeur rapidement et de s'adapter aux retours des utilisateurs et des parties prenantes.
+## Scrum
 
-- **👥 Collaboration** : Communication constante entre l'équipe, les utilisateurs et les parties prenantes du projet.
-- **🔄 Itération** : Développement par cycles courts avec livraisons fréquentes et amélioration continue.
-- **📈 Valeur** : Focus sur les fonctionnalités qui apportent le plus de valeur aux utilisateurs finaux.
-- **🎯 Adaptation** : Capacité à réagir rapidement aux changements et aux retours d'expérience.
+**Scrum** cadence cette idée. Le **sprint** est une itération d'une à quatre semaines, souvent deux, dont l'objectif ne change pas en cours de route. Le cadre tient par des rôles, des événements, et des artefacts.
 
-## 🏃‍♂️ Scrum : Framework Agile
+Le **product owner** porte le besoin. En entreprise, c'est souvent le responsable produit, ou la personne qui représente le client. Il écrit les user stories, ordonne le backlog, et accepte ou refuse ce qui est livré. Il est l'interface avec les utilisateurs. Il ne répartit pas les tâches dans l'équipe.
 
-> **Scrum en Action**
->
-> Scrum est un framework agile structuré autour de **sprints** (itérations de 1-4 semaines), d'**événements** (réunions rituelles) et d'**artefacts** (documents de travail). Parfait pour organiser des projets informatiques avec des livrables réguliers.
+Le **scrum master** tient le cadre. Il anime les cérémonies, enlève les obstacles qui bloquent l'équipe, la protège des demandes qui arriveraient au milieu du sprint, et l'aide à s'améliorer. Il n'est pas le chef de projet : il ne décide ni du contenu ni des estimations.
 
-### Rôles Scrum
+L'**équipe de développement** réalise le produit. Elle mélange les métiers dont le sprint a besoin, développement, test, conception. Elle s'organise, estime les stories, et livre un incrément qui fonctionne. Personne de l'extérieur ne lui assigne les tâches une par une.
 
-#### 👑 Product Owner
-En entreprise, c'est souvent le responsable produit ou le représentant client qui définit les besoins.
-- ✅ Définit les user stories
-- ✅ Priorise le backlog produit
-- ✅ Valide les fonctionnalités
-- ✅ Interface avec les utilisateurs
+Pour un sprint de deux semaines, les durées usuelles sont les suivantes. Le **sprint planning** ouvre le sprint, environ quatre heures : quel objectif, quelles stories, découpées en tâches. Le **daily scrum**, quinze minutes chaque jour, sert à synchroniser l'équipe, pas à rendre compte à un chef. La **sprint review**, environ deux heures, montre l'incrément aux parties prenantes et recueille leurs retours. La **rétrospective**, environ une heure et demie, regarde la façon de travailler, pas le produit, et choisit une amélioration pour le sprint suivant.
 
-#### 🎯 Scrum Master
-Facilitateur du processus Scrum qui aide l'équipe à éliminer les obstacles et à s'améliorer.
-- ✅ Anime les cérémonies Scrum
-- ✅ Résout les blocages
-- ✅ Protège l'équipe des perturbations
-- ✅ Coach l'équipe sur Scrum
+## Kanban
 
-#### 💻 Équipe de Développement
-Équipe pluridisciplinaire (développeurs, testeurs, designers) qui réalise concrètement le produit.
-- ✅ Auto-organisée et pluridisciplinaire
-- ✅ Estime et réalise les user stories
-- ✅ Livre un incrément fonctionnel
-- ✅ Améliore continuellement ses pratiques
+**Kanban** ne cadence pas en sprints. Il rend le flux visible sur un tableau, et limite le travail en cours, le *WIP*. Les colonnes typiques sont : à faire, en cours, terminé, déployé. Une carte est une tâche. Elle avance d'une colonne à l'autre. On ne commence pas une cinquième carte quand la limite de la colonne « en cours » est atteinte : on finit, ou l'on débloque, ce qui est déjà ouvert.
 
-### Le Sprint
+Cela convient à la maintenance, aux bugs, aux demandes dont la priorité change d'un jour à l'autre. Une limite de deux ou trois cartes par personne évite d'ouvrir dix sujets et de n'en terminer aucun. Le flux se mesure au temps qu'une carte passe dans le tableau, pas à la vélocité d'un sprint.
 
-- **📋 Sprint Planning** (4h pour 2 semaines)
-- **🔄 Daily Scrum** (15 min/jour)
-- **🎯 Sprint Review** (2h pour 2 semaines)
-- **🔍 Retrospective** (1h30 pour 2 semaines)
+## Une story, des critères, une définition de fini
 
-## 📋 Kanban : Visualiser le Flux
+Une **user story** décrit une fonctionnalité du point de vue de la personne qui s'en sert, et le bénéfice qu'elle en retire.
 
-> **Tableau Kanban**
->
-> Kanban visualise le flux de travail et limite le travail en cours (WIP). Idéal pour gérer les tâches de maintenance, les bugs ou les projets avec des priorités changeantes.
+`En tant que <rôle>, je veux <action> afin de <bénéfice>.`
 
-### Exemple de Tableau Kanban
+« En tant qu'étudiant, je veux ajouter une tâche avec une date limite afin d'organiser mes révisions. » La story ne dit pas encore comment la coder. Elle dit pour qui, quoi, et pourquoi. Sans le « afin de », on a une tâche technique déguisée.
 
-#### 📝 À Faire
-- Créer la base de données
-- Concevoir l'interface utilisateur
-- Rédiger les tests unitaires
+Les **critères d'acceptation** rendent la fin vérifiable. Pour l'exemple : le titre est obligatoire, la date est sélectionnable, la tâche apparaît dans la liste triée. Si un critère manque, la review se transforme en discussion de goût.
 
-#### 🔄 En Cours
-- Développer l'API REST
-- Intégrer l'authentification
+**INVEST** rappelle la forme d'une bonne story. Indépendante, autant que possible, pour qu'on puisse la sortir du sprint sans emporter les autres. Négociable : le détail se précise avec l'équipe, la story n'est pas un cahier des charges fermé. Valorisante : elle apporte quelque chose à quelqu'un. Estimable : l'équipe sait en parler en taille. Petite : elle tient dans un sprint. Testable : les critères d'acceptation existent.
 
-#### ✅ Terminé
-- Analyser les besoins
-- Configurer l'environnement
-- Créer le repository Git
+Le **product backlog** est la liste ordonnée de tout ce qu'on pourrait faire : stories, corrections, améliorations. Chaque élément a un titre, une description, des critères, une estimation, une priorité. L'ordre est celui du product owner. Le **sprint backlog** est le sous-ensemble retenu pour le sprint, découpé en tâches par l'équipe. L'**incrément** est ce qui est terminé à la fin du sprint. Il doit être **potentiellement livrable** : pas une démo qui ne tourne que sur la machine du développeur.
 
-#### 🚀 Déployé
-- Page de connexion
-- Module de gestion utilisateurs
+La **definition of ready** dit quand une story a le droit d'entrer dans un sprint. Description claire, critères d'acceptation écrits, estimation faite, dépendances identifiées. Une story floue qu'on tire quand même dans le sprint consomme le planning à la découvrir.
 
-> 💡 **Limite WIP :** Ne travaillez que sur 2-3 tâches maximum par personne pour éviter la dispersion et améliorer la qualité.
+La **definition of done** dit quand elle est finie, pour toute l'équipe, pas selon l'humeur de chacun. Le code compile et a été testé. Les tests unitaires sont écrits et passent. La revue de code a eu lieu. La documentation minimale est là. Le livrable est déployé sur un environnement de test. Une story « presque finie » n'entre pas dans l'incrément.
 
-## 📝 User Stories
+## Quand plusieurs équipes avancent ensemble
 
-> **Définition**
->
-> Une **user story** décrit une fonctionnalité du point de vue de l’utilisateur et la valeur qu’elle apporte.
-
-🔹 *Template :* `En tant que <rôle>, je veux <action> afin de <bénéfice>.`
-🔹 Chaque story doit avoir des **critères d’acceptation** : conditions précises permettant de valider si la fonctionnalité est terminée.
-🔹 Bonnes pratiques : utiliser le modèle **INVEST** (Indépendante, Négociable, Valorisante, Estimable, Petite, Testable).
-
-> 💡 **Exemple :** « En tant qu’étudiant, je veux ajouter une tâche avec une date limite afin d’organiser mes révisions. »
->
-> **Critères d’acceptation :** titre obligatoire, date sélectionnable, tâche visible dans la liste triée.
-
-## 📂 Les Artefacts Scrum
-
-> **📋 Product Backlog**
->
-> Liste priorisée de toutes les fonctionnalités, améliorations et corrections. Chaque item contient : titre, description (user story), critères d’acceptation, estimation et priorité.
-
-> **🗂️ Sprint Backlog**
->
-> Sous-ensemble du product backlog sélectionné pour un sprint, découpé en tâches techniques par l’équipe de développement.
-
-> **🚀 Incrément**
->
-> Ensemble des éléments « Done » à la fin d’un sprint. L’incrément doit être **potentiellement livrable** au client.
-
-## ✅ Definition of Ready & Definition of Done
-
-### 📥 Definition of Ready (DoR)
-Une user story est prête à entrer en sprint si :
-- Description claire et complète
-- Critères d’acceptation définis
-- Estimation réalisée
-- Dépendances identifiées
-
-### 📤 Definition of Done (DoD)
-Une user story est considérée comme terminée si :
-- Code compilé et testé
-- Tests unitaires écrits et passés
-- Revue de code effectuée
-- Documentation minimale ajoutée
-- Livrable déployé en environnement de test
-
-## 🔧 SAFe : Scaled Agile pour Grandes Organisations
-
-> **Scaled Agile Framework**
->
-> SAFe (Scaled Agile Framework) étend l'agilité aux grandes organisations avec plusieurs équipes. Comprendre SAFe est essentiel pour travailler dans des environnements professionnels complexes.
-
-- **🎯 Program Increment (PI)** : Cycle de 8-12 semaines synchronisant plusieurs équipes Scrum sur des objectifs communs.
-- **🚂 Agile Release Train** : Ensemble d'équipes agiles travaillant ensemble sur une solution commune avec un rythme partagé.
-- **📋 PI Planning** : Événement de planification de 2 jours réunissant toutes les équipes pour aligner les objectifs.
-- **📊 Lean Portfolio** : Gestion stratégique des investissements et allocation des ressources selon les principes Lean.
+**SAFe** (*Scaled Agile Framework*) reprend Scrum à l'échelle de plusieurs équipes qui construisent une même solution. Le **program increment** est un cycle de huit à douze semaines, qui aligne ces équipes sur des objectifs communs. L'**agile release train** est l'ensemble des équipes qui partagent ce rythme. Le **PI planning** réunit tout le monde, en général sur deux jours, pour poser ces objectifs et voir les dépendances entre équipes. Le **lean portfolio** décide, au-dessus, où l'organisation met l'argent et les gens. On n'en déploie pas le détail dans un projet de classe. On retient que l'agilité d'une équipe ne se copie pas telle quelle le jour où dix équipes livrent le même produit : il faut un rythme commun et un endroit où les dépendances se voient.

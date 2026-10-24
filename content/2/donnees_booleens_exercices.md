@@ -9,6 +9,7 @@ icon: ✅
 badgeId: premiere_fiche_exercices_bool
 prerequisites:
   - donnees_caracteres
+audience: public
 ---
 
 
@@ -18,7 +19,7 @@ Cette fiche propose une série d'exercices progressifs pour maîtriser les bool�
 
 <ExerciseTabs courseId="premiere_fiche_exercices_bool" courseTitle="Exercices Booléens">
 
-<ExerciseSection title="1. Comprendre les booléens" difficulty="easy">
+<ExerciseSection title="1. Comprendre les booléens" difficulty="easy" type="python">
 <Enonce>
 
 Quel sera le résultat de ces expressions ? `True` ou `False`.
@@ -66,7 +67,7 @@ assert (5 != 5) == False
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="2. Comparaisons simples" difficulty="easy">
+<ExerciseSection title="2. Comparaisons simples" difficulty="easy" type="lecture">
 <Enonce>
 
 Donner le résultat des expressions suivantes :
@@ -108,7 +109,7 @@ assert (3 < 8) == True
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="3. Opérateurs logiques" difficulty="medium">
+<ExerciseSection title="3. Opérateurs logiques" difficulty="medium" type="lecture">
 <Enonce>
 
 Pour chaque expression, déterminer le résultat (`True` ou `False`) :
@@ -150,7 +151,7 @@ assert (not ((3 != 3) or (5 < 2))) == True
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="4. Expressions complexes" difficulty="medium">
+<ExerciseSection title="4. Expressions complexes" difficulty="medium" type="lecture">
 <Enonce>
 
 Évaluer les expressions suivantes étape par étape :
@@ -188,7 +189,7 @@ assert (((5 > 3) or (2 < 1)) and (not (4 == 4))) == False
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="5. Fonctions booléennes" difficulty="important">
+<ExerciseSection title="5. Fonctions booléennes" difficulty="important" type="python">
 <Enonce>
 
 Écrire les fonctions Python suivantes qui retournent un booléen :
@@ -237,7 +238,7 @@ assert est_triangle_rectangle(3, 4, 6) == False
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="6. Applications pratiques" difficulty="hard">
+<ExerciseSection title="6. Applications pratiques" difficulty="hard" type="python">
 <Enonce>
 
 Résoudre les problèmes suivants en écrivant les fonctions correspondantes :

@@ -5,125 +5,80 @@ level: '2'
 chapter: Localisation
 icon: "\U0001F30D"
 prerequisites: []
+audience: public
 ---
 
-> **📖 Définition : Géolocalisation**
-> **La géolocalisation** est une technique permettant de situer de manière précise un lieu, une personne ou un objet sur la planète grâce à des coordonnées géographiques.
+> **Définition : géolocalisation**
+> La **géolocalisation** situe un lieu, une personne ou un objet sur la Terre à l'aide de coordonnées géographiques.
 
-## 📅 Point Historique
+Votre téléphone le fait plusieurs fois par jour, souvent sans que vous le demandiez. Le cours sert à voir d'où vient cette position, comment on la calcule, et ce qu'elle révèle quand elle reste collée à une photo.
 
-> **📚 L'évolution du GPS**
->
-> *   **Années 1960** : L'armée américaine développe le **GPS (Global Positioning System)** pour améliorer la précision de ses opérations militaires.
-> *   **Années 1980** : Le premier satellite GPS est envoyé dans l'espace.
-> *   **Années 1990** : Le GPS devient accessible au grand public.
-> *   **Aujourd'hui** : La géolocalisation est omniprésente (smartphones, voitures, montres connectées, etc.).
+## D'un système militaire à une puce dans la poche
 
-D'autres puissances ont développé leurs propres systèmes :
-*   🇪🇺 **Galileo** (Europe, plus précis que le GPS)
-*   🇷🇺 **GLONASS** (Russie)
-*   🇨🇳 **BeiDou** (Chine)
+Dans les années 1960, l'armée américaine met au point le **GPS** (*Global Positioning System*) pour savoir où sont ses unités, avec une précision que les cartes papier ne donnaient pas. Le premier satellite est lancé dans les années 1980. Dans les années 1990, le signal devient accessible au public. Aujourd'hui, le même principe est dans les téléphones, les voitures et les montres.
 
-<Quiz 
-  question="Quel est le nom du système de positionnement par satellite européen ?" 
-  options={["GPS", "Galileo", "GLONASS", "BeiDou"]} 
-  answer={1} 
-  explanation="Galileo est le système européen, souvent plus précis que le GPS américain car plus récent."
-/>
+Le GPS n'est pas le seul système. L'Europe a **Galileo**, en général plus précis que le GPS civil. La Russie a **GLONASS**, la Chine a **BeiDou**. Un téléphone récent en écoute souvent plusieurs à la fois, et recoupe.
 
-## 📍 Coordonnées Géographiques
+## Trois nombres pour un point
 
-Pour localiser un point sur Terre, on utilise un système de coordonnées en trois dimensions :
+Un point sur Terre se décrit avec trois coordonnées.
 
 | Coordonnée | Définition | Unité | Exemple (Paris) |
 |------------|------------|-------|------------------|
-| **Latitude** | Angle par rapport à l'équateur (Nord/Sud) | Degrés | 48.8588897° N |
-| **Longitude** | Angle par rapport au méridien de Greenwich (Est/Ouest) | Degrés | 2.320041° E |
+| **Latitude** | Angle par rapport à l'équateur, vers le nord ou le sud | Degrés | 48.8588897° N |
+| **Longitude** | Angle par rapport au méridien de Greenwich, vers l'est ou l'ouest | Degrés | 2.320041° E |
 | **Altitude** | Hauteur par rapport au niveau de la mer | Mètres | 35 m |
 
-<Quiz 
-  question="Que représente la Latitude ?" 
-  options={["La position Est/Ouest", "La hauteur par rapport à la mer", "La position Nord/Sud par rapport à l'équateur", "La vitesse de déplacement"]} 
-  answer={2} 
-  explanation="La Latitude indique si on est au Nord ou au Sud de l'équateur (0°)."
-/>
+La latitude et la longitude suffisent à poser un point sur la carte. L'altitude dit si ce point est au sol, sur une colline, ou dans un immeuble. Sans elle, deux lieux l'un au-dessus de l'autre se confondent.
 
 <GpsCoordinates />
 
-## 🛰️ Fonctionnement par Satellite
+## Comment le récepteur se situe
 
-### La Trilatération
+> **Définition : trilatération**
+> La **trilatération** détermine une position en mesurant les distances à au moins trois points de référence connus. Ici, ces points sont des satellites.
 
-> **📖 Définition : Trilatération**
-> **La trilatération** est la technique mathématique utilisée pour déterminer une position en mesurant les distances depuis au moins trois points de référence connus (les satellites).
+Le récepteur n'envoie rien vers l'espace. Il écoute. Il capte les signaux d'au moins quatre satellites : trois pour la position dans l'espace, un quatrième pour recaler l'horloge, qui doit être extrêmement juste. La distance se déduit du temps de trajet. Le signal voyage à la vitesse de la lumière, environ 300 000 km/s, donc \(d = v \times t\). Autour de chaque satellite, cette distance dessine une sphère. Votre position est à l'intersection de ces sphères.
 
-**Le processus :**
-1.  Le récepteur GPS capte les signaux d'au moins **4 satellites** (3 pour la position, 1 pour la synchronisation temporelle).
-2.  Il calcule la distance grâce au temps de trajet du signal ($d = v \times t$, avec $v = 300\,000 \text{ km/s}$).
-3.  L'intersection des sphères de distance donne la position exacte.
+La précision n'est pas garantie. Elle dépend du nombre de satellites visibles, de la météo, des obstacles (un immeuble, un tunnel) et de la qualité du récepteur. En ville, entre les façades, le signal rebondit et la position saute.
 
-<Quiz 
-  question="Combien de satellites sont nécessaires au minimum pour obtenir une position GPS précise (latitude, longitude et altitude) ?" 
-  options={["1", "2", "3", "4"]} 
-  answer={3} 
-  explanation="Il faut 3 satellites pour trianguler la position (X, Y, Z) et un 4ème pour synchroniser l'horloge du récepteur avec celle, atomique, des satellites."
-/>
-
-!!! warning "Précision du signal"
-    La précision dépend de nombreux facteurs : nombre de satellites visibles, météo, obstacles (bâtiments, tunnels) et qualité du récepteur.
-
-### 🎮 Activité Interactive
-
-Comprenez le principe de la trilatération en manipulant les satellites pour retrouver le renard !
+Vous pouvez manipuler les satellites sur la carte pour retrouver le renard : c'est le même calcul, rendu visible.
 
 <TrilaterationMap />
 
-## 🗺️ Cartographie Numérique
+## Afficher le point sur une carte
 
-Une fois que l'on connaît sa position (latitude, longitude), il faut l'afficher sur une carte. Il existe deux façons de représenter une carte numérique :
+Connaître 48,8° N et 2,3° E ne montre encore rien. Il faut une carte, et il en existe deux sortes.
 
-### 1. Cartes Matricielles (Raster)
-C'est une **image** composée de pixels (comme une photo satellite ou une carte papier scannée).
-*   **Avantage** : Très détaillé, réaliste (photo aérienne).
-*   **Inconvénient** : Si on zoome trop, l'image devient floue (pixelisée). Elle prend beaucoup de place en mémoire.
-*   *Exemple : Vue "Satellite" de Google Maps.*
+Une carte **matricielle**, ou raster, est une image faite de pixels. Une photo satellite, ou une carte papier scannée, en sont des exemples. Le détail est réaliste. Si l'on zoome trop, les carrés apparaissent, et le fichier est lourd. C'est la vue Satellite de Google Maps.
 
-### 2. Cartes Vectorielles
-C'est un **dessin** mathématique composé de formes géométriques (points, lignes, polygones).
-*   **Avantage** : On peut zoomer à l'infini sans perte de qualité (c'est toujours net). Le fichier est très léger. On peut changer le style (couleurs, nuit/jour) facilement.
-*   **Inconvénient** : Moins réaliste qu'une photo.
-*   *Exemple : Vue "Plan" de Google Maps, Waze, OpenStreetMap.*
+Une carte **vectorielle** est un dessin mathématique : des points, des lignes, des polygones. On zoome sans perdre la netteté, le fichier reste léger, et l'on peut changer les couleurs, le mode nuit par exemple, sans refaire la carte. Elle est moins « vraie » qu'une photo. C'est la vue Plan, Waze, ou OpenStreetMap.
 
 | Type | Composition | Zoom | Usage |
 |------|-------------|------|-------|
-| **Matricielle** | Pixels (Image) | Flou si zoomé | Photo aérienne, Scan |
-| **Vectorielle** | Formes (Maths) | Toujours net | GPS, Plans de ville |
+| **Matricielle** | Pixels | Flou si l'on zoome trop | Photo aérienne, scan |
+| **Vectorielle** | Formes | Reste net | GPS, plans de ville |
 
-## 🛣️ Calcul d'Itinéraires
+## Trouver un chemin
 
-Les applications comme **Google Maps** ou **Waze** utilisent des algorithmes (comme l'algorithme de Dijkstra) pour trouver le meilleur chemin en fonction de :
-*   La distance (plus court)
-*   Le temps (plus rapide)
-*   Le trafic (embouteillages, accidents)
-*   Les préférences (sans péage, à pied, à vélo)
+Une fois les deux points posés sur une carte vectorielle, encore faut-il les relier. Google Maps ou Waze s'appuient sur des algorithmes de plus court chemin, dont celui de Dijkstra. « Le meilleur » chemin n'est pas unique. On peut minimiser la distance, le temps, éviter un bouchon, refuser un péage, ou imposer la marche et le vélo. Le graphe des rues est le même. Ce qui change, c'est ce que l'on compte comme coût.
 
-## 💻 Le Protocole NMEA-0183
+## La phrase que le GPS envoie
 
-> **📖 Définition : NMEA**
-> Le protocole **NMEA-0183** est un standard textuel qui permet aux récepteurs GPS de communiquer leurs données (position, heure, qualité du signal) aux autres appareils.
+> **Définition : NMEA**
+> Le protocole **NMEA-0183** est un standard texte. Le récepteur GPS s'en sert pour transmettre sa position, l'heure et la qualité du signal à un autre appareil.
 
-### Structure d'une trame `$GPGGA`
+Une trame `$GPGGA` ressemble à ceci :
 
-Exemple de trame reçue :
 ```text
 $GPGGA,064036.289,4836.5375,N,00740.9373,E,1,04,3.2,200.2,M,,,,0000*0E
 ```
 
-Utilisez le décodeur ci-dessous pour analyser cette trame ou tester d'autres exemples :
+Les champs se suivent, séparés par des virgules : l'heure, la latitude, l'hémisphère, la longitude, le nombre de satellites, l'altitude. Le décodeur ci-dessous les sépare. Vous pouvez coller la trame de l'exemple, ou une autre.
 
 <NmeaDecoder />
 
-## 📝 Exercices d'Application
+## Exercices d'application
 
 ### Exercice 1 : Localisation du lycée
 1.  Sur votre téléphone ou sur Google Maps, retrouvez les coordonnées GPS exactes du lycée.

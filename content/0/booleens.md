@@ -6,10 +6,11 @@ chapter: Representation_de_base
 icon: "\U0001F518"
 prerequisites:
   - binaire
+audience: public
 ---
 
 <ExerciseTabs courseId="booleens-logique" courseTitle="Logique Booléenne">
-  <ExerciseSection id="bool-1" label="1. Cours : Logique Booléenne">
+  <ExerciseSection id="bool-1" label="1. Cours : Logique Booléenne" type="lecture">
     <Enonce>
 ## Introduction
 
@@ -123,7 +124,7 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="bool-2" label="2. Exercice Pratique">
+  <ExerciseSection id="bool-2" label="2. Exercice Pratique" type="python">
     <Enonce>
 ### Exercice Pratique
 

@@ -5,33 +5,34 @@ level: seconde
 chapter: Données structurées
 icon: "\U0001F5C4️"
 prerequisites: []
+audience: public
 ---
 
-# 1. Introduction
+# Données structurées
 
-La nécessité d'organiser et de structurer les données remonte aux premiers systèmes informatiques. Aujourd'hui, les données structurées permettent de gérer des milliards d'informations pour alimenter des applications, des sites web ou des systèmes d'intelligence artificielle.
+Dès que les ordinateurs ont eu à garder autre chose qu'un calcul, il a fallu ranger l'information pour la retrouver. Aujourd'hui, des applications, des sites et des systèmes d'intelligence artificielle s'appuient sur des quantités énormes de données. Elles ne sont utiles que si une machine peut les lire sans deviner.
 
-> **Définition** : **Une donnée structurée** est une information organisée selon un format prédéfini qui facilite son stockage, sa recherche et son traitement automatique par les machines.
+> **Définition**
+> Une **donnée structurée** est une information rangée selon un format décidé à l'avance. Ce format facilite le stockage, la recherche et le traitement automatique.
 
-On distingue deux catégories principales :
-- **Données tabulaires** : organisées en lignes et colonnes (ex: CSV).
-- **Données hiérarchiques** : organisées en arbre avec des niveaux de profondeur (ex: JSON).
+Deux familles reviennent sans cesse. Les données **tabulaires** se lisent en lignes et en colonnes, comme un tableau : le CSV en est l'exemple le plus simple. Les données **hiérarchiques** s'emboîtent, un élément contenant d'autres éléments : le JSON est fait pour cela.
 
-# 2. Les formats de données
+## Quatre formats, quatre usages
 
 | Format | Rôle | Exemple d'usage |
 |----------|-------------------------------|-----------------------|
-| **CSV** | Format tabulaire simple | Tableurs, exports de données |
-| **JSON** | Format hiérarchique pour structures complexes | APIs web, configuration |
-| **XML** | Format de balisage pour documents structurés | Documents officiels, échange |
-| **SQL** | Langage pour interroger les bases de données | Requêtes, rapports |
+| **CSV** | Tableau simple | Tableurs, exports |
+| **JSON** | Structure emboîtée | API web, fichiers de configuration |
+| **XML** | Document balisé | Échanges entre administrations |
+| **SQL** | Langage d'interrogation | Requêtes sur une base |
 
-## 2.1 Le format CSV (Données tabulaires)
+Le CSV et le JSON sont des fichiers. SQL n'est pas un format de fichier au même sens : c'est le langage avec lequel on interroge une base. On le met dans le même tableau parce que vous le croiserez au moment de « sortir » une information déjà rangée.
 
-Le format **CSV** (Comma-Separated Values) utilise des séparateurs (souvent des virgules ou des points-virgules) pour délimiter les colonnes.
-Il commence souvent par une ligne d'en-tête.
+### Le CSV, un tableau dans un fichier texte
 
-**Exemple : Base de données sur les renards**
+**CSV** veut dire *Comma-Separated Values* : des valeurs séparées par des virgules, ou souvent, en France, par des points-virgules. La première ligne donne en général le nom des colonnes. Chaque ligne suivante est un enregistrement.
+
+Voici une petite base sur des renards. La virgule sépare les champs, pas les phrases.
 
 ```csv
 Nom,Espece,Habitat,Poids_kg,Longueur_cm
@@ -41,14 +42,13 @@ Fennec,Vulpes zerda,Désert,1.5,24
 Silver,Vulpes vulpes,Forêt boréale,7.1,61
 ```
 
-## 2.2 Le format JSON (Données hiérarchiques)
+Si vous ouvrez ce fichier dans un tableur, chaque virgule devient une frontière de colonne. C'est tout le format : rien de caché, et justement pour cela il supporte mal une information qui contient elle-même des sous-parties.
 
-Le format **JSON** (JavaScript Object Notation) permet de représenter des objets complexes avec des relations internes.
-Il est constitué de paires **clé-valeur**.
+### Le JSON, quand une fiche a des tiroirs
 
-> **Note** : Le JSON est très utilisé sur le web car il est léger et lisible par les humains et les machines.
+**JSON** (*JavaScript Object Notation*) décrit des objets par des paires **clé-valeur**. Une valeur peut elle-même être un objet, ou une liste. On s'en sert beaucoup sur le Web parce que le fichier reste léger et qu'un humain peut encore le lire.
 
-**Exemple : Fiche détaillée d'un renard**
+La fiche de Rusty ne tient pas dans une seule ligne de tableau : le poids, l'habitat et le menu ne sont pas au même niveau. Le JSON le montre.
 
 ```json
 {
@@ -74,17 +74,13 @@ Il est constitué de paires **clé-valeur**.
 }
 ```
 
-# 3. Les Bases de Données Relationnelles
+`alimentation` est une liste. `habitat` est un objet, qui contient encore un objet `coordonnees`. C'est cette imbrication que le CSV ne sait pas écrire sans se tordre.
 
-Pour gérer de grands volumes de données, on utilise des **bases de données**.
-Le **modèle relationnel** organise les données en **tables** liées entre elles.
+## Les bases relationnelles
 
-### Concepts clés :
-- **Table** : Structure organisée en lignes (enregistrements) et colonnes (champs).
-- **Relation** : Lien entre les tables (via des clés étrangères).
-- **SQL** : Langage standard pour interroger et manipuler les données.
+Quand les données deviennent nombreuses, et surtout quand elles se recoupent, un fichier ne suffit plus. On passe à une **base de données**. Le **modèle relationnel** range l'information dans des **tables** reliées entre elles.
 
-**Exemple : Table "Renards"**
+Une **table** est un tableau : les lignes sont les enregistrements, les colonnes sont les champs. Une **relation** relie deux tables, en général grâce à une clé : le numéro qui permet de retrouver, dans une autre table, la fiche qui correspond. **SQL** est le langage standard pour interroger ces tables et les modifier.
 
 | ID | Nom | Espèce | Habitat | Poids (kg) | Région |
 |----|-----|--------|---------|------------|--------|
@@ -93,68 +89,46 @@ Le **modèle relationnel** organise les données en **tables** liées entre elle
 | 3 | Fennec | Vulpes zerda | Désert | 1.5 | Afrique |
 | 4 | Silver | Vulpes vulpes | Forêt | 7.1 | Amérique |
 
-# 3.5 Traitement des données
+L'`ID` n'est pas un détail. C'est lui qui permettra, plus tard, de dire « cet animal » sans recopier tout son nom à chaque fois qu'une autre table en parle.
 
-Une fois les données structurées dans une table, on peut effectuer des opérations pour en extraire de l'information.
+## Trier, filtrer, calculer
 
-### Les opérations de base :
-1. **Trier** : Ordonner les données (ex: du plus petit au plus grand).
-2. **Filtrer** : Ne garder que les données qui nous intéressent (ex: seulement les monstres de type Feu).
-3. **Calculer** : Faire des statistiques (ex: moyenne des niveaux).
+Une fois la table remplie, on ne la relit pas ligne à ligne. On lui pose des opérations.
 
-Essayez de manipuler cette base de données de monstres :
+**Trier**, c'est ranger : du plus léger au plus lourd, par exemple. **Filtrer**, c'est ne garder que ce qui nous intéresse, les renards de forêt, ou, dans une autre base, les monstres de type Feu. **Calculer**, c'est produire un nombre que la table ne contient pas encore, comme une moyenne.
+
+La base ci-dessous se manipule directement. Essayez un tri, puis un filtre, et regardez ce qui reste.
 
 <DataProcessor />
 
-# 4. Le Cloud Computing
+## Le cloud
 
-> **☁️ Définition**
->
-> Le **Cloud Computing** (ou informatique en nuage) consiste à utiliser des serveurs informatiques distants via Internet pour stocker des données ou exécuter des applications, plutôt que de le faire sur son propre disque dur.
+> **Définition**
+> Le **cloud computing**, l'informatique en nuage, consiste à utiliser des serveurs distants, via Internet, pour stocker des données ou exécuter des programmes, plutôt que de tout faire sur son propre disque.
 
-### 🏠 Local vs ☁️ Cloud
-
-- **Stockage Local** : Vos fichiers sont sur votre ordinateur/téléphone. Si vous le perdez, vous perdez tout.
-- **Stockage Cloud** : Vos fichiers sont envoyés dans des **Data Centers** (immenses usines à serveurs). Ils sont dupliqués pour ne jamais être perdus.
+Sur votre ordinateur, un fichier perdu avec la machine est perdu. Dans un data center, les mêmes fichiers sont copiés plusieurs fois, justement pour qu'une panne de disque ne les efface pas. Ce n'est pas immatériel : ce sont des bâtiments, de l'électricité, et des machines qui appartiennent à quelqu'un.
 
 <CloudArchitecture />
 
-> **⚠️ Enjeu de souveraineté**
->
-> La plupart des géants du Cloud (Google, Amazon, Microsoft) sont américains. Cela pose la question de la confidentialité : qui a le droit de regarder vos données stockées chez eux ? (cf. le *Cloud Act* américain).
+La plupart des très gros acteurs, Google, Amazon, Microsoft, sont américains. La question n'est donc pas seulement « est-ce que mes fichiers sont en sécurité », mais « qui a le droit de les regarder ». Le *Cloud Act* américain permet, dans certains cas, à la justice des États-Unis d'exiger des données détenues par ces entreprises, y compris lorsque les serveurs sont ailleurs.
 
-# 5. Données Personnelles et RGPD
+## Vos données, et le RGPD
 
-> **🛡️ RGPD (Règlement Général sur la Protection des Données)**
->
-> Depuis 2018, ce règlement européen protège votre vie privée. Il impose des règles strictes aux entreprises qui collectent vos données.
+> **RGPD**
+> Depuis 2018, le règlement général sur la protection des données encadre, en Europe, la collecte et l'usage des données personnelles.
 
-En tant que citoyen européen, vous disposez de **droits fondamentaux** sur vos données.
+Le règlement ne dit pas qu'une entreprise n'a pas le droit de connaître votre nom. Il dit à quelles conditions elle peut le faire, et quels droits vous gardez : accéder à ce qui est stocké, le faire corriger, parfois le faire effacer. Le schéma ci-dessous reprend ces droits.
 
 <RgpdRights />
 
-# 6. Big Data et Open Data
+## Quand il y en a trop, et quand on les ouvre
 
-### 🌊 Big Data (Mégadonnées)
+On parle de **big data** lorsque le volume devient trop grand pour les outils habituels, un tableur par exemple. Ces données viennent des téléphones, des réseaux sociaux, des objets connectés, des satellites. On les résume souvent par trois V.
 
-Quand le volume de données devient si grand qu'il est impossible de le traiter avec des outils classiques (comme Excel), on parle de **Big Data**.
-Ces données proviennent de nos smartphones, des réseaux sociaux, des objets connectés, des satellites...
+Le **volume** est la quantité : des téraoctets, des pétaoctets. YouTube reçoit environ 500 heures de vidéo chaque minute. La **variété** rappelle que tout n'est pas un tableau propre : du texte, des photos, du son, une position, un clic. La **vélocité** est la vitesse à laquelle il faut les traiter. Un algorithme de trading décide en quelques millisecondes ; il ne peut pas attendre le lendemain.
 
-Le Big Data est caractérisé par la règle des **3V** :
-1.  **Volume** : La quantité de données est gigantesque (Téraoctets, Pétaoctets).
-    *   *Exemple : YouTube reçoit 500 heures de vidéo chaque minute.*
-2.  **Variété** : Les données sont de toutes formes (Texte, images, sons, géolocalisation, clics...).
-    *   *Exemple : Facebook analyse vos photos, vos messages et vos likes en même temps.*
-3.  **Vélocité** : La vitesse à laquelle les données sont créées et doivent être analysées en temps réel.
-    *   *Exemple : Les algorithmes de trading en bourse décident en quelques millisecondes.*
+L'**open data** est une autre démarche. Il s'agit de publier des données numériques gratuitement, sans restriction de droit d'auteur qui en empêcherait la réutilisation. Ce sont souvent l'État ou les collectivités qui ouvrent leurs fichiers, pour la transparence et pour que d'autres construisent des services dessus.
 
-### 🔓 Open Data (Données Ouvertes)
+La RATP publie les horaires de bus en temps réel, et une application comme Citymapper s'en sert pour vous guider. La base des produits alimentaires nourrit une application comme Yuka. Le geste est le même : une donnée publique, réutilisée par quelqu'un d'autre.
 
-L'**Open Data** est une démarche politique et citoyenne qui consiste à mettre des données numériques **gratuitement à la disposition de tous**, sans restriction de droit d'auteur.
-
-C'est souvent l'État ou les collectivités qui ouvrent leurs données pour favoriser la transparence et l'innovation.
-
-*   **Exemple 1** : La RATP partage les horaires de bus en temps réel -> L'application *Citymapper* les utilise pour vous guider.
-*   **Exemple 2** : La base de données des produits alimentaires -> L'application *Yuka* l'utilise pour noter vos courses.
-
-> 🌍 **Ressource** : Visitez [data.gouv.fr](https://www.data.gouv.fr), la plateforme officielle des données publiques françaises.
+Le portail officiel des données publiques françaises est [data.gouv.fr](https://www.data.gouv.fr).

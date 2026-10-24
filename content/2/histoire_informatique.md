@@ -6,59 +6,43 @@ chapter: Histoire
 icon: "\U0001F4DC"
 badgeId: histoire_info
 prerequisites: []
+audience: public
 ---
 
 # Histoire de l'informatique
 
-## Objectifs
+L'informatique ne commence pas avec le PC de la maison. Elle commence quand on essaie de faire calculer une machine, puis quand on sépare l'idée du calcul de la quincaillerie qui le réalise. Les concepts, l'algorithme, le programme stocké, le réseau, arrivent souvent avant les appareils que le public peut acheter. Ce chapitre pose quelques jalons pour que les cours d'architecture et de réseaux aient une date, pas seulement une définition.
 
-- Situer quelques jalons majeurs de l'histoire de l'informatique.
-- Relier figures (Lovelace, Turing, von Neumann…) et idées (programme, machine universelle, architecture).
-- Distinguer Internet et Web dans le récit contemporain.
-- Identifier la continuité : automatiser le calcul → miniaturiser → démocratiser.
+## Avant l'électronique
 
-## Idée clé
+En 1642, Blaise Pascal fait construire la Pascaline, une machine mécanique qui additionne et soustrait. On tourne des roues, les retenues se propagent toutes seules. Ce n'est pas encore un ordinateur : elle ne décide pas de la prochaine opération. En 1801, le métier Jacquard tisse des motifs commandés par des cartes perforées. Le dessin n'est plus dans les mains du tisserand, il est dans un support qu'on peut changer. L'idée de programme externe est déjà là, dans un atelier textile.
 
-L'informatique naît de la rencontre entre **logique / mathématiques** et **technologie** (mécanique, puis électronique). Les concepts (algorithme, programme stocké, réseau) précèdent souvent les machines grand public.
+En 1834, Charles Babbage décrit la machine analytique : une mémoire, un organe de calcul, et une suite d'opérations à enchaîner. Il ne la construit pas. Ada Lovelace, entre 1815 et 1852, travaille avec lui et écrit un algorithme pour cette machine, le calcul des nombres de Bernoulli. On la présente souvent comme la première programmeuse, parce qu'elle décrit ce que la machine doit faire, et pas seulement comment la construire. Elle voit aussi que l'engin pourrait manipuler autre chose que des nombres, des symboles, si on lui donne les règles.
 
-## Précurseurs (avant 1940)
+## La guerre, puis une architecture
 
-Avant l'électronique, on cherche déjà à automatiser le calcul.
+La Seconde Guerre mondiale accélère tout ce qui calcule, en particulier la cryptanalyse. En 1936, avant même le conflit, Alan Turing a déjà proposé un modèle très dépouillé, la **machine de Turing**, pour dire ce qu'un algorithme peut calculer et ce qu'il ne pourra jamais calculer. Ce n'est pas un plan d'usine. C'est une frontière.
 
-- **1642 — Pascaline** (Blaise Pascal) : machine à calculer mécanique (addition, soustraction).
-- **1801 — Métier Jacquard** : motifs pilotés par **cartes perforées** — idée de « programme » externe.
-- **1834 — Machine analytique** (Charles Babbage) : vision d'une machine à enchaîner des opérations (mémoire + calcul), jamais construite de son vivant.
+En 1945, l'architecture de von Neumann fixe le schéma que vous avez vu par ailleurs : une mémoire unique pour les données et le programme, et une unité de calcul. La même année, l'ENIAC devient le premier grand calculateur entièrement électronique. Il pèse des tonnes, occupe une salle, et on le programme en rebranchant des câbles. Le programme n'est pas encore un fichier qu'on charge. Il est un câblage.
 
-**Ada Lovelace** (1815–1852) collabore avec Babbage et décrit un algorithme pour la machine (nombres de Bernoulli) : souvent présentée comme la **première programmeuse**.
+## Du tube à la puce
 
-## Naissance de l'ordinateur (1940–1950)
+En 1947, le transistor remplace peu à peu les tubes à vide. Il est plus petit, chauffe moins, tombe moins en panne. Sans lui, la suite ne tient pas dans une pièce, encore moins dans une poche. En 1971, l'Intel 4004 met un processeur entier sur une puce. C'est le microprocesseur : l'unité de calcul quitte l'armoire.
 
-La Seconde Guerre mondiale accélère calcul et cryptanalyse.
+En 1965, Gordon Moore observe que le nombre de transistors sur une puce double à peu près tous les deux ans. La « loi de Moore » n'est pas une loi physique. C'est une prévision industrielle, qui a piloté des décennies de hausse de puissance, jusqu'à ce que la miniaturisation devienne beaucoup plus difficile.
 
-- **1936 — Alan Turing** : modèle de la **machine de Turing** — ce qui est calculable.
-- **1945 — Architecture de von Neumann** : mémoire unique pour données **et** programme + unité de calcul — schéma des ordinateurs modernes.
-- **1945 — ENIAC** : premier grand ordinateur entièrement électronique (tonnes, m², programmation par câblage).
+## Quand tout le monde peut s'en servir
 
-## Révolution électronique (1950–1980)
+En 1984, le Macintosh popularise l'interface graphique : fenêtres, souris, icônes. Une partie de ces idées vient des recherches de Xerox, au Palo Alto Research Center, que le grand public n'avait pas vues. En 1989, Tim Berners-Lee, au CERN, propose le Web : HTML et HTTP. Internet, le réseau, existe déjà depuis les années 1960-1970. Le Web est une application par-dessus, celle des pages et des liens. Les confondre, c'est dater le réseau de 1989, vingt ans trop tard.
 
-- **1947 — Transistor** : remplace les tubes à vide (plus petit, plus fiable).
-- **1971 — Microprocesseur** (Intel 4004) : le processeur sur une puce — miniaturisation.
+Google est fondé en 1998. L'iPhone arrive en 2007 et déplace l'informatique dans la main, avec un écran tactile et une connexion permanente. Le calcul, parti d'une machine de salon qu'on ne pouvait pas déplacer, tient alors dans un objet qu'on oublie sur une table.
 
-**Loi de Moore** (1965) : observation / prédiction que le nombre de transistors sur une puce double environ tous les deux ans — moteur de la hausse de puissance pendant des décennies.
-
-## Informatique pour tous (1980–aujourd'hui)
-
-- **1984 — Macintosh** : interface graphique grand public (fenêtres, souris), héritée notamment de travaux Xerox.
-- **1989 — Web** (Tim Berners-Lee, CERN) : HTML et HTTP — Internet existait déjà ; le Web le rend navigable par hyperliens.
-- **1998** : Google.
-- **2007** : iPhone — informatique mobile et tactile.
-
-## Frise chronologique
+## Frise
 
 | Date | Événement | Idée à retenir |
 | :--- | :--- | :--- |
 | 1843 | Ada Lovelace | Premier programme théorique |
-| 1936 | Alan Turing | Machine universelle / calculabilité |
+| 1936 | Alan Turing | Machine universelle, calculabilité |
 | 1945 | Von Neumann | Architecture à programme stocké |
 | 1947 | Transistor | Base de l'électronique moderne |
 | 1969 | ARPANET | Racines d'Internet |
@@ -66,19 +50,8 @@ La Seconde Guerre mondiale accélère calcul et cryptanalyse.
 | 1989 | Web | Pages et hyperliens au CERN |
 | 2007 | Smartphone | Internet mobile |
 
-## Piège fréquent
+La date de 1843 est celle des notes de Lovelace sur la machine de Babbage, pas celle de sa naissance. La frise mélange exprès des idées (Turing, von Neumann) et des objets (le transistor, le téléphone). Les cours du programme se rangent derrière l'une ou l'autre colonne.
 
-Confondre **Internet** (réseau de réseaux, années 1960–70) et **Web** (application d'hypertexte, 1989). Autre simplification : croire que « l'informatique commence avec le PC » — les concepts clés sont antérieurs.
+## Pour s'entraîner
 
-## À retenir
-
-- Racines : automatiser le calcul (Pascal, Jacquard, Babbage / Lovelace).
-- Turing formalise le calculable ; von Neumann structure l'ordinateur moderne.
-- Transistor puis microprocesseur : miniaturisation et démocratisation.
-- Internet ≠ Web : le réseau précède les pages hypertexte.
-- Interfaces graphiques et smartphones ont ouvert l'informatique au grand public.
-- L'histoire mêle idées abstraites et sauts technologiques.
-
-## Pour s'entraîner / Suite
-
-Reliez chaque ligne de la frise à un cours du programme (architecture, réseaux, Web). Pour approfondir une figure, une courte biographie ou un documentaire sur Turing / Lovelace / Berners-Lee complète utilement ce panorama.
+Reliez chaque ligne de la frise à un cours du programme : architecture, réseaux ou Web. Pour une figure, une courte biographie de Turing, de Lovelace ou de Berners-Lee suffit à sortir du tableau.

@@ -9,30 +9,19 @@ chapter: Langages et Programmation
 icon: "🐛"
 badgeId: terminale_modularite
 prerequisites: []
+audience: public
 ---
 
-# 🧩 Modularité et Mise au Point
+# Modularité et mise au point
 
-En Terminale NSI, il ne s'agit plus seulement d'écrire du code qui "marche", mais d'écrire du code **robuste**, **maintenable** et **vérifié**. Ce chapitre aborde les bonnes pratiques pour structurer vos programmes et chasser les bugs efficacement.
+En Terminale, un programme qui « marche sur l'exemple du cours » ne suffit plus. Il doit rester lisible dans six mois, survivre à une entrée absurde, et pouvoir être vérifié sans le relire en entier. Trois outils portent ce travail : découper en modules, traiter les erreurs au lieu de les laisser planter, et écrire des tests qui rejouent les cas connus.
 
----
+## Découper en modules
 
-## 1. La Modularité
+La **modularité** consiste à répartir un programme dans plusieurs fichiers, les **modules**, chacun avec une responsabilité. On s'y retrouve. Une fonction écrite une fois, comme celles du module `math`, sert dans plusieurs projets. Deux personnes peuvent modifier deux fichiers sans réécrire la même fonction en parallèle.
 
-La **modularité** consiste à découper un programme complexe en plusieurs fichiers ou composants plus petits et indépendants, appelés **modules**.
+Un module Python est un fichier `.py`. Son nom, sans l'extension, est le nom qu'on importe.
 
-### Pourquoi modulariser ?
-
-*   **Organisation** : Le code est plus lisible et plus facile à naviguer.
-*   **Réutilisabilité** : Une fonction bien écrite dans un module peut être utilisée dans plusieurs projets (ex: le module `math`).
-*   **Collaboration** : Plusieurs développeurs peuvent travailler sur des modules différents sans se gêner.
-
-### Créer et importer un module en Python
-
-Un module Python est simplement un fichier `.py`.
-
-**Exemple :**
-Imaginons un fichier `geometrie.py` :
 ```python
 # Fichier: geometrie.py
 PI = 3.14159
@@ -45,7 +34,7 @@ def perimetre_cercle(rayon):
     return 2 * PI * rayon
 ```
 
-Pour l'utiliser dans un autre fichier `main.py` :
+Depuis un autre fichier du même dossier, `import geometrie` charge le module. On appelle ensuite `geometrie.aire_cercle(r)` : le préfixe dit d'où vient le nom, et évite d'écraser une fonction `aire_cercle` que le fichier courant aurait déjà.
 
 ```python
 # Fichier: main.py
@@ -56,8 +45,10 @@ aire = geometrie.aire_cercle(r)
 print(f"L'aire est {aire}")
 ```
 
+Quatre formes reviennent. `import geometrie` charge tout le module, et l'on préfixe. `from geometrie import aire_cercle` ne récupère que cette fonction, appelable sans préfixe. `from geometrie import *` verse tous les noms dans le fichier courant : pratique pour un essai, illisible ensuite, parce qu'on ne sait plus qui a défini quoi. `import geometrie as geo` donne un surnom, utile quand le nom du module est long. On choisit le préfixe dès que deux modules pourraient offrir le même nom.
+
 <ExerciseTabs courseId="prog_mod_import" courseTitle="Imports">
-  <ExerciseSection id="mod-import-1" label="Variantes d'import">
+  <ExerciseSection id="mod-import-1" label="Variantes d'import" type="lecture">
     <Enonce>
       Il existe plusieurs façons d'importer. Que font les commandes suivantes ?
       1. `import geometrie`
@@ -68,19 +59,17 @@ print(f"L'aire est {aire}")
   </ExerciseSection>
 </ExerciseTabs>
 
----
+## Trois sortes d'erreurs
 
-## 2. Gestion des Bugs et Exceptions
+Un **bug** est un écart entre ce que le programme fait et ce qu'on voulait. Il n'arrive pas toujours de la même façon.
 
-Un **bug** est une erreur dans un programme informatique. On distingue trois types d'erreurs principales :
+Une **erreur de syntaxe** viole la grammaire du langage : un `:` oublié après `if`. Python n'exécute rien. Il faut corriger avant même le premier test.
 
-1.  **Erreurs de syntaxe** : Le code ne respecte pas les règles du langage (ex: oubli de `: ` après un `if`). Python arrête l'exécution immédiatement.
-2.  **Erreurs d'exécution (Exceptions)** : Le code est syntaxiquement correct, mais une opération impossible est demandée pendant l'exécution (ex: division par zéro, index hors liste).
-3.  **Erreurs de logique** : Le programme ne plante pas, mais le résultat est faux (ex: formule mathématique incorrecte). Ce sont les plus difficiles à détecter !
+Une **exception** survient pendant l'exécution, sur un code pourtant syntaxiquement correct. Diviser par zéro, lire un indice hors de la liste, additionner un texte et un entier. Le programme s'arrête sur la ligne impossible, sauf si on a prévu de rattraper l'erreur.
 
-### Gérer les exceptions avec `try` / `except`
+Une **erreur de logique** ne plante pas. La formule est fausse, le résultat est plausible, et l'on peut le croire. C'est la plus difficile : seuls des exemples dont on connaît la réponse la trahissent.
 
-Pour éviter qu'un programme ne plante brutalement, on peut "attraper" les exceptions.
+`try` / `except` rattrape une exception. Le bloc `try` tente l'opération. Si l'exception nommée se produit, le bloc `except` correspondant s'exécute, et le programme continue. Une exception non prévue continue de remonter.
 
 ```python
 def division_sur(a, b):
@@ -95,13 +84,11 @@ def division_sur(a, b):
         return None
 ```
 
----
+`ZeroDivisionError` et `TypeError` ne se mélangent pas. Un `except:` sans nom avalerait tout, y compris une faute de frappe dans le corps, et l'on mettrait des heures à comprendre pourquoi le calcul ne se fait plus. On attrape ce qu'on sait traiter. Le reste doit rester visible.
 
-## 3. Programmation Défensive : `assert`
+## Dire ce que la fonction exige
 
-La programmation défensive consiste à anticiper les problèmes. L'instruction `assert` permet de vérifier une condition en cours d'exécution. Si la condition est fausse, le programme s'arrête avec une erreur (`AssertionError`).
-
-C'est très utile pour vérifier les **préconditions** d'une fonction (ce que la fonction attend en entrée).
+`assert` vérifie une condition au moment de l'exécution. Si elle est fausse, Python lève `AssertionError` et s'arrête, avec le message qu'on a fourni. On s'en sert pour les **préconditions** : ce que la fonction a le droit d'attendre de ses arguments, pendant qu'on développe. Ce n'est pas un dialogue avec l'utilisateur. Une saisie incorrecte se traite avec `if` et `except`. Une assertion qui échoue dit : le programme est arrivé dans un état que le développeur jugeait impossible.
 
 ```python
 def calcul_moyenne(notes):
@@ -110,14 +97,16 @@ def calcul_moyenne(notes):
     
     somme = 0
     for note in notes:
-        # Invariant : chaque note doit être valide
+        # Chaque note lue doit appartenir à l'intervalle attendu
         assert 0 <= note <= 20, f"Note invalide trouvée : {note}"
         somme += note
     return somme / len(notes)
 ```
 
+La précondition porte sur la liste entière : elle n'est pas vide, sinon la division finale n'a pas de sens. L'assertion dans la boucle contrôle chaque note. L'**invariant** de cette boucle, lui, est autre chose : après chaque tour, `somme` vaut la somme des notes déjà parcourues. On ne l'écrit pas toujours en `assert`. On le garde en tête quand on relit la boucle, parce que c'est lui qui justifie le `return`.
+
 <ExerciseTabs courseId="prog_mod_assert" courseTitle="Assertions">
-  <ExerciseSection id="mod-assert-1" label="Pratique">
+  <ExerciseSection id="mod-assert-1" label="Pratique" type="python">
     <Enonce>
       Écrivez une fonction `racine_carree(x)` qui utilise `math.sqrt`.
       Ajoutez une assertion pour vérifier que `x` est positif ou nul.
@@ -125,15 +114,11 @@ def calcul_moyenne(notes):
   </ExerciseSection>
 </ExerciseTabs>
 
----
+## Des tests qui rejouent les exemples
 
-## 4. Tests Unitaires et Doctests
+Une erreur de logique ne lève pas d'exception. On l'attrape en comparant le résultat à une valeur qu'on a calculée à la main. Un **test** est ce comparaison, écrite dans le projet, rejouée à chaque modification.
 
-Pour vérifier qu'une fonction fait bien ce qu'elle est censée faire (pas d'erreur de logique), on écrit des **tests**.
-
-### Les Doctests
-
-C'est une spécificité géniale de Python : on écrit les tests directement dans la documentation de la fonction (docstring). Ils servent à la fois d'exemple pour l'utilisateur et de test automatique.
+Un **doctest** vit dans la docstring. Les lignes qui commencent par `>>>` sont des appels, la ligne suivante est le résultat attendu. La docstring documente et vérifie en même temps.
 
 ```python
 def somme(a, b):
@@ -155,11 +140,9 @@ if __name__ == "__main__":
     doctest.testmod()
 ```
 
-Si tout va bien, `doctest.testmod()` n'affiche rien. S'il y a une erreur, il l'affiche en détail.
+`if __name__ == "__main__"` évite de lancer les tests quand un autre fichier importe `somme`. Exécuté directement, `doctest.testmod()` rejoue les exemples. S'ils passent, il n'affiche rien. S'ils échouent, il montre la valeur obtenue et la valeur attendue.
 
-### Les Tests Unitaires (`unittest`)
-
-Pour des projets plus gros, on utilise le module `unittest`. On crée une classe qui hérite de `unittest.TestCase`.
+Pour un projet plus gros, `unittest` range les tests dans une classe qui hérite de `unittest.TestCase`. Chaque méthode dont le nom commence par `test` est un cas. `assertEqual` échoue si les deux arguments diffèrent.
 
 ```python
 import unittest
@@ -178,8 +161,10 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
+Un test raconte un cas : des arguments, un résultat. Il ne relit pas le corps de la fonction. Quand on modifie `multiplication`, on relance la classe. Les cas déjà justes doivent le rester.
+
 <ExerciseTabs courseId="prog_mod_doctest" courseTitle="Doctests">
-  <ExerciseSection id="mod-doctest-1" label="Écrire un doctest">
+  <ExerciseSection id="mod-doctest-1" label="Écrire un doctest" type="python">
     <Enonce>
       Ajoutez des doctests à la fonction suivante qui vérifie si un nombre est pair.
       ```python
@@ -190,10 +175,6 @@ if __name__ == '__main__':
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
-
----
-
-## 📝 Résumé
 
 | Concept | Description | Outil Python |
 | :--- | :--- | :--- |

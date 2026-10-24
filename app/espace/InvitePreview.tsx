@@ -3,8 +3,8 @@ import { BookOpen, GraduationCap } from "lucide-react";
 import { Card, PageHeader } from "@/components/ui";
 
 const LINKS = [
-  { href: "/cours", label: "Cours", text: "Parcourir les parcours publics. Chaque exercice s’ouvre depuis sa fiche.", icon: BookOpen },
-  { href: "/academie", label: "Académie", text: "Explorer l’académie.", icon: GraduationCap },
+  { href: "/", label: "Accueil", text: "Parcourir les parcours publics. Chaque exercice s’ouvre depuis sa fiche.", icon: BookOpen },
+  { href: "/academie", label: "Le renard dans le poulailler", text: "Guide le renard jusqu’à la poule en Python.", icon: GraduationCap },
 ];
 
 export function InvitePreview({ name }: { name: string }) {

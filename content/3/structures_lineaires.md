@@ -8,6 +8,7 @@ icon: "\U0001F4DA"
 badgeId: terminale_structures_lineaires
 prerequisites:
   - poo_classes_objets
+audience: public
 ---
 
 # 📚 Structures de Données Linéaires
@@ -83,7 +84,7 @@ C'est comme une file d'attente à la cantine. On ajoute à la fin (queue), on re
 
 <ExerciseTabs courseId="terminale_structures_lineaires" courseTitle="Exercices Piles & Files">
 
-  <ExerciseSection id="struct-ex-1" label="Parenthésage">
+  <ExerciseSection id="struct-ex-1" label="Parenthésage" type="python">
     <Enonce>
     ### Vérification de parenthèses (Pile)
     On veut vérifier si une expression est bien parenthésée : `(a + b) * (c)` est bon, `(a + b` est mauvais.
@@ -100,7 +101,7 @@ C'est comme une file d'attente à la cantine. On ajoute à la fin (queue), on re
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="struct-ex-2" label="Croisement Routier">
+  <ExerciseSection id="struct-ex-2" label="Croisement Routier" type="python">
     <Enonce>
     ### Simulation de croisement (File)
     On modélise un feu rouge avec une File. Les voitures arrivent et s'ajoutent à la file. Quand le feu passe au vert, la première voiture part.

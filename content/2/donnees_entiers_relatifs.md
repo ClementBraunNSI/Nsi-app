@@ -7,68 +7,46 @@ icon: "\U0001F321️"
 badgeId: premiere_entiers_relatifs
 prerequisites:
   - donnees_entiers_positifs
+audience: public
 ---
 
 # Entiers négatifs en binaire
 
-## Objectifs
+Les entiers positifs tiennent dans des puissances de 2. Une température, un score, une coordonnée descendent aussi en dessous de zéro. Il faut donc coder des entiers **signés**, et d'abord fixer la taille : 4 bits, 8 bits, 32 bits. Le domaine représentable dépend de ce choix. Sur 8 bits, le codage qu'utilisent les processeurs va de $-128$ à $+127$.
 
-- Comprendre pourquoi un simple « bit de signe » ne suffit pas
-- Représenter un entier négatif en **complément à deux**
-- Vérifier qu'une addition binaire donne le bon résultat
+## Le bit de signe ne suffit pas
 
-## Idée clé
+La première idée est simple. Le bit de gauche dit le signe : **0** pour un positif, **1** pour un négatif. Les autres bits codent la valeur absolue. Sur 4 bits, $0100_{(2)}$ vaut $+4$, et $1001_{(2)}$ se lit « négatif, et 001 », donc $-1$.
 
-Sur $n$ bits, les ordinateurs codent les entiers relatifs en **complément à deux** : le bit de poids fort vaut $-2^{n-1}$, les autres bits restent positifs. L'addition marche alors **comme pour les positifs** (sans circuit spécial pour la soustraction).
+Deux défauts rendent cette convention inutilisable pour calculer. Il existe **deux zéros** : $0000$ et $1000$, « plus zéro » et « moins zéro ». Et l'addition ordinaire ne tombe pas juste. Avec cette écriture, $-13 + 13$ ne donne pas 0. Il faudrait un circuit spécial pour la soustraction. Les machines n'ont pas choisi ce chemin.
 
-## Pourquoi coder les négatifs ?
+## Le complément à deux
 
-Températures, scores, coordonnées… Il faut des nombres **signés**. On fixe d'abord la taille : 4 bits, 8 bits, 32 bits, etc. Le domaine représentable dépend de $n$.
+Le **complément à deux** règle les deux problèmes d'un coup. Sur $n$ bits, le bit de poids fort pèse $-2^{n-1}$, et les autres bits gardent leur poids positif habituel. L'addition se fait alors **comme pour les positifs**. La retenue qui sort des $n$ bits est ignorée. Pas de circuit à part pour soustraire : soustraire $b$, c'est ajouter l'opposé de $b$.
 
-Sur 8 bits en complément à deux : de $-128$ à $+127$.
+L'image utile est le compteur kilométrique. Après $0000$, si l'on recule d'un cran, tous les rouleaux passent à 9, ou ici à 1. $1111$ joue le rôle de $-1$, $1110$ celui de $-2$, et ainsi de suite. On n'a qu'un seul zéro, $0000$. La plage sur $n$ bits est $[-2^{n-1}\,;\,2^{n-1}-1]$.
 
-## Première idée : bit de signe
+Pour écrire un négatif :
 
-Le bit le plus à gauche code le signe : **0** = positif, **1** = négatif ; le reste code la valeur absolue.
+1. Écrire la **valeur absolue** en binaire, sur les $n$ bits, avec les zéros de tête.
+2. **Inverser** tous les bits. C'est le complément à un.
+3. **Ajouter 1**.
 
-Exemples sur 4 bits : $0100_{(2)} = +4$, $1001_{(2)} = -1$.
-
-Deux problèmes :
-
-1. **Deux zéros** : $0000$ et $1000$
-2. **Additions fausses** : $-13 + 13$ ne donne pas 0 avec cette convention
-
-Cette représentation n'est donc pas utilisée pour l'arithmétique machine.
-
-## Complément à deux
-
-### Analogie
-
-Comme un compteur kilométrique : après $0000$, en reculant on obtient $1111$, $1110$, … qui jouent le rôle de $-1$, $-2$, …
-
-### Méthode (nombre négatif)
-
-1. Écrire la **valeur absolue** en binaire (sur $n$ bits)
-2. **Inverser** tous les bits (complément à 1)
-3. **Ajouter 1**
-
-Exemple : $-14$ sur 8 bits
+Exemple : $-14$ sur 8 bits.
 
 1. $14 = 00001110_{(2)}$
 2. Inversion : $11110001_{(2)}$
 3. $+1$ : $11110010_{(2)}$
 
-Donc $-14_{(10)} = 11110010_{(2)}$ (complément à 2, 8 bits).
+Donc $-14_{(10)} = 11110010_{(2)}$ en complément à deux sur 8 bits. Oublier le $+1$ laisse le complément à un, qui n'est pas le codage de la machine. Changer de taille en cours de route non plus : un nombre sur 4 bits n'a pas les mêmes zéros de tête que sur 8 bits, et l'inversion ne donne pas le même résultat.
 
-### Vérification par addition
-
-Sur 4 bits : $14$ ne tient pas, prenons plutôt $6 + (-4)$.
+On vérifie par l'addition. Sur 4 bits, prenons $6 + (-4)$, puisque 14 ne tient pas dans 4 bits en positif.
 
 - $6 = 0110_{(2)}$
-- $-4$ : $0100$ → invert $1011$ → $+1$ → $1100_{(2)}$
-- Somme : $0110 + 1100 = 10010$ → on garde 4 bits : $0010_{(2)} = 2$ ✓
+- $-4$ : valeur absolue $0100$, inversion $1011$, plus un $\rightarrow 1100_{(2)}$
+- Somme : $0110 + 1100 = 10010$. On ne garde que 4 bits : $0010_{(2)} = 2$.
 
-Les retenues hors des $n$ bits sont **ignorées**.
+La retenue sortie du quatrième bit est jetée. Le résultat est bien $6 - 4 = 2$.
 
 | Critère | Bit de signe | Complément à 2 |
 |---|---|---|
@@ -76,18 +54,7 @@ Les retenues hors des $n$ bits sont **ignorées**.
 | Addition correcte | Non | Oui |
 | Usage actuel | Non | Standard |
 
-## Piège fréquent
-
-Oublier d'**ajouter 1** après l'inversion : on obtient alors le complément à 1, pas le complément à 2. Autre erreur : changer de taille de bits en cours de calcul (4 bits vs 8 bits).
-
-## À retenir
-
-- Le bit de signe seul crée un double zéro et casse l'arithmétique
-- Complément à 2 : inverser les bits, puis $+1$
-- Sur $n$ bits : plage $[-2^{n-1}\,;\,2^{n-1}-1]$
-- L'addition se fait comme pour les positifs ; on tronque à $n$ bits
-- Le bit de poids fort vaut $-2^{n-1}$ en complément à 2
-- C'est la représentation utilisée par les processeurs modernes
+Pour fermer : le bit de signe seul fabrique deux zéros et casse l'addition. Le complément à deux inverse les bits puis ajoute 1. Sur $n$ bits, on représente de $-2^{n-1}$ à $2^{n-1}-1$. On additionne comme pour les positifs et on tronque à $n$ bits. Le bit de poids fort vaut $-2^{n-1}$. C'est le codage des processeurs.
 
 ## Pour s'entraîner
 

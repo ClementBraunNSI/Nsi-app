@@ -6,160 +6,141 @@ chapter: BTS SIO 1 SLAM AP
 icon: "\U0001F697"
 prerequisites:
   - missionap1
+audience: public
 ---
 
-Mission 2 : Gestion de Flotte Automobile - AutoRent
+# Mission AP2 — Gestion de flotte AutoRent
 
-**Durée :** 16h (4h/semaine en 4 semaines) **Atelier de professionnalisation - Semestre 2**
+Le but de cette mission est de moderniser la gestion du parc d'AutoRent, une agence de location.
+Durée : 16 h (4 h par semaine, 4 semaines), atelier de professionnalisation, semestre 2.
 
-1) Compétences abordées
+Le siège envoie chaque jour un CSV brut. Vous construisez deux outils qui se parlent par un fichier :
 
-*   B1.2 Recenser et identifier les ressources numériques
-*   B1.3 Développer la présence en ligne de l'organisation
-*   B2.1 Concevoir et développer une solution applicative
-*   B2.2 Assurer la maintenance corrective ou évolutive d'une solution applicative
+1. une application console C#, qui lit, contrôle et structure les véhicules ;
+2. une page web (HTML, CSS, PHP), qui montre aux clients uniquement les véhicules disponibles.
 
----
+**Compétences :** B1.2 Recenser et identifier les ressources numériques. B1.3 Développer la présence en ligne. B2.1 Concevoir et développer une solution applicative. B2.2 Assurer la maintenance corrective ou évolutive.
 
-2) Contexte
+**Ressources :**
+- [Fichier flotte.csv](/assets/ap2/flotte.csv)
 
-**L'agence de location "AutoRent"**
-AutoRent est une agence de location de véhicules qui souhaite moderniser la gestion de son parc automobile. Actuellement, les données des véhicules sont reçues quotidiennement du siège sous forme de fichiers CSV bruts, difficiles à exploiter directement.
+## 1. La veille, avant le code 📎
 
-L'agence a besoin de deux outils complémentaires :
-1.  Une **application backend (C#)** pour traiter, valider et structurer les données reçues.
-2.  Une **interface web (HTML/CSS/PHP)** pour présenter le catalogue des véhicules disponibles aux clients.
+Note d'une page, pas plus, à rendre avec le projet.
 
----
+1. Héritage en C# : à quoi sert `:`, quelle est la différence entre la classe de base et la classe dérivée, peut-on hériter de plusieurs classes.
+2. Polymorphisme : à quoi servent `virtual` et `override`, et comment une `List<Vehicule>` contient à la fois des voitures et des motos.
+3. Un schéma, même crayonné, où `Voiture` et `Moto` héritent de `Vehicule`. Le camping-car s'y ajoute dans la section suivante.
 
-3) Recherche Préliminaire (Veille Technologique)
+## 2. Les données 🚗
 
-Avant de commencer le développement, vous devez acquérir les bases théoriques nécessaires pour cette mission.
+Le CSV source, séparateur point-virgule. `Divers1` et `Divers2` changent de sens selon le type : à vous de les ranger dans les bonnes propriétés.
 
-**Thème : L'Héritage et le Polymorphisme en POO**
+```csv
+Type;Immatriculation;Marque;Modele;Prix;Km;Etat;Divers1;Divers2
+Voiture;AB-123-CD;Peugeot;208;35;12000;Disponible;5;Oui
+Moto;EF-456-GH;Yamaha;MT-07;45;5000;En maintenance;689;A
+CampingCar;IJ-789-KL;Fiat;Ducato;120;45000;Loué;7.2;4
+```
 
-Vous devez produire une courte **note de synthèse** (1 page max) répondant aux questions suivantes :
-1.  **L'Héritage :**
-    *   Qu'est-ce que l'héritage (`:` en C#) et quel est son but principal (DRY - Don't Repeat Yourself) ?
-    *   Quelle est la différence entre une classe "Mère" (Base) et une classe "Fille" (Dérivée) ?
-    *   Peut-on hériter de plusieurs classes en C# ?
-2.  **Le Polymorphisme :**
-    *   Que signifient les mots-clés `virtual` et `override` en C# ?
-    *   Comment faire pour stocker des `Voiture` et des `Moto` dans une seule et même `List<Vehicule>` ?
-3.  **Application au projet :**
-    *   Proposez une ébauche de diagramme de classe pour AutoRent montrant comment `Voiture` et `Moto` héritent de `Vehicule`.
+Lecture de la première ligne de données : une `Voiture`, immatriculation `AB-123-CD`, marque Peugeot, modèle 208, prix 35, 12 000 km, état Disponible, 5 places, climatisation Oui.
 
-*Ressources conseillées : Microsoft Docs (C#), Cours sur OpenClassrooms ou NSI.app.*
+La moto : cylindrée 689, permis A. Le camping-car : longueur 7,2 m, 4 couchages.
 
----
+<ExerciseTabs courseId="sio_ap2_modele" courseTitle="Modèle AutoRent">
+  <ExerciseSection id="ap2-modele-1" label="Les classes" type="autre">
+    <Enonce>
+      Classe de base `Vehicule` : immatriculation, marque, modèle, prix par jour, kilométrage, état (`Disponible`, `En maintenance`, `Loué`).
 
-4) Cahier des Charges
+      - `Voiture` : nombre de places, climatisation (oui ou non).
+      - `Moto` : cylindrée en cm³, permis (A ou A2).
+      - `CampingCar` : longueur en mètres, capacité de couchage.
 
-Le projet doit respecter les contraintes techniques et fonctionnelles suivantes :
+      La colonne `Type` choisit la classe à construire. Une ligne `Voiture` ne devient pas une `Moto`.
 
-**A. Gestion des Données (Backend)**
-*   L'application doit être capable de lire un fichier de données brutes (`flotte.csv`) fourni par le siège.
-*   L'agence loue désormais trois types de véhicules : **Voitures**, **Motos** et **Camping-Cars**.
-*   Les données doivent être stockées en mémoire sous forme d'objets structurés en utilisant l'**Héritage** (vu en Recherche Préliminaire) :
-    *   Une classe mère `Vehicule` contenant les propriétés communes (Immatriculation, Marque, Modèle, Prix, État).
-    *   Des classes filles avec leurs spécificités :
-        *   `Voiture` : Nombre de places, Climatisation (Oui/Non).
-        *   `Moto` : Cylindrée (cc), Permis requis (A/A2).
-        *   `CampingCar` : Longueur (m), Capacité couchage.
-*   L'application doit garantir l'intégrité des données (ex: pas de prix négatif, format d'immatriculation valide).
+      *Attention : un prix négatif est refusé, la ligne n'entre pas dans la liste. Une immatriculation qui n'a pas la forme deux lettres, trois chiffres, deux lettres (comme `AB-123-CD`) est refusée aussi. Affichez la ligne rejetée, et continuez le fichier.*
 
-**B. Traitements Automatisés**
-*   L'application doit permettre de filtrer les véhicules selon leur état (Disponible, En maintenance, Loué) **ET** selon leur type (Voiture, Moto, Camping-Car).
-*   Elle doit calculer des indicateurs financiers (ex: revenu potentiel total du parc).
-*   Simulation de devis. L'utilisateur peut sélectionner un véhicule et une durée pour obtenir le coût total (avec application d'une remise de 10% pour les locations > 7 jours).
-*   Elle doit générer un fichier d'export propre (`disponibles.csv`) contenant uniquement les véhicules prêts à la location, formaté pour être lu par le site web.
+      Après chargement de l'exemple : 3 véhicules, dont 1 disponible (la 208). La moto est en maintenance, le camping-car est loué.
+    </Enonce>
+  </ExerciseSection>
 
-**C. Interface Client (Frontend)**
-*   Le site web doit afficher dynamiquement la liste des véhicules disponibles à partir du fichier généré par l'application C#.
-*   L'interface doit permettre de filtrer l'affichage par catégorie (ex: "Voir uniquement les Motos").
-*   Le client doit pouvoir visualiser clairement les informations spécifiques (ex: la cylindrée pour une moto).
+  <ExerciseSection id="ap2-modele-2" label="AfficherDetails" type="autre">
+    <Enonce>
+      `AfficherDetails()` est `virtual` sur `Vehicule` et `override` dans chaque classe. Une voiture affiche les places et la climatisation. Une moto affiche la cylindrée et le permis. Un camping-car affiche la longueur et les couchages. Le reste (immatriculation, marque, modèle, prix, état) est commun : il est écrit une fois, dans la classe de base.
 
----
+      Contrôle sur la 208 : on lit `AB-123-CD`, `Peugeot`, `208`, `35`, `Disponible`, `5` places, climatisation `Oui`.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-1) Fonctionnement attendu de l'application C#
+## 3. La console du gestionnaire 🖥️
 
-L'application backend sera une **application Console** interactive destinée au gestionnaire de parc. Voici le scénario d'utilisation type :
+Au démarrage, l'application charge `flotte.csv`. Le menu ne plante pas sur un choix invalide : il réaffiche les options.
 
-1.  **Démarrage :** L'application se lance et charge automatiquement les données depuis le fichier source (`flotte.csv`).
-2.  **Menu Principal :** L'utilisateur accède à un menu textuel proposant plusieurs actions :
-    *   *Afficher le parc complet* : Liste tous les véhicules (triés par type).
-    *   *Filtrer par type/état* : "Afficher toutes les Motos disponibles".
-    *   *Rechercher un véhicule* : Par immatriculation.
-    *   *Simuler un devis* : Calculer le prix pour X jours.
-    *   *Afficher les statistiques* :
-        *   Nombre de véhicules par type.
-        *   Revenu potentiel total.
-        *   Véhicule le plus cher et le moins cher.
-    *   *Exporter pour le Web* : Génère le fichier `disponibles.csv`.
-    *   *Quitter*.
-3.  **Interaction :** L'application doit gérer les erreurs de saisie (ex: choix invalide dans le menu) sans planter.
+```text
+1. Afficher le parc complet
+2. Filtrer par type et par état
+3. Rechercher par immatriculation
+4. Simuler un devis
+5. Statistiques
+6. Exporter les disponibles
+7. Quitter
+```
 
----
+<ExerciseTabs courseId="sio_ap2_console" courseTitle="Console">
+  <ExerciseSection id="ap2-console-1" label="Filtres et recherche" type="autre">
+    <Enonce>
+      Le choix 1 liste les véhicules groupés par type : voitures, puis motos, puis camping-cars. Chacun passe par `AfficherDetails()`.
 
-6) Développement de l'Application C# (Partie 2)
+      Le choix 2 demande le type et l'état. « Motos disponibles » sur le fichier d'exemple n'affiche rien : la MT-07 est en maintenance. « Voitures disponibles » affiche la 208.
 
-Vous devez concevoir et développer l'application en respectant les principes de la **Programmation Orientée Objet**, spécifiquement l'**Héritage** et le **Polymorphisme**.
+      Le choix 3 demande une immatriculation. `AB-123-CD` affiche la 208. `ZZ-000-ZZ` affiche `Véhicule introuvable.`
+    </Enonce>
+  </ExerciseSection>
 
-**Travail à faire :**
+  <ExerciseSection id="ap2-console-2" label="Devis et statistiques" type="autre">
+    <Enonce>
+      Le devis multiplie le prix par jour par le nombre de jours. Au-delà de 7 jours, une remise de 10 % s'applique sur le total. 7 jours tout juste : pas de remise.
 
-1.  **Analyse et Modélisation :**
-    *   Concevoir l'architecture des classes. Quelle est la classe de base ? Quelles sont les classes dérivées ?
-    *   Définir les propriétés communes et spécifiques.
-    *   Réaliser le **Diagramme de Classes UML** complet mettant en évidence les relations d'héritage.
+      ```text
+      AB-123-CD, 7 jours : 35 * 7 = 245
+      AB-123-CD, 10 jours : 35 * 10 = 350, remise 35, à payer 315
+      ```
 
-2.  **Implémentation :**
-    *   Développer la hiérarchie de classes (`Vehicule`, `Voiture`, `Moto`, `CampingCar`).
-    *   Utiliser le **Polymorphisme** pour la méthode `AfficherDetails()` (chaque type de véhicule s'affiche différemment).
-    *   Mettre en place la lecture du fichier CSV. Attention : le fichier CSV contiendra une colonne "Type" qui vous permettra de savoir quelle classe instancier (Factory Pattern simplifié).
-    *   Implémenter la logique du menu et des filtres.
-    *   Gérer l'export CSV en incluant les nouvelles colonnes spécifiques.
+      Un nombre de jours inférieur à 1 est refusé, le menu revient.
 
----
+      Les statistiques affichent : le nombre de véhicules par type (1, 1 et 1 sur l'exemple), le revenu potentiel du parc si chaque véhicule était loué un jour (35 + 45 + 120 = 200), le plus cher (Ducato, 120) et le moins cher (208, 35).
+    </Enonce>
+  </ExerciseSection>
 
-7) Développement de l'Interface Web (Partie 3)
+  <ExerciseSection id="ap2-console-3" label="Export" type="autre">
+    <Enonce>
+      Le choix 6 écrit `disponibles.csv`, uniquement les véhicules à l'état Disponible. Sur l'exemple, une seule ligne de données : la 208. Les colonnes spécifiques suivent : places et climatisation pour une voiture, cylindrée et permis pour une moto, longueur et couchages pour un camping-car. L'en-tête nomme ces colonnes. Le site web lira ce fichier, pas `flotte.csv`.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-L'interface web est la vitrine pour les clients.
+## 4. La vitrine web 🌐
 
-**Travail à faire :**
+`index.php` lit `disponibles.csv`. Chaque type a une icône (🚗, 🏍️ ou 🚐). Les caractéristiques spécifiques sont des badges : par exemple `Permis A` pour une moto, `5 places` pour la 208. Les cartes sont en grille, le CSS est dans un fichier à part.
 
-1.  **Structure de la page (`index.php`) :**
-    *   Concevoir une page qui lit le fichier `disponibles.csv`.
-    *   Utiliser des icônes (FontAwesome ou Emojis) pour distinguer visuellement les types de véhicules (🚗, 🏍️, 🚐).
+Des boutons filtrent l'affichage : Tout, Voitures, Motos, Camping-cars. Sur l'export d'exemple, Tout et Voitures montrent la 208. Motos ne montre rien.
 
-2.  **Design et Ergonomie (CSS) :**
-    *   Créer des "Badges" pour afficher les caractéristiques (ex: Badge "Permis A" pour les motos).
-    *   Mettre en page les résultats de manière grille.
+<ExerciseTabs courseId="sio_ap2_web" courseTitle="Vitrine">
+  <ExerciseSection id="ap2-web-1" label="La grille" type="autre">
+    <Enonce>
+      La page ouverte après l'export affiche la Peugeot 208, son prix 35, l'icône voiture, et le badge des 5 places. La Yamaha et le Fiat n'apparaissent pas : ils ne sont pas disponibles.
 
-3.  **Recherche et Filtres (Bonus) :**
-    *   Ajouter des boutons pour filtrer l'affichage instantanément (Tout, Voitures, Motos, Camping-Cars).
+      Le filtre Motos laisse la grille vide, avec le texte `Aucun véhicule dans cette catégorie.` Revenir sur Tout réaffiche la 208. Les chemins du CSV fonctionnent quand on ouvre la page depuis le dossier rendu.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
----
+## 5. Ce qu'on rend 📦
 
-1) Livrables attendus
+- Le projet C# (solution complète, code commenté), qui charge l'exemple et dont le devis 10 jours de la 208 affiche 315.
+- Le diagramme de classes, avec les trois héritages et `AfficherDetails`.
+- Les fichiers PHP et CSS, et le `disponibles.csv` produit par votre export.
+- Un guide utilisateur PDF : comment lancer la console, exporter, puis ouvrir la page.
 
-*   **Le Code Source C#** (Projet Visual Studio complet, code commenté).
-*   **Le Code Source Web** (Fichiers PHP, CSS).
-*   **Le Diagramme de Classes** (Indispensable pour valider l'héritage).
-*   **Un Guide Utilisateur** (PDF).
-
----
-
-8) Ressources et Aides
-
-*   **Format du fichier CSV source (`flotte.csv`) :**
-    [📥 Télécharger le fichier flotte.csv](/assets/ap2/flotte.csv)
-
-    ```csv
-    Type;Immatriculation;Marque;Modele;Prix;Km;Etat;Divers1;Divers2
-    Voiture;AB-123-CD;Peugeot;208;35;12000;Disponible;5;Oui
-    Moto;EF-456-GH;Yamaha;MT-07;45;5000;En maintenance;689;A
-    CampingCar;IJ-789-KL;Fiat;Ducato;120;45000;Loué;7.2;4
-    ```
-    *(Note : Les colonnes Divers1 et Divers2 changent de sens selon le type de véhicule. À vous de les mapper correctement dans votre code !)*
-
-> **Note :** Ce projet simule une architecture réelle où un "Back-Office" (C#) prépare les données pour un "Front-Office" (Web). Soigner la communication entre les deux (le format du fichier CSV d'échange).
+Le back-office prépare les données, le front-office les montre. Le format de `disponibles.csv` est décrit dans le guide : une personne qui n'a pas écrit le C# doit pouvoir le relire.

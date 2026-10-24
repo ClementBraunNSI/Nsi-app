@@ -6,11 +6,13 @@ chapter: Programmation en C
 icon: "\U0001F4AA"
 prerequisites:
   - exercices-tris
+audience:
+  accounts: []
 ---
 
 <ExerciseTabs courseId="c-tableaux-2d-levels" courseTitle="C - Tableaux 2D - Niveaux">
 
-  <ExerciseSection id="level-1" label="Niveau 1 - Facile">
+  <ExerciseSection id="level-1" label="Niveau 1 - Facile" type="autre">
     <Enonce>
       ### Exercices de Niveau 1 : Utilisation Simple
       
@@ -18,7 +20,7 @@ prerequisites:
     </Enonce>
     
     <ExerciseTabs courseId="c-tableaux-2d-exos" courseTitle="Niveau 1">
-      <ExerciseSection id="exo-1-1" label="1.1 - Morpion">
+      <ExerciseSection id="exo-1-1" label="1.1 - Morpion" type="autre">
         <Enonce>
         ### Exercice 1.1 : La Grille de Morpion
         **Objectif** : Manipuler un tableau 2D de caractères.
@@ -71,7 +73,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-1-2" label="1.2 - Tables">
+      <ExerciseSection id="exo-1-2" label="1.2 - Tables" type="autre">
         <Enonce>
         ### Exercice 1.2 : Table de Multiplication
         **Objectif** : Utiliser des boucles imbriquées pour remplir un tableau.
@@ -121,7 +123,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-1-3" label="1.3 - Diagonale">
+      <ExerciseSection id="exo-1-3" label="1.3 - Diagonale" type="autre">
         <Enonce>
         ### Exercice 1.3 : La Diagonale
         **Objectif** : Accéder aux éléments spécifiques d'une matrice.
@@ -166,7 +168,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-1-4" label="1.4 - Somme Totale">
+      <ExerciseSection id="exo-1-4" label="1.4 - Somme Totale" type="autre">
         <Enonce>
         ### Exercice 1.4 : Somme Totale
         **Objectif** : Parcourir tout le tableau pour accumuler une valeur.
@@ -212,7 +214,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-1-5" label="1.5 - Damier">
+      <ExerciseSection id="exo-1-5" label="1.5 - Damier" type="autre">
         <Enonce>
         ### Exercice 1.5 : Le Damier
         **Objectif** : Utiliser les indices `i` et `j` pour créer un motif.
@@ -262,7 +264,7 @@ prerequisites:
     </ExerciseTabs>
   </ExerciseSection>
 
-  <ExerciseSection id="level-2" label="Niveau 2 - Moyen">
+  <ExerciseSection id="level-2" label="Niveau 2 - Moyen" type="autre">
     <Enonce>
       ### Exercices de Niveau 2 : Fonctions
       
@@ -270,7 +272,7 @@ prerequisites:
     </Enonce>
 
     <ExerciseTabs courseId="c-tableaux-2d-exos" courseTitle="Niveau 2">
-      <ExerciseSection id="exo-2-1" label="2.1 - Sommes">
+      <ExerciseSection id="exo-2-1" label="2.1 - Sommes" type="autre">
         <Enonce>
         ### Exercice 2.1 : Somme des Lignes
         **Objectif** : Parcourir et analyser les données.
@@ -321,7 +323,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-2-2" label="2.2 - Maximum">
+      <ExerciseSection id="exo-2-2" label="2.2 - Maximum" type="autre">
         <Enonce>
         ### Exercice 2.2 : Recherche du Maximum
         Trouver la valeur maximale dans une matrice donnée et afficher ses coordonnées (ligne, colonne).
@@ -363,7 +365,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-2-3" label="2.3 - Transposée">
+      <ExerciseSection id="exo-2-3" label="2.3 - Transposée" type="autre">
         <Enonce>
         ### Exercice 2.3 : Transposée d'une Matrice
         **Objectif** : Manipuler les indices pour inverser lignes et colonnes.
@@ -407,7 +409,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-2-4" label="2.4 - Symétrie">
+      <ExerciseSection id="exo-2-4" label="2.4 - Symétrie" type="autre">
         <Enonce>
         ### Exercice 2.4 : Matrice Symétrique
         **Objectif** : Vérifier une propriété géométrique d'une matrice.
@@ -463,7 +465,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-2-5" label="2.5 - Recherche">
+      <ExerciseSection id="exo-2-5" label="2.5 - Recherche" type="autre">
         <Enonce>
         ### Exercice 2.5 : Recherche d'une Valeur
         **Objectif** : Fonction de recherche avec retour rapide.
@@ -521,7 +523,7 @@ prerequisites:
     </ExerciseTabs>
   </ExerciseSection>
 
-  <ExerciseSection id="level-3" label="Niveau 3 - Difficile">
+  <ExerciseSection id="level-3" label="Niveau 3 - Difficile" type="autre">
     <Enonce>
       ### Exercices de Niveau 3 : Allocation Dynamique
       
@@ -529,7 +531,7 @@ prerequisites:
     </Enonce>
 
     <ExerciseTabs courseId="c-tableaux-2d-exos" courseTitle="Niveau 3">
-      <ExerciseSection id="exo-3-1" label="3.1 - Malloc">
+      <ExerciseSection id="exo-3-1" label="3.1 - Malloc" type="autre">
         <Enonce>
         ### Exercice 3.1 : Création Dynamique (Malloc)
         **Objectif** : Maîtriser `malloc` et `free` pour les tableaux 2D.
@@ -595,7 +597,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-3-2" label="3.2 - Identité">
+      <ExerciseSection id="exo-3-2" label="3.2 - Identité" type="autre">
         <Enonce>
         ### Exercice 3.2 : Matrice Identité
         Créer une fonction `creer_identite(int n)` qui retourne une matrice identité de taille `N x N` (allouée dynamiquement).
@@ -650,7 +652,7 @@ prerequisites:
         </Verification>
       </ExerciseSection>
 
-      <ExerciseSection id="exo-3-3" label="3.3 - Pascal">
+      <ExerciseSection id="exo-3-3" label="3.3 - Pascal" type="autre">
         <Enonce>
         ### Exercice 3.3 : Triangle de Pascal (Tableau Irrégulier)
         **Objectif** : Allouer des lignes de tailles différentes.

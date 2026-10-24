@@ -10,6 +10,7 @@ prerequisites:
   - prog_recursivite
   - structures_graphes
   - sql-bases-donnees
+audience: public
 ---
 
 # Exercices fondamentaux

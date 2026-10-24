@@ -8,42 +8,44 @@ icon: "\U0001F512"
 badgeId: terminale_securite
 prerequisites:
   - reseaux_routage
+audience: public
 ---
 
-# 🔒 Sécurisation des Communications
+# Sécuriser les communications
 
-Sur Internet, les données transitent par de nombreux routeurs. N'importe qui sur le chemin pourrait intercepter les paquets ("Man in the Middle"). Il est donc crucial de **chiffrer** les données.
+Un paquet IP traverse des routeurs qui ne vous appartiennent pas. Quelqu'un placé sur le chemin peut le copier. On appelle cela une attaque de l'homme du milieu. Le chiffrement ne cache pas qu'une conversation a lieu, ni toujours vers qui. Il empêche de lire le contenu.
 
-## 1. Chiffrement Symétrique
+## Une seule clé
 
-C'est la méthode la plus ancienne (ex: Code de César, Enigma, AES).
-*   **Principe** : La **MÊME clé** sert à chiffrer et à déchiffrer.
-*   **Problème** : Comment échanger la clé secrète sans se la faire voler ? (Problème de l'échange de clés).
-*   **Exemple** : AES (Advanced Encryption Standard). Très rapide.
+Le chiffrement **symétrique** est le plus ancien. Le chiffre de César, la machine Enigma, et aujourd'hui AES (*Advanced Encryption Standard*) en font partie. La même clé sert à chiffrer et à déchiffrer. C'est rapide, et c'est pour cela qu'AES protège l'essentiel du trafic une fois la conversation lancée.
 
-## 2. Chiffrement Asymétrique
+Le problème est en amont. Pour utiliser la clé, les deux correspondants doivent déjà la posséder, et l'échanger sans qu'un tiers la lise. Si vous envoyez la clé dans le même canal que le message, celui qui écoute prend les deux. C'est le problème de l'échange de clés.
 
-Inventé dans les années 70 (RSA).
-*   **Principe** : On utilise une **paire de clés** :
-    1.  **Clé Publique** : Distribuée à tout le monde. Sert à **CHIFFRER**.
-    2.  **Clé Privée** : Gardée secrète. Sert à **DÉCHIFFRER**.
-*   **Analogie** : La clé publique est un cadenas ouvert. Tout le monde peut mettre un message dans une boîte et fermer le cadenas. Mais seul celui qui a la clé privée peut l'ouvrir.
-*   **Avantage** : Plus besoin d'échanger un secret !
-*   **Inconvénient** : Beaucoup plus lent que le symétrique.
+## Une paire de clés
 
-## 3. HTTPS et Certificats
+Le chiffrement **asymétrique**, dont RSA dans les années 1970, sépare les rôles. Chaque personne possède une **clé publique**, que tout le monde peut connaître, et une **clé privée**, qu'elle garde. Ce qu'une clé ferme, l'autre l'ouvre.
 
-Quand vous allez sur un site en `https://` (cadenas vert), le protocole TLS/SSL est utilisé. Il combine les deux méthodes pour le meilleur des deux mondes :
+Pour écrire un secret à quelqu'un, on chiffre avec *sa* clé publique. Seule sa clé privée peut déchiffrer. Vous n'avez rien de secret à lui envoyer au préalable : sa clé publique peut être affichée. L'image utile est le cadenas ouvert. N'importe qui peut le fermer sur une boîte. Une seule personne a la clé qui le rouvre.
 
-1.  **Authentification** : Le serveur envoie son **Certificat** (contenant sa clé publique), signé par une autorité de confiance (CA), pour prouver qu'il est bien `google.com` et pas un pirate.
-2.  **Échange de clé (Asymétrique)** : Le navigateur utilise la clé publique du serveur pour chiffrer une "clé de session" temporaire et l'envoyer au serveur.
-3.  **Communication (Symétrique)** : Une fois que les deux possèdent cette clé de session, ils l'utilisent avec AES pour chiffrer toute la conversation (car c'est plus rapide).
+C'est beaucoup plus lent que le symétrique. On ne chiffre donc pas une vidéo entière avec RSA. On s'en sert pour les petits secrets, en particulier pour se mettre d'accord sur une clé de session.
+
+## Ce que fait HTTPS
+
+Quand l'adresse commence par `https://`, le protocole TLS (autrefois SSL) combine les deux méthodes.
+
+D'abord, le serveur prouve qui il est. Il envoie un **certificat**, qui contient sa clé publique et qui est signé par une autorité de certification. Votre navigateur vérifie cette signature. Sans cela, n'importe qui pourrait présenter une clé en prétendant être le site, et votre cadenas ne protégerait qu'une conversation avec l'attaquant.
+
+Ensuite, le navigateur invente une clé de session, temporaire, et la chiffre avec la clé publique du serveur. Seul le serveur peut la lire, grâce à sa clé privée. Les deux possèdent alors le même secret, sans l'avoir écrit en clair sur le réseau.
+
+Enfin, toute la suite de la conversation est chiffrée avec cette clé de session, en symétrique, souvent AES. On a utilisé le lent pour transmettre un secret court, et le rapide pour le reste.
+
+Le cadenas dit que ce mécanisme est en place. Il ne dit pas que le site est honnête. Il dit que vous parlez bien à celui qui a obtenu le certificat, et que le trajet est illisible.
 
 ---
 
 <ExerciseTabs courseId="terminale_securite" courseTitle="Exercices Crypto">
 
-  <ExerciseSection id="secu-ex-1" label="Alice et Bob">
+  <ExerciseSection id="secu-ex-1" label="Alice et Bob" type="lecture">
     <Enonce>
     ### Scénario RSA
     Alice veut envoyer un message secret à Bob.

@@ -7,6 +7,7 @@ meta: 'Docstrings, Type Hinting et Documentation'
 level: premiere
 prerequisites:
   - python_exercices_fonctions
+audience: public
 ---
 
 ## 🐞 Chasseur de Bugs
@@ -37,7 +38,7 @@ print("Ouf, x est positif")
 ```
 
 <ExerciseTabs courseId="specifications-python" courseTitle="Spécification">
-  <ExerciseSection id="specs-1-1" label="1.1 - Documenter est_pair">
+  <ExerciseSection id="specs-1-1" label="1.1 - Documenter est_pair" type="python">
     <Enonce>
     ### Exercice 1.1 : Documenter est_pair
     **Ajouter une docstring complète à la fonction `est_pair` suivante :**
@@ -69,7 +70,7 @@ assert est_pair(4) is True, "est_pair(4) doit renvoyer True."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="specs-2-1" label="2.1 - Spécification de compter_mots">
+  <ExerciseSection id="specs-2-1" label="2.1 - Spécification de compter_mots" type="python">
     <Enonce>
     ### Exercice 2.1 : Spécification de compter_mots
     **Proposer une spécification (docstring) pour la fonction `compter_mots` :**
@@ -111,7 +112,7 @@ assert compter_mots("a b c") == 3, "compter_mots('a b c') doit renvoyer 3."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="specs-2-2" label="2.2 - Spécification de surface">
+  <ExerciseSection id="specs-2-2" label="2.2 - Spécification de surface" type="python">
     <Enonce>
     ### Exercice 2.2 : Spécification de surface
     **Proposer une spécification pour la fonction `surface` :**
@@ -149,7 +150,7 @@ assert abs(surface(1) - 3.14159) < 0.0001, "Le calcul de surface semble incorrec
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="specs-3-1" label="3.1 - Synthèse (Somme, Moyenne, Périmètre)">
+  <ExerciseSection id="specs-3-1" label="3.1 - Synthèse (Somme, Moyenne, Périmètre)" type="python">
     <Enonce>
     ### Exercice 3.1 : Somme, Moyenne et Périmètre
     **Écrivez les fonctions complètes (code + spécification) pour :**

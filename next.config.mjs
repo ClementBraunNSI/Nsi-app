@@ -2,6 +2,15 @@
 const nextConfig = {
   // Cette option aide Turbopack à trouver ses repères
   transpilePackages: ['lucide-react'],
+  async redirects() {
+    return [
+      {
+        source: "/cours",
+        destination: "/",
+        statusCode: 301,
+      },
+    ];
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {

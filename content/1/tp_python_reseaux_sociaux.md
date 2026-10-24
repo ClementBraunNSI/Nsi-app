@@ -6,11 +6,12 @@ chapter: Réseaux sociaux
 icon: "🐍"
 prerequisites:
   - Cours_Reseaux_Sociaux
+audience: public
 ---
 
 <ExerciseTabs courseId="tp-python-reseaux" courseTitle="TP Python : Réseaux sociaux" packages="networkx,pandas">
 
-  <ExerciseSection id="rs-0" label="Important ⚠️ - Avant de commencer">
+  <ExerciseSection id="rs-0" label="Important ⚠️ - Avant de commencer" type="lecture">
     <Enonce>
       ### Important ⚠️ - Avant de commencer
 
@@ -42,7 +43,7 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-1" label="Introduction 🦊 - Créer un graphe">
+  <ExerciseSection id="rs-1" label="Introduction 🦊 - Créer un graphe" type="python">
     <Enonce>
       ### Introduction 🦊 - Créer un graphe
 
@@ -63,7 +64,7 @@ assert set(reseau.nodes()) == {"Alice", "Bob", "Charlie"}, "Ajoutez Alice, Bob e
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-2" label="Introduction 🦊 - Relier des amis">
+  <ExerciseSection id="rs-2" label="Introduction 🦊 - Relier des amis" type="python">
     <Enonce>
       ### Introduction 🦊 - Relier des amis
 
@@ -92,7 +93,7 @@ assert not reseau.has_edge("Alice", "Charlie"), "Alice et Charlie ne sont pas am
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-3" label="Introduction 🦊 - Nombre d'amis">
+  <ExerciseSection id="rs-3" label="Introduction 🦊 - Nombre d'amis" type="python">
     <Enonce>
       ### Introduction 🦊 - Nombre d'amis
 
@@ -131,7 +132,7 @@ assert amis_bob == 3, "Bob a 3 amis dans ce réseau."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-4" label="Introduction 🦊 - Vérifier une amitié">
+  <ExerciseSection id="rs-4" label="Introduction 🦊 - Vérifier une amitié" type="python">
     <Enonce>
       ### Introduction 🦊 - Vérifier une amitié
 
@@ -166,7 +167,7 @@ assert alice_charlie_amis == False, "Alice et Charlie ne sont pas amis directeme
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-5" label="Facile 🦊 - Tableau des profils">
+  <ExerciseSection id="rs-5" label="Facile 🦊 - Tableau des profils" type="python">
     <Enonce>
       ### Facile 🦊 - Tableau des profils
 
@@ -200,7 +201,7 @@ assert ville_charlie == profils_ref.loc[profils_ref["Prénom"] == "Charlie", "Vi
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-6" label="Facile 🦊 - L'utilisateur le plus populaire">
+  <ExerciseSection id="rs-6" label="Facile 🦊 - L'utilisateur le plus populaire" type="python">
     <Enonce>
       ### Facile 🦊 - L'utilisateur le plus populaire
 
@@ -241,7 +242,7 @@ assert plus_populaire == "Alice", "Alice a le plus d'amis."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-7" label="Facile 🦊 - Graphe depuis un tableau">
+  <ExerciseSection id="rs-7" label="Facile 🦊 - Graphe depuis un tableau" type="python">
     <Enonce>
       ### Facile 🦊 - Graphe depuis un tableau
 

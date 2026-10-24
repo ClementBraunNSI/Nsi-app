@@ -4,10 +4,11 @@ description: "Découverte des types fondamentaux en Python : nombres, chaînes e
 level: SNI
 chapter: "Programmation_Python"
 icon: "🐍"
+audience: public
 ---
 
 <ExerciseTabs courseId="types-base" courseTitle="Types de base">
-  <ExerciseSection id="cours-types" label="Cours">
+  <ExerciseSection id="cours-types" label="Cours" type="lecture">
     <Enonce>
 ## Introduction
 
@@ -199,7 +200,7 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="ex-types-pratique" label="Exercice Pratique">
+  <ExerciseSection id="ex-types-pratique" label="Exercice Pratique" type="python">
     <Enonce>
 ### Exercice Pratique
 

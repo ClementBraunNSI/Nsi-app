@@ -5,6 +5,8 @@ level: particuliers
 chapter: "Programmation en C — Révisions"
 icon: "🔧"
 revisionSheet: true
+audience:
+  accounts: []
 ---
 
 # 🔧 Révision — Affectations & types

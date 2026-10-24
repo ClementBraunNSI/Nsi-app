@@ -8,89 +8,44 @@ chapter: Web
 icon: "\U0001F310"
 prerequisites:
   - Cours_html
+audience: public
 ---
 
-# 🌐 Web
-> L'évolution du World Wide Web et ses technologies fondamentales
+# Web
 
-## 📅 L'Histoire du World Wide Web
+Internet est le réseau. Le Web est une application qui tourne dessus : des pages, des liens, des images, que votre navigateur va chercher sur des serveurs. On va voir comment cette application est née, puis ce qui se passe vraiment quand vous tapez une adresse.
 
-### 1989 : Naissance du Web
-Tim Berners-Lee et Robert Cailliau créent le World Wide Web au CERN en Suisse. L'objectif : permettre l'échange de données sur Internet via des hyperliens.
+## Comment le Web est arrivé
 
-### 1991 : Premier Site Web
-Mise en ligne de la toute première page web au CERN, expliquant le concept du World Wide Web et comment l'utiliser.
+En 1989, Tim Berners-Lee et Robert Cailliau travaillent au CERN, en Suisse. Leur problème est concret : les chercheurs ont des documents éparpillés sur des machines différentes, et personne ne sait plus où chercher. Ils proposent de relier ces documents par des **hyperliens**, des liens cliquables qui mènent d'une ressource à une autre, même si elle est stockée ailleurs dans le monde.
 
-### 1993 : Web Libre
-Le CERN annonce que le Web sera libre d'utilisation pour tous, sans redevances. Cette décision révolutionnaire permet l'explosion du Web.
+En 1991, la première page est mise en ligne au CERN. Elle explique le projet, et comment s'en servir. En 1993, le CERN décide que le Web sera libre, sans redevance. Cette décision compte autant que l'invention elle-même : n'importe qui peut publier, sans payer une licence aux inventeurs. C'est ce qui permet l'explosion qui suit. Aujourd'hui, on compte plus de 1,7 milliard de sites.
 
-### Aujourd'hui : Web Moderne
-Plus de 1,7 milliard de sites web actifs, avec des technologies avancées permettant des applications complexes et interactives.
+Au début, le Web se lit. Entre 1990 et 2000 environ, une page ressemble à un journal : vous arrivez, vous lisez, vous repartez. On appelle parfois cela le Web 1.0. À partir des années 2000, vous publiez aussi. Un commentaire, une photo, un article de wiki : c'est le Web participatif, souvent appelé Web 2.0. Les réseaux sociaux, les blogs et les wikis en sont les formes les plus visibles.
 
-### 📜 L'Évolution : Du Web 1.0 au Web 2.0
+Dans les années 1990, deux navigateurs se disputent le marché, Netscape et Internet Explorer. Microsoft gagne cette première bataille. Plus tard, Chrome prendra la place. Le navigateur n'est pas le Web : c'est le programme qui l'affiche. Mais celui qui domine le marché influence beaucoup ce que les sites ont le droit de faire.
 
-- **Web 1.0 (1990-2000)** : Le Web "statique". On ne pouvait que *lire* des informations (comme un journal en ligne).
-- **Web 2.0 (2000-présent)** : Le Web "participatif". L'utilisateur devient acteur : il publie, commente, partage (Réseaux sociaux, Blogs, Wikis).
+> Un hyperlien est un lien cliquable vers une ressource, parfois sur un autre serveur. C'est l'idée centrale du Web : le document ne s'arrête pas à la page que vous avez sous les yeux.
 
-> **⚔️ La Guerre des Navigateurs**
->
-> Dans les années 90, deux logiciels se sont battus pour dominer le marché : **Netscape** et **Internet Explorer**. C'est Microsoft qui a gagné cette première bataille, avant d'être détrôné plus tard par **Google Chrome**.
+Voici un lien vers l'accueil du site : [accueil](../../index.md). Et si vous voulez voir à quoi ressemblait le tout début, la [première page du CERN](http://info.cern.ch/hypertext/WWW/TheProject.html) est encore en ligne.
 
-> **🎯 Concept Fondamental : Les Hyperliens**
->
-> La technologie du Web repose sur les **hyperliens** - des liens cliquables qui permettent de naviguer entre les ressources stockées sur différents serveurs à travers le monde.
+## Qui demande, qui répond
 
-> 🔗 **Exemple d'hyperlien :** [Lien menant à l'accueil du site](../../index.md)
+Le Web fonctionne en **client-serveur**. Les deux machines n'ont pas le même rôle, et ce rôle peut changer d'une requête à l'autre.
 
-> 🌍 **Anecdote historique :** Découvrez la [toute première page web](http://info.cern.ch/hypertext/WWW/TheProject.html) créée par les chercheurs du CERN !
+Le **client** est la machine qui veut recevoir quelque chose. Dans la vie courante, c'est votre navigateur. Du point de vue de TCP, c'est la machine réceptrice. Le **serveur** détient la page, l'image ou la vidéo, et l'envoie. C'est l'émettrice.
 
-<Quiz 
-  question="Quelle est la différence majeure entre le Web 1.0 et le Web 2.0 ?" 
-  options={["Le Web 2.0 est plus rapide", "Le Web 2.0 permet aux utilisateurs de créer du contenu (participatif)", "Le Web 1.0 n'utilisait pas Internet", "Le Web 2.0 est payant"]} 
-  answer={1} 
-  explanation="Le Web 2.0 marque le passage de sites statiques (lecture seule) à des plateformes dynamiques où les utilisateurs interagissent et créent du contenu (réseaux sociaux, blogs, wikis)."
-/>
-
-## 🔄 Le Modèle Client-Serveur
-
-> **🎯 Architecture Fondamentale**
->
-> Le Web fonctionne selon un modèle **client-serveur** où les machines communiquent selon des rôles bien définis.
-
-### 💻 Client
-Machine qui souhaite recevoir des informations ou des données. Correspond à la machine *réceptrice* dans les échanges TCP. Exemple : votre navigateur web.
-
-### 🖥️ Serveur
-Machine qui dispose d'informations et a pour rôle de les envoyer. Correspond à la machine *émettrice*. Exemple : serveur hébergeant un site web.
-
-> **📡 Communication par Requêtes**
->
-> Les échanges entre client et serveur se font via des **requêtes** - des messages formalisés qui permettent de demander ou d'envoyer des données.
+Ils ne s'envoient pas des phrases libres. Ils échangent des **requêtes**, des messages dont la forme est fixée à l'avance : on demande une ressource, ou on en envoie une, et l'autre côté sait comment lire la demande.
 
 ![Schéma du modèle client-serveur](/content/1/client_serveur.png)
 
-<Quiz 
-  question="Quel est le rôle du Client dans le modèle Client-Serveur ?" 
-  options={["Il stocke les sites web", "Il fournit la connexion Internet", "Il envoie des requêtes pour demander des ressources", "Il gère les adresses IP"]} 
-  answer={2} 
-  explanation="Le Client (comme votre navigateur) demande des pages web au Serveur en envoyant des requêtes HTTP."
-/>
+## De l'adresse IP à l'adresse que vous tapez
 
-## 🏷️ Adresses IP et URL
-
-> **🌐 De l'IP à l'URL**
->
-> Plutôt que de retenir des adresses IP comme **216.58.214.163** pour accéder à Google, nous utilisons des **URL** (Uniform Resource Locator) - des adresses intelligibles par l'humain.
-
-### 🧩 Structure d'une URL
+Personne ne retient `216.58.214.163` pour ouvrir Google. On retient une **URL**, *Uniform Resource Locator* : une adresse écrite pour nous.
 
 <UrlBuilder />
 
-> **🗂️ Serveur DNS (Domain Name Server)**
->
-> Le serveur DNS maintient une table de correspondance entre les adresses IP et les adresses symboliques, permettant la traduction automatique des URL en adresses IP.
-
-### 📊 Exemple de Table DNS
+Le **DNS** (*Domain Name System*) tient la table de correspondance entre ces noms et les adresses IP. Quand vous demandez un nom, quelqu'un doit le traduire.
 
 | Site | Adresse symbolique | Adresse IP |
 |------|-------------------|------------|
@@ -99,37 +54,15 @@ Machine qui dispose d'informations et a pour rôle de les envoyer. Correspond à
 | Leboncoin | www.leboncoin.fr | 18.164.52.43 |
 | Amazon | www.amazon.fr | 52.95.116.113 |
 
-## 🔍 Fonctionnement du Serveur DNS
-
-> **🎯 Résolution DNS**
->
-> Le serveur DNS associe une adresse symbolique avec une adresse IP. Le processus varie selon que l'adresse est déjà connue ou non.
-
-### 💾 Adresse Connue (Cache)
-Si l'adresse symbolique est stockée dans le cache du navigateur, celui-ci utilise directement l'adresse IP correspondante sans interroger de serveur DNS externe.
-
-### 🔄 Adresse Inconnue (Récursif)
-Si l'adresse n'est pas connue, une série de requêtes récursives est lancée pour trouver le serveur DNS qui dispose de l'information recherchée.
-
-> 💡 **Exemple pratique :** Recherche de www.google.fr → Le navigateur utilise directement l'IP **172.217.20.163** si elle est en cache.
-
-<Quiz 
-  question="Quelle est la fonction principale d'un serveur DNS ?" 
-  options={["Bloquer les publicités", "Traduire un nom de domaine (URL) en adresse IP", "Héberger les fichiers du site web", "Crypter les connexions"]} 
-  answer={1} 
-  explanation="Le DNS (Domain Name System) est l'annuaire d'Internet : il traduit les noms lisibles par les humains (google.fr) en adresses IP compréhensibles par les machines (172.217.20.163)."
-/>
+Deux cas se présentent. Si le navigateur a déjà traduit ce nom récemment, il garde la réponse dans son **cache** et n'interroge personne. Chercher `www.google.fr` peut alors se résumer à réutiliser `172.217.20.163`. Si le nom est inconnu, la recherche part de serveur en serveur, jusqu'à celui qui connaît la réponse. On parle de résolution récursive.
 
 <DnsResolver />
 
-## 📝 Le Langage HTML
+## HTML, le langage des pages
 
-> **🎯 HTML (HyperText Markup Language)**
->
-> Créé en **1991** par **Tim Berners-Lee** au CERN, HTML est un langage **à balises** qui structure et organise le contenu des pages web.
+> **HTML** (*HyperText Markup Language*) a été créé en 1991 par Tim Berners-Lee, au CERN. C'est un langage à **balises** : il décrit la structure d'une page, pas son apparence finale.
 
-### 🏷️ Principe des Balises
-Les balises sont des éléments entourés de crochets angulaires (`< >`) qui indiquent comment le contenu doit être interprété ou affiché. Chaque élément a une balise d'ouverture et de fermeture.
+Une balise est un mot entouré de chevrons, `<` et `>`. La plupart s'ouvrent et se ferment. Le navigateur les lit, puis les cache : vous voyez le paragraphe, pas la balise `<p>`.
 
 ```html
 <p>Ceci est un paragraphe.</p>
@@ -142,70 +75,43 @@ Les balises sont des éléments entourés de crochets angulaires (`< >`) qui ind
 <img src="image.jpg" alt="Description de l'image" />
 ```
 
-> ✨ **Caractéristiques clés :** Les balises ne sont pas visibles par l'utilisateur final - elles servent uniquement à structurer le document et contrôler son rendu.
+Le HTML donne un sens au contenu. Un titre n'est pas « du texte en gros » : c'est un titre. Un lien n'est pas une phrase soulignée : c'est une adresse vers ailleurs. La mise en forme vient ensuite, souvent d'un autre langage.
 
-> 🎯 **Usage :** HTML permet d'ajouter une signification **sémantique** aux données et de contrôler la mise en forme du contenu web.
+## HTTP, la conversation
 
-## 📡 Protocole HTTP
+> **HTTP** (*HyperText Transfer Protocol*) est le protocole qui fait circuler les pages sur le Web. Le client envoie une requête. Le serveur répond avec la ressource demandée, et avec un code qui dit si tout s'est bien passé.
 
-> **🎯 HTTP (HyperText Transfer Protocol)**
->
-> HTTP est le **protocole de communication** qui permet l'échange de données sur le Web selon un modèle client-serveur. Le client envoie des requêtes, le serveur répond avec des codes de statut et les ressources demandées.
-
-### 🔧 Les Méthodes HTTP
-
-#### 📥 Méthode GET vs 📤 Méthode POST
+Deux méthodes reviennent tout le temps. **GET** demande une ressource, sans rien modifier sur le serveur : ouvrir une page, charger une image. **POST** envoie des données, par exemple le contenu d'un formulaire.
 
 <HttpMethodVisualizer />
 
-### 📊 Codes de Statut HTTP
+Le serveur ne répond pas seulement par la page. Il ajoute un **code de statut**. `200` veut dire que la requête a réussi. `404` veut dire que la ressource n'existe pas, la fameuse page introuvable. `500` veut dire que le serveur lui-même a un problème, indépendamment de votre demande.
 
-- **200 OK** : La requête a réussi
-- **404 Not Found** : La ressource demandée n'existe pas
-- **500 Internal Server Error** : Problème côté serveur
+## Pourquoi Google classe les pages comme il le fait
 
-> 🔄 **Usage courant :** Ces méthodes sont utilisées lors de l'envoi de formulaires ou de l'initialisation de pages par le navigateur.
+En 1996, Larry Page et Sergey Brin, à Stanford, proposent **PageRank**. Avant eux, un moteur cherchait surtout les mots de la page. Eux proposent de regarder aussi l'importance de la page dans le réseau des liens.
 
-## 🏆 L'Algorithme PageRank
+L'idée est celle d'un vote. Quand une page pose un lien vers une autre, elle vote pour elle. Plus une page reçoit de liens, plus elle semble utile. Mais tous les votes ne pèsent pas le même poids. Un lien depuis une page déjà très citée compte plus que dix liens depuis des pages que personne ne regarde. Au Loup-Garou, le vote du maire compte double : c'est la même intuition.
 
-> **🎯 Révolution de la Recherche Web**
->
-> Développé par **Larry Page** et **Sergey Brin** à Stanford en 1996, PageRank révolutionne la recherche en classant les pages selon leur **importance** dans le réseau Internet, pas seulement leur contenu.
-
-### 🗳️ Principe du "Vote"
-PageRank fonctionne sur la logique de **votes** : une page "vote" pour une autre lorsqu'elle possède un lien vers celle-ci. Plus une page reçoit de liens, plus elle semble pertinente.
-
-### ⚖️ Pondération des Votes
-Pour éviter les biais, certaines pages ont des votes plus importants que d'autres. Une page de haute qualité qui fait un lien vers votre site apporte plus de "poids" que de nombreux liens de faible qualité.
-
-> 💡 **Analogie :** Comme le maire au Loup-Garou de Thiercelieux, certaines pages ont un vote qui compte double !
-
-> 🎯 **Impact :** Cette logique de calcul de pertinence est aujourd'hui utilisée par la plupart des moteurs de recherche pour classer les résultats.
-
-> 🚀 **Héritage :** PageRank a permis à Google de devenir le moteur de recherche dominant en proposant des résultats plus pertinents que ses concurrents.
+Ce calcul a aidé Google à proposer des résultats plus pertinents que ses concurrents de l'époque. Les moteurs d'aujourd'hui ont beaucoup ajouté par-dessus, mais l'idée de départ reste celle-là : une page est importante aussi parce que d'autres pages la désignent.
 
 <PageRankVisualizer />
 
-## 🍪 Cookies et Traceurs
+## Ce que les sites retiennent de vous
 
-> **Définition : Cookie**
-> Un **cookie** est un petit fichier texte déposé sur votre ordinateur par les sites web que vous visitez. Il permet de "mémoriser" des informations d'une page à l'autre (panier d'achat, connexion, préférences).
+> **Définition : cookie**
+> Un **cookie** est un petit fichier texte déposé sur votre ordinateur par un site que vous visitez. Il permet de garder une information d'une page à l'autre : un panier, une connexion, une préférence de langue.
 
-### 🕵️ Le Traçage Publicitaire
-Certains cookies (tiers) ne servent pas au fonctionnement du site, mais à vous suivre de site en site pour établir votre **profil publicitaire**. C'est pour cela que vous voyez des pubs de chaussures après avoir visité un site de sport !
+Tous les cookies ne servent pas le site que vous êtes en train de regarder. Certains, déposés par des tiers, vous suivent de site en site pour construire un profil publicitaire. C'est pour cela qu'une paire de chaussures vous poursuit après une visite sur un site de sport.
 
 <CookieManager />
 
-## 🔒 Sécurité : HTTPS et Cadenas
+## Le cadenas
 
-> **HTTP vs HTTPS**
-> - **HTTP** : Les données circulent "en clair". N'importe qui sur le réseau peut les lire.
-> - **HTTPS** (S = Secure) : Les données sont **chiffrées**. Seul le destinataire peut les lire.
+En HTTP, les données circulent en clair. Quelqu'un placé sur le chemin, sur le même Wi-Fi par exemple, peut les lire. **HTTPS** ajoute un chiffrement : le S veut dire *secure*. Seuls les deux bouts de la conversation peuvent lire le contenu.
 
-### 🛡️ Simulation d'une attaque "Man-in-the-Middle"
-Essayez d'envoyer un mot de passe avec et sans HTTPS pour voir ce qu'un pirate peut intercepter.
+Le simulateur ci-dessous montre ce qu'un intermédiaire peut voir selon que le cadenas est là ou non. On appelle ce genre d'écoute une attaque de l'homme du milieu.
 
 <HttpsSimulator />
 
-> **⚠️ Règle d'or**
-> Ne jamais entrer de mot de passe ou de numéro de carte bancaire si le petit cadenas 🔒 n'est pas présent dans la barre d'adresse !
+Tant que le cadenas n'est pas dans la barre d'adresse, n'écrivez ni mot de passe ni numéro de carte.

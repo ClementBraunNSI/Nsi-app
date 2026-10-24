@@ -6,6 +6,7 @@ chapter: Web
 icon: "\U0001F47E"
 prerequisites:
   - Cours_WEB
+audience: public
 ---
 
 # Galerie des Monstres

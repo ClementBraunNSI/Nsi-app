@@ -6,6 +6,8 @@ chapter: Programmation en C
 icon: "\U0001F4E6"
 prerequisites:
   - cours-fonctions
+audience:
+  accounts: []
 ---
 
 # 📦 C — Les Tableaux

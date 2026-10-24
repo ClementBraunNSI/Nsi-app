@@ -8,6 +8,7 @@ chapter: Internet
 icon: "\U0001F50C"
 prerequisites:
   - activite_internet_interactive
+audience: public
 ---
 
 > **Objectif de l'activité**
@@ -34,11 +35,6 @@ Permet d'utiliser la simulation pour étudier les échanges de données en temps
 
 ![Schéma réseau simple](/content/1/s1.png)
 
-1. Quels sont les éléments de ce réseau ?
-2. À quoi sert le routeur dans cette configuration ?
-3. Dans quels réseaux sont les ordinateurs 1 et 2 ?
-   *(Indication : pour les 2 réseaux, la partie réseau est définie sur 3 octets)*
-
 ## 🚀 Un réseau plus étoffé
 
 > **Évolution**
@@ -46,8 +42,7 @@ Permet d'utiliser la simulation pour étudier les échanges de données en temps
 
 ![Schéma réseau étoffé](/content/1/s2.png)
 
-1. À quelle propriété du routeur faut-il veiller pour réaliser ce schéma ?
-2. Réaliser le schéma ci-dessus en utilisant le mode construction de Filius.
+Réaliser le schéma ci-dessus en utilisant le mode construction de Filius.
 
 > **Objectif pratique**
 > Cette activité vous permettra de comprendre concrètement comment les **routeurs** interconnectent différents réseaux et gèrent le routage des paquets de données.

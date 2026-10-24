@@ -4,9 +4,9 @@ description: 'map, filter, reduce et enchaînements — fiche progressive par ni
 icon: "λ"
 chapter: Programmation fonctionnelle
 level: particuliers
-access: private
-allowedStudents:
-  - Anatole
+audience:
+  accounts:
+    - 77a341a1-dc82-4fe5-a94c-d24ce93c4cbe
 ---
 
 `map` applique une fonction à chaque élément, `filter` ne garde que ceux qui vérifient un prédicat, `reduce` (module `functools`) accumule une seule valeur. `map` et `filter` renvoient un itérateur : on le convertit avec `list` pour obtenir une liste. Ces opérations construisent un nouveau résultat et ne modifient pas la liste d'origine. La fonction passée à `map`, `filter` ou `reduce` peut être une `lambda` ou une fonction nommée.
@@ -25,7 +25,7 @@ reduce(lambda acc, x: acc + x, [1, 2, 3], 0)
   {/* CATÉGORIE 1 : INTRODUCTION (1.1 à 1.3)      */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonct-1-1" label="1.1 [Introduction] - Doubler avec map">
+  <ExerciseSection id="fonct-1-1" label="1.1 [Introduction] - Doubler avec map" type="python">
     <Enonce>
     ### Exercice 1.1 [Introduction] : Doubler avec map
     **Écrire une fonction `doubler(nombres)` qui prend une liste de nombres et renvoie une nouvelle liste où chaque élément est multiplié par 2, en utilisant `map`. La liste d'origine ne doit pas être modifiée.**
@@ -58,7 +58,7 @@ assert doubler([-1, 4]) == [-2, 8]
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-1-2" label="1.2 [Introduction] - Filtrer les positifs">
+  <ExerciseSection id="fonct-1-2" label="1.2 [Introduction] - Filtrer les positifs" type="python">
     <Enonce>
     ### Exercice 1.2 [Introduction] : Filtrer les positifs
     **Écrire une fonction `positifs(nombres)` qui prend une liste de nombres et renvoie une nouvelle liste contenant uniquement les nombres strictement positifs, en utilisant `filter`. La liste d'origine ne doit pas être modifiée.**
@@ -90,7 +90,7 @@ assert positifs([]) == []
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-1-3" label="1.3 [Introduction] - Somme avec reduce">
+  <ExerciseSection id="fonct-1-3" label="1.3 [Introduction] - Somme avec reduce" type="python">
     <Enonce>
     ### Exercice 1.3 [Introduction] : Somme avec reduce
     **Écrire une fonction `somme(nombres)` qui prend une liste de nombres et renvoie leur somme, en utilisant `functools.reduce`. Une liste vide renvoie 0. La liste d'origine ne doit pas être modifiée.**
@@ -131,7 +131,7 @@ assert somme([-2, 5]) == 3
   {/* CATÉGORIE 2 : FACILE (2.1 à 2.3)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonct-2-1" label="2.1 [Facile] - Longueurs des mots">
+  <ExerciseSection id="fonct-2-1" label="2.1 [Facile] - Longueurs des mots" type="python">
     <Enonce>
     ### Exercice 2.1 [Facile] : Longueurs des mots
     **Écrire une fonction `longueurs(mots)` qui prend une liste de chaînes et renvoie une nouvelle liste de leurs longueurs, en utilisant `map`. La liste d'origine ne doit pas être modifiée.**
@@ -163,7 +163,7 @@ assert longueurs([]) == []
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-2-2" label="2.2 [Facile] - Nombres pairs">
+  <ExerciseSection id="fonct-2-2" label="2.2 [Facile] - Nombres pairs" type="python">
     <Enonce>
     ### Exercice 2.2 [Facile] : Nombres pairs
     **Écrire une fonction `pairs(nombres)` qui prend une liste d'entiers et renvoie une nouvelle liste des entiers pairs, en utilisant `filter`. 0 est pair, et un entier négatif pair est conservé. La liste d'origine ne doit pas être modifiée.**
@@ -197,7 +197,7 @@ assert pairs([]) == []
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-2-3" label="2.3 [Facile] - Produit des nombres">
+  <ExerciseSection id="fonct-2-3" label="2.3 [Facile] - Produit des nombres" type="python">
     <Enonce>
     ### Exercice 2.3 [Facile] : Produit des nombres
     **Écrire une fonction `produit(nombres)` qui prend une liste de nombres et renvoie leur produit, en utilisant `functools.reduce`. Une liste vide renvoie 1. La liste d'origine ne doit pas être modifiée.**
@@ -238,7 +238,7 @@ assert produit([-2, 5]) == -10
   {/* CATÉGORIE 3 : MOYEN (3.1 à 3.3)             */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonct-3-1" label="3.1 [Moyen] - Doubles des pairs">
+  <ExerciseSection id="fonct-3-1" label="3.1 [Moyen] - Doubles des pairs" type="python">
     <Enonce>
     ### Exercice 3.1 [Moyen] : Doubles des pairs
     **Écrire une fonction `doubles_des_pairs(nombres)` qui prend une liste d'entiers, ne garde que les pairs avec `filter`, puis renvoie une nouvelle liste de leurs doubles avec `map`. La liste d'origine ne doit pas être modifiée.**
@@ -272,7 +272,7 @@ assert doubles_des_pairs([]) == []
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-3-2" label="3.2 [Moyen] - Longueurs au-dessus d'un seuil">
+  <ExerciseSection id="fonct-3-2" label="3.2 [Moyen] - Longueurs au-dessus d'un seuil" type="python">
     <Enonce>
     ### Exercice 3.2 [Moyen] : Longueurs au-dessus d'un seuil
     **Écrire une fonction `longueurs_au_dessus(mots, seuil)` qui prend une liste de chaînes non vides et un entier `seuil`. Elle ne garde, avec `filter`, que les mots dont la longueur est strictement supérieure à `seuil`, puis renvoie avec `map` la liste de ces longueurs. La liste d'origine ne doit pas être modifiée.**
@@ -306,7 +306,7 @@ assert longueurs_au_dessus([], 0) == []
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-3-3" label="3.3 [Moyen] - Somme des positifs">
+  <ExerciseSection id="fonct-3-3" label="3.3 [Moyen] - Somme des positifs" type="python">
     <Enonce>
     ### Exercice 3.3 [Moyen] : Somme des positifs
     **Écrire une fonction `somme_positifs(nombres)` qui prend une liste de nombres, ne garde que les strictement positifs avec `filter`, puis renvoie leur somme avec `functools.reduce`. S'il n'y a aucun positif, le résultat est 0. La liste d'origine ne doit pas être modifiée.**
@@ -348,7 +348,7 @@ assert somme_positifs([]) == 0
   {/* CATÉGORIE 4 : AVANCÉ (4.1 à 4.3)            */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonct-4-1" label="4.1 [Avancé] - Somme des carrés">
+  <ExerciseSection id="fonct-4-1" label="4.1 [Avancé] - Somme des carrés" type="python">
     <Enonce>
     ### Exercice 4.1 [Avancé] : Somme des carrés
     **Écrire une fonction `somme_carres(nombres)` qui prend une liste de nombres, calcule le carré de chaque élément avec `map`, puis renvoie la somme de ces carrés avec `functools.reduce`. Une liste vide renvoie 0. La liste d'origine ne doit pas être modifiée.**
@@ -386,7 +386,7 @@ assert somme_carres([]) == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-4-2" label="4.2 [Avancé] - Doubler au-dessus d'un seuil">
+  <ExerciseSection id="fonct-4-2" label="4.2 [Avancé] - Doubler au-dessus d'un seuil" type="python">
     <Enonce>
     ### Exercice 4.2 [Avancé] : Doubler au-dessus d'un seuil
     **Écrire une fonction `doubler_au_dessus(nombres, seuil)` qui prend une liste de nombres et un nombre `seuil`. Avec `filter`, elle ne garde que les valeurs strictement supérieures à `seuil`, puis avec `map` elle renvoie une nouvelle liste de leurs doubles. La liste d'origine ne doit pas être modifiée.**
@@ -420,7 +420,7 @@ assert doubler_au_dessus([], 0) == []
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-4-3" label="4.3 [Avancé] - Initiales des mots longs">
+  <ExerciseSection id="fonct-4-3" label="4.3 [Avancé] - Initiales des mots longs" type="python">
     <Enonce>
     ### Exercice 4.3 [Avancé] : Initiales des mots longs
     **Écrire une fonction `initiales_longues(mots, seuil)` qui prend une liste de mots non vides et un entier `seuil`. Avec `filter`, elle ne garde que les mots dont la longueur est supérieure ou égale à `seuil`, puis avec `map` elle renvoie la liste de leur première lettre. La liste d'origine ne doit pas être modifiée.**
@@ -458,7 +458,7 @@ assert initiales_longues([], 1) == []
   {/* CATÉGORIE 5 : DIFFICILE (5.1 à 5.6)         */}
   {/* ========================================== */}
 
-  <ExerciseSection id="fonct-5-1" label="5.1 [Difficile] - Somme des carrés des pairs">
+  <ExerciseSection id="fonct-5-1" label="5.1 [Difficile] - Somme des carrés des pairs" type="python">
     <Enonce>
     ### Exercice 5.1 [Difficile] : Somme des carrés des pairs
     **Écrire une fonction `somme_carres_pairs(nombres)` qui prend une liste d'entiers. Avec `filter`, elle ne garde que les entiers pairs, avec `map` elle calcule leur carré, puis avec `functools.reduce` elle renvoie la somme de ces carrés. S'il n'y a aucun pair, le résultat est 0. La liste d'origine ne doit pas être modifiée.**
@@ -498,7 +498,7 @@ assert somme_carres_pairs([]) == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-5-2" label="5.2 [Difficile] - Produit des longueurs paires">
+  <ExerciseSection id="fonct-5-2" label="5.2 [Difficile] - Produit des longueurs paires" type="python">
     <Enonce>
     ### Exercice 5.2 [Difficile] : Produit des longueurs paires
     **Écrire une fonction `produit_longueurs_paires(mots)` qui prend une liste de chaînes. Avec `filter`, elle ne garde que les mots de longueur paire, avec `map` elle récupère ces longueurs, puis avec `functools.reduce` elle renvoie leur produit. S'il n'y a aucun mot de longueur paire, le résultat est 1. La liste d'origine ne doit pas être modifiée.**
@@ -537,7 +537,7 @@ assert produit_longueurs_paires([]) == 1
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-5-3" label="5.3 [Difficile] - Bilan des admis">
+  <ExerciseSection id="fonct-5-3" label="5.3 [Difficile] - Bilan des admis" type="python">
     <Enonce>
     ### Exercice 5.3 [Difficile] : Bilan des admis
     **Écrire une fonction `bilan_admis(copies, seuil)` qui prend une liste de dictionnaires `{"nom", "note", "absent"}` et un entier `seuil`. Avec `filter`, elle ne garde que les copies non absentes dont la note est supérieure ou égale à `seuil` (une note égale au seuil est admise). Avec `map` puis `functools.reduce`, elle renvoie le tuple `(nombre, somme)` de ces notes. S'il n'y a aucun admis, le résultat est `(0, 0)`. La liste d'origine ne doit pas être modifiée.**
@@ -594,7 +594,7 @@ assert bilan_admis([], 10) == (0, 0)
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-5-4" label="5.4 [Difficile] - Voyelles des mots pairs">
+  <ExerciseSection id="fonct-5-4" label="5.4 [Difficile] - Voyelles des mots pairs" type="python">
     <Enonce>
     ### Exercice 5.4 [Difficile] : Voyelles des mots pairs
     **Écrire une fonction `somme_voyelles_pairs(mots)` qui prend une liste de chaînes. Avec `filter`, elle ne garde que les mots de longueur paire. Pour chacun, avec `filter` elle compte les voyelles `a, e, i, o, u, y` (majuscules comprises), puis avec `functools.reduce` elle renvoie la somme de ces comptes. Un mot pair sans voyelle compte pour 0. S'il n'y a aucun mot de longueur paire, le résultat est 0. La liste d'origine ne doit pas être modifiée.**
@@ -640,7 +640,7 @@ assert somme_voyelles_pairs([]) == 0
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-5-5" label="5.5 [Difficile] - Gagnants ex aequo">
+  <ExerciseSection id="fonct-5-5" label="5.5 [Difficile] - Gagnants ex aequo" type="python">
     <Enonce>
     ### Exercice 5.5 [Difficile] : Gagnants ex aequo
     **Écrire une fonction `gagnants(votes)` qui prend une liste de tuples `(nom, voix)`, avec des voix entières supérieures ou égales à 0. Avec `functools.reduce`, elle détermine le meilleur total de voix, puis avec `filter` et `map` elle renvoie la liste des noms qui l'atteignent, dans l'ordre d'apparition. En cas d'égalité, tous les noms ex aequo sont renvoyés. Une liste vide renvoie `[]`. La liste d'origine ne doit pas être modifiée.**
@@ -681,7 +681,7 @@ assert gagnants([]) == []
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="fonct-5-6" label="5.6 [Difficile] - Dépense sous un plafond">
+  <ExerciseSection id="fonct-5-6" label="5.6 [Difficile] - Dépense sous un plafond" type="python">
     <Enonce>
     ### Exercice 5.6 [Difficile] : Dépense sous un plafond
     **Écrire une fonction `depense_sous_plafond(achats, plafond)` qui prend une liste de dictionnaires `{"article", "prix", "quantite"}` et un entier `plafond`. Avec `filter`, elle ne garde que les achats de quantité strictement positive dont le prix est inférieur ou égal au plafond (un prix égal au plafond est gardé). Avec `map`, elle calcule `prix * quantite` pour chacun, puis avec `functools.reduce` elle renvoie la somme de ces montants. S'il n'y a aucun achat retenu, le résultat est 0. La liste d'origine ne doit pas être modifiée.**

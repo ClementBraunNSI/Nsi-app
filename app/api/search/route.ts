@@ -4,7 +4,8 @@ import matter from "gray-matter";
 import { NextResponse } from "next/server";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
 import { contentFolderFromParam, urlSlugFromFolder, sortLevelIds } from "@/lib/nsi-levels";
-import { courseVisibility, isRestrictedCourse } from "@/lib/course-access";
+import { canAccessCourse } from "@/lib/course-access";
+import { getAuthContext, viewerFromAuth } from "@/lib/auth";
 import { contentRoot } from "@/lib/content-path";
 
 type SearchResult = {
@@ -37,6 +38,7 @@ export async function GET(req: Request) {
       .filter((d) => fs.statSync(path.join(contentRootDir, d)).isDirectory()),
   );
 
+  const viewer = viewerFromAuth(await getAuthContext());
   const results: SearchResult[] = [];
   for (const level of levels) {
     const folder = contentFolderFromParam(level) ?? level;
@@ -44,7 +46,7 @@ export async function GET(req: Request) {
     for (const { filePath, slug } of entries) {
       const raw = fs.readFileSync(filePath, "utf8");
       const { data } = matter(raw);
-      if (isRestrictedCourse(courseVisibility(data, folder, slug))) continue;
+      if (!canAccessCourse(data, viewer)) continue;
       const title = String(data.title || slug);
       const chapter = String(data.chapter || "Cours");
       const score = scoreQuery(q, title, chapter);

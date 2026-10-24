@@ -6,25 +6,16 @@ chapter: Introduction à Python
 icon: "🧱"
 badgeId: premiere_python_intro
 prerequisites: []
+audience: public
 ---
 
-## Objectifs
+# Constructions élémentaires en Python
 
-- Affecter une valeur à une variable avec `=`.
-- Utiliser les opérateurs arithmétiques et de comparaison.
-- Lire une entrée avec `input()` et l'afficher avec `print()`.
-- Écrire une condition `if` / `elif` / `else`.
-- Répéter des instructions avec `for` et `while`.
+Un programme Python est une suite d'**instructions** exécutées dans l'ordre, de haut en bas, sauf quand un test ou une boucle décide de sauter ou de recommencer. Les briques de cette suite sont peu nombreuses : affecter une valeur, calculer, lire, afficher, choisir, répéter. Tout le reste de l'année s'appuie dessus.
 
-## Idée clé
+## L'affectation
 
-Un programme Python exécute des **instructions dans l'ordre**. Les constructions élémentaires — affectation, calcul, test, boucle — sont les briques que l'on combine ensuite dans des fonctions et des structures de données.
-
-## Programme et affectation
-
-Un **programme** est une suite d'instructions exécutées **séquentiellement**.
-
-L'**affectation** associe une valeur à un nom de variable grâce à l'opérateur `=`. Ce n'est ni une égalité mathématique, ni une « instanciation » (terme réservé à la POO).
+L'**affectation** associe une valeur à un nom, avec `=`. Ce n'est pas une égalité mathématique. En maths, `score = score + 10` serait absurde. En Python, on lit à droite d'abord, puis on range le résultat dans le nom de gauche. Ce n'est pas non plus une instanciation : ce mot est réservé à la programmation orientée objet, plus tard.
 
 ```python
 score = 0
@@ -32,7 +23,11 @@ score = score + 10   # réaffectation : score vaut maintenant 10
 message = "Bonjour"
 ```
 
-## Opérateurs arithmétiques
+Au départ `score` vaut 0. La ligne suivante calcule `0 + 10` et range 10 sous le même nom. L'ancienne valeur est perdue.
+
+## Calculer
+
+Les opérateurs arithmétiques s'écrivent presque comme en cours de maths. Deux détails changent le résultat. `/` fait une division réelle et renvoie un flottant : `7 / 2` vaut `3.5`. `//` ne garde que le quotient entier : `7 // 2` vaut `3`. `%` donne le reste : `7 % 2` vaut `1`. `**` élève à une puissance : `2 ** 3` vaut `8`.
 
 | Opérateur | Opération | Exemple |
 | --- | --- | --- |
@@ -49,9 +44,9 @@ a = 3 + 2
 b = 10 % 3   # 1
 ```
 
-## Comparaisons et conditions
+## Choisir un chemin
 
-Les comparaisons renvoient un booléen. Attention : `==` teste l'égalité ; `=` affecte.
+Une comparaison renvoie un booléen, `True` ou `False`. `>` et `<` comparent, `>=` et `<=` aussi, `==` teste l'égalité, `!=` la différence. Le piège d'écriture est `=`, qui affecte, contre `==`, qui compare. Dans un `if`, on veut presque toujours `==`.
 
 | Opérateur | Signification |
 | --- | --- |
@@ -71,12 +66,11 @@ else:
     print("Enfant")
 ```
 
-L'indentation (4 espaces) délimite le bloc exécuté sous chaque branche.
+Python exécute la première branche dont la condition est vraie, et ignore les autres. `elif` veut dire « sinon, si ». `else` ramasse tout ce qui reste. L'**indentation**, quatre espaces, dit quelles lignes appartiennent à la branche. Sans elle, Python ne sait pas où le bloc s'arrête.
 
-## Entrées et sorties
+## Lire et afficher
 
-- `print(...)` affiche à l'écran.
-- `input(...)` lit une **chaîne** saisie par l'utilisateur.
+`print(...)` écrit à l'écran. `input(...)` lit ce que l'utilisateur tape, et renvoie **toujours une chaîne**, même si la personne a tapé des chiffres. Pour calculer un âge, il faut convertir : `int(input(...))`.
 
 ```python
 nom = input("Nom : ")
@@ -84,10 +78,11 @@ print("Bonjour", nom)
 age = int(input("Âge : "))  # conversion obligatoire pour calculer
 ```
 
-## Boucles `for` et `while`
+Oublier `int` est l'erreur classique. `"18" >= 18` mélange une chaîne et un entier, et Python lève une erreur de types.
 
-`for` répète un nombre de fois connu (souvent avec `range`).  
-`while` répète **tant qu'une condition** reste vraie — penser à faire évoluer la variable de contrôle.
+## Répéter
+
+`for` répète un nombre de fois connu à l'avance. On le couple souvent à `range`. `while` répète **tant qu'une condition** reste vraie. Il faut alors faire évoluer la variable de contrôle, sinon la condition ne devient jamais fausse et la boucle ne s'arrête pas.
 
 ```python
 for i in range(1, 6):
@@ -102,19 +97,9 @@ while n <= 5:
 !!! tip "`range`"
     `range(5)` produit `0, 1, 2, 3, 4`. `range(1, 6)` produit `1` à `5` (la borne de droite est exclue).
 
-## Piège fréquent
+Les deux boucles affichent les mêmes nombres. Dans le `for`, `range` fournit les valeurs. Dans le `while`, c'est vous qui avancez `n`. Si vous oubliez `n = n + 1`, `n` reste à 1, la condition reste vraie, et le programme ne sort plus.
 
-- Oublier `int(input(...))` : `"18" >= 18` provoque une erreur de types.
-- Boucle `while` sans mise à jour de la variable → boucle infinie.
-
-## À retenir
-
-- `=` = affectation ; `==` = comparaison.
-- `input()` renvoie toujours une `str` ; convertir si besoin.
-- `if` / `elif` / `else` choisissent un chemin selon des booléens.
-- `for` : répétition bornée ; `while` : répétition conditionnelle.
-- L'indentation structure les blocs.
-- Les instructions s'exécutent de haut en bas, sauf branchement ou boucle.
+Pour fermer : `=` affecte, `==` compare. `input` renvoie une chaîne, à convertir avant un calcul. `if`, `elif` et `else` choisissent un chemin. `for` répète un nombre de fois connu, `while` répète tant qu'une condition tient. L'indentation dessine les blocs. Le reste du programme se lit de haut en bas, sauf quand un test ou une boucle dévie.
 
 ## Pour s'entraîner
 

@@ -7,6 +7,7 @@ icon: "\U0001F3CE️"
 badgeId: premiere_activite_algo
 prerequisites:
   - algo_knn_cours
+audience: public
 ---
 
 # 🏎️ Atelier Algo : La Course au Tri

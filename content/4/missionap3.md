@@ -6,136 +6,97 @@ chapter: BTS SIO 1 SLAM AP
 icon: "🧩"
 prerequisites:
   - missionap2
+audience: public
 ---
 
-Mission 3 : Evolution Architecturale de la solution AutoRent
+# Mission AP3 — AutoRent en MVC et en application graphique
 
-**Durée :** 12h (4h/semaine en 3 semaines) **Atelier de professionnalisation - Semestre 2**
+Le but de cette mission est de faire évoluer AutoRent, pas d'en changer le métier.
+Durée : 12 h (4 h par semaine, 3 semaines), atelier de professionnalisation, semestre 2. Suite directe de la mission AP2.
 
-1) Compétences abordées
+L'AP2 a livré une console C# et une page PHP qui lit `disponibles.csv`. Deux évolutions sont obligatoires :
 
-*   B1.3 Développer la présence en ligne de l'organisation
-*   B2.1 Concevoir et développer une solution applicative
-*   B2.2 Assurer la maintenance corrective ou évolutive d'une solution applicative
+1. remplacer la page PHP procédurale par une architecture MVC ;
+2. remplacer la console par une application graphique (WinForms, WPF, Avalonia, ou une technologie équivalente validée par l'enseignant).
 
----
+Les véhicules, les états, le devis et l'export restent ceux de l'AP2. On ne recommence pas le sujet.
 
-2) Contexte
+**Compétences :** B1.3 Développer la présence en ligne. B2.1 Concevoir et développer une solution applicative. B2.2 Assurer la maintenance corrective ou évolutive.
 
-**Suite directe de la Mission 2**
+## 1. La veille, avant de toucher au code 📎
 
-La mission AP2 a permis de construire une première version fonctionnelle :
-1. Une application C# en mode Console pour traiter et structurer les véhicules.
-2. Une interface Web en PHP pour afficher le catalogue des véhicules disponibles.
+Note d'une page, pas plus.
 
-L'entreprise souhaite maintenant faire évoluer cette base vers une architecture plus professionnelle et maintenable.
+1. Rôle du modèle, de la vue et du contrôleur. Ce que le MVC change pour la maintenance, par rapport à une page PHP qui mélange la requête, le calcul et l'HTML. Quels points sécurisent l'architecture : échappement du HTML, requêtes qui ne collent pas une saisie brute, fichiers inclus par l'instruction prévue par le langage.
+2. Dans l'application graphique : ce qui est métier (devis, filtre, export) et ce qui est interface (bouton, grille, message). Un clic appelle le métier. Il ne recalcule pas le devis dans le gestionnaire d'événement.
 
-Les deux évolutions obligatoires sont :
-1. Remplacer l'approche Web actuelle par une **architecture MVC**.
-2. Remplacer l'application Console C# par une **application graphique** (WinForms, WPF, Avalonia, ou technologie équivalente validée par l'enseignant).
+## 2. Le web en MVC 🧩
 
----
+La page d'accueil est la vitrine : tous les véhicules **disponibles**, en grille. Les véhicules en maintenance ou loués ne s'y affichent pas. Sur le jeu d'essai de l'AP2, la grille contient la Peugeot 208, pas la Yamaha MT-07, pas le Fiat Ducato.
 
-3) Recherche Préliminaire (Veille Technologique)
+<ExerciseTabs courseId="sio_ap3_mvc" courseTitle="MVC">
+  <ExerciseSection id="ap3-mvc-1" label="Les trois couches" type="autre">
+    <Enonce>
+      Rangez le projet en modèle, vue et contrôleur.
 
-Avant de démarrer le développement, vous devez produire une courte **note de synthèse** (1 page max) sur les thèmes suivants :
+      - Le modèle porte un véhicule (immatriculation, marque, modèle, prix, état, champs spécifiques) et refuse un prix négatif.
+      - Le contrôleur lit la demande et choisit la vue. Il ne contient pas le CSS.
+      - La vue affiche. Elle ne recalcule pas le devis et elle n'écrit pas dans le CSV.
 
-1.  **Architecture MVC :**
-    *   Quel est le rôle de chaque couche (`Model`, `View`, `Controller`) ?
-    *   En quoi MVC améliore-t-il la maintenabilité par rapport à une page PHP procédurale ?
-    *   Quels éléments permettent de sécuriser l'architecture MVC ?
+      Quatre actions, et pas davantage pour le cœur du sujet :
 
-2.  **Application graphique C# :**
-    *   Différence entre logique métier et logique d'interface utilisateur.
-    *   Bonnes pratiques d'événements UI (boutons, saisies, validation utilisateur).
-    
----
+      1. catalogue des disponibles ;
+      2. filtre par type (voiture, moto, camping-car) ;
+      3. fiche d'un véhicule, à partir de son immatriculation ;
+      4. tri par prix croissant.
 
-4) Cahier des Charges
+      Contrôle, dans cet ordre : la grille montre la 208 à 35 € ; le filtre moto affiche `Aucun véhicule disponible.` ; la fiche `AB-123-CD` montre 5 places et la climatisation ; le tri par prix, le jour où plusieurs véhicules sont disponibles, place le moins cher en premier.
+    </Enonce>
+  </ExerciseSection>
 
-Le projet doit respecter les contraintes techniques et fonctionnelles suivantes :
+  <ExerciseSection id="ap3-mvc-2" label="Sécurité de la page" type="autre">
+    <Enonce>
+      Une immatriculation ou un type tapé dans l'adresse ne s'imprime pas tel quel dans la page : les caractères HTML sont encodés. Le texte `<script>` saisi comme recherche s'affiche comme du texte, il ne s'exécute pas.
 
-**A. Refonte de l'application Web en MVC**
-*   Structurer le projet en respectant l'architecture de base du modèle MVC.
-*   Le contrôleur doit gérer :
-    *   l'affichage du catalogue,
-    *   les filtres par type,
-    *   la consultation d'un détail véhicule,
-    *   un tri simple par prix.
-*   Les vues doivent rester concentrées sur l'affichage (uniquement les véhicules disponibles).
-*   Les modèles doivent porter les données et la validation de base.
+      Les fichiers externes (CSS, et le CSV s'il est lu côté serveur) sont appelés avec l'instruction prévue, pas collés dans une chaîne ouverte à une saisie. Le CSS est dans un fichier externe. Les composants qui se répètent (carte véhicule, badge) sont écrits une fois.
 
-**B. Evolution de l'application C# vers une interface graphique**
-*   Supprimer le menu console et proposer une interface graphique claire.
-*   L'écran principal doit permettre :
-    *   affichage de la flotte,
-    *   filtres par type et état,
-    *   recherche par immatriculation,
-    *   simulation de devis,
-    *   affichage de statistiques,
-    *   export des données vers la couche Web (CSV).
-*   Les validations de saisie doivent être gérées proprement (messages utilisateur explicites).
-*   La logique métier ne doit pas être directement codée dans les événements UI.
+      Relisez le cours sur les injections SQL et les failles XSS, et indiquez dans un commentaire de la vue où l'encodage a lieu.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
----
+## 3. L'application graphique 🖼️
 
-5) Fonctionnement attendu de l'application C# graphique
+L'écran principal montre la flotte, pas seulement les disponibles : c'est l'outil de l'agent. La vitrine web, elle, continue de ne montrer que les disponibles.
 
-L'application C# devient un outil de gestion visuel pour l'agent AutoRent.
+Au démarrage, les données sont chargées (fichier source, ou sauvegarde locale). L'écran contient : la liste ou la grille, une zone de recherche, les filtres de type et d'état, un bouton d'actualisation.
 
-1.  **Démarrage :** chargement automatique des données (fichier source ou persistance locale).
-2.  **Écran principal :**
-    *   grille/liste des véhicules,
-    *   zone de recherche,
-    *   filtres (type, état),
-    *   bouton d'actualisation.
-3.  **Fonctions métier :**
-    *   simulation de devis,
-    *   calcul d'indicateurs (ex: revenu potentiel),
-    *   export vers le format attendu par l'application Web MVC.
-4.  **Sécurité de l'application :**
-    *   aucune erreur brute affichée à l'utilisateur,
-    *   gestion des erreurs de saisie et de données.
+<ExerciseTabs courseId="sio_ap3_gui" courseTitle="Application graphique">
+  <ExerciseSection id="ap3-gui-1" label="L'écran" type="autre">
+    <Enonce>
+      Le menu console de l'AP2 disparaît. Les mêmes traitements sont des actions de l'écran :
 
+      - recherche par immatriculation : `AB-123-CD` sélectionne la 208, `ZZ-000-ZZ` affiche un message clair, pas une exception brute ;
+      - filtres par type et par état : « moto » et « en maintenance » laisse voir la MT-07 ;
+      - devis : 7 jours sur la 208 affichent 245, 10 jours affichent 315 (remise de 10 % au-delà de 7 jours, comme en AP2) ;
+      - statistiques : 1 véhicule par type sur le fichier d'exemple, revenu potentiel d'une journée 200, plus cher le Ducato à 120, moins cher la 208 à 35 ;
+      - export CSV vers le format lu par le MVC. Après export, la vitrine web montre la 208 et pas les deux autres.
 
----
+      Un champ vide, un nombre de jours inférieur à 1, ou un fichier absent produisent un message pour l'agent. L'application reste ouverte.
 
-6) Développement de l'Application Web MVC (Partie 3)
+      *Attention : le calcul du devis, le filtre et l'export sont des méthodes du métier. Le clic du bouton les appelle. Il ne contient pas la formule.*
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-L'application web devient la vitrine publique de la flotte **disponible**. 
-**Rappel : La page d'accueil est la vitrine qui affiche tous les véhicules **DISPONIBLES** sous forme de grille**
+## 4. Ce qu'on rend 📦
 
-**Travail à faire :**
+- Le projet C# graphique, commenté, sans le menu console.
+- Le site MVC : modèles, contrôleurs, vues, CSS externe.
+- Le diagramme de classes, mis à jour par rapport à l'AP2 (les classes de véhicules restent, l'interface graphique s'y ajoute sans absorber le métier).
+- Un guide utilisateur PDF, avec des captures : l'écran de la flotte, le devis à 315, la grille web de la 208.
+- Une archive nommée `AP3_AutoRent_NOM1_NOM2.zip`.
 
-1.  **Structure MVC :**
-    *   implémenter les modèles de données,
-    *   créer les contrôleurs **principaux**,
+L'archive qui ne porte pas ce nom perd 2 points.
 
-2.  **Fonctionnalités :**
-    *   afficher les véhicules disponibles,
-    *   filtrer par type,
-    *   trier par prix,
-    *   afficher une fiche détaillée.
-
-3.  **Ergonomie :**
-    *   interface lisible,
-    *   composants réutilisables,
-    *   design cohérent (CSS propre dans un fichier externe).
-
-4. **Sécurité :**
-    * Encodage des caractères HTML,
-    * Respect des normes de sécurité (cf cours Injections SQL et failles XSS),
-    * Appeler tous les fichiers extérieurs avec la bonne instruction
-
----
-
-8) Livrables attendus
-
-*   **Le Code Source C#** (Projet graphique complet, commenté).
-*   **Le Code Source Web MVC** (Modèles, contrôleurs, vues, CSS).
-*   **Le Diagramme de Classes UML** (mis à jour par rapport à AP2).
-*   **Un Guide Utilisateur** (PDF avec captures d'écran).
-*   **Une archive finale** nommée : `AP3_AutoRent_NOM1_NOM2.zip` (si le rendu ne s'appelle pas ainsi, une pénalité de 2 points sera appliquée).
-
-!!! danger "IA"
-    *   **Toute suspicion d'utilisation d'IA à but uniquement génératif entraînera la note de 0/20**
+*Toute suspicion d'utilisation d'une IA dans le seul but de générer le rendu entraîne la note de 0/20. L'IA ne rédige pas le code, les vues, ni le guide.*

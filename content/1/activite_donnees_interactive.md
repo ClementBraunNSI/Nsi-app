@@ -6,6 +6,7 @@ chapter: Données structurées
 icon: "\U0001F4CA"
 prerequisites:
   - activite_blockly
+audience: public
 ---
 
 # 📊 Atelier Données : Enquête sur le CSV
@@ -13,7 +14,7 @@ prerequisites:
 Les données sont souvent stockées dans des fichiers **CSV** (Comma Separated Values). Pour les exploiter, on utilise des outils de tri et de filtrage.
 
 <ExerciseTabs courseId="csv-detective" courseTitle="Enquêtes de Données">
-  <ExerciseSection id="enquete-1" label="Enquête 1 - Le Vol du Musée">
+  <ExerciseSection id="enquete-1" label="Enquête 1 - Le Vol du Musée" type="lecture">
     <Enonce>
 ### 🎨 Enquête 1 : Le Vol du Musée
 
@@ -27,7 +28,7 @@ Un tableau de valeur a disparu du Musée des Beaux-Arts. Le voleur s'est glissé
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="enquete-2" label="Enquête 2 - L'Attaque Fantôme">
+  <ExerciseSection id="enquete-2" label="Enquête 2 - L'Attaque Fantôme" type="lecture">
     <Enonce>
 ### 💻 Enquête 2 : L'Attaque Fantôme
 
@@ -41,7 +42,7 @@ Une intrusion informatique a été détectée sur les serveurs de l'école. L'ad
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="enquete-3" label="Enquête 3 - L'Affaire du Poison">
+  <ExerciseSection id="enquete-3" label="Enquête 3 - L'Affaire du Poison" type="lecture">
     <Enonce>
 ### 🧪 Enquête 3 : L'Affaire du Poison (Difficile)
 
@@ -53,7 +54,7 @@ Des produits chimiques dangereux ont été dérobés dans un laboratoire du Sud-
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="enquete-4" label="Enquête 4 - Le Réseau Portuaire">
+  <ExerciseSection id="enquete-4" label="Enquête 4 - Le Réseau Portuaire" type="lecture">
     <Enonce>
 ### 🚢 Enquête 4 : Le Réseau Portuaire (Expert)
 

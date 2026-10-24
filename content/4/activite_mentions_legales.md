@@ -5,11 +5,12 @@ badgeId: bts_sql_audit_rgpd
 meta: 'Durée : 2 heures · Objectif : Comprendre pour mieux protéger'
 prerequisites:
   - tp_blockchain_python
+audience: public
 ---
 
 <ExerciseTabs courseId="bts_cyber_rgpd_audit" courseTitle="TP Cybersécurité - Audit RGPD">
 
-  <ExerciseSection id="tp-rgpd-partie1" label="1. Outils & Découverte">
+  <ExerciseSection id="tp-rgpd-partie1" label="1. Outils & Découverte" type="autre">
     <Enonce>
     ## 🔍 Partie 1 : Découverte des outils d'audit (20 min)
 
@@ -40,7 +41,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-rgpd-partie2" label="2. Audit Complet">
+  <ExerciseSection id="tp-rgpd-partie2" label="2. Audit Complet" type="autre">
     <Enonce>
     ## 🛡️ Partie 2 : Audit complet d'un site web (50 min)
 
@@ -77,7 +78,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-rgpd-partie3" label="3. Recommandations">
+  <ExerciseSection id="tp-rgpd-partie3" label="3. Recommandations" type="autre">
     <Enonce>
     ## 📋 Partie 3 : Recommandations de mise en conformité (40 min)
 
@@ -101,7 +102,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-rgpd-partie4" label="4. Mentions Légales">
+  <ExerciseSection id="tp-rgpd-partie4" label="4. Mentions Légales" type="autre">
     <Enonce>
     ## ⚖️ Partie 4 : Rédaction des mentions légales (30 min)
 

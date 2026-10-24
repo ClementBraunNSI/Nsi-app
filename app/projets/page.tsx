@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ArrowRight, Palette, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Projets | La tanière du code',
+  title: { absolute: 'Projets | La tanière du code' },
   description: 'Découvrez les projets pédagogiques et créatifs de La tanière du code.',
 };
 

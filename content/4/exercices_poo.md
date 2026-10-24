@@ -5,11 +5,12 @@ badgeId: bts_poo_basics
 meta: 'Classes, Objets, Propriétés, Constructeurs, Héritage'
 prerequisites:
   - projet_rpg_csharp
+audience: public
 ---
 
 <ExerciseTabs courseId="bts_poo_basics" courseTitle="TP POO - Bases">
   
-  <ExerciseSection id="tp-poo-exercice1" label="Exercice 1 - Compte Bancaire">
+  <ExerciseSection id="tp-poo-exercice1" label="Exercice 1 - Compte Bancaire" type="autre">
     <Enonce>
     ## 🏦 Exercice 1 : Gestion de Compte Bancaire (Niveau Débutant)
 
@@ -102,7 +103,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-poo-exercice2" label="Exercice 2 - Bibliothèque">
+  <ExerciseSection id="tp-poo-exercice2" label="Exercice 2 - Bibliothèque" type="autre">
     <Enonce>
     ## 📚 Exercice 2 : Gestion de Livres (Niveau Débutant/Intermédiaire)
 
@@ -200,7 +201,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-poo-exercice3" label="Exercice 3 - Étudiants">
+  <ExerciseSection id="tp-poo-exercice3" label="Exercice 3 - Étudiants" type="autre">
     <Enonce>
     ## 🎓 Exercice 3 : Gestion d'Étudiants (Niveau Intermédiaire)
 
@@ -324,7 +325,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-poo-exercice4" label="Exercice 4 - Concessionnaire">
+  <ExerciseSection id="tp-poo-exercice4" label="Exercice 4 - Concessionnaire" type="autre">
     <Enonce>
     ## 🚗 Exercice 4 : Gestion de Concessionnaire (Niveau Intermédiaire/Avancé)
 
@@ -534,7 +535,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-poo-exercice5" label="Exercice 5 - Import CSV">
+  <ExerciseSection id="tp-poo-exercice5" label="Exercice 5 - Import CSV" type="autre">
     <Enonce>
     ## 📂 Exercice 5 : Importation de Données CSV (Niveau Intermédiaire)
 
@@ -631,7 +632,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-poo-exercice6-animaux" label="Exercice 6 - Héritage (Animaux)">
+  <ExerciseSection id="tp-poo-exercice6-animaux" label="Exercice 6 - Héritage (Animaux)" type="autre">
     <Enonce>
     ## 🐾 Exercice 6 : Animaux et Héritage (Niveau Avancé)
 
@@ -787,7 +788,7 @@ prerequisites:
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="tp-poo-exercice6" label="Exercice 6 - Héritage Véhicules">
+  <ExerciseSection id="tp-poo-exercice6" label="Exercice 6 - Héritage Véhicules" type="autre">
     <Enonce>
     ## 🏍️ Exercice 6 : Concessionnaire Multi-Véhicules
 

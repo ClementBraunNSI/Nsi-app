@@ -4,318 +4,147 @@ description: "Construction d'un SITE pour le GEI (HTML PHP)"
 level: "4"
 chapter: "BTS SIO 1 SLAM AP"
 icon: "🚀"
+audience: public
 ---
 
-Mission 1 : Appel d'offre - Site internet dynamique et portable 
+# Mission AP1 — Site du GEI
 
-**Durée :** 16h (4h/semaine en 4 semaines) **Atelier de professionnalisation - Semestre 2** 
+Le but de cette mission est de répondre à l'appel d'offres du Groupement des Entreprises d'Insertion : un site dynamique, consultable sur téléphone, branché sur une base de données.
+Durée : 16 h (4 h par semaine, 4 semaines), atelier de professionnalisation, semestre 2. Travail en binôme.
 
-1) Compétences abordées 
+**Compétences :** B1.3 Développer la présence en ligne de l'organisation. B1.4 Travailler en mode projet. B2.1 Concevoir et développer une solution applicative. B2.2 Assurer la maintenance corrective ou évolutive d'une solution applicative.
 
-* B1.3 Développer la présence en ligne de l'organisation 
+## 1. Le contexte 🏢
 
+Le GEI, créé en 1988, représente 1 200 entreprises d'insertion en France. Elles emploient chaque année 65 000 salariés (collecte, tri, recyclage, environnement, tourisme, restauration, et d'autres secteurs). Le site doit installer cette identité : image actuelle, entreprises lisibles, communication cohérente, pages utilisables sur mobile.
 
-* B1.4 Travailler en mode projet 
+Le site est à la fois une vitrine (présentation, missions, partenaires), un annuaire (illustrations, témoignages, chiffres), et un support qu'on ouvre sur téléphone comme sur grand écran.
 
+Cinq rubriques, dans la navigation :
 
-* B2.1 Concevoir et développer une solution applicative 
+1. Contenus éditoriaux (c'est l'accueil)
+2. Carte de France
+3. Moteur de recherche
+4. Contact
+5. Mentions légales
 
+*Attention à l'usage de l'IA : elle peut aider à comparer des pistes. Elle ne rédige pas le site à votre place. Le code rendu est le vôtre, commenté en français.*
 
-* B2.2 Assurer la maintenance corrective ou évolutive d'une solution applicative 
+## 2. Les pages, avec un exemple à tenir 🗺️
 
+### Accueil — contenus éditoriaux
 
+Deux familles de contenus, stockées en base, pas écrites en dur dans chaque page.
 
----
+- Une actualité : titre, résumé, corps avec un lien, et au plus une pièce jointe (document, photo, son ou vidéo).
+- Une page de présentation : offre de services, missions, organisation, chiffres clés. Un partenaire : logo, texte court, adresse du site.
 
-2) Contexte et objectifs 
+Exemple d'actualité à insérer pour vérifier l'accueil. Vous la remplacez ensuite par des contenus GEI que vous avez cherchés. N'inventez pas un chiffre d'affaires réel.
 
-**Appel d'offre : Conception du site internet du Groupement des Entreprises d'Insertion** Créé en 1988, le groupement des entreprises d'insertion représente 1200 entreprises d'insertion en France. Celles-ci emploient chaque année 65000 salariés dans divers secteurs d'activité (collecte, tri, récupération, recyclage des déchets, environnement, tourisme et restauration, etc.).
+```text
+titre   : Semaine du recyclage
+resume  : Les entreprises du GEI ouvrent leurs ateliers.
+corps   : Programme et inscription.
+lien    : https://exemple.gei.invalid/semaine
+```
 
-Plus de 25 ans après sa création, le GEI est devenu la plus grande alliance des entreprises d'insertion en France. C'est pourquoi, cette enseigne se doit désormais d'installer son identité dans tout le pays à travers l'ensemble des supports de communication existants.
+L'accueil affiche le titre, le résumé, et le lien cliquable. Le corps s'ouvre au clic.
 
-**Les objectifs motivant la création de ce nouveau site sont les suivants :** 
+### Carte de France
 
-* Renvoyer une image plus moderne et dynamique du groupement sur le web, en phase avec les nouveaux outils à disposition (site Internet dynamique ou application ou réseaux sociaux).
+La carte montre 18 régions : 13 métropolitaines et 5 d'outre-mer. Un clic sur le **nom** d'une des 13 régions métropolitaines ouvre, en pop-up ou dans un nouvel onglet, les entreprises de cette région, classées par nom, avec localisation, secteur, adresse, téléphone, e-mail, prénom et nom du dirigeant.
 
+Ces informations viennent de la base. Deux entreprises par région, secteurs variés. Les textes sont indicatifs : on ne réutilise pas un jeu de données déjà fourni par un autre sujet.
 
-* Renforcer la visibilité et la lisibilité des entreprises d'insertion et entreprises de travail temporaire afin de capter de nouveaux publics (création du nouveau logo).
+Aller plus loin, seulement quand le clic sur le nom fonctionne : rendre cliquables les 5 régions d'outre-mer, puis la zone de la région et plus seulement son nom.
 
+### Moteur de recherche
 
-* Instaurer un système de communication cohérent (Réseaux sociaux, forum, FAQ, ...) permettant de poursuivre le travail mutualisation de contenus et de moyens impulsé par une charte graphique.
+Il est dans la barre de navigation. Il cherche dans les titres, les résumés et les corps, pour les actualités et pour les entreprises. Sans base, il ne peut pas répondre : la requête SQL utilise le mot tapé, et la page affiche les lignes trouvées.
 
+Contrôle : le mot `recyclage` retrouve l'actualité d'exemple. Un mot absent affiche `Aucun résultat.`, pas une page blanche.
 
-* Rendre accessible l'ensemble des informations de GEI (site Internet adapté pour mobile).
+### Contact
 
+Une entreprise s'inscrit une seule fois. Le formulaire PHP a deux parties.
 
+- Entreprise : nom, adresse, code postal, e-mail, téléphone, secteur (liste déroulante).
+- Dirigeant : nom, prénom, e-mail, téléphone.
 
-**Ce site devra être à la fois :** 
+La case de consentement n'est pas cochée par défaut. Les champs indispensables sont visibles comme tels. Les champs qui ne le sont pas ont une raison, écrite dans la politique de confidentialité. On ne demande pas une donnée dont la page ne se sert pas.
 
-* Une vitrine du groupement GEI : présentation, informations, ses missions, ses partenaires.
+Contrôle : deux envois avec le même nom d'entreprise. Le second est refusé, la base ne gagne pas de doublon. Un envoi sans case cochée est refusé, rien n'est enregistré.
 
+### Mentions légales
 
-* Un annuaire des entreprises : valorisation via des illustrations, témoignages, chiffres clés.
+Lien dans le pied de page, par exemple `accéder aux mentions légales`. La page dit ce qui est collecté, pourquoi, et comment on demande la suppression ou la modification.
 
+Informations du GEI à intégrer :
 
-* Un véritable support de communication : accessible à partir de n'importe quel appareil (les pages doivent respecter les diverses résolutions des appareils mobiles).
+- RCS : 801 171 109
+- TVA : FR3801171109
+- Adresse : GEI Wallon, 22 avenue de l'explorateur de Kerguelen, 98412 France
 
+Pour chaque mention obligatoire d'un site professionnel que vous ne pouvez pas remplir avec ces données (hébergeur, directeur de la publication, si vous ne les avez pas), écrivez que le site de démonstration ne correspond pas à cette catégorie, plutôt que d'inventer un nom.
 
+<ExerciseTabs courseId="sio_ap1_pages" courseTitle="Pages du GEI">
+  <ExerciseSection id="ap1-pages-1" label="Parcours de contrôle" type="autre">
+    <Enonce>
+      Avant de rendre, le site se parcourt dans cet ordre, sur un téléphone ou une fenêtre étroite, puis sur un écran large.
 
----
+      1. L'accueil affiche l'actualité d'exemple, avec son lien.
+      2. Un clic sur le nom d'une région métropolitaine liste ses deux entreprises.
+      3. Le mot `recyclage` dans le moteur retrouve l'actualité. Un mot absent affiche `Aucun résultat.`
+      4. Le formulaire refuse un doublon et refuse l'envoi sans consentement.
+      5. Le pied de page ouvre les mentions, où figurent le RCS, la TVA et l'adresse ci-dessus.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
 
-3) Architecture du site Internet 
+## 3. Le déroulement, semaine après semaine 🗓️
 
-L'architecture s'organise autour d'un **Site internet**  principal divisé en cinq rubriques :
+Chaque étape est montrée au professeur avant la suivante.
 
-* Contenus éditoriaux 
-
-
-* Carte de France 
-
-
-* Moteur de recherche 
-
-
-* Contact 
-
-
-* Mentions légales 
-
-
-
----
-
-4) Description des pages 
-
-Le site internet que vous allez concevoir permet aux entreprises de se valoriser et de gagner en notoriété. Le but est donc de retrouver toutes les informations gratifiantes des entreprises afin d'attirer les visiteurs. Le chiffre d'affaires, le nombre d'embauches ou encore le salaire des employés peuvent être des informations intéressantes. L'autre intérêt du site est qu'il regroupe des entreprises de secteurs divers et variés. C'est pourquoi l'interface du site doit être interactive et universelle.
-
-Page « Contenus éditoriaux » 
-
-Cette page est en réalité l'accueil du site où plusieurs éléments sont mis en avant : 
-
-* Actualités (résumé, descriptif avec intégration de liens hypertexte, docs joints, photos, sons, vidéo, etc.).
-
-
-* Pages de présentation (offre de services, missions, organisation, chiffre clés) et Partenaires (logo, texte court de présentation, adresse site web).
-
-
-
-Page « Carte de France » 
-
-* Affichage de la carte de France, découpée en 18 régions (carte actuelle avec 13 régions métropolitaines et 5 régions d'outre-mer).
-
-
-* Quand l'internaute clique sur le nom d'une des 13 grandes régions métropolitaines, il voit apparaître dans une pop-up ou nouvel onglet, les différentes entreprises de cette grande région classée par nom, localisation et secteurs d'activité ainsi que les informations relatives (coordonnées postales, téléphoniques, E-mail de contact, prénom et nom du chef d'entreprise).
-
-
-* Toutes ces informations doivent être stockées dans une base de données.
-
-
-* 
-**Aller plus loin 1 :** Si vous avez encore du temps, vous pouvez également rendre cliquables les 5 régions d'outre-mer.
-
-
-* 
-**Aller plus loin 2 :** Si vous avez encore du temps, vous pouvez rendre cliquable toute la zone de la région et non plus que la zone du nom.
-
-
-
-Page « Moteur de recherche » 
-
-* Son accès est à intégrer dans la barre de navigation du site.
-
-
-* Ce moteur permet de rechercher tous les contenus éditoriaux et entreprises par mots clés présents dans : titres, résumés, contenu/descriptif.
-
-
-* Pour que le moteur de recherche fonctionne, il faut impérativement que toutes vos données soient stockées dans une base de données.
-
-
-* Vous pouvez stocker des titres, des images (ou noms d'image), des textes, etc..
-
-
-
-Page « Contact » 
-
-* C'est ici que les entreprises se rendent afin de s'inscrire sur le site. Elles renseignent toutes les informations nécessaires à leur référencement, et une entreprise ne peut s'inscrire qu'une seule fois.
-
-
-* Inscription grâce à un formulaire (en PHP avec données sécurisées).
-
-
-* 
-**Le formulaire contiendra 2 parties :** 
-
-
-* Les informations de l'entreprise (Nom, adresse, CP, Email, Tel, secteur d'activité par un menu déroulant).
-
-
-* Les informations du Chef d'entreprise (Nom, Prénom, email, Tel).
-
-
-
-
-* Le formulaire doit respecter les principes fondamentaux du RGPD et en particulier minimiser les données collectées (recueil de consentement et politique de confidentialité).
-
-
-* 
-**La transparence doit s'exercer de deux façons :** 
-
-
-* Il s'agit de faire clairement apparaître les données indispensables et celles qui ne le sont pas.
-
-
-* Il faut aussi donner les raisons de la collecte des données non essentielles en informant dans une page dédiée à la politique de confidentialité.
-
-
-
-
-
-Page « Mentions légales et RGPD » 
-
-* Cette page qui regroupe la « Politique de confidentialité » rassemble les informations sur les traitements de données personnelles.
-
-
-* Cette page est obligatoire sur tous les sites professionnels et doit apparaître dans le pied de page sous forme d'un lien hypertexte par exemple "accéder aux mentions légales".
-
-
-* Lorsque des données personnelles sont demandées aux utilisateurs puis collectées, il est dans l'obligation pour le site de demander le consentement à ces collectes.
-
-
-* Pour ce faire, il faut que le contenu de la page des mentions légales contienne une mention à la collecte, à l'utilisation, la suppression ou la modification de ces données.
-
-
-* Le plus simple pour demander ce consentement est de prévoir une case à cocher (non cochée par défaut) qui demande d'indiquer que la politique de confidentialité soit acceptée.
-
-
-* 
-**Vous disposez des informations suivantes :** 
-
-
-* Numéro RCS : 801 171 109 
-
-
-* Numéro de TVA : FR3801171109 
-
-
-* Adresse : GEI Wallon 22 avenue de l'explorateur de Kerguelen 98412 France 
-
-
-
-
-* 1) Trouver les informations obligatoires et les intégrer aux mentions légales. Pour les informations facultatives, il faudra indiquer que le site ne correspond pas à ces catégories.
-
-
-* 2) Il ne faut en aucun cas utiliser des données déjà existantes pour ce site. Il faudra alors trouver des informations à titre indicatif.
-
-
-
----
-
-5) Détail du travail à faire 
-
-En binôme, vous allez devoir répondre à l'appel d'offres. Pour ce faire, vous devrez tout d'abord comprendre le sujet en l'étudiant ensemble. Ensuite, avant de commencer quoi que ce soit, il va falloir vous répartir les tâches et déterminer la durée de chacune d'entre elles. Cela vous permettra d'optimiser votre temps, et chacune des étapes suivantes devront être validées par le professeur.
-
-Étape 1 : Répartition des tâches 
-
-* Qui fait quoi ? Qui est plus à l'aise avec le HTML ? le CSS ? le PHP ? le SQL ? 
-
-
-* Combien de temps chaque tâche va-t-elle durer ? Faire plusieurs tâches en parallèle pour gagner du temps.
-
-
-* Mettre en place un outil de gestion de projet (Gantt, Kanban, Notion.com).
-
-
-
-Étape 2 : Effectuer des recherches 
-
-* Afin de vous aider en tant que futur développeur Web à obtenir un squelette de votre site Web, il existe des outils gratuits pour la création et gestion de contenu.
-
-
-* Définir ce que sont un template et un framework.
-
-
-* Comparer et choisir un ou plusieurs frameworks ou templates.
-
-
-
-Étape 3 : Création du Cahier des Charges 
-
-* La création de ce site doit suivre l'élaboration d'un Cahier des Charges, pour la maintenance du site si du contenu doit être rajouté par la suite.
-
-
-* 
-**Élaborer un cahier des charges qui doit contenir :** 
-
-
-* L'ensemble de la charte graphique et des technologies qui seront utilisées.
-
-
-* L'utilité de chacune des pages.
-
-
-* La location des liens vers d'autres pages et comment ils sont réalisés.
-
-
-* L'architecture et arborescence du site (structure des dossiers, organisation des fichiers, nomenclature).
-
-
-* Conformité légale : respect du RGPD et mentions légales détaillées.
-
-
-
-
-
-Étape 4 : Création de la base de données 
-
-* Chercher des entreprises (2 par région en variant les secteurs d'activités) afin de les insérer dans la base.
-
-
-* D'autres informations concernant l'actualité et la présentation de GEI sont aussi stockées.
-
-
-* Réfléchir aux données et aux types d'informations importantes (données publiques, internes, confidentielles et à accès restreint).
-
-
-* Penser aux types de données : de caractères, numériques, de dates.
-
-
-* Réaliser le schéma relationnel de votre ou vos Bases de données.
-
-
-* Réaliser le dictionnaire des données de vos tables (Champ, Type, particularité).
-
-
-
-Étape 5 : Création du site 
-
-* Elaborer une charte graphique en fonction de votre contenu (et de votre squelette choisi par template ou framework).
-
-
-* Créez UN dossier commun afin d'échanger vos fichiers (Office, Notion.com ou GitHub).
-
-
-* Pensez à rendre votre site interactif et un minima responsive design ! 
-
-
-
-Étape 6 : Rendus du site Web 
-
-* Arborescence propre (nom des dossiers et des fichiers cohérents).
-
-
-* Le cahier des charges.
-
-
-* Les fichiers regroupant le résultat de vos recherches avec liens des sources.
-
-
-* Code et syntaxe propres avec commentaires simples en français.
-
-
-* Sans oublier le respect des normes HTML5 et CSS.
-
-
-
-> 
-> **Note sur l'Intelligence Artificielle :** Attention à l'usage de l'IA qui sera à utiliser pour vous aider en tant qu'outil de réflexion et de pistes d'amélioration. L'IA ne doit pas faire le travail à votre place ! 
+<ExerciseTabs courseId="sio_ap1_etapes" courseTitle="Étapes">
+  <ExerciseSection id="ap1-etape-1" label="Répartition" type="autre">
+    <Enonce>
+      Écrivez qui prend le HTML, le CSS, le PHP et le SQL. Estimez la durée de chaque tâche. Deux tâches peuvent avancer en parallèle. Mettez en place un outil (Gantt, Kanban ou Notion) et une capture, ou un export, fait partie du rendu.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="ap1-etape-2" label="Recherche" type="autre">
+    <Enonce>
+      Définissez ce qu'est un template et ce qu'est un framework. Comparez-en au moins deux, avec les liens des sources, et dites lequel vous gardez pour le squelette du site, et pourquoi il convient au GEI (pages répétables, formulaire, mobile).
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="ap1-etape-3" label="Cahier des charges" type="autre">
+    <Enonce>
+      Rédigez le cahier des charges : charte graphique, technologies, utilité de chacune des cinq pages, où sont les liens et comment ils sont faits, arborescence des dossiers, nommage des fichiers, RGPD et mentions légales.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="ap1-etape-4" label="Base" type="autre">
+    <Enonce>
+      Cherchez deux entreprises indicatives par région, secteurs variés. Ajoutez les contenus d'accueil. Classez ce qui est public, interne, ou à accès restreint.
+
+      Rendez le schéma relationnel et le dictionnaire des données : pour chaque champ, le nom, le type (texte, nombre, date) et la particularité (clé, obligatoire, unique). L'entreprise du formulaire ne peut apparaître qu'une fois : la contrainte est dans la base, pas seulement dans la page.
+    </Enonce>
+  </ExerciseSection>
+
+  <ExerciseSection id="ap1-etape-5" label="Site" type="autre">
+    <Enonce>
+      Construisez le site dans un dossier partagé (drive, Notion ou GitHub). La charte vient du cahier des charges. Les pages sont en HTML5 et CSS, le formulaire en PHP, les lectures en SQL. Le site reste utilisable quand on rétrécit la fenêtre : le texte ne sort pas de l'écran, le menu reste atteignable.
+
+      Commentez en français, simplement, les requêtes et les contrôles du formulaire.
+    </Enonce>
+  </ExerciseSection>
+</ExerciseTabs>
+
+## 4. Ce qu'on rend 📦
+
+- L'arborescence du site : noms de dossiers et de fichiers cohérents, code commenté en français, HTML5 et CSS tenus.
+- Le cahier des charges.
+- Les recherches, avec les liens des sources.
+- Le schéma, le dictionnaire des données, et un jeu d'essai : l'actualité `Semaine du recyclage`, deux entreprises d'au moins une région, un refus de doublon.
+- L'export ou la capture de l'outil de suivi (qui fait quoi, et pour combien de temps).

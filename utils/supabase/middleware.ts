@@ -55,7 +55,31 @@ export async function updateSession(request: NextRequest) {
   )
 
   try {
-    await supabase.auth.getUser()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('must_change_password')
+        .eq('id', user.id)
+        .maybeSingle()
+      const mustChange = Boolean(profile?.must_change_password)
+      const path = request.nextUrl.pathname
+      const target = mustChange && path !== '/mot-de-passe'
+        ? '/mot-de-passe'
+        : !mustChange && path === '/mot-de-passe'
+          ? '/espace'
+          : null
+      if (target) {
+        const redirectUrl = request.nextUrl.clone()
+        redirectUrl.pathname = target
+        redirectUrl.search = ''
+        const redirectResponse = NextResponse.redirect(redirectUrl)
+        response.cookies.getAll().forEach((cookie) => {
+          redirectResponse.cookies.set(cookie)
+        })
+        return redirectResponse
+      }
+    }
   } catch (error) {
     if (isAbortError(error)) return response
     console.error("Middleware Auth Error:", error)

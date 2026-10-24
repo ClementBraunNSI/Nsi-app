@@ -5,15 +5,16 @@ badgeId: bts_python_intro
 meta: 'Variables, Conditions, Fonctions, Boucles et Listes'
 prerequisites:
   - introduction_cybersecurite
+audience: public
 ---
 
 <ExerciseTabs courseId="bts_python_intro" courseTitle="Badge Premiers Pas en Python">
 
-<ExerciseSection id="python-variables-1" label="1. Variables & Affichage">
+<ExerciseSection id="python-variables-1" label="1. Variables & Affichage" type="autre">
 
-## Variables · Affichage · Demande
+## Variables, affichage, saisie
 
-### 📝 Affichage avec `print()`
+`print` écrit dans le terminal. On peut lui passer plusieurs valeurs, séparées par des virgules : il les affiche à la suite, avec un espace entre elles.
 
 ```python
 print("Hello World!")
@@ -22,7 +23,7 @@ prenom = "Maya"
 print("Bonjour", prenom)
 ```
 
-Affiche un message dans le terminal. Plusieurs éléments peuvent être séparés par des virgules.
+L'interpréteur ci-dessous exécute ce que vous tapez, sans quitter la page. Changez le message, relancez, et regardez ce qui sort.
 
 <Admonition type="experiment" title="Testez votre code en direct !">
 Utilisez l'interpréteur ci-dessous pour tester vos commandes Python sans quitter la page. Essayez de modifier le message !
@@ -32,13 +33,7 @@ Utilisez l'interpréteur ci-dessous pour tester vos commandes Python sans quitte
 prenom = 'Maya'
 print('Bonjour', prenom)" />
 
-### 🗣️ Demander à l'utilisateur
-
-La fonction `input()` demande une saisie et retourne une chaîne (`str`). Stocker la réponse pour la réutiliser.
-
-### 🔄 Conversion de types
-
-Convertir une chaîne en entier ou flottant avec `int()` et `float()`; transformer vers chaîne avec `str()`.
+`input` pose une question et renvoie toujours une chaîne, un `str`, même quand la personne a tapé des chiffres. On range cette chaîne dans une variable pour s'en resservir. Pour calculer avec, on la convertit : `int` vers un entier, `float` vers un décimal. `str` fait le chemin inverse, d'un nombre vers une chaîne.
 
 ```python
 # Demande de l'âge à l'utilisateur
@@ -52,7 +47,7 @@ type(age)   # str
 age = int(age)
 ```
 
----
+Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une autre chaîne. On ne peut pas lui ajouter 1. Après `int(age)`, c'est l'entier 19, et le calcul devient possible. Oublier la conversion est la première erreur de ce chapitre : le programme ne se plaint pas à l'`input`, il se plaint à l'opération suivante.
 
 ### Exercice 1.1 — Mon premier message
 **Créer un programme qui affiche "Bienvenue en Python !" dans le terminal.**
@@ -116,20 +111,19 @@ print("Mon animal préféré est " + animal)
 
 </ExerciseSection>
 
-<ExerciseSection id="python-conditions-2" label="2. Conditions">
+<ExerciseSection id="python-conditions-2" label="2. Conditions" type="autre">
 
-## Les structures conditionnelles
+## Choisir selon une condition
 
-### ⚖️ La structure `if`
+Un programme qui fait toujours la même chose ne décide rien. `if` n'exécute le bloc indenté que lorsque la condition est vraie. Les deux-points annoncent le bloc. L'indentation le délimite : en Python, le décalage n'est pas décoratif, c'est la syntaxe.
 
 ```python
 age = 18
 if age >= 18:
     print("Vous êtes majeur")
 ```
-Après `if`, écrire la condition, terminer par `:` et indenter le bloc exécuté si la condition est vraie.
 
-### `if` – `else`
+`else` prend le cas restant, quand la condition est fausse. Un seul des deux blocs s'exécute.
 
 ```python
 age = 15
@@ -140,9 +134,7 @@ else:
     print("Vous êtes mineur")
 ```
 
-### `if` – `elif` – `else`
-
-Pour tester plusieurs conditions successives, utiliser `elif`.
+Dès qu'il y a plus de deux issues, `elif` teste une condition suivante, seulement si les précédentes ont échoué. L'ordre compte. Une note de 17 satisfait aussi `>= 14` et `>= 12`. Si le test le plus exigeant n'est pas écrit en premier, il ne sera jamais atteint.
 
 ```python
 note = 14
@@ -159,8 +151,6 @@ else:
     print("Insuffisant")
 ```
 
-### Opérateurs de comparaison
-
 | Opérateur | Signification | Exemple |
 | :---: | :--- | :--- |
 | `>` | supérieur | `3 > 1` |
@@ -170,12 +160,10 @@ else:
 | `==` | égal à | `3 == 1` |
 | `!=` | différent de | `3 != 1` |
 
-**Attention** à ne pas confondre l'affectation `=` avec la comparaison `==`.
+`=` affecte, `==` compare. `if age = 18` n'est pas une condition. C'est une erreur.
 
-### Opérateurs logiques
+`and` exige que les deux côtés soient vrais. `or` se contente d'un seul. `not` inverse.
 
-#### `and` (et)
-Les deux conditions doivent être vraies.
 ```python
 age = 20
 permis = True
@@ -184,8 +172,6 @@ if age >= 18 and permis == True:
     print("Vous pouvez conduire")
 ```
 
-#### `or` (ou)
-Au moins une des conditions doit être vraie.
 ```python
 jour = "samedi"
 
@@ -193,8 +179,6 @@ if jour == "samedi" or jour == "dimanche":
     print("C'est le week-end !")
 ```
 
-#### `not` (non)
-Inverse la condition.
 ```python
 pluie = False
 
@@ -202,7 +186,7 @@ if not pluie:
     print("On peut sortir sans parapluie")
 ```
 
----
+`permis == True` se simplifie souvent en `if permis`, puisque la variable est déjà un booléen. Les deux formes disent la même chose. Autant lire la plus courte une fois qu'elle ne surprend plus.
 
 ### Exercice 2.1 — Comparaison de deux nombres
 **Demander deux nombres à l'utilisateur et afficher lequel est le plus grand. Si les deux nombres sont égaux, afficher "Les nombres sont égaux".**
@@ -288,14 +272,11 @@ print("Prix:", prix)
 
 </ExerciseSection>
 
-<ExerciseSection id="python-fonctions-3" label="3. Fonctions">
+<ExerciseSection id="python-fonctions-3" label="3. Fonctions" type="autre">
 
-## Fonctions
+## Ranger un geste dans une fonction
 
-### 📦 Qu'est-ce qu'une fonction ?
-Une fonction est un bloc de code réutilisable qui effectue une tâche spécifique. Elle organise le code et évite les répétitions.
-
-### Définir et appeler une fonction
+Une **fonction** est un bloc qu'on nomme pour le rappeler. Elle évite de recopier le même code, et elle donne un nom au geste : `dire_bonjour` se lit mieux que trois `print` perdus au milieu du script. On la définit avec `def`, on l'appelle par son nom suivi de parenthèses.
 
 ```python
 def dire_bonjour():
@@ -305,7 +286,9 @@ def dire_bonjour():
 dire_bonjour()
 ```
 
-### Paramètres
+Sans l'appel, la fonction existe et ne s'exécute pas. Définir n'est pas lancer.
+
+Un **paramètre** est une valeur que l'appel fournit. Le même `saluer` sert pour Alice et pour Bob. Plusieurs paramètres se séparent par des virgules, et l'ordre de l'appel est l'ordre de la définition.
 
 ```python
 def dire_bonjour(prenom):
@@ -315,8 +298,6 @@ dire_bonjour("Alice")
 dire_bonjour("Bob")
 ```
 
-Plusieurs paramètres sont possibles, séparés par des virgules :
-
 ```python
 def additionner(a, b):
     resultat = a + b
@@ -325,7 +306,7 @@ def additionner(a, b):
 additionner(5, 3)
 ```
 
-### Retour de valeur avec `return`
+`print` montre une valeur. Il ne la rend pas au reste du programme. `return` la renvoie : l'appel peut la stocker, la passer à une autre fonction, s'en servir dans un calcul. Une fonction qui affiche et une fonction qui calcule ne jouent pas le même rôle. On préfère calculer dans la fonction, et afficher là où l'on décide de montrer le résultat.
 
 ```python
 def additionner(a, b):
@@ -336,8 +317,6 @@ somme = additionner(10, 20)
 print(somme)  # 30
 ```
 
-**print** affiche une valeur, **return** renvoie une valeur pour réutilisation.
-
 ```python
 def calculer_double(nombre):
     return nombre * 2
@@ -345,8 +324,6 @@ def calculer_double(nombre):
 resultat = calculer_double(5)
 print("Le double est :", resultat)
 ```
-
----
 
 ### Exercice 3.1 — Ma première fonction
 **Créer une fonction `afficher_message()` qui affiche "Bienvenue dans mon programme !". Appeler cette fonction 3 fois.**
@@ -457,11 +434,11 @@ calculatrice()
 
 </ExerciseSection>
 
-<ExerciseSection id="python-boucles-4" label="4. Boucles">
+<ExerciseSection id="python-boucles-4" label="4. Boucles" type="autre">
 
-## Boucles
+## Répéter
 
-### 🔄 Boucle `for` et `range()`
+`for` parcourt une suite. `range(debut, fin)` produit les entiers de `debut` inclus à `fin` exclu : `range(1, 6)` donne 1, 2, 3, 4, 5. Un troisième argument est le pas. On parcourt aussi une liste directement : la variable de boucle prend chaque valeur, l'une après l'autre.
 
 ```python
 # Parcourir une séquence de nombres de 1 à 5
@@ -473,9 +450,8 @@ animaux = ["renard", "lapin", "hibou"]
 for a in animaux:
     print(a)
 ```
-`range(debut, fin, pas)` génère une séquence. Parcourir des listes directement est fréquent.
 
-### 🔁 Boucle `while`
+`while` répète tant que la condition reste vraie. Il faut que quelque chose, dans le corps, la rende fausse un jour. Ici, `compteur` augmente. S'il n'augmentait pas, la condition `compteur < 3` resterait vraie, et la boucle ne s'arrêterait pas.
 
 ```python
 # Répéter tant qu'une condition est vraie
@@ -484,9 +460,8 @@ while compteur < 3:
     print("tour", compteur)
     compteur += 1
 ```
-Attention aux conditions et aux mises à jour des variables pour éviter les boucles infinies.
 
-### `break` et `continue`
+`break` sort de la boucle tout de suite. `continue` saute le reste du tour et passe à l'itération suivante. Dans l'exemple, les pairs sont sautés, et l'arrivée à 5 arrête tout. On affiche donc 1 et 3.
 
 ```python
 for i in range(1, 10):
@@ -496,9 +471,8 @@ for i in range(1, 10):
         continue   # Passe à l'itération suivante
     print(i)
 ```
-Utiliser `break` pour arrêter la boucle, `continue` pour sauter à l'itération suivante.
 
----
+On prend `for` quand on sait quoi parcourir. On prend `while` quand l'arrêt dépend d'une condition qu'on ne sait pas compter à l'avance, une saisie, une valeur qui décroît.
 
 ### Exercice 4.1 — 1 à 100
 **Écrire une fonction `liste_de_1_a_100()` qui retourne la liste des nombres de 1 à 100.**
@@ -558,11 +532,11 @@ chaine2+chaine1 => "aurevoirbonjour"
 
 </ExerciseSection>
 
-<ExerciseSection id="python-listes-5" label="5. Listes & Tuples">
+<ExerciseSection id="python-listes-5" label="5. Listes & Tuples" type="autre">
 
-## Listes & Tuples
+## Listes et tuples
 
-### 📋 Créer et manipuler une liste
+Une **liste** garde plusieurs valeurs dans l'ordre, sous un seul nom. L'indice commence à 0. L'indice `-1` désigne le dernier élément, sans qu'on ait à calculer `len` soi-même. `len` donne le nombre d'éléments.
 
 ```python
 # Création
@@ -587,9 +561,9 @@ for i in range(len(notes)):
 carres = [x*x for x in range(5)]  # [0,1,4,9,16]
 ```
 
-### Méthodes utiles sur les listes
+On parcourt par valeur quand seule la note compte. On parcourt par indice quand on a aussi besoin de la position. La compréhension de liste construit une nouvelle liste en une expression : ici, les carrés de 0 à 4.
 
-Méthodes courantes pour ajouter, retirer, trier, copier et interroger une liste.
+Les méthodes modifient souvent la liste sur place. `append` ajoute un élément à la fin. `extend` ajoute ceux d'une autre liste. `insert` place un élément à un indice, et décale le reste. `remove` retire la première occurrence d'une valeur. `pop` retire et renvoie, par défaut le dernier, ou celui de l'indice donné. `count` et `index` interrogent sans modifier. `sort` et `reverse` réordonnent. Le découpage `liste[2:5]` fabrique une nouvelle liste, de l'indice 2 inclus à l'indice 5 exclu. `liste[::-1]` la renverse.
 
 ```python
 liste = [3, 1, 4]
@@ -621,11 +595,10 @@ inverse = liste[::-1]
 copie1 = liste[:]           # copie par slicing
 copie2 = liste.copy()       # copie
 ```
-**Attention** : les listes sont mutables; utiliser une copie pour conserver l’original si vous devez modifier sans impacter la variable source.
 
-### Tuples
+Une liste est **mutable**. `autre = liste` ne copie pas : les deux noms désignent le même objet, et modifier l'un modifie l'autre. `liste[:]` ou `liste.copy()` fabrique une liste distincte. On copie quand on veut trier ou filtrer sans perdre l'original.
 
-Un tuple est une séquence immuable. On peut l'indexer et le parcourir comme une liste, mais on ne peut pas modifier ses éléments.
+Un **tuple** se parcourt et s'indexe comme une liste. Il est **immuable** : on ne peut pas remplacer un élément, ni l'`append`. On s'en sert pour une valeur qui ne doit pas bouger, des coordonnées, une paire qu'on rend depuis une fonction.
 
 ```python
 coord = (10, 20)
@@ -633,8 +606,6 @@ x = coord[0]  # 10
 y = coord[1]  # 20
 # coord[0] = 99  # Erreur : tuple immuable
 ```
-
----
 
 ### Exercice 5.1 — Somme des éléments
 **Écrire une fonction `somme_elements(liste)` qui retourne la somme des éléments de `liste`.**

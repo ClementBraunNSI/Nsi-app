@@ -7,239 +7,124 @@ level: '2'
 chapter: Internet
 icon: "\U0001F310"
 prerequisites: []
+audience: public
 ---
 
 > **Définition : Internet**
-> **Internet** est un réseau informatique à échelle mondiale sur lequel de nombreuses applications sont basées (email, transfert de fichiers, navigation web, etc.).
+> **Internet** est un réseau informatique à l'échelle mondiale. Le mail, le transfert de fichiers, la navigation sur le Web et beaucoup d'autres applications s'appuient dessus.
 
-## 📅 L'Histoire d'Internet : Des Pionniers à la Révolution Mondiale
+Quand on dit « je vais sur Internet », on pense souvent à un site ou à une application. En réalité, on utilise un immense réseau de machines qui s'échangent des données. Le cours d'aujourd'hui sert à voir comment ce réseau s'est construit, puis comment une information trouve son chemin d'un appareil à un autre.
 
-### 1960s - Les Pionniers d'ARPANET
-L'idée révolutionnaire de relier des machines pour échanger des données naît dans les laboratoires et universités. Robert Kahn dirige le projet ARPANET pour la Defense Advanced Research Projects Agency.
+## D'où vient Internet
 
-### 1969 - Premier Message de l'Histoire
-Le 20 septembre 1969, la première communication voit le jour entre l'université de Californie et Stanford. Le premier message transmis était simplement "login".
+L'idée n'est pas née dans un garage. Dans les années 1960, des laboratoires et des universités cherchent un moyen de relier des ordinateurs qui, jusque-là, ne se parlent pas. Le projet s'appelle ARPANET. Il est financé par la Defense Advanced Research Projects Agency, l'agence de recherche de l'armée américaine. Le but n'est pas encore de regarder des vidéos : on veut que des machines distantes puissent s'échanger des données.
 
-### 1970-80s - Naissance des Protocoles
-Développement des règles de communication appelées "protocoles". Ces normes permettent aux machines de communiquer de manière standardisée.
+Le 29 octobre 1969, la première communication a lieu entre l'université de Californie à Los Angeles et le Stanford Research Institute. On tente d'envoyer le mot `login`. La liaison tombe après les deux premières lettres. On retient quand même l'épisode : c'est la première fois que deux machines de ce réseau se parlent vraiment.
 
-### 1983 - Révolution TCP/IP
-Installation du protocole TCP/IPv4 sur ARPANET. Création simultanée des règles des systèmes de nom de domaine (DNS).
+Dans les années 1970 et 1980, on comprend qu'il faut des règles communes. Ces règles s'appellent des **protocoles**. Sans elles, chaque constructeur inventerait sa façon d'envoyer un message, et les machines ne se comprendraient plus.
 
-### 1990s - Explosion du Web
-Tim Berners-Lee et Robert Cailliau créent le World Wide Web au CERN en Suisse, révolutionnant l'accès à l'information.
+En 1983, ARPANET adopte TCP/IPv4. La même année, on pose les règles du système de noms de domaine, le DNS. Ce sont deux décisions discrètes, et pourtant ce sont elles qui rendent le réseau utilisable à grande échelle : une façon unique d'acheminer les données, et une façon humaine de nommer les machines.
+
+Au début des années 1990, Tim Berners-Lee et Robert Cailliau, au CERN, inventent le World Wide Web. Internet existait déjà. Le Web, lui, change la manière d'y accéder : on passe d'une machine à l'autre en suivant des liens.
 
 ![Tim Berners-Lee et Robert Cailliau](/content/1/tblrc.jpeg)
 
-### Aujourd'hui - Internet Mondial
-Plus de 4 milliards d'internautes connectés, échangeant emails, fichiers et accédant à une quantité incommensurable de données.
+Aujourd'hui, plus de quatre milliards de personnes utilisent ce réseau pour écrire, envoyer des fichiers ou consulter des quantités de données qu'aucune bibliothèque ne pourrait tenir sur des étagères.
 
 ![Réseau ARPANET](/content/1/arpanet.jpeg)
 
-> **Le saviez-vous ?**
-> L'objectif initial était de relier seulement trois universités : Stanford, Los Angeles et l'Utah.
+> Au départ, on ne voulait relier que trois universités : Stanford, Los Angeles et l'Utah. Le réseau que vous avez dans la poche est sorti de ce projet très limité.
 
 ![Carte mondiale d'Internet](/content/1/geo-mercator.svg)
 
-<Quiz 
-  question="Quel était le nom du premier réseau, ancêtre d'Internet, créé dans les années 60 ?" 
-  options={["ARPANET", "INTERNET", "MINITEL", "WEB"]} 
-  answer={0} 
-  explanation="ARPANET (Advanced Research Projects Agency Network) est le premier réseau à transfert de paquets développé aux États-Unis."
-/>
+## De quoi est fait un réseau
 
-<Quiz 
-  question="Qui a inventé le World Wide Web (le Web) au CERN en 1989 ?" 
-  options={["Robert Kahn", "Vint Cerf", "Tim Berners-Lee", "Bill Gates"]} 
-  answer={2} 
-  explanation="Tim Berners-Lee a inventé le Web au CERN pour faciliter le partage d'informations entre scientifiques."
-/>
+> **Définition : réseau informatique**
+> Un **réseau informatique** est un ensemble de machines reliées, par différents moyens, qui communiquent entre elles pour échanger des données.
 
-## 🔧 Anatomie d'un Réseau Informatique
+Regardez une salle de classe, ou une maison. Il y a des appareils, des boîtiers, et des câbles ou des ondes. Chacun a un rôle, et on les confond souvent parce que la box du salon en cumule plusieurs.
 
-> **Définition : Réseau Informatique**
-> Un **réseau informatique** est un ensemble de machines reliées, par différents moyens, qui communiquent entre elles pour échanger des données ou des informations.
+Les **machines** sont celles qui veulent parler : ordinateur, tablette, console, téléphone. Le **switch** les relie entre elles tant qu'elles restent dans le même réseau local. La box de la maison fait souvent ce travail. Un switch dédié, avec des prises RJ45, fait la même chose dans une salle informatique.
 
-### 🧩 Les Composants Essentiels
+Le **routeur** sert à autre chose. Il fait sortir du réseau local pour rejoindre Internet, ou un autre réseau. Là encore, la box joue souvent ce rôle en plus du switch. Dans un lycée ou une entreprise, le routeur est parfois un appareil à part.
 
-#### 💻 Machines
-Éléments qui cherchent à communiquer, envoyer ou recevoir des données.
-*Exemples : Ordinateurs, tablettes, consoles, smartphones*
+Enfin, il faut un **support** pour que le signal circule. Ce peut être un câble Ethernet, de la fibre optique, ou le Wi-Fi. Le support ne « comprend » pas le message. Il le transporte.
 
-#### 🔀 Switch
-Élément qui relie de manière locale des machines dans un même réseau.
-*Exemples : Box internet, switch RJ45*
-
-#### 🌐 Routeur
-Élément qui permet de relier un réseau local à Internet ou d'autres réseaux.
-*Exemples : Box internet, routeur spécialisé*
-
-#### 📡 Supports de Transmission
-Éléments qui permettent de relier les diverses machines au switch ou au routeur.
-*Exemples : Câble Ethernet, Fibre optique, WiFi*
-
-### 🗺️ Typologie des Réseaux
-
-#### 🏠 Réseau Local (LAN)
-Réseau localisé dans une même zone géographique (maison, bureau, école).
-
-#### 🌍 Réseau Internet (WAN)
-Réseau accessible à Internet, connectant des réseaux locaux du monde entier.
+On distingue ensuite l'échelle. Un **réseau local**, ou LAN, reste dans un même lieu : une maison, un bureau, le lycée. **Internet** est un WAN, un réseau de réseaux : des réseaux locaux du monde entier, reliés les uns aux autres.
 
 ![Schéma réseau local et Internet](/content/1/rlinternet.png)
 
-<Quiz 
-  question="Quel appareil permet de connecter votre réseau local (maison) au réseau Internet mondial ?" 
-  options={["Le Switch", "Le Routeur (Box)", "La Carte Réseau", "Le Serveur"]} 
-  answer={1} 
-  explanation="C'est le rôle du routeur (souvent intégré dans votre Box Internet) de faire le lien entre votre réseau local (LAN) et le réseau étendu (WAN/Internet)."
-/>
+## Comment une machine est reconnue
 
-> **Question clé**
-> On dispose de machines et d'un réseau, mais comment se retrouvent-elles pour communiquer ? Quelles techniques sont utilisées ?
+Une machine possède une ou plusieurs **cartes réseau**. C'est par elles qu'elle parle, soit aux voisines, soit vers Internet. Chaque carte a une adresse qui lui est propre.
 
-## 🏷️ L'Adressage dans les Réseaux
+> **Adresse MAC**
+> L'adresse **MAC** (*Media Access Control*) est aussi appelée **adresse physique**. C'est l'adresse utilisée par le port Ethernet et par le protocole Ethernet.
 
-### 🔗 Adressage Local : MAC
+Elle s'écrit en six blocs de deux caractères hexadécimaux, par exemple `a1:b2:c3:d4:e5:f6`. L'hexadécimal compte avec seize symboles, de 0 à 9 puis de A à F. Cette adresse ne sert que dans le réseau local, et elle est unique au monde : deux cartes ne portent pas la même.
 
-Une machine dispose d'une ou plusieurs **cartes réseaux** qui permettent de communiquer localement ou globalement vers Internet. Chaque carte possède une adresse unique.
+Pour sortir sur Internet, la MAC ne suffit plus. Il faut une adresse que les routeurs du monde entier sachent lire.
 
-> **📍 Adresse MAC**
-> L'adresse **MAC (Media Access Control)** est aussi appelée **adresse physique** car elle correspond à l'adresse utilisée par le port Ethernet et le protocole Ethernet.
+> **Adresse IP**
+> Une **adresse IP** (*Internet Protocol*), en version 4, est formée de quatre nombres compris entre 0 et 255. La machine les manipule en binaire. Nous, nous les lisons en décimal.
 
-**Caractéristiques :**
-- **Format** : 6 blocs de 2 caractères
-- **Base** : Hexadécimale (16 caractères)
-- **Portée** : Réseau local uniquement
-- **Unicité** : Unique au monde
+`127.0.0.1` est un exemple que vous croiserez souvent : c'est *localhost*, l'adresse par laquelle une machine se parle à elle-même.
 
-> **Exemple** : `a1:b2:c3:d4:e5:f6`
+## Le masque, ou comment savoir si l'on reste chez soi
 
-> **Base hexadécimale** : Représentation en 16 caractères (0-9, A-F)
+Une adresse IP seule ne dit pas tout. Il faut aussi un **masque** pour séparer la partie qui désigne le réseau de la partie qui désigne la machine. Pensez à une adresse postale : le masque indique où s'arrête le nom du quartier et où commence le numéro de la maison.
 
-### 🌐 Adressage Internet : IP
+Avec `192.168.1.42` et le masque `255.255.255.0`, les trois premiers nombres, `192.168.1`, désignent le réseau local. Le `42` désigne la machine dans ce réseau. La question pratique est simple : cette machine est-elle chez moi, ou faut-il passer par le routeur ? À la maison ou au lycée, le masque le plus courant est justement `255.255.255.0`, qu'on note aussi `/24`.
 
-Pour qu'un réseau soit accessible sur Internet, chaque machine doit posséder une adresse unique permettant de l'identifier parmi des milliards d'autres.
+Pour retrouver l'adresse du réseau, on fait un **ET binaire** entre l'adresse IP et le masque. Rappel :
 
-> **🎯 Adresse IP**
-> L'**Adresse IP (Internet Protocol)** est constituée de 4 nombres allant de 0 à 255, représentés en binaire par l'ordinateur mais affichés en décimal pour l'humain.
-
-**Caractéristiques :**
-- **Format** : 4 nombres (0-255)
-- **Base humaine** : Décimale (base 10)
-- **Base machine** : Binaire (0 et 1)
-- **Portée** : Internet mondial
-
-> **Exemple** : `127.0.0.1` (localhost)
-
-### 🎭 Les Masques de Sous-réseau (version simple)
-
-Une adresse IP ne suffit pas a elle seule : on a aussi besoin d'un **masque** pour savoir quelle partie correspond au **reseau** et quelle partie correspond a la **machine**.
-
-> **🧠 Idee cle**
-> Le masque sert a separer :
-> - la partie "quartier" (le reseau)
-> - la partie "maison" (l'appareil)
-
-Par exemple, avec l'adresse `192.168.1.42` et le masque `255.255.255.0` :
-- `192.168.1` represente le reseau local
-- `42` represente la machine dans ce reseau
-
-Cela permet de repondre simplement a la question :
-- **"Cette machine est-elle dans mon reseau local ou faut-il passer par le routeur ?"**
-
-> **Exemple courant en maison/ecole** : `255.255.255.0` (aussi note `/24`)
-
-#### 🧮 Calcul de l'adresse reseau avec `&` (ET binaire)
-
-Pour retrouver l'adresse reseau, on fait un **ET binaire** entre l'IP et le masque :
 - `1 & 1 = 1`
 - `1 & 0 = 0`
 - `0 & 1 = 0`
 - `0 & 0 = 0`
 
-Exemple :
-- IP : `192.168.1.42`
-- Masque : `255.255.255.0`
+Prenons le dernier octet de `192.168.1.42`, puisque le masque y vaut 0. En binaire, 42 s'écrit `00101010` et 0 s'écrit `00000000`. Le ET des deux donne `00000000`, donc 0. L'adresse du réseau est **`192.168.1.0`**. Les trois premiers octets, masqués par 255, restent inchangés.
 
-En binaire (sur le dernier octet) :
-- `42`  -> `00101010`
-- `0`   -> `00000000`
+## Comment les données voyagent : TCP/IP
 
-Calcul :
-- `00101010`
-- `00000000`
-- `-------- &`
-- `00000000` -> `0`
+Les adresses disent *qui* parle. Elles ne disent pas encore *comment* le message est transporté.
 
-Donc l'adresse reseau est : **`192.168.1.0`**
+> **Protocole TCP/IP**
+> **TCP/IP** est le protocole de communication qui permet l'échange de données entre machines sur Internet. C'est le langage commun grâce auquel des appareils très différents arrivent à se comprendre.
 
-## 🌐 Le Protocole TCP/IP
-
-Maintenant que nous savons comment les machines se reconnaissent sur Internet grâce aux adresses, découvrons comment les données transitent réellement d'une machine à une autre à travers le monde.
-
-> **🔗 Protocole TCP/IP**
-> Le protocole **TCP/IP** est un protocole de communication qui permet l'échange de données entre machines sur Internet. Il constitue le langage universel d'Internet, permettant à des milliards d'appareils de communiquer ensemble.
-
-### 🏗️ Les 4 Couches du Modèle
-
-Le modèle TCP/IP découpe la communication en 4 couches distinctes, chacune ayant un rôle précis.
-Cliquez sur chaque couche ci-dessous pour découvrir son rôle et une analogie simple.
+On découpe ce travail en quatre couches. Chacune a un rôle précis, et aucune ne fait le travail des autres. Cliquez sur chaque couche pour voir ce qu'elle prend en charge, avec une analogie simple.
 
 <TcpIpLayers />
 
-### 📦 Le Principe d'Encapsulation
-
-Lorsqu'on envoie un message (par exemple une page web), les données descendent les couches comme une poupée russe.
+Quand vous demandez une page web, les données descendent ces couches les unes après les autres, un peu comme des enveloppes empilées. C'est l'encapsulation.
 
 <EncapsulationVisualizer />
 
-### ✂️ Le Découpage en Paquets
-
-Sur Internet, les données ne circulent pas d'un seul bloc. Elles sont découpées en petits paquets indépendants qui peuvent emprunter des chemins différents.
-
-> **🚦 Comment les routeurs choisissent le chemin ?**
-> Comme un **GPS** (Waze ou Google Maps), les routeurs connaissent l'état du trafic en temps réel.
-> Ils ne choisissent pas toujours le chemin le plus court en distance, mais le plus **rapide**. Si une route est encombrée (bouchon), le routeur envoie le paquet par un autre chemin, même s'il est plus long.
+Sur Internet, on n'envoie pas le fichier d'un seul bloc. On le découpe en petits **paquets**, qui peuvent prendre des chemins différents. Les routeurs choisissent un peu comme un GPS : ils regardent l'état du trafic, pas seulement la distance. Si une liaison est encombrée, le paquet part par un détour, pourvu qu'il arrive plus vite.
 
 <PacketTracer />
 
-> **Note :** Utilisez le simulateur ci-dessus pour lancer un "Ping" et visualiser le trajet d'un paquet à travers les routeurs.
+Le simulateur ci-dessus permet de lancer un ping et de voir le trajet d'un paquet à travers les routeurs.
 
-## 📖 Le DNS : L'Annuaire d'Internet
+## Le DNS, l'annuaire
 
-Les ordinateurs communiquent avec des adresses IP (ex: `142.250.179.142`), mais les humains préfèrent des noms faciles à retenir (ex: `google.com`).
+Les machines se parlent avec des adresses IP, par exemple `142.250.179.142`. Personne n'a envie de retenir ça pour ouvrir un site. On préfère `google.com`.
 
-> **📒 DNS (Domain Name System)**
-> Le **DNS** est l'annuaire d'Internet. Il traduit les noms de domaine (compréhensibles par l'humain) en adresses IP (compréhensibles par la machine).
+> **DNS (Domain Name System)**
+> Le **DNS** est l'annuaire d'Internet. Il traduit un nom de domaine, lisible par nous, en adresse IP, lisible par les machines.
 
-Imaginez que vous voulez appeler un ami. Vous cherchez son nom dans votre répertoire ("Maman") et votre téléphone compose le numéro (`06 12 34 56 78`). Le DNS fait exactement la même chose pour les sites web !
+C'est le même geste que lorsque vous cherchez « Maman » dans le répertoire du téléphone : vous connaissez le nom, l'appareil compose le numéro. Le DNS fait cela pour les sites.
 
-## 🤝 Client-Serveur et Peer-to-Peer
+## Deux façons de s'organiser
 
-Il existe deux grandes façons d'organiser les communications sur Internet :
+La plupart des services que vous utilisez, le Web, le mail, le streaming, suivent le modèle **client-serveur**. Vous, le client, demandez quelque chose. Le serveur, chez Google ou chez Netflix, le fournit. Au restaurant, vous commandez et la cuisine prépare : les rôles ne sont pas les mêmes.
 
-### 🍽️ Le Modèle Client-Serveur
-C'est le modèle le plus courant (Web, Email, Streaming).
-- **Le Client** (vous) demande un service (une page web, une vidéo).
-- **Le Serveur** (Google, Netflix) fournit le service.
-*Analogie : Au restaurant, vous (client) commandez un plat, et le cuisinier (serveur) vous le prépare et vous l'apporte.*
+Le **pair-à-pair**, ou P2P, fonctionne autrement. Il n'y a pas de machine centrale. Chaque ordinateur est à la fois client et serveur, et les données passent directement de l'un à l'autre. C'est plus proche d'un repas où chacun apporte un plat et le partage.
 
-### 🔄 Le Modèle Peer-to-Peer (P2P)
-Dans ce modèle, il n'y a pas de chef ! Tous les ordinateurs sont égaux.
-- Chaque ordinateur est à la fois **client et serveur**.
-- Ils s'échangent des données directement entre eux.
-*Analogie : Un repas partagé (auberge espagnole) où tout le monde apporte quelque chose et partage avec les autres.*
+## Internet est physique
 
-## 🌍 L'Infrastructure Physique
+On parle de « cloud », de nuage, comme si les données flottaient. Elles sont dans des machines, et elles circulent dans des câbles.
 
-On parle souvent du "Cloud" (nuage), mais Internet est bien réel et physique !
+> Environ 99 % du trafic intercontinental passe sous les océans, dans des câbles de fibre optique. Les satellites ne portent qu'une petite part de ce trafic.
 
-> **📡 Le saviez-vous ?**
-> 99% du trafic Internet intercontinental passe sous les océans par des **câbles sous-marins** en fibre optique, pas par des satellites !
-
-Internet, c'est :
-1.  **Des Câbles** : Des milliers de kilomètres de fibre optique sous les mers et sous nos rues.
-2.  **Des Data Centers** : D'immenses hangars remplis d'ordinateurs (serveurs) qui stockent les vidéos, photos et sites web. Le "Cloud", c'est juste l'ordinateur de quelqu'un d'autre !
-3.  **Des Points d'Échange (IXP)** : Des carrefours où les réseaux des opérateurs (Orange, Free, Google...) se connectent pour s'échanger du trafic.
-
+Trois éléments tiennent l'ensemble. D'abord les **câbles**, sous les mers et sous les rues. Ensuite les **data centers**, ces hangars pleins de serveurs où sont stockés les vidéos, les photos et les sites. Le nuage, c'est l'ordinateur de quelqu'un d'autre. Enfin les **points d'échange**, les IXP : des carrefours où les réseaux d'Orange, de Free, de Google et des autres se branchent les uns aux autres pour s'échanger du trafic.
