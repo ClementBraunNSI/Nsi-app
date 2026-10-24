@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "nsi-dev-demo",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "set NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321&& set NEXT_PUBLIC_SUPABASE_ANON_KEY=demo-local-key&& npm run dev -- -p 3001"],
+      "port": 3001
     }
   ]
 }

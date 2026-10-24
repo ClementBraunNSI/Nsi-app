@@ -1,0 +1,41 @@
+import type { Table } from "./types";
+
+/** Les habitants de la forêt, communs à toutes les enquêtes. */
+export const ANIMAUX: Table = {
+  name: "animaux",
+  description: "Tous les habitants de la forêt.",
+  columns: [
+    { name: "id", type: "INTEGER", description: "Numéro de l'animal" },
+    { name: "nom", type: "TEXT", description: "Son prénom" },
+    { name: "espece", type: "TEXT", description: "Son espèce" },
+    { name: "pelage", type: "TEXT", description: "Couleur du pelage ou du plumage" },
+    { name: "taille_cm", type: "INTEGER", description: "Taille en centimètres" },
+    { name: "terrier", type: "TEXT", description: "Lieu où il habite" },
+  ],
+  rows: [
+    [1, "Roux", "renard", "roux et blanc", 70, "Terrier des Ronces"],
+    [2, "Zélie", "belette", "brun et blanc", 22, "Vieux Moulin"],
+    [3, "Biscotte", "lapin", "brun et blanc", 40, "Clairière"],
+    [4, "Hulotte", "chouette", "gris et brun", 38, "Grand Chêne"],
+    [5, "Piquet", "hérisson", "brun", 25, "Haie du Verger"],
+    [6, "Musc", "putois", "brun foncé", 40, "Vieux Moulin"],
+    [7, "Grisou", "blaireau", "gris et noir", 75, "Talus des Fougères"],
+    [8, "Bourru", "blaireau", "gris et noir", 80, "Combe aux Pierres"],
+    [9, "Moka", "blaireau", "gris et noir", 72, "Talus des Fougères"],
+    [10, "Noisette", "écureuil", "roux", 23, "Grand Chêne"],
+    [11, "Ondine", "loutre", "brun", 90, "Berge du Ruisseau"],
+    [12, "Ziggy", "rat musqué", "brun", 30, "Berge du Ruisseau"],
+    [13, "Filou", "raton laveur", "gris", 60, "Vieux Moulin"],
+    [14, "Bâtisseur", "castor", "brun", 100, "Barrage des Castors"],
+    [15, "Crôa", "grenouille", "vert", 9, "Mare aux Iris"],
+    [16, "Plume", "chouette", "blanc et gris", 35, "Grand Chêne"],
+    [17, "Hermès", "hermine", "brun et blanc", 28, "Combe aux Pierres"],
+    [18, "Sanglou", "sanglier", "noir", 120, "Bois Profond"],
+    [19, "Cerise", "biche", "fauve", 130, "Clairière"],
+    [20, "Tamia", "mulot", "brun et blanc", 9, "Vieux Moulin"],
+    [21, "Gaspard", "corbeau", "noir", 48, "Grand Chêne"],
+    [22, "Ambre", "renard", "roux et blanc", 65, "Terrier des Ronces"],
+    [23, "Pépin", "lièvre", "brun", 55, "Clairière"],
+    [24, "Sauterelle", "couleuvre", "vert et jaune", 80, "Mare aux Iris"],
+  ],
+};

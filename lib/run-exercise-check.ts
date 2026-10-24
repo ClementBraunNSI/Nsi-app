@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
+  CHECK_UNAVAILABLE,
   parsePythonCheckResult,
   reportForClient,
   reportFromQuery,
@@ -15,21 +16,11 @@ import { PYTHON_CHECK_RUNNER } from './python-check-runner';
 const require = createRequire(import.meta.url);
 const MAX_OUTPUT = 2_000_000;
 
-const CHECK_PROGRAM = `${PYTHON_CHECK_RUNNER}
-def _boot():
-    payload = json.load(sys.stdin)
-    user = ""
-    tests = ""
-    if isinstance(payload, dict):
-        user = payload.get("user") or ""
-        tests = payload.get("tests") or ""
-    del payload
-    return _nsi_run(user, tests)
+// Python tourne avec Pyodide dans un processus Node séparé : Node est présent sur Vercel, python3 non.
+// next.config.mjs embarque ce fichier et node_modules/pyodide avec la page d'exercice.
+const CHILD_SCRIPT = path.join(process.cwd(), 'lib', 'pyodide-check-child.cjs');
 
-print(json.dumps(_boot(), ensure_ascii=False))
-`;
-
-const UNAVAILABLE = 'La vérification n’a pas pu être lancée.';
+const UNAVAILABLE = CHECK_UNAVAILABLE;
 
 function reportFromStdout(stdout: string): RunReport | null {
   const text = stdout.trim();
@@ -41,24 +32,26 @@ function reportFromStdout(stdout: string): RunReport | null {
   }
 }
 
-function pythonEnv(): NodeJS.ProcessEnv {
-  return {
+/** Environnement minimal du processus de vérification : aucune clé du serveur n'y passe. */
+function childEnv(): NodeJS.ProcessEnv {
+  const env: NodeJS.ProcessEnv = {
     PATH: process.env.PATH ?? '/usr/bin:/bin',
     NODE_ENV: 'production',
     LANG: 'C.UTF-8',
-    LC_ALL: 'C.UTF-8',
-    MPLBACKEND: 'Agg',
-    PYTHONDONTWRITEBYTECODE: '1',
-    PYTHONNOUSERSITE: '1',
-    PYTHONSAFEPATH: '1',
   };
+  // Windows : Node a besoin de ces variables pour démarrer et trouver le dossier temporaire.
+  for (const key of ['SystemRoot', 'TEMP', 'TMP', 'TMPDIR']) {
+    if (process.env[key]) env[key] = process.env[key];
+  }
+  return env;
 }
 
-function runPythonProcess(userCode: string, verification: string, cwd: string): Promise<string> {
+function runPythonProcess(userCode: string, verification: string, packages: string[], cwd: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    const child = spawn('python3', ['-c', CHECK_PROGRAM], {
+    // Sans eval ni new Function, `obj.constructor("return import('fs')")()` ne rouvre pas le disque.
+    const child = spawn(process.execPath, ['--disallow-code-generation-from-strings', CHILD_SCRIPT], {
       cwd,
-      env: pythonEnv(),
+      env: childEnv(),
       stdio: ['pipe', 'pipe', 'pipe'],
     });
     const chunks: Buffer[] = [];
@@ -71,10 +64,11 @@ function runPythonProcess(userCode: string, verification: string, cwd: string): 
       if (error) reject(Object.assign(error, { stdout }));
       else resolve(stdout);
     };
+    // Le premier chargement de Pyodide prend quelques secondes ; les modules (numpy…) davantage.
     const timer = setTimeout(() => {
       child.kill('SIGKILL');
       finish(new Error('timeout'));
-    }, 20000);
+    }, packages.length > 0 ? 45000 : 25000);
     child.stdout.on('data', (chunk: Buffer) => {
       size += chunk.length;
       if (size > MAX_OUTPUT) {
@@ -91,14 +85,14 @@ function runPythonProcess(userCode: string, verification: string, cwd: string): 
       if (code === 0) finish(null, stdout);
       else finish(new Error('python'), stdout);
     });
-    child.stdin.end(JSON.stringify({ user: userCode, tests: verification }));
+    child.stdin.end(JSON.stringify({ runner: PYTHON_CHECK_RUNNER, user: userCode, tests: verification, packages }));
   });
 }
 
-export async function runPythonCheck(userCode: string, verification: string): Promise<RunReport> {
+export async function runPythonCheck(userCode: string, verification: string, packages: string[] = []): Promise<RunReport> {
   const cwd = await mkdtemp(path.join(tmpdir(), 'nsi-run-'));
   try {
-    const stdout = await runPythonProcess(userCode, verification, cwd);
+    const stdout = await runPythonProcess(userCode, verification, packages, cwd);
     return reportFromStdout(stdout) ?? unexpectedRunReport(UNAVAILABLE);
   } catch (error) {
     const stdout = error && typeof error === 'object' && 'stdout' in error && typeof error.stdout === 'string'

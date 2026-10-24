@@ -8,7 +8,7 @@ const FoxAcademy = dynamic(() => import("./academy/FoxAcademy"), {
     <div className="grid min-h-[calc(100vh-5rem)] place-items-center bg-[var(--bg)]">
       <div className="flex items-center gap-3 text-sm font-semibold text-[var(--muted)]">
         <span className="text-2xl animate-bounce" aria-hidden="true">🦊</span>
-        Ouverture du poulailler…
+        Le renard se prépare…
       </div>
     </div>
   ),

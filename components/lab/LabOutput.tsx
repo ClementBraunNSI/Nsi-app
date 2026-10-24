@@ -1,7 +1,8 @@
 "use client";
 
+import { Check, Loader2, Play, RotateCw, X } from "lucide-react";
 import type { LabExercise } from "@/app/actions/getExercises";
-import type { RunReport } from "@/lib/python-check";
+import { CHECK_UNAVAILABLE, type RunReport } from "@/lib/python-check";
 import { RunResultPanel } from "@/components/lab/RunResultPanel";
 
 type SqlResults = { columns: string[]; values: any[][] } | null;
@@ -17,60 +18,91 @@ type Props = {
   tab: "console" | "tests";
   onTab: (tab: "console" | "tests") => void;
   onClear: () => void;
+  onRetryTest: () => void;
   consoleState: ConsoleState;
   sqlResults: SqlResults;
   report: RunReport | null;
   statusLine: string | null;
 };
 
-export function LabOutput({ exercise, tab, onTab, onClear, consoleState, sqlResults, report, statusLine }: Props) {
+/**
+ * Un seul panneau de résultat : ce que le programme affiche après « Exécuter »,
+ * la liste des tests après « Vérifier ». Le petit sélecteur n'apparaît que si les deux existent.
+ */
+export function LabOutput({ exercise, tab, onTab, onClear, onRetryTest, consoleState, sqlResults, report, statusLine }: Props) {
+  const ran = consoleState.tone !== "idle" || sqlResults !== null;
+  const both = exercise.hasVerification && report !== null && ran;
+  const view: "console" | "tests" = report && (tab === "tests" || !ran) ? "tests" : "console";
   const passed = report?.tests.filter((test) => test.ok).length ?? 0;
   const total = report?.tests.length ?? 0;
-  const count = total > 0 ? ` (${passed}/${total})` : "";
+
+  if (statusLine) {
+    return (
+      <section className="exercise-result" aria-live="polite">
+        <p className="exercise-result-status">
+          <Loader2 size={15} className="animate-spin" aria-hidden />
+          {statusLine}
+        </p>
+      </section>
+    );
+  }
+
+  if (!ran && !report) {
+    return (
+      <section className="exercise-result is-idle">
+        <p className="exercise-result-hint">
+          <Play size={13} aria-hidden /> <b>Exécuter</b> montre ce que ton programme affiche.
+          {exercise.hasVerification ? (
+            <>
+              {" "}
+              <Check size={13} aria-hidden /> <b>Vérifier</b> lance les tests.
+            </>
+          ) : null}
+        </p>
+      </section>
+    );
+  }
+
+  const unavailable = view === "tests" && report?.error === CHECK_UNAVAILABLE;
 
   return (
-    <div className="exercise-output">
-      <div className="exercise-output-bar" role="tablist" aria-label="Résultat de l’exécution">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={tab === "console"}
-          className={tab === "console" ? "is-active" : ""}
-          onClick={() => onTab("console")}
-        >
-          Console
+    <section className="exercise-result" aria-live="polite">
+      <header className="exercise-result-head">
+        {both ? (
+          <div className="exercise-result-switch" role="tablist" aria-label="Résultat affiché">
+            <button type="button" role="tab" aria-selected={view === "console"} onClick={() => onTab("console")}>
+              Affichage
+            </button>
+            <button type="button" role="tab" aria-selected={view === "tests"} onClick={() => onTab("tests")}>
+              Tests {total > 0 ? `${passed}/${total}` : ""}
+            </button>
+          </div>
+        ) : (
+          <span className="exercise-result-title">{view === "tests" ? "Vérification" : "Affichage du programme"}</span>
+        )}
+        <button type="button" className="exercise-result-close" onClick={onClear} aria-label="Effacer le résultat" title="Effacer le résultat">
+          <X size={15} />
         </button>
-        {exercise.hasVerification ? (
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === "tests"}
-            className={tab === "tests" ? "is-active" : ""}
-            onClick={() => onTab("tests")}
-          >
-            Résultats des tests{count}
-          </button>
-        ) : null}
-        <button type="button" className="exercise-clear" onClick={onClear}>
-          Effacer
-        </button>
-      </div>
-      <div className="exercise-output-body" role="tabpanel">
-        {tab === "tests" && exercise.hasVerification ? (
-          statusLine && !report ? (
-            <p className="exercise-console is-idle">{statusLine}</p>
-          ) : report ? (
-            <RunResultPanel report={report} />
+      </header>
+
+      <div className="exercise-result-body">
+        {view === "tests" && report ? (
+          unavailable ? (
+            <div className="exercise-result-oops">
+              <p>
+                <b>La vérification n’a pas pu se lancer.</b> Ton code n’est pas en cause : réessaie dans un instant.
+              </p>
+              <button type="button" onClick={onRetryTest}>
+                <RotateCw size={14} aria-hidden /> Réessayer
+              </button>
+            </div>
           ) : (
-            <p className="exercise-console is-idle">Lance « Tester ma solution » pour afficher les tests.</p>
+            <RunResultPanel report={report} />
           )
         ) : (
           <>
-            {statusLine ? <p className="exercise-console is-idle">{statusLine}</p> : null}
-            {!statusLine ? (
-              <pre className={`exercise-console is-${consoleState.tone}`}>{consoleState.text}</pre>
-            ) : null}
-            {consoleState.detail && !statusLine ? (
+            <pre className={`exercise-console is-${consoleState.tone}`}>{consoleState.text}</pre>
+            {consoleState.detail ? (
               <details className="exercise-console-detail">
                 <summary>Détail technique</summary>
                 <pre>{consoleState.detail}</pre>
@@ -78,7 +110,6 @@ export function LabOutput({ exercise, tab, onTab, onClear, consoleState, sqlResu
             ) : null}
             {exercise.type === "sql" && sqlResults ? (
               <div className="exercise-sql">
-                <p>Résultat de la requête</p>
                 <div className="exercise-sql-scroll">
                   <table>
                     <thead>
@@ -100,6 +131,6 @@ export function LabOutput({ exercise, tab, onTab, onClear, consoleState, sqlResu
           </>
         )}
       </div>
-    </div>
+    </section>
   );
 }
