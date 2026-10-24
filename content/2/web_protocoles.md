@@ -8,6 +8,8 @@ badgeId: premiere_web_protocoles
 prerequisites:
   - web_javascript_interactions
 audience: public
+groupe: web-http
+groupeTitre: "Le Web et HTTP"
 ---
 
 # Le Web et HTTP

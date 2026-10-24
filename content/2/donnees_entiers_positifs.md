@@ -7,6 +7,8 @@ icon: "\U0001F522"
 badgeId: premiere_entiers_positifs
 prerequisites: []
 audience: public
+groupe: binaire-hexadecimal
+groupeTitre: "Entiers en binaire et hexadécimal"
 ---
 
 # Entiers positifs en binaire et hexadécimal

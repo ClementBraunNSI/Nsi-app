@@ -7,6 +7,9 @@ icon: "🐍"
 prerequisites:
   - donnees_structurees
 audience: public
+groupe: donnees-structurees
+groupeTitre: "Données structurées"
+version: "TP Python"
 ---
 
 <ExerciseTabs courseId="tp-python-donnees" courseTitle="TP Python : Données structurées" packages="pandas">

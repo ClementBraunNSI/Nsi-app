@@ -10,6 +10,8 @@ badgeId: premiere_exercices
 prerequisites:
   - algo_knn
 audience: public
+groupe: knn
+groupeTitre: "k plus proches voisins (KNN)"
 ---
 
 

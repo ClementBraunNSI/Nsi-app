@@ -9,6 +9,8 @@ badgeId: premiere_python_fonctions
 prerequisites:
   - python_types_base
 audience: public
+groupe: fonctions-python
+groupeTitre: "Fonctions en Python"
 ---
 
 # Fonctions en Python

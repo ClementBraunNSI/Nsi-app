@@ -8,6 +8,8 @@ badgeId: premiere_traitement_tables_csv
 prerequisites:
   - python_dictionnaires
 audience: public
+groupe: csv
+groupeTitre: "Données en tables (CSV)"
 ---
 
 # Traitement de données en tables

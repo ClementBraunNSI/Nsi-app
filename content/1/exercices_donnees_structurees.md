@@ -7,6 +7,8 @@ icon: "\U0001F4CB"
 prerequisites:
   - activite_donnees_interactive
 audience: public
+groupe: donnees-structurees
+groupeTitre: "Données structurées"
 ---
 
 # Exercice 1 : Découverte des formats de données

@@ -10,6 +10,7 @@ import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
 import { levelFoxFromNiveau } from "@/lib/chapter-utils";
 import { contentFolderFromParam, coursePath, getNsiLevel, seoLevelName } from "@/lib/nsi-levels";
 import { getAuthContext, viewerFromAuth } from "@/lib/auth";
+import { parseCourseGroup, type CourseGroupRef } from "@/lib/course-groups";
 import { EmptyState, PageHeader } from "@/components/ui";
 import ResourceNotFound from "@/components/ResourceNotFound";
 
@@ -45,6 +46,7 @@ interface CoursData {
   icon: string;
   href?: string;
   isPrivate?: boolean;
+  group?: CourseGroupRef | null;
 }
 
 export default async function PageNiveau({ params }: { params: Promise<{ niveaux: string }> }) {
@@ -113,6 +115,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         chapter: String(data.chapter || "Général"),
         icon: String(data.icon || "📘"),
         isPrivate: isRestrictedCourse(data),
+        group: parseCourseGroup(data),
         audience: data,
       };
     })
@@ -186,12 +189,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
 
       <ChaptersPreviewTabs
         niveaux={level.urlSlug}
-        theme={{
-          icon: "text-[var(--accent)]",
-          border: "hover:border-[var(--accent)]",
-          text: "group-hover:text-[var(--accent)]",
-          light: "group-hover:bg-[var(--accent-soft)]",
-        }}
+        folder={folder}
         chapters={orderedChapitres.map(([name, courses]) => ({
           name,
           isPrivate: name.toLowerCase().includes("particulier"),
@@ -202,6 +200,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
             icon: cours.icon,
             href: cours.href || coursePath(folder, cours.slug),
             isPrivate: cours.isPrivate,
+            group: cours.group ?? null,
           })),
         }))}
       />

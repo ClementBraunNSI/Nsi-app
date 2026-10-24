@@ -8,6 +8,8 @@ badgeId: premiere_fiche_exo_circuits
 prerequisites:
   - archi_circuits
 audience: public
+groupe: circuits-logiques
+groupeTitre: "Circuits logiques"
 ---
 
 

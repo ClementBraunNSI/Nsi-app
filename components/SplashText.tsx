@@ -88,7 +88,7 @@ const getSeasonalMessages = () => {
   return messages;
 };
 
-export default function SplashText() {
+export default function SplashText({ compact = false, className }: { compact?: boolean; className?: string } = {}) {
   const [message, setMessage] = useState("");
   const [rotation, setRotation] = useState(-10);
 
@@ -106,10 +106,10 @@ export default function SplashText() {
 
   return (
     <div 
-      className="mx-auto mb-10 w-fit transform animate-bounce-subtle select-none"
+      className={`${className ?? "mx-auto mb-10"} w-fit transform animate-bounce-subtle select-none`}
       style={{ animation: 'bounce 3s infinite ease-in-out' }}
     >
-      <span className="text-xl md:text-2xl font-black text-[#F97316] bg-[#FFF8E1] border-2 border-[#F97316] shadow-[4px_4px_0px_#F97316] px-6 py-2 rounded-sm whitespace-nowrap -rotate-2 inline-block hover:rotate-0 transition-transform cursor-default">
+      <span className={`${compact ? "text-sm md:text-base px-3 py-1.5" : "text-xl md:text-2xl px-6 py-2"} font-black text-[#F97316] bg-[#FFF8E1] border-2 border-[#F97316] shadow-[4px_4px_0px_#F97316] rounded-sm whitespace-nowrap -rotate-2 inline-block hover:rotate-0 transition-transform cursor-default`}>
         {message}
       </span>
       <style jsx>{`

@@ -18,7 +18,7 @@ export default function ClientLayoutShell({ children }: { children: React.ReactN
   const [highContrastMode, setHighContrastMode] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const pathname = usePathname();
-  const { user, role, signOut } = useAuthSession();
+  const { user, role, fullName, signOut } = useAuthSession();
 
   useEffect(() => {
     const savedDyslexic = localStorage.getItem("dyslexicMode") === "true";
@@ -46,6 +46,7 @@ export default function ClientLayoutShell({ children }: { children: React.ReactN
         pathname={pathname}
         user={user}
         role={role}
+        fullName={fullName}
         signOut={signOut}
         dyslexicMode={dyslexicMode}
         darkMode={darkMode}

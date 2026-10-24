@@ -8,6 +8,9 @@ badgeId: premiere_activite_algo
 prerequisites:
   - algo_knn_cours
 audience: public
+groupe: algorithmes-de-tri
+groupeTitre: "Algorithmes de tri"
+version: "Atelier"
 ---
 
 # 🏎️ Atelier Algo : La Course au Tri

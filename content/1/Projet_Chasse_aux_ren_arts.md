@@ -7,6 +7,11 @@ icon: "\U0001F409"
 prerequisites:
   - activite_web_interactive
 audience: public
+groupe: chasse-renarts
+groupeTitre: "Projet : Chasse aux Ren'Arts"
+version: "Français"
+versionCode: "FR"
+image: /images/fox_chasse_renard.png
 ---
 
 # 🦊 Projet : Chasse aux Ren'Arts

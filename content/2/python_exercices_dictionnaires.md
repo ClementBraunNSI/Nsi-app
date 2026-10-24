@@ -9,6 +9,8 @@ level: premiere
 prerequisites:
   - python_exercices_listes
 audience: public
+groupe: dictionnaires
+groupeTitre: "Dictionnaires"
 ---
 
 <ExerciseTabs courseId="les-dictionnaires-python" courseTitle="Les dictionnaires">

@@ -10,6 +10,9 @@ badgeId: premiere_tp_piles_files
 prerequisites:
   - structures_lineaires_piles_files
 audience: public
+groupe: piles-files
+groupeTitre: "Piles et files"
+version: "TP"
 ---
 
 

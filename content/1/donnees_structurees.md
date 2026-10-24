@@ -6,6 +6,8 @@ chapter: Données structurées
 icon: "\U0001F5C4️"
 prerequisites: []
 audience: public
+groupe: donnees-structurees
+groupeTitre: "Données structurées"
 ---
 
 # Données structurées

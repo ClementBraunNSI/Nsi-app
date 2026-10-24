@@ -9,6 +9,9 @@ meta: 'Durée : 2 heures · Objectif : Implémenter les algorithmes classiques'
 prerequisites:
   - algo_dichotomie
 audience: public
+groupe: algorithmes-de-tri
+groupeTitre: "Algorithmes de tri"
+version: "TP"
 ---
 
 ## Objectifs

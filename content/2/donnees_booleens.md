@@ -7,6 +7,8 @@ icon: "\U0001F4A1"
 badgeId: premiere_booleens
 prerequisites: []
 audience: public
+groupe: booleens
+groupeTitre: "Booléens"
 ---
 
 # Booléens et fonctions booléennes

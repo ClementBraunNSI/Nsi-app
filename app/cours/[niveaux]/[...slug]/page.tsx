@@ -17,6 +17,8 @@ import ChasseEditionPicker from '@/components/chasse/ChasseEditionPicker';
 import { resolveCourseFile } from '@/lib/content-path';
 import { getAuthContext, viewerFromAuth } from '@/lib/auth';
 import { canAccessCourse } from '@/lib/course-access';
+import { parseCourseGroup } from '@/lib/course-groups';
+import { groupMembers } from '@/lib/course-group-members';
 
 const RESERVED_TITLE = 'Cours réservé';
 const RESERVED_DESCRIPTION = 'Ce contenu est réservé.';
@@ -261,6 +263,10 @@ export default async function CoursePage({
   // Navigation entre les cours
   const { prev, next } = getAdjacentCourses(folder, slugStr);
 
+  // Fiches du même groupe (cours, exercices, TP d'une notion). Ren'Arts garde son sélecteur d'édition.
+  const group = isChasseProjectSlug(slugStr) ? null : parseCourseGroup(data);
+  const siblings = group ? groupMembers(folder, group.id, viewerFromAuth(auth)) : [];
+
   const baseMdxComponents = {
     ExerciseTabs,
     ExerciseSection,
@@ -387,6 +393,25 @@ export default async function CoursePage({
               edition={edition}
               layout="page"
             />
+          )}
+
+          {group && siblings.length > 1 && (
+            <nav className="group-bar" aria-label={`Fiches de « ${group.title} »`}>
+              <span className="text-sm font-semibold text-[var(--subtle)]">Dans « {group.title} »</span>
+              <div className="group-bar-seg">
+                {siblings.map((member) => (
+                  <Link
+                    key={member.href}
+                    href={member.href}
+                    aria-current={member.slug === slugStr ? 'page' : undefined}
+                    title={member.title}
+                  >
+                    {member.annex ? '📦 ' : ''}
+                    {member.label}
+                  </Link>
+                ))}
+              </div>
+            </nav>
           )}
 
           <div className="course-content">

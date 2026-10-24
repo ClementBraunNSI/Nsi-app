@@ -10,6 +10,8 @@ badgeId: premiere_fiche_exercices_bool
 prerequisites:
   - donnees_caracteres
 audience: public
+groupe: booleens
+groupeTitre: "Booléens"
 ---
 
 
