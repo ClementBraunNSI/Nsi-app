@@ -35,3 +35,8 @@ next-env.d.ts
 # custom build/dev folders
 /dev
 node_modules
+app/apercu-illustrations/page.tsx
+_drafts/maquette-accueil-T.html
+_drafts/maquettes-accueil-2.html
+_drafts/maquettes-accueil-3.html
+_drafts/maquettes-accueil.html

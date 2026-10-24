@@ -24,6 +24,7 @@ function pythonBridge(level: LevelConfig, world: World): string {
 
   return `
 import json
+import sys
 
 grid_cols = ${world.cols}
 grid_rows = ${world.rows}
@@ -56,10 +57,16 @@ def _blocked(p):
         return True
     return any(r['x'] == p['x'] and r['y'] == p['y'] for r in rocks)
 
+def _student_line():
+    f = sys._getframe()
+    while f is not None and f.f_code.co_filename != '<renard>':
+        f = f.f_back
+    return f.f_lineno if f is not None else 0
+
 def _push(kind):
     if len(actions) >= MAX_ACTIONS:
         raise RenardError("Le programme fait trop d'actions. Il y a peut-être une boucle infinie.")
-    actions.append(kind)
+    actions.append([kind, _student_line()])
 
 def avancer():
     global pos
@@ -147,20 +154,35 @@ export async function executeStudentCode(
   code: string,
   level: LevelConfig,
   world: World
-): Promise<{ actions: Action[]; error?: string }> {
+): Promise<{ actions: Action[]; error?: string; errorLine?: number }> {
   const bridge = pythonBridge(level, world);
   await pyodide.runPythonAsync(bridge);
   const escaped = JSON.stringify(code);
   try {
     await pyodide.runPythonAsync(`
 student_source = ${escaped}
+run_error_line = 0
+
+def _error_line(err):
+    if isinstance(err, SyntaxError):
+        return err.lineno or 0
+    line = 0
+    tb = err.__traceback__
+    while tb is not None:
+        if tb.tb_frame.f_code.co_filename == '<renard>':
+            line = tb.tb_lineno
+        tb = tb.tb_next
+    return line
+
 try:
-    exec(student_source, env, env)
+    exec(compile(student_source, '<renard>', 'exec'), env, env)
     run_error = None
 except RenardError as err:
     run_error = 'RenardError: ' + str(err)
+    run_error_line = _error_line(err)
 except Exception as err:
     run_error = type(err).__name__ + ': ' + str(err)
+    run_error_line = _error_line(err)
 `);
   } catch (error: any) {
     return { actions: [], error: translatePythonError(error?.message || String(error)) };
@@ -169,27 +191,24 @@ except Exception as err:
   const errorProxy = pyodide.globals.get("run_error");
   const error = errorProxy ? String(errorProxy) : "";
   if (errorProxy && typeof errorProxy.destroy === "function") errorProxy.destroy();
-  if (error && error !== "None") {
-    const actionsProxy = pyodide.globals.get("actions");
-    const partial: string[] = actionsProxy ? actionsProxy.toJs() : [];
-    if (actionsProxy?.destroy) actionsProxy.destroy();
-    return {
-      actions: partial.map(toAction),
-      error: translatePythonError(error),
-    };
-  }
 
   const actionsProxy = pyodide.globals.get("actions");
-  const raw: string[] = actionsProxy ? actionsProxy.toJs() : [];
+  const raw: [string, number][] = actionsProxy ? actionsProxy.toJs() : [];
   if (actionsProxy?.destroy) actionsProxy.destroy();
-  return { actions: raw.map(toAction) };
+  const actions = raw.map(toAction);
+
+  if (error && error !== "None") {
+    const errorLine = Number(pyodide.globals.get("run_error_line")) || 0;
+    return { actions, error: translatePythonError(error), errorLine };
+  }
+  return { actions };
 }
 
-function toAction(kind: string): Action {
-  if (kind === "TURN_LEFT") return { type: "TURN_LEFT" };
-  if (kind === "TURN_RIGHT") return { type: "TURN_RIGHT" };
-  if (kind === "READ") return { type: "READ" };
-  return { type: "MOVE" };
+function toAction([kind, line]: [string, number]): Action {
+  if (kind === "TURN_LEFT") return { type: "TURN_LEFT", line };
+  if (kind === "TURN_RIGHT") return { type: "TURN_RIGHT", line };
+  if (kind === "READ") return { type: "READ", line };
+  return { type: "MOVE", line };
 }
 
 export function replayActions(world: World, actions: Action[]) {

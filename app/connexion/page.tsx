@@ -3,19 +3,39 @@
 import { FormEvent, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { ArrowLeft, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { PageHeader } from "@/components/ui";
+import SplashText from "@/components/SplashText";
 
 function safeNext(next: string | null) {
   if (!next || !next.startsWith("/") || next.startsWith("//")) return "/espace";
   return next;
 }
 
-function ConnexionForm() {
+/** Messages Supabase les plus courants, reformulés pour un élève. */
+function friendlyError(message: string) {
+  const text = message.toLowerCase();
+  if (text.includes("invalid login") || text.includes("invalid credentials")) return "Identifiant ou mot de passe incorrect.";
+  if (text.includes("email not confirmed")) return "Ce compte n’est pas encore activé. Demande à ton professeur.";
+  if (text.includes("rate limit") || text.includes("too many")) return "Trop d’essais d’affilée. Patiente une minute puis réessaie.";
+  if (text.includes("fetch") || text.includes("network")) return "Connexion au serveur impossible. Vérifie ta connexion internet.";
+  return message;
+}
+
+type Mood = "idle" | "thinking" | "happy" | "dizzy";
+
+const BENEFITS = [
+  { emoji: "📚", text: "Reprends tes cours là où tu les as laissés" },
+  { emoji: "✅", text: "Tes exercices validés et tes badges, sur tous tes appareils" },
+  { emoji: "📝", text: "Les devoirs donnés à ta classe" },
+];
+
+function ConnexionForm({ onMood }: { onMood: (mood: Mood) => void }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -23,12 +43,15 @@ function ConnexionForm() {
     event.preventDefault();
     setPending(true);
     setError(null);
+    onMood("thinking");
     const { error: signError } = await supabase.auth.signInWithPassword({ email, password });
-    setPending(false);
     if (signError) {
-      setError(signError.message);
+      setPending(false);
+      setError(friendlyError(signError.message));
+      onMood("dizzy");
       return;
     }
+    onMood("happy");
     const { data: { user } } = await supabase.auth.getUser();
     const { data: profile } = user
       ? await supabase.from("profiles").select("role").eq("id", user.id).single()
@@ -47,61 +70,105 @@ function ConnexionForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto mt-8 max-w-sm space-y-4">
+    <form onSubmit={handleSubmit} className="login-form" noValidate={false}>
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm font-semibold text-[var(--fg)]">
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          autoComplete="username"
-          className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm outline-none focus:border-[var(--accent)]"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <p className="login-eyebrow">Espace élève</p>
+        <h1 className="login-title">Bon retour au terrier 👋</h1>
+        <p className="login-sub">Utilise l’identifiant donné en classe.</p>
       </div>
-      <div>
-        <label htmlFor="password" className="mb-1 block text-sm font-semibold text-[var(--fg)]">
-          Mot de passe
-        </label>
-        <input
-          id="password"
-          type="password"
-          autoComplete="current-password"
-          className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm outline-none focus:border-[var(--accent)]"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
-      <button
-        type="submit"
-        disabled={pending}
-        className="w-full rounded-xl bg-[var(--accent)] py-3 text-sm font-semibold text-[var(--accent-fg)] disabled:opacity-60"
-      >
+
+      <label className="login-field">
+        <span>Adresse e-mail</span>
+        <span className="login-input">
+          <Mail size={17} aria-hidden />
+          <input
+            id="email"
+            type="email"
+            autoComplete="username"
+            inputMode="email"
+            placeholder="prenom.nom@exemple.fr"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (error) setError(null);
+            }}
+            onFocus={() => onMood("idle")}
+            required
+          />
+        </span>
+      </label>
+
+      <label className="login-field">
+        <span>Mot de passe</span>
+        <span className="login-input">
+          <Lock size={17} aria-hidden />
+          <input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (error) setError(null);
+            }}
+            onFocus={() => onMood("thinking")}
+            onBlur={() => onMood("idle")}
+            required
+          />
+          <button
+            type="button"
+            className="login-eye"
+            onClick={() => setShowPassword((value) => !value)}
+            aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+            aria-pressed={showPassword}
+          >
+            {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+          </button>
+        </span>
+      </label>
+
+      {error ? (
+        <p className="login-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+
+      <button type="submit" disabled={pending} className="login-submit">
+        {pending ? <Loader2 size={18} className="animate-spin" aria-hidden /> : null}
         {pending ? "Connexion…" : "Se connecter"}
       </button>
-      <p className="text-center text-sm text-[var(--muted)]">
-        <Link href="/" className="hover:text-[var(--accent)]">Retour à l'accueil</Link>
-      </p>
+
+      <p className="login-help">Mot de passe oublié ? Ton professeur peut le réinitialiser depuis son espace.</p>
+
+      <Link href="/" className="login-back">
+        <ArrowLeft size={15} aria-hidden /> Retour à l’accueil
+      </Link>
     </form>
   );
 }
 
 export default function ConnexionPage() {
+  const [mood, setMood] = useState<Mood>("idle");
+
   return (
-    <div className="mx-auto min-h-[calc(100vh-5rem)] max-w-lg px-6 py-16">
-      <PageHeader
-        eyebrow="Espace élève"
-        title="Connexion"
-        description="Utilise l'identifiant fourni en classe. Tes cours et badges restent liés à ce compte."
-      />
-      <Suspense>
-        <ConnexionForm />
-      </Suspense>
+    <div className="login-page">
+      <div className="login-card">
+        <aside className="login-art" aria-hidden>
+          <SplashText compact className="login-splash" />
+          <div className={`login-fox is-${mood}`} />
+          <ul className="login-benefits">
+            {BENEFITS.map((item) => (
+              <li key={item.text}>
+                <span>{item.emoji}</span>
+                {item.text}
+              </li>
+            ))}
+          </ul>
+        </aside>
+        <Suspense>
+          <ConnexionForm onMood={setMood} />
+        </Suspense>
+      </div>
     </div>
   );
 }

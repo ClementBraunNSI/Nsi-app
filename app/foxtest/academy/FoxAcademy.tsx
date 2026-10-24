@@ -1,33 +1,34 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import {
+  ArrowLeft,
   BookOpen,
   Check,
   ChevronLeft,
   ChevronRight,
-  CircleHelp,
-  Code2,
-  Copy,
   Lightbulb,
   LoaderCircle,
+  Lock,
+  Map as MapIcon,
   Play,
   RotateCcw,
   Save,
-  Sparkles,
+  X,
 } from "lucide-react";
-import Board from "./Board";
+import Board, { type FoxAction } from "./Board";
 import { CHAPTERS, COMMANDS } from "./commands";
 import { executeStudentCode, translatePythonError } from "./engine";
 import { LEVELS, getLevel } from "./levels";
-import type { Direction, GameStatus, Position, SavedProgress } from "./types";
+import { GAME_NAME } from "./meta";
+import type { Action, ChapterId, Direction, GameStatus, Position, SavedProgress } from "./types";
 import { ahead, buildWorld, countCodeLines, isBlocked, samePos, turn } from "./world";
 import styles from "./academy.module.css";
-import SimpleCodeEditor, {
-  type SimpleCodeEditorHandle,
-} from "@/components/interactive/SimpleCodeEditor";
+import { CodeArea, type CodeAreaHandle } from "@/components/lab/CodeArea";
 
 const STORAGE_PREFIX = "fox-academy-v2";
+const CHAPTER_ORDER: ChapterId[] = ["sequence", "variables", "conditions", "for", "while"];
 
 function generateResumeCode() {
   if (typeof window === "undefined" || !window.crypto) {
@@ -39,6 +40,13 @@ function generateResumeCode() {
   return `FOX-${raw.toUpperCase()}`;
 }
 
+function chapterName(id: ChapterId) {
+  return CHAPTERS[id].label.split("·")[1]?.trim() || CHAPTERS[id].label;
+}
+
+type Feedback = { tone: "error" | "info"; text: string } | null;
+type Step = Position & { dir: Direction };
+
 export default function FoxAcademy() {
   const [resumeCode, setResumeCode] = useState("");
   const [resumeInput, setResumeInput] = useState("");
@@ -47,28 +55,36 @@ export default function FoxAcademy() {
   const [completed, setCompleted] = useState<number[]>([]);
   const [codeByLevel, setCodeByLevel] = useState<Record<number, string>>({});
   const [attemptsByLevel, setAttemptsByLevel] = useState<Record<number, number>>({});
+  const [starsByLevel, setStarsByLevel] = useState<Record<number, number>>({});
   const [code, setCode] = useState(LEVELS[0].starter);
   const [world, setWorld] = useState(() => buildWorld(LEVELS[0]));
-  const [foxPos, setFoxPos] = useState<Position>({ x: 0, y: 0 });
+  const [foxPos, setFoxPos] = useState<Position>(() => buildWorld(LEVELS[0]).start);
   const [foxDir, setFoxDir] = useState<Direction>(LEVELS[0].startDir);
+  const [trail, setTrail] = useState<Step[]>([]);
   const [status, setStatus] = useState<GameStatus>("idle");
-  const [logs, setLogs] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState<Feedback>(null);
   const [stars, setStars] = useState(0);
-  const [foxAction, setFoxAction] = useState<"idle" | "walk" | "turn" | "read" | "bump">("idle");
+  const [foxAction, setFoxAction] = useState<FoxAction>("idle");
   const [stepState, setStepState] = useState({ current: 0, total: 0 });
-  const [drawerTab, setDrawerTab] = useState<"memo" | "save">("memo");
-  const [showHint, setShowHint] = useState(false);
+  const [activeLine, setActiveLine] = useState(0);
+  const [errorLine, setErrorLine] = useState(0);
+  const [panel, setPanel] = useState<"none" | "hint" | "memo">("none");
+  const [showMap, setShowMap] = useState(false);
+  const [showSave, setShowSave] = useState(false);
+  const [fast, setFast] = useState(false);
   const [isPyodideReady, setIsPyodideReady] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const pyodideRef = useRef<any>(null);
   const pyodideLoadingRef = useRef(false);
-  const editorRef = useRef<SimpleCodeEditorHandle>(null);
+  const editorRef = useRef<CodeAreaHandle>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const cancelRef = useRef(false);
   const hydratingRef = useRef(false);
 
   const level = useMemo(() => getLevel(levelId), [levelId]);
-  const maxUnlocked = Math.max(1, ...completed.map((id) => id + 1), 1);
+  const maxUnlocked = Math.min(LEVELS.length, Math.max(1, ...completed.map((id) => id + 1)));
 
+  // --- Sauvegarde locale (code de reprise) ---
   useEffect(() => {
     const last = window.localStorage.getItem(`${STORAGE_PREFIX}-last`);
     const created = last || generateResumeCode();
@@ -83,11 +99,12 @@ export default function FoxAcademy() {
     if (!raw) return;
     try {
       hydratingRef.current = true;
-      const data: SavedProgress = JSON.parse(raw);
+      const data: SavedProgress & { starsByLevel?: Record<number, number> } = JSON.parse(raw);
       const nextId = data.levelId && LEVELS.some((item) => item.id === data.levelId) ? data.levelId : 1;
       setLevelId(nextId);
       setCompleted(data.completed || []);
       setAttemptsByLevel(data.attemptsByLevel || {});
+      setStarsByLevel(data.starsByLevel || {});
       setCodeByLevel(data.codeByLevel || {});
       setCode(data.codeByLevel?.[nextId] || getLevel(nextId).starter);
       setLoadStatus("Progression chargée.");
@@ -102,12 +119,13 @@ export default function FoxAcademy() {
 
   useEffect(() => {
     if (!resumeCode || hydratingRef.current) return;
-    const payload: SavedProgress = {
+    const payload = {
       resumeCode,
       levelId,
       completed,
       codeByLevel: { ...codeByLevel, [levelId]: code },
       attemptsByLevel,
+      starsByLevel,
       updatedAt: Date.now(),
     };
     try {
@@ -115,41 +133,32 @@ export default function FoxAcademy() {
     } catch {
       /* quota */
     }
-  }, [resumeCode, levelId, code, completed, attemptsByLevel, codeByLevel]);
+  }, [resumeCode, levelId, code, completed, attemptsByLevel, codeByLevel, starsByLevel]);
 
-  const resetWorld = useCallback((id: number, keepCode = true) => {
-    const next = getLevel(id);
-    const nextWorld = buildWorld(next, Date.now());
+  // --- Monde et renard ---
+  const placeFox = useCallback((nextWorld: ReturnType<typeof buildWorld>) => {
     cancelRef.current = true;
     setWorld(nextWorld);
     setFoxPos(nextWorld.start);
     setFoxDir(nextWorld.startDir);
+    setTrail([]);
     setStatus("idle");
-    setLogs([]);
+    setFeedback(null);
     setStars(0);
     setFoxAction("idle");
     setStepState({ current: 0, total: 0 });
+    setActiveLine(0);
+    setErrorLine(0);
     setIsRunning(false);
-    if (!keepCode) {
-      setCode(codeByLevel[id] || next.starter);
-    }
-  }, [codeByLevel]);
+  }, []);
 
   useEffect(() => {
-    const next = getLevel(levelId);
-    const nextWorld = buildWorld(next);
-    setWorld(nextWorld);
-    setFoxPos(nextWorld.start);
-    setFoxDir(nextWorld.startDir);
-    setStatus("idle");
-    setLogs([]);
-    setStars(0);
-    setFoxAction("idle");
-    setStepState({ current: 0, total: 0 });
-    setShowHint(false);
-    setCode(codeByLevel[levelId] || next.starter);
+    placeFox(buildWorld(getLevel(levelId)));
+    setPanel("none");
+    setCode(codeByLevel[levelId] || getLevel(levelId).starter);
   }, [levelId]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // --- Python (Pyodide) ---
   useEffect(() => {
     if (isPyodideReady || pyodideLoadingRef.current) return;
     pyodideLoadingRef.current = true;
@@ -162,14 +171,12 @@ export default function FoxAcademy() {
           setIsPyodideReady(true);
           return;
         }
-        const pyodide = await window.loadPyodide({
-          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/",
-        });
+        const pyodide = await window.loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/" });
         pyodideRef.current = pyodide;
         window.pyodide = pyodide;
         setIsPyodideReady(true);
       } catch (error: any) {
-        setLogs([`Impossible de charger Python : ${error?.message || error}`]);
+        setFeedback({ tone: "error", text: `Impossible de charger Python : ${error?.message || error}` });
         pyodideLoadingRef.current = false;
       }
     };
@@ -188,125 +195,66 @@ export default function FoxAcademy() {
     script.async = true;
     script.onload = () => void init();
     script.onerror = () => {
-      setLogs(["Impossible de charger l'interpréteur Python (réseau)."]);
+      setFeedback({ tone: "error", text: "Impossible de charger Python. Vérifie ta connexion puis recharge la page." });
       pyodideLoadingRef.current = false;
     };
     document.body.appendChild(script);
   }, [isPyodideReady]);
 
-  const insertCommand = (snippet: string) => {
-    const editor = editorRef.current;
-    if (!editor) {
-      setCode((prev) => `${prev.trimEnd()}\n${snippet}\n`);
-      return;
-    }
-    editor.insertText(snippet);
-  };
-
-  const run = async () => {
-    if (!pyodideRef.current || isRunning) return;
-    const lines = countCodeLines(code);
-    if (level.maxLines && lines > level.maxLines) {
-      setLogs([`Ce défi autorise au plus ${level.maxLines} lignes. Une boucle permet d'écrire moins.`]);
-      setStatus("lost");
-      return;
-    }
-
-    cancelRef.current = false;
-    setIsRunning(true);
-    setStatus("playing");
-    setLogs([]);
-    setStars(0);
-    setFoxAction("idle");
-    setStepState({ current: 0, total: 0 });
-    setFoxPos(world.start);
-    setFoxDir(world.startDir);
-    setAttemptsByLevel((prev) => ({ ...prev, [level.id]: (prev[level.id] || 0) + 1 }));
-    setCodeByLevel((prev) => ({ ...prev, [level.id]: code }));
-
-    try {
-      const result = await executeStudentCode(pyodideRef.current, code, level, world);
-      if (result.actions.length === 0 && result.error) {
-        setLogs([result.error]);
-        setStatus("lost");
-        setFoxAction("bump");
-        setIsRunning(false);
-        return;
-      }
-      const outcome = await animate(result.actions);
-      if (cancelRef.current) return;
-      if (result.error && !outcome.won) {
-        setLogs([result.error]);
-      } else if (!outcome.won) {
-        setLogs([
-          outcome.bumped
-            ? "Le renard a heurté un obstacle."
-            : "Le renard n'est pas arrivé sur la poule. Relis le chemin, instruction par instruction.",
-        ]);
-        setStatus("lost");
-      }
-    } catch (error: any) {
-      setLogs([translatePythonError(error?.message || String(error))]);
-      setStatus("lost");
-      setFoxAction("bump");
-    } finally {
-      setIsRunning(false);
-    }
-  };
-
-  const animate = async (actions: { type: string }[]) => {
+  // --- Exécution et animation ---
+  const animate = async (actions: Action[]) => {
     let pos = { ...world.start };
     let dir = world.startDir;
-    const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
+    const speed = fast ? 0.45 : 1;
+    const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms * speed));
+    const steps: Step[] = [{ ...pos, dir }];
+    setTrail([...steps]);
     setStepState({ current: 0, total: actions.length });
 
     for (let index = 0; index < actions.length; index += 1) {
       const action = actions[index];
       if (cancelRef.current) return { won: false, bumped: false };
       setStepState({ current: index + 1, total: actions.length });
+      setActiveLine(action.line || 0);
 
-      if (action.type === "TURN_LEFT") {
+      if (action.type === "TURN_LEFT" || action.type === "TURN_RIGHT") {
         setFoxAction("turn");
-        await wait(130);
-        dir = turn(dir, "LEFT");
+        await wait(140);
+        dir = turn(dir, action.type === "TURN_LEFT" ? "LEFT" : "RIGHT");
         setFoxDir(dir);
-        await wait(150);
-      } else if (action.type === "TURN_RIGHT") {
-        setFoxAction("turn");
-        await wait(130);
-        dir = turn(dir, "RIGHT");
-        setFoxDir(dir);
-        await wait(150);
+        await wait(200);
       } else if (action.type === "READ") {
         setFoxAction("read");
-        await wait(360);
-      } else if (action.type === "MOVE") {
+        await wait(480);
+      } else {
         setFoxAction("walk");
         const next = ahead(pos, dir);
         if (isBlocked(world, next)) {
-          await wait(170);
+          await wait(180);
           setFoxAction("bump");
-          setStatus("lost");
           return { won: false, bumped: true };
         }
-        await wait(100);
+        await wait(110);
         pos = next;
+        steps.push({ ...pos, dir });
         setFoxPos({ ...pos });
-        await wait(230);
+        setTrail([...steps]);
+        await wait(260);
       }
     }
-    await wait(200);
+    await wait(180);
+    setActiveLine(0);
     if (samePos(pos, world.goal)) {
       const lines = countCodeLines(code);
       const earned = lines <= level.bestLines ? 3 : lines <= level.bestLines + 2 ? 2 : 1;
       setStars(earned);
+      setStarsByLevel((prev) => ({ ...prev, [level.id]: Math.max(prev[level.id] || 0, earned) }));
       setStatus("won");
       setFoxAction("idle");
       setCompleted((prev) => (prev.includes(level.id) ? prev : [...prev, level.id]));
       try {
         const confetti = (await import("canvas-confetti")).default;
-        confetti({ particleCount: 90, spread: 70, origin: { y: 0.55 } });
+        confetti({ particleCount: 90, spread: 70, origin: { y: 0.55 }, colors: ["#f97316", "#fdba74", "#fef3c7", "#16a34a"] });
       } catch {
         /* ignore */
       }
@@ -316,10 +264,87 @@ export default function FoxAcademy() {
     return { won: false, bumped: false };
   };
 
+  const run = async () => {
+    if (!pyodideRef.current || isRunning) return;
+    const lines = countCodeLines(code);
+    if (level.maxLines && lines > level.maxLines) {
+      setFeedback({ tone: "info", text: `Ce défi se résout en ${level.maxLines} lignes au plus (tu en as ${lines}). Une boucle permet d'écrire moins.` });
+      setStatus("lost");
+      return;
+    }
+
+    cancelRef.current = false;
+    // Sur téléphone, le plateau est au-dessus de l'éditeur : on le ramène à l'écran pour voir le renard bouger.
+    if (window.matchMedia("(max-width: 1023px)").matches) {
+      stageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setIsRunning(true);
+    setStatus("playing");
+    setFeedback(null);
+    setErrorLine(0);
+    setStars(0);
+    setFoxAction("idle");
+    setFoxPos(world.start);
+    setFoxDir(world.startDir);
+    setTrail([]);
+    setAttemptsByLevel((prev) => ({ ...prev, [level.id]: (prev[level.id] || 0) + 1 }));
+    setCodeByLevel((prev) => ({ ...prev, [level.id]: code }));
+
+    try {
+      const result = await executeStudentCode(pyodideRef.current, code, level, world);
+      if (result.actions.length === 0 && result.error) {
+        setFeedback({ tone: "error", text: result.error });
+        setErrorLine(result.errorLine || 0);
+        setStatus("lost");
+        setFoxAction("bump");
+        return;
+      }
+      const outcome = await animate(result.actions);
+      if (cancelRef.current) return;
+      if (!outcome.won) {
+        setStatus("lost");
+        setActiveLine(0);
+        if (result.error) {
+          setFeedback({ tone: "error", text: result.error });
+          setErrorLine(result.errorLine || 0);
+        } else {
+          setFeedback({
+            tone: "info",
+            text: outcome.bumped
+              ? "Le renard s'est cogné. Regarde la ligne surlignée et compte les cases."
+              : "Le programme est fini, mais le renard n'est pas sur la poule. Suis ses empreintes pour voir où il s'est arrêté.",
+          });
+        }
+      }
+    } catch (error: any) {
+      setFeedback({ tone: "error", text: translatePythonError(error?.message || String(error)) });
+      setStatus("lost");
+      setFoxAction("bump");
+    } finally {
+      setIsRunning(false);
+    }
+  };
+
+  const runRef = useRef(run);
+  runRef.current = run;
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        void runRef.current();
+      }
+      if (event.key === "Escape") {
+        setShowMap(false);
+        setShowSave(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const goTo = (id: number) => {
-    if (id < 1 || id > LEVELS.length) return;
-    if (id > maxUnlocked) return;
-    setShowHint(false);
+    if (id < 1 || id > LEVELS.length || id > maxUnlocked) return;
+    setShowMap(false);
     setLevelId(id);
   };
 
@@ -329,9 +354,8 @@ export default function FoxAcademy() {
       setLoadStatus("Saisis un code de reprise.");
       return;
     }
-    const raw = localStorage.getItem(`${STORAGE_PREFIX}-${candidate}`);
-    if (!raw) {
-      setLoadStatus("Aucune sauvegarde pour ce code.");
+    if (!localStorage.getItem(`${STORAGE_PREFIX}-${candidate}`)) {
+      setLoadStatus("Aucune sauvegarde pour ce code sur cet appareil.");
       return;
     }
     setResumeCode(candidate);
@@ -347,268 +371,275 @@ export default function FoxAcademy() {
     : level.commands.includes("lire_nombre")
       ? String(world.numberValue)
       : undefined;
+  const progress = stepState.total > 0 ? Math.round((stepState.current / stepState.total) * 100) : 0;
 
   return (
     <div className={styles.academy}>
-      <div className={styles.frame}>
+      {/* Barre du haut : nom, chapitres, navigation entre défis */}
       <header className={styles.topbar}>
         <div className={styles.brand}>
-          <div className={styles.crest} aria-hidden="true">
-            <Sparkles size={20} />
-          </div>
+          <Link href="/" className={styles.iconButton} aria-label="Retour à l'accueil" title="Retour à l'accueil">
+            <ArrowLeft size={18} />
+          </Link>
           <div className="min-w-0">
-            <h1 className={styles.eyebrow}>Le renard dans le poulailler · {chapter.label}</h1>
-            <p className={styles.title}>{level.id}. {level.title}</p>
+            <p className={styles.gameName}>{GAME_NAME}</p>
+            <p className={styles.chapterName}>{chapter.label}</p>
           </div>
         </div>
+
+        <ol className={styles.chapters} aria-label="Chapitres">
+          {CHAPTER_ORDER.map((id) => {
+            const levels = LEVELS.filter((item) => item.chapter === id);
+            const done = levels.filter((item) => completed.includes(item.id)).length;
+            const first = levels[0]?.id ?? 1;
+            const current = level.chapter === id;
+            const locked = first > maxUnlocked;
+            return (
+              <li key={id}>
+                <button
+                  type="button"
+                  disabled={locked}
+                  onClick={() => goTo(Math.min(maxUnlocked, levels.find((item) => !completed.includes(item.id))?.id ?? first))}
+                  className={`${styles.chapterPill} ${current ? styles.chapterPillCurrent : ""} ${done === levels.length ? styles.chapterPillDone : ""}`}
+                  title={`${chapterName(id)} : ${done}/${levels.length} défis réussis`}
+                >
+                  {locked ? <Lock size={12} /> : done === levels.length ? <Check size={12} /> : null}
+                  <span>{chapterName(id)}</span>
+                  <i style={{ width: `${(done / levels.length) * 100}%` }} aria-hidden />
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+
         <div className={styles.levelNav}>
-          <button
-            type="button"
-            onClick={() => goTo(levelId - 1)}
-            disabled={levelId === 1}
-            className={styles.roundButton}
-            aria-label="Défi précédent"
-          >
+          <button type="button" onClick={() => goTo(levelId - 1)} disabled={levelId === 1} className={styles.iconButton} aria-label="Défi précédent">
             <ChevronLeft size={18} />
           </button>
-          <span className={styles.levelCount}>{level.id} / {LEVELS.length}</span>
+          <button type="button" onClick={() => setShowMap(true)} className={styles.levelCount} title="Voir tous les défis">
+            <MapIcon size={14} /> {level.id} / {LEVELS.length}
+          </button>
           <button
             type="button"
             onClick={() => goTo(levelId + 1)}
             disabled={levelId === LEVELS.length || levelId >= maxUnlocked}
-            className={styles.roundButton}
+            className={styles.iconButton}
             aria-label="Défi suivant"
           >
             <ChevronRight size={18} />
           </button>
+          <button type="button" onClick={() => setShowSave((value) => !value)} className={styles.iconButton} aria-label="Sauvegarde" title="Sauvegarde">
+            <Save size={16} />
+          </button>
+          {showSave ? (
+            <div className={styles.savePopover} role="dialog" aria-label="Sauvegarde">
+              <p>
+                Ton code de reprise : <strong>{resumeCode || "…"}</strong>
+              </p>
+              <p className={styles.muted}>Note-le pour reprendre ta partie sur cet appareil.</p>
+              <div className={styles.resumeRow}>
+                <input
+                  value={resumeInput}
+                  onChange={(event) => setResumeInput(event.target.value.toUpperCase())}
+                  placeholder="FOX-…"
+                  aria-label="Code de reprise"
+                />
+                <button type="button" onClick={loadResume}>
+                  Reprendre
+                </button>
+              </div>
+              {loadStatus ? <p className={styles.muted}>{loadStatus}</p> : null}
+            </div>
+          ) : null}
         </div>
       </header>
 
-      <nav className={styles.trail} aria-label="Parcours pédagogique">
-        {LEVELS.map((item) => {
-          const done = completed.includes(item.id);
-          const locked = item.id > maxUnlocked && item.id !== levelId;
-          const startsChapter = item.id === 1 || LEVELS[item.id - 2]?.chapter !== item.chapter;
-          return (
-            <div key={item.id} className="contents">
-            {startsChapter && <span className={styles.trailChapter}>{CHAPTERS[item.chapter].label.split("·")[1]}</span>}
-            <button
-              type="button"
-              disabled={locked}
-              onClick={() => goTo(item.id)}
-              className={`${styles.trailDot} ${
-                item.id === levelId ? styles.trailDotCurrent : done ? styles.trailDotDone : ""
-              }`}
-              aria-label={`Défi ${item.id} : ${item.title}${locked ? " (verrouillé)" : ""}`}
-            >
-              {done && item.id !== levelId ? <Check size={12} className="mx-auto" /> : item.id}
-            </button>
-            </div>
-          );
-        })}
-      </nav>
-
       <div className={styles.workspace}>
-        <section className={styles.console}>
-          <article className={styles.mission}>
-            <p className={styles.missionLabel}>Mission · {chapter.concept}</p>
-            <p className={styles.missionText}>{level.mission}</p>
-            <div className={styles.concepts}>
-              {level.concepts.map((concept) => <span key={concept} className={styles.concept}>{concept}</span>)}
-              <button type="button" className={styles.concept} onClick={() => setShowHint((value) => !value)}>
-                <Lightbulb size={11} className="inline -mt-0.5 mr-1" />
-                {showHint ? "Masquer l'indice" : "Afficher l'indice"}
-              </button>
-            </div>
-            {showHint && (
-              <div key={level.id} className={styles.hintPanel}>
-                <Lightbulb size={15} />
-                <span>{level.hint}</span>
-              </div>
-            )}
-          </article>
+        {/* Plateau */}
+        <section className={styles.stageColumn} aria-label="Plateau">
+          <div className={styles.stageFrame} ref={stageRef}>
+            <Board world={world} foxPos={foxPos} foxDir={foxDir} foxAction={foxAction} signLabel={signLabel} chapter={level.chapter} trail={trail} />
 
-          <div className={styles.commandDock}>
-            <div className={styles.commandDockHeader}>
-              <span>Fonctions autorisées dans ce défi</span>
-              <span>cliquer pour insérer</span>
-            </div>
-            <div className={styles.commands}>
-              {allowed.map((command) => (
-                <button
-                  key={command.id}
-                  type="button"
-                  onClick={() => insertCommand(`${command.insert}\n`)}
-                  className={styles.command}
-                  title={command.description}
-                >
-                  <Copy size={12} />
-                  {command.code}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <article className={styles.editorShell}>
-            <div className={styles.editorTop}>
-              <div className={styles.editorFile}>
-                <span className={styles.windowDots}><span /><span /><span /></span>
-                <Code2 size={13} />
-                mission_{String(level.id).padStart(2, "0")}.py
-              </div>
-              <button
-                type="button"
-                onClick={() => setCode(level.starter)}
-                className={styles.resetCode}
-                title="Réinitialiser le code"
-              >
-                <RotateCcw size={15} />
-                Recommencer
-              </button>
-            </div>
-            <div className={styles.editor}>
-              <SimpleCodeEditor
-                ref={editorRef}
-                height="100%"
-                language="python"
-                value={code}
-                onChange={setCode}
-                ariaLabel="Programme Python du renard"
-              />
-            </div>
-            <div className={styles.runbar}>
-              <p className={styles.lineCount}>
-                {lines} ligne{lines > 1 ? "s" : ""}
-                {level.maxLines ? ` · max ${level.maxLines}` : ""}
-              </p>
-              <button
-                type="button"
-                onClick={run}
-                disabled={isRunning || !isPyodideReady}
-                className={styles.runButton}
-              >
-                {isRunning || !isPyodideReady
-                  ? <LoaderCircle size={15} className="animate-spin" />
-                  : <Play size={15} fill="currentColor" />}
-                {isRunning ? "Exécution…" : isPyodideReady ? "Exécuter" : "Chargement Python…"}
-              </button>
-            </div>
-
-            {logs.length > 0 && status !== "won" && (
-            <div className={styles.feedback} role="alert">
-              <CircleHelp size={17} className="shrink-0" />
-              <div>
-              {logs.map((log) => (
-                <p key={log}>{log}</p>
-              ))}
-              </div>
-            </div>
-            )}
-          </article>
-        </section>
-
-        <section className={styles.stageColumn}>
-          <div className="relative flex flex-1">
-            <Board
-              world={world}
-              foxPos={foxPos}
-              foxDir={foxDir}
-              foxAction={foxAction}
-              signLabel={signLabel}
-              levelId={level.id}
-              levelTitle={level.title}
-              step={stepState.current}
-              totalSteps={stepState.total}
-              chapter={level.chapter}
-            />
-
-            {status === "won" && (
+            {status === "won" ? (
               <div className={styles.victory}>
                 <div className={styles.victoryCard}>
                   <div className={styles.victoryFox} role="img" aria-label="Renard qui célèbre" />
                   <h2>Poule rattrapée !</h2>
-                  <p className="mt-1 text-xs text-[#5b6f60]">
-                    Programme terminé en {stepState.total} action{stepState.total > 1 ? "s" : ""}.
-                  </p>
                   <div className={styles.stars} aria-label={`${stars} étoiles sur 3`}>
                     {[1, 2, 3].map((i) => (
                       <span key={i} className={i <= stars ? "" : styles.starOff}>★</span>
                     ))}
                   </div>
+                  <p>
+                    {stars === 3
+                      ? `Programme parfait : ${lines} ligne${lines > 1 ? "s" : ""}.`
+                      : `Réussi en ${lines} lignes. Le meilleur programme en fait ${level.bestLines}.`}
+                  </p>
                   <div className={styles.victoryActions}>
-                    <button
-                      type="button"
-                      onClick={() => resetWorld(level.id, true)}
-                    >
+                    <button type="button" onClick={() => placeFox(buildWorld(level, Date.now()))}>
                       Rejouer
                     </button>
-                    {levelId < LEVELS.length && (
-                      <button
-                        type="button"
-                        onClick={() => goTo(levelId + 1)}
-                      >
-                        Défi suivant
+                    {levelId < LEVELS.length ? (
+                      <button type="button" className={styles.primary} onClick={() => goTo(levelId + 1)}>
+                        Défi suivant <ChevronRight size={16} />
                       </button>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
 
-          <div className={styles.drawer}>
-            <div className={styles.drawerTabs}>
-            <button
-              type="button"
-              onClick={() => setDrawerTab("memo")}
-              className={`${styles.drawerTab} ${drawerTab === "memo" ? styles.drawerTabActive : ""}`}
-            >
-              <BookOpen size={14} />
-              Mémo Python
-            </button>
-            <button
-              type="button"
-              onClick={() => setDrawerTab("save")}
-              className={`${styles.drawerTab} ${drawerTab === "save" ? styles.drawerTabActive : ""}`}
-            >
-              <Save size={14} />
-              Sauvegarde
-            </button>
+          <div className={styles.stageBar}>
+            <div className={styles.stepTrack} aria-hidden>
+              <span style={{ width: `${progress}%` }} />
             </div>
+            <span className={styles.stepText}>
+              {stepState.total > 0 ? `Étape ${stepState.current} / ${stepState.total}` : "Le renard attend ton programme"}
+            </span>
+            <button type="button" className={`${styles.chip} ${fast ? styles.chipOn : ""}`} onClick={() => setFast((value) => !value)} aria-pressed={fast}>
+              {fast ? "🐇 Rapide" : "🐢 Normal"}
+            </button>
+            <button type="button" className={styles.chip} onClick={() => placeFox(buildWorld(level, Date.now()))} disabled={isRunning}>
+              <RotateCcw size={13} /> Replacer
+            </button>
+          </div>
+        </section>
 
-            <div className={styles.drawerContent}>
-            {drawerTab === "memo" ? (
-              <div className={styles.memoGrid}>
+        {/* Mission + programme */}
+        <section className={styles.codeColumn} aria-label="Programme">
+          <article className={styles.mission}>
+            <p className={styles.missionEyebrow}>
+              Défi {level.id} · {chapterName(level.chapter)}
+              {starsByLevel[level.id] ? <span className={styles.missionStars}>{"★".repeat(starsByLevel[level.id])}</span> : null}
+            </p>
+            <h1 className={styles.missionTitle}>{level.title}</h1>
+            <p className={styles.missionText}>{level.mission}</p>
+            <div className={styles.missionActions}>
+              <button type="button" className={`${styles.chip} ${panel === "hint" ? styles.chipOn : ""}`} onClick={() => setPanel(panel === "hint" ? "none" : "hint")}>
+                <Lightbulb size={13} /> Indice
+              </button>
+              <button type="button" className={`${styles.chip} ${panel === "memo" ? styles.chipOn : ""}`} onClick={() => setPanel(panel === "memo" ? "none" : "memo")}>
+                <BookOpen size={13} /> Aide-mémoire
+              </button>
+            </div>
+            {panel === "hint" ? <p className={styles.hint}>{level.hint}</p> : null}
+            {panel === "memo" ? (
+              <div className={styles.memo}>
                 {chapter.memo.map((block) => (
-                  <div key={block.title} className={styles.memoCard}>
+                  <div key={block.title}>
                     <strong>{block.title}</strong>
                     <pre>{block.body}</pre>
                   </div>
                 ))}
               </div>
-            ) : (
-              <>
-                <p className="mb-2">
-                  Ton code de reprise : <strong className="font-mono text-[var(--fg)]">{resumeCode || "…"}</strong>
-                  {" · "}{attemptsByLevel[level.id] || 0} tentative{(attemptsByLevel[level.id] || 0) > 1 ? "s" : ""} sur ce défi.
-                </p>
-                <div className={styles.resumePanel}>
-                  <input
-                    value={resumeInput}
-                    onChange={(event) => setResumeInput(event.target.value.toUpperCase())}
-                    placeholder="FOX-…"
-                    aria-label="Code de reprise"
-                  />
-                  <button type="button" onClick={loadResume}>Reprendre</button>
-                </div>
-                {loadStatus && <p className="mt-2">{loadStatus}</p>}
-              </>
-            )}
+            ) : null}
+          </article>
+
+          <div className={styles.commands} aria-label="Fonctions disponibles">
+            {allowed.map((command) => (
+              <button
+                key={command.id}
+                type="button"
+                onClick={() => editorRef.current?.insertLine(command.insert)}
+                className={styles.command}
+                title={`${command.description} Clique pour l'ajouter au programme.`}
+              >
+                {command.code}
+              </button>
+            ))}
+          </div>
+
+          <div className={styles.editor}>
+            <div className={styles.editorBar}>
+              <span>renard.py</span>
+              <button type="button" onClick={() => setCode(level.starter)} title="Revenir au code de départ" disabled={isRunning}>
+                <RotateCcw size={13} /> Effacer
+              </button>
             </div>
+            <div className={styles.editorBody}>
+              <CodeArea
+                ref={editorRef}
+                value={code}
+                onChange={(value) => {
+                  setCode(value);
+                  if (errorLine) setErrorLine(0);
+                }}
+                language="python"
+                activeLine={activeLine}
+                errorLine={errorLine}
+                ariaLabel="Programme Python du renard"
+                placeholder="# Écris ici les instructions du renard"
+              />
+            </div>
+          </div>
+
+          {feedback ? (
+            <div className={`${styles.feedback} ${feedback.tone === "error" ? styles.feedbackError : ""}`} role="alert">
+              <span aria-hidden>{feedback.tone === "error" ? "🦊💥" : "🦊"}</span>
+              <p>
+                {feedback.text}
+                {errorLine ? <em> (ligne {errorLine})</em> : null}
+              </p>
+              <button type="button" onClick={() => setFeedback(null)} aria-label="Fermer le message">
+                <X size={14} />
+              </button>
+            </div>
+          ) : null}
+
+          <div className={styles.runBar}>
+            <p className={styles.lineCount}>
+              {lines} ligne{lines > 1 ? "s" : ""}
+              {level.maxLines ? <> · max {level.maxLines}</> : null}
+              <span className={styles.shortcut}>Ctrl + Entrée</span>
+            </p>
+            <button type="button" onClick={run} disabled={isRunning || !isPyodideReady} className={styles.runButton}>
+              {isRunning || !isPyodideReady ? <LoaderCircle size={17} className="animate-spin" /> : <Play size={17} fill="currentColor" />}
+              {isRunning ? "Le renard avance…" : isPyodideReady ? "Lancer le renard" : "Chargement de Python…"}
+            </button>
           </div>
         </section>
       </div>
-      </div>
+
+      {/* Carte de tous les défis */}
+      {showMap ? (
+        <div className={styles.mapBackdrop} onClick={(event) => event.target === event.currentTarget && setShowMap(false)}>
+          <div className={styles.map} role="dialog" aria-modal="true" aria-labelledby="carte-titre">
+            <div className={styles.mapHead}>
+              <h2 id="carte-titre">Tous les défis</h2>
+              <button type="button" className={styles.iconButton} onClick={() => setShowMap(false)} aria-label="Fermer">
+                <X size={18} />
+              </button>
+            </div>
+            {CHAPTER_ORDER.map((id) => (
+              <section key={id} className={styles.mapChapter}>
+                <h3>
+                  {CHAPTERS[id].label} <span>{CHAPTERS[id].concept}</span>
+                </h3>
+                <div className={styles.mapLevels}>
+                  {LEVELS.filter((item) => item.chapter === id).map((item) => {
+                    const done = completed.includes(item.id);
+                    const locked = item.id > maxUnlocked;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        disabled={locked}
+                        onClick={() => goTo(item.id)}
+                        className={`${styles.mapLevel} ${item.id === levelId ? styles.mapLevelCurrent : ""} ${done ? styles.mapLevelDone : ""}`}
+                      >
+                        <span className={styles.mapNumber}>{locked ? <Lock size={13} /> : done ? <Check size={14} /> : item.id}</span>
+                        <span className={styles.mapTitle}>{item.title}</span>
+                        {starsByLevel[item.id] ? <span className={styles.mapStars}>{"★".repeat(starsByLevel[item.id])}</span> : null}
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

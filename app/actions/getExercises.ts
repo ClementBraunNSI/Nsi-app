@@ -10,7 +10,7 @@ import { contentRoot } from '@/lib/content-path';
 import { canOpenExerciseIde, isEditorExercise, readExerciseType } from '@/lib/exercise-type';
 import { stripHiddenExerciseBlocks } from '@/lib/exercise-statement';
 import { coursePath } from '@/lib/nsi-levels';
-import { SAVE_WARNING, everyTestPassed, testsUnavailableReport, unexpectedRunReport, type RunReport } from '@/lib/python-check';
+import { CHECK_UNAVAILABLE, SAVE_WARNING, everyTestPassed, testsUnavailableReport, unexpectedRunReport, type RunReport } from '@/lib/python-check';
 import { runPythonCheck, runSqlCheck } from '@/lib/run-exercise-check';
 import type { Achievement } from '@/lib/achievements';
 
@@ -474,9 +474,9 @@ export async function checkExerciseSolution(exerciseId: string, code: string): P
   try {
     report = exercise.type === 'sql'
       ? await runSqlCheck(source, verification)
-      : await runPythonCheck(source, verification);
+      : await runPythonCheck(source, verification, exercise.pythonPackages ?? []);
   } catch {
-    report = unexpectedRunReport('La vérification n’a pas pu être lancée.');
+    report = unexpectedRunReport(CHECK_UNAVAILABLE);
   }
 
   if (auth.isElevated) {

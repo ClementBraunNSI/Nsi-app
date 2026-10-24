@@ -28,6 +28,9 @@ export type RunReport = {
 
 export const SAVE_WARNING = 'La validation n’a pas pu être enregistrée.';
 
+/** Le serveur n'a pas pu exécuter la vérification : ce n'est pas une erreur de l'élève. */
+export const CHECK_UNAVAILABLE = 'La vérification n’a pas pu être lancée.';
+
 export function buildPythonCheckSource(userCode: string, verification: string | null): string {
   const payload = JSON.stringify({ user: userCode ?? '', tests: verification ?? '' });
   return `${PYTHON_CHECK_RUNNER}

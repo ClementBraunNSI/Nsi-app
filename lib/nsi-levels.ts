@@ -57,7 +57,7 @@ export const NSI_LEVELS = {
     short: 'C',
     audience: 'Ouvert à tous',
     description: 'Types, tableaux, fonctions, structures et tris. Accessible sans compte.',
-    image: '/images/fox_2.png',
+    image: '/images/fox_c.svg',
     profileCode: '',
     featured: false,
   },
