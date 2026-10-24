@@ -1,0 +1,1188 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquette accueil T</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens repris de app/globals.css (:root et .dark) + une couleur par niveau */
+  :root {
+    color-scheme: light;
+    --bg: #f7f4ef; --surface: #fffcf8; --surface-2: #f1ece4;
+    --fg: #14110e; --muted: #5c564e; --subtle: #8a8278;
+    --border: color-mix(in srgb, #14110e 10%, transparent);
+    --accent: #ea580c; --accent-fg: #fff; --accent-soft: #fff1e6; --ring: #fb923c;
+    --radius: 1.15rem; --radius-sm: .7rem;
+    --inset: inset 0 1px 0 rgba(255,255,255,.72);
+    --shadow: var(--inset), 0 1px 1px rgba(20,17,14,.03), 0 22px 50px -32px rgba(20,17,14,.28);
+    --ease: cubic-bezier(.22,1,.36,1);
+    /* Niveaux : un même orange, de plus en plus foncé de SNI à BTS SIO */
+    --sni: #fdba74; --snt: #fb923c; --nsi1: #ea580c; --tnsi: #c2410c; --sio: #7c2d12; --c: #a16207;
+    --sni-on: #431407; --snt-on: #431407; --nsi1-on: #1a0a03; --tnsi-on: #fff; --sio-on: #fff; --c-on: #fff;
+    --ok: #16a34a; --code-bg: #1b1f27; --code-fg: #e6e1d9;
+  }
+  .dark {
+    color-scheme: dark;
+    --bg: #0c1017; --surface: #161c27; --surface-2: #1e2633;
+    --fg: #f6f1ea; --muted: #c4bdb3; --subtle: #8b847b;
+    --border: color-mix(in srgb, #f6f1ea 12%, transparent);
+    --accent: #fb923c; --accent-fg: #1a1204; --accent-soft: #2a2013; --ring: #fdba74;
+    --inset: inset 0 1px 0 rgba(255,255,255,.06);
+    --shadow: var(--inset), 0 18px 44px -30px rgba(0,0,0,.7);
+    --sni: #fed7aa; --snt: #fdba74; --nsi1: #fb923c; --tnsi: #ea580c; --sio: #c2410c; --c: #ca8a04;
+    --sni-on: #431407; --snt-on: #431407; --nsi1-on: #431407; --tnsi-on: #1a0a03; --sio-on: #fff; --c-on: #1a1204;
+    --ok: #4ade80; --code-bg: #0f131a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); scroll-behavior: smooth; }
+  body { background-color: var(--bg); color: var(--fg); font-family: Geist, system-ui, sans-serif; letter-spacing: -.011em; transition: background-color .25s, color .25s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; cursor: pointer; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  svg { flex-shrink: 0; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+
+  /* ----- barre de contrôle de la maquette (hors site) ----- */
+  .mock-bar { position: sticky; top: 0; z-index: 90; height: 46px; display: flex; gap: 18px; justify-content: center; align-items: center; flex-wrap: wrap; padding: 0 12px; background: #1d1712; color: #e9e4dc; font-size: 13px; font-weight: 500; }
+  .seg { display: inline-flex; background: #3a312a; border-radius: 999px; padding: 3px; }
+  .seg button { border: 0; background: none; color: #e9e4dc; padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: 13px; }
+  .seg button.on { background: #ea580c; color: #fff; }
+  .seg-back { border: 0; background: #3a312a; color: #e9e4dc; border-radius: 999px; padding: 6px 14px; font-weight: 600; font-size: 13px; }
+
+  /* ----- en-tête du site ----- */
+  /* En-tête : copie de components/layout/SiteHeader.tsx (classes Tailwind traduites) */
+  .site-header { position: sticky; top: 46px; z-index: 50; height: 5rem; border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 96%, transparent); }
+  .site-header nav { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .logo { display: flex; align-items: center; gap: .75rem; flex-shrink: 0; min-width: 0; }
+  .logo img { height: 4.7rem; width: auto; object-fit: contain; flex-shrink: 0; }
+  .logo .name { font-size: 1rem; font-weight: 600; letter-spacing: -.025em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .logo .name b { color: var(--accent); font-weight: 600; }
+  .logo .name span { color: var(--muted); }
+  .hright { display: flex; flex: 1; min-width: 0; align-items: center; justify-content: flex-end; gap: 1.75rem; font-size: .875rem; font-weight: 600; }
+  .links { display: flex; align-items: center; gap: 1.25rem; }
+  .links a { color: var(--muted); white-space: nowrap; transition: color .15s; }
+  .links a:hover, .links a.on { color: var(--accent); }
+  .hbtns { position: relative; display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
+  .hbtn { display: flex; align-items: center; gap: .5rem; padding: .625rem; border: 0; border-radius: .75rem; background: none; color: var(--muted); font-size: .75rem; font-weight: 600; transition: background .15s, color .15s; }
+  .hbtn:hover { background: var(--surface-2); }
+  .hbtn.on, .hbtn.active { color: var(--accent); }
+  .hbtn.open { background: var(--accent-soft); color: var(--accent); }
+  .hbtn.logout:hover { color: #dc2626; }
+  .hbtn.who { padding: .35rem .75rem .35rem .35rem; font-size: .875rem; color: var(--fg); border: 1px solid var(--border); background: var(--surface); }
+  .hbtn.who .av { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-fg); font-size: 13px; font-weight: 700; }
+  .hbtn.who.active { border-color: var(--accent); }
+  .greet { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; padding: 8px 16px 8px 8px; border-radius: 999px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+  .greet .av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-fg); font-weight: 700; }
+  .greet b { display: block; font-size: 15px; font-weight: 600; }
+  .greet span { font-size: 13px; color: var(--muted); }
+  .btn-resume { padding: .5rem .75rem; border-radius: .75rem; background: var(--accent-soft); color: var(--accent); font-size: .75rem; font-weight: 600; }
+  .btn-resume:hover { opacity: .8; }
+  .btn-login { padding: .625rem 1.25rem; border-radius: .75rem; background: var(--fg); color: var(--bg); font-size: .875rem; font-weight: 600; transition: background .15s, color .15s; }
+  .btn-login:hover { background: var(--accent); color: var(--accent-fg); }
+  .a11y { position: absolute; top: 4rem; right: 0; width: 16rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem; z-index: 110; display: none; }
+  .a11y.open { display: block; }
+  .a11y .hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 1px solid var(--border); font-size: .75rem; font-weight: 600; color: var(--subtle); }
+  .a11y .hd button { border: 0; background: none; color: var(--subtle); }
+  .a11y .opt { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: .75rem; margin-top: .5rem; border-radius: .75rem; border: 1px solid transparent; background: var(--surface-2); color: var(--muted); font-size: .875rem; font-weight: 600; }
+  .a11y .opt:hover { color: var(--fg); }
+  .a11y .opt.on { background: var(--accent-soft); color: var(--accent); border-color: var(--border); }
+  .a11y .opt span { display: flex; align-items: center; gap: .75rem; }
+  .a11y .opt em { font-style: normal; font-size: .75rem; color: var(--accent); }
+  @media (max-width: 1279px) { .btn-resume { display: none; } }
+  @media (max-width: 1023px) { .logo .name span { display: none; } }
+  @media (max-width: 767px) { .hbtn .lbl { display: none; } .logo img { height: 4rem; } }
+  @font-face { font-family: 'Luciole'; src: url('https://www.clementbraun.info/fonts/Luciole/Luciole-Regular.woff2') format('woff2'); font-display: swap; }
+  .dyslexic body * { font-family: 'Luciole', sans-serif !important; line-height: 2 !important; word-spacing: .15em !important; letter-spacing: .05em !important; }
+  .high-contrast:not(.dark) { --bg: #fff; --surface: #fff; --surface-2: #f2f2f2; --fg: #000; --muted: #1a1a1a; --subtle: #333; --border: #000; --accent: #9a3412; --inset: none; --shadow: none; }
+  .high-contrast.dark { --bg: #000; --surface: #000; --surface-2: #141414; --fg: #fff; --muted: #f2f2f2; --subtle: #d4d4d4; --border: #fff; --accent: #fdba74; --inset: none; --shadow: none; }
+  .read-bar { position: absolute; left: 0; bottom: -1px; height: 3px; background: var(--accent); width: 0; transition: width .1s linear; }
+
+  /* ----- commun ----- */
+  .wrap { max-width: 80rem; margin: 0 auto; padding: 0 2rem; }
+  main { min-height: 70vh; animation: page-in .32s var(--ease); }
+  @keyframes page-in { from { opacity: .01; translate: 0 10px; } }
+  .btn-acc { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-fg); padding: 12px 18px; border: 0; border-radius: var(--radius-sm); font-weight: 600; font-size: 15px; transition: transform .15s var(--ease), filter .15s; white-space: nowrap; }
+  .btn-acc:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); background: var(--surface); padding: 12px 18px; border-radius: var(--radius-sm); font-weight: 600; font-size: 15px; white-space: nowrap; }
+  .btn-ghost:hover { border-color: var(--accent); }
+  .eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .02em; }
+  .card { border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+  a.card { transition: border-color .18s var(--ease), transform .18s var(--ease); }
+  a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .h2 { font-size: 24px; font-weight: 600; letter-spacing: -.02em; }
+  .h2 em { font-style: normal; color: var(--accent); }
+  .crumbs { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--subtle); font-weight: 500; padding: 26px 0 18px; flex-wrap: wrap; }
+  .crumbs a:hover { color: var(--accent); }
+  .crumbs b { color: var(--fg); font-weight: 600; }
+  .progress { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+  .progress i { display: block; height: 100%; border-radius: 99px; background: var(--accent); transition: width .4s var(--ease); }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; }
+  .kind { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 4px 9px; color: var(--kc); background: color-mix(in srgb, var(--kc) 12%, transparent); }
+  .k-cours { --kc: #2563eb; } .k-exercices { --kc: #059669; } .k-tp { --kc: #9333ea; } .k-projet { --kc: #ea580c; }
+  .dark .k-cours { --kc: #60a5fa; } .dark .k-exercices { --kc: #34d399; } .dark .k-tp { --kc: #c084fc; } .dark .k-projet { --kc: #fb923c; }
+  .ok { color: var(--ok); font-weight: 600; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .lock { color: var(--subtle); display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+  /* ----- accueil : hero ----- */
+  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding: 64px 0 48px; }
+  .hello { font-size: 15px; font-weight: 600; color: var(--muted); margin-bottom: 18px; }
+  .title { font-size: clamp(2.6rem, 5.6vw, 4.7rem); font-weight: 600; line-height: .98; letter-spacing: -.035em; }
+  .title .c { color: var(--accent); }
+  .title .u { position: relative; display: inline-block; }
+  .title .u svg { position: absolute; left: 0; bottom: -8px; width: 100%; height: 10px; }
+  .lead { font-size: 19px; color: var(--muted); line-height: 1.6; font-weight: 500; margin: 28px 0; max-width: 540px; }
+  .search { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 17px 20px; font-size: 17px; font-weight: 500; color: var(--subtle); box-shadow: var(--shadow); max-width: 540px; width: 100%; cursor: text; transition: border-color .15s; text-align: left; }
+  .search:hover { border-color: var(--accent); }
+  .search kbd { margin-left: auto; font: 500 12px "Geist Mono"; color: var(--subtle); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; background: var(--surface-2); }
+  .quick { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .quick button { font-size: 13px; font-weight: 500; color: var(--muted); border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 5px 12px; }
+  .quick button:hover { color: var(--accent); border-color: var(--accent); }
+  .cta { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+  .stage { position: relative; height: 460px; border-radius: 28px; background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
+  .stage::before { content: ""; position: absolute; width: 440px; height: 440px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent), transparent 68%); left: 50%; top: 52%; transform: translate(-50%, -50%); }
+  .stage .fox { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); height: 350px; transition: transform .3s var(--ease); }
+  .stage:hover .fox { transform: translateX(-50%) translateY(-6px) rotate(-2deg); }
+  .splash { position: absolute; top: 22px; left: 22px; display: inline-block; color: var(--accent); font-weight: 700; font-size: 15px; transform: rotate(-4deg); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); padding: 8px 14px; border-radius: 10px; animation: wobble 2.8s ease-in-out infinite; }
+  @keyframes wobble { 50% { transform: rotate(-4deg) scale(1.05); } }
+  .chip { position: absolute; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 10px 14px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow); display: flex; gap: 10px; align-items: center; }
+  .chip img { width: 30px; height: 30px; object-fit: contain; }
+  .chip small { display: block; font-weight: 500; color: var(--subtle); font-size: 12px; }
+  .chip.c1 { right: 20px; top: 96px; } .chip.c2 { left: 20px; bottom: 70px; }
+
+  /* ----- bandeau de reprise ----- */
+  .resume { display: grid; grid-template-columns: 1.9fr 1fr 1fr; gap: 14px; margin-bottom: 56px; }
+  .resume .card { padding: 18px 20px; }
+  .continue { display: flex; gap: 18px; align-items: center; border-color: color-mix(in srgb, var(--accent) 35%, var(--border)) !important;
+              background: linear-gradient(120deg, var(--accent-soft), transparent 60%), var(--surface) !important; }
+  .thumb { width: 84px; height: 84px; flex-shrink: 0; border-radius: var(--radius-sm); background: var(--surface-2); display: grid; place-items: center; }
+  .thumb img { width: 76px; height: 76px; object-fit: contain; }
+  .continue .info { flex: 1; min-width: 0; }
+  .continue h3 { font-size: 18px; font-weight: 600; margin: 3px 0 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .meta-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--subtle); margin-top: 6px; }
+  .side-card .k { font-size: 12px; font-weight: 600; color: var(--subtle); display: flex; justify-content: space-between; }
+  .side-card h3 { font-size: 16px; font-weight: 600; margin: 6px 0 4px; }
+  .side-card p { font-size: 13px; color: var(--muted); }
+  .due { display: inline-block; margin-top: 10px; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 3px 10px; }
+  .badges { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .badge-img { width: 52px; height: 52px; object-fit: contain; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); padding: 3px; }
+  .badge-more { width: 52px; height: 52px; border-radius: 12px; border: 1px dashed var(--border); display: grid; place-items: center; font-size: 13px; font-weight: 600; color: var(--subtle); }
+
+  /* ----- sélecteur de niveau ----- */
+  #niveaux { scroll-margin-top: 140px; }
+  .sel-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 18px; gap: 20px; }
+  .sel-head p { color: var(--subtle); font-size: 14px; font-weight: 500; }
+  .panel { border-radius: 24px; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+  .tabs { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--border); background: var(--surface-2); }
+  .tab { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border: 0; border-right: 1px solid var(--border); background: none; font-weight: 600; font-size: 15px; color: var(--muted); position: relative; text-align: left; transition: background .15s, color .15s; }
+  .tab:last-child { border-right: 0; }
+  .tab:hover { color: var(--fg); }
+  .tab img { width: 46px; height: 46px; object-fit: contain; transition: transform .2s var(--ease); }
+  .tab:hover img { transform: translateY(-2px) rotate(-3deg); }
+  .tab small { display: block; font-size: 12px; font-weight: 500; color: var(--subtle); }
+  .tab.on { background: var(--surface); color: var(--fg); }
+  .tab.on::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--lc); }
+  .tab .mine { position: absolute; top: 8px; right: 10px; font-size: 10px; font-weight: 700; color: var(--accent); }
+  .content { display: grid; grid-template-columns: 330px 1fr; }
+  .intro { padding: 28px; border-right: 1px solid var(--border); background: linear-gradient(180deg, color-mix(in srgb, var(--lc) 10%, transparent), transparent 60%); display: flex; flex-direction: column; }
+  .intro img { height: 200px; margin: 0 auto 14px; object-fit: contain; }
+  [style*="--lc"] { --lt: color-mix(in srgb, var(--lc) 60%, var(--fg)); }
+  .intro .aud { font-size: 12px; font-weight: 600; color: var(--lt); }
+  .intro h3 { font-size: 28px; font-weight: 600; letter-spacing: -.02em; margin-top: 2px; }
+  .intro p { color: var(--muted); font-size: 15px; margin: 8px 0 18px; line-height: 1.5; }
+  .stats { display: flex; gap: 18px; margin-bottom: 20px; font-size: 13px; color: var(--subtle); font-weight: 500; }
+  .stats b { display: block; font-size: 20px; color: var(--fg); font-weight: 600; }
+  .btn-lvl { background: var(--lc); color: var(--lon); align-self: flex-start; margin-top: auto; }
+  .chapters { padding: 24px 26px; }
+  .chapters .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .chapters .top span { font-size: 13px; color: var(--subtle); font-weight: 500; }
+  .chgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ch { display: flex; gap: 14px; align-items: center; padding: 10px 14px 10px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); transition: border-color .15s, transform .15s var(--ease); text-align: left; width: 100%; }
+  .ch:hover { border-color: var(--lc); transform: translateX(2px); }
+  .ic { width: 58px; height: 42px; flex-shrink: 0; border-radius: 9px; background: var(--surface-2); overflow: hidden; display: grid; place-items: center; }
+  .ic img { width: 100%; height: 100%; object-fit: cover; }
+  .ic img.fox { object-fit: contain; padding: 3px; }
+  .ch .t { flex: 1; min-width: 0; }
+  .ch .t b { display: block; font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ch .t span { font-size: 12px; font-weight: 500; color: var(--subtle); }
+  .mini { height: 5px; border-radius: 9px; background: var(--surface-2); margin-top: 6px; overflow: hidden; }
+  .mini i { display: block; height: 100%; background: var(--lc); border-radius: 9px; }
+  .ch .done { font-size: 12px; font-weight: 700; color: var(--lt); white-space: nowrap; }
+
+  /* ----- accueil : niveaux en bento, du plus clair au plus foncé ----- */
+  .bento { --bt-alpha: 84%; display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 170px; gap: 14px; }
+  .bt { position: relative; overflow: hidden; border-radius: var(--radius); padding: 20px 22px; color: var(--lon); grid-column: span 3;
+        background: radial-gradient(circle at 88% 85%, rgba(255,255,255,.22), transparent 55%), color-mix(in srgb, var(--lc) var(--bt-alpha), transparent);
+        border: 1px solid color-mix(in srgb, var(--lc) 60%, transparent);
+        box-shadow: var(--shadow); display: flex; transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+  .bt:hover { transform: translateY(-3px); box-shadow: var(--inset), 0 26px 50px -28px color-mix(in srgb, var(--lc) 80%, transparent); }
+  .dark .bento { --bt-alpha: 92%; }
+  /* la transparence éclaircit le fond : le texte blanc de Terminale passerait sous 4,5 de contraste */
+  :root:not(.dark) .bt-tnsi { --lon: #1a0a03 !important; }
+  .bt-1nsi { grid-column: span 6; grid-row: span 2; padding: 30px; }
+  .bt-txt { position: relative; z-index: 1; display: flex; flex-direction: column; max-width: 60%; }
+  .bt-aud { font-size: 12px; font-weight: 600; opacity: .85; }
+  .bt h3 { font-size: 22px; font-weight: 600; letter-spacing: -.02em; margin: 2px 0 6px; }
+  .bt p { font-size: 13px; line-height: 1.45; opacity: .85; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .bt-meta { margin-top: auto; font-size: 12px; font-weight: 600; opacity: .9; white-space: nowrap; }
+  .bt-1nsi h3 { font-size: 40px; letter-spacing: -.03em; }
+  .bt-1nsi p { font-size: 16px; -webkit-line-clamp: 3; max-width: 340px; }
+  .bt-1nsi .bt-meta { font-size: 14px; }
+  .bt-step { position: absolute; top: 14px; right: 16px; z-index: 1; font: 600 12px "Geist Mono"; opacity: .6; }
+  .bt-plate { position: absolute; right: -18px; bottom: -22px; width: 140px; height: 140px; border-radius: 50%; background: color-mix(in srgb, var(--surface) 88%, transparent); display: grid; place-items: center; transition: transform .25s var(--ease); }
+  .bt-plate img { width: 108px; height: 108px; object-fit: contain; transform: translate(-6px, -8px); }
+  .bt:hover .bt-plate { transform: scale(1.05) rotate(-4deg); }
+  .bt-1nsi .bt-plate { width: 300px; height: 300px; right: -30px; bottom: -40px; }
+  .bt-1nsi .bt-plate img { width: 240px; height: 240px; transform: translate(-14px, -20px); }
+  .bt-prog { height: 8px; border-radius: 99px; background: color-mix(in srgb, var(--lon) 22%, transparent); overflow: hidden; margin: 14px 0 8px; max-width: 280px; }
+  .bt-prog i { display: block; height: 100%; border-radius: 99px; background: var(--lon); }
+  .bt.mine { outline: 3px solid color-mix(in srgb, var(--lc) 40%, transparent); outline-offset: 3px; }
+
+  /* ----- extras ----- */
+  .extras { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; margin-top: 18px; }
+  .ex { display: flex; align-items: center; gap: 18px; padding: 16px; }
+  .ex .pic { width: 104px; height: 104px; flex-shrink: 0; border-radius: var(--radius-sm); background: var(--surface-2); display: grid; place-items: center; }
+  .ex .pic img { height: 92px; object-fit: contain; }
+  .ex.small .pic { width: 80px; height: 80px; } .ex.small .pic img { height: 70px; }
+  .ex h3 { font-size: 17px; font-weight: 600; } .ex p { font-size: 13px; color: var(--muted); margin: 4px 0 8px; }
+  .ex .link { font-size: 13px; font-weight: 600; color: var(--accent); }
+
+  /* ----- page « tous les niveaux » ----- */
+  .lvl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
+  .lvl-card { display: flex; gap: 18px; align-items: center; padding: 18px; position: relative; overflow: hidden; }
+  .lvl-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--lc); }
+  .lvl-card .pic { width: 110px; height: 110px; flex-shrink: 0; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--lc) 10%, var(--surface-2)); display: grid; place-items: center; }
+  .lvl-card .pic img { height: 96px; }
+  .lvl-card .aud { font-size: 12px; font-weight: 600; color: var(--lt); }
+  .lvl-card h3 { font-size: 20px; font-weight: 600; margin: 2px 0 4px; }
+  .lvl-card p { font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .lvl-card small { display: block; margin-top: 8px; font-size: 12px; color: var(--subtle); font-weight: 600; }
+
+  /* ----- page niveau ----- */
+  .lvl-hero { display: grid; grid-template-columns: 180px 1fr auto; gap: 28px; align-items: center; padding: 26px 30px; position: relative; overflow: hidden;
+              background: linear-gradient(110deg, color-mix(in srgb, var(--lc) 12%, transparent), transparent 55%), var(--surface); }
+  .lvl-hero img { height: 160px; margin: 0 auto; }
+  .lvl-hero .aud { font-size: 13px; font-weight: 600; color: var(--lt); }
+  .lvl-hero h1 { font-size: 40px; font-weight: 600; letter-spacing: -.03em; margin: 2px 0 6px; }
+  .lvl-hero p { color: var(--muted); font-size: 16px; max-width: 560px; }
+  .lvl-hero .stats { margin: 0; }
+  .lvl-hero .ring { width: 108px; height: 108px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--lc) calc(var(--p) * 1%), var(--surface-2) 0); }
+  .lvl-hero .ring span { width: 84px; height: 84px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; text-align: center; font-size: 22px; font-weight: 700; line-height: 1; }
+  .lvl-hero .ring small { display: block; font-size: 11px; font-weight: 500; color: var(--subtle); margin-top: 3px; }
+  .lvl-layout { display: grid; grid-template-columns: 300px 1fr; gap: 24px; margin-top: 24px; align-items: start; }
+  .ch-nav { position: sticky; top: 150px; padding: 10px; display: flex; flex-direction: column; gap: 4px; max-height: calc(100vh - 170px); overflow: auto; }
+  .ch-nav .lbl { font-size: 12px; font-weight: 600; color: var(--subtle); padding: 8px 10px 6px; }
+  .ch-btn { display: flex; gap: 12px; align-items: center; padding: 8px 10px; border-radius: 12px; border: 1px solid transparent; background: none; text-align: left; width: 100%; transition: background .15s; }
+  .ch-btn:hover { background: var(--surface-2); }
+  .ch-btn.on { background: color-mix(in srgb, var(--lc) 10%, var(--surface)); border-color: color-mix(in srgb, var(--lc) 35%, transparent); }
+  .ch-btn .ic { width: 46px; height: 34px; border-radius: 8px; }
+  .ch-btn .t { flex: 1; min-width: 0; }
+  .ch-btn b { display: block; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ch-btn span { font-size: 12px; color: var(--subtle); font-weight: 500; }
+  .ch-head { display: flex; gap: 22px; align-items: center; padding: 20px; margin-bottom: 16px; }
+  .ch-head .big { width: 180px; height: 120px; flex-shrink: 0; border-radius: var(--radius-sm); background: var(--surface-2); overflow: hidden; display: grid; place-items: center; }
+  .ch-head .big img { width: 100%; height: 100%; object-fit: cover; }
+  .ch-head .big img.fox { object-fit: contain; padding: 8px; }
+  .ch-head h2 { font-size: 28px; font-weight: 600; letter-spacing: -.02em; margin: 2px 0 6px; }
+  .ch-head p { color: var(--muted); font-size: 15px; }
+  .filters { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); margin-bottom: 14px; flex-wrap: wrap; }
+  .filters button { border: 0; background: none; border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .filters button span { color: var(--subtle); font-weight: 500; margin-left: 4px; }
+  .filters button.on { background: var(--surface); color: var(--fg); box-shadow: var(--shadow); }
+  .res-list { display: flex; flex-direction: column; gap: 10px; }
+  /* liste compacte : en-tête de chapitre sur une ligne, tuiles sur deux colonnes */
+  .ch-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .ch-title { display: flex; gap: 14px; align-items: center; min-width: 0; }
+  .ch-title .ic { width: 64px; height: 46px; border-radius: 10px; }
+  .ch-title h2 { font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
+  .ch-title span { font-size: 13px; color: var(--subtle); font-weight: 500; }
+  .ch-title .mini { width: 180px; }
+  .ch-bar .filters { margin: 0; }
+  .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tile { display: flex; gap: 12px; align-items: center; padding: 9px 12px 9px 9px; border: 1px solid var(--border); border-radius: 13px; background: var(--surface); text-align: left; width: 100%; min-width: 0; transition: border-color .15s, transform .15s var(--ease), box-shadow .15s; }
+  .tile:hover { border-color: var(--lc); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .tile .ki { width: 38px; height: 38px; flex-shrink: 0; border-radius: 10px; display: grid; place-items: center; color: var(--kc); background: color-mix(in srgb, var(--kc) 12%, transparent); position: relative; }
+  .tile .ki.img { background: var(--surface-2); overflow: hidden; }
+  .tile .ki.img img { width: 100%; height: 100%; object-fit: cover; }
+  .tile .ki.stack { box-shadow: 3px -3px 0 -1px var(--surface), 3px -3px 0 0 color-mix(in srgb, var(--kc) 30%, transparent); }
+  .tile .ki em { position: absolute; right: -6px; bottom: -6px; font: 700 10px Geist; font-style: normal; background: var(--fg); color: var(--bg); border-radius: 99px; padding: 1px 5px; }
+  .tile .t { flex: 1; min-width: 0; }
+  .tile b { display: block; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile small { font-size: 12px; color: var(--subtle); font-weight: 500; }
+  .tile .tags { display: flex; gap: 4px; margin-top: 3px; flex-wrap: wrap; }
+  .tile .tags i { font-style: normal; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 6px; background: var(--surface-2); color: var(--muted); }
+  .tile .tags i[class^="k-"] { color: var(--kc); background: color-mix(in srgb, var(--kc) 12%, transparent); }
+  .tile .more { color: var(--subtle); display: grid; place-items: center; }
+  .tile.group { border-style: dashed; }
+  .tile.group:hover { border-style: solid; }
+  /* modale de choix */
+  .modal.pick { width: min(680px, 94vw); text-align: left; position: relative; padding: 28px; }
+  .modal.pick h2 { margin-top: 4px; }
+  .modal.pick > p { margin: 6px 0 18px; }
+  .pick-x { position: absolute; top: 14px; right: 14px; border: 0; background: var(--surface-2); color: var(--muted); width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; }
+  .pick-grid { display: grid; gap: 10px; }
+  .pick-grid.v { grid-template-columns: repeat(3, 1fr); }
+  .pick-opt { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); transition: border-color .15s, transform .15s var(--ease); display: flex; gap: 12px; align-items: center; padding: 12px; }
+  .pick-opt:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .pick-grid.v .pick-opt { flex-direction: column; align-items: stretch; text-align: center; padding: 10px 10px 14px; }
+  .pick-opt .pic { position: relative; height: 120px; border-radius: 10px; background: var(--surface-2); display: grid; place-items: center; overflow: hidden; }
+  .pick-opt .pic img { height: 112px; object-fit: contain; }
+  .pick-opt .pic i { position: absolute; top: 8px; left: 8px; font: 700 11px Geist; font-style: normal; background: var(--fg); color: var(--bg); border-radius: 6px; padding: 2px 7px; }
+  .pick-opt .ki { width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; display: grid; place-items: center; color: var(--kc); background: color-mix(in srgb, var(--kc) 12%, transparent); }
+  .pick-opt .t { flex: 1; min-width: 0; }
+  .pick-opt b { display: block; font-size: 16px; font-weight: 600; }
+  .pick-opt small { font-size: 12px; color: var(--subtle); }
+  .pick-extras { display: flex; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .pick-extras a { font-size: 13px; font-weight: 600; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; }
+  .pick-extras a:hover { color: var(--accent); border-color: var(--accent); }
+  /* barre de versions sur une fiche */
+  .variant-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+  .variant-bar .vl { font-size: 13px; font-weight: 600; color: var(--subtle); }
+  .seg2 { display: inline-flex; gap: 3px; padding: 3px; border-radius: 11px; background: var(--surface-2); flex-wrap: wrap; }
+  .seg2 a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .seg2 a:hover { color: var(--fg); }
+  .seg2 a.on { background: var(--surface); color: var(--accent); box-shadow: var(--shadow); }
+  .seg2 a i { font: 700 10px Geist; font-style: normal; background: var(--fg); color: var(--bg); border-radius: 5px; padding: 1px 5px; }
+  .variant-bar .vx { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .variant-bar .vx:hover { color: var(--accent); }
+  .variant-bar .vx:first-of-type { margin-left: auto; }
+  .res { display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: center; padding: 14px 18px 14px 14px; }
+  .res .thumb { width: 56px; height: 56px; }
+  .res .thumb img { width: 50px; height: 50px; }
+  .res h3 { font-size: 16px; font-weight: 600; margin: 5px 0 3px; }
+  .res p { font-size: 13px; color: var(--muted); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .res .right { display: flex; align-items: center; gap: 12px; color: var(--subtle); }
+  .empty { padding: 40px; text-align: center; color: var(--subtle); }
+
+  /* ----- page cours ----- */
+  .course-head { display: grid; grid-template-columns: 1fr 160px; gap: 24px; align-items: center; padding: 28px 30px; }
+  .course-head .ey { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 13px; font-weight: 600; }
+  .course-head .ey .lv { color: var(--lt); }
+  .course-head .ey .chn { color: var(--muted); }
+  .course-head h1 { font-size: 40px; font-weight: 600; letter-spacing: -.03em; line-height: 1.05; margin: 10px 0 10px; }
+  .course-head p { color: var(--muted); font-size: 17px; line-height: 1.55; max-width: 680px; }
+  .course-head .pills { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .course-head img { height: 150px; margin: 0 auto; object-fit: contain; }
+  .course-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 28px; margin-top: 24px; align-items: start; }
+  .prose { padding: 34px 40px; }
+  .prose .intro-p { font-size: 18px; line-height: 1.7; color: var(--fg); }
+  .prose h2 { font-size: 24px; font-weight: 600; letter-spacing: -.02em; margin: 36px 0 14px; scroll-margin-top: 150px; padding-left: 12px; border-left: 3px solid var(--accent); }
+  .skel { display: flex; flex-direction: column; gap: 9px; }
+  .skel i { display: block; height: 11px; border-radius: 6px; background: var(--surface-2); }
+  .skel-note { font-size: 12px; color: var(--subtle); font-weight: 500; margin-top: 10px; font-style: italic; }
+  .admo { margin-top: 16px; border-radius: var(--radius-sm); border: 1px solid color-mix(in srgb, #2563eb 25%, transparent); background: color-mix(in srgb, #2563eb 7%, transparent); padding: 14px 16px; font-size: 14px; color: var(--muted); }
+  .admo b { color: var(--fg); display: block; margin-bottom: 4px; }
+  .toc { position: sticky; top: 150px; display: flex; flex-direction: column; gap: 14px; }
+  .toc .card { padding: 16px; }
+  .toc .lbl { font-size: 12px; font-weight: 600; color: var(--subtle); margin-bottom: 8px; display: block; }
+  .toc a.h { display: block; font-size: 13px; font-weight: 500; color: var(--muted); padding: 5px 0 5px 10px; border-left: 2px solid var(--border); }
+  .toc a.h:hover, .toc a.h.on { color: var(--accent); border-left-color: var(--accent); }
+  .toc a.sib { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; padding: 6px 8px; border-radius: 8px; color: var(--muted); font-weight: 500; }
+  .toc a.sib:hover { background: var(--surface-2); color: var(--fg); }
+  .toc a.sib.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .toc .badge-win { display: flex; gap: 12px; align-items: center; }
+  .toc .badge-win img { width: 64px; height: 64px; object-fit: contain; border-radius: 12px; background: var(--surface-2); padding: 4px; }
+  .toc .badge-win img.locked { filter: grayscale(1); opacity: .5; }
+  .toc .badge-win b { font-size: 14px; } .toc .badge-win p { font-size: 12px; color: var(--subtle); }
+  .prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+  .prevnext a { padding: 16px 18px; }
+  .prevnext small { display: block; font-size: 12px; color: var(--subtle); font-weight: 600; margin-bottom: 4px; }
+  .prevnext b { font-weight: 600; }
+  .prevnext .nx { text-align: right; }
+
+  /* ----- exercice ----- */
+  .exo { margin: 30px 0 10px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+  .exo-tabs { display: flex; gap: 2px; padding: 6px; background: var(--surface-2); border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .exo-tabs button { border: 0; background: none; border-radius: 9px; padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; display: inline-flex; gap: 6px; align-items: center; }
+  .exo-tabs button.on { background: var(--surface); color: var(--fg); box-shadow: var(--shadow); }
+  .exo-tabs button .okd { color: var(--ok); }
+  .exo-body { display: grid; grid-template-columns: 1fr 1.15fr; }
+  .exo-st { padding: 20px; border-right: 1px solid var(--border); font-size: 14px; line-height: 1.6; color: var(--muted); }
+  .exo-st h4 { font-size: 16px; color: var(--fg); margin-bottom: 8px; font-weight: 600; }
+  .exo-st code { font: 500 13px "Geist Mono"; background: var(--surface-2); padding: 1px 5px; border-radius: 5px; color: var(--fg); }
+  .exo-st .hint { margin-top: 14px; border: 1px dashed var(--border); border-radius: 10px; padding: 10px 12px; font-size: 13px; }
+  .exo-ed { display: flex; flex-direction: column; background: var(--code-bg); }
+  .exo-ed .bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,.08); font: 500 12px "Geist Mono"; color: #8b93a1; }
+  .exo-ed textarea { flex: 1; min-height: 230px; resize: vertical; border: 0; outline: 0; background: transparent; color: var(--code-fg); font: 400 13.5px/1.65 "Geist Mono", monospace; padding: 14px 16px; tab-size: 4; }
+  .exo-ed .acts { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid rgba(255,255,255,.08); }
+  .exo-ed .acts button { border: 0; border-radius: 8px; padding: 8px 14px; font-weight: 600; font-size: 13px; display: inline-flex; gap: 6px; align-items: center; }
+  .b-run { background: rgba(255,255,255,.1); color: #e6e1d9; }
+  .b-check { background: #ea580c; color: #fff; }
+  .out { font: 400 12.5px/1.6 "Geist Mono", monospace; color: #c9d1d9; padding: 10px 16px 14px; border-top: 1px solid rgba(255,255,255,.08); min-height: 44px; white-space: pre-wrap; }
+  .out .pass { color: #4ade80; } .out .info { color: #8b93a1; } .out .warn { color: #fbbf24; }
+
+  /* ----- espace élève ----- */
+  .esp-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; padding: 10px 0 24px; flex-wrap: wrap; }
+  .esp-head h1 { font-size: 40px; font-weight: 600; letter-spacing: -.03em; }
+  .esp-head p { color: var(--muted); margin-top: 6px; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
+  .kpi { padding: 18px 20px; }
+  .kpi b { display: block; font-size: 30px; font-weight: 600; letter-spacing: -.02em; }
+  .kpi span { font-size: 13px; color: var(--subtle); font-weight: 500; }
+  .esp-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; margin-top: 14px; }
+  .esp-grid .card { padding: 20px; }
+  .esp-grid h2 { font-size: 18px; font-weight: 600; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+  .esp-grid h2 span { font-size: 13px; color: var(--subtle); font-weight: 500; }
+  .prog-row { display: grid; grid-template-columns: 46px 1fr 60px; gap: 12px; align-items: center; padding: 8px 6px; border-radius: 10px; }
+  .prog-row:hover { background: var(--surface-2); }
+  .prog-row .ic { width: 46px; height: 34px; }
+  .prog-row b { font-size: 14px; font-weight: 600; display: block; margin-bottom: 5px; }
+  .prog-row em { font-style: normal; font-size: 13px; font-weight: 600; text-align: right; color: var(--muted); }
+  .hw { display: flex; gap: 14px; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; }
+  .hw .d { width: 48px; text-align: center; border-radius: 10px; background: var(--surface-2); padding: 6px 0; font-size: 11px; font-weight: 600; color: var(--subtle); }
+  .hw .d b { display: block; font-size: 18px; color: var(--fg); }
+  .hw .t { flex: 1; } .hw .t b { display: block; font-size: 14px; } .hw .t span { font-size: 12px; color: var(--subtle); }
+  .badge-wall { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .badge-wall div { text-align: center; font-size: 11px; color: var(--subtle); font-weight: 500; }
+  .badge-wall img { width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--border); padding: 4px; margin-bottom: 4px; }
+  .badge-wall .locked img { filter: grayscale(1); opacity: .35; }
+
+  /* ----- connexion ----- */
+  .login { max-width: 900px; margin: 50px auto; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+  .login .art { background: var(--surface-2); display: grid; place-items: center; padding: 30px; position: relative; }
+  .login .art img { height: 280px; }
+  .login .art .splash { position: absolute; }
+  .login form { padding: 40px; display: flex; flex-direction: column; gap: 14px; }
+  .login h1 { font-size: 30px; font-weight: 600; letter-spacing: -.02em; }
+  .login p { color: var(--muted); font-size: 14px; }
+  .login label { font-size: 13px; font-weight: 600; display: flex; flex-direction: column; gap: 6px; }
+  .login input { font: inherit; font-size: 15px; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--fg); }
+  .login input:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+  .login .demo { font-size: 12px; color: var(--subtle); text-align: center; }
+
+  /* ----- palette Ctrl K ----- */
+  .pal-bg { position: fixed; inset: 0; z-index: 120; background: rgba(12,10,8,.45); display: none; align-items: flex-start; justify-content: center; padding-top: 12vh; }
+  .pal-bg.open { display: flex; animation: page-in .2s var(--ease); }
+  .pal { width: min(640px, 92vw); border-radius: 18px; background: var(--surface); border: 1px solid var(--border); box-shadow: 0 30px 80px -20px rgba(0,0,0,.45); overflow: hidden; }
+  .pal-in { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--border); color: var(--subtle); }
+  .pal-in input { flex: 1; border: 0; outline: 0; background: none; font: inherit; font-size: 17px; color: var(--fg); }
+  .pal-in kbd { font: 500 11px "Geist Mono"; border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; }
+  .pal-res { max-height: 52vh; overflow: auto; padding: 8px; }
+  .pal-res .grp { font-size: 11px; font-weight: 600; color: var(--subtle); padding: 10px 10px 6px; text-transform: uppercase; letter-spacing: .06em; }
+  .pal-item { display: flex; gap: 12px; align-items: center; padding: 9px 10px; border-radius: 10px; }
+  .pal-item.sel { background: var(--accent-soft); }
+  .pal-item .ic { width: 40px; height: 30px; border-radius: 7px; }
+  .pal-item .t { flex: 1; min-width: 0; }
+  .pal-item b { display: block; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pal-item span { font-size: 12px; color: var(--subtle); }
+  .pal-item mark { background: none; color: var(--accent); }
+  .pal-foot { display: flex; gap: 16px; padding: 10px 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--subtle); }
+
+  /* ----- modale badge ----- */
+  .modal-bg { position: fixed; inset: 0; z-index: 130; background: rgba(12,10,8,.5); display: none; align-items: center; justify-content: center; }
+  .modal-bg.open { display: flex; }
+  .modal { width: min(420px, 92vw); text-align: center; padding: 30px; animation: pop .45s var(--ease); }
+  @keyframes pop { from { transform: scale(.85); opacity: 0; } }
+  .modal img { width: 170px; height: 170px; object-fit: contain; margin: 6px auto 10px; animation: spin-in .8s var(--ease); }
+  @keyframes spin-in { from { transform: rotate(-20deg) scale(.6); } }
+  .modal h2 { font-size: 24px; font-weight: 600; } .modal p { color: var(--muted); margin: 6px 0 20px; }
+  .toast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 140; background: var(--fg); color: var(--bg); padding: 11px 18px; border-radius: 12px; font-size: 14px; font-weight: 600; box-shadow: 0 20px 40px -20px rgba(0,0,0,.5); display: none; }
+  .toast.show { display: block; animation: pop .3s var(--ease); }
+
+  footer { border-top: 1px solid var(--border); margin-top: 72px; padding: 32px 0; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; color: var(--subtle); font-size: 14px; gap: 20px; flex-wrap: wrap; }
+  footer nav { display: flex; gap: 22px; font-weight: 500; color: var(--muted); }
+
+  /* ----- mobile ----- */
+  @media (max-width: 960px) {
+    .wrap { padding: 0 16px; }
+    .site-header nav { padding: 0 16px; }
+    .links { overflow-x: auto; gap: .75rem; }
+    .hright { gap: .5rem; }
+    .hero, .resume, .content, .lvl-layout, .course-layout, .esp-grid, .login, .exo-body { grid-template-columns: 1fr; }
+    .hero { gap: 28px; padding: 36px 0 32px; }
+    .stage { height: 340px; } .stage .fox { height: 260px; }
+    .tabs { grid-template-columns: repeat(5, minmax(150px, 1fr)); overflow-x: auto; }
+    .intro { border-right: 0; border-bottom: 1px solid var(--border); }
+    .intro img { height: 140px; }
+    .chgrid, .extras, .lvl-grid, .prevnext { grid-template-columns: 1fr; }
+    .sel-head { flex-direction: column; align-items: start; }
+    .lvl-hero { grid-template-columns: 1fr; text-align: left; }
+    .lvl-hero img { height: 110px; margin: 0; }
+    .ch-nav { position: static; max-height: none; flex-direction: row; overflow-x: auto; }
+    .ch-nav .lbl { display: none; }
+    .ch-btn { min-width: 220px; }
+    .ch-head { flex-direction: column; align-items: start; }
+    .course-head { grid-template-columns: 1fr; } .course-head img { display: none; }
+    .course-head h1, .lvl-hero h1, .esp-head h1 { font-size: 30px; }
+    .prose { padding: 22px 18px; }
+    .toc { position: static; }
+    .kpis { grid-template-columns: 1fr 1fr; }
+    .badge-wall { grid-template-columns: repeat(4, 1fr); }
+    .exo-st { border-right: 0; border-bottom: 1px solid var(--border); }
+    .res { grid-template-columns: 48px 1fr; } .res .right { grid-column: 2; }
+    .res-grid, .pick-grid.v { grid-template-columns: 1fr; }
+    .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; } .bt, .bt-1nsi { grid-column: span 1; grid-row: span 1; padding: 18px; } .bt-1nsi { grid-column: span 2; grid-row: span 2; } .bt-1nsi h3 { font-size: 28px; } .bt-txt { max-width: 70%; } .bt-plate { width: 110px; height: 110px; } .bt-plate img { width: 86px; height: 86px; } .bt-1nsi .bt-plate { width: 200px; height: 200px; } .bt-1nsi .bt-plate img { width: 160px; height: 160px; }
+    .pick-grid.v .pick-opt { flex-direction: row; text-align: left; } .pick-opt .pic { width: 90px; height: 70px; } .pick-opt .pic img { height: 64px; }
+  }
+</style>
+</head>
+<body>
+<div class="mock-bar">
+  <button class="seg-back" id="back">← Retour</button>
+  <span>Maquette T</span>
+  <div class="seg" id="theme"><button class="on" data-v="light">☀︎ Clair</button><button data-v="dark">☾ Sombre</button></div>
+  <div class="seg" id="who"><button class="on" data-v="visitor">Visiteur</button><button data-v="student">Élève connecté</button></div>
+</div>
+
+<header class="site-header" id="header"></header>
+<main id="app"></main>
+<footer><div class="wrap"><span>© 2026 Clément Braun — NSI</span><nav><a href="#/outils">Outils enseignants</a><a href="#/mentions">Mentions légales</a><a>GitHub</a></nav></div></footer>
+
+<div class="pal-bg" id="pal"><div class="pal" role="dialog" aria-label="Recherche">
+  <div class="pal-in"><span data-i="search"></span><input id="pal-q" placeholder="Rechercher une notion, un cours, un niveau…" autocomplete="off"><kbd>Échap</kbd></div>
+  <div class="pal-res" id="pal-res"></div>
+  <div class="pal-foot"><span>↑ ↓ pour naviguer</span><span>↵ pour ouvrir</span><span>Échap pour fermer</span></div>
+</div></div>
+<div class="modal-bg" id="modal"><div class="card modal" id="modal-box"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var DATA = {"sni":[{"n":"Representation de base","img":null,"list":[{"s":"booleens","t":"Logique booléenne","d":"Les valeurs Vrai/Faux et les opérateurs logiques (ET, OU, NON).","k":"cours","a":1,"m":"","b":null,"p":"La logique booléenne est un système mathématique qui ne manipule que deux valeurs : VRAI (True) ou FAUX (False). Elle est au cœur du fonctionnement des ordinateurs et permet de prendre des décisions dans les programmes informatiques.","h":["Introduction","Les valeurs booléennes","Les opérateurs booléens","L'opérateur OU EXCLUSIF (XOR)"]},{"s":"images","t":"Représentation des images en binaire","d":"Comment les images sont codées en binaire.","k":"cours","a":1,"m":"","b":null,"p":"","h":[]},{"s":"binaire","t":"Représentation des nombres en bases","d":"Comprendre les bases 2, 10, 16 et la conversion entre elles.","k":"cours","a":1,"m":"","b":null,"p":"On appelle dénombrer le fait de donner un par un les nombres d'une suite ou d'un ensemble. On appelle compter le fait de réaliser des opérations sur des nombres.","h":["Différencier comptage et dénombrement","Définition","Représentation d'un nombre","Base 2"]},{"s":"texte","t":"Représentation du texte en binaire","d":"Codage des caractères (ASCII, Unicode).","k":"cours","a":1,"m":"","b":null,"p":"","h":[]}]},{"n":"Cybersécurite","img":null,"list":[{"s":"activite_cyber_interactive","t":"Atelier Cybersécurité : Brute Force","d":"Comprendre pourquoi un mot de passe complexe est essentiel.","k":"tp","a":1,"m":"","b":null,"p":"Une attaque par Brute Force consiste à tester toutes les combinaisons possibles jusqu'à trouver le bon mot de passe.","h":["🎯 Simulation","⚠️ Attention"]},{"s":"cybersecurite","t":"Cybersécurité","d":"Introduction aux enjeux de la sécurité informatique, chiffrement et bonnes pratiques.","k":"cours","a":1,"m":"","b":null,"p":"La cybersécurité désigne l'ensemble des techniques et pratiques visant à protéger les systèmes informatiques, les réseaux et les données contre les attaques, les dommages ou les accès non autorisés. À l'ère du numérique, où nous partageons constamment des informations en ligne, comprendre les enjeux de la…","h":["Introduction","Les enjeux de la sécurisation des échanges sur Internet","Le chiffrement : principe de base","Méthodes de chiffrement simples"]}]},{"n":"Données Structurées","img":null,"list":[{"s":"activite_binaire_interactive","t":"Atelier Données : Pixel Art Binaire","d":"Comprendre comment une image est codée en 0 et 1.","k":"tp","a":1,"m":"","b":null,"p":"Pour un ordinateur, une image n'est qu'une suite de nombres. Dans une image en noir et blanc simple : - 0 = Blanc - 1 = Noir","h":["🎯 Création","🧠 Question"]}]},{"n":"Programmation Python","img":null,"list":[{"s":"types_base","t":"Valeur et type des données","d":"Découverte des types fondamentaux en Python : nombres, chaînes et booléens.","k":"cours","a":1,"m":"","b":null,"p":"En informatique, les données que nous manipulons ont différentes natures : des nombres, du texte, des réponses vrai/faux, etc. Chaque donnée possède un type qui détermine ce que l'on peut faire avec elle.","h":["Introduction","Qu'est-ce un type de données ?","Les types de base en Python","Vérifier le type d'une variable","Conversion entre types","Erreurs courantes liées aux types"]}]}],"snt":[{"n":"Web","img":"chapitres/1/chap_web.png","list":[{"s":"atelier_editeur_html","t":"Atelier : éditeur HTML en direct","d":"Écrire du code HTML et observer immédiatement le rendu dans le navigateur.","k":"tp","a":1,"m":"","b":null,"p":"Dans cette activité, il s'agit d'écrire du code HTML et d'observer directement le résultat dans un aperçu de page web.","h":["Objectifs","Découverte de l'éditeur","Défi guidé","Petit rappel","À vérifier avant de terminer"]},{"s":"activite_web_interactive","t":"Atelier Web : Éditeur HTML","d":"Expérimente avec le code HTML et CSS en temps réel.","k":"tp","a":1,"m":"","b":null,"p":"Dans cet atelier interactif, tu peux modifier le code HTML et CSS à gauche et voir le résultat instantanément à droite.","h":["🎯 Objectifs","💡 À toi de jouer !"]},{"s":"monstres","t":"Galerie des Monstres","d":"Découvrez les créations des élèves du projet bestiaire Web (année 2024-2025).","k":"projet","a":1,"m":"","b":null,"p":"Découvrez les créations des élèves de Seconde pour le projet bestiaire : chaque monstre a été intégré dans une page HTML personnelle.","h":[]},{"s":"Cours_html","t":"Notice sur HTML","d":"Introduction au HTML, structure d'un fichier et principales balises.","k":"cours","a":1,"m":"","b":null,"p":"Une page web que vous lisez a d'abord été un fichier texte. Ce fichier ne contient pas seulement les phrases visibles. Il contient aussi des indications qui disent au navigateur : ceci est un titre, ceci est un paragraphe, ceci est une image. Ces indications forment le HTML.","h":["À quoi ressemble un fichier","Les balises que vous allez écrire tout de suite"]},{"s":"Projet_Chasse_aux_ren_arts","t":"Projet : Chasse aux Ren Arts","d":"Création d'un site web : La chasse aux Ren-Arts","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer la page web de votre tableau pour la chasse aux Ren'Arts. Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de repérage, puis choisir le fond, la couleur du texte et la police.","h":["Remplir la maquette 🖼️","Retirer les bordures ✂️","Fond, texte, police 🎨","Ce qu'on rend 📦"]},{"s":"Projet_creation_site","t":"Projet : Création du Bestiaire","d":"Création d'un site web de bestiaire en 3 parties : HTML, CSS, et finalisation.","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer la page d'un monstre dans le bestiaire de la classe. Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de repérage, puis poser le fond d'écran et la couleur du texte.","h":["Remplir la maquette 🐉","Retirer les bordures ✂️","Fond et texte 🎨"]},{"s":"Projet_Chasse_aux_ren_arts_anglais","t":"Projet : Out'Foxed in the Gallery","d":"Site web Chasse aux Ren-Arts, classe de Seconde, récit en anglais avec votre professeur.e d'anglais.","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer la page web d'une œuvre réelle, puis d'y faire entrer un renard. Dans ce projet, la recherche, les faits sur l'œuvre et la page se font en français. L'histoire du tableau se rédige en anglais.","h":["La fiche de l'œuvre 🔎","Le récit en anglais ✍️","Remplir la maquette 🖼️","Retirer les bordures ✂️","Fond, texte, police 🎨","Ce qu'on rend, et comment c'est lu 📦"]},{"s":"Projet_Chasse_aux_ren_arts_espagnol","t":"Projet : Zor'prendido en el cuadro","d":"Site web Chasse aux Ren-Arts, classe de Seconde, récit en espagnol avec votre professeur.e d'espagnol.","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer la page web d'une œuvre réelle, puis d'y faire entrer un renard. Dans ce projet, la recherche, les faits sur l'œuvre et la page se font en français. L'histoire du tableau se rédige en espagnol.","h":["La fiche de l'œuvre 🔎","Le récit en espagnol ✍️","Remplir la maquette 🖼️","Retirer les bordures ✂️","Fond, texte, police 🎨","Ce qu'on rend, et comment c'est lu 📦"]},{"s":"ressources_chasse_renarts","t":"Ressources : Fichiers Chasse aux Ren-Arts","d":"Modèles HTML/CSS et archive ZIP pour le projet Chasse aux Ren-Arts.","k":"projet","a":1,"m":"","b":null,"p":"","h":["Téléchargement"]},{"s":"Cours_WEB","t":"Web","d":"L'évolution du World Wide Web et ses technologies fondamentales : Client-Serveur, HTTP, HTML et DNS.","k":"cours","a":1,"m":"","b":null,"p":"Internet est le réseau. Le Web est une application qui tourne dessus : des pages, des liens, des images, que votre navigateur va chercher sur des serveurs. On va voir comment cette application est née, puis ce qui se passe vraiment quand vous tapez une adresse.","h":["Comment le Web est arrivé","Qui demande, qui répond","De l'adresse IP à l'adresse que vous tapez","HTML, le langage des pages","HTTP, la conversation","Pourquoi Google classe les pages comme il le fait","Ce que les sites retiennent de vous","Le cadenas"]}]},{"n":"Données structurées","img":"chapitres/1/chap_donnees.png","list":[{"s":"activite_blockly","t":"Activité : Manipuler des données en tableau","d":"Découvrir le tri, le filtre et les statistiques sur un tableur avant l'enquête CSV.","k":"tp","a":1,"m":"","b":null,"p":"Avant de programmer ou d'enquêter sur un fichier CSV, il faut comprendre comment exploiter un tableau : trier, filtrer et calculer des statistiques — comme dans Excel ou Google Sheets.","h":["Les trois opérations de base","À vous de jouer","Pour aller plus loin (optionnel)"]},{"s":"activite_donnees_interactive","t":"Atelier Données : Le Détective CSV","d":"Apprendre à filtrer et trier des données structurées.","k":"tp","a":1,"m":"","b":null,"p":"Les données sont souvent stockées dans des fichiers CSV (Comma Separated Values). Pour les exploiter, on utilise des outils de tri et de filtrage.","h":[]},{"s":"donnees_structurees","t":"Données Structurées","d":"Comprendre les formats de données (CSV, JSON) et les bases de données","k":"cours","a":1,"m":"","b":null,"p":"Dès que les ordinateurs ont eu à garder autre chose qu'un calcul, il a fallu ranger l'information pour la retrouver. Aujourd'hui, des applications, des sites et des systèmes d'intelligence artificielle s'appuient sur des quantités énormes de données. Elles ne sont utiles que si une machine peut les lire sans deviner.","h":["Quatre formats, quatre usages","Les bases relationnelles","Trier, filtrer, calculer","Le cloud","Vos données, et le RGPD","Quand il y en a trop, et quand on les ouvre"]},{"s":"exercices_donnees_structurees","t":"Exercices - Données Structurées","d":"Exercices sur les formats CSV, JSON et les bases de données","k":"exercices","a":1,"m":"","b":null,"p":"Associez chaque format à sa description :","h":[]},{"s":"tp_python_donnees_structurees","t":"TP Python : Données structurées","d":"Manipuler des CSV, JSON et tableaux type Excel avec pandas et le module json.","k":"tp","a":1,"m":"","b":null,"p":"csv_texte = \"\"\"Nom,Espece,Habitat,Poids_kg,Longueur_cm Rusty,Vulpes vulpes,Forêt tempérée,6.5,58 Arctic,Vulpes lagopus,Toundra arctique,3.2,46 Fennec,Vulpes zerda,Désert,1.5,24 Silver,Vulpes vulpes,Forêt boréale,7.1,61\"\"\"","h":[]}]},{"n":"Internet","img":"chapitres/1/chap_internet.png","list":[{"s":"activite_internet_interactive","t":"Atelier Internet : Le Routage","d":"Simuler l'envoi d'un paquet à travers le réseau Internet.","k":"tp","a":1,"m":"","b":null,"p":"Internet est un réseau de réseaux. Lorsqu'on envoie une donnée (un paquet), elle passe par plusieurs routeurs avant d'arriver à destination.","h":["🎯 Simulation"]},{"s":"Cours_Internet","t":"Internet","d":"L'histoire et le fonctionnement du réseau mondial, des pionniers à la révolution TCP/IP.","k":"cours","a":1,"m":"","b":null,"p":"Quand on dit « je vais sur Internet », on pense souvent à un site ou à une application. En réalité, on utilise un immense réseau de machines qui s'échangent des données. Le cours d'aujourd'hui sert à voir comment ce réseau s'est construit, puis comment une information trouve son chemin d'un appareil à un autre.","h":["D'où vient Internet","De quoi est fait un réseau","Comment une machine est reconnue","Le masque, ou comment savoir si l'on reste chez soi","Comment les données voyagent : TCP/IP","Le DNS, l'annuaire","Deux façons de s'organiser","Internet est physique"]},{"s":"Binaire_Decimal","t":"Le binaire : Définition","d":"Comprendre la base 2, les bits, octets et les conversions avec le décimal.","k":"cours","a":1,"m":"","b":null,"p":"Nous comptons d'habitude en base 10. Cela veut dire que nous disposons de dix symboles, de 0 à 9, et que la position d'un chiffre change sa valeur. L'informatique n'a pas dix symboles. Elle en a deux : 0 et 1. On les appelle des bits. Huit bits regroupés forment un octet.","h":["Compter en base 10, pour s'en souvenir","Du binaire vers le décimal","Du décimal vers le binaire"]},{"s":"Activite","t":"Simulation d'un Réseau Informatique","d":"Découverte du logiciel Filius pour simuler des réseaux et comprendre les échanges de données.","k":"tp","a":1,"m":"","b":null,"p":"Réaliser le schéma ci-dessus en utilisant le mode construction de Filius.","h":["🔧 Approche du logiciel Filius","🏗️ Construction d'un réseau simple","🚀 Un réseau plus étoffé"]},{"s":"Activite_2","t":"Simulation de Serveurs WEB et DNS","d":"Mise en place de serveurs WEB et DNS dans un réseau simulé avec Filius.","k":"tp","a":1,"m":"","b":null,"p":"","h":["🔧 Création du réseau","🖥️ Configuration d'un serveur WEB","🌐 Configuration d'un serveur DNS","📄 Ajout de votre page web personnalisée"]}]},{"n":"Photographie Numérique","img":"chapitres/1/chap_photo.png","list":[{"s":"activite_photo_interactive","t":"Atelier Photo : Le modèle RVB","d":"Comprendre comment les couleurs sont formées avec Rouge, Vert et Bleu.","k":"tp","a":1,"m":"","b":null,"p":"Les écrans utilisent le modèle RVB (Rouge, Vert, Bleu) pour afficher des millions de couleurs. Chaque pixel est composé de ces trois sous-pixels.","h":["🎯 Expérimentation","📸 Traitement d'Image"]},{"s":"metadonnees","t":"Métadonnées et Formats","d":"Comprendre les formats de fichiers image, la compression et les métadonnées EXIF","k":"cours","a":1,"m":"","b":null,"p":"Une image « brute », au format RAW, garde à peu près tout ce que le capteur a vu. Elle est fidèle, et elle est énorme. Pour la stocker ou l'envoyer, on choisit un format de fichier, et ce choix décide de ce qu'on accepte de perdre.","h":["Ce que le fichier sait en plus des pixels","Les lire","Pour s'entraîner"]},{"s":"photographie_couleur","t":"Photographie Couleur","d":"Comprendre la synthèse additive, le modèle RGB et la profondeur de couleur","k":"cours","a":1,"m":"","b":null,"p":"Un écran ne peint pas. Il allume de toutes petites lumières, et c'est votre œil qui en fait une couleur. Pour comprendre le codage, il faut donc commencer par la rétine, pas par le fichier.","h":["Ce que l'œil fait déjà","Additionner des lumières","Comment on code un pixel","Combien pèse l'image","Changer les couleurs, pixel par pixel","Compresser","Les métadonnées voyagent avec l'image","Le droit à l'image"]},{"s":"photographie_noir_et_blanc","t":"Photographie Noir et Blanc","d":"Comprendre la numérisation des images en noir et blanc, les pixels et la définition","k":"cours","a":1,"m":"","b":null,"p":"Avant de parler de couleur, il faut voir comment une image devient une suite de nombres. Le noir et blanc est le cas le plus simple : chaque point n'a qu'une luminosité, pas trois composantes.","h":["De la lumière aux nombres","Coder le noir, le blanc, et les gris","Le négatif"]},{"s":"TP_Python_Photographie","t":"TP Python : Photographie numérique","d":"Manipuler des pixels et des images avec la bibliothèque Pillow (PIL).","k":"tp","a":1,"m":"","b":null,"p":"","h":[]}]},{"n":"Localisation","img":"chapitres/1/chap_geoloc.png","list":[{"s":"activite_localisation_interactive","t":"Atelier Localisation : Trilateration","d":"Comprendre le fonctionnement du GPS avec les satellites.","k":"tp","a":1,"m":"","b":null,"p":"Pour calculer ta position, ton téléphone écoute les signaux d'au moins 3 satellites. C'est le principe de la trilatération.","h":[]},{"s":"Cours_Localisation","t":"La Géolocalisation","d":"Fonctionnement du GPS, enjeux de vie privée et cartographie numérique.","k":"cours","a":1,"m":"","b":null,"p":"Votre téléphone le fait plusieurs fois par jour, souvent sans que vous le demandiez. Le cours sert à voir d'où vient cette position, comment on la calcule, et ce qu'elle révèle quand elle reste collée à une photo.","h":["D'un système militaire à une puce dans la poche","Trois nombres pour un point","Comment le récepteur se situe","Afficher le point sur une carte","Trouver un chemin","La phrase que le GPS envoie","Exercices d'application"]},{"s":"projet_carte_gps","t":"Mini-projet : Carte GPS du Renard","d":"Modifier du code Python pour placer des points sur une carte interactive avec folium.","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de construire une carte interactive du passage du renard, en modifiant du code Python. Dans ce projet, nous allons afficher une carte de France, poser des marqueurs, parcourir une liste de lieux, puis ajouter votre propre endroit.","h":["Une carte de France 🗺️","Le marqueur de Paris 📍","Lyon et Marseille 🏙️","Une boucle sur les lieux 🔁","Votre lieu 🏫","Le trajet (bonus) 🧵"]},{"s":"tp_python_localisation","t":"TP Python : Géolocalisation","d":"Manipuler des coordonnées GPS avec pandas, folium (cartes) et geopy (distances). Puis mini-projet carte interactive.","k":"projet","a":1,"m":"","b":null,"p":"assert 'ville_nord' in locals(), \"Créez la variable ville_nord.\" assert ville_nord == attendu, \"Trouvez la ville avec la latitude la plus élevée.\"","h":["Suite : mini-projet carte interactive"]}]},{"n":"Micro-controleurs","img":"chapitres/1/chap_microcontrol.png","list":[{"s":"activite_objets_connectes","t":"Activité : Composer un système connecté","d":"Assembler capteurs, logique et actionneurs pour simuler une alarme IoT.","k":"tp","a":1,"m":"","b":null,"p":"Pour écrire du code Python sur la carte (ou son simulateur en ligne), utilisez l'éditeur officiel :","h":["Mission : l'alarme anti-intrusion","Programmer une vraie Micro:bit","Extension (optionnel)"]},{"s":"objets_connectes","t":"Objets Connectés","d":"Comprendre l'Internet des Objets (IoT), les capteurs et les protocoles","k":"cours","a":1,"m":"","b":null,"p":"On date souvent le mot de 1999, même si des machines reliées à un réseau existent dès les années 1980. Aujourd'hui, les montres, les enceintes, certaines voitures et une foule de capteurs industriels en font partie. L'objet n'est plus seulement un outil qu'on allume. Il mesure quelque chose, et il en parle à une…","h":["Ce qu'il y a dedans","Comment ils se parlent","Le trajet d'une mesure","Où on les trouve","L'interface, le morceau que vous voyez","Il attend des événements","Le maillon faible"]},{"s":"simulateur_microbit","t":"Simulateur Micro:bit","d":"Programmer la carte Micro:bit avec le simulateur en ligne officiel.","k":"cours","a":1,"m":"","b":null,"p":"Vous pouvez tester vos programmes sans carte physique grâce au simulateur intégré à l'éditeur officiel Micro:bit.","h":["Ouvrir le simulateur","Premier test","Fonctionnalités du simulateur","Exemple avec interaction","Dépannage"]},{"s":"tp_microbit","t":"TP - Micro:bit","d":"S'initier à la programmation embarquée avec la carte Micro:bit","k":"tp","a":1,"m":"","b":null,"p":"La carte Micro:bit est un petit ordinateur de poche programmable. Elle permet de découvrir l'informatique embarquée de manière ludique.","h":["Présentation","Premiers pas en Python","Exercices"]}]},{"n":"Programmation Python","img":"chapitres/1/chap_python.png","list":[{"s":"Fiche_exercices_boucles","t":"Fiche d'exercices : Les boucles en Python","d":"Exercices sur les boucles (for/while) en Python.","k":"exercices","a":1,"m":"","b":null,"p":"","h":[]},{"s":"Fiche_exercices_conditions","t":"Fiche d'exercices : Les conditions en Python","d":"Exercices sur les conditions (if/else) en Python.","k":"exercices","a":1,"m":"","b":null,"p":"","h":[]},{"s":"Fiche_exercices_python","t":"Fiche d'exercices : Python","d":"Premiers pas avec Python : variables, input/output, et calculs simples.","k":"exercices","a":1,"m":"","b":null,"p":"","h":[]}]},{"n":"Réseaux sociaux","img":"chapitres/1/chap_rsx_sociaux.png","list":[{"s":"activite_reseaux_sociaux_interactive","t":"Atelier Réseaux Sociaux : Graphe","d":"Visualiser les liens entre les utilisateurs d'un réseau social.","k":"tp","a":1,"m":"","b":null,"p":"Un réseau social peut être modélisé par un graphe : - Les nœuds (cercles) sont les utilisateurs. - Les arêtes (lignes) sont les liens d'amitié.","h":["🎯 Visualisation"]},{"s":"Cours_Reseaux_Sociaux","t":"Les Réseaux Sociaux : Définitions et Enjeux","d":"Comprendre les réseaux sociaux, leur modèle économique, les enjeux de cyberviolence et leur modélisation par les graphes.","k":"cours","a":1,"m":"","b":null,"p":"Un réseau social numérique n'est pas « Internet », ni « le Web » en général. C'est une plateforme précise, avec un profil, des relations, et un fil de contenus. On va d'abord la définir, puis regarder comment elle gagne de l'argent, ce qu'elle choisit de vous montrer, et comment on peut la dessiner comme un graphe.","h":["Ils ne montrent pas la même chose","Une histoire courte, et un modèle économique","L'algorithme ne vous montre pas tout","L'âge, le profil, et ce qu'on y met","Les violences qui passent par l'écran","Dessiner le réseau : les graphes","Six poignées de main"]},{"s":"tp_python_reseaux_sociaux","t":"TP Python : Réseaux sociaux","d":"Modéliser un réseau d'amis avec networkx (graphes) et pandas.","k":"tp","a":1,"m":"","b":null,"p":"","h":[]}]}],"1nsi":[{"n":"Algorithmique","img":"chapitres/2/chap_algo.png","list":[{"s":"algo_knn_cours","t":"Algorithme des K Plus Proches Voisins","d":"Comprendre l'algorithme KNN, son fonctionnement, la distance euclidienne et ses applications en classification et régression.","k":"cours","a":1,"m":"","b":null,"p":"Pour deviner ce qu'est un nouvel exemple, on regarde ceux qu'on connaît déjà et qui lui ressemblent. C'est tout l'algorithme des plus proches voisins, le k-NN. Il n'apprend pas une formule. Il garde les exemples, mesure des distances, et suit les voisins. La proximité, ici, tient lieu de similarité.","h":["Quatre gestes","La distance euclidienne","Choisir k","Ce que l'algorithme coûte","Pour s'entraîner"]},{"s":"algo_gloutons","t":"Algorithmes Gloutons","d":"Introduction aux stratégies d'optimisation gloutonnes (Rendu de monnaie, Sac à dos)","k":"cours","a":1,"m":"","b":null,"p":"Un algorithme glouton prend, à chaque étape, le choix qui paraît le meilleur maintenant, et il ne revient pas dessus. Il est simple à écrire et souvent rapide. Il ne garantit pas la meilleure solution globale. Un alpiniste qui grimpe toujours la pente la plus raide devant lui atteint un sommet. Rien ne dit que…","h":["Rendre la monnaie","Remplir un sac","Choisir des tâches qui ne se chevauchent pas","Pour s'entraîner"]},{"s":"activite_algo_interactive","t":"Atelier Algo : La Course au Tri","d":"Visualiser comment un algorithme trie des données.","k":"tp","a":1,"m":"","b":null,"p":"Trier des données est l'une des tâches les plus courantes en informatique. Mais comment l'ordinateur s'y prend-il ?","h":["🎯 Observation","🧠 Analyse"]},{"s":"algo_tris_exercices_fusion","t":"Exercices : Tri et Fusion","d":"Cours sur Exercices : Tri et Fusion","k":"exercices","a":1,"m":"","b":null,"p":"","h":[]},{"s":"algo_knn_exercices","t":"Exercices KNN","d":"Exercices pratiques sur l'algorithme des K Plus Proches Voisins (calculs manuels, implémentation Python, analyse).","k":"exercices","a":1,"m":"","b":null,"p":"??? success \"Correction\" 1. Distances au carré () :","h":["Exercice 1 : Compréhension du principe","Exercice 2 : Calcul de distance euclidienne","Exercice 3 : Application manuelle (K=1 et K=3)","Exercice 4 : Influence de K","Exercice 5 : Implémentation de la distance","Exercice 6 : Recherche des voisins","Exercice 7 : Prédiction de classe (Vote majoritaire)","Exercice 8 : Système de recommandation de films","Exercice 9 : Optimisations et variantes (Approfondissement)"]},{"s":"algo_dichotomie","t":"Recherche Dichotomique","d":"Algorithme de recherche efficace dans une liste triée","k":"cours","a":1,"m":"","b":null,"p":"Chercher un mot dans un dictionnaire en lisant chaque page depuis le début marche, et c'est lent. On ouvre au milieu, on regarde si le mot est avant ou après, et on jette une moitié. La recherche dichotomique fait exactement cela sur une liste triée. À chaque comparaison, la zone qui reste est environ deux fois…","h":["Deux bornes qui se resserrent","Pseudocode","Solution Python","Pourquoi c'est rapide","Pour s'entraîner"]},{"s":"algo_tris","t":"TP : Algorithmes de Tri","d":"Comprendre et implémenter les tris par sélection et insertion","k":"tp","a":1,"m":"Durée : 2 heures · Objectif : Implémenter les algorithmes classiques","b":"premiere_tris","p":"Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre (croissant ou décroissant). Sélection et insertion procèdent par comparaisons ; le dénombrement compte les occurrences.","h":["Objectifs","Idée clé","Le Tri par Sélection","Le Tri par Insertion","Pour aller plus loin : Le Tri par Dénombrement","Bonus : Visualisation et Comparaison","Piège fréquent","À retenir","Pour s'entraîner"]},{"s":"algo_knn","t":"TP KNN","d":"Travaux pratiques pour implémenter l'algorithme KNN sur des cas concrets (Fruits, Iris, Spam).","k":"tp","a":1,"m":"","b":null,"p":"L'objectif de ce TP est de mettre en pratique l'algorithme des K Plus Proches Voisins (KNN) sur de petits ensembles de données, en partant de zéro.","h":["Objectif","Exercice 1 : Douceur d'un fruit","Exercice 2 : Classification de fleurs Iris (simplifié)","Exercice 3 : Détection de spam (conceptuel)"]}]},{"n":"Introduction à Python","img":"chapitres/2/chap_python.png","list":[{"s":"python_constructions_elementaires","t":"Constructions élémentaires en Python","d":"Variables, opérateurs, entrées-sorties, conditions et boucles : les briques de base d'un programme.","k":"cours","a":1,"m":"","b":null,"p":"Un programme Python est une suite d'instructions exécutées dans l'ordre, de haut en bas, sauf quand un test ou une boucle décide de sauter ou de recommencer. Les briques de cette suite sont peu nombreuses : affecter une valeur, calculer, lire, afficher, choisir, répéter. Tout le reste de l'année s'appuie dessus.","h":["L'affectation","Calculer","Choisir un chemin","Lire et afficher","Répéter","Pour s'entraîner"]},{"s":"python_exercices_boucles","t":"Exercices : Les Boucles","d":"for, while, range et parcours de chaînes — fiche progressive par niveau.","k":"exercices","a":1,"m":"for, while, range et parcours de chaînes","b":null,"p":"","h":[]},{"s":"python_exercices_conditions","t":"Exercices : Les Conditions","d":"","k":"exercices","a":1,"m":"if, if/else, if/elif/else et opérateurs logiques","b":null,"p":"","h":[]},{"s":"python_exercices_fonctions","t":"Exercices : Les Fonctions","d":"","k":"exercices","a":1,"m":"Définition, Paramètres et Valeurs de retour","b":"les-fonctions-python","p":"","h":[]},{"s":"python_exercices_specifications","t":"Exercices : Spécification","d":"","k":"exercices","a":1,"m":"Docstrings, Type Hinting et Documentation","b":"specifications-python","p":"Avant de passer aux exercices de spécification, entraînez-vous à repérer les erreurs courantes de nommage, de typage et de logique qui rendent le code difficile à spécifier ou à maintenir.","h":["🐞 Chasseur de Bugs","Le contrat de confiance : l'Assertion"]},{"s":"python_exercices_types","t":"Exercices : Types en Python","d":"","k":"exercices","a":1,"m":"Variables, Types, Opérateurs et Conditions","b":"types-python","p":"","h":[]},{"s":"python_fonctions","t":"Fonctions en Python","d":"Définir, appeler et documenter des fonctions pour modulariser un programme.","k":"cours","a":1,"m":"","b":null,"p":"Dès qu'un calcul revient deux fois, le copier-coller devient un piège : on corrige une copie et on oublie l'autre. Une fonction donne un nom à ce calcul. On lui passe des entrées, elle travaille, elle renvoie un résultat. Le reste du programme n'a pas besoin de voir les lignes du milieu. Il appelle le nom.","h":["Définir, puis appeler","Ce qui reste dans la fonction","Nommer et documenter","Pour s'entraîner"]},{"s":"python_types_base","t":"Types de données en Python","d":"Booléens, entiers, flottants et chaînes : reconnaître un type et l'utiliser correctement.","k":"cours","a":1,"m":"","b":null,"p":"Vous avez déjà écrit des affectations, des tests et des boucles. Chaque valeur que ces lignes manipulent a un type, et le type décide ce que Python accepte d'en faire. Comparer des booléens, calculer avec des nombres, indexer une chaîne : ce ne sont pas les mêmes opérations. La confusion la plus fréquente en début…","h":["Les booléens","Les nombres","Les chaînes","Vérifier un type","Pour s'entraîner"]}]},{"n":"Représentation des données","img":"chapitres/2/chap_types.png","list":[{"s":"donnees_booleens","t":"Booléens et Fonctions booléennes","d":"L'algèbre de George Boole et la logique binaire","k":"cours","a":1,"m":"","b":null,"p":"George Boole, au XIXe siècle, a voulu calculer avec des propositions vraies ou fausses, comme on calcule avec des nombres. Un siècle plus tard, les circuits ont fait de cette algèbre quelque chose de physique : un fil porte un signal, ou il n'en porte pas. En programmation, le même partage revient dans chaque if.…","h":["Quatre opérations","Calculer une expression","En Python","Pour s'entraîner"]},{"s":"donnees_entiers_relatifs","t":"Entiers négatifs en Binaire","d":"Représentation des nombres signés et complément à 2","k":"cours","a":1,"m":"","b":null,"p":"Les entiers positifs tiennent dans des puissances de 2. Une température, un score, une coordonnée descendent aussi en dessous de zéro. Il faut donc coder des entiers signés, et d'abord fixer la taille : 4 bits, 8 bits, 32 bits. Le domaine représentable dépend de ce choix. Sur 8 bits, le codage qu'utilisent les…","h":["Le bit de signe ne suffit pas","Le complément à deux","Pour s'entraîner"]},{"s":"donnees_entiers_positifs","t":"Entiers Positifs en Binaire et Hexadécimal","d":"Comprendre les systèmes de numération et les conversions entre bases","k":"cours","a":1,"m":"","b":null,"p":"Une machine ne distingue que deux états : le courant passe, ou il ne passe pas. On code donc les entiers avec deux symboles, 0 et 1. Le binaire est cette écriture. L'hexadécimal, seize symboles, sert surtout à la raccourcir : un chiffre hexadécimal remplace exactement quatre bits. Avant de convertir, il faut voir…","h":["Une base, des colonnes","Du binaire vers le décimal","Du décimal vers le binaire","L'hexadécimal, quatre bits d'un coup","Pour s'entraîner"]},{"s":"donnees_binaires_exercices","t":"Exercices Binaire et Hexadécimal","d":"Exercices sur la représentation des nombres en binaire et hexadécimal, opérations arithmétiques et complément à deux.","k":"exercices","a":1,"m":"","b":"premiere_fiche_exercices_binaires","p":"Cette fiche couvre les conversions entre bases, les opérations arithmétiques binaires, le complément à deux et l'implémentation de conversions en Python.","h":[]},{"s":"donnees_booleens_exercices","t":"Exercices Booléens","d":"Exercices sur les booléens, les opérateurs de comparaison et les opérateurs logiques en Python.","k":"exercices","a":1,"m":"","b":"premiere_fiche_exercices_bool","p":"Cette fiche propose une série d'exercices progressifs pour maîtriser les booléens et les opérations logiques en Python.","h":[]},{"s":"donnees_reels","t":"Nombres réels en Binaire","d":"Représentation en virgule fixe et flottante (IEEE754)","k":"cours","a":1,"m":"","b":null,"p":"Un entier tombe juste sur un nombre fini de bits. Un réel, souvent non. On le code comme une notation scientifique, mais en base 2 :","h":["Après la virgule","IEEE 754, simple précision","Ce que Python affiche vraiment","Pour s'entraîner"]},{"s":"donnees_caracteres","t":"Représentation des caractères","d":"Codage ASCII et Unicode (UTF-8)","k":"cours","a":1,"m":"","b":null,"p":"La machine ne stocke que des bits. Une lettre n'est donc pas un dessin : c'est un nombre, qu'on affiche ensuite comme un glyphe. « A », « é », « 字 » sont trois symboles, et chacun a un code. Le système de règles qui relie le nombre au symbole s'appelle un codage.","h":["Un caractère est un entier","ASCII, cent vingt-huit places","Unicode nomme, UTF-8 range","Pour s'entraîner"]}]},{"n":"Dictionnaires et Tables","img":"chapitres/2/chap_dictio.png","list":[{"s":"bdd_sql_introduction","t":"Bases de données et SQL","d":"Introduction aux bases de données relationnelles et au langage de requête SQL","k":"cours","a":1,"m":"","b":null,"p":"Un tableur ou un fichier CSV finit par suffire tant que vous êtes seul à le modifier, et tant que la question reste simple. Dès que plusieurs programmes doivent lire les mêmes informations, les mettre à jour sans les casser, et n'en extraire qu'une partie, on passe à une base de données. En 1970, Edgar F. Codd…","h":["Demander, pas parcourir","Pratiquer"]},{"s":"python_dictionnaires","t":"Dictionnaires en Python","d":"Structure clé-valeur : créer, lire, modifier et parcourir un dictionnaire.","k":"cours","a":1,"m":"","b":null,"p":"Une liste se lit par un indice : notes[0] est la première note, et l'ordre compte. Un dictionnaire se lit par une clé : eleve[\"prenom\"] nomme l'information qu'on veut. La clé désigne, la valeur contient. On ne dit pas « attribut » ici. Ce mot appartient à la programmation orientée objet. Ici, on parle de clés.","h":["Créer","Lire, modifier, retirer","Parcourir","Pour s'entraîner"]},{"s":"python_exercices_dictionnaires","t":"Exercices : Dictionnaires","d":"Création, accès, modification et parcours des dictionnaires — fiche progressive par niveau.","k":"exercices","a":1,"m":"Dictionnaires Python : clés, valeurs, parcours et dictionnaires imbriqués","b":null,"p":"","h":[]},{"s":"python_csv_exercices","t":"Exercices : Traitement CSV","d":"Cours sur Exercices : Traitement CSV","k":"exercices","a":1,"m":"","b":null,"p":"","h":[]},{"s":"python_structures_imbriquees","t":"TP - Structures Imbriquées (Spotify)","d":"Manipuler des listes de dictionnaires contenant des listes","k":"tp","a":1,"m":"","b":null,"p":"C'est exactement comme cela que Spotify ou Netflix stockent vos données !","h":["🎯 Objectif","Analyse de la Structure","Exercices d'Échauffement (Lecture)","Exercices Avancés (Listes dans Dictionnaires)","Défis Experts (Calculs & Filtrage)","Défis Ultimes (Data Analyst) 👩‍💻"]},{"s":"python_csv","t":"Traitement de données en tables","d":"Charger un CSV en liste de dictionnaires, puis projeter et sélectionner des données.","k":"cours","a":1,"m":"","b":null,"p":"Un tableur et un fichier texte racontent souvent la même chose : des lignes, des colonnes, un en-tête. Le format CSV (*Comma-Separated Values*) est ce texte. Chaque ligne est un enregistrement, les champs sont séparés par une virgule ou, très souvent en France, par un point-virgule. Une fois chargé, le fichier…","h":["Charger le fichier","Choisir des colonnes : la projection","Choisir des lignes : la sélection","Atelier interactif","Pour s'entraîner"]}]},{"n":"Web et Interaction","img":"chapitres/2/chap_web.png","list":[{"s":"web_css_introduction","t":"Introduction au CSS","d":"Mise en forme des pages web — sélecteurs, couleurs et mise en page de base.","k":"cours","a":1,"m":"","b":null,"p":"Le HTML a posé les titres, les paragraphes et les zones. Il ne décide pas de la couleur, de la police, ni de l'alignement. C'est le rôle du CSS (*Cascading Style Sheets*) : la présentation. On sépare les deux pour pouvoir changer l'apparence sans réécrire le contenu, et pour que la même feuille habille plusieurs pages.","h":["Relier la feuille à la page","Qui est visé","Ce qu'on règle le plus souvent","Aligner avec Flexbox","Pour s'entraîner / Suite"]},{"s":"web_http_exercices","t":"Fiche d'exercices - Web et HTTP","d":"Exercices sur le protocole HTTP, les URLs, le HTML, le CSS et JavaScript.","k":"exercices","a":1,"m":"","b":null,"p":"https://www.example.com:8080/path/to/page?param1=value1&param2=value2#section","h":["Partie 1 : Protocole HTTP et URLs","Partie 2 : HTML et CSS","Partie 3 : JavaScript et interactivité"]},{"s":"algo_galerie_art","t":"Galerie d'images en HTML","d":"Mini-activité pour intégrer des images dans une page HTML (balise img, alt, chemins) — ressource liée au chapitre Web.","k":"tp","a":1,"m":"","b":null,"p":"Une image web n'est pas « collée » dans le fichier HTML : on pointe vers un fichier (chemin) et on fournit un texte alternatif pour l'accessibilité.","h":["Objectifs","Idée clé","La balise img","Chemins : relative vs absolue","Galerie minimale","Aperçu des images de démonstration","Piège fréquent","À retenir","Pour s'entraîner"]},{"s":"web_javascript_interactions","t":"Interactions Web : JavaScript","d":"Rendre les pages web dynamiques et interactives avec le DOM et les événements.","k":"cours","a":1,"m":"","b":"js_interactions","p":"Le HTML a décrit la page, le CSS l'a habillée. Rien ne se passe encore quand on clique. Le JavaScript est le troisième langage : il s'exécute dans le navigateur et change la page pendant qu'on la regarde. Brendan Eich l'a créé en 1995. Il est aujourd'hui le langage du comportement, côté client.","h":["Une syntaxe courte","Trouver un nœud, puis le changer","Réagir à un geste","Pour s'entraîner / Suite","Exercices pratiques"]},{"s":"web_html","t":"Le langage HTML","d":"Introduction au langage HTML, structure d'une page et principales balises.","k":"cours","a":1,"m":"","b":null,"p":"Une page web n'est pas un dessin. C'est un texte balisé, que le navigateur interprète. Le HTML (*HyperText Markup Language*) décrit la structure et le sens du contenu : ceci est un titre, ceci un paragraphe, ceci un lien. Il ne dit pas la couleur, et il ne réagit pas au clic. La couleur viendra du CSS, le clic du…","h":["Le squelette d'un document","Des balises qui veulent dire quelque chose","Un formulaire envoie des données","Pour s'entraîner / Suite"]},{"s":"web_protocoles","t":"Le Web et HTTP","d":"Introduction au Web, architecture client-serveur, protocole HTTP et URL.","k":"cours","a":1,"m":"","b":null,"p":"Vous avez écrit des pages. Il reste à voir comment elles voyagent. Le Web est une application : un navigateur, le client, demande une ressource à un serveur, qui répond. Le protocole de cet échange s'appelle HTTP, ou HTTPS quand l'échange est chiffré. Une URL nomme la ressource. Le DNS traduit le nom de domaine en…","h":["Lire une URL","La requête et la réponse","HTTPS, pages, cookies","Pour s'entraîner / Suite"]}]},{"n":"Structures de données linéaires","img":null,"list":[{"s":"python_exercices_listes","t":"Exercices : Les listes","d":"Création, parcours, modification et algorithmes sur les listes — fiche progressive par niveau.","k":"exercices","a":1,"m":"Listes Python : indices, parcours, méthodes et algorithmes","b":null,"p":"","h":[]},{"s":"python_exercices_papier","t":"Exercices : Listes et tuples","d":"Fiche d'exercices papier sur les listes et tuples","k":"exercices","a":1,"m":"","b":null,"p":"","h":[]},{"s":"structures_lineaires_piles_files","t":"Piles et Files","d":"Piles (LIFO) et files (FIFO) : principe, opérations, et implantation avec des listes.","k":"cours","a":1,"m":"","b":null,"p":"Une liste Python laisse lire, insérer et retirer à peu près n'importe quelle place. C'est pratique, et parfois trop. Une pile et une file sont des listes dont on a volontairement restreint les opérations, pour qu'une règle d'accès reste vraie du début à la fin de l'algorithme. Sur une pile, on ne touche que le…","h":["La pile : dernier entré, premier sorti","La file : premier entré, premier sorti","Une liste, à condition de se tenir","Pour s'entraîner"]},{"s":"structures_lineaires_cours","t":"Structures de données linéaires","d":"Listes et tuples : accès par indice, parcours, et modifications des listes.","k":"cours","a":1,"m":"","b":null,"p":"Une structure linéaire range des éléments les uns après les autres. Chaque case a un indice, et l'ordre fait partie de l'information. En Python, deux structures partagent cette idée et ne partagent pas les mêmes droits. Le tuple fige son contenu. La liste le laisse changer. On choisit l'une ou l'autre selon qu'on a…","h":["L'indice commence à zéro","Modifier une liste","Construire une liste en une expression","Pour s'entraîner"]},{"s":"structures_lineaires_tp","t":"TP Piles et Files","d":"Implémentation de Piles et Files et applications (parenthésage, file d'attente).","k":"tp","a":1,"m":"","b":null,"p":"Implémenter les structures de données Pile et File en POO et les utiliser pour résoudre des problèmes classiques.","h":["Objectif","Partie 1 : Implémentation","Partie 2 : Application des Piles - Vérification de parenthèses","Partie 3 : Application des Files - Simulation"]}]},{"n":"Architecture matérielle","img":"chapitres/2/chap_archi.png","list":[{"s":"archi_circuits","t":"Circuits électroniques","d":"Portes logiques, transistors et tables de vérité","k":"cours","a":1,"m":"","b":null,"p":"Le cours sur les booléens a calculé avec vrai et faux. Le processeur fait le même calcul avec des tensions. Un transistor est un interrupteur commandé : une tension sur la grille laisse passer le courant, ou le bloque. En assemblant quelques transistors, on obtient une porte logique, qui réalise ET, OU ou NON sur…","h":["Quatre portes","Lire une équation","Une alarme, pour voir la table devenir un montage","Pour s'entraîner"]},{"s":"archi_circuits_exercices","t":"Exercices : Circuits Logiques","d":"Cours sur Exercices : Circuits Logiques","k":"exercices","a":1,"m":"","b":null,"p":"","h":[]},{"s":"archi_von_neumann","t":"Modèle de Von Neumann","d":"Comprendre les fondements de l'architecture informatique moderne et le modèle séquentiel","k":"cours","a":1,"m":"","b":null,"p":"Ouvrez un ordinateur, même en pensée : il y a un processeur, de la mémoire, des câbles, un clavier, un écran. Le modèle de von Neumann est la façon de nommer ces blocs, et surtout de dire dans quel ordre ils travaillent. Un ordinateur moderne exécute un programme stocké en mémoire, données et instructions au même…","h":["Dans le processeur","Plusieurs mémoires, pas une","Le tuyau le plus étroit","Pour s'entraîner"]}]},{"n":"Programmation Orientée Objet","img":"chapitres/2/chap_poo.png","list":[{"s":"poo_exercices","t":"Exercices POO","d":"Exercices pratiques sur la POO. Création de classes, méthodes, héritage et encapsultation.","k":"exercices","a":1,"m":"","b":null,"p":"Nous reprenons la classe Voiture du cours.","h":["TP Guidé : Concessionnaire Automobile","Exercices d'application (Niveau Facile)","Exercices d'application (Niveau Intermédiaire)"]},{"s":"poo_introduction","t":"Introduction POO","d":"Classes, objets, attributs et méthodes : premiers pas en programmation orientée objet.","k":"cours","a":1,"m":"","b":null,"p":"Jusqu'ici, une donnée d'un côté et une fonction de l'autre vivaient séparées. On passait la donnée à la fonction quand on en avait besoin. En programmation orientée objet, on change de geste : ce qu'une chose *est* et ce qu'elle *sait faire* voyagent ensemble. Aujourd'hui, on apprend à écrire ce regroupement, et à…","h":["La classe décrit, l'objet existe","Créer, puis s'en servir","Pourquoi se donner cette peine","Deux erreurs qui reviennent","Pour s'entraîner"]}]},{"n":"Systèmes d'exploitation","img":"chapitres/2/chap_sys.png","list":[{"s":"os_linux_commandes","t":"Commandes Linux","d":"Guide des commandes essentielles pour naviguer et gérer un système Linux.","k":"cours","a":1,"m":"","b":null,"p":"Le cours sur les systèmes a décrit l'arborescence. Ici, on s'y déplace. Le shell est le programme qui lit une ligne, la découpe en commande, options et chemins, et lance le programme correspondant. Une option s'écrit souvent avec un tiret : -l, -a, -r. Tout chemin absolu part de la racine /. Un chemin relatif part…","h":["Savoir où l'on est","Créer, copier, déplacer, effacer","Les droits, en trois chiffres","Se connecter plus loin"]},{"s":"os_systemes","t":"Systèmes d'Exploitation","d":"Introduction aux systèmes d'exploitation (OS), leur histoire, composants et fonctionnement.","k":"cours","a":1,"m":"","b":null,"p":"Vous avez vu le processeur, la mémoire et les bus. Aucun programme que vous écrivez ne leur parle directement. Entre votre code et le matériel, il y a un système d'exploitation. Sans lui, chaque application devrait savoir allumer un pixel, réserver une case mémoire et attraper une touche du clavier. L'OS fait ce…","h":["Le noyau","Où sont les fichiers","Qui a le droit","Deux façons de commander","Pour s'entraîner"]}]},{"n":"Histoire","img":null,"list":[{"s":"histoire_informatique","t":"Histoire de l'Informatique","d":"Les grandes étapes, figures et machines qui ont façonné le monde numérique.","k":"cours","a":1,"m":"","b":null,"p":"L'informatique ne commence pas avec le PC de la maison. Elle commence quand on essaie de faire calculer une machine, puis quand on sépare l'idée du calcul de la quincaillerie qui le réalise. Les concepts, l'algorithme, le programme stocké, le réseau, arrivent souvent avant les appareils que le public peut acheter.…","h":["Avant l'électronique","La guerre, puis une architecture","Du tube à la puce","Quand tout le monde peut s'en servir","Frise","Pour s'entraîner"]}]},{"n":"Réseaux et Internet","img":"chapitres/2/chap_res.png","list":[{"s":"reseaux_cours","t":"Introduction aux réseaux","d":"Comprendre les fondements de la communication numérique, le modèle TCP/IP et l'adressage","k":"cours","a":1,"m":"","b":null,"p":"En Seconde, vous avez vu un réseau comme un ensemble de machines reliées. En Première, on met des noms précis sur ce qui circule, et on sépare des mots que le langage courant mélange. Une machine a besoin d'une identité locale, l'adresse MAC, et d'une adresse logique, l'adresse IP. Les données partent en paquets.…","h":["Deux adresses, deux échelles","Masque et notation CIDR","Privée ou publique","Quatre couches, et des enveloppes","Pour s'entraîner"]}]},{"n":"Projets","img":null,"list":[{"s":"projet_systeme_vote","t":"Algorithmes : Système de Vote","d":"Implémentation de différents systèmes de scrutin (Majoritaire, Condorcet)","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de programmer un système de dépouillement. Dans ce projet, nous allons appliquer quatre règles au même jeu de bulletins, et constater que la règle peut changer le vainqueur.","h":["Scrutin à un tour 🗳️","Scrutin à deux tours 2️⃣","Condorcet ⚔️","Borda et comparaison 🧮","Pour aller plus loin"]},{"s":"projet_simulation_propagation","t":"Boucles : Simulation de Propagation","d":"Modéliser la propagation d'une rumeur ou d'un virus dans une population.","k":"projet","a":1,"m":"","b":"premiere_projet_virus","p":"Le but de ce projet est de simuler, jour après jour, la propagation d'une rumeur dans une population fermée. Dans ce projet, nous allons écrire une boucle while qui s'arrête quand tout le monde est au courant, sans jamais dépasser la population.","h":["Le modèle 📣","Pour aller plus loin"]},{"s":"projet_application_bancaire","t":"Dictionnaires : App Bancaire","d":"Création d'une application bancaire simple en Python","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer une petite banque en console, en Python. Dans ce projet, nous allons ranger les comptes dans un dictionnaire, puis écrire le dépôt, le retrait, la consultation et le menu.","h":["Les comptes 💳","Dépôt et retrait 💶","Le menu 🏧","Simulation et rendu 🧪","Pour aller plus loin"]},{"s":"projet_jeux_video","t":"Dictionnaires : Collection Jeux","d":"Création d'un gestionnaire de collection de jeux vidéo en Python","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer un gestionnaire de collection de jeux vidéo, en Python. Dans ce projet, nous allons ajouter un jeu, afficher sa fiche, modifier un champ, supprimer un jeu, puis lister toute la collection depuis un menu.","h":["La collection 🕹️","Ajouter et chercher 🔍","Modifier et supprimer ✏️","Menu et rendu 📋","Pour aller plus loin"]},{"s":"poo_projet_pokensi","t":"Dictionnaires : PokéNSI","d":"Création d'un jeu inspiré de Pokémon en Python","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer un jeu inspiré de Pokémon en utilisant Python. Dans cette première partie, nous allons nous concentrer sur la création du Pokédex et la mise en place du système de combat.","h":["Le Pokédex 📱","Le système de combat ⚔️","Simulation ⚡"]},{"s":"projet_caisse_foyer","t":"Fonctions : La caisse du foyer","d":"Tenir la caisse du foyer avec des fonctions, des conditions et des boucles, sans liste ni dictionnaire.","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de tenir la caisse du foyer du lycée pendant la récréation. Dans ce projet, nous allons servir les clients un par un, encaisser, rendre la monnaie, puis afficher le bilan. Le foyer vend trois articles.","h":["Contraintes de programmation","Les trois articles 🥤","Une ligne de ticket 💶","Un client 🙋","La récréation 🔄","Le bilan 📊"]},{"s":"projet_tournoi_esport","t":"Listes : Tournoi E-Sport","d":"Gérer les scores et le classement d'un tournoi de jeu vidéo.","k":"projet","a":1,"m":"","b":"premiere_projet_esport","p":"Le but de ce projet est de créer l'outil d'une soirée tournoi (League of Legends, Rocket League, Valorant, ou un jeu du lycée). Dans ce projet, nous allons inscrire les équipes, saisir un score par équipe, calculer la moyenne, désigner le ou les vainqueurs, puis afficher le classement.","h":["Les équipes 👥","Simulation 📺","Pour aller plus loin"]},{"s":"projet_gestion_bibliotheque","t":"Structures : Bibliothèque","d":"Système de gestion d'une collection de livres numériques en Python","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer un programme qui gère une collection de livres : ajout, recherche, affichage, suppression, et conservation des données dans un fichier CSV entre deux lancements. Dans ce projet, chaque livre est un dictionnaire, et la bibliothèque est une liste de ces dictionnaires.","h":["Les livres 📖","Le fichier CSV 💾","Menu et suppression 🗑️"]},{"s":"projet_gestion_stock","t":"Structures : Gestion Stock","d":"Simulation d'un système de gestion de stock et de ventes pour un petit commerce","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de simuler la réserve et la caisse d'un petit commerce. Dans ce projet, le catalogue est une liste de dictionnaires, et une vente est une liste de couples (id_produit, quantite). On ne retire du stock qu'une fois toute la vente vérifiée : un article manquant annule le ticket entier.","h":["Le catalogue 🏷️","Les mouvements 📥","La vente 🧾","Menu et rendu 🛒"]},{"s":"projet_empreinte_carbone","t":"Variables : Calculateur d'Empreinte Carbone","d":"Créer un outil pour estimer l'impact écologique d'un trajet.","k":"projet","a":1,"m":"","b":"premiere_projet_carbone","p":"Le but de ce projet est de créer un programme qui estime les émissions de CO2 d'un trajet selon le mode de transport. Dans ce projet, nous allons travailler les variables, input, les conversions de type et les conditions.","h":["Les facteurs 🚲"]},{"s":"web_projet","t":"Web : Site Personnel","d":"Créer une page web sur un tableau revisité avec des renards.","k":"projet","a":1,"m":"","b":null,"p":"Le but de ce projet est de créer une page web qui présente un tableau connu, puis une version de ce tableau où des renards ont pris la place des personnages. Dans ce projet, la page raconte une courte histoire à partir de cette scène, et le visiteur bascule entre les deux images.","h":["Le tableau et les fichiers 🖼️","Le bouton qui change l'image 🦊"]}]}],"tnsi":[{"n":"Langages et Programmation","img":"chapitres/3/chap_langages.png","list":[{"s":"prog_modularite_mise_au_point","t":"Modularité et Mise au Point","d":"Apprenez à structurer vos programmes, gérer les erreurs et valider votre code avec des tests.","k":"cours","a":1,"m":"","b":null,"p":"En Terminale, un programme qui « marche sur l'exemple du cours » ne suffit plus. Il doit rester lisible dans six mois, survivre à une entrée absurde, et pouvoir être vérifié sans le relire en entier. Trois outils portent ce travail : découper en modules, traiter les erreurs au lieu de les laisser planter, et écrire…","h":["Découper en modules","Trois sortes d'erreurs","Dire ce que la fonction exige","Des tests qui rejouent les exemples"]},{"s":"listes-comprehension-exercices","t":"Listes par compréhension - Exercices","d":"Série d'exercices gradués pour maîtriser les listes par compréhension en Python.","k":"exercices","a":1,"m":"","b":null,"p":"Les listes par compréhension sont un moyen concis et puissant de créer des listes en Python. Elles remplacent souvent les boucles for classiques pour la construction de listes.","h":[]},{"s":"prog_recursivite","t":"Récursivité","d":"Principe des fonctions récursives et pile d'exécution.","k":"cours","a":1,"m":"","b":"terminale_recursivite","p":"Une fonction est récursive lorsqu'elle s'appelle elle-même. On s'en sert quand un problème se décompose en un problème de la même forme, plus petit. La factorielle, le parcours d'un arbre, les tours de Hanoï : à chaque fois, la question sur se ramène à la même question sur , ou sur une partie de la structure. Sans…","h":["Deux morceaux, pas un","La pile d'appels","Récursif et itératif"]},{"s":"prog_calculabilite","t":"Calculabilité et Décidabilité","d":"Limites de l'informatique : ce qui peut être calculé ou non.","k":"cours","a":1,"m":"","b":"terminale_calculabilite","p":"On a parfois l'impression qu'un ordinateur assez puissant finira par répondre à n'importe quelle question, pourvu qu'on lui laisse du temps. Alan Turing, en 1936, montre que non. Il existe des problèmes pour lesquels aucun algorithme ne donnera la réponse. Ce n'est pas une question de mémoire ou de vitesse. C'est…","h":["Une machine très pauvre, et pourtant suffisante","Calculable, décidable","Le problème de l'arrêt"]},{"s":"poo_heritage_polymorphisme","t":"POO : Héritage et polymorphisme","d":"Réutiliser et spécialiser des classes avec héritage, surcharge et redéfinition.","k":"cours","a":1,"m":"","b":null,"p":"Une classe décrit un moule. Quand plusieurs moules partagent les mêmes attributs et presque les mêmes méthodes, on n'écrit pas trois fois init. L'héritage crée une classe fille à partir d'une classe mère. La fille réutilise ce qui est commun, et spécialise ce qui change. On ne le fait que pour une relation « est un…","h":["La fille reprend, puis elle redéfinit","Appeler le constructeur de la mère"]},{"s":"exercices_poo","t":"Exercices : POO en Python","d":"Classes, encapsulation, composition et héritage en Python.","k":"exercices","a":1,"m":"","b":null,"p":"Ces exercices reprennent la progression du cours : une classe, l'encapsulation, plusieurs classes qui collaborent, puis l'héritage. Les cours utiles sont Classes et objets et Héritage et polymorphisme.","h":["Compte bancaire","Bibliothèque","Étudiants et moyenne","Concessionnaire","Import CSV","Refuge et héritage","Véhicules et héritage"]},{"s":"prog_api_evenementielle","t":"API et programmation événementielle","d":"Connecter interface utilisateur, événements et requêtes réseau","k":"cours","a":1,"m":"","b":null,"p":"Un programme de Première exécute ses lignes de haut en bas, puis s'arrête. Une application graphique attend. Elle ne sait pas quand la personne va cliquer, taper, ou quand la réponse du réseau va arriver. La programmation événementielle organise le code autour de ces moments. Une API est le contrat par lequel ce…","h":["Une API est un contrat, pas une page","L'interface réagit, elle ne boucle pas","Exercices"]}]},{"n":"Structures de données","img":"chapitres/3/chap_structures.png","list":[{"s":"poo_classes_objets","t":"POO : Classes et Objets","d":"Comprendre et appliquer la Programmation Orientée Objet en Python.","k":"cours","a":1,"m":"","b":"terminale_poo","p":"La programmation orientée objet organise un programme autour d'objets qui se parlent, plutôt qu'autour d'une longue suite de fonctions auxquelles on repasse les mêmes données. C'est le style dominant en Java, en C++, en C# et, pour une grande partie du code, en Python. L'idée n'est pas nouvelle pour vous si vous…","h":["Écrire la classe","Cacher le mécanisme"]},{"s":"structures_lineaires","t":"Structures Linéaires : Listes, Piles, Files","d":"Implémentation et utilisation des structures de données linéaires.","k":"cours","a":1,"m":"","b":"terminale_structures_lineaires","p":"Pour organiser les données, nous avons besoin de structures adaptées. En Terminale, nous étudions trois structures abstraites fondamentales : les Listes, les Piles et les Files.","h":["Les Listes Chaînées (Linked Lists)","Les Piles (Stacks)","Les Files (Queues)"]},{"s":"structures_arbres","t":"Arbres et Arbres Binaires","d":"Structures hiérarchiques, vocabulaire et algorithmes de base.","k":"cours","a":1,"m":"","b":"terminale_arbres","p":"Une liste range des éléments à la suite. Un arbre les range en niveaux : chaque élément a un parent, sauf un, et peut avoir des enfants. Les systèmes de fichiers, le DOM d'une page HTML, l'analyse d'une expression : ce sont des arbres. On ne parle plus d'indice « le troisième », on parle de qui descend de qui.","h":["Le vocabulaire","Au plus deux enfants","Visiter tous les nœuds"]},{"s":"arbres-binaires-recherche","t":"Arbres binaires de recherche et Algorithmes","d":"Révision ABR, implémentations et complexité","k":"cours","a":1,"m":"","b":null,"p":"Un arbre binaire range des nœuds avec un gauche et un droit. Un arbre binaire de recherche ajoute une règle sur les valeurs. Pour tout nœud, les valeurs du sous-arbre gauche sont strictement inférieures à la sienne, et les valeurs du sous-arbre droit sont supérieures ou égales. Les doublons, dans cette convention,…","h":["Chercher, insérer, et ce que ça coûte","Exercice 1 : Construction et propriétés","Exercice 2 : Implémentation Python","Exercice 3 : Applications avancées","Exercice 4 : Complexité et optimisation","Pour aller plus loin"]},{"s":"structures_graphes","t":"Graphes","d":"Modélisation de réseaux, sommets, arêtes et algorithmes.","k":"cours","a":1,"m":"","b":"terminale_graphes","p":"Un arbre a une racine, et un seul chemin entre deux nœuds. Beaucoup de situations refusent cette discipline. Deux villes sont reliées par plusieurs routes, deux comptes se suivent sans qu'il y ait de « sommet du réseau », une page web pointe vers une autre qui finit par revenir vers elle. On modélise cela par un…","h":["Ranger un graphe en mémoire","Parcourir sans tourner en rond"]},{"s":"graphes_ponderes_dijkstra","t":"Graphes pondérés et plus court chemin","d":"Comprendre et appliquer l'algorithme de Dijkstra","k":"cours","a":1,"m":"","b":null,"p":"Dans un graphe non pondéré, le plus court chemin est celui qui traverse le moins d'arêtes. Dès qu'une arête porte un poids — une distance, un coût, une durée — ce n'est plus le nombre d'arêtes qui compte, c'est la somme des poids. Un détour par trois arêtes légères peut être meilleur qu'une arête directe très…","h":["Valider le plus proche, puis relâcher","Le graphe en dictionnaire","Remonter le chemin","Exercices"]}]},{"n":"Algorithmique","img":"chapitres/3/chap_algo.png","list":[{"s":"algo_recherche_textuelle","t":"Algorithmes de Recherche Textuelle","d":"Recherche de motifs dans un texte : Naïf et Boyer-Moore.","k":"cours","a":1,"m":"","b":"terminale_algo_texte","p":"Le problème est celui de Ctrl+F ou de grep : trouver les occurrences d'un motif dans un texte. Le texte a une longueur , le motif une longueur . On veut les positions où les caractères du motif coïncident avec le texte. Tout l'enjeu est de ne pas tout recomparer à chaque décalage.","h":["Glisser d'un cran : la recherche naïve","Boyer-Moore : comparer par la fin"]},{"s":"algo_diviser_pour_regner","t":"Algorithmique : Diviser pour Régner","d":"Méthode de résolution par décomposition (Tri fusion, etc.).","k":"cours","a":1,"m":"","b":"terminale_diviser_regner","p":"Pour trier une liste, le tri fusion coupe la liste en deux moitiés. Il trie la moitié gauche par un appel récursif, puis la moitié droite. Une liste d'un seul élément, ou une liste vide, est déjà triée : c'est le cas de base, on ne coupe plus. Reste à fusionner deux listes triées en une seule liste triée.","h":["Le tri fusion","Tourner une image carrée","La dichotomie, presque"]},{"s":"algo_programmation_dynamique","t":"Programmation Dynamique","d":"Optimisation de problèmes complexes (Rendu de monnaie, Fibonacci).","k":"cours","a":1,"m":"","b":"terminale_prog_dynamique","p":"Diviser pour régner découpe un problème et résout les morceaux. Cela devient ruineux quand les morceaux se recoupent : on recalcule dix fois la même chose, par des chemins différents. La programmation dynamique fait le même découpage, et elle range le résultat de chaque sous-problème. La prochaine fois qu'on le…","h":["Fibonacci, calculé une fois","Le rendu de monnaie, quand le glouton se trompe"]},{"s":"algo_complexite_analyse","t":"Analyse de complexité","d":"Évaluer et comparer l'efficacité des algorithmes en temps et en mémoire","k":"cours","a":1,"m":"","b":null,"p":"Un algorithme peut être juste et néanmoins inutilisable. S'il examine chaque paire d'éléments d'une liste de dix millions d'entrées, la réponse correcte arrive trop tard. L'analyse de complexité prévoit comment le coût grandit quand la taille des données grandit. On s'en sert pour comparer des algorithmes sans…","h":["Le temps, compté en opérations","La mémoire","Comment conclure","Exercices"]}]},{"n":"Architectures matérielles, OS & Réseaux","img":"chapitres/3/chap_archi.png","list":[{"s":"archi_soc","t":"Architecture : SoC et Processus","d":"Architecture matérielle (SoC) et Système d'Exploitation (Processus).","k":"cours","a":1,"m":"","b":"terminale_archi_os","p":"L'architecture de von Neumann sépare le processeur, la mémoire et les entrées-sorties, reliés par des bus sur une carte mère. On peut changer la barrette de mémoire, ou la carte graphique. Un téléphone ne se démonte pas ainsi. Il repose sur un système sur puce, un *System on Chip*.","h":["Tout tenir sur une puce","Plusieurs programmes, peu de cœurs","Quand chacun attend l'autre"]},{"s":"reseaux_routage","t":"Réseaux : Protocoles de Routage","d":"Comment les paquets trouvent leur chemin sur Internet (RIP, OSPF).","k":"cours","a":1,"m":"","b":"terminale_routage","p":"Internet est un maillage de réseaux, reliés par des routeurs. Quand un paquet part, aucun routeur ne connaît le trajet complet jusqu'au destinataire. Chacun sait seulement à qui le passer ensuite. Les protocoles de routage servent à construire, et à tenir à jour, cette décision.","h":["La table de routage","RIP compte les sauts","OSPF regarde le débit"]},{"s":"securite_communications","t":"Sécurité des Communications","d":"Chiffrement symétrique, asymétrique et protocoles sécurisés.","k":"cours","a":1,"m":"","b":"terminale_securite","p":"Un paquet IP traverse des routeurs qui ne vous appartiennent pas. Quelqu'un placé sur le chemin peut le copier. On appelle cela une attaque de l'homme du milieu. Le chiffrement ne cache pas qu'une conversation a lieu, ni toujours vers qui. Il empêche de lire le contenu.","h":["Une seule clé","Une paire de clés","Ce que fait HTTPS"]},{"s":"os_ordonnancement_memoire","t":"Systèmes d'exploitation : ordonnancement et mémoire","d":"Approfondir processus, CPU, mémoire virtuelle et appels système","k":"cours","a":1,"m":"","b":null,"p":"En Première, le système d'exploitation était la couche entre vos programmes et le matériel. En Terminale, on regarde deux partages concrets : qui a le droit d'utiliser le processeur maintenant, et comment plusieurs programmes croient chacun disposer d'une mémoire continue alors qu'ils se la disputent.","h":["Processus et threads","À qui donner le processeur","Une mémoire qui n'est pas celle qu'on croit","Passer par le noyau","Exercices"]}]},{"n":"Bases de Données","img":"chapitres/3/chap_bdd.png","list":[{"s":"bdd_modele_relationnel","t":"Bases de Données : Modèle Relationnel","d":"Théorie des bases de données : tables, clés, schéma.","k":"cours","a":1,"m":"","b":"terminale_bdd_modele","p":"Une base de données stocke beaucoup d'informations, de façon structurée, durable, et exploitable par plusieurs programmes. Le modèle le plus répandu est le modèle relationnel, proposé par E. F. Codd en 1970. L'idée est de tout ranger dans des tables, et de lier les tables par des valeurs communes, pas par des…","h":["Tables, lignes, colonnes","Écrire le schéma","Ce que le SGBD refuse"]},{"s":"sql-bases-donnees","t":"SQL & Bases de Données","d":"Interroger et manipuler les données relationnelles","k":"cours","a":1,"m":"","b":null,"p":"Le modèle relationnel a posé les tables, les clés, les contraintes. SQL est le langage qui les crée, les remplit et les interroge. On ne parcourt pas la table avec une boucle dans le programme : on décrit le résultat voulu, et le SGBD décide comment le calculer.","h":["Créer, insérer, lire, modifier, supprimer","Comparer et combiner","Relier deux tables"]},{"s":"sql-bases-donnees-exercices","t":"SQL & Bases de Données - Exercices","d":"Exercices pratiques sur SQL et les bases de données","k":"exercices","a":1,"m":"","b":null,"p":"","h":[]}]},{"n":"Entrainement","img":"chapitres/3/chap_entrainement.png","list":[{"s":"exercices_terminale_fondamentaux","t":"Exercices fondamentaux - Terminale NSI","d":"Série d'exercices guidés sur les notions clés du programme","k":"exercices","a":1,"m":"","b":null,"p":"Cette fiche propose des exercices courts et progressifs pour consolider les notions de Terminale.","h":["Bloc A - Récursivité","Bloc B - ABR","Bloc C - Graphes","Bloc D - SQL","Bloc E - Complexité"]},{"s":"entrainement_epreuve_pratique","t":"Entraînement épreuve pratique","d":"Sujets chronométrés de type bac pratique NSI","k":"cours","a":1,"m":"","b":null,"p":"","h":["Format conseillé","Sujet type A - Récursivité","Sujet type B - ABR","Sujet type C - Graphes","Sujet type D - SQL + Python","Grille de compétences (épreuve pratique)","Auto-évaluation"]}]},{"n":"Histoire","img":"chapitres/3/chap_histoire.png","list":[{"s":"histoire_grands_evenements","t":"Histoire de l'Informatique","d":"Les grandes étapes, de l'Antiquité à l'IA moderne.","k":"cours","a":1,"m":"","b":"terminale_histoire","p":"L'informatique ne commence pas avec l'ordinateur de bureau. C'est la science du traitement automatique de l'information : représenter des données, écrire une procédure, la faire exécuter par une machine. Le boulier calcule déjà. Ce qui change, au fil des siècles, c'est ce que la machine sait enchaîner toute seule.","h":["Avant l'électricité","Une machine qui enchaîne les instructions","La puce, le Web, les données"]}]},{"n":"Projets","img":"chapitres/3/chap_projets.png","list":[{"s":"mini_projets_synthese","t":"Mini-projets de synthèse","d":"Mobiliser plusieurs notions du programme sur des projets courts","k":"cours","a":1,"m":"","b":null,"p":"Le but de ces quatre mini-projets est de réinvestir plusieurs chapitres du programme sur un travail de 2 à 6 heures. Chaque sujet ci-dessous se suit comme un projet : données de départ, fonctions à écrire, exemple chiffré, puis fichier à rendre.","h":["Réseau de villes 🛣️","Catalogue de véhicules 🚗","Analyse de logs 📜","Simulateur d'épreuve pratique 🎲","Ce qui est regardé sur les quatre sujets"]}]}],"sio":[{"n":"BTS SIO 1 : B2 - Développement (SLAM)","img":null,"list":[{"s":"csharp_csv_bdd","t":"C# et les Données : Fichiers CSV et Bases de Données","d":"Apprendre à persister des données en C# : du fichier CSV simple à la base de données MariaDB.","k":"cours","a":1,"m":"","b":null,"p":"Une liste de clients créée dans Main disparaît quand la console se ferme. Persister, c'est écrire ces données quelque part où elles survivent au programme, puis les relire au démarrage suivant. Deux endroits suffisent pour commencer. Le fichier CSV est un texte, simple, ouvrable dans Excel, adapté à un seul…","h":["Lire et écrire un CSV","Se connecter à MariaDB ou MySQL","Exercice"]},{"s":"introduction_poo","t":"Introduction à la POO en C#","d":"Les bases de la Programmation Orientée Objet : concepts, classes et objets.","k":"cours","a":1,"m":"","b":null,"p":"Jusqu'ici, un programme est une suite de fonctions qui se passent des variables. Cela tient pour un calcul. Cela se défait dès que le même « client » possède un nom, un solde, et trois opérations qui doivent rester cohérentes entre elles. La programmation orientée objet range ces données et ces opérations dans un…","h":["L'objet et la classe","Écrire la classe","Deux chiens, deux mémoires","Décider qui a le droit de modifier","Plusieurs façons de construire","Ce qu'une méthode rend","Trois piliers"]},{"s":"cours_heritage_csharp","t":"L'Héritage et le Polymorphisme en C#","d":"Approfondissement sur l'héritage, les classes abstraites et le polymorphisme.","k":"cours","a":1,"m":"","b":null,"p":"Une classe Voiture et une classe Moto répéteraient les mêmes champs — une marque, une méthode pour démarrer — si chacune était écrite à part. L'héritage évite cette copie. La classe dérivée, la fille, reçoit les propriétés et les méthodes de la classe de base, la mère, et n'ajoute que ce qui lui est propre. C'est…","h":["Le constructeur ne s'hérite pas","Une méthode, plusieurs comportements","Une classe qu'on ne construit pas","Fermer la descendance"]},{"s":"cours_interfaces_csharp","t":"Les interfaces en C#","d":"Cours détaillé sur les interfaces, l’injection de dépendances et l’architecture en couches.","k":"cours","a":1,"m":"","b":null,"p":"Une classe mélange souvent deux choses : le geste métier, « enregistrer ce véhicule », et le détail technique, « l'écrire dans un CSV » ou « l'écrire dans SQL ». Le jour où le stockage change, tout le service est à rouvrir. Une interface sépare les deux. Elle décrit un contrat : les méthodes qu'une classe devra…","h":["Écrire le contrat, puis une classe qui le tient","Recevoir le contrat, pas la classe concrète","Exercices d'application","TP guidé (1h)","Livrable attendu"]},{"s":"cours_tests_unitaires_csharp","t":"Les tests unitaires en C#","d":"Cours détaillé sur la démarche AAA, les tests nominaux/limites/exceptions et l’isolation de la logique métier.","k":"cours","a":1,"m":"","b":null,"p":"Un test unitaire exécute une action du service et compare le résultat à une valeur qu'on a décidée à l'avance. Il ne lance pas l'application. Il ne clique pas dans l'interface. Quand on modifie le calcul d'un devis, on relance la suite : les cas déjà justes doivent le rester. Un test qui casse signale une…","h":["Arrange, Act, Assert","Ne pas tester le disque en même temps que le devis","Exercices d'application","TP guidé (1h)","Livrable attendu"]},{"s":"cours_linq_json_csharp","t":"LINQ et JSON en C#","d":"Cours détaillé sur les requêtes LINQ, la sérialisation JSON et la robustesse des traitements.","k":"cours","a":1,"m":"","b":null,"p":"Une flotte de véhicules tient en mémoire dans une liste. On veut ceux qui sont disponibles, les trois plus chers, le prix moyen, le regroupement par type. Une boucle foreach sait le faire, et elle mélange le parcours, le test et l'accumulation. LINQ décrit le résultat. La lecture dit *quoi*, le compilateur s'occupe…","h":["Interroger la flotte","Écrire et relire un fichier JSON","Exercices d'application","TP guidé (1h)","Livrable attendu"]},{"s":"premiers_pas_csharp","t":"Premiers pas en C#","d":"","k":"cours","a":1,"m":"Syntaxe, Conditions, Boucles et Listes","b":"bts_csharp_intro","p":"","h":["Variables, méthodes, affichage","Décider avec if","Répéter avec for et while","Une liste qui grandit"]},{"s":"projet_rpg_csharp","t":"Projet Fil Rouge : Création d'un jeu 'FoxMon' (Type Pokémon)","d":"","k":"projet","a":1,"m":"C#, Projet, POO, Héritage, Polymorphisme, Console, Pokemon","b":null,"p":"Le but de ce projet est de créer un jeu console, en C#, inspiré de Pokémon, dont toutes les créatures sont des renards : les FoxMons. Le projet s'étale sur plusieurs séances. On avance dans l'ordre : la carte, le bestiaire, l'héritage, les attaques, les objets, les dresseurs, les dégâts, l'expérience, puis la…","h":["La carte et le dresseur 🗺️","Le bestiaire et le combat 🦊","L'héritage 🧬","Les attaques, lues dans un CSV 📄","Objets et capture 🧪","Les dresseurs sur la carte 🤝","Dégâts, types, critiques ⚔️","Expérience, évolution, grande carte 📈","Sauvegarde 💾"]},{"s":"exercices_poo","t":"TP : Les Bases de la POO en C#","d":"","k":"tp","a":1,"m":"Classes, Objets, Propriétés, Constructeurs, Héritage","b":"bts_poo_basics","p":"","h":["🏦 Exercice 1 : Gestion de Compte Bancaire (Niveau Débutant)","📚 Exercice 2 : Gestion de Livres (Niveau Débutant/Intermédiaire)","🎓 Exercice 3 : Gestion d'Étudiants (Niveau Intermédiaire)","🚗 Exercice 4 : Gestion de Concessionnaire (Niveau Intermédiaire/Avancé)","📂 Exercice 5 : Importation de Données CSV (Niveau Intermédiaire)","🐾 Exercice 6 : Animaux et Héritage (Niveau Avancé)","🏍️ Exercice 6 : Concessionnaire Multi-Véhicules"]},{"s":"tp_remediation_poo","t":"TP Remédiation : Les Bases Absolues de la POO en C#","d":"","k":"tp","a":1,"m":"Classes, Objets, Constructeurs, Instance, Static","b":"bts_poo_remediation","p":"","h":["🧱 Étape 1 : Syntaxe C# et Création de Classe","🪄 Étape 2 : L'Instanciation (Donner vie au code)","⚔️ Étape 3 : Interaction entre Objets","📦 Étape 4 : Stocker des objets dans une Liste","🔍 Étape 5 : Explorer et analyser une Liste","🏰 Étape 6 : GvG (Guilde vs Guilde)"]}]},{"n":"BTS SIO 1 : B3 - CyberSécurité","img":null,"list":[{"s":"rgpd_cnil","t":"Attendus RGPD & CNIL","d":"Politique de collecte et protection des données personnelles : RGPD, CNIL et droits des citoyens","k":"cours","a":1,"m":"","b":null,"p":"Un formulaire, un fichier de paie, une caméra, un cookie : dès qu'une information désigne une personne, le droit s'en mêle. Le RGPD, règlement général sur la protection des données, est le texte européen entré en application le 25 mai 2018. Il encadre le traitement des données personnelles sur tout le territoire de…","h":["Ce qu'on traite, et où le texte s'applique","La CNIL","Trois rôles à ne pas confondre","Six principes, et la preuve","De quel droit","Ce que la personne peut exiger","Ce que l'organisme doit tenir","Dès la conception, pas en rustine","Sortir de l'Union"]},{"s":"chiffrement_hachage","t":"Chiffrement et Hachage","d":"Fondamentaux de la cryptographie : chiffrement, hachage et signatures numériques","k":"cours","a":1,"m":"","b":null,"p":"La confidentialité, l'intégrité, l'authenticité et la non-répudiation ne se protègent pas avec le même outil. Quatre questions, quatre réponses.","h":["Trois mots qu'on confond","Alice, Bob, et le message en clair","Une lettre, toujours la même","Une lettre, plusieurs visages","La même clé des deux côtés","Trois exercices à la main","Ce qu'on utilise vraiment","Pourquoi la clé symétrique ne voyage pas","Deux clés, des rôles contraires"]},{"s":"introduction_cybersecurite","t":"Introduction à la cybersécurité","d":"Introduction aux concepts fondamentaux de la cybersécurité, les piliers CIA, les menaces courantes et la gestion des risques.","k":"cours","a":1,"m":"","b":null,"p":"Les organisations font tourner leur activité sur des systèmes d'information : dossiers, messagerie, paiement, production. Plus ces systèmes sont reliés, plus un incident les atteint loin. La cybersécurité est l'ensemble des mesures qui protègent les données, les infrastructures et la confiance qu'on leur porte.…","h":["Confidentialité, intégrité, disponibilité","De l'actif à l'impact","Des menaces qu'il faut savoir nommer","Estimer, puis traiter"]},{"s":"premiers_pas_python","t":"Premiers pas en Python","d":"","k":"cours","a":1,"m":"Variables, Conditions, Fonctions, Boucles et Listes","b":"bts_python_intro","p":"print écrit dans le terminal. On peut lui passer plusieurs valeurs, séparées par des virgules : il les affiche à la suite, avec un espace entre elles.","h":["Variables, affichage, saisie","Choisir selon une condition","Ranger un geste dans une fonction","Répéter","Listes et tuples"]},{"s":"cours_owasp_web","t":"Sécurité Web : OWASP, SQLi & XSS","d":"Cours complet sur le Top 10 OWASP, avec un focus technique sur les injections SQL et XSS (Préparation E5/E6).","k":"cours","a":1,"m":"","b":"bts_owasp_web","p":"","h":["Le Top 10 OWASP, édition 2021","Injections SQL, XSS, CSRF","Impact, et ce que la loi demande ensuite"]},{"s":"tp_cesar_vigenere","t":"TP - Chiffrement et Déchiffrement","d":"Implémentation des chiffrements de César, Vigenère et RSA en Python.","k":"tp","a":1,"m":"","b":null,"p":"","h":[]},{"s":"injections_sql","t":"TP - Sécurité Web : Injections SQL","d":"","k":"tp","a":1,"m":"Durée : 2 heures · Objectif : Comprendre pour mieux protéger","b":"bts_sql_injection","p":"","h":["Partie 1 : Découverte de l'injection SQL","Partie 2 : Analyse de logs d'attaque","Partie 3 : Solutions de protection","Partie 4 : Mini-rapport (15 min)","Livrables à rendre"]},{"s":"activite_mentions_legales","t":"TP : Audit RGPD d'un site web réel","d":"","k":"tp","a":1,"m":"Durée : 2 heures · Objectif : Comprendre pour mieux protéger","b":"bts_sql_audit_rgpd","p":"","h":["🔍 Partie 1 : Découverte des outils d'audit (20 min)","🛡️ Partie 2 : Audit complet d'un site web (50 min)","📋 Partie 3 : Recommandations de mise en conformité (40 min)","⚖️ Partie 4 : Rédaction des mentions légales (30 min)"]},{"s":"tp_injections_web","t":"TP SISR : Audit et Sécurisation d'une Application Web","d":"","k":"tp","a":1,"m":"Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer","b":"bts_sql_audit_rgpd","p":"","h":["Contexte du TP","Partie 1 : Mise en place du Lab","Partie 2 : Injection SQL (SQLi) - \"L'Effraction\"","Partie 3 : Cross-Site Scripting (XSS) - \"Le Piège\"","Partie 4 : Cross-Site Request Forgery (CSRF) - \"La Marionnette\"","Partie 4 bis : Mots de passe et Hachage","Partie 5 : Remédiation (Patching)","Partie 6 : Challenges CTF (Bonus)","Partie 7 : Le Rapport d'Audit"]},{"s":"tp_blockchain_python","t":"TP SLAM : Création d'une mini blockchain","d":"","k":"tp","a":1,"m":"Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer","b":"bts_sql_blockchain","p":"","h":["Objectifs Pédagogiques","Introduction : Le Grand Livre Numérique","Partie 1 : Le Hachage (Les fondations)","Partie 2 : La Brique Élémentaire (Classe Block)","Partie 3 : La Chaîne (Classe Blockchain)","Partie 4 : Sécurité et Attaque (Le cœur du sujet)","Partie 5 : Proof of Work (Le Minage)"]}]},{"n":"BTS SIO 2 : B1 - Support et mise à disposition de services informatiques","img":null,"list":[{"s":"activite_veille_e6","t":"Activité — Recherche documentaire (liste de sujets) — préparation E6","d":"Séance de 2 h : chaque étudiant ou binôme travaille un sujet imposé ou tiré au sort, et rend une fiche de synthèse","k":"tp","a":1,"m":"","b":null,"p":"Vous choisirez 4 sujets à aborder et faire une fiche de veille correspondante. Ce travail peut être fait en binôme.","h":[") Organisation",") Liste de sujets",") Exigences sur les sources (minimum à respecter dans le rendu)",") Modèle de rendu (à reproduire dans votre document)"]},{"s":"Gestion_projet","t":"Gestion de Projet Informatique","d":"Fondamentaux de la gestion de projet, rôles, méthodes et outils","k":"projet","a":1,"m":"","b":null,"p":"BTS SIO, bloc 1. Un service informatique ne s'installe pas tout seul. Derrière un site, une application, un réseau mis en place, il y a un projet : un ensemble d'activités temporaires, uniques et coordonnées, menées pour atteindre un objectif précis, dans un délai fixé, avec des ressources limitées. Le projet a un…","h":["Qui fait quoi","Le diagramme de Gantt","Deux façons d'enchaîner le travail","Les outils, et le geste Git"]},{"s":"Gestion_risques","t":"Gestion des Risques","d":"Identification, analyse et traitement des risques en projet informatique","k":"projet","a":1,"m":"","b":null,"p":"Un risque de projet est un événement incertain. S'il se produit, il écarte le projet de ses objectifs : délai, coût, qualité, périmètre. L'écart peut être négatif, un développeur absent la semaine de la livraison. Il peut être positif, une bibliothèque qui fait gagner dix jours : on parle alors d'opportunité, et on…","h":["La criticité, pour savoir par quoi commencer","Travaux dirigés : calcul de risques"]},{"s":"ITIL","t":"Introduction à ITIL","d":"Gestion des services informatiques et bonnes pratiques (ITIL v4)","k":"cours","a":1,"m":"","b":null,"p":"Un projet se termine le jour de la mise en service. Le serveur, lui, continue. Il faut surveiller, corriger, mettre à jour, répondre aux personnes qui s'en servent. Cette phase n'est plus de la gestion de projet : c'est de la gestion des services informatiques. ITIL (*Information Technology Infrastructure Library*)…","h":["Livrer, puis faire vivre","Quatre dimensions"]},{"s":"Chemin_critique","t":"Le Chemin Critique","d":"Méthode de planification et d'optimisation de projets","k":"cours","a":1,"m":"","b":null,"p":"Un projet est un réseau de tâches qui s'attendent. Certaines peuvent prendre du retard sans décaler la livraison. D'autres, non. Le chemin critique est la plus longue chaîne de tâches dépendantes, en durée. Sa longueur est la durée minimale du projet : on ne peut pas finir plus tôt que le plus long chemin. Tout…","h":["Calculer","Exercices pratiques"]},{"s":"Methodes_agiles","t":"Méthodes Agiles","d":"Introduction aux méthodes agiles (Scrum, Kanban) et à la gestion de projet moderne","k":"projet","a":1,"m":"","b":null,"p":"BTS SIO, bloc 1. Le chemin critique suppose qu'on connaît les tâches et leurs durées assez tôt pour figer un réseau. Beaucoup de projets informatiques n'ont pas cette stabilité : le besoin se précise quand on voit le logiciel tourner. Les méthodes agiles organisent le travail pour livrer souvent, montrer le…","h":["Scrum","Kanban","Une story, des critères, une définition de fini","Quand plusieurs équipes avancent ensemble"]},{"s":"Patrimoine_informatique","t":"Patrimoine Informatique","d":"Recensement et identification des ressources numériques (SIO Bloc 1)","k":"cours","a":1,"m":"","b":null,"p":"BTS SIO, bloc 1. Avant de sécuriser, de sauvegarder ou de remplacer quoi que ce soit, il faut savoir ce que l'organisation possède. Le patrimoine numérique regroupe les ressources dont le système d'information a besoin pour fonctionner : le matériel, les logiciels, et ce qui n'est ni l'un ni l'autre — comptes,…","h":["Pourquoi l'inventaire change le quotidien","L'audit s'appuie sur la liste","Trois familles de ressources","Comment on recense","Comment on le montre","Trois parcs, le même travail","Inventaire du projet d'atelier"]}]},{"n":"BTS SIO 1 SLAM AP","img":null,"list":[{"s":"missionap1","t":"Mission AP1","d":"Construction d'un SITE pour le GEI (HTML PHP)","k":"cours","a":1,"m":"","b":null,"p":"Le but de cette mission est de répondre à l'appel d'offres du Groupement des Entreprises d'Insertion : un site dynamique, consultable sur téléphone, branché sur une base de données. Durée : 16 h (4 h par semaine, 4 semaines), atelier de professionnalisation, semestre 2. Travail en binôme.","h":["Le contexte 🏢","Les pages, avec un exemple à tenir 🗺️","Le déroulement, semaine après semaine 🗓️","Ce qu'on rend 📦"]},{"s":"missionap2","t":"Mission AP2","d":"Développement d'une application de gestion de flotte (C# / CSV / Web)","k":"cours","a":1,"m":"","b":null,"p":"Le but de cette mission est de moderniser la gestion du parc d'AutoRent, une agence de location. Durée : 16 h (4 h par semaine, 4 semaines), atelier de professionnalisation, semestre 2.","h":["La veille, avant le code 📎","Les données 🚗","La console du gestionnaire 🖥️","La vitrine web 🌐","Ce qu'on rend 📦"]},{"s":"missionap3","t":"Mission AP3","d":"Evolution de la mission AP2 vers une architecture MVC et une application graphique C#","k":"cours","a":1,"m":"","b":null,"p":"Le but de cette mission est de faire évoluer AutoRent, pas d'en changer le métier. Durée : 12 h (4 h par semaine, 3 semaines), atelier de professionnalisation, semestre 2. Suite directe de la mission AP2.","h":["La veille, avant de toucher au code 📎","Le web en MVC 🧩","L'application graphique 🖼️","Ce qu'on rend 📦"]}]},{"n":"Ressources nécessaires","img":null,"list":[{"s":"ressources_vehicules","t":"Ressouces : Flotte de véhicules","d":"","k":"cours","a":1,"m":"Durée : AP2","b":null,"p":"","h":[]},{"s":"lab_cybersecurite","t":"Ressouces : Lab vulnérable","d":"","k":"tp","a":1,"m":"Durée : 2 heures · Objectif : Comprendre pour mieux protéger","b":"bts_sql_audit_rgpd","p":"// Désactiver les protections XSS du navigateur pour l'exercice header(\"X-XSS-Protection: 0\");","h":[]}]},{"n":"BTS SIO 1 SLAM","img":null,"list":[{"s":"ds_poo_refuge_console","t":"DS : Gestion d'un refuge animalier (C# / POO)","d":"Devoir surveillé de 2h — application console C# (encapsulation, héritage, polymorphisme).","k":"cours","a":1,"m":"","b":null,"p":"Le refuge associatif « La Tanière du Renard » accueille des animaux en attente d'adoption. Chaque animal possède des informations communes (identifiant, nom, âge, état de santé) et des caractéristiques propres à son espèce.","h":[") Contexte",") Cahier des charges fonctionnel",") Fonctionnement attendu de l'application console",") Déroulement du DS (2 heures)",") Livrables attendus",") Fichier CSV source fourni"]}]},{"n":"BTS SIO 2 : E4 - Support et mise à disposition de services informatiques","img":null,"list":[{"s":"guideline_portefolio","t":"Construire son Portfolio Professionnel","d":"Méthodologie pour l'épreuve E4 : Structure, Méthode STAR et choix technologiques.","k":"cours","a":1,"m":"","b":null,"p":"Voici les lignes directrices pour le construire, l'héberger et le rédiger de manière professionnelle.","h":["La Structure Idéale : Que mettre dans son portfolio ?","Rédiger ses missions : La méthode STAR et le Contexte","Choix Technologiques et Hébergement","Mettre en valeur vos missions (Les Preuves)"]}]}],"c":[{"n":"Programmation en C","img":null,"list":[{"s":"cleo/cours-affectations-types","t":"C - Affectations & Types","d":"Variables, opérateurs, entrées/sorties - bases solides","k":"cours","a":0,"m":"","b":null,"p":"En C, chaque variable doit être déclarée avec un type précis. Les types fondamentaux sont :","h":["Variables, opérateurs, entrées/sorties — bases solides","🎯 Types fondamentaux du C","🔤 Affectations et opérateurs","📥📤 Entrées et sorties","🧮 Exemple pratique"]},{"s":"cleo/exercices-affectations-types","t":"C - Affectations & Types - Exercices","d":"Exercices pratiques sur les variables et opérateurs en C","k":"exercices","a":0,"m":"","b":null,"p":"","h":[]},{"s":"cleo/exercices-tris","t":"C - Algorithmes de Tri - Exercices","d":"Exercices guidés sur les tris : sélection, insertion et dénombrement","k":"exercices","a":0,"m":"","b":null,"p":"","h":[]},{"s":"cleo/exercices-tableaux-2d","t":"C - Exercices Tableaux 2D","d":"Exercices progressifs sur les matrices","k":"exercices","a":0,"m":"","b":null,"p":"","h":[]},{"s":"cleo/cours-fonctions","t":"C - Fonctions","d":"Organiser le code en fonctions réutilisables","k":"cours","a":0,"m":"","b":null,"p":"Une fonction est un bloc de code qui effectue une tâche spécifique et peut être réutilisé.","h":["Organiser le code en fonctions réutilisables","🎯 Qu'est-ce qu'une fonction ?","🔧 Déclaration et utilisation","🧠 Portée des variables (Scope)","📝 Exercices"]},{"s":"cleo/exercices-fonctions","t":"C - Fonctions - Exercices","d":"Organiser le code en fonctions réutilisables","k":"exercices","a":0,"m":"","b":null,"p":"","h":[]},{"s":"cleo/cours-tableaux","t":"C - Les Tableaux","d":"Stocker et manipuler plusieurs variables ensemble","k":"cours","a":0,"m":"","b":null,"p":"Un tableau (array) est une variable spéciale qui peut contenir plusieurs valeurs du même type.","h":["Stocker et manipuler plusieurs variables ensemble","📚 Qu'est-ce qu'un tableau ?","🎯 Initialisation et accès","🔄 Parcourir un tableau","🔍 Recherche dans un tableau","⚠️ Points importants"]},{"s":"cleo/cours-tableaux-2d","t":"C - Les Tableaux à 2 Dimensions","d":"Manipuler des matrices statiques et dynamiques","k":"cours","a":0,"m":"","b":null,"p":"Il existe deux façons de créer ces tableaux en C : 1. Statique : Taille fixe connue à l'avance (ex: int grille[10][10]). 2. Dynamique : Taille variable décidée pendant l'exécution (avec malloc).","h":["📚 Introduction","️⃣ Allocation Statique (Sur la pile)","️⃣ Allocation Dynamique (Sur le tas)","️⃣ Passage en paramètre de fonction","🔍 Résumé"]},{"s":"cleo/cours-structures-controle","t":"C - Structures de Contrôle","d":"Conditions, choix et boucles pour diriger vos programmes","k":"cours","a":0,"m":"","b":null,"p":"Pour exécuter du code seulement si une condition est vraie.","h":["Conditions, choix et boucles pour diriger vos programmes","🚦 Les Conditions (if / else)","🔄 Les Boucles"]},{"s":"cleo/exercices-tableaux","t":"C - Tableaux - Exercices","d":"Exercices pratiques sur les tableaux en C","k":"exercices","a":0,"m":"","b":null,"p":"","h":[]},{"s":"cleo/cours-structures-pointeurs","t":"Introduction aux Structures en C","d":"Les bases de la programmation structurée en C : struct, typedef et pointeurs.","k":"cours","a":0,"m":"","b":null,"p":"Le langage C n'est pas un langage orienté objet comme C# ou Java. Il ne possède pas de \"classes\". Cependant, il permet de regrouper des données liées entre elles grâce aux structures.","h":["🌟 Introduction","📦 Le Concept de Structure (struct)","🏗️ Créer et Utiliser des Structures","🔄 Structures et Fonctions (Passage par Valeur vs Adresse)","🛠️ Exemple Complet : Gestion d'un rectangle","⚠️ Pièges Courants"]}]},{"n":"Programmation en C — Révisions","img":null,"list":[{"s":"cleo/revision-affectations-types","t":"Révision — Affectations & types","d":"Fiche synthèse : variables, opérateurs, printf / scanf","k":"exercices","a":0,"m":"","b":null,"p":"","h":["Ce qu'il faut retenir","Opérateurs utiles","Affichage et lecture","Mini-checklist avant un contrôle"]},{"s":"cleo/revision-fonctions","t":"Révision — Fonctions","d":"Fiche synthèse : prototype, paramètres, return, void","k":"exercices","a":0,"m":"","b":null,"p":"Une fonction regroupe du code sous un nom. On l'appelle quand on en a besoin, avec des arguments, et elle peut renvoyer une valeur.","h":["Idée principale","Modèle à connaître","Exemple minimal","Ordre des déclarations","Mini-checklist"]},{"s":"cleo/revision-structures-pointeurs","t":"Révision — Structures & pointeurs","d":"Fiche synthèse : struct, typedef, &, *","k":"exercices","a":0,"m":"","b":null,"p":"Souvent un char * ou un char tab[] pointe vers du texte ; attention aux tailles et au '\\0' en fin de chaîne.","h":["struct : regrouper des données","Pointeur : l'adresse d'une variable","Passage à une fonction","Chaînes et tableaux","Mini-checklist"]},{"s":"cleo/revision-structures-controle","t":"Révision — Structures de contrôle","d":"Fiche synthèse : if / else, switch, for, while","k":"exercices","a":0,"m":"","b":null,"p":"Utile quand tu compares une variable à plusieurs valeurs entières ou caractères :","h":["Conditions : if / else","switch (choix multiples)","Boucles","Exemple for tableau","Mini-checklist"]},{"s":"cleo/revision-tableaux","t":"Révision — Tableaux (1D)","d":"Fiche synthèse : déclaration, indices, parcours for","k":"exercices","a":0,"m":"","b":null,"p":"Un tableau stocke plusieurs valeurs du même type, côte à côte en mémoire.","h":["Définition rapide","Déclaration / initialisation","Parcours standard","Passage à une fonction","Mini-checklist"]},{"s":"cleo/revision-tableaux-2d","t":"Révision — Tableaux 2D (matrices)","d":"Fiche synthèse : grille, double boucle, indices [i][j]","k":"exercices","a":0,"m":"","b":null,"p":"Un tableau 2D = lignes et colonnes (matrice, grille de jeu, image simplifiée).","h":["Idée","Initialisation","Parcours ligne par ligne","À retenir pour les exos","Mini-checklist"]},{"s":"cleo/revision-tris-tableaux","t":"Révision — Tris de tableaux en C","d":"Bulles, cocktail, sélection, insertion : idées, code et complexité","k":"cours","a":0,"m":"","b":null,"p":"On trie un tableau sur place (on modifie tab) ou on en construit un nouveau. En cours, on travaille surtout sur place avec la taille n.","h":["Rappel","Tri à bulles (*bubble sort*)","Tri cocktail (*shaker sort*)","Tri par sélection","Tri par insertion","Tri par dénombrement (*counting sort*)","Tableau récapitulatif","Lien avec ton fichier tris.c","Mini-checklist avant un DS"]}]},{"n":"C : Programmation Structurée","img":null,"list":[{"s":"cleo/exercices-structures","t":"TP : Structures et Pointeurs en C","d":"","k":"tp","a":0,"m":"Struct, Typedef, Pointeurs, Allocation Dynamique","b":"c_structs","p":"","h":["🕒 Exercice 1 : Gestion du Temps (Débutant)","📍 Exercice 2 : Géométrie (Débutant)","🌀 Exercice 3 : Nombres Complexes (Débutant)","🔄 Exercice 4 : Modification d'État (Intermédiaire)","▭ Exercice 5 : Rectangle (Intermédiaire)","👥 Exercice 6 : Classe d'Étudiants (Intermédiaire)","🏹 Exercice 7 : Vecteurs 3D (Intermédiaire)","⚔️ Exercice 8 : Mini RPG (Avancé)","📚 Exercice 9 : Bibliothèque (Avancé)"]}]},{"n":"Programmation fonctionnelle","img":null,"list":[{"s":"anatole/exercices-programmation-fonctionnelle","t":"Exercices : Programmation fonctionnelle","d":"map, filter, reduce et enchaînements — fiche progressive par niveau.","k":"exercices","a":0,"m":"","b":null,"p":"map applique une fonction à chaque élément, filter ne garde que ceux qui vérifient un prédicat, reduce (module functools) accumule une seule valeur. map et filter renvoient un itérateur : on le convertit avec list pour obtenir une liste. Ces opérations construisent un nouveau résultat et ne modifient pas la liste…","h":[]}]}]};
+var IMG = 'https://www.clementbraun.info/images/';
+
+var LEVELS = [
+  { id: 'sni', label: 'SNI', aud: 'Découverte', color: 'var(--sni)', on: 'var(--sni-on)', fox: 'fox_0.png', desc: 'Les bases du numérique et de l’informatique, pour démarrer sans prérequis.' },
+  { id: 'snt', label: 'SNT', aud: 'Seconde', color: 'var(--snt)', on: 'var(--snt-on)', fox: 'fox_1.png', desc: 'Photo, web, données, réseaux et premiers pas en Python.' },
+  { id: '1nsi', label: 'Première NSI', aud: 'Première', color: 'var(--nsi1)', on: 'var(--nsi1-on)', fox: 'fox_2.png', desc: 'Algorithmique, Python et structures de données — le cœur du programme.' },
+  { id: 'tnsi', label: 'Terminale NSI', aud: 'Terminale', color: 'var(--tnsi)', on: 'var(--tnsi-on)', fox: 'fox_3.png', desc: 'Récursivité, bases de données, réseaux et préparation au bac.' },
+  { id: 'sio', label: 'BTS SIO', aud: 'Post-bac', color: 'var(--sio)', on: 'var(--sio-on)', fox: 'fox_4.png', desc: 'Services informatiques aux organisations, pour aller plus loin après le lycée.' },
+  { id: 'c', label: 'Programmation en C', aud: 'Langage C', color: 'var(--c)', on: 'var(--c-on)', fox: 'fox_2.png', desc: 'Types, tableaux, fonctions, structures et tris.', hidden: true }
+];
+var CH_LABEL = {
+  'Representation de base': 'Représentation de base', 'Cybersécurite': 'Cybersécurité', 'Données Structurées': 'Données structurées',
+  'Dictionnaires et Tables': 'Dictionnaires et tables', 'Web et Interaction': 'Web et interaction', 'Programmation Orientée Objet': 'Programmation orientée objet',
+  'Micro-controleurs': 'Micro-contrôleurs', 'Photographie Numérique': 'Photographie numérique', 'Langages et Programmation': 'Langages et programmation',
+  'Bases de Données': 'Bases de données', 'Entrainement': 'Entraînement', 'Architectures matérielles, OS & Réseaux': 'Architectures, OS et réseaux',
+  'BTS SIO 1 : B2 - Développement (SLAM)': 'B2 · Développement (SLAM)', 'BTS SIO 1 : B3 - CyberSécurité': 'B3 · Cybersécurité',
+  'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques': 'B1 · Support et services', 'BTS SIO 1 SLAM AP': 'Ateliers pro SLAM',
+  'Ressources nécessaires': 'Ressources', 'BTS SIO 1 SLAM': 'SLAM', 'BTS SIO 2 : E4 - Support et mise à disposition de services informatiques': 'E4 · Épreuve support'
+};
+var KIND = { cours: { l: 'Cours', i: 'book' }, exercices: { l: 'Exercices', i: 'pencil' }, tp: { l: 'TP', i: 'flask' }, projet: { l: 'Projet', i: 'rocket' } };
+var SPLASH = ['Ctrl + C pour copier, Ctrl + V pour coder.', '404 : Vulpes not found.', 'Attention aux boucles infinies !', 'Python > Java ? (Débat ouvert)', 'Affûtage des griffes...', 'Réveil des renards...'];
+var ICON = {
+  book: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+  pencil: '<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>',
+  flask: '<path d="M10 2v7.5a2 2 0 0 1-.2.9L4.7 20.5a1 1 0 0 0 .9 1.5h12.8a1 1 0 0 0 .9-1.5l-5.1-10.1a2 2 0 0 1-.2-.9V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/>',
+  rocket: '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>',
+  lock: '<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  right: '<path d="m9 18 6-6-6-6"/>',
+  left: '<path d="m15 18-6-6 6-6"/>',
+  play: '<polygon points="6 3 20 12 6 21 6 3"/>',
+  eye: '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  dashboard: '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>',
+  logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/>',
+  type: '<polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/>',
+  moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+  zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+  x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'
+};
+function ic(name, size) { size = size || 16; return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[name] + '</svg>'; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function norm(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+function key(s) { return norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+function lcs(L) { return '--lc:' + L.color + ';--lon:' + L.on; }
+function lvl(id) { return LEVELS.filter(function (l) { return l.id === id; })[0]; }
+
+// --- index des chapitres et cours ---
+var CH = {}, ALL = [];
+LEVELS.forEach(function (L) {
+  CH[L.id] = (DATA[L.id] || []).map(function (ch) {
+    var name = CH_LABEL[ch.n] || ch.n;
+    var c = { level: L.id, name: name, key: key(name), img: ch.img, list: ch.list };
+    ch.list.forEach(function (x) { x.level = L.id; x.chapter = c; ALL.push(x); });
+    return c;
+  });
+});
+function findCourse(level, slug) { return ALL.filter(function (c) { return c.level === level && c.s === slug; })[0]; }
+
+// --- regroupements : une seule entrée dans la liste, une modale pour choisir ---
+// « versions » : la même activité en plusieurs langues ; « notion » : le cours, ses exercices et son TP.
+// Membre : [slug, libellé, code court, illustration]
+var GROUPS = [
+  { level: 'snt', type: 'versions', title: 'Projet : Chasse aux Ren’Arts', img: 'fox_chasse_renard.png',
+    desc: 'Créer la page web d’un tableau revisité par un renard. Choisis la langue de ton récit.',
+    items: [['Projet_Chasse_aux_ren_arts', 'Français', 'FR', 'fox_chasse_renard.png'], ['Projet_Chasse_aux_ren_arts_anglais', 'Anglais', 'EN', 'fox_chasse_renard_anglais_v2.png'], ['Projet_Chasse_aux_ren_arts_espagnol', 'Espagnol', 'ES', 'fox_chasse_renard_espagnol_v2.png']],
+    extras: [['ressources_chasse_renarts', '📦 Fichiers du projet (ZIP)'], ['#/ren-arts', '🖼️ Galerie des éditions passées']] },
+  { level: 'snt', type: 'notion', title: 'Données structurées', items: [['donnees_structurees'], ['exercices_donnees_structurees'], ['tp_python_donnees_structurees', 'TP Python']] },
+  { level: '1nsi', type: 'notion', title: 'Algorithmes de tri', items: [['algo_tris', 'TP'], ['algo_tris_exercices_fusion', 'Exercices'], ['activite_algo_interactive', 'Atelier']] },
+  { level: '1nsi', type: 'notion', title: 'k plus proches voisins (KNN)', items: [['algo_knn_cours'], ['algo_knn_exercices'], ['algo_knn', 'TP']] },
+  { level: '1nsi', type: 'notion', title: 'Fonctions en Python', items: [['python_fonctions'], ['python_exercices_fonctions']] },
+  { level: '1nsi', type: 'notion', title: 'Types de données en Python', items: [['python_types_base'], ['python_exercices_types']] },
+  { level: '1nsi', type: 'notion', title: 'Booléens', items: [['donnees_booleens'], ['donnees_booleens_exercices']] },
+  { level: '1nsi', type: 'notion', title: 'Entiers en binaire et hexadécimal', items: [['donnees_entiers_positifs'], ['donnees_binaires_exercices']] },
+  { level: '1nsi', type: 'notion', title: 'Dictionnaires', items: [['python_dictionnaires'], ['python_exercices_dictionnaires']] },
+  { level: '1nsi', type: 'notion', title: 'Données en tables (CSV)', items: [['python_csv'], ['python_csv_exercices']] },
+  { level: '1nsi', type: 'notion', title: 'Le Web et HTTP', items: [['web_protocoles'], ['web_http_exercices']] },
+  { level: '1nsi', type: 'notion', title: 'Piles et files', items: [['structures_lineaires_piles_files'], ['structures_lineaires_tp', 'TP']] },
+  { level: '1nsi', type: 'notion', title: 'Circuits logiques', items: [['archi_circuits'], ['archi_circuits_exercices']] },
+  { level: '1nsi', type: 'notion', title: 'Programmation orientée objet', items: [['poo_introduction'], ['poo_exercices']] },
+  { level: 'tnsi', type: 'notion', title: 'SQL et bases de données', items: [['sql-bases-donnees'], ['sql-bases-donnees-exercices']] }
+];
+GROUPS.forEach(function (g, gi) {
+  g.id = gi;
+  g.members = g.items.map(function (it) {
+    var x = findCourse(g.level, it[0]);
+    if (!x) return null;
+    x.group = g;
+    return { x: x, label: it[1] || KIND[x.k].l, code: it[2], img: it[3] };
+  }).filter(Boolean);
+  (g.extras || []).forEach(function (e) { var x = findCourse(g.level, e[0]); if (x) x.extraOf = g; });
+});
+function groupDone(g) { return g.members.filter(function (m) { return isDone(m.x); }).length; }
+// Entrées affichées dans un chapitre : un groupe prend la place de son premier membre.
+function chapterEntries(c) {
+  var seen = {}, out = [];
+  c.list.forEach(function (x) {
+    if (x.extraOf) return;
+    if (x.group && x.group.members.length > 1) {
+      if (seen[x.group.id]) return;
+      seen[x.group.id] = true;
+      out.push({ g: x.group, kinds: x.group.members.map(function (m) { return m.x.k; }) });
+    } else out.push({ x: x, kinds: [x.k] });
+  });
+  return out;
+}
+function chImg(c, cls) { return c.img ? '<img src="' + IMG + c.img + '" alt="">' : '<img class="fox' + (cls ? ' ' + cls : '') + '" src="' + IMG + lvl(c.level).fox + '" alt="">'; }
+function courseThumb(x) { return IMG + (x.b ? 'badges/' + x.b + '.png' : (x.chapter.img || lvl(x.level).fox)); }
+function href(level, slug) { return '#/cours/' + level + (slug ? '/' + slug : ''); }
+
+// --- état de la maquette ---
+var state = { student: false, theme: 'light', filter: 'all' };
+var STUDENT = { name: 'Léa', initial: 'L', level: '1nsi', classe: '1NSI2' };
+var EXO = {};          // slug -> tableau de booléens (exercices validés)
+var DONE = {};         // slug -> true (cours terminés par l'élève)
+(function seedProgress() {
+  var plan = { 'introduction-a-python': 99, 'representation-des-donnees': 99, 'algorithmique': 4, 'dictionnaires-et-tables': 3, 'web-et-interaction': 2, 'architecture-materielle': 1, 'projets': 1 };
+  CH['1nsi'].forEach(function (c) {
+    var n = plan[c.key] || 0;
+    c.list.filter(function (x) { return x.s !== 'algo_tris'; }).slice(0, n).forEach(function (x) { DONE[x.s] = true; });
+  });
+  EXO.algo_tris = [true, true, true, false, false];
+})();
+function isDone(x) { return state.student && x.level === STUDENT.level && !!DONE[x.s]; }
+function inProgress(x) { return state.student && EXO[x.s] && EXO[x.s].some(Boolean) && !DONE[x.s]; }
+function canRead(x) { return !!x.a; }
+function chapterDone(c) { return c.list.filter(isDone).length; }
+function levelDone(id) { return CH[id].reduce(function (s, c) { return s + chapterDone(c); }, 0); }
+function levelTotal(id) { return CH[id].reduce(function (s, c) { return s + c.list.length; }, 0); }
+function earnedBadges() { return ALL.filter(function (x) { return x.b && isDone(x); }); }
+
+// ================= rendu : en-tête =================
+// Identique à components/layout/SiteHeader.tsx : Accueil, À propos, accessibilité, Connexion
+// (ou Reprendre / Espace / Déconnexion une fois connecté).
+var a11y = { open: false, dyslexic: false, contrast: false };
+function renderHeader(route) {
+  var r = route.parts[0] || '';
+  var dark = document.documentElement.classList.contains('dark');
+  var opt = function (k, on, icon, label) { return '<button class="opt' + (on ? ' on' : '') + '" data-a11y="' + k + '"><span>' + ic(icon, 18) + label + '</span>' + (on ? ic('check', 16) : '') + '</button>'; };
+  document.getElementById('header').innerHTML =
+    '<nav><a class="logo" href="#/" aria-label="Accueil"><img src="' + IMG + 'fox_3_mark.png" alt=""><span class="name"><b>La tanière du Code</b> <span>par Clément BRAUN</span></span></a>' +
+    '<div class="hright"><div class="links"><a href="#/"' + (r === '' ? ' class="on"' : '') + '>Accueil</a><a href="#/a-propos"' + (r === 'a-propos' ? ' class="on"' : '') + '>À propos</a></div>' +
+    '<div class="hbtns"><button class="hbtn' + (a11y.open ? ' open' : '') + '" data-a11y="toggle" title="Accessibilité">' + ic('eye', 20) + '</button>' +
+    '<div class="a11y' + (a11y.open ? ' open' : '') + '"><div class="hd">Accessibilité<button data-a11y="toggle" aria-label="Fermer">' + ic('x', 16) + '</button></div>' +
+      '<button class="opt" data-toast="La collection des renards cachés s’ouvre ici."><span>Renards trouvés</span><em>0/5</em></button>' +
+      opt('dyslexic', a11y.dyslexic, 'type', 'Dyslexie') + opt('dark', dark, 'moon', 'Mode Sombre') + opt('contrast', a11y.contrast, 'zap', 'Contraste') + '</div>' +
+    (state.student
+      ? '<a class="btn-resume" href="#/espace">Reprendre</a>' +
+        '<a class="hbtn who' + (r === 'espace' ? ' active' : '') + '" href="#/espace" title="Mon espace"><span class="av">' + STUDENT.initial + '</span><span class="lbl">' + STUDENT.name + '</span></a>' +
+        '<button class="hbtn logout" data-logout>' + ic('logout', 18) + '<span class="lbl">Déconnexion</span></button>'
+      : '<a class="btn-login" href="#/connexion">Connexion</a>') +
+    '</div></div><span class="read-bar" id="readbar"></span></nav>';
+}
+
+// Message d'accueil personnalisé : prénom, moment de la journée, et la prochaine étape.
+function greeting() {
+  var h = new Date().getHours();
+  var hello = h < 5 || h >= 18 ? 'Bonsoir' : 'Bonjour';
+  var x = resumeTarget(), L = lvl(STUDENT.level);
+  var pct = Math.round(levelDone(L.id) / levelTotal(L.id) * 100);
+  var st = x && EXO[x.s], left = st ? st.filter(function (v) { return !v; }).length : 0;
+  var next = !x ? 'Tout est terminé, bravo !'
+    : left ? 'Encore ' + left + ' exercice' + (left > 1 ? 's' : '') + ' pour finir « ' + esc(x.t) + ' ».'
+    : 'Prochaine étape : « ' + esc(x.t) + ' ».';
+  return '<div class="greet"><span class="av">' + STUDENT.initial + '</span><div><b>' + hello + ' ' + STUDENT.name + ' 👋 Tu en es à ' + pct + ' % de ' + L.label + '.</b><span>' + next + '</span></div></div>';
+}
+
+// ================= rendu : accueil =================
+function renderHome() {
+  var tris = findCourse('1nsi', 'algo_tris');
+  var exo = EXO.algo_tris, nb = exo.filter(Boolean).length;
+  var badges = earnedBadges();
+  var html =
+    '<div class="wrap"><section class="hero"><div>' +
+      (state.student ? greeting() : '') +
+      '<h1 class="title">Maîtrise le <span class="c">code.</span><br>Deviens un <span class="u">renard.<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path d="M0 5C20 2 80 2 100 5" stroke="var(--accent)" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span></h1>' +
+      '<p class="lead">Des cours clairs, des exercices corrigés automatiquement et un parcours de progression, de la seconde au BTS.</p>' +
+      '<button class="search" data-pal>' + ic('search', 20) + 'Rechercher une notion (ex : boucles, listes…)<kbd>Ctrl K</kbd></button>' +
+      '<div class="quick">' + ['Boucles', 'Listes', 'Dictionnaires', 'HTML', 'SQL', 'Récursivité'].map(function (q) { return '<button data-pal="' + q + '">' + q + '</button>'; }).join('') + '</div>' +
+      (state.student ? '' : '<div class="cta"><a class="btn-acc" href="#niveaux" data-scroll="niveaux">Choisir mon niveau ↓</a><a class="btn-ghost" href="#/connexion">Se connecter</a></div>') +
+    '</div><div class="stage"><span class="splash" id="splash">' + SPLASH[0] + '</span><img class="fox" src="' + IMG + 'fox_2.png" alt="Le renard de Première NSI">' +
+      (state.student
+        ? '<div class="chip c1"><img src="' + IMG + 'badges/' + (badges[0] ? badges[0].b : 'les-fonctions-python') + '.png" alt=""><span>Nouveau badge<small>' + esc(badges[0] ? badges[0].t : 'Les fonctions') + '</small></span></div><div class="chip c2"><span>🔥 ' + (levelDone('1nsi') * 3 + nb) + ' exercices réussis<small>cette année</small></span></div>'
+        : '<div class="chip c1"><span>✅ Exercices corrigés<small>automatiquement</small></span></div><div class="chip c2"><span>🏅 Des badges<small>à chaque fiche réussie</small></span></div>') +
+    '</div></section>';
+
+  if (state.student) {
+    html += '<section class="resume">' +
+      resumeCard('') +
+      '<a class="card side-card" href="' + href('1nsi', 'python_exercices_dictionnaires') + '"><div class="k"><span>📝 Devoir</span><span>2 jours</span></div><h3>Exercices sur les dictionnaires</h3><p>Donné par M. Braun · ' + STUDENT.classe + '</p><span class="due">À rendre vendredi</span></a>' +
+      '<a class="card side-card" href="#/espace"><div class="k"><span>🏅 Mes badges</span><span>' + badges.length + ' / ' + ALL.filter(function (x) { return x.b && x.level === '1nsi'; }).length + '</span></div><div class="badges">' +
+        badges.slice(0, 3).map(function (x) { return '<img class="badge-img" src="' + IMG + 'badges/' + x.b + '.png" alt="' + esc(x.t) + '">'; }).join('') +
+        (badges.length > 3 ? '<span class="badge-more">+' + (badges.length - 3) + '</span>' : '') + '</div></a>' +
+    '</section>';
+  }
+
+  // Accueil : uniquement les portes d'entrée des niveaux, en bento. Les cours restent sur la page de chaque niveau.
+  html += '<section id="niveaux"><div class="sel-head"><h2 class="h2">Parcourir par <em>niveaux</em></h2><p>' +
+    (state.student ? 'Ton niveau est mis en avant, avec ta progression.' : 'De la découverte au BTS : choisis ton niveau.') + '</p></div>' +
+    '<div class="bento">' + LEVELS.filter(function (L) { return !L.hidden; }).map(function (L, i) {
+      var mine = state.student && L.id === STUDENT.level;
+      var total = levelTotal(L.id), pct = Math.round(levelDone(L.id) / total * 100);
+      return '<a class="bt bt-' + L.id + (mine ? ' mine' : '') + '" href="' + href(L.id) + '" style="' + lcs(L) + '">' +
+        '<span class="bt-step">' + (i + 1) + '</span>' +
+        '<div class="bt-txt"><span class="bt-aud">' + (mine ? 'Mon niveau · ' : '') + L.aud + '</span><h3>' + L.label + '</h3><p>' + L.desc + '</p>' +
+        (mine ? '<div class="bt-prog"><i style="width:' + pct + '%"></i></div><span class="bt-meta">' + pct + ' % terminé · Continuer →</span>'
+              : '<span class="bt-meta">' + CH[L.id].length + ' chapitres · ' + total + ' ressources →</span>') + '</div>' +
+        '<span class="bt-plate"><img src="' + IMG + L.fox + '" alt=""></span></a>';
+    }).join('') + '</div></section>';
+
+  html += '<section style="margin-top:56px"><h2 class="h2">Un peu plus de <em>renards</em></h2><div class="extras">' +
+    '<a class="card ex" href="#/academie"><div class="pic"><img src="' + IMG + 'fox_act.png" alt=""></div><div><span class="eyebrow">Apprentissage Python</span><h3>Le renard dans le poulailler</h3><p>Fonctions, variables, conditions et boucles : guide le renard jusqu’à la poule.</p><span class="link">Jouer →</span></div></a>' +
+    '<a class="card ex small" href="#/ren-arts"><div class="pic"><img src="' + IMG + 'fox_chasse_renard.png" alt=""></div><div><h3>Chasse aux Ren’Arts</h3><p>Les grands classiques revisités par les élèves.</p></div></a>' +
+    '<a class="card ex small" href="' + href('c') + '"><div class="pic"><img src="' + IMG + 'fox_2.png" alt=""></div><div><h3>Programmation en C</h3><p>Types, tableaux, fonctions et tris.</p></div></a>' +
+    '</div></section></div>';
+  app.innerHTML = html;
+}
+
+
+// ================= rendu : tous les niveaux =================
+function renderAllLevels() {
+  app.innerHTML = '<div class="wrap"><div class="crumbs"><a href="#/">Accueil</a>' + ic('right', 12) + '<b>Cours</b></div>' +
+    '<h1 class="title" style="font-size:44px;margin-bottom:10px">Tous les <span class="c">parcours</span></h1><p class="lead" style="margin:0 0 26px">De la découverte jusqu’au BTS. Choisis ton niveau.</p>' +
+    '<div class="lvl-grid">' + LEVELS.map(function (L) {
+      return '<a class="card lvl-card" href="' + href(L.id) + '" style="' + lcs(L) + '"><div class="pic"><img src="' + IMG + L.fox + '" alt=""></div><div><span class="aud">' + L.aud + '</span><h3>' + L.label + '</h3><p>' + L.desc + '</p><small>' + CH[L.id].length + ' chapitres · ' + levelTotal(L.id) + ' ressources</small></div></a>';
+    }).join('') + '</div></div>';
+}
+
+// ================= rendu : page niveau =================
+function renderLevel(id, query) {
+  var L = lvl(id);
+  if (!L) return renderMissing();
+  var chs = CH[id];
+  var cur = chs.filter(function (c) { return c.key === query.ch; })[0] || chs[0];
+  var mine = state.student && id === STUDENT.level;
+  var total = levelTotal(id), done = levelDone(id);
+  var entries = chapterEntries(cur);
+  var counts = { all: entries.length };
+  Object.keys(KIND).forEach(function (k) { counts[k] = entries.filter(function (e) { return e.kinds.indexOf(k) >= 0; }).length; });
+  if (state.filter !== 'all' && !counts[state.filter]) state.filter = 'all';
+  var list = entries.filter(function (e) { return state.filter === 'all' || e.kinds.indexOf(state.filter) >= 0; });
+
+  app.innerHTML = '<div class="wrap" style="' + lcs(L) + '">' +
+    '<div class="crumbs"><a href="#/">Accueil</a>' + ic('right', 12) + '<a href="#/cours">Cours</a>' + ic('right', 12) + '<b>' + L.label + '</b></div>' +
+    '<section class="card lvl-hero"><img src="' + IMG + L.fox + '" alt=""><div><span class="aud">' + L.aud + '</span><h1>' + L.label + '</h1><p>' + L.desc + '</p>' +
+      '<div class="stats" style="margin-top:14px"><span><b>' + chs.length + '</b>chapitres</span><span><b>' + total + '</b>ressources</span>' + (mine ? '<span><b>' + done + '</b>terminées</span>' : '') + '</div></div>' +
+      (mine ? '<div class="ring" style="--p:' + Math.round(done / total * 100) + '"><span><div>' + Math.round(done / total * 100) + ' %<small>terminé</small></div></span></div>'
+            : '<button class="btn-ghost" data-pal>' + ic('search', 15) + 'Chercher dans ' + L.label + '</button>') +
+    '</section>' +
+    '<div class="lvl-layout"><aside class="card ch-nav"><span class="lbl">Chapitres</span>' +
+      chs.map(function (c) {
+        var d = chapterDone(c);
+        return '<a class="ch-btn' + (c === cur ? ' on' : '') + '" href="' + href(id) + '?ch=' + c.key + '"><span class="ic">' + chImg(c) + '</span><span class="t"><b>' + esc(c.name) + '</b><span>' +
+          (mine ? d + ' / ' : '') + c.list.length + ' ressource' + (c.list.length > 1 ? 's' : '') + '</span>' + (mine ? '<div class="mini"><i style="width:' + Math.round(d / c.list.length * 100) + '%"></i></div>' : '') + '</span></a>';
+      }).join('') +
+    '</aside><section>' +
+      '<div class="ch-bar"><div class="ch-title"><span class="ic">' + chImg(cur) + '</span><div><h2>' + esc(cur.name) + '</h2><span>' + cur.list.length + ' ressource' + (cur.list.length > 1 ? 's' : '') +
+        (mine ? ' · ' + chapterDone(cur) + ' terminée' + (chapterDone(cur) > 1 ? 's' : '') : '') + '</span>' +
+        (mine ? '<div class="mini"><i style="width:' + Math.round(chapterDone(cur) / cur.list.length * 100) + '%"></i></div>' : '') + '</div></div>' +
+      '<div class="filters">' + ['all'].concat(Object.keys(KIND)).map(function (k) {
+        if (k !== 'all' && !counts[k]) return '';
+        return '<button data-filter="' + k + '" class="' + (state.filter === k ? 'on' : '') + '">' + (k === 'all' ? 'Tous' : KIND[k].l) + '<span>' + counts[k] + '</span></button>';
+      }).join('') + '</div></div>' +
+      '<div class="res-grid">' + (list.length ? list.map(entryTile).join('') : '<div class="card empty">Aucune ressource de ce type.</div>') + '</div>' +
+    '</section></div></div>';
+}
+function status(x) {
+  return !canRead(x) ? '<span class="lock">' + ic('lock', 13) + '</span>'
+    : isDone(x) ? '<span class="ok">' + ic('check', 14) + '</span>'
+    : inProgress(x) ? '<span class="pill">' + EXO[x.s].filter(Boolean).length + '/' + EXO[x.s].length + '</span>' : '';
+}
+// Tuile compacte : une ligne de titre, une ligne de méta. La description passe en infobulle.
+function entryTile(e) {
+  if (e.x) {
+    var x = e.x;
+    return '<a class="tile k-' + x.k + '" href="' + href(x.level, x.s) + '" title="' + esc(x.d || x.p) + '"><span class="ki">' + ic(KIND[x.k].i, 17) + '</span><span class="t"><b>' + esc(x.t) + '</b><small>' + KIND[x.k].l + '</small></span>' + status(x) + '</a>';
+  }
+  var g = e.g, d = groupDone(g), n = g.members.length;
+  var tags = g.members.map(function (m) { return '<i class="' + (g.type === 'notion' ? 'k-' + m.x.k : '') + '">' + esc(g.type === 'versions' ? m.code : m.label) + '</i>'; }).join('');
+  var right = state.student && d ? (d === n ? '<span class="ok">' + ic('check', 14) + '</span>' : '<span class="pill">' + d + '/' + n + '</span>') : '';
+  var icon = g.img ? '<span class="ki img"><img src="' + IMG + g.img + '" alt=""></span>' : '<span class="ki stack">' + ic('book', 17) + '<em>' + n + '</em></span>';
+  return '<button class="tile group k-' + g.members[0].x.k + '" data-group="' + g.id + '" title="' + esc(g.desc || '') + '">' + icon + '<span class="t"><b>' + esc(g.title) + '</b><small class="tags">' + tags + '</small></span>' + right + '<span class="more">' + ic('right', 16) + '</span></button>';
+}
+function openGroup(g) {
+  var isV = g.type === 'versions';
+  document.getElementById('modal-box').className = 'card modal pick';
+  document.getElementById('modal-box').innerHTML =
+    '<button class="pick-x" data-close-modal aria-label="Fermer">' + ic('x', 18) + '</button>' +
+    '<span class="eyebrow">' + (isV ? 'Choisis ta version' : 'Que veux-tu ouvrir ?') + '</span><h2>' + esc(g.title) + '</h2>' + (g.desc ? '<p>' + esc(g.desc) + '</p>' : '') +
+    '<div class="pick-grid ' + (isV ? 'v' : 'n') + '">' + g.members.map(function (m) {
+      var x = m.x, st = isDone(x) ? '<span class="ok">' + ic('check', 13) + 'Terminé</span>' : inProgress(x) ? '<span class="pill">En cours</span>' : '';
+      return '<a class="pick-opt k-' + x.k + '" href="' + href(x.level, x.s) + '">' +
+        (isV ? '<span class="pic"><img src="' + IMG + m.img + '" alt=""><i>' + m.code + '</i></span>' : '<span class="ki">' + ic(KIND[x.k].i, 20) + '</span>') +
+        '<span class="t"><b>' + esc(m.label) + '</b><small>' + esc(x.t) + '</small></span>' + st + '</a>';
+    }).join('') + '</div>' +
+    (g.extras ? '<div class="pick-extras">' + g.extras.map(function (e) { var to = e[0].charAt(0) === '#' ? e[0] : href(g.level, e[0]); return '<a href="' + to + '">' + e[1] + '</a>'; }).join('') + '</div>' : '');
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+// Sur une fiche regroupée : passer d'une version (ou d'un type) à l'autre sans revenir à la liste.
+function variantBar(x) {
+  var g = x.group;
+  if (!g || g.members.length < 2) return '';
+  var isV = g.type === 'versions';
+  return '<nav class="variant-bar"><span class="vl">' + (isV ? 'Version' : 'Dans « ' + esc(g.title) + ' »') + '</span><div class="seg2">' + g.members.map(function (m) {
+    return '<a class="' + (m.x === x ? 'on' : '') + '" href="' + href(m.x.level, m.x.s) + '">' + (isV ? '<i>' + m.code + '</i>' : ic(KIND[m.x.k].i, 14)) + esc(m.label) + (isDone(m.x) ? ' ✓' : '') + '</a>';
+  }).join('') + '</div>' + (g.extras || []).map(function (e) {
+    var to = e[0].charAt(0) === '#' ? e[0] : href(g.level, e[0]);
+    return '<a class="vx" href="' + to + '">' + e[1] + '</a>';
+  }).join('') + '</nav>';
+}
+
+// ================= rendu : page cours =================
+function exoTabsFor(x) {
+  if (x.s === 'algo_tris') return ['Tri par sélection', 'Tri par insertion', 'Tri par dénombrement', 'Tri à bulles', 'Comparer les tris'];
+  if (x.k === 'cours') return null;
+  return ['Exercice 1', 'Exercice 2', 'Exercice 3'];
+}
+var CODE = {
+  'Tri par sélection': 'def tri_selection(t):\n    """Trie la liste t en place par sélection."""\n    n = len(t)\n    for i in range(n - 1):\n        i_min = i\n        # à compléter : chercher le minimum de t[i:]\n        t[i], t[i_min] = t[i_min], t[i]\n    return t\n\nprint(tri_selection([5, 2, 4, 6, 1, 3]))',
+  'Tri par insertion': 'def tri_insertion(t):\n    for i in range(1, len(t)):\n        cle = t[i]\n        j = i - 1\n        # à compléter : décaler les éléments plus grands\n        t[j + 1] = cle\n    return t',
+  'Tri par dénombrement': 'def tri_denombrement(t, maxi):\n    compte = [0] * (maxi + 1)\n    for x in t:\n        compte[x] += 1\n    # à compléter : reconstruire la liste triée\n    return t',
+  'Tri à bulles': 'def tri_bulles(t):\n    n = len(t)\n    # à compléter\n    return t',
+  'Comparer les tris': 'import time\n\n# Mesure le temps de chaque tri sur une liste de 1000 entiers\n# et compare les résultats.'
+};
+function renderCourse(id, slug) {
+  var L = lvl(id), x = findCourse(id, slug);
+  if (!L || !x) return renderMissing();
+  var siblings = x.chapter.list, idx = siblings.indexOf(x);
+  var prev = siblings[idx - 1], next = siblings[idx + 1];
+  var crumbs = '<div class="crumbs"><a href="#/">Accueil</a>' + ic('right', 12) + '<a href="' + href(id) + '">' + L.label + '</a>' + ic('right', 12) + '<a href="' + href(id) + '?ch=' + x.chapter.key + '">' + esc(x.chapter.name) + '</a>' + ic('right', 12) + '<b>' + esc(x.t) + '</b></div>';
+
+  if (!canRead(x)) {
+    app.innerHTML = '<div class="wrap">' + crumbs + '<div class="card" style="max-width:520px;margin:30px auto;padding:40px;text-align:center"><div style="width:64px;height:64px;border-radius:16px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin:0 auto 16px">' + ic('lock', 30) + '</div>' +
+      '<h2 class="h2">Cours réservé</h2><p style="color:var(--muted);margin:10px 0 22px">' + (state.student ? 'Tu n’as pas la permission d’accéder à ce cours.' : 'Connecte-toi pour débloquer ce cours, sauvegarder ta progression et gagner des badges.') + '</p>' +
+      (state.student ? '<a class="btn-ghost" href="#/espace">Retour à mon espace</a>' : '<a class="btn-acc" href="#/connexion?next=' + encodeURIComponent(href(id, slug)) + '">Se connecter</a>') + '</div></div>';
+    return;
+  }
+
+  var heads = x.h && x.h.length ? x.h : ['Découvrir la notion', 'Pour s’entraîner'];
+  var tabs = exoTabsFor(x);
+  var sections = heads.map(function (h, i) {
+    var lines = [92, 100, 86, 97, 64].slice(0, 3 + (i % 3)).map(function (w) { return '<i style="width:' + w + '%"></i>'; }).join('');
+    var block = '<h2 id="s' + i + '">' + esc(h) + '</h2><div class="skel">' + lines + '</div>';
+    if (i === 0) block += '<div class="admo"><b>💡 À retenir</b>Les encadrés, tableaux, formules et widgets interactifs du cours s’affichent ici.</div>';
+    if (i === 0 && tabs) block += exoBlock(x, tabs);
+    return block;
+  }).join('');
+  var badgeEarned = x.b && (isDone(x));
+
+  app.innerHTML = '<div class="wrap" style="' + lcs(L) + '">' + crumbs +
+    '<header class="card course-head"><div><div class="ey"><span class="lv">' + L.label + '</span><span class="chn">' + esc(x.chapter.name) + '</span><span class="kind k-' + x.k + '">' + ic(KIND[x.k].i, 13) + KIND[x.k].l + '</span>' +
+      (isDone(x) ? '<span class="ok">' + ic('check', 14) + 'Terminé</span>' : '') + '</div>' +
+      '<h1>' + esc(x.t) + '</h1>' + (x.d ? '<p>' + esc(x.d) + '</p>' : '') + (x.m ? '<div class="pills"><span class="pill">' + ic('clock', 12) + esc(x.m) + '</span></div>' : '') + '</div>' +
+      '<img src="' + IMG + L.fox + '" alt=""></header>' + variantBar(x) +
+    '<div class="course-layout"><article class="card prose">' + (x.p ? '<p class="intro-p">' + esc(x.p) + '</p>' : '') + sections +
+      '<p class="skel-note">Contenu du cours abrégé dans la maquette : les titres et l’introduction sont les vrais, le reste est figuré.</p></article>' +
+      '<aside class="toc"><div class="card"><span class="lbl">Sommaire</span>' + heads.map(function (h, i) { return '<a class="h" data-goto="s' + i + '">' + esc(h) + '</a>'; }).join('') + '</div>' +
+      (x.b ? '<div class="card"><span class="lbl">Badge à gagner</span><div class="badge-win"><img class="' + (badgeEarned ? '' : 'locked') + '" src="' + IMG + 'badges/' + x.b + '.png" alt=""><div><b>' + esc(x.t) + '</b><p>' + (badgeEarned ? 'Obtenu ✓' : state.student ? 'Valide tous les exercices' : 'Connecte-toi pour le gagner') + '</p></div></div></div>' : '') +
+      '<div class="card"><span class="lbl">Dans ce chapitre</span>' + siblings.map(function (s) {
+        return '<a class="sib' + (s === x ? ' on' : '') + '" href="' + href(id, s.s) + '"><span>' + esc(s.t) + '</span>' + (isDone(s) ? '<span class="ok">' + ic('check', 12) + '</span>' : '') + '</a>';
+      }).join('') + '</div></aside></div>' +
+    '<nav class="prevnext">' + (prev ? '<a class="card" href="' + href(id, prev.s) + '"><small>← Précédent</small><b>' + esc(prev.t) + '</b></a>' : '<span></span>') +
+      (next ? '<a class="card nx" href="' + href(id, next.s) + '"><small>Suivant →</small><b>' + esc(next.t) + '</b></a>' : '') + '</nav></div>';
+  updateReadBar();
+}
+function exoBlock(x, tabs) {
+  var st = EXO[x.s] && state.student ? EXO[x.s] : (EXO['_v_' + x.s] = EXO['_v_' + x.s] || tabs.map(function () { return false; }));
+  if (!EXO[x.s] && state.student) st = EXO[x.s] = tabs.map(function () { return false; });
+  var first = Math.max(0, st.indexOf(false));
+  return '<div class="exo" data-exo="' + esc(x.s) + '"><div class="exo-tabs">' + tabs.map(function (t, i) {
+    return '<button data-tab="' + i + '" class="' + (i === first ? 'on' : '') + '">' + (st[i] ? '<span class="okd">' + ic('check', 13) + '</span>' : '') + esc(t) + '</button>';
+  }).join('') + '</div><div class="exo-body" id="exo-body">' + exoPane(x, tabs, first) + '</div></div>';
+}
+function exoPane(x, tabs, i) {
+  var t = tabs[i];
+  var code = CODE[t] || 'def ma_fonction(donnees):\n    """À compléter"""\n    pass\n\nprint(ma_fonction([3, 1, 2]))';
+  return '<div class="exo-st"><h4>' + esc(t) + '</h4><p>Écris la fonction demandée dans l’éditeur, puis clique sur <b>Vérifier</b> : des tests cachés contrôlent ton code.</p>' +
+    '<p style="margin-top:10px">Exemple : <code>' + (x.s === 'algo_tris' ? 'tri([5, 2, 4]) → [2, 4, 5]' : 'ma_fonction([3, 1, 2])') + '</code></p>' +
+    '<div class="hint">💡 <b>Indice</b> — commence par le cas d’une liste vide ou d’un seul élément.</div></div>' +
+    '<div class="exo-ed"><div class="bar"><span>solution.py</span><span>Python 3.12 · Pyodide</span></div><textarea spellcheck="false" aria-label="Éditeur de code">' + esc(code) + '</textarea>' +
+    '<div class="acts"><button class="b-run" data-run>' + ic('play', 13) + 'Exécuter</button><button class="b-check" data-check="' + i + '">' + ic('check', 13) + 'Vérifier</button></div>' +
+    '<div class="out" id="out"><span class="info">Prêt. Exécute ou vérifie ton code.</span></div></div>';
+}
+
+// Cours à reprendre : le TP de tri tant qu'il n'est pas fini, puis la prochaine ressource non terminée.
+function resumeTarget() {
+  if (!DONE.algo_tris) return findCourse('1nsi', 'algo_tris');
+  var pool = ALL.filter(function (x) { return x.level === STUDENT.level && !DONE[x.s] && x.a; });
+  return pool.filter(function (x) { return x.chapter.key === 'algorithmique'; })[0] || pool[0];
+}
+function resumeCard(style) {
+  var x = resumeTarget();
+  if (!x) return '';
+  var tabs = exoTabsFor(x), st = EXO[x.s] || (tabs ? tabs.map(function () { return false; }) : null);
+  var n = st ? st.filter(Boolean).length : 0, tot = st ? st.length : 1, pct = Math.round(n / tot * 100);
+  return '<a class="card continue"' + (style ? ' style="' + style + '"' : '') + ' href="' + href(x.level, x.s) + '"><div class="thumb"><img src="' + courseThumb(x) + '" alt=""></div><div class="info"><span class="eyebrow">' + (n ? 'Reprendre' : 'Prochaine étape') + ' · ' + esc(x.chapter.name) + '</span><h3>' + esc(x.t) + '</h3>' +
+    '<div class="progress"><i style="width:' + pct + '%"></i></div><div class="meta-row"><span>' + (st ? n + ' / ' + tot + ' exercices' : 'À commencer') + '</span><span>' + pct + ' %</span></div></div><span class="btn-acc">' + (n ? 'Continuer →' : 'Commencer →') + '</span></a>';
+}
+
+// ================= rendu : espace élève =================
+function renderEspace() {
+  if (!state.student) { go('#/connexion?next=' + encodeURIComponent('#/espace')); return; }
+  var L = lvl(STUDENT.level), total = levelTotal(L.id), done = levelDone(L.id);
+  var nsiBadges = ALL.filter(function (x) { return x.b && x.level === L.id; });
+  var earned = earnedBadges();
+  var tris = findCourse('1nsi', 'algo_tris'), exo = EXO.algo_tris, nb = exo.filter(Boolean).length;
+  app.innerHTML = '<div class="wrap"><div class="crumbs"><a href="#/">Accueil</a>' + ic('right', 12) + '<b>Mon espace</b></div>' +
+    '<div class="esp-head"><div><h1>Bonjour ' + STUDENT.name + ' 👋</h1><p>' + L.label + ' · classe ' + STUDENT.classe + '</p></div><div style="display:flex;gap:10px"><a class="btn-ghost" href="' + href(L.id) + '">Mon niveau</a></div></div>' +
+    '<div class="kpis"><div class="card kpi"><b>' + Math.round(done / total * 100) + ' %</b><span>du parcours ' + L.label + '</span></div><div class="card kpi"><b>' + done + '</b><span>ressources terminées</span></div>' +
+      '<div class="card kpi"><b>' + (done * 3 + nb) + '</b><span>exercices réussis</span></div><div class="card kpi"><b>' + earned.length + '</b><span>badges obtenus</span></div></div>' +
+    resumeCard('padding:18px 20px;margin-bottom:14px') +
+    '<div class="esp-grid"><div class="card" style="' + lcs(L) + '"><h2>Ma progression <span>' + done + ' / ' + total + '</span></h2>' +
+      CH[L.id].map(function (c) {
+        var d = chapterDone(c), pct = Math.round(d / c.list.length * 100);
+        return '<a class="prog-row" href="' + href(L.id) + '?ch=' + c.key + '"><span class="ic">' + chImg(c) + '</span><div><b>' + esc(c.name) + '</b><div class="mini" style="margin:0"><i style="width:' + pct + '%"></i></div></div><em>' + d + ' / ' + c.list.length + '</em></a>';
+      }).join('') + '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:14px"><div class="card"><h2>Devoirs <span>2</span></h2>' +
+        '<a class="hw" href="' + href('1nsi', 'python_exercices_dictionnaires') + '"><div class="d">VEN<b>31</b></div><div class="t"><b>Exercices sur les dictionnaires</b><span>Donné par M. Braun · à rendre vendredi</span></div><span class="due" style="margin:0">2 jours</span></a>' +
+        '<a class="hw" href="' + href('1nsi', 'web_html') + '"><div class="d">MAR<b>4</b></div><div class="t"><b>HTML : structurer une page</b><span>Donné par M. Braun · à rendre mardi</span></div><span class="pill">6 jours</span></a></div>' +
+      '<div class="card"><h2>Mes badges <span>' + earned.length + ' / ' + nsiBadges.length + '</span></h2><div class="badge-wall">' +
+        nsiBadges.slice(0, 18).map(function (x) { return '<div class="' + (isDone(x) ? '' : 'locked') + '" title="' + esc(x.t) + '"><img src="' + IMG + 'badges/' + x.b + '.png" alt=""></div>'; }).join('') +
+      '</div></div></div></div></div>';
+}
+
+// ================= rendu : connexion =================
+function renderLogin(query) {
+  if (state.student) { go(query.next || '#/espace'); return; }
+  app.innerHTML = '<div class="wrap"><div class="card login"><div class="art"><span class="splash" style="top:22px;left:22px">Réveil des renards...</span><img src="' + IMG + 'fox_3.png" alt=""></div>' +
+    '<form id="login-form"><span class="eyebrow">Espace élève</span><h1>Connexion</h1><p>Utilise l’identifiant donné par ton professeur.</p>' +
+    '<label>Identifiant<input name="id" value="lea.martin" autocomplete="off"></label><label>Mot de passe<input type="password" name="pw" value="renard" autocomplete="off"></label>' +
+    '<button class="btn-acc" type="submit" style="justify-content:center">Se connecter</button><p class="demo">Maquette : n’importe quel identifiant connecte Léa (1NSI2).</p></form></div></div>';
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    setStudent(true);
+    go(query.next || '#/espace');
+  });
+}
+
+function renderMissing(name) {
+  var pages = { academie: ['Académie', 'fox_act.png', 'Le jeu « Le renard dans le poulailler » garde sa page actuelle.'], 'a-propos': ['À propos', 'fox_3.png', 'La page À propos garde son contenu actuel.'], 'ren-arts': ['Chasse aux Ren’Arts', 'fox_chasse_renard.png', 'La galerie garde sa page actuelle.'], outils: ['Outils enseignants', 'fox_4.png', 'Page inchangée.'], mentions: ['Mentions légales', 'fox_0.png', 'Page inchangée.'] };
+  var p = pages[name] || ['Page introuvable', 'fox_0.png', '404 : Vulpes not found.'];
+  app.innerHTML = '<div class="wrap"><div class="card" style="max-width:560px;margin:50px auto;padding:40px;text-align:center"><img src="' + IMG + p[1] + '" alt="" style="height:150px;margin:0 auto 16px"><h1 class="h2">' + p[0] + '</h1><p style="color:var(--muted);margin:10px 0 22px">' + p[2] + ' Elle n’est pas reproduite dans la maquette.</p><a class="btn-acc" href="#/">Retour à l’accueil</a></div></div>';
+}
+
+// ================= routeur =================
+var app = document.getElementById('app');
+// Navigation interne : l'aperçu local bloque les ancres, on garde donc la route en mémoire.
+var CUR = location.hash && location.hash.indexOf('#/') === 0 ? location.hash : '#/';
+var HIST = [];
+function go(h) {
+  if (h !== CUR) { HIST.push(CUR); CUR = h; try { history.pushState(null, '', h); } catch (e) {} }
+  route();
+}
+function back() { if (HIST.length) { CUR = HIST.pop(); try { history.replaceState(null, '', CUR); } catch (e) {} route(); } }
+window.addEventListener('popstate', function () { if (location.hash.indexOf('#/') === 0) { CUR = location.hash; route(); } });
+function parse() {
+  var h = CUR.replace(/^#/, '') || '/';
+  var qi = h.indexOf('?');
+  var path = qi < 0 ? h : h.slice(0, qi), q = qi < 0 ? '' : h.slice(qi + 1);
+  var query = {};
+  q.split('&').filter(Boolean).forEach(function (kv) { var p = kv.split('='); query[p[0]] = decodeURIComponent(p[1] || ''); });
+  return { parts: path.split('/').filter(Boolean), query: query };
+}
+var lastPath = null;
+function route() {
+  if (CUR === '#niveaux') return;
+  closeModal();
+  var r = parse(), p = r.parts;
+  var pathKey = p.join('/');
+  if (pathKey !== lastPath) { state.filter = 'all'; }
+  renderHeader(r);
+  app.style.animation = 'none'; void app.offsetWidth; app.style.animation = '';
+  if (!p.length) renderHome();
+  else if (p[0] === 'cours' && p.length === 1) renderAllLevels();
+  else if (p[0] === 'cours' && p.length === 2) renderLevel(p[1], r.query);
+  else if (p[0] === 'cours') renderCourse(p[1], p.slice(2).join('/'));
+  else if (p[0] === 'espace') renderEspace();
+  else if (p[0] === 'connexion') renderLogin(r.query);
+  else renderMissing(p[0]);
+  if (pathKey !== lastPath) window.scrollTo(0, 0);
+  lastPath = pathKey;
+  document.querySelectorAll('[data-i]').forEach(function (el) { el.innerHTML = ic(el.dataset.i, 18); });
+}
+document.getElementById('back').addEventListener('click', back);
+
+// ================= interactions =================
+function setStudent(v) {
+  state.student = v;
+  document.querySelectorAll('#who button').forEach(function (b) { b.classList.toggle('on', (b.dataset.v === 'student') === v); });
+}
+function seg(id, cb) {
+  var box = document.getElementById(id);
+  box.querySelectorAll('button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      box.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
+      b.classList.add('on');
+      cb(b.dataset.v);
+    });
+  });
+}
+function setTheme(dark) {
+  document.documentElement.classList.toggle('dark', dark);
+  document.querySelectorAll('#theme button').forEach(function (b) { b.classList.toggle('on', (b.dataset.v === 'dark') === dark); });
+  renderHeader(parse());
+}
+seg('theme', function (v) { setTheme(v === 'dark'); });
+seg('who', function (v) { setStudent(v === 'student'); lastPath = null; route(); });
+
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
+  clearTimeout(toast.tm); toast.tm = setTimeout(function () { t.classList.remove('show'); }, 2600);
+}
+
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href^="#/"]');
+  if (a && !e.target.closest('[data-pal]')) { e.preventDefault(); go(a.getAttribute('href')); return; }
+  var t = e.target.closest('[data-filter],[data-pal],[data-scroll],[data-goto],[data-tab],[data-run],[data-check],[data-logout],[data-a11y],[data-toast],[data-close-modal],[data-group],.pal-item');
+  if (!t) return;
+  if (t.dataset.filter) { state.filter = t.dataset.filter; route(); }
+  else if (t.hasAttribute('data-pal')) { e.preventDefault(); openPal(t.dataset.pal || ''); }
+  else if (t.dataset.scroll) { e.preventDefault(); document.getElementById(t.dataset.scroll).scrollIntoView(); }
+  else if (t.dataset.goto) { document.getElementById(t.dataset.goto).scrollIntoView(); }
+  else if (t.dataset.tab) {
+    var r = parse(), x = findCourse(r.parts[1], r.parts.slice(2).join('/')), tabs = exoTabsFor(x);
+    t.parentNode.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b === t); });
+    document.getElementById('exo-body').innerHTML = exoPane(x, tabs, +t.dataset.tab);
+  }
+  else if (t.hasAttribute('data-run')) {
+    document.getElementById('out').innerHTML = '<span class="info">&gt;&gt;&gt; exécution…</span>\n[1, 2, 3, 4, 5, 6]\n<span class="info">Terminé en 12 ms.</span>';
+  }
+  else if (t.dataset.check) { checkExercise(+t.dataset.check); }
+  else if (t.hasAttribute('data-logout')) { setStudent(false); go('#/'); toast('Déconnexion réussie. À bientôt !'); }
+  else if (t.dataset.a11y) {
+    var k = t.dataset.a11y;
+    if (k === 'toggle') a11y.open = !a11y.open;
+    else if (k === 'dark') { setTheme(!document.documentElement.classList.contains('dark')); return; }
+    else if (k === 'dyslexic') { a11y.dyslexic = !a11y.dyslexic; document.documentElement.classList.toggle('dyslexic', a11y.dyslexic); }
+    else if (k === 'contrast') { a11y.contrast = !a11y.contrast; document.documentElement.classList.toggle('high-contrast', a11y.contrast); }
+    renderHeader(parse());
+  }
+  else if (t.dataset.toast) { toast(t.dataset.toast); }
+  else if (t.hasAttribute('data-close-modal')) { closeModal(); route(); }
+  else if (t.dataset.group) { openGroup(GROUPS[+t.dataset.group]); }
+  else if (t.classList.contains('pal-item')) { closePal(); go(t.dataset.href); }
+});
+
+function checkExercise(i) {
+  var r = parse(), x = findCourse(r.parts[1], r.parts.slice(2).join('/')), tabs = exoTabsFor(x);
+  var out = document.getElementById('out');
+  out.innerHTML = '<span class="info">Vérification avec 4 tests cachés…</span>';
+  setTimeout(function () {
+    out.innerHTML = '<span class="pass">✓ liste vide</span>\n<span class="pass">✓ un seul élément</span>\n<span class="pass">✓ liste déjà triée</span>\n<span class="pass">✓ liste aléatoire (1000 éléments)</span>\n' +
+      (state.student ? '<span class="pass">Bravo, exercice validé ! Progression enregistrée.</span>' : '<span class="warn">Bravo ! Connecte-toi pour enregistrer ta progression et gagner le badge.</span>');
+    var store = state.student ? (EXO[x.s] = EXO[x.s] || tabs.map(function () { return false; })) : EXO['_v_' + x.s];
+    store[i] = true;
+    var btn = document.querySelector('.exo-tabs [data-tab="' + i + '"]');
+    if (btn && !btn.querySelector('.okd')) btn.insertAdjacentHTML('afterbegin', '<span class="okd">' + ic('check', 13) + '</span>');
+    if (state.student && store.every(Boolean) && !DONE[x.s]) {
+      DONE[x.s] = true;
+      setTimeout(function () { showBadge(x); }, 500);
+    }
+  }, 650);
+}
+function showBadge(x) {
+  var img = x.b ? IMG + 'badges/' + x.b + '.png' : IMG + lvl(x.level).fox;
+  document.getElementById('modal-box').className = 'card modal';
+  document.getElementById('modal-box').innerHTML = '<span class="eyebrow">' + (x.b ? 'Badge débloqué !' : 'Fiche terminée !') + '</span><img src="' + img + '" alt=""><h2>' + esc(x.t) + '</h2><p>Tous les exercices sont validés. Bien joué, ' + STUDENT.name + ' 🦊</p><button class="btn-acc" data-close-modal>Continuer</button>';
+  document.getElementById('modal').classList.add('open');
+}
+
+// ----- palette de recherche -----
+var palSel = 0, palItems = [];
+function openPal(q) {
+  document.getElementById('pal').classList.add('open');
+  var input = document.getElementById('pal-q');
+  input.value = q; renderPal(); setTimeout(function () { input.focus(); }, 10);
+}
+function closePal() { document.getElementById('pal').classList.remove('open'); }
+function hl(text, q) {
+  if (!q) return esc(text);
+  var i = norm(text).indexOf(norm(q));
+  if (i < 0) return esc(text);
+  return esc(text.slice(0, i)) + '<mark>' + esc(text.slice(i, i + q.length)) + '</mark>' + esc(text.slice(i + q.length));
+}
+function renderPal() {
+  var q = document.getElementById('pal-q').value.trim(), nq = norm(q);
+  var levels = LEVELS.filter(function (L) { return !L.hidden && (!nq || norm(L.label + ' ' + L.aud).indexOf(nq) >= 0); });
+  var courses = !nq ? ALL.filter(function (x) { return x.level === (state.student ? STUDENT.level : '1nsi'); }).slice(0, 6)
+    : ALL.filter(function (x) { return norm(x.t + ' ' + x.d + ' ' + x.chapter.name + ' ' + (x.h || []).join(' ')).indexOf(nq) >= 0; })
+         .sort(function (a, b) { return (norm(b.t).indexOf(nq) >= 0) - (norm(a.t).indexOf(nq) >= 0); }).slice(0, 12);
+  palItems = [];
+  var html = '';
+  if (courses.length) {
+    html += '<div class="grp">' + (nq ? 'Cours et exercices' : 'Suggestions') + '</div>';
+    courses.forEach(function (x) {
+      palItems.push(href(x.level, x.s));
+      html += '<a class="pal-item" data-href="' + href(x.level, x.s) + '"><span class="ic">' + chImg(x.chapter) + '</span><span class="t"><b>' + hl(x.t, q) + '</b><span>' + lvl(x.level).label + ' · ' + esc(x.chapter.name) + '</span></span><span class="kind k-' + x.k + '">' + KIND[x.k].l + '</span>' + (canRead(x) ? '' : '<span class="lock">' + ic('lock', 13) + '</span>') + '</a>';
+    });
+  }
+  if (levels.length) {
+    html += '<div class="grp">Niveaux</div>';
+    levels.forEach(function (L) {
+      palItems.push(href(L.id));
+      html += '<a class="pal-item" data-href="' + href(L.id) + '"><span class="ic"><img class="fox" src="' + IMG + L.fox + '" alt=""></span><span class="t"><b>' + hl(L.label, q) + '</b><span>' + L.aud + ' · ' + levelTotal(L.id) + ' ressources</span></span></a>';
+    });
+  }
+  if (!html) html = '<div class="empty">Aucun résultat pour « ' + esc(q) + ' ». 🦊</div>';
+  document.getElementById('pal-res').innerHTML = html;
+  palSel = 0; markPal();
+}
+function markPal() {
+  document.querySelectorAll('.pal-item').forEach(function (el, i) { el.classList.toggle('sel', i === palSel); if (i === palSel) el.scrollIntoView({ block: 'nearest' }); });
+}
+document.getElementById('pal-q').addEventListener('input', renderPal);
+document.getElementById('pal').addEventListener('click', function (e) { if (e.target.id === 'pal') closePal(); });
+document.getElementById('modal').addEventListener('click', function (e) { if (e.target.id === 'modal') closeModal(); });
+document.addEventListener('keydown', function (e) {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openPal(''); return; }
+  if (e.key === 'Escape' && document.getElementById('modal').classList.contains('open')) { closeModal(); return; }
+  if (!document.getElementById('pal').classList.contains('open')) return;
+  if (e.key === 'Escape') closePal();
+  else if (e.key === 'ArrowDown') { e.preventDefault(); palSel = Math.min(palSel + 1, palItems.length - 1); markPal(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); palSel = Math.max(palSel - 1, 0); markPal(); }
+  else if (e.key === 'Enter' && palItems[palSel]) { closePal(); go(palItems[palSel]); }
+});
+
+// ----- barre de lecture et phrases d'accroche -----
+function updateReadBar() {
+  var bar = document.getElementById('readbar');
+  if (!bar) return;
+  var onCourse = parse().parts.length > 2;
+  var max = document.documentElement.scrollHeight - innerHeight;
+  bar.style.width = onCourse && max > 0 ? (scrollY / max * 100) + '%' : '0';
+}
+window.addEventListener('scroll', updateReadBar, { passive: true });
+var si = 0;
+setInterval(function () { var s = document.getElementById('splash'); if (s) { si = (si + 1) % SPLASH.length; s.textContent = SPLASH[si]; } }, 4000);
+
+route();
+</script>
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquettes accueil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&family=Space+Grotesk:wght@500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;800&family=Caveat:wght@600;700&family=Patrick+Hand&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --img: "https://www.clementbraun.info/images/";
+    --ink: #1d1712;
+    --cream: #fbf5ec;
+    --orange: #f26b1d;
+    --sni: #5b8a9a; --snt: #3b82f6; --nsi1: #f26b1d; --tnsi: #8b5cf6; --sio: #10b981; --c: #d97706;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #e9e4dc; font-family: Nunito, system-ui, sans-serif; color: var(--ink); }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  .switcher { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 10px; background: #1d1712; }
+  .switcher button { font: 700 14px Nunito, sans-serif; border: 0; border-radius: 999px; padding: 8px 16px; background: #3a312a; color: #e9e4dc; cursor: pointer; }
+  .switcher button.on { background: var(--orange); color: #fff; }
+  .mock { display: none; }
+  .mock.on { display: block; }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; max-width: 1180px; margin: 0 auto; padding: 18px 32px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+  .brand img { height: 44px; }
+  .nav-links { display: flex; gap: 22px; align-items: center; font-weight: 700; font-size: 15px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; border-radius: 999px; padding: 11px 20px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* ============ A : La carte du terrier ============ */
+  #a { background: var(--cream); padding-bottom: 60px; }
+  #a .brand span { font-family: "Bricolage Grotesque"; font-size: 19px; }
+  #a .btn-dark { background: var(--ink); color: #fff; }
+  #a .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center; padding: 40px 0 10px; }
+  #a h1 { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 72px; line-height: .95; letter-spacing: -.03em; }
+  #a h1 em { font-style: normal; color: var(--orange); position: relative; }
+  #a h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 14px; background: #ffd9bf; z-index: -1; border-radius: 6px; }
+  #a .lead { font-size: 19px; color: #5c5148; margin: 20px 0 26px; max-width: 520px; }
+  #a .search { display: flex; align-items: center; gap: 12px; background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; padding: 16px 18px; box-shadow: 5px 5px 0 var(--ink); max-width: 520px; font-size: 17px; color: #8a7f75; }
+  #a .chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  #a .chip { font-weight: 700; font-size: 13px; padding: 6px 12px; border-radius: 999px; background: #fff; border: 1.5px solid #e2d6c6; }
+  #a .hero-art { position: relative; height: 380px; }
+  #a .hero-art .blob { position: absolute; inset: 20px 10px 0 30px; background: #ffd9bf; border-radius: 46% 54% 60% 40% / 50% 45% 55% 50%; }
+  #a .hero-art img { position: absolute; inset: 0; margin: auto; height: 340px; object-fit: contain; filter: drop-shadow(0 18px 20px rgba(0,0,0,.15)); }
+  #a .bubble { position: absolute; top: 18px; right: 0; background: #fff; border: 2.5px solid var(--ink); border-radius: 16px; padding: 10px 14px; font-weight: 800; font-size: 14px; transform: rotate(4deg); box-shadow: 3px 3px 0 var(--ink); }
+  #a .section-title { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 34px; margin: 46px 0 6px; }
+  #a .section-sub { color: #6d6157; font-weight: 600; margin-bottom: 18px; }
+  #a .map { position: relative; background: #f3e8d7; border: 2.5px solid var(--ink); border-radius: 28px; padding: 30px 26px 26px; overflow: hidden; }
+  #a .map svg.path { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #a .stops { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-items: end; }
+  #a .stop { background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; padding: 12px 12px 14px; box-shadow: 4px 4px 0 var(--ink); transition: transform .15s; }
+  #a .stop:hover { transform: translateY(-4px) rotate(-1deg); }
+  #a .stop:nth-child(odd) { margin-bottom: 70px; }
+  #a .stop .pic { height: 110px; border-radius: 14px; display: grid; place-items: center; }
+  #a .stop .pic img { height: 100px; object-fit: contain; }
+  #a .stop .num { display: inline-block; font: 800 12px Nunito; color: #fff; padding: 3px 9px; border-radius: 999px; margin: 10px 0 6px; }
+  #a .stop h3 { font-family: "Bricolage Grotesque"; font-size: 20px; font-weight: 800; }
+  #a .stop p { font-size: 13px; color: #6d6157; font-weight: 600; margin-top: 4px; }
+  #a .stop.star { outline: 4px solid var(--orange); outline-offset: 4px; }
+  #a .side { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 18px; }
+  #a .tile { display: flex; gap: 14px; align-items: center; background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; padding: 14px; box-shadow: 4px 4px 0 var(--ink); }
+  #a .tile img { width: 86px; height: 86px; object-fit: contain; border-radius: 14px; }
+  #a .tile h3 { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 18px; }
+  #a .tile p { font-size: 13px; color: #6d6157; font-weight: 600; }
+  #a .tag { font: 800 11px Nunito; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ============ B : Cartes à collectionner ============ */
+  #b { background: #fff7ee; padding-bottom: 60px; font-family: Nunito; }
+  #b .brand span { font-family: Fredoka; font-size: 20px; font-weight: 600; }
+  #b .btn-or { background: var(--orange); color: #fff; box-shadow: 0 4px 0 #b9480a; }
+  #b .hero { text-align: center; padding: 34px 0 20px; position: relative; }
+  #b .sticker { display: inline-block; font: 600 15px Fredoka; background: #ffe066; padding: 6px 14px; border-radius: 12px; transform: rotate(-3deg); margin-bottom: 18px; box-shadow: 0 3px 0 #d4b02a; }
+  #b h1 { font-family: Fredoka; font-weight: 700; font-size: 76px; line-height: 1; letter-spacing: -.01em; }
+  #b h1 .o { color: var(--orange); }
+  #b h1 .wave { display: inline-block; background: var(--tnsi); color: #fff; padding: 0 18px 6px; border-radius: 22px; transform: rotate(-2deg); }
+  #b .lead { font-size: 20px; color: #6a5d52; margin: 20px auto 26px; max-width: 600px; font-weight: 600; }
+  #b .search { margin: 0 auto; max-width: 560px; display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 999px; padding: 8px 8px 8px 24px; box-shadow: 0 6px 0 #f1dcc6, 0 0 0 2px #f1dcc6; font-size: 17px; color: #9a8d82; }
+  #b .search .go { margin-left: auto; background: var(--orange); color: #fff; font: 600 15px Fredoka; border-radius: 999px; padding: 10px 18px; }
+  #b .floaters img { position: absolute; width: 120px; }
+  #b .floaters .f1 { left: 30px; top: 90px; transform: rotate(-12deg); }
+  #b .floaters .f2 { right: 30px; top: 150px; transform: rotate(10deg) scaleX(-1); }
+  #b .section-title { font-family: Fredoka; font-weight: 700; font-size: 34px; margin: 46px 0 18px; display: flex; align-items: center; gap: 12px; }
+  #b .section-title small { font: 700 14px Nunito; color: #9a8d82; }
+  #b .deck { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+  #b .card { border-radius: 26px; padding: 10px; color: #fff; box-shadow: 0 8px 0 rgba(0,0,0,.18); transition: transform .2s; position: relative; }
+  #b .card:nth-child(1) { transform: rotate(-3deg); }
+  #b .card:nth-child(2) { transform: rotate(2deg); }
+  #b .card:nth-child(3) { transform: rotate(-1deg) translateY(-12px) scale(1.05); z-index: 2; }
+  #b .card:nth-child(4) { transform: rotate(3deg); }
+  #b .card:nth-child(5) { transform: rotate(-2deg); }
+  #b .card:hover { transform: rotate(0) translateY(-14px) scale(1.06); z-index: 3; }
+  #b .card .art { background: rgba(255,255,255,.22); border-radius: 18px; height: 150px; display: grid; place-items: center; }
+  #b .card .art img { height: 136px; object-fit: contain; }
+  #b .card .lvl { position: absolute; top: 18px; left: 18px; font: 600 13px Fredoka; background: #fff; color: var(--ink); border-radius: 999px; padding: 3px 10px; }
+  #b .card h3 { font: 700 21px Fredoka; margin: 12px 6px 2px; }
+  #b .card p { font-size: 13px; font-weight: 700; opacity: .9; margin: 0 6px 6px; min-height: 36px; }
+  #b .card .foot { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,.16); border-radius: 14px; padding: 8px 12px; font: 600 13px Fredoka; }
+  #b .bar { flex: 1; height: 8px; background: rgba(255,255,255,.3); border-radius: 99px; margin-left: 10px; overflow: hidden; }
+  #b .bar i { display: block; height: 100%; background: #fff; border-radius: 99px; }
+  #b .duo { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 18px; }
+  #b .play { border-radius: 26px; padding: 22px; display: flex; gap: 16px; align-items: center; box-shadow: 0 6px 0 rgba(0,0,0,.12); }
+  #b .play img { width: 110px; height: 110px; object-fit: contain; }
+  #b .play h3 { font: 700 22px Fredoka; }
+  #b .play p { font-weight: 700; font-size: 14px; opacity: .8; margin: 4px 0 10px; }
+  #b .play .mini { display: inline-block; font: 600 13px Fredoka; background: var(--ink); color: #fff; padding: 6px 12px; border-radius: 999px; }
+
+  /* ============ C : Bento vitaminé ============ */
+  #c { background: #fffaf3; padding-bottom: 60px; font-family: "Space Grotesk", sans-serif; }
+  #c .brand span { font-weight: 700; font-size: 19px; }
+  #c .btn-dark { background: var(--ink); color: #fff; }
+  #c .bento { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 120px; gap: 14px; margin-top: 18px; }
+  #c .b { border-radius: 26px; padding: 22px; position: relative; overflow: hidden; }
+  #c .hero { grid-column: span 7; grid-row: span 3; background: var(--ink); color: #fff; padding: 34px; }
+  #c .hero h1 { font-weight: 700; font-size: 60px; line-height: 1; letter-spacing: -.03em; }
+  #c .hero h1 span { color: var(--orange); }
+  #c .hero p { color: #cbbfb3; font-size: 18px; margin: 16px 0 22px; max-width: 340px; font-family: Nunito; font-weight: 600; }
+  #c .hero .search { display: flex; gap: 10px; align-items: center; background: #2e2620; border-radius: 16px; padding: 14px 16px; color: #9c8f84; font-family: Nunito; font-weight: 600; max-width: 360px; }
+  #c .hero .search kbd { margin-left: auto; font: 700 12px "Space Grotesk"; background: #4a3f36; color: #e9e1d8; padding: 3px 8px; border-radius: 6px; }
+  #c .hero img { position: absolute; right: -10px; bottom: -10px; height: 200px; transform: scaleX(-1); }
+  #c .streak { grid-column: span 5; grid-row: span 1; background: #ffe066; display: flex; align-items: center; gap: 14px; }
+  #c .streak b { font-size: 34px; }
+  #c .streak p { font-weight: 700; font-family: Nunito; }
+  #c .defi { grid-column: span 5; grid-row: span 2; background: #ffd9bf; }
+  #c .defi .k { font: 700 12px "Space Grotesk"; text-transform: uppercase; letter-spacing: .1em; color: #b9480a; }
+  #c .defi h3 { font-size: 26px; margin: 8px 0; }
+  #c .defi pre { background: #fff; border-radius: 14px; padding: 12px 14px; font: 600 14px ui-monospace, Consolas, monospace; color: var(--ink); }
+  #c .defi .opts { display: flex; gap: 8px; margin-top: 10px; }
+  #c .defi .opts span { background: #fff; border-radius: 10px; padding: 6px 14px; font-weight: 700; }
+  #c .lvl { color: #fff; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; transition: transform .15s; }
+  #c .lvl:hover { transform: translateY(-4px); }
+  #c .lvl img { position: absolute; right: -6px; bottom: -6px; height: 140px; }
+  #c .lvl .t { font: 700 12px "Space Grotesk"; text-transform: uppercase; letter-spacing: .1em; opacity: .85; }
+  #c .lvl h3 { font-size: 28px; line-height: 1; margin-top: 6px; letter-spacing: -.02em; }
+  #c .lvl p { font-family: Nunito; font-weight: 700; font-size: 14px; max-width: 60%; opacity: .92; }
+  #c .w4 { grid-column: span 4; } #c .w3 { grid-column: span 3; } #c .w5 { grid-column: span 5; } #c .w6 { grid-column: span 6; }
+  #c .big { grid-row: span 3; }
+  #c .big img { height: 230px; }
+  #c .big h3 { font-size: 40px; }
+  #c .extra { grid-row: span 2; background: #fff; border: 2px solid #efe3d4; display: flex; gap: 14px; align-items: center; }
+  #c .extra img { width: 96px; height: 96px; flex-shrink: 0; object-fit: contain; }
+  #c .extra h3 { font-size: 20px; overflow-wrap: anywhere; }
+  #c .extra p { font-family: Nunito; font-weight: 600; color: #6d6157; font-size: 14px; margin-top: 4px; }
+  #c .arrow { position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.25); display: grid; place-items: center; font-weight: 700; }
+
+  /* ============ D : Éditorial ============ */
+  #d { background: #f6f2ea; padding-bottom: 60px; font-family: Inter, sans-serif; color: #1c1915; }
+  #d .nav { border-bottom: 1px solid #1c1915; }
+  #d .brand span { font: 600 20px Fraunces; }
+  #d .brand img { height: 36px; }
+  #d .nav-links { font-weight: 500; font-size: 14px; }
+  #d .btn-line { border: 1px solid #1c1915; border-radius: 0; padding: 8px 16px; font-weight: 600; }
+  #d .masthead { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #6b6259; padding: 12px 0; border-bottom: 1px solid #d8d0c4; }
+  #d .hero { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; padding: 44px 0 40px; border-bottom: 1px solid #1c1915; }
+  #d h1 { font: 400 66px/1.02 Fraunces; letter-spacing: -.02em; }
+  #d h1 i { color: #c2410c; }
+  #d .lead { font: 400 19px/1.55 Fraunces; color: #4a433b; margin: 22px 0 26px; max-width: 560px; }
+  #d .search { display: flex; gap: 12px; border-bottom: 2px solid #1c1915; padding: 10px 0; color: #8a8074; font-size: 17px; max-width: 520px; }
+  #d .figure { border: 1px solid #1c1915; background: #ede5d8; display: grid; place-items: center; height: 300px; position: relative; }
+  #d .figure img { height: 250px; }
+  #d .figure figcaption { position: absolute; bottom: -26px; left: 0; font: italic 13px Fraunces; color: #6b6259; }
+  #d .cols { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; margin-top: 40px; }
+  #d h2 { font: 600 13px Inter; letter-spacing: .14em; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid #1c1915; }
+  #d .toc a { display: grid; grid-template-columns: 56px 1fr auto; align-items: baseline; gap: 18px; padding: 18px 0; border-bottom: 1px solid #d8d0c4; }
+  #d .toc a:hover h3 { color: #c2410c; }
+  #d .toc .n { font: 400 28px Fraunces; color: #a39789; }
+  #d .toc h3 { font: 600 26px Fraunces; letter-spacing: -.01em; }
+  #d .toc p { color: #5f574e; font-size: 15px; margin-top: 2px; }
+  #d .toc .aud { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #6b6259; }
+  #d .aside a { display: block; padding: 18px 0; border-bottom: 1px solid #d8d0c4; }
+  #d .aside .k { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #c2410c; font-weight: 600; }
+  #d .aside h3 { font: 600 20px Fraunces; margin: 4px 0; }
+  #d .aside p { font-size: 14px; color: #5f574e; }
+  #d .quote { margin-top: 26px; font: italic 22px/1.4 Fraunces; border-left: 3px solid #c2410c; padding-left: 16px; }
+
+  /* ============ E : Terminal ============ */
+  #e { background: #0d1210; color: #d7e3dc; padding-bottom: 60px; font-family: "JetBrains Mono", monospace; }
+  #e .brand span { font-weight: 800; font-size: 16px; }
+  #e .brand span b { color: #ff8a3d; }
+  #e .nav-links { font-size: 13px; color: #8fa89b; }
+  #e .btn-term { border: 1px solid #ff8a3d; color: #ff8a3d; border-radius: 6px; padding: 7px 14px; font-size: 13px; }
+  #e .hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 36px; align-items: center; padding: 30px 0; }
+  #e .win { background: #141b18; border: 1px solid #26332d; border-radius: 12px; overflow: hidden; box-shadow: 0 30px 60px -30px #000; }
+  #e .win .bar { display: flex; gap: 7px; padding: 12px 14px; background: #1a2320; border-bottom: 1px solid #26332d; }
+  #e .win .bar i { width: 12px; height: 12px; border-radius: 50%; background: #3a4a43; }
+  #e .win .bar i:nth-child(1) { background: #ff5f57; } #e .win .bar i:nth-child(2) { background: #febc2e; } #e .win .bar i:nth-child(3) { background: #28c840; }
+  #e .win .bar span { margin-left: 10px; font-size: 12px; color: #6f857a; }
+  #e .win pre { padding: 20px 22px; font: 15px/1.7 "JetBrains Mono"; white-space: pre-wrap; }
+  #e .p { color: #4ade80; } #e .o { color: #ff8a3d; } #e .d { color: #6f857a; } #e .y { color: #fde047; }
+  #e .cur { display: inline-block; width: 9px; height: 18px; background: #4ade80; vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  #e h1 { font-size: 44px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; }
+  #e h1 span { color: #ff8a3d; }
+  #e .lead { color: #8fa89b; font-size: 15px; line-height: 1.7; margin: 16px 0 22px; }
+  #e .search { border: 1px solid #26332d; background: #141b18; border-radius: 8px; padding: 13px 14px; color: #6f857a; font-size: 14px; }
+  #e .search b { color: #4ade80; }
+  #e h2 { font-size: 14px; color: #6f857a; margin: 40px 0 14px; font-weight: 400; }
+  #e h2 b { color: #4ade80; font-weight: 400; }
+  #e .ls { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  #e .ls a { border: 1px solid #26332d; background: #121916; border-radius: 10px; padding: 14px; transition: border-color .15s; }
+  #e .ls a:hover { border-color: var(--lc); }
+  #e .ls .dir { color: var(--lc); font-weight: 800; font-size: 16px; }
+  #e .ls img { height: 90px; margin: 10px auto; object-fit: contain; filter: saturate(.9); }
+  #e .ls p { font-size: 12px; color: #8fa89b; line-height: 1.5; }
+  #e .ls .meta { font-size: 11px; color: #4f6359; margin-top: 8px; }
+  #e .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  #e .extras a { display: flex; gap: 12px; align-items: center; border: 1px dashed #26332d; border-radius: 10px; padding: 12px; }
+  #e .extras img { width: 64px; height: 64px; object-fit: contain; }
+  #e .extras h3 { font-size: 14px; } #e .extras p { font-size: 12px; color: #8fa89b; }
+
+  /* ============ F : Cahier d'école ============ */
+  #f { padding-bottom: 60px; font-family: "Patrick Hand", cursive; color: #26303f; font-size: 18px;
+       background-color: #fdfcf7; background-image: linear-gradient(#dbe6f3 1px, transparent 1px), linear-gradient(90deg, #dbe6f3 1px, transparent 1px); background-size: 28px 28px; }
+  #f .nav { border-bottom: 2px solid #e5484d; }
+  #f .brand span { font: 700 30px Caveat; }
+  #f .nav-links { font-size: 19px; }
+  #f .btn-ink { background: #26303f; color: #fff; border-radius: 6px; transform: rotate(-1.5deg); font-family: "Patrick Hand"; font-weight: 400; }
+  #f .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 30px; align-items: center; padding: 36px 0 10px; }
+  #f h1 { font: 700 78px/0.95 Caveat; }
+  #f h1 mark { background: linear-gradient(transparent 55%, #ffe46b 55%); color: inherit; padding: 0 4px; }
+  #f .lead { font-size: 22px; margin: 16px 0 22px; max-width: 520px; }
+  #f .search { background: #fff; border: 2px solid #26332d; border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; padding: 14px 20px; max-width: 480px; color: #7b8494; }
+  #f .polaroid { background: #fff; padding: 14px 14px 46px; box-shadow: 0 10px 24px rgba(0,0,0,.12); transform: rotate(3deg); position: relative; width: 320px; margin: 0 auto; }
+  #f .polaroid img { height: 260px; width: 100%; object-fit: contain; background: #fde9d9; }
+  #f .polaroid span { position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font: 700 26px Caveat; }
+  #f .tape { position: absolute; top: -14px; left: 50%; width: 110px; height: 28px; margin-left: -55px; background: rgba(255,228,107,.75); transform: rotate(-4deg); }
+  #f h2 { font: 700 44px Caveat; margin: 40px 0 16px; }
+  #f h2 small { font: 400 20px "Patrick Hand"; color: #e5484d; margin-left: 10px; }
+  #f .notes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+  #f .note { padding: 16px 14px 18px; box-shadow: 0 8px 16px rgba(0,0,0,.1); position: relative; transition: transform .15s; }
+  #f .note:nth-child(odd) { transform: rotate(-2deg); } #f .note:nth-child(even) { transform: rotate(2deg); }
+  #f .note:hover { transform: rotate(0) scale(1.04); }
+  #f .note img { height: 100px; margin: 0 auto 6px; object-fit: contain; }
+  #f .note h3 { font: 700 30px Caveat; line-height: 1; }
+  #f .note p { font-size: 16px; line-height: 1.25; margin-top: 4px; }
+  #f .pin { position: absolute; top: -8px; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ff8f8f, #c81e1e); box-shadow: 0 2px 3px rgba(0,0,0,.3); }
+  #f .doodles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  #f .doodle { border: 2px dashed #26303f; border-radius: 14px; padding: 14px; display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,.7); }
+  #f .doodle img { width: 80px; height: 80px; object-fit: contain; }
+  #f .doodle h3 { font: 700 26px Caveat; line-height: 1; }
+
+  /* ============ G : Pixel arcade ============ */
+  #g { background: #1b1d3a; color: #fff; padding-bottom: 60px; font-family: VT323, monospace; font-size: 22px;
+       background-image: radial-gradient(#ffffff22 1px, transparent 1px); background-size: 22px 22px; }
+  #g .brand span { font: 12px "Press Start 2P"; color: #ffb347; }
+  #g .nav-links { font-size: 22px; color: #c9c6ff; }
+  #g .px { border: 0; box-shadow: 0 -4px 0 0 #fff, 0 4px 0 0 #fff, -4px 0 0 0 #fff, 4px 0 0 0 #fff, 0 8px 0 0 #000; }
+  #g .btn-px { background: #ff7a1a; color: #fff; font: 10px "Press Start 2P"; padding: 12px 14px; border-radius: 0; }
+  #g .hero { text-align: center; padding: 40px 0 20px; }
+  #g .hero .hi { font: 10px "Press Start 2P"; color: #8be9fd; letter-spacing: .1em; }
+  #g h1 { font: 40px/1.4 "Press Start 2P"; margin: 18px 0; text-shadow: 4px 4px 0 #ff7a1a, 8px 8px 0 #000; }
+  #g .lead { color: #c9c6ff; max-width: 640px; margin: 0 auto 20px; }
+  #g .start { display: inline-block; font: 14px "Press Start 2P"; color: #ffe066; animation: blink 1.1s steps(1) infinite; margin: 10px 0 24px; }
+  #g .search { max-width: 520px; margin: 0 auto; background: #0f1030; padding: 14px 16px; text-align: left; color: #8a86c7; }
+  #g h2 { font: 14px "Press Start 2P"; margin: 46px 0 24px; color: #8be9fd; }
+  #g .worlds { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
+  #g .world { background: #2a2d5c; padding: 12px; text-align: center; transition: transform .1s; }
+  #g .world:hover { transform: translate(-2px,-2px); }
+  #g .world .scr { background: var(--lc); height: 110px; display: grid; place-items: center; }
+  #g .world img { height: 96px; image-rendering: pixelated; }
+  #g .world .w { font: 9px "Press Start 2P"; color: #ffe066; margin: 12px 0 6px; }
+  #g .world h3 { font: 12px/1.5 "Press Start 2P"; }
+  #g .world .stars { color: #ffe066; margin-top: 6px; letter-spacing: 3px; }
+  #g .world.sel { outline: 4px dashed #ffe066; outline-offset: 8px; }
+  #g .bonus { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  #g .bonus a { background: #2a2d5c; padding: 14px; display: flex; gap: 12px; align-items: center; }
+  #g .bonus img { width: 72px; height: 72px; object-fit: contain; }
+  #g .bonus h3 { font: 10px/1.6 "Press Start 2P"; color: #ffb347; }
+  #g .bonus p { color: #c9c6ff; line-height: 1; }
+
+  /* ============ H : Minimal ============ */
+  #h { background: #fff; color: #0a0a0a; padding-bottom: 60px; font-family: Inter, sans-serif; }
+  #h .nav { border-bottom: 1px solid #ececec; max-width: none; padding: 14px 40px; }
+  #h .brand span { font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
+  #h .brand img { height: 30px; }
+  #h .nav-links { font-size: 14px; font-weight: 500; color: #555; gap: 26px; }
+  #h .btn-blk { background: #0a0a0a; color: #fff; border-radius: 8px; padding: 8px 14px; font-size: 14px; font-weight: 500; }
+  #h .hero { padding: 90px 0 60px; max-width: 760px; }
+  #h .pill { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: #555; border: 1px solid #ececec; border-radius: 999px; padding: 5px 12px 5px 6px; }
+  #h .pill b { background: #fff1e6; color: #c2410c; border-radius: 999px; padding: 2px 8px; font-weight: 600; font-size: 12px; }
+  #h h1 { font-size: 60px; font-weight: 600; letter-spacing: -.045em; line-height: 1.02; margin: 22px 0 18px; }
+  #h h1 span { color: #a3a3a3; }
+  #h .lead { font-size: 18px; color: #555; line-height: 1.55; max-width: 560px; }
+  #h .row { display: flex; gap: 10px; margin-top: 28px; }
+  #h .search { flex: 1; max-width: 420px; display: flex; align-items: center; gap: 10px; border: 1px solid #e5e5e5; border-radius: 10px; padding: 11px 14px; color: #999; font-size: 15px; }
+  #h .search kbd { margin-left: auto; font: 500 12px Inter; border: 1px solid #e5e5e5; border-radius: 5px; padding: 1px 6px; color: #777; }
+  #h .grid { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #ececec; border-radius: 14px; overflow: hidden; }
+  #h .grid a { padding: 22px 20px; border-right: 1px solid #ececec; transition: background .15s; }
+  #h .grid a:last-child { border-right: 0; }
+  #h .grid a:hover { background: #fafafa; }
+  #h .grid a:hover img { filter: none; opacity: 1; }
+  #h .grid img { height: 80px; object-fit: contain; filter: grayscale(1); opacity: .75; transition: .2s; margin-bottom: 18px; }
+  #h .grid .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+  #h .grid .aud { font-size: 12px; color: #777; font-weight: 500; }
+  #h .grid h3 { font-size: 17px; font-weight: 600; letter-spacing: -.01em; margin: 4px 0; }
+  #h .grid p { font-size: 13px; color: #666; line-height: 1.45; }
+  #h h2 { font-size: 13px; font-weight: 500; color: #777; margin: 0 0 12px; }
+  #h .more { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px; }
+  #h .more a { border: 1px solid #ececec; border-radius: 12px; padding: 16px; display: flex; gap: 14px; align-items: center; }
+  #h .more img { width: 52px; height: 52px; object-fit: contain; background: #f6f6f6; border-radius: 10px; padding: 4px; }
+  #h .more h3 { font-size: 15px; font-weight: 600; } #h .more p { font-size: 13px; color: #666; }
+</style>
+</head>
+<body>
+<div class="switcher">
+  <button data-t="a" class="on">A · La carte du terrier</button>
+  <button data-t="b">B · Cartes à collectionner</button>
+  <button data-t="c">C · Bento vitaminé</button>
+  <button data-t="d">D · Éditorial</button>
+  <button data-t="h">E · Minimal</button>
+  <button data-t="e">F · Terminal</button>
+  <button data-t="f">G · Cahier d'école</button>
+  <button data-t="g">H · Pixel arcade</button>
+</div>
+
+<!-- ===================== A ===================== -->
+<section id="a" class="mock on">
+  <div class="nav">
+    <div class="brand"><img src="https://www.clementbraun.info/images/fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn btn-dark">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Apprends à coder comme un <em>renard</em>.</h1>
+        <p class="lead">Des cours de la seconde au BTS, des exercices qui se corrigent tout seuls et des défis pour gagner tes badges.</p>
+        <div class="search">🔍 Rechercher une notion : boucles, listes, SQL…</div>
+        <div class="chips"><span class="chip">🐍 Python</span><span class="chip">🌐 Web</span><span class="chip">🗃️ SQL</span><span class="chip">🔁 Récursivité</span><span class="chip">🧠 Graphes</span></div>
+      </div>
+      <div class="hero-art">
+        <div class="blob"></div>
+        <img src="https://www.clementbraun.info/images/fox_2.png" alt="">
+        <div class="bubble">Ctrl + C pour copier,<br>Ctrl + V pour coder 🦊</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Ton parcours, étape par étape</h2>
+    <p class="section-sub">Choisis ton niveau. Chaque étape débloque de nouveaux renards.</p>
+    <div class="map">
+      <svg class="path" viewBox="0 0 1000 340" preserveAspectRatio="none" aria-hidden="true"><path d="M60 300 C 180 300, 160 60, 300 70 S 420 300, 500 290 S 640 60, 700 70 S 860 300, 940 280" fill="none" stroke="#1d1712" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round"/></svg>
+      <div class="stops">
+        <a class="stop"><div class="pic" style="background:#dbe8ec"><img src="https://www.clementbraun.info/images/fox_0.png" alt=""></div><span class="num" style="background:var(--sni)">Étape 1 · Découverte</span><h3>SNI</h3><p>Les bases du numérique, sans prérequis.</p></a>
+        <a class="stop"><div class="pic" style="background:#dbe7fd"><img src="https://www.clementbraun.info/images/fox_1.png" alt=""></div><span class="num" style="background:var(--snt)">Étape 2 · Seconde</span><h3>SNT</h3><p>Photo, web, données, réseaux.</p></a>
+        <a class="stop star"><div class="pic" style="background:#ffe1cc"><img src="https://www.clementbraun.info/images/fox_2.png" alt=""></div><span class="num" style="background:var(--nsi1)">Étape 3 · Première</span><h3>Première NSI</h3><p>Algo, Python, structures de données.</p></a>
+        <a class="stop"><div class="pic" style="background:#e9e0fd"><img src="https://www.clementbraun.info/images/fox_3.png" alt=""></div><span class="num" style="background:var(--tnsi)">Étape 4 · Terminale</span><h3>Terminale NSI</h3><p>Récursivité, SQL, réseaux, bac.</p></a>
+        <a class="stop"><div class="pic" style="background:#d4f5e8"><img src="https://www.clementbraun.info/images/fox_4.png" alt=""></div><span class="num" style="background:var(--sio)">Étape 5 · Post-bac</span><h3>BTS SIO</h3><p>Pour aller plus loin après le lycée.</p></a>
+      </div>
+    </div>
+
+    <h2 class="section-title">Hors des sentiers</h2>
+    <div class="side">
+      <a class="tile"><img src="https://www.clementbraun.info/images/fox_act.png" alt="" style="background:#d4f2ef"><div><span class="tag" style="color:#0d9488">Jeu · Python</span><h3>Le renard dans le poulailler</h3><p>Guide le renard jusqu'à la poule en codant.</p></div></a>
+      <a class="tile"><img src="https://www.clementbraun.info/images/fox_chasse_renard.png" alt="" style="background:#ffe0e6"><div><span class="tag" style="color:#e11d48">Galerie</span><h3>Chasse aux Ren'Arts</h3><p>Les chefs-d'œuvre revisités par les élèves.</p></div></a>
+      <a class="tile"><img src="https://www.clementbraun.info/images/fox_2.png" alt="" style="background:#fdecc8"><div><span class="tag" style="color:#b45309">Ouvert à tous</span><h3>Programmation en C</h3><p>Types, tableaux, fonctions, tris.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== B ===================== -->
+<section id="b" class="mock">
+  <div class="nav">
+    <div class="brand"><img src="https://www.clementbraun.info/images/fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn btn-or">Connexion</span></div>
+  </div>
+  <div class="wrap hero">
+    <div class="floaters"><img class="f1" src="https://www.clementbraun.info/images/fox_1.png" alt=""><img class="f2" src="https://www.clementbraun.info/images/fox_4.png" alt=""></div>
+    <span class="sticker">✨ Nouveau : l'Académie du renard</span>
+    <h1>Maîtrise le <span class="o">code</span>,<br>deviens un <span class="wave">renard</span></h1>
+    <p class="lead">Cours, exercices auto-corrigés et badges à collectionner, de la seconde jusqu'au BTS.</p>
+    <div class="search">🔍 Boucles, listes, SQL, graphes… <span class="go">Chercher</span></div>
+  </div>
+  <div class="wrap">
+    <h2 class="section-title">Choisis ta carte <small>5 niveaux · ta progression sur chaque carte</small></h2>
+    <div class="deck">
+      <a class="card" style="background:var(--sni)"><span class="lvl">Découverte</span><div class="art"><img src="https://www.clementbraun.info/images/fox_0.png" alt=""></div><h3>SNI</h3><p>Les bases du numérique.</p><div class="foot">8 cours<span class="bar"><i style="width:20%"></i></span></div></a>
+      <a class="card" style="background:var(--snt)"><span class="lvl">Seconde</span><div class="art"><img src="https://www.clementbraun.info/images/fox_1.png" alt=""></div><h3>SNT</h3><p>Photo, web, données, réseaux.</p><div class="foot">40 cours<span class="bar"><i style="width:55%"></i></span></div></a>
+      <a class="card" style="background:var(--nsi1)"><span class="lvl">Première</span><div class="art"><img src="https://www.clementbraun.info/images/fox_2.png" alt=""></div><h3>Première NSI</h3><p>Algo, Python, structures.</p><div class="foot">60 cours<span class="bar"><i style="width:35%"></i></span></div></a>
+      <a class="card" style="background:var(--tnsi)"><span class="lvl">Terminale</span><div class="art"><img src="https://www.clementbraun.info/images/fox_3.png" alt=""></div><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p><div class="foot">28 cours<span class="bar"><i style="width:10%"></i></span></div></a>
+      <a class="card" style="background:var(--sio)"><span class="lvl">Post-bac</span><div class="art"><img src="https://www.clementbraun.info/images/fox_4.png" alt=""></div><h3>BTS SIO</h3><p>Aller plus loin après le lycée.</p><div class="foot">40 cours<span class="bar"><i style="width:0%"></i></span></div></a>
+    </div>
+
+    <h2 class="section-title">On joue ? 🎮</h2>
+    <div class="duo">
+      <a class="play" style="background:#c8f1ea"><img src="https://www.clementbraun.info/images/fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Fonctions, conditions, boucles : guide le renard en Python.</p><span class="mini">Jouer ▶</span></div></a>
+      <a class="play" style="background:#ffd6de"><img src="https://www.clementbraun.info/images/fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p><span class="mini">Visiter</span></div></a>
+      <a class="play" style="background:#fde7b0"><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><div><h3>Langage C</h3><p>Ouvert à tous, sans compte.</p><span class="mini">Ouvrir</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== C ===================== -->
+<section id="c" class="mock">
+  <div class="nav">
+    <div class="brand"><img src="https://www.clementbraun.info/images/fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn btn-dark">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="bento">
+      <div class="b hero">
+        <h1>Maîtrise le <span>code.</span><br>Deviens un <span>renard.</span></h1>
+        <p>De la seconde au BTS : cours, exercices auto-corrigés et défis pour progresser.</p>
+        <div class="search">🔍 Rechercher une notion… <kbd>Ctrl K</kbd></div>
+        <img src="https://www.clementbraun.info/images/fox_2.png" alt="">
+      </div>
+      <div class="b streak"><b>🔥</b><p>Ctrl + C pour copier, Ctrl + V pour coder.<br><span style="opacity:.7">— proverbe du terrier</span></p></div>
+      <div class="b defi">
+        <div class="k">Défi du jour</div>
+        <h3>Que vaut <code>t</code> ?</h3>
+        <pre>t = [3, 1, 2]
+t.sort()
+t = t[::-1]</pre>
+        <div class="opts"><span>[1, 2, 3]</span><span>[3, 2, 1]</span><span>[2, 1, 3]</span></div>
+      </div>
+
+      <a class="b lvl big w6" style="background:var(--nsi1)"><span class="arrow">→</span><div><div class="t">Première · le cœur du programme</div><h3>Première NSI</h3></div><p>Algorithmique, Python et structures de données.</p><img src="https://www.clementbraun.info/images/fox_2.png" alt=""></a>
+      <a class="b lvl w3" style="background:var(--snt)"><span class="arrow">→</span><div><div class="t">Seconde</div><h3>SNT</h3></div><p>Photo, web, réseaux.</p><img src="https://www.clementbraun.info/images/fox_1.png" alt=""></a>
+      <a class="b lvl w3" style="background:var(--tnsi)"><span class="arrow">→</span><div><div class="t">Terminale</div><h3>Tle NSI</h3></div><p>Récursivité, SQL, bac.</p><img src="https://www.clementbraun.info/images/fox_3.png" alt=""></a>
+      <a class="b lvl w3" style="background:var(--sni); grid-row: span 1"><div><div class="t">Découverte</div><h3>SNI</h3></div><img src="https://www.clementbraun.info/images/fox_0.png" alt="" style="height:100px"></a>
+      <a class="b lvl w3" style="background:var(--sio); grid-row: span 1"><div><div class="t">Post-bac</div><h3>BTS SIO</h3></div><img src="https://www.clementbraun.info/images/fox_4.png" alt="" style="height:100px"></a>
+
+      <a class="b extra w4"><img src="https://www.clementbraun.info/images/fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Le jeu pour apprendre Python.</p></div></a>
+      <a class="b extra w4"><img src="https://www.clementbraun.info/images/fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a class="b extra w4"><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><div><h3>Programmation en C</h3><p>Ouvert à tous, sans compte.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== D : Éditorial ===================== -->
+<section id="d" class="mock">
+  <div class="nav">
+    <div class="brand"><img src="https://www.clementbraun.info/images/fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>Projets</a><a>À propos</a><span class="btn btn-line">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="masthead"><span>Informatique · de la seconde au BTS</span><span>Clément Braun, professeur de NSI</span></div>
+    <div class="hero">
+      <div>
+        <h1>Comprendre l'informatique, <i>une notion à la fois.</i></h1>
+        <p class="lead">Des cours rédigés pour être lus, des exercices corrigés automatiquement et des activités interactives, organisés selon les programmes officiels.</p>
+        <div class="search">Rechercher une notion — boucles, listes, SQL…</div>
+      </div>
+      <figure class="figure"><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><figcaption>Le renard de Première, mascotte du site.</figcaption></figure>
+    </div>
+    <div class="cols">
+      <div>
+        <h2>Les parcours</h2>
+        <div class="toc">
+          <a><span class="n">01</span><div><h3>SNI</h3><p>Les bases du numérique et de l'informatique, sans prérequis.</p></div><span class="aud">Découverte</span></a>
+          <a><span class="n">02</span><div><h3>SNT</h3><p>Photo, web, données, réseaux et premiers pas en Python.</p></div><span class="aud">Seconde</span></a>
+          <a><span class="n">03</span><div><h3>Première NSI</h3><p>Algorithmique, Python et structures de données.</p></div><span class="aud">Première</span></a>
+          <a><span class="n">04</span><div><h3>Terminale NSI</h3><p>Récursivité, bases de données, réseaux, préparation au bac.</p></div><span class="aud">Terminale</span></a>
+          <a><span class="n">05</span><div><h3>BTS SIO</h3><p>Services informatiques aux organisations.</p></div><span class="aud">Post-bac</span></a>
+        </div>
+      </div>
+      <div class="aside">
+        <h2>À découvrir</h2>
+        <a><div class="k">Jeu</div><h3>Le renard dans le poulailler</h3><p>Apprendre Python en guidant un renard.</p></a>
+        <a><div class="k">Galerie</div><h3>Chasse aux Ren'Arts</h3><p>Les grands classiques revisités par les élèves.</p></a>
+        <a><div class="k">Ouvert à tous</div><h3>Programmation en C</h3><p>Types, tableaux, fonctions, structures et tris.</p></a>
+        <p class="quote">« Ctrl + C pour copier, Ctrl + V pour coder. »</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== E : Minimal ===================== -->
+<section id="h" class="mock">
+  <div class="nav">
+    <div class="brand"><img src="https://www.clementbraun.info/images/fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>Projets</a><a>À propos</a><span class="btn btn-blk">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <span class="pill"><b>Nouveau</b> L'Académie du renard est en ligne →</span>
+      <h1>Apprendre à coder,<br><span>de la seconde au BTS.</span></h1>
+      <p class="lead">Cours, exercices auto-corrigés et activités interactives pour SNT, NSI et BTS SIO.</p>
+      <div class="row"><div class="search">🔍 Rechercher une notion <kbd>Ctrl K</kbd></div><span class="btn btn-blk" style="padding:11px 16px">Commencer</span></div>
+    </div>
+    <h2>Parcours</h2>
+    <div class="grid">
+      <a><img src="https://www.clementbraun.info/images/fox_0.png" alt=""><div class="aud"><span class="dot" style="background:var(--sni)"></span>Découverte</div><h3>SNI</h3><p>Les bases du numérique.</p></a>
+      <a><img src="https://www.clementbraun.info/images/fox_1.png" alt=""><div class="aud"><span class="dot" style="background:var(--snt)"></span>Seconde</div><h3>SNT</h3><p>Photo, web, données, réseaux.</p></a>
+      <a><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><div class="aud"><span class="dot" style="background:var(--nsi1)"></span>Première</div><h3>Première NSI</h3><p>Algo, Python, structures.</p></a>
+      <a><img src="https://www.clementbraun.info/images/fox_3.png" alt=""><div class="aud"><span class="dot" style="background:var(--tnsi)"></span>Terminale</div><h3>Terminale NSI</h3><p>Récursivité, SQL, réseaux.</p></a>
+      <a><img src="https://www.clementbraun.info/images/fox_4.png" alt=""><div class="aud"><span class="dot" style="background:var(--sio)"></span>Post-bac</div><h3>BTS SIO</h3><p>Pour aller plus loin.</p></a>
+    </div>
+    <div class="more">
+      <a><img src="https://www.clementbraun.info/images/fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Jeu de programmation Python</p></div></a>
+      <a><img src="https://www.clementbraun.info/images/fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>Galerie des élèves</p></div></a>
+      <a><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><div><h3>Programmation en C</h3><p>Ouvert à tous</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== F : Terminal ===================== -->
+<section id="e" class="mock">
+  <div class="nav">
+    <div class="brand"><img src="https://www.clementbraun.info/images/fox_3_mark.png" alt=""><span><b>~/</b>taniere-du-code</span></div>
+    <div class="nav-links"><a>./cours</a><a>./academie</a><a>./a-propos</a><span class="btn btn-term">$ login</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Maîtrise le <span>code</span>.<br>Deviens un <span>renard</span>.</h1>
+        <p class="lead"># Cours, exercices auto-corrigés et défis<br># de la seconde au BTS SIO.</p>
+        <div class="search"><b>$</b> grep -r "boucles" ./cours</div>
+      </div>
+      <div class="win">
+        <div class="bar"><i></i><i></i><i></i><span>renard@taniere: ~</span></div>
+        <pre><span class="p">renard@taniere</span>:~$ python3 bienvenue.py
+<span class="d"># Choisis ton parcours</span>
+<span class="o">def</span> <span class="y">apprendre</span>(niveau):
+    <span class="o">return</span> <span class="p">"🦊 "</span> + niveau
+
+>>> apprendre(<span class="p">"1NSI"</span>)
+<span class="p">'🦊 1NSI'</span>
+<span class="p">renard@taniere</span>:~$ <span class="cur"></span></pre>
+      </div>
+    </div>
+    <h2><b>$</b> ls ./parcours</h2>
+    <div class="ls">
+      <a style="--lc:#7fb3c4"><div class="dir">sni/</div><img src="https://www.clementbraun.info/images/fox_0.png" alt=""><p>Les bases du numérique.</p><div class="meta">drwxr-xr-x · découverte</div></a>
+      <a style="--lc:#60a5fa"><div class="dir">snt/</div><img src="https://www.clementbraun.info/images/fox_1.png" alt=""><p>Photo, web, données, réseaux.</p><div class="meta">drwxr-xr-x · seconde</div></a>
+      <a style="--lc:#ff8a3d"><div class="dir">1nsi/</div><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><p>Algo, Python, structures.</p><div class="meta">drwxr-xr-x · première</div></a>
+      <a style="--lc:#a78bfa"><div class="dir">tnsi/</div><img src="https://www.clementbraun.info/images/fox_3.png" alt=""><p>Récursivité, SQL, bac.</p><div class="meta">drwxr-xr-x · terminale</div></a>
+      <a style="--lc:#34d399"><div class="dir">sio/</div><img src="https://www.clementbraun.info/images/fox_4.png" alt=""><p>Aller plus loin.</p><div class="meta">drwxr-xr-x · post-bac</div></a>
+    </div>
+    <h2><b>$</b> ls ./bonus</h2>
+    <div class="extras">
+      <a><img src="https://www.clementbraun.info/images/fox_act.png" alt=""><div><h3>poulailler.py</h3><p>Le jeu pour apprendre Python.</p></div></a>
+      <a><img src="https://www.clementbraun.info/images/fox_chasse_renard.png" alt=""><div><h3>ren_arts/</h3><p>La galerie des élèves.</p></div></a>
+      <a><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><div><h3>langage_c/</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== G : Cahier d'école ===================== -->
+<section id="f" class="mock">
+  <div class="nav">
+    <div class="brand"><img src="https://www.clementbraun.info/images/fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn btn-ink">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Maîtrise le code,<br>deviens un <mark>renard</mark> !</h1>
+        <p class="lead">Les cours, les exercices et les défis de la classe, de la seconde jusqu'au BTS. ✏️</p>
+        <div class="search">🔍 Cherche une notion : boucles, listes…</div>
+      </div>
+      <div class="polaroid"><div class="tape"></div><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><span>Ctrl + C, Ctrl + V 🦊</span></div>
+    </div>
+    <h2>Choisis ta classe <small>← clique sur un post-it</small></h2>
+    <div class="notes">
+      <a class="note" style="background:#d6e9ef"><span class="pin"></span><img src="https://www.clementbraun.info/images/fox_0.png" alt=""><h3>SNI</h3><p>Les bases du numérique.</p></a>
+      <a class="note" style="background:#d9e6ff"><span class="pin"></span><img src="https://www.clementbraun.info/images/fox_1.png" alt=""><h3>SNT</h3><p>Photo, web, données, réseaux.</p></a>
+      <a class="note" style="background:#ffe1c7"><span class="pin"></span><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><h3>Première NSI</h3><p>Algo, Python, structures.</p></a>
+      <a class="note" style="background:#e8defd"><span class="pin"></span><img src="https://www.clementbraun.info/images/fox_3.png" alt=""><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p></a>
+      <a class="note" style="background:#d3f3e4"><span class="pin"></span><img src="https://www.clementbraun.info/images/fox_4.png" alt=""><h3>BTS SIO</h3><p>Aller plus loin.</p></a>
+    </div>
+    <h2>Dans la marge…</h2>
+    <div class="doodles">
+      <a class="doodle"><img src="https://www.clementbraun.info/images/fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Apprends Python en jouant.</p></div></a>
+      <a class="doodle"><img src="https://www.clementbraun.info/images/fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a class="doodle"><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><div><h3>Langage C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== H : Pixel arcade ===================== -->
+<section id="g" class="mock">
+  <div class="nav">
+    <div class="brand"><img src="https://www.clementbraun.info/images/fox_3_mark.png" alt=""><span>TANIÈRE DU CODE</span></div>
+    <div class="nav-links"><a>COURS</a><a>ACADÉMIE</a><a>À PROPOS</a><span class="btn btn-px px">LOGIN</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hi">HI-SCORE 999999 · 1UP</div>
+      <h1>MAÎTRISE LE CODE<br>DEVIENS UN RENARD</h1>
+      <p class="lead">Des cours, des exercices auto-corrigés et des badges à débloquer, de la seconde au BTS.</p>
+      <div class="start">▶ PRESS START</div>
+      <div class="search px">&gt; RECHERCHER UNE NOTION_</div>
+    </div>
+    <h2>SÉLECTIONNE TON MONDE</h2>
+    <div class="worlds">
+      <a class="world px" style="--lc:#5b8a9a"><div class="scr"><img src="https://www.clementbraun.info/images/fox_0.png" alt=""></div><div class="w">MONDE 0</div><h3>SNI</h3><div class="stars">★☆☆</div></a>
+      <a class="world px" style="--lc:#3b82f6"><div class="scr"><img src="https://www.clementbraun.info/images/fox_1.png" alt=""></div><div class="w">MONDE 1</div><h3>SNT</h3><div class="stars">★★☆</div></a>
+      <a class="world px sel" style="--lc:#f26b1d"><div class="scr"><img src="https://www.clementbraun.info/images/fox_2.png" alt=""></div><div class="w">MONDE 2</div><h3>1RE NSI</h3><div class="stars">★★☆</div></a>
+      <a class="world px" style="--lc:#8b5cf6"><div class="scr"><img src="https://www.clementbraun.info/images/fox_3.png" alt=""></div><div class="w">MONDE 3</div><h3>TLE NSI</h3><div class="stars">☆☆☆</div></a>
+      <a class="world px" style="--lc:#10b981"><div class="scr"><img src="https://www.clementbraun.info/images/fox_4.png" alt=""></div><div class="w">MONDE 4</div><h3>BTS SIO</h3><div class="stars">☆☆☆</div></a>
+    </div>
+    <h2>NIVEAUX BONUS</h2>
+    <div class="bonus">
+      <a class="px"><img src="https://www.clementbraun.info/images/fox_act.png" alt=""><div><h3>LE POULAILLER</h3><p>Apprends Python en jouant.</p></div></a>
+      <a class="px"><img src="https://www.clementbraun.info/images/fox_chasse_renard.png" alt=""><div><h3>REN'ARTS</h3><p>La galerie des élèves.</p></div></a>
+      <a class="px"><img src="https://www.clementbraun.info/images/fox_2.png" alt=""><div><h3>LANGAGE C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.switcher button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.switcher button, .mock').forEach(function (el) { el.classList.remove('on'); });
+      b.classList.add('on');
+      document.getElementById(b.dataset.t).classList.add('on');
+      window.scrollTo(0, 0);
+    });
+  });
+</script>
+</body>
+</html>

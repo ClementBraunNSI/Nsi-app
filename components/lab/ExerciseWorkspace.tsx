@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Check, CheckCircle, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { checkExerciseSolution, type ExerciseCheckResult, type ExerciseSheetNav, type LabExercise } from '@/app/actions/getExercises';
 import { supabase } from '@/lib/supabase';
 import { loadPythonPackages } from '@/lib/pyodide-packages';
@@ -52,7 +52,13 @@ function consoleFromReport(report: RunReport, emptyLine: string): ConsoleState {
 }
 
 export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; nav: ExerciseSheetNav | null }) {
-  const [code, setCode] = useState('');
+  const [code, setCodeState] = useState('');
+  // Le raccourci clavier peut partir avant le rendu qui suit la frappe : on lit toujours le dernier texte saisi.
+  const codeRef = useRef('');
+  const setCode = (value: string) => {
+    codeRef.current = value;
+    setCodeState(value);
+  };
   const [running, setRunning] = useState<'execute' | 'test' | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -173,7 +179,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     const leaked: string[] = [];
     pyodide.setStdout({ batched: (msg: string) => leaked.push(String(msg)) });
     pyodide.setStderr({ batched: (msg: string) => leaked.push(String(msg)) });
-    const raw = await pyodide.runPythonAsync(buildPythonCheckSource(code, null));
+    const raw = await pyodide.runPythonAsync(buildPythonCheckSource(codeRef.current, null));
     const next = parsePythonCheckResult(raw);
     if (!next.prints.trim() && leaked.length > 0) next.prints = leaked.join('\n');
     return next;
@@ -191,7 +197,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
         }
         setSqlResults(null);
         try {
-          const results = sqlDb.exec(code);
+          const results = sqlDb.exec(codeRef.current);
           if (results.length > 0) {
             const lastResult = results[results.length - 1];
             setSqlResults({ columns: lastResult.columns, values: lastResult.values });
@@ -222,7 +228,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
       if (exercise.type === 'sql' && sqlDb) {
         setSqlResults(null);
         try {
-          const results = sqlDb.exec(code);
+          const results = sqlDb.exec(codeRef.current);
           if (results.length > 0) {
             const lastResult = results[results.length - 1];
             setSqlResults({ columns: lastResult.columns, values: lastResult.values });
@@ -231,7 +237,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
           setSqlResults(null);
         }
       }
-      presentCheck(await checkExerciseSolution(exercise.id, code));
+      presentCheck(await checkExerciseSolution(exercise.id, codeRef.current));
     } catch (error: any) {
       const next = unexpectedRunReport(error?.message || 'Erreur inattendue.');
       setConsoleState(consoleFromReport(next, emptyLine));
@@ -249,6 +255,22 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     setStatusLine(null);
     setTab('console');
   };
+
+  // Ctrl+Entrée exécute, Ctrl+Maj+Entrée vérifie, depuis Monaco comme depuis l'éditeur tactile.
+  const shortcuts = useRef({ execute: handleExecute, test: handleTest, busy: running !== null });
+  shortcuts.current = { execute: handleExecute, test: handleTest, busy: running !== null };
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' || !(event.ctrlKey || event.metaKey)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (shortcuts.current.busy) return;
+      if (event.shiftKey && exercise.hasVerification) shortcuts.current.test();
+      else shortcuts.current.execute();
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, [exercise.hasVerification]);
 
   const handleEditorWillMount = (monaco: any) => {
     monaco.editor.defineTheme('orange-dark', {
@@ -303,9 +325,9 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
       )}
 
       <header className="exercise-toolbar">
-        <Link href={backHref} className="exercise-back">
+        <Link href={backHref} className="exercise-back" title="Retour à la fiche">
           <ArrowLeft size={16} aria-hidden />
-          Retour au chapitre
+          <span>Fiche</span>
         </Link>
         <div className="exercise-toolbar-center">
           <h1 title={exercise.label}>{exercise.label}</h1>
@@ -318,10 +340,6 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
         </div>
         {nav && nav.total > 0 ? (
           <div className="exercise-nav">
-            <span className="exercise-nav-count">{nav.marker} / {nav.total}</span>
-            <span className="exercise-nav-track" aria-hidden>
-              <span style={{ width: `${(nav.index / nav.total) * 100}%` }} />
-            </span>
             {nav.previous ? (
               <Link href={`/exercice/${encodeURIComponent(nav.previous.id)}`} className="exercise-nav-arrow" aria-label={`Exercice précédent : ${nav.previous.label}`}>
                 <ChevronLeft size={16} />
@@ -331,6 +349,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
                 <ChevronLeft size={16} />
               </button>
             )}
+            <span className="exercise-nav-count">{nav.marker} / {nav.total}</span>
             {nav.next ? (
               <Link href={`/exercice/${encodeURIComponent(nav.next.id)}`} className="exercise-nav-arrow" aria-label={`Exercice suivant : ${nav.next.label}`}>
                 <ChevronRight size={16} />
@@ -342,6 +361,11 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
             )}
           </div>
         ) : null}
+        {nav && nav.total > 0 ? (
+          <span className="exercise-progress" aria-hidden>
+            <span style={{ width: `${(nav.index / nav.total) * 100}%` }} />
+          </span>
+        ) : null}
       </header>
 
       <div className="exercise-body">
@@ -350,11 +374,9 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
           <LabEditor
             exercise={exercise}
             code={code}
-            running={running}
+            busy={running !== null}
             onCodeChange={setCode}
             onReset={() => setCode('')}
-            onExecute={handleExecute}
-            onTest={handleTest}
             beforeMount={handleEditorWillMount}
           />
           <LabOutput
@@ -362,11 +384,27 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
             tab={tab}
             onTab={setTab}
             onClear={handleClear}
+            onRetryTest={handleTest}
             consoleState={consoleState}
             sqlResults={sqlResults}
             report={report}
             statusLine={statusLine}
           />
+          <div className="exercise-actions">
+            <span className="exercise-shortcut" aria-hidden>
+              <kbd>Ctrl</kbd>+<kbd>Entrée</kbd> exécute
+            </span>
+            <button type="button" onClick={handleExecute} disabled={running !== null} className="exercise-run">
+              <Play size={15} fill="currentColor" aria-hidden />
+              {running === 'execute' ? 'Exécution…' : 'Exécuter'}
+            </button>
+            {exercise.hasVerification ? (
+              <button type="button" onClick={handleTest} disabled={running !== null} className="exercise-test">
+                <Check size={15} aria-hidden />
+                {running === 'test' ? 'Vérification…' : 'Vérifier'}
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

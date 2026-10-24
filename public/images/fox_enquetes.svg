@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="220 250 1450 1370" role="img" aria-label="Le renard détective et sa loupe">
+<title>Le renard détective et sa loupe</title>
+<style>
+.a{transform-box:fill-box}
+.blink{transform-origin:50% 50%;animation:blink 6s infinite}
+@keyframes blink{0%,91%,95%,100%{transform:scaleY(1)}93%{transform:scaleY(.1)}}
+.ear-l{transform-origin:65% 90%;animation:ear-l 8s infinite}
+@keyframes ear-l{0%,76%,90%,100%{transform:rotate(0)}79%{transform:rotate(-9deg)}83%{transform:rotate(0)}86%{transform:rotate(-5deg)}}
+.ear-r{transform-origin:35% 90%;animation:ear-r 9s 2.5s infinite}
+@keyframes ear-r{0%,76%,90%,100%{transform:rotate(0)}79%{transform:rotate(9deg)}83%{transform:rotate(0)}86%{transform:rotate(5deg)}}
+.tail{transform-origin:75% 75%;animation:tail 4.5s ease-in-out infinite alternate}
+@keyframes tail{from{transform:rotate(-2.5deg)}to{transform:rotate(3deg)}}
+.mag{transform-origin:20% 20%;animation:mag 4s ease-in-out infinite alternate}
+@keyframes mag{from{transform:translate(0,0) rotate(0)}to{transform:translate(-6px,-10px) rotate(-3deg)}}
+.glint{animation:glint 5s ease-in-out infinite}
+@keyframes glint{0%,55%{transform:translateX(0)}75%,100%{transform:translateX(330px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<defs><clipPath id="lens"><circle cx="1395" cy="1240" r="108"/></clipPath></defs>
+<path d="M390 1548C300 1520 240 1440 300 1340C360 1240 520 1120 545 1020C570 920 555 840 600 868C650 900 720 975 805 1005L1270 1003C1330 995 1335 1050 1333 1130C1330 1290 1450 1410 1445 1480C1442 1530 1420 1545 1400 1550Z" fill="#FEE8B6"/>
+<ellipse cx="960" cy="1560" rx="610" ry="38" fill="#DAD6CA"/>
+<g transform="translate(1500 1560) rotate(20) scale(0.45)" fill="#C9B79B">
+<ellipse cx="0" cy="22" rx="34" ry="27"/><circle cx="-38" cy="-18" r="13"/><circle cx="-13" cy="-36" r="13"/><circle cx="13" cy="-36" r="13"/><circle cx="38" cy="-18" r="13"/>
+</g>
+<g transform="translate(1610 1530) rotate(28) scale(0.4)" fill="#C9B79B">
+<ellipse cx="0" cy="22" rx="34" ry="27"/><circle cx="-38" cy="-18" r="13"/><circle cx="-13" cy="-36" r="13"/><circle cx="13" cy="-36" r="13"/><circle cx="38" cy="-18" r="13"/>
+</g>
+<g class="a tail">
+<path d="M400 1140C420 1180 450 1210 485 1232L557 1266L523 1266L523 1316L435 1328L465 1410C400 1395 355 1350 339 1305C345 1250 365 1195 400 1140Z" fill="#F9F6E3"/>
+<polygon points="523,1266 557,1266 670,1316 523,1316" fill="#E4742B"/>
+<path d="M435 1328L523 1316L670 1316L670 1497C600 1460 520 1420 465 1410Z" fill="#D5612D"/>
+<path d="M339 1305C355 1350 400 1395 465 1410L418 1442L455 1537L405 1508C360 1470 330 1400 339 1305Z" fill="#DAD6CA"/>
+<path d="M465 1410C520 1420 600 1460 670 1497L780 1556L486 1556L418 1442Z" fill="#B4432B"/>
+</g>
+<polygon points="830,965 995,1133 1003,1556 780,1556 670,1497 670,1215" fill="#E4742B"/>
+<polygon points="995,1133 1051,1188 1108,1130 1100,1556 1003,1556" fill="#B4432B"/>
+<polygon points="1270,965 1225,1205 1207,1303 1105,1303 1108,1130" fill="#E4742B"/>
+<polygon points="1225,1205 1310,1287 1203,1490 1167,1505 1207,1303" fill="#B4432B"/>
+<polygon points="858,1078 898,1305 933,1508 912,1492 852,1492 830,1525 873,1308 840,1233 726,1188 843,1205" fill="#B4432B"/>
+<polygon points="898,1305 998,1303 1003,1556 810,1556 852,1492 912,1492 933,1508" fill="#281E1E"/>
+<polygon points="1105,1303 1207,1303 1167,1505 1191,1492 1252,1494 1290,1556 1100,1556" fill="#281E1E"/>
+<polygon points="890,742 944,770 838,942" fill="#E4742B"/>
+<polygon points="1215,740 1160,768 1272,958" fill="#E4742B"/>
+<polygon points="944,770 1023,810 1080,810 1160,768 1175,792 1098,832 1003,832 930,797" fill="#DAD6CA"/>
+<polygon points="930,797 1003,832 1098,832 1175,792 1272,958 1270,965 1051,1188 830,965 838,942" fill="#F9F6E3"/>
+<g class="a ear-l">
+<path d="M818 292L983 437L848 560Q818 430 818 292Z" fill="#E4742B"/>
+<path d="M835 337Q900 425 947 468L880 530Q852 450 835 337Z" fill="#281E1E"/>
+</g>
+<g class="a ear-r">
+<path d="M1283 292L1119 437L1254 560Q1283 430 1283 292Z" fill="#E4742B"/>
+<path d="M1266 337Q1201 425 1155 468L1222 530Q1249 450 1266 337Z" fill="#281E1E"/>
+</g>
+<polygon points="983,437 1051,437 1051,760 1028,766 995,660 968,613 912,598 862,634 735,662" fill="#EE973B"/>
+<polygon points="1119,437 1051,437 1051,760 1074,766 1107,660 1133,613 1190,598 1240,634 1366,662" fill="#E4742B"/>
+<polygon points="862,634 912,598 938,643 995,660 1028,766 980,700" fill="#C24F2E"/>
+<polygon points="1240,634 1190,598 1164,643 1107,660 1074,766 1122,700" fill="#C24F2E"/>
+<g class="a blink"><polygon points="912,598 968,613 984,630 995,660 938,643" fill="#281E1E"/><polygon points="1190,598 1133,613 1117,630 1107,660 1164,643" fill="#281E1E"/></g>
+<polygon points="735,662 862,634 980,700 1000,745 1023,772 1051,797 1023,812" fill="#F9F6E3"/>
+<polygon points="1366,662 1240,634 1122,700 1102,745 1080,772 1051,797 1080,812" fill="#F9F6E3"/>
+<path d="M1030 762L1051 758L1072 762L1080 772Q1066 790 1051 797Q1036 790 1023 772Z" fill="#281E1E"/>
+<polygon points="1023,810 1051,797 1080,810 1072,815 1030,815" fill="#281E1E"/>
+<g>
+<path d="M896 458C900 335 980 282 1051 282L1051 458Z" fill="#B48A5A"/>
+<path d="M1051 282C1122 282 1202 335 1206 458L1051 458Z" fill="#9A7148"/>
+<path d="M960 316C985 350 995 400 998 458" fill="none" stroke="#7E5A3A" stroke-width="10" opacity=".45"/>
+<path d="M1142 316C1117 350 1107 400 1104 458" fill="none" stroke="#6E4F33" stroke-width="10" opacity=".45"/>
+<path d="M905 390C960 372 1142 372 1197 390" fill="none" stroke="#6E4F33" stroke-width="10" opacity=".4"/>
+<polygon points="896,432 1206,432 1206,462 896,462" fill="#6E4F33"/>
+<polygon points="958,462 1144,462 1124,508 978,508" fill="#7E5A3A"/>
+<polygon points="1032,288 1070,288 1088,262 1051,274 1014,262" fill="#6E4F33"/>
+</g>
+<g class="a mag">
+<line x1="1487" y1="1332" x2="1600" y2="1445" stroke="#7A4A2E" stroke-width="48" stroke-linecap="round"/>
+<line x1="1475" y1="1320" x2="1507" y2="1352" stroke="#281E1E" stroke-width="60" stroke-linecap="round"/>
+<circle cx="1395" cy="1240" r="120" fill="#EAF4F1" fill-opacity=".55"/>
+<g clip-path="url(#lens)">
+<g transform="translate(1395 1246) rotate(0) scale(1.15)" fill="#B4432B">
+<ellipse cx="0" cy="22" rx="34" ry="27"/><circle cx="-38" cy="-18" r="13"/><circle cx="-13" cy="-36" r="13"/><circle cx="13" cy="-36" r="13"/><circle cx="38" cy="-18" r="13"/>
+</g>
+<polygon class="a glint" points="1300,1100 1335,1100 1255,1380 1220,1380" fill="#fff" opacity=".6"/>
+</g>
+<circle cx="1395" cy="1240" r="120" fill="none" stroke="#281E1E" stroke-width="26"/>
+</g>
+</svg>

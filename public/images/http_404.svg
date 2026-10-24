@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 100 1200 720" role="img" aria-label="Erreur 404 : le renard cherche la page">
+<title>Erreur 404 : le renard cherche la page</title>
+<style>
+.a{transform-box:fill-box}
+.blink{transform-origin:50% 50%;animation:blink 6s infinite}
+@keyframes blink{0%,91%,95%,100%{transform:scaleY(1)}93%{transform:scaleY(.1)}}
+.ear-l{transform-origin:65% 90%;animation:ear-l 8s infinite}
+@keyframes ear-l{0%,76%,90%,100%{transform:rotate(0)}79%{transform:rotate(-9deg)}83%{transform:rotate(0)}86%{transform:rotate(-5deg)}}
+.ear-r{transform-origin:35% 90%;animation:ear-r 9s 2.5s infinite}
+@keyframes ear-r{0%,76%,90%,100%{transform:rotate(0)}79%{transform:rotate(9deg)}83%{transform:rotate(0)}86%{transform:rotate(5deg)}}
+.tail{transform-origin:75% 75%;animation:tail 4.5s ease-in-out infinite alternate}
+@keyframes tail{from{transform:rotate(-2.5deg)}to{transform:rotate(3deg)}}
+.hide{animation:hide 7s ease-in-out infinite}
+@keyframes hide{0%,62%,100%{transform:translateY(0)}72%,84%{transform:translateY(760px)}}
+.float{transform-origin:50% 50%;animation:float 3.5s ease-in-out infinite alternate}
+@keyframes float{from{transform:translateY(0) rotate(-4deg)}to{transform:translateY(-12px) rotate(4deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<defs><linearGradient id="digit" x1="0" y1="0" x2="1" y2="1"><stop offset=".5" stop-color="#EE973B"/><stop offset=".5" stop-color="#E4742B"/></linearGradient><clipPath id="burrow"><polygon points="560,380 640,380 670,420 670,580 640,620 560,620 530,580 530,420"/></clipPath></defs>
+<path d="M300 700C220 560 280 330 500 270C720 210 960 260 1010 450C1040 580 990 690 930 700Z" fill="#FEE8B6"/>
+<ellipse cx="600" cy="712" rx="560" ry="20" fill="#DAD6CA"/>
+<path d="M250 300L330 300L330 560L380 560L380 630L330 630L330 700L250 700L250 630L80 630L80 560ZM250 412L250 560L162 560Z" fill="url(#digit)" fill-rule="evenodd"/>
+<polygon points="530,300 670,300 750,390 750,610 670,700 530,700 450,610 450,390" fill="url(#digit)"/>
+<polygon points="560,380 640,380 670,420 670,580 640,620 560,620 530,580 530,420" fill="#281E1E"/>
+<g clip-path="url(#burrow)"><g transform="translate(368.8 366) scale(.22)"><g class="a hide"><g class="a ear-l">
+<path d="M818 292L983 437L848 560Q818 430 818 292Z" fill="#E4742B"/>
+<path d="M835 337Q900 425 947 468L880 530Q852 450 835 337Z" fill="#281E1E"/>
+</g>
+<g class="a ear-r">
+<path d="M1283 292L1119 437L1254 560Q1283 430 1283 292Z" fill="#E4742B"/>
+<path d="M1266 337Q1201 425 1155 468L1222 530Q1249 450 1266 337Z" fill="#281E1E"/>
+</g>
+<polygon points="983,437 1051,437 1051,760 1028,766 995,660 968,613 912,598 862,634 735,662" fill="#EE973B"/>
+<polygon points="1119,437 1051,437 1051,760 1074,766 1107,660 1133,613 1190,598 1240,634 1366,662" fill="#E4742B"/>
+<polygon points="862,634 912,598 938,643 995,660 1028,766 980,700" fill="#C24F2E"/>
+<polygon points="1240,634 1190,598 1164,643 1107,660 1074,766 1122,700" fill="#C24F2E"/>
+<g class="a blink"><polygon points="912,598 968,613 984,630 995,660 938,643" fill="#281E1E"/><polygon points="1190,598 1133,613 1117,630 1107,660 1164,643" fill="#281E1E"/></g>
+<polygon points="735,662 862,634 980,700 1000,745 1023,772 1051,797 1023,812" fill="#F9F6E3"/>
+<polygon points="1366,662 1240,634 1122,700 1102,745 1080,772 1051,797 1080,812" fill="#F9F6E3"/>
+<path d="M1030 762L1051 758L1072 762L1080 772Q1066 790 1051 797Q1036 790 1023 772Z" fill="#281E1E"/>
+<polygon points="1023,810 1051,797 1080,810 1072,815 1030,815" fill="#281E1E"/></g></g></g>
+<path d="M990 300L1070 300L1070 560L1120 560L1120 630L1070 630L1070 700L990 700L990 630L820 630L820 560ZM990 412L990 560L902 560Z" fill="url(#digit)" fill-rule="evenodd"/>
+<g class="a float">
+<path d="M720 205Q720 165 758 165Q796 165 796 201Q796 225 766 237L766 258" fill="none" stroke="#281E1E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="766" cy="288" r="12" fill="#281E1E"/>
+</g>
+</svg>

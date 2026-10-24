@@ -21,11 +21,12 @@ export type CommandDef = {
   description: string;
 };
 
+/** `line` : ligne du programme de l'élève qui a déclenché l'action (0 si inconnue). */
 export type Action =
-  | { type: "MOVE" }
-  | { type: "TURN_LEFT" }
-  | { type: "TURN_RIGHT" }
-  | { type: "READ" };
+  | { type: "MOVE"; line?: number }
+  | { type: "TURN_LEFT"; line?: number }
+  | { type: "TURN_RIGHT"; line?: number }
+  | { type: "READ"; line?: number };
 
 export type LevelConfig = {
   id: number;

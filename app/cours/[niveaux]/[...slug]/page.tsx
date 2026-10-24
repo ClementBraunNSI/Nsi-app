@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, Lock } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -226,34 +226,17 @@ export default async function CoursePage({
 
   if (!allowed) {
     return (
-      <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-8">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 bg-red-100 rounded-[var(--radius-sm)] flex items-center justify-center text-red-600 mx-auto mb-4">
-            <Lock size={32} />
-          </div>
-          <h2 className="text-xl font-semibold tracking-tight text-[var(--fg)] mb-2">{RESERVED_TITLE}</h2>
-          {auth.user ? (
-            <>
-              <p className="text-[var(--muted)] mb-6">Vous n&apos;avez pas la permission d&apos;accéder à ce cours.</p>
-              <Link href="/espace" className="text-[var(--accent)] font-semibold">
-                Retour à l&apos;espace
-              </Link>
-            </>
-          ) : (
-            <>
-              <p className="text-[var(--muted)] mb-6">
-                Connecte-toi pour débloquer ce cours, sauvegarder ta progression et gagner des badges exclusifs.
-              </p>
-              <Link
-                href={`/connexion?next=${encodeURIComponent(coursePath(niveaux, slugStr))}`}
-                className="bg-[var(--accent)] text-[var(--accent-fg)] font-semibold py-3 px-6 rounded-[var(--radius-sm)] inline-block transition-colors duration-150"
-              >
-                Se connecter
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
+      <ResourceNotFound
+        code={403}
+        title={RESERVED_TITLE}
+        description={
+          auth.user
+            ? "Vous n'avez pas la permission d'accéder à ce cours."
+            : "Connecte-toi pour débloquer ce cours, sauvegarder ta progression et gagner des badges exclusifs."
+        }
+        actionHref={auth.user ? "/espace" : `/connexion?next=${encodeURIComponent(coursePath(niveaux, slugStr))}`}
+        actionLabel={auth.user ? "Retour à l'espace" : "Se connecter"}
+      />
     );
   }
 

@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquettes accueil · série 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Space+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;700&family=Sora:wght@400;600;700;800&family=Archivo+Black&family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --sni: #5b8a9a; --snt: #3b82f6; --nsi1: #f26b1d; --tnsi: #8b5cf6; --sio: #10b981; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #e9e4dc; font-family: "DM Sans", system-ui, sans-serif; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .switcher { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 10px; background: #1d1712; }
+  .switcher button { font: 700 14px "DM Sans", sans-serif; border: 0; border-radius: 999px; padding: 8px 16px; background: #3a312a; color: #e9e4dc; cursor: pointer; }
+  .switcher button.on { background: #f26b1d; color: #fff; }
+  .mock { display: none; } .mock.on { display: block; }
+  .nav { display: flex; align-items: center; justify-content: space-between; max-width: 1180px; margin: 0 auto; padding: 18px 32px; position: relative; z-index: 2; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .brand img { height: 42px; }
+  .nav-links { display: flex; gap: 22px; align-items: center; font-weight: 600; font-size: 15px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+
+  /* ============ I : Risographie ============ */
+  #i { background: #f3ede1; color: #1f3a93; font-family: "Space Mono", monospace; padding-bottom: 60px; position: relative; overflow: hidden;
+       background-image: radial-gradient(rgba(31,58,147,.13) 1.2px, transparent 1.3px); background-size: 9px 9px; }
+  #i .brand span { font: 15px "Bowlby One"; color: #ff5b2e; }
+  #i .nav-links { font-size: 13px; text-transform: uppercase; }
+  #i .btn { background: #ff5b2e; color: #f3ede1; padding: 9px 16px; font-weight: 700; text-transform: uppercase; font-size: 13px; mix-blend-mode: multiply; }
+  #i .hero { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 20px; padding: 30px 0 10px; }
+  #i h1 { font: 82px/0.92 "Bowlby One"; color: #ff5b2e; text-transform: uppercase; text-shadow: 5px 4px 0 rgba(31,58,147,.85); mix-blend-mode: multiply; }
+  #i .lead { font-size: 15px; line-height: 1.6; margin: 22px 0; max-width: 460px; }
+  #i .search { border: 2px solid #1f3a93; padding: 13px 14px; max-width: 460px; font-size: 14px; background: #f3ede1; }
+  #i .art { position: relative; height: 420px; }
+  #i .art .disc { position: absolute; width: 360px; height: 360px; border-radius: 50%; background: #ff5b2e; right: 60px; top: 10px; mix-blend-mode: multiply; opacity: .35; }
+  #i .art .disc2 { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: #1f3a93; right: 0; top: 110px; mix-blend-mode: multiply; opacity: .18; }
+  #i .art img { position: absolute; right: 40px; top: 30px; height: 380px; mix-blend-mode: multiply; }
+  #i .band { background: #1f3a93; color: #f3ede1; font: 22px "Bowlby One"; text-transform: uppercase; white-space: nowrap; overflow: hidden; padding: 10px 0; margin: 30px 0; transform: rotate(-1.5deg); }
+  #i .band span { color: #ff5b2e; }
+  #i .levels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border: 2px solid #1f3a93; }
+  #i .lv { border-right: 2px solid #1f3a93; padding: 16px; position: relative; }
+  #i .lv:last-child { border-right: 0; }
+  #i .lv:hover { background: rgba(255,91,46,.12); }
+  #i .lv .no { font: 46px "Bowlby One"; color: #ff5b2e; mix-blend-mode: multiply; line-height: 1; }
+  #i .lv img { height: 110px; margin: 6px auto 10px; mix-blend-mode: multiply; }
+  #i .lv h3 { font: 18px "Bowlby One"; text-transform: uppercase; }
+  #i .lv p { font-size: 12px; line-height: 1.5; margin-top: 4px; }
+  #i .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 26px; }
+  #i .extras a { display: flex; gap: 12px; align-items: center; border: 2px dashed #1f3a93; padding: 12px; }
+  #i .extras img { width: 80px; height: 80px; object-fit: contain; mix-blend-mode: multiply; }
+  #i .extras h3 { font: 15px "Bowlby One"; color: #ff5b2e; text-transform: uppercase; }
+  #i .extras p { font-size: 12px; }
+
+  /* ============ J : Forêt au crépuscule ============ */
+  #j { color: #fff7ed; padding-bottom: 60px; position: relative; overflow: hidden;
+       background: linear-gradient(180deg, #24184a 0%, #6b2d6b 38%, #e0603a 72%, #f6a25b 100%); }
+  #j .brand span { font: 22px "DM Serif Display"; }
+  #j .btn { background: #fff7ed; color: #3b1d4a; padding: 10px 18px; border-radius: 999px; font-weight: 700; }
+  #j .stars { position: absolute; inset: 0 0 50% 0; background-image: radial-gradient(#fff 1px, transparent 1.5px), radial-gradient(#fff 1px, transparent 1.5px); background-size: 120px 90px, 70px 130px; background-position: 0 0, 35px 60px; opacity: .45; }
+  #j .moon { position: absolute; width: 110px; height: 110px; border-radius: 50%; background: #fff3d6; right: 14%; top: 110px; box-shadow: 0 0 80px 20px rgba(255,236,190,.35); }
+  #j .hero { text-align: center; padding: 50px 0 0; }
+  #j h1 { font: 84px/1 "DM Serif Display"; text-shadow: 0 6px 30px rgba(0,0,0,.25); }
+  #j h1 i { color: #ffc58f; }
+  #j .lead { font-size: 19px; opacity: .9; margin: 18px auto 24px; max-width: 560px; }
+  #j .search { margin: 0 auto; max-width: 520px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.35); backdrop-filter: blur(8px); border-radius: 999px; padding: 14px 22px; text-align: left; color: #ffe7d1; }
+  #j .scene { position: relative; height: 330px; margin-top: 10px; }
+  #j .scene svg { position: absolute; left: 50%; bottom: 0; width: 1600px; margin-left: -800px; height: 330px; }
+  #j .scene img { position: absolute; bottom: 120px; height: 190px; filter: drop-shadow(0 10px 14px rgba(0,0,0,.35)); }
+  #j .ground { background: #2a1838; margin-top: -2px; padding: 40px 0 10px; }
+  #j h2 { font: 38px "DM Serif Display"; text-align: center; margin-bottom: 22px; }
+  #j .burrows { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  #j .burrow { background: #3a2350; border-radius: 120px 120px 20px 20px; padding: 26px 16px 18px; text-align: center; border: 1px solid #573873; transition: transform .2s; }
+  #j .burrow:hover { transform: translateY(-6px); }
+  #j .burrow .hole { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 12px; display: grid; place-items: center; background: radial-gradient(circle at 50% 60%, var(--lc) 0%, transparent 70%); }
+  #j .burrow img { height: 110px; }
+  #j .burrow h3 { font: 24px "DM Serif Display"; }
+  #j .burrow p { font-size: 13px; opacity: .75; margin-top: 4px; }
+  #j .burrow .k { display: inline-block; margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--lc); }
+  #j .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
+  #j .extras a { display: flex; gap: 12px; align-items: center; background: #3a2350; border-radius: 18px; padding: 12px; border: 1px solid #573873; }
+  #j .extras img { width: 76px; height: 76px; object-fit: contain; }
+  #j .extras h3 { font: 19px "DM Serif Display"; } #j .extras p { font-size: 13px; opacity: .75; }
+
+  /* ============ K : Aurore ============ */
+  #k { background: #08080f; color: #f1f0ff; font-family: Sora, sans-serif; padding-bottom: 60px; position: relative; overflow: hidden; }
+  #k .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; }
+  #k .b1 { width: 520px; height: 520px; background: #f26b1d; left: -120px; top: -60px; }
+  #k .b2 { width: 480px; height: 480px; background: #8b5cf6; right: -80px; top: 80px; }
+  #k .b3 { width: 420px; height: 420px; background: #10b981; left: 40%; top: 560px; opacity: .3; }
+  #k .brand span { font-weight: 700; }
+  #k .nav-links { color: #b8b5d6; font-weight: 400; }
+  #k .btn { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); padding: 9px 16px; border-radius: 12px; color: #fff; backdrop-filter: blur(10px); }
+  #k .hero { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 30px; padding: 50px 0 30px; }
+  #k h1 { font-size: 60px; font-weight: 800; line-height: 1; letter-spacing: -.04em; }
+  #k h1 span { background: linear-gradient(90deg, #ffb37a, #f26b1d 40%, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #k .lead { color: #b8b5d6; font-size: 18px; line-height: 1.6; margin: 20px 0 26px; max-width: 480px; }
+  #k .search { max-width: 460px; display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 16px; padding: 14px 16px; color: #8d8ab0; backdrop-filter: blur(14px); }
+  #k .search kbd { margin-left: auto; font: 600 12px Sora; background: rgba(255,255,255,.1); border-radius: 6px; padding: 2px 8px; color: #ccc; }
+  #k .orb { position: relative; height: 400px; display: grid; place-items: center; }
+  #k .orb .ring { position: absolute; width: 360px; height: 360px; border-radius: 50%; border: 1px solid rgba(255,255,255,.18); background: radial-gradient(circle, rgba(242,107,29,.35), transparent 65%); }
+  #k .orb .ring.r2 { width: 300px; height: 300px; border-style: dashed; }
+  #k .orb img { position: relative; height: 320px; filter: drop-shadow(0 0 40px rgba(242,107,29,.55)); }
+  #k .glass { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  #k .g { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 22px; padding: 16px; backdrop-filter: blur(16px); position: relative; overflow: hidden; transition: border-color .2s, transform .2s; }
+  #k .g::before { content: ""; position: absolute; width: 140px; height: 140px; border-radius: 50%; background: var(--lc); filter: blur(50px); opacity: .45; top: -30px; right: -30px; }
+  #k .g:hover { border-color: var(--lc); transform: translateY(-4px); }
+  #k .g img { position: relative; height: 104px; margin: 0 auto 12px; filter: drop-shadow(0 0 18px var(--lc)); }
+  #k .g .aud { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--lc); font-weight: 600; position: relative; }
+  #k .g h3 { font-size: 19px; font-weight: 700; margin: 4px 0; position: relative; }
+  #k .g p { font-size: 13px; color: #a9a6c9; position: relative; }
+  #k h2 { font-size: 14px; color: #8d8ab0; font-weight: 400; margin: 34px 0 14px; letter-spacing: .04em; }
+  #k .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  #k .extras a { display: flex; gap: 14px; align-items: center; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 12px; }
+  #k .extras img { width: 70px; height: 70px; object-fit: contain; }
+  #k .extras h3 { font-size: 15px; } #k .extras p { font-size: 13px; color: #a9a6c9; }
+
+  /* ============ L : Bauhaus ============ */
+  #l { background: #f1ebdd; color: #111; padding-bottom: 60px; }
+  #l .brand span { font: 16px "Archivo Black"; text-transform: uppercase; letter-spacing: .02em; }
+  #l .nav-links { font-weight: 700; text-transform: uppercase; font-size: 13px; letter-spacing: .06em; }
+  #l .btn { background: #111; color: #f1ebdd; padding: 10px 16px; font-weight: 700; text-transform: uppercase; font-size: 13px; }
+  #l .hero { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: 150px 150px 150px; gap: 0; border: 3px solid #111; margin-top: 10px; }
+  #l .cell { border: 3px solid #111; margin: -1.5px; position: relative; overflow: hidden; }
+  #l .t { grid-column: 1 / 8; grid-row: 1 / 3; background: #f1ebdd; padding: 26px 30px; display: flex; flex-direction: column; justify-content: center; }
+  #l h1 { font: 64px/0.95 "Archivo Black"; text-transform: uppercase; letter-spacing: -.02em; }
+  #l h1 span { color: #f26b1d; }
+  #l .circ { grid-column: 8 / 13; grid-row: 1 / 4; background: #1f4fbf; display: grid; place-items: center; }
+  #l .circ::before { content: ""; position: absolute; width: 380px; height: 380px; border-radius: 50%; background: #f26b1d; }
+  #l .circ::after { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 0; border-left: 140px solid #ffcc29; border-top: 140px solid transparent; }
+  #l .circ img { position: relative; height: 360px; z-index: 1; }
+  #l .s { grid-column: 1 / 4; grid-row: 3 / 4; background: #ffcc29; padding: 20px; font-weight: 700; font-size: 15px; line-height: 1.4; }
+  #l .q { grid-column: 4 / 8; grid-row: 3 / 4; background: #111; color: #f1ebdd; padding: 20px 22px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  #l .q .search { border-bottom: 2px solid #f1ebdd; padding: 8px 0; color: #bdb5a4; }
+  #l .q small { font-weight: 700; text-transform: uppercase; letter-spacing: .12em; font-size: 11px; color: #ffcc29; }
+  #l h2 { font: 30px "Archivo Black"; text-transform: uppercase; margin: 40px 0 16px; }
+  #l .row { display: grid; grid-template-columns: repeat(5, 1fr); border: 3px solid #111; }
+  #l .lv { border-right: 3px solid #111; position: relative; }
+  #l .lv:last-child { border-right: 0; }
+  #l .lv .top { height: 170px; display: grid; place-items: center; position: relative; overflow: hidden; background: var(--bg); }
+  #l .lv .shape { position: absolute; width: 130px; height: 130px; background: var(--sh); }
+  #l .lv .circle { border-radius: 50%; }
+  #l .lv .tri { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  #l .lv .half { border-radius: 130px 130px 0 0; height: 65px; top: 70px; }
+  #l .lv img { position: relative; height: 140px; }
+  #l .lv .bot { border-top: 3px solid #111; padding: 14px; background: #f1ebdd; }
+  #l .lv:hover .bot { background: #111; color: #f1ebdd; }
+  #l .lv h3 { font: 19px "Archivo Black"; text-transform: uppercase; }
+  #l .lv p { font-size: 13px; margin-top: 4px; }
+  #l .extras { display: grid; grid-template-columns: repeat(3, 1fr); border: 3px solid #111; border-top: 0; }
+  #l .extras a { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-right: 3px solid #111; }
+  #l .extras a:last-child { border-right: 0; }
+  #l .extras img { width: 70px; height: 70px; object-fit: contain; }
+  #l .extras h3 { font: 14px "Archivo Black"; text-transform: uppercase; } #l .extras p { font-size: 13px; }
+
+  /* ============ M : Pâte à modeler (clay) ============ */
+  #m { background: #fdf3ea; color: #3d2c25; font-family: "M PLUS Rounded 1c", sans-serif; padding-bottom: 60px; }
+  #m .brand span { font-weight: 800; font-size: 19px; }
+  #m .nav-links { font-weight: 700; }
+  #m .clay { box-shadow: 10px 12px 24px rgba(186,128,92,.28), inset -6px -8px 14px rgba(0,0,0,.08), inset 6px 8px 14px rgba(255,255,255,.7); }
+  #m .btn { background: #ffb08a; padding: 11px 20px; border-radius: 22px; font-weight: 800; color: #5a2a14; }
+  #m .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 30px; align-items: center; padding: 30px 0 20px; }
+  #m .card-hero { background: #fff; border-radius: 44px; padding: 44px; }
+  #m h1 { font-size: 56px; font-weight: 800; line-height: 1.02; letter-spacing: -.02em; }
+  #m h1 span { color: #f26b1d; }
+  #m .lead { font-size: 18px; color: #7b625a; margin: 18px 0 24px; font-weight: 500; }
+  #m .search { border-radius: 26px; background: #fdf3ea; padding: 16px 22px; color: #a18b80; font-weight: 700; box-shadow: inset 4px 5px 10px rgba(186,128,92,.25), inset -4px -5px 10px rgba(255,255,255,.9); }
+  #m .pedestal { display: grid; place-items: center; position: relative; height: 420px; }
+  #m .pedestal .p { position: absolute; bottom: 20px; width: 300px; height: 90px; border-radius: 50%; background: #ffd2b8; }
+  #m .pedestal .bub { position: absolute; width: 330px; height: 330px; border-radius: 50%; background: #ffe6d6; top: 10px; }
+  #m .pedestal img { position: relative; height: 340px; margin-bottom: 30px; filter: drop-shadow(0 16px 14px rgba(150,80,40,.25)); }
+  #m h2 { font-size: 30px; font-weight: 800; margin: 36px 0 18px; }
+  #m .pills { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+  #m .pill { border-radius: 36px; padding: 18px 16px 20px; text-align: center; background: var(--bg); transition: transform .2s; }
+  #m .pill:hover { transform: translateY(-6px) scale(1.02); }
+  #m .pill .ball { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 12px; display: grid; place-items: center; background: #fff; }
+  #m .pill img { height: 112px; }
+  #m .pill h3 { font-size: 20px; font-weight: 800; }
+  #m .pill p { font-size: 13px; color: #7b625a; font-weight: 500; margin-top: 2px; }
+  #m .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; }
+  #m .extras a { display: flex; gap: 14px; align-items: center; background: #fff; border-radius: 30px; padding: 14px; }
+  #m .extras img { width: 80px; height: 80px; object-fit: contain; background: #fdf3ea; border-radius: 24px; padding: 6px; }
+  #m .extras h3 { font-size: 16px; font-weight: 800; } #m .extras p { font-size: 13px; color: #7b625a; }
+
+  /* ============ N : Bande dessinée ============ */
+  #n { background: #fff6d9; color: #111; font-family: "Comic Neue", sans-serif; padding-bottom: 60px;
+       background-image: radial-gradient(rgba(242,107,29,.22) 2px, transparent 2.5px); background-size: 14px 14px; }
+  #n .brand span { font: 26px Bangers; letter-spacing: .04em; }
+  #n .nav-links { font-weight: 700; }
+  #n .btn { font: 20px Bangers; letter-spacing: .05em; background: #ffd400; border: 3px solid #111; padding: 6px 16px; box-shadow: 4px 4px 0 #111; }
+  #n .strip { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto; gap: 14px; margin-top: 10px; }
+  #n .panel { border: 4px solid #111; background: #fff; position: relative; overflow: hidden; box-shadow: 6px 6px 0 #111; }
+  #n .p1 { grid-row: 1 / 3; padding: 34px; background: #fff; }
+  #n .p1 .cap { display: inline-block; background: #ffd400; border: 3px solid #111; font-weight: 700; padding: 4px 10px; font-size: 14px; margin-bottom: 18px; }
+  #n h1 { font: 86px/0.92 Bangers; letter-spacing: .02em; }
+  #n h1 span { color: #f26b1d; -webkit-text-stroke: 2px #111; }
+  #n .lead { font-size: 19px; margin: 18px 0 22px; max-width: 460px; }
+  #n .search { border: 3px solid #111; padding: 12px 14px; font-weight: 700; color: #777; max-width: 460px; border-radius: 6px; }
+  #n .p2 { height: 300px; background: #3b82f6; display: grid; place-items: center;
+           background-image: repeating-conic-gradient(from 0deg, #3b82f6 0 10deg, #5a9bff 10deg 20deg); }
+  #n .p2 img { height: 260px; position: relative; top: 20px; }
+  #n .bubble { position: absolute; top: 14px; left: 14px; background: #fff; border: 3px solid #111; border-radius: 26px; padding: 10px 14px; font-weight: 700; font-size: 15px; max-width: 220px; }
+  #n .bubble::after { content: ""; position: absolute; bottom: -16px; left: 60px; border-left: 14px solid transparent; border-right: 6px solid transparent; border-top: 16px solid #111; }
+  #n .p3 { background: #ffd400; padding: 16px; display: flex; align-items: center; justify-content: center; font: 46px Bangers; letter-spacing: .04em; transform: rotate(-1deg); }
+  #n .p3 span { -webkit-text-stroke: 2px #111; color: #fff; }
+  #n h2 { font: 40px Bangers; letter-spacing: .03em; margin: 40px 0 16px; }
+  #n .cases { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  #n .case { border: 4px solid #111; background: #fff; box-shadow: 5px 5px 0 #111; transition: transform .12s; }
+  #n .case:hover { transform: translate(-3px,-3px) rotate(-1deg); box-shadow: 8px 8px 0 #111; }
+  #n .case .top { height: 130px; display: grid; place-items: center; border-bottom: 4px solid #111; background: var(--lc);
+                  background-image: radial-gradient(rgba(255,255,255,.35) 2px, transparent 2.5px); background-size: 10px 10px; }
+  #n .case img { height: 118px; }
+  #n .case .bot { padding: 10px 12px 12px; }
+  #n .case h3 { font: 26px Bangers; letter-spacing: .03em; }
+  #n .case p { font-size: 14px; font-weight: 700; }
+  #n .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+  #n .extras a { display: flex; gap: 12px; align-items: center; border: 4px solid #111; background: #fff; padding: 10px; box-shadow: 5px 5px 0 #111; }
+  #n .extras img { width: 76px; height: 76px; object-fit: contain; }
+  #n .extras h3 { font: 22px Bangers; letter-spacing: .03em; } #n .extras p { font-size: 14px; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="switcher">
+  <button data-t="i" class="on">I · Risographie</button>
+  <button data-t="j">J · Forêt au crépuscule</button>
+  <button data-t="k">K · Aurore</button>
+  <button data-t="l">L · Bauhaus</button>
+  <button data-t="m">M · Pâte à modeler</button>
+  <button data-t="n">N · Bande dessinée</button>
+</div>
+
+<!-- ===================== I ===================== -->
+<section id="i" class="mock on">
+  <div class="nav">
+    <div class="brand"><img data-f="fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Maîtrise le code.<br>Deviens un renard.</h1>
+        <p class="lead">Cours, exercices auto-corrigés et activités interactives — de la seconde au BTS SIO.</p>
+        <div class="search">→ rechercher une notion : boucles, listes, SQL…</div>
+      </div>
+      <div class="art"><div class="disc"></div><div class="disc2"></div><img data-f="fox_2.png" alt=""></div>
+    </div>
+  </div>
+  <div class="band">&nbsp;★ Python <span>★</span> Web <span>★</span> SQL <span>★</span> Réseaux <span>★</span> Graphes <span>★</span> Récursivité <span>★</span> Données <span>★</span> Python <span>★</span> Web <span>★</span> SQL <span>★</span> Réseaux <span>★</span> Graphes</div>
+  <div class="wrap">
+    <div class="levels">
+      <a class="lv"><div class="no">0</div><img data-f="fox_0.png" alt=""><h3>SNI</h3><p>Les bases du numérique.</p></a>
+      <a class="lv"><div class="no">1</div><img data-f="fox_1.png" alt=""><h3>SNT</h3><p>Photo, web, données, réseaux.</p></a>
+      <a class="lv"><div class="no">2</div><img data-f="fox_2.png" alt=""><h3>Première NSI</h3><p>Algo, Python, structures.</p></a>
+      <a class="lv"><div class="no">3</div><img data-f="fox_3.png" alt=""><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p></a>
+      <a class="lv"><div class="no">4</div><img data-f="fox_4.png" alt=""><h3>BTS SIO</h3><p>Aller plus loin.</p></a>
+    </div>
+    <div class="extras">
+      <a><img data-f="fox_act.png" alt=""><div><h3>Le poulailler</h3><p>Le jeu pour apprendre Python.</p></div></a>
+      <a><img data-f="fox_chasse_renard.png" alt=""><div><h3>Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a><img data-f="fox_2.png" alt=""><div><h3>Langage C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== J ===================== -->
+<section id="j" class="mock">
+  <div class="stars"></div><div class="moon"></div>
+  <div class="nav">
+    <div class="brand"><img data-f="fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn">Connexion</span></div>
+  </div>
+  <div class="wrap hero">
+    <h1>Maîtrise le code.<br><i>Deviens un renard.</i></h1>
+    <p class="lead">Des cours, des exercices et des défis pour progresser à ton rythme, de la seconde au BTS.</p>
+    <div class="search">🔍 Rechercher une notion…</div>
+  </div>
+  <div class="scene">
+    <svg viewBox="0 0 1600 330" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 170 C 200 110, 380 150, 560 120 S 900 60, 1100 120 S 1450 90, 1600 140 V330 H0Z" fill="#7a3561" opacity=".75"/>
+      <path d="M0 220 C 220 170, 420 230, 640 190 S 1000 150, 1220 200 S 1480 180, 1600 210 V330 H0Z" fill="#4d2552"/>
+      <path d="M0 270 C 260 240, 520 290, 800 255 S 1300 240, 1600 270 V330 H0Z" fill="#2a1838"/>
+    </svg>
+    <img data-f="fox_1.png" alt="" style="left:12%; height:120px; bottom:110px">
+    <img data-f="fox_2.png" alt="" style="left:50%; margin-left:-95px; bottom:70px">
+    <img data-f="fox_4.png" alt="" style="right:10%; height:130px; bottom:100px">
+  </div>
+  <div class="ground">
+    <div class="wrap">
+      <h2>Choisis ton terrier</h2>
+      <div class="burrows">
+        <a class="burrow" style="--lc:#7fb3c4"><div class="hole"><img data-f="fox_0.png" alt=""></div><h3>SNI</h3><p>Les bases du numérique.</p><span class="k">Découverte →</span></a>
+        <a class="burrow" style="--lc:#60a5fa"><div class="hole"><img data-f="fox_1.png" alt=""></div><h3>SNT</h3><p>Photo, web, données, réseaux.</p><span class="k">Seconde →</span></a>
+        <a class="burrow" style="--lc:#ff8a3d"><div class="hole"><img data-f="fox_2.png" alt=""></div><h3>Première NSI</h3><p>Algo, Python, structures.</p><span class="k">Première →</span></a>
+        <a class="burrow" style="--lc:#a78bfa"><div class="hole"><img data-f="fox_3.png" alt=""></div><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p><span class="k">Terminale →</span></a>
+        <a class="burrow" style="--lc:#34d399"><div class="hole"><img data-f="fox_4.png" alt=""></div><h3>BTS SIO</h3><p>Aller plus loin.</p><span class="k">Post-bac →</span></a>
+      </div>
+      <div class="extras">
+        <a><img data-f="fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Apprends Python en jouant.</p></div></a>
+        <a><img data-f="fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+        <a><img data-f="fox_2.png" alt=""><div><h3>Programmation en C</h3><p>Ouvert à tous.</p></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== K ===================== -->
+<section id="k" class="mock">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="nav">
+    <div class="brand"><img data-f="fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Maîtrise le <span>code.</span><br>Deviens un <span>renard.</span></h1>
+        <p class="lead">Cours, exercices auto-corrigés et activités interactives, de la seconde au BTS SIO.</p>
+        <div class="search">🔍 Rechercher une notion <kbd>Ctrl K</kbd></div>
+      </div>
+      <div class="orb"><div class="ring"></div><div class="ring r2"></div><img data-f="fox_2.png" alt=""></div>
+    </div>
+    <div class="glass">
+      <a class="g" style="--lc:#7fb3c4"><img data-f="fox_0.png" alt=""><div class="aud">Découverte</div><h3>SNI</h3><p>Les bases du numérique.</p></a>
+      <a class="g" style="--lc:#60a5fa"><img data-f="fox_1.png" alt=""><div class="aud">Seconde</div><h3>SNT</h3><p>Photo, web, réseaux.</p></a>
+      <a class="g" style="--lc:#ff8a3d"><img data-f="fox_2.png" alt=""><div class="aud">Première</div><h3>Première NSI</h3><p>Algo, Python, structures.</p></a>
+      <a class="g" style="--lc:#a78bfa"><img data-f="fox_3.png" alt=""><div class="aud">Terminale</div><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p></a>
+      <a class="g" style="--lc:#34d399"><img data-f="fox_4.png" alt=""><div class="aud">Post-bac</div><h3>BTS SIO</h3><p>Aller plus loin.</p></a>
+    </div>
+    <h2>Et aussi</h2>
+    <div class="extras">
+      <a><img data-f="fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Jeu de programmation Python</p></div></a>
+      <a><img data-f="fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>Galerie des élèves</p></div></a>
+      <a><img data-f="fox_2.png" alt=""><div><h3>Programmation en C</h3><p>Ouvert à tous</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== L ===================== -->
+<section id="l" class="mock">
+  <div class="nav">
+    <div class="brand"><img data-f="fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <div class="cell t"><h1>Maîtrise le <span>code.</span><br>Deviens un <span>renard.</span></h1></div>
+      <div class="cell circ"><img data-f="fox_2.png" alt=""></div>
+      <div class="cell s">Cours, exercices auto-corrigés et activités interactives. De la seconde au BTS SIO.</div>
+      <div class="cell q"><small>Rechercher</small><div class="search">boucles, listes, SQL…</div></div>
+    </div>
+    <h2>Les parcours</h2>
+    <div class="row">
+      <a class="lv" style="--bg:#d9d2c3; --sh:#1f4fbf"><div class="top"><div class="shape circle"></div><img data-f="fox_0.png" alt=""></div><div class="bot"><h3>SNI</h3><p>Les bases du numérique.</p></div></a>
+      <a class="lv" style="--bg:#1f4fbf; --sh:#ffcc29"><div class="top"><div class="shape tri"></div><img data-f="fox_1.png" alt=""></div><div class="bot"><h3>SNT</h3><p>Photo, web, réseaux.</p></div></a>
+      <a class="lv" style="--bg:#ffcc29; --sh:#f26b1d"><div class="top"><div class="shape circle"></div><img data-f="fox_2.png" alt=""></div><div class="bot"><h3>Première NSI</h3><p>Algo, Python, structures.</p></div></a>
+      <a class="lv" style="--bg:#f26b1d; --sh:#111"><div class="top"><div class="shape"></div><img data-f="fox_3.png" alt=""></div><div class="bot"><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p></div></a>
+      <a class="lv" style="--bg:#111; --sh:#f1ebdd"><div class="top"><div class="shape half"></div><img data-f="fox_4.png" alt=""></div><div class="bot"><h3>BTS SIO</h3><p>Aller plus loin.</p></div></a>
+    </div>
+    <div class="extras">
+      <a><img data-f="fox_act.png" alt=""><div><h3>Le poulailler</h3><p>Apprends Python en jouant.</p></div></a>
+      <a><img data-f="fox_chasse_renard.png" alt=""><div><h3>Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a><img data-f="fox_2.png" alt=""><div><h3>Langage C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== M ===================== -->
+<section id="m" class="mock">
+  <div class="nav">
+    <div class="brand"><img data-f="fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn clay">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="hero">
+      <div class="card-hero clay">
+        <h1>Maîtrise le <span>code.</span><br>Deviens un <span>renard.</span></h1>
+        <p class="lead">Des cours tout doux, des exercices qui se corrigent tout seuls et des badges à gagner.</p>
+        <div class="search">🔍 Cherche une notion…</div>
+      </div>
+      <div class="pedestal"><div class="bub"></div><div class="p clay"></div><img data-f="fox_2.png" alt=""></div>
+    </div>
+    <h2>Ton niveau</h2>
+    <div class="pills">
+      <a class="pill clay" style="--bg:#d9ebf0"><div class="ball clay"><img data-f="fox_0.png" alt=""></div><h3>SNI</h3><p>Les bases du numérique.</p></a>
+      <a class="pill clay" style="--bg:#dce8ff"><div class="ball clay"><img data-f="fox_1.png" alt=""></div><h3>SNT</h3><p>Photo, web, réseaux.</p></a>
+      <a class="pill clay" style="--bg:#ffe0cc"><div class="ball clay"><img data-f="fox_2.png" alt=""></div><h3>Première NSI</h3><p>Algo, Python, structures.</p></a>
+      <a class="pill clay" style="--bg:#ebe2ff"><div class="ball clay"><img data-f="fox_3.png" alt=""></div><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p></a>
+      <a class="pill clay" style="--bg:#d6f5e7"><div class="ball clay"><img data-f="fox_4.png" alt=""></div><h3>BTS SIO</h3><p>Aller plus loin.</p></a>
+    </div>
+    <div class="extras">
+      <a class="clay"><img data-f="fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Apprends Python en jouant.</p></div></a>
+      <a class="clay"><img data-f="fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a class="clay"><img data-f="fox_2.png" alt=""><div><h3>Programmation en C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== N ===================== -->
+<section id="n" class="mock">
+  <div class="nav">
+    <div class="brand"><img data-f="fox_3_mark.png" alt=""><span>La tanière du code</span></div>
+    <div class="nav-links"><a>Cours</a><a>Académie</a><a>À propos</a><span class="btn">Connexion</span></div>
+  </div>
+  <div class="wrap">
+    <div class="strip">
+      <div class="panel p1">
+        <span class="cap">Épisode 1 : la tanière</span>
+        <h1>Maîtrise le <span>code.</span><br>Deviens un <span>renard.</span></h1>
+        <p class="lead">Cours, exercices auto-corrigés et défis, de la seconde jusqu'au BTS.</p>
+        <div class="search">🔍 Rechercher une notion…</div>
+      </div>
+      <div class="panel p2"><div class="bubble">Ctrl + C pour copier, Ctrl + V pour coder !</div><img data-f="fox_2.png" alt=""></div>
+      <div class="panel p3"><span>CLAC ! CLAC !</span>&nbsp;⌨️</div>
+    </div>
+    <h2>Choisis ton héros</h2>
+    <div class="cases">
+      <a class="case" style="--lc:#7fb3c4"><div class="top"><img data-f="fox_0.png" alt=""></div><div class="bot"><h3>SNI</h3><p>Les bases du numérique.</p></div></a>
+      <a class="case" style="--lc:#60a5fa"><div class="top"><img data-f="fox_1.png" alt=""></div><div class="bot"><h3>SNT</h3><p>Photo, web, réseaux.</p></div></a>
+      <a class="case" style="--lc:#ff8a3d"><div class="top"><img data-f="fox_2.png" alt=""></div><div class="bot"><h3>Première NSI</h3><p>Algo, Python, structures.</p></div></a>
+      <a class="case" style="--lc:#a78bfa"><div class="top"><img data-f="fox_3.png" alt=""></div><div class="bot"><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p></div></a>
+      <a class="case" style="--lc:#34d399"><div class="top"><img data-f="fox_4.png" alt=""></div><div class="bot"><h3>BTS SIO</h3><p>Aller plus loin.</p></div></a>
+    </div>
+    <div class="extras">
+      <a><img data-f="fox_act.png" alt=""><div><h3>Le poulailler</h3><p>Apprends Python en jouant.</p></div></a>
+      <a><img data-f="fox_chasse_renard.png" alt=""><div><h3>Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a><img data-f="fox_2.png" alt=""><div><h3>Langage C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('img[data-f]').forEach(function (img) {
+    img.src = 'https://www.clementbraun.info/images/' + img.dataset.f;
+  });
+  document.querySelectorAll('.switcher button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.switcher button, .mock').forEach(function (el) { el.classList.remove('on'); });
+      b.classList.add('on');
+      document.getElementById(b.dataset.t).classList.add('on');
+      window.scrollTo(0, 0);
+    });
+  });
+</script>
+</body>
+</html>

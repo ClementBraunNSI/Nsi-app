@@ -27,7 +27,7 @@ export function PageHeader({ eyebrow, title, description, actions, media, classN
           )}
           {actions && <div className="mt-6 flex flex-wrap gap-3">{actions}</div>}
         </div>
-        {media && <div className="relative hidden h-28 w-40 shrink-0 sm:block">{media}</div>}
+        {media && <div className="page-header-media relative hidden h-28 w-40 shrink-0 sm:block">{media}</div>}
       </div>
       {!media && (
         <div className="absolute -top-8 -right-4 text-[9rem] opacity-[0.035] select-none pointer-events-none">🦊</div>

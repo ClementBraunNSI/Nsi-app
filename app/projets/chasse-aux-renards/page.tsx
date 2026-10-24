@@ -225,11 +225,11 @@ export default function ChasseAuxRenards() {
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600">
       <nav className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <Link href="/projets" className="flex items-center gap-2 text-slate-400 hover:text-orange-500 transition-colors font-bold text-sm uppercase tracking-widest">
             <Home size={18} /> Projets
           </Link>
-          <div className="flex items-center gap-2 text-orange-500 font-black tracking-widest uppercase text-sm">
+          <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-orange-500 font-black tracking-wide sm:tracking-widest uppercase text-xs sm:text-sm">
             <Palette size={18} />
             <button
               type="button"

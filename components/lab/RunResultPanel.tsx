@@ -1,18 +1,12 @@
 import { Check, X } from "lucide-react";
 import type { RunReport, RunTest } from "@/lib/python-check";
 
-function ratioText(passed: number, total: number) {
-  const noun = total > 1 ? "tests réussis" : "test réussi";
-  return `${passed}/${total} ${noun}`;
-}
-
 function displayLabel(test: RunTest) {
   if (!test.ok) return test.label;
   const defined = test.label
     .replace(/n['’]est pas définie/gi, "est définie")
     .replace(/n['’]est pas défini/gi, "est défini");
-  if (defined !== test.label) return defined;
-  return test.label;
+  return defined;
 }
 
 function valueLabels(test: RunTest) {
@@ -29,33 +23,28 @@ function usable(value: string | undefined) {
   return value !== undefined && value.length > 0 && value.length <= 180;
 }
 
-function TestCard({ test, index }: { test: RunTest; index: number }) {
+function FailedTest({ test, index }: { test: RunTest; index: number }) {
   const labels = valueLabels(test);
-  const showValues = !test.ok && usable(test.expected) && usable(test.actual) && (test.actual !== test.expected || test.printCompare);
+  const showValues = usable(test.expected) && usable(test.actual) && (test.actual !== test.expected || test.printCompare);
   return (
-    <li className={test.ok ? "exercise-test-card is-ok" : "exercise-test-card is-bad"}>
-      <p className="exercise-test-name">Test {index + 1} : {displayLabel(test)}</p>
-      <p className="exercise-test-state">
-        {test.ok ? <Check size={15} aria-hidden /> : <X size={15} aria-hidden />}
-        {test.ok ? "Réussi" : "Échec"}
+    <li className="exercise-test is-bad">
+      <p className="exercise-test-name">
+        <X size={14} aria-hidden />
+        <span>
+          <span className="exercise-test-index">Test {index + 1}</span> {displayLabel(test)}
+        </span>
       </p>
-      {test.detail && test.detail.trim() !== test.label.trim() ? (
-        <p className="exercise-test-detail">{test.detail}</p>
-      ) : null}
+      {test.detail && test.detail.trim() !== test.label.trim() ? <p className="exercise-test-detail">{test.detail}</p> : null}
       {showValues ? (
         <div className="exercise-values">
-          {test.expected !== undefined ? (
-            <div>
-              <p>{labels.expected}</p>
-              <pre>{test.expected || "∅"}</pre>
-            </div>
-          ) : null}
-          {test.actual !== undefined ? (
-            <div>
-              <p>{labels.actual}</p>
-              <pre>{test.actual || "∅"}</pre>
-            </div>
-          ) : null}
+          <div>
+            <p>{labels.expected}</p>
+            <pre>{test.expected || "∅"}</pre>
+          </div>
+          <div>
+            <p>{labels.actual}</p>
+            <pre>{test.actual || "∅"}</pre>
+          </div>
         </div>
       ) : null}
     </li>
@@ -70,34 +59,54 @@ function joinedPrints(report: RunReport) {
   return parts.filter(Boolean).join("\n\n");
 }
 
+/** Tests ratés en premier et détaillés ; tests réussis réduits à une ligne. */
 export function RunResultPanel({ report }: { report: RunReport }) {
-  const passed = report.tests.filter((test) => test.ok).length;
+  const indexed = report.tests.map((test, index) => ({ test, index }));
+  const failed = indexed.filter(({ test }) => !test.ok);
+  const passedTests = indexed.filter(({ test }) => test.ok);
   const total = report.tests.length;
-  const allOk = report.status === "success" && total > 0 && passed === total;
-  const summaryClass = allOk ? "is-ok" : total > 0 ? "is-bad" : "is-warn";
-  const summary = total > 0
-    ? ratioText(passed, total)
-    : (report.error || "Les tests n’ont pas été lancés.");
+  const allOk = report.status === "success" && total > 0 && failed.length === 0;
   const prints = joinedPrints(report);
 
   return (
-    <div id="exercice-resultat" className="exercise-test-panel" role="status" aria-live="polite">
-      <p className={`exercise-test-summary ${summaryClass}`}>
+    <div id="exercice-resultat" className="exercise-test-panel" role="status">
+      <p className={`exercise-test-summary ${allOk ? "is-ok" : "is-bad"}`}>
         {allOk ? <Check size={16} aria-hidden /> : <X size={16} aria-hidden />}
-        <span>{summary}</span>
+        <span>
+          {total > 0
+            ? allOk
+              ? `Bravo, ${total === 1 ? "le test passe" : `les ${total} tests passent`} !`
+              : `${passedTests.length} test${passedTests.length > 1 ? "s" : ""} sur ${total} réussi${passedTests.length > 1 ? "s" : ""}`
+            : report.error || "Les tests n’ont pas été lancés."}
+        </span>
       </p>
-      {report.validationNote ? <p className="exercise-validation-note">{report.validationNote}</p> : null}
+      {report.validationNote ? <p className="exercise-validation-note">Aperçu enseignant : {report.validationNote.toLowerCase()}</p> : null}
       {total > 0 && report.error ? <p className="exercise-test-detail">{report.error}</p> : null}
-      {total > 0 ? (
-        <ul className="exercise-test-row">
-          {report.tests.map((test, index) => <TestCard key={`${test.label}-${index}`} test={test} index={index} />)}
+
+      {failed.length > 0 ? (
+        <ul className="exercise-test-list">
+          {failed.map(({ test, index }) => (
+            <FailedTest key={`${test.label}-${index}`} test={test} index={index} />
+          ))}
         </ul>
       ) : null}
-      {report.validationNote && prints ? (
-        <div className="exercise-test-prints">
-          <p>Affichage</p>
+
+      {passedTests.length > 0 ? (
+        <ul className="exercise-test-passed">
+          {passedTests.map(({ test, index }) => (
+            <li key={`${test.label}-${index}`}>
+              <Check size={13} aria-hidden />
+              <span className="exercise-test-index">Test {index + 1}</span> {displayLabel(test)}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
+      {prints && (report.validationNote || failed.length > 0) ? (
+        <details className="exercise-test-prints">
+          <summary>Ce que ton programme a affiché</summary>
           <pre>{prints}</pre>
-        </div>
+        </details>
       ) : null}
       {report.saveWarning ? <p className="exercise-save-warning">{report.saveWarning}</p> : null}
     </div>

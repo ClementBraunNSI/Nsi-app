@@ -53,6 +53,48 @@ describe('server exercise check', () => {
     expect(JSON.stringify(failed)).not.toContain('return age');
   });
 
+  it('keeps student code away from server secrets, host files and Node internals', async () => {
+    process.env.NSI_TEST_SECRET = 'ne-doit-pas-sortir';
+    const probe = [
+      'import os',
+      'res = {}',
+      'res["env"] = sorted(os.environ.get(k, "") for k in ["NSI_TEST_SECRET", "SUPABASE_SERVICE_ROLE_KEY"])',
+      'for name, target in [("passwd", "/etc/passwd"), ("win", "C:/Windows/win.ini"), ("pkg", "' + process.cwd().replace(/\\/g, '/') + '/package.json")]:',
+      '    try:',
+      '        open(target).read()',
+      '        res[name] = "lu"',
+      '    except Exception:',
+      '        res[name] = "bloque"',
+      'import js',
+      'res["js"] = hasattr(js, "process")',
+      'import pyodide_js',
+      'res["nodefs"] = hasattr(pyodide_js.FS.filesystems, "NODEFS")',
+      'try:',
+      '    from pyodide.code import run_js',
+      '    res["run_js"] = run_js("typeof process")',
+      'except Exception:',
+      '    res["run_js"] = "bloque"',
+      'try:',
+      '    res["function"] = pyodide_js.runPython.constructor("return typeof process.getBuiltinModule")()',
+      'except Exception:',
+      '    res["function"] = "bloque"',
+      'print(res)',
+    ].join('\n');
+    const report = await runPythonCheck(probe, 'assert True\n');
+    delete process.env.NSI_TEST_SECRET;
+
+    expect(report.error).toBeUndefined();
+    expect(report.prints).not.toContain('ne-doit-pas-sortir');
+    expect(report.prints).toContain("'env': ['', '']");
+    expect(report.prints).toContain("'passwd': 'bloque'");
+    expect(report.prints).toContain("'win': 'bloque'");
+    expect(report.prints).toContain("'pkg': 'bloque'");
+    expect(report.prints).toContain("'js': False");
+    expect(report.prints).toContain("'nodefs': False");
+    expect(report.prints).toContain("'run_js': 'bloque'");
+    expect(report.prints).toContain("'function': 'bloque'");
+  });
+
   it('grades SQL without returning the verification query', async () => {
     const passed = await runSqlCheck(
       'CREATE TABLE etudiants(id INTEGER); INSERT INTO etudiants VALUES (1);',

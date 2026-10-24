@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { BookOpen, GraduationCap } from "lucide-react";
 import { Card, PageHeader } from "@/components/ui";
+import { GAME_NAME } from "@/app/foxtest/academy/meta";
 
 const LINKS = [
   { href: "/", label: "Accueil", text: "Parcourir les parcours publics. Chaque exercice s’ouvre depuis sa fiche.", icon: BookOpen },
-  { href: "/academie", label: "Le renard dans le poulailler", text: "Guide le renard jusqu’à la poule en Python.", icon: GraduationCap },
+  { href: "/academie", label: GAME_NAME, text: "Guide le renard jusqu’à la poule en Python.", icon: GraduationCap },
 ];
 
 export function InvitePreview({ name }: { name: string }) {

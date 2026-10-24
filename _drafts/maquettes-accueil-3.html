@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquettes accueil · série 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens repris de app/globals.css */
+  :root {
+    --bg: #f7f4ef; --surface: #fffcf8; --surface-2: #f1ece4;
+    --fg: #14110e; --muted: #5c564e; --subtle: #8a8278;
+    --border: color-mix(in srgb, #14110e 10%, transparent);
+    --accent: #ea580c; --accent-fg: #fff; --accent-soft: #fff1e6;
+    --radius: 1.15rem; --radius-sm: .7rem;
+    --inset: inset 0 1px 0 rgba(255,255,255,.72);
+    --shadow: var(--inset), 0 1px 1px rgba(20,17,14,.03), 0 22px 50px -32px rgba(20,17,14,.28);
+    --ease: cubic-bezier(.22,1,.36,1);
+    --sni: #64748b; --snt: #3b82f6; --nsi1: #f97316; --tnsi: #a855f7; --sio: #10b981;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: Geist, system-ui, sans-serif; letter-spacing: -.011em; }
+  body { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .switcher { position: sticky; top: 0; z-index: 60; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 10px; background: #1d1712; }
+  .switcher button { font: 600 14px Geist, sans-serif; border: 0; border-radius: 999px; padding: 8px 16px; background: #3a312a; color: #e9e4dc; cursor: pointer; }
+  .switcher button.on { background: var(--accent); color: #fff; }
+  .mock { display: none; padding-bottom: 70px; } .mock.on { display: block; }
+
+  /* ----- en-tête commun (identique au site actuel) ----- */
+  .site-header { height: 5rem; border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 85%, transparent); backdrop-filter: blur(12px); }
+  .site-header nav { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+  .logo img { height: 4.2rem; }
+  .logo b { color: var(--accent); font-weight: 600; } .logo span { color: var(--muted); font-weight: 500; }
+  .links { display: flex; align-items: center; gap: 22px; font-size: 14px; font-weight: 500; color: var(--muted); }
+  .links .on { color: var(--accent); }
+  .btn-dark { background: var(--fg); color: var(--bg); padding: 9px 16px; border-radius: var(--radius-sm); font-weight: 600; font-size: 14px; }
+  .btn-acc { background: var(--accent); color: var(--accent-fg); padding: 11px 18px; border-radius: var(--radius-sm); font-weight: 600; font-size: 15px; display: inline-block; }
+  .btn-ghost { border: 1px solid var(--border); background: var(--surface); padding: 11px 18px; border-radius: var(--radius-sm); font-weight: 600; font-size: 15px; display: inline-block; }
+  .wrap { max-width: 80rem; margin: 0 auto; padding: 0 2rem; }
+
+  /* ----- éléments communs ----- */
+  .title { font-size: clamp(2.6rem, 6vw, 4.8rem); font-weight: 600; line-height: .98; letter-spacing: -.035em; text-wrap: balance; }
+  .title .c { color: var(--accent); }
+  .title .u { position: relative; display: inline-block; }
+  .title .u svg { position: absolute; left: 0; bottom: -8px; width: 100%; height: 10px; }
+  .splash { display: inline-block; color: #f59e0b; font-weight: 700; font-size: 15px; transform: rotate(-4deg); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); padding: 8px 14px; border-radius: 10px; color: var(--accent); }
+  .search { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; font-size: 17px; font-weight: 500; color: var(--subtle); box-shadow: var(--shadow); }
+  .search kbd { margin-left: auto; font: 500 12px "Geist Mono"; color: var(--subtle); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; background: var(--surface-2); }
+  .card { border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; transition: border-color .18s var(--ease), transform .18s var(--ease); }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+  .h2 { font-size: 24px; font-weight: 600; letter-spacing: -.02em; margin: 56px 0 18px; }
+  .h2 em { font-style: normal; color: var(--accent); }
+  .h2 small { font-size: 14px; font-weight: 500; color: var(--subtle); margin-left: 10px; letter-spacing: 0; }
+  .eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .02em; }
+  .lead { font-size: 19px; color: var(--muted); line-height: 1.6; font-weight: 500; }
+  .foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 14px; margin-top: auto; font-size: 12px; font-weight: 600; color: var(--subtle); }
+
+  /* ============ O : Fidèle, en mieux ============ */
+  #o .hero { text-align: center; padding: 72px 0 60px; }
+  #o .hero .lead { max-width: 640px; margin: 26px auto 28px; }
+  #o .hero .search { max-width: 600px; margin: 26px auto 0; text-align: left; }
+  #o .quick { display: flex; gap: 8px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+  #o .quick span { font-size: 13px; font-weight: 500; color: var(--muted); border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 5px 12px; }
+  #o .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  #o .lvl { display: flex; flex-direction: column; }
+  #o .lvl .pic { height: 150px; background: var(--surface-2); position: relative; display: grid; place-items: center; border-bottom: 3px solid var(--lc); }
+  #o .lvl .pic img { height: 128px; }
+  #o .lvl .pic .tag { position: absolute; top: 10px; right: 10px; }
+  #o .lvl .body { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+  #o .lvl h3 { font-size: 18px; font-weight: 600; letter-spacing: -.015em; }
+  #o .lvl p { font-size: 13px; color: var(--muted); line-height: 1.5; margin: 6px 0 16px; }
+  #o .lvl.feat { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 70%, transparent), transparent 50%), var(--surface); }
+  #o .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  #o .mini { display: flex; gap: 16px; align-items: center; padding: 14px; }
+  #o .mini .pic { width: 96px; height: 96px; flex-shrink: 0; border-radius: var(--radius-sm); background: var(--surface-2); display: grid; place-items: center; }
+  #o .mini img { height: 84px; }
+  #o .mini h3 { font-size: 16px; font-weight: 600; }
+  #o .mini p { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+  /* ============ P : Hero partagé ============ */
+  #p .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; padding: 64px 0 40px; }
+  #p .hero .lead { margin: 26px 0 28px; max-width: 540px; }
+  #p .hero .search { max-width: 540px; }
+  #p .cta { display: flex; gap: 10px; margin-top: 16px; }
+  #p .stage { position: relative; height: 440px; border-radius: 28px; background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
+  #p .stage::before { content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, var(--accent-soft), transparent 70%); left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  #p .stage img.main { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); height: 340px; }
+  #p .stage .splash { position: absolute; top: 22px; left: 22px; }
+  #p .stage .chip { position: absolute; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 10px 14px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow); display: flex; gap: 8px; align-items: center; }
+  #p .stage .c1 { right: 20px; top: 90px; } #p .stage .c2 { left: 20px; bottom: 70px; }
+  #p .rail { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  #p .lv { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  #p .lv .top { display: flex; justify-content: space-between; align-items: center; }
+  #p .lv .num { font: 500 12px "Geist Mono"; color: var(--subtle); }
+  #p .lv .pic { height: 110px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--lc) 12%, var(--surface-2)); display: grid; place-items: center; }
+  #p .lv .pic img { height: 96px; }
+  #p .lv h3 { font-size: 17px; font-weight: 600; }
+  #p .lv p { font-size: 13px; color: var(--muted); line-height: 1.45; }
+  #p .row3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; }
+  #p .wide { display: flex; align-items: center; gap: 18px; padding: 18px; }
+  #p .wide .pic { width: 120px; height: 120px; flex-shrink: 0; border-radius: var(--radius-sm); background: var(--surface-2); display: grid; place-items: center; }
+  #p .wide img { height: 104px; }
+  #p .wide h3 { font-size: 17px; font-weight: 600; } #p .wide p { font-size: 13px; color: var(--muted); margin: 4px 0 10px; }
+  #p .link { font-size: 13px; font-weight: 600; color: var(--accent); }
+
+  /* ============ Q : Frise de progression ============ */
+  #q .hero { text-align: center; padding: 64px 0 20px; }
+  #q .hero .lead { max-width: 620px; margin: 24px auto; }
+  #q .hero .search { max-width: 560px; margin: 0 auto; text-align: left; }
+  #q .timeline { position: relative; margin-top: 56px; padding: 30px 0 0; }
+  #q .line { position: absolute; top: 58px; left: 8%; right: 8%; height: 3px; background: linear-gradient(90deg, var(--sni), var(--snt), var(--nsi1), var(--tnsi), var(--sio)); border-radius: 3px; opacity: .55; }
+  #q .steps { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  #q .step { text-align: center; }
+  #q .step .bubble { width: 60px; height: 60px; margin: 0 auto 18px; border-radius: 50%; background: var(--surface); border: 3px solid var(--lc); display: grid; place-items: center; font-weight: 700; color: var(--lc); font-size: 15px; box-shadow: var(--shadow); }
+  #q .step .card { padding: 16px 14px 18px; text-align: left; }
+  #q .step .pic { height: 120px; border-radius: var(--radius-sm); background: var(--surface-2); display: grid; place-items: center; margin-bottom: 14px; }
+  #q .step img { height: 104px; }
+  #q .step .aud { font-size: 12px; font-weight: 600; color: var(--lc); }
+  #q .step h3 { font-size: 18px; font-weight: 600; margin: 2px 0 6px; }
+  #q .step p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  #q .step.here .bubble { background: var(--lc); color: #fff; }
+  #q .step.here .card { border-color: var(--accent); }
+  #q .split { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  #q .mini { display: flex; gap: 14px; align-items: center; padding: 14px; }
+  #q .mini img { width: 84px; height: 84px; object-fit: contain; background: var(--surface-2); border-radius: var(--radius-sm); padding: 6px; }
+  #q .mini h3 { font-size: 16px; font-weight: 600; } #q .mini p { font-size: 13px; color: var(--muted); }
+
+  /* ============ R : Bento sobre ============ */
+  #r .bento { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 118px; gap: 14px; margin-top: 28px; }
+  #r .b { border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); padding: 24px; position: relative; overflow: hidden; transition: border-color .18s var(--ease); }
+  #r a.b:hover { border-color: var(--accent); }
+  #r .hero { grid-column: span 8; grid-row: span 4; padding: 44px; display: flex; flex-direction: column; justify-content: center;
+             background: linear-gradient(160deg, var(--accent-soft), transparent 55%), var(--surface); }
+  #r .hero .lead { margin: 24px 0 26px; max-width: 480px; }
+  #r .hero .search { max-width: 480px; }
+  #r .hero img { position: absolute; right: 24px; bottom: 0; height: 300px; }
+  #r .splashb { grid-column: span 4; grid-row: span 1; display: flex; align-items: center; justify-content: center; background: var(--surface-2); }
+  #r .feat { grid-column: span 4; grid-row: span 3; display: flex; flex-direction: column; }
+  #r .feat .pic { flex: 1; display: grid; place-items: center; background: var(--surface-2); border-radius: var(--radius-sm); margin-bottom: 16px; }
+  #r .feat .pic img { height: 150px; }
+  #r .feat h3 { font-size: 22px; font-weight: 600; }
+  #r .feat p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  #r .lv { grid-column: span 3; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; }
+  #r .lv img { position: absolute; right: 8px; bottom: 6px; height: 110px; }
+  #r .lv h3 { font-size: 20px; font-weight: 600; margin-top: 6px; }
+  #r .lv p { font-size: 13px; color: var(--muted); max-width: 55%; }
+  #r .lv .bar { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--lc); }
+  #r .ex { grid-column: span 4; grid-row: span 1; display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
+  #r .ex img { width: 76px; height: 76px; object-fit: contain; }
+  #r .ex h3 { font-size: 15px; font-weight: 600; } #r .ex p { font-size: 13px; color: var(--muted); }
+
+  /* ============ S : Sélecteur de niveau ============ */
+  #s .hero { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: end; padding: 60px 0 30px; }
+  #s .hero .lead { margin: 22px 0 0; max-width: 560px; }
+  #s .hero .side { width: 420px; }
+  #s .hero .side .splash { margin-bottom: 16px; }
+  #s .panel { border-radius: 24px; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+  #s .tabs { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--border); background: var(--surface-2); }
+  #s .tab { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-right: 1px solid var(--border); font-weight: 600; font-size: 15px; color: var(--muted); cursor: pointer; position: relative; }
+  #s .tab:last-child { border-right: 0; }
+  #s .tab img { width: 44px; height: 44px; object-fit: contain; }
+  #s .tab small { display: block; font-size: 12px; font-weight: 500; color: var(--subtle); }
+  #s .tab.on { background: var(--surface); color: var(--fg); }
+  #s .tab.on::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--lc); }
+  #s .content { display: grid; grid-template-columns: 340px 1fr; }
+  #s .intro { padding: 30px; border-right: 1px solid var(--border); background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 70%, transparent), transparent 60%); }
+  #s .intro img { height: 210px; margin: 0 auto 10px; }
+  #s .intro h3 { font-size: 28px; font-weight: 600; letter-spacing: -.02em; }
+  #s .intro p { color: var(--muted); font-size: 15px; margin: 8px 0 20px; line-height: 1.5; }
+  #s .chapters { padding: 26px 30px; }
+  #s .chapters .eyebrow { margin-bottom: 14px; display: block; }
+  #s .chgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  #s .ch { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; font-size: 15px; transition: border-color .15s; }
+  #s .ch:hover { border-color: var(--accent); }
+  #s .ch span { font-size: 12px; font-weight: 500; color: var(--subtle); }
+  #s .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  #s .mini { display: flex; gap: 14px; align-items: center; padding: 14px; }
+  #s .mini img { width: 84px; height: 84px; object-fit: contain; background: var(--surface-2); border-radius: var(--radius-sm); padding: 6px; }
+  #s .mini h3 { font-size: 16px; font-weight: 600; } #s .mini p { font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="switcher">
+  <button data-t="o" class="on">O · Fidèle, en mieux</button>
+  <button data-t="p">P · Hero partagé</button>
+  <button data-t="q">Q · Frise de progression</button>
+  <button data-t="r">R · Bento sobre</button>
+  <button data-t="s">S · Sélecteur de niveau</button>
+</div>
+
+<template id="header">
+  <header class="site-header"><nav>
+    <a class="logo"><img data-f="fox_3_mark.png" alt=""><span><b>La tanière du Code</b> par Clément BRAUN</span></a>
+    <div class="links"><a class="on">Accueil</a><a>Cours</a><a>Académie</a><a>À propos</a><span>👁</span><span class="btn-dark">Connexion</span></div>
+  </nav></header>
+</template>
+<template id="title">
+  <h1 class="title">Maîtrise le <span class="c">code.</span><br>Deviens un <span class="u">renard.<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path d="M0 5C20 2 80 2 100 5" stroke="#ea580c" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span></h1>
+</template>
+
+<!-- ===================== O ===================== -->
+<section id="o" class="mock on">
+  <div data-slot="header"></div>
+  <div class="wrap">
+    <div class="hero">
+      <div data-slot="title"></div>
+      <p class="lead">Des cours clairs, des exercices corrigés automatiquement et un parcours de progression, de la seconde au BTS.</p>
+      <span class="splash">Ctrl + C pour copier, Ctrl + V pour coder.</span>
+      <div class="search">🔍 Rechercher une notion (ex : boucles, listes…)<kbd>Ctrl K</kbd></div>
+      <div class="quick"><span>Boucles</span><span>Listes</span><span>Dictionnaires</span><span>HTML</span><span>SQL</span><span>Récursivité</span></div>
+    </div>
+    <h2 class="h2">Parcourir par niveaux</h2>
+    <div class="grid">
+      <a class="card lvl" style="--lc:var(--sni)"><div class="pic"><img data-f="fox_0.png" alt=""><span class="tag">Découverte</span></div><div class="body"><h3>SNI</h3><p>Les bases du numérique, sans prérequis.</p><div class="foot">Ouvrir <span class="dot" style="background:var(--sni)"></span></div></div></a>
+      <a class="card lvl" style="--lc:var(--snt)"><div class="pic"><img data-f="fox_1.png" alt=""><span class="tag">Seconde</span></div><div class="body"><h3>SNT</h3><p>Photo, web, données, réseaux et Python.</p><div class="foot">Ouvrir <span class="dot" style="background:var(--snt)"></span></div></div></a>
+      <a class="card lvl feat" style="--lc:var(--nsi1)"><div class="pic"><img data-f="fox_2.png" alt=""><span class="tag">Première</span></div><div class="body"><h3>Première NSI</h3><p>Algorithmique, Python et structures de données.</p><div class="foot">Ouvrir <span class="dot" style="background:var(--nsi1)"></span></div></div></a>
+      <a class="card lvl" style="--lc:var(--tnsi)"><div class="pic"><img data-f="fox_3.png" alt=""><span class="tag">Terminale</span></div><div class="body"><h3>Terminale NSI</h3><p>Récursivité, SQL, réseaux et bac.</p><div class="foot">Ouvrir <span class="dot" style="background:var(--tnsi)"></span></div></div></a>
+      <a class="card lvl" style="--lc:var(--sio)"><div class="pic"><img data-f="fox_4.png" alt=""><span class="tag">Post-bac</span></div><div class="body"><h3>BTS SIO</h3><p>Services informatiques aux organisations.</p><div class="foot">Ouvrir <span class="dot" style="background:var(--sio)"></span></div></div></a>
+    </div>
+    <h2 class="h2">Un peu plus de <em>renards</em></h2>
+    <div class="row3">
+      <a class="card mini"><div class="pic"><img data-f="fox_act.png" alt=""></div><div><h3>Le renard dans le poulailler</h3><p>Guide le renard en Python.</p></div></a>
+      <a class="card mini"><div class="pic"><img data-f="fox_chasse_renard.png" alt=""></div><div><h3>Chasse aux Ren'Arts</h3><p>Les grands classiques revisités.</p></div></a>
+      <a class="card mini"><div class="pic"><img data-f="fox_2.png" alt=""></div><div><h3>Programmation en C</h3><p>Ressource ouverte, sans compte.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== P ===================== -->
+<section id="p" class="mock">
+  <div data-slot="header"></div>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div data-slot="title"></div>
+        <p class="lead">Des cours clairs, des exercices corrigés automatiquement et un parcours de progression, de la seconde au BTS.</p>
+        <div class="search">🔍 Rechercher une notion…<kbd>Ctrl K</kbd></div>
+        <div class="cta"><span class="btn-acc">Commencer en Première NSI</span><span class="btn-ghost">Voir tous les niveaux</span></div>
+      </div>
+      <div class="stage">
+        <span class="splash">Attention aux boucles infinies !</span>
+        <img class="main" data-f="fox_2.png" alt="">
+        <div class="chip c1">🏅 Badge débloqué : Tris</div>
+        <div class="chip c2">✅ 12 exercices réussis</div>
+      </div>
+    </div>
+    <h2 class="h2">Parcourir par niveaux</h2>
+    <div class="rail">
+      <a class="card lv" style="--lc:var(--sni)"><div class="top"><span class="tag">Découverte</span><span class="num">00</span></div><div class="pic"><img data-f="fox_0.png" alt=""></div><h3>SNI</h3><p>Les bases du numérique.</p></a>
+      <a class="card lv" style="--lc:var(--snt)"><div class="top"><span class="tag">Seconde</span><span class="num">01</span></div><div class="pic"><img data-f="fox_1.png" alt=""></div><h3>SNT</h3><p>Photo, web, données, réseaux.</p></a>
+      <a class="card lv" style="--lc:var(--nsi1)"><div class="top"><span class="tag">Première</span><span class="num">02</span></div><div class="pic"><img data-f="fox_2.png" alt=""></div><h3>Première NSI</h3><p>Algo, Python, structures.</p></a>
+      <a class="card lv" style="--lc:var(--tnsi)"><div class="top"><span class="tag">Terminale</span><span class="num">03</span></div><div class="pic"><img data-f="fox_3.png" alt=""></div><h3>Terminale NSI</h3><p>Récursivité, SQL, bac.</p></a>
+      <a class="card lv" style="--lc:var(--sio)"><div class="top"><span class="tag">Post-bac</span><span class="num">04</span></div><div class="pic"><img data-f="fox_4.png" alt=""></div><h3>BTS SIO</h3><p>Pour aller plus loin.</p></a>
+    </div>
+    <h2 class="h2">Un peu plus de <em>renards</em></h2>
+    <div class="row3">
+      <a class="card wide"><div class="pic"><img data-f="fox_act.png" alt=""></div><div><span class="eyebrow">Apprentissage Python</span><h3>Le renard dans le poulailler</h3><p>Fonctions, variables, conditions et boucles.</p><span class="link">Jouer →</span></div></a>
+      <a class="card wide"><div class="pic" style="width:90px;height:90px"><img data-f="fox_chasse_renard.png" alt="" style="height:78px"></div><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a class="card wide"><div class="pic" style="width:90px;height:90px"><img data-f="fox_2.png" alt="" style="height:78px"></div><div><h3>Programmation en C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q ===================== -->
+<section id="q" class="mock">
+  <div data-slot="header"></div>
+  <div class="wrap">
+    <div class="hero">
+      <div data-slot="title"></div>
+      <p class="lead">Un parcours continu, de la découverte jusqu'au BTS. Reprends là où tu en es.</p>
+      <div class="search">🔍 Rechercher une notion…<kbd>Ctrl K</kbd></div>
+    </div>
+    <div class="timeline">
+      <div class="line"></div>
+      <div class="steps">
+        <a class="step" style="--lc:var(--sni)"><div class="bubble">0</div><div class="card"><div class="pic"><img data-f="fox_0.png" alt=""></div><div class="aud">Découverte</div><h3>SNI</h3><p>Les bases du numérique, sans prérequis.</p></div></a>
+        <a class="step" style="--lc:var(--snt)"><div class="bubble">2de</div><div class="card"><div class="pic"><img data-f="fox_1.png" alt=""></div><div class="aud">Seconde</div><h3>SNT</h3><p>Photo, web, données, réseaux.</p></div></a>
+        <a class="step here" style="--lc:var(--nsi1)"><div class="bubble">1re</div><div class="card"><div class="pic"><img data-f="fox_2.png" alt=""></div><div class="aud">Première · tu es ici</div><h3>Première NSI</h3><p>Algorithmique, Python, structures.</p></div></a>
+        <a class="step" style="--lc:var(--tnsi)"><div class="bubble">Tle</div><div class="card"><div class="pic"><img data-f="fox_3.png" alt=""></div><div class="aud">Terminale</div><h3>Terminale NSI</h3><p>Récursivité, SQL, réseaux, bac.</p></div></a>
+        <a class="step" style="--lc:var(--sio)"><div class="bubble">BTS</div><div class="card"><div class="pic"><img data-f="fox_4.png" alt=""></div><div class="aud">Post-bac</div><h3>BTS SIO</h3><p>Pour aller plus loin.</p></div></a>
+      </div>
+    </div>
+    <h2 class="h2">Un peu plus de <em>renards</em></h2>
+    <div class="split">
+      <a class="card mini"><img data-f="fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Apprendre Python en jouant.</p></div></a>
+      <a class="card mini"><img data-f="fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a class="card mini"><img data-f="fox_2.png" alt=""><div><h3>Programmation en C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== R ===================== -->
+<section id="r" class="mock">
+  <div data-slot="header"></div>
+  <div class="wrap">
+    <div class="bento">
+      <div class="b hero">
+        <div data-slot="title"></div>
+        <p class="lead">Cours, exercices auto-corrigés et parcours de progression, de la seconde au BTS.</p>
+        <div class="search">🔍 Rechercher une notion…<kbd>Ctrl K</kbd></div>
+        <img data-f="fox_2.png" alt="">
+      </div>
+      <div class="b splashb"><span class="splash">404 : Vulpes not found.</span></div>
+      <a class="b feat"><div class="pic"><img data-f="fox_act.png" alt=""></div><span class="eyebrow">Apprentissage Python</span><h3>Le renard dans le poulailler</h3><p>Guide le renard jusqu'à la poule en codant.</p></a>
+      <a class="b lv" style="--lc:var(--snt)"><span class="bar"></span><div><span class="tag">Seconde</span><h3>SNT</h3></div><p>Photo, web, données, réseaux.</p><img data-f="fox_1.png" alt=""></a>
+      <a class="b lv" style="--lc:var(--nsi1)"><span class="bar"></span><div><span class="tag">Première</span><h3>Première NSI</h3></div><p>Algo, Python, structures.</p><img data-f="fox_2.png" alt=""></a>
+      <a class="b lv" style="--lc:var(--tnsi)"><span class="bar"></span><div><span class="tag">Terminale</span><h3>Terminale NSI</h3></div><p>Récursivité, SQL, bac.</p><img data-f="fox_3.png" alt=""></a>
+      <a class="b lv" style="--lc:var(--sio)"><span class="bar"></span><div><span class="tag">Post-bac</span><h3>BTS SIO</h3></div><p>Pour aller plus loin.</p><img data-f="fox_4.png" alt=""></a>
+      <a class="b ex"><img data-f="fox_0.png" alt=""><div><h3>SNI</h3><p>Les bases du numérique.</p></div></a>
+      <a class="b ex"><img data-f="fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a class="b ex"><img data-f="fox_2.png" alt=""><div><h3>Programmation en C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== S ===================== -->
+<section id="s" class="mock">
+  <div data-slot="header"></div>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div data-slot="title"></div>
+        <p class="lead">Choisis ton niveau et plonge directement dans un chapitre.</p>
+      </div>
+      <div class="side"><span class="splash">Python &gt; Java ? (Débat ouvert)</span><div class="search">🔍 Rechercher une notion…<kbd>Ctrl K</kbd></div></div>
+    </div>
+    <div class="panel">
+      <div class="tabs">
+        <div class="tab" style="--lc:var(--sni)"><img data-f="fox_0.png" alt=""><div>SNI<small>Découverte</small></div></div>
+        <div class="tab" style="--lc:var(--snt)"><img data-f="fox_1.png" alt=""><div>SNT<small>Seconde</small></div></div>
+        <div class="tab on" style="--lc:var(--nsi1)"><img data-f="fox_2.png" alt=""><div>Première NSI<small>Première</small></div></div>
+        <div class="tab" style="--lc:var(--tnsi)"><img data-f="fox_3.png" alt=""><div>Terminale NSI<small>Terminale</small></div></div>
+        <div class="tab" style="--lc:var(--sio)"><img data-f="fox_4.png" alt=""><div>BTS SIO<small>Post-bac</small></div></div>
+      </div>
+      <div class="content">
+        <div class="intro"><img data-f="fox_2.png" alt=""><h3>Première NSI</h3><p>Algorithmique, Python et structures de données : le cœur du programme.</p><span class="btn-acc">Ouvrir le niveau →</span></div>
+        <div class="chapters">
+          <span class="eyebrow">Chapitres</span>
+          <div class="chgrid">
+            <a class="ch">Introduction à Python <span>8 ressources</span></a>
+            <a class="ch">Algorithmique <span>8 ressources</span></a>
+            <a class="ch">Représentation des données <span>7 ressources</span></a>
+            <a class="ch">Dictionnaires et tables <span>6 ressources</span></a>
+            <a class="ch">Web et interaction <span>6 ressources</span></a>
+            <a class="ch">Structures de données linéaires <span>5 ressources</span></a>
+            <a class="ch">Architecture matérielle <span>3 ressources</span></a>
+            <a class="ch">Programmation orientée objet <span>2 ressources</span></a>
+            <a class="ch">Projets <span>11 ressources</span></a>
+            <a class="ch">Systèmes, réseaux, histoire <span>4 ressources</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 class="h2">Un peu plus de <em>renards</em></h2>
+    <div class="row3">
+      <a class="card mini"><img data-f="fox_act.png" alt=""><div><h3>Le renard dans le poulailler</h3><p>Apprendre Python en jouant.</p></div></a>
+      <a class="card mini"><img data-f="fox_chasse_renard.png" alt=""><div><h3>Chasse aux Ren'Arts</h3><p>La galerie des élèves.</p></div></a>
+      <a class="card mini"><img data-f="fox_2.png" alt=""><div><h3>Programmation en C</h3><p>Ouvert à tous.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-slot]').forEach(function (slot) {
+    slot.replaceWith(document.getElementById(slot.dataset.slot).content.cloneNode(true));
+  });
+  document.querySelectorAll('img[data-f]').forEach(function (img) {
+    img.src = 'https://www.clementbraun.info/images/' + img.dataset.f;
+  });
+  document.querySelectorAll('.switcher button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.switcher button, .mock').forEach(function (el) { el.classList.remove('on'); });
+      b.classList.add('on');
+      document.getElementById(b.dataset.t).classList.add('on');
+      window.scrollTo(0, 0);
+    });
+  });
+</script>
+</body>
+</html>

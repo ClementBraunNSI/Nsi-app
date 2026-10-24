@@ -10,6 +10,7 @@ import { getHomeDashboard, type HomeDashboard } from "@/app/actions/home";
 import { isAbortError } from "@/lib/is-abort-error";
 import SplashText from "@/components/SplashText";
 import ColleagueTeaser from "@/components/ColleagueTeaser";
+import { GAME_NAME } from "@/app/foxtest/academy/meta";
 
 export type HomeLevel = {
   folder: string;
@@ -282,7 +283,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
 
           <div className="home-stage">
             <SplashText compact className="home-splash" />
-            <Image src="/images/fox_2.png" alt="Le renard de Première NSI" width={360} height={360} priority className="home-stage-fox" />
+            <Image src="/images/fox_assis.svg" alt="Le renard de la tanière" width={360} height={360} priority className="home-stage-fox" />
             {dashboard ? (
               <>
                 {dashboard.badges[0] ? (
@@ -382,10 +383,23 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                 </span>
                 <span>
                   <span className="home-eyebrow">Apprentissage Python</span>
-                  <b>Le renard dans le poulailler</b>
+                  <b>{GAME_NAME}</b>
                   <span className="home-ex-p">Fonctions, variables, conditions et boucles : guide le renard jusqu’à la poule.</span>
                   <span className="home-ex-link">
                     Jouer <ArrowRight size={14} />
+                  </span>
+                </span>
+              </Link>
+              <Link href="/enquetes" className="home-ex is-wide">
+                <span className="home-ex-pic">
+                  <Image src="/images/fox_enquetes.svg" alt="" width={98} height={92} />
+                </span>
+                <span>
+                  <span className="home-eyebrow">Blocs, Python ou SQL</span>
+                  <b>Enquêtes de la forêt</b>
+                  <span className="home-ex-p">Fouille les registres des gardes, croise les témoignages et démasque les coupables.</span>
+                  <span className="home-ex-link">
+                    Enquêter <ArrowRight size={14} />
                   </span>
                 </span>
               </Link>
@@ -400,7 +414,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
               </Link>
               <Link href="/cours/c" className="home-ex">
                 <span className="home-ex-pic">
-                  <Image src="/images/fox_2.png" alt="" width={70} height={70} />
+                  <Image src="/images/fox_c.svg" alt="" width={74} height={70} />
                 </span>
                 <span>
                   <b>Programmation en C</b>
