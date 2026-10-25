@@ -4,11 +4,12 @@ import Link from "next/link";
 
 type HttpCode = 403 | 404 | 500;
 
-// 404.png est le dessin d'origine ; 403 et 500 reprennent le même monde (scripts/illustrations.mjs).
+// Les trois scènes viennent de scripts/illustrations.mjs : 404 est le dessin 404.png vectorisé (la queue remue),
+// 403 et 500 reprennent son buisson avec les renards existants.
 const ART: Record<HttpCode, { src: string; alt: string }> = {
-  403: { src: "/images/http_403.svg", alt: "Le renard assis devant une barrière fermée par un cadenas" },
-  404: { src: "/images/404.png", alt: "Le renard cherche dans un buisson" },
-  500: { src: "/images/http_500.svg", alt: "Le renard emmêlé dans les câbles d'une machine qui fume" },
+  403: { src: "/images/http_403.svg", alt: "Le renard regarde une barrière fermée par un cadenas" },
+  404: { src: "/images/http_404.svg", alt: "Le renard cherche dans un buisson en remuant la queue" },
+  500: { src: "/images/http_500.svg", alt: "Le renard emmêlé dans les câbles d'un serveur qui fume" },
 };
 
 type ResourceNotFoundProps = {
@@ -34,14 +35,7 @@ export default function ResourceNotFound({
   return (
     <main className="http-error">
       <div className="http-error-figure">
-        <Image src={art.src} alt={art.alt} width={1536} height={1024} priority sizes="(max-width: 640px) 100vw, 36rem" />
-        {code === 404 ? (
-          // Le dessin 404 est une image fixe : deux feuilles tombent du buisson où le renard fouille.
-          <>
-            <span className="http-error-leaf" aria-hidden />
-            <span className="http-error-leaf is-late" aria-hidden />
-          </>
-        ) : null}
+        <Image src={art.src} alt={art.alt} width={1536} height={1024} priority />
       </div>
       <p className="http-error-code">Erreur {code}</p>
       <h1>{title}</h1>

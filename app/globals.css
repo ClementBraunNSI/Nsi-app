@@ -611,7 +611,6 @@ a.home-ex:hover { border-color: var(--accent); transform: translateY(-2px); }
 }
 
 .http-error-figure {
-  position: relative;
   width: min(100%, 38rem);
   margin: -2rem 0 0.5rem;
 }
@@ -622,47 +621,6 @@ a.home-ex:hover { border-color: var(--accent); transform: translateY(-2px); }
   height: auto;
 }
 
-.http-error-leaf {
-  position: absolute;
-  left: 40%;
-  top: 41%;
-  width: 2.4%;
-  aspect-ratio: 2 / 1;
-  background: #888c3a;
-  clip-path: polygon(0 50%, 50% 0, 100% 50%, 50% 100%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.http-error-leaf.is-late {
-  left: 66%;
-  top: 44%;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .http-error-leaf {
-    animation: http-leaf 7s ease-in 1s infinite;
-  }
-
-  .http-error-leaf.is-late {
-    animation-delay: 4.5s;
-  }
-}
-
-@keyframes http-leaf {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) rotate(0deg);
-  }
-  12%,
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-1.6rem, 5.5rem) rotate(170deg);
-  }
-}
 
 .http-error-code {
   padding: 0.25rem 0.85rem;

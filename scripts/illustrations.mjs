@@ -194,14 +194,11 @@ const foxC = svg("220 360 1260 1200", "Le renard et le langage C", C_BODY, `.flo
 
 // ---------- 4. Pages d'erreur : le monde du dessin 404.png ----------
 // 404 : le dessin d'origine (404.png), vectorisé pour que la queue remue.
-// 403 et 500 : les renards existants (fox_1.png vectorisé, renard assis tracé plus haut) dans le même décor :
-// fond transparent, buissons à grandes feuilles anguleuses, sol gris clair et quelques feuilles.
+// 403 et 500 : les renards existants (fox_1.png vectorisé, renard assis tracé plus haut) devant le même buisson,
+// sur fond transparent, avec un sol gris clair et quelques feuilles.
 
 const S = {
-  leaf: "#8A9040",
   leafMid: "#67752F",
-  leafDark: "#4E5F27",
-  leafDeep: "#3F4F20",
   ground: "#E4E2D8",
 };
 
@@ -209,66 +206,22 @@ const SCENE_GROUND = `<ellipse cx="768" cy="842" rx="640" ry="17" fill="${S.grou
 
 const near = (c, ref, d) => (c[0] - ref[0]) ** 2 + (c[1] - ref[1]) ** 2 + (c[2] - ref[2]) ** 2 < d * d;
 
-/** Petit nombre pseudo-aléatoire stable, pour que les buissons soient identiques à chaque génération. */
-function rand(seed) {
-  const x = Math.sin(seed * 127.1) * 43758.5453;
-  return x - Math.floor(x);
-}
+// Le buisson de 404.png, sans le renard : le creux qu'il laisse est comblé avec les feuilles voisines,
+// puis caché derrière la barrière (403) ou le renard assis (500).
+const leafy = ([r, g, b]) => r < 200 && g >= r - 12 && g > b + 15;
+const FOX_404 = [[690, 560], [760, 520], [880, 500], [990, 320], [1200, 210], [1180, 480], [1100, 600], [1080, 700], [1050, 860], [770, 860], [700, 760]];
+let bush404Drawing;
 
-const pts = (list) => list.map(([x, y]) => `${x.toFixed(0)},${y.toFixed(0)}`).join(" ");
-
-/** Buisson comme celui de 404.png : silhouette claire en pointes irrégulières, grandes feuilles sombres dedans. */
-function bush(x0, x1, base, top, seed) {
-  const w = x1 - x0;
-  const h = base - top;
-  const archAt = (x) => Math.sin(Math.PI * Math.min(1, Math.max(0, (x - x0) / w)));
-
-  // Chaque grande feuille du bord : un creux, une épaule puis une pointe, pour des feuilles larges et anguleuses.
-  const leavesOnEdge = 7;
-  const height = (x, k) => base - h * (0.3 + 0.7 * archAt(x)) * k;
-  const outline = [[x0, base]];
-  for (let i = 0; i < leavesOnEdge; i += 1) {
-    const xa = x0 + (w * i) / leavesOnEdge;
-    const span = w / leavesOnEdge;
-    const notch = xa + (rand(seed + i) - 0.5) * span * 0.2;
-    const shoulder = xa + span * (0.3 + 0.1 * rand(seed + 10 + i));
-    const tip = xa + span * (0.62 + 0.2 * rand(seed + 20 + i));
-    if (i > 0) outline.push([notch, height(notch, 0.66 + 0.12 * rand(seed + 30 + i))]);
-    outline.push([shoulder, height(shoulder, 0.84 + 0.08 * rand(seed + 40 + i))]);
-    outline.push([tip, height(tip, 0.95 + 0.1 * rand(seed + 50 + i))]);
-  }
-  outline.push([x1, base]);
-
-  const inner = [];
-  const m = 5;
-  for (let j = 0; j < m; j += 1) {
-    const cx = x0 + w * (0.16 + (0.68 * j) / (m - 1)) + (rand(seed + 60 + j) - 0.5) * 30;
-    const lh = h * archAt(cx) * (0.55 + 0.3 * rand(seed + 70 + j));
-    const lw = w * (0.1 + 0.05 * rand(seed + 80 + j));
-    const lean = (rand(seed + 90 + j) - 0.5) * lw * 1.4;
-    const fill = j % 3 === 1 ? S.leafDeep : j % 2 ? S.leafMid : S.leafDark;
-    inner.push(poly(pts([[cx - lw, base], [cx - lw * 0.45, base - lh * 0.55], [cx + lean, base - lh], [cx + lw * 0.5, base - lh * 0.45], [cx + lw, base]]), fill));
-  }
-
-  const grass = [
-    [[x0 - 34, base], [x0 - 52, base - 44], [x0 - 6, base]],
-    [[x0 - 4, base], [x0 - 14, base - 62], [x0 + 22, base]],
-    [[x1 + 34, base], [x1 + 52, base - 44], [x1 + 6, base]],
-    [[x1 + 4, base], [x1 + 14, base - 62], [x1 - 22, base]],
-  ].map((blade) => poly(pts(blade), S.leaf));
-
-  const flying = [0, 1]
-    .map((i) => {
-      const lx = x0 + w * (i ? 0.92 : 0.04) + rand(seed + 40 + i) * 20;
-      const ly = top + h * 0.15 - rand(seed + 50 + i) * 30;
-      return poly(pts([[lx, ly], [lx + 14, ly - 20], [lx + 26, ly + 2], [lx + 10, ly + 14]]), S.leaf);
-    })
-    .join("\n");
-
-  return `${flying}
-${grass.join("\n")}
-${poly(pts(outline), S.leaf)}
-${inner.join("\n")}`;
+async function bush404() {
+  bush404Drawing ??= await vectorize(path.join(OUT, "404.png"), {
+    epsilon: 1.8,
+    parts: [{ name: "fox", mask: FOX_404, colors: (c) => !leafy(c) }],
+  });
+  const { back, palette } = bush404Drawing;
+  return regionsToSvg(
+    back.filter((region) => leafy(palette[region.color])),
+    palette,
+  );
 }
 
 /** Feuilles tombées au sol. */
@@ -363,14 +316,13 @@ const http403 = svg(
   "0 0 1536 1024",
   "Erreur 403 : le renard regarde la barrière fermée par un cadenas",
   `${SCENE_GROUND}
-${bush(110, 430, 842, 650, 3)}
-${bush(900, 1450, 842, 470, 11)}
-<g transform="translate(520 0)">
+${await bush404()}
+<g transform="translate(230 0)">
 ${gate()}
 ${PADLOCK}
 </g>
-${groundLeaves([[260, 866, 20], [880, 872, -15], [1400, 858, 35]])}
-${await sideFox(0.72, 266, 264.6)}`,
+${groundLeaves([[150, 866, 20], [1330, 872, -15]])}
+${await sideFox(0.66, 164, 312.7)}`,
   `.tail1{animation:tail1 4.5s ease-in-out infinite alternate}
 @keyframes tail1{from{transform:rotate(-2deg)}to{transform:rotate(2.5deg)}}
 .ear1{animation:ear-l 8s infinite}
@@ -409,20 +361,21 @@ const http500 = svg(
   "0 0 1536 1024",
   "Erreur 500 : la machine du serveur fume et le renard s'est emmêlé dans les câbles",
   `${SCENE_GROUND}
-${bush(130, 440, 842, 640, 5)}
-${bush(1190, 1450, 842, 600, 17)}
+${await bush404()}
+<g transform="translate(-160 0)">
 <g class="a puff-a">${smokePuff(600, 330, 1)}</g>
 <g class="a puff-b">${smokePuff(660, 300, 0.75)}</g>
 <g class="a puff-c">${smokePuff(560, 310, 0.6)}</g>
 ${server()}
-<path d="M762 720C830 750 812 828 900 830C960 832 990 815 1010 812" ${CABLE}/>
-${groundLeaves([[300, 868, 15], [1260, 874, -20]])}
-<g transform="translate(671 297.4) scale(.35)">${fox()}</g>
-<path d="M930 842C950 805 1000 790 1040 800C1100 815 1140 805 1150 780C1160 750 1110 740 1090 768C1070 795 1100 846 1150 860C1190 872 1230 868 1260 856" ${CABLE}/>
-${poly("1256,844 1286,840 1290,866 1260,870", "#2E2A22")}
-${poly("1288,845 1310,843 1310,850 1288,852", "#A7ABB0")}
-${poly("1289,856 1311,855 1311,862 1289,863", "#A7ABB0")}
-<g class="a spark">${poly("1334,836 1341,851 1356,847 1345,859 1356,874 1339,866 1331,881 1326,865 1311,863 1325,854", "#FFD45C")}</g>`,
+</g>
+<path d="M602 720C670 750 652 828 740 830C800 832 840 815 860 812" ${CABLE}/>
+${groundLeaves([[180, 868, 15], [1330, 874, -20]])}
+<g transform="translate(500.6 250.7) scale(.38)">${fox()}</g>
+<path d="M790 842C810 805 860 790 900 800C960 815 1000 805 1010 780C1020 750 970 740 950 768C930 795 960 846 1010 860C1050 872 1090 868 1120 856" ${CABLE}/>
+${poly("1116,844 1146,840 1150,866 1120,870", "#2E2A22")}
+${poly("1148,845 1170,843 1170,850 1148,852", "#A7ABB0")}
+${poly("1149,856 1171,855 1171,862 1149,863", "#A7ABB0")}
+<g class="a spark">${poly("1194,836 1201,851 1216,847 1205,859 1216,874 1199,866 1191,881 1186,865 1171,863 1185,854", "#FFD45C")}</g>`,
   `.puff-a,.puff-b,.puff-c{transform-origin:50% 50%;opacity:0;animation:puff 4.2s ease-out infinite}
 .puff-b{animation-delay:1.4s}.puff-c{animation-delay:2.8s}
 @keyframes puff{0%{opacity:0;transform:translateY(40px) scale(.6)}20%{opacity:.95}100%{opacity:0;transform:translateY(-150px) scale(1.25)}}
