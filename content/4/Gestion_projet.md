@@ -11,7 +11,7 @@ audience: public
 
 # Gestion de projet informatique
 
-BTS SIO, bloc 1. Un service informatique ne s'installe pas tout seul. Derrière un site, une application, un réseau mis en place, il y a un **projet** : un ensemble d'activités temporaires, uniques et coordonnées, menées pour atteindre un objectif précis, dans un délai fixé, avec des ressources limitées. Le projet a un début et une fin. Passé cette fin, on n'est plus en train de le construire. On l'exploite.
+Ce cours relève du bloc 1 du BTS SIO. Un service informatique ne s'installe pas tout seul. Derrière un site, une application, un réseau mis en place, il y a un **projet** : un ensemble d'activités temporaires, uniques et coordonnées, menées pour atteindre un objectif précis, dans un délai fixé, avec des ressources limitées. Le projet a un début et une fin. Passé cette fin, on n'est plus en train de le construire. On l'exploite.
 
 Quatre traits le séparent du travail courant. L'**objectif** est un résultat attendu, écrit, mesurable, et tenable dans le temps imparti. La **temporalité** pose une date de début et une date de fin. L'**unicité** veut dire que le livrable n'existait pas tel quel : refaire le même site pour un autre client, c'est un autre projet. Les **ressources** (budget, personnes, moyens techniques) sont comptées. On ne peut pas en ajouter sans le décider.
 
@@ -91,4 +91,4 @@ git push origin feature/ma-fonctionnalite
 # Envoie la branche sur le serveur distant
 ```
 
-Cloner, brancher, commiter, pousser. Le reste du projet (qui décide du contenu, dans quel ordre, avec quelle méthode) se joue en dehors de ces quatre commandes. Git garde l'historique. Il ne remplace ni le Gantt, ni le product owner, ni la conversation qui dit si la fonctionnalité est la bonne.
+Au quotidien, Git se résume à cloner, créer une branche, commiter et pousser. Le reste du projet (qui décide du contenu, dans quel ordre, avec quelle méthode) se joue en dehors de ces quatre commandes. Git garde l'historique. Il ne remplace ni le Gantt, ni le product owner, ni la conversation qui dit si la fonctionnalité est la bonne.

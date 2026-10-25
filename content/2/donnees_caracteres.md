@@ -51,7 +51,7 @@ b'\xc3\xa9'   # deux octets en UTF-8
 
 Table de référence : [charset.org/utf-8](https://www.charset.org/utf-8)
 
-Pour fermer : un caractère est un symbole relié à un nombre. ASCII en code 128 sur 7 bits, alphabet latin de base. Unicode numérote tous les symboles par des points de code. UTF-8 range ces numéros sur 1 à 4 octets, en restant compatible avec ASCII. En Python, `ord`, `chr` et `.encode("utf-8")` font voir la différence.
+Pour fermer : un caractère est un symbole relié à un nombre. ASCII code 128 caractères sur 7 bits, ceux de l'alphabet latin de base. Unicode numérote tous les symboles par des points de code. UTF-8 range ces numéros sur 1 à 4 octets, en restant compatible avec ASCII. En Python, `ord`, `chr` et `.encode("utf-8")` font voir la différence.
 
 ## Pour s'entraîner
 

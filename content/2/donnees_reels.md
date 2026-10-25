@@ -12,7 +12,7 @@ audience: public
 
 # Nombres réels en binaire
 
-Un entier tombe juste sur un nombre fini de bits. Un réel, souvent non. On le code comme une notation scientifique, mais en base 2 :
+Un entier tombe juste sur un nombre fini de bits, alors qu'un réel n'y tombe souvent pas. On le code comme une notation scientifique, mais en base 2 :
 
 $$N = (-1)^{S} \times m \times 2^{e}$$
 
@@ -53,7 +53,7 @@ On ne stocke pas l'exposant tel quel. On lui ajoute un **biais**, 127 en simple 
 
 $$14{,}75 = \underbrace{0}_{S}\ \underbrace{10000010}_{E}\ \underbrace{11011000000000000000000}_{M}$$
 
-Le biais de 127 ne concerne que l'exposant sur 8 bits. En double précision, l'exposant tient sur 11 bits et le biais vaut 1023. Même idée, autre constante.
+Le biais de 127 ne concerne que l'exposant sur 8 bits. En double précision, l'exposant tient sur 11 bits et le biais vaut 1023. Le principe est le même, seule la constante change.
 
 ## Ce que Python affiche vraiment
 
@@ -78,7 +78,7 @@ Decimal("0.1") + Decimal("0.2") == Decimal("0.3")  # True
 
 `Decimal("0.1")` part du texte `"0.1"`, donc du décimal que vous avez écrit. `Decimal(0.1)` partirait du flottant déjà arrondi : ce n'est pas la même chose.
 
-Pour fermer : après la virgule, les poids sont $2^{-1}$, $2^{-2}$, et la suite. Un flottant, c'est un signe, un exposant et une mantisse, sur un nombre fini de bits. L'exposant est stocké avec un biais, 127 en simple précision. En Python, `float` suit IEEE 754 en double précision, 64 bits. On compare avec une tolérance, ou avec `Decimal` si le décimal doit tomber juste.
+Pour fermer : après la virgule, les poids sont $2^{-1}$, $2^{-2}$, et la suite. Un flottant, c'est un signe, un exposant et une mantisse, sur un nombre fini de bits. L'exposant est stocké avec un biais, 127 en simple précision. En Python, `float` suit la norme IEEE 754 en double précision, c'est-à-dire sur 64 bits. On compare avec une tolérance, ou avec `Decimal` si le décimal doit tomber juste.
 
 ## Pour s'entraîner
 

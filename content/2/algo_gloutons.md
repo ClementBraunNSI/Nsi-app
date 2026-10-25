@@ -40,7 +40,7 @@ print(rendu_monnaie(49, systeme_euro))
 # [20, 20, 5, 2, 2]
 ```
 
-Le système est parcouru du plus grand au plus petit. Pour 49 euros, 50 est trop grand. On pose deux billets de 20, il reste 9. Une pièce de 5, il reste 4. Deux pièces de 2. Quatre pièces et un billet, et c'est optimal. Avec les pièces et billets de l'euro, ce glouton est **toujours** optimal. On dit que le système est **canonique**.
+Le système est parcouru du plus grand au plus petit. Pour 49 euros, 50 est trop grand. On pose deux billets de 20, il reste 9. On pose ensuite une pièce de 5, il reste 4, puis deux pièces de 2. Cela fait cinq pièces et billets en tout, et on ne peut pas faire moins. Avec les pièces et billets de l'euro, ce glouton est **toujours** optimal. On dit que le système est **canonique**.
 
 Ce n'est pas vrai de tous les systèmes. Avec les pièces `{1, 3, 4}` et un montant de **6** :
 

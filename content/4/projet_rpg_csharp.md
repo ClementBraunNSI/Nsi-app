@@ -13,7 +13,7 @@ audience: public
 Le but de ce projet est de créer un jeu console, en C#, inspiré de Pokémon, dont toutes les créatures sont des renards : les FoxMons.
 Le projet s'étale sur plusieurs séances. On avance dans l'ordre : la carte, le bestiaire, l'héritage, les attaques, les objets, les dresseurs, les dégâts, l'expérience, puis la sauvegarde.
 
-**Organisation des fichiers.** Un fichier par classe, un seul namespace `FoxMon`.
+**Organisation des fichiers.** Chaque classe a son propre fichier, et toutes partagent le même namespace `FoxMon`.
 
 ```text
 FoxMon/
@@ -134,13 +134,13 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 
       Le dresseur a une `List<FoxMon> Equipe`, au plus 6 renards. Ajouter un septième est refusé : la liste ne dépasse pas 6, la méthode renvoie faux.
 
-      Renard de test : `RenardEau`, 20 PV max, niveau 5, vitesse 10. Au départ, PV actuels = PV max.
+      Renard de test : `RenardEau`, 20 PV max, niveau 5, vitesse 10. Au départ, ses PV actuels sont égaux à ses PV max.
     </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="foxmon-combat-2" label="Les hautes herbes" type="autre">
     <Enonce>
-      Quand le dresseur **arrive** sur une case `*`, tirez un nombre entre 0 et 99. S'il est strictement inférieur à 20, un FoxMon sauvage apparaît. Vingt pour cent, pas à chaque pas.
+      Quand le dresseur **arrive** sur une case `*`, tirez un nombre entre 0 et 99. S'il est strictement inférieur à 20, un FoxMon sauvage apparaît. La rencontre a donc lieu une fois sur cinq environ, et pas à chaque pas.
 
       Le combat remplace la carte. Dans `Main`, un booléen `enCombat` décide de la vue.
 
@@ -384,4 +384,4 @@ Le dossier `FoxMon`, qui compile, avec un fichier par classe dans le namespace `
 - la capture `p = 0,175` sur l'exemple 10/20, interdite contre un dresseur ;
 - la sauvegarde JSON qu'on recharge après avoir quitté.
 
-En tête de `Program.cs`, un commentaire avec votre nom et la classe. Le pas suivant, seulement si ce dossier tourne : porter l'affichage vers WinForms, WPF ou MonoGame. Le métier (dégâts, capture, sauvegarde) ne se réécrit pas dans les boutons.
+Placez en tête de `Program.cs` un commentaire avec votre nom et votre classe. Une fois que ce dossier tourne, et seulement alors, l'étape suivante consiste à porter l'affichage vers WinForms, WPF ou MonoGame. Le métier (dégâts, capture, sauvegarde) ne se réécrit pas dans les boutons.

@@ -87,7 +87,7 @@ Un **cookie** est un petit texte que le serveur demande au navigateur de garder,
 
 <CookieManager />
 
-HTTP est un protocole de la **couche application**. En dessous, TCP assure le transport, IP l'acheminement. Le cours sur les réseaux a posé ces couches. Ici, on reste au message que le navigateur et le serveur s'échangent.
+HTTP est un protocole de la **couche application**. En dessous, TCP assure le transport des données et IP leur acheminement. Le cours sur les réseaux a posé ces couches. Ici, on reste au message que le navigateur et le serveur s'échangent.
 
 Pour fermer : le client demande, le serveur répond. Une URL assemble un protocole, un domaine et un chemin. Le DNS traduit le nom en IP. GET obtient, POST envoie dans le corps. Les codes 2xx disent le succès, 4xx une erreur côté client, 5xx une erreur côté serveur. HTTPS chiffre l'échange avec TLS. Un cookie est une petite mémoire dans le navigateur.
 

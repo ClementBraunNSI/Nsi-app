@@ -256,7 +256,7 @@ public class Calculatrice
 }
 ```
 
-La **surcharge** existe aussi pour les méthodes. Même nom, paramètres différents. Le compilateur choisit celle qui correspond à l'appel. `Afficher(3)` n'est pas `Afficher("3")`.
+La **surcharge** existe aussi pour les méthodes. Plusieurs méthodes portent alors le même nom, mais reçoivent des paramètres différents. Le compilateur choisit celle qui correspond à l'appel. `Afficher(3)` n'est pas `Afficher("3")`.
 
 ```csharp
 public class Afficheur
@@ -388,4 +388,4 @@ foreach (Animal animal in animaux)
 // Miaou !
 ```
 
-Encapsulation, héritage, polymorphisme. Le premier protège l'état. Le deuxième partage ce qui est commun. Le troisième laisse chaque fille décider du geste, sans que le code qui appelle ait à connaître la fille.
+La programmation objet repose sur trois principes : l'encapsulation, l'héritage et le polymorphisme. Le premier protège l'état. Le deuxième partage ce qui est commun. Le troisième laisse chaque fille décider du geste, sans que le code qui appelle ait à connaître la fille.

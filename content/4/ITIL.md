@@ -10,7 +10,7 @@ audience: public
 
 # Introduction à ITIL
 
-Un projet se termine le jour de la mise en service. Le serveur, lui, continue. Il faut surveiller, corriger, mettre à jour, répondre aux personnes qui s'en servent. Cette phase n'est plus de la gestion de projet : c'est de la **gestion des services informatiques**. **ITIL** (*Information Technology Infrastructure Library*) est le référentiel de bonnes pratiques le plus utilisé pour l'organiser. La version du cours est **ITIL 4**.
+Un projet se termine le jour de la mise en service. Le serveur, lui, continue de tourner. Il faut surveiller, corriger, mettre à jour, répondre aux personnes qui s'en servent. Cette phase n'est plus de la gestion de projet : c'est de la **gestion des services informatiques**. **ITIL** (*Information Technology Infrastructure Library*) est le référentiel de bonnes pratiques le plus utilisé pour l'organiser. La version du cours est **ITIL 4**.
 
 ITIL ne dit pas quelle commande taper, ni quel logiciel choisir. Il dit quoi mettre en place pour qu'un service reste fiable : qui est prévenu en cas de panne, comment on enregistre un incident, comment on améliore le service d'une année sur l'autre. La norme **ISO/CEI 20000** certifie un système de gestion des services. Elle s'est appuyée sur ces pratiques, après le standard britannique BS 15000. ITIL est le référentiel. La norme est le cadre qu'on peut faire auditer.
 
@@ -36,7 +36,7 @@ Le projet crée le service. ITIL le fait vivre. Un beau livrable sans procédure
 
 ITIL 4 considère qu'un service tient sur **quatre dimensions**. En négliger une suffit à l'arrêter, même si les trois autres sont solides.
 
-Les **organisations et les personnes** : les rôles, les compétences, la façon de se parler. Le support, le helpdesk, l'administrateur réseau. Un serveur peut être parfait. S'il tombe et que personne ne sait qui a le droit de le redémarrer, le service est déjà arrêté.
+Les **organisations et les personnes** : les rôles, les compétences, la façon de se parler. Le support, le helpdesk et l'administrateur réseau en font partie. Un serveur peut être parfait. S'il tombe et que personne ne sait qui a le droit de le redémarrer, le service est déjà arrêté.
 
 L'**information et la technologie** : les serveurs, les bases, les outils. Un logiciel de tickets comme GLPI fait partie de cette dimension. Il ne répare rien tout seul. Il rend visible ce qui est en cours.
 

@@ -82,7 +82,7 @@ Les deux boucles affichent la même information. La seconde évite de chercher l
 
 Deux erreurs reviennent. `eleve[0]` ne marche que si `0` est vraiment une clé. Un dictionnaire n'a pas de « premier élément » au sens d'une liste. Et appeler une clé un attribut mélange deux chapitres : la clé est un nom dans une table, l'attribut est une donnée d'objet.
 
-Pour fermer : un dictionnaire associe des clés à des valeurs. On crée avec `{ "cle": valeur }` ou avec `d["cle"] = valeur`. On lit et on modifie avec `d["cle"]`. `"cle" in d` teste, `d.pop("cle")` retire. `for cle in d` parcourt les clés. Liste : indices. Dictionnaire : noms.
+Pour fermer : un dictionnaire associe des clés à des valeurs. On crée avec `{ "cle": valeur }` ou avec `d["cle"] = valeur`. On lit et on modifie avec `d["cle"]`. `"cle" in d` teste la présence d'une clé et `d.pop("cle")` la retire. `for cle in d` parcourt les clés. Une liste repère ses valeurs par des indices, alors qu'un dictionnaire les repère par des noms.
 
 ## Pour s'entraîner
 

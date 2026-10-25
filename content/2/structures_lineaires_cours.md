@@ -79,7 +79,7 @@ nombres.remove(4)    # retire la première occurrence de 4
 | `pop()` / `pop(i)` | retire et renvoie le dernier / l'indice `i` |
 | `remove(e)` | retire la première occurrence de `e` |
 
-Dans une boucle, `nombres.append(e)` est le bon geste. `nombres = nombres + [e]` fabrique une nouvelle liste à chaque tour, et recopie tout ce qui précède. Le résultat se ressemble. Le coût, non.
+Dans une boucle, `nombres.append(e)` est le bon geste. `nombres = nombres + [e]` fabrique une nouvelle liste à chaque tour, et recopie tout ce qui précède. Le résultat est le même, mais le coût est bien plus élevé.
 
 ## Construire une liste en une expression
 

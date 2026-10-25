@@ -61,7 +61,7 @@ Recopiez cette fiche au cahier ou dans un fichier. Apportez-la au cours d'anglai
 
 ## 2. Le récit en anglais <Icone nom="pen-line" />
 
-Un seul récit, en trois parties. La fiche, le titre factuel de l'œuvre et la liste des caractéristiques restent en français.
+Vous écrivez un seul récit, découpé en trois parties. La fiche, le titre factuel de l'œuvre et la liste des caractéristiques restent en français.
 
 1. La scène telle qu'elle est peinte : le lieu, les personnages, les objets. Au moins trois des cinq détails de la fiche apparaissent dans le texte.
 2. Une action qui avance : quelqu'un entre, une porte s'ouvre, un regard change, un objet passe de main en main.

@@ -53,7 +53,7 @@ La mémoire suit le nombre réel d'arêtes. Parcourir les amis de B, c'est parco
 
 On parcourt un graphe un peu comme un arbre, avec une différence qui casse les algorithmes naïfs : il peut y avoir un **cycle**. Si l'on ne note pas les sommets déjà vus, on revient indéfiniment sur ses pas.
 
-Le parcours en **largeur** (*breadth-first search*, BFS) explore par vagues. D'abord les voisins du départ, puis les voisins des voisins. Dans un graphe non pondéré, la première fois qu'on atteint un sommet, on y est arrivé par un plus court chemin, en nombre d'arêtes. C'est le GPS le plus simple, celui qui compte les carrefours et pas les kilomètres.
+Le parcours en **largeur** (*breadth-first search*, BFS) explore par vagues. Il visite d'abord les voisins du départ, puis les voisins de ces voisins, et ainsi de suite. Dans un graphe non pondéré, la première fois qu'on atteint un sommet, on y est arrivé par un plus court chemin, en nombre d'arêtes. C'est le GPS le plus simple, celui qui compte les carrefours et pas les kilomètres.
 
 Le parcours en **profondeur** (*depth-first search*, DFS) s'enfonce le plus loin possible, puis revient en arrière quand il est bloqué. Il convient aux labyrinthes, et c'est avec lui qu'on détecte souvent un cycle : on retombe sur un sommet encore « en cours de visite », pas seulement déjà terminé.
 

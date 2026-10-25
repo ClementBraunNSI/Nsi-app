@@ -23,7 +23,7 @@ Le problème est en amont. Pour utiliser la clé, les deux correspondants doiven
 
 ## Une paire de clés
 
-Le chiffrement **asymétrique**, dont RSA dans les années 1970, sépare les rôles. Chaque personne possède une **clé publique**, que tout le monde peut connaître, et une **clé privée**, qu'elle garde. Ce qu'une clé ferme, l'autre l'ouvre.
+Le chiffrement **asymétrique**, dont RSA dans les années 1970, sépare les rôles. Chaque personne possède une **clé publique**, que tout le monde peut connaître, et une **clé privée**, qu'elle garde. Un message chiffré avec l'une des deux clés ne peut être déchiffré qu'avec l'autre.
 
 Pour écrire un secret à quelqu'un, on chiffre avec *sa* clé publique. Seule sa clé privée peut déchiffrer. Vous n'avez rien de secret à lui envoyer au préalable : sa clé publique peut être affichée. L'image utile est le cadenas ouvert. N'importe qui peut le fermer sur une boîte. Une seule personne a la clé qui le rouvre.
 

@@ -127,4 +127,4 @@ On parle de « cloud », de nuage, comme si les données flottaient. Elles sont 
 
 > Environ 99 % du trafic intercontinental passe sous les océans, dans des câbles de fibre optique. Les satellites ne portent qu'une petite part de ce trafic.
 
-Trois éléments tiennent l'ensemble. D'abord les **câbles**, sous les mers et sous les rues. Ensuite les **data centers**, ces hangars pleins de serveurs où sont stockés les vidéos, les photos et les sites. Le nuage, c'est l'ordinateur de quelqu'un d'autre. Enfin les **points d'échange**, les IXP : des carrefours où les réseaux d'Orange, de Free, de Google et des autres se branchent les uns aux autres pour s'échanger du trafic.
+Trois éléments tiennent l'ensemble. Il y a d'abord les **câbles**, posés sous les mers et sous les rues. Viennent ensuite les **data centers**, ces hangars pleins de serveurs où sont stockés les vidéos, les photos et les sites. Le « nuage » n'est donc rien d'autre que l'ordinateur de quelqu'un d'autre. Enfin, les **points d'échange** (IXP) sont des carrefours où les réseaux d'Orange, de Free, de Google et des autres se branchent les uns aux autres pour s'échanger du trafic.

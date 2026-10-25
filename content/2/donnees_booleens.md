@@ -19,7 +19,7 @@ Une **variable booléenne** contient l'une de ces deux valeurs. Une **fonction b
 
 ## Quatre opérations
 
-Le **NON**, noté $\overline{a}$ ou `not`, inverse. Il n'a qu'une entrée.
+Le **NON**, noté $\overline{a}$ ou `not`, inverse la valeur de son unique entrée.
 
 | a | s |
 |:-:|:-:|

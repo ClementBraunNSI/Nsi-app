@@ -51,7 +51,7 @@ public void CalculerDevis_DureeZero_LeveArgumentException()
 
 `CalculerDevis` ne doit pas dépendre d'un CSV ou d'une base pour qu'on puisse le vérifier. On lui injecte un dépôt **en mémoire**. Le test reste rapide, il ne laisse pas de fichier, et un échec pointe le calcul, pas une ligne mal lue. C'est le rôle de l'interface vue dans le cours sur les contrats : `VehiculeService` reçoit un `IVehiculeRepository`, et le test fournit `InMemoryVehiculeRepository`.
 
-Le projet de tests est un projet à part, xUnit ou NUnit. On y ajoute une référence vers le projet métier, pas l'inverse : le métier ne doit pas connaître ses tests. Une classe de tests par service, `VehiculeServiceTests`, `StatsServiceTests`. Les méthodes portent le cas dans leur nom. On lance la suite après chaque correction, pas seulement la veille du rendu.
+Le projet de tests est un projet à part, xUnit ou NUnit. On y ajoute une référence vers le projet métier, pas l'inverse : le métier ne doit pas connaître ses tests. On écrit une classe de tests par service, par exemple `VehiculeServiceTests` et `StatsServiceTests`. Les méthodes portent le cas dans leur nom. On lance la suite après chaque correction, pas seulement la veille du rendu.
 
 ## Exercices d'application
 

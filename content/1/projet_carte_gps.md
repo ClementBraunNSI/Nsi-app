@@ -147,7 +147,7 @@ folium.Marker(trajet[1], popup='Lyon').add_to(carte)
 
 print('Tracez le trajet Paris-Lyon')" />
 
-Décommentez la ligne `PolyLine`. Une ligne bleue relie Paris à Lyon. `weight=4` règle l'épaisseur, `opacity=0.8` la transparence.
+Décommentez la ligne `PolyLine`. Une ligne bleue relie Paris à Lyon. `weight=4` règle l'épaisseur du trait et `opacity=0.8` sa transparence.
 
 **Ce qu'on rend.** Le programme de l'étape 5, avec Paris, Lyon, et votre marqueur vert aux coordonnées que vous avez cherchées. Le nom dans `popup` est celui de votre lieu. Si vous faites le bonus, le trajet Paris-Lyon est dans le même fichier.
 

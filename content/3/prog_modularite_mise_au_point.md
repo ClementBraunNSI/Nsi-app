@@ -65,7 +65,7 @@ Un **bug** est un écart entre ce que le programme fait et ce qu'on voulait. Il 
 
 Une **erreur de syntaxe** viole la grammaire du langage : un `:` oublié après `if`. Python n'exécute rien. Il faut corriger avant même le premier test.
 
-Une **exception** survient pendant l'exécution, sur un code pourtant syntaxiquement correct. Diviser par zéro, lire un indice hors de la liste, additionner un texte et un entier. Le programme s'arrête sur la ligne impossible, sauf si on a prévu de rattraper l'erreur.
+Une **exception** survient pendant l'exécution, sur un code pourtant syntaxiquement correct. C'est le cas quand on divise par zéro, quand on lit un indice hors de la liste ou quand on additionne un texte et un entier. Le programme s'arrête sur la ligne impossible, sauf si on a prévu de rattraper l'erreur.
 
 Une **erreur de logique** ne plante pas. La formule est fausse, le résultat est plausible, et l'on peut le croire. C'est la plus difficile : seuls des exemples dont on connaît la réponse la trahissent.
 

@@ -34,7 +34,7 @@ Cinq rubriques, dans la navigation :
 
 ### Accueil : contenus éditoriaux
 
-Deux familles de contenus, stockées en base, pas écrites en dur dans chaque page.
+L'accueil affiche deux familles de contenus. Elles sont stockées en base, et non écrites en dur dans chaque page.
 
 - Une actualité : titre, résumé, corps avec un lien, et au plus une pièce jointe (document, photo, son ou vidéo).
 - Une page de présentation : offre de services, missions, organisation, chiffres clés. Un partenaire : logo, texte court, adresse du site.
@@ -54,7 +54,7 @@ L'accueil affiche le titre, le résumé, et le lien cliquable. Le corps s'ouvre 
 
 La carte montre 18 régions : 13 métropolitaines et 5 d'outre-mer. Un clic sur le **nom** d'une des 13 régions métropolitaines ouvre, en pop-up ou dans un nouvel onglet, les entreprises de cette région, classées par nom, avec localisation, secteur, adresse, téléphone, e-mail, prénom et nom du dirigeant.
 
-Ces informations viennent de la base. Deux entreprises par région, secteurs variés. Les textes sont indicatifs : on ne réutilise pas un jeu de données déjà fourni par un autre sujet.
+Ces informations viennent de la base. Prévoyez deux entreprises par région, dans des secteurs variés. Les textes sont indicatifs : on ne réutilise pas un jeu de données déjà fourni par un autre sujet.
 
 Aller plus loin, seulement quand le clic sur le nom fonctionne : rendre cliquables les 5 régions d'outre-mer, puis la zone de la région et plus seulement son nom.
 
@@ -77,7 +77,7 @@ Contrôle : deux envois avec le même nom d'entreprise. Le second est refusé, l
 
 ### Mentions légales
 
-Lien dans le pied de page, par exemple `accéder aux mentions légales`. La page dit ce qui est collecté, pourquoi, et comment on demande la suppression ou la modification.
+Un lien du pied de page y mène, par exemple `accéder aux mentions légales`. La page dit ce qui est collecté, pourquoi, et comment on demande la suppression ou la modification.
 
 Informations du GEI à intégrer :
 
