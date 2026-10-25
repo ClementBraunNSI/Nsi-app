@@ -42,7 +42,7 @@ int main(void) {
 
 ## Ordre des déclarations
 
-En C, le compilateur doit connaître une fonction **avant** son utilisation, sauf si tu fournis un **prototype** en haut du fichier :
+En C, le compilateur doit connaître une fonction **avant** son utilisation, sauf si un **prototype** est fourni en haut du fichier :
 
 ```c
 int carre(int x);   /* prototype */

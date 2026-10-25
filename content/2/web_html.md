@@ -109,4 +109,4 @@ En résumé, le HTML dit la structure et le sens, le navigateur construit la pag
 
 ## Pour s'entraîner / Suite
 
-Testez la structure avec l'explorateur et l'aperçu ci-dessus, puis passez à [Introduction au CSS](/cours/2/web_css_introduction) pour la mise en forme, puis [Interactions JavaScript](/cours/2/web_javascript_interactions).
+Tester la structure avec l'explorateur et l'aperçu ci-dessus, puis passer à [Introduction au CSS](/cours/2/web_css_introduction) pour la mise en forme, puis [Interactions JavaScript](/cours/2/web_javascript_interactions).

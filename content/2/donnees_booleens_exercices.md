@@ -33,7 +33,7 @@ Quel sera le résultat de ces expressions ? `True` ou `False`.
 5. `not False`
 6. `5 != 5`
 
-Complétez le code ci-dessous pour vérifier vos réponses.
+Compléter le code ci-dessous pour vérifier les réponses.
 
 </Enonce>
 <Correction>

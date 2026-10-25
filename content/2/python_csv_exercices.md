@@ -58,7 +58,7 @@ groupeTitre: "Données en tables (CSV)"
     
     **1. Noms des communes**
     Écrire une fonction `afficher_noms_communes(villes)` qui affiche le nom de toutes les communes (`nom_commune_postal`).
-    *(Attention, il y en a beaucoup, affichez seulement les 5 premières pour tester)*
+    *(Attention, il y en a beaucoup, afficher seulement les 5 premières pour tester)*
     
     **2. Recherche par Code Postal**
     Écrire une fonction `afficher_communes_par_code_postal(villes, code_postal)` qui affiche les noms des communes ayant ce code postal.
@@ -126,7 +126,7 @@ groupeTitre: "Données en tables (CSV)"
     
     **3. Par Latitude**
     Écrire une fonction `communes_sud(villes, latitude_limite)` qui retourne la liste des communes situées au sud de la latitude donnée (latitude < latitude_limite).
-    *Note : Les coordonnées sont des chaînes de caractères dans le CSV, pensez à les convertir en `float`.*
+    *Note : Les coordonnées sont des chaînes de caractères dans le CSV, penser à les convertir en `float`.*
     
     <Correction>
     ```python

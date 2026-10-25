@@ -128,7 +128,7 @@ assert True
     <Enonce>
 ### Exercice Pratique
 
-Déterminez le résultat des expressions logiques suivantes et assignez-les aux variables `r1`, `r2`, `r3` et `r4`.
+Déterminer le résultat des expressions logiques suivantes et les assigner aux variables `r1`, `r2`, `r3` et `r4`.
 
 1. `(True and False) or True` -> `r1`
 2. `not (True or False)` -> `r2`

@@ -25,7 +25,7 @@ version: "TP Python"
       | **CSV / Excel** | `pandas` | Lire, filtrer et analyser des tableaux |
       | **JSON** | `json` (module intégré) | Lire des fiches hiérarchiques |
 
-      **Dans le Lab NSI**, les modules sont chargés automatiquement. En local, installez pandas avec : `pip install pandas`.
+      **Dans le Lab NSI**, les modules sont chargés automatiquement. En local, installer pandas avec : `pip install pandas`.
 
       **Exemple de départ pour un exercice CSV :**
 
@@ -40,7 +40,7 @@ version: "TP Python"
       print(df)
       ```
 
-      **Conseil :** explorez toujours vos données avec `print()` avant de répondre.
+      **Conseil :** explorer toujours les données avec `print()` avant de répondre.
     </Enonce>
     <Verification>
 ```python
@@ -65,7 +65,7 @@ assert True, "Consignes lues."
       Silver,Vulpes vulpes,Forêt boréale,7.1,61
       ```
 
-      **Mission :** Chargez ces données dans un DataFrame `df` avec `pnd.read_csv(StringIO(...))`, puis stockez le **nombre de renards** (lignes de données) dans `nb_renards`.
+      **Mission :** Charger ces données dans un DataFrame `df` avec `pnd.read_csv(StringIO(...))`, puis stocker le **nombre de renards** (lignes de données) dans `nb_renards`.
 
       *Indice :* `len(df)` compte les lignes du tableau.
     </Enonce>
@@ -95,7 +95,7 @@ assert nb_renards == len(attendu), "nb_renards doit correspondre au nombre de li
 
       Comme dans Excel, chaque **colonne** a un nom (l'en-tête du CSV).
 
-      **Mission :** À partir du DataFrame `df` ci-dessous, stockez la liste des noms de colonnes dans `colonnes` et le nombre de colonnes dans `nb_colonnes`.
+      **Mission :** À partir du DataFrame `df` ci-dessous, stocker la liste des noms de colonnes dans `colonnes` et le nombre de colonnes dans `nb_colonnes`.
 
       ```python
       import pandas as pnd
@@ -110,7 +110,7 @@ assert nb_renards == len(attendu), "nb_renards doit correspondre au nombre de li
       df = pnd.read_csv(StringIO(csv_texte))
       ```
 
-      *Indice :* `df.columns` donne les noms de colonnes. Convertissez en liste avec `.tolist()`.
+      *Indice :* `df.columns` donne les noms de colonnes. Convertir en liste avec `.tolist()`.
     </Enonce>
     <Verification>
 ```python
@@ -139,7 +139,7 @@ assert "Poids_kg" in colonnes, "Le fichier contient une colonne Poids_kg."
 
       On peut accéder à une **cellule** comme dans un tableur : `df.loc[ligne, "Colonne"]`.
 
-      **Mission :** À partir du `df` fourni, stockez dans `poids_fennec` le poids (en kg) du renard dont le nom est **Fennec**.
+      **Mission :** À partir du `df` fourni, stocker dans `poids_fennec` le poids (en kg) du renard dont le nom est **Fennec**.
 
       ```python
       import pandas as pnd
@@ -154,7 +154,7 @@ assert "Poids_kg" in colonnes, "Le fichier contient une colonne Poids_kg."
       df = pnd.read_csv(StringIO(csv_texte))
       ```
 
-      *Indice :* filtrez d'abord la ligne : `df[df["Nom"] == "Fennec"]`, puis lisez la colonne `Poids_kg`.
+      *Indice :* filtrer d'abord la ligne : `df[df["Nom"] == "Fennec"]`, puis lire la colonne `Poids_kg`.
     </Enonce>
     <Verification>
 ```python
@@ -181,7 +181,7 @@ assert float(poids_fennec) == attendu, "Lisez le poids du Fennec dans le tableau
 
       Le **filtrage** permet de ne garder que les lignes qui correspondent à un critère (comme un filtre Excel).
 
-      **Mission :** À partir du `df` fourni, créez `df_desert` contenant **uniquement** les renards dont l'`Habitat` contient le mot `"Désert"`. Stockez le nombre de résultats dans `nb_resultats`.
+      **Mission :** À partir du `df` fourni, créer `df_desert` contenant **uniquement** les renards dont l'`Habitat` contient le mot `"Désert"`. Stocker le nombre de résultats dans `nb_resultats`.
 
       ```python
       import pandas as pnd
@@ -225,7 +225,7 @@ assert nb_resultats == len(attendu), "nb_resultats doit correspondre au filtre."
 
       On peut **trier** un tableau par colonne, comme dans Excel.
 
-      **Mission :** Triez le `df` fourni par `Poids_kg` du plus léger au plus lourd. Stockez le résultat dans `df_trie` et le nom du renard le plus lourd dans `plus_lourd`.
+      **Mission :** Trier le `df` fourni par `Poids_kg` du plus léger au plus lourd. Stocker le résultat dans `df_trie` et le nom du renard le plus lourd dans `plus_lourd`.
 
       ```python
       import pandas as pnd
@@ -286,7 +286,7 @@ assert plus_lourd == attendu.iloc[-1]["Nom"], "plus_lourd est le renard le plus 
       '''
       ```
 
-      **Mission :** Convertissez `fiche_texte` en dictionnaire `fiche` avec `json.loads()`, puis stockez :
+      **Mission :** Convertir `fiche_texte` en dictionnaire `fiche` avec `json.loads()`, puis stocker :
 
       - la `region` d'habitat dans `region`
       - le nombre d'aliments dans `nb_aliments`
@@ -324,7 +324,7 @@ assert nb_aliments == len(fiche_ref["renard"]["alimentation"]), "Comptez les ali
 
       Pandas peut calculer des **statistiques** sur une colonne numérique (moyenne, maximum, etc.).
 
-      **Mission :** À partir du `df` fourni, calculez la **moyenne** des poids dans `poids_moyen` et le **poids maximum** dans `poids_max`.
+      **Mission :** À partir du `df` fourni, calculer la **moyenne** des poids dans `poids_moyen` et le **poids maximum** dans `poids_max`.
 
       ```python
       import pandas as pnd

@@ -13,7 +13,7 @@ groupeTitre: "Fonctions en Python"
 ---
 
 {/* L'id 'les-fonctions-python' doit correspondre à l'identifiant 
-  utilisé dans votre base de données pour cette fiche précise. 
+  utilisé dans la base de données pour cette fiche précise. 
 */}
 <ExerciseTabs courseId="les-fonctions-python" courseTitle="Les Fonctions">
   
@@ -90,7 +90,7 @@ assert afficher_somme(2, 3) is None, "La fonction ne doit rien renvoyer (None)."
   <ExerciseSection id="fonctions-1-4" label="1.4 [Facile] - Fonction parité" type="python">
     <Enonce>
     ### Exercice 1.4 [Facile] : Fonction parité
-    **Écrire une fonction `parite` qui prend un entier un paramètre et renvoie `True` si le nombre est pair, `False` sinon. Utilisez le type hinting.**
+    **Écrire une fonction `parite` qui prend un entier un paramètre et renvoie `True` si le nombre est pair, `False` sinon. Utiliser le type hinting.**
     *Exemple : parite(7) doit renvoyer False.*
 
     <Correction>
@@ -491,7 +491,7 @@ assert syracuse_vol(3) == 7, "Le temps de vol pour 3 est de 7 étapes."
   <ExerciseSection id="fonctions-4-2" label="4.2 [Difficile] - Placement financier" type="python">
     <Enonce>
     ### Exercice 4.2 [Difficile] : Placement financier
-    **Écrire une fonction `temps_doublement` qui prend un capital initial et un taux d'intérêt annuel (ex: `0.03` pour 3%). À l'aide d'une boucle `while`, calculez et renvoyez le nombre d'années nécessaires pour que le capital double.**
+    **Écrire une fonction `temps_doublement` qui prend un capital initial et un taux d'intérêt annuel (ex: `0.03` pour 3%). À l'aide d'une boucle `while`, calculer et renvoyer le nombre d'années nécessaires pour que le capital double.**
 
     <Correction>
     ```python

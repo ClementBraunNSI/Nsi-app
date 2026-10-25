@@ -40,13 +40,13 @@ L'ordre d'affichage est celui de la première apparition dans la liste.
 <ExerciseTabs courseId="proj_vote_maj" courseTitle="Majoritaire">
   <ExerciseSection id="vote-maj-1" label="Modélisation" type="lecture">
     <Enonce>
-      Écrivez `depouiller_majoritaire(urnes)`.
+      Écrire `depouiller_majoritaire(urnes)`.
 
-      1. Parcourez `urnes` et comptez les voix dans un dictionnaire.
-      2. Affichez chaque candidat et son nombre de voix, dans l'ordre de première apparition.
-      3. Renvoyez le nom du vainqueur.
+      1. Parcourir `urnes` et compter les voix dans un dictionnaire.
+      2. Afficher chaque candidat et son nombre de voix, dans l'ordre de première apparition.
+      3. Renvoyer le nom du vainqueur.
 
-      Si deux candidats ou plus partagent le maximum, affichez-les et renvoyez `"égalité"`. Si `urnes` est vide, affichez `Aucun bulletin.` et renvoyez `"aucun"`.
+      Si deux candidats ou plus partagent le maximum, les afficher et renvoyer `"égalité"`. Si `urnes` est vide, afficher `Aucun bulletin.` et renvoyer `"aucun"`.
 
       Le jeu A renvoie `"Alice"`.
 
@@ -89,26 +89,26 @@ candidats = ["Alice", "Bob", "Charlie"]
 <ExerciseTabs courseId="proj_vote_maj2" courseTitle="Deux Tours">
   <ExerciseSection id="vote-maj2-1" label="Premier tour" type="lecture">
     <Enonce>
-      Écrivez `voix_premier_tour(bulletins)` qui renvoie un dictionnaire des premières places. Sur le jeu B : Alice 4, Bob 3, Charlie 2.
+      Écrire `voix_premier_tour(bulletins)` qui renvoie un dictionnaire des premières places. Sur le jeu B : Alice 4, Bob 3, Charlie 2.
 
-      Écrivez `a_majorite_absolue(voix, nb_bulletins)` qui renvoie un booléen. Avec 4 voix sur 9, Alice n'a pas la majorité absolue. Avec trois bulletins qui commencent tous par Alice, la fonction renvoie `True`.
+      Écrire `a_majorite_absolue(voix, nb_bulletins)` qui renvoie un booléen. Avec 4 voix sur 9, Alice n'a pas la majorité absolue. Avec trois bulletins qui commencent tous par Alice, la fonction renvoie `True`.
 
-      Écrivez `finalistes(voix)` qui renvoie les deux noms ayant le plus de voix, le meilleur en premier. Sur le jeu B : Alice puis Bob. S'il y a égalité pour la deuxième place, décrivez la règle choisie dans un commentaire et tenez-vous-y (le jeu B n'a pas cette égalité).
+      Écrire `finalistes(voix)` qui renvoie les deux noms ayant le plus de voix, le meilleur en premier. Sur le jeu B : Alice puis Bob. S'il y a égalité pour la deuxième place, décrire la règle choisie dans un commentaire et s'y tenir (le jeu B n'a pas cette égalité).
     </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="vote-maj2-2" label="Second tour" type="lecture">
     <Enonce>
-      Écrivez `duel(bulletins, candidat1, candidat2)`.
+      Écrire `duel(bulletins, candidat1, candidat2)`.
 
-      1. Parcourez les bulletins.
-      2. Sur chacun, regardez qui de `candidat1` ou `candidat2` apparaît en premier.
-      3. Comptez les deux voix.
-      4. Renvoyez le gagnant. En cas d'égalité, renvoyez `"égalité"`.
+      1. Parcourir les bulletins.
+      2. Sur chacun, regarder qui de `candidat1` ou `candidat2` apparaît en premier.
+      3. Compter les deux voix.
+      4. Renvoyer le gagnant. En cas d'égalité, renvoyer `"égalité"`.
 
       Sur le jeu B, `duel(bulletins, "Alice", "Bob")` renvoie `"Bob"` (5 contre 4).
 
-      Écrivez `scrutin_deux_tours(bulletins, candidats)` qui enchaîne premier tour, test de majorité absolue, puis duel des finalistes. Elle renvoie le nom élu. Sur le jeu B, elle renvoie `"Bob"`.
+      Écrire `scrutin_deux_tours(bulletins, candidats)` qui enchaîne premier tour, test de majorité absolue, puis duel des finalistes. Elle renvoie le nom élu. Sur le jeu B, elle renvoie `"Bob"`.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -134,9 +134,9 @@ Alice bat Bob (2 voix contre 1), Bob bat Charlie (2 contre 1), Charlie bat Alice
 <ExerciseTabs courseId="proj_vote_condorcet" courseTitle="Condorcet">
   <ExerciseSection id="vote-condorcet-1" label="Tous les duels" type="lecture">
     <Enonce>
-      Écrivez `duels(bulletins, candidats)` qui organise chaque paire une seule fois (Alice contre Bob, pas aussi Bob contre Alice).
+      Écrire `duels(bulletins, candidats)` qui organise chaque paire une seule fois (Alice contre Bob, pas aussi Bob contre Alice).
 
-      Pour chaque paire, appelez `duel` et affichez une ligne du type `Alice vs Bob : Bob (5-4)`. La fonction peut renvoyer un dictionnaire des résultats, à condition que l'affichage soit présent.
+      Pour chaque paire, appeler `duel` et afficher une ligne du type `Alice vs Bob : Bob (5-4)`. La fonction peut renvoyer un dictionnaire des résultats, à condition que l'affichage soit présent.
 
       Jeu B : Bob bat Alice, Charlie bat Alice, Charlie bat Bob.
     </Enonce>
@@ -144,12 +144,12 @@ Alice bat Bob (2 voix contre 1), Bob bat Charlie (2 contre 1), Charlie bat Alice
 
   <ExerciseSection id="vote-condorcet-2" label="Vainqueur de Condorcet" type="lecture">
     <Enonce>
-      Écrivez `vainqueur_condorcet(bulletins, candidats)`.
+      Écrire `vainqueur_condorcet(bulletins, candidats)`.
 
-      Un candidat est vainqueur s'il gagne chaque duel qui le concerne. Renvoyez son nom, ou `None` si personne ne remplit cette condition.
+      Un candidat est vainqueur s'il gagne chaque duel qui le concerne. Renvoyer son nom, ou `None` si personne ne remplit cette condition.
 
-      - Jeu B : renvoyez `"Charlie"`.
-      - Jeu C : renvoyez `None` et affichez `Paradoxe de Condorcet : aucun candidat ne gagne tous ses duels.`
+      - Jeu B : renvoyer `"Charlie"`.
+      - Jeu C : renvoyer `None` et afficher `Paradoxe de Condorcet : aucun candidat ne gagne tous ses duels.`
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -167,11 +167,11 @@ Le même paquet de bulletins donne donc trois vainqueurs différents : Alice au 
 <ExerciseTabs courseId="proj_vote_borda" courseTitle="Méthode de Borda">
   <ExerciseSection id="vote-borda-1" label="Calcul des points" type="lecture">
     <Enonce>
-      Écrivez `calculer_borda(bulletins, candidats)`.
+      Écrire `calculer_borda(bulletins, candidats)`.
 
-      1. Initialisez un dictionnaire de scores à 0 pour chaque candidat.
+      1. Initialiser un dictionnaire de scores à 0 pour chaque candidat.
       2. Pour chaque bulletin, le candidat à la position `i` (en partant de 0) reçoit `N - 1 - i` points.
-      3. Renvoyez le dictionnaire des scores.
+      3. Renvoyer le dictionnaire des scores.
 
       Contrôle sur un seul bulletin `["Alice", "Charlie", "Bob"]` : Alice 2, Charlie 1, Bob 0.
 
@@ -181,11 +181,11 @@ Le même paquet de bulletins donne donc trois vainqueurs différents : Alice au 
 
   <ExerciseSection id="vote-borda-2" label="Comparaison" type="lecture">
     <Enonce>
-      Écrivez `vainqueur_borda(scores)` qui renvoie le nom au score maximal, ou `"égalité"` si plusieurs candidats partagent ce maximum.
+      Écrire `vainqueur_borda(scores)` qui renvoie le nom au score maximal, ou `"égalité"` si plusieurs candidats partagent ce maximum.
 
       Sur le jeu B, elle renvoie `"Charlie"`.
 
-      Dans le programme principal, affichez côte à côte les quatre résultats du jeu B :
+      Dans le programme principal, afficher côte à côte les quatre résultats du jeu B :
 
       ```text
       Un tour : Alice
@@ -204,4 +204,4 @@ Le même paquet de bulletins donne donc trois vainqueurs différents : Alice au 
 ## 5. Pour aller plus loin
 
 *   **Jugement majoritaire.** Chaque bulletin donne une mention (Excellent, Bien, Passable, Insuffisant) plutôt qu'un classement. La mention médiane départage les candidats.
-*   **Diagramme.** Affichez les voix du premier tour avec une ligne de caractères `#` par candidat, par exemple `Alice : ####`.
+*   **Diagramme.** Afficher les voix du premier tour avec une ligne de caractères `#` par candidat, par exemple `Alice : ####`.

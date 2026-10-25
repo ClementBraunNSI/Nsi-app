@@ -14,9 +14,9 @@ audience: public
 
 # Systèmes d'exploitation
 
-Vous avez vu le processeur, la mémoire et les bus. Aucun programme que vous écrivez ne leur parle directement. Entre votre code et le matériel, il y a un **système d'exploitation**. Sans lui, chaque application devrait savoir allumer un pixel, réserver une case mémoire et attraper une touche du clavier. L'OS fait ce travail une fois pour toutes, et prête ces services aux programmes.
+Le processeur, la mémoire et les bus ont déjà été vus. Aucun programme ordinaire ne leur parle directement. Entre le code et le matériel, il y a un **système d'exploitation**. Sans lui, chaque application devrait savoir allumer un pixel, réserver une case mémoire et attraper une touche du clavier. L'OS fait ce travail une fois pour toutes, et prête ces services aux programmes.
 
-Il relie donc le matériel et les logiciels, il partage les ressources (processeur, mémoire, disques) quand plusieurs programmes tournent ensemble, et il vous offre une interface, graphique ou en texte. Historiquement, il automatise ce qu'un opérateur faisait à la main : lancer un travail, ranger les fichiers, donner la machine à tour de rôle.
+Il relie donc le matériel et les logiciels, il partage les ressources (processeur, mémoire, disques) quand plusieurs programmes tournent ensemble, et il offre une interface, graphique ou en texte. Historiquement, il automatise ce qu'un opérateur faisait à la main : lancer un travail, ranger les fichiers, donner la machine à tour de rôle.
 
 On oppose souvent deux familles, selon ce qu'on a le droit de faire du code.
 
@@ -25,11 +25,11 @@ On oppose souvent deux familles, selon ce qu'on a le droit de faire du code.
 | **Libre** | Le code est ouvert, on peut le lire, le modifier, le redistribuer | Linux (Ubuntu, Debian), FreeBSD |
 | **Propriétaire** | Le code est fermé, une licence encadre l'usage | Windows, macOS, iOS |
 
-« Libre » ne veut pas dire « sans auteur », ni toujours « gratuit ». Cela veut dire que les règles de la licence vous autorisent à étudier le système et à le modifier. « Propriétaire » veut dire que l'éditeur garde ce droit.
+« Libre » ne veut pas dire « sans auteur », ni toujours « gratuit ». Cela veut dire que les règles de la licence autorisent à étudier le système et à le modifier. « Propriétaire » veut dire que l'éditeur garde ce droit.
 
 ## Le noyau
 
-Le **noyau**, ou *kernel*, est la partie qui a un accès privilégié au matériel. Le reste de l'OS et vos applications passent par lui.
+Le **noyau**, ou *kernel*, est la partie qui a un accès privilégié au matériel. Le reste de l'OS et les applications passent par lui.
 
 C'est lui qui alloue la RAM et la rend quand un programme se termine. C'est lui qui choisit quel processus occupe le processeur, et pendant combien de temps : l'**ordonnancement**. C'est lui, via des pilotes (*drivers*), qui sait parler au clavier, à l'écran, au disque. Un pilote est un traducteur. Le noyau dit « lis ce secteur », le pilote sait quels signaux envoyer à ce modèle précis de disque.
 
@@ -55,9 +55,9 @@ Le `x` sur un dossier surprend. Il ne lance rien : il autorise à entrer dans le
 
 ## Deux façons de commander
 
-La **ligne de commande** (CLI) passe par un terminal. Elle est précise, scriptable, légère. On administre souvent un serveur ainsi, parce qu'il n'a pas d'écran. L'**interface graphique** (GUI) propose des fenêtres et une souris. Elle est plus abordable, et plus coûteuse en ressources. Ce ne sont pas deux systèmes. Ce sont deux portes d'entrée vers le même OS. Votre session graphique lance d'ailleurs des programmes qui, eux, parlent encore au noyau.
+La **ligne de commande** (CLI) passe par un terminal. Elle est précise, scriptable, légère. On administre souvent un serveur ainsi, parce qu'il n'a pas d'écran. L'**interface graphique** (GUI) propose des fenêtres et une souris. Elle est plus abordable, et plus coûteuse en ressources. Ce ne sont pas deux systèmes. Ce sont deux portes d'entrée vers le même OS. La session graphique lance d'ailleurs des programmes qui, eux, parlent encore au noyau.
 
-Une erreur fréquente est de prendre le navigateur pour le système. Le navigateur est une application. C'est l'OS qui lui prête du temps processeur, de la mémoire, et l'accès au disque. Fermez l'OS, et le navigateur n'a plus rien sur quoi tourner.
+Une erreur fréquente est de prendre le navigateur pour le système. Le navigateur est une application. C'est l'OS qui lui prête du temps processeur, de la mémoire, et l'accès au disque. Fermer l'OS, et le navigateur n'a plus rien sur quoi tourner.
 
 ## Pour s'entraîner
 

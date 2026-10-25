@@ -28,7 +28,7 @@ Deux familles reviennent sans cesse. Les données **tabulaires** se lisent en li
 | **XML** | Document balisé | Échanges entre administrations |
 | **SQL** | Langage d'interrogation | Requêtes sur une base |
 
-Le CSV et le JSON sont des fichiers. SQL n'est pas un format de fichier au même sens : c'est le langage avec lequel on interroge une base. On le met dans le même tableau parce que vous le croiserez au moment de « sortir » une information déjà rangée.
+Le CSV et le JSON sont des fichiers. SQL n'est pas un format de fichier au même sens : c'est le langage avec lequel on interroge une base. On le met dans le même tableau parce qu'on le croise au moment de « sortir » une information déjà rangée.
 
 ### Le CSV, un tableau dans un fichier texte
 
@@ -44,7 +44,7 @@ Fennec,Vulpes zerda,Désert,1.5,24
 Silver,Vulpes vulpes,Forêt boréale,7.1,61
 ```
 
-Si vous ouvrez ce fichier dans un tableur, chaque virgule devient une frontière de colonne. C'est tout le format : rien de caché, et justement pour cela il supporte mal une information qui contient elle-même des sous-parties.
+Dans un tableur, chaque virgule de ce fichier devient une frontière de colonne. C'est tout le format : rien de caché, et justement pour cela il supporte mal une information qui contient elle-même des sous-parties.
 
 ### Le JSON, quand une fiche a des tiroirs
 
@@ -99,7 +99,7 @@ Une fois la table remplie, on ne la relit pas ligne à ligne. On lui pose des op
 
 **Trier**, c'est ranger : du plus léger au plus lourd, par exemple. **Filtrer**, c'est ne garder que ce qui nous intéresse, les renards de forêt, ou, dans une autre base, les monstres de type Feu. **Calculer**, c'est produire un nombre que la table ne contient pas encore, comme une moyenne.
 
-La base ci-dessous se manipule directement. Essayez un tri, puis un filtre, et regardez ce qui reste.
+La base ci-dessous se manipule directement. Essayer un tri, puis un filtre, et regarder ce qui reste.
 
 <DataProcessor />
 
@@ -108,18 +108,18 @@ La base ci-dessous se manipule directement. Essayez un tri, puis un filtre, et r
 > **Définition**
 > Le **cloud computing**, l'informatique en nuage, consiste à utiliser des serveurs distants, via Internet, pour stocker des données ou exécuter des programmes, plutôt que de tout faire sur son propre disque.
 
-Sur votre ordinateur, un fichier perdu avec la machine est perdu. Dans un data center, les mêmes fichiers sont copiés plusieurs fois, justement pour qu'une panne de disque ne les efface pas. Ce n'est pas immatériel : ce sont des bâtiments, de l'électricité, et des machines qui appartiennent à quelqu'un.
+Sur un ordinateur personnel, un fichier perdu avec la machine est perdu. Dans un data center, les mêmes fichiers sont copiés plusieurs fois, justement pour qu'une panne de disque ne les efface pas. Ce n'est pas immatériel : ce sont des bâtiments, de l'électricité, et des machines qui appartiennent à quelqu'un.
 
 <CloudArchitecture />
 
 La plupart des très gros acteurs, Google, Amazon, Microsoft, sont américains. La question n'est donc pas seulement « est-ce que mes fichiers sont en sécurité », mais « qui a le droit de les regarder ». Le *Cloud Act* américain permet, dans certains cas, à la justice des États-Unis d'exiger des données détenues par ces entreprises, y compris lorsque les serveurs sont ailleurs.
 
-## Vos données, et le RGPD
+## Les données, et le RGPD
 
 > **RGPD**
 > Depuis 2018, le règlement général sur la protection des données encadre, en Europe, la collecte et l'usage des données personnelles.
 
-Le règlement ne dit pas qu'une entreprise n'a pas le droit de connaître votre nom. Il dit à quelles conditions elle peut le faire, et quels droits vous gardez : accéder à ce qui est stocké, le faire corriger, parfois le faire effacer. Le schéma ci-dessous reprend ces droits.
+Le règlement ne dit pas qu'une entreprise n'a pas le droit de connaître le nom d'une personne. Il dit à quelles conditions elle peut le faire, et quels droits la personne garde : accéder à ce qui est stocké, le faire corriger, parfois le faire effacer. Le schéma ci-dessous reprend ces droits.
 
 <RgpdRights />
 
@@ -131,6 +131,6 @@ Le **volume** est la quantité : des téraoctets, des pétaoctets. YouTube reço
 
 L'**open data** est une autre démarche. Il s'agit de publier des données numériques gratuitement, sans restriction de droit d'auteur qui en empêcherait la réutilisation. Ce sont souvent l'État ou les collectivités qui ouvrent leurs fichiers, pour la transparence et pour que d'autres construisent des services dessus.
 
-La RATP publie les horaires de bus en temps réel, et une application comme Citymapper s'en sert pour vous guider. La base des produits alimentaires nourrit une application comme Yuka. Le geste est le même : une donnée publique, réutilisée par quelqu'un d'autre.
+La RATP publie les horaires de bus en temps réel, et une application comme Citymapper s'en sert pour guider ses utilisateurs. La base des produits alimentaires nourrit une application comme Yuka. Le geste est le même : une donnée publique, réutilisée par quelqu'un d'autre.
 
 Le portail officiel des données publiques françaises est [data.gouv.fr](https://www.data.gouv.fr).

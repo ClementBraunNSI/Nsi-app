@@ -112,7 +112,7 @@ groupeTitre: "Circuits logiques"
     <Enonce>
     ### Exercice 4 : Simplification de circuits
 
-    **Simplifiez les expressions booléennes suivantes en utilisant les lois de De Morgan et les propriétés de l'algèbre booléenne :**
+    **Simplifier les expressions booléennes suivantes en utilisant les lois de De Morgan et les propriétés de l'algèbre booléenne :**
 
     1. `not (a and b) or (not a or not b)`
     2. `(a and b) or (a and not b)`
@@ -170,7 +170,7 @@ groupeTitre: "Circuits logiques"
     `S = (A and B) or (B and C) or (A and C)`
 
     **Questions :**
-    1. Construisez la table de vérité complète de ce circuit
+    1. Construire la table de vérité complète de ce circuit
     2. Dans quels cas la sortie S vaut-elle 1 ?
     3. Ce circuit implémente quelle fonction logique ? (Indice : fonction de vote)
     4. Combien de portes logiques minimum faut-il pour réaliser ce circuit ?
@@ -225,7 +225,7 @@ groupeTitre: "Circuits logiques"
     <Enonce>
     ### Exercice 6 : Conception d'un additionneur
 
-    **Concevez un circuit additionneur 1 bit.**
+    **Concevoir un circuit additionneur 1 bit.**
     
     Un additionneur 1 bit prend en entrée :
     - `A` et `B` : les deux bits à additionner
@@ -236,8 +236,8 @@ groupeTitre: "Circuits logiques"
     - `Cout` : la retenue de sortie
 
     **Questions :**
-    1. Établissez la table de vérité de cet additionneur
-    2. Trouvez les équations booléennes pour S et Cout
+    1. Établir la table de vérité de cet additionneur
+    2. Trouver les équations booléennes pour S et Cout
     
     <Correction>
     **1. Table de vérité :**
@@ -292,7 +292,7 @@ groupeTitre: "Circuits logiques"
     <Enonce>
     ### Exercice 7 : Multiplexeur
 
-    **Analysez ce multiplexeur 2 vers 1 :**
+    **Analyser ce multiplexeur 2 vers 1 :**
 
     Un multiplexeur 2 vers 1 a :
     - Deux entrées de données : `D0`, `D1`
@@ -304,8 +304,8 @@ groupeTitre: "Circuits logiques"
     - Si `S = 1`, alors `Y = D1`
 
     **Questions :**
-    1. Écrivez l'équation booléenne de Y
-    2. Construisez la table de vérité
+    1. Écrire l'équation booléenne de Y
+    2. Construire la table de vérité
     
     <Correction>
     **1. Équation :**

@@ -11,13 +11,13 @@ audience: public
 
 # Simulateur BBC Micro:bit
 
-Vous pouvez tester vos programmes **sans carte physique** grâce au simulateur intégré à l'éditeur officiel Micro:bit.
+Les programmes se testent **sans carte physique** grâce au simulateur intégré à l'éditeur officiel Micro:bit.
 
 ![Carte Micro:bit](/content/1/microbit.png)
 
 ## 1. Ouvrir le simulateur
 
-1. Rendez-vous sur **[python.microbit.org](https://python.microbit.org/v/3)**.
+1. Se rendre sur **[python.microbit.org](https://python.microbit.org/v/3)**.
 2. Un aperçu de la carte s'affiche à gauche : matrice LED 5×5, boutons **A** et **B**.
 3. Le code Python s'écrit dans la zone de droite.
 
@@ -25,7 +25,7 @@ Vous pouvez tester vos programmes **sans carte physique** grâce au simulateur i
 
 ## 2. Premier test
 
-Copiez ce programme, puis cliquez sur **Run** (ou le bouton lecture) :
+Copier ce programme, puis cliquer sur **Run** (ou le bouton lecture) :
 
 ```python
 from microbit import *
@@ -37,7 +37,7 @@ while True:
     sleep(1000)
 ```
 
-Vous devez voir un **cœur** clignoter sur la matrice LED.
+Un **cœur** doit clignoter sur la matrice LED.
 
 ## 3. Fonctionnalités du simulateur
 
@@ -64,14 +64,14 @@ while True:
     sleep(100)
 ```
 
-Appuyez sur le **bouton A** dans le simulateur pour incrémenter le compteur.
+Appuyer sur le **bouton A** dans le simulateur pour incrémenter le compteur.
 
 ## 5. Dépannage
 
-- **Le programme ne s'arrête pas** : cliquez sur Stop dans l'éditeur.
-- **Rien ne s'affiche** : vérifiez l'indentation et la boucle `while True`.
+- **Le programme ne s'arrête pas** : cliquer sur Stop dans l'éditeur.
+- **Rien ne s'affiche** : vérifier l'indentation et la boucle `while True`.
 - **Erreur d'import** : la ligne `from microbit import *` doit être présente en haut du fichier.
 
 ---
 
-Passez ensuite à l'[activité système connecté](activite_objets_connectes.md) puis au [TP Micro:bit](tp_microbit.md).
+Passer ensuite à l'[activité système connecté](activite_objets_connectes.md) puis au [TP Micro:bit](tp_microbit.md).

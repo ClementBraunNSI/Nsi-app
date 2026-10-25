@@ -13,7 +13,7 @@ audience: public
 ## <Icone nom="target" /> Objectif
 Comprendre comment naviguer dans des données complexes : **une liste de dictionnaires**, où chaque dictionnaire contient lui-même **des listes**.
 
-C'est exactement comme cela que Spotify ou Netflix stockent vos données !
+C'est exactement comme cela que Spotify ou Netflix stockent les données !
 
 ---
 
@@ -55,7 +55,7 @@ spotify_db = [
 
 ### <Icone nom="brain" /> Comment lire ça ?
 
-Imaginez que vous êtes un GPS. Pour trouver une info, vous devez suivre le chemin étape par étape.
+Imaginer un GPS. Pour trouver une info, il doit suivre le chemin étape par étape.
 
 *   `spotify_db` est une **Liste** `[...]`. Donc on utilise un **indice** `[0]`, `[1]`, etc.
 *   `spotify_db[0]` est un **Dictionnaire** `{...}` (C'est Orelsan). Donc on utilise une **clé** `["nom"]`, `["albums"]`.
@@ -141,7 +141,7 @@ for artiste in spotify_db:
 ## 3. Exercices Avancés (Listes dans Dictionnaires)
 
 Ici, on va devoir entrer dans les sous-listes. C'est souvent là que ça bloque !
-Rappelez-vous : **Si c'est une liste, il faut (souvent) une boucle pour la parcourir.**
+À retenir : **Si c'est une liste, il faut (souvent) une boucle pour la parcourir.**
 
 <ExerciseTabs courseId="tp_spotify_2" courseTitle="Niveau Avancé">
 
@@ -270,7 +270,7 @@ print(f"Total écoutes The Weeknd : {total}")
 On cherche l'artiste qui a sorti l'album **"Civilisation"**.
 Le programme doit parcourir la base et afficher : `C'est Orelsan qui a fait Civilisation`.
 
-*Indice : Vous aurez besoin d'une boucle `for` (artistes) ET d'une condition `if "Civilisation" in ...`*
+*Indice : il faudra une boucle `for` (artistes) ET d'une condition `if "Civilisation" in ...`*
 </Enonce>
 
 <Correction>
@@ -290,7 +290,7 @@ for artiste in spotify_db:
 Angèle vient de sortir "Démons" (30 000 000 écoutes).
 Ajouter cette chanson à sa liste `top_titres`.
 
-<Icone nom="triangle-alert" /> Attention : `top_titres` est une liste de **dictionnaires**. Vous devez donc ajouter un objet de la forme `{"titre": "...", "ecoutes":...}`.
+<Icone nom="triangle-alert" /> Attention : `top_titres` est une liste de **dictionnaires**. Il faut donc ajouter un objet de la forme `{"titre": "...", "ecoutes":...}`.
 </Enonce>
 
 <Correction>
@@ -374,7 +374,7 @@ print("Ma Playlist de Soirée :", playlist_soiree)
 Qui est l'artiste le plus populaire au total ?
 Calculer le cumul des écoutes pour **chaque** artiste, et afficher celui qui a le plus gros score.
 
-*Astuce : Vous allez devoir faire une boucle pour calculer le total de chaque artiste, et comparer ce total avec un `max_total`.*
+*Astuce : il faudra une boucle pour calculer le total de chaque artiste, et comparer ce total avec un `max_total`.*
 </Enonce>
 
 <Correction>
@@ -403,7 +403,7 @@ print(f"L'artiste N°1 est {meilleur_artiste} avec {max_ecoutes_global} écoutes
 Orelsan renie son album "La fête est finie". Il veut le supprimer de la base.
 Trouver Orelsan dans la base, et supprimer "La fête est finie" de sa liste d'albums.
 
-*Indice : La méthode `.remove("Valeur")` est votre amie.*
+*Indice : La méthode `.remove("Valeur")` est bien utile.*
 </Enonce>
 
 <Correction>

@@ -23,7 +23,7 @@ En 1834, Charles Babbage décrit la machine analytique : une mémoire, un organe
 
 La Seconde Guerre mondiale accélère tout ce qui calcule, en particulier la cryptanalyse. En 1936, avant même le conflit, Alan Turing a déjà proposé un modèle très dépouillé, la **machine de Turing**, pour dire ce qu'un algorithme peut calculer et ce qu'il ne pourra jamais calculer. Ce n'est pas un plan d'usine. C'est une frontière.
 
-En 1945, l'architecture de von Neumann fixe le schéma que vous avez vu par ailleurs : une mémoire unique pour les données et le programme, et une unité de calcul. La même année, l'ENIAC devient le premier grand calculateur entièrement électronique. Il pèse des tonnes, occupe une salle, et on le programme en rebranchant des câbles. Le programme n'est pas encore un fichier qu'on charge. Il est un câblage.
+En 1945, l'architecture de von Neumann fixe le schéma vu par ailleurs : une mémoire unique pour les données et le programme, et une unité de calcul. La même année, l'ENIAC devient le premier grand calculateur entièrement électronique. Il pèse des tonnes, occupe une salle, et on le programme en rebranchant des câbles. Le programme n'est pas encore un fichier qu'on charge. Il est un câblage.
 
 ## Du tube à la puce
 
@@ -54,4 +54,4 @@ La date de 1843 est celle des notes de Lovelace sur la machine de Babbage, pas c
 
 ## Pour s'entraîner
 
-Reliez chaque ligne de la frise à un cours du programme : architecture, réseaux ou Web. Pour une figure, une courte biographie de Turing, de Lovelace ou de Berners-Lee suffit à sortir du tableau.
+Relier chaque ligne de la frise à un cours du programme : architecture, réseaux ou Web. Pour une figure, une courte biographie de Turing, de Lovelace ou de Berners-Lee suffit à sortir du tableau.

@@ -16,7 +16,7 @@ image: /images/fox_chasse_renard.png
 
 # <Renard /> Projet : Chasse aux Ren'Arts
 
-Le but de ce projet est de créer la page web de votre tableau pour la chasse aux Ren'Arts.
+Le but de ce projet est de créer la page web de son tableau pour la chasse aux Ren'Arts.
 Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de repérage, puis choisir le fond, la couleur du texte et la police.
 
 **Ressources :**
@@ -43,9 +43,9 @@ Voilà la maquette ouverte dans le navigateur. Chaque bloc de couleur est une `d
       3. Bloc rouge de droite : un paragraphe qui explique le contexte du tableau renardifié (ce qui a changé, où le renard entre dans la scène).
       4. Bloc bleu foncé : une liste (`ul` / `li`) des caractéristiques. Au minimum : taille, année, lieu de conservation, technique, matériaux.
       5. Bloc rose de gauche : l'image du tableau original, puis un titre de niveau 3 (`h3`) avec le nom du tableau, l'artiste et la date.
-      6. Bloc rose de droite : l'image du tableau renardifié, puis un `h3` avec le nom que vous donnez à cette version.
+      6. Bloc rose de droite : l'image du tableau renardifié, puis un `h3` avec le nom donné à cette version.
 
-      Balise à adapter. Remplacez `image.png` par le nom de votre fichier, par exemple `images/original.png` et `images/renard.png`.
+      Balise à adapter. Remplacer `image.png` par le nom du fichier, par exemple `images/original.png` et `images/renard.png`.
 
       ```html
       <img class="image_principale" src="images/image.png" alt="nom_du_tableau"/>
@@ -62,7 +62,7 @@ Voilà la maquette ouverte dans le navigateur. Chaque bloc de couleur est une `d
   </ExerciseSection>
 </ExerciseTabs>
 
-Voici un exemple de liste, à réécrire à partir de votre tableau. On ne recopie pas ces noms si ce n'est pas votre œuvre.
+Voici un exemple de liste, à réécrire à partir de son propre tableau. On ne recopie pas ces noms si ce n'est pas la même œuvre.
 
 ```html
 <ul>
@@ -99,11 +99,11 @@ Variantes à reconnaître aussi : `border: 2px solid black;`, `border-width`, `b
     <Enonce>
       Dans `style.css` :
 
-      1. Ouvrez le fichier.
-      2. Repérez toutes les lignes qui contiennent le mot `border`. La classe `.container` peut apparaître plusieurs fois : lisez le fichier du début à la fin.
-      3. Supprimez uniquement ces lignes.
-      4. Conservez `display`, `flex-direction`, `gap`, `text-align`, `width`, `height` et `object-fit`.
-      5. Enregistrez, puis actualisez la page.
+      1. Ouvrir le fichier.
+      2. Repérer toutes les lignes qui contiennent le mot `border`. La classe `.container` peut apparaître plusieurs fois : lire le fichier du début à la fin.
+      3. Supprimer uniquement ces lignes.
+      4. Conserver `display`, `flex-direction`, `gap`, `text-align`, `width`, `height` et `object-fit`.
+      5. Enregistrer, puis actualiser la page.
 
       ```css
       .image {
@@ -144,12 +144,12 @@ Variantes à reconnaître aussi : `border: 2px solid black;`, `border-width`, `b
 
 ## 3. Fond, texte, police <Icone nom="palette" />
 
-La classe `container` contient toute la page. La modifier change presque tout le site. Si elle apparaît deux fois, complétez celle qui contient déjà `display: flex;`.
+La classe `container` contient toute la page. La modifier change presque tout le site. Si elle apparaît deux fois, compléter celle qui contient déjà `display: flex;`.
 
 <ExerciseTabs courseId="snt_chasse_renarts_fond" courseTitle="Fond">
   <ExerciseSection id="chasse-fr-3" label="container" type="python">
     <Enonce>
-      Dans `.container`, ajoutez le fond, la couleur du texte et la police. Point de départ :
+      Dans `.container`, ajouter le fond, la couleur du texte et la police. Point de départ :
 
       ```css
       .container {
@@ -203,11 +203,11 @@ Le dossier contient :
 
 Sous Windows 11 :
 
-1. Ouvrez l'explorateur de fichiers.
-2. Retrouvez le dossier `projet_site_eleve`.
+1. Ouvrir l'explorateur de fichiers.
+2. Retrouver le dossier `projet_site_eleve`.
 3. Clic droit sur le dossier.
 4. **Compresser dans un fichier ZIP**.
 5. Si l'option n'apparaît pas : **Afficher plus d'options**, puis **Envoyer vers** > **Dossier compressé**.
 6. Windows crée `projet_site_eleve.zip`.
-7. Renommez l'archive, par exemple `NOM_Prenom_projet_site_eleve.zip`.
-8. Déposez-la sur Pronote.
+7. Renommer l'archive, par exemple `NOM_Prenom_projet_site_eleve.zip`.
+8. La déposer sur Pronote.

@@ -21,9 +21,9 @@ Avant de programmer ou d'enquêter sur un fichier CSV, il faut comprendre commen
 | **Filtrer** | Ne garder que les monstres de type Feu |
 | **Calculer** | Trouver la moyenne des niveaux |
 
-## À vous de jouer
+## Mise en pratique
 
-Manipulez la base de données ci-dessous. Essayez de :
+Manipuler la base de données ci-dessous. Essayer de :
 
 1. Trier les lignes par **niveau** décroissant.
 2. Filtrer pour n'afficher qu'un seul **type**.
@@ -33,10 +33,10 @@ Manipulez la base de données ci-dessous. Essayez de :
 
 ## Pour aller plus loin (optionnel)
 
-Si vous souhaitez découvrir la **programmation par blocs** appliquée aux données, vous pouvez aussi explorer cette activité externe sur Algorea :
+Pour découvrir la **programmation par blocs** appliquée aux données, cette activité externe sur Algorea est aussi disponible :
 
 [Activité Blockly : Données structurées (Algorea)](https://old.parcours.algorea.org/contents/4707-4702-1067253748629066205-653650670442840123-1174881031623574659-1302936453571687221/)
 
 ---
 
-Passez ensuite à l'**Atelier Détective CSV** pour appliquer ces notions sur de vrais fichiers de données.
+Passer ensuite à l'**Atelier Détective CSV** pour appliquer ces notions sur de vrais fichiers de données.

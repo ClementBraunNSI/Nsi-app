@@ -19,7 +19,7 @@ audience: public
   <ExerciseSection id="conditions-1-1" label="1.1 [Facile] - Majeur ou mineur" type="python">
     <Enonce>
     ### Exercice 1.1 [Facile] : Majeur ou mineur
-    **Écrire une fonction `est_majeur` qui prend un âge (entier) en paramètre et renvoie `True` si la personne est majeure (âge supérieur ou égal à 18), `False` sinon. Utilisez un `if` / `else`.**
+    **Écrire une fonction `est_majeur` qui prend un âge (entier) en paramètre et renvoie `True` si la personne est majeure (âge supérieur ou égal à 18), `False` sinon. Utiliser un `if` / `else`.**
 
     <Correction>
     ```python
@@ -173,7 +173,7 @@ assert tarif_musee(25) == 8
   <ExerciseSection id="conditions-2-1" label="2.1 [Moyen] - Signe d'un nombre" type="python">
     <Enonce>
     ### Exercice 2.1 [Moyen] : Signe d'un nombre
-    **Écrire une fonction `signe` qui prend un entier et renvoie `"positif"` s'il est strictement supérieur à 0, `"negatif"` s'il est strictement inférieur à 0, `"nul"` sinon. Utilisez `if` / `elif` / `else`.**
+    **Écrire une fonction `signe` qui prend un entier et renvoie `"positif"` s'il est strictement supérieur à 0, `"negatif"` s'il est strictement inférieur à 0, `"nul"` sinon. Utiliser `if` / `elif` / `else`.**
 
     <Correction>
     ```python
@@ -398,7 +398,7 @@ assert mot_de_passe_valide("abc1") is False
   <ExerciseSection id="conditions-3-2" label="3.2 [Avancé] - Triangle rectangle" type="python">
     <Enonce>
     ### Exercice 3.2 [Avancé] : Triangle rectangle
-    **Écrire une fonction `est_triangle_rectangle` qui prend trois longueurs `a`, `b`, `c` (flottants positifs) et renvoie `True` si elles forment un triangle rectangle (théorème de Pythagore), `False` sinon. Testez les trois combinaisons possibles pour l'hypoténuse, sans utiliser de liste.**
+    **Écrire une fonction `est_triangle_rectangle` qui prend trois longueurs `a`, `b`, `c` (flottants positifs) et renvoie `True` si elles forment un triangle rectangle (théorème de Pythagore), `False` sinon. Tester les trois combinaisons possibles pour l'hypoténuse, sans utiliser de liste.**
 
     <Correction>
     ```python
@@ -640,7 +640,7 @@ assert date_valide(29, 2, 2026) is False
     <Enonce>
     ### Exercice 4.4 [Difficile] : Pierre-feuille-ciseaux
     **Écrire une fonction `pfc` qui prend les choix de deux joueurs (`"pierre"`, `"feuille"` ou `"ciseaux"`) et renvoie `1` si le joueur 1 gagne, `2` si le joueur 2 gagne, `0` en cas d'égalité. Renvoie `-1` si un choix est invalide.**
-    *Rappel : on peut aussi tester l'appartenance d'un caractère à une chaîne avec `in` (ex. `"a" in "abc"` : `True`). Ici, validez chaque choix avec des comparaisons `==`.*
+    *Rappel : on peut aussi tester l'appartenance d'un caractère à une chaîne avec `in` (ex. `"a" in "abc"` : `True`). Ici, valider chaque choix avec des comparaisons `==`.*
 
     <Correction>
     ```python

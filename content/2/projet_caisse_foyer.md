@@ -53,7 +53,7 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
 <ExerciseTabs courseId="proj_caisse_prix" courseTitle="Prix des articles">
   <ExerciseSection id="caisse-prix-1" label="Trois fonctions" type="python">
     <Enonce>
-      Écrivez les trois fonctions. Les noms, les paramètres et les valeurs de retour sont fixés.
+      Écrire les trois fonctions. Les noms, les paramètres et les valeurs de retour sont fixés.
 
       ```python
       def est_choix_valide(choix: str) -> bool:
@@ -68,7 +68,7 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
 
       Les trois prix sont des `float` écrits dans `prix_article`, chacun derrière un `if`. Un choix autre que `"1"`, `"2"` et `"3"` donne `False`, `-1.0` ou `"inconnu"` selon la fonction.
 
-      *Testez avec :*
+      *Tester avec :*
 
       ```python
       print(est_choix_valide("2"))    # True
@@ -88,9 +88,9 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
 <ExerciseTabs courseId="proj_caisse_ligne" courseTitle="Montant et monnaie">
   <ExerciseSection id="caisse-ligne-1" label="montant_ligne" type="lecture">
     <Enonce>
-      Écrivez `montant_ligne(choix, quantite)`. Elle renvoie le prix unitaire multiplié par la quantité.
+      Écrire `montant_ligne(choix, quantite)`. Elle renvoie le prix unitaire multiplié par la quantité.
 
-      Renvoyez `-1.0` si `est_choix_valide(choix)` est faux, ou si `quantite` est inférieure à 1. Dans ces cas, on ne multiplie pas.
+      Renvoyer `-1.0` si `est_choix_valide(choix)` est faux, ou si `quantite` est inférieure à 1. Dans ces cas, on ne multiplie pas.
 
       ```python
       print(montant_ligne("3", 2))  # 7.0
@@ -102,9 +102,9 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
 
   <ExerciseSection id="caisse-ligne-2" label="rendu_monnaie" type="lecture">
     <Enonce>
-      Écrivez `rendu_monnaie(a_payer, donne)`. Elle renvoie `donne - a_payer` quand le client a donné assez, y compris quand les deux montants sont égaux (la monnaie vaut alors `0.0`).
+      Écrire `rendu_monnaie(a_payer, donne)`. Elle renvoie `donne - a_payer` quand le client a donné assez, y compris quand les deux montants sont égaux (la monnaie vaut alors `0.0`).
 
-      Si `donne` est inférieur à `a_payer`, renvoyez `-1.0`.
+      Si `donne` est inférieur à `a_payer`, renvoyer `-1.0`.
 
       ```python
       print(rendu_monnaie(7.0, 10.0))  # 3.0
@@ -148,15 +148,15 @@ Montant insuffisant. Vente annulée.
 <ExerciseTabs courseId="proj_caisse_client" courseTitle="Un client">
   <ExerciseSection id="caisse-client-1" label="servir_client" type="lecture">
     <Enonce>
-      Écrivez `servir_client()`. Elle ne reçoit aucun paramètre. Elle parle au client avec `input` et renvoie un `float`.
+      Écrire `servir_client()`. Elle ne reçoit aucun paramètre. Elle parle au client avec `input` et renvoie un `float`.
 
-      - Redemandez l'article tant que `est_choix_valide` est faux. Message : `Choix invalide.`
-      - Redemandez la quantité tant qu'elle n'est pas un entier supérieur ou égal à 1. Message : `Quantité invalide.`
-      - Affichez `À payer : X.XX €` à partir de `montant_ligne`.
-      - Lisez le montant donné. S'il est insuffisant, affichez `Montant insuffisant. Vente annulée.` et renvoyez `0.0`.
-      - Sinon affichez `Monnaie : X.XX €` et renvoyez le montant à payer.
+      - Redemander l'article tant que `est_choix_valide` est faux. Message : `Choix invalide.`
+      - Redemander la quantité tant qu'elle n'est pas un entier supérieur ou égal à 1. Message : `Quantité invalide.`
+      - Afficher `À payer : X.XX €` à partir de `montant_ligne`.
+      - Lire le montant donné. S'il est insuffisant, afficher `Montant insuffisant. Vente annulée.` et renvoyer `0.0`.
+      - Sinon afficher `Monnaie : X.XX €` et renvoyer le montant à payer.
 
-      La quantité lue par `input` est un `str` : convertissez-la en `int` une fois le texte obtenu. Les essais du sujet sont des nombres entiers, sans espace autour.
+      La quantité lue par `input` est un `str` : la convertir en `int` une fois le texte obtenu. Les essais du sujet sont des nombres entiers, sans espace autour.
 
       *Attention : pas de liste pour mémoriser les essais. Un `while` et quelques variables suffisent.*
     </Enonce>
@@ -178,15 +178,15 @@ On ne conserve pas le détail de chaque ticket. Seuls les cinq compteurs survive
 <ExerciseTabs courseId="proj_caisse_journee" courseTitle="La récréation">
   <ExerciseSection id="caisse-journee-1" label="Plusieurs clients" type="python">
     <Enonce>
-      Écrivez le programme principal.
+      Écrire le programme principal.
 
-      1. Lisez le nombre maximum de clients. Tant que cette valeur est inférieure à 1, reposez la question.
-      2. Initialisez `total` à `0.0` et les quatre compteurs entiers à `0` : `nb_ventes`, `nb_jus`, `nb_cookies`, `nb_sandwiches`.
-      3. Avec `for numero in range(1, nb_max + 1)`, servez un client.
-      4. N'augmentez les compteurs que si `servir_client` a renvoyé un montant supérieur à 0. Ajoutez la quantité vendue au bon compteur : deux sandwiches augmentent `nb_sandwiches` de 2.
-      5. Après chaque client réellement appelé, lisez `Un autre client ? (oui/non) : `. Si la réponse n'est pas exactement `oui`, sortez de la journée.
+      1. Lire le nombre maximum de clients. Tant que cette valeur est inférieure à 1, reposer la question.
+      2. Initialiser `total` à `0.0` et les quatre compteurs entiers à `0` : `nb_ventes`, `nb_jus`, `nb_cookies`, `nb_sandwiches`.
+      3. Avec `for numero in range(1, nb_max + 1)`, servir un client.
+      4. N'augmentez les compteurs que si `servir_client` a renvoyé un montant supérieur à 0. Ajouter la quantité vendue au bon compteur : deux sandwiches augmentent `nb_sandwiches` de 2.
+      5. Après chaque client réellement appelé, lire `Un autre client ? (oui/non) : `. Si la réponse n'est pas exactement `oui`, sortir de la journée.
 
-      Rejouez l'exemple du bilan : 2 sandwiches payés 10 €, puis 1 jus payé 1,20 €, puis arrêt. Une troisième vente annulée ne compte pas. Le total vaut `8.2`, `nb_ventes` vaut 2, `nb_sandwiches` vaut 2, `nb_jus` vaut 1.
+      Rejouer l'exemple du bilan : 2 sandwiches payés 10 €, puis 1 jus payé 1,20 €, puis arrêt. Une troisième vente annulée ne compte pas. Le total vaut `8.2`, `nb_ventes` vaut 2, `nb_sandwiches` vaut 2, `nb_jus` vaut 1.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -219,11 +219,11 @@ Les trois nombres se comparent avec des `if`. On n'assemble pas les noms dans un
 <ExerciseTabs courseId="proj_caisse_bilan" courseTitle="Bilan">
   <ExerciseSection id="caisse-bilan-1" label="resume_journee" type="lecture">
     <Enonce>
-      Écrivez `resume_journee(nb_ventes, total, nb_jus, nb_cookies, nb_sandwiches)`. Elle affiche le bilan et ne renvoie rien.
+      Écrire `resume_journee(nb_ventes, total, nb_jus, nb_cookies, nb_sandwiches)`. Elle affiche le bilan et ne renvoie rien.
 
-      - `nb_ventes` vaut 0 : affichez `Aucune vente.` et arrêtez-vous.
-      - Sinon affichez le bloc `--- Bilan de la récré ---`, le total et le ticket moyen avec deux décimales, puis les trois compteurs.
-      - Comparez `nb_jus`, `nb_cookies` et `nb_sandwiches` pour produire l'un des trois messages.
+      - `nb_ventes` vaut 0 : afficher `Aucune vente.` et s'arrêter.
+      - Sinon afficher le bloc `--- Bilan de la récré ---`, le total et le ticket moyen avec deux décimales, puis les trois compteurs.
+      - Comparer `nb_jus`, `nb_cookies` et `nb_sandwiches` pour produire l'un des trois messages.
 
       Test d'égalité : 3 jus, 3 cookies, 1 sandwich affiche `Égalité : jus et cookie (3 chacun)`.
     </Enonce>
@@ -232,9 +232,9 @@ Les trois nombres se comparent avec des `if`. On n'assemble pas les noms dans un
 
 **Ce qu'on rend.** Un seul fichier `caisse_foyer.py` :
 
-- en tête, un commentaire avec votre nom et la classe ;
+- en tête, un commentaire avec son nom et la classe ;
 - les sept fonctions, avec ces noms-là ;
 - le programme principal qui lance la journée puis appelle `resume_journee` ;
-- les `print` de test peuvent rester, à condition de ne pas gêner la saisie (regroupez-les sous un commentaire, ou enlevez-les une fois les tests passés).
+- les `print` de test peuvent rester, à condition de ne pas gêner la saisie (les regrouper sous un commentaire, ou les enlever une fois les tests passés).
 
 Un fichier qui calcule juste mais qui stocke les tickets dans une liste ne respecte pas les contraintes.

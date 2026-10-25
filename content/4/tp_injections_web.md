@@ -130,15 +130,15 @@ audience: public
         ```
     3.  Se connecter au Lab en tant qu'admin.
     4.  Ouvrir un nouvel onglet et glisser-déposer le fichier `piege.html` dedans.
-    5.  **Question :** Retourner sur le Lab. Que constatez-vous dans le livre d'or ? L'utilisateur connecté a-t-il explicitement écrit ce message ?
+    5.  **Question :** Retourner sur le Lab. Qu'observe-t-on dans le livre d'or ? L'utilisateur connecté a-t-il explicitement écrit ce message ?
 
     ## Partie 4 bis : Mots de passe et Hachage
 
     ### Défi 4.2 : Audit des mots de passe
     
     1.  Réutiliser la faille SQLi pour afficher le contenu de la colonne `password` de la table `users`.
-    2.  **Question 1 :** Quel constat faites-vous sur le format de stockage des mots de passe dans la base de données ?
-    3.  **Question 2 :** Justifiez pourquoi cette pratique représente un risque critique pour l'entreprise (notamment en conformité RGPD).
+    2.  **Question 1 :** Quel constat faire sur le format de stockage des mots de passe dans la base de données ?
+    3.  **Question 2 :** Justifier pourquoi cette pratique représente un risque critique pour l'entreprise (notamment en conformité RGPD).
     </Enonce>
   </ExerciseSection>
 
@@ -228,7 +228,7 @@ audience: public
         }
         ```
 
-    **Question :** Réessayer l'attaque avec `piege.html`. Quel message d'erreur obtenez-vous ? Expliquez pourquoi le piège ne fonctionne plus (indice : le fichier `piege.html` connait-il le token ?).
+    **Question :** Réessayer l'attaque avec `piege.html`. Quel message d'erreur s'affiche ? Expliquer pourquoi le piège ne fonctionne plus (indice : le fichier `piege.html` connait-il le token ?).
     </Enonce>
   </ExerciseSection>
 
@@ -239,18 +239,18 @@ audience: public
     Pour ceux qui ont terminé en avance. Ces défis ne nécessitent **aucune modification** du fichier `lab_securite.php`, seulement de l'ingéniosité.
 
     ### Challenge 6.1 : Cartographie de la base de données (A03: Injection)
-    Vous avez accès à la table `notes` via la recherche. Mais quelles sont les autres tables cachées ?
+    La table `notes` est accessible via la recherche. Mais quelles sont les autres tables cachées ?
     Dans SQLite, une table système spéciale nommée `sqlite_master` contient le schéma de toute la base.
 
     *   **Objectif :** Utiliser une injection SQL (UNION) dans la barre de recherche pour lister le nom de toutes les tables de la base (`tbl_name`).
     *   **Indice :** La table `sqlite_master` contient les colonnes `type`, `name`, `tbl_name`, `rootpage`, `sql`.
-    *   **Question :** Quel est le nom de la table contenant les utilisateurs ? (Prouvez-le avec une capture d'écran du résultat de l'injection).
+    *   **Question :** Quel est le nom de la table contenant les utilisateurs ? (Le prouver avec une capture d'écran du résultat de l'injection).
 
     ### Challenge 6.2 : Cracking de mot de passe (A02: Cryptographic Failures)
-    Vous savez que l'utilisateur `admin` existe. Mais il y a un autre utilisateur nommé `toto`.
+    L'utilisateur `admin` existe. Mais il y a un autre utilisateur nommé `toto`.
 
-    1.  Utilisez l'injection SQL découverte précédemment pour extraire le mot de passe de `toto` depuis la table des utilisateurs.
-    2.  Connectez-vous avec `toto`.
+    1.  Utiliser l'injection SQL découverte précédemment pour extraire le mot de passe de `toto` depuis la table des utilisateurs.
+    2.  Se connecter avec `toto`.
     3.  Quelle est sa moyenne ? (Visible uniquement une fois connecté).
 
     ### Challenge 6.3 : Security Hardening (A05: Security Misconfiguration)
@@ -258,7 +258,7 @@ audience: public
     `header("X-XSS-Protection: 0");`
 
     4.  **Recherche :** Pourquoi cette ligne est-elle dangereuse en production ? Que fait-elle exactement ?
-    5.  **Patching :** Proposez 3 en-têtes HTTP (Headers) de sécurité à ajouter pour durcir l'application (ex: CSP, HSTS...).
+    5.  **Patching :** Proposer 3 en-têtes HTTP (Headers) de sécurité à ajouter pour durcir l'application (ex: CSP, HSTS...).
     </Enonce>
   </ExerciseSection>
 

@@ -45,7 +45,7 @@ assert True, "Consignes lues."
     <Enonce>
       ### Introduction <Renards n="1" /> - Créer une image
 
-      **Mission :** Créez une image RGB de **1×1 pixel** entièrement **rouge** avec Pillow. Stockez l'image dans `image`, sa largeur dans `largeur` et sa hauteur dans `hauteur`.
+      **Mission :** Créer une image RGB de **1×1 pixel** entièrement **rouge** avec Pillow. Stocker l'image dans `image`, sa largeur dans `largeur` et sa hauteur dans `hauteur`.
 
       *Indice :* `Image.new("RGB", (largeur, hauteur), color=(r, v, b))`, le rouge pur correspond à `(255, 0, 0)`.
     </Enonce>
@@ -66,9 +66,9 @@ assert image.getpixel((0, 0)) == (255, 0, 0), "Le pixel doit être rouge pur."
     <Enonce>
       ### Introduction <Renards n="1" /> - Lire un pixel
 
-      **Mission :** Créez une image RGB de **3×3 pixels** remplie de noir `(0, 0, 0)`, puis coloriez le **pixel central** en vert `(0, 255, 0)` avec `putpixel`. Stockez la couleur du pixel central dans `pixel_centre`.
+      **Mission :** Créer une image RGB de **3×3 pixels** remplie de noir `(0, 0, 0)`, puis colorier le **pixel central** en vert `(0, 255, 0)` avec `putpixel`. Stocker la couleur du pixel central dans `pixel_centre`.
 
-      *Indice :* le centre d'une image 3×3 est à la position `(1, 1)`. Lisez avec `getpixel((x, y))`.
+      *Indice :* le centre d'une image 3×3 est à la position `(1, 1)`. Lire avec `getpixel((x, y))`.
     </Enonce>
     <Verification>
 ```python
@@ -88,7 +88,7 @@ assert pixel_centre == (0, 255, 0), "Le pixel central doit être vert pur."
 
       La **définition** d'une image est le nombre total de pixels : largeur × hauteur.
 
-      **Mission :** Créez une image RGB de **800×600 pixels** (couleur au choix). Stockez la largeur, la hauteur et la définition (nombre total de pixels) dans `largeur`, `hauteur` et `definition`.
+      **Mission :** Créer une image RGB de **800×600 pixels** (couleur au choix). Stocker la largeur, la hauteur et la définition (nombre total de pixels) dans `largeur`, `hauteur` et `definition`.
 
       *Indice :* `image.size` renvoie `(largeur, hauteur)`.
     </Enonce>
@@ -111,7 +111,7 @@ assert definition == 480000, "800 × 600 = 480 000 pixels."
 
       Pillow peut convertir une image couleur en **niveaux de gris** (noir et blanc) avec `.convert("L")`.
 
-      **Mission :** Créez une image 1×1 de couleur `(100, 50, 105)`, convertissez-la en niveaux de gris dans `image_nb`, puis stockez le niveau de gris du pixel dans `gris`.
+      **Mission :** Créer une image 1×1 de couleur `(100, 50, 105)`, la convertir en niveaux de gris dans `image_nb`, puis stocker le niveau de gris du pixel dans `gris`.
 
       *Indice :* `image_nb = image.convert("L")` puis `getpixel((0, 0))`.
     </Enonce>
@@ -136,9 +136,9 @@ assert gris == attendu, "Le niveau de gris doit correspondre à la conversion Pi
 
       Le filtre **négatif** inverse chaque composante : `nouveau = 255 - ancien`.
 
-      **Mission :** À partir d'une image 1×1 de couleur `(200, 80, 0)`, calculez la couleur inversée et créez une **nouvelle image** `image_negatif` avec ce pixel. Stockez la couleur dans `pixel_inverse`.
+      **Mission :** À partir d'une image 1×1 de couleur `(200, 80, 0)`, calculer la couleur inversée et créer une **nouvelle image** `image_negatif` avec ce pixel. Stocker la couleur dans `pixel_inverse`.
 
-      *Indice :* appliquez `255 - valeur` sur chaque composante RVB.
+      *Indice :* appliquer `255 - valeur` sur chaque composante RVB.
     </Enonce>
     <Verification>
 ```python
@@ -161,7 +161,7 @@ assert image_negatif.getpixel((0, 0)) == attendu, "L'image doit contenir le pixe
 
       Un **mégapixel** (Mpx) = 1 million de pixels.
 
-      **Mission :** Créez une image de **4000×3000 pixels**. Calculez sa définition dans `definition` et le nombre de mégapixels (entier) dans `megapixels`.
+      **Mission :** Créer une image de **4000×3000 pixels**. Calculer sa définition dans `definition` et le nombre de mégapixels (entier) dans `megapixels`.
 
       *Indice :* `megapixels = definition // 1_000_000`
     </Enonce>
@@ -182,16 +182,16 @@ assert megapixels == 12, "Convertissez en mégapixels."
     <Enonce>
       ### Facile <Renards n="1" /> - Bande de pixels colorés
 
-      **Mission :** Créez une image **4×1 pixels** (bande horizontale) avec les couleurs suivantes de gauche à droite :
+      **Mission :** Créer une image **4×1 pixels** (bande horizontale) avec les couleurs suivantes de gauche à droite :
 
       1. Rouge `(255, 0, 0)`
       2. Vert `(0, 255, 0)`
       3. Bleu `(0, 0, 255)`
       4. Blanc `(255, 255, 255)`
 
-      Stockez l'image dans `bande` et la couleur du **dernier pixel** (à droite) dans `dernier_pixel`.
+      Stocker l'image dans `bande` et la couleur du **dernier pixel** (à droite) dans `dernier_pixel`.
 
-      *Indice :* créez une image noire 4×1, puis `putpixel((x, 0), couleur)` pour chaque colonne.
+      *Indice :* créer une image noire 4×1, puis `putpixel((x, 0), couleur)` pour chaque colonne.
     </Enonce>
     <Verification>
 ```python

@@ -14,7 +14,7 @@ groupeTitre: "Le Web et HTTP"
 
 # Le Web et HTTP
 
-Vous avez écrit des pages. Il reste à voir comment elles voyagent. Le Web est une application : un **navigateur**, le client, demande une ressource à un **serveur**, qui répond. Le protocole de cet échange s'appelle **HTTP**, ou **HTTPS** quand l'échange est chiffré. Une **URL** nomme la ressource. Le **DNS** traduit le nom de domaine en adresse IP, parce que les routeurs acheminent des paquets, pas des noms.
+Des pages ont déjà été écrites. Il reste à voir comment elles voyagent. Le Web est une application : un **navigateur**, le client, demande une ressource à un **serveur**, qui répond. Le protocole de cet échange s'appelle **HTTP**, ou **HTTPS** quand l'échange est chiffré. Une **URL** nomme la ressource. Le **DNS** traduit le nom de domaine en adresse IP, parce que les routeurs acheminent des paquets, pas des noms.
 
 Le Web date de 1989, au CERN. Tim Berners-Lee et Robert Cailliau ont proposé d'accéder à des documents par des **hyperliens**, plutôt que de savoir sur quelle machine le fichier était rangé. La première page est toujours en ligne : [http://info.cern.ch/hypertext/WWW/TheProject.html](http://info.cern.ch/hypertext/WWW/TheProject.html).
 
@@ -83,7 +83,7 @@ Un **404** veut dire que la ressource demandée n'existe pas à cette URL. C'est
 
 Une page **statique** est un fichier servi tel quel, identique pour tout le monde. Une page **dynamique** est produite au moment de la requête : une base, une session, un calcul. Le protocole reste HTTP dans les deux cas. Ce qui change, c'est le travail du serveur avant d'écrire la réponse.
 
-Un **cookie** est un petit texte que le serveur demande au navigateur de garder, et que le navigateur renvoie ensuite avec les requêtes vers ce site. Il sert une session, ou une préférence. Un cookie de session disparaît à la fermeture du navigateur. Un cookie persistant a une date d'expiration. Les cookies tiers, déposés par un domaine que vous n'avez pas visité directement, servent souvent au suivi. On ne les pose pas « parce que c'est pratique » sans se demander qui les relit.
+Un **cookie** est un petit texte que le serveur demande au navigateur de garder, et que le navigateur renvoie ensuite avec les requêtes vers ce site. Il sert une session, ou une préférence. Un cookie de session disparaît à la fermeture du navigateur. Un cookie persistant a une date d'expiration. Les cookies tiers, déposés par un domaine qui n'a pas été visité directement, servent souvent au suivi. On ne les pose pas « parce que c'est pratique » sans se demander qui les relit.
 
 <CookieManager />
 
@@ -93,4 +93,4 @@ En résumé, le client demande, le serveur répond. Une URL assemble un protocol
 
 ## Pour s'entraîner / Suite
 
-Manipulez les interactifs (URL, DNS, méthodes, HTTPS, cookies). Reliez ce cours au modèle TCP/IP : HTTP est un protocole de la **couche application**.
+Manipuler les interactifs (URL, DNS, méthodes, HTTPS, cookies). Relier ce cours au modèle TCP/IP : HTTP est un protocole de la **couche application**.

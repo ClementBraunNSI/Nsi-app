@@ -45,7 +45,7 @@ graphe = {
 }
 ```
 
-La mémoire suit le nombre réel d'arêtes. Parcourir les amis de B, c'est parcourir une liste courte. Vérifier une liaison précise demande de chercher dans cette liste, ce qui est un peu moins direct que lire `M[i][j]`. Pour les graphes que vous manipulerez, presque toujours creux, on préfère cette forme.
+La mémoire suit le nombre réel d'arêtes. Parcourir les amis de B, c'est parcourir une liste courte. Vérifier une liaison précise demande de chercher dans cette liste, ce qui est un peu moins direct que lire `M[i][j]`. Pour les graphes manipulés ici, presque toujours creux, on préfère cette forme.
 
 <GraphVisualizer />
 
@@ -72,8 +72,8 @@ Les deux ont besoin d'un ensemble de sommets marqués. Sans cette marque, la str
     *   Charlie est ami avec Alice.
     *   David est ami avec Bob.
     
-    1.  Représentez ce graphe sous forme de dictionnaire d'adjacence.
-    2.  Écrivez une fonction `sont_amis(graphe, p1, p2)` qui renvoie True s'ils sont connectés directement.
+    1.  Représenter ce graphe sous forme de dictionnaire d'adjacence.
+    2.  Écrire une fonction `sont_amis(graphe, p1, p2)` qui renvoie True s'ils sont connectés directement.
     
     </Enonce>
   </ExerciseSection>
@@ -81,7 +81,7 @@ Les deux ont besoin d'un ensemble de sommets marqués. Sans cette marque, la str
   <ExerciseSection id="graphe-ex-2" label="Voisins" type="python">
     <Enonce>
     ### Trouver les voisins
-    Écrivez une fonction `nb_amis(graphe, personne)` qui renvoie le nombre d'amis d'une personne.
+    Écrire une fonction `nb_amis(graphe, personne)` qui renvoie le nombre d'amis d'une personne.
     
     </Enonce>
   </ExerciseSection>

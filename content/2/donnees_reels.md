@@ -76,7 +76,7 @@ from decimal import Decimal
 Decimal("0.1") + Decimal("0.2") == Decimal("0.3")  # True
 ```
 
-`Decimal("0.1")` part du texte `"0.1"`, donc du décimal que vous avez écrit. `Decimal(0.1)` partirait du flottant déjà arrondi : ce n'est pas la même chose.
+`Decimal("0.1")` part du texte `"0.1"`, donc du décimal écrit. `Decimal(0.1)` partirait du flottant déjà arrondi : ce n'est pas la même chose.
 
 En résumé, après la virgule, les poids sont $2^{-1}$, $2^{-2}$, et la suite. Un flottant, c'est un signe, un exposant et une mantisse, sur un nombre fini de bits. L'exposant est stocké avec un biais, 127 en simple précision. En Python, `float` suit la norme IEEE 754 en double précision, c'est-à-dire sur 64 bits. On compare avec une tolérance, ou avec `Decimal` si le décimal doit tomber juste.
 

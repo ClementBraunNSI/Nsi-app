@@ -50,7 +50,7 @@ assert True, "Consignes lues."
 
       On peut stocker des lieux dans un **tableau pandas**, comme un fichier Excel de coordonnées GPS.
 
-      **Mission :** Créez un DataFrame `villes` à partir des données ci-dessous, puis stockez la **latitude de Lyon** dans `latitude_lyon`.
+      **Mission :** Créer un DataFrame `villes` à partir des données ci-dessous, puis stocker la **latitude de Lyon** dans `latitude_lyon`.
 
       | Ville | Latitude | Longitude |
       |-------|----------|-----------|
@@ -84,7 +84,7 @@ assert abs(float(latitude_lyon) - float(villes_ref.loc[villes_ref["Ville"] == "L
 
       La bibliothèque **geopy** calcule la distance réelle entre deux points GPS (en kilomètres).
 
-      **Mission :** Calculez la distance en kilomètres entre **Paris** et **Marseille** (coordonnées dans le tableau ci-dessous). Stockez le résultat arrondi à **1 décimale** dans `distance_km`.
+      **Mission :** Calculer la distance en kilomètres entre **Paris** et **Marseille** (coordonnées dans le tableau ci-dessous). Stocker le résultat arrondi à **1 décimale** dans `distance_km`.
 
       | Ville | Latitude | Longitude |
       |-------|----------|-----------|
@@ -119,9 +119,9 @@ assert abs(float(distance_km) - attendu) < 1.0, "Calculez la distance Paris -> M
 
       **folium** permet de créer une **carte interactive** centrée sur des coordonnées.
 
-      **Mission :** Créez une carte `carte` centrée sur la France (`location=[46.5, 2.5]`, `zoom_start=6`).
+      **Mission :** Créer une carte `carte` centrée sur la France (`location=[46.5, 2.5]`, `zoom_start=6`).
 
-      Vérifiez que la carte est bien créée en stockant son niveau de zoom dans `zoom` (`carte.options['zoom']`).
+      Vérifier que la carte est bien créée en stockant son niveau de zoom dans `zoom` (`carte.options['zoom']`).
 
       *Indice :* `import folium` puis `folium.Map(location=[...], zoom_start=...)`
     </Enonce>
@@ -141,12 +141,12 @@ assert int(zoom) == 6, "Le zoom initial doit être 6."
 
       On peut **placer des marqueurs** sur une carte folium, comme des points GPS.
 
-      **Mission :** Partez d'une carte centrée sur `[46.5, 2.5]` (zoom 6). Ajoutez **deux marqueurs** :
+      **Mission :** Partir d'une carte centrée sur `[46.5, 2.5]` (zoom 6). Ajouter **deux marqueurs** :
 
       - Paris : `[48.8566, 2.3522]`, popup `"Paris"`
       - Lyon : `[45.7640, 4.8357]`, popup `"Lyon"`
 
-      Stockez la carte dans `carte` et le **nombre de marqueurs ajoutés** dans `nb_marqueurs` (comptez les objets `Marker` dans `carte._children`).
+      Stocker la carte dans `carte` et le **nombre de marqueurs ajoutés** dans `nb_marqueurs` (compter les objets `Marker` dans `carte._children`).
 
       *Indice :* `folium.Marker([lat, lon], popup="...").add_to(carte)`
     </Enonce>
@@ -164,7 +164,7 @@ assert nb_marqueurs == 2, "Ajoutez exactement 2 marqueurs (Paris et Lyon)."
     <Enonce>
       ### Facile <Renards n="1" /> - Carte depuis un tableau
 
-      **Mission :** Créez le DataFrame `villes` ci-dessous, puis une carte `carte` avec un marqueur pour **chaque ville** du tableau (utilisez une boucle `for`).
+      **Mission :** Créer le DataFrame `villes` ci-dessous, puis une carte `carte` avec un marqueur pour **chaque ville** du tableau (utiliser une boucle `for`).
 
       | Ville | Latitude | Longitude |
       |-------|----------|-----------|
@@ -172,9 +172,9 @@ assert nb_marqueurs == 2, "Ajoutez exactement 2 marqueurs (Paris et Lyon)."
       | Lyon | 45.7640 | 4.8357 |
       | Marseille | 43.2965 | 5.3698 |
 
-      Stockez le nombre de marqueurs dans `nb_marqueurs`.
+      Stocker le nombre de marqueurs dans `nb_marqueurs`.
 
-      *Indice :* parcourez le DataFrame avec `for _, ligne in villes.iterrows():`
+      *Indice :* parcourir le DataFrame avec `for _, ligne in villes.iterrows():`
     </Enonce>
     <Verification>
 ```python
@@ -195,7 +195,7 @@ assert nb_marqueurs == 3, "Placez un marqueur par ville."
 
       La **latitude** indique la position Nord/Sud : plus elle est élevée, plus on est au nord.
 
-      **Mission :** À partir du DataFrame `villes` fourni, trouvez la ville la plus au **nord** (latitude maximale) et stockez son nom dans `ville_nord`.
+      **Mission :** À partir du DataFrame `villes` fourni, trouver la ville la plus au **nord** (latitude maximale) et stocker son nom dans `ville_nord`.
 
       ```python
       import pandas as pd
@@ -232,9 +232,9 @@ assert ville_nord == attendu, "Trouvez la ville avec la latitude la plus élevé
 
       Une carte folium peut être **exportée en HTML**, comme une page web.
 
-      **Mission :** Créez une carte avec un marqueur sur la Tour Eiffel (`[48.8584, 2.2945]`, popup `"Tour Eiffel"`). Sauvegardez-la dans la variable texte `html_carte` avec `carte._repr_html_()`.
+      **Mission :** Créer une carte avec un marqueur sur la Tour Eiffel (`[48.8584, 2.2945]`, popup `"Tour Eiffel"`). La sauvegarder dans la variable texte `html_carte` avec `carte._repr_html_()`.
 
-      Vérifiez que le HTML contient bien le mot `"Tour Eiffel"` dans une variable booléenne `contient_nom`.
+      Vérifier que le HTML contient bien le mot `"Tour Eiffel"` dans une variable booléenne `contient_nom`.
 
       *Indice :* `html_carte = carte._repr_html_()` puis `"Tour Eiffel" in html_carte`
     </Enonce>
@@ -256,4 +256,4 @@ assert "Tour Eiffel" in html_carte, "Exportez correctement la carte avec le popu
 
 ## Suite : mini-projet carte interactive
 
-Une fois les exercices terminés, passez au **[Mini-projet : Carte GPS du Renard](projet_carte_gps.md)** : vous modifierez du code pas à pas pour placer des points sur une carte visible directement dans le navigateur.
+Une fois les exercices terminés, passer au **[Mini-projet : Carte GPS du Renard](projet_carte_gps.md)** : le code y est modifié pas à pas pour placer des points sur une carte visible directement dans le navigateur.

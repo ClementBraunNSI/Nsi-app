@@ -66,7 +66,7 @@ En résumé, une fonction récursive s'appelle elle-même, avec un cas de base q
   <ExerciseSection id="rec-ex-1" label="Somme Récursive" type="python">
     <Enonce>
     ### Somme des entiers
-    Écrivez une fonction récursive `somme(n)` qui calcule la somme des entiers de 0 à `n`.
+    Écrire une fonction récursive `somme(n)` qui calcule la somme des entiers de 0 à `n`.
     *   Exemple : `somme(4)` doit renvoyer `4 + 3 + 2 + 1 + 0 = 10`.
     
     **Indices :**
@@ -84,7 +84,7 @@ En résumé, une fonction récursive s'appelle elle-même, avec un cas de base q
     *   $F_1 = 1$
     *   $F_n = F_{n-1} + F_{n-2}$ pour $n \ge 2$
     
-    Écrivez la fonction récursive `fibonacci(n)`.
+    Écrire la fonction récursive `fibonacci(n)`.
     
     </Enonce>
   </ExerciseSection>
@@ -93,7 +93,7 @@ En résumé, une fonction récursive s'appelle elle-même, avec un cas de base q
     <Enonce>
     ### Détection de Palindrome
     Un palindrome se lit pareil dans les deux sens (ex: "LAVAL", "RADAR").
-    Écrivez une fonction récursive `est_palindrome(mot)` qui renvoie `True` ou `False`.
+    Écrire une fonction récursive `est_palindrome(mot)` qui renvoie `True` ou `False`.
     
     **Principe :**
     *   Si le mot a 0 ou 1 lettre -> C'est un palindrome (Base).

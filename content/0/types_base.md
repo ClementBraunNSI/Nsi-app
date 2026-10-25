@@ -204,12 +204,12 @@ assert True
     <Enonce>
 ### Exercice Pratique
 
-**Déclarez trois variables :**
+**Déclarer trois variables :**
 1. `annee` (entier) valant 2024
 2. `langage` (chaîne) valant "Python"
 3. `version` (flottant) valant 3.12
 
-**Puis affichez la phrase :** "En 2024, j'apprends Python 3.12" en utilisant ces variables.
+**Puis afficher la phrase :** "En 2024, j'apprends Python 3.12" en utilisant ces variables.
     </Enonce>
     <Verification>
 ```python

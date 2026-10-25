@@ -97,7 +97,7 @@ while n <= 5:
 !!! tip "`range`"
     `range(5)` produit `0, 1, 2, 3, 4`. `range(1, 6)` produit `1` à `5` (la borne de droite est exclue).
 
-Les deux boucles affichent les mêmes nombres. Dans le `for`, `range` fournit les valeurs. Dans le `while`, c'est vous qui avancez `n`. Si vous oubliez `n = n + 1`, `n` reste à 1, la condition reste vraie, et le programme ne sort plus.
+Les deux boucles affichent les mêmes nombres. Dans le `for`, `range` fournit les valeurs. Dans le `while`, c'est au programme d'avancer `n`. Sans `n = n + 1`, `n` reste à 1, la condition reste vraie, et le programme ne sort plus.
 
 En résumé, `=` affecte, `==` compare. `input` renvoie une chaîne, à convertir avant un calcul. `if`, `elif` et `else` choisissent un chemin. `for` répète un nombre de fois connu, `while` répète tant qu'une condition tient. L'indentation dessine les blocs. Le reste du programme se lit de haut en bas, sauf quand un test ou une boucle dévie.
 

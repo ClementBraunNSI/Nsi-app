@@ -17,7 +17,7 @@ On date souvent le mot de 1999, même si des machines reliées à un réseau exi
 
 ## Ce qu'il y a dedans
 
-Un objet connecté n'est pas « une puce magique ». Il assemble quelques rôles, que vous retrouvez presque toujours.
+Un objet connecté n'est pas « une puce magique ». Il assemble quelques rôles, qu'on retrouve presque toujours.
 
 | Composant | Rôle | Exemple |
 |-----------|------|----------|
@@ -32,7 +32,7 @@ Le capteur observe. L'actionneur agit. Le microcontrôleur, la carte Micro:bit p
 ![Carte Micro:bit - Face](/content/1/microbit.png)
 ![Carte Micro:bit - Dos](/content/1/microbit-back.png)
 
-Vous croiserez souvent les mêmes capteurs. Une station météo mesure la température et l'humidité. Un accéléromètre et un gyroscope sentent le mouvement et la rotation, c'est ce qui retourne l'écran du téléphone. Un capteur de lumière allume les phares, un microphone écoute pour un assistant vocal.
+Les mêmes capteurs reviennent souvent. Une station météo mesure la température et l'humidité. Un accéléromètre et un gyroscope sentent le mouvement et la rotation, c'est ce qui retourne l'écran du téléphone. Un capteur de lumière allume les phares, un microphone écoute pour un assistant vocal.
 
 En face, les actionneurs sont ce que l'objet fait voir ou faire : une LED, un écran, un haut-parleur, un moteur, un relais qui ouvre un circuit, une vanne qui laisse passer l'eau.
 
@@ -48,7 +48,7 @@ Tous les objets n'utilisent pas le même réseau. On choisit selon la distance, 
 | **4G/5G** | Nationale | Élevée | Très haut | Voitures, téléphones |
 | **NFC** | Moins de 10 cm | Très faible | Moyen | Paiement, badges |
 
-Le Wi-Fi envoie beaucoup, mais il vide une pile. Le Bluetooth convient aux objets que vous portez, parce qu'ils restent près du téléphone. Le NFC ne porte que sur quelques centimètres : c'est voulu, pour un paiement ou un badge. LoRaWAN fait l'inverse du Wi-Fi. Un compteur d'eau qui envoie une mesure par jour, sur plusieurs kilomètres, n'a pas besoin d'un gros débit. Il a besoin de tenir des années sur une batterie. C'est pour ce genre de cas qu'on le choisit.
+Le Wi-Fi envoie beaucoup, mais il vide une pile. Le Bluetooth convient aux objets portés sur soi, parce qu'ils restent près du téléphone. Le NFC ne porte que sur quelques centimètres : c'est voulu, pour un paiement ou un badge. LoRaWAN fait l'inverse du Wi-Fi. Un compteur d'eau qui envoie une mesure par jour, sur plusieurs kilomètres, n'a pas besoin d'un gros débit. Il a besoin de tenir des années sur une batterie. C'est pour ce genre de cas qu'on le choisit.
 
 ## Le trajet d'une mesure
 
@@ -60,9 +60,9 @@ On peut donc suivre la donnée en cinq temps : elle est collectée, transmise, s
 
 À la maison, la domotique règle le confort, la sécurité et parfois la consommation. En santé, une montre suit des constantes, une alerte peut signaler une chute. En ville, l'éclairage public et les feux s'adaptent au trafic, les bennes préviennent quand elles sont pleines. Dans une usine, des capteurs annoncent une panne avant qu'elle n'arrête la chaîne : c'est une partie de ce qu'on appelle l'industrie 4.0. Dans un champ, l'arrosage se déclenche selon l'humidité du sol plutôt que selon une heure fixe.
 
-## L'interface, le morceau que vous voyez
+## L'interface, la partie visible
 
-L'objet a beau mesurer tout seul, quelqu'un doit pouvoir regarder les données ou donner un ordre. Cette **interface** peut être une application, un site qui sert de tableau de bord, des boutons sur le boîtier, ou la voix. Ce n'est pas un détail de confort. Sans interface, vous ne savez pas ce que l'objet a décidé à votre place.
+L'objet a beau mesurer tout seul, quelqu'un doit pouvoir regarder les données ou donner un ordre. Cette **interface** peut être une application, un site qui sert de tableau de bord, des boutons sur le boîtier, ou la voix. Ce n'est pas un détail de confort. Sans interface, impossible de savoir ce que l'objet a décidé à la place de son utilisateur.
 
 <IotInterface />
 
@@ -88,6 +88,6 @@ Dans cet exemple, la carte ne « finit » jamais. Tant qu'elle est alimentée, e
 
 Ces objets sont souvent mal protégés, parce qu'on les installe et qu'on les oublie. En 2016, le logiciel **Mirai** a pris le contrôle de centaines de milliers de caméras et de routeurs. Les pirates s'en sont servis comme d'une armée, un **botnet**, pour noyer des sites sous les requêtes, dont Twitter et Netflix. La faille n'était pas sophistiquée : beaucoup d'appareils avaient gardé le mot de passe d'usine, souvent `admin` / `admin`.
 
-La vie privée est l'autre enjeu. Une montre sait où vous êtes et à peu près comment vous dormez. Une enceinte entend ce qui se dit dans la pièce. Une caméra filme l'intérieur du logement. Ce ne sont pas des effets secondaires rares : ce sont les données dont ces objets ont besoin pour fonctionner.
+La vie privée est l'autre enjeu. Une montre sait où se trouve son porteur et à peu près comment il dort. Une enceinte entend ce qui se dit dans la pièce. Une caméra filme l'intérieur du logement. Ce ne sont pas des effets secondaires rares : ce sont les données dont ces objets ont besoin pour fonctionner.
 
-Trois réflexes limitent les dégâts. Changez le mot de passe par défaut dès l'installation. Faites les mises à jour, même quand l'objet « marche très bien ». Si la box le permet, placez ces appareils sur un réseau Wi-Fi invité, séparé de l'ordinateur où vous travaillez.
+Trois réflexes limitent les dégâts. Changer le mot de passe par défaut dès l'installation. Faire les mises à jour, même quand l'objet « marche très bien ». Si la box le permet, placer ces appareils sur un réseau Wi-Fi invité, séparé de l'ordinateur de travail.

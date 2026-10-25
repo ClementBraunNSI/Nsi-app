@@ -16,7 +16,7 @@ audience:
     <Enonce>
       ### Exercices de Niveau 1 : Utilisation Simple
       
-      Dans ce niveau, vous allez manipuler des tableaux statiques simples.
+      Ce niveau manipule des tableaux statiques simples.
     </Enonce>
     
     <ExerciseTabs courseId="c-tableaux-2d-exos" courseTitle="Niveau 1">
@@ -174,7 +174,7 @@ audience:
         **Objectif** : Parcourir tout le tableau pour accumuler une valeur.
 
         1. Déclarer un tableau `int notes[3][5]` représentant les notes de 3 élèves sur 5 matières.
-        2. Initialiser avec des valeurs de votre choix (entre 0 et 20).
+        2. Initialiser avec des valeurs au choix (entre 0 et 20).
         3. Calculer la somme totale de toutes les notes et la moyenne globale.
         
         <Correction>
@@ -418,7 +418,7 @@ audience:
         
         Écrire une fonction `int est_symetrique(int mat[3][3])` qui retourne `1` (vrai) si la matrice est symétrique, `0` (faux) sinon.
 
-        Testez avec :
+        Tester avec :
         ```c
         int sym[3][3] = {{1, 2, 3}, {2, 5, 6}, {3, 6, 9}}; // Symétrique
         int pas_sym[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}; // Pas symétrique
@@ -475,7 +475,7 @@ audience:
         - Retourne `1` si trouvé.
         - Retourne `0` si non trouvé.
         
-        Dans le `main`, demandez à l'utilisateur un nombre et dites-lui s'il est dans la grille.
+        Dans le `main`, demander à l'utilisateur un nombre et lui dire s'il est dans la grille.
 
         <Correction>
         ```c

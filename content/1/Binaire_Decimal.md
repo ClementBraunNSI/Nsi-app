@@ -46,4 +46,4 @@ On divise le nombre par 2. Le reste, 0 ou 1, est un bit du résultat. Le quotien
 
 ![div_succ](/content/1/div_succ.png)
 
-L'ordre compte. Le premier reste obtenu est le bit de droite, le bit de poids faible. On lit ensuite les restes dans le sens de la flèche du schéma, du dernier calcul vers le premier. Si vous les recopiez dans l'ordre où ils apparaissent, le nombre est écrit à l'envers.
+L'ordre compte. Le premier reste obtenu est le bit de droite, le bit de poids faible. On lit ensuite les restes dans le sens de la flèche du schéma, du dernier calcul vers le premier. Recopiés dans l'ordre où ils apparaissent, ils donnent le nombre écrit à l'envers.

@@ -16,10 +16,10 @@ audience: public
 
       **Pour tous les exercices :**
 
-      - Créez un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
-      - Testez votre code en l'exécutant
+      - Créer un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
+      - Tester le code en l'exécutant
       - N'hésitez pas à modifier les valeurs pour voir comment le programme réagit
-      - Recopiez vos programmes sur votre cahier pour pouvoir les réviser plus tard
+      - Recopier les programmes sur le cahier pour pouvoir les réviser plus tard
     </Enonce>
     <Verification>
 ```python
@@ -34,7 +34,7 @@ assert True, "Consignes lues."
 
       **Écrire un programme qui affiche "Bonjour le monde !"**
 
-      *Pour la vérification, stockez le texte dans une variable `message` avant de l'afficher.*
+      *Pour la vérification, stocker le texte dans une variable `message` avant de l'afficher.*
     </Enonce>
     <Verification>
 ```python
@@ -48,9 +48,9 @@ assert message == "Bonjour le monde !", "Le message doit être 'Bonjour le monde
     <Enonce>
       ### Introduction <Renards n="1" /> - Affichage simple
 
-      **Écrire un programme qui affiche votre prénom et votre âge sur deux lignes différentes.**
+      **Écrire un programme qui affiche son prénom et son âge sur deux lignes différentes.**
 
-      *Utilisez les variables `prenom` (texte) et `age` (entier).*
+      *Utiliser les variables `prenom` (texte) et `age` (entier).*
     </Enonce>
     <Verification>
 ```python
@@ -68,7 +68,7 @@ assert isinstance(age, int), "L'âge doit être un nombre entier."
 
       **Écrire un programme qui calcule et affiche le résultat de 15 + 27.**
 
-      *Stockez le résultat dans une variable nommée `resultat`.*
+      *Stocker le résultat dans une variable nommée `resultat`.*
     </Enonce>
     <Verification>
 ```python
@@ -84,8 +84,8 @@ assert resultat == 42, "Le calcul 15 + 27 devrait donner 42."
 
       **Écrire un programme qui :**
 
-      - Crée une variable `nom` avec votre nom
-      - Crée une variable `age` avec votre âge
+      - Créer une variable `nom` avec son nom
+      - Créer une variable `age` avec son âge
       - Affiche ces informations
     </Enonce>
     <Verification>
@@ -104,7 +104,7 @@ assert isinstance(age, int), "La variable 'age' doit être un nombre entier (int
 
       **Écrire un programme qui demande le prénom de l'utilisateur et lui dit bonjour.**
 
-      *Stockez la réponse de l'utilisateur dans une variable `prenom`.*
+      *Stocker la réponse de l'utilisateur dans une variable `prenom`.*
     </Enonce>
     <Verification>
 ```python
@@ -120,7 +120,7 @@ assert isinstance(prenom, str), "La variable 'prenom' doit être du texte."
 
       **Écrire un programme qui :**
 
-      - Crée deux variables `a` et `b` avec des nombres de votre choix
+      - Créer deux variables `a` et `b` avec des nombres au choix
       - Calcule leur somme dans une variable `somme`
       - Affiche le résultat
 
@@ -144,8 +144,8 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
 
       **Écrire un programme qui demande deux nombres à l'utilisateur et affiche leur somme.**
 
-      *Utilisez les variables `a`, `b` et `somme`.*
-      *N'oubliez pas de convertir les entrées en nombres avec `int()` ou `float()`*
+      *Utiliser les variables `a`, `b` et `somme`.*
+      *Ne pas oublier de convertir les entrées en nombres avec `int()` ou `float()`*
     </Enonce>
     <Verification>
 ```python
@@ -165,7 +165,7 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
 
       **Écrire un programme qui demande la longueur et la largeur d'un rectangle et calcule son périmètre.**
 
-      *Utilisez les variables `longueur`, `largeur` et `perimetre`.*
+      *Utiliser les variables `longueur`, `largeur` et `perimetre`.*
       *Rappel : Périmètre = 2 × (longueur + largeur)*
     </Enonce>
     <Verification>
@@ -186,8 +186,8 @@ assert perimetre == 2 * (longueur + largeur), "Le calcul du périmètre est inco
 
       **Écrire un programme qui demande le rayon d'un cercle et calcule son aire.**
 
-      *Utilisez les variables `rayon` et `aire`.*
-      *Rappel : Aire = π × rayon² (utilisez 3.14 pour π)*
+      *Utiliser les variables `rayon` et `aire`.*
+      *Rappel : Aire = π × rayon² (utiliser 3.14 pour π)*
     </Enonce>
     <Verification>
 ```python
@@ -205,7 +205,7 @@ assert abs(aire - (3.14 * rayon ** 2)) < 0.01, "Le calcul de l'aire est incorrec
 
       **Écrire un programme qui convertit une température de Celsius en Fahrenheit.**
 
-      *Utilisez les variables `celsius` et `fahrenheit`.*
+      *Utiliser les variables `celsius` et `fahrenheit`.*
       *Formule : F = C × 9/5 + 32*
     </Enonce>
     <Verification>
@@ -249,7 +249,7 @@ assert abs(prix_ttc - (prix_ht + montant_tva)) < 0.01, "Le calcul du prix TTC es
       - Demande le prénom et le nom de l'utilisateur (`prenom` et `nom`)
       - Affiche son nom complet en majuscules dans une variable `nom_complet`
 
-      *Utilisez la méthode `.upper()` pour mettre en majuscules*
+      *Utiliser la méthode `.upper()` pour mettre en majuscules*
 
       ## <Icone nom="flame" /> Niveau Intermédiaire
     </Enonce>
@@ -267,7 +267,7 @@ assert nom_complet == (prenom + " " + nom).upper() or nom_complet == (prenom + n
 
       **Écrire un programme qui demande deux nombres (`a` et `b`) et effectue les quatre opérations de base.**
 
-      *Stockez les résultats dans : `somme`, `difference`, `produit`, `quotient`.*
+      *Stocker les résultats dans : `somme`, `difference`, `produit`, `quotient`.*
     </Enonce>
     <Verification>
 ```python

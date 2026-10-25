@@ -20,7 +20,7 @@ groupeTitre: "k plus proches voisins (KNN)"
 ## Exercice 1 : Compréhension du principe
 
 !!! question "Question"
-    1.  Expliquez avec vos propres mots le principe de l'algorithme des K plus proches voisins.
+    1.  Expliquer avec les propres mots le principe de l'algorithme des K plus proches voisins.
     2.  Est-ce un algorithme d'apprentissage supervisé ou non supervisé ? Pourquoi ?
     3.  Quelle est la différence entre l'utilisation de KNN pour la classification et pour la régression ?
 
@@ -34,7 +34,7 @@ groupeTitre: "k plus proches voisins (KNN)"
 
 !!! question "Question"
     Soient deux points $A(2, 5)$ et $B(5, 9)$ dans un plan cartésien.
-    Calculez la distance euclidienne entre ces deux points.
+    Calculer la distance euclidienne entre ces deux points.
 
 ??? success "Correction"
     La formule de la distance euclidienne est $d = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.
@@ -58,7 +58,7 @@ On dispose des données d'entraînement suivantes (taille en cm, poids en kg) cl
 On veut classer un nouvel individu $X(125, 32)$.
 
 !!! question "Question"
-    1.  Calculez la distance (au carré pour simplifier, car l'ordre reste le même) entre $X$ et chaque point $P1$ à $P5$.
+    1.  Calculer la distance (au carré pour simplifier, car l'ordre reste le même) entre $X$ et chaque point $P1$ à $P5$.
     2.  Quelle est la classe de $X$ pour $K=1$ ?
     3.  Quelle est la classe de $X$ pour $K=3$ ?
 
@@ -99,7 +99,7 @@ On veut classer un nouvel individu $X(125, 32)$.
 ## Exercice 5 : Implémentation de la distance
 
 !!! question "À coder"
-    Implémentez en Python une fonction `distance_euclidienne(point1, point2)` qui prend deux listes de coordonnées (ex: `[x, y]`) et retourne leur distance.
+    Implémenter en Python une fonction `distance_euclidienne(point1, point2)` qui prend deux listes de coordonnées (ex: `[x, y]`) et retourne leur distance.
     
     *Rappel : `sqrt` est dans le module `math`.*
 
@@ -141,7 +141,7 @@ print(distance_euclidienne(p1, p2)) # Doit afficher 5.0
     `donnees = [[1, 2, 'A'], [4, 6, 'B'], [1, 3, 'A'], [5, 7, 'B']]`
     Chaque élément est `[x, y, classe]`.
     
-    Écrivez une fonction `proches_voisins(donnees, cible, k)` qui retourne les $k$ plus proches voisins du point `cible` (ex: `[2, 2]`).
+    Écrire une fonction `proches_voisins(donnees, cible, k)` qui retourne les $k$ plus proches voisins du point `cible` (ex: `[2, 2]`).
 
 ```python
 def proches_voisins(donnees, cible, k):
@@ -179,7 +179,7 @@ def proches_voisins(donnees, cible, k):
 ## Exercice 7 : Prédiction de classe (Vote majoritaire)
 
 !!! question "À coder"
-    Écrivez une fonction `predire_classe(voisins)` qui prend une liste de voisins (ex: `[[1, 2, 'A'], [4, 6, 'B'], ...]`) et retourne la classe la plus fréquente.
+    Écrire une fonction `predire_classe(voisins)` qui prend une liste de voisins (ex: `[[1, 2, 'A'], [4, 6, 'B'], ...]`) et retourne la classe la plus fréquente.
 
 ```python
 def predire_classe(voisins):
@@ -219,9 +219,9 @@ Chaque utilisateur a noté 3 genres de films sur 5 : Action, Comédie, Drame.
 On veut prédire sa note pour **Sci-Fi** avec $K=2$.
 
 !!! question "Question"
-    1.  Calculez les distances entre Eve et les 4 autres utilisateurs (sur les 3 genres connus).
-    2.  Identifiez les 2 voisins les plus proches.
-    3.  Prédisez la note Sci-Fi pour Eve (moyenne des voisins ou moyenne pondérée par l'inverse de la distance).
+    1.  Calculer les distances entre Eve et les 4 autres utilisateurs (sur les 3 genres connus).
+    2.  Identifier les 2 voisins les plus proches.
+    3.  Prédire la note Sci-Fi pour Eve (moyenne des voisins ou moyenne pondérée par l'inverse de la distance).
 
 ??? success "Correction"
     **1. Calcul des distances (sur Action, Comédie, Drame) :**
@@ -245,7 +245,7 @@ On veut prédire sa note pour **Sci-Fi** avec $K=2$.
 ## Exercice 9 : Optimisations et variantes (Approfondissement)
 
 !!! question "Analyse"
-    Analysez ces améliorations possibles de l'algorithme K-NN :
+    Analyser ces améliorations possibles de l'algorithme K-NN :
     
     1.  **k-NN pondéré** : Les voisins plus proches ont plus d'influence dans le vote.
     2.  **Normalisation** : Mettre toutes les caractéristiques à la même échelle (ex: 0 à 1).

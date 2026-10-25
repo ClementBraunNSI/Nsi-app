@@ -10,13 +10,13 @@ audience: public
 
 # Notice sur HTML
 
-Une page web que vous lisez a d'abord été un fichier texte. Ce fichier ne contient pas seulement les phrases visibles. Il contient aussi des indications qui disent au navigateur : ceci est un titre, ceci est un paragraphe, ceci est une image. Ces indications forment le HTML.
+Une page web affichée a d'abord été un fichier texte. Ce fichier ne contient pas seulement les phrases visibles. Il contient aussi des indications qui disent au navigateur : ceci est un titre, ceci est un paragraphe, ceci est une image. Ces indications forment le HTML.
 
 > **HTML** (*HyperText Markup Language*) est le langage de balisage qui structure le contenu d'une page. Titres, paragraphes, images et liens sont des éléments délimités par des balises.
 
 ## À quoi ressemble un fichier
 
-Tout document HTML5 commence à peu près de la même façon. Le navigateur a besoin de savoir dans quelle langue est la page, comment lire les caractères, et quel titre afficher dans l'onglet. Le reste, ce que vous voyez vraiment, se trouve dans le corps du document.
+Tout document HTML5 commence à peu près de la même façon. Le navigateur a besoin de savoir dans quelle langue est la page, comment lire les caractères, et quel titre afficher dans l'onglet. Le reste, ce qui s'affiche vraiment, se trouve dans le corps du document.
 
 ```html
 <!DOCTYPE html>
@@ -38,7 +38,7 @@ Tout document HTML5 commence à peu près de la même façon. Le navigateur a be
 
 <HtmlStructureExplorer />
 
-## Les balises que vous allez écrire tout de suite
+## Les balises à écrire tout de suite
 
 Les titres vont de `<h1>` à `<h6>`. Le `h1` est le titre principal de la page, pas « le plus gros texte » : c'est le navigateur, ou la feuille de style, qui décide de la taille. On n'en met en général qu'un seul.
 
@@ -47,7 +47,7 @@ Les titres vont de `<h1>` à `<h6>`. Le `h1` est le titre principal de la page, 
 <h2>Mon sous-titre</h2>
 ```
 
-Un paragraphe se marque avec `<p>`. Si vous sautez une ligne dans le fichier sans balise, le navigateur l'ignore souvent. C'est `<p>` qui crée vraiment le paragraphe.
+Un paragraphe se marque avec `<p>`. Une ligne sautée dans le fichier sans balise est souvent ignorée par le navigateur. C'est `<p>` qui crée vraiment le paragraphe.
 
 ```html
 <p>Ceci est un paragraphe.</p>
@@ -59,7 +59,7 @@ Un lien utilise `<a>`, et l'adresse se place dans l'attribut `href`. Le texte en
 <a href="https://www.example.com">Visiter Example.com</a>
 ```
 
-Une image utilise `<img>`. Elle n'a pas de balise fermante : tout tient dans les attributs. `src` indique où trouver le fichier. `alt` décrit l'image pour quelqu'un qui ne la voit pas, et pour vous le jour où le fichier manque.
+Une image utilise `<img>`. Elle n'a pas de balise fermante : tout tient dans les attributs. `src` indique où trouver le fichier. `alt` décrit l'image pour quelqu'un qui ne la voit pas, et pour l'auteur de la page le jour où le fichier manque.
 
 ```html
 <img src="source de l'image" alt="Mon image">
@@ -81,4 +81,4 @@ Les listes ont deux formes, et on les mélange souvent. `<ul>` donne une liste �
 </ol>
 ```
 
-Quand vous écrirez votre première page, commencez par ce squelette, puis ajoutez un titre, un paragraphe et un lien. Le reste des balises viendra quand vous en aurez besoin.
+Pour écrire une première page, commencer par ce squelette, puis ajouter un titre, un paragraphe et un lien. Le reste des balises viendra au fil des besoins.

@@ -46,7 +46,7 @@ Les années 2000 généralisent le téléphone connecté, les réseaux sociaux, 
 
   <ExerciseSection id="hist-ex-1" label="Qui suis-je ?" type="lecture">
     <Enonce>
-    ### Retrouvez le personnage
+    ### Retrouver le personnage
     1.  J'ai écrit le premier programme informatique pour la machine de Babbage.
     2.  J'ai décrypté le code Enigma et formalisé le concept d'ordinateur.
     3.  J'ai inventé le Web.

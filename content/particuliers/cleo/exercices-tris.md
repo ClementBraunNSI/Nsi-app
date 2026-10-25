@@ -33,7 +33,7 @@ audience:
     ```
 
     ### Exercice 1 : Implémentation du Tri par Sélection
-    **Écrivez un programme en C qui :**
+    **Écrire un programme en C qui :**
     1. Initialise un tableau d'entiers non trié (ex: `{64, 25, 12, 22, 11}`).
     2. Implémente la fonction `void triSelection(int tab[], int taille)`.
     3. Affiche le tableau avant et après le tri.
@@ -65,7 +65,7 @@ audience:
     ```
 
     ### Exercice 2 : Implémentation du Tri par Insertion
-    **Écrivez un programme en C qui :**
+    **Écrire un programme en C qui :**
     1. Initialise un tableau d'entiers (ex: `{12, 11, 13, 5, 6}`).
     2. Implémente la fonction `void triInsertion(int tab[], int taille)`.
     3. Affiche chaque étape du tri (état du tableau à chaque itération de la boucle principale).
@@ -116,10 +116,10 @@ audience:
 
     ### Exercice 3 : Implémentation Simple
     On simplifie ici : on suppose qu'on trie des notes entre 0 et 20.
-    1. Créez un tableau `notes[]` avec des valeurs entre 0 et 20.
-    2. Créez un tableau `compteur[21]` initialisé à 0.
-    3. Parcourez `notes` pour remplir `compteur` (histogramme).
-    4. Reconstruisez le tableau `notes` trié en lisant `compteur`.
+    1. Créer un tableau `notes[]` avec des valeurs entre 0 et 20.
+    2. Créer un tableau `compteur[21]` initialisé à 0.
+    3. Parcourir `notes` pour remplir `compteur` (histogramme).
+    4. Reconstruire le tableau `notes` trié en lisant `compteur`.
 
     </Enonce>
     <Verification>

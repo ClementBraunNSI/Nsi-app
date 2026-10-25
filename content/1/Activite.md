@@ -45,4 +45,4 @@ Permet d'utiliser la simulation pour étudier les échanges de données en temps
 Réaliser le schéma ci-dessus en utilisant le mode construction de Filius.
 
 > **Objectif pratique**
-> Cette activité vous permettra de comprendre concrètement comment les **routeurs** interconnectent différents réseaux et gèrent le routage des paquets de données.
+> Cette activité permet de comprendre concrètement comment les **routeurs** interconnectent différents réseaux et gèrent le routage des paquets de données.

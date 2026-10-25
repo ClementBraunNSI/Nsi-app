@@ -16,7 +16,7 @@ Le but de ce projet est de créer une petite banque en console, en Python.
 Dans ce projet, nous allons ranger les comptes dans un dictionnaire, puis écrire le dépôt, le retrait, la consultation et le menu.
 
 **Ressources :**
-- [Code de départ](resources/app_back.py) : s'il est fourni en classe, il ne contient pas les fonctions à écrire. Sinon, partez d'un fichier vide `banque.py`.
+- [Code de départ](resources/app_back.py) : s'il est fourni en classe, il ne contient pas les fonctions à écrire. Sinon, partir d'un fichier vide `banque.py`.
 
 ## 1. Les comptes <Icone nom="credit-card" />
 
@@ -37,7 +37,7 @@ Le solde initial n'est pas une transaction : `transactions` commence vide. Les f
 <ExerciseTabs courseId="proj_bank_struct" courseTitle="Structure des Comptes">
   <ExerciseSection id="bank-struct-1" label="Base de données" type="python">
     <Enonce>
-      Créez un dictionnaire vide `comptes`.
+      Créer un dictionnaire vide `comptes`.
 
       La clé est le numéro (`"12345"`). La valeur est un dictionnaire avec `nom` (`str`), `solde` (`float`) et `transactions` (liste de textes).
     </Enonce>
@@ -45,13 +45,13 @@ Le solde initial n'est pas une transaction : `transactions` commence vide. Les f
 
   <ExerciseSection id="bank-struct-2" label="Création de compte" type="python">
     <Enonce>
-      Écrivez `creer_compte(comptes, numero, nom, solde_initial)`.
+      Écrire `creer_compte(comptes, numero, nom, solde_initial)`.
 
-      1. Si `numero` est déjà une clé, affichez `Compte déjà existant.` et renvoyez `False`. Le dictionnaire ne change pas.
-      2. Si `solde_initial` est inférieur à 0, affichez `Montant invalide.` et renvoyez `False`.
-      3. Sinon ajoutez le compte, avec une liste `transactions` vide, et renvoyez `True`.
+      1. Si `numero` est déjà une clé, afficher `Compte déjà existant.` et renvoyer `False`. Le dictionnaire ne change pas.
+      2. Si `solde_initial` est inférieur à 0, afficher `Montant invalide.` et renvoyer `False`.
+      3. Sinon ajouter le compte, avec une liste `transactions` vide, et renvoyer `True`.
 
-      *Testez avec :*
+      *Tester avec :*
 
       ```python
       creer_compte(comptes, "12345", "Alice", 1000.0)  # True
@@ -75,11 +75,11 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
 <ExerciseTabs courseId="proj_bank_ops" courseTitle="Opérations">
   <ExerciseSection id="bank-ops-1" label="Dépôt" type="python">
     <Enonce>
-      Écrivez `deposer(comptes, numero, montant)`.
+      Écrire `deposer(comptes, numero, montant)`.
 
-      1. Compte absent : affichez `Compte introuvable.` et renvoyez `False`.
-      2. `montant` inférieur ou égal à 0 : affichez `Montant invalide.` et renvoyez `False`. Le solde ne change pas, rien n'est écrit dans l'historique.
-      3. Sinon ajoutez `montant` au solde, ajoutez le texte `"+ "` suivi du montant à `transactions`, et renvoyez `True`.
+      1. Compte absent : afficher `Compte introuvable.` et renvoyer `False`.
+      2. `montant` inférieur ou égal à 0 : afficher `Montant invalide.` et renvoyer `False`. Le solde ne change pas, rien n'est écrit dans l'historique.
+      3. Sinon ajouter `montant` au solde, ajouter le texte `"+ "` suivi du montant à `transactions`, et renvoyer `True`.
 
       Après `deposer(comptes, "12345", 200.0)`, Alice est à `1200.0` et l'historique contient une seule ligne : `"+ 200.0"`.
 
@@ -89,13 +89,13 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
 
   <ExerciseSection id="bank-ops-2" label="Retrait" type="lecture">
     <Enonce>
-      Écrivez `retirer(comptes, numero, montant)`.
+      Écrire `retirer(comptes, numero, montant)`.
 
-      Mêmes contrôles que le dépôt pour le compte inconnu et le montant interdit. Contrôle en plus : si `montant` est strictement supérieur au solde, affichez `Solde insuffisant.` et renvoyez `False`. Rien n'est enregistré.
+      Mêmes contrôles que le dépôt pour le compte inconnu et le montant interdit. Contrôle en plus : si `montant` est strictement supérieur au solde, afficher `Solde insuffisant.` et renvoyer `False`. Rien n'est enregistré.
 
       *Attention : le solde ne devient jamais négatif.*
 
-      Enchaînez sur le compte d'Alice (solde 1200 après le dépôt) :
+      Enchaîner sur le compte d'Alice (solde 1200 après le dépôt) :
 
       ```python
       retirer(comptes, "12345", 50.0)    # True, solde 1150.0
@@ -108,9 +108,9 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
 
   <ExerciseSection id="bank-ops-3" label="Consultation" type="lecture">
     <Enonce>
-      Écrivez `verifier_solde(comptes, numero)`. Elle affiche le solde et le renvoie. Compte inconnu : affichez `Compte introuvable.` et renvoyez `-1.0`.
+      Écrire `verifier_solde(comptes, numero)`. Elle affiche le solde et le renvoie. Compte inconnu : afficher `Compte introuvable.` et renvoyer `-1.0`.
 
-      Écrivez `voir_transactions(comptes, numero)`. Elle affiche chaque ligne puis renvoie la liste. Compte inconnu : le même message, et une liste vide. Compte sans opération : affichez `Aucune opération.` et renvoyez `[]`.
+      Écrire `voir_transactions(comptes, numero)`. Elle affiche chaque ligne puis renvoie la liste. Compte inconnu : le même message, et une liste vide. Compte sans opération : afficher `Aucune opération.` et renvoyer `[]`.
 
       Sur le scénario complet, `verifier_solde(comptes, "12345")` affiche `1150.0`. Bob, jamais mouvementé, a le solde `500.0` et le message `Aucune opération.`
     </Enonce>
@@ -122,7 +122,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
 <ExerciseTabs courseId="proj_bank_ui" courseTitle="Interface">
   <ExerciseSection id="bank-ui-1" label="Menu principal" type="lecture">
     <Enonce>
-      Écrivez `main()` avec une boucle qui réaffiche le menu jusqu'au choix `6`.
+      Écrire `main()` avec une boucle qui réaffiche le menu jusqu'au choix `6`.
 
       ```text
       --- MENU BANQUE ---
@@ -136,7 +136,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
 
       Chaque option demande le numéro, et le montant quand il le faut, puis appelle la fonction correspondante. Un choix autre que 1 à 6 affiche `Choix invalide.` et revient au menu. Le choix `6` termine la fonction.
 
-      Rejouez ensuite au clavier : Alice 1000, Bob 500, dépôt 200 sur Alice, retrait 50 sur Alice, solde 1150, retrait 2000 refusé.
+      Rejouer ensuite au clavier : Alice 1000, Bob 500, dépôt 200 sur Alice, retrait 50 sur Alice, solde 1150, retrait 2000 refusé.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -146,7 +146,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
 <ExerciseTabs courseId="proj_bank_test" courseTitle="Validation">
   <ExerciseSection id="bank-test-1" label="Scénario de test" type="lecture">
     <Enonce>
-      En bas du fichier, laissez un bloc qui part d'un dictionnaire vide et enchaîne les appels ci-dessous, y compris les trois `False`.
+      En bas du fichier, laisser un bloc qui part d'un dictionnaire vide et enchaîne les appels ci-dessous, y compris les trois `False`.
 
       ```python
       creer_compte(comptes, "12345", "Alice", 1000.0)   # True
@@ -158,7 +158,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
       deposer(comptes, "99999", 10.0)                   # False
       ```
 
-      Affichez le booléen renvoyé par chaque appel, puis le solde et l'historique d'Alice. On doit lire `1150.0`, puis les deux lignes `+ 200.0` et `- 50.0`.
+      Afficher le booléen renvoyé par chaque appel, puis le solde et l'historique d'Alice. On doit lire `1150.0`, puis les deux lignes `+ 200.0` et `- 50.0`.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -168,4 +168,4 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
 ## 5. Pour aller plus loin
 
 *   **Virement.** `virer(comptes, source, destination, montant)` retire sur un compte et dépose sur l'autre. Si le retrait échoue, le compte destinataire ne bouge pas.
-*   **Relevé.** Affichez le nom du titulaire, le solde, puis l'historique, sous le titre `Relevé du compte 12345`.
+*   **Relevé.** Afficher le nom du titulaire, le solde, puis l'historique, sous le titre `Relevé du compte 12345`.

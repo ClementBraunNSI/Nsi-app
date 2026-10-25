@@ -16,7 +16,7 @@ La machine ne stocke que des bits. Une lettre n'est donc pas un dessin : c'est u
 
 ## Un caractère est un entier
 
-Lettre, chiffre, ponctuation, espace, emoji : pour le processeur, ce sont des entiers. En ASCII comme en Unicode, la lettre **A** a le code **65**, qu'on écrit aussi $41_{(16)}$. Changer de symbole, c'est changer de nombre. Le glyphe que vous voyez à l'écran est le dessin que la police associe à ce nombre.
+Lettre, chiffre, ponctuation, espace, emoji : pour le processeur, ce sont des entiers. En ASCII comme en Unicode, la lettre **A** a le code **65**, qu'on écrit aussi $41_{(16)}$. Changer de symbole, c'est changer de nombre. Le glyphe affiché à l'écran est le dessin que la police associe à ce nombre.
 
 ## ASCII, cent vingt-huit places
 

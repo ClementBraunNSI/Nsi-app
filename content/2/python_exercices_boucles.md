@@ -300,7 +300,7 @@ assert somme_pairs_jusqua(6) == 12
   <ExerciseSection id="boucles-2-6" label="2.6 [Facile] - Compter les consonnes" type="python">
     <Enonce>
     ### Exercice 2.6 [Facile] : Compter les consonnes
-    **Écrire une fonction `compter_consonnes` qui prend une chaîne alphabétique et renvoie le nombre de consonnes. Utilisez `lettre in voyelles` pour repérer les voyelles.**
+    **Écrire une fonction `compter_consonnes` qui prend une chaîne alphabétique et renvoie le nombre de consonnes. Utiliser `lettre in voyelles` pour repérer les voyelles.**
 
     <Correction>
     ```python
@@ -850,7 +850,7 @@ assert plus_longue_serie("abc") == 1
   <ExerciseSection id="boucles-6-2" label="6.2 [Expert] - Chiffrement de César" type="python">
     <Enonce>
     ### Exercice 6.2 [Expert] : Chiffrement de César
-    **Écrire une fonction `cesar` qui prend une chaîne de lettres minuscules `texte` et un entier `decalage`, puis renvoie le texte chiffré (décalage circulaire). Utilisez `if "a" <= lettre <= "z"` pour filtrer les lettres.**
+    **Écrire une fonction `cesar` qui prend une chaîne de lettres minuscules `texte` et un entier `decalage`, puis renvoie le texte chiffré (décalage circulaire). Utiliser `if "a" <= lettre <= "z"` pour filtrer les lettres.**
 
     <Correction>
     ```python

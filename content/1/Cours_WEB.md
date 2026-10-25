@@ -13,7 +13,7 @@ audience: public
 
 # Web
 
-Internet est le réseau. Le Web est une application qui tourne dessus : des pages, des liens, des images, que votre navigateur va chercher sur des serveurs. On va voir comment cette application est née, puis ce qui se passe vraiment quand vous tapez une adresse.
+Internet est le réseau. Le Web est une application qui tourne dessus : des pages, des liens, des images, que le navigateur va chercher sur des serveurs. On va voir comment cette application est née, puis ce qui se passe vraiment quand une adresse est tapée.
 
 ## Comment le Web est arrivé
 
@@ -21,31 +21,31 @@ En 1989, Tim Berners-Lee et Robert Cailliau travaillent au CERN, en Suisse. Leur
 
 En 1991, la première page est mise en ligne au CERN. Elle explique le projet, et comment s'en servir. En 1993, le CERN décide que le Web sera libre, sans redevance. Cette décision compte autant que l'invention elle-même : n'importe qui peut publier, sans payer une licence aux inventeurs. C'est ce qui permet l'explosion qui suit. Aujourd'hui, on compte plus de 1,7 milliard de sites.
 
-Au début, le Web se lit. Entre 1990 et 2000 environ, une page ressemble à un journal : vous arrivez, vous lisez, vous repartez. On appelle parfois cela le Web 1.0. À partir des années 2000, vous publiez aussi. Un commentaire, une photo, un article de wiki : c'est le Web participatif, souvent appelé Web 2.0. Les réseaux sociaux, les blogs et les wikis en sont les formes les plus visibles.
+Au début, le Web se lit. Entre 1990 et 2000 environ, une page ressemble à un journal : on arrive, on lit, on repart. On appelle parfois cela le Web 1.0. À partir des années 2000, chacun publie aussi. Un commentaire, une photo, un article de wiki : c'est le Web participatif, souvent appelé Web 2.0. Les réseaux sociaux, les blogs et les wikis en sont les formes les plus visibles.
 
 Dans les années 1990, deux navigateurs se disputent le marché, Netscape et Internet Explorer. Microsoft gagne cette première bataille. Plus tard, Chrome prendra la place. Le navigateur n'est pas le Web : c'est le programme qui l'affiche. Mais celui qui domine le marché influence beaucoup ce que les sites ont le droit de faire.
 
-> Un hyperlien est un lien cliquable vers une ressource, parfois sur un autre serveur. C'est l'idée centrale du Web : le document ne s'arrête pas à la page que vous avez sous les yeux.
+> Un hyperlien est un lien cliquable vers une ressource, parfois sur un autre serveur. C'est l'idée centrale du Web : le document ne s'arrête pas à la page affichée.
 
-Voici un lien vers l'accueil du site : [accueil](../../index.md). Et si vous voulez voir à quoi ressemblait le tout début, la [première page du CERN](http://info.cern.ch/hypertext/WWW/TheProject.html) est encore en ligne.
+Voici un lien vers l'accueil du site : [accueil](../../index.md). Pour voir à quoi ressemblait le tout début, la [première page du CERN](http://info.cern.ch/hypertext/WWW/TheProject.html) est encore en ligne.
 
 ## Qui demande, qui répond
 
 Le Web fonctionne en **client-serveur**. Les deux machines n'ont pas le même rôle, et ce rôle peut changer d'une requête à l'autre.
 
-Le **client** est la machine qui veut recevoir quelque chose. Dans la vie courante, c'est votre navigateur. Du point de vue de TCP, c'est la machine réceptrice. Le **serveur** détient la page, l'image ou la vidéo, et l'envoie. C'est l'émettrice.
+Le **client** est la machine qui veut recevoir quelque chose. Dans la vie courante, c'est le navigateur. Du point de vue de TCP, c'est la machine réceptrice. Le **serveur** détient la page, l'image ou la vidéo, et l'envoie. C'est l'émettrice.
 
 Ils ne s'envoient pas des phrases libres. Ils échangent des **requêtes**, des messages dont la forme est fixée à l'avance : on demande une ressource, ou on en envoie une, et l'autre côté sait comment lire la demande.
 
 ![Schéma du modèle client-serveur](/content/1/client_serveur.png)
 
-## De l'adresse IP à l'adresse que vous tapez
+## De l'adresse IP à l'adresse tapée
 
 Personne ne retient `216.58.214.163` pour ouvrir Google. On retient une **URL**, *Uniform Resource Locator* : une adresse écrite pour nous.
 
 <UrlBuilder />
 
-Le **DNS** (*Domain Name System*) tient la table de correspondance entre ces noms et les adresses IP. Quand vous demandez un nom, quelqu'un doit le traduire.
+Le **DNS** (*Domain Name System*) tient la table de correspondance entre ces noms et les adresses IP. Quand un nom est demandé, quelqu'un doit le traduire.
 
 | Site | Adresse symbolique | Adresse IP |
 |------|-------------------|------------|
@@ -62,7 +62,7 @@ Deux cas se présentent. Si le navigateur a déjà traduit ce nom récemment, il
 
 > **HTML** (*HyperText Markup Language*) a été créé en 1991 par Tim Berners-Lee, au CERN. C'est un langage à **balises** : il décrit la structure d'une page, pas son apparence finale.
 
-Une balise est un mot entouré de chevrons, `<` et `>`. La plupart s'ouvrent et se ferment. Le navigateur les lit, puis les cache : vous voyez le paragraphe, pas la balise `<p>`.
+Une balise est un mot entouré de chevrons, `<` et `>`. La plupart s'ouvrent et se ferment. Le navigateur les lit, puis les cache : on voit le paragraphe, pas la balise `<p>`.
 
 ```html
 <p>Ceci est un paragraphe.</p>
@@ -85,7 +85,7 @@ Deux méthodes reviennent tout le temps. **GET** demande une ressource, sans rie
 
 <HttpMethodVisualizer />
 
-Le serveur ne répond pas seulement par la page. Il ajoute un **code de statut**. `200` veut dire que la requête a réussi. `404` veut dire que la ressource n'existe pas, la fameuse page introuvable. `500` veut dire que le serveur lui-même a un problème, indépendamment de votre demande.
+Le serveur ne répond pas seulement par la page. Il ajoute un **code de statut**. `200` veut dire que la requête a réussi. `404` veut dire que la ressource n'existe pas, la fameuse page introuvable. `500` veut dire que le serveur lui-même a un problème, indépendamment de la demande.
 
 ## Pourquoi Google classe les pages comme il le fait
 
@@ -97,12 +97,12 @@ Ce calcul a aidé Google à proposer des résultats plus pertinents que ses conc
 
 <PageRankVisualizer />
 
-## Ce que les sites retiennent de vous
+## Ce que les sites retiennent des visiteurs
 
 > **Définition : cookie**
-> Un **cookie** est un petit fichier texte déposé sur votre ordinateur par un site que vous visitez. Il permet de garder une information d'une page à l'autre : un panier, une connexion, une préférence de langue.
+> Un **cookie** est un petit fichier texte déposé sur l'ordinateur par un site visité. Il permet de garder une information d'une page à l'autre : un panier, une connexion, une préférence de langue.
 
-Tous les cookies ne servent pas le site que vous êtes en train de regarder. Certains, déposés par des tiers, vous suivent de site en site pour construire un profil publicitaire. C'est pour cela qu'une paire de chaussures vous poursuit après une visite sur un site de sport.
+Tous les cookies ne servent pas le site consulté. Certains, déposés par des tiers, suivent l'internaute de site en site pour construire un profil publicitaire. C'est pour cela qu'une paire de chaussures poursuit l'internaute après une visite sur un site de sport.
 
 <CookieManager />
 

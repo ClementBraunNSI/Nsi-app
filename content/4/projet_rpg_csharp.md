@@ -46,7 +46,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 <ExerciseTabs courseId="sio_foxmon_carte" courseTitle="Carte">
   <ExerciseSection id="foxmon-carte-1" label="Charger la grille" type="autre">
     <Enonce>
-      Créez la classe `Carte`. La grille est un `char[,]`. Copiez le chargement, puis vérifiez que `grille[2, 2]` vaut `'.'` et que `grille[0, 0]` vaut `'#'`.
+      Créer la classe `Carte`. La grille est un `char[,]`. Copier le chargement, puis vérifier que `grille[2, 2]` vaut `'.'` et que `grille[0, 0]` vaut `'#'`.
 
       ```csharp
       string[] lignes = new[]
@@ -78,7 +78,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 
       *Attention : l'indice x est la colonne, y est la ligne. `lignes[y][x]` se range dans `grille[x, y]`.*
 
-      Écrivez `Afficher()` : une double boucle dessine la grille. Écrivez `EstTraversable(int x, int y)` : faux sur un `#`, faux hors de la grille. Écrivez `EstHauteHerbe(int x, int y)` : vrai seulement sur `*`.
+      Écrire `Afficher()` : une double boucle dessine la grille. Écrire `EstTraversable(int x, int y)` : faux sur un `#`, faux hors de la grille. Écrire `EstHauteHerbe(int x, int y)` : vrai seulement sur `*`.
 
       `EstTraversable(2, 2)` vaut vrai. `EstTraversable(0, 0)` vaut faux. `EstHauteHerbe(9, 1)` vaut vrai (le premier `*` de la deuxième ligne).
     </Enonce>
@@ -86,7 +86,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 
   <ExerciseSection id="foxmon-carte-2" label="Le dresseur" type="autre">
     <Enonce>
-      Créez `Dresseur` : `Nom`, `X`, `Y`. Départ : nom `Joueur`, position `(2, 2)`.
+      Créer `Dresseur` : `Nom`, `X`, `Y`. Départ : nom `Joueur`, position `(2, 2)`.
 
       ```csharp
       namespace FoxMon;
@@ -98,7 +98,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
       }
       ```
 
-      Écrivez `Deplacer(Carte carte, int dx, int dy)`. La méthode calcule la case d'arrivée. Si `EstTraversable` est faux, `X` et `Y` ne changent pas. Sinon ils prennent la nouvelle case.
+      Écrire `Deplacer(Carte carte, int dx, int dy)`. La méthode calcule la case d'arrivée. Si `EstTraversable` est faux, `X` et `Y` ne changent pas. Sinon ils prennent la nouvelle case.
 
       Depuis `(2, 2)`, un pas vers la gauche de 1 reste en `(2, 2)` si la case n'est pas traversable, et un pas vers la droite de 1 va en `(3, 2)` sur cette carte (la case est un `.`).
 
@@ -130,7 +130,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 <ExerciseTabs courseId="sio_foxmon_combat" courseTitle="Combat">
   <ExerciseSection id="foxmon-combat-1" label="La classe FoxMon" type="autre">
     <Enonce>
-      Créez `FoxMon` : nom, points de vie actuels, PV max, niveau, vitesse, et `TypeElementaire` (`"Eau"`, `"Feu"` ou `"Plante"` pour l'instant).
+      Créer `FoxMon` : nom, points de vie actuels, PV max, niveau, vitesse, et `TypeElementaire` (`"Eau"`, `"Feu"` ou `"Plante"` pour l'instant).
 
       Le dresseur a une `List<FoxMon> Equipe`, au plus 6 renards. Ajouter un septième est refusé : la liste ne dépasse pas 6, la méthode renvoie faux.
 
@@ -140,7 +140,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 
   <ExerciseSection id="foxmon-combat-2" label="Les hautes herbes" type="autre">
     <Enonce>
-      Quand le dresseur **arrive** sur une case `*`, tirez un nombre entre 0 et 99. S'il est strictement inférieur à 20, un FoxMon sauvage apparaît. La rencontre a donc lieu une fois sur cinq environ, et pas à chaque pas.
+      Quand le dresseur **arrive** sur une case `*`, tirer un nombre entre 0 et 99. S'il est strictement inférieur à 20, un FoxMon sauvage apparaît. La rencontre a donc lieu une fois sur cinq environ, et pas à chaque pas.
 
       Le combat remplace la carte. Dans `Main`, un booléen `enCombat` décide de la vue.
 
@@ -174,7 +174,7 @@ Les `if` sur le type se regroupent dans des classes.
     <Enonce>
       `FoxMon` devient la classe mère. Elle garde les PV, le niveau, la vitesse, et une méthode qui dit si le renard est KO (`Pv <= 0`).
 
-      Créez `RenardFeu`, `RenardEau` et `RenardPlante`. Le constructeur de chaque fille fixe le type et les statistiques de base. On ne les redemande pas à l'appel.
+      Créer `RenardFeu`, `RenardEau` et `RenardPlante`. Le constructeur de chaque fille fixe le type et les statistiques de base. On ne les redemande pas à l'appel.
 
       | Classe | Type | PV max | Vitesse |
       | --- | --- | --- | --- |
@@ -202,13 +202,13 @@ Tranch'Herbe,Plante,55,95
 <ExerciseTabs courseId="sio_foxmon_attaques" courseTitle="Attaques">
   <ExerciseSection id="foxmon-atk-1" label="Charger le fichier" type="autre">
     <Enonce>
-      Créez la classe `Attaque` : `Nom`, `Type`, `Puissance`, `Precision`.
+      Créer la classe `Attaque` : `Nom`, `Type`, `Puissance`, `Precision`.
 
-      Créez `PanelAttaques` avec `ChargerToutesLesAttaques()`, qui lit `attaques.csv` à la racine du projet (`File.ReadAllLines`, puis `Split(',')`). La première ligne est l'en-tête : on ne l'instancie pas. Chaque ligne suivante devient une `Attaque`. Puissance et précision sont des entiers.
+      Créer `PanelAttaques` avec `ChargerToutesLesAttaques()`, qui lit `attaques.csv` à la racine du projet (`File.ReadAllLines`, puis `Split(',')`). La première ligne est l'en-tête : on ne l'instancie pas. Chaque ligne suivante devient une `Attaque`. Puissance et précision sont des entiers.
 
       Après chargement du fichier ci-dessus, la liste contient 4 attaques. `Crocs Feu` a la puissance 65 et la précision 95.
 
-      Ajoutez `List<Attaque> AttaquesConnues` sur `FoxMon`. À la création d'un `RenardFeu`, donnez-lui `Charge` et `Crocs Feu`. Pas plus de 4. Une cinquième est refusée.
+      Ajouter `List<Attaque> AttaquesConnues` sur `FoxMon`. À la création d'un `RenardFeu`, lui donner `Charge` et `Crocs Feu`. Pas plus de 4. Une cinquième est refusée.
     </Enonce>
   </ExerciseSection>
 
@@ -216,11 +216,11 @@ Tranch'Herbe,Plante,55,95
     <Enonce>
       En combat, Attaquer affiche les attaques connues et le joueur en choisit une par son numéro. Un numéro hors liste redemande.
 
-      Tirez un entier entre 1 et 100. S'il est strictement supérieur à `Precision`, l'attaque échoue : affichez `Raté !`, les PV ne bougent pas.
+      Tirer un entier entre 1 et 100. S'il est strictement supérieur à `Precision`, l'attaque échoue : afficher `Raté !`, les PV ne bougent pas.
 
       `Charge` (précision 100) ne rate pas. `Crocs Feu` (95) rate quand le tir vaut 96, 97, 98, 99 ou 100.
 
-      Pour le test, fixez le tir à 96 : `Crocs Feu` rate. Fixez-le à 95 : l'attaque part.
+      Pour le test, fixer le tir à 96 : `Crocs Feu` rate. Le fixer à 95 : l'attaque part.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -230,7 +230,7 @@ Tranch'Herbe,Plante,55,95
 <ExerciseTabs courseId="sio_foxmon_objets" courseTitle="Objets">
   <ExerciseSection id="foxmon-obj-1" label="Le sac" type="autre">
     <Enonce>
-      Créez la classe abstraite `Objet` : `Nom`, et `Utiliser(Dresseur lanceur, FoxMon cible)`.
+      Créer la classe abstraite `Objet` : `Nom`, et `Utiliser(Dresseur lanceur, FoxMon cible)`.
 
       - `Potion` : rend 10 PV, sans dépasser les PV max. Un renard à 15/20 passe à 20, pas à 25. Un renard KO (0 PV) n'est pas soigné : la potion n'est pas consommée.
       - `VulBall` : tente la capture d'un sauvage.
@@ -289,7 +289,7 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
 <ExerciseTabs courseId="sio_foxmon_degats" courseTitle="Dégâts">
   <ExerciseSection id="foxmon-degats-1" label="La formule" type="autre">
     <Enonce>
-      Écrivez `CalculerDegats(Attaque attaque, FoxMon defenseur)`.
+      Écrire `CalculerDegats(Attaque attaque, FoxMon defenseur)`.
 
       ```text
       degats = puissance * multiplicateurType * critique * variable
@@ -334,7 +334,7 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
 
   <ExerciseSection id="foxmon-xp-2" label="La carte JSON" type="autre">
     <Enonce>
-      Remplacez la carte écrite dans le code par un chargement JSON (`File.ReadAllText`, `System.Text.Json`). `EstTraversable` lit la couche `collision` (`#` bloque). `EstHauteHerbe` lit `ground` (ou la légende : `*` veut dire hautes herbes). `Afficher` parcourt `ground`. Le dresseur commence aux coordonnées `spawn`. Les PNJ viennent du tableau `pnj`.
+      Remplacer la carte écrite dans le code par un chargement JSON (`File.ReadAllText`, `System.Text.Json`). `EstTraversable` lit la couche `collision` (`#` bloque). `EstHauteHerbe` lit `ground` (ou la légende : `*` veut dire hautes herbes). `Afficher` parcourt `ground`. Le dresseur commence aux coordonnées `spawn`. Les PNJ viennent du tableau `pnj`.
 
       ```json
       {
@@ -366,9 +366,9 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
     <Enonce>
       Une classe `Sauvegarde` contient : position du dresseur, équipe (espèce, surnom, niveau, PV, XP, attaques), inventaire, argent, noms des PNJ déjà vaincus.
 
-      `Sauvegarder` écrit ce contenu en JSON avec `System.Text.Json`. `Charger` le relit. Les deux sont dans le menu, accessibles depuis la carte (touches que vous indiquez à l'écran, par exemple `S` et `C`).
+      `Sauvegarder` écrit ce contenu en JSON avec `System.Text.Json`. `Charger` le relit. Les deux sont dans le menu, accessibles depuis la carte (touches indiquées à l'écran, par exemple `S` et `C`).
 
-      Contrôle : avancez, capturez ou soignez, sauvegardez, quittez le programme, relancez, chargez. Le `@` est à la même case, l'équipe a les mêmes PV, le rival déjà vaincu ne relance pas le combat.
+      Contrôle : avancer, capturer ou soigner, sauvegarder, quitter le programme, relancer, charger. Le `@` est à la même case, l'équipe a les mêmes PV, le rival déjà vaincu ne relance pas le combat.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -384,4 +384,4 @@ Le dossier `FoxMon`, qui compile, avec un fichier par classe dans le namespace `
 - la capture `p = 0,175` sur l'exemple 10/20, interdite contre un dresseur ;
 - la sauvegarde JSON qu'on recharge après avoir quitté.
 
-Placez en tête de `Program.cs` un commentaire avec votre nom et votre classe. Une fois que ce dossier tourne, et seulement alors, l'étape suivante consiste à porter l'affichage vers WinForms, WPF ou MonoGame. Le métier (dégâts, capture, sauvegarde) ne se réécrit pas dans les boutons.
+Placer en tête de `Program.cs` un commentaire avec son nom et sa classe. Une fois que ce dossier tourne, et seulement alors, l'étape suivante consiste à porter l'affichage vers WinForms, WPF ou MonoGame. Le métier (dégâts, capture, sauvegarde) ne se réécrit pas dans les boutons.

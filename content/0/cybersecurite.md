@@ -117,13 +117,13 @@ assert True
     <Enonce>
 ### Activité pratique : Déchiffrement
 
-Vous avez intercepté un message chiffré avec le code de César (décalage de 1).
+Un message chiffré avec le code de César (décalage de 1) a été intercepté.
 
 **Message chiffré :** "QZUIPO"
 
-Déchiffrez ce message pour retrouver le mot original et stockez-le dans la variable `message_clair` (sous forme de chaîne de caractères).
+Déchiffrer ce message pour retrouver le mot original et le stocker dans la variable `message_clair` (sous forme de chaîne de caractères).
 
-**Indice :** Reculez chaque lettre d'un rang dans l'alphabet.
+**Indice :** Reculer chaque lettre d'un rang dans l'alphabet.
 
 ```python
 message_clair = "..." 

@@ -99,7 +99,7 @@ En résumé, le CSS habille, le HTML structure. On lie la feuille avec `<link re
 
 ## Pour s'entraîner / Suite
 
-Appliquez une feuille de style à une page HTML déjà structurée, puis enchaînez avec [Interactions JavaScript](/cours/2/web_javascript_interactions) pour rendre la page dynamique.
+Appliquer une feuille de style à une page HTML déjà structurée, puis enchaîner avec [Interactions JavaScript](/cours/2/web_javascript_interactions) pour rendre la page dynamique.
 
 !!! info "Programme Première"
     Le BO attend la capacité à structurer une page (HTML) et à en contrôler la présentation (CSS), avant d'ajouter des scripts côté client.

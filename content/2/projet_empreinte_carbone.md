@@ -37,7 +37,7 @@ Messages, selon les kilogrammes :
 <ExerciseTabs courseId="premiere_projet_carbone" courseTitle="Calculateur Carbone">
   <ExerciseSection id="proj-carb-1" label="Les fonctions" type="python">
     <Enonce>
-      Écrivez les quatre fonctions, et vérifiez-les avec des appels directs, avant d'écrire le dialogue.
+      Écrire les quatre fonctions, et les vérifier avec des appels directs, avant d'écrire le dialogue.
 
       ```python
       def facteur_emission(choix: str) -> float:
@@ -71,12 +71,12 @@ Messages, selon les kilogrammes :
 
   <ExerciseSection id="proj-carb-2" label="Le dialogue" type="python">
     <Enonce>
-      Écrivez le programme principal du fichier `carbone.py`.
+      Écrire le programme principal du fichier `carbone.py`.
 
-      1. Demandez `Distance (km) : `. `input` renvoie un `str` : convertissez-le en `float`. Tant que la distance est inférieure ou égale à 0, reposez la question. Une distance `-3` ou `0` ne passe pas.
-      2. Affichez les quatre lignes du menu, puis lisez `Votre choix : `. Tant que `facteur_emission(choix)` vaut `-1.0`, réaffichez le menu. Un choix `"9"` ne passe pas.
-      3. Calculez les grammes, puis les kilogrammes.
-      4. Affichez `Émissions : X.XX kg de CO2.` puis la phrase renvoyée par `message`.
+      1. Demander `Distance (km) : `. `input` renvoie un `str` : le convertir en `float`. Tant que la distance est inférieure ou égale à 0, reposer la question. Une distance `-3` ou `0` ne passe pas.
+      2. Afficher les quatre lignes du menu, puis lire `Votre choix : `. Tant que `facteur_emission(choix)` vaut `-1.0`, réafficher le menu. Un choix `"9"` ne passe pas.
+      3. Calculer les grammes, puis les kilogrammes.
+      4. Afficher `Émissions : X.XX kg de CO2.` puis la phrase renvoyée par `message`.
 
       Le trajet 100 km / choix `1` produit :
 
@@ -99,8 +99,8 @@ Messages, selon les kilogrammes :
     <Enonce>
       Trois ajouts, chacun dans une fonction, une fois le dialogue juste.
 
-      - `distance_effective(distance, aller_retour)` : si `aller_retour` vaut `True`, renvoyez le double. Question : `Aller-retour ? (oui/non)`. Seul `oui` met le booléen à `True`. 100 km en voiture aller-retour donnent 24 kg.
-      - `economie_train(distance, choix)` : kilogrammes que l'on éviterait en prenant le train à la place. Pour 250 km en avion, le train émet 2,5 kg, l'avion 62,5 kg, l'économie affichée est `60.00 kg`. Pour le train et le vélo, affichez `Déjà le mode le plus sobre du comparateur.` et ne donnez pas une économie négative.
+      - `distance_effective(distance, aller_retour)` : si `aller_retour` vaut `True`, renvoyer le double. Question : `Aller-retour ? (oui/non)`. Seul `oui` met le booléen à `True`. 100 km en voiture aller-retour donnent 24 kg.
+      - `economie_train(distance, choix)` : kilogrammes que l'on éviterait en prenant le train à la place. Pour 250 km en avion, le train émet 2,5 kg, l'avion 62,5 kg, l'économie affichée est `60.00 kg`. Pour le train et le vélo, afficher `Déjà le mode le plus sobre du comparateur.` et ne pas donner une économie négative.
       - `part_voiture(kg, passagers)` : uniquement si le choix est la voiture. `passagers` compte le conducteur et vaut au moins 1, sinon on redemande. 100 km en voiture à 4 donnent `3.00 kg` par personne.
     </Enonce>
   </ExerciseSection>

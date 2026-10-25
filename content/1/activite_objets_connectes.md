@@ -15,22 +15,22 @@ Un **objet connecté** relie des **capteurs** (qui mesurent), une **logique** (q
 
 ## Mission : l'alarme anti-intrusion
 
-Construisez un système d'alarme :
+Construire un système d'alarme :
 
-1. Déposez un **capteur de luminosité** dans la zone « Entrée ».
-2. Ajoutez une **porte ET** pour combiner deux conditions.
-3. Placez une **sirène** en sortie.
-4. Baissez la luminosité avec le curseur et activez l'interrupteur pour déclencher l'alarme.
+1. Déposer un **capteur de luminosité** dans la zone « Entrée ».
+2. Ajouter une **porte ET** pour combiner deux conditions.
+3. Placer une **sirène** en sortie.
+4. Baisser la luminosité avec le curseur et activer l'interrupteur pour déclencher l'alarme.
 
 <IotSimulator />
 
 ## Programmer une vraie Micro:bit
 
-Pour écrire du code Python sur la carte (ou son simulateur en ligne), utilisez l'éditeur officiel :
+Pour écrire du code Python sur la carte (ou son simulateur en ligne), utiliser l'éditeur officiel :
 
 [Éditeur Python Micro:bit](https://python.microbit.org/v/3)
 
-Puis poursuivez avec le [TP Micro:bit](tp_microbit.md).
+Puis poursuivre avec le [TP Micro:bit](tp_microbit.md).
 
 ## Extension (optionnel)
 

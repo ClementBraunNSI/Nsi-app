@@ -62,7 +62,7 @@ quantite = int(colonnes[3])
     <Enonce>
     ## Compte bancaire
 
-    Créez une classe `CompteBancaire`.
+    Créer une classe `CompteBancaire`.
 
     - `CompteBancaire(titulaire, solde=0)` enregistre le titulaire et le solde de départ. Sans second argument, le solde vaut `0`.
     - `titulaire` est un attribut public.
@@ -150,7 +150,7 @@ quantite = int(colonnes[3])
     <Enonce>
     ## Bibliothèque
 
-    Créez une classe `Livre`.
+    Créer une classe `Livre`.
 
     - `Livre(titre, auteur, annee)` crée un livre disponible.
     - `titre`, `auteur` et `annee` sont lisibles.
@@ -241,7 +241,7 @@ quantite = int(colonnes[3])
     <Enonce>
     ## Étudiants et moyenne
 
-    Créez une classe `Etudiant`.
+    Créer une classe `Etudiant`.
 
     - `Etudiant(nom, prenom, numero)` enregistre le nom, le prénom et le numéro.
     - `nom` et `prenom` sont lisibles.

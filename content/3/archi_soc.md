@@ -49,10 +49,10 @@ Le système évite cette situation en contrôlant l'allocation, par exemple en i
   <ExerciseSection id="os-ex-2" label="Ordonnancement" type="lecture">
     <Enonce>
     ### Round Robin (Tourniquet)
-    Imaginez 3 processus P1, P2, P3 prêts. L'OS leur donne le CPU chacun leur tour pendant 10ms (quantum).
+    Imaginer 3 processus P1, P2, P3 prêts. L'OS leur donne le CPU chacun leur tour pendant 10ms (quantum).
     P1 a besoin de 25ms, P2 de 15ms, P3 de 30ms.
     
-    Décrivez l'ordre d'exécution.
+    Décrire l'ordre d'exécution.
     
     </Enonce>
   </ExerciseSection>

@@ -84,7 +84,7 @@ Types : **Setosa** et **Versicolor**.
 
 !!! tip "À réaliser"
     1.  **Représenter les données** : Liste de dictionnaires.
-    2.  **Calculer la distance** : Réutiliser votre fonction (avec `[longueur_sepale, longueur_petale]`).
+    2.  **Calculer la distance** : Réutiliser la fonction précédente (avec `[longueur_sepale, longueur_petale]`).
     3.  **Trouver les K voisins** : Trouver les voisins de la Fleur Y.
     4.  **Prédire** : Prédire la classe de la **Fleur Y** avec **K=5**.
 
@@ -110,4 +110,4 @@ Mesures : **Nombre de mots clés suspects** et **Longueur de l'email** (échelle
 
 !!! tip "À réaliser"
     1.  Représenter les données.
-    2.  Utiliser vos fonctions KNN pour prédire la classe de l'**Email Z** avec **K=3**.
+    2.  Utiliser les fonctions KNN pour prédire la classe de l'**Email Z** avec **K=3**.

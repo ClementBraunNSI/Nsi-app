@@ -46,7 +46,7 @@ L'échelle de probabilité va de 1 à 5 : 1 signifie très improbable, 2 peu pro
 
 ### Exercice 1 : Calcul de la criticité
 
-Pour chacun des risques suivants, calculez la criticité et déterminez le niveau de risque.
+Pour chacun des risques suivants, calculer la criticité et déterminer le niveau de risque.
 
 1. **Risque A : Perte de données non sauvegardées**
    - Probabilité : 2 (Faible)
@@ -70,7 +70,7 @@ Pour chacun des risques suivants, calculez la criticité et déterminez le nivea
 
 ### Exercice 2 : Stratégies de mitigation
 
-Proposez une action préventive (avant l'incident) et une action corrective (après l'incident) pour le risque suivant :
+Proposer une action préventive (avant l'incident) et une action corrective (après l'incident) pour le risque suivant :
 
 **Risque : Panne disque dur serveur**
 Le serveur de fichiers principal subit une défaillance matérielle de son disque dur.
@@ -89,12 +89,12 @@ Le serveur de fichiers principal subit une défaillance matérielle de son disqu
 
 ### Exercice 3 : Analyse de cas concret
 
-Vous êtes chef de projet sur le développement d'une application mobile. Le lancement est prévu dans 2 semaines.
-Votre développeur principal tombe malade pour une durée indéterminée.
+Un chef de projet pilote le développement d'une application mobile. Le lancement est prévu dans 2 semaines.
+Son développeur principal tombe malade pour une durée indéterminée.
 
-1. Qualifiez ce risque (type, probabilité, impact).
+1. Qualifier ce risque (type, probabilité, impact).
 2. Quelle est la criticité si aucun backup n'est prévu ?
-3. Quelle action immédiate proposez-vous ?
+3. Quelle action immédiate proposer ?
 
 #### Analyse
 

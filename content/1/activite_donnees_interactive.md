@@ -20,9 +20,9 @@ Les données sont souvent stockées dans des fichiers **CSV** (Comma Separated V
 
 Un tableau de valeur a disparu du Musée des Beaux-Arts. Le voleur s'est glissé parmi les visiteurs et le personnel.
 
-**Votre mission :** Retrouver le coupable en utilisant les indices laissés par les témoins et les caméras de surveillance.
+**Mission :** Retrouver le coupable en utilisant les indices laissés par les témoins et les caméras de surveillance.
 
-**Le fichier contient plus de 100 suspects. Suivez les étapes de l'enquête ci-dessous pour filtrer la liste et trouver le coupable.**
+**Le fichier contient plus de 100 suspects. Suivre les étapes de l'enquête ci-dessous pour filtrer la liste et trouver le coupable.**
 
 <CsvDetective />
     </Enonce>
@@ -34,9 +34,9 @@ Un tableau de valeur a disparu du Musée des Beaux-Arts. Le voleur s'est glissé
 
 Une intrusion informatique a été détectée sur les serveurs de l'école. L'adresse IP a été tracée jusqu'en Asie.
 
-**Votre mission :** Identifier le hacker responsable de l'attaque parmi les nombreux profils suspects.
+**Mission :** Identifier le hacker responsable de l'attaque parmi les nombreux profils suspects.
 
-**Utilisez les outils de filtrage pour réduire la liste des suspects étape par étape.**
+**Utiliser les outils de filtrage pour réduire la liste des suspects étape par étape.**
 
 <CsvDetective scenario="scenario2" />
     </Enonce>
@@ -48,7 +48,7 @@ Une intrusion informatique a été détectée sur les serveurs de l'école. L'ad
 
 Des produits chimiques dangereux ont été dérobés dans un laboratoire du Sud-Ouest de la France.
 
-**Votre mission :** Retrouver le voleur parmi le personnel médical. Soyez attentif aux détails.
+**Mission :** Retrouver le voleur parmi le personnel médical. Être attentif aux détails.
 
 <CsvDetective scenario="scenario3" />
     </Enonce>
@@ -60,7 +60,7 @@ Des produits chimiques dangereux ont été dérobés dans un laboratoire du Sud-
 
 Un réseau de contrebande utilise les grands ports européens. Nous devons intercepter le passeur.
 
-**Votre mission :** Croiser les informations pour identifier la cible dans cette base de données complexe.
+**Mission :** Croiser les informations pour identifier la cible dans cette base de données complexe.
 
 <CsvDetective scenario="scenario4" />
     </Enonce>

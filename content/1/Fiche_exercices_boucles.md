@@ -16,11 +16,11 @@ audience: public
 
       **Pour tous les exercices :**
 
-      - N'oubliez pas les deux points `:` après la boucle
-      - Faites attention à l'indentation dans la boucle
-      - Testez votre code avec différentes valeurs
-      - Créez un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
-      - Recopiez vos programmes sur votre cahier pour pouvoir les réviser plus tard
+      - Ne pas oublier les deux points `:` après la boucle
+      - Faire attention à l'indentation dans la boucle
+      - Tester le code avec différentes valeurs
+      - Créer un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
+      - Recopier les programmes sur le cahier pour pouvoir les réviser plus tard
     </Enonce>
   </ExerciseSection>
 
@@ -33,7 +33,7 @@ audience: public
       - Demande un nombre de départ
       - Affiche le compte à rebours jusqu'à 0
 
-      *Pour la vérification, stockez le nombre de départ dans une variable `n` et la liste des nombres affichés dans une variable `rebours` (ex: `[5, 4, 3, 2, 1, 0]`).*
+      *Pour la vérification, stocker le nombre de départ dans une variable `n` et la liste des nombres affichés dans une variable `rebours` (ex: `[5, 4, 3, 2, 1, 0]`).*
     </Enonce>
     <Verification>
 ```python
@@ -54,7 +54,7 @@ assert rebours == list(range(n, -1, -1)), f"Le compte à rebours est incorrect p
       - Demande un nombre
       - Affiche sa table de multiplication de 1 à 10
 
-      *Pour la vérification, stockez le nombre choisi dans `n` et la liste des résultats dans `table` (ex: `[5, 10, ..., 50]`).*
+      *Pour la vérification, stocker le nombre choisi dans `n` et la liste des résultats dans `table` (ex: `[5, 10, ..., 50]`).*
     </Enonce>
     <Verification>
 ```python
@@ -95,7 +95,7 @@ assert table == expected, f"La table de multiplication pour {n} est incorrecte."
       ***
       ```
 
-      *Pour la vérification, stockez le nombre de marches dans `n` et la liste des lignes (chaînes de caractères) dans `lignes` (ex: `['*', '**', '***']`).*
+      *Pour la vérification, stocker le nombre de marches dans `n` et la liste des lignes (chaînes de caractères) dans `lignes` (ex: `['*', '**', '***']`).*
     </Enonce>
     <Verification>
 ```python
@@ -118,7 +118,7 @@ assert lignes == expected, f"L'escalier est incorrect pour n={n}."
       - Calcule la somme des nombres de 1 à n
       - Affiche le résultat
 
-      *Pour la vérification, stockez le nombre choisi dans `n` et le résultat dans `somme`.*
+      *Pour la vérification, stocker le nombre choisi dans `n` et le résultat dans `somme`.*
     </Enonce>
     <Verification>
 ```python
@@ -139,7 +139,7 @@ assert somme == expected, f"La somme des nombres de 1 à {n} doit être {expecte
       - Demande un nombre n
       - Affiche les puissances de 2 jusqu'à 2^n
 
-      *Pour la vérification, stockez le nombre choisi dans `n` et la liste des puissances calculées dans `puissances` (ex: `[1, 2, 4, ..., 2^n]`).*
+      *Pour la vérification, stocker le nombre choisi dans `n` et la liste des puissances calculées dans `puissances` (ex: `[1, 2, 4, ..., 2^n]`).*
     </Enonce>
     <Verification>
 ```python
@@ -164,7 +164,7 @@ assert puissances == expected, f"Les puissances de 2 jusqu'à 2^{n} sont incorre
 
       ## <Icone nom="star" /> Niveau Facile
 
-      *Pour la vérification, stockez la phrase dans `phrase`, le nombre de répétitions dans `n`, et créez une liste `resultats` contenant la phrase répétée `n` fois.*
+      *Pour la vérification, stocker la phrase dans `phrase`, le nombre de répétitions dans `n`, et créer une liste `resultats` contenant la phrase répétée `n` fois.*
     </Enonce>
     <Verification>
 ```python
@@ -191,7 +191,7 @@ assert all(r == phrase for r in resultats), "Tous les éléments doivent être �
 
       ## <Icone nom="flame" /> Niveau Intermédiaire
 
-      *Pour la vérification, assurez-vous que votre boucle se termine correctement quand on entre 'non'. Aucune variable spécifique n'est vérifiée automatiquement ici car cest un programme interactif.*
+      *Pour la vérification, s'assurer que la boucle se termine correctement quand on entre 'non'. Aucune variable spécifique n'est vérifiée automatiquement ici car cest un programme interactif.*
     </Enonce>
     <Verification>
 ```python
@@ -211,7 +211,7 @@ assert True
       - Affiche "Perdu!" si le nombre n'est pas trouvé après 5 essais
       - Affiche le nombre d'essais utilisés en cas de victoire
 
-      *Pour la vérification, utilisez une variable `essais_restants` qui décrémente à chaque tour.*
+      *Pour la vérification, utiliser une variable `essais_restants` qui décrémente à chaque tour.*
     </Enonce>
     <Verification>
 ```python
@@ -230,7 +230,7 @@ assert 'essais_restants' in locals() or 'essais' in locals(), "Utilisez une vari
       - S'arrête quand on entre 0
       - Affiche le total à payer
 
-      *Pour la vérification, stockez le montant total calculé dans une variable `total`.*
+      *Pour la vérification, stocker le montant total calculé dans une variable `total`.*
     </Enonce>
     <Verification>
 ```python

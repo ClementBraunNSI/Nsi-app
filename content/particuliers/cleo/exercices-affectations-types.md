@@ -14,11 +14,11 @@ audience:
   <ExerciseSection id="exo-1-1" label="1.1 - Variables et types" type="autre">
     <Enonce>
     ### Exercice 1.1 : Déclaration de variables
-    **Déclarez et initialisez les variables suivantes :**
+    **Déclarer et initialiser les variables suivantes :**
     - Un entier `age` avec la valeur 18
     - Un flottant `prix` avec la valeur 19.99
     - Un caractère `grade` avec la valeur 'A'
-    - Affichez ces variables avec printf()
+    - Afficher ces variables avec printf()
 
     <Correction>
     ```c
@@ -48,7 +48,7 @@ audience:
   <ExerciseSection id="exo-1-2" label="1.2 - Opérateurs arithmétiques" type="autre">
     <Enonce>
     ### Exercice 1.2 : Calculs simples
-    **Créez un programme qui :**
+    **Créer un programme qui :**
     - Déclare deux entiers `a = 15` et `b = 7`
     - Calcule et affiche leur somme, différence, produit et quotient
     - Calcule et affiche le reste de la division
@@ -82,7 +82,7 @@ audience:
   <ExerciseSection id="exo-1-3" label="1.3 - Entrées utilisateur" type="autre">
     <Enonce>
     ### Exercice 1.3 : Saisie et calcul
-    **Créez un programme qui :**
+    **Créer un programme qui :**
     - Demande à l'utilisateur son âge
     - Demande l'âge d'un ami
     - Calcule et affiche la somme des âges

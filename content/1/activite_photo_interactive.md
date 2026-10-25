@@ -23,7 +23,7 @@ Utilise les curseurs ci-dessous pour mélanger les couleurs.
 <PixelManipulator />
 
 ## <Icone nom="camera" /> Traitement d'Image
-Maintenant, appliquons ces concepts sur une vraie image. Tu peux modifier les canaux Rouge, Vert et Bleu de l'image ci-dessous, ou appliquer des filtres.
+Maintenant, appliquons ces concepts sur une vraie image. Les canaux Rouge, Vert et Bleu de l'image ci-dessous peuvent être modifiés, et des filtres appliqués.
 
 <ImageManipulator src="/content/1/maya.png" />
 

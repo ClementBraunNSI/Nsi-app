@@ -35,7 +35,7 @@ Pour la photographie, la norme courante est l'**EXIF** (*Exchangeable Image File
 
 ![Exemple de données EXIF](/content/1/exif.png)
 
-Quand vous partagez la photo, vous partagez potentiellement tout cela, y compris l'endroit précis où vous étiez. Beaucoup de réseaux sociaux effacent ces champs avant de republier l'image. Tous les services de transfert ne le font pas. Si la photo ne doit pas dire où vous habitez, il faut vérifier, ou retirer ces données avant l'envoi.
+Partager la photo, c'est potentiellement partager tout cela, y compris l'endroit précis de la prise de vue. Beaucoup de réseaux sociaux effacent ces champs avant de republier l'image. Tous les services de transfert ne le font pas. Si la photo ne doit pas révéler un domicile, il faut vérifier, ou retirer ces données avant l'envoi.
 
 ## Les lire
 
@@ -47,7 +47,7 @@ En ligne de commande, `exiftool` lit ces champs directement. En Python, la bibli
 
 # Exercice
 
-Reliez chaque format à sa description :
+Relier chaque format à sa description :
 
 ![Exercice - Relier les formats](/content/1/exo_relier.png)
 

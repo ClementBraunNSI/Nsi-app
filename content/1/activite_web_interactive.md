@@ -9,9 +9,9 @@ prerequisites:
 audience: public
 ---
 
-# <Icone nom="globe" /> Atelier Web : Crée ta première page
+# <Icone nom="globe" /> Atelier Web : créer sa première page
 
-Dans cet atelier interactif, tu peux modifier le code HTML et CSS à gauche et voir le résultat instantanément à droite.
+Dans cet atelier interactif, le code HTML et CSS se modifie à gauche et le résultat s'affiche instantanément à droite.
 
 ## <Icone nom="target" /> Objectifs
 1. Change le texte du titre `<h1>`.
@@ -20,7 +20,7 @@ Dans cet atelier interactif, tu peux modifier le code HTML et CSS à gauche et v
 
 <WebPreview />
 
-## <Icone nom="lightbulb" /> À toi de jouer !
+## <Icone nom="lightbulb" /> Mise en pratique
 Essaie d'ajouter un bouton :
 ```html
 <button>Clique-moi !</button>

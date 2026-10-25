@@ -15,7 +15,7 @@ audience: public
     <Enonce>
       ### Important <Icone nom="triangle-alert" /> - Avant de commencer
 
-      En cours, vous avez vu qu'un réseau social peut se modéliser par un **graphe** : des **sommets** (utilisateurs) reliés par des **arêtes** (amitiés).
+      Le cours a montré qu'un réseau social peut se modéliser par un **graphe** : des **sommets** (utilisateurs) reliés par des **arêtes** (amitiés).
 
       | Bibliothèque | Usage |
       |-------------|-------|
@@ -47,7 +47,7 @@ assert True, "Consignes lues."
     <Enonce>
       ### Introduction <Renards n="1" /> - Créer un graphe
 
-      **Mission :** Créez un graphe non orienté `reseau` avec **networkx**, ajoutez les utilisateurs `"Alice"`, `"Bob"` et `"Charlie"` comme sommets, puis stockez le nombre d'utilisateurs dans `nb_utilisateurs`.
+      **Mission :** Créer un graphe non orienté `reseau` avec **networkx**, ajouter les utilisateurs `"Alice"`, `"Bob"` et `"Charlie"` comme sommets, puis stocker le nombre d'utilisateurs dans `nb_utilisateurs`.
 
       *Indice :* `import networkx as nx`, `G = nx.Graph()`, `G.add_node("...")`, `G.number_of_nodes()`.
     </Enonce>
@@ -70,12 +70,12 @@ assert set(reseau.nodes()) == {"Alice", "Bob", "Charlie"}, "Ajoutez Alice, Bob e
 
       Une **amitié** entre deux personnes est une **arête** du graphe.
 
-      **Mission :** Créez un graphe `reseau` avec les utilisateurs Alice, Bob et Charlie. Ajoutez les amitiés suivantes :
+      **Mission :** Créer un graphe `reseau` avec les utilisateurs Alice, Bob et Charlie. Ajouter les amitiés suivantes :
 
       - Alice et Bob
       - Bob et Charlie
 
-      Stockez le nombre d'amitiés dans `nb_amities`.
+      Stocker le nombre d'amitiés dans `nb_amities`.
 
       *Indice :* `G.add_edge("Alice", "Bob")` crée une arête entre deux amis.
     </Enonce>
@@ -99,7 +99,7 @@ assert not reseau.has_edge("Alice", "Charlie"), "Alice et Charlie ne sont pas am
 
       Le **degré** d'un sommet = son nombre d'amis dans le réseau.
 
-      **Mission :** À partir du graphe fourni, stockez le nombre d'amis de **Bob** dans `amis_bob`.
+      **Mission :** À partir du graphe fourni, stocker le nombre d'amis de **Bob** dans `amis_bob`.
 
       ```python
       import networkx as nx
@@ -136,7 +136,7 @@ assert amis_bob == 3, "Bob a 3 amis dans ce réseau."
     <Enonce>
       ### Introduction <Renards n="1" /> - Vérifier une amitié
 
-      **Mission :** À partir du graphe fourni, vérifiez si **Alice** et **Charlie** sont amis. Stockez le résultat (`True` ou `False`) dans `alice_charlie_amis`.
+      **Mission :** À partir du graphe fourni, vérifier si **Alice** et **Charlie** sont amis. Stocker le résultat (`True` ou `False`) dans `alice_charlie_amis`.
 
       ```python
       import networkx as nx
@@ -173,7 +173,7 @@ assert alice_charlie_amis == False, "Alice et Charlie ne sont pas amis directeme
 
       On peut croiser un **tableau pandas** (profils) et un **graphe** (amitiés).
 
-      **Mission :** Créez un DataFrame `profils` à partir du tableau ci-dessous, puis stockez la ville de **Charlie** dans `ville_charlie`.
+      **Mission :** Créer un DataFrame `profils` à partir du tableau ci-dessous, puis stocker la ville de **Charlie** dans `ville_charlie`.
 
       | Prénom | Âge | Ville |
       |--------|-----|-------|
@@ -181,7 +181,7 @@ assert alice_charlie_amis == False, "Alice et Charlie ne sont pas amis directeme
       | Bob | 16 | Paris |
       | Charlie | 15 | Marseille |
 
-      *Indice :* filtrez avec `profils[profils["Prénom"] == "Charlie"]`.
+      *Indice :* filtrer avec `profils[profils["Prénom"] == "Charlie"]`.
     </Enonce>
     <Verification>
 ```python
@@ -205,7 +205,7 @@ assert ville_charlie == profils_ref.loc[profils_ref["Prénom"] == "Charlie", "Vi
     <Enonce>
       ### Facile <Renards n="1" /> - L'utilisateur le plus populaire
 
-      **Mission :** Dans le graphe fourni, trouvez l'utilisateur qui a le **plus d'amis** et stockez son prénom dans `plus_populaire`.
+      **Mission :** Dans le graphe fourni, trouver l'utilisateur qui a le **plus d'amis** et stocker son prénom dans `plus_populaire`.
 
       ```python
       import networkx as nx
@@ -219,7 +219,7 @@ assert ville_charlie == profils_ref.loc[profils_ref["Prénom"] == "Charlie", "Vi
       ])
       ```
 
-      *Indice :* `nx.degree(reseau)` renvoie le degré de chaque sommet. Cherchez le maximum.
+      *Indice :* `nx.degree(reseau)` renvoie le degré de chaque sommet. Chercher le maximum.
     </Enonce>
     <Verification>
 ```python
@@ -246,7 +246,7 @@ assert plus_populaire == "Alice", "Alice a le plus d'amis."
     <Enonce>
       ### Facile <Renards n="1" /> - Graphe depuis un tableau
 
-      **Mission :** Créez un graphe `reseau` à partir du tableau de **paires d'amis** ci-dessous (chaque ligne = une amitié). Stockez le nombre total d'arêtes dans `nb_amities`.
+      **Mission :** Créer un graphe `reseau` à partir du tableau de **paires d'amis** ci-dessous (chaque ligne = une amitié). Stocker le nombre total d'arêtes dans `nb_amities`.
 
       | Utilisateur 1 | Utilisateur 2 |
       |---------------|---------------|
@@ -255,7 +255,7 @@ assert plus_populaire == "Alice", "Alice a le plus d'amis."
       | Charlie | Diana |
       | Alice | Diana |
 
-      *Indice :* créez un DataFrame puis parcourez les lignes pour appeler `add_edge`.
+      *Indice :* créer un DataFrame puis parcourir les lignes pour appeler `add_edge`.
     </Enonce>
     <Verification>
 ```python

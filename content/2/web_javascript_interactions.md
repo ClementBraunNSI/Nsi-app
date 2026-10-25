@@ -87,7 +87,7 @@ En résumé, JavaScript s'occupe du comportement, le DOM est l'arbre de la page.
 
 ## Pour s'entraîner / Suite
 
-Entraînez-vous avec les exercices ci-dessous. Ensuite, le cours [Web et HTTP](/cours/2/web_protocoles) situe ces pages dans le modèle client-serveur.
+S'entraîner avec les exercices ci-dessous. Ensuite, le cours [Web et HTTP](/cours/2/web_protocoles) situe ces pages dans le modèle client-serveur.
 
 ## Exercices pratiques
 

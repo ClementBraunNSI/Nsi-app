@@ -75,7 +75,7 @@ Ainsi `min_pieces[1]` ne peut utiliser que la pièce 1, et vaut 1. La case 2 s'a
     *   `min_pieces[0] = 0`
     *   Pour `i` de 1 à 6, on cherche `min(min_pieces[i - piece]) + 1`.
     
-    Remplissez le tableau à la main.
+    Remplir le tableau à la main.
     
     </Enonce>
   </ExerciseSection>

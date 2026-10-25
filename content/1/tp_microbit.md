@@ -50,14 +50,14 @@ while True:
 ## 3. Exercices
 
 ### <Icone nom="star" /> Exercice 1 : Affichage simple <Renards n="1" />
-Affichez le motif d'un visage souriant (`Image.HAPPY`) sur l'écran LED.
+Afficher le motif d'un visage souriant (`Image.HAPPY`) sur l'écran LED.
 
 ### <Icone nom="palette" /> Exercice 2 : Message défilant <Renards n="1" />
-Faites défiler votre prénom sur l'écran LED.
-*Indice : Utilisez `display.scroll()`.*
+Faire défiler son prénom sur l'écran LED.
+*Indice : Utiliser `display.scroll()`.*
 
 ### <Icone nom="gamepad-2" /> Exercice 3 : Interaction Bouton <Renards n="2" />
-Affichez un cœur quand on appuie sur le bouton A.
+Afficher un cœur quand on appuie sur le bouton A.
 
 ```python
 from microbit import *
@@ -70,10 +70,10 @@ while True:
 ```
 
 ### <Icone nom="palette" /> Exercice 4 : Animation <Renards n="2" />
-Alternez entre deux images toutes les secondes (par exemple un cœur et un carré) indéfiniment.
+Alterner entre deux images toutes les secondes (par exemple un cœur et un carré) indéfiniment.
 
 ### <Renard /> Exercice 5 : Pixel Art <Renards n="3" />
-Créez votre propre image (par exemple une tête de renard) en définissant l'intensité de chaque LED (de 0 à 9).
+Créer sa propre image (par exemple une tête de renard) en définissant l'intensité de chaque LED (de 0 à 9).
 
 ![Renard](/content/1/fox_microbit.png)
 
@@ -88,5 +88,5 @@ display.show(mon_image)
 ```
 
 ### <Icone nom="star" /> Exercice 6 : Compteur <Renards n="2" />
-Créez un programme qui affiche "A" quand on appuie sur A, et "B" quand on appuie sur B.
-*Bonus : Incrémentez un compteur à chaque appui et affichez sa valeur.*
+Créer un programme qui affiche "A" quand on appuie sur A, et "B" quand on appuie sur B.
+*Bonus : Incrémenter un compteur à chaque appui et afficher sa valeur.*

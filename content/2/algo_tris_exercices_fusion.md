@@ -23,11 +23,11 @@ groupeTitre: "Algorithmes de tri"
     
     **1. Tri alphabétique**
     Écrire une fonction `trier_par_nom(villes)` qui trie la liste des villes par ordre alphabétique de leur nom.
-    *Indice : Utilisez `sorted()` ou `.sort()` avec le paramètre `key` et une fonction lambda.*
+    *Indice : Utiliser `sorted()` ou `.sort()` avec le paramètre `key` et une fonction lambda.*
     
     **2. Tri numérique**
     Écrire une fonction `trier_par_latitude(villes)` qui trie les villes du Sud au Nord (latitude croissante).
-    *Attention : Pensez à convertir la latitude en float.*
+    *Attention : Penser à convertir la latitude en float.*
     
     **3. Top K**
     Écrire une fonction `top_k_nord(villes, k)` qui renvoie les `k` villes les plus au Nord (latitude la plus élevée).
@@ -149,7 +149,7 @@ groupeTitre: "Algorithmes de tri"
     **Objectif**
     Écrire une fonction `fusionner(liste1, liste2)` qui prend deux listes d'entiers **déjà triées** par ordre croissant et renvoie une nouvelle liste triée contenant tous les éléments.
     
-    *Contrainte : Vous ne devez pas utiliser `.sort()` ou `sorted()`. Vous devez parcourir les deux listes simultanément.*
+    *Contrainte : ne pas utiliser `.sort()` ou `sorted()`, et parcourir les deux listes simultanément.*
     
     Exemple :
     `[1, 3, 5]` et `[2, 4]` donnent `[1, 2, 3, 4, 5]`

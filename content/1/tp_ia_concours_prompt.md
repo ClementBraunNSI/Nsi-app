@@ -14,14 +14,14 @@ groupeTitre: "Prompter une IA"
 
 # Le concours du prompt
 
-Le professeur projette une **cible** : un texte ou une image. Votre binôme doit, à l'aide d'une IA générative, obtenir le résultat le plus proche possible de cette cible. Vous ne pouvez pas la copier. Vous devez la décrire avec vos propres mots, comme dans les exercices, et améliorer votre prompt d'essai en essai.
+Une **cible** est projetée au tableau : un texte ou une image. Chaque binôme doit, à l'aide d'une IA générative, obtenir le résultat le plus proche possible de cette cible. Elle ne peut pas être copiée : il faut la décrire avec ses propres mots, comme dans les exercices, et améliorer le prompt d'essai en essai.
 
 Le binôme qui s'approche le plus de la cible gagne la manche. À la fin des trois manches, on additionne les points.
 
-## Ce qu'il vous faut
+## Matériel
 
-- Chaque binôme dispose d'un ordinateur et utilise les IA indiquées par le professeur.
-- Pour chaque manche, vous remplissez une **fiche de manche** (modèle plus bas) où vous recopiez chaque prompt envoyé.
+- Chaque binôme dispose d'un ordinateur et utilise les IA indiquées en classe.
+- Pour chaque manche, une **fiche de manche** (modèle plus bas) est remplie, avec chaque prompt envoyé recopié.
 - Chacun a un rôle, et les rôles s'échangent à chaque manche : l'un tape les prompts, l'autre tient la fiche et surveille le chronomètre.
 
 ## Les règles
@@ -31,7 +31,7 @@ Le binôme qui s'approche le plus de la cible gagne la manche. À la fin des tro
 | **Pas de copie de la cible** | Interdit de recopier le texte cible, de le photographier ou de téléverser l'image cible dans l'IA. On décrit avec ses mots. |
 | **Nombre d'essais limité** | 5 générations maximum par manche. Chaque génération compte, même ratée. |
 | **Prompt court** | Le prompt envoyé ne dépasse pas la limite de mots de la manche. |
-| **Tout est noté** | Chaque prompt envoyé est recopié sur la fiche, avec ce que vous changez et pourquoi. |
+| **Tout est noté** | Chaque prompt envoyé est recopié sur la fiche, avec ce qui change et pourquoi. |
 | **Aucune donnée personnelle** | Ni nom, ni photo, ni information sur une personne réelle. |
 
 Un binôme qui ne respecte pas une règle perd les points de la manche. Le but est d'apprendre à décrire précisément, pas de trouver une astuce pour contourner la consigne.
@@ -41,20 +41,20 @@ Un binôme qui ne respecte pas une règle perd les points de la manche. Le but e
 | Manche | Type de cible | Durée | Limite du prompt | Essais |
 |--------|---------------|-------|------------------|--------|
 | **1. Le texte** | Un texte court (poème, slogan, petite annonce) | 12 minutes | 60 mots | 5 |
-| **2. L'image** | Une image générée à l'avance par le professeur | 15 minutes | 50 mots | 5 |
+| **2. L'image** | Une image générée à l'avance | 15 minutes | 50 mots | 5 |
 | **3. La contrainte** | Un texte ou une image, avec une contrainte surprise annoncée au départ | 12 minutes | 40 mots | 4 |
 
-Avant chaque manche, prenez 2 minutes pour observer la cible **sans toucher à l'ordinateur**. Listez ce qui la caractérise : forme, longueur, ton, couleurs, cadrage, détails. C'est cette liste qui fera la différence.
+Avant chaque manche, prendre 2 minutes pour observer la cible **sans toucher à l'ordinateur**. Lister ce qui la caractérise : forme, longueur, ton, couleurs, cadrage, détails. C'est cette liste qui fera la différence.
 
-**Pour la manche 1**, pensez à la forme autant qu'au sens : nombre de lignes, rimes, ponctuation, niveau de langue.
+**Pour la manche 1**, penser à la forme autant qu'au sens : nombre de lignes, rimes, ponctuation, niveau de langue.
 
-**Pour la manche 2**, reprenez le tableau du cours : sujet, attitude, décor, style, cadrage, lumière. Un détail bien décrit vaut mieux que trois adjectifs vagues.
+**Pour la manche 2**, reprendre le tableau du cours : sujet, attitude, décor, style, cadrage, lumière. Un détail bien décrit vaut mieux que trois adjectifs vagues.
 
-**Pour la manche 3**, la contrainte surprise peut être, par exemple, d'écrire le prompt sans utiliser un mot précis, ou d'obtenir le résultat avec une IA que vous n'avez pas encore utilisée.
+**Pour la manche 3**, la contrainte surprise peut être, par exemple, d'écrire le prompt sans utiliser un mot précis, ou d'obtenir le résultat avec une IA pas encore utilisée.
 
 ## Comment on départage
 
-À la fin de chaque manche, chaque binôme choisit **son meilleur résultat**. Tous les résultats sont affichés côte à côte avec la cible, sans le nom des binômes. Le jury, composé du professeur et d'un représentant de chaque binôme, note la proximité avec la grille suivante.
+À la fin de chaque manche, chaque binôme choisit **son meilleur résultat**. Tous les résultats sont affichés côte à côte avec la cible, sans le nom des binômes. Un jury, avec un représentant de chaque binôme, note la proximité avec la grille suivante.
 
 | Critère | Ce que l'on regarde | Points |
 |---------|---------------------|--------|
@@ -68,7 +68,7 @@ On ne vote pas pour son propre binôme. En cas d'égalité, le binôme qui a uti
 
 ## La fiche de manche
 
-**Pour chaque manche, recopiez et complétez :**
+**Pour chaque manche, recopier et compléter :**
 
 | Essai | IA utilisée | Prompt envoyé (en entier) | Nombre de mots | Ce qui était trop loin de la cible | Ce que l'on change au prochain essai |
 |-------|-------------|---------------------------|----------------|------------------------------------|--------------------------------------|
@@ -82,15 +82,15 @@ On ne vote pas pour son propre binôme. En cas d'égalité, le binôme qui a uti
 
 À la fin de la séance, chaque binôme rend ses trois fiches de manche et répond, en quelques lignes, aux questions suivantes.
 
-1. Quel changement de prompt a le plus rapproché votre résultat de la cible ? Recopiez le prompt avant et après.
-2. Avez-vous changé d'IA pendant une manche ? Qu'est-ce que cela a changé ?
-3. Une IA a-t-elle ignoré une partie de votre consigne malgré plusieurs essais ? Laquelle, et comment avez-vous réagi ?
-4. Si vous deviez refaire la manche 2, quel serait votre premier prompt ?
+1. Quel changement de prompt a le plus rapproché le résultat de la cible ? Recopier le prompt avant et après.
+2. Le binôme a-t-il changé d'IA pendant une manche ? Qu'est-ce que cela a changé ?
+3. Une IA a-t-elle ignoré une partie de la consigne malgré plusieurs essais ? Laquelle, et quelle a été la réaction du binôme ?
+4. Pour refaire la manche 2, quel serait le premier prompt ?
 
 La note du TP ne dépend pas du classement. Elle porte sur la qualité des fiches : des prompts complets, des modifications expliquées, et une réflexion honnête sur ce qui a marché ou non.
 
 <Correction>
-**Pour le professeur : idées de cibles**, invisibles sur le site.
+**Idées de cibles**, invisibles sur le site.
 
 Manche 1, texte cible (à projeter) :
 

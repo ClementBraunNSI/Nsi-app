@@ -46,7 +46,7 @@ Pour préparer ces sauts, on calcule à l'avance la dernière position de chaque
     Motif : `"BANANA"`
     Longueur : 6
     
-    Remplissez la table :
+    Remplir la table :
     *   `"A"` : dernière position ?
     *   `"N"` : dernière position ?
     *   `"B"` : dernière position ?

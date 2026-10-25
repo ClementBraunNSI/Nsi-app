@@ -39,7 +39,7 @@ La recherche dichotomique vue en Première est du même esprit, avec une économ
     On dispose de deux listes **déjà triées** :
     `L1 = [1, 3, 5, 7]` et `L2 = [2, 4, 6, 8]`
     
-    Écrivez une fonction `fusion(l1, l2)` qui renvoie une seule liste triée `[1, 2, 3, 4, 5, 6, 7, 8]` en parcourant les listes une seule fois.
+    Écrire une fonction `fusion(l1, l2)` qui renvoie une seule liste triée `[1, 2, 3, 4, 5, 6, 7, 8]` en parcourant les listes une seule fois.
     
     </Enonce>
   </ExerciseSection>

@@ -9,7 +9,7 @@ audience: public
 ---
 
 ### Contexte
-Les injections SQL restent l'une des vulnérabilités les plus critiques du web (Top 10 OWASP). Ce TP vous place dans la peau d'un attaquant éthique pour comprendre les mécanismes, puis dans celle d'un administrateur système pour analyser les traces et sécuriser l'infrastructure.
+Les injections SQL restent l'une des vulnérabilités les plus critiques du web (Top 10 OWASP). Ce TP place dans la peau d'un attaquant éthique pour comprendre les mécanismes, puis dans celle d'un administrateur système pour analyser les traces et sécuriser l'infrastructure.
 
 <ExerciseTabs courseId="bts_sql_injection" courseTitle="Badge Injection SQL">
   <ExerciseSection id="part1" label="1. Découverte (25')" type="autre">
@@ -40,7 +40,7 @@ Les injections SQL restent l'une des vulnérabilités les plus critiques du web 
     **À noter dans le compte rendu :**
     1. **Quelle URL a été modifiée ?**
     2. **Combien de produits s'affichent maintenant ?**
-    3. **Expliquer le fonctionnement (avec vos mots) :** Pourquoi l'ajout de caractères spéciaux modifie le comportement de la requête SQL ?
+    3. **Expliquer le fonctionnement (avec les mots) :** Pourquoi l'ajout de caractères spéciaux modifie le comportement de la requête SQL ?
   </ExerciseSection>
 
   <ExerciseSection id="part2" label="2. Analyse Logs (40')" type="autre">
@@ -152,7 +152,7 @@ Les injections SQL restent l'une des vulnérabilités les plus critiques du web 
     Objectif : Rédiger un rapport professionnel synthétique pour la direction technique.
 
     ### Exercice 4.1 : Rapport d'incident
-    **Contexte :** En tant que technicien SISR, le responsable IT vous demande un rapport suite aux logs suspects identifiés en partie 2.
+    **Contexte :** En tant que technicien SISR, le responsable IT demande un rapport suite aux logs suspects identifiés en partie 2.
     **Rédiger un court rapport (1/2 page) avec cette structure :**
 
     **RAPPORT D'INCIDENT DE SÉCURITÉ**

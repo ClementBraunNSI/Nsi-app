@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   ArrowLeft,
   BookOpen,
+  Box,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -30,6 +32,9 @@ import { ahead, buildWorld, countCodeLines, isBlocked, samePos, turn } from "./w
 import styles from "./academy.module.css";
 import { CodeArea, type CodeAreaHandle } from "@/components/lab/CodeArea";
 
+// La vue 3D (three.js) n'est téléchargée que si on l'affiche.
+const Board3D = dynamic(() => import("./Board3D"), { ssr: false, loading: () => <div className={styles.meadow3d} /> });
+
 const STORAGE_PREFIX = "fox-academy-v2";
 const CHAPTER_ORDER: ChapterId[] = ["sequence", "variables", "conditions", "for", "while"];
 
@@ -51,6 +56,9 @@ type Feedback = { tone: "error" | "info"; text: string } | null;
 type Step = Position & { dir: Direction };
 
 export default function FoxAcademy() {
+  // Aperçu de la vue 3D : /academie?vue=3d l'affiche, avec un bouton pour revenir à la 2D.
+  const [allow3d, setAllow3d] = useState(false);
+  const [view, setView] = useState<"2d" | "3d">("2d");
   const [resumeCode, setResumeCode] = useState("");
   const [resumeInput, setResumeInput] = useState("");
   const [loadStatus, setLoadStatus] = useState("");
@@ -86,6 +94,13 @@ export default function FoxAcademy() {
 
   const level = useMemo(() => getLevel(levelId), [levelId]);
   const maxUnlocked = Math.min(LEVELS.length, Math.max(1, ...completed.map((id) => id + 1)));
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("vue") === "3d") {
+      setAllow3d(true);
+      setView("3d");
+    }
+  }, []);
 
   // --- Sauvegarde locale (code de reprise) ---
   useEffect(() => {
@@ -461,7 +476,11 @@ export default function FoxAcademy() {
         {/* Plateau */}
         <section className={styles.stageColumn} aria-label="Plateau">
           <div className={styles.stageFrame} ref={stageRef}>
-            <Board world={world} foxPos={foxPos} foxDir={foxDir} foxAction={foxAction} signLabel={signLabel} chapter={level.chapter} trail={trail} />
+            {view === "3d" ? (
+              <Board3D world={world} foxPos={foxPos} foxDir={foxDir} foxAction={foxAction} signLabel={signLabel} chapter={level.chapter} trail={trail} />
+            ) : (
+              <Board world={world} foxPos={foxPos} foxDir={foxDir} foxAction={foxAction} signLabel={signLabel} chapter={level.chapter} trail={trail} />
+            )}
 
             {status === "won" ? (
               <div className={styles.victory}>
@@ -504,6 +523,12 @@ export default function FoxAcademy() {
               {fast ? <Rabbit size={14} aria-hidden /> : <Turtle size={14} aria-hidden />}
               {fast ? "Rapide" : "Normal"}
             </button>
+            {allow3d ? (
+              <button type="button" className={`${styles.chip} ${view === "3d" ? styles.chipOn : ""}`} onClick={() => setView(view === "3d" ? "2d" : "3d")} aria-pressed={view === "3d"}>
+                <Box size={14} aria-hidden />
+                {view === "3d" ? "3D" : "2D"}
+              </button>
+            ) : null}
             <button type="button" className={styles.chip} onClick={() => placeFox(buildWorld(level, Date.now()))} disabled={isRunning}>
               <RotateCcw size={13} /> Replacer
             </button>

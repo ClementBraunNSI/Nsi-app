@@ -14,7 +14,7 @@ audience: public
     <Enonce>
 ### <Icone nom="radio-tower" /> Mission : Retrouver le Renard
 
-Pour calculer ta position, ton téléphone écoute les signaux d'au moins 3 satellites. C'est le principe de la **trilatération**.
+Pour calculer sa position, un téléphone écoute les signaux d'au moins 3 satellites. C'est le principe de la **trilatération**.
 
 **Objectif :** Le renard se cache. Utilise les signaux des satellites Galileo pour trianguler sa position exacte.
 

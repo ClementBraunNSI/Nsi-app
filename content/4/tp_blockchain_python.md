@@ -26,7 +26,7 @@ audience: public
 
     ## Introduction : Le Grand Livre Numérique
 
-    Une blockchain est une base de données distribuée et sécurisée. Imaginez un grand cahier où tout le monde peut écrire, mais :
+    Une blockchain est une base de données distribuée et sécurisée. Imaginer un grand cahier où tout le monde peut écrire, mais :
     1.  **Immuable :** Une fois écrit, on ne peut plus effacer ni modifier une ligne sans que cela se voie.
     2.  **Chronologique :** Chaque page est liée à la précédente.
     3.  **Sécurisé :** Pour valider une page, il faut résoudre un problème mathématique complexe.
@@ -69,7 +69,7 @@ audience: public
 
     ### <Icone nom="notebook-pen" /> Exercice 1.2 : L'Effet Avalanche
     L'effet avalanche signifie qu'une modification minime de l'entrée change radicalement la sortie.
-    1.  Dans votre script, hacher le mot `"Blockchain"`.
+    1.  Dans le script, hacher le mot `"Blockchain"`.
     2.  Hacher le mot `"blockchain"` (minuscule).
     3.  Comparer les deux résultats caractère par caractère. Se ressemblent-ils ?
         *   *Réponse attendue : Non, ils sont totalement différents.*
@@ -99,7 +99,7 @@ audience: public
     1.  Concaténer tous les attributs (`index`, `timestamp`, `data`, `previous_hash`) en une seule chaîne de caractères.
     2.  Retourner le hash SHA-256 de cette chaîne.
 
-    *Astuce : Utilisez `str(self.index)` pour convertir les nombres en texte avant concaténation.*
+    *Astuce : Utiliser `str(self.index)` pour convertir les nombres en texte avant concaténation.*
 
     ### <Icone nom="notebook-pen" /> Exercice 2.3 : Un affichage propre (`__str__`)
     Pour faciliter le débogage, ajouter la méthode spéciale `__str__` :
@@ -107,7 +107,7 @@ audience: public
         def __str__(self):
             return f"Block #{self.index} [Data: {self.data}] [Hash: {self.hash}] [Prev: {self.previous_hash}]"
     ```
-    *Testez en créant un bloc manuellement dans votre `main` et en l'affichant avec `print(mon_bloc)`.*
+    *Tester en créant un bloc manuellement dans le `main` et en l'affichant avec `print(mon_bloc)`.*
     </Enonce>
   </ExerciseSection>
 
@@ -154,7 +154,7 @@ audience: public
     2.  **Intégrité du lien :** Le `previous_hash` du bloc courant est-il identique au `hash` du bloc précédent ? (Sinon, la chaîne est brisée).
 
     ### <Icone nom="notebook-pen" /> Exercice 4.2 : Scénario d'attaque complet
-    Dans le `main`, réalisez le scénario suivant étape par étape :
+    Dans le `main`, réaliser le scénario suivant étape par étape :
 
     **Étape A : Tout va bien**
     *   Afficher "Chaîne valide ?" -> Doit afficher `True`.
@@ -201,7 +201,7 @@ audience: public
     *   Fixer une difficulté de 4 (dans `__init__` de Blockchain).
 
     ### <Icone nom="notebook-pen" /> Exercice 5.4 : Le Challenge (Benchmark)
-    Testez le temps de minage :
+    Tester le temps de minage :
     *   Avec difficulté = 2 (Instantané)
     *   Avec difficulté = 4 (Quelques secondes)
     *   Avec difficulté = 5 (Peut prendre 10-30 secondes)

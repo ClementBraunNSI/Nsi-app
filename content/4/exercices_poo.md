@@ -15,25 +15,25 @@ audience: public
     ## <Icone nom="landmark" /> Exercice 1 : Gestion de Compte Bancaire (Niveau Débutant)
 
     ### Contexte
-    Vous devez créer un système simple pour gérer un compte bancaire avec des opérations de base.
+    Créer un système simple pour gérer un compte bancaire avec des opérations de base.
 
     ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `CompteBancaire`**
 
-    Créez une classe `CompteBancaire` avec les propriétés suivantes :
+    Créer une classe `CompteBancaire` avec les propriétés suivantes :
     - `string Titulaire` (propriété publique avec get et set)
     - `double Solde` (propriété publique avec get et **private** set - le solde ne peut être modifié que par les méthodes de la classe)
 
     **Étape 2 : Ajouter un constructeur**
 
-    Créez un constructeur qui prend en paramètres :
+    Créer un constructeur qui prend en paramètres :
     - Le nom du titulaire
     - Le solde initial (par défaut 0)
 
     **Étape 3 : Ajouter les méthodes**
 
-    Implémentez les méthodes suivantes :
+    Implémenter les méthodes suivantes :
 
     ```csharp
     // Déposer de l'argent sur le compte
@@ -108,13 +108,13 @@ audience: public
     ## <Icone nom="library" /> Exercice 2 : Gestion de Livres (Niveau Débutant/Intermédiaire)
 
     ### Contexte
-    Vous devez créer un système pour gérer des livres dans une bibliothèque.
+    Créer un système pour gérer des livres dans une bibliothèque.
 
     ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `Livre`**
 
-    Créez une classe `Livre` avec les propriétés suivantes :
+    Créer une classe `Livre` avec les propriétés suivantes :
     - `string Titre`
     - `string Auteur`
     - `int AnneePublication`
@@ -206,13 +206,13 @@ audience: public
     ## <Icone nom="graduation-cap" /> Exercice 3 : Gestion d'Étudiants (Niveau Intermédiaire)
 
     ### Contexte
-    Vous devez créer un système pour gérer des étudiants avec leurs notes et calculs de moyenne.
+    Créer un système pour gérer des étudiants avec leurs notes et calculs de moyenne.
 
     ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `Etudiant`**
 
-    Créez une classe `Etudiant` avec les propriétés suivantes :
+    Créer une classe `Etudiant` avec les propriétés suivantes :
     - `string Nom`
     - `string Prenom`
     - `int NumeroEtudiant` (propriété en lecture seule - `{ get; }`)
@@ -330,13 +330,13 @@ audience: public
     ## <Icone nom="car" /> Exercice 4 : Gestion de Concessionnaire (Niveau Intermédiaire/Avancé)
 
     ### Contexte
-    Un concessionnaire automobile a besoin d'un système pour gérer son inventaire de voitures. Vous devez créer deux classes qui travaillent ensemble : `Voiture` et `Concessionnaire`.
+    Un concessionnaire automobile a besoin d'un système pour gérer son inventaire de voitures. Créer deux classes qui travaillent ensemble : `Voiture` et `Concessionnaire`.
 
     ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `Voiture`**
 
-    Créez une classe `Voiture` avec les propriétés suivantes :
+    Créer une classe `Voiture` avec les propriétés suivantes :
     - `string Marque`
     - `string Modele`
     - `int Annee`
@@ -346,12 +346,12 @@ audience: public
 
     **Étape 2 : Constructeur de `Voiture`**
 
-    Créez un constructeur qui initialise la marque, le modèle, l'année, le prix et le kilométrage.
+    Créer un constructeur qui initialise la marque, le modèle, l'année, le prix et le kilométrage.
     Par défaut, la propriété `EstVendue` doit être initialisée à `false`.
 
     **Étape 3 : Méthodes de `Voiture`**
 
-    Implémentez les méthodes suivantes :
+    Implémenter les méthodes suivantes :
 
     ```csharp
     // Marquer la voiture comme vendue
@@ -386,7 +386,7 @@ audience: public
 
     **Étape 4 : Créer la classe `Concessionnaire`**
 
-    Créez une classe `Concessionnaire` avec les propriétés suivantes :
+    Créer une classe `Concessionnaire` avec les propriétés suivantes :
     - `string Nom` (lecture/écriture)
     - `string Ville` (lecture/écriture)
     - `List<Voiture> voitures` (attribut privé pour stocker la liste des voitures)
@@ -540,11 +540,11 @@ audience: public
     ## <Icone nom="folder-open" /> Exercice 5 : Importation de Données CSV (Niveau Intermédiaire)
 
     ### Contexte
-    Votre magasin reçoit régulièrement la liste de ses nouveaux produits sous forme de fichier CSV (Comma Separated Values).
-    Vous devez créer un programme capable de lire ce fichier et de transformer chaque ligne en un objet `Produit` utilisable dans votre application.
+    Un magasin reçoit régulièrement la liste de ses nouveaux produits sous forme de fichier CSV (Comma Separated Values).
+    Créer un programme capable de lire ce fichier et de transformer chaque ligne en un objet `Produit` utilisable dans l'application.
 
     ### <Icone nom="file-text" /> Le fichier CSV (`produits.csv`)
-    Voici le contenu du fichier que vous devrez traiter :
+    Voici le contenu du fichier à traiter :
     ```csv
     A100;Ecran 24 pouces;150.00;10
     B200;Clavier mécanique;89.99;5
@@ -557,13 +557,13 @@ audience: public
 
     **Étape 1 : Créer la classe `Produit`**
     
-    Créez une classe avec les propriétés suivantes :
+    Créer une classe avec les propriétés suivantes :
     - `string Reference`
     - `string Nom`
     - `double Prix`
     - `int Quantite`
     
-    Ajoutez un constructeur pour initialiser ces valeurs et une méthode `Afficher()` pour voir les détails du produit.
+    Ajouter un constructeur pour initialiser ces valeurs et une méthode `Afficher()` pour voir les détails du produit.
 
     **Étape 2 : Comprendre la lecture de fichier**
     
@@ -603,14 +603,14 @@ audience: public
     - Une méthode `ImporterProduits(string cheminFichier)` :
       - Cette méthode doit lire le fichier ligne par ligne.
       - Pour chaque ligne, elle crée un objet `Produit` et l'ajoute au `Stock`.
-      - <Icone nom="triangle-alert" /> **Important :** Utilisez un bloc `try...catch` pour gérer le cas où le fichier n'existe pas.
+      - <Icone nom="triangle-alert" /> **Important :** Utiliser un bloc `try...catch` pour gérer le cas où le fichier n'existe pas.
 
     **Étape 4 : Tester dans le Main**
     
-    1. Créez manuellement un fichier `produits.csv` à la racine de votre projet avec le contenu donné plus haut.
-    2. Dans le `Main`, instanciez un `Magasin`.
-    3. Appelez la méthode `ImporterProduits("produits.csv")`.
-    4. Affichez le contenu du stock pour vérifier que tout a bien été chargé.
+    1. Créer manuellement un fichier `produits.csv` à la racine du projet avec le contenu donné plus haut.
+    2. Dans le `Main`, instancier un `Magasin`.
+    3. Appeler la méthode `ImporterProduits("produits.csv")`.
+    4. Afficher le contenu du stock pour vérifier que tout a bien été chargé.
 
     ### <Icone nom="target" /> Résultat attendu
     ```
@@ -637,7 +637,7 @@ audience: public
     ## <Icone nom="paw-print" /> Exercice 6 : Animaux et Héritage (Niveau Avancé)
 
     ### Contexte
-    Vous devez créer un système de gestion d'animaux dans un refuge en utilisant l'héritage pour éviter la duplication de code.
+    Créer un système de gestion d'animaux dans un refuge en utilisant l'héritage pour éviter la duplication de code.
 
     ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
@@ -794,7 +794,7 @@ audience: public
 
     ### Contexte
     Le concessionnaire de l'exercice 4 s'agrandit ! Il ne vend plus seulement des voitures, mais aussi des motos et des quads.
-    Vous devez refactoriser votre code pour utiliser l'héritage.
+    Refactoriser le code pour utiliser l'héritage.
 
     ### <Icone nom="clipboard-list" /> Étapes à réaliser
 

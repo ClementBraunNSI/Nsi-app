@@ -80,7 +80,7 @@ for ligne in villes:
         print(ligne["nom_commune"])
 ```
 
-On compare `code_departement` à la chaîne `"59"`, pas à l'entier `59`, parce que le CSV a tout lu comme du texte. Pour une latitude, il faut `float(ligne["latitude"])` avant de la comparer à un nombre. Sinon Python compare une chaîne et un flottant, et l'ordre n'a pas le sens que vous croyez.
+On compare `code_departement` à la chaîne `"59"`, pas à l'entier `59`, parce que le CSV a tout lu comme du texte. Pour une latitude, il faut `float(ligne["latitude"])` avant de la comparer à un nombre. Sinon Python compare une chaîne et un flottant, et l'ordre n'a pas le sens attendu.
 
 On enchaîne souvent les deux opérations : d'abord les lignes du Nord, ensuite seulement le nom et la latitude.
 

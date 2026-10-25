@@ -1,6 +1,6 @@
 ---
 title: Types de données en Python
-subtitle: Les types fondamentaux pour structurer vos données
+subtitle: Les types fondamentaux pour structurer les données
 description: "Booléens, entiers, flottants et chaînes : reconnaître un type et l'utiliser correctement."
 level: premiere
 chapter: Introduction à Python
@@ -15,7 +15,7 @@ groupeTitre: "Types de données en Python"
 
 # Types de données en Python
 
-Vous avez déjà écrit des affectations, des tests et des boucles. Chaque valeur que ces lignes manipulent a un **type**, et le type décide ce que Python accepte d'en faire. Comparer des booléens, calculer avec des nombres, indexer une chaîne : ce ne sont pas les mêmes opérations. La confusion la plus fréquente en début d'année est de prendre `"3"` pour `3`. L'une est un texte, l'autre un entier. Python ne devine pas à votre place.
+Les affectations, les tests et les boucles sont déjà connus. Chaque valeur que ces lignes manipulent a un **type**, et le type décide ce que Python accepte d'en faire. Comparer des booléens, calculer avec des nombres, indexer une chaîne : ce ne sont pas les mêmes opérations. La confusion la plus fréquente en début d'année est de prendre `"3"` pour `3`. L'une est un texte, l'autre un entier. Python ne devine pas à la place du programmeur.
 
 ## Les booléens
 
@@ -52,7 +52,7 @@ La division `/` donne toujours un flottant, même quand le résultat tombe juste
 !!! warning "Point décimal"
     On écrit `3.14` avec un **point**, jamais une virgule. Les flottants peuvent produire de petites erreurs d'arrondi (norme IEEE 754) : `0.1 + 0.2` n'est pas exactement `0.3`.
 
-On reviendra sur cette norme dans le cours sur les réels. Pour l'instant, retenez qu'un `float` est une approximation, pas toujours le nombre décimal que vous croyez avoir écrit.
+On reviendra sur cette norme dans le cours sur les réels. Pour l'instant, retenir qu'un `float` est une approximation, pas toujours le nombre décimal qu'on croit avoir écrit.
 
 ## Les chaînes
 
@@ -72,7 +72,7 @@ On convertit quand la conversion a un sens. `int("42")` donne l'entier `42`. `st
 
 ## Vérifier un type
 
-`type()` affiche le type d'une valeur. C'est l'outil à sortir quand un calcul refuse de se faire et que vous ne savez plus ce que contient la variable.
+`type()` affiche le type d'une valeur. C'est l'outil à sortir quand un calcul refuse de se faire et qu'on ne sait plus ce que contient la variable.
 
 ```python
 print(type(True))   # <class 'bool'>

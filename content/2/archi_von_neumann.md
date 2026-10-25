@@ -13,7 +13,7 @@ audience: public
 
 # Modèle de Von Neumann
 
-Ouvrez un ordinateur, même en pensée : il y a un processeur, de la mémoire, des câbles, un clavier, un écran. Le modèle de von Neumann est la façon de nommer ces blocs, et surtout de dire dans quel ordre ils travaillent. Un ordinateur moderne exécute un programme **stocké en mémoire**, données et instructions au même endroit, **une instruction après l'autre**. C'est l'unité de contrôle qui mène ce défilé.
+Ouvrir un ordinateur, même en pensée : il y a un processeur, de la mémoire, des câbles, un clavier, un écran. Le modèle de von Neumann est la façon de nommer ces blocs, et surtout de dire dans quel ordre ils travaillent. Un ordinateur moderne exécute un programme **stocké en mémoire**, données et instructions au même endroit, **une instruction après l'autre**. C'est l'unité de contrôle qui mène ce défilé.
 
 John von Neumann formalise cette architecture pour l'EDVAC, à la fin des années 1940. Deux idées tiennent tout : on calcule en binaire, et le programme n'est plus câblé dans la machine, il est écrit dans la mémoire, comme les données. On peut donc changer de programme sans ressouder.
 
@@ -47,7 +47,7 @@ graph TD
 
 Le processeur réunit deux unités qu'il ne faut pas échanger. L'**unité arithmétique et logique**, l'UAL, fait les opérations : additions, comparaisons, décalages, opérations logiques. Elle s'appuie sur des **registres**, une toute petite mémoire interne, beaucoup plus rapide que la RAM, où elle pose les valeurs en cours de calcul.
 
-L'**unité de contrôle**, l'UC, ne calcule pas le résultat. Elle décide quoi faire maintenant. Son cycle tient en quatre temps. Elle **lit** l'instruction en mémoire (*fetch*), elle la **décode** pour savoir quel opcode et quels opérandes elle contient (*decode*), elle **fait calculer** l'UAL (*execute*), puis elle **range** le résultat dans un registre ou en mémoire (*store*). L'horloge cadence ce cycle. Quand on vous dit qu'un processeur tourne à plusieurs gigahertz, on vous dit combien de ces battements il enchaîne par seconde, pas combien de travail utile il abat.
+L'**unité de contrôle**, l'UC, ne calcule pas le résultat. Elle décide quoi faire maintenant. Son cycle tient en quatre temps. Elle **lit** l'instruction en mémoire (*fetch*), elle la **décode** pour savoir quel opcode et quels opérandes elle contient (*decode*), elle **fait calculer** l'UAL (*execute*), puis elle **range** le résultat dans un registre ou en mémoire (*store*). L'horloge cadence ce cycle. Dire qu'un processeur tourne à plusieurs gigahertz, c'est dire combien de ces battements il enchaîne par seconde, pas combien de travail utile il abat.
 
 ![proco](intelamd.jpeg)
 

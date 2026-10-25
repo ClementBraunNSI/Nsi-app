@@ -18,11 +18,11 @@ groupeTitre: "Le Web et HTTP"
 ## Partie 1 : Protocole HTTP et URLs
 
 ### Exercice 1 - Anatomie d'une URL
-**Analysez cette URL et identifiez ses composants :**
+**Analyser cette URL et identifier ses composants :**
 
 `https://www.example.com:8080/path/to/page?param1=value1&param2=value2#section`
 
-Identifiez :
+Identifier :
 1.  Le protocole
 2.  Le nom de domaine
 3.  Le port
@@ -40,7 +40,7 @@ Identifiez :
     6.  **Ancre :** `section`
 
 ### Exercice 2 - Méthodes HTTP
-**Associez chaque méthode HTTP à son usage :**
+**Associer chaque méthode HTTP à son usage :**
 
 **Méthodes :** GET, POST, PUT, DELETE, HEAD, PATCH
 
@@ -62,7 +62,7 @@ Identifiez :
     *   PATCH : 6. Modifier partiellement une ressource
 
 ### Exercice 3 - Codes de statut HTTP
-**Expliquez la signification de ces codes de statut :**
+**Expliquer la signification de ces codes de statut :**
 1.  200
 2.  301
 3.  404
@@ -84,7 +84,7 @@ Identifiez :
     8.  **418 I'm a teapot :** Code humoristique (RFC 2324)
 
 ### Exercice 4 - En-têtes HTTP
-**Analysez cette requête HTTP et répondez aux questions :**
+**Analyser cette requête HTTP et répondre aux questions :**
 
 ```http
 GET /api/users HTTP/1.1
@@ -108,7 +108,7 @@ Content-Type: application/json
     4.  **Erreur :** `Content-Type` ne devrait pas être présent dans une requête GET (pas de corps)
 
 ### Exercice 5 - Session et cookies
-**Analysez cet échange HTTP et expliquez le mécanisme :**
+**Analyser cet échange HTTP et expliquer le mécanisme :**
 
 **Requête 1 :**
 ```http
@@ -148,7 +148,7 @@ Cookie: sessionid=xyz789
 ## Partie 2 : HTML et CSS
 
 ### Exercice 6 - Structure HTML
-**Corrigez ce code HTML qui contient des erreurs :**
+**Corriger ce code HTML qui contient des erreurs :**
 
 ```html
 <html>
@@ -196,7 +196,7 @@ Cookie: sessionid=xyz789
     *   Fermeture de la balise html.
 
 ### Exercice 7 - Sélecteurs CSS
-**Écrivez les sélecteurs CSS pour :**
+**Écrire les sélecteurs CSS pour :**
 1.  Tous les paragraphes
 2.  L'élément avec l'id "header"
 3.  Tous les éléments avec la classe "highlight"
@@ -214,7 +214,7 @@ Cookie: sessionid=xyz789
     6.  `:hover`
 
 ### Exercice 8 - Responsive Design
-**Créez un CSS responsive pour cette structure :**
+**Créer un CSS responsive pour cette structure :**
 
 ```html
 <div class="container">
@@ -269,7 +269,7 @@ Cookie: sessionid=xyz789
 ## Partie 3 : JavaScript et interactivité
 
 ### Exercice 9 - Manipulation du DOM
-**Écrivez le JavaScript pour :**
+**Écrire le JavaScript pour :**
 1.  Changer le texte d'un élément avec l'id "title"
 2.  Ajouter la classe "active" à tous les boutons
 3.  Créer un nouvel élément `<p>` et l'ajouter au body
@@ -298,7 +298,7 @@ Cookie: sessionid=xyz789
     ```
 
 ### Exercice 10 - Requêtes AJAX
-**Créez une fonction qui :**
+**Créer une fonction qui :**
 1.  Fait une requête GET vers "/api/users"
 2.  Affiche les données dans une liste HTML
 3.  Gère les erreurs de réseau

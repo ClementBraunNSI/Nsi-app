@@ -25,8 +25,8 @@ Implémenter les structures de données Pile et File en POO et les utiliser pour
 ## Partie 1 : Implémentation
 
 !!! question "À faire"
-    Implémentez les classes `Pile` et `File` vues en cours.
-    Ajoutez une méthode `__str__` pour visualiser le contenu de la structure (ex: `[1, 2, 3]`).
+    Implémenter les classes `Pile` et `File` vues en cours.
+    Ajouter une méthode `__str__` pour visualiser le contenu de la structure (ex: `[1, 2, 3]`).
 
 ## Partie 2 : Application des Piles - Vérification de parenthèses
 
@@ -42,7 +42,7 @@ Exemple invalide : `(a + b))`, `((a+b)`, `)a+b(`
 4.  À la fin, la pile doit être vide (toutes les parenthèses ouvertes ont été fermées).
 
 !!! question "Exercice"
-    Écrivez la fonction `verifier_parentheses(expression)` qui retourne `True` ou `False`.
+    Écrire la fonction `verifier_parentheses(expression)` qui retourne `True` ou `False`.
 
 ```python
 def verifier_parentheses(expression):
@@ -69,9 +69,9 @@ On veut simuler une file d'attente d'impression.
 Des documents arrivent (nom du fichier) et sont mis en file d'attente. L'imprimante traite les documents un par un.
 
 !!! question "Exercice"
-    1.  Créez une file `imprimante`.
-    2.  Ajoutez ("enfilez") 3 documents : "Doc1.pdf", "Image.jpg", "Rapport.docx".
-    3.  Simulez l'impression en défilant les documents un par un et en affichant "Impression de [nom]...".
+    1.  Créer une file `imprimante`.
+    2.  Ajouter ("enfiler") 3 documents : "Doc1.pdf", "Image.jpg", "Rapport.docx".
+    3.  Simuler l'impression en défilant les documents un par un et en affichant "Impression de [nom]...".
 
 ```python
 imprimante = File()
