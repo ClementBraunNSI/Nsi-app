@@ -1,5 +1,5 @@
 ---
-title: "Exercices - Prompter une IA"
+title: "Exercices : Prompter une IA"
 description: "Comparer plusieurs IA génératives sur les mêmes demandes, améliorer ses prompts et apprendre à vérifier les réponses."
 level: seconde
 chapter: "Intelligence artificielle"
