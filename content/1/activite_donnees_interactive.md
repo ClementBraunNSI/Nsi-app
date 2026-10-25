@@ -58,7 +58,7 @@ Des produits chimiques dangereux ont été dérobés dans un laboratoire du Sud-
     <Enonce>
 ### <Icone nom="ship" /> Enquête 4 : Le Réseau Portuaire (Expert)
 
-Un réseau de contrebande utilise les grands ports européens. Nous devons intercepter le passeur.
+Un réseau de contrebande utilise les grands ports européens. Le passeur doit être intercepté.
 
 **Mission :** Croiser les informations pour identifier la cible dans cette base de données complexe.
 

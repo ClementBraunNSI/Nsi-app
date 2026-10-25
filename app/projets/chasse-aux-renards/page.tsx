@@ -224,7 +224,7 @@ export default function ChasseAuxRenards() {
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600">
-      <nav className="border-b border-slate-100 bg-white sticky top-0 z-30">
+      <nav className="border-b border-slate-100 bg-white sticky top-[var(--sticky-top)] z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <Link href="/projets" className="flex items-center gap-2 text-slate-400 hover:text-orange-500 transition-colors font-bold text-sm">
             <Home size={18} /> Projets
@@ -247,7 +247,7 @@ export default function ChasseAuxRenards() {
             </button>
             {activeEdition === '2025-2026' && (
               <>
-                <span className="text-slate-300">|</span>
+                <span className="hidden text-slate-300 sm:inline">|</span>
                 {(['secondes', '3e'] as const).map((level) => (
                   <button
                     key={level}
@@ -269,8 +269,8 @@ export default function ChasseAuxRenards() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
+      <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 sm:py-12">
+        <div className="mb-8 sm:mb-12">
           <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
             Chasse aux <span className="text-orange-500">Ren&apos;Arts.</span>
           </h1>
@@ -279,7 +279,7 @@ export default function ChasseAuxRenards() {
           </p>
         </div>
 
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-slate-100">
+        <div className="bg-white rounded-[1.5rem] p-4 sm:rounded-[2rem] sm:p-6 md:p-8 shadow-sm border border-slate-100">
           {activeEdition === '2025-2026' && editionLength === 0 ? (
             <div className="py-16 text-center">
               <p className="text-lg font-bold text-slate-800 mb-2">

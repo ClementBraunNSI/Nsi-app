@@ -57,7 +57,7 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
 
     ### 4. Mise en pratique
 
-    Nous allons implémenter ce tri étape par étape.
+    Ce tri s'implémente étape par étape.
 
     **Exercice A : Trouver le minimum**
     Écrire une fonction `indice_min(liste, debut)` qui renvoie **l'indice** de la valeur la plus petite dans la partie de la liste commençant à `debut`.

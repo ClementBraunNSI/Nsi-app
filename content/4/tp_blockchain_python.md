@@ -31,13 +31,13 @@ audience: public
     2.  **Chronologique :** Chaque page est liée à la précédente.
     3.  **Sécurisé :** Pour valider une page, il faut résoudre un problème mathématique complexe.
 
-    Dans ce TP, nous allons construire ce mécanisme de zéro.
+    Ce TP construit ce mécanisme de zéro.
 
     ---
 
     ## Partie 1 : Le Hachage (Les fondations)
 
-    Pour sécuriser notre chaîne, nous avons besoin d'une empreinte digitale numérique unique pour chaque bloc. C'est le rôle des fonctions de hachage.
+    Pour sécuriser la chaîne, il faut une empreinte digitale numérique unique pour chaque bloc. C'est le rôle des fonctions de hachage.
 
     ### <Icone nom="library" /> Tutoriel : Le module `hashlib`
 
@@ -145,7 +145,7 @@ audience: public
     <Enonce>
     ## Partie 4 : Sécurité et Attaque (Le cœur du sujet)
 
-    C'est ici que nous allons comprendre pourquoi la blockchain est sécurisée.
+    C'est ici que l'on comprend pourquoi la blockchain est sécurisée.
 
     ### <Icone nom="notebook-pen" /> Exercice 4.1 : L'Inspecteur (`is_chain_valid`)
     Ajouter une méthode `is_chain_valid(self)` qui retourne `True` ou `False`.

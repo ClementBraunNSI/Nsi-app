@@ -13,7 +13,7 @@ audience: public
 # <Icone nom="bug" /> Projet - Simulation de Propagation
 
 Le but de ce projet est de simuler, jour après jour, la propagation d'une rumeur dans une population fermée.
-Dans ce projet, nous allons écrire une boucle `while` qui s'arrête quand tout le monde est au courant, sans jamais dépasser la population.
+Ce projet consiste à écrire une boucle `while` qui s'arrête quand tout le monde est au courant, sans jamais dépasser la population.
 
 Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelles personnes. Les « infectés » du programme sont les personnes qui connaissent la rumeur et la transmettent encore. Dans la version de base, personne n'oublie.
 

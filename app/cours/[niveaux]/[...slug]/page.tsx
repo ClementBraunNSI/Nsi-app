@@ -327,28 +327,31 @@ export default async function CoursePage({
       <ReadingProgressBar />
       
       {/* Barre de navigation haute */}
-      <nav className="course-topnav sticky top-20 z-30">
-        <div className="max-w-5xl mx-auto px-6 py-4">
+      <nav className="course-topnav">
+        <div className="max-w-5xl mx-auto px-4 py-2.5 sm:px-6 sm:py-4">
           <Link href={coursePath(niveaux)} className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--accent)] transition-colors duration-150 text-xs font-semibold">
             <ChevronLeft size={16} /> Retour à {nsiLevelLabel(niveaux)}
           </Link>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div className="max-w-7xl mx-auto px-3 py-5 sm:px-6 sm:py-8">
         <button
           type="button"
           data-fox-easter-id="cours"
           aria-label="Secret renard cours"
           className="fox-secret-spot absolute top-32 right-8 z-20"
         />
-        <Breadcrumbs customItems={[
-          { label: nsiLevelLabel(niveaux), href: coursePath(niveaux) },
-          { label: data.chapter || 'Cours', href: '#' },
-          { label: data.title || slugStr, href: '#' }
-        ]} />
+        {/* Sur téléphone, le lien de retour et l'en-tête du cours suffisent : le fil d'Ariane prendrait trois lignes. */}
+        <div className="hidden md:block">
+          <Breadcrumbs customItems={[
+            { label: nsiLevelLabel(niveaux), href: coursePath(niveaux) },
+            { label: data.chapter || 'Cours', href: '#' },
+            { label: data.title || slugStr, href: '#' }
+          ]} />
+        </div>
 
-        <div className="mt-6">
+        <div className="md:mt-6">
           <PageHeader
             className="mb-8"
             eyebrow={

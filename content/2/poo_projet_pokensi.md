@@ -13,7 +13,7 @@ audience: public
 # <Icone nom="gamepad-2" /> Projet - PokéNSI (Partie 1)
 
 Le but de ce projet est de créer un jeu inspiré de Pokémon en utilisant Python.
-Dans cette première partie, nous allons nous concentrer sur la création du Pokédex et la mise en place du système de combat.
+Cette première partie porte sur la création du Pokédex et la mise en place du système de combat.
 
 **Ressources :**
 - [Code source principal](resources/pokensi_main.py)

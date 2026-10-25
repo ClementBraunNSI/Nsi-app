@@ -13,7 +13,7 @@ audience: public
 # <Icone nom="landmark" /> Projet - Application Bancaire Simple
 
 Le but de ce projet est de créer une petite banque en console, en Python.
-Dans ce projet, nous allons ranger les comptes dans un dictionnaire, puis écrire le dépôt, le retrait, la consultation et le menu.
+Ce projet consiste à ranger les comptes dans un dictionnaire, puis écrire le dépôt, le retrait, la consultation et le menu.
 
 **Ressources :**
 - [Code de départ](resources/app_back.py) : s'il est fourni en classe, il ne contient pas les fonctions à écrire. Sinon, partir d'un fichier vide `banque.py`.

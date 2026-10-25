@@ -12,7 +12,7 @@ audience: public
 # <Icone nom="vote" /> Projet - Simulateur de Système de Vote
 
 Le but de ce projet est de programmer un système de dépouillement.
-Dans ce projet, nous allons appliquer quatre règles au même jeu de bulletins, et constater que la règle peut changer le vainqueur.
+Ce projet consiste à appliquer quatre règles au même jeu de bulletins, et constater que la règle peut changer le vainqueur.
 
 On utilise des listes et des dictionnaires : une liste de noms pour un scrutin à un tour, une liste de classements pour les autres méthodes, un dictionnaire pour les scores. Le programme ne demande pas les votes au clavier : les bulletins sont écrits dans le fichier `votes.py`, ce qui permet de vérifier les résultats.
 

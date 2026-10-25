@@ -26,7 +26,7 @@ L'objectif de ce TP est de mettre en pratique l'algorithme des K Plus Proches Vo
 
 ### Contexte
 
-Nous avons des données sur des fruits, caractérisés par leur **douceur** (1 à 10) et leur **acidité** (1 à 10). Nous voulons prédire si un nouveau fruit est une "Pomme" ou une "Orange".
+Des données décrivent des fruits, caractérisés par leur **douceur** (1 à 10) et leur **acidité** (1 à 10). Il s'agit de prédire si un nouveau fruit est une "Pomme" ou une "Orange".
 
 **Données d'entraînement :**
 
@@ -66,7 +66,7 @@ Nous avons des données sur des fruits, caractérisés par leur **douceur** (1 �
 
 ### Contexte
 
-Nous allons appliquer KNN à un ensemble simplifié de fleurs Iris, caractérisées par la longueur de leurs sépales et pétales.
+KNN s'applique ici à un ensemble simplifié de fleurs Iris, caractérisées par la longueur de leurs sépales et pétales.
 Types : **Setosa** et **Versicolor**.
 
 **Données d'entraînement :**

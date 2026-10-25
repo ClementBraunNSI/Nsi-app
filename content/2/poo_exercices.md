@@ -21,7 +21,7 @@ groupeTitre: "Programmation orientée objet"
 
 ### Partie 1 : La Classe `Voiture`
 
-Nous reprenons la classe `Voiture` du cours.
+Reprendre la classe `Voiture` du cours.
 
 ```python
 class Voiture:

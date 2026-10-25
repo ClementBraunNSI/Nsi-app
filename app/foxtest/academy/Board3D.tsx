@@ -38,8 +38,8 @@ type Season = {
   sun: string;
   hemi: { sky: string; ground: string; intensity: number };
   key: { color: string; intensity: number; position: [number, number, number] };
-  /** Teinte posée sur le renard 2D, qui n'est pas éclairé, pour qu'il suive la lumière de la saison. */
-  fox: string;
+  /** Part de lumière propre du renard : ses couleurs restent vives à l'ombre, presque rien la nuit. */
+  foxGlow: number;
   night?: boolean;
 };
 
@@ -50,7 +50,7 @@ const SEASONS: Record<ChapterId, Season> = {
     flower: "#f9a8c9", flowerHeart: "#fde047", stem: "#4f9a3a", tuft: "#5f9f3d", fog: "#fff4dc", sun: "#fff1b8",
     hemi: { sky: "#e4f3ff", ground: "#7fae5c", intensity: 1.5 },
     key: { color: "#fff4df", intensity: 2.6, position: [5, 10, 7] },
-    fox: "#ffffff",
+    foxGlow: 0.2,
   },
   variables: {
     grass: ["#b6dc72", "#a4cf60"], edge: "#789f3e", earth: "#946035", earthDark: "#714624",
@@ -58,7 +58,7 @@ const SEASONS: Record<ChapterId, Season> = {
     flower: "#facc15", flowerHeart: "#92400e", stem: "#4a8a2c", tuft: "#6d9c34", fog: "#fff7e3", sun: "#ffe680",
     hemi: { sky: "#e8f6ff", ground: "#8eb55a", intensity: 1.5 },
     key: { color: "#fff0c8", intensity: 2.9, position: [4, 11, 6] },
-    fox: "#ffffff",
+    foxGlow: 0.2,
   },
   conditions: {
     grass: ["#c8cf7c", "#b7bf68"], edge: "#8d8f45", earth: "#8a5532", earthDark: "#693c20",
@@ -66,7 +66,7 @@ const SEASONS: Record<ChapterId, Season> = {
     flower: "#ef6c3a", flowerHeart: "#fde68a", stem: "#8a7a3a", tuft: "#9a8d43", fog: "#fff1e1", sun: "#ffd38a",
     hemi: { sky: "#ffe6cc", ground: "#a99a58", intensity: 1.45 },
     key: { color: "#ffdcae", intensity: 2.5, position: [6, 8, 6] },
-    fox: "#fff4ea",
+    foxGlow: 0.18,
   },
   for: {
     grass: ["#9fcf86", "#8ec276"], edge: "#5f9152", earth: "#80523a", earthDark: "#613a26",
@@ -74,7 +74,7 @@ const SEASONS: Record<ChapterId, Season> = {
     flower: "#c084fc", flowerHeart: "#fde047", stem: "#3f7c55", tuft: "#4f8a4f", fog: "#ffe4c4", sun: "#ffcf8a",
     hemi: { sky: "#ffd6bd", ground: "#7d9c6c", intensity: 1.35 },
     key: { color: "#ffb47c", intensity: 2.4, position: [-8, 4.5, 4] },
-    fox: "#ffe6d4",
+    foxGlow: 0.14,
   },
   while: {
     grass: ["#5d8f63", "#527f57"], edge: "#36583c", earth: "#4b3424", earthDark: "#33231a",
@@ -82,7 +82,7 @@ const SEASONS: Record<ChapterId, Season> = {
     flower: "#c7d2fe", flowerHeart: "#fef3c7", stem: "#2c5139", tuft: "#3f6e4c", fog: "#45507a", sun: "#f5f0d0",
     hemi: { sky: "#6f80b8", ground: "#1d2a22", intensity: 0.9 },
     key: { color: "#c3cdff", intensity: 1.25, position: [-5, 9, 5] },
-    fox: "#a5b0d8",
+    foxGlow: 0.04,
     night: true,
   },
 };
@@ -94,7 +94,6 @@ function noise(x: number, y: number, seed: number) {
 }
 
 const YAW: Record<Direction, number> = { S: 0, E: Math.PI / 2, N: Math.PI, W: -Math.PI / 2 };
-const STEP: Record<Direction, [number, number]> = { E: [1, 0], W: [-1, 0], S: [0, 1], N: [0, -1] };
 const DIRECTION_LABEL: Record<Direction, string> = { N: "le haut", E: "la droite", S: "le bas", W: "la gauche" };
 
 /* ---------- Modèles glTF (chargés une fois pour toute la page) ---------- */
@@ -128,83 +127,32 @@ function prepareModel(source: THREE.Group, scale: number) {
   return { model, part };
 }
 
-/* ---------- Le renard : la planche 2D du jeu, riggée (voir scripts/game-fox-rig.mjs) ---------- */
-
-type FoxView = "profil" | "face" | "dos";
-type FoxFacing = { view: FoxView; mirror: 1 | -1 };
-
-/** De dos quand il monte, de face quand il descend, de profil sinon (le profil gauche est le droit en miroir). */
-const FACING: Record<Direction, FoxFacing> = {
-  E: { view: "profil", mirror: 1 },
-  W: { view: "profil", mirror: -1 },
-  S: { view: "face", mirror: 1 },
-  N: { view: "dos", mirror: 1 },
-};
-
-// Le dessin est penché vers la caméra (plongée de 40°) et un peu étiré, pour ne pas paraître tassé.
-const FOX_TILT = 0.32;
-const FOX_STRETCH = 1 / Math.cos(THREE.MathUtils.degToRad(40) - FOX_TILT);
-const FOX_SHADOW: Record<FoxView, [number, number]> = { profil: [0.5, 0.15], face: [0.24, 0.13], dos: [0.24, 0.13] };
+/* ---------- Le renard : volume construit sur la planche du jeu 2D (scripts/game-fox-3d.mjs) ---------- */
 
 function prepareFox(source: THREE.Object3D) {
   const model = cloneSkinned(source);
-  model.rotation.x = -FOX_TILT;
-  const tinted: Array<{ material: THREE.MeshBasicMaterial; base: THREE.Color }> = [];
   const bones = new Map<string, THREE.Bone>();
-  const anchors: THREE.Object3D[] = [];
+  const materials: THREE.MeshStandardMaterial[] = [];
   model.traverse((object) => {
     const mesh = object as THREE.SkinnedMesh;
     if (mesh.isSkinnedMesh) {
-      // Pas d'éclairage : les couleurs du dessin restent celles du jeu 2D, teintées selon la saison.
-      const flat = new THREE.MeshBasicMaterial({
-        map: (mesh.material as THREE.MeshStandardMaterial).map,
-        transparent: true,
-        alphaTest: 0.06,
-        side: THREE.DoubleSide,
-      });
-      mesh.material = flat;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
       mesh.frustumCulled = false;
-      // Calque de devant (la queue vue de dos) : dessiné après le fond.
-      if (mesh.name.endsWith("_avant")) mesh.renderOrder = 1;
-      tinted.push({ material: flat, base: new THREE.Color("#ffffff") });
+      // Le dessin éclaire un peu par lui-même : ses couleurs restent vives côté ombre.
+      const material = mesh.material as THREE.MeshStandardMaterial;
+      material.emissive = new THREE.Color("#ffffff");
+      material.emissiveMap = material.map;
+      materials.push(material);
     }
     const bone = object as THREE.Bone;
-    if (bone.isBone) {
-      bone.userData.base = bone.position.clone();
-      bones.set(bone.name, bone);
-    }
-    if (typeof object.userData.couleur === "string") anchors.push(object);
+    if (bone.isBone) bones.set(bone.name, bone);
   });
-  // Paupières : une ellipse couleur pelage posée sur chaque œil, visible le temps d'un clignement.
-  const lids = anchors.map((anchor) => {
-    const { couleur, rx, ry } = anchor.userData as { couleur: string; rx: number; ry: number };
-    const material = new THREE.MeshBasicMaterial({ color: couleur, side: THREE.DoubleSide });
-    const lid = new THREE.Mesh(new THREE.CircleGeometry(1, 20), material);
-    lid.scale.set(rx, ry, 1);
-    lid.visible = false;
-    anchor.add(lid);
-    tinted.push({ material, base: new THREE.Color(couleur) });
-    return lid;
-  });
-  const shadow = new THREE.Mesh(
-    new THREE.CircleGeometry(1, 28),
-    new THREE.MeshBasicMaterial({ color: "#1d2616", transparent: true, opacity: 0.2, depthWrite: false }),
-  );
-  shadow.rotation.x = -Math.PI / 2;
-  shadow.position.y = 0.008;
-  const views: Record<FoxView, THREE.Object3D> = {
-    profil: model.getObjectByName("renard_profil") ?? new THREE.Object3D(),
-    face: model.getObjectByName("renard_face") ?? new THREE.Object3D(),
-    dos: model.getObjectByName("renard_dos") ?? new THREE.Object3D(),
-  };
   const spare = new THREE.Object3D();
   return {
     model,
-    shadow,
-    views,
-    lids,
-    tinted,
-    tint: "",
+    materials,
+    glow: -1,
     bones: [...bones.values()],
     bone: (name: string): THREE.Object3D => bones.get(name) ?? spare,
   };
@@ -460,7 +408,7 @@ export default function Board3D({ world, foxPos, foxDir, foxAction, signLabel, c
   const live = useRef({
     target: new THREE.Vector3(),
     dir: "E" as Direction,
-    foxTint: "#ffffff",
+    foxGlow: 0.2,
     action: "idle" as FoxAction,
     actionAt: 0,
     atGoal: false,
@@ -548,7 +496,7 @@ export default function Board3D({ world, foxPos, foxDir, foxAction, signLabel, c
         if (disposed) return;
         rig.fox = prepareFox(fox);
         rig.hen = prepareModel(hen, 1.45);
-        foxRig.add(rig.fox.model, rig.fox.shadow);
+        foxRig.add(rig.fox.model);
         henRig.add(rig.hen.model);
         host.dataset.ready = "true";
       })
@@ -559,8 +507,6 @@ export default function Board3D({ world, foxPos, foxDir, foxAction, signLabel, c
     /* Boucle d'animation */
     let frame = 0;
     let visible = true;
-    let nextBlink = 1.5;
-    let blinkAt = -10;
     let nextEar = 3;
     let nextPeck = 2;
     let peckAt = -10;
@@ -568,11 +514,6 @@ export default function Board3D({ world, foxPos, foxDir, foxAction, signLabel, c
     let earSide = 1;
     let walkPhase = 0;
     let walkWeight = 0;
-    // Changement de vue en cours : de quelle vue vers laquelle, et depuis quand.
-    let flipFrom: FoxFacing | null = null;
-    let flipTo: FoxFacing | null = null;
-    let flipAt = -10;
-    let shadowSize: [number, number] = [0.3, 0.13];
 
     const animate = () => {
       frame = requestAnimationFrame(animate);
@@ -582,123 +523,84 @@ export default function Board3D({ world, foxPos, foxDir, foxAction, signLabel, c
       const s = live.current;
       const since = t - s.actionAt;
 
-      // Déplacement amorti vers la case visée : suit aussi bien la vitesse normale que la rapide.
-      const snapping = s.snap || reduced;
-      if (snapping) foxRig.position.copy(s.target);
-      else foxRig.position.lerp(s.target, 1 - Math.exp(-dt * 13));
+      // Déplacement et rotation amortis vers la case et la direction visées : suit aussi bien la
+      // vitesse normale que la rapide.
+      const yaw = YAW[s.dir];
+      if (s.snap || reduced) {
+        foxRig.position.copy(s.target);
+        foxRig.rotation.y = yaw;
+      } else {
+        foxRig.position.lerp(s.target, 1 - Math.exp(-dt * 13));
+        let delta = yaw - foxRig.rotation.y;
+        delta = Math.atan2(Math.sin(delta), Math.cos(delta));
+        foxRig.rotation.y += delta * (1 - Math.exp(-dt * 16));
+      }
+      s.snap = false;
 
       const fox = rig.fox;
       if (fox) {
-        // La vue suit la direction ; en tournant, le dessin pivote comme une feuille de papier.
-        const want = FACING[s.dir];
-        if (want !== flipTo) {
-          const instant = snapping || !flipTo;
-          flipFrom = instant ? want : (t - flipAt < 0.14 ? flipFrom : flipTo);
-          flipTo = want;
-          flipAt = instant ? -10 : t;
-        }
-        const flip = Math.min(1, (t - flipAt) / 0.28);
-        const shown = (flip < 0.5 ? flipFrom : flipTo) ?? want;
-        for (const [name, group] of Object.entries(fox.views)) group.visible = name === shown.view;
-
-        for (const bone of fox.bones) {
-          bone.position.copy(bone.userData.base as THREE.Vector3);
-          bone.rotation.set(0, 0, 0);
-          bone.scale.set(1, 1, 1);
-        }
-        const b = (name: string) => fox.bone(`${shown.view}_${name}`);
+        for (const bone of fox.bones) bone.rotation.set(0, 0, 0);
+        const b = fox.bone;
         const calm = reduced ? 0 : 1;
 
-        // Marche : de profil, les diagonales avancent ensemble et le bas de la patte se plie en
-        // remontant ; de face et de dos, les pattes se lèvent l'une après l'autre.
+        // Marche : les diagonales avancent ensemble, le bas de la patte se plie en remontant.
         const walking = s.action === "walk" && !reduced;
         walkWeight += ((walking ? 1 : 0) - walkWeight) * (1 - Math.exp(-dt * 12));
         walkPhase += dt * 13 * walkWeight;
         const ph = walkPhase;
         const ww = walkWeight;
-        b("corps").position.y += Math.abs(Math.sin(ph)) * 0.008 * ww;
-        b("corps").scale.y = 1 + Math.sin(t * 2.2) * 0.01 * calm * (1 - ww);
-        let headTilt = Math.sin(t * 0.8) * 0.03 * calm * (1 - ww);
-        if (shown.view === "profil") {
-          const swing = Math.sin(ph) * 0.45 * ww;
-          const liftA = Math.max(0, Math.cos(ph)) * ww;
-          const liftB = Math.max(0, -Math.cos(ph)) * ww;
-          b("patte_ar_1").rotation.z = swing;
-          b("patte_av_2").rotation.z = swing;
-          b("patte_ar_2").rotation.z = -swing;
-          b("patte_av_1").rotation.z = -swing;
-          b("patte_ar_1_bas").rotation.z = -0.6 * liftA;
-          b("patte_av_2_bas").rotation.z = -0.6 * liftA;
-          b("patte_ar_2_bas").rotation.z = -0.6 * liftB;
-          b("patte_av_1_bas").rotation.z = -0.6 * liftB;
-          headTilt += Math.sin(ph * 2) * 0.035 * ww;
-        } else {
-          b("patte_g").position.y += Math.max(0, Math.sin(ph)) * 0.024 * ww;
-          b("patte_d").position.y += Math.max(0, -Math.sin(ph)) * 0.024 * ww;
-          b("corps").rotation.z = Math.sin(ph) * 0.035 * ww;
-          headTilt -= Math.sin(ph) * 0.03 * ww;
-        }
+        const swing = Math.sin(ph) * 0.5 * ww;
+        const liftA = Math.max(0, Math.cos(ph)) * ww;
+        const liftB = Math.max(0, -Math.cos(ph)) * ww;
+        b("patte_ar_1").rotation.x = -swing;
+        b("patte_av_2").rotation.x = -swing;
+        b("patte_ar_2").rotation.x = swing;
+        b("patte_av_1").rotation.x = swing;
+        b("patte_ar_1_bas").rotation.x = 0.7 * liftA;
+        b("patte_av_2_bas").rotation.x = 0.7 * liftA;
+        b("patte_ar_2_bas").rotation.x = 0.7 * liftB;
+        b("patte_av_1_bas").rotation.x = 0.7 * liftB;
 
-        // Queue : lente au repos, plus vive en marchant, frétillante une fois la poule rattrapée.
-        const wag = (lag: number) =>
-          s.atGoal && !reduced ? Math.sin(t * 14 - lag) * 0.16 : walking ? Math.sin(ph - lag) * 0.07 : Math.sin(t * 1.5 - lag) * 0.07 * calm;
-        b("queue_1").rotation.z = wag(0);
-        b("queue_2").rotation.z = wag(0.9) * 1.4;
-
-        // Lecture du panneau, coup contre un obstacle, petit saut pendant un demi-tour.
+        // Tête : regarde autour d'elle au repos, hoche en marchant, se penche pour lire le panneau.
+        let headPitch = Math.sin(ph * 2) * 0.04 * ww + Math.sin(t * 0.9) * 0.03 * calm * (1 - ww);
+        const headYaw = Math.sin(t * 0.7) * 0.18 * calm * (1 - ww);
+        let lift = Math.abs(Math.sin(ph)) * 0.012 * ww;
         let lunge = 0;
-        let squash = 0;
         let earBack = 0;
         if (!reduced) {
-          if (s.action === "read" && since < 0.6) {
-            headTilt += (shown.view === "profil" ? -0.28 : 0.2) * Math.sin(Math.min(1, since / 0.48) * Math.PI);
-          }
+          if (s.action === "turn" && since < 0.3) lift += Math.sin((since / 0.3) * Math.PI) * 0.06;
+          if (s.action === "read" && since < 0.6) headPitch += 0.35 * Math.sin(Math.min(1, since / 0.48) * Math.PI);
           if (s.action === "bump" && since < 0.4) {
             const k = Math.sin((since / 0.4) * Math.PI);
             lunge = 0.14 * k;
-            squash = k;
-            earBack = 0.4 * k;
+            headPitch -= 0.25 * k;
+            earBack = 0.5 * k;
           }
         }
-        b("tete").rotation.z = headTilt;
+        b("tete").rotation.set(headPitch, headYaw, 0);
+        fox.model.position.set(0, lift, lunge);
 
-        // Oreilles qui bougent de temps en temps, clignements.
+        // Queue : lente au repos, plus vive en marchant, frétillante une fois la poule rattrapée.
+        const wag = (lag: number) =>
+          s.atGoal && !reduced ? Math.sin(t * 14 - lag) * 0.35 : walking ? Math.sin(ph - lag) * 0.2 : Math.sin(t * 1.5 - lag) * 0.18 * calm;
+        b("queue_1").rotation.set(Math.sin(t * 1.1) * 0.05 * calm, wag(0), 0);
+        b("queue_2").rotation.set(0, wag(0.9) * 1.3, 0);
+
+        // Oreilles qui bougent de temps en temps, couchées en arrière au moment du choc.
         if (!reduced && t > nextEar) {
           earAt = t;
           earSide = Math.random() < 0.5 ? 1 : -1;
           nextEar = t + 3 + Math.random() * 4;
         }
-        const twitch = t - earAt < 0.35 ? Math.sin(((t - earAt) / 0.35) * Math.PI) * 0.35 : 0;
-        if (shown.view === "profil") {
-          b("oreille_1").rotation.z = earBack + (earSide > 0 ? twitch : 0);
-          b("oreille_2").rotation.z = earBack + (earSide < 0 ? twitch : 0);
-        } else {
-          b("oreille_g").rotation.z = earBack + (earSide > 0 ? twitch : 0);
-          b("oreille_d").rotation.z = -earBack - (earSide < 0 ? twitch : 0);
-        }
-        if (!reduced && t > nextBlink) {
-          blinkAt = t;
-          nextBlink = t + 2 + Math.random() * 3;
-        }
-        for (const lid of fox.lids) lid.visible = t - blinkAt < 0.12;
+        const twitch = t - earAt < 0.35 ? Math.sin(((t - earAt) / 0.35) * Math.PI) * 0.4 : 0;
+        b("oreille_g").rotation.set(-earBack, 0, earSide > 0 ? -twitch : 0);
+        b("oreille_d").rotation.set(-earBack, 0, earSide < 0 ? twitch : 0);
 
-        const [dx, dz] = STEP[s.dir];
-        const width = Math.max(0.03, Math.abs(Math.cos(flip * Math.PI)));
-        const hop = reduced ? 0 : Math.sin(flip * Math.PI) * 0.05;
-        fox.model.position.set(dx * lunge, 0.004 + hop, dz * lunge);
-        fox.model.scale.set(shown.mirror * width * (1 + 0.06 * squash), FOX_STRETCH * (1 - 0.1 * squash), 1);
-
-        const [sw, sd] = FOX_SHADOW[shown.view];
-        shadowSize = [shadowSize[0] + (sw - shadowSize[0]) * (1 - Math.exp(-dt * 12)), shadowSize[1] + (sd - shadowSize[1]) * (1 - Math.exp(-dt * 12))];
-        fox.shadow.scale.set(shadowSize[0], shadowSize[1], 1);
-
-        if (fox.tint !== s.foxTint) {
-          const tint = new THREE.Color(s.foxTint);
-          for (const { material, base } of fox.tinted) material.color.copy(base).multiply(tint);
-          fox.tint = s.foxTint;
+        if (fox.glow !== s.foxGlow) {
+          for (const material of fox.materials) material.emissiveIntensity = s.foxGlow;
+          fox.glow = s.foxGlow;
         }
       }
-      s.snap = false;
 
       const hen = rig.hen;
       if (hen) {
@@ -780,7 +682,7 @@ export default function Board3D({ world, foxPos, foxDir, foxAction, signLabel, c
     Object.assign(key.shadow.camera, { left: -span, right: span, top: span, bottom: -span, near: 0.5, far: 40 });
     key.shadow.camera.updateProjectionMatrix();
     scene.fog = null;
-    live.current.foxTint = season.fox;
+    live.current.foxGlow = season.foxGlow;
 
     const W = world.cols;
     const D = world.rows;

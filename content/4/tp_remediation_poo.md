@@ -23,7 +23,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     ### Les règles d'or (à lire attentivement) :
     1. **Les Propriétés :** On utilise `get; set;` pour définir une propriété accessible de l'extérieur.
     2. **Le Constructeur :** Il porte **exactement le même nom que la classe**. Il n'a **pas de type de retour** (ni `void`, ni `int`).
-    3. **Pas de `static` partout :** Le mot clé `static` signifie "appartient au moule global". Or, en POO, on veut que chaque objet ait ses propres valeurs. **Retirer le mot `static` de les méthodes et propriétés !**
+    3. **Pas de `static` partout :** Le mot clé `static` signifie "appartient au moule global". Or, en POO, on veut que chaque objet ait ses propres valeurs. **Retirer le mot `static` des méthodes et propriétés !**
 
     ### <Icone nom="clipboard-list" /> Travail à faire
 

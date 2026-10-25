@@ -8,7 +8,7 @@
   --ink: #1f2a1c;
   display: flex;
   flex-direction: column;
-  min-height: calc(100dvh - 5rem);
+  min-height: calc(100dvh - var(--header-h));
   background: var(--bg);
   color: var(--fg);
 }
@@ -1146,7 +1146,7 @@
     min-height: 0;
     flex: none;
     height: min(46dvh, 28rem);
-    scroll-margin-top: 6rem;
+    scroll-margin-top: calc(var(--sticky-top) + 1rem);
   }
 
   .stageBar {

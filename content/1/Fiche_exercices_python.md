@@ -84,8 +84,8 @@ assert resultat == 42, "Le calcul 15 + 27 devrait donner 42."
 
       **Écrire un programme qui :**
 
-      - Créer une variable `nom` avec son nom
-      - Créer une variable `age` avec son âge
+      - Crée une variable `nom` avec le nom de l'élève
+      - Crée une variable `age` avec l'âge de l'élève
       - Affiche ces informations
     </Enonce>
     <Verification>
@@ -120,7 +120,7 @@ assert isinstance(prenom, str), "La variable 'prenom' doit être du texte."
 
       **Écrire un programme qui :**
 
-      - Créer deux variables `a` et `b` avec des nombres au choix
+      - Crée deux variables `a` et `b` avec des nombres au choix
       - Calcule leur somme dans une variable `somme`
       - Affiche le résultat
 

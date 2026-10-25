@@ -41,7 +41,7 @@ export default function MotDePassePage() {
   };
 
   return (
-    <div className="mx-auto min-h-[calc(100vh-5rem)] max-w-lg px-6 py-16">
+    <div className="mx-auto min-h-[calc(100vh_-_var(--header-h))] max-w-lg px-6 py-16">
       <PageHeader
         eyebrow="Première connexion"
         title="Choisis ton mot de passe"

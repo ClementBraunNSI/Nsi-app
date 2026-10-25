@@ -2,7 +2,7 @@
 // Usage : node scripts/game-3d-assets.mjs
 // Sortie : public/images/foxtest/academy/3d/{renard,poule}.glb, textures incluses.
 //
-// Le renard est la planche de sprites du jeu 2D, riggée (voir game-fox-rig.mjs). La poule est
+// Le renard est construit en volume à partir de la planche de sprites du jeu 2D (game-fox-3d.mjs). La poule est
 // modélisée ici en low poly facetté : chaque partie qui bouge (tête, ailes) est un nœud nommé dont
 // l'origine est l'articulation. Ses couleurs viennent d'un atlas de dégradés : chaque facette
 // pointe sur une case de l'atlas, la hauteur choisit la teinte.
@@ -12,7 +12,7 @@ import path from "node:path";
 import sharp from "sharp";
 import * as THREE from "three";
 import { Document, NodeIO, TextureInfo } from "@gltf-transform/core";
-import { writeFoxRig } from "./game-fox-rig.mjs";
+import { writeFox3D } from "./game-fox-3d.mjs";
 
 const OUT = "public/images/foxtest/academy/3d";
 
@@ -364,5 +364,5 @@ async function writeModel(model, png) {
 fs.mkdirSync(OUT, { recursive: true });
 const png = await atlasPng();
 fs.writeFileSync(path.join(OUT, "atlas.png"), png);
-await writeFoxRig(OUT);
+await writeFox3D(OUT);
 await writeModel(hen(), png);

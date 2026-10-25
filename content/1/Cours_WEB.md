@@ -41,7 +41,7 @@ Ils ne s'envoient pas des phrases libres. Ils échangent des **requêtes**, des 
 
 ## De l'adresse IP à l'adresse tapée
 
-Personne ne retient `216.58.214.163` pour ouvrir Google. On retient une **URL**, *Uniform Resource Locator* : une adresse écrite pour nous.
+Personne ne retient `216.58.214.163` pour ouvrir Google. On retient une **URL**, *Uniform Resource Locator* : une adresse écrite pour les humains.
 
 <UrlBuilder />
 

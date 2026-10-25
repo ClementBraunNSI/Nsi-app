@@ -12,7 +12,7 @@ audience: public
     <Enonce>
 ## Introduction
 
-En informatique, les données que nous manipulons ont différentes natures : des nombres, du texte, des réponses vrai/faux, etc. Chaque donnée possède un **type** qui détermine ce que l'on peut faire avec elle.
+En informatique, les données manipulées ont différentes natures : des nombres, du texte, des réponses vrai/faux, etc. Chaque donnée possède un **type** qui détermine ce que l'on peut faire avec elle.
 
 ## Qu'est-ce un type de données ?
 

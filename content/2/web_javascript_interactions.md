@@ -97,7 +97,7 @@ S'entraîner avec les exercices ci-dessous. Ensuite, le cours [Web et HTTP](/cou
     <Enonce>
     ### Objectif : Créer un compteur de likes
     
-    Nous allons créer un bouton qui incrémente un compteur affiché à l'écran.
+    Créer un bouton qui incrémente un compteur affiché à l'écran.
     
     **Code HTML fourni :**
     ```html

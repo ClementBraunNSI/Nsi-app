@@ -17,7 +17,7 @@ image: /images/fox_chasse_renard.png
 # <Renard /> Projet : Chasse aux Ren'Arts
 
 Le but de ce projet est de créer la page web de son tableau pour la chasse aux Ren'Arts.
-Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de repérage, puis choisir le fond, la couleur du texte et la police.
+Ce projet consiste à remplir la maquette HTML, retirer les bordures de repérage, puis choisir le fond, la couleur du texte et la police.
 
 **Ressources :**
 - [Notice sur HTML](Cours_html.md) : titres, paragraphes, listes, images.

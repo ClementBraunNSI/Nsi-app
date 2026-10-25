@@ -13,7 +13,7 @@ audience: public
 # <Icone nom="sprout" /> Projet - Calculateur d'Empreinte Carbone
 
 Le but de ce projet est de créer un programme qui estime les émissions de CO2 d'un trajet selon le mode de transport.
-Dans ce projet, nous allons travailler les variables, `input`, les conversions de type et les conditions.
+Ce projet consiste à travailler les variables, `input`, les conversions de type et les conditions.
 
 Les facteurs ci-dessous sont des ordres de grandeur pour l'exercice, pas un bilan carbone officiel.
 

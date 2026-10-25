@@ -9,7 +9,7 @@ prerequisites:
 audience: public
 ---
 
-Nous comptons d'habitude en base 10. Cela veut dire que nous disposons de dix symboles, de 0 à 9, et que la position d'un chiffre change sa valeur. L'informatique n'a pas dix symboles. Elle en a deux : 0 et 1. On les appelle des **bits**. Huit bits regroupés forment un **octet**.
+On compte d'habitude en base 10. Cela veut dire qu'on dispose de dix symboles, de 0 à 9, et que la position d'un chiffre change sa valeur. L'informatique n'a pas dix symboles. Elle en a deux : 0 et 1. On les appelle des **bits**. Huit bits regroupés forment un **octet**.
 
 Pourquoi deux seulement ? Parce qu'un circuit est à l'aise avec une question fermée : le courant passe, ou il ne passe pas. Tout le reste, les nombres, le texte, les images, se reconstruit à partir de cette alternative.
 

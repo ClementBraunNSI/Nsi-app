@@ -179,7 +179,7 @@ Si `.container` apparaît deux fois, compléter celle qui contient déjà `displ
 
 ## 6. Ce qu'on rend, et comment c'est lu <Icone nom="package" />
 
-Deux professeurs lisent le même site. Chacun note ce qui relève de son cours. Le lien entre le récit et le tableau se vérifie à deux : la fiche et l'image sont sur la page.
+Le même site est évalué en SNT et en anglais. Chaque matière note ce qui relève de son cours. Le lien entre le récit et le tableau se vérifie dans les deux : la fiche et l'image sont sur la page.
 
 ### Traces de recherche (SNT)
 

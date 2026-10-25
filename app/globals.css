@@ -157,14 +157,40 @@ body::before {
   view-transition-name: page-main;
 }
 
+/* Hauteur de l'en-tête, et décalage des éléments collants placés dessous.
+   Téléphone : en-tête plus bas. Téléphone en paysage : il défile avec la page pour laisser la hauteur au contenu. */
+:root {
+  --header-h: 5rem;
+  --sticky-top: var(--header-h);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --header-h: 3.75rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 540px) {
+  :root {
+    --header-h: 3.5rem;
+    --sticky-top: 0px;
+  }
+}
+
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
   view-transition-name: site-header;
-  height: 5rem;
+  height: var(--header-h);
   border-bottom: 1px solid var(--border);
   background: var(--surface);
+}
+
+@media (orientation: landscape) and (max-height: 540px) {
+  .site-header {
+    position: relative;
+  }
 }
 
 .site-header-inner {
@@ -178,9 +204,215 @@ body::before {
   gap: 1rem;
 }
 
+.site-brand {
+  display: flex;
+  min-width: 0;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.site-brand-name {
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
+.site-header-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .site-header-inner {
+    padding: 0 0.75rem 0 1rem;
+    gap: 0.5rem;
+  }
+
+  .site-brand {
+    flex-shrink: 1;
+    gap: 0.5rem;
+  }
+
+  .site-brand-name {
+    font-size: 0.95rem;
+  }
+
+  .site-header-desktop {
+    display: none;
+  }
+
+  .site-header-mobile {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.375rem;
+  }
+}
+
+.site-login-mobile {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 0.8rem;
+  border-radius: 0.75rem;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.site-login-mobile svg {
+  display: none;
+}
+
+/* Petit téléphone : « Connexion » se réduit à son icône pour que le nom du site reste entier. */
+@media (max-width: 359px) {
+  .site-login-mobile {
+    width: 2.5rem;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .site-login-mobile svg {
+    display: block;
+  }
+
+  .site-login-mobile span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+}
+
+.site-menu-button {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: 0.85rem;
+  border: 1px solid var(--border);
+  color: var(--fg);
+  transition: background-color 150ms;
+}
+
+.site-menu-button[aria-expanded="true"] {
+  background: var(--surface-2);
+}
+
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: var(--header-h) 0 0;
+  background: rgba(12, 10, 8, 0.45);
+  animation: page-soft-in 200ms var(--ease-out);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  max-height: calc(100dvh - var(--header-h));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.75rem 1rem calc(1.25rem + env(safe-area-inset-bottom));
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 0 1.5rem 1.5rem;
+  background: var(--surface);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.45);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu {
+    animation: mobile-menu-in 240ms var(--ease-out);
+  }
+}
+
+@keyframes mobile-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.75rem);
+  }
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mobile-menu-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 3.25rem;
+  padding: 0 0.85rem;
+  border-radius: 0.9rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.mobile-menu-links a svg {
+  color: var(--subtle);
+}
+
+.mobile-menu-links a.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.mobile-menu-links a.is-active svg {
+  color: var(--accent);
+}
+
+.mobile-menu-block {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.mobile-menu-block h2 {
+  margin: 0 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--subtle);
+}
+
+.mobile-menu-account {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.mobile-menu-primary,
+.mobile-menu-secondary {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.mobile-menu-primary {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.mobile-menu-secondary {
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
 .site-logo {
-  --site-fox-h: 4rem;
-  --site-fox-w: 4rem;
+  --site-fox-h: 2.75rem;
+  --site-fox-w: 2.75rem;
   --site-fox-fit: cover;
   --site-fox-pos: 100% 0%;
   display: block;
@@ -203,6 +435,12 @@ body::before {
 @media (min-width: 1024px) {
   .site-logo {
     --site-fox-h: 4.7rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 540px) {
+  .site-logo {
+    --site-fox-h: 2.9rem;
   }
 }
 
@@ -296,10 +534,109 @@ a.home-ex:hover { border-color: var(--accent); transform: translateY(-2px); }
 .home-ex-list { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; margin-top: 0.3rem; font-size: 0.85rem; font-weight: 500; }
 .home-ex-list a:hover { color: var(--accent); }
 
+/* ---------- Accueil du téléphone : sa propre composition (HomeMobile) ---------- */
+.hm { display: none; }
+
+@media (max-width: 767px) {
+  .home-desktop { display: none; }
+  .hm { display: block; position: relative; z-index: 10; padding: 1rem 1rem 3rem; }
+}
+
+.hm-greet { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem; }
+.hm-greet b { display: block; font-size: 1.05rem; font-weight: 600; color: var(--fg); }
+.hm-greet span:not(.home-avatar) { display: block; font-size: 0.875rem; color: var(--muted); }
+
+.hm-hero { position: relative; overflow: hidden; padding: 1.15rem 1.15rem 0; border-radius: 1.75rem; border: 1px solid var(--border); background: radial-gradient(circle at 88% 92%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 58%), var(--surface-2); box-shadow: var(--shadow); }
+.hm-splash { margin: 0 0 0.85rem; max-width: 100%; }
+.hm-splash span { white-space: normal; font-size: 0.8rem; line-height: 1.35; }
+.hm-title { font-size: clamp(1.7rem, 8.2vw, 2.4rem); font-weight: 600; line-height: 1.04; letter-spacing: -0.035em; color: var(--fg); }
+.hm-hero-row { display: flex; align-items: flex-end; gap: 0.25rem; margin-top: 0.85rem; }
+.hm-lead { flex: 1; min-width: 0; align-self: center; padding-bottom: 0.5rem; font-size: 0.95rem; font-weight: 500; line-height: 1.5; color: var(--muted); }
+.hm-fox-box { position: relative; flex-shrink: 0; width: 8.25rem; height: 10rem; }
+/* Le dessin occupe le milieu de son carré : on l'agrandit et on cale ses pattes sur le bas de la carte. */
+.hm-fox { position: absolute; left: -2.6rem; bottom: -2.1rem; width: 14rem; height: 14rem; cursor: pointer; }
+
+.hm-search { position: relative; z-index: 30; margin-top: 1rem; }
+.hm-search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--subtle); pointer-events: none; }
+.hm-search input { width: 100%; height: 3.25rem; padding: 0 1rem 0 2.85rem; border-radius: 1rem; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); font-size: 1rem; font-weight: 500; color: var(--fg); outline: none; -webkit-appearance: none; appearance: none; }
+.hm-search input:focus { border-color: var(--accent); }
+.hm-search input::placeholder { color: var(--subtle); }
+.hm-search-results { position: absolute; top: calc(100% + 0.5rem); left: 0; right: 0; max-height: 60dvh; overflow-y: auto; border-radius: 1rem; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+.hm-search-results a { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; min-height: 3.5rem; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); color: var(--subtle); }
+.hm-search-results a:last-child { border-bottom: 0; }
+.hm-search-results b { display: block; font-size: 0.95rem; font-weight: 600; color: var(--fg); }
+.hm-search-results small { display: block; font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+.hm-search-empty { padding: 1.1rem 1rem; text-align: center; font-size: 0.9rem; color: var(--muted); }
+.hm-chips { display: flex; gap: 0.5rem; overflow-x: auto; margin: 0.75rem -1rem 0; padding: 0 1rem 0.25rem; scrollbar-width: none; }
+.hm-chips::-webkit-scrollbar { display: none; }
+.hm-chips button { flex-shrink: 0; min-height: 2.25rem; padding: 0 0.95rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); font-size: 0.875rem; font-weight: 500; color: var(--muted); }
+.hm-chips button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+
+.hm-resume { display: grid; gap: 0.6rem; margin-bottom: 1.25rem; }
+.hm-continue { display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 0.75rem 0.85rem 0.85rem; border-radius: 1.25rem; border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border)); background: linear-gradient(120deg, var(--accent-soft), transparent 70%), var(--surface); box-shadow: var(--shadow); }
+.hm-continue-pic { display: grid; width: 3.75rem; height: 3.75rem; flex-shrink: 0; place-items: center; border-radius: 0.9rem; background: var(--surface-2); }
+.hm-continue-title { display: block; margin: 0.15rem 0 0.5rem; font-size: 1.05rem; font-weight: 600; line-height: 1.3; color: var(--fg); }
+.hm-continue-go { flex-shrink: 0; color: var(--accent); }
+.hm-minis { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.hm-mini { display: flex; min-width: 0; flex-direction: column; gap: 0.3rem; padding: 0.8rem 0.9rem; border-radius: 1.1rem; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+.hm-mini-k { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 600; color: var(--subtle); }
+.hm-mini b { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 0.95rem; font-weight: 600; line-height: 1.3; color: var(--fg); }
+.hm-mini-p { font-size: 0.8rem; line-height: 1.4; color: var(--muted); }
+.hm-mini-due { align-self: flex-start; padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--accent-soft); font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+.hm-mini-badges { display: flex; gap: 0.3rem; }
+.hm-mini-badges img { width: 1.9rem; height: 1.9rem; object-fit: contain; border-radius: 0.5rem; background: var(--surface-2); }
+
+.hm-section { margin-top: 2.25rem; scroll-margin-top: calc(var(--sticky-top) + 1rem); }
+.hm-h2 { font-size: 1.45rem; font-weight: 600; letter-spacing: -0.025em; color: var(--fg); }
+.hm-sub { margin-top: 0.2rem; font-size: 0.9rem; color: var(--muted); }
+
+/* Les niveaux sur un sentier : un rond numéroté par niveau, reliés par des pointillés. */
+.hm-trail { position: relative; display: grid; gap: 0.65rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.hm-trail::before { content: ""; position: absolute; left: 1.05rem; top: 1.75rem; bottom: 1.75rem; border-left: 2px dashed color-mix(in srgb, var(--accent) 40%, transparent); }
+.hm-step { position: relative; display: flex; align-items: center; gap: 0.75rem; }
+.hm-node { position: relative; z-index: 1; display: grid; width: 2.15rem; height: 2.15rem; flex-shrink: 0; place-items: center; border-radius: 50%; background: var(--lc); color: var(--lon); font-family: var(--font-geist-mono), monospace; font-size: 0.85rem; font-weight: 700; box-shadow: 0 0 0 4px var(--bg); }
+.hm-level { display: flex; min-width: 0; flex: 1; align-items: center; gap: 0.75rem; min-height: 4.75rem; padding: 0.65rem 0.65rem 0.65rem 1rem; border-radius: 1.15rem; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); transition: border-color 150ms; }
+.hm-level:active { border-color: var(--lc); }
+.hm-level-txt { display: flex; min-width: 0; flex: 1; flex-direction: column; }
+.hm-level-aud { font-size: 0.75rem; font-weight: 600; color: var(--lt); }
+.hm-level b { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.015em; color: var(--fg); }
+.hm-level-meta { margin-top: 0.1rem; font-size: 0.8rem; font-weight: 500; color: var(--subtle); }
+.hm-level-pic { display: grid; width: 3.6rem; height: 3.6rem; flex-shrink: 0; place-items: center; border-radius: 1rem; background: color-mix(in srgb, var(--lc) 24%, var(--surface)); }
+.hm-level-pic img { width: 3.1rem; height: 3.1rem; object-fit: contain; }
+.hm-level-prog { display: block; height: 6px; margin: 0.45rem 0 0.1rem; border-radius: 99px; overflow: hidden; background: color-mix(in srgb, var(--lon) 22%, transparent); }
+.hm-level-prog i { display: block; height: 100%; border-radius: 99px; background: var(--lon); }
+/* Première NSI, et le niveau de l'élève connecté, prennent la couleur du niveau. */
+.hm-step.is-featured .hm-level,
+.hm-step.is-mine .hm-level { min-height: 5.5rem; border-color: color-mix(in srgb, var(--lc) 60%, transparent); background: radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.22), transparent 55%), color-mix(in srgb, var(--lc) 88%, transparent); }
+.hm-step.is-featured .hm-level-aud, .hm-step.is-featured .hm-level b, .hm-step.is-featured .hm-level-meta,
+.hm-step.is-mine .hm-level-aud, .hm-step.is-mine .hm-level b, .hm-step.is-mine .hm-level-meta { color: var(--lon); }
+.hm-step.is-featured .hm-level-pic, .hm-step.is-mine .hm-level-pic { width: 4.25rem; height: 4.25rem; background: color-mix(in srgb, var(--surface) 88%, transparent); }
+.hm-step.is-featured .hm-level-pic img, .hm-step.is-mine .hm-level-pic img { width: 3.7rem; height: 3.7rem; }
+.hm-step.is-mine .hm-level { outline: 3px solid color-mix(in srgb, var(--lc) 40%, transparent); outline-offset: 2px; }
+:root:not(.dark) .hm-step[data-level="3"] { --lon: #1a0a03; }
+
+/* Les activités défilent de côté, une carte et le début de la suivante à l'écran. */
+.hm-rail { display: flex; gap: 0.75rem; overflow-x: auto; margin: 1rem -1rem 0; padding: 0.25rem 1rem 1rem; scroll-snap-type: x mandatory; scroll-padding: 0 1rem; scrollbar-width: none; }
+.hm-rail::-webkit-scrollbar { display: none; }
+.hm-card { display: flex; flex: 0 0 min(16rem, 78vw); flex-direction: column; overflow: hidden; scroll-snap-align: start; border-radius: 1.25rem; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+.hm-card-pic { display: grid; height: 8.75rem; place-items: center; background: var(--surface-2); }
+.hm-card-pic img { width: auto; height: 7.25rem; object-fit: contain; }
+.hm-card-body { display: flex; flex: 1; flex-direction: column; gap: 0.2rem; padding: 0.85rem 1rem 1rem; }
+.hm-card b { font-size: 1.05rem; font-weight: 600; color: var(--fg); }
+.hm-card-p { font-size: 0.875rem; line-height: 1.45; color: var(--muted); }
+.hm-card-link { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: auto; padding-top: 0.6rem; font-size: 0.875rem; font-weight: 600; color: var(--accent); }
+
+.hm-private { display: flex; gap: 0.85rem; margin-top: 1.5rem; padding: 1rem; border-radius: 1.25rem; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border)); background: var(--accent-soft); }
+.hm-private-pic { display: grid; width: 3.5rem; height: 3.5rem; flex-shrink: 0; place-items: center; border-radius: 0.9rem; background: var(--surface); }
+.hm-private b { display: block; font-size: 1.05rem; font-weight: 600; color: var(--fg); }
+.hm-private p { margin-top: 0.2rem; font-size: 0.875rem; color: var(--muted); }
+.hm-private ul { display: grid; gap: 0.15rem; margin-top: 0.35rem; }
+.hm-private li a { display: block; padding: 0.35rem 0; font-size: 0.925rem; font-weight: 500; color: var(--fg); }
+
 /* ---------- Connexion : prairie illustrée à gauche, formulaire à droite ---------- */
 .login-page {
   display: grid;
-  min-height: calc(100dvh - 5rem);
+  min-height: calc(100dvh - var(--header-h));
   place-items: center;
   padding: 2rem 1rem;
 }
@@ -994,9 +1331,9 @@ a.home-ex:hover { border-color: var(--accent); transform: translateY(-2px); }
 
 .enq-dossier {
   position: sticky;
-  top: 6rem;
+  top: calc(var(--sticky-top) + 1rem);
   display: flex;
-  max-height: calc(100dvh - 7rem);
+  max-height: calc(100dvh - var(--sticky-top) - 2rem);
   flex-direction: column;
   gap: 0.75rem;
   overflow-y: auto;
@@ -1574,9 +1911,34 @@ a.home-ex:hover { border-color: var(--accent); transform: translateY(-2px); }
   }
 }
 
+/* Téléphone en paysage : l'atelier tient dans la hauteur de l'écran, la requête SQL des blocs à côté. */
+@media (orientation: landscape) and (max-height: 540px) {
+  .enq-blockly {
+    grid-template-columns: minmax(0, 1fr) 13rem;
+  }
+
+  .enq-blockly-host {
+    height: calc(100dvh - 1.5rem);
+  }
+
+  .enq-sql-preview {
+    border-top: 0;
+    border-left: 1px solid var(--border);
+  }
+
+  .enq-sql-preview pre {
+    max-height: none;
+  }
+
+  .enq-editor-body {
+    height: calc(100dvh - 7.5rem);
+    min-height: 10rem;
+  }
+}
+
 /* ---------- Page niveau : chapitres à gauche, tuiles compactes, fenêtre de choix ---------- */
 .lvl-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 1.5rem; align-items: start; }
-.lvl-chapters { position: sticky; top: 6rem; display: flex; flex-direction: column; gap: 2px; max-height: calc(100vh - 7rem); overflow: auto; padding: 0.6rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+.lvl-chapters { position: sticky; top: calc(var(--sticky-top) + 1rem); display: flex; flex-direction: column; gap: 2px; max-height: calc(100vh - var(--sticky-top) - 2rem); overflow: auto; padding: 0.6rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
 .lvl-chapter { display: flex; align-items: center; gap: 0.7rem; width: 100%; padding: 0.45rem 0.55rem; border-radius: 12px; border: 1px solid transparent; text-align: left; transition: background-color 150ms; }
 .lvl-chapter:hover { background: var(--surface-2); }
 .lvl-chapter.is-active { background: color-mix(in srgb, var(--lc, var(--accent)) 12%, var(--surface)); border-color: color-mix(in srgb, var(--lc, var(--accent)) 40%, transparent); }
@@ -1899,6 +2261,67 @@ html[data-nav-dir="back"]::view-transition-new(page-main) {
   background-color: var(--surface-2);
 }
 
+/* Téléphone : le tableau défile seul, de côté, et ses colonnes gardent une largeur lisible
+   au lieu de se réduire à un mot par ligne. */
+@media (max-width: 767px) {
+  .course-prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+    overscroll-behavior-x: contain;
+  }
+
+  .course-prose th,
+  .course-prose td {
+    min-width: 7.5rem;
+    padding: 10px 12px !important;
+  }
+
+  .course-prose td code {
+    white-space: nowrap;
+  }
+
+  .course-prose pre {
+    font-size: 0.8125rem;
+  }
+}
+
+/* Le code d'un bloc garde la taille du bloc (Typography le réduisait une seconde fois dans les encadrés). */
+.course-prose pre code {
+  font-size: inherit;
+}
+
+/* Une longue adresse se coupe plutôt que de sortir de l'écran. */
+.course-prose a {
+  overflow-wrap: anywhere;
+}
+
+/* Formules : une formule centrée trop large défile seule ; sur téléphone, KaTeX grossit un peu moins le texte. */
+.course-prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+}
+
+@media (max-width: 767px) {
+  .course-prose .katex {
+    font-size: 1.1em;
+  }
+}
+
+/* Très petit écran : une formule en ligne qui ne tient pas défile de côté au lieu de déborder. */
+@media (max-width: 359px) {
+  .course-prose .katex:not(.katex-display .katex) {
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    vertical-align: middle;
+  }
+}
+
 /* =========================
    Course Pages Design Layer
    ========================= */
@@ -1907,8 +2330,18 @@ html[data-nav-dir="back"]::view-transition-new(page-main) {
 }
 
 .course-topnav {
+  position: sticky;
+  top: var(--sticky-top);
+  z-index: 30;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
+}
+
+/* Téléphone : le lien de retour défile avec le cours, l'en-tête du site reste seul en haut. */
+@media (max-width: 767px) {
+  .course-topnav {
+    position: static;
+  }
 }
 
 .course-hero {
@@ -1933,7 +2366,7 @@ html[data-nav-dir="back"]::view-transition-new(page-main) {
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
   padding: 0.5rem 0.9rem;
 }
@@ -1949,6 +2382,13 @@ html[data-nav-dir="back"]::view-transition-new(page-main) {
 @media (min-width: 768px) {
   .course-content {
     padding: 2.5rem;
+  }
+}
+
+/* Téléphone : les cadres imbriqués (cours, laboratoire, énoncé) rognent moins la largeur du texte. */
+@media (max-width: 639px) {
+  .course-content {
+    padding: 1.1rem 0.9rem;
   }
 }
 
@@ -2114,6 +2554,18 @@ html[data-nav-dir="back"]::view-transition-new(page-main) {
   background: var(--accent-soft);
   border-radius: 0.45rem;
   padding: 0.12rem 0.35rem;
+}
+
+/* Dans un bloc de code, le texte garde la couleur du bloc : pas de pastille par ligne. */
+.lab-prose pre code {
+  color: inherit;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.lab-prose pre {
+  overflow-x: auto;
 }
 
 .dark .course-prose blockquote {
@@ -2328,7 +2780,7 @@ input, textarea {
 
 .cours-sticky-nav {
   position: sticky;
-  top: 5rem;
+  top: var(--sticky-top);
   z-index: 30;
   padding: 0.75rem 0 0.85rem;
   margin-bottom: 0.25rem;
@@ -2342,7 +2794,7 @@ input, textarea {
   --ex-dark-line: rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - 5rem);
+  height: calc(100dvh - var(--header-h));
   overflow: hidden;
   background: var(--bg);
   color: var(--fg);
@@ -3134,13 +3586,13 @@ input, textarea {
 @media (max-width: 959px) {
   .exercise-workspace {
     height: auto;
-    min-height: calc(100dvh - 5rem);
+    min-height: calc(100dvh - var(--header-h));
     overflow: visible;
   }
 
   .exercise-toolbar {
     position: sticky;
-    top: 5rem;
+    top: var(--sticky-top);
     z-index: 20;
     padding: 0.4rem 0.6rem;
   }
@@ -3198,6 +3650,402 @@ input, textarea {
 
   .exercise-values {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Le bouton « Énoncé » ne sert que là où l'énoncé peut se replier : tablette en portrait, téléphone en paysage. */
+.exercise-statement-toggle {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.25rem;
+  padding: 0 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.exercise-statement-toggle[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* L'éditeur tactile remplit son cadre, quelle que soit la hauteur disponible. */
+.exercise-editor-frame .code-area {
+  min-height: 0;
+}
+
+/* Exécuter et Vérifier dans la barre de l'éditeur : seulement sur téléphone en paysage, où la hauteur manque. */
+.exercise-bar-actions {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+}
+
+.exercise-bar-run,
+.exercise-bar-test {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.1rem;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.exercise-bar-run {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fafafa;
+}
+
+.exercise-bar-test {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+.exercise-bar-run:disabled,
+.exercise-bar-test:disabled {
+  opacity: 0.55;
+}
+
+/* Tablette en portrait : tout tient dans l'écran, l'énoncé en haut (repliable), le code dessous. */
+@media (min-width: 600px) and (max-width: 959px) and (orientation: portrait) {
+  .exercise-workspace {
+    height: calc(100dvh - var(--header-h));
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .exercise-toolbar {
+    position: relative;
+    top: auto;
+  }
+
+  .exercise-statement-toggle {
+    display: inline-flex;
+  }
+
+  .exercise-body {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .exercise-statement {
+    flex: 0 1 auto;
+    max-height: 36%;
+    overflow-y: auto;
+  }
+
+  .exercise-body.is-focus .exercise-statement {
+    display: none;
+  }
+
+  .exercise-work {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .exercise-editor {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 9rem;
+  }
+
+  .exercise-result {
+    max-height: 34%;
+  }
+
+  .exercise-result-body {
+    overflow-y: auto;
+  }
+
+  .exercise-actions {
+    position: static;
+    box-shadow: none;
+  }
+
+  .exercise-run,
+  .exercise-test {
+    flex: 0 1 12rem;
+  }
+}
+
+/* Téléphone en paysage : l'IDE prend tout l'écran (sans l'en-tête du site), énoncé à gauche, code à droite. */
+@media (orientation: landscape) and (max-height: 540px) {
+  :root:has(.exercise-workspace) {
+    --header-h: 0px;
+  }
+
+  :root:has(.exercise-workspace) .site-header {
+    display: none;
+  }
+
+  .exercise-workspace {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .exercise-toolbar {
+    position: relative;
+    top: auto;
+    min-height: 2.75rem;
+    gap: 0.5rem;
+    padding: 0.25rem 0.6rem;
+  }
+
+  .exercise-toolbar-center h1 {
+    font-size: 0.875rem;
+  }
+
+  .exercise-statement-toggle {
+    display: inline-flex;
+    min-height: 2rem;
+  }
+
+  .exercise-nav-arrow {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .exercise-body {
+    display: grid;
+    flex: 1;
+    grid-template-columns: minmax(12.5rem, 38%) minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .exercise-body.is-focus {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .exercise-body.is-focus .exercise-statement {
+    display: none;
+  }
+
+  .exercise-statement {
+    overflow-y: auto;
+    padding: 0.75rem 0.9rem 1.25rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 0;
+  }
+
+  .exercise-work {
+    min-height: 0;
+  }
+
+  .exercise-editor {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 0;
+  }
+
+  .exercise-editor-bar {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .exercise-bar-actions {
+    display: flex;
+  }
+
+  .exercise-result {
+    max-height: 40%;
+  }
+
+  .exercise-result-hint,
+  .exercise-result-status {
+    padding: 0.45rem 0.8rem;
+  }
+
+  .exercise-result-body {
+    overflow-y: auto;
+    padding: 0.6rem 0.8rem 0.8rem;
+  }
+
+  .exercise-actions {
+    display: none;
+  }
+}
+
+/* Clavier ouvert sur un téléphone en paysage : il ne reste que l'éditeur et les boutons. */
+@media (orientation: landscape) and (max-height: 260px) {
+  .exercise-toolbar,
+  .exercise-statement,
+  .exercise-result {
+    display: none;
+  }
+
+  .exercise-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Téléphone en portrait : l'IDE demande le format paysage (voir IdeRotatePrompt). */
+.ide-rotate {
+  display: none;
+}
+
+@media (orientation: portrait) and (max-width: 599px) {
+  .ide-rotate {
+    position: fixed;
+    inset: 0;
+    z-index: 180;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: calc(var(--header-h) + 1.25rem) 1.25rem calc(1.5rem + env(safe-area-inset-bottom));
+    background: var(--bg);
+    text-align: center;
+  }
+
+  /* L'entrée animée de la page décalerait l'invitation (fixed) le temps de l'animation ; l'IDE dessous ne défile pas. */
+  .page-enter:has(.ide-rotate) {
+    animation: none;
+  }
+
+  .exercise-workspace {
+    height: calc(100dvh - var(--header-h));
+    min-height: 0;
+    overflow: hidden;
+  }
+}
+
+.ide-rotate-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.ide-rotate-figure {
+  width: min(100%, 26rem);
+  margin: 1rem 0 0.25rem;
+}
+
+.ide-rotate-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ide-rotate-text {
+  max-width: 21rem;
+  margin-top: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+.ide-rotate-exercise {
+  max-width: 21rem;
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Cours bloqué sur téléphone et tablette pendant les heures de cours (MobileBlocker). */
+.course-blocker {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .course-blocker {
+    position: fixed;
+    inset: 0;
+    z-index: 180;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: calc(var(--header-h) + 1.25rem) 1.25rem calc(1.5rem + env(safe-area-inset-bottom));
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .page-enter:has(.course-blocker) {
+    animation: none;
+  }
+}
+
+.course-blocker-figure {
+  width: min(100%, 24rem);
+  margin: 0.5rem 0 0;
+}
+
+.course-blocker-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.course-blocker h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+}
+
+.course-blocker p {
+  max-width: 24rem;
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.course-blocker .course-blocker-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.ide-rotate-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  margin-top: 1.5rem;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* Téléphone : aucun texte sous 12 px, y compris les tailles fixes posées dans les composants. */
+@media (max-width: 767px) {
+  .text-\[9px\],
+  .text-\[10px\],
+  .text-\[11px\] {
+    font-size: 0.75rem;
+  }
+
+  .lvl-tags i,
+  .lvl-pick-pic i {
+    font-size: 12px;
   }
 }
 

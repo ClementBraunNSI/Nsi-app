@@ -19,7 +19,7 @@ groupeTitre: "Données en tables (CSV)"
     <Enonce>
     ### Chargement des données
     
-    Pour ces exercices, nous utiliserons le fichier `communes.csv`.
+    Ces exercices utilisent le fichier `communes.csv`.
     Voici le code pour charger les données dans une liste de dictionnaires :
     
     ```python

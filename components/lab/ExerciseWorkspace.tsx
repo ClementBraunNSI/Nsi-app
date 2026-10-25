@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Check, CheckCircle, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { ArrowLeft, BookOpen, Check, CheckCircle, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { checkExerciseSolution, type ExerciseCheckResult, type ExerciseSheetNav, type LabExercise } from '@/app/actions/getExercises';
 import { supabase } from '@/lib/supabase';
 import { loadPythonPackages } from '@/lib/pyodide-packages';
@@ -20,6 +20,7 @@ import SuccessModal from '@/components/SuccessModal';
 import { ExerciseStatement } from '@/components/lab/ExerciseStatement';
 import { LabEditor } from '@/components/lab/LabEditor';
 import { LabOutput, type ConsoleState } from '@/components/lab/LabOutput';
+import { IdeRotatePrompt, usePortraitPhone } from '@/components/lab/IdeRotatePrompt';
 
 const IDLE_CONSOLE: ConsoleState = { tone: 'idle', text: 'En attente d\'exécution' };
 
@@ -69,6 +70,9 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
   const [statusLine, setStatusLine] = useState<string | null>(null);
   const [consoleState, setConsoleState] = useState<ConsoleState>(IDLE_CONSOLE);
   const [tab, setTab] = useState<'console' | 'tests'>('console');
+  // Tablette et téléphone en paysage : l'énoncé se replie pour laisser toute la place au code.
+  const [statementOpen, setStatementOpen] = useState(true);
+  const portraitPhone = usePortraitPhone();
   const [sqlDb, setSqlDb] = useState<any>(null);
   const [sqlJs, setSqlJs] = useState<any>(null);
   const pyodideRef = useRef<any>(null);
@@ -294,7 +298,9 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
   const backHref = exercise.pagePath || '/';
 
   return (
-    <div className="exercise-workspace">
+    <>
+    <IdeRotatePrompt backHref={backHref} label={exercise.label} />
+    <div className="exercise-workspace" inert={portraitPhone}>
       {showSuccessModal && pendingBadge && (
         <SuccessModal
           courseTitle={pendingBadge.courseTitle}
@@ -338,6 +344,17 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
             </span>
           ) : null}
         </div>
+        <button
+          type="button"
+          className="exercise-statement-toggle"
+          aria-pressed={statementOpen}
+          aria-controls="exercise-statement"
+          onClick={() => setStatementOpen((open) => !open)}
+          title={statementOpen ? "Masquer l'énoncé" : "Afficher l'énoncé"}
+        >
+          <BookOpen size={15} aria-hidden />
+          <span>Énoncé</span>
+        </button>
         {nav && nav.total > 0 ? (
           <div className="exercise-nav">
             {nav.previous ? (
@@ -368,7 +385,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
         ) : null}
       </header>
 
-      <div className="exercise-body">
+      <div className={statementOpen ? 'exercise-body' : 'exercise-body is-focus'}>
         <ExerciseStatement label={exercise.label} content={cleanStatement(exercise.content)} />
         <div className="exercise-work">
           <LabEditor
@@ -378,6 +395,20 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
             onCodeChange={setCode}
             onReset={() => setCode('')}
             beforeMount={handleEditorWillMount}
+            barActions={
+              <span className="exercise-bar-actions">
+                <button type="button" onClick={handleExecute} disabled={running !== null} className="exercise-bar-run">
+                  <Play size={13} fill="currentColor" aria-hidden />
+                  {running === 'execute' ? 'En cours' : 'Exécuter'}
+                </button>
+                {exercise.hasVerification ? (
+                  <button type="button" onClick={handleTest} disabled={running !== null} className="exercise-bar-test">
+                    <Check size={13} aria-hidden />
+                    {running === 'test' ? 'En cours' : 'Vérifier'}
+                  </button>
+                ) : null}
+              </span>
+            }
           />
           <LabOutput
             exercise={exercise}
@@ -408,5 +439,6 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
         </div>
       </div>
     </div>
+    </>
   );
 }

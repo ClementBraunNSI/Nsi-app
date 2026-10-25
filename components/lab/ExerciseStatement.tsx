@@ -59,7 +59,7 @@ function Fold({
 export function ExerciseStatement({ label, content }: Props) {
   const parts = splitStatement(content, label);
   return (
-    <div className="exercise-statement">
+    <div id="exercise-statement" className="exercise-statement">
       <section>
         <h2 className="exercise-enonce-title">
           <BookOpen size={16} aria-hidden />

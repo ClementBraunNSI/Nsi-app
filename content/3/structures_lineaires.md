@@ -13,7 +13,7 @@ audience: public
 
 # <Icone nom="library" /> Structures de Données Linéaires
 
-Pour organiser les données, nous avons besoin de structures adaptées. En Terminale, nous étudions trois structures abstraites fondamentales : les **Listes**, les **Piles** et les **Files**.
+Pour organiser les données, il faut des structures adaptées. En Terminale, trois structures abstraites fondamentales sont étudiées : les **Listes**, les **Piles** et les **Files**.
 
 ## 1. Les Listes Chaînées (Linked Lists)
 

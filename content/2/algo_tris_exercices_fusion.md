@@ -19,7 +19,7 @@ groupeTitre: "Algorithmes de tri"
     <Enonce>
     ### Tri de données
     
-    On manipule toujours notre liste de dictionnaires `villes`.
+    On manipule toujours la liste de dictionnaires `villes`.
     
     **1. Tri alphabétique**
     Écrire une fonction `trier_par_nom(villes)` qui trie la liste des villes par ordre alphabétique de leur nom.

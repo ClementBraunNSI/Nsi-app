@@ -12,7 +12,7 @@ audience: public
 # <Icone nom="library" /> Projet : Création du Bestiaire
 
 Le but de ce projet est de créer la page d'un monstre dans le bestiaire de la classe.
-Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de repérage, puis poser le fond d'écran et la couleur du texte.
+Ce projet consiste à remplir la maquette HTML, retirer les bordures de repérage, puis poser le fond d'écran et la couleur du texte.
 
 **Ressources :**
 - [Maquette vide](projet_site_eleve.zip) : un fichier `index.html`, un dossier `image` pour l'image du monstre, un dossier `style` pour la feuille CSS.

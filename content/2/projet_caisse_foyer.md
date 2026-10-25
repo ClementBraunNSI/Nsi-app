@@ -12,7 +12,7 @@ audience: public
 # <Icone nom="receipt" /> Projet - La caisse du foyer
 
 Le but de ce projet est de tenir la caisse du foyer du lycée pendant la récréation.
-Dans ce projet, nous allons servir les clients un par un, encaisser, rendre la monnaie, puis afficher le bilan. Le foyer vend trois articles.
+Ce projet consiste à servir les clients un par un, encaisser, rendre la monnaie, puis afficher le bilan. Le foyer vend trois articles.
 
 Ce projet se fait tôt dans l'année. Le programme tient dans des variables simples. Chaque information (un prix, un total, un nombre de jus) a sa propre variable.
 

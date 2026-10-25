@@ -38,7 +38,7 @@ Permet d'utiliser la simulation pour étudier les échanges de données en temps
 ## <Icone nom="rocket" /> Un réseau plus étoffé
 
 > **Évolution**
-> Après avoir compris le fonctionnement de base de Filius, nous allons maintenant étoffer le réseau précédent pour une configuration plus complexe.
+> Après avoir compris le fonctionnement de base de Filius, il s'agit maintenant d'étoffer le réseau précédent pour une configuration plus complexe.
 
 ![Schéma réseau étoffé](/content/1/s2.png)
 

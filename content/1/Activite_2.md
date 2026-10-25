@@ -30,7 +30,7 @@ audience: public
 > Ajouter une interface au routeur et créer un réseau `192.168.2.11` avec un ordinateur.
 
 1. Sur la machine `192.168.2.11`, ajouter l'application **serveur DNS** et l'ouvrir.
-2. Comme nom de domaine, ajouter `www.nsi.fr` et associer l'adresse `192.168.3.12` (notre serveur WEB).
+2. Comme nom de domaine, ajouter `www.nsi.fr` et associer l'adresse `192.168.3.12` (le serveur WEB).
 3. Ajouter l'adresse du serveur DNS pour tous les ordinateurs.
 
 ## 4. <Icone nom="file-text" /> Ajout d'une page web personnalisée

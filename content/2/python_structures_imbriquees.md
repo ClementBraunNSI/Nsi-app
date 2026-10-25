@@ -19,7 +19,7 @@ C'est exactement comme cela que Spotify ou Netflix stockent les données !
 
 ## 1. Analyse de la Structure
 
-Voici notre base de données musicale `spotify_db`. C'est une **liste** qui contient 3 **dictionnaires** (les artistes).
+Voici la base de données musicale `spotify_db`. C'est une **liste** qui contient 3 **dictionnaires** (les artistes).
 
 ```python
 spotify_db = [

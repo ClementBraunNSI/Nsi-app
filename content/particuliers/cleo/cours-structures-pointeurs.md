@@ -37,7 +37,7 @@ struct Personne {
 };
 ```
 
-Ici, nous avons créé un nouveau type appelé `struct Personne`.
+Ici, un nouveau type appelé `struct Personne` a été créé.
 
 ### Utilisation avec `typedef`
 

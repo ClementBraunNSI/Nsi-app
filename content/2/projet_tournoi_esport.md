@@ -13,7 +13,7 @@ audience: public
 # <Icone nom="trophy" /> Projet - Gestionnaire de Tournoi E-Sport
 
 Le but de ce projet est de créer l'outil d'une soirée tournoi (League of Legends, Rocket League, Valorant, ou un jeu du lycée).
-Dans ce projet, nous allons inscrire les équipes, saisir un score par équipe, calculer la moyenne, désigner le ou les vainqueurs, puis afficher le classement.
+Ce projet consiste à inscrire les équipes, saisir un score par équipe, calculer la moyenne, désigner le ou les vainqueurs, puis afficher le classement.
 
 Deux listes parallèles mémorisent les données : `scores[i]` est le score de `equipes[i]`.
 

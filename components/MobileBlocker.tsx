@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Smartphone, Clock } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Clock, Monitor } from 'lucide-react';
 
 export default function MobileBlocker() {
   const [shouldBlock, setShouldBlock] = useState(false);
@@ -22,26 +24,28 @@ export default function MobileBlocker() {
 
   if (!shouldBlock) return null;
 
+  // Même monde que la page 403 : le renard devant la barrière fermée.
   return (
-    <div className="lg:hidden fixed inset-0 z-[9999] bg-slate-900 text-white flex flex-col items-center justify-center p-8 text-center">
-      <div className="bg-orange-500 p-6 rounded-full mb-6">
-        <Smartphone size={48} />
+    <div className="course-blocker" role="alertdialog" aria-modal="true" aria-labelledby="course-blocker-title" aria-describedby="course-blocker-text">
+      <span className="ide-rotate-chip">
+        <Clock size={14} aria-hidden />
+        Bloqué de 08:00 à 17:00
+      </span>
+      <div className="course-blocker-figure">
+        <Image src="/images/http_403.svg" alt="Le renard regarde une barrière fermée par un cadenas" width={1536} height={1024} />
       </div>
-      <h2 className="text-2xl font-bold tracking-tight mb-4">
-        Mode Ordinateur Requis
-      </h2>
-      <p className="text-slate-300 max-w-xs leading-relaxed mb-4">
-        Pour garantir des conditions d'examen équitables et éviter la triche, l'accès à ce cours est bloqué sur mobile et tablette pendant les heures de cours.
+      <h2 id="course-blocker-title">Mode ordinateur requis</h2>
+      <p id="course-blocker-text">
+        Pour garantir des conditions d&apos;examen équitables et éviter la triche, l&apos;accès à ce cours est bloqué sur mobile et
+        tablette pendant les heures de cours.
       </p>
-      
-      <div className="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700 text-orange-400 text-sm font-bold mb-6">
-        <Clock size={16} />
-        <span>Bloqué de 08:00 à 17:00</span>
-      </div>
-
-      <div className="px-4 py-2 bg-slate-800 rounded-lg text-xs font-mono text-slate-400">
-        Veuillez utiliser un ordinateur de bureau (Laptop/Desktop).
-      </div>
+      <p className="course-blocker-hint">
+        <Monitor size={16} aria-hidden />
+        Utiliser un ordinateur, portable ou de bureau.
+      </p>
+      <Link href="/" className="ide-rotate-back">
+        Retour à l&apos;accueil
+      </Link>
     </div>
   );
 }

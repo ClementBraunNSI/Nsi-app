@@ -268,7 +268,7 @@ audience:
     <Enonce>
       ### Exercices de Niveau 2 : Fonctions
       
-      Ici, nous allons créer des fonctions pour manipuler nos tableaux 2D.
+      Ici, il s'agit de créer des fonctions pour manipuler les tableaux 2D.
     </Enonce>
 
     <ExerciseTabs courseId="c-tableaux-2d-exos" courseTitle="Niveau 2">

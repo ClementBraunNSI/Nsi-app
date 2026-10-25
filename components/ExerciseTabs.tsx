@@ -339,14 +339,14 @@ export function ExerciseTabs({
 
       {/* ProgressBar removed as requested */}
 
-      <div className="sticky top-4 z-20 mb-5 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_18px_42px_-34px_rgba(15,23,42,0.55)]">
-        <div className="border-b border-slate-100 bg-slate-50/80 px-5 py-4">
-          <p className="text-[10px] font-bold text-orange-500">Niveaux de difficulté</p>
+      <div className="mb-5 overflow-hidden rounded-[1.4rem] border border-slate-200 bg-white shadow-[0_18px_42px_-34px_rgba(15,23,42,0.55)] sm:rounded-[2rem] md:sticky md:top-[calc(var(--sticky-top)_+_1rem)] md:z-20">
+        <div className="border-b border-slate-100 bg-slate-50/80 px-4 py-3.5 sm:px-5 sm:py-4">
+          <p className="text-xs font-bold text-orange-500">Niveaux de difficulté</p>
           <p className="mt-1 text-sm text-slate-500">
             Introduction, Facile, Moyen, Avancé, Difficile, Expert, puis choisis l'exercice.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2 p-4">
+        <div className="flex flex-wrap gap-2 p-3 sm:p-4">
           {categories.map((cat) => {
             const count = childrenArray.filter((child) => difficultyByChild.get(child.props.id) === cat).length;
             const styles = DIFFICULTY_STYLES[cat];
@@ -356,14 +356,14 @@ export function ExerciseTabs({
                 key={cat}
                 type="button"
                 onClick={() => setActiveGroup(cat)}
-                className={`rounded-2xl border px-4 py-3 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
+                className={`rounded-2xl border px-3.5 py-2.5 text-sm font-bold transition-all sm:px-4 sm:py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
                   isActive
                     ? styles.active
                     : `bg-white text-slate-600 border-slate-200 ${styles.idle}`
                 }`}
               >
                 <span>{cat}</span>
-                <span className={`ml-2 text-[10px] font-bold ${isActive ? 'text-white/80' : 'text-slate-400'}`}>
+                <span className={`ml-2 text-xs font-bold ${isActive ? 'text-white/80' : 'text-slate-400'}`}>
                   {count}
                 </span>
               </button>
@@ -404,7 +404,7 @@ export function ExerciseTabs({
         })}
       </div>
 
-      <div className="bg-white rounded-[2rem] p-5 md:p-8 border border-slate-200 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)] min-h-[350px]">
+      <div className="min-h-[350px] sm:rounded-[2rem] sm:border sm:border-slate-200 sm:bg-white sm:p-5 sm:shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)] md:p-8">
         {(() => {
           const activeChild = childrenArray.find((child) => child.props.id === activeTab);
           return activeChild ?? null;
@@ -418,7 +418,7 @@ export function ExerciseTabs({
 
 export function Enonce({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-[1.6rem] border border-orange-100 bg-orange-50/35 p-5 md:p-7">
+    <div className="rounded-[1.25rem] border border-orange-100 bg-orange-50/35 p-3.5 sm:rounded-[1.6rem] sm:p-5 md:p-7">
       <div className="mb-4 flex items-center gap-2 text-xs font-semibold text-orange-600">
         <Code2 size={13} />
         Énoncé

@@ -13,7 +13,7 @@ audience: public
 # <Icone nom="gamepad-2" /> Projet - Gestionnaire de Jeux Vidéo
 
 Le but de ce projet est de créer un gestionnaire de collection de jeux vidéo, en Python.
-Dans ce projet, nous allons ajouter un jeu, afficher sa fiche, modifier un champ, supprimer un jeu, puis lister toute la collection depuis un menu.
+Ce projet consiste à ajouter un jeu, afficher sa fiche, modifier un champ, supprimer un jeu, puis lister toute la collection depuis un menu.
 
 Chaque jeu est un dictionnaire de détails. Le titre est la clé du dictionnaire principal : deux jeux ne peuvent pas porter le même titre. La comparaison est exacte, majuscules comprises : `"celeste"` ne trouve pas `"Celeste"`.
 

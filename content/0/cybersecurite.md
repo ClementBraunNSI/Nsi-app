@@ -12,7 +12,7 @@ audience: public
     <Enonce>
 ## Introduction
 
-La **cybersécurité** désigne l'ensemble des techniques et pratiques visant à protéger les systèmes informatiques, les réseaux et les données contre les attaques, les dommages ou les accès non autorisés. À l'ère du numérique, où nous partageons constamment des informations en ligne, comprendre les enjeux de la cybersécurité est devenu essentiel.
+La **cybersécurité** désigne l'ensemble des techniques et pratiques visant à protéger les systèmes informatiques, les réseaux et les données contre les attaques, les dommages ou les accès non autorisés. À l'ère du numérique, où les informations se partagent constamment en ligne, comprendre les enjeux de la cybersécurité est devenu essentiel.
 
 ## Les enjeux de la sécurisation des échanges sur Internet
 

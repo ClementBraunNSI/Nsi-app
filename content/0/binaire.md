@@ -21,8 +21,8 @@ Une **base** est un ensemble de caractères uniques qui permettent de représent
 
 Il existe un certain nombre de bases très connues :
 
-- Base 10 : La base 10 est la base que nous utilisons quotidiennement pour compter. $B_{10}=\lbrace 0,1,2,3,4,5,6,7,8,9 \rbrace $.
-- Base 12 : La base 12 est la base que nous utilisons pour remplir des boites d'oeufs, pour représenter les parties d'une journée.
+- Base 10 : La base 10 est la base utilisée au quotidien pour compter. $B_{10}=\lbrace 0,1,2,3,4,5,6,7,8,9 \rbrace $.
+- Base 12 : La base 12 est la base utilisée pour remplir des boites d'oeufs, pour représenter les parties d'une journée.
 
 La base 2 est la base utilisée par les ordinateurs pour fonctionner. Un ordinateur fonctionne grâce au courant électrique et analyse en permanence si du courant passe pour permettre de réaliser des calculs différents.
 
@@ -46,7 +46,7 @@ On peut écrire $1000 = 10^3 = 10*10*10$ ou $1000000 = 10^6 = 10*10*10*10*10*10$
 
 **Remarque :** Si l'on compte le nombre de fois où l'on a divisé, la puissance sera négative.  
 
-Cependant, nous représentons nos nombres en base 10 et chaque colonne est une puissance de 10. Il y a donc un lien entre les colonnes et la base utilisée et cela nous permettra de représenter des nombres dans n'importe quelle base.
+Cependant, les nombres s'écrivent d'habitude en base 10 et chaque colonne est une puissance de 10. Il y a donc un lien entre les colonnes et la base utilisée et cela permettra de représenter des nombres dans n'importe quelle base.
 
 ## Base 2
 
@@ -64,7 +64,7 @@ Exemple :
 
 ### Obtenir la représentation en base 10 d'un nombre en base 2
 
-Pour ce nombre dans le tableau de puissances de 2, il serait écrit 1101. Pour obtenir sa valeur en base 10 pour que nous humains puissions le comprendre plus facilement, on peut utilser la technique vue pour la base 10 :
+Pour ce nombre dans le tableau de puissances de 2, il serait écrit 1101. Pour obtenir sa valeur en base 10 pour le rendre plus lisible par un humain, on peut utilser la technique vue pour la base 10 :
 
 $1101_{2} = 1*8 + 1*4+ 0*2 + 1*1 = 13_{10}$.
     </Enonce>
@@ -126,7 +126,7 @@ Pour obtenir la représentation en base 2 d'un nombre en base 10, on peut utilis
 
 **Étapes:**
 
-1. On cherche la puissance de 2 qui se rapproche de notre nombre sans le dépasser
+1. On cherche la puissance de 2 qui se rapproche du nombre sans le dépasser
 2. On écrit le tableau de puissances de 2 allant de la puissance trouvée à 1
 3. On regarde si on peut retirer la puissance de 2 du tableau au nombre, si oui, on écrit 1 sinon 0.
 4. On regarde si on peut retirer la puissance de 2 suivante au résultat de la soustraction de nombre à la puissance de 2 vue avant.

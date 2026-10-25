@@ -97,7 +97,7 @@ L'`ID` n'est pas un détail. C'est lui qui permettra, plus tard, de dire « cet 
 
 Une fois la table remplie, on ne la relit pas ligne à ligne. On lui pose des opérations.
 
-**Trier**, c'est ranger : du plus léger au plus lourd, par exemple. **Filtrer**, c'est ne garder que ce qui nous intéresse, les renards de forêt, ou, dans une autre base, les monstres de type Feu. **Calculer**, c'est produire un nombre que la table ne contient pas encore, comme une moyenne.
+**Trier**, c'est ranger : du plus léger au plus lourd, par exemple. **Filtrer**, c'est ne garder que ce qui intéresse, les renards de forêt, ou, dans une autre base, les monstres de type Feu. **Calculer**, c'est produire un nombre que la table ne contient pas encore, comme une moyenne.
 
 La base ci-dessous se manipule directement. Essayer un tri, puis un filtre, et regarder ce qui reste.
 

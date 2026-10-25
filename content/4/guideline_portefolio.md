@@ -73,7 +73,7 @@ Le jury ne connaît ni l'entreprise, ni les tuteurs. Avant de montrer le code ou
 Ne pas se contenter de raconter ce qui a été fait : **le prouver !**
 
 ### <Icone nom="laptop" /> Pour les profils SLAM
-Intégrer des "snippets" de code propres, afficher les schémas de base de données (MCD/UML), montrer l'évolution de les maquettes Figma vers le résultat final, et lier les dépôts Git.
+Intégrer des "snippets" de code propres, afficher les schémas de base de données (MCD/UML), montrer l'évolution des maquettes Figma vers le résultat final, et lier les dépôts Git.
 
 ### <Icone nom="plug" /> Pour les profils SISR
-Utiliser des schémas réseaux (Packet Tracer, Draw.io) pour illustrer la topologie (VLANs, routeurs). Mettre en valeur les scripts d'automatisation (PowerShell, Bash) et intégrer des captures d'écran de les interfaces d'administration (Règles pfSense, GPO, dashboard Grafana).
+Utiliser des schémas réseaux (Packet Tracer, Draw.io) pour illustrer la topologie (VLANs, routeurs). Mettre en valeur les scripts d'automatisation (PowerShell, Bash) et intégrer des captures d'écran des interfaces d'administration (Règles pfSense, GPO, dashboard Grafana).

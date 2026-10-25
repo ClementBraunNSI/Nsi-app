@@ -66,7 +66,7 @@ Elle s'écrit en six blocs de deux caractères hexadécimaux, par exemple `a1:b2
 Pour sortir sur Internet, la MAC ne suffit plus. Il faut une adresse que les routeurs du monde entier sachent lire.
 
 > **Adresse IP**
-> Une **adresse IP** (*Internet Protocol*), en version 4, est formée de quatre nombres compris entre 0 et 255. La machine les manipule en binaire. Nous, nous les lisons en décimal.
+> Une **adresse IP** (*Internet Protocol*), en version 4, est formée de quatre nombres compris entre 0 et 255. La machine les manipule en binaire. Les humains les lisent en décimal.
 
 `127.0.0.1` est un exemple qu'on croise souvent : c'est *localhost*, l'adresse par laquelle une machine se parle à elle-même.
 
@@ -111,7 +111,7 @@ Le simulateur ci-dessus permet de lancer un ping et de voir le trajet d'un paque
 Les machines se parlent avec des adresses IP, par exemple `142.250.179.142`. Personne n'a envie de retenir ça pour ouvrir un site. On préfère `google.com`.
 
 > **DNS (Domain Name System)**
-> Le **DNS** est l'annuaire d'Internet. Il traduit un nom de domaine, lisible par nous, en adresse IP, lisible par les machines.
+> Le **DNS** est l'annuaire d'Internet. Il traduit un nom de domaine, lisible par un humain, en adresse IP, lisible par les machines.
 
 C'est le même geste que chercher « Maman » dans le répertoire du téléphone : on connaît le nom, l'appareil compose le numéro. Le DNS fait cela pour les sites.
 
