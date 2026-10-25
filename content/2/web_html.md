@@ -11,7 +11,7 @@ audience: public
 
 # Le langage HTML
 
-Une page web n'est pas un dessin. C'est un texte balisé, que le navigateur interprète. Le **HTML** (*HyperText Markup Language*) décrit la **structure** et le **sens** du contenu : ceci est un titre, ceci un paragraphe, ceci un lien. Il ne dit pas la couleur, et il ne réagit pas au clic. La couleur viendra du CSS, le clic du JavaScript. Mélanger les trois rôles, c'est ce qui rend une page impossible à maintenir.
+Une page web n'est pas un dessin. C'est un texte balisé, que le navigateur interprète. Le **HTML** (*HyperText Markup Language*) décrit la **structure** et le **sens** du contenu : ceci est un titre, ceci un paragraphe, ceci un lien. Il ne dit pas la couleur, et il ne réagit pas au clic. C'est le CSS qui donnera la couleur, et le JavaScript qui réagira au clic. Mélanger les trois rôles, c'est ce qui rend une page impossible à maintenir.
 
 ## Le squelette d'un document
 

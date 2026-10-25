@@ -11,7 +11,7 @@ audience: public
 
 # Le chemin critique
 
-Un projet est un réseau de tâches qui s'attendent. Certaines peuvent prendre du retard sans décaler la livraison. D'autres, non. Le **chemin critique** est la plus longue chaîne de tâches dépendantes, en durée. Sa longueur est la **durée minimale** du projet : on ne peut pas finir plus tôt que le plus long chemin. Tout retard sur une tâche de ce chemin retarde la date de fin, d'autant. Le chef de projet les suit en priorité, parce que c'est là que le temps ne se rattrape pas.
+Un projet est un réseau de tâches qui s'attendent. Certaines peuvent prendre du retard sans décaler la livraison, d'autres ne le peuvent pas. Le **chemin critique** est la plus longue chaîne de tâches dépendantes, en durée. Sa longueur est la **durée minimale** du projet : on ne peut pas finir plus tôt que le plus long chemin. Tout retard sur une tâche de ce chemin retarde la date de fin, d'autant. Le chef de projet les suit en priorité, parce que c'est là que le temps ne se rattrape pas.
 
 Une **tâche critique** a une **marge totale** nulle. La marge totale est le retard qu'une tâche peut prendre sans décaler la fin du projet. La **marge libre** est plus étroite : c'est le retard possible sans décaler le début au plus tôt de la tâche suivante. Une tâche peut avoir de la marge totale et plus de marge libre, si le successeur avait lui-même un peu de jeu. Une **dépendance** dit qu'une tâche n'a pas le droit de commencer avant la fin d'une autre.
 

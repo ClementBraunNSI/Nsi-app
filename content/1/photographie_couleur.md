@@ -42,11 +42,11 @@ Ce n'est pas la logique de la peinture. En peinture, mélanger des pigments reti
 
 ## Comment on code un pixel
 
-Chaque pixel couleur est fait de trois composantes. L'intensité de chacune est en général codée sur un octet, donc 8 bits, ce qui donne un entier entre 0 et 255. Zéro, la composante est éteinte. 255, elle est au maximum.
+Chaque pixel couleur est fait de trois composantes. L'intensité de chacune est en général codée sur un octet, donc 8 bits, ce qui donne un entier entre 0 et 255. Une composante qui vaut 0 est éteinte, et une composante qui vaut 255 est au maximum.
 
 ![Décomposition d'un pixel](/content/1/pix_to_couleur.png)
 
-Trois octets, cela fait 24 bits par pixel. On note la couleur `(R, V, B)`. Le vert s'écrit parfois G, pour *green*, dans les logiciels en anglais : c'est la même composante.
+Avec trois octets, chaque pixel occupe donc 24 bits. On note la couleur `(R, V, B)`. Le vert s'écrit parfois G, pour *green*, dans les logiciels en anglais : c'est la même composante.
 
 Quelques couleurs tombent juste, parce qu'elles allument une composante à fond et éteignent les autres. Le gris moyen allume les trois à mi-chemin. L'écriture hexadécimale compacte chaque octet sur deux caractères : 255 s'écrit `FF`, 0 s'écrit `00`.
 

@@ -20,9 +20,9 @@ Le binôme qui s'approche le plus de la cible gagne la manche. À la fin des tro
 
 ## Ce qu'il vous faut
 
-- Un ordinateur par binôme, et les IA indiquées par le professeur.
-- Une **fiche de manche** par manche (modèle plus bas), où vous recopiez chaque prompt envoyé.
-- Un rôle pour chacun, échangé à chaque manche : l'un tape les prompts, l'autre tient la fiche et surveille le chronomètre.
+- Chaque binôme dispose d'un ordinateur et utilise les IA indiquées par le professeur.
+- Pour chaque manche, vous remplissez une **fiche de manche** (modèle plus bas) où vous recopiez chaque prompt envoyé.
+- Chacun a un rôle, et les rôles s'échangent à chaque manche : l'un tape les prompts, l'autre tient la fiche et surveille le chronomètre.
 
 ## Les règles
 

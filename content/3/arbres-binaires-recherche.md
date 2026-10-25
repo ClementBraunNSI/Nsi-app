@@ -29,7 +29,7 @@ L'insertion suit le même chemin. On descend jusqu'à un lien vide, et l'on y ac
 
 Dans un ABR **équilibré**, la hauteur est de l'ordre de $\log_2 n$. Recherche, insertion et suppression coûtent alors $O(\log_2 n)$ : un nombre de comparaisons proportionnel à la hauteur. Dans le pire des cas, l'arbre-liste, la hauteur vaut $n - 1$ et le coût redevient $O(n)$, comme un parcours de liste. L'équilibrage (arbres AVL, arbres rouge-noir) réorganise après les insertions pour que la hauteur reste logarithmique. On n'en écrit pas le code ici. On retient pourquoi il existe : sans lui, le coût annoncé n'est qu'un espoir sur l'ordre des données.
 
-Le minimum est le nœud qu'on atteint en descendant toujours à gauche. Le maximum, toujours à droite. Leur recherche coûte aussi la hauteur, pas la taille : on suit un seul chemin.
+Le minimum est le nœud qu'on atteint en descendant toujours à gauche. Le maximum s'obtient de la même façon, en descendant toujours à droite. Leur recherche coûte aussi la hauteur, pas la taille : on suit un seul chemin.
 
 Supprimer dépend du nœud visé. Une feuille se décroche. Un nœud avec un seul enfant se fait remplacer par cet enfant. Un nœud avec deux enfants se fait remplacer par son **prédécesseur infixe**, le plus grand nœud de son sous-arbre gauche, qui a au plus un enfant, et que l'on sait donc retirer. La règle gauche-inférieur, droit-supérieur doit rester vraie après coup. Le parcours infixe croissant est le test : s'il décroît quelque part, la suppression a cassé l'ABR.
 

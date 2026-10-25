@@ -95,7 +95,7 @@ Classement :
 3. Lynx (12)
 ```
 
-Égalité en tête, mêmes équipes, scores 10, 14 et 14. 38 / 3 arrondi à deux décimales vaut 12,67.
+Testez aussi une égalité en tête, avec les mêmes équipes et les scores 10, 14 et 14. La moyenne 38 / 3, arrondie à deux décimales, vaut 12,67.
 
 ```text
 Moyenne : 12.67

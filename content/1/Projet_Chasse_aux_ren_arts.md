@@ -62,7 +62,7 @@ Voilà la maquette ouverte dans le navigateur. Chaque bloc de couleur est une `d
   </ExerciseSection>
 </ExerciseTabs>
 
-Exemple de liste, à réécrire avec votre tableau. On ne recopie pas ces noms si ce n'est pas votre œuvre.
+Voici un exemple de liste, à réécrire à partir de votre tableau. On ne recopie pas ces noms si ce n'est pas votre œuvre.
 
 ```html
 <ul>
@@ -193,7 +193,7 @@ La classe `container` contient toute la page. La modifier change presque tout le
 
 ## 4. Ce qu'on rend <Icone nom="package" />
 
-Une archive du dossier entier `projet_site_eleve`, pas seulement `index.html`. Sinon les images et le CSS manquent à l'ouverture.
+On rend une archive du dossier entier `projet_site_eleve`, et pas seulement `index.html` : sans le dossier, les images et le CSS manquent à l'ouverture.
 
 Le dossier contient :
 

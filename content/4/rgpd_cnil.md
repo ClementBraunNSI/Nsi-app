@@ -37,7 +37,7 @@ Les contrôles prennent quatre formes. En **ligne**, depuis les locaux de la CNI
 
 Le **responsable de traitement** est la personne, l'autorité ou l'organisme qui décide pourquoi on traite et avec quels moyens. C'est lui qui assure la conformité, met les mesures de sécurité, répond aux demandes de droits, et notifie les violations à la CNIL. L'entreprise qui gère la paie de ses salariés est responsable de ce traitement. Elle a choisi d'avoir un fichier de paie.
 
-Le **sous-traitant** traite pour le compte du responsable, et sur ses instructions. Un hébergeur, un cloud, un cabinet comptable externe. Il ne traite que sur instruction documentée. Il garantit la confidentialité et la sécurité. Il aide le responsable sur la sécurité, l'analyse d'impact et les droits des personnes. À la fin du contrat, il supprime les données ou les renvoie. Il ne décide pas de la finalité. S'il s'en invente une, il devient responsable de ce nouveau traitement.
+Le **sous-traitant** traite pour le compte du responsable, et sur ses instructions. C'est par exemple un hébergeur, un fournisseur de cloud ou un cabinet comptable externe. Il ne traite que sur instruction documentée. Il garantit la confidentialité et la sécurité. Il aide le responsable sur la sécurité, l'analyse d'impact et les droits des personnes. À la fin du contrat, il supprime les données ou les renvoie. Il ne décide pas de la finalité. S'il s'en invente une, il devient responsable de ce nouveau traitement.
 
 Le **délégué à la protection des données**, le DPO, pilote la conformité. Le désigner est obligatoire pour les organismes publics, et pour ceux qui traitent des données sensibles à grande échelle ou qui suivent des personnes de façon régulière et systématique. Il informe et conseille le responsable et les employés. Il contrôle le respect du règlement, par des audits internes. Il est le point de contact de la CNIL et des personnes. Il doit être indépendant. Un conflit d'intérêts le disqualifie : le directeur des systèmes d'information, qui choisit les moyens techniques, ne peut pas être en même temps celui qui les contrôle.
 
@@ -131,7 +131,7 @@ La CNIL sanctionne. Les plafonds sont faits pour compter dans un bilan. Jusqu'à
 
 Toute collecte en ligne s'accompagne d'une **politique de confidentialité**. Elle est accessible depuis toutes les pages, en général dans le pied de page. Elle est écrite pour être comprise, pas pour être déchiffrée par un juriste. Elle dit les finalités, les destinataires, les durées, les droits.
 
-Les **cookies** non essentiels (publicité, mesure d'audience qui n'est pas strictement nécessaire, réseaux sociaux) ne se déposent qu'après un consentement. Le bandeau propose d'accepter, de refuser, de personnaliser. Refuser doit être aussi simple qu'accepter. Le choix se conserve ; six mois est la durée que la CNIL recommande avant de redemander.
+Les **cookies** non essentiels (publicité, mesure d'audience qui n'est pas strictement nécessaire, réseaux sociaux) ne se déposent qu'après un consentement. Le bandeau propose d'accepter, de refuser ou de personnaliser. Refuser doit être aussi simple qu'accepter. Le choix se conserve ; six mois est la durée que la CNIL recommande avant de redemander.
 
 ## Le formulaire de contact
 

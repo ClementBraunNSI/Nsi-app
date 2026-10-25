@@ -13,7 +13,7 @@ audience: public
 
 # Méthodes agiles
 
-BTS SIO, bloc 1. Le chemin critique suppose qu'on connaît les tâches et leurs durées assez tôt pour figer un réseau. Beaucoup de projets informatiques n'ont pas cette stabilité : le besoin se précise quand on voit le logiciel tourner. Les méthodes **agiles** organisent le travail pour livrer souvent, montrer le résultat, et changer le plan sans reprendre tout le projet.
+Ce cours relève du bloc 1 du BTS SIO. Le chemin critique suppose qu'on connaît les tâches et leurs durées assez tôt pour figer un réseau. Beaucoup de projets informatiques n'ont pas cette stabilité : le besoin se précise quand on voit le logiciel tourner. Les méthodes **agiles** organisent le travail pour livrer souvent, montrer le résultat, et changer le plan sans reprendre tout le projet.
 
 Le **manifeste agile** (2001) pose quatre préférences. Les personnes et leurs échanges passent avant les processus et les outils. Un logiciel qui fonctionne passe avant une documentation exhaustive. La collaboration avec le client passe avant la négociation du contrat. L'adaptation au changement passe avant le suivi d'un plan. Les quatre seconds termes existent encore. Un contrat, une doc, un outil, un plan restent utiles. Ils ne remplacent pas un incrément qu'on peut essayer, ni une conversation avec la personne qui s'en servira.
 
@@ -51,7 +51,7 @@ Les **critères d'acceptation** rendent la fin vérifiable. Pour l'exemple : le 
 
 Le **product backlog** est la liste ordonnée de tout ce qu'on pourrait faire : stories, corrections, améliorations. Chaque élément a un titre, une description, des critères, une estimation, une priorité. L'ordre est celui du product owner. Le **sprint backlog** est le sous-ensemble retenu pour le sprint, découpé en tâches par l'équipe. L'**incrément** est ce qui est terminé à la fin du sprint. Il doit être **potentiellement livrable** : pas une démo qui ne tourne que sur la machine du développeur.
 
-La **definition of ready** dit quand une story a le droit d'entrer dans un sprint. Description claire, critères d'acceptation écrits, estimation faite, dépendances identifiées. Une story floue qu'on tire quand même dans le sprint consomme le planning à la découvrir.
+La **definition of ready** dit quand une story a le droit d'entrer dans un sprint. Sa description doit être claire, ses critères d'acceptation écrits, son estimation faite et ses dépendances identifiées. Une story floue qu'on tire quand même dans le sprint consomme le planning à la découvrir.
 
 La **definition of done** dit quand elle est finie, pour toute l'équipe, pas selon l'humeur de chacun. Le code compile et a été testé. Les tests unitaires sont écrits et passent. La revue de code a eu lieu. La documentation minimale est là. Le livrable est déployé sur un environnement de test. Une story « presque finie » n'entre pas dans l'incrément.
 

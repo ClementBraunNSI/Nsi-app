@@ -26,7 +26,7 @@ Le siège envoie chaque jour un CSV brut. Vous construisez deux outils qui se pa
 
 ## 1. La veille, avant le code <Icone nom="paperclip" />
 
-Note d'une page, pas plus, à rendre avec le projet.
+La note tient sur une page au maximum et se rend avec le projet.
 
 1. Héritage en C# : à quoi sert `:`, quelle est la différence entre la classe de base et la classe dérivée, peut-on hériter de plusieurs classes.
 2. Polymorphisme : à quoi servent `virtual` et `override`, et comment une `List<Vehicule>` contient à la fois des voitures et des motos.
@@ -34,7 +34,7 @@ Note d'une page, pas plus, à rendre avec le projet.
 
 ## 2. Les données <Icone nom="car" />
 
-Le CSV source, séparateur point-virgule. `Divers1` et `Divers2` changent de sens selon le type : à vous de les ranger dans les bonnes propriétés.
+Le CSV source utilise le point-virgule comme séparateur. `Divers1` et `Divers2` changent de sens selon le type : à vous de les ranger dans les bonnes propriétés.
 
 ```csv
 Type;Immatriculation;Marque;Modele;Prix;Km;Etat;Divers1;Divers2

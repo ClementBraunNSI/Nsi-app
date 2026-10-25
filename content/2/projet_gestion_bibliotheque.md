@@ -136,7 +136,7 @@ L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictRea
 
   <ExerciseSection id="lib-ui-1" label="Menu interactif" type="lecture">
     <Enonce>
-      Écrivez `menu_principal`. Au début, `bibliotheque = charger("bibliotheque.csv")`.
+      Écrivez `menu_principal`. Au début de la fonction, chargez les données avec `bibliotheque = charger("bibliotheque.csv")`.
 
       ```text
       --- MA BIBLIOTHÈQUE ---

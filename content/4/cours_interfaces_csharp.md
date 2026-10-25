@@ -18,7 +18,7 @@ On y gagne trois fois. Le service n'est plus couplé à un fichier ou à une bas
 
 ## Écrire le contrat, puis une classe qui le tient
 
-`interface` déclare les signatures. Pas de champs métier, pas de constructeur qui rangerait un état. Par convention, le nom commence par `I`.
+`interface` déclare les signatures. Elle ne contient ni champs métier ni constructeur qui rangerait un état. Par convention, le nom commence par `I`.
 
 ```csharp
 public interface IVehiculeRepository

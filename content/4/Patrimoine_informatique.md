@@ -11,7 +11,7 @@ audience: public
 
 # Patrimoine informatique
 
-BTS SIO, bloc 1. Avant de sécuriser, de sauvegarder ou de remplacer quoi que ce soit, il faut savoir ce que l'organisation possède. Le **patrimoine numérique** regroupe les ressources dont le système d'information a besoin pour fonctionner : le matériel, les logiciels, et ce qui n'est ni l'un ni l'autre, comptes, droits, bases, procédures. Un serveur qu'on a oublié dans un placard fait encore partie du patrimoine. Il fait aussi partie de la surface d'attaque.
+Ce cours relève du bloc 1 du BTS SIO. Avant de sécuriser, de sauvegarder ou de remplacer quoi que ce soit, il faut savoir ce que l'organisation possède. Le **patrimoine numérique** regroupe les ressources dont le système d'information a besoin pour fonctionner : le matériel, les logiciels, et ce qui n'est ni l'un ni l'autre, comptes, droits, bases, procédures. Un serveur qu'on a oublié dans un placard fait encore partie du patrimoine. Il fait aussi partie de la surface d'attaque.
 
 Tenir cet inventaire à jour est une exigence de la norme **ISO/IEC 27001:2022**, pas seulement une bonne habitude de technicien. L'annexe **A.5.9** demande que les actifs liés à l'information et aux installations qui la traitent soient identifiés, et qu'un inventaire en soit établi et tenu à jour. L'annexe **A.5.10** demande une organisation qui garantisse que ces informations et ces ressources sont protégées, utilisées et gérées comme il faut. L'annexe **A.5.36** demande que l'organisation voie l'ensemble de ses actifs au regard de ses politiques de sécurité, de ses règles et des standards qu'elle s'impose. Sans liste, ces trois contrôles ne peuvent pas être démontrés à un auditeur.
 
@@ -69,15 +69,15 @@ La **CMDB** (*Configuration Management Database*) est la base qui rassemble tout
 
 ## Trois parcs, le même travail
 
-**Cas 1, une start-up.** Quatre personnes, un logiciel interne de gestion des clients. Le parc : des portables Dell Latitude, un NAS Synology DS220+, un routeur et un commutateur, VS Code et GitHub, Sage Start, une imprimante.
+**Cas 1 : une start-up.** Quatre personnes y développent un logiciel interne de gestion des clients. Le parc : des portables Dell Latitude, un NAS Synology DS220+, un routeur et un commutateur, VS Code et GitHub, Sage Start, une imprimante.
 
 À faire : un tableau d'inventaire, les ressources critiques, une organisation des sauvegardes, les dépendances.
 
-**Cas 2, une PME.** Quinze personnes, des applications mobiles. Le parc : dix postes fixes de développement, cinq portables pour l'encadrement, un NAS Synology DS920+, MySQL, un réseau avec commutateurs et pare-feu, la suite JetBrains, des comptes et des droits.
+**Cas 2 : une PME.** Quinze personnes y développent des applications mobiles. Le parc : dix postes fixes de développement, cinq portables pour l'encadrement, un NAS Synology DS920+, MySQL, un réseau avec commutateurs et pare-feu, la suite JetBrains, des comptes et des droits.
 
 À faire : classer chaque ressource (matérielle, logicielle, immatérielle), un tableau complet, les ressources critiques pour le développement et pour la sécurité, une dépendance entre deux actifs, les risques de panne ou de licence.
 
-**Cas 3, une société plus grande.** Cinquante personnes, plusieurs projets web et mobiles en même temps. Le parc : trente-cinq postes de développement HP G6, quinze portables de chefs de projet Dell XPS reliés en VPN, un serveur de test et un serveur de production, un intranet, les environnements de développement, la bureautique, les outils de design, la documentation.
+**Cas 3 : une société plus grande.** Cinquante personnes y mènent plusieurs projets web et mobiles en même temps. Le parc : trente-cinq postes de développement HP G6, quinze portables de chefs de projet Dell XPS reliés en VPN, un serveur de test et un serveur de production, un intranet, les environnements de développement, la bureautique, les outils de design, la documentation.
 
 À faire : l'inventaire complet, les ressources critiques et ce qu'il faut en sécuriser, les dépendances et une cartographie, des améliorations de maintenance et de sécurité, les risques de perte ou de panne et une parade pour chacun.
 

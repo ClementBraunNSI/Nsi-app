@@ -16,7 +16,7 @@ audience: public
 Avant de parler de couleur, il faut voir comment une image devient une suite de nombres. Le noir et blanc est le cas le plus simple : chaque point n'a qu'une luminosité, pas trois composantes.
 
 > **Définition**
-> Le mot *photographie* vient du grec *photos*, la lumière, et *graphein*, écrire. Écrire avec la lumière, donc.
+> Le mot *photographie* vient du grec *photos*, la lumière, et *graphein*, écrire. Photographier, c'est donc écrire avec la lumière.
 
 La photographie numérique prolonge la photographie argentique, elle ne la remplace pas d'un coup. En 1826, Nicéphore Niépce obtient la première photographie conservée, *Point de vue du Gras*. En 1957, Russell Kirsch produit la première image numérique, un carré de 176 pixels de côté, le portrait de son fils. En 1969, Willard Boyle et George E. Smith inventent le capteur CCD ; ils recevront le prix Nobel en 2009. En 1975, Steven Sasson, chez Kodak, construit le premier appareil photo numérique.
 

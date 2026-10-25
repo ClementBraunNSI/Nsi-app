@@ -71,7 +71,7 @@ Il est simple à expliquer et à coder. Il ne suppose pas que les données forme
 
 Le prix est le parcours. Pour chaque nouveau point, on calcule la distance à **tous** les exemples. Plus le fichier grossit, plus une prédiction devient lente, et il faut garder tous les exemples en mémoire : il n'y a pas de modèle résumé à emporter à la place. L'échelle des coordonnées, déjà dite, peut fausser les voisins si on l'oublie.
 
-Pour fermer : le k-NN classe, ou estime, à partir des $k$ exemples les plus proches. La distance du cours est l'euclidienne. La classification vote, la régression moyenne. Un $k$ trop petit suit le bruit. Un $k$ trop grand noie le point dans des voisins qui ne lui ressemblent plus. Les coordonnées doivent être du même ordre de grandeur. La méthode reste coûteuse quand les exemples sont très nombreux.
+Pour fermer : le k-NN classe, ou estime, à partir des $k$ exemples les plus proches. La distance du cours est l'euclidienne. En classification, les voisins votent. En régression, on fait la moyenne de leurs valeurs. Un $k$ trop petit suit le bruit. Un $k$ trop grand noie le point dans des voisins qui ne lui ressemblent plus. Les coordonnées doivent être du même ordre de grandeur. La méthode reste coûteuse quand les exemples sont très nombreux.
 
 ## Pour s'entraîner
 

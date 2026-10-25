@@ -25,7 +25,7 @@ L'exemple fixe la quantité de texte. Vous pouvez le suivre avec *La Nuit étoil
 
 *   **Original.** Vincent van Gogh, 1889, huile sur toile, Museum of Modern Art, New York. Quatre à six lignes : le ciel tourbillonne au-dessus d'un village, un cyprès occupe le premier plan, la peinture est visible en touches épaisses.
 *   **Version renard.** Le cyprès devient un renard dressé, ou un renard est assis sur le clocher. Quatre à six lignes sur ce qui a changé et ce qui reste (le ciel, le village, les couleurs).
-*   **Histoire.** Huit à douze lignes. Un renard sort du tableau la nuit où le musée ferme, suit le tourbillon du ciel, et doit y rentrer avant l'ouverture. Un récit avec un début, un événement, une fin.
+*   **Histoire.** Huit à douze lignes. Un renard sort du tableau la nuit où le musée ferme, suit le tourbillon du ciel, et doit y rentrer avant l'ouverture. Le récit doit avoir un début, un événement et une fin.
 
 ```text
 projet-tableau-renard/

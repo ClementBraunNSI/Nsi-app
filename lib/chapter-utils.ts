@@ -39,6 +39,7 @@ export function chapterImageFromData(niveaux: string, chapterName: string): stri
     "donnees structurees": "/images/chapitres/1/chap_donnees.png",
     "micro-controleurs": "/images/chapitres/1/chap_microcontrol.png",
     microcontroleurs: "/images/chapitres/1/chap_microcontrol.png",
+    "intelligence artificielle": "/images/chapitres/1/chap_ia.svg",
   };
 
   const chapterMapLevel2: Record<string, string> = {

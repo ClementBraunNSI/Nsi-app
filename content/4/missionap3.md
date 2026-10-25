@@ -25,7 +25,7 @@ Les véhicules, les états, le devis et l'export restent ceux de l'AP2. On ne re
 
 ## 1. La veille, avant de toucher au code <Icone nom="paperclip" />
 
-Note d'une page, pas plus.
+La note tient sur une page au maximum.
 
 1. Rôle du modèle, de la vue et du contrôleur. Ce que le MVC change pour la maintenance, par rapport à une page PHP qui mélange la requête, le calcul et l'HTML. Quels points sécurisent l'architecture : échappement du HTML, requêtes qui ne collent pas une saisie brute, fichiers inclus par l'instruction prévue par le langage.
 2. Dans l'application graphique : ce qui est métier (devis, filtre, export) et ce qui est interface (bouton, grille, message). Un clic appelle le métier. Il ne recalcule pas le devis dans le gestionnaire d'événement.

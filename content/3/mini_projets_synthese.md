@@ -160,7 +160,7 @@ Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. L
 
   <ExerciseSection id="mini-logs-2" label="Deux stratégies" type="lecture">
     <Enonce>
-      Deux façons d'obtenir les lignes `ERROR`, dans l'ordre du fichier.
+      Voici deux façons d'obtenir les lignes `ERROR` dans l'ordre du fichier.
 
       - Stratégie A : une passe, on ajoute la ligne dès qu'on voit `ERROR`. On lit n lignes une fois.
       - Stratégie B : on charge toutes les lignes, on les trie par l'heure, puis on filtre `ERROR`. Le tri domine.

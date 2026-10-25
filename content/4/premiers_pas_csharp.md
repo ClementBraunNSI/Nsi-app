@@ -50,7 +50,7 @@ audience: public
     Console.WriteLine(age); // Affiche la valeur de la variable
     ```
 
-    Une méthode se lit en trois endroits. Le type de retour, avant le nom : `void` si elle ne renvoie rien, `int` ou `double` si elle calcule. Les paramètres, entre parenthèses, avec leur type. Le corps, entre accolades. `return` sort de la méthode en rendant la valeur. Après un `return`, le reste du corps ne s'exécute pas.
+    Une méthode se lit en trois endroits. Le type de retour se place avant le nom : `void` si elle ne renvoie rien, `int` ou `double` si elle calcule. Les paramètres se placent entre parenthèses, chacun avec son type. Le corps se place entre accolades. `return` sort de la méthode en rendant la valeur. Après un `return`, le reste du corps ne s'exécute pas.
 
     ### Exercice 1.1 : Message de bienvenue
     **Écrire une méthode `static void AfficherBienvenue()` qui affiche "Bienvenue en C# !" dans la console.**
@@ -129,7 +129,7 @@ audience: public
     }
     ```
 
-    `>` et `<` comparent. `>=` et `<=` incluent l'égalité. `==` teste l'égalité, `!=` la différence. Comme en Python, `=` affecte et `==` compare. Une condition qui affecte par erreur ne dit pas ce que vous croyez.
+    `>` et `<` comparent. `>=` et `<=` incluent l'égalité. `==` teste l'égalité et `!=` teste la différence. Comme en Python, `=` affecte et `==` compare. Une condition qui affecte par erreur ne dit pas ce que vous croyez.
 
     Plusieurs issues s'écrivent avec `else if`. Les tests se lisent dans l'ordre, et le premier qui est vrai gagne. Un âge de 10 satisfait aussi `<= 17`. S'il est testé en second, la branche « Enfant » ne s'exécute jamais.
 
@@ -308,7 +308,7 @@ audience: public
   <ExerciseSection id="csharp-listes-4" label="4. Listes" type="autre">
     ## Une liste qui grandit
 
-    Un tableau a une taille fixée à la création. Une `List<T>` grandit quand on ajoute. Le `T` entre chevrons est le type des éléments : `List<int>` ne contient que des entiers, `List<string>` que des textes. Mélanger les deux, le compilateur le refuse.
+    Un tableau a une taille fixée à la création. Une `List<T>` grandit quand on ajoute. Le `T` entre chevrons est le type des éléments : `List<int>` ne contient que des entiers, `List<string>` que des textes. Si l'on essaie de mélanger les deux, le compilateur refuse.
 
     `new List<int>()` crée une liste vide. `Add` ajoute un élément à la fin. On peut aussi remplir dès la création, avec des accolades. `AddRange` ajoute tous les éléments d'une autre liste. L'accès se fait par l'indice, à partir de 0 : `maListe[0]` est le premier. `Count` donne le nombre d'éléments. Ce n'est pas `Length`, qui est la propriété des tableaux et des chaînes.
 

@@ -40,7 +40,7 @@ Les produits utiles vont de 1 à 25. Les seuils du cours :
 
 7 n'apparaît pas : ce n'est pas un produit de deux entiers entre 1 et 5. On ne « arrondit » pas un 6 vers le moyen pour le faire entrer dans une case.
 
-L'échelle de probabilité se lit ainsi. 1, très improbable. 2, peu probable. 3, possible. 4, probable. 5, très probable. L'impact suit la même graduation, du très faible au très fort, selon ce que l'événement ferait au délai, au coût, à la qualité ou au périmètre. Deux personnes qui notent seules ne trouvent pas toujours le même chiffre. On note ensemble, et l'on écrit pourquoi.
+L'échelle de probabilité va de 1 à 5 : 1 signifie très improbable, 2 peu probable, 3 possible, 4 probable et 5 très probable. L'impact suit la même graduation, du très faible au très fort, selon ce que l'événement ferait au délai, au coût, à la qualité ou au périmètre. Deux personnes qui notent seules ne trouvent pas toujours le même chiffre. On note ensemble, et l'on écrit pourquoi.
 
 ## Travaux dirigés : calcul de risques
 

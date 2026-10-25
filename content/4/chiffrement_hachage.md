@@ -13,7 +13,7 @@ audience: public
 
 # Chiffrement et hachage
 
-La confidentialité, l'intégrité, l'authenticité et la non-répudiation ne se protègent pas avec le même outil. Quatre questions, quatre réponses.
+La confidentialité, l'intégrité, l'authenticité et la non-répudiation ne se protègent pas avec le même outil. À chacune de ces quatre questions correspond une réponse différente.
 
 La **confidentialité** veut que seules les personnes autorisées lisent l'information. Est-ce que quelqu'un d'autre peut lire le message ? La réponse technique est le **chiffrement**.
 
@@ -175,13 +175,13 @@ HTTPS combine les deux. L'asymétrique sert à se mettre d'accord, de façon sû
 
 **RSA** (Rivest, Shamir, Adleman, 1977) est l'algorithme asymétrique le plus enseigné. Sa sécurité repose sur la difficulté de factoriser un très grand entier. Les clés courantes font 2048 ou 4096 bits. On le trouve dans HTTPS, SSH, les signatures, les certificats TLS.
 
-La génération, sur des petits nombres pour voir le geste, pas pour protéger quoi que ce soit :
+Voici la génération des clés sur de petits nombres. Le but est de voir le geste, pas de protéger quoi que ce soit :
 
-1. Deux nombres premiers, p = 61 et q = 53.
+1. On choisit deux nombres premiers, p = 61 et q = 53.
 2. n = p × q = 61 × 53 = 3233.
 3. φ(n) = (p − 1) × (q − 1) = 60 × 52 = 3120.
-4. Un exposant e, avec 1 < e < φ(n), premier avec φ(n). Ici e = 17.
-5. L'exposant d tel que (d × e) mod φ(n) = 1. Ici d = 2753.
+4. On choisit un exposant e tel que 1 < e < φ(n) et premier avec φ(n). Ici e = 17.
+5. On calcule l'exposant d tel que (d × e) mod φ(n) = 1. Ici d = 2753.
 
 La clé publique est le couple (n, e) = (3233, 17). La clé privée est (n, d) = (3233, 2753). Dans un vrai RSA, p et q ont des centaines de chiffres. Retrouver p et q à partir d'un n de 2048 bits se compte, avec les machines actuelles, en milliards d'années. L'exemple 3233 se factorise en une minute : il explique la forme des clés, il ne chiffre rien de réel.
 
@@ -219,7 +219,7 @@ sha256sum nom_fichier.txt
 
 Créez un fichier avec votre nom, calculez l'empreinte, changez une lettre, recalculez. Les deux empreintes ne se ressemblent pas. C'est l'avalanche, visible.
 
-On hache pour vérifier un téléchargement ou une sauvegarde. On hache les mots de passe : la base ne contient pas le secret, elle contient une empreinte, et la vérification recalcule. On signe l'empreinte d'un document plutôt que le document, parce que la signature asymétrique est lente et l'empreinte est courte. Une chaîne de blocs range dans chaque bloc l'empreinte du précédent : modifier un bloc ancien casse toutes les empreintes qui suivent. Deux fichiers identiques ont la même empreinte, ce qui détecte un doublon. Deux fichiers différents qui auraient la même empreinte, ce serait une collision, et c'est précisément ce qu'un algorithme encore recommandé rend impraticable.
+On hache pour vérifier un téléchargement ou une sauvegarde. On hache les mots de passe : la base ne contient pas le secret, elle contient une empreinte, et la vérification recalcule. On signe l'empreinte d'un document plutôt que le document, parce que la signature asymétrique est lente et l'empreinte est courte. Une chaîne de blocs range dans chaque bloc l'empreinte du précédent : modifier un bloc ancien casse toutes les empreintes qui suivent. Deux fichiers identiques ont la même empreinte, ce qui détecte un doublon. Si deux fichiers différents avaient la même empreinte, ce serait une collision, et c'est précisément ce qu'un algorithme encore recommandé rend impraticable.
 
 ## Signer, ce n'est pas chiffrer
 
@@ -268,7 +268,7 @@ Le certificat, au format **X.509**, porte l'identité (nom, organisation, nom de
 
 La confiance se lit en chaîne. L'**autorité racine** est préinstallée dans le système ou le navigateur. Son certificat est auto-signé, et il est protégé en conséquence : s'il est faux, tout ce qui en descend l'est. Elle signe des **autorités intermédiaires**, qui signent au quotidien les certificats des sites. Le certificat de `www.banque.fr` contient la clé publique du site, son identité, et la signature de l'intermédiaire. Le navigateur remonte jusqu'à une racine qu'il connaît déjà. Il ne fait pas confiance au site parce que le site le dit. Il fait confiance parce qu'une racine déjà présente a signé quelqu'un qui a signé le site.
 
-À l'ouverture d'une page HTTPS, le navigateur reçoit le certificat, vérifie la signature de l'intermédiaire, vérifie que cet intermédiaire remonte à une racine installée, vérifie les dates, vérifie que le nom de domaine du certificat est celui de l'adresse. Si la chaîne tient, le cadenas s'affiche. Sinon, un avertissement. L'avertissement n'est pas un détail d'interface. C'est la chaîne qui a cassé.
+À l'ouverture d'une page HTTPS, le navigateur reçoit le certificat, vérifie la signature de l'intermédiaire, vérifie que cet intermédiaire remonte à une racine installée, vérifie les dates, vérifie que le nom de domaine du certificat est celui de l'adresse. Si la chaîne tient, le cadenas s'affiche. Sinon, le navigateur affiche un avertissement. Cet avertissement n'est pas un simple détail d'interface : il signale que la chaîne de confiance a cassé.
 
 Ouvrez le cadenas d'un site HTTPS et lisez le certificat : l'autorité, la date de fin, la clé publique. Vous y voyez la chaîne, pas un logo.
 

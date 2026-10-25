@@ -257,7 +257,7 @@ audience: public
 
     ### Exercice 2 : Le score dépend du contexte
 
-    Une injection SQL est découverte sur le site vitrine de la boulangerie du quartier. Le site montre des photos de pains et les horaires. Pas de compte client, pas d'espace membre, pas de donnée personnelle. La base ne contient que les tables `produits` et `horaires`.
+    Une injection SQL est découverte sur le site vitrine de la boulangerie du quartier. Le site montre des photos de pains et les horaires. Il n'a ni compte client, ni espace membre, ni donnée personnelle. La base ne contient que les tables `produits` et `horaires`.
 
     Discutez le score CVSS de cette faille à partir de ce contexte : la même injection, sur une base clients, n'a pas le même impact.
 
