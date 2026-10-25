@@ -9,9 +9,9 @@ export default function AdminMessagesPage() {
         <PageHeader
           eyebrow="Administration"
           title="Messagerie"
-          description="Une conversation par élève. Les messages reçus apparaissent dès l’ouverture du fil."
+          description="Une conversation par élève. Les messages reçus apparaissent dès l'ouverture du fil."
         />
-        <Suspense fallback={<p className="text-sm text-slate-400">Chargement…</p>}>
+        <Suspense fallback={<p className="text-sm text-slate-400">Chargement en cours</p>}>
           <TeacherInbox />
         </Suspense>
       </div>

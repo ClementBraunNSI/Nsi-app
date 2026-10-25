@@ -15,7 +15,7 @@ function ActivityGroup({ title, students }: { title: string; students: StudentAc
   return (
     <section className="space-y-4">
       <h2 className="text-2xl font-semibold text-slate-800">
-        {title} · {students.length}
+        {title} ({students.length})
       </h2>
       {students.length === 0 ? (
         <p className="text-sm text-slate-400">Aucun élève dans ce groupe.</p>
@@ -33,7 +33,7 @@ function ActivityGroup({ title, students }: { title: string; students: StudentAc
                 <div className="flex flex-col items-end gap-2">
                   {student.lastWorkAt ? (
                     <p className="text-sm font-semibold text-slate-600">
-                      Dernière activité · {formatWhen(student.lastWorkAt)}
+                      Dernière activité : {formatWhen(student.lastWorkAt)}
                     </p>
                   ) : (
                     <span className="inline-flex px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold border border-red-100">
@@ -51,7 +51,7 @@ function ActivityGroup({ title, students }: { title: string; students: StudentAc
                 <ul className="mt-3 space-y-1">
                   {student.events.map((event, index) => (
                     <li key={`${student.id}-${index}`} className="text-sm text-slate-600">
-                      {event.at ? <span className="text-slate-400">{formatWhen(event.at)} · </span> : null}
+                      {event.at ? <span className="text-slate-400">{formatWhen(event.at)} : </span> : null}
                       {event.label}
                     </li>
                   ))}
@@ -74,7 +74,7 @@ export default async function AdminActivityPage() {
         <PageHeader
           eyebrow="Administration"
           title="Activité"
-          description="Exercices validés, fiches terminées et devoirs rendus. Un message envoyé n’est pas compté comme du travail."
+          description="Exercices validés, fiches terminées et devoirs rendus. Un message envoyé n'est pas compté comme du travail."
         />
         {activity ? (
           <>
@@ -82,7 +82,7 @@ export default async function AdminActivityPage() {
             <ActivityGroup title="Élèves de classe" students={activity.classe} />
           </>
         ) : (
-          <p className="text-sm text-slate-400">Cette page est réservée à l’enseignant.</p>
+          <p className="text-sm text-slate-400">Cette page est réservée à l'enseignant.</p>
         )}
       </div>
     </div>

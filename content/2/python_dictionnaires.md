@@ -3,7 +3,7 @@ title: Dictionnaires en Python
 description: "Structure clé-valeur : créer, lire, modifier et parcourir un dictionnaire."
 level: premiere
 chapter: Dictionnaires et Tables
-icon: "\U0001F5DD️"
+icon: "key-round"
 badgeId: premiere_dictionnaires
 prerequisites: []
 audience: public
@@ -71,7 +71,7 @@ options["langues"].append("allemand")
 
 ```python
 for cle in eleve:
-    print(cle, "→", eleve[cle])
+    print(cle, "->", eleve[cle])
 
 # variante explicite
 for cle, valeur in eleve.items():

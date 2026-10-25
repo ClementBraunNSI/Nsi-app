@@ -78,8 +78,8 @@ export default function StackVisualizer({ initialData = [], maxSize = 8, type = 
 
       {/* Visualization Area */}
       <div className={`
-        flex items-center justify-center bg-slate-50 rounded-xl p-8 min-h-[200px] border border-slate-200 relative
-        ${type === 'stack' ? 'flex-col-reverse justify-end' : 'flex-row justify-start overflow-x-auto'}
+ flex items-center justify-center bg-slate-50 rounded-xl p-8 min-h-[200px] border border-slate-200 relative
+ ${type === 'stack' ? 'flex-col-reverse justify-end' : 'flex-row justify-start overflow-x-auto'}
       `}>
         <AnimatePresence mode='popLayout'>
           {items.map((item, index) => (
@@ -90,8 +90,8 @@ export default function StackVisualizer({ initialData = [], maxSize = 8, type = 
               animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: type === 'stack' ? -50 : 0, x: type === 'queue' ? 50 : 0 }}
               className={`
-                flex items-center justify-center font-bold text-slate-700 shadow-sm border border-slate-300 bg-white
-                ${type === 'stack' ? 'w-full max-w-[200px] h-12 rounded-lg mb-2 last:mb-0' : 'min-w-[80px] h-20 rounded-xl mr-2 last:mr-0'}
+ flex items-center justify-center font-bold text-slate-700 shadow-sm border border-slate-300 bg-white
+ ${type === 'stack' ? 'w-full max-w-[200px] h-12 rounded-lg mb-2 last:mb-0' : 'min-w-[80px] h-20 rounded-xl mr-2 last:mr-0'}
               `}
             >
               {item}
@@ -101,7 +101,7 @@ export default function StackVisualizer({ initialData = [], maxSize = 8, type = 
         </AnimatePresence>
         
         {items.length === 0 && (
-          <div className="absolute inset-0 flex items-center justify-center text-slate-300 font-bold text-xl uppercase tracking-widest pointer-events-none">
+          <div className="absolute inset-0 flex items-center justify-center text-slate-300 font-bold text-xl pointer-events-none">
             Vide
           </div>
         )}

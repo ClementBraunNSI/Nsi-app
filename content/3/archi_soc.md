@@ -4,7 +4,7 @@ description: "Architecture matérielle (SoC) et Système d'Exploitation (Process
 level: TNSI
 order: 20
 chapter: "Architectures matérielles, OS & Réseaux"
-icon: "⚙️"
+icon: "settings"
 badgeId: "terminale_archi_os"
 prerequisites: []
 audience: public

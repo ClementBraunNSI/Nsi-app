@@ -24,7 +24,7 @@ export default function CodeBlock({ code, language = 'python', title }: CodeBloc
   const highlight = (code: string) => {
     if (language === 'python') {
       return code
-        .replace(/(def|class|return|if|else|for|while|import|from|print)/g, '<span class="text-purple-400 font-bold">$1</span>')
+        .replace(/(def|class|return|if|else|for|while|import|from|print)/g, '<span class="text-orange-400 font-bold">$1</span>')
         .replace(/('.*?'|".*?")/g, '<span class="text-green-400">$1</span>')
         .replace(/(#.*)/g, '<span class="text-slate-500 italic">$1</span>')
         .replace(/\b(\d+)\b/g, '<span class="text-orange-400">$1</span>');

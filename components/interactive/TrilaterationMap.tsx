@@ -350,7 +350,7 @@ export default function TrilaterationMap() {
               position={target} 
               icon={foxIcon}
             >
-              <Popup>🦊 Tu m'as trouvé !</Popup>
+              <Popup>Tu m'as trouvé !</Popup>
             </Marker>
           )}
 
@@ -361,7 +361,7 @@ export default function TrilaterationMap() {
         
         {/* Overlay Message for Step 0 */}
         {step === 0 && (
-          <div className="absolute inset-0 bg-slate-900/10 backdrop-blur-[1px] flex items-center justify-center z-[1000] pointer-events-none">
+          <div className="absolute inset-0 bg-slate-900-[1px] flex items-center justify-center z-[1000] pointer-events-none">
             <div className="bg-white/90 p-4 rounded-xl shadow-xl">
               <p className="font-bold text-slate-800">En attente du signal...</p>
             </div>

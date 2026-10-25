@@ -4,7 +4,7 @@ description: "Sujets chronométrés de type bac pratique NSI"
 level: TNSI
 order: 240
 chapter: Entrainement
-icon: "🎯"
+icon: "target"
 badgeId: terminale_entrainement_bac
 prerequisites:
   - exercices_terminale_fondamentaux

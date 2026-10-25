@@ -4,7 +4,7 @@ description: 'Comment les paquets trouvent leur chemin sur Internet (RIP, OSPF).
 level: TNSI
 order: 30
 chapter: 'Architectures matérielles, OS & Réseaux'
-icon: "\U0001F310"
+icon: "globe"
 badgeId: terminale_routage
 prerequisites:
   - archi_soc
@@ -33,7 +33,7 @@ Toutes les 30 secondes environ, chaque routeur envoie sa table à ses voisins. C
 
 OSPF (*Open Shortest Path First*) est un protocole à **état de liens**. Chaque routeur finit par connaître la carte du réseau, pas seulement la distance annoncée par ses voisins. Il calcule ensuite le plus court chemin avec l'algorithme de Dijkstra.
 
-La métrique n'est plus le nombre de sauts. C'est un **coût**, souvent inversement proportionnel au débit, de la forme \(10^8 / \text{débit}\). Une liaison rapide coûte peu, une liaison lente coûte cher. OSPF choisit donc vraiment un chemin rapide, quitte à traverser un routeur de plus. Il demande plus de calcul, et plus de mémoire, puisque chaque routeur tient la topologie.
+La métrique n'est plus le nombre de sauts. C'est un **coût**, souvent inversement proportionnel au débit, de la forme $10^8 / \text{débit}$. Une liaison rapide coûte peu, une liaison lente coûte cher. OSPF choisit donc vraiment un chemin rapide, quitte à traverser un routeur de plus. Il demande plus de calcul, et plus de mémoire, puisque chaque routeur tient la topologie.
 
 Le choix entre les deux n'est pas une question de mode. Si tous les liens se valent, compter les sauts suffit. Dès que les débits diffèrent beaucoup, la métrique de RIP ment.
 

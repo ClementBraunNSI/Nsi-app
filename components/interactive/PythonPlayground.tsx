@@ -139,8 +139,8 @@ export default function PythonPlayground({ initialCode = "print('Hello NSI !')",
             onClick={runCode}
             disabled={isPyodideLoading || isRunning}
             className={`
-              flex items-center gap-2 px-4 py-1.5 rounded-lg font-bold text-sm transition-all
-              ${isPyodideLoading || isRunning 
+ flex items-center gap-2 px-4 py-1.5 rounded-lg font-bold text-sm transition-all
+ ${isPyodideLoading || isRunning 
                 ? "bg-slate-200 text-slate-400 cursor-not-allowed" 
                 : "bg-emerald-500 text-white hover:bg-emerald-600 shadow-sm hover:shadow"}
             `}
@@ -170,7 +170,7 @@ export default function PythonPlayground({ initialCode = "print('Hello NSI !')",
 
         {/* Console Output */}
         <div className="bg-[#1e1e1e] text-slate-300 font-mono text-sm p-4 overflow-y-auto h-full flex flex-col">
-          <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider font-bold">Sortie Console</div>
+          <div className="text-xs text-slate-500 mb-2 font-bold">Sortie Console</div>
           
           {output.length === 0 && !error && (
             <div className="text-slate-600 italic mt-4 text-center">

@@ -12,12 +12,12 @@ audience: public
   
   <ExerciseSection id="tp-poo-exercice1" label="Exercice 1 - Compte Bancaire" type="autre">
     <Enonce>
-    ## 🏦 Exercice 1 : Gestion de Compte Bancaire (Niveau Débutant)
+    ## <Icone nom="landmark" /> Exercice 1 : Gestion de Compte Bancaire (Niveau Débutant)
 
     ### Contexte
     Vous devez créer un système simple pour gérer un compte bancaire avec des opérations de base.
 
-    ### 📋 Étapes à réaliser
+    ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `CompteBancaire`**
 
@@ -83,7 +83,7 @@ audience: public
     }
     ```
 
-    ### 🎯 Résultat attendu
+    ### <Icone nom="target" /> Résultat attendu
     ```
     Compte de Alice Dupont : 100€
     Dépôt de 50€ effectué.
@@ -94,7 +94,7 @@ audience: public
     Compte de Alice Dupont : 120€
     ```
 
-    ### 💡 Concepts travaillés
+    ### <Icone nom="lightbulb" /> Concepts travaillés
     - Création d'une classe simple
     - Propriétés avec contrôle d'accès (`private set`)
     - Constructeur avec paramètres
@@ -105,12 +105,12 @@ audience: public
 
   <ExerciseSection id="tp-poo-exercice2" label="Exercice 2 - Bibliothèque" type="autre">
     <Enonce>
-    ## 📚 Exercice 2 : Gestion de Livres (Niveau Débutant/Intermédiaire)
+    ## <Icone nom="library" /> Exercice 2 : Gestion de Livres (Niveau Débutant/Intermédiaire)
 
     ### Contexte
     Vous devez créer un système pour gérer des livres dans une bibliothèque.
 
-    ### 📋 Étapes à réaliser
+    ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `Livre`**
 
@@ -181,7 +181,7 @@ audience: public
     }
     ```
 
-    ### 🎯 Résultat attendu
+    ### <Icone nom="target" /> Résultat attendu
     ```
     1984 par George Orwell (1949) - Statut : Disponible
     Âge du livre : 76 ans
@@ -192,7 +192,7 @@ audience: public
     1984 par George Orwell (1949) - Statut : Disponible
     ```
 
-    ### 💡 Concepts travaillés
+    ### <Icone nom="lightbulb" /> Concepts travaillés
     - Gestion d'état (disponible/emprunté)
     - Validation avant modification
     - Calcul basé sur les propriétés
@@ -203,12 +203,12 @@ audience: public
 
   <ExerciseSection id="tp-poo-exercice3" label="Exercice 3 - Étudiants" type="autre">
     <Enonce>
-    ## 🎓 Exercice 3 : Gestion d'Étudiants (Niveau Intermédiaire)
+    ## <Icone nom="graduation-cap" /> Exercice 3 : Gestion d'Étudiants (Niveau Intermédiaire)
 
     ### Contexte
     Vous devez créer un système pour gérer des étudiants avec leurs notes et calculs de moyenne.
 
-    ### 📋 Étapes à réaliser
+    ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `Etudiant`**
 
@@ -306,7 +306,7 @@ audience: public
     }
     ```
 
-    ### 🎯 Résultat attendu
+    ### <Icone nom="target" /> Résultat attendu
     ```
     Note invalide. La note doit être entre 0 et 20.
     Étudiant N°12345 : Sophie Martin
@@ -317,7 +317,7 @@ audience: public
     Moyenne : 17.17/20 - Mention : Très bien
     ```
 
-    ### 💡 Concepts travaillés
+    ### <Icone nom="lightbulb" /> Concepts travaillés
     - Propriété en lecture seule
     - Collection privée (encapsulation)
     - Calculs sur collections
@@ -327,12 +327,12 @@ audience: public
 
   <ExerciseSection id="tp-poo-exercice4" label="Exercice 4 - Concessionnaire" type="autre">
     <Enonce>
-    ## 🚗 Exercice 4 : Gestion de Concessionnaire (Niveau Intermédiaire/Avancé)
+    ## <Icone nom="car" /> Exercice 4 : Gestion de Concessionnaire (Niveau Intermédiaire/Avancé)
 
     ### Contexte
     Un concessionnaire automobile a besoin d'un système pour gérer son inventaire de voitures. Vous devez créer deux classes qui travaillent ensemble : `Voiture` et `Concessionnaire`.
 
-    ### 📋 Étapes à réaliser
+    ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `Voiture`**
 
@@ -492,7 +492,7 @@ audience: public
     }
     ```
 
-    ### 🎯 Résultat attendu
+    ### <Icone nom="target" /> Résultat attendu
     ```
     Voiture ajoutée : Renault Clio
     Voiture ajoutée : Peugeot 308
@@ -526,7 +526,7 @@ audience: public
     Renault Clio (2020) - 13500€ - 25000 km - Statut : Disponible
     ```
 
-    ### 💡 Concepts travaillés
+    ### <Icone nom="lightbulb" /> Concepts travaillés
     - **Composition** : Un concessionnaire contient une liste de voitures
     - Manipulation de collections d'objets
     - Communication entre objets
@@ -537,13 +537,13 @@ audience: public
 
   <ExerciseSection id="tp-poo-exercice5" label="Exercice 5 - Import CSV" type="autre">
     <Enonce>
-    ## 📂 Exercice 5 : Importation de Données CSV (Niveau Intermédiaire)
+    ## <Icone nom="folder-open" /> Exercice 5 : Importation de Données CSV (Niveau Intermédiaire)
 
     ### Contexte
     Votre magasin reçoit régulièrement la liste de ses nouveaux produits sous forme de fichier CSV (Comma Separated Values).
     Vous devez créer un programme capable de lire ce fichier et de transformer chaque ligne en un objet `Produit` utilisable dans votre application.
 
-    ### 📄 Le fichier CSV (`produits.csv`)
+    ### <Icone nom="file-text" /> Le fichier CSV (`produits.csv`)
     Voici le contenu du fichier que vous devrez traiter :
     ```csv
     A100;Ecran 24 pouces;150.00;10
@@ -553,7 +553,7 @@ audience: public
     ```
     Chaque ligne correspond à : `Référence;Nom;Prix;Quantité`
 
-    ### 📋 Étapes à réaliser
+    ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe `Produit`**
     
@@ -603,7 +603,7 @@ audience: public
     - Une méthode `ImporterProduits(string cheminFichier)` :
       - Cette méthode doit lire le fichier ligne par ligne.
       - Pour chaque ligne, elle crée un objet `Produit` et l'ajoute au `Stock`.
-      - ⚠️ **Important :** Utilisez un bloc `try...catch` pour gérer le cas où le fichier n'existe pas.
+      - <Icone nom="triangle-alert" /> **Important :** Utilisez un bloc `try...catch` pour gérer le cas où le fichier n'existe pas.
 
     **Étape 4 : Tester dans le Main**
     
@@ -612,7 +612,7 @@ audience: public
     3. Appelez la méthode `ImporterProduits("produits.csv")`.
     4. Affichez le contenu du stock pour vérifier que tout a bien été chargé.
 
-    ### 🎯 Résultat attendu
+    ### <Icone nom="target" /> Résultat attendu
     ```
     Tentative d'importation du fichier produits.csv...
     Importation réussie ! 4 produits ajoutés.
@@ -624,7 +624,7 @@ audience: public
     [D400] Tapis de souris : 12€ (Quantité: 50)
     ```
 
-    ### 💡 Concepts travaillés
+    ### <Icone nom="lightbulb" /> Concepts travaillés
     - Manipulation de fichiers (`System.IO`)
     - Traitement de chaînes de caractères (`Split`)
     - Conversion de types (`Parse`)
@@ -634,12 +634,12 @@ audience: public
 
   <ExerciseSection id="tp-poo-exercice6-animaux" label="Exercice 6 - Héritage (Animaux)" type="autre">
     <Enonce>
-    ## 🐾 Exercice 6 : Animaux et Héritage (Niveau Avancé)
+    ## <Icone nom="paw-print" /> Exercice 6 : Animaux et Héritage (Niveau Avancé)
 
     ### Contexte
     Vous devez créer un système de gestion d'animaux dans un refuge en utilisant l'héritage pour éviter la duplication de code.
 
-    ### 📋 Étapes à réaliser
+    ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe mère `Animal`**
 
@@ -746,7 +746,7 @@ audience: public
     }
     ```
 
-    ### 🎯 Résultat attendu
+    ### <Icone nom="target" /> Résultat attendu
     ```
     Rex a été ajouté au refuge.
     Bella a été ajouté au refuge.
@@ -755,11 +755,11 @@ audience: public
     Kiwi a été ajouté au refuge.
 
     === Animaux du refuge Les Amis des Animaux ===
-    🐕 Chien : Rex (Berger Allemand) - 3 ans - 25.5 kg - Statut : Disponible
-    🐕 Chien : Bella (Labrador) - 5 ans - 18 kg - Statut : Disponible
-    🐱 Chat : Minou (Tigré) - 2 ans - 4.5 kg - Statut : Disponible
-    🐱 Chat : Félix (Noir) - 4 ans - 5 kg - Statut : Disponible
-    🐦 Oiseau : Kiwi - 1 ans - 0.3 kg - Envergure : 25 cm - Statut : Disponible
+    Chien : Rex (Berger Allemand) - 3 ans - 25.5 kg - Statut : Disponible
+    Chien : Bella (Labrador) - 5 ans - 18 kg - Statut : Disponible
+    Chat : Minou (Tigré) - 2 ans - 4.5 kg - Statut : Disponible
+    Chat : Félix (Noir) - 4 ans - 5 kg - Statut : Disponible
+    Oiseau : Kiwi - 1 ans - 0.3 kg - Envergure : 25 cm - Statut : Disponible
 
     --- Test des méthodes spécifiques ---
     Rex aboie : Wouf wouf !
@@ -774,9 +774,9 @@ audience: public
     Bella a maintenant 6 ans.
 
     === Animaux disponibles à l'adoption ===
-    🐕 Chien : Bella (Labrador) - 6 ans - 18 kg - Statut : Disponible
-    🐱 Chat : Félix (Noir) - 4 ans - 5 kg - Statut : Disponible
-    🐦 Oiseau : Kiwi - 1 ans - 0.3 kg - Envergure : 25 cm - Statut : Disponible
+    Chien : Bella (Labrador) - 6 ans - 18 kg - Statut : Disponible
+    Chat : Félix (Noir) - 4 ans - 5 kg - Statut : Disponible
+    Oiseau : Kiwi - 1 ans - 0.3 kg - Envergure : 25 cm - Statut : Disponible
 
     === Statistiques du refuge Les Amis des Animaux ===
     Total d'animaux : 5
@@ -790,13 +790,13 @@ audience: public
 
   <ExerciseSection id="tp-poo-exercice6" label="Exercice 6 - Héritage Véhicules" type="autre">
     <Enonce>
-    ## 🏍️ Exercice 6 : Concessionnaire Multi-Véhicules
+    ## <Icone nom="bike" /> Exercice 6 : Concessionnaire Multi-Véhicules
 
     ### Contexte
     Le concessionnaire de l'exercice 4 s'agrandit ! Il ne vend plus seulement des voitures, mais aussi des motos et des quads.
     Vous devez refactoriser votre code pour utiliser l'héritage.
 
-    ### 📋 Étapes à réaliser
+    ### <Icone nom="clipboard-list" /> Étapes à réaliser
 
     **Étape 1 : Créer la classe mère `Vehicule`**
 
@@ -837,7 +837,7 @@ audience: public
 
         // Constructeur
 
-        // Redéfinition de AfficherInfos() (avec émoji 🏍️)
+        // Redéfinition de AfficherInfos() (avec émoji )
     }
     ```
 
@@ -882,7 +882,7 @@ audience: public
     }
     ```
 
-    ### 🎯 Résultat attendu
+    ### <Icone nom="target" /> Résultat attendu
     Le programme doit afficher la liste hétérogène de véhicules et les statistiques par type.
     </Enonce>
   </ExerciseSection>

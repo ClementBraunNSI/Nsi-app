@@ -4,7 +4,7 @@ description: Comprendre et appliquer la Programmation Orientée Objet en Python.
 level: TNSI
 order: 140
 chapter: Structures de données
-icon: "\U0001F3D7️"
+icon: "construction"
 badgeId: terminale_poo
 prerequisites:
   - prog_modularite_mise_au_point
@@ -83,7 +83,7 @@ class CompteBancaire:
 
   <ExerciseSection id="poo-ex-1" label="Création de Classe" type="python">
     <Enonce>
-    ### La Classe `Chien` 🐶
+    ### La Classe `Chien` <Icone nom="dog" />
     1.  Créez une classe `Chien` avec les attributs `nom` et `race`.
     2.  Ajoutez une méthode `aboyer()` qui affiche "Wouaf ! Je suis [nom] !".
     3.  Créez un chien nommé "Rex", de race "Berger Allemand", et faites-le aboyer.
@@ -93,7 +93,7 @@ class CompteBancaire:
 
   <ExerciseSection id="poo-ex-2" label="RPG Simple" type="python">
     <Enonce>
-    ### Personnage de Jeu ⚔️
+    ### Personnage de Jeu <Icone nom="swords" />
     Créez une classe `Personnage` :
     1.  Attributs : `pseudo`, `pv` (points de vie, defaut 100), `force`.
     2.  Méthode `attaquer(self, cible)` : Enlève `self.force` aux PV de la `cible`.

@@ -4,7 +4,7 @@ description: "Approfondir processus, CPU, mémoire virtuelle et appels système"
 level: TNSI
 order: 220
 chapter: Architectures matérielles, OS & Réseaux
-icon: "🧠"
+icon: "brain"
 badgeId: terminale_os_avance
 prerequisites:
   - archi_soc

@@ -3,7 +3,7 @@ title: "Les Réseaux Sociaux : Définitions et Enjeux"
 description: "Comprendre les réseaux sociaux, leur modèle économique, les enjeux de cyberviolence et leur modélisation par les graphes."
 level: "2"
 chapter: "Réseaux sociaux"
-icon: "📱"
+icon: "smartphone"
 audience: public
 ---
 

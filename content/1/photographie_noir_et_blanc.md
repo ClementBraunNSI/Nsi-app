@@ -5,7 +5,7 @@ description: >-
   définition
 level: seconde
 chapter: Photographie Numérique
-icon: "\U0001F4F7"
+icon: "camera"
 prerequisites:
   - photographie_couleur
 audience: public
@@ -41,7 +41,7 @@ La **définition** est le nombre total de pixels. On multiplie la largeur par la
 
 $$ \text{Définition} = \text{Nombre de colonnes} \times \text{Nombre de lignes} $$
 
-Une image de 800 pixels sur 600 en contient \(800 \times 600 = 480\,000\), soit 0,48 mégapixel. Une définition plus grande décrit l'image plus finement. Elle ne dit pas encore si, une fois imprimée, ces pixels seront serrés ou espacés.
+Une image de 800 pixels sur 600 en contient $800 \times 600 = 480\,000$, soit 0,48 mégapixel. Une définition plus grande décrit l'image plus finement. Elle ne dit pas encore si, une fois imprimée, ces pixels seront serrés ou espacés.
 
 C'est le rôle de la **résolution**. Elle mesure la densité de pixels sur un support, écran ou papier, en points par pouce : ppp, ou dpi (*dots per inch*). Un pouce vaut environ 2,54 cm.
 
@@ -73,14 +73,14 @@ Pour des nuances, on donne plus de bits à chaque pixel. Le standard courant est
 
 ![Nuances de gris](/content/1/img_nuances.png)
 
-Un bit donne \(2^1 = 2\) possibilités. Huit bits en donnent \(2^8 = 256\), de 0 à 255. La convention est simple, et il faut la tenir : **0 est le noir**, **255 est le blanc**. Plus la valeur monte, plus le gris s'éclaircit. Ce n'est pas « plus de noir ». C'est plus de lumière.
+Un bit donne $2^1 = 2$ possibilités. Huit bits en donnent $2^8 = 256$, de 0 à 255. La convention est simple, et il faut la tenir : **0 est le noir**, **255 est le blanc**. Plus la valeur monte, plus le gris s'éclaircit. Ce n'est pas « plus de noir ». C'est plus de lumière.
 
 ## Le négatif
 
-Pour inverser une image en niveaux de gris, on retourne l'échelle. Le pixel \(P'\) vaut :
+Pour inverser une image en niveaux de gris, on retourne l'échelle. Le pixel $P'$ vaut :
 
 $$ P' = 255 - P $$
 
-Un noir, 0, devient 255, donc blanc. Un blanc devient noir. Un gris à 200 devient \(255 - 200 = 55\), un gris sombre. La formule ne mélange pas les pixels voisins : chacun est retourné seul.
+Un noir, 0, devient 255, donc blanc. Un blanc devient noir. Un gris à 200 devient $255 - 200 = 55$, un gris sombre. La formule ne mélange pas les pixels voisins : chacun est retourné seul.
 
 ![Image inversée (Négatif)](/content/1/mayainv.png)

@@ -1,15 +1,15 @@
 ---
-title: "Révision — Structures & pointeurs"
+title: "Révision : Structures & pointeurs"
 description: "Fiche synthèse : struct, typedef, &, *"
 level: particuliers
-chapter: "Programmation en C — Révisions"
-icon: "🏗️"
+chapter: "Programmation en C : Révisions"
+icon: "construction"
 revisionSheet: true
 audience:
   accounts: []
 ---
 
-# 🏗️ Révision — Structures et pointeurs
+# <Icone nom="construction" /> Révision : Structures et pointeurs
 
 ## `struct` : regrouper des données
 
@@ -54,6 +54,6 @@ Souvent un `char *` ou un `char tab[]` pointe vers du texte ; attention aux **ta
 
 ## Mini-checklist
 
-*   Je sais lire un schéma « variable → adresse → valeur ».
+*   Je sais lire un schéma « variable, adresse, valeur ».
 *   Je n'oublie pas les parenthèses sur `(*px)++` si besoin.
 *   Je relie ça au cours : structures + fonctions qui modifient des données « en place ».

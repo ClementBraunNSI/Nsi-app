@@ -115,7 +115,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
               data.profile.classe,
             ]
               .filter(Boolean)
-              .join(" · ") || "Suivi de cours particuliers"
+              .join(", ") || "Suivi de cours particuliers"
           }
           actions={
             <div className="flex gap-3">
@@ -124,12 +124,12 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                 onClick={() => setShowAchievements(true)}
                 className="flex items-center gap-3 bg-[var(--surface-2)] px-5 py-3 rounded-2xl border border-[var(--border)] hover:border-purple-200 transition-colors"
               >
-                <Target className="text-purple-500" size={22} />
+                <Target className="text-orange-500" size={22} />
                 <div className="text-left">
                   <div className="text-2xl font-semibold leading-none">
                     {data.achievements.filter((achievement) => achievement.earned).length}
                   </div>
-                  <div className="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)]">Succès</div>
+                  <div className="text-[10px] font-semibold text-[var(--muted)]">Succès</div>
                 </div>
               </button>
               <button
@@ -140,7 +140,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                 <Award className="text-orange-500" size={22} />
                 <div className="text-left">
                   <div className="text-2xl font-semibold leading-none">{data.badges.length}</div>
-                  <div className="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)]">Badges</div>
+                  <div className="text-[10px] font-semibold text-[var(--muted)]">Badges</div>
                 </div>
               </button>
             </div>
@@ -188,7 +188,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                             });
                           }}
                         >
-                          J’ai terminé
+                          J'ai terminé
                         </Button>
                       ) : null}
                     </div>
@@ -262,17 +262,17 @@ export function EspacePanel({ data }: { data: EspaceData }) {
             </div>
             {data.nextLesson ? (
               <div className="rounded-2xl bg-orange-50 border border-orange-100 p-4 mb-4">
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-orange-600">Prochain cours</p>
+                <p className="text-[10px] font-semibold text-orange-600">Prochain cours</p>
                 <p className="font-semibold mt-1 capitalize">{formatWhen(data.nextLesson.starts_at)}</p>
                 <p className="text-xs text-[var(--muted)] mt-1">
                   {data.nextLesson.duration_minutes} min
-                  {data.nextLesson.title ? ` · ${data.nextLesson.title}` : ""}
+                  {data.nextLesson.title ? ` : ${data.nextLesson.title}` : ""}
                 </p>
               </div>
             ) : (
               <p className="text-sm text-[var(--muted)] mb-4">Aucune séance à venir.</p>
             )}
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)] mb-2">
+            <p className="text-[10px] font-semibold text-[var(--muted)] mb-2">
               Cours précédents
             </p>
             {data.pastLessons.length === 0 ? (
@@ -298,14 +298,14 @@ export function EspacePanel({ data }: { data: EspaceData }) {
           {chapters.length === 0 ? (
             <EmptyState
               icon={<BookOpen size={28} />}
-              title="Rien n’est assigné pour l’instant"
+              title="Rien n'est assigné pour l'instant"
               description="Le prochain cours servira à choisir les fiches. En attendant, tu peux chercher un cours public depuis le menu."
             />
           ) : (
             <div className="space-y-6">
               {chapters.map(([chapter, sheets]) => (
                 <div key={chapter} className="space-y-3">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--muted)]">{chapter}</h3>
+                  <h3 className="text-sm font-semibold text-[var(--muted)]">{chapter}</h3>
                   {sheets.map((sheet) => {
                     const percent = sheet.total ? Math.round((sheet.completedCount / sheet.total) * 100) : 0;
                     const nextExercise = sheet.exercises.find((exercise) => !exercise.completed) || sheet.exercises[0];
@@ -326,7 +326,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                             </div>
                             <p className="text-sm text-[var(--muted)] mt-1">
                               {sheet.completedCount}/{sheet.total || "?"} exercices
-                              {percent ? ` · ${percent}%` : ""}
+                              {percent ? ` (${percent} %)` : ""}
                             </p>
                             </div>
                           </div>
@@ -335,7 +335,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                               href={`/exercice/${encodeURIComponent(nextExercise.id)}`}
                               className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-[var(--accent-fg)]"
                             >
-                              Continuer l’exercice
+                              Continuer l'exercice
                             </Link>
                           )}
                         </div>
@@ -368,7 +368,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                                       href={`/exercice/${encodeURIComponent(exercise.id)}`}
                                       className="text-xs font-semibold text-orange-600 hover:underline"
                                     >
-                                      Réaliser l’exercice
+                                      Réaliser l'exercice
                                     </Link>
                                   )}
                                 </div>
@@ -409,7 +409,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
                     <p className={`font-semibold ${achievement.earned ? "" : "text-[var(--muted)]"}`}>{achievement.title}</p>
                     <p className="text-sm text-[var(--muted)] mt-1">{achievement.description}</p>
                     {!achievement.earned && (
-                      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)] mt-2">
+                      <p className="text-[10px] font-semibold text-[var(--muted)] mt-2">
                         Pas encore obtenu
                       </p>
                     )}
@@ -424,7 +424,7 @@ export function EspacePanel({ data }: { data: EspaceData }) {
       {showBadges && (
         <Overlay title="Badges" icon={<Trophy size={28} />} onClose={() => setShowBadges(false)}>
           {data.badges.length === 0 ? (
-            <p className="text-center text-[var(--muted)]">Valide tous les exercices d’une fiche pour obtenir son badge.</p>
+            <p className="text-center text-[var(--muted)]">Valide tous les exercices d'une fiche pour obtenir son badge.</p>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {data.badges.map((badge) => (

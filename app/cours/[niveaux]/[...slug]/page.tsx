@@ -17,8 +17,6 @@ import ChasseEditionPicker from '@/components/chasse/ChasseEditionPicker';
 import { resolveCourseFile } from '@/lib/content-path';
 import { getAuthContext, viewerFromAuth } from '@/lib/auth';
 import { canAccessCourse } from '@/lib/course-access';
-import { parseCourseGroup } from '@/lib/course-groups';
-import { groupMembers } from '@/lib/course-group-members';
 
 const RESERVED_TITLE = 'Cours réservé';
 const RESERVED_DESCRIPTION = 'Ce contenu est réservé.';
@@ -96,6 +94,7 @@ export async function generateMetadata({ params }: { params: Promise<{ niveaux: 
 import { ExerciseTabs, ExerciseSection, Enonce } from '@/components/ExerciseTabs';
 import { Correction, Verification } from '@/components/SolutionBlocks';
 import { Admonition } from '@/components/Admonition';
+import { Icone, Renard, Renards } from '@/components/mdx/CourseMarks';
 import { transformAdmonitions } from '@/lib/admonition-utils';
 import { stripHiddenExerciseBlocks } from '@/lib/exercise-statement';
 // Widgets interactifs MDX: lazy-load pour réduire le bundle "cours"
@@ -163,18 +162,18 @@ const SNT_WIDGET_META: Record<string, { title: string; description: string }> = 
   ImageCompression: { title: 'Laboratoire de compression', description: 'Compare poids, qualité et détails visibles.' },
   ImageRights: { title: 'Enquête sur les images', description: 'Apprends à publier des images de manière responsable.' },
   SocialGraph: { title: 'Réseau du renard', description: 'Explore les relations, voisins et chemins dans un graphe social.' },
-  GraphMetricsExplorer: { title: 'Mesures d’un réseau', description: 'Observe comment quelques indicateurs décrivent un graphe.' },
+  GraphMetricsExplorer: { title: 'Mesures d\'un réseau', description: 'Observe comment quelques indicateurs décrivent un graphe.' },
   FilterBubble: { title: 'Dans la bulle', description: 'Teste comment les recommandations modifient ce que tu vois.' },
-  ReflectionInput: { title: 'Carnet d’observation', description: 'Formule ton explication avec tes propres mots.' },
-  PacketTracer: { title: 'Pisteur de paquets', description: 'Suis un paquet de machine en machine jusqu’à sa destination.' },
-  TcpIpLayers: { title: 'Les couches du réseau', description: 'Reconstitue le voyage d’une information sur Internet.' },
+  ReflectionInput: { title: 'Carnet d\'observation', description: 'Formule ton explication avec tes propres mots.' },
+  PacketTracer: { title: 'Pisteur de paquets', description: 'Suis un paquet de machine en machine jusqu\'à sa destination.' },
+  TcpIpLayers: { title: 'Les couches du réseau', description: 'Reconstitue le voyage d\'une information sur Internet.' },
   EncapsulationVisualizer: { title: 'Poupées russes du réseau', description: 'Observe les enveloppes ajoutées à chaque couche.' },
   GpsCoordinates: { title: 'Boussole GPS', description: 'Déplace le repère et lis latitude et longitude.' },
   TrilaterationMap: { title: 'À la recherche du renard', description: 'Croise les distances des satellites pour le localiser.' },
   NmeaDecoder: { title: 'Décodeur GPS', description: 'Transforme une trame brute en informations compréhensibles.' },
   CookieManager: { title: 'Boîte à cookies', description: 'Distingue les cookies utiles de ceux qui suivent ta navigation.' },
-  DnsResolver: { title: 'Annuaire du Web', description: 'Suis la résolution d’un nom de domaine vers une adresse IP.' },
-  UrlBuilder: { title: 'Constructeur d’URL', description: 'Assemble chaque partie d’une adresse web.' },
+  DnsResolver: { title: 'Annuaire du Web', description: 'Suis la résolution d\'un nom de domaine vers une adresse IP.' },
+  UrlBuilder: { title: 'Constructeur d\'URL', description: 'Assemble chaque partie d\'une adresse web.' },
   HttpMethodVisualizer: { title: 'Messager HTTP', description: 'Compare les requêtes envoyées par un navigateur.' },
   HttpsSimulator: { title: 'Le tunnel sécurisé', description: 'Observe ce que le chiffrement protège pendant le trajet.' },
   PageRankVisualizer: { title: 'Classement des terriers', description: 'Découvre comment les liens influencent un moteur de recherche.' },
@@ -183,9 +182,9 @@ const SNT_WIDGET_META: Record<string, { title: string; description: string }> = 
   CsvDetective: { title: 'Le renard détective', description: 'Croise les indices en filtrant une base de suspects.' },
   CloudArchitecture: { title: 'Où vivent les données ?', description: 'Relie appareils, services et stockage dans le nuage.' },
   RgpdRights: { title: 'Les droits du renard', description: 'Identifie les bons réflexes pour protéger les données personnelles.' },
-  IotSimulator: { title: 'Fabrique d’objet connecté', description: 'Assemble capteur, logique et actionneur.' },
+  IotSimulator: { title: 'Fabrique d\'objet connecté', description: 'Assemble capteur, logique et actionneur.' },
   IotInterface: { title: 'Maison connectée', description: 'Pilote les objets et observe leurs réactions.' },
-  FilterPlayground: { title: 'Filtres photographiques', description: 'Modifie la lumière et les couleurs d’une image.' },
+  FilterPlayground: { title: 'Filtres photographiques', description: 'Modifie la lumière et les couleurs d\'une image.' },
   MonstersGallery: { title: 'Bestiaire numérique', description: 'Observe comment des données décrivent une collection.' },
   CarteGpsPlayground: { title: 'Carte du renard', description: 'Programme une carte et visualise immédiatement le résultat.' },
 };
@@ -246,10 +245,6 @@ export default async function CoursePage({
   // Navigation entre les cours
   const { prev, next } = getAdjacentCourses(folder, slugStr);
 
-  // Fiches du même groupe (cours, exercices, TP d'une notion). Ren'Arts garde son sélecteur d'édition.
-  const group = isChasseProjectSlug(slugStr) ? null : parseCourseGroup(data);
-  const siblings = group ? groupMembers(folder, group.id, viewerFromAuth(auth)) : [];
-
   const baseMdxComponents = {
     ExerciseTabs,
     ExerciseSection,
@@ -257,6 +252,9 @@ export default async function CoursePage({
     Enonce,
     Verification,
     Admonition,
+    Icone,
+    Renard,
+    Renards,
     SqlEditor,
     SqlTable,
     WebPreview,
@@ -376,25 +374,6 @@ export default async function CoursePage({
               edition={edition}
               layout="page"
             />
-          )}
-
-          {group && siblings.length > 1 && (
-            <nav className="group-bar" aria-label={`Fiches de « ${group.title} »`}>
-              <span className="text-sm font-semibold text-[var(--subtle)]">Dans « {group.title} »</span>
-              <div className="group-bar-seg">
-                {siblings.map((member) => (
-                  <Link
-                    key={member.href}
-                    href={member.href}
-                    aria-current={member.slug === slugStr ? 'page' : undefined}
-                    title={member.title}
-                  >
-                    {member.annex ? '📦 ' : ''}
-                    {member.label}
-                  </Link>
-                ))}
-              </div>
-            </nav>
           )}
 
           <div className="course-content">

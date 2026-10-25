@@ -3,21 +3,21 @@ title: 'Listes : Tournoi E-Sport'
 description: Gérer les scores et le classement d'un tournoi de jeu vidéo.
 level: premiere
 chapter: Projets
-icon: "\U0001F3C6"
+icon: "trophy"
 badgeId: premiere_projet_esport
 prerequisites:
   - poo_projet_pokensi
 audience: public
 ---
 
-# 🏆 Projet - Gestionnaire de Tournoi E-Sport
+# <Icone nom="trophy" /> Projet - Gestionnaire de Tournoi E-Sport
 
 Le but de ce projet est de créer l'outil d'une soirée tournoi (League of Legends, Rocket League, Valorant, ou un jeu du lycée).
 Dans ce projet, nous allons inscrire les équipes, saisir un score par équipe, calculer la moyenne, désigner le ou les vainqueurs, puis afficher le classement.
 
 Deux listes parallèles mémorisent les données : `scores[i]` est le score de `equipes[i]`.
 
-## 1. Les équipes 👥
+## 1. Les équipes <Icone nom="users" />
 
 <ExerciseTabs courseId="premiere_projet_esport" courseTitle="Gestion Tournoi">
   <ExerciseSection id="proj-esport-1" label="Inscription" type="python">
@@ -78,7 +78,7 @@ Deux listes parallèles mémorisent les données : `scores[i]` est le score de `
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Simulation 📺
+## 2. Simulation <Icone nom="tv" />
 
 Le programme principal enchaîne inscription, scores, moyenne arrondie, vainqueurs et classement.
 

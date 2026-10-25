@@ -1,15 +1,15 @@
 ---
-title: "Révision — Affectations & types"
+title: "Révision : Affectations & types"
 description: "Fiche synthèse : variables, opérateurs, printf / scanf"
 level: particuliers
-chapter: "Programmation en C — Révisions"
-icon: "🔧"
+chapter: "Programmation en C : Révisions"
+icon: "wrench"
 revisionSheet: true
 audience:
   accounts: []
 ---
 
-# 🔧 Révision — Affectations & types
+# <Icone nom="wrench" /> Révision : Affectations & types
 
 ## Ce qu'il faut retenir
 

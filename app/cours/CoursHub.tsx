@@ -100,7 +100,7 @@ function LevelCard({ level }: { level: HubLevel }) {
 
           <div className="mt-auto flex items-center justify-between border-t border-[var(--border)] pt-4">
             <span className="text-xs font-semibold text-[var(--subtle)]">
-              {level.chapters.length} chapitre{level.chapters.length > 1 ? "s" : ""} · {level.courseCount} ressource
+              {level.chapters.length} chapitre{level.chapters.length > 1 ? "s" : ""}, {level.courseCount} ressource
               {level.courseCount > 1 ? "s" : ""}
             </span>
             <span className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--fg)]">
@@ -157,7 +157,7 @@ export default function CoursHub({ levels }: { levels: HubLevel[] }) {
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Une notion, un chapitre… (ex. listes, HTML, SQL)"
+          placeholder="Une notion ou un chapitre (ex. listes, HTML, SQL)"
           className="w-full rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] py-4 pl-14 pr-5 text-base font-medium text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--subtle)] focus:border-[var(--accent)]"
           aria-label="Rechercher un cours"
         />

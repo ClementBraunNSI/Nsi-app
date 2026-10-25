@@ -3,7 +3,7 @@ title: Photographie Couleur
 description: 'Comprendre la synthèse additive, le modèle RGB et la profondeur de couleur'
 level: seconde
 chapter: Photographie Numérique
-icon: "\U0001F3A8"
+icon: "palette"
 prerequisites:
   - metadonnees
 audience: public
@@ -72,7 +72,7 @@ En couleur « classique », 24 bits, chaque pixel occupe 3 octets :
 
 $$ \text{Poids (octets)} = \text{Nombre de pixels} \times 3 $$
 
-Une image de 800 par 600 fait 480 000 pixels. En couleur, sans compression, cela donne \(480\,000 \times 3 = 1\,440\,000\) octets, environ 1,44 Mo. Dès que le fichier est plus léger, c'est qu'un format a comprimé, et parfois jeté, une partie de l'information.
+Une image de 800 par 600 fait 480 000 pixels. En couleur, sans compression, cela donne $480\,000 \times 3 = 1\,440\,000$ octets, environ 1,44 Mo. Dès que le fichier est plus léger, c'est qu'un format a comprimé, et parfois jeté, une partie de l'information.
 
 ## Changer les couleurs, pixel par pixel
 

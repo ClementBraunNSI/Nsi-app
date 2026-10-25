@@ -4,7 +4,7 @@ description: Principe des fonctions récursives et pile d'exécution.
 level: TNSI
 order: 90
 chapter: Langages et Programmation
-icon: "\U0001F504"
+icon: "refresh-cw"
 badgeId: terminale_recursivite
 prerequisites:
   - prog_modularite_mise_au_point
@@ -39,13 +39,13 @@ L'interpréteur range les appels en cours dans une **pile**. Chaque appel est un
 
 Pour `factorielle(3)` :
 
-1. Appel `factorielle(3)` : besoin de `factorielle(2)` → on empile
-2. Appel `factorielle(2)` : besoin de `factorielle(1)` → on empile
-3. Appel `factorielle(1)` : besoin de `factorielle(0)` → on empile
-4. Appel `factorielle(0)` : renvoie `1` → on dépile
-5. Reprise de `factorielle(1)` : calcule `1 * 1 = 1` → on dépile
-6. Reprise de `factorielle(2)` : calcule `2 * 1 = 2` → on dépile
-7. Reprise de `factorielle(3)` : calcule `3 * 2 = 6` → on dépile
+1. Appel `factorielle(3)` : besoin de `factorielle(2)`, donc on empile
+2. Appel `factorielle(2)` : besoin de `factorielle(1)`, donc on empile
+3. Appel `factorielle(1)` : besoin de `factorielle(0)`, donc on empile
+4. Appel `factorielle(0)` : renvoie `1`, donc on dépile
+5. Reprise de `factorielle(1)` : calcule `1 * 1 = 1`, donc on dépile
+6. Reprise de `factorielle(2)` : calcule `2 * 1 = 2`, donc on dépile
+7. Reprise de `factorielle(3)` : calcule `3 * 2 = 6`, donc on dépile
 
 Le résultat est 6. Au plus fort de l'exécution, quatre appels étaient en attente les uns sur les autres. Ce n'est pas « la fonction qui tourne en même temps qu'elle-même » : ce sont quatre contextes distincts, chacun avec son propre `n`.
 
@@ -78,7 +78,7 @@ Pour fermer : une fonction récursive s'appelle elle-même, avec un cas de base 
 
   <ExerciseSection id="rec-ex-2" label="Fibonacci" type="python">
     <Enonce>
-    ### Suite de Fibonacci 🐰
+    ### Suite de Fibonacci <Icone nom="rabbit" />
     La suite est définie par :
     *   $F_0 = 0$
     *   $F_1 = 1$

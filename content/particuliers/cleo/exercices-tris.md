@@ -3,7 +3,7 @@ title: C - Algorithmes de Tri - Exercices
 description: 'Exercices guidés sur les tris : sélection, insertion et dénombrement'
 level: particuliers
 chapter: Programmation en C
-icon: "\U0001F504"
+icon: "refresh-cw"
 prerequisites:
   - exercices-affectations-types
 audience:

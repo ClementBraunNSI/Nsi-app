@@ -3,7 +3,7 @@ title: 'TP Python : Données structurées'
 description: 'Manipuler des CSV, JSON et tableaux type Excel avec pandas et le module json.'
 level: seconde
 chapter: Données structurées
-icon: "🐍"
+icon: "code"
 prerequisites:
   - donnees_structurees
 audience: public
@@ -14,9 +14,9 @@ version: "TP Python"
 
 <ExerciseTabs courseId="tp-python-donnees" courseTitle="TP Python : Données structurées" packages="pandas">
 
-  <ExerciseSection id="donnees-0" label="Important ⚠️ - Avant de commencer" type="lecture">
+  <ExerciseSection id="donnees-0" label="Important - Avant de commencer" type="lecture">
     <Enonce>
-      ### Important ⚠️ - Avant de commencer
+      ### Important <Icone nom="triangle-alert" /> - Avant de commencer
 
       Ce TP utilise des **bibliothèques Python** adaptées aux données structurées vues en cours.
 
@@ -49,9 +49,9 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-1" label="Introduction 🦊 - Lire un CSV avec pandas" type="python">
+  <ExerciseSection id="donnees-1" label="Introduction - Lire un CSV avec pandas" type="python">
     <Enonce>
-      ### Introduction 🦊 - Lire un CSV avec pandas
+      ### Introduction <Renards n="1" /> - Lire un CSV avec pandas
 
       Le module **pandas** permet de manipuler un CSV comme un **tableur Excel** en Python.
 
@@ -89,9 +89,9 @@ assert nb_renards == len(attendu), "nb_renards doit correspondre au nombre de li
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-2" label="Introduction 🦊 - Les colonnes du tableau" type="python">
+  <ExerciseSection id="donnees-2" label="Introduction - Les colonnes du tableau" type="python">
     <Enonce>
-      ### Introduction 🦊 - Les colonnes du tableau
+      ### Introduction <Renards n="1" /> - Les colonnes du tableau
 
       Comme dans Excel, chaque **colonne** a un nom (l'en-tête du CSV).
 
@@ -133,9 +133,9 @@ assert "Poids_kg" in colonnes, "Le fichier contient une colonne Poids_kg."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-3" label="Introduction 🦊 - Lire une cellule" type="python">
+  <ExerciseSection id="donnees-3" label="Introduction - Lire une cellule" type="python">
     <Enonce>
-      ### Introduction 🦊 - Lire une cellule
+      ### Introduction <Renards n="1" /> - Lire une cellule
 
       On peut accéder à une **cellule** comme dans un tableur : `df.loc[ligne, "Colonne"]`.
 
@@ -175,9 +175,9 @@ assert float(poids_fennec) == attendu, "Lisez le poids du Fennec dans le tableau
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-4" label="Facile 🦊 - Filtrer un tableau" type="python">
+  <ExerciseSection id="donnees-4" label="Facile - Filtrer un tableau" type="python">
     <Enonce>
-      ### Facile 🦊 - Filtrer un tableau
+      ### Facile <Renards n="1" /> - Filtrer un tableau
 
       Le **filtrage** permet de ne garder que les lignes qui correspondent à un critère (comme un filtre Excel).
 
@@ -219,9 +219,9 @@ assert nb_resultats == len(attendu), "nb_resultats doit correspondre au filtre."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-5" label="Facile 🦊 - Trier un tableau" type="python">
+  <ExerciseSection id="donnees-5" label="Facile - Trier un tableau" type="python">
     <Enonce>
-      ### Facile 🦊 - Trier un tableau
+      ### Facile <Renards n="1" /> - Trier un tableau
 
       On peut **trier** un tableau par colonne, comme dans Excel.
 
@@ -263,9 +263,9 @@ assert plus_lourd == attendu.iloc[-1]["Nom"], "plus_lourd est le renard le plus 
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-6" label="Facile 🦊 - Lire un JSON" type="python">
+  <ExerciseSection id="donnees-6" label="Facile - Lire un JSON" type="python">
     <Enonce>
-      ### Facile 🦊 - Lire un JSON
+      ### Facile <Renards n="1" /> - Lire un JSON
 
       Le module **`json`** (intégré à Python) permet de lire une fiche hiérarchique.
 
@@ -318,11 +318,11 @@ assert nb_aliments == len(fiche_ref["renard"]["alimentation"]), "Comptez les ali
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="donnees-7" label="Facile 🦊 - Statistique sur une colonne" type="python">
+  <ExerciseSection id="donnees-7" label="Facile - Statistique sur une colonne" type="python">
     <Enonce>
-      ### Facile 🦊 - Statistique sur une colonne
+      ### Facile <Renards n="1" /> - Statistique sur une colonne
 
-      Pandas peut calculer des **statistiques** sur une colonne numérique (moyenne, maximum…).
+      Pandas peut calculer des **statistiques** sur une colonne numérique (moyenne, maximum, etc.).
 
       **Mission :** À partir du `df` fourni, calculez la **moyenne** des poids dans `poids_moyen` et le **poids maximum** dans `poids_max`.
 

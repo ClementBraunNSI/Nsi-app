@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Lock, Globe, Server, Folder, HelpCircle } from 'lucide-react';
+import { Lock, Globe, Server, Folder, HelpCircle, Wrench } from 'lucide-react';
 
 export default function UrlBuilder() {
   const [protocol, setProtocol] = useState('https');
@@ -14,7 +14,7 @@ export default function UrlBuilder() {
   return (
     <div className="flex flex-col gap-6 my-8 border rounded-xl overflow-hidden shadow-lg bg-white p-6">
       <h3 className="text-xl font-bold text-slate-800 text-center mb-4">
-        🛠️ Constructeur d'URL
+        <Wrench size={22} className="mr-2 inline align-[-4px] text-orange-500" aria-hidden />Constructeur d'URL
       </h3>
 
       {/* The URL Display */}
@@ -32,7 +32,7 @@ export default function UrlBuilder() {
         
         {/* Protocol */}
         <div className="border rounded-lg p-3 hover:shadow-md transition-shadow bg-slate-50 border-slate-200">
-          <div className="flex items-center gap-2 mb-2 text-slate-600 font-bold text-sm uppercase">
+          <div className="flex items-center gap-2 mb-2 text-slate-600 font-bold text-sm">
             <Lock size={16} /> Protocole
           </div>
           <select 
@@ -48,7 +48,7 @@ export default function UrlBuilder() {
 
         {/* Subdomain */}
         <div className="border rounded-lg p-3 hover:shadow-md transition-shadow bg-slate-50 border-slate-200">
-          <div className="flex items-center gap-2 mb-2 text-slate-600 font-bold text-sm uppercase">
+          <div className="flex items-center gap-2 mb-2 text-slate-600 font-bold text-sm">
             <Globe size={16} /> Sous-domaine
           </div>
           <input 
@@ -62,7 +62,7 @@ export default function UrlBuilder() {
 
         {/* Domain */}
         <div className="border rounded-lg p-3 hover:shadow-md transition-shadow bg-slate-100 border-slate-300">
-          <div className="flex items-center gap-2 mb-2 text-slate-900 font-bold text-sm uppercase">
+          <div className="flex items-center gap-2 mb-2 text-slate-900 font-bold text-sm">
             <Server size={16} /> Nom de domaine
           </div>
           <div className="flex gap-1">
@@ -88,7 +88,7 @@ export default function UrlBuilder() {
 
         {/* Path */}
         <div className="border rounded-lg p-3 hover:shadow-md transition-shadow bg-orange-50 border-orange-200">
-          <div className="flex items-center gap-2 mb-2 text-orange-800 font-bold text-sm uppercase">
+          <div className="flex items-center gap-2 mb-2 text-orange-800 font-bold text-sm">
             <Folder size={16} /> Chemin (Path)
           </div>
           <div className="flex items-center gap-1">
@@ -105,7 +105,7 @@ export default function UrlBuilder() {
 
         {/* Query */}
         <div className="border rounded-lg p-3 hover:shadow-md transition-shadow bg-orange-50/50 border-orange-100">
-          <div className="flex items-center gap-2 mb-2 text-orange-700 font-bold text-sm uppercase">
+          <div className="flex items-center gap-2 mb-2 text-orange-700 font-bold text-sm">
             <HelpCircle size={16} /> Paramètres
           </div>
           <div className="flex items-center gap-1">

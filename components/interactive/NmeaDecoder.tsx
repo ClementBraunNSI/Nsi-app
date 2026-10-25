@@ -137,7 +137,7 @@ export default function NmeaDecoder() {
                 <Clock size={24} />
               </div>
               <div>
-                <div className="text-xs font-bold uppercase text-slate-400">Heure UTC</div>
+                <div className="text-xs font-bold text-slate-400">Heure UTC</div>
                 <div className="text-lg font-mono font-bold text-slate-800">{parsed.time}</div>
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function NmeaDecoder() {
                 <MapPin size={24} />
               </div>
               <div>
-                <div className="text-xs font-bold uppercase text-slate-400">Position</div>
+                <div className="text-xs font-bold text-slate-400">Position</div>
                 <div className="text-sm font-mono font-bold text-slate-800">{parsed.lat}</div>
                 <div className="text-sm font-mono font-bold text-slate-800">{parsed.lon}</div>
               </div>
@@ -158,7 +158,7 @@ export default function NmeaDecoder() {
                 <Satellite size={24} />
               </div>
               <div>
-                <div className="text-xs font-bold uppercase text-slate-400">Satellites</div>
+                <div className="text-xs font-bold text-slate-400">Satellites</div>
                 <div className="text-lg font-mono font-bold text-slate-800">{parsed.sats}</div>
               </div>
             </div>
@@ -168,7 +168,7 @@ export default function NmeaDecoder() {
                 <Mountain size={24} />
               </div>
               <div>
-                <div className="text-xs font-bold uppercase text-slate-400">Altitude</div>
+                <div className="text-xs font-bold text-slate-400">Altitude</div>
                 <div className="text-lg font-mono font-bold text-slate-800">{parsed.alt} m</div>
               </div>
             </div>
@@ -178,7 +178,7 @@ export default function NmeaDecoder() {
                 <CheckCircle2 size={24} />
               </div>
               <div>
-                <div className="text-xs font-bold uppercase text-slate-400">Qualité du signal</div>
+                <div className="text-xs font-bold text-slate-400">Qualité du signal</div>
                 <div className="text-lg font-bold text-slate-800">{parsed.quality}</div>
               </div>
             </div>

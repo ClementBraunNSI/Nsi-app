@@ -3,7 +3,7 @@ title: Recherche Dichotomique
 description: Algorithme de recherche efficace dans une liste triée
 level: premiere
 chapter: Algorithmique
-icon: "\U0001F50D"
+icon: "search"
 badgeId: premiere_recherche_dichotomique
 prerequisites:
   - algo_gloutons
@@ -36,18 +36,18 @@ On ne reprend pas `milieu` dans la zone suivante. On l'a déjà comparé. Quand 
 
 ```text
 fonction recherche_dichotomique(liste, valeur):
-    debut ← 0
-    fin ← longueur(liste) - 1
+    debut <- 0
+    fin <- longueur(liste) - 1
 
     tant que debut <= fin:
-        milieu ← (debut + fin) // 2
+        milieu <- (debut + fin) // 2
 
         si liste[milieu] == valeur:
             retourner milieu
         sinon si liste[milieu] < valeur:
-            debut ← milieu + 1
+            debut <- milieu + 1
         sinon:
-            fin ← milieu - 1
+            fin <- milieu - 1
 
     retourner -1
 ```
@@ -110,4 +110,4 @@ Pour fermer : la dichotomie ne vaut que sur une liste triée. Chaque étape éli
 
 1. Chercher `11` dans `[2, 4, 6, 8, 10, 11, 14]` en notant à chaque étape `debut`, `fin` et `milieu`.
 2. Modifier la fonction pour qu'elle fonctionne aussi sur une liste triée **décroissante**.
-3. Expliquer en une phrase pourquoi trier puis chercher en dichotomie peut être rentable… ou non, selon le nombre de recherches.
+3. Expliquer en une phrase pourquoi trier puis chercher en dichotomie peut être rentable, ou non, selon le nombre de recherches.

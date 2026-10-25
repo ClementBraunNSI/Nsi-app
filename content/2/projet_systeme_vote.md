@@ -3,13 +3,13 @@ title: 'Algorithmes : Système de Vote'
 description: 'Implémentation de différents systèmes de scrutin (Majoritaire, Condorcet)'
 level: premiere
 chapter: Projets
-icon: "\U0001F5F3️"
+icon: "vote"
 badgeId: premiere_projet_vote
 prerequisites: []
 audience: public
 ---
 
-# 🗳️ Projet - Simulateur de Système de Vote
+# <Icone nom="vote" /> Projet - Simulateur de Système de Vote
 
 Le but de ce projet est de programmer un système de dépouillement.
 Dans ce projet, nous allons appliquer quatre règles au même jeu de bulletins, et constater que la règle peut changer le vainqueur.
@@ -18,11 +18,11 @@ On utilise des listes et des dictionnaires : une liste de noms pour un scrutin �
 
 Un bulletin de classement contient chaque candidat une seule fois.
 
-## 1. Scrutin à un tour 🗳️
+## 1. Scrutin à un tour <Icone nom="vote" />
 
 Celui qui a le plus de voix gagne. Il n'y a pas de seuil de 50 % dans cette partie.
 
-Jeu A — un seul nom par électeur :
+Jeu A (un seul nom par électeur) :
 
 ```python
 urnes = ["Alice", "Bob", "Alice", "Charlie", "Bob", "Alice"]
@@ -63,7 +63,7 @@ L'ordre d'affichage est celui de la première apparition dans la liste.
 
 Chaque électeur classe tous les candidats. Au premier tour, on ne regarde que le premier nom du bulletin. Si un candidat a strictement plus de la moitié des bulletins, il est élu tout de suite. Sinon, les deux meilleurs s'affrontent : sur chaque bulletin, on donne la voix à celui des deux qui est classé devant l'autre.
 
-Jeu B — neuf bulletins, trois candidats :
+Jeu B (neuf bulletins, trois candidats) :
 
 ```python
 bulletins = [
@@ -113,13 +113,13 @@ candidats = ["Alice", "Bob", "Charlie"]
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Condorcet ⚔️
+## 3. Condorcet <Icone nom="swords" />
 
 Un vainqueur de Condorcet bat chaque autre candidat en duel. Il n'en existe pas toujours.
 
 Sur le jeu B : Charlie bat Alice (5-4) et Charlie bat Bob (6-3). Charlie gagne ses deux duels.
 
-Jeu C — paradoxe de Condorcet :
+Jeu C (paradoxe de Condorcet) :
 
 ```python
 cycle = [
@@ -154,7 +154,7 @@ Alice bat Bob (2 voix contre 1), Bob bat Charlie (2 contre 1), Charlie bat Alice
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Borda et comparaison 🧮
+## 4. Borda et comparaison <Icone nom="calculator" />
 
 Avec N candidats, le premier d'un bulletin reçoit N − 1 points, le deuxième N − 2, et le dernier reçoit 0.
 

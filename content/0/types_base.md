@@ -3,7 +3,7 @@ title: "Valeur et type des données"
 description: "Découverte des types fondamentaux en Python : nombres, chaînes et booléens."
 level: SNI
 chapter: "Programmation_Python"
-icon: "🐍"
+icon: "code"
 audience: public
 ---
 
@@ -160,32 +160,32 @@ bool2 = bool(texte2)  # False (chaîne vide)
 
 ### Erreur 1 : Mélanger texte et nombre
 ```python
-# ❌ ERREUR
+# ERREUR
 age = 15
 message = "J'ai " + age + " ans"  # TypeError !
 
-# ✅ CORRECT
+# CORRECT
 age = 15
 message = "J'ai " + str(age) + " ans"  # "J'ai 15 ans"
 ```
 
 ### Erreur 2 : Mauvaise conversion
 ```python
-# ❌ ERREUR
+# ERREUR
 texte = "Bonjour"
 nombre = int(texte)  # ValueError ! (on ne peut pas convertir du texte en nombre)
 
-# ✅ CORRECT
+# CORRECT
 texte = "123"
 nombre = int(texte)  # 123
 ```
 
 ### Erreur 3 : Division par zéro
 ```python
-# ❌ ERREUR
+# ERREUR
 resultat = 10 / 0  # ZeroDivisionError !
 
-# ✅ CORRECT : vérifier avant
+# CORRECT : vérifier avant
 diviseur = 0
 if diviseur != 0:
     resultat = 10 / diviseur

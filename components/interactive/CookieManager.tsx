@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Cookie, Eye, Lock, ShieldAlert, Trash2, ShoppingCart, User, Globe } from 'lucide-react';
+import { Cookie, Eye, Lock, ShieldAlert, Trash2, ShoppingCart, User, Globe, Volleyball, Plane } from 'lucide-react';
 
 export default function CookieManager() {
   const [cookies, setCookies] = useState([
@@ -52,10 +52,10 @@ export default function CookieManager() {
         
         <div className="flex flex-col gap-2 mb-6">
           <button onClick={() => visitSite('Site de Sport')} className="bg-white border hover:bg-slate-100 hover:border-orange-500 p-3 rounded-lg text-left shadow-sm transition-colors">
-            ⚽ Visiter un site de Sport
+            <Volleyball size={16} className="mr-2 inline align-[-3px] text-orange-500" aria-hidden />Visiter un site de sport
           </button>
           <button onClick={() => visitSite('Site de Voyage')} className="bg-white border hover:bg-slate-100 hover:border-orange-500 p-3 rounded-lg text-left shadow-sm transition-colors">
-            ✈️ Visiter un site de Voyage
+            <Plane size={16} className="mr-2 inline align-[-3px] text-orange-500" aria-hidden />Visiter un site de voyage
           </button>
         </div>
 

@@ -5,7 +5,7 @@ description: >-
   dos)
 level: premiere
 chapter: Algorithmique
-icon: "\U0001F36A"
+icon: "cookie"
 badgeId: premiere_introduction_gloutons
 prerequisites:
   - activite_algo_interactive

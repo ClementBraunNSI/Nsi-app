@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'leaflet/dist/leaflet.css';
-import { Globe } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Globe } from 'lucide-react';
 
 // Dynamic imports for Leaflet
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
@@ -50,26 +50,26 @@ export default function GpsCoordinates() {
 
         <div className="space-y-6">
           <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm">
-            <label className="text-xs font-black uppercase tracking-widest text-slate-400 mb-1 block">Latitude (Nord/Sud)</label>
+            <label className="text-xs font-bold text-slate-400 mb-1 block">Latitude (Nord/Sud)</label>
             <div className="text-3xl font-mono font-bold text-orange-600">
               {position[0].toFixed(4)}°
             </div>
             <p className="text-xs text-slate-500 mt-2">
               Angle par rapport à l'<strong>Équateur</strong> (0°).
-              <br/>Positive = Hémisphère Nord 🟢
-              <br/>Négative = Hémisphère Sud 🔴
+              <br/>Positive = Hémisphère Nord
+              <br/>Négative = Hémisphère Sud
             </p>
           </div>
 
           <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-            <label className="text-xs font-black uppercase tracking-widest text-slate-400 mb-1 block">Longitude (Est/Ouest)</label>
+            <label className="text-xs font-bold text-slate-400 mb-1 block">Longitude (Est/Ouest)</label>
             <div className="text-3xl font-mono font-bold text-slate-600">
               {position[1].toFixed(4)}°
             </div>
             <p className="text-xs text-slate-500 mt-2">
               Angle par rapport au <strong>Méridien de Greenwich</strong> (0°).
-              <br/>Positive = Est ➡️
-              <br/>Négative = Ouest ⬅️
+              <br/>Positive = Est <ArrowRight size={12} className="inline align-[-1px]" aria-hidden />
+              <br/>Négative = Ouest <ArrowLeft size={12} className="inline align-[-1px]" aria-hidden />
             </p>
           </div>
           

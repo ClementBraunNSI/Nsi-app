@@ -3,7 +3,7 @@ title: "Commandes Linux"
 description: "Guide des commandes essentielles pour naviguer et gérer un système Linux."
 level: premiere
 chapter: "Systèmes d'exploitation"
-icon: "⌨️"
+icon: "keyboard"
 badgeId: "premiere_commandes_linux"
 prerequisites:
   - os_systemes
@@ -20,7 +20,7 @@ Le cours sur les systèmes a décrit l'arborescence. Ici, on s'y déplace. Le **
 
 | Commande | Rôle | Exemples |
 | :--- | :--- | :--- |
-| `pwd` | Affiche le dossier courant | `pwd` → `/home/eleve` |
+| `pwd` | Affiche le dossier courant | `pwd` donne `/home/eleve` |
 | `ls` | Liste le contenu | `ls`, `ls -l` (détails), `ls -a` (cachés) |
 | `cd` | Change de dossier | `cd Documents`, `cd ..`, `cd ~` |
 

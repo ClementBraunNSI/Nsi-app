@@ -3,7 +3,7 @@ title: 'Simulateur Micro:bit'
 description: 'Programmer la carte Micro:bit avec le simulateur en ligne officiel.'
 level: seconde
 chapter: Micro-controleurs
-icon: "\U0001F5A5️"
+icon: "monitor"
 prerequisites:
   - objets_connectes
 audience: public

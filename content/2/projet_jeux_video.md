@@ -3,21 +3,21 @@ title: 'Dictionnaires : Collection Jeux'
 description: Création d'un gestionnaire de collection de jeux vidéo en Python
 level: premiere
 chapter: Projets
-icon: "\U0001F3AE"
+icon: "gamepad-2"
 badgeId: premiere_gestion_jeux_video
 prerequisites:
   - projet_application_bancaire
 audience: public
 ---
 
-# 🎮 Projet - Gestionnaire de Jeux Vidéo
+# <Icone nom="gamepad-2" /> Projet - Gestionnaire de Jeux Vidéo
 
 Le but de ce projet est de créer un gestionnaire de collection de jeux vidéo, en Python.
 Dans ce projet, nous allons ajouter un jeu, afficher sa fiche, modifier un champ, supprimer un jeu, puis lister toute la collection depuis un menu.
 
 Chaque jeu est un dictionnaire de détails. Le titre est la clé du dictionnaire principal : deux jeux ne peuvent pas porter le même titre. La comparaison est exacte, majuscules comprises : `"celeste"` ne trouve pas `"Celeste"`.
 
-## 1. La collection 🕹️
+## 1. La collection <Icone nom="joystick" />
 
 Au lancement, la collection contient déjà deux jeux, pour que les essais ne partent pas d'une base vide.
 
@@ -62,7 +62,7 @@ Statut : possédé
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Ajouter et chercher 🔍
+## 2. Ajouter et chercher <Icone nom="search" />
 
 <ExerciseTabs courseId="proj_jv_base" courseTitle="Fonctions de Base">
   <ExerciseSection id="pjv-base-1" label="Ajouter un jeu" type="python">
@@ -95,7 +95,7 @@ Statut : possédé
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Modifier et supprimer ✏️
+## 3. Modifier et supprimer <Icone nom="pencil" />
 
 <ExerciseTabs courseId="proj_jv_adv" courseTitle="Gestion Avancée">
   <ExerciseSection id="pjv-adv-1" label="Modifier un jeu" type="lecture">
@@ -120,7 +120,7 @@ Statut : possédé
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Menu et rendu 📋
+## 4. Menu et rendu <Icone nom="clipboard-list" />
 
 <ExerciseTabs courseId="proj_jv_menu" courseTitle="Interface">
   <ExerciseSection id="pjv-menu-1" label="Menu interactif" type="lecture">

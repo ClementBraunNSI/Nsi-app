@@ -3,7 +3,7 @@ title: Représentation des images en binaire
 description: Comment les images sont codées en binaire.
 level: SNI
 chapter: Representation_de_base
-icon: "\U0001F5BC️"
+icon: "image"
 prerequisites:
   - booleens
 audience: public

@@ -79,7 +79,7 @@ export default function SqlTable({
       <div className="overflow-x-auto p-0">
         {data && data.columns.length > 0 ? (
             <table className="w-full text-sm text-left text-slate-600 border-collapse">
-            <thead className="text-xs text-slate-700 uppercase bg-slate-100">
+            <thead className="text-xs text-slate-700 bg-slate-100">
                 <tr>
                 {data.columns.map((col, i) => (
                     <th key={i} className="px-6 py-3 border-b border-r border-slate-200 last:border-r-0">

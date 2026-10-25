@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { FlaskConical } from 'lucide-react';
 import CommandPalette from '@/components/experimental/CommandPalette';
 import GlossaryTooltip from '@/components/experimental/GlossaryTooltip';
 import MultiLangCodeBlock from '@/components/experimental/MultiLangCodeBlock';
@@ -37,8 +38,8 @@ export default function ExperimentalLab() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-black mb-2 text-slate-800 flex items-center gap-3">
-          🧪 Laboratoire Expérimental
+        <h1 className="text-4xl font-bold mb-2 text-slate-800 flex items-center gap-3">
+          <FlaskConical size={34} aria-hidden /> Laboratoire expérimental
         </h1>
         <p className="text-slate-500 mb-8 text-lg">
           Zone de test pour les futures fonctionnalités de Nsi-app.
@@ -109,12 +110,12 @@ export default function ExperimentalLab() {
               <h2 className="text-2xl font-bold mb-4">Fil d'Ariane (Breadcrumbs)</h2>
               
               <div className="p-6 border border-slate-100 rounded-xl bg-slate-50 mb-8">
-                <p className="text-xs text-slate-400 uppercase font-bold mb-2">Exemple 1 : Navigation actuelle</p>
+                <p className="text-xs text-slate-400 font-bold mb-2">Exemple 1 : Navigation actuelle</p>
                 <Breadcrumbs />
               </div>
 
               <div className="p-6 border border-slate-100 rounded-xl bg-slate-50">
-                <p className="text-xs text-slate-400 uppercase font-bold mb-2">Exemple 2 : Simulation Profonde</p>
+                <p className="text-xs text-slate-400 font-bold mb-2">Exemple 2 : Simulation Profonde</p>
                 <Breadcrumbs customItems={[
                   { label: 'Première NSI', href: '/cours/2' },
                   { label: 'Algorithmique', href: '/cours/2/algo_dichotomie' },
@@ -192,16 +193,16 @@ export default function ExperimentalLab() {
     return -1;
 }`,
                 pseudo: `Fonction RechercheDichotomique(liste, element)
-    debut ← 0
-    fin ← Longueur(liste) - 1
+    debut <- 0
+    fin <- Longueur(liste) - 1
     Tant que debut ≤ fin faire
-        milieu ← (debut + fin) div 2
+        milieu <- (debut + fin) div 2
         Si liste[milieu] = element alors
             Retourner milieu
         Sinon si liste[milieu] < element alors
-            debut ← milieu + 1
+            debut <- milieu + 1
         Sinon
-            fin ← milieu - 1
+            fin <- milieu - 1
     Fin Tant que
     Retourner -1`
               }} />

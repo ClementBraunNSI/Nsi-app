@@ -4,7 +4,7 @@ description: "Comprendre et appliquer l'algorithme de Dijkstra"
 level: TNSI
 order: 200
 chapter: Structures de données
-icon: "🧭"
+icon: "compass"
 badgeId: terminale_graphes_ponderes
 prerequisites:
   - structures_graphes
@@ -13,7 +13,7 @@ audience: public
 
 # Graphes pondérés et plus court chemin
 
-Dans un graphe non pondéré, le plus court chemin est celui qui traverse le moins d'arêtes. Dès qu'une arête porte un **poids** — une distance, un coût, une durée — ce n'est plus le nombre d'arêtes qui compte, c'est la **somme des poids**. Un détour par trois arêtes légères peut être meilleur qu'une arête directe très chère. On cherche alors un chemin de coût minimal.
+Dans un graphe non pondéré, le plus court chemin est celui qui traverse le moins d'arêtes. Dès qu'une arête porte un **poids** (une distance, un coût, une durée), ce n'est plus le nombre d'arêtes qui compte, c'est la **somme des poids**. Un détour par trois arêtes légères peut être meilleur qu'une arête directe très chère. On cherche alors un chemin de coût minimal.
 
 On se fixe un sommet de départ. L'objectif de Dijkstra est la distance minimale de ce départ vers chacun des autres sommets, pas vers une seule cible. Les cibles se déduisent du tableau, une fois qu'il est rempli.
 
@@ -41,7 +41,7 @@ graphe = {
 }
 ```
 
-De A, on peut aller en B pour 4 ou en C pour 2. De C, on rejoint B pour 1, ce qui est mieux que l'arête directe A→B. C'est exactement le genre d'amélioration que la relaxation doit découvrir.
+De A, on peut aller en B pour 4 ou en C pour 2. De C, on rejoint B pour 1, ce qui est mieux que l'arête directe A-B. C'est exactement le genre d'amélioration que la relaxation doit découvrir.
 
 ```python
 def dijkstra(graphe, source):

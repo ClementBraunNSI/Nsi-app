@@ -3,7 +3,7 @@ title: 'Interactions Web : JavaScript'
 description: Rendre les pages web dynamiques et interactives avec le DOM et les événements.
 level: premiere
 chapter: Web et Interaction
-icon: ⚡
+icon: "zap"
 badgeId: js_interactions
 prerequisites:
   - web_html
@@ -102,7 +102,7 @@ Entraînez-vous avec les exercices ci-dessous. Ensuite, le cours [Web et HTTP](/
     **Code HTML fourni :**
     ```html
     <p>Likes : <span id="compteur">0</span></p>
-    <button id="btn-like">J'aime 👍</button>
+    <button id="btn-like">J'aime </button>
     ```
     
     **Consignes :**

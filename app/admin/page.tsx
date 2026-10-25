@@ -136,8 +136,8 @@ export default function AdminDashboard() {
                   <Award size={20} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Badges</p>
-                  <p className="text-xl font-black text-slate-800">{totalBadges}</p>
+                  <p className="text-xs font-bold text-slate-400">Total Badges</p>
+                  <p className="text-xl font-bold text-slate-800">{totalBadges}</p>
                 </div>
               </div>
             </div>
@@ -159,7 +159,7 @@ export default function AdminDashboard() {
                   audience === id ? 'bg-orange-500 text-white' : 'bg-white text-slate-500 border border-slate-200'
                 }`}
               >
-                {label} · {count}
+                {label} ({count})
               </button>
             );
           })}
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
               label="Exercices Validés" 
               value={totalExercises} // Idéalement filtrer par niveau si possible plus tard
               subtext="Global plateforme"
-              color="bg-purple-50 text-purple-500" 
+              color="bg-orange-50 text-orange-500" 
             />
           </div>
 
@@ -259,12 +259,12 @@ export default function AdminDashboard() {
             <table className="w-full text-left">
               <thead className="bg-slate-50/50 border-b border-slate-100">
                 <tr>
-                  <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Élève</th>
-                  <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Niveau</th>
-                  <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Classe</th>
-                  <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Dernière Activité</th>
-                  <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic">Statut</th>
-                  <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-400 italic text-right">Action</th>
+                  <th className="px-6 py-4 text-xs font-bold text-slate-400 italic">Élève</th>
+                  <th className="px-6 py-4 text-xs font-bold text-slate-400 italic">Niveau</th>
+                  <th className="px-6 py-4 text-xs font-bold text-slate-400 italic">Classe</th>
+                  <th className="px-6 py-4 text-xs font-bold text-slate-400 italic">Dernière Activité</th>
+                  <th className="px-6 py-4 text-xs font-bold text-slate-400 italic">Statut</th>
+                  <th className="px-6 py-4 text-xs font-bold text-slate-400 italic text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
                       <tr key={s.id} className="hover:bg-slate-50 transition-colors group">
                         <td className="px-6 py-5">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold uppercase text-sm">
+                            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-sm">
                               {(s.full_name || s.email || '?')[0]}
                             </div>
                             <div>
@@ -290,7 +290,7 @@ export default function AdminDashboard() {
                                 {s.full_name || 'Sans nom'}
                               </button>
                               <p className="text-xs text-slate-400 font-medium">{s.email}</p>
-                              <span className={`mt-1 inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide ${
+                              <span className={`mt-1 inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold ${
                                 s.has_private_lessons
                                   ? 'bg-orange-50 text-orange-700 border border-orange-100'
                                   : 'bg-slate-100 text-slate-600'
@@ -301,12 +301,12 @@ export default function AdminDashboard() {
                           </div>
                         </td>
                         <td className="px-6 py-5">
-                          <span className="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wide">
+                          <span className="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold">
                             {LEVELS.find(l => l.id === s.level)?.label || s.level || 'N/A'}
                           </span>
                         </td>
                         <td className="px-6 py-5 text-sm font-medium text-slate-600">
-                          {s.classe || (s.has_private_lessons ? 'Particulier' : '—')}
+                          {s.classe || (s.has_private_lessons ? 'Particulier' : 'Sans classe')}
                         </td>
                         <td className="px-6 py-5">
                           <div className="flex items-center gap-2 text-slate-500 text-sm font-medium">
@@ -317,7 +317,7 @@ export default function AdminDashboard() {
                         <td className="px-6 py-5">
                           {isInactive ? (
                             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold border border-red-100">
-                              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                               Inactif
                             </span>
                           ) : (
@@ -430,24 +430,24 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
   }, [student]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900 animate-in fade-in duration-200">
       <div 
         className="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white/90 backdrop-blur-md z-10">
+        <div className="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-100 to-orange-50 text-orange-500 flex items-center justify-center font-black text-2xl shadow-inner">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-100 to-orange-50 text-orange-500 flex items-center justify-center font-bold text-2xl shadow-inner">
               {(student.full_name || student.email || '?')[0]}
             </div>
             <div>
-              <h2 className="text-2xl font-black text-slate-800 tracking-tight">{student.full_name || 'Élève sans nom'}</h2>
+              <h2 className="text-2xl font-bold text-slate-800 tracking-tight">{student.full_name || 'Élève sans nom'}</h2>
               <div className="flex items-center gap-2 mt-1">
-                <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wide">
+                <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 text-xs font-bold">
                    {LEVELS.find(l => l.id === student.level)?.label || student.level || 'N/A'}
                 </span>
-                <span className={`px-2 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide ${
+                <span className={`px-2 py-0.5 rounded-md text-xs font-bold ${
                   student.has_private_lessons ? 'bg-orange-50 text-orange-700' : 'bg-slate-100 text-slate-600'
                 }`}>
                   {student.has_private_lessons ? 'Cours particuliers' : 'Élève de classe'}
@@ -477,23 +477,23 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
                 <div className="p-5 bg-gradient-to-br from-orange-50 to-white rounded-2xl border border-orange-100 shadow-sm">
                   <div className="flex items-center gap-2 mb-2 text-orange-600">
                     <Award size={20} />
-                    <p className="text-xs font-bold uppercase tracking-wider">Badges Obtenus</p>
+                    <p className="text-xs font-bold">Badges Obtenus</p>
                   </div>
-                  <p className="text-4xl font-black text-slate-800">{details?.badges.length}</p>
+                  <p className="text-4xl font-bold text-slate-800">{details?.badges.length}</p>
                 </div>
                 <div className="p-5 bg-gradient-to-br from-blue-50 to-white rounded-2xl border border-blue-100 shadow-sm">
                   <div className="flex items-center gap-2 mb-2 text-blue-600">
                     <CheckCircle size={20} />
-                    <p className="text-xs font-bold uppercase tracking-wider">Exercices Terminés</p>
+                    <p className="text-xs font-bold">Exercices Terminés</p>
                   </div>
-                  <p className="text-4xl font-black text-slate-800">{details?.exercisesCount}</p>
+                  <p className="text-4xl font-bold text-slate-800">{details?.exercisesCount}</p>
                 </div>
-                <div className="p-5 bg-gradient-to-br from-purple-50 to-white rounded-2xl border border-purple-100 shadow-sm">
-                  <div className="flex items-center gap-2 mb-2 text-purple-600">
+                <div className="p-5 bg-gradient-to-br from-orange-50 to-white rounded-2xl border border-orange-100 shadow-sm">
+                  <div className="flex items-center gap-2 mb-2 text-orange-600">
                     <Award size={20} />
-                    <p className="text-xs font-bold uppercase tracking-wider">Succès</p>
+                    <p className="text-xs font-bold">Succès</p>
                   </div>
-                  <p className="text-4xl font-black text-slate-800">{details?.achievements?.length || 0}</p>
+                  <p className="text-4xl font-bold text-slate-800">{details?.achievements?.length || 0}</p>
                 </div>
               </div>
 
@@ -627,8 +627,8 @@ function StatCard({ icon, label, value, subtext, color }: any) {
         </div>
       </div>
       <div>
-        <h3 className="text-3xl font-black text-slate-800 tracking-tight mb-1">{value}</h3>
-        <p className="text-sm font-bold text-slate-500 uppercase tracking-wide mb-1">{label}</p>
+        <h3 className="text-3xl font-bold text-slate-800 tracking-tight mb-1">{value}</h3>
+        <p className="text-sm font-bold text-slate-500 mb-1">{label}</p>
         {subtext && <p className="text-xs text-slate-400 font-medium italic">{subtext}</p>}
       </div>
     </div>

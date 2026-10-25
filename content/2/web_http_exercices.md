@@ -3,7 +3,7 @@ title: Fiche d'exercices - Web et HTTP
 description: 'Exercices sur le protocole HTTP, les URLs, le HTML, le CSS et JavaScript.'
 level: premiere
 chapter: Web et Interaction
-icon: "\U0001F30D"
+icon: "earth"
 badgeId: premiere_fiche_exercices_web_http
 prerequisites:
   - web_protocoles
@@ -54,12 +54,12 @@ Identifiez :
 
 ??? tip "Correction"
     **Associations :**
-    *   GET → 1. Récupérer des données sans les modifier
-    *   POST → 2. Envoyer des données pour créer une ressource
-    *   PUT → 3. Remplacer complètement une ressource
-    *   DELETE → 4. Supprimer une ressource
-    *   HEAD → 5. Récupérer seulement les en-têtes
-    *   PATCH → 6. Modifier partiellement une ressource
+    *   GET : 1. Récupérer des données sans les modifier
+    *   POST : 2. Envoyer des données pour créer une ressource
+    *   PUT : 3. Remplacer complètement une ressource
+    *   DELETE : 4. Supprimer une ressource
+    *   HEAD : 5. Récupérer seulement les en-têtes
+    *   PATCH : 6. Modifier partiellement une ressource
 
 ### Exercice 3 - Codes de statut HTTP
 **Expliquez la signification de ces codes de statut :**

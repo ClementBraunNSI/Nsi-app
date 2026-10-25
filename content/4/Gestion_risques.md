@@ -3,7 +3,7 @@ title: Gestion des Risques
 description: 'Identification, analyse et traitement des risques en projet informatique'
 level: '4'
 chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
-icon: ⚠️
+icon: "triangle-alert"
 prerequisites:
   - ITIL
 audience: public
@@ -11,7 +11,7 @@ audience: public
 
 # Gestion des risques
 
-**BTS SIO — Bloc 1 : gestion des risques en projet informatique**
+**BTS SIO, Bloc 1 : gestion des risques en projet informatique**
 
 Un **risque de projet** est un événement incertain. S'il se produit, il écarte le projet de ses objectifs : délai, coût, qualité, périmètre. L'écart peut être négatif, un développeur absent la semaine de la livraison. Il peut être positif, une bibliothèque qui fait gagner dix jours : on parle alors d'opportunité, et on la traite aussi, pour ne pas la laisser passer. Gérer les risques, c'est les identifier, les analyser, les traiter, puis les surveiller. Un registre qu'on ne rouvre plus n'est pas une gestion.
 

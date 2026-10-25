@@ -1,9 +1,9 @@
 ---
 title: 'Les interfaces en C#'
-description: 'Cours détaillé sur les interfaces, l’injection de dépendances et l’architecture en couches.'
+description: 'Cours détaillé sur les interfaces, l''injection de dépendances et l''architecture en couches.'
 level: '2'
 chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
-icon: "🧩"
+icon: "puzzle"
 prerequisites:
   - introduction_poo
   - cours_heritage_csharp

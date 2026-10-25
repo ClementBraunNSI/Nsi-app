@@ -3,16 +3,16 @@ title: "C - Affectations & Types"
 description: "Variables, opérateurs, entrées/sorties - bases solides"
 level: "particuliers"
 chapter: "Programmation en C"
-icon: "🔧"
+icon: "wrench"
 audience:
   accounts: []
 ---
 
-# 🔧 C — Affectations & Types (débutante)
+# <Icone nom="wrench" /> C : Affectations & Types (débutante)
 
-## Variables, opérateurs, entrées/sorties — bases solides
+## Variables, opérateurs, entrées/sorties : bases solides
 
-## 🎯 Types fondamentaux du C
+## <Icone nom="target" /> Types fondamentaux du C
 
 ### Types de base
 
@@ -32,7 +32,7 @@ double pi = 3.14159;   // Un décimal plus précis
 char grade = 'A';      // Un caractère
 ```
 
-## 🔤 Affectations et opérateurs
+## <Icone nom="type" /> Affectations et opérateurs
 
 ### Opérateurs arithmétiques
 
@@ -52,7 +52,7 @@ compteur += 1;  // Équivaut à : compteur = compteur + 1;
 compteur *= 2;  // Équivaut à : compteur = compteur * 2;
 ```
 
-## 📥📤 Entrées et sorties
+## <Icone nom="inbox" /><Icone nom="send" /> Entrées et sorties
 
 ### Affichage avec printf()
 
@@ -88,7 +88,7 @@ int main() {
 }
 ```
 
-## 🧮 Exemple pratique
+## <Icone nom="calculator" /> Exemple pratique
 
 ```c
 #include <stdio.h>

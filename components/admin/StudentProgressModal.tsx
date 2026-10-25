@@ -45,7 +45,7 @@ function SheetCard({ sheet, onOpen }: { sheet: StudentProgressSheet; onOpen: () 
         />
         <ChevronRight size={18} className="shrink-0 text-slate-300 transition group-hover:text-orange-500" />
       </div>
-      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">{sheet.chapter}</p>
+      <p className="text-[10px] font-bold text-slate-400">{sheet.chapter}</p>
       <h3 className="text-lg font-semibold tracking-tight text-slate-800">{sheet.courseTitle}</h3>
       <p className="mt-2 text-sm font-bold text-slate-600">{validatedPhrase(sheet.validatedCount, sheet.total)}</p>
       <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100">
@@ -55,7 +55,7 @@ function SheetCard({ sheet, onOpen }: { sheet: StudentProgressSheet; onOpen: () 
         />
       </div>
       <span
-        className={`mt-4 inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${
+        className={`mt-4 inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold ${
           sheet.status === 'validated'
             ? 'border-emerald-200 bg-white text-emerald-700'
             : sheet.status === 'in_progress'
@@ -131,7 +131,7 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900 p-4"
       onClick={onClose}
     >
       <div
@@ -141,22 +141,22 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
         className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-center justify-between gap-4 border-b border-slate-100 bg-white/90 p-6 backdrop-blur-md">
+        <div className="flex items-center justify-between gap-4 border-b border-slate-100 bg-white p-6">
           <div className="flex min-w-0 items-center gap-4">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-orange-50 text-2xl font-black text-orange-500 shadow-inner">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-orange-50 text-2xl font-bold text-orange-500 shadow-inner">
               {displayName[0]?.toUpperCase() || '?'}
             </div>
             <div className="min-w-0">
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-orange-500">Progression</p>
-              <h2 id="student-progress-title" className="truncate text-2xl font-black tracking-tight text-slate-800">
+              <p className="text-[10px] font-bold text-orange-500">Progression</p>
+              <h2 id="student-progress-title" className="truncate text-2xl font-bold tracking-tight text-slate-800">
                 {displayName}
               </h2>
               <div className="mt-1 flex flex-wrap items-center gap-2">
-                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-slate-500">
+                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-500">
                   {levelLabel(student.level || data?.profileLevel || '') || 'Niveau inconnu'}
                 </span>
                 <span
-                  className={`rounded-md px-2 py-0.5 text-xs font-bold uppercase tracking-wide ${
+                  className={`rounded-md px-2 py-0.5 text-xs font-bold ${
                     student.has_private_lessons ? 'bg-orange-50 text-orange-700' : 'bg-slate-100 text-slate-600'
                   }`}
                 >
@@ -180,11 +180,11 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
           {loading ? (
             <div className="flex flex-col items-center justify-center gap-4 py-20 text-slate-400">
               <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-orange-500" />
-              <p className="animate-pulse font-medium">Chargement de la progression…</p>
+              <p className="animate-pulse font-medium">Chargement de la progression</p>
             </div>
           ) : failed || !data ? (
             <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center">
-              <p className="font-bold text-slate-600">La progression n’a pas pu être chargée.</p>
+              <p className="font-bold text-slate-600">La progression n'a pas pu être chargée.</p>
             </div>
           ) : (
             <>
@@ -252,7 +252,7 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
                       size={72}
                     />
                     <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">{openSheet.chapter}</p>
+                    <p className="text-[10px] font-bold text-slate-400">{openSheet.chapter}</p>
                     <h3 className="mt-1 text-xl font-semibold tracking-tight text-slate-800">{openSheet.courseTitle}</h3>
                     <p className="mt-2 text-sm font-bold text-slate-600">
                       {validatedPhrase(openSheet.validatedCount, openSheet.total)}
@@ -290,7 +290,7 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
                 <>
                   <p className="text-sm font-semibold text-slate-600">
                     {validatedExercises === 1 ? '1 exercice validé' : `${validatedExercises} exercices validés`}
-                    {' · '}
+                    {', '}
                     {validatedSheets === 1 ? '1 fiche terminée' : `${validatedSheets} fiches terminées`}
                   </p>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

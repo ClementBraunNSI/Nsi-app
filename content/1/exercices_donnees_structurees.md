@@ -3,7 +3,7 @@ title: Exercices - Données Structurées
 description: 'Exercices sur les formats CSV, JSON et les bases de données'
 level: seconde
 chapter: Données structurées
-icon: "\U0001F4CB"
+icon: "clipboard-list"
 prerequisites:
   - activite_donnees_interactive
 audience: public

@@ -3,14 +3,14 @@ title: "TP - Structures Imbriquées (Spotify)"
 description: "Manipuler des listes de dictionnaires contenant des listes"
 level: premiere
 chapter: Dictionnaires et Tables
-icon: "🎧"
+icon: "headphones"
 badgeId: "tp_spotify"
 audience: public
 ---
 
-# 🎧 TP : Structures Imbriquées (Spotify)
+# <Icone nom="headphones" /> TP : Structures Imbriquées (Spotify)
 
-## 🎯 Objectif
+## <Icone nom="target" /> Objectif
 Comprendre comment naviguer dans des données complexes : **une liste de dictionnaires**, où chaque dictionnaire contient lui-même **des listes**.
 
 C'est exactement comme cela que Spotify ou Netflix stockent vos données !
@@ -53,7 +53,7 @@ spotify_db = [
 ]
 ```
 
-### 🧠 Comment lire ça ?
+### <Icone nom="brain" /> Comment lire ça ?
 
 Imaginez que vous êtes un GPS. Pour trouver une info, vous devez suivre le chemin étape par étape.
 
@@ -290,7 +290,7 @@ for artiste in spotify_db:
 Angèle vient de sortir "Démons" (30 000 000 écoutes).
 Ajouter cette chanson à sa liste `top_titres`.
 
-⚠️ Attention : `top_titres` est une liste de **dictionnaires**. Vous devez donc ajouter un objet de la forme `{"titre": "...", "ecoutes": ...}`.
+<Icone nom="triangle-alert" /> Attention : `top_titres` est une liste de **dictionnaires**. Vous devez donc ajouter un objet de la forme `{"titre": "...", "ecoutes":...}`.
 </Enonce>
 
 <Correction>
@@ -312,7 +312,7 @@ print(spotify_db[1]["top_titres"])
 
 ---
 
-## 5. Défis Ultimes (Data Analyst) 👩‍💻
+## 5. Défis Ultimes (Data Analyst) <Icone nom="user" />
 
 Ici, on ne rigole plus. On va faire de la vraie analyse de données comme un Data Scientist chez Spotify.
 

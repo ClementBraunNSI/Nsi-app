@@ -28,7 +28,7 @@ export default function IotInterface() {
   }, [heater]);
 
   const triggerMotion = () => {
-    setNotification("⚠️ Mouvement détecté dans le salon !");
+    setNotification("Mouvement détecté dans le salon !");
     setTimeout(() => setNotification(null), 4000);
   };
 
@@ -88,7 +88,7 @@ export default function IotInterface() {
 
           {/* Notification Toast */}
           {notification && (
-            <div className="absolute top-10 left-2 right-2 bg-white/90 backdrop-blur text-slate-900 p-3 rounded-lg shadow-lg text-xs font-bold flex items-center gap-2 animate-bounce-in">
+            <div className="absolute top-10 left-2 right-2 bg-white text-slate-900 p-3 rounded-lg shadow-lg text-xs font-bold flex items-center gap-2-in">
               <Bell size={16} className="text-red-500" />
               {notification}
             </div>
@@ -97,13 +97,13 @@ export default function IotInterface() {
 
         {/* Physical World Simulation */}
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 h-[300px] relative flex flex-col justify-between">
-          <div className="absolute top-2 right-2 text-slate-300 font-black text-4xl opacity-20 pointer-events-none">MAISON</div>
+          <div className="absolute top-2 right-2 text-slate-300 font-bold text-4xl opacity-20 pointer-events-none">MAISON</div>
           
           <div className="flex justify-around items-end h-full pb-4">
             {/* Lamp */}
             <div className="flex flex-col items-center gap-2">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 shadow-lg ${
-                lights ? 'bg-orange-300 shadow-orange-200' : 'bg-slate-300'
+                lights ? 'bg-orange-300' : 'bg-slate-300'
               }`}>
                 <Lightbulb size={32} className="text-white" />
               </div>

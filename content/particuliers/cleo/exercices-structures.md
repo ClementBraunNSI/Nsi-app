@@ -14,7 +14,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo1" label="1. Le Temps qui passe" type="autre">
     <Enonce>
-    ## 🕒 Exercice 1 : Gestion du Temps (Débutant)
+    ## <Icone nom="clock" /> Exercice 1 : Gestion du Temps (Débutant)
 
     ### Objectif
     Créer une structure pour représenter une heure (Heures, Minutes, Secondes) et écrire une fonction pour l'afficher proprement.
@@ -52,7 +52,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo2" label="2. Distance Points" type="autre">
     <Enonce>
-    ## 📍 Exercice 2 : Géométrie (Débutant)
+    ## <Icone nom="map-pin" /> Exercice 2 : Géométrie (Débutant)
 
     ### Objectif
     Manipuler des coordonnées et utiliser la librairie mathématique.
@@ -92,7 +92,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo3" label="3. Nombres Complexes" type="autre">
     <Enonce>
-    ## 🌀 Exercice 3 : Nombres Complexes (Débutant)
+    ## <Icone nom="tornado" /> Exercice 3 : Nombres Complexes (Débutant)
 
     ### Objectif
     Créer une "méthode" d'addition qui retourne une nouvelle structure.
@@ -133,7 +133,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo4" label="4. Passage par Pointeur" type="autre">
     <Enonce>
-    ## 🔄 Exercice 4 : Modification d'État (Intermédiaire)
+    ## <Icone nom="refresh-cw" /> Exercice 4 : Modification d'État (Intermédiaire)
 
     ### Objectif
     Comprendre pourquoi les pointeurs sont indispensables pour modifier une structure.
@@ -233,7 +233,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo6" label="6. Tableau de Structures" type="autre">
     <Enonce>
-    ## 👥 Exercice 6 : Classe d'Étudiants (Intermédiaire)
+    ## <Icone nom="users" /> Exercice 6 : Classe d'Étudiants (Intermédiaire)
 
     ### Objectif
     Gérer un tableau de structures.
@@ -283,7 +283,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo7" label="7. Produit Vectoriel" type="autre">
     <Enonce>
-    ## 🏹 Exercice 7 : Vecteurs 3D (Intermédiaire)
+    ## <Icone nom="crosshair" /> Exercice 7 : Vecteurs 3D (Intermédiaire)
 
     ### Objectif
     Retourner une structure calculée à partir de deux autres.
@@ -330,7 +330,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo8" label="8. RPG : Héros" type="autre">
     <Enonce>
-    ## ⚔️ Exercice 8 : Mini RPG (Avancé)
+    ## <Icone nom="swords" /> Exercice 8 : Mini RPG (Avancé)
 
     ### Objectif
     Simuler un combat tour par tour.
@@ -390,7 +390,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo9" label="9. Gestion Bibliothèque" type="autre">
     <Enonce>
-    ## 📚 Exercice 9 : Bibliothèque (Avancé)
+    ## <Icone nom="library" /> Exercice 9 : Bibliothèque (Avancé)
 
     ### Objectif
     Gestion complète avec tableau et recherche.
@@ -468,7 +468,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo10" label="10. Structures Imbriquées" type="autre">
     <Enonce>
-    ## 🏠 Exercice 10 : Structures dans Structures (Expert)
+    ## <Icone nom="house" /> Exercice 10 : Structures dans Structures (Expert)
 
     ### Objectif
     Manipuler des données hiérarchiques.
@@ -535,7 +535,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo11" label="11. Allocation Dynamique" type="autre">
     <Enonce>
-    ## 🧠 Exercice 11 : Allocation Dynamique (Expert)
+    ## <Icone nom="brain" /> Exercice 11 : Allocation Dynamique (Expert)
 
     ### Objectif
     Créer une structure sur le tas (Heap) au lieu de la pile (Stack).
@@ -592,7 +592,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo12" label="12. Tableau Dynamique" type="autre">
     <Enonce>
-    ## 📈 Exercice 12 : Tableau Dynamique de Structures (Expert +)
+    ## <Icone nom="trending-up" /> Exercice 12 : Tableau Dynamique de Structures (Expert +)
 
     ### Objectif
     Gérer un nombre d'éléments inconnu à la compilation.
@@ -652,7 +652,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo13" label="13. Inventaire Jeu" type="autre">
     <Enonce>
-    ## 🎒 Exercice 13 : Inventaire de Jeu Vidéo (Expert)
+    ## <Icone nom="backpack" /> Exercice 13 : Inventaire de Jeu Vidéo (Expert)
 
     ### Contexte
     Dans un RPG, le joueur possède un inventaire limité en poids.
@@ -735,7 +735,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo14" label="14. Liste Chaînée (Playlist)" type="autre">
     <Enonce>
-    ## 🎵 Exercice 14 : Playlist Musicale (Expert +)
+    ## <Icone nom="music" /> Exercice 14 : Playlist Musicale (Expert +)
 
     ### Contexte
     Une playlist est une liste de chansons où l'on peut facilement ajouter ou supprimer un titre au milieu. C'est le cas parfait pour une liste chaînée.
@@ -805,7 +805,7 @@ audience:
 
   <ExerciseSection id="tp-c-exo15" label="15. Gestionnaire de Tâches" type="autre">
     <Enonce>
-    ## ✅ Exercice 15 : Todo List Prioritaire (Bonus)
+    ## <Icone nom="circle-check" /> Exercice 15 : Todo List Prioritaire (Bonus)
 
     ### Contexte
     On veut gérer une liste de tâches, mais on veut toujours récupérer la tâche la plus urgente en premier.

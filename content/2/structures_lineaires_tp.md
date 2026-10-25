@@ -5,7 +5,7 @@ description: >-
   d'attente).
 level: premiere
 chapter: Structures de données linéaires
-icon: "\U0001F4E5"
+icon: "inbox"
 badgeId: premiere_tp_piles_files
 prerequisites:
   - structures_lineaires_piles_files

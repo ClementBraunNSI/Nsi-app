@@ -3,7 +3,7 @@ title: Représentation des caractères
 description: Codage ASCII et Unicode (UTF-8)
 level: premiere
 chapter: Représentation des données
-icon: "\U0001F524"
+icon: "type"
 badgeId: premiere_caracteres
 prerequisites:
   - donnees_entiers_positifs
@@ -55,4 +55,4 @@ Pour fermer : un caractère est un symbole relié à un nombre. ASCII en code 12
 
 ## Pour s'entraîner
 
-[Exercices — données binaires](/cours/2/donnees_binaires_exercices)
+[Exercices : données binaires](/cours/2/donnees_binaires_exercices)

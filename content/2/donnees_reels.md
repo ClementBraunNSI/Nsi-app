@@ -3,7 +3,7 @@ title: Nombres réels en Binaire
 description: Représentation en virgule fixe et flottante (IEEE754)
 level: premiere
 chapter: Représentation des données
-icon: "\U0001F30A"
+icon: "waves"
 badgeId: premiere_reels
 prerequisites:
   - donnees_entiers_positifs
@@ -82,4 +82,4 @@ Pour fermer : après la virgule, les poids sont $2^{-1}$, $2^{-2}$, et la suite.
 
 ## Pour s'entraîner
 
-[Exercices — données binaires](/cours/2/donnees_binaires_exercices)
+[Exercices : données binaires](/cours/2/donnees_binaires_exercices)

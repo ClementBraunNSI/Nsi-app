@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Bug, Check, RefreshCw, Trophy, AlertTriangle, Code, ArrowRight } from 'lucide-react';
+import { Bug, Check, RefreshCw, Trophy, AlertTriangle, Code, ArrowRight, Lightbulb } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Types pour les exercices
@@ -170,7 +170,7 @@ export default function BugHunter() {
         >
           <Trophy size={48} className="text-emerald-600" />
         </motion.div>
-        <h2 className="text-3xl font-black text-slate-800 mb-4">Chasse Terminée !</h2>
+        <h2 className="text-3xl font-bold text-slate-800 mb-4">Chasse Terminée !</h2>
         <p className="text-lg text-slate-600 mb-8">
           Tu as identifié et corrigé les bugs les plus courants en Python.
           <br/>
@@ -197,7 +197,7 @@ export default function BugHunter() {
       <div className="bg-slate-900 text-white p-6 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Bug className="text-emerald-400" size={24} />
-          <h2 className="text-xl font-bold">Chasseur de Bugs 🐞</h2>
+          <h2 className="text-xl font-bold">Chasseur de Bugs</h2>
         </div>
         <div className="text-sm font-medium bg-slate-800 px-3 py-1 rounded-full">
           Niveau {currentLevelIndex + 1} / {LEVELS.length}
@@ -207,9 +207,9 @@ export default function BugHunter() {
       <div className="p-6 md:p-8">
         {/* Level Info */}
         <div className="mb-6">
-          <h3 className="text-2xl font-black text-slate-800 mb-2 flex items-center gap-2">
+          <h3 className="text-2xl font-bold text-slate-800 mb-2 flex items-center gap-2">
             {currentLevel.title}
-            <span className={`text-xs px-2 py-1 rounded-full uppercase tracking-wider font-bold ${
+            <span className={`text-xs px-2 py-1 rounded-full font-bold ${
               currentLevel.bugType === 'syntax' ? 'bg-red-100 text-red-700' :
               currentLevel.bugType === 'logic' ? 'bg-orange-100 text-orange-700' :
               'bg-blue-100 text-blue-700'
@@ -276,7 +276,7 @@ export default function BugHunter() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-center border-t border-slate-100 pt-6">
           <div className="text-sm text-slate-500 italic flex items-center gap-2">
-             💡 Indice : {currentLevel.hint}
+             <Lightbulb size={16} aria-hidden /> Indice : {currentLevel.hint}
           </div>
           
           <div className="flex gap-3 w-full sm:w-auto">

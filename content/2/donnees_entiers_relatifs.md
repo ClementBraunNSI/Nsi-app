@@ -3,7 +3,7 @@ title: Entiers négatifs en Binaire
 description: Représentation des nombres signés et complément à 2
 level: premiere
 chapter: Représentation des données
-icon: "\U0001F321️"
+icon: "thermometer"
 badgeId: premiere_entiers_relatifs
 prerequisites:
   - donnees_entiers_positifs
@@ -58,4 +58,4 @@ Pour fermer : le bit de signe seul fabrique deux zéros et casse l'addition. Le 
 
 ## Pour s'entraîner
 
-[Exercices — données binaires](/cours/2/donnees_binaires_exercices)
+[Exercices : données binaires](/cours/2/donnees_binaires_exercices)

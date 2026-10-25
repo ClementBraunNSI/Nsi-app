@@ -113,6 +113,6 @@ function friendlyPythonError(line: string) {
   if (file) return `Fichier introuvable : « ${file[1]} ». Les fichiers s'appellent comme les tables, avec .csv (par exemple animaux.csv).`;
   const key = line.match(/KeyError: '(.+?)'/);
   if (key) return `La colonne « ${key[1]} » n'existe pas dans ce fichier. Vérifie son nom dans le dossier.`;
-  if (line.startsWith("SyntaxError") || line.startsWith("IndentationError")) return `${line} — vérifie les deux-points, les parenthèses et l'indentation.`;
+  if (line.startsWith("SyntaxError") || line.startsWith("IndentationError")) return `${line}. Vérifie les deux-points, les parenthèses et l'indentation.`;
   return line;
 }

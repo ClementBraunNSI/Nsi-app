@@ -3,12 +3,12 @@
 import { FormEvent, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ArrowLeft, Blocks, Code2, Database, Lightbulb, NotebookPen, RotateCcw, Search, Table2 } from "lucide-react";
+import { ArrowLeft, Blocks, Code2, Database, Lightbulb, NotebookPen, RotateCcw, Search, Table2, Target } from "lucide-react";
 import { checkAccusation } from "@/app/actions/enquetes";
 import type { PublicEnquete } from "@/lib/enquetes/types";
 import { clearCase, markSolved, readProgress, readSolutions, readSolved, saveProgress, type Mode, type Solution } from "@/lib/enquetes/progress";
 
-const loading = () => <p className="enq-muted enq-loading">Ouverture de l’atelier…</p>;
+const loading = () => <p className="enq-muted enq-loading">Ouverture de l'atelier</p>;
 const BlocklyMode = dynamic(() => import("@/components/enquetes/BlocklyMode"), { ssr: false, loading });
 const CodeMode = dynamic(() => import("@/components/enquetes/CodeMode"), { ssr: false, loading });
 
@@ -124,7 +124,7 @@ export default function InvestigationView({ enquete, next }: Props) {
         </Link>
         <div className="enq-head-main">
           <p className="enq-eyebrow">
-            Enquête {enquete.numero} · {enquete.difficulty}
+            Enquête {enquete.numero}, niveau {enquete.difficulty.toLowerCase()}
           </p>
           <h1>{enquete.title}</h1>
         </div>
@@ -160,7 +160,9 @@ export default function InvestigationView({ enquete, next }: Props) {
             {enquete.story.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
-            <p className="enq-objective">🎯 {enquete.objective}</p>
+            <p className="enq-objective">
+              <Target size={16} aria-hidden /> {enquete.objective}
+            </p>
           </section>
 
           <section className="enq-card">
@@ -214,18 +216,18 @@ export default function InvestigationView({ enquete, next }: Props) {
 
           <section className="enq-card">
             <h2>
-              <NotebookPen size={15} /> Carnet d’enquête
+              <NotebookPen size={15} /> Carnet d'enquête
             </h2>
             <textarea
               className="enq-notes"
               value={notes}
               onChange={(event) => saveNotes(event.target.value)}
-              placeholder="Note ici tes pistes : numéros de rapport, suspects, alibis…"
+              placeholder="Note ici tes pistes : numéros de rapport, suspects, alibis"
               rows={4}
             />
             <p className="enq-saved">Ton avancée est gardée sur cet appareil.</p>
             <button type="button" className="enq-reset" onClick={restart}>
-              <RotateCcw size={13} /> Recommencer l’enquête à zéro
+              <RotateCcw size={13} /> Recommencer l'enquête à zéro
             </button>
           </section>
         </aside>
@@ -266,13 +268,13 @@ export default function InvestigationView({ enquete, next }: Props) {
                     autoComplete="off"
                   />
                   <button type="submit" className="enq-run-button" disabled={checking}>
-                    {checking ? "Vérification…" : "Accuser"}
+                    {checking ? "Vérification en cours" : "Accuser"}
                   </button>
                 </div>
                 {verdict === "wrong" ? (
                   <p className="enq-error" role="alert">
-                    Ce n’est pas le bon suspect.{" "}
-                    {attempts >= 2 && hintCount < enquete.hints.length ? "Un indice pourrait t’aider." : "Relis les témoignages et vérifie chaque condition."}
+                    Ce n'est pas le bon suspect.{" "}
+                    {attempts >= 2 && hintCount < enquete.hints.length ? "Un indice pourrait t'aider." : "Relis les témoignages et vérifie chaque condition."}
                   </p>
                 ) : null}
               </>

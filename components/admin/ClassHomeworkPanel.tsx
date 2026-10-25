@@ -44,7 +44,7 @@ export function ClassHomeworkPanel() {
     reload();
   }, []);
 
-  if (!board) return <p className="text-sm text-slate-400">Chargement des devoirs…</p>;
+  if (!board) return <p className="text-sm text-slate-400">Chargement des devoirs</p>;
 
   return (
     <div className="space-y-8">
@@ -64,8 +64,8 @@ export function ClassHomeworkPanel() {
             if (result.error) {
               setNotice(
                 result.error === "private_class"
-                  ? "Les cours particuliers s’assignent élève par élève."
-                  : "Le devoir de classe n’a pas été enregistré.",
+                  ? "Les cours particuliers s'assignent élève par élève."
+                  : "Le devoir de classe n'a pas été enregistré.",
               );
               return;
             }
@@ -78,7 +78,7 @@ export function ClassHomeworkPanel() {
           });
         }}
       >
-        <h2 className="text-lg font-black text-slate-800">Nouveau devoir de classe</h2>
+        <h2 className="text-lg font-bold text-slate-800">Nouveau devoir de classe</h2>
         <div className="grid md:grid-cols-2 gap-3">
           <input
             list="classes-connues"
@@ -180,9 +180,9 @@ export function ClassHomeworkPanel() {
                     <p className="font-bold text-slate-800">{item.title}</p>
                     <p className="text-slate-500">
                       Classe {item.classe}
-                      {item.page_title ? ` · ${item.page_title}` : ""}
-                      {item.due_at ? ` · pour le ${new Date(item.due_at).toLocaleString("fr-FR")}` : ""}
-                      {` · ${item.doneCount} rendu${item.doneCount > 1 ? "s" : ""}`}
+                      {item.page_title ? `, ${item.page_title}` : ""}
+                      {item.due_at ? `, pour le ${new Date(item.due_at).toLocaleString("fr-FR")}` : ""}
+                      {`, ${item.doneCount} rendu${item.doneCount > 1 ? "s" : ""}`}
                     </p>
                   </div>
                   <div className="flex gap-3">

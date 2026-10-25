@@ -3,7 +3,7 @@ title: 'LINQ et JSON en C#'
 description: 'Cours détaillé sur les requêtes LINQ, la sérialisation JSON et la robustesse des traitements.'
 level: '2'
 chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
-icon: "📊"
+icon: "chart-column"
 prerequisites:
   - introduction_poo
   - csharp_csv_bdd

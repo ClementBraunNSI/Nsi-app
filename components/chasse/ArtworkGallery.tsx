@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
+import { Brush, ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
 
 interface Artwork {
   id: number;
@@ -66,8 +66,8 @@ export default function ArtworkGallery() {
       {/* Header */}
       <div className="bg-gradient-to-br from-orange-400 via-orange-500 to-red-500 rounded-3xl p-12 text-center text-white shadow-xl mb-12 relative overflow-hidden">
         <div className="relative z-10">
-          <h1 className="text-4xl md:text-5xl font-black mb-4 uppercase tracking-tight">
-            🎨 Chasse aux Ren'Arts
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+            Chasse aux Ren'Arts
           </h1>
           <p className="text-xl opacity-90 max-w-2xl mx-auto font-medium">
             Galerie des œuvres classiques revisitées par nos élèves, où le renard s'invite dans l'histoire de l'art.
@@ -94,7 +94,7 @@ export default function ArtworkGallery() {
             />
             
             {/* Zoom Hint */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 backdrop-blur-[2px]">
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black-[2px]">
               <div className="bg-white/90 text-slate-900 px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
                 <ZoomIn size={20} /> Agrandir l'œuvre
               </div>
@@ -104,14 +104,14 @@ export default function ArtworkGallery() {
           {/* Navigation Buttons (Overlay) */}
           <button 
             onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-800 p-3 rounded-full shadow-lg backdrop-blur-sm transition-all hover:scale-110 z-20"
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white hover:bg-white text-slate-800 p-3 rounded-full shadow-lg transition-all hover:scale-110 z-20"
             aria-label="Précédent"
           >
             <ChevronLeft size={24} />
           </button>
           <button 
             onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-800 p-3 rounded-full shadow-lg backdrop-blur-sm transition-all hover:scale-110 z-20"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white hover:bg-white text-slate-800 p-3 rounded-full shadow-lg transition-all hover:scale-110 z-20"
             aria-label="Suivant"
           >
             <ChevronRight size={24} />
@@ -124,11 +124,11 @@ export default function ArtworkGallery() {
             <div className="absolute top-0 right-0 w-24 h-24 bg-orange-100 dark:bg-orange-900/20 rounded-bl-full -mr-12 -mt-12 z-0"></div>
             
             <div className="relative z-10">
-              <div className="text-orange-500 font-black text-6xl opacity-20 absolute -top-4 -left-4 select-none">
+              <div className="text-orange-500 font-bold text-6xl opacity-20 absolute -top-4 -left-4 select-none">
                 {String(currentArtwork.id).padStart(2, '0')}
               </div>
               
-              <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 mt-4 leading-tight">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 mt-4 leading-tight">
                 {currentArtwork.title}
               </h2>
               
@@ -136,14 +136,14 @@ export default function ArtworkGallery() {
               
               <div className="space-y-4">
                 <div>
-                  <p className="text-xs font-bold uppercase text-slate-400 tracking-wider mb-1">Artiste Élève</p>
+                  <p className="text-xs font-bold text-slate-400 mb-1">Artiste Élève</p>
                   <p className="text-lg font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
-                    👨‍🎨 {currentArtwork.artist}
+                    <Brush size={18} aria-hidden /> {currentArtwork.artist}
                   </p>
                 </div>
                 
                 <div>
-                  <p className="text-xs font-bold uppercase text-slate-400 tracking-wider mb-1">Œuvre Originale</p>
+                  <p className="text-xs font-bold text-slate-400 mb-1">Œuvre Originale</p>
                   <p className="text-slate-600 dark:text-slate-300 italic leading-relaxed border-l-2 border-slate-200 dark:border-slate-700 pl-3">
                     {currentArtwork.original}
                   </p>
@@ -166,8 +166,8 @@ export default function ArtworkGallery() {
             key={art.id}
             onClick={() => goToSlide(index)}
             className={`
-              flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all snap-center
-              ${index === currentIndex 
+ flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all snap-center
+ ${index === currentIndex 
                 ? 'border-orange-500 scale-110 shadow-lg ring-2 ring-orange-200 dark:ring-orange-900' 
                 : 'border-transparent opacity-60 hover:opacity-100 hover:scale-105'}
             `}
@@ -186,7 +186,7 @@ export default function ArtworkGallery() {
       {/* Fullscreen Modal */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 z-[100] bg-black flex items-center justify-center p-4 animate-in fade-in duration-200"
           onClick={() => setIsModalOpen(false)}
         >
           <button 
@@ -204,8 +204,8 @@ export default function ArtworkGallery() {
               className="object-contain"
               priority
             />
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center bg-black/50 backdrop-blur-md text-white px-6 py-2 rounded-full text-sm font-medium">
-              {currentArtwork.title} — {currentArtwork.artist}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center bg-black text-white px-6 py-2 rounded-full text-sm font-medium">
+              {currentArtwork.title}, {currentArtwork.artist}
             </div>
           </div>
         </div>

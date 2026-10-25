@@ -4,7 +4,7 @@ description: Interroger et manipuler les données relationnelles
 level: TNSI
 order: 60
 chapter: Bases de Données
-icon: "\U0001F4BE"
+icon: "save"
 badgeId: terminale_sql_cours
 prerequisites:
   - bdd_modele_relationnel

@@ -4,7 +4,7 @@ description: "Connecter interface utilisateur, événements et requêtes réseau
 level: TNSI
 order: 210
 chapter: Langages et Programmation
-icon: "🔌"
+icon: "plug"
 badgeId: terminale_api_evenementielle
 prerequisites:
   - prog_modularite_mise_au_point

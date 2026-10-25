@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight, LayoutGrid, Zap } from 'lucide-react';
+import { CourseIcon } from "@/components/ui/CourseIcon";
 
 type CourseItem = {
   slug: string;
@@ -63,11 +64,11 @@ export default function BentoChaptersView({ chapters, niveaux, theme }: Props) {
                   }`}>
                     {chapter.isPrivate ? <Zap size={18} fill="currentColor" /> : <LayoutGrid size={18} />}
                   </div>
-                  <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
+                  <span className="text-[11px] font-bold text-slate-400">
                     {chapter.courses.length} cours
                   </span>
                 </div>
-                <h2 className={`mt-4 text-lg font-black leading-tight ${
+                <h2 className={`mt-4 text-lg font-bold leading-tight ${
                   chapter.isPrivate ? 'text-orange-700' : 'text-slate-900'
                 }`}>
                   {chapter.name}
@@ -94,7 +95,7 @@ export default function BentoChaptersView({ chapters, niveaux, theme }: Props) {
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <span className="text-2xl shrink-0">{cours.icon}</span>
+                        <span className="shrink-0 text-[var(--accent)]"><CourseIcon name={cours.icon} /></span>
                         <div className="min-w-0">
                           <h3 className={`font-bold text-sm truncate ${
                             cours.isPrivate ? 'text-gray-900 group-hover:text-orange-600' : `text-gray-900 ${theme.text}`

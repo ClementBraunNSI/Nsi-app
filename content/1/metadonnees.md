@@ -5,7 +5,7 @@ description: >-
   EXIF
 level: seconde
 chapter: Photographie Numérique
-icon: "\U0001F5BC️"
+icon: "image"
 prerequisites:
   - activite_photo_interactive
 audience: public

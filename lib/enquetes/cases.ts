@@ -45,7 +45,7 @@ const OEUFS: Enquete = {
   title: "Qui a croqué les œufs ?",
   difficulty: "Facile",
   skills: ["Lire une table", "Filtrer avec plusieurs conditions"],
-  pitch: "Douze œufs ont disparu du poulailler. Toute la forêt accuse Roux le renard… à tort ?",
+  pitch: "Douze œufs ont disparu du poulailler. Toute la forêt accuse Roux le renard. À tort ?",
   story: [
     "Au matin du 13 octobre 2026, la fermière des Tilleuls découvre son poulailler sens dessus dessous : douze œufs ont disparu pendant la nuit.",
     "Toute la forêt montre Roux le renard du doigt. Lui jure qu'il est innocent. Le garde forestier te confie le dossier : retrouve le vrai coupable grâce aux registres de la forêt.",
@@ -104,7 +104,7 @@ const MIEL: Enquete = {
   pitch: "Les ruches de la clairière ont été pillées en plein après-midi. Une empreinte, trois suspects, des alibis à vérifier.",
   story: [
     "Le 19 octobre 2026, les abeilles de la clairière sont furieuses : trois rayons de miel ont disparu de leurs ruches.",
-    "Le voleur a laissé une empreinte bien nette dans la boue. Il ne reste plus qu'à savoir à qui elle appartient… et qui n'était pas ailleurs à ce moment-là.",
+    "Le voleur a laissé une empreinte bien nette dans la boue. Il ne reste plus qu'à savoir à qui elle appartient, et qui n'était pas ailleurs à ce moment-là.",
   ],
   objective: "Trouve le nom de l'animal qui a volé le miel.",
   tables: [
@@ -178,7 +178,7 @@ const BARRAGE: Enquete = {
   title: "Le barrage percé",
   difficulty: "Difficile",
   skills: ["Relier plusieurs tables", "Compter et regrouper"],
-  pitch: "Le barrage des castors a été saboté en pleine nuit. Le coupable a laissé une corde… et beaucoup d'indices dans les registres.",
+  pitch: "Le barrage des castors a été saboté en pleine nuit. Le coupable a laissé une corde, et beaucoup d'indices dans les registres.",
   story: [
     "Dans la nuit du 26 octobre 2026, un trou a été percé à la base du barrage des castors. Bâtisseur et sa famille ont passé la nuit à colmater.",
     "Le saboteur a laissé une corde coupée sur l'eau. Trois indices le désignent : la corde, le club dont il fait partie et ses visites répétées au barrage.",

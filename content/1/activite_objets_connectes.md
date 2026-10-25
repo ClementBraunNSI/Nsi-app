@@ -3,7 +3,7 @@ title: 'Activité : Composer un système connecté'
 description: 'Assembler capteurs, logique et actionneurs pour simuler une alarme IoT.'
 level: seconde
 chapter: Micro-controleurs
-icon: "\U0001F3AE"
+icon: "gamepad-2"
 prerequisites:
   - simulateur_microbit
 audience: public
@@ -34,4 +34,4 @@ Puis poursuivez avec le [TP Micro:bit](tp_microbit.md).
 
 ## Extension (optionnel)
 
-[Activité Algorea — Microcontrôleurs](https://parcours.algorea.org/fr/a/940211979874721401;p=4702,1067253748629066205,1249223707321882853;pa=0)
+[Activité Algorea : Microcontrôleurs](https://parcours.algorea.org/fr/a/940211979874721401;p=4702,1067253748629066205,1249223707321882853;pa=0)

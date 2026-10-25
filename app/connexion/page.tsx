@@ -3,7 +3,7 @@
 import { FormEvent, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
+import { ArrowLeft, BookOpen, CircleCheck, Eye, EyeOff, Loader2, Lock, Mail, NotebookPen, type LucideIcon } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import SplashText from "@/components/SplashText";
 
@@ -16,18 +16,18 @@ function safeNext(next: string | null) {
 function friendlyError(message: string) {
   const text = message.toLowerCase();
   if (text.includes("invalid login") || text.includes("invalid credentials")) return "Identifiant ou mot de passe incorrect.";
-  if (text.includes("email not confirmed")) return "Ce compte n’est pas encore activé. Demande à ton professeur.";
-  if (text.includes("rate limit") || text.includes("too many")) return "Trop d’essais d’affilée. Patiente une minute puis réessaie.";
+  if (text.includes("email not confirmed")) return "Ce compte n'est pas encore activé. Demande à ton professeur.";
+  if (text.includes("rate limit") || text.includes("too many")) return "Trop d'essais d'affilée. Patiente une minute puis réessaie.";
   if (text.includes("fetch") || text.includes("network")) return "Connexion au serveur impossible. Vérifie ta connexion internet.";
   return message;
 }
 
 type Mood = "idle" | "thinking" | "happy" | "dizzy";
 
-const BENEFITS = [
-  { emoji: "📚", text: "Reprends tes cours là où tu les as laissés" },
-  { emoji: "✅", text: "Tes exercices validés et tes badges, sur tous tes appareils" },
-  { emoji: "📝", text: "Les devoirs donnés à ta classe" },
+const BENEFITS: { icon: LucideIcon; text: string }[] = [
+  { icon: BookOpen, text: "Reprends tes cours là où tu les as laissés" },
+  { icon: CircleCheck, text: "Tes exercices validés et tes badges, sur tous tes appareils" },
+  { icon: NotebookPen, text: "Les devoirs donnés à ta classe" },
 ];
 
 function ConnexionForm({ onMood }: { onMood: (mood: Mood) => void }) {
@@ -73,8 +73,8 @@ function ConnexionForm({ onMood }: { onMood: (mood: Mood) => void }) {
     <form onSubmit={handleSubmit} className="login-form" noValidate={false}>
       <div>
         <p className="login-eyebrow">Espace élève</p>
-        <h1 className="login-title">Bon retour au terrier 👋</h1>
-        <p className="login-sub">Utilise l’identifiant donné en classe.</p>
+        <h1 className="login-title">Bon retour au terrier</h1>
+        <p className="login-sub">Utilise l'identifiant donné en classe.</p>
       </div>
 
       <label className="login-field">
@@ -135,13 +135,13 @@ function ConnexionForm({ onMood }: { onMood: (mood: Mood) => void }) {
 
       <button type="submit" disabled={pending} className="login-submit">
         {pending ? <Loader2 size={18} className="animate-spin" aria-hidden /> : null}
-        {pending ? "Connexion…" : "Se connecter"}
+        {pending ? "Connexion en cours" : "Se connecter"}
       </button>
 
       <p className="login-help">Mot de passe oublié ? Ton professeur peut le réinitialiser depuis son espace.</p>
 
       <Link href="/" className="login-back">
-        <ArrowLeft size={15} aria-hidden /> Retour à l’accueil
+        <ArrowLeft size={15} aria-hidden /> Retour à l'accueil
       </Link>
     </form>
   );
@@ -159,7 +159,7 @@ export default function ConnexionPage() {
           <ul className="login-benefits">
             {BENEFITS.map((item) => (
               <li key={item.text}>
-                <span>{item.emoji}</span>
+                <item.icon size={18} className="login-benefit-icon" aria-hidden />
                 {item.text}
               </li>
             ))}

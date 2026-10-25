@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Heart, RefreshCw, AlertTriangle, Info } from 'lucide-react';
+import { Heart, RefreshCw, AlertTriangle, Info, Volleyball, Landmark, Dna, Cat, Music, type LucideIcon } from 'lucide-react';
 
 type Topic = 'Sport' | 'Politique' | 'Science' | 'Animaux' | 'Musique';
 
@@ -9,34 +9,34 @@ interface Post {
   id: number;
   topic: Topic;
   content: string;
-  image: string; // Emoji
+  image: LucideIcon;
   color: string;
 }
 
-const TOPICS: Record<Topic, { color: string, emoji: string, contents: string[] }> = {
+const TOPICS: Record<Topic, { color: string, icon: LucideIcon, contents: string[] }> = {
   'Sport': {
     color: 'bg-blue-100 border-blue-300 text-blue-800',
-    emoji: '⚽',
+    icon: Volleyball,
     contents: ['Le PSG gagne encore !', 'Nouveau record du monde', 'Les JO approchent', 'Quel but magnifique !', 'Tennis : Finale incroyable']
   },
   'Politique': {
     color: 'bg-red-100 border-red-300 text-red-800',
-    emoji: '🏛️',
+    icon: Landmark,
     contents: ['Nouvelle loi votée', 'Débat houleux à l\'assemblée', 'Élections : les sondages', 'Réforme des retraites', 'Discours du président']
   },
   'Science': {
-    color: 'bg-purple-100 border-purple-300 text-purple-800',
-    emoji: '🧬',
+    color: 'bg-orange-100 border-purple-300 text-orange-800',
+    icon: Dna,
     contents: ['Découverte sur Mars', 'Nouveau vaccin', 'L\'IA progresse vite', 'Les trous noirs expliqués', 'Avancée en fusion nucléaire']
   },
   'Animaux': {
     color: 'bg-green-100 border-green-300 text-green-800',
-    emoji: '🐱',
+    icon: Cat,
     contents: ['Regardez ce chaton !', 'Chien qui fait du skate', 'Sauvetage d\'un panda', 'Les dauphins sont malins', 'Compilation de chats drôles']
   },
   'Musique': {
     color: 'bg-yellow-100 border-yellow-300 text-yellow-800',
-    emoji: '🎵',
+    icon: Music,
     contents: ['Nouvel album de Drake', 'Concert complet', 'Découverte jazz', 'Top 50 du moment', 'Guitare électrique tuto']
   }
 };
@@ -79,7 +79,7 @@ export default function FilterBubble() {
         id: Date.now() + i,
         topic: selectedTopic,
         content: topicData.contents[Math.floor(Math.random() * topicData.contents.length)],
-        image: topicData.emoji,
+        image: topicData.icon,
         color: topicData.color
       });
     }
@@ -142,9 +142,9 @@ export default function FilterBubble() {
               className={`p-4 rounded-lg border-l-4 shadow-sm bg-white flex justify-between items-center transition-all hover:scale-[1.02] ${post.color}`}
             >
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{post.image}</span>
+                <post.image size={24} className="shrink-0" aria-hidden />
                 <div>
-                  <span className="text-xs font-bold uppercase opacity-70 tracking-wider">{post.topic}</span>
+                  <span className="text-xs font-bold opacity-70">{post.topic}</span>
                   <p className="text-sm font-medium">{post.content}</p>
                 </div>
               </div>
@@ -169,7 +169,7 @@ export default function FilterBubble() {
 
       {/* Right: Algorithm Analysis */}
       <div className="w-full md:w-64 bg-white p-4 rounded-lg border border-slate-200 h-fit">
-        <h4 className="font-bold text-slate-700 mb-4 text-sm uppercase tracking-wide">
+        <h4 className="font-bold text-slate-700 mb-4 text-sm">
           Analyse de l'Algorithme
         </h4>
 
@@ -211,7 +211,7 @@ export default function FilterBubble() {
         </div>
 
         {diversity < 30 && (
-          <div className="p-3 bg-red-50 border border-red-100 rounded-lg mb-4 animate-pulse">
+          <div className="p-3 bg-red-50 border border-red-100 rounded-lg mb-4">
             <div className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5" />
               <div>

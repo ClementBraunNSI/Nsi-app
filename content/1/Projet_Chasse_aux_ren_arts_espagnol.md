@@ -4,7 +4,7 @@ description: 'Site web Chasse aux Ren-Arts, classe de Seconde, récit en espagno
 image: /images/fox_chasse_renard_espagnol_v2.png
 level: '2'
 chapter: Web
-icon: "\U0001F409"
+icon: "flame"
 prerequisites:
   - activite_web_interactive
 audience: public
@@ -14,7 +14,7 @@ version: "Espagnol"
 versionCode: "ES"
 ---
 
-# 🦊 Projet : Zor'prendido en el cuadro
+# <Renard /> Projet : Zor'prendido en el cuadro
 
 Le but de ce projet est de créer la page web d'une œuvre réelle, puis d'y faire entrer un renard.
 Dans ce projet, la recherche, les faits sur l'œuvre et la page se font en français. L'histoire du tableau se rédige en espagnol.
@@ -29,7 +29,7 @@ Dans le fichier HTML fourni, le modèle écrit parfois « renardisé ». Il s'ag
 - [Notice sur HTML](Cours_html.md) : titres, paragraphes, listes, images.
 - [Code fourni](ressources_chasse_renarts.md) : `index.html` à remplir, et `style.css`.
 
-## 1. La fiche de l'œuvre 🔎
+## 1. La fiche de l'œuvre <Icone nom="search" />
 
 Avant de remplir la page, vous constituez une fiche sur un tableau réel. Elle alimente la liste du site, et le cours d'espagnol : le récit s'appuie sur ces faits et sur l'image.
 
@@ -59,7 +59,7 @@ Recopiez cette fiche au cahier ou dans un fichier. Apportez-la au cours d'espagn
 - **Ce qui est représenté** : les cinq détails vus sur l'image.
 - **Sources** : au moins deux. Pour chacune : nom du site ou de l'ouvrage, adresse de la page ou référence du livre, date de consultation, et ce que vous y avez pris (la date, les dimensions, le mouvement). Une information absente se marque « non trouvé », avec la source de ce qui a été trouvé.
 
-## 2. Le récit en espagnol ✍️
+## 2. Le récit en espagnol <Icone nom="pen-line" />
 
 Un seul récit, en trois parties. La fiche, le titre factuel de l'œuvre et la liste des caractéristiques restent en français.
 
@@ -71,7 +71,7 @@ Un seul récit, en trois parties. La fiche, le titre factuel de l'œuvre et la l
 
 Le temps choisi est tenu d'un bout à l'autre du récit. Les phrases sont reliées. On comprend l'histoire.
 
-## 3. Remplir la maquette 🖼️
+## 3. Remplir la maquette <Icone nom="image" />
 
 ![base](/content/1/maquette_base.png)
 
@@ -104,7 +104,7 @@ Chaque bloc de couleur est une `div`. La feuille de style ne se modifie pas pend
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Retirer les bordures ✂️
+## 4. Retirer les bordures <Icone nom="scissors" />
 
 Les bordures colorées servaient à voir les zones. Le contenu est placé : on les retire.
 
@@ -148,7 +148,7 @@ border-color: red;
   </ExerciseSection>
 </ExerciseTabs>
 
-## 5. Fond, texte, police 🎨
+## 5. Fond, texte, police <Icone nom="palette" />
 
 Si `.container` apparaît deux fois, complétez celle qui contient déjà `display: flex;`.
 
@@ -177,7 +177,7 @@ Si `.container` apparaît deux fois, complétez celle qui contient déjà `displ
   </ExerciseSection>
 </ExerciseTabs>
 
-## 6. Ce qu'on rend, et comment c'est lu 📦
+## 6. Ce qu'on rend, et comment c'est lu <Icone nom="package" />
 
 Deux professeurs lisent le même site. Chacun note ce qui relève de son cours. Le lien entre le récit et le tableau se vérifie à deux : la fiche et l'image sont sur la page.
 

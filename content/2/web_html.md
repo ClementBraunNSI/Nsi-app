@@ -3,7 +3,7 @@ title: Le langage HTML
 description: 'Introduction au langage HTML, structure d''une page et principales balises.'
 level: premiere
 chapter: Web et Interaction
-icon: "\U0001F4C4"
+icon: "file-text"
 badgeId: premiere_langage_html
 prerequisites: []
 audience: public

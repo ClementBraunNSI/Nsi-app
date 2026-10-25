@@ -3,13 +3,13 @@ title: 'Projet : Création du Bestiaire'
 description: 'Création d''un site web de bestiaire en 3 parties : HTML, CSS, et finalisation.'
 level: '2'
 chapter: Web
-icon: "\U0001F409"
+icon: "flame"
 prerequisites:
   - activite_web_interactive
 audience: public
 ---
 
-# 📚 Projet : Création du Bestiaire
+# <Icone nom="library" /> Projet : Création du Bestiaire
 
 Le but de ce projet est de créer la page d'un monstre dans le bestiaire de la classe.
 Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de repérage, puis poser le fond d'écran et la couleur du texte.
@@ -19,7 +19,7 @@ Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de re
 
 Avant de commencer, relisez la [notice sur HTML](Cours_html.md) : titres, paragraphes, listes, images.
 
-## 1. Remplir la maquette 🐉
+## 1. Remplir la maquette <Icone nom="flame" />
 
 Voici ce que la première séance doit reproduire :
 
@@ -63,7 +63,7 @@ Chaque bloc de couleur est une `div` : une division de la page. La feuille de st
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Retirer les bordures ✂️
+## 2. Retirer les bordures <Icone nom="scissors" />
 
 Le fichier `style.css` rassemble le style de la page. Une classe s'écrit ainsi :
 
@@ -113,7 +113,7 @@ On rencontre aussi `border: 2px solid black;`, `border-width`, `border-style`.
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Fond et texte 🎨
+## 3. Fond et texte <Icone nom="palette" />
 
 La classe `container` englobe la page. C'est là qu'on pose le fond et la couleur du texte.
 

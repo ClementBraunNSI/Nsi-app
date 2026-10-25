@@ -13,7 +13,7 @@ import {
 export const metadata: Metadata = {
   title: { absolute: 'Outils enseignants | La tanière du code' },
   description:
-    'Applications web indépendantes pour préparer des évaluations, corriger des copies Python, rédiger les conseils de classe et planifier l’année NSI/SNT.',
+    'Applications web indépendantes pour préparer des évaluations, corriger des copies Python, rédiger les conseils de classe et planifier l\'année NSI/SNT.',
 };
 
 const TOOLS = [
@@ -41,7 +41,7 @@ const TOOLS = [
     folder: 'tools/conseil-classe',
     color: 'bg-amber-600',
     icon: ClipboardCheck,
-    summary: 'Importer un CSV Pronote, générer des brouillons d’appréciations, export local (RGPD).',
+    summary: 'Importer un CSV Pronote, générer des brouillons d\'appréciations, export local (RGPD).',
     run: 'npm run dev:conseilnote',
   },
   {
@@ -50,7 +50,7 @@ const TOOLS = [
     folder: 'tools/planificateur',
     color: 'bg-teal-600',
     icon: CalendarDays,
-    summary: 'Planifier l’année par périodes à partir du référentiel de notions NSI/SNT.',
+    summary: 'Planifier l\'année par périodes à partir du référentiel de notions NSI/SNT.',
     run: 'npm run dev:plannsi',
   },
   {
@@ -77,10 +77,10 @@ export default function OutilsEnseignantsPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <main className="mx-auto max-w-5xl px-6 py-16">
-        <p className="text-sm font-semibold uppercase tracking-widest text-slate-500">
+        <p className="text-sm font-semibold text-slate-500">
           Pour les enseignants
         </p>
-        <h1 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">
+        <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
           Outils NSI / SNT indépendants
         </h1>
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">
@@ -102,7 +102,7 @@ export default function OutilsEnseignantsPage() {
             href="/"
             className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:border-slate-300"
           >
-            Retour à l’accueil
+            Retour à l'accueil
           </Link>
         </div>
 
@@ -147,7 +147,7 @@ export default function OutilsEnseignantsPage() {
               Pour le zip : <code className="rounded bg-slate-100 px-1">npx serve generateur-eval/dist</code> (et de même pour chaque app).
             </li>
             <li>
-              Pour le développement : <code className="rounded bg-slate-100 px-1">cd tools && npm install && npm run extract</code> puis une commande <code className="rounded bg-slate-100 px-1">dev:…</code>.
+              Pour le développement : <code className="rounded bg-slate-100 px-1">cd tools && npm install && npm run extract</code> puis une commande <code className="rounded bg-slate-100 px-1">dev:...</code>.
             </li>
           </ol>
           <p className="mt-4 text-sm text-slate-500">

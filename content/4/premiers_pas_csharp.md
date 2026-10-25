@@ -52,7 +52,7 @@ audience: public
 
     Une méthode se lit en trois endroits. Le type de retour, avant le nom : `void` si elle ne renvoie rien, `int` ou `double` si elle calcule. Les paramètres, entre parenthèses, avec leur type. Le corps, entre accolades. `return` sort de la méthode en rendant la valeur. Après un `return`, le reste du corps ne s'exécute pas.
 
-    ### Exercice 1.1 — Message de bienvenue
+    ### Exercice 1.1 : Message de bienvenue
     **Écrire une méthode `static void AfficherBienvenue()` qui affiche "Bienvenue en C# !" dans la console.**
 
     <Correction>
@@ -64,7 +64,7 @@ audience: public
     ```
     </Correction>
 
-    ### Exercice 1.2 — Présentation complète
+    ### Exercice 1.2 : Présentation complète
     **Écrire une méthode `static void SePresenter(string prenom, string ville)` qui affiche "Je m'appelle [prenom] et j'habite [ville]".**
 
     <Correction>
@@ -76,7 +76,7 @@ audience: public
     ```
     </Correction>
 
-    ### Exercice 1.3 — Calcul d'âge futur
+    ### Exercice 1.3 : Calcul d'âge futur
     **Écrire une méthode `static int AgeDans10Ans(int ageActuel)` qui retourne l'âge dans 10 ans.**
 
     <Correction>
@@ -88,7 +88,7 @@ audience: public
     ```
     </Correction>
 
-    ### Exercice 1.4 — Conversion de température
+    ### Exercice 1.4 : Conversion de température
     **Écrire une méthode `static double CelsiusVersFahrenheit(double celsius)`. Formule : `(celsius * 9/5) + 32`.**
 
     <Correction>
@@ -100,7 +100,7 @@ audience: public
     ```
     </Correction>
 
-    ### Exercice 1.5 — Moyenne de trois notes
+    ### Exercice 1.5 : Moyenne de trois notes
     **Écrire une méthode `static double Moyenne(double n1, double n2, double n3)` qui retourne la moyenne des trois nombres.**
 
     <Correction>
@@ -150,7 +150,7 @@ audience: public
 
     Une méthode qui doit rendre une catégorie fait `return` dans chaque branche. Le compilateur vérifie qu'aucune branche n'oublie de rendre une valeur, quand le type de retour n'est pas `void`.
 
-    ### Exercice 2.1 — Le plus grand
+    ### Exercice 2.1 : Le plus grand
     **Écrire une méthode `static int Max(int a, int b)` qui retourne le plus grand des deux nombres.**
 
     <Correction>
@@ -169,7 +169,7 @@ audience: public
     ```
     </Correction>
 
-    ### Exercice 2.2 — Vérification de longueur
+    ### Exercice 2.2 : Vérification de longueur
     **Écrire une méthode `static bool EstMotLong(string mot)` qui retourne `true` si le mot fait plus de 5 caractères, sinon `false`.**
 
     <Correction>
@@ -181,7 +181,7 @@ audience: public
     ```
     </Correction>
 
-    ### Exercice 2.3 — Catégorie d'âge
+    ### Exercice 2.3 : Catégorie d'âge
     **Écrire une méthode `static string CategorieAge(int age)` qui retourne "Enfant" (&lt;=12), "Ado" (&lt;=17), "Adulte" (&lt;=59) ou "Senior".**
 
     <Correction>
@@ -208,7 +208,7 @@ audience: public
     ```
     </Correction>
 
-    ### Exercice 2.4 — Billet de train
+    ### Exercice 2.4 : Billet de train
     **Écrire une méthode `static double CalculerPrixTrain(int age, double km)` selon les règles : 0.20€/km. -50% si &lt;12 ans, -30% si >=65 ans. -10€ si >200km.**
 
     <Correction>
@@ -274,34 +274,34 @@ audience: public
 
     On choisit `for` quand la borne est un nombre ou une longueur. On choisit `while` quand l'arrêt dépend d'une condition qu'on ne sait pas écrire comme un compteur, une saisie, une valeur qui diminue jusqu'à un seuil.
 
-    ### Exercice 3.1 — Compter jusqu'à N
+    ### Exercice 3.1 : Compter jusqu'à N
     **Écrire une méthode `static void CompterJusqua(int n)` qui affiche les nombres de 1 à n.**
 
-    ### Exercice 3.2 — Table de multiplication
+    ### Exercice 3.2 : Table de multiplication
     **Écrire une méthode `static void AfficherTable(int n)` qui affiche la table de multiplication de n (de 1 à 10).**
 
-    ### Exercice 3.3 — Somme 1 à N
+    ### Exercice 3.3 : Somme 1 à N
     **Écrire une méthode `static int SommeJusqua(int n)` qui calcule la somme des entiers de 1 à n.**
 
-    ### Exercice 3.4 — Compter voyelles
+    ### Exercice 3.4 : Compter voyelles
     **Écrire une méthode `static int CompterVoyelles(string texte)` qui retourne le nombre de voyelles.**
 
-    ### Exercice 3.5 — Palindrome
+    ### Exercice 3.5 : Palindrome
     **Écrire une méthode `static bool EstPalindrome(string texte)` qui vérifie si le texte est un palindrome.**
 
-    ### Exercice 3.6 — Puissance de 2
+    ### Exercice 3.6 : Puissance de 2
     **Écrire une méthode `static void AfficherPuissances(int n)` qui affiche toutes les puissances de 2 inférieures ou égales à n.**
 
-    ### Exercice 3.7 — Triangle d'étoiles
+    ### Exercice 3.7 : Triangle d'étoiles
     **Écrire une méthode `static void DessinerTriangle(int hauteur)` qui affiche un triangle rectangle d'étoiles.**
 
-    ### Exercice 3.8 — Factorielle
+    ### Exercice 3.8 : Factorielle
     **Écrire une méthode `static int Factorielle(int n)` qui retourne la factorielle de n (n!).**
 
-    ### Exercice 3.9 — Nombre Premier
+    ### Exercice 3.9 : Nombre Premier
     **Écrire une méthode `static bool EstPremier(int n)` qui retourne true si n est un nombre premier.**
 
-    ### Exercice 3.10 — Inverser une chaîne
+    ### Exercice 3.10 : Inverser une chaîne
     **Écrire une méthode `static string InverserChaine(string texte)` qui retourne la chaîne inversée.**
   </ExerciseSection>
 
@@ -348,31 +348,31 @@ audience: public
     }
     ```
 
-    ### Exercice 4.1 — Somme des éléments
+    ### Exercice 4.1 : Somme des éléments
     **Écrire une méthode `static int Somme(List<int> nombres)` qui retourne la somme des éléments.**
 
-    ### Exercice 4.2 — Compter les pairs
+    ### Exercice 4.2 : Compter les pairs
     **Écrire une méthode `static int CompterPairs(List<int> nombres)` qui retourne le nombre d'éléments pairs.**
 
-    ### Exercice 4.3 — Trouver le Maximum
+    ### Exercice 4.3 : Trouver le Maximum
     **Écrire une méthode `static int TrouverMax(List<int> nombres)` qui retourne la plus grande valeur.**
 
-    ### Exercice 4.4 — Filtrer les Positifs
+    ### Exercice 4.4 : Filtrer les Positifs
     **Écrire une méthode `static List<int> FiltrerPositifs(List<int> nombres)` qui retourne une nouvelle liste ne contenant que les nombres positifs.**
 
-    ### Exercice 4.5 — Concaténation
+    ### Exercice 4.5 : Concaténation
     **Écrire une méthode `static string Concatener(List<string> mots)` qui assemble les mots séparés par un espace.**
 
-    ### Exercice 4.6 — Inverser la liste
+    ### Exercice 4.6 : Inverser la liste
     **Écrire une méthode `static List<int> InverserListe(List<int> nombres)` qui retourne une nouvelle liste inversée.**
 
-    ### Exercice 4.7 — Recherche d'élément
+    ### Exercice 4.7 : Recherche d'élément
     **Écrire une méthode `static int TrouverIndex(List<int> nombres, int valeur)` qui retourne l'index de la valeur ou -1.**
 
-    ### Exercice 4.8 — Moyenne
+    ### Exercice 4.8 : Moyenne
     **Écrire une méthode `static double CalculerMoyenne(List<double> notes)` qui retourne la moyenne des notes.**
 
-    ### Exercice 4.9 — Uniques
+    ### Exercice 4.9 : Uniques
     **Écrire une méthode `static List<int> SupprimerDoublons(List<int> nombres)` qui retourne la liste sans doublons.**
   </ExerciseSection>
 </ExerciseTabs>

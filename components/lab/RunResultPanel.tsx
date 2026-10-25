@@ -77,7 +77,7 @@ export function RunResultPanel({ report }: { report: RunReport }) {
             ? allOk
               ? `Bravo, ${total === 1 ? "le test passe" : `les ${total} tests passent`} !`
               : `${passedTests.length} test${passedTests.length > 1 ? "s" : ""} sur ${total} réussi${passedTests.length > 1 ? "s" : ""}`
-            : report.error || "Les tests n’ont pas été lancés."}
+            : report.error || "Les tests n'ont pas été lancés."}
         </span>
       </p>
       {report.validationNote ? <p className="exercise-validation-note">Aperçu enseignant : {report.validationNote.toLowerCase()}</p> : null}

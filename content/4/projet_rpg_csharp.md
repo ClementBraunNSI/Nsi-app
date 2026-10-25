@@ -8,7 +8,7 @@ prerequisites:
 audience: public
 ---
 
-# Projet fil rouge — FoxMon
+# Projet fil rouge : FoxMon
 
 Le but de ce projet est de créer un jeu console, en C#, inspiré de Pokémon, dont toutes les créatures sont des renards : les FoxMons.
 Le projet s'étale sur plusieurs séances. On avance dans l'ordre : la carte, le bestiaire, l'héritage, les attaques, les objets, les dresseurs, les dégâts, l'expérience, puis la sauvegarde.
@@ -24,7 +24,7 @@ FoxMon/
 
 Les classes du même namespace se voient sans import supplémentaire. `Program.cs` contient `Main`.
 
-## 1. La carte et le dresseur 🗺️
+## 1. La carte et le dresseur <Icone nom="map" />
 
 La région est une grille. `.` est un chemin, `#` un mur, `*` des hautes herbes. Le dresseur est dessiné par un `@`.
 
@@ -115,7 +115,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
       1. `Console.Clear()`
       2. dessiner la carte
       3. dessiner le `@`
-      4. `Console.ReadKey(true)` — la touche n'est pas recopiée à l'écran
+      4. `Console.ReadKey(true)` : la touche n'est pas recopiée à l'écran
       5. flèche haut, bas, gauche, droite : appeler `Deplacer` avec le bon couple `(dx, dy)`
 
       `Console.SetCursorPosition(x, y)` place le curseur pour le `@`. Sans `Clear`, la carte s'empile vers le bas : ce n'est pas le rendu attendu.
@@ -125,7 +125,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Le bestiaire et le combat 🦊
+## 2. Le bestiaire et le combat <Renard />
 
 <ExerciseTabs courseId="sio_foxmon_combat" courseTitle="Combat">
   <ExerciseSection id="foxmon-combat-1" label="La classe FoxMon" type="autre">
@@ -165,7 +165,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. L'héritage 🧬
+## 3. L'héritage <Icone nom="dna" />
 
 Les `if` sur le type se regroupent dans des classes.
 
@@ -187,7 +187,7 @@ Les `if` sur le type se regroupent dans des classes.
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Les attaques, lues dans un CSV 📄
+## 4. Les attaques, lues dans un CSV <Icone nom="file-text" />
 
 Un FoxMon connaît jusqu'à 4 attaques. On ne les écrit pas une par une dans le code : elles viennent d'un fichier.
 
@@ -225,7 +225,7 @@ Tranch'Herbe,Plante,55,95
   </ExerciseSection>
 </ExerciseTabs>
 
-## 5. Objets et capture 🧪
+## 5. Objets et capture <Icone nom="flask-conical" />
 
 <ExerciseTabs courseId="sio_foxmon_objets" courseTitle="Objets">
   <ExerciseSection id="foxmon-obj-1" label="Le sac" type="autre">
@@ -260,7 +260,7 @@ Tranch'Herbe,Plante,55,95
   </ExerciseSection>
 </ExerciseTabs>
 
-## 6. Les dresseurs sur la carte 🤝
+## 6. Les dresseurs sur la carte <Icone nom="handshake" />
 
 <ExerciseTabs courseId="sio_foxmon_pnj" courseTitle="Dresseurs">
   <ExerciseSection id="foxmon-pnj-1" label="Champ de vision" type="autre">
@@ -276,14 +276,14 @@ Tranch'Herbe,Plante,55,95
   </ExerciseSection>
 </ExerciseTabs>
 
-## 7. Dégâts, types, critiques ⚔️
+## 7. Dégâts, types, critiques <Icone nom="swords" />
 
 Table utilisée à partir de cette séance. Le type de l'attaque est comparé au type du défenseur.
 
-| Attaque → défenseur | Multiplicateur |
+| Attaque contre défenseur | Multiplicateur |
 | --- | --- |
-| Feu → Plante, Plante → Eau, Eau → Feu | 2,0 |
-| Sens inverse (Feu → Eau, Eau → Plante, Plante → Feu) | 0,5 |
+| Feu contre Plante, Plante contre Eau, Eau contre Feu | 2,0 |
+| Sens inverse (Feu contre Eau, Eau contre Plante, Plante contre Feu) | 0,5 |
 | Même type, ou type Normal | 1,0 |
 
 <ExerciseTabs courseId="sio_foxmon_degats" courseTitle="Dégâts">
@@ -311,7 +311,7 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
   </ExerciseSection>
 </ExerciseTabs>
 
-## 8. Expérience, évolution, grande carte 📈
+## 8. Expérience, évolution, grande carte <Icone nom="trending-up" />
 
 <ExerciseTabs courseId="sio_foxmon_xp" courseTitle="Expérience">
   <ExerciseSection id="foxmon-xp-1" label="Niveaux" type="autre">
@@ -359,7 +359,7 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
   </ExerciseSection>
 </ExerciseTabs>
 
-## 9. Sauvegarde 💾
+## 9. Sauvegarde <Icone nom="save" />
 
 <ExerciseTabs courseId="sio_foxmon_save" courseTitle="Sauvegarde">
   <ExerciseSection id="foxmon-save-1" label="Écrire et relire" type="autre">
@@ -373,7 +373,7 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
   </ExerciseSection>
 </ExerciseTabs>
 
-## 10. Ce qu'on rend 📦
+## 10. Ce qu'on rend <Icone nom="package" />
 
 Le dossier `FoxMon`, qui compile, avec un fichier par classe dans le namespace `FoxMon` :
 

@@ -4,7 +4,7 @@ description: 'Modélisation de réseaux, sommets, arêtes et algorithmes.'
 level: TNSI
 order: 180
 chapter: Structures de données
-icon: "\U0001F578️"
+icon: "network"
 badgeId: terminale_graphes
 prerequisites:
   - structures_arbres
@@ -15,7 +15,7 @@ audience: public
 
 Un arbre a une racine, et un seul chemin entre deux nœuds. Beaucoup de situations refusent cette discipline. Deux villes sont reliées par plusieurs routes, deux comptes se suivent sans qu'il y ait de « sommet du réseau », une page web pointe vers une autre qui finit par revenir vers elle. On modélise cela par un **graphe**.
 
-> Un graphe \(G = (S, A)\) est un ensemble \(S\) de **sommets** et un ensemble \(A\) de liaisons entre ces sommets.
+> Un graphe $G = (S, A)$ est un ensemble $S$ de **sommets** et un ensemble $A$ de liaisons entre ces sommets.
 
 Les sommets sont les entités : des villes, des comptes, des machines. Les liaisons sont de plusieurs natures, et le vocabulaire change avec elles.
 

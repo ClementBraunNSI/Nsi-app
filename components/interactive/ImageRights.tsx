@@ -69,7 +69,7 @@ export default function ImageRights() {
 
       <div className="min-h-[200px] flex flex-col items-center justify-center">
         {step === 99 ? (
-          <div className="text-center animate-bounce-in">
+          <div className="text-center-in">
             <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle size={48} />
             </div>
@@ -77,7 +77,7 @@ export default function ImageRights() {
             <p className="text-sm text-slate-500">Vous respectez le droit à l'image.</p>
           </div>
         ) : step === 100 ? (
-          <div className="text-center animate-bounce-in">
+          <div className="text-center-in">
             <div className="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <XCircle size={48} />
             </div>

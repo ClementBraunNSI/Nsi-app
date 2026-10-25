@@ -6,10 +6,13 @@ type PageHeaderProps = {
   description?: React.ReactNode;
   actions?: React.ReactNode;
   media?: React.ReactNode;
+  /** « large » : l'illustration (le renard du niveau) prend toute la hauteur de l'en-tête et reste visible sur téléphone. */
+  mediaSize?: "small" | "large";
   className?: string;
 };
 
-export function PageHeader({ eyebrow, title, description, actions, media, className = "" }: PageHeaderProps) {
+export function PageHeader({ eyebrow, title, description, actions, media, mediaSize = "small", className = "" }: PageHeaderProps) {
+  const large = mediaSize === "large";
   return (
     <header
       className={`rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-8 md:p-10 relative overflow-hidden ${className}`}
@@ -27,11 +30,10 @@ export function PageHeader({ eyebrow, title, description, actions, media, classN
           )}
           {actions && <div className="mt-6 flex flex-wrap gap-3">{actions}</div>}
         </div>
-        {media && <div className="page-header-media relative hidden h-28 w-40 shrink-0 sm:block">{media}</div>}
+        {media && (
+          <div className={`page-header-media relative shrink-0 ${large ? "is-large" : "hidden h-28 w-40 sm:block"}`}>{media}</div>
+        )}
       </div>
-      {!media && (
-        <div className="absolute -top-8 -right-4 text-[9rem] opacity-[0.035] select-none pointer-events-none">🦊</div>
-      )}
     </header>
   );
 }

@@ -4,7 +4,7 @@ description: Réutiliser et spécialiser des classes avec héritage, surcharge e
 level: TNSI
 order: 145
 chapter: Langages et Programmation
-icon: "🧬"
+icon: "dna"
 badgeId: terminale_poo_heritage
 prerequisites:
   - poo_classes_objets

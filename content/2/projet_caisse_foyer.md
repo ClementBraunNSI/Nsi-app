@@ -3,13 +3,13 @@ title: 'Fonctions : La caisse du foyer'
 description: Tenir la caisse du foyer avec des fonctions, des conditions et des boucles, sans liste ni dictionnaire.
 level: premiere
 chapter: Projets
-icon: "🧾"
+icon: "receipt"
 badgeId: premiere_projet_caisse
 prerequisites: []
 audience: public
 ---
 
-# 🧾 Projet - La caisse du foyer
+# <Icone nom="receipt" /> Projet - La caisse du foyer
 
 Le but de ce projet est de tenir la caisse du foyer du lycée pendant la récréation.
 Dans ce projet, nous allons servir les clients un par un, encaisser, rendre la monnaie, puis afficher le bilan. Le foyer vend trois articles.
@@ -40,7 +40,7 @@ Les trois prix sont écrits dans la fonction `prix_article`, chacun derrière un
 
 Les compteurs de la journée sont des variables séparées : `nb_jus`, `nb_cookies`, `nb_sandwiches`, `nb_ventes`, `total`.
 
-## 1. Les trois articles 🥤
+## 1. Les trois articles <Icone nom="cup-soda" />
 
 | Choix | Article | Prix |
 | --- | --- | --- |
@@ -83,7 +83,7 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Une ligne de ticket 💶
+## 2. Une ligne de ticket <Icone nom="euro" />
 
 <ExerciseTabs courseId="proj_caisse_ligne" courseTitle="Montant et monnaie">
   <ExerciseSection id="caisse-ligne-1" label="montant_ligne" type="lecture">
@@ -115,7 +115,7 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Un client 🙋
+## 3. Un client <Icone nom="hand" />
 
 Dialogue attendu pour un client servi (les lignes après `>` sont ce que tape l'utilisateur) :
 
@@ -163,7 +163,7 @@ Montant insuffisant. Vente annulée.
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. La récréation 🔄
+## 4. La récréation <Icone nom="refresh-cw" />
 
 Le programme demande d'abord `Nombre maximum de clients : `. Ce nombre est un entier supérieur ou égal à 1. Sinon, on repose la question (`while`).
 
@@ -191,7 +191,7 @@ On ne conserve pas le détail de chaque ticket. Seuls les cinq compteurs survive
   </ExerciseSection>
 </ExerciseTabs>
 
-## 5. Le bilan 📊
+## 5. Le bilan <Icone nom="chart-column" />
 
 Deux ventes encaissées : 2 sandwiches (7,00 €) puis 1 jus (1,20 €).
 

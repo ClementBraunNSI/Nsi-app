@@ -59,7 +59,7 @@ export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeM
             beforeMount={beforeMount}
             value={code}
             onChange={(value) => onCodeChange(value || "")}
-            loading={<span className="exercise-editor-loading">Chargement de l’éditeur…</span>}
+            loading={<span className="exercise-editor-loading">Chargement de l'éditeur</span>}
             options={{
               minimap: { enabled: false },
               fontSize: 14,

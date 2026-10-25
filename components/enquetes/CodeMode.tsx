@@ -15,7 +15,7 @@ const STARTERS = {
   python: [
     "import csv",
     "",
-    "# Chaque table est un fichier CSV : rapports.csv, temoignages.csv, animaux.csv…",
+    "# Chaque table est un fichier CSV : rapports.csv, temoignages.csv, animaux.csv, etc.",
     'with open("rapports.csv", encoding="utf-8") as fichier:',
     "    for ligne in csv.DictReader(fichier):",
     '        print(ligne["date"], "|", ligne["lieu"], "|", ligne["description"])',
@@ -61,7 +61,7 @@ export default function CodeMode({ enquete, language }: Props) {
   const run = async () => {
     if (running) return;
     setRunning(true);
-    setStatus(language === "python" ? "Chargement de Python (la première fois prend quelques secondes)…" : null);
+    setStatus(language === "python" ? "Chargement de Python (la première fois prend quelques secondes)" : null);
     try {
       const next = language === "sql" ? await runSql(enquete, codeRef.current) : await runPython(enquete, codeRef.current);
       setOutcome(next);
@@ -113,7 +113,7 @@ export default function CodeMode({ enquete, language }: Props) {
         <span className="enq-shortcut">Ctrl + Entrée</span>
         <button type="button" className="enq-run-button" onClick={run} disabled={running}>
           {running ? <Loader2 size={16} className="animate-spin" /> : <Play size={16} fill="currentColor" />}
-          {running ? "Recherche…" : language === "sql" ? "Lancer la requête" : "Lancer le programme"}
+          {running ? "Recherche en cours" : language === "sql" ? "Lancer la requête" : "Lancer le programme"}
         </button>
       </div>
 

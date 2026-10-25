@@ -2,7 +2,7 @@
 title: 'TP SLAM : Création d''une mini blockchain'
 chapter: 'BTS SIO 1 : B3 - CyberSécurité'
 badgeId: bts_sql_blockchain
-meta: 'Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer'
+meta: 'Durée : 4 heures. Objectif : Attaquer, Comprendre, Réparer'
 prerequisites:
   - tp_injections_web
 audience: public
@@ -39,7 +39,7 @@ audience: public
 
     Pour sécuriser notre chaîne, nous avons besoin d'une empreinte digitale numérique unique pour chaque bloc. C'est le rôle des fonctions de hachage.
 
-    ### 📚 Tutoriel : Le module `hashlib`
+    ### <Icone nom="library" /> Tutoriel : Le module `hashlib`
 
     En Python, le hachage se fait en 3 étapes strictes :
     1.  **Encoder** la chaîne en octets (`.encode()`).
@@ -62,12 +62,12 @@ audience: public
     # Résultat : a2c4e... (64 caractères)
     ```
 
-    ### 📝 Exercice 1.1 : Premier Hash
+    ### <Icone nom="notebook-pen" /> Exercice 1.1 : Premier Hash
     1.  Créer un fichier `blockchain.py`.
     2.  Importer les modules `hashlib` et `time`.
     3.  Créer une fonction `test_hachage()` qui demande une saisie utilisateur, calcule son SHA-256 et l'affiche.
 
-    ### 📝 Exercice 1.2 : L'Effet Avalanche
+    ### <Icone nom="notebook-pen" /> Exercice 1.2 : L'Effet Avalanche
     L'effet avalanche signifie qu'une modification minime de l'entrée change radicalement la sortie.
     1.  Dans votre script, hacher le mot `"Blockchain"`.
     2.  Hacher le mot `"blockchain"` (minuscule).
@@ -82,7 +82,7 @@ audience: public
 
     Un bloc est un conteneur qui regroupe des informations. Dans une blockchain, il contient obligatoirement une référence au bloc précédent.
 
-    ### 📚 Théorie : Structure d'un bloc
+    ### <Icone nom="library" /> Théorie : Structure d'un bloc
     Un bloc contient généralement :
     *   `index` : Sa position (0, 1, 2...).
     *   `timestamp` : Sa date de création.
@@ -90,10 +90,10 @@ audience: public
     *   `previous_hash` : L'empreinte du bloc d'avant (le lien !).
     *   `hash` : Sa propre empreinte (calculée à partir de tout le reste).
 
-    ### 📝 Exercice 2.1 : Le Constructeur
+    ### <Icone nom="notebook-pen" /> Exercice 2.1 : Le Constructeur
     Créer la classe `Block` avec son constructeur.
 
-    ### 📝 Exercice 2.2 : Calculer l'empreinte
+    ### <Icone nom="notebook-pen" /> Exercice 2.2 : Calculer l'empreinte
     Ajouter la méthode `calculate_hash` à la classe `Block`.
     Elle doit :
     1.  Concaténer tous les attributs (`index`, `timestamp`, `data`, `previous_hash`) en une seule chaîne de caractères.
@@ -101,7 +101,7 @@ audience: public
 
     *Astuce : Utilisez `str(self.index)` pour convertir les nombres en texte avant concaténation.*
 
-    ### 📝 Exercice 2.3 : Un affichage propre (`__str__`)
+    ### <Icone nom="notebook-pen" /> Exercice 2.3 : Un affichage propre (`__str__`)
     Pour faciliter le débogage, ajouter la méthode spéciale `__str__` :
     ```python
         def __str__(self):
@@ -117,11 +117,11 @@ audience: public
 
     La Blockchain est le gestionnaire. C'est une liste ordonnée de blocs.
 
-    ### 📝 Exercice 3.1 : Le Genesis Block
+    ### <Icone nom="notebook-pen" /> Exercice 3.1 : Le Genesis Block
     Le premier bloc est spécial car il n'a pas de prédécesseur avec un hash "0". On l'appelle le "Genesis Block".
     Créer la classe `Blockchain`.
 
-    ### 📝 Exercice 3.2 : Ajouter un maillon
+    ### <Icone nom="notebook-pen" /> Exercice 3.2 : Ajouter un maillon
     Pour ajouter un bloc, il faut respecter la règle d'or : **Le `previous_hash` du nouveau bloc DOIT être le `hash` du dernier bloc de la chaîne.**
 
     Ajouter la méthode `add_block(self, new_data)` :
@@ -132,7 +132,7 @@ audience: public
         *   Previous Hash = Hash du parent
     3.  Ajouter ce nouveau bloc à la liste `self.chain`.
 
-    ### 📝 Exercice 3.3 : Visualisation
+    ### <Icone nom="notebook-pen" /> Exercice 3.3 : Visualisation
     Dans le programme principal (`if __name__ == "__main__":`), simuler une utilisation :
     4.  Instancier la Blockchain.
     5.  Ajouter 3 blocs avec des transactions fictives ("A envoie à B", "B envoie à C"...).
@@ -147,13 +147,13 @@ audience: public
 
     C'est ici que nous allons comprendre pourquoi la blockchain est sécurisée.
 
-    ### 📝 Exercice 4.1 : L'Inspecteur (`is_chain_valid`)
+    ### <Icone nom="notebook-pen" /> Exercice 4.1 : L'Inspecteur (`is_chain_valid`)
     Ajouter une méthode `is_chain_valid(self)` qui retourne `True` ou `False`.
     Elle doit parcourir la chaîne (à partir du bloc 1, pas 0) et vérifier DEUX conditions pour chaque bloc :
     1.  **Intégrité des données :** Recalculer le hash du bloc courant. Est-il identique à celui stocké dans `bloc.hash` ? (Sinon, les données ont été altérées).
     2.  **Intégrité du lien :** Le `previous_hash` du bloc courant est-il identique au `hash` du bloc précédent ? (Sinon, la chaîne est brisée).
 
-    ### 📝 Exercice 4.2 : Scénario d'attaque complet
+    ### <Icone nom="notebook-pen" /> Exercice 4.2 : Scénario d'attaque complet
     Dans le `main`, réalisez le scénario suivant étape par étape :
 
     **Étape A : Tout va bien**
@@ -181,12 +181,12 @@ audience: public
 
     Pour empêcher le recalcul rapide de toute la chaîne, on impose une contrainte de temps : le minage. Il faut trouver un hash qui commence par un certain nombre de zéros (la "difficulté").
 
-    ### 📝 Exercice 5.1 : Le Nonce
+    ### <Icone nom="notebook-pen" /> Exercice 5.1 : Le Nonce
     Le `nonce` est un nombre arbitraire qu'on va modifier jusqu'à trouver le bon hash.
     1.  Ajouter `self.nonce = 0` dans le `__init__` de `Block`.
     2.  Ajouter `self.nonce` à la concaténation dans `calculate_hash`.
 
-    ### 📝 Exercice 5.2 : La Pioche (`mine_block`)
+    ### <Icone nom="notebook-pen" /> Exercice 5.2 : La Pioche (`mine_block`)
     Ajouter la méthode `mine_block(self, difficulty)` dans `Block`.
     Principe :
     1.  Définir la cible (ex: "0000" si difficulté = 4).
@@ -195,12 +195,12 @@ audience: public
         *   Recalculer `self.hash`.
     3.  Quand c'est trouvé, afficher "Bloc miné !" et le hash.
 
-    ### 📝 Exercice 5.3 : Intégration
+    ### <Icone nom="notebook-pen" /> Exercice 5.3 : Intégration
     Modifier `add_block` dans `Blockchain` :
     *   Avant d'ajouter le bloc à la liste, appeler `new_block.mine_block(difficulty)`.
     *   Fixer une difficulté de 4 (dans `__init__` de Blockchain).
 
-    ### 📝 Exercice 5.4 : Le Challenge (Benchmark)
+    ### <Icone nom="notebook-pen" /> Exercice 5.4 : Le Challenge (Benchmark)
     Testez le temps de minage :
     *   Avec difficulté = 2 (Instantané)
     *   Avec difficulté = 4 (Quelques secondes)

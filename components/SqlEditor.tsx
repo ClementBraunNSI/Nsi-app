@@ -163,7 +163,7 @@ export default function SqlEditor({
           <div className="overflow-x-auto">
              {results.columns.length > 0 ? (
                 <table className="w-full text-sm text-left text-slate-600 border-collapse">
-                <thead className="text-xs text-slate-700 uppercase bg-slate-200">
+                <thead className="text-xs text-slate-700 bg-slate-200">
                     <tr>
                     {results.columns.map((col, i) => (
                         <th key={i} className="px-6 py-3 border border-slate-300">

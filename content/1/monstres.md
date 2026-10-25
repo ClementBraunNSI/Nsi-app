@@ -3,7 +3,7 @@ title: Galerie des Monstres
 description: Découvrez les créations des élèves du projet bestiaire Web (année 2024-2025).
 level: seconde
 chapter: Web
-icon: "\U0001F47E"
+icon: "gamepad-2"
 prerequisites:
   - Cours_WEB
 audience: public

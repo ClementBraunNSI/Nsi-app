@@ -5,7 +5,7 @@ description: >-
   révolution TCP/IP.
 level: '2'
 chapter: Internet
-icon: "\U0001F310"
+icon: "globe"
 prerequisites: []
 audience: public
 ---

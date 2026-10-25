@@ -3,20 +3,31 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Editor from '@monaco-editor/react';
-import { Play, RotateCcw, ChevronRight, ChevronLeft, HelpCircle, CheckCircle } from 'lucide-react';
+import { Play, RotateCcw, ChevronRight, ChevronLeft, HelpCircle, CheckCircle, Mountain, Star } from 'lucide-react';
+import { FoxHead } from '@/components/ui/FoxHead';
 import confetti from 'canvas-confetti';
 import { LEVELS, LevelConfig, Direction, Position } from './levels';
 
 // --- GAME CONSTANTS ---
 const CELL_SIZE = 60;
 
-// --- ASSETS (Using emojis for MVP, can be replaced by images) ---
+// --- Personnages et décor : les illustrations du site (renard, poule de l'académie) ---
 const SPRITES = {
-  FOX: '🦊',
-  GOAL: '🐔', // Chicken!
-  OBSTACLE: '🪨',
-  EMPTY: '',
-  GRASS: '🟩'
+  FOX: <FoxHead size={44} />,
+  GOAL: (
+    <span
+      aria-label="La poule"
+      role="img"
+      style={{
+        width: 44,
+        height: 44,
+        backgroundImage: 'url(/images/foxtest/academy/academy-hen-spritesheet.png?v=2)',
+        backgroundSize: '400% 100%',
+        backgroundPosition: '0% center',
+      }}
+    />
+  ),
+  OBSTACLE: <Mountain size={30} className="text-stone-500" aria-label="Rocher" />,
 };
 
 import { loader } from '@monaco-editor/react';
@@ -84,14 +95,14 @@ export default function FoxGame() {
         pyodideRef.current = pyodide;
         setIsPyodideReady(true);
         console.log("Pyodide Ready for Fox Game");
-        setLogs(prev => [...prev, "✅ Moteur Python prêt !"]);
+        setLogs(prev => [...prev, "Moteur Python prêt."]);
       } catch (e) {
         let msg = "Erreur inconnue";
         if (typeof e === 'string') msg = e;
         else if (e && (e as any).message) msg = (e as any).message;
         
         console.error("Pyodide Load Error (Safe):", msg);
-        setLogs(prev => [...prev, `❌ Erreur d'initialisation Python: ${msg}`]);
+        setLogs(prev => [...prev, `Erreur d'initialisation de Python : ${msg}`]);
         pyodideLoadingRef.current = false; // Allow retry?
       }
     };
@@ -116,7 +127,7 @@ export default function FoxGame() {
       script.onload = () => initPyodide();
       script.onerror = (e) => {
         console.error("Failed to load Pyodide script (Network/404)");
-        setLogs(prev => [...prev, "❌ Erreur critique : Impossible de charger le moteur Python (Pyodide). Vérifiez votre connexion internet."]);
+        setLogs(prev => [...prev, "Erreur critique : impossible de charger le moteur Python (Pyodide). Vérifiez votre connexion internet."]);
         pyodideLoadingRef.current = false;
       };
       document.body.appendChild(script);
@@ -163,75 +174,75 @@ goal_pos = json.loads('${goalPosJson}')
 actions_queue = []
 
 def get_next_pos(pos, direction):
-    x, y = pos['x'], pos['y']
-    if direction == 'N': y -= 1
-    elif direction == 'S': y += 1
-    elif direction == 'E': x += 1
-    elif direction == 'W': x -= 1
-    return {'x': x, 'y': y}
+ x, y = pos['x'], pos['y']
+ if direction == 'N': y -= 1
+ elif direction == 'S': y += 1
+ elif direction == 'E': x += 1
+ elif direction == 'W': x -= 1
+ return {'x': x, 'y': y}
 
 def is_blocked(pos):
-    # Grid boundaries
-    if pos['x'] < 0 or pos['x'] >= grid_size['cols'] or pos['y'] < 0 or pos['y'] >= grid_size['rows']:
-        return True
-    # Obstacles
-    for obs in obstacles:
-        if obs['x'] == pos['x'] and obs['y'] == pos['y']:
-            return True
-    return False
+ # Grid boundaries
+ if pos['x'] < 0 or pos['x'] >= grid_size['cols'] or pos['y'] < 0 or pos['y'] >= grid_size['rows']:
+ return True
+ # Obstacles
+ for obs in obstacles:
+ if obs['x'] == pos['x'] and obs['y'] == pos['y']:
+ return True
+ return False
 
 # --- SENSORS ---
 
 def mur_devant():
-    next_p = get_next_pos(current_pos, current_dir)
-    return is_blocked(next_p)
+ next_p = get_next_pos(current_pos, current_dir)
+ return is_blocked(next_p)
 
 def mur_droite():
-    dirs = ['N', 'E', 'S', 'W']
-    idx = dirs.index(current_dir)
-    right_dir = dirs[(idx + 1) % 4]
-    next_p = get_next_pos(current_pos, right_dir)
-    return is_blocked(next_p)
+ dirs = ['N', 'E', 'S', 'W']
+ idx = dirs.index(current_dir)
+ right_dir = dirs[(idx + 1) % 4]
+ next_p = get_next_pos(current_pos, right_dir)
+ return is_blocked(next_p)
 
 def mur_gauche():
-    dirs = ['N', 'E', 'S', 'W']
-    idx = dirs.index(current_dir)
-    left_dir = dirs[(idx + 3) % 4]
-    next_p = get_next_pos(current_pos, left_dir)
-    return is_blocked(next_p)
+ dirs = ['N', 'E', 'S', 'W']
+ idx = dirs.index(current_dir)
+ left_dir = dirs[(idx + 3) % 4]
+ next_p = get_next_pos(current_pos, left_dir)
+ return is_blocked(next_p)
 
 def sur_objectif():
-    return current_pos['x'] == goal_pos['x'] and current_pos['y'] == goal_pos['y']
+ return current_pos['x'] == goal_pos['x'] and current_pos['y'] == goal_pos['y']
 
 # --- ACTIONS ---
 
 def avancer():
-    global current_pos
-    # Check physical move for simulation state
-    next_p = get_next_pos(current_pos, current_dir)
-    if not is_blocked(next_p):
-        current_pos = next_p
-    actions_queue.append("MOVE")
+ global current_pos
+ # Check physical move for simulation state
+ next_p = get_next_pos(current_pos, current_dir)
+ if not is_blocked(next_p):
+ current_pos = next_p
+ actions_queue.append("MOVE")
 
 def tourner_gauche():
-    global current_dir
-    dirs = ['N', 'E', 'S', 'W']
-    idx = dirs.index(current_dir)
-    current_dir = dirs[(idx + 3) % 4]
-    actions_queue.append("TURN_LEFT")
+ global current_dir
+ dirs = ['N', 'E', 'S', 'W']
+ idx = dirs.index(current_dir)
+ current_dir = dirs[(idx + 3) % 4]
+ actions_queue.append("TURN_LEFT")
 
 def tourner_droite():
-    global current_dir
-    dirs = ['N', 'E', 'S', 'W']
-    idx = dirs.index(current_dir)
-    current_dir = dirs[(idx + 1) % 4]
-    actions_queue.append("TURN_RIGHT")
+ global current_dir
+ dirs = ['N', 'E', 'S', 'W']
+ idx = dirs.index(current_dir)
+ current_dir = dirs[(idx + 1) % 4]
+ actions_queue.append("TURN_RIGHT")
 
 # Aliases
 def av(): avancer()
 def tg(): tourner_gauche()
 def td(): tourner_droite()
-      `;
+ `;
 
       await pyodideRef.current.runPythonAsync(pythonBridge);
       
@@ -263,7 +274,7 @@ def td(): tourner_droite()
       
       console.error("Game Exec Error (String):", msg);
 
-      setLogs(prev => [...prev, `❌ Erreur: ${msg}`]);
+      setLogs(prev => [...prev, `Erreur : ${msg}`]);
       setGameStatus('lost');
     } finally {
       setIsRunning(false);
@@ -287,7 +298,7 @@ def td(): tourner_droite()
         
         // Check collision (Wall or Obstacle)
         if (isBlocked(nextPos)) {
-            setLogs(prev => [...prev, `⚠️ Aïe ! Mur ou obstacle en (${nextPos.x}, ${nextPos.y})`]);
+            setLogs(prev => [...prev, `Aïe ! Mur ou obstacle en (${nextPos.x}, ${nextPos.y})`]);
             setGameStatus('lost');
             // setIsRunning(false); // Handled in finally block
             return;
@@ -360,9 +371,9 @@ def td(): tourner_droite()
 
       setLogs(prev => [
               ...prev, 
-              '🎉 BRAVO! Tu as attrapé la poule!',
-              `📊 Code : ${lines} lignes (Objectif : ${level.bestLineCount})`,
-              `⭐ Note : ${earnedStars}/3`
+              'Bravo ! Tu as attrapé la poule.',
+              `Code : ${lines} lignes (Objectif : ${level.bestLineCount})`,
+              `Note : ${earnedStars}/3`
             ]);
             
             try {
@@ -372,7 +383,7 @@ def td(): tourner_droite()
             }
           } else {
       setGameStatus('lost');
-      setLogs(prev => [...prev, '❌ Perdu... Le renard n\'est pas arrivé à destination.']);
+      setLogs(prev => [...prev, 'Perdu. Le renard n\'est pas arrivé à destination.']);
     }
   };
 
@@ -395,8 +406,8 @@ def td(): tourner_droite()
             {/* Header Level */}
             <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
                 <div>
-                    <h1 className="text-3xl font-black text-orange-700 mb-1 flex items-center gap-2">
-                        🦊 Le renard dans le poulailler
+                    <h1 className="text-3xl font-bold text-orange-700 mb-1 flex items-center gap-2">
+                        <FoxHead size={34} /> Le renard dans le poulailler
                     </h1>
                     <h2 className="text-xl font-bold text-orange-900">{level.id}. {level.title}</h2>
                     <p className="text-orange-800/80 max-w-md mt-2">{level.description}</p>
@@ -421,7 +432,7 @@ def td(): tourner_droite()
 
             {/* GRID */}
             <div 
-                className="relative bg-white/50 backdrop-blur-sm p-4 rounded-xl shadow-xl border-4 border-orange-200"
+                className="relative bg-white p-4 rounded-xl shadow-xl border-4 border-orange-200"
                 style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${level.gridSize.cols}, ${CELL_SIZE}px)`,
@@ -437,10 +448,10 @@ def td(): tourner_droite()
                     
                     return (
                         <div key={idx} className={`
-                            w-[${CELL_SIZE}px] h-[${CELL_SIZE}px] 
-                            rounded-lg flex items-center justify-center text-3xl
-                            ${isObstacle ? 'bg-stone-200' : 'bg-emerald-100'}
-                            border-2 ${isObstacle ? 'border-stone-300' : 'border-emerald-200'}
+ w-[${CELL_SIZE}px] h-[${CELL_SIZE}px] 
+ rounded-lg flex items-center justify-center text-3xl
+ ${isObstacle ? 'bg-stone-200' : 'bg-emerald-100'}
+ border-2 ${isObstacle ? 'border-stone-300' : 'border-emerald-200'}
                         `}>
                             {isObstacle && SPRITES.OBSTACLE}
                             {isGoal && SPRITES.GOAL}
@@ -472,16 +483,16 @@ def td(): tourner_droite()
                 }`}>
                     {gameStatus === 'won' && (
                         <>
-                            <span>🎉 Niveau réussi !</span>
+                            <span>Niveau réussi !</span>
                             <div className="flex">
                                 {[1,2,3].map(i => (
-                                    <span key={i} className={`text-xl ${i <= stars ? 'grayscale-0' : 'grayscale opacity-30'}`}>⭐</span>
+                                    <Star key={i} size={18} className={i <= stars ? 'fill-amber-400 text-amber-500' : 'text-slate-300'} aria-hidden />
                                 ))}
                             </div>
                         </>
                     )}
-                    {gameStatus === 'lost' && "💀 Essaye encore..."}
-                    {gameStatus === 'playing' && "🏃‍♂️ En cours..."}
+                    {gameStatus === 'lost' && "Essaye encore"}
+                    {gameStatus === 'playing' && "En cours"}
                     {gameStatus === 'idle' && "En attente"}
                 </div>
             </div>
@@ -509,7 +520,7 @@ def td(): tourner_droite()
                         className={`flex items-center gap-2 px-6 py-2 rounded-md text-sm font-bold transition-all ${
                             isRunning 
                             ? 'bg-slate-600 text-slate-400 cursor-wait'
-                            : 'bg-orange-600 hover:bg-orange-500 text-white shadow-lg shadow-orange-900/20'
+                            : 'bg-orange-600 hover:bg-orange-500 text-white shadow-lg'
                         }`}
                     >
                         <Play size={16} fill="currentColor" />
@@ -539,7 +550,7 @@ def td(): tourner_droite()
 
             {/* Console */}
             <div className="h-48 bg-[#151515] border-t border-[#3e3e3e] flex flex-col">
-                <div className="px-4 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-[#3e3e3e] flex justify-between">
+                <div className="px-4 py-2 text-xs font-bold text-slate-500 border-b border-[#3e3e3e] flex justify-between">
                     <span>Journal de bord</span>
                     {level.hint && <span className="text-orange-400 flex items-center gap-1"><HelpCircle size={12}/> Indice disponible</span>}
                 </div>

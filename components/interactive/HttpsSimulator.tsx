@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Lock, Unlock, RefreshCw, Key, FileText, Send, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Lock, Unlock, RefreshCw, Key, FileText, Send, CheckCircle2, AlertTriangle, VenetianMask } from 'lucide-react';
 
 export default function HttpsSimulator() {
   const [isSecure, setIsSecure] = useState(false);
@@ -92,7 +92,7 @@ export default function HttpsSimulator() {
           {/* Hacker */}
           <div className="absolute top-[-20px] bg-slate-800 text-red-400 p-2 rounded-lg text-xs font-mono border border-slate-700 shadow-xl">
              <div className="flex items-center gap-1 mb-1 border-b border-slate-700 pb-1">
-               <span className="text-red-500">😈 Hacker</span>
+               <span className="flex items-center gap-1 text-red-500"><VenetianMask size={13} aria-hidden /> Hacker</span>
                <span className="text-slate-500">sniffing...</span>
              </div>
              <div>
@@ -100,7 +100,7 @@ export default function HttpsSimulator() {
                  isSecure ? (
                    <span className="text-slate-500 line-through decoration-red-500 decoration-2 select-none blur-[2px]">{transitData}</span>
                  ) : (
-                   <span className="bg-red-900/30 px-1 rounded text-red-300 animate-pulse">{message}</span>
+                   <span className="bg-red-900/30 px-1 rounded text-red-300">{message}</span>
                  )
                ) : (
                  <span className="text-slate-600 italic">En attente...</span>

@@ -23,7 +23,7 @@ export default function CommandPalette() {
   const commands: CommandItem[] = [
     { id: 'home', title: 'Aller à l\'Accueil', category: 'Pages', icon: <Hash size={16} />, action: () => router.push('/') },
     { id: 'dicho', title: 'Cours : Dichotomie', category: 'Cours', icon: <FileText size={16} />, action: () => router.push('/cours/2/algo_dichotomie') },
-    { id: 'python', title: 'Cours : Python — Constructions', category: 'Cours', icon: <FileText size={16} />, action: () => router.push('/cours/2/python_constructions_elementaires') },
+    { id: 'python', title: 'Cours : Python, constructions', category: 'Cours', icon: <FileText size={16} />, action: () => router.push('/cours/2/python_constructions_elementaires') },
   ];
 
   const filteredCommands = commands.filter(cmd => 
@@ -46,7 +46,7 @@ export default function CommandPalette() {
   if (typeof window === 'undefined') return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm flex items-start justify-center pt-[20vh] animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[9999] bg-black flex items-start justify-center pt-[20vh] animate-in fade-in duration-200">
       <div className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col">
         
         {/* Search Input */}
@@ -84,7 +84,7 @@ export default function CommandPalette() {
                     <span>{cmd.title}</span>
                   </div>
                   {cmd.category && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 dark:bg-slate-900 px-1.5 py-0.5 rounded border border-slate-100 dark:border-slate-800">
+                    <span className="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-900 px-1.5 py-0.5 rounded border border-slate-100 dark:border-slate-800">
                       {cmd.category}
                     </span>
                   )}
@@ -97,8 +97,8 @@ export default function CommandPalette() {
         {/* Footer */}
         <div className="px-4 py-2 bg-slate-50 dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-xs text-slate-400">
           <div className="flex gap-4">
-            <span><strong className="font-bold">↑↓</strong> pour naviguer</span>
-            <span><strong className="font-bold">↵</strong> pour valider</span>
+            <span><strong className="font-bold">Flèches</strong> pour naviguer</span>
+            <span><strong className="font-bold">Entrée</strong> pour valider</span>
           </div>
           <span className="flex items-center gap-1">
             Propulsé par <Command size={10} />

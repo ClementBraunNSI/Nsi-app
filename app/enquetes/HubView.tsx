@@ -51,7 +51,7 @@ export default function HubView({ enquetes }: { enquetes: Summary[] }) {
                 <span className={`enq-case-fox ${MOOD[index % MOOD.length]}`} aria-hidden />
                 <span className="enq-case-body">
                   <span className="enq-case-meta">
-                    Enquête {enquete.numero} · <span className={`enq-level is-${enquete.difficulty.toLowerCase()}`}>{enquete.difficulty}</span>
+                    Enquête {enquete.numero} <span className={`enq-level is-${enquete.difficulty.toLowerCase()}`}>{enquete.difficulty}</span>
                     {done ? (
                       <span className="enq-done">
                         <Check size={13} /> Résolue

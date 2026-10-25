@@ -5,7 +5,7 @@ description: >-
   manuels, implémentation Python, analyse).
 level: premiere
 chapter: Algorithmique
-icon: "\U0001F3CB️"
+icon: "dumbbell"
 badgeId: premiere_exercices
 prerequisites:
   - algo_knn

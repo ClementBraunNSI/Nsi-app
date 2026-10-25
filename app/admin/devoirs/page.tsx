@@ -9,7 +9,7 @@ export default function AdminClassHomeworkPage() {
         <PageHeader
           eyebrow="Administration"
           title="Devoirs"
-          description="Un devoir particulier va à un seul élève. Un devoir de classe va à tous les élèves qui ont cette classe."
+          description="Un devoir particulier va à un seul élève. Un devoir de classe va à tous les élèves qui ont cette classe. Une semaine après sa date limite, un devoir est supprimé automatiquement ; sans date limite, il reste jusqu'à ce que tu le supprimes."
         />
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold text-slate-800">Devoirs particuliers</h2>

@@ -224,12 +224,12 @@ export default function ChasseAuxRenards() {
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] font-sans selection:bg-orange-100 selection:text-orange-600">
-      <nav className="border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-30">
+      <nav className="border-b border-slate-100 bg-white sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-          <Link href="/projets" className="flex items-center gap-2 text-slate-400 hover:text-orange-500 transition-colors font-bold text-sm uppercase tracking-widest">
+          <Link href="/projets" className="flex items-center gap-2 text-slate-400 hover:text-orange-500 transition-colors font-bold text-sm">
             <Home size={18} /> Projets
           </Link>
-          <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-orange-500 font-black tracking-wide sm:tracking-widest uppercase text-xs sm:text-sm">
+          <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-orange-500 font-bold sm: text-xs sm:text-sm">
             <Palette size={18} />
             <button
               type="button"
@@ -271,7 +271,7 @@ export default function ChasseAuxRenards() {
 
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-black text-slate-900 mb-4 tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
             Chasse aux <span className="text-orange-500">Ren&apos;Arts.</span>
           </h1>
           <p className="text-slate-500 text-lg max-w-3xl font-medium leading-relaxed">
@@ -282,8 +282,8 @@ export default function ChasseAuxRenards() {
         <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-slate-100">
           {activeEdition === '2025-2026' && editionLength === 0 ? (
             <div className="py-16 text-center">
-              <p className="text-lg font-black text-slate-800 mb-2">
-                {LEVEL_LABELS[activeLevel2025]} — édition 2025-2026
+              <p className="text-lg font-bold text-slate-800 mb-2">
+                {LEVEL_LABELS[activeLevel2025]}, édition 2025-2026
               </p>
               <p className="text-slate-500 text-sm max-w-md mx-auto">
                 {activeLevel2025 === '3e'
@@ -302,7 +302,7 @@ export default function ChasseAuxRenards() {
             >
               <ChevronLeft size={24} />
             </button>
-            <div className="font-bold text-slate-400 tracking-widest">
+            <div className="font-bold text-slate-400">
               <span className="text-slate-900">{currentIndex + 1}</span> / {editionLength}
             </div>
             <button
@@ -342,14 +342,14 @@ export default function ChasseAuxRenards() {
                 unoptimized
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-slate-900/5 transition-colors flex items-center justify-center">
-                <span className="opacity-0 group-hover:opacity-100 bg-white/95 text-slate-800 px-6 py-3 rounded-full font-black text-xs uppercase tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-all shadow-xl">
+                <span className="opacity-0 group-hover:opacity-100 bg-white/95 text-slate-800 px-6 py-3 rounded-full font-bold text-xs transform translate-y-4 group-hover:translate-y-0 transition-all shadow-xl">
                   {activeEdition === '2025-2026' && currentArtwork2025.siteUrl
                     ? 'Voir le site élève'
                     : "Agrandir l'œuvre"}
                 </span>
               </div>
               {activeEdition === '2025-2026' && currentArtwork2025.isPlaceholder && (
-                <span className="absolute top-4 right-4 rounded-full bg-slate-200 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-slate-600 shadow-sm">
+                <span className="absolute top-4 right-4 rounded-full bg-slate-200 px-3 py-1 text-[10px] font-bold text-slate-600 shadow-sm">
                   À venir
                 </span>
               )}
@@ -358,19 +358,19 @@ export default function ChasseAuxRenards() {
             <div className="lg:col-span-2 space-y-6">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-6">
-                  <div className="inline-block px-4 py-1.5 bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest rounded-full border border-orange-100">
+                  <div className="inline-block px-4 py-1.5 bg-orange-50 text-orange-600 text-[10px] font-bold rounded-full border border-orange-100">
                     Artiste :{' '}
                     {activeEdition === '2024-2025'
                       ? currentArtwork2024.artist
                       : `${currentArtwork2025.artist}.`}
                   </div>
                   {activeEdition === '2025-2026' && currentArtwork2025 && (
-                    <div className="inline-block px-4 py-1.5 bg-slate-100 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-full border border-slate-200">
+                    <div className="inline-block px-4 py-1.5 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-full border border-slate-200">
                       {LEVEL_LABELS[currentArtwork2025.level]}
                     </div>
                   )}
                 </div>
-                <h2 className="text-3xl font-black text-slate-800 mb-4 leading-tight">
+                <h2 className="text-3xl font-bold text-slate-800 mb-4 leading-tight">
                   {activeEdition === '2024-2025'
                     ? currentArtwork2024.title
                     : cleanDisplayTitle(currentArtwork2025.title)}
@@ -400,7 +400,7 @@ export default function ChasseAuxRenards() {
                   <button
                     type="button"
                     onClick={() => openArtwork2025(currentArtwork2025)}
-                    className="mt-4 inline-flex items-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-xs font-black uppercase tracking-widest text-white hover:bg-orange-600 transition-colors"
+                    className="mt-4 inline-flex items-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-xs font-bold text-white hover:bg-orange-600 transition-colors"
                   >
                     <ExternalLink size={14} />
                     Voir le mini-site
@@ -453,7 +453,7 @@ export default function ChasseAuxRenards() {
       </main>
 
       {isImageModalOpen && (activeEdition === '2024-2025' || !selected2025?.siteUrl) && (
-        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center p-4 animate-in fade-in duration-200">
           <button
             type="button"
             onClick={() => {
@@ -487,11 +487,11 @@ export default function ChasseAuxRenards() {
       )}
 
       {siteViewerOpen && selected2025?.siteUrl && (
-        <div className="fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-sm flex flex-col animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[100] bg-slate-950 flex flex-col animate-in fade-in duration-200">
           <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 md:px-6">
             <div className="min-w-0">
-              <p className="text-[10px] font-black uppercase tracking-widest text-orange-400">
-                Site élève — Artiste {selected2025.artist}.
+              <p className="text-[10px] font-bold text-orange-400">
+                Site élève. Artiste : {selected2025.artist}.
               </p>
               <h3 className="truncate text-sm md:text-base font-bold text-white">
                 {cleanDisplayTitle(selected2025.title)}
@@ -502,7 +502,7 @@ export default function ChasseAuxRenards() {
                 href={selected2025.siteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs font-bold uppercase tracking-widest text-white hover:bg-white/20 transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs font-bold text-white hover:bg-white/20 transition-colors"
               >
                 <ExternalLink size={14} />
                 Nouvel onglet

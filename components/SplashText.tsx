@@ -69,16 +69,16 @@ const getSeasonalMessages = () => {
   }
 
   // Événements Spéciaux
-  if (month === 11 && day >= 20 && day <= 26) messages.push("Distribution des cadeaux 🎁", "Joyeux Noël ! 🎄", "Emballage des surprises...");
-  if (month === 0 && day <= 7) messages.push("Bonne année ! 🎉", "Résolution : Coder plus !", "Nouvelle année, nouveau code...");
-  if (month === 9 && day >= 25) messages.push("Attention aux fantômes... 👻", "Des bonbons ou un bug ? 🎃", "Bouh ! 🧛‍♂️");
-  if (month === 3 && day === 1) messages.push("Attention aux poissons ! 🐟", "Ce n'est pas une blague...");
-  if (month === 1 && day === 14) messages.push("Code in Love... 💙", "Mon cœur bat pour le code...");
+  if (month === 11 && day >= 20 && day <= 26) messages.push("Distribution des cadeaux", "Joyeux Noël !", "Emballage des surprises...");
+  if (month === 0 && day <= 7) messages.push("Bonne année !", "Résolution : Coder plus !", "Nouvelle année, nouveau code...");
+  if (month === 9 && day >= 25) messages.push("Attention aux fantômes...", "Des bonbons ou un bug ?", "Bouh !");
+  if (month === 3 && day === 1) messages.push("Attention aux poissons !", "Ce n'est pas une blague...");
+  if (month === 1 && day === 14) messages.push("Code in Love...", "Mon cœur bat pour le code...");
   
   // Période BAC / Examens (Juin)
   if (month === 5) {
     messages.push(
-      "Courage pour le BAC ! 💪", 
+      "Courage pour le BAC !", 
       "Dernières révisions...", 
       "On ne lâche rien !",
       "Compilation des fiches de révision..."
@@ -106,10 +106,10 @@ export default function SplashText({ compact = false, className }: { compact?: b
 
   return (
     <div 
-      className={`${className ?? "mx-auto mb-10"} w-fit transform animate-bounce-subtle select-none`}
+      className={`${className ?? "mx-auto mb-10"} w-fit transform-subtle select-none`}
       style={{ animation: 'bounce 3s infinite ease-in-out' }}
     >
-      <span className={`${compact ? "text-sm md:text-base px-3 py-1.5" : "text-xl md:text-2xl px-6 py-2"} font-black text-[#F97316] bg-[#FFF8E1] border-2 border-[#F97316] shadow-[4px_4px_0px_#F97316] rounded-sm whitespace-nowrap -rotate-2 inline-block hover:rotate-0 transition-transform cursor-default`}>
+      <span className={`${compact ? "text-sm md:text-base px-3 py-1.5" : "text-xl md:text-2xl px-6 py-2"} font-bold text-[#F97316] bg-[#FFF8E1] border-2 border-[#F97316] shadow-[4px_4px_0px_#F97316] rounded-sm whitespace-nowrap -rotate-2 inline-block hover:rotate-0 transition-transform cursor-default`}>
         {message}
       </span>
       <style jsx>{`

@@ -193,7 +193,7 @@ export default function SortingVisualizer({ algorithm = 'selection', title }: So
 
   const getBarColor = (index: number) => {
     if (swapping.includes(index)) return 'bg-red-500';
-    if (highlight.includes(index)) return 'bg-purple-500';
+    if (highlight.includes(index)) return 'bg-orange-500';
     if (comparing.includes(index)) return 'bg-yellow-500';
     if (sorted.includes(index)) return 'bg-emerald-500';
     return 'bg-blue-400';
@@ -259,7 +259,7 @@ export default function SortingVisualizer({ algorithm = 'selection', title }: So
           </div>
           
           <div className="flex items-center gap-2 text-slate-500">
-            <span className="text-xs font-bold uppercase">Vitesse</span>
+            <span className="text-xs font-bold">Vitesse</span>
             <input 
               type="range" 
               min="50" 
@@ -276,8 +276,8 @@ export default function SortingVisualizer({ algorithm = 'selection', title }: So
           <div className="flex items-center gap-1"><div className="w-3 h-3 bg-emerald-500 rounded-sm"></div> Trié</div>
           <div className="flex items-center gap-1"><div className="w-3 h-3 bg-yellow-500 rounded-sm"></div> Comparaison</div>
           <div className="flex items-center gap-1"><div className="w-3 h-3 bg-red-500 rounded-sm"></div> Échange</div>
-          {algorithm === 'selection' && <div className="flex items-center gap-1"><div className="w-3 h-3 bg-purple-500 rounded-sm"></div> Min actuel</div>}
-          {algorithm === 'insertion' && <div className="flex items-center gap-1"><div className="w-3 h-3 bg-purple-500 rounded-sm"></div> À insérer</div>}
+          {algorithm === 'selection' && <div className="flex items-center gap-1"><div className="w-3 h-3 bg-orange-500 rounded-sm"></div> Min actuel</div>}
+          {algorithm === 'insertion' && <div className="flex items-center gap-1"><div className="w-3 h-3 bg-orange-500 rounded-sm"></div> À insérer</div>}
         </div>
       </div>
     </div>

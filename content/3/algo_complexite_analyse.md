@@ -4,7 +4,7 @@ description: "Évaluer et comparer l'efficacité des algorithmes en temps et en 
 level: TNSI
 order: 190
 chapter: Algorithmique
-icon: "⏱️"
+icon: "timer"
 badgeId: terminale_complexite
 prerequisites:
   - algo_programmation_dynamique

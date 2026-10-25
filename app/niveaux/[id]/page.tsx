@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronRight, GraduationCap, GitBranch, Lock, ShieldCheck } from 'lucide-react';
 import { canAccessCourse, isPublicCourse } from '@/lib/course-access';
 import { getAuthContext, viewerFromAuth } from '@/lib/auth';
+import { CourseIcon } from "@/components/ui/CourseIcon";
 
 type CourseNode = {
   slug: string;
@@ -83,7 +84,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
     '0': { title: 'SNI', color: 'bg-slate-500' },
     '1': { title: 'SNT', color: 'bg-blue-500' },
     '2': { title: 'Première NSI', color: 'bg-orange-500' },
-    '3': { title: 'Terminale NSI', color: 'bg-purple-500' },
+    '3': { title: 'Terminale NSI', color: 'bg-orange-500' },
     '4': { title: 'BTS SIO', color: 'bg-emerald-500' },
   };
 
@@ -107,7 +108,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
       title: String(data.title || fileName),
       description: String(data.description || ""),
       chapter: String(data.chapter || "Général"),
-      icon: String(data.icon || '📘'),
+      icon: String(data.icon || 'book-open'),
       restricted: !isPublicCourse(data),
       prerequisites: parsePrerequisites(data.prerequisites),
     }];
@@ -128,11 +129,11 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
             <GraduationCap size={32} />
           </div>
           <div>
-            <h1 className="text-4xl font-black text-slate-900 tracking-tight">
+            <h1 className="text-4xl font-bold text-slate-900 tracking-tight">
               {currentLevel.title}
             </h1>
             {isAdmin && (
-              <div className="flex items-center gap-1.5 mt-1 text-emerald-600 font-bold text-[10px] uppercase tracking-widest">
+              <div className="flex items-center gap-1.5 mt-1 text-emerald-600 font-bold text-[10px]">
                 <ShieldCheck size={14} /> Accès Enseignant (Tous les cours)
               </div>
             )}
@@ -146,7 +147,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
 
         return (
         <section key={nom} className="mb-14">
-          <h2 className="text-2xl font-bold text-slate-800 uppercase tracking-tight italic mb-6 border-b border-slate-50 pb-4 flex items-center gap-3">
+          <h2 className="text-2xl font-bold text-slate-800 tracking-tight italic mb-6 border-b border-slate-50 pb-4 flex items-center gap-3">
             <GitBranch className="text-orange-500" size={20} />
             {nom}
           </h2>
@@ -157,7 +158,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
                   {tierIndex < tiers.length - 1 && (
                     <div className="absolute top-8 -right-3 h-0.5 w-6 bg-orange-200" />
                   )}
-                  <div className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">
+                  <div className="mb-3 text-[10px] font-bold text-slate-400">
                     Étape {tier.depth + 1}
                   </div>
                   <div className="space-y-4">
@@ -173,12 +174,12 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
                       >
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex items-start gap-4">
-                            <div className="text-3xl leading-none">{cours.icon}</div>
+                            <div className="shrink-0 text-[var(--accent)]"><CourseIcon name={cours.icon} size={26} /></div>
                             <div>
                               <h3 className="font-bold text-base text-slate-900 group-hover:text-orange-600 flex items-center gap-2">
                                 {cours.title}
                                 {cours.restricted && (
-                                  <span className="text-[9px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-300 font-black flex items-center gap-1">
+                                  <span className="text-[9px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-300 font-bold flex items-center gap-1">
                                     <Lock size={10} /> PRIVÉ
                                   </span>
                                 )}
@@ -191,7 +192,7 @@ export default async function PageSommaireNiveau({ params }: { params: Promise<{
 
                         {cours.prerequisites.filter((p) => chapterSlugSet.has(p)).length > 0 && (
                           <div className="mt-4 pt-3 border-t border-slate-100">
-                            <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
+                            <div className="text-[10px] font-bold text-slate-400 mb-2">
                               Prérequis
                             </div>
                             <div className="flex flex-wrap gap-2">

@@ -3,7 +3,7 @@ title: La Géolocalisation
 description: 'Fonctionnement du GPS, enjeux de vie privée et cartographie numérique.'
 level: '2'
 chapter: Localisation
-icon: "\U0001F30D"
+icon: "earth"
 prerequisites: []
 audience: public
 ---
@@ -38,7 +38,7 @@ La latitude et la longitude suffisent à poser un point sur la carte. L'altitude
 > **Définition : trilatération**
 > La **trilatération** détermine une position en mesurant les distances à au moins trois points de référence connus. Ici, ces points sont des satellites.
 
-Le récepteur n'envoie rien vers l'espace. Il écoute. Il capte les signaux d'au moins quatre satellites : trois pour la position dans l'espace, un quatrième pour recaler l'horloge, qui doit être extrêmement juste. La distance se déduit du temps de trajet. Le signal voyage à la vitesse de la lumière, environ 300 000 km/s, donc \(d = v \times t\). Autour de chaque satellite, cette distance dessine une sphère. Votre position est à l'intersection de ces sphères.
+Le récepteur n'envoie rien vers l'espace. Il écoute. Il capte les signaux d'au moins quatre satellites : trois pour la position dans l'espace, un quatrième pour recaler l'horloge, qui doit être extrêmement juste. La distance se déduit du temps de trajet. Le signal voyage à la vitesse de la lumière, environ 300 000 km/s, donc $d = v \times t$. Autour de chaque satellite, cette distance dessine une sphère. Votre position est à l'intersection de ces sphères.
 
 La précision n'est pas garantie. Elle dépend du nombre de satellites visibles, de la météo, des obstacles (un immeuble, un tunnel) et de la qualité du récepteur. En ville, entre les façades, le signal rebondit et la position saute.
 

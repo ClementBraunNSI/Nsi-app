@@ -1,9 +1,9 @@
 ---
 title: 'Les tests unitaires en C#'
-description: 'Cours détaillé sur la démarche AAA, les tests nominaux/limites/exceptions et l’isolation de la logique métier.'
+description: 'Cours détaillé sur la démarche AAA, les tests nominaux/limites/exceptions et l''isolation de la logique métier.'
 level: '2'
 chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
-icon: "✅"
+icon: "circle-check"
 prerequisites:
   - introduction_poo
 audience: public

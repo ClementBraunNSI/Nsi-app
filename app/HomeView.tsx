@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronRight, Github, Search } from "lucide-react";
+import { ArrowRight, ChevronRight, Flame, Github, Medal, NotebookPen, Search } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { getLandingPrivateCard, type LandingPrivateCard } from "@/app/actions/coursePages";
 import { getHomeDashboard, type HomeDashboard } from "@/app/actions/home";
 import { isAbortError } from "@/lib/is-abort-error";
 import SplashText from "@/components/SplashText";
+import { AnimatedFox } from "@/components/home/AnimatedFox";
 import ColleagueTeaser from "@/components/ColleagueTeaser";
 import { GAME_NAME } from "@/app/foxtest/academy/meta";
 
@@ -47,7 +48,7 @@ function Greeting({ dashboard }: { dashboard: HomeDashboard }) {
       <div>
         <b>
           {hello}
-          {firstName ? ` ${firstName}` : ""} 👋
+          {firstName ? ` ${firstName}` : ""}
           {level ? ` Tu en es à ${level.percent} % de ${level.label}.` : ""}
         </b>
         <span>{next}</span>
@@ -71,7 +72,7 @@ function ResumeBand({ dashboard }: { dashboard: HomeDashboard }) {
           </span>
           <span className="min-w-0 flex-1">
             <span className="home-eyebrow">
-              {resume.done > 0 ? "Reprendre" : "Prochaine étape"} · {resume.chapter}
+              {resume.done > 0 ? "Reprendre" : "Prochaine étape"} : {resume.chapter}
             </span>
             <b className="home-continue-title">{resume.title}</b>
             <span className="home-progress">
@@ -84,7 +85,7 @@ function ResumeBand({ dashboard }: { dashboard: HomeDashboard }) {
               <span>{percent} %</span>
             </span>
           </span>
-          <span className="home-btn">{resume.done > 0 ? "Continuer" : "Commencer"} →</span>
+          <span className="home-btn">{resume.done > 0 ? "Continuer" : "Commencer"}</span>
         </Link>
       ) : (
         <Link href={dashboard.level?.href || "/espace"} className="home-continue">
@@ -97,7 +98,9 @@ function ResumeBand({ dashboard }: { dashboard: HomeDashboard }) {
 
       <Link href={homework?.href || "/espace"} className="home-side">
         <span className="home-side-k">
-          <span>📝 Devoir</span>
+          <span className="home-side-label">
+            <NotebookPen size={14} aria-hidden /> Devoir
+          </span>
         </span>
         {homework ? (
           <>
@@ -107,14 +110,16 @@ function ResumeBand({ dashboard }: { dashboard: HomeDashboard }) {
         ) : (
           <>
             <b>Aucun devoir à rendre</b>
-            <span className="home-side-p">Tout est à jour 🎉</span>
+            <span className="home-side-p">Tout est à jour</span>
           </>
         )}
       </Link>
 
       <Link href="/espace" className="home-side">
         <span className="home-side-k">
-          <span>🏅 Mes badges</span>
+          <span className="home-side-label">
+            <Medal size={14} aria-hidden /> Mes badges
+          </span>
           <span>
             {badgeCount}
             {badgeTotal ? ` / ${badgeTotal}` : ""}
@@ -240,7 +245,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--subtle)] pointer-events-none" size={20} />
               <input
                 type="text"
-                placeholder="Rechercher une notion (ex : boucles, listes…)"
+                placeholder="Rechercher une notion (ex : boucles, listes)"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-14 pr-6 py-4 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] focus:border-[var(--accent)] outline-none transition-colors text-base font-medium text-[var(--fg)]"
@@ -249,7 +254,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
               {searchQuery.length > 1 && (
                 <div className="absolute top-full left-0 right-0 mt-3 bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] overflow-hidden text-left" style={{ boxShadow: "var(--shadow)" }}>
                   {isSearching ? (
-                    <div className="p-6 text-center text-[var(--muted)]">Recherche dans les cours... 🦊</div>
+                    <div className="p-6 text-center text-[var(--muted)]">Recherche dans les cours</div>
                   ) : results.length > 0 ? (
                     results.map((course) => (
                       <Link key={`${course.level}/${course.slug}`} href={`/cours/${course.level}/${course.slug}`} className="flex items-center justify-between p-4 hover:bg-[var(--surface-2)] transition-colors border-b border-[var(--border)] last:border-0">
@@ -277,7 +282,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
 
           <div className="home-stage">
             <SplashText compact className="home-splash" />
-            <Image src="/images/fox_assis.svg" alt="Le renard de la tanière" width={360} height={360} priority className="home-stage-fox" />
+            <AnimatedFox className="home-stage-fox" />
             {dashboard ? (
               <>
                 {dashboard.badges[0] ? (
@@ -290,25 +295,12 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                 ) : null}
                 <div className="home-chip home-chip-2">
                   <span>
-                    🔥 {dashboard.exercisesCount} exercice{dashboard.exercisesCount > 1 ? "s" : ""} réussi{dashboard.exercisesCount > 1 ? "s" : ""}
+                    <Flame size={14} className="home-chip-icon" aria-hidden /> {dashboard.exercisesCount} exercice{dashboard.exercisesCount > 1 ? "s" : ""} réussi{dashboard.exercisesCount > 1 ? "s" : ""}
                     <small>depuis le début</small>
                   </span>
                 </div>
               </>
-            ) : (
-              <>
-                <div className="home-chip home-chip-1">
-                  <span>
-                    ✅ Exercices corrigés<small>automatiquement</small>
-                  </span>
-                </div>
-                <div className="home-chip home-chip-2">
-                  <span>
-                    🏅 Des badges<small>à chaque fiche réussie</small>
-                  </span>
-                </div>
-              </>
-            )}
+            ) : null}
           </div>
         </header>
 
@@ -338,7 +330,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                     <span className="home-bt-step">{index + 1}</span>
                     <span className="home-bt-txt">
                       <span className="home-bt-aud">
-                        {mine ? "Mon niveau · " : ""}
+                        {mine ? "Mon niveau : " : ""}
                         {level.audience}
                       </span>
                       <h3>{level.label}</h3>
@@ -348,12 +340,12 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                           <span className="home-bt-prog">
                             <i style={{ width: `${percent}%` }} />
                           </span>
-                          <span className="home-bt-meta">{percent} % terminé · Continuer →</span>
+                          <span className="home-bt-meta">{percent} % terminé</span>
                         </>
                       ) : (
                         <span className="home-bt-meta">
-                          {level.chapters} chapitre{level.chapters > 1 ? "s" : ""} · {level.resources} ressource
-                          {level.resources > 1 ? "s" : ""} →
+                          {level.chapters} chapitre{level.chapters > 1 ? "s" : ""}, {level.resources} ressource
+                          {level.resources > 1 ? "s" : ""}
                         </span>
                       )}
                     </span>
@@ -378,7 +370,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                 <span>
                   <span className="home-eyebrow">Apprentissage Python</span>
                   <b>{GAME_NAME}</b>
-                  <span className="home-ex-p">Fonctions, variables, conditions et boucles : guide le renard jusqu’à la poule.</span>
+                  <span className="home-ex-p">Fonctions, variables, conditions et boucles : guide le renard jusqu'à la poule.</span>
                   <span className="home-ex-link">
                     Jouer <ArrowRight size={14} />
                   </span>
@@ -402,7 +394,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                   <Image src="/images/fox_chasse_renard.png" alt="" width={70} height={70} />
                 </span>
                 <span>
-                  <b>Chasse aux Ren’Arts</b>
+                  <b>Chasse aux Ren'Arts</b>
                   <span className="home-ex-p">Les grands classiques revisités par les élèves.</span>
                 </span>
               </Link>
@@ -445,7 +437,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
 
       <footer className="border-t border-[var(--border)] py-12">
         <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-[var(--subtle)] text-sm">© 2026 Clément Braun — NSI</div>
+          <div className="text-[var(--subtle)] text-sm">© 2026 Clément Braun, NSI</div>
           <div className="flex items-center gap-6">
             <Link href="/outils-enseignants" className="text-[var(--muted)] hover:text-[var(--fg)] transition-colors text-sm font-medium">
               Outils enseignants

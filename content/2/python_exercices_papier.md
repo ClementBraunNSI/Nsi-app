@@ -3,7 +3,7 @@ title: 'Exercices : Listes et tuples'
 description: "Fiche d'exercices papier sur les listes et tuples"
 level: premiere
 chapter: Structures de données linéaires
-icon: "\U0001F4DD"
+icon: "notebook-pen"
 badgeId: premiere_fiche_exercices_papier
 prerequisites:
   - python_exercices_listes

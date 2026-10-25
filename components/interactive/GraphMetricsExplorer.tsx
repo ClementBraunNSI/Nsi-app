@@ -276,7 +276,7 @@ export default function GraphMetricsExplorer() {
           </div>
 
           <div className="bg-slate-50 border border-slate-200 p-4 rounded-xl flex-1 overflow-auto">
-            <h4 className="font-bold text-slate-700 mb-3 text-xs uppercase tracking-wider">
+            <h4 className="font-bold text-slate-700 mb-3 text-xs">
               Détails par Sommet
             </h4>
             <table className="w-full text-xs text-left">

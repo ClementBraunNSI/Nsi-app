@@ -1,7 +1,7 @@
 ---
 title: 'Exercices : Dictionnaires'
-description: 'Création, accès, modification et parcours des dictionnaires — fiche progressive par niveau.'
-icon: "\U0001F4D6"
+description: 'Création, accès, modification et parcours des dictionnaires : fiche progressive par niveau.'
+icon: "book-open"
 chapter: Dictionnaires et Tables
 badgeId: premiere_exercices_dictionnaires
 meta: 'Dictionnaires Python : clés, valeurs, parcours et dictionnaires imbriqués'
@@ -157,7 +157,7 @@ assert sorted(liste_cles({'b': 2, 'a': 1})) == ['a', 'b']
   <ExerciseSection id="dict-2-1" label="2.1 [Facile] - Ajouter un élève" type="python">
     <Enonce>
     ### Exercice 2.1 [Facile] : Ajouter un élève
-    **Écrire une fonction `ajouter_eleve` qui prend un dictionnaire `notes` (nom → moyenne), un `nom` et une `moyenne`. Si le nom n'existe pas encore, l'ajoute et renvoie `True` ; sinon renvoie `False` sans modifier la moyenne existante.**
+    **Écrire une fonction `ajouter_eleve` qui prend un dictionnaire `notes` (nom : moyenne), un `nom` et une `moyenne`. Si le nom n'existe pas encore, l'ajoute et renvoie `True` ; sinon renvoie `False` sans modifier la moyenne existante.**
 
     <Correction>
     ```python
@@ -266,7 +266,7 @@ assert set(voitures_par_couleur(voitures, 'rouge')) == {'A', 'C'}
   <ExerciseSection id="dict-2-5" label="2.5 [Facile] - Voitures dans un budget" type="python">
     <Enonce>
     ### Exercice 2.5 [Facile] : Voitures dans un budget
-    **Écrire une fonction `voitures_budget` qui prend un dictionnaire `voitures` (modèle → `{'prix': ...}`) et un `budget`, et renvoie la liste des modèles dont le prix est ≤ `budget`.**
+    **Écrire une fonction `voitures_budget` qui prend un dictionnaire `voitures` (modèle : `{'prix': ...}`) et un `budget`, et renvoie la liste des modèles dont le prix est ≤ `budget`.**
 
     <Correction>
     ```python
@@ -295,7 +295,7 @@ assert set(voitures_budget(voitures, 16000)) == {'A', 'C'}
   <ExerciseSection id="dict-2-6" label="2.6 [Facile] - Produits en rupture" type="python">
     <Enonce>
     ### Exercice 2.6 [Facile] : Produits en rupture
-    **Écrire une fonction `produits_en_rupture` qui prend un dictionnaire `inventaire` (produit → `{'prix': ..., 'stock': ...}`) et renvoie la liste des produits dont le stock est ≤ 10.**
+    **Écrire une fonction `produits_en_rupture` qui prend un dictionnaire `inventaire` (produit : `{'prix': ..., 'stock': ...}`) et renvoie la liste des produits dont le stock est ≤ 10.**
 
     <Correction>
     ```python
@@ -328,7 +328,7 @@ assert 'pommes' not in produits_en_rupture(inventaire)
   <ExerciseSection id="dict-3-1" label="3.1 [Moyen] - Livres disponibles" type="python">
     <Enonce>
     ### Exercice 3.1 [Moyen] : Livres disponibles
-    **Écrire une fonction `livres_disponibles` qui prend un dictionnaire `bibliotheque` (titre → `{'disponible': bool}`) et renvoie la liste des titres disponibles.**
+    **Écrire une fonction `livres_disponibles` qui prend un dictionnaire `bibliotheque` (titre : `{'disponible': bool}`) et renvoie la liste des titres disponibles.**
 
     <Correction>
     ```python
@@ -354,9 +354,9 @@ assert livres_disponibles(bib) == ['A']
     <Enonce>
     ### Exercice 3.2 [Moyen] : Emprunter un livre
     **Écrire une fonction `emprunter_livre` qui prend `bibliotheque` et un `titre`.**
-    - Livre trouvé et disponible → passe `disponible` à `False`, renvoie `"emprunte"`.
-    - Livre trouvé mais indisponible → renvoie `"deja_emprunte"`.
-    - Livre absent → renvoie `"introuvable"`.
+    - Livre trouvé et disponible : passe `disponible` à `False`, renvoie `"emprunte"`.
+    - Livre trouvé mais indisponible : renvoie `"deja_emprunte"`.
+    - Livre absent : renvoie `"introuvable"`.
 
     <Correction>
     ```python
@@ -385,7 +385,7 @@ assert emprunter_livre(bib, 'Z') == "introuvable"
   <ExerciseSection id="dict-3-3" label="3.3 [Moyen] - Contacts par ville" type="python">
     <Enonce>
     ### Exercice 3.3 [Moyen] : Contacts par ville
-    **Écrire une fonction `contacts_par_ville` qui prend un dictionnaire `contacts` (nom → `{'ville': ...}`) et une `ville`, et renvoie la liste des noms dans cette ville.**
+    **Écrire une fonction `contacts_par_ville` qui prend un dictionnaire `contacts` (nom : `{'ville': ...}`) et une `ville`, et renvoie la liste des noms dans cette ville.**
 
     <Correction>
     ```python
@@ -413,7 +413,7 @@ assert contacts_par_ville(contacts, 'Paris') == ['Alice']
   <ExerciseSection id="dict-3-4" label="3.4 [Moyen] - Moyenne par matière" type="python">
     <Enonce>
     ### Exercice 3.4 [Moyen] : Moyenne par matière
-    Un dictionnaire `classe` associe chaque élève à un sous-dictionnaire matière → liste de notes.
+    Un dictionnaire `classe` associe chaque élève à un sous-dictionnaire `{matière: liste de notes}`.
     **Écrire une fonction `moyenne_matiere` qui renvoie la moyenne arrondie à 2 décimales de l'élève dans la matière, ou `0` si l'élève ou la matière est absente.**
 
     <Correction>
@@ -441,7 +441,7 @@ assert moyenne_matiere(classe, 'Test', 'M2') == 0
   <ExerciseSection id="dict-3-5" label="3.5 [Moyen] - Ventes totales par mois" type="python">
     <Enonce>
     ### Exercice 3.5 [Moyen] : Ventes totales par mois
-    Un dictionnaire `ventes` associe chaque mois à un sous-dictionnaire produit → quantité vendue.
+    Un dictionnaire `ventes` associe chaque mois à un sous-dictionnaire `{produit: quantité vendue}`.
     **Écrire une fonction `ventes_totales_mois` qui renvoie la somme des ventes du mois demandé, ou `0` si le mois est absent.**
 
     <Correction>
@@ -469,7 +469,7 @@ assert ventes_totales_mois(ventes, 'M') == 0
   <ExerciseSection id="dict-3-6" label="3.6 [Moyen] - Valeur totale du stock" type="python">
     <Enonce>
     ### Exercice 3.6 [Moyen] : Valeur totale du stock
-    **Écrire une fonction `valeur_totale_stock` qui prend un dictionnaire `inventaire` (produit → `{'prix': ..., 'stock': ...}`) et renvoie la valeur totale du stock (somme de `prix × stock`).**
+    **Écrire une fonction `valeur_totale_stock` qui prend un dictionnaire `inventaire` (produit : `{'prix': ..., 'stock': ...}`) et renvoie la valeur totale du stock (somme de `prix × stock`).**
 
     <Correction>
     ```python
@@ -500,7 +500,7 @@ assert valeur_totale_stock(inventaire) == (2.5 * 50 + 3.0 * 5)
   <ExerciseSection id="dict-4-1" label="4.1 [Avancé] - Ventes totales par produit" type="python">
     <Enonce>
     ### Exercice 4.1 [Avancé] : Ventes totales par produit
-    **Écrire une fonction `ventes_totales_produit` qui prend un dictionnaire `ventes` (mois → {produit → quantité}) et un `produit`, et renvoie le total vendu sur tous les mois.**
+    **Écrire une fonction `ventes_totales_produit` qui prend un dictionnaire `ventes` (mois : `{produit: quantité}`) et un `produit`, et renvoie le total vendu sur tous les mois.**
 
     <Correction>
     ```python
@@ -557,7 +557,7 @@ assert produit_le_plus_vendu(ventes) == ('A', 15)
   <ExerciseSection id="dict-4-3" label="4.3 [Avancé] - Valeur totale de l'inventaire" type="python">
     <Enonce>
     ### Exercice 4.3 [Avancé] : Valeur totale de l'inventaire
-    **Écrire une fonction `valeur_totale_inventaire` qui prend un dictionnaire `inventaire` (produit → `{'quantite': ..., 'prix': ...}`) et renvoie la valeur totale (`quantite × prix` pour chaque produit).**
+    **Écrire une fonction `valeur_totale_inventaire` qui prend un dictionnaire `inventaire` (produit : `{'quantite': ..., 'prix': ...}`) et renvoie la valeur totale (`quantite × prix` pour chaque produit).**
 
     <Correction>
     ```python
@@ -584,7 +584,7 @@ assert valeur_totale_inventaire(inv) == 2000
   <ExerciseSection id="dict-4-4" label="4.4 [Avancé] - Produits par catégorie" type="python">
     <Enonce>
     ### Exercice 4.4 [Avancé] : Produits par catégorie
-    **Écrire une fonction `produits_par_categorie` qui prend un dictionnaire `inventaire` (produit → `{'categorie': ...}`) et une `categorie`, et renvoie la liste des produits de cette catégorie.**
+    **Écrire une fonction `produits_par_categorie` qui prend un dictionnaire `inventaire` (produit : `{'categorie': ...}`) et une `categorie`, et renvoie la liste des produits de cette catégorie.**
 
     <Correction>
     ```python
@@ -670,9 +670,9 @@ assert fusionner({'a': 1, 'b': 2}, {'b': 9, 'c': 3}) == {'a': 1, 'b': 9, 'c': 3}
   <ExerciseSection id="dict-5-1" label="5.1 [Difficile] - Compter les mots" type="python">
     <Enonce>
     ### Exercice 5.1 [Difficile] : Compter les mots
-    **Écrire une fonction `compter_mots` qui prend un texte et renvoie un dictionnaire {mot: fréquence}.**
+    **Écrire une fonction `compter_mots` qui prend un texte et renvoie un dictionnaire `{mot: fréquence}`.**
     Ignorer la casse (tout en minuscules) et la ponctuation.
-    *Exemple : `"Salut salut!"` → `{'salut': 2}`.*
+    *Exemple : `"Salut salut!"` donne `{'salut': 2}`.*
 
     <Correction>
     ```python
@@ -786,7 +786,7 @@ assert sorted(filtrer_cles_par_valeur(notes, 12)) == ['Alice', 'Charlie']
   <ExerciseSection id="dict-5-5" label="5.5 [Difficile] - Moyenne des notes" type="python">
     <Enonce>
     ### Exercice 5.5 [Difficile] : Moyenne des notes
-    **Écrire une fonction `moyenne_notes` qui prend un dictionnaire `notes` (nom → moyenne) et renvoie la moyenne de toutes les moyennes, arrondie à 2 décimales. Renvoie `0` si le dictionnaire est vide.**
+    **Écrire une fonction `moyenne_notes` qui prend un dictionnaire `notes` (nom : moyenne) et renvoie la moyenne de toutes les moyennes, arrondie à 2 décimales. Renvoie `0` si le dictionnaire est vide.**
 
     <Correction>
     ```python
@@ -812,7 +812,7 @@ assert moyenne_notes({}) == 0
   <ExerciseSection id="dict-5-6" label="5.6 [Difficile] - Compter par catégorie" type="python">
     <Enonce>
     ### Exercice 5.6 [Difficile] : Compter par catégorie
-    **Écrire une fonction `compter_categories` qui prend un dictionnaire `inventaire` (produit → `{'categorie': ...}`) et renvoie un dictionnaire {catégorie: nombre de produits}.**
+    **Écrire une fonction `compter_categories` qui prend un dictionnaire `inventaire` (produit : `{'categorie': ...}`) et renvoie un dictionnaire `{catégorie: nombre de produits}`.**
 
     <Correction>
     ```python
@@ -845,7 +845,7 @@ assert compter_categories(inv) == {'fruits': 2, 'legumes': 1}
   <ExerciseSection id="dict-6-1" label="6.1 [Expert] - Index par auteur" type="python">
     <Enonce>
     ### Exercice 6.1 [Expert] : Index par auteur
-    **Écrire une fonction `index_par_auteur` qui prend un dictionnaire `bibliotheque` (titre → `{'auteur': ...}`) et renvoie un dictionnaire {auteur: [liste des titres]}.**
+    **Écrire une fonction `index_par_auteur` qui prend un dictionnaire `bibliotheque` (titre : `{'auteur': ...}`) et renvoie un dictionnaire `{auteur: [liste des titres]}`.**
 
     <Correction>
     ```python
@@ -877,7 +877,7 @@ assert sorted(index['Orwell']) == ['1984', 'Animal Farm']
   <ExerciseSection id="dict-6-2" label="6.2 [Expert] - Ventes cumulées par produit" type="python">
     <Enonce>
     ### Exercice 6.2 [Expert] : Ventes cumulées par produit
-    **Écrire une fonction `ventes_cumulees` qui prend un dictionnaire `ventes` (mois → {produit → quantité}) et renvoie un dictionnaire {produit: total sur tous les mois}.**
+    **Écrire une fonction `ventes_cumulees` qui prend un dictionnaire `ventes` (mois : `{produit: quantité}`) et renvoie un dictionnaire `{produit: total sur tous les mois}`.**
 
     <Correction>
     ```python
@@ -902,7 +902,7 @@ assert ventes_cumulees(ventes) == {'A': 15, 'B': 13}
   <ExerciseSection id="dict-6-3" label="6.3 [Expert] - Moyenne générale d'un élève" type="python">
     <Enonce>
     ### Exercice 6.3 [Expert] : Moyenne générale d'un élève
-    Un dictionnaire `classe` associe chaque élève à un sous-dictionnaire matière → liste de notes.
+    Un dictionnaire `classe` associe chaque élève à un sous-dictionnaire `{matière: liste de notes}`.
     **Écrire une fonction `moyenne_generale` qui renvoie la moyenne des moyennes par matière de l'élève, arrondie à 2 décimales, ou `0` si l'élève est absent ou n'a aucune note.**
 
     <Correction>

@@ -7,7 +7,7 @@ export default function ColleagueTeaser() {
         <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-6 py-6 md:px-8">
           <h2 className="text-2xl font-semibold tracking-tight text-[var(--fg)]">Sites de collègues</h2>
           <p className="mt-3 text-base leading-relaxed text-[var(--muted)]">
-            D’autres enseignants de SNT et de NSI publient leurs sites de cours en France.
+            D'autres enseignants de SNT et de NSI publient leurs sites de cours en France.
           </p>
           <p className="mt-2 text-base leading-relaxed text-[var(--muted)]">
             Ces sites complètent La tanière. Ils sont utiles aux élèves, aux professeurs et aux inspecteurs.

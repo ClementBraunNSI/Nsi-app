@@ -28,9 +28,9 @@ function toLocalInput(iso: string) {
 
 const PAGE_ERRORS: Record<string, string> = {
   private_student: "Ce cours particulier se donne à un élève inscrit en cours particuliers.",
-  private_class: "Les cours particuliers s’assignent élève par élève.",
+  private_class: "Les cours particuliers s'assignent élève par élève.",
   unknown_page: "Cette page est introuvable.",
-  save_failed: "L’enregistrement n’a pas abouti.",
+  save_failed: "L'enregistrement n'a pas abouti.",
 };
 
 export function StudentFollowup({ studentId }: { studentId: string }) {
@@ -68,7 +68,7 @@ export function StudentFollowup({ studentId }: { studentId: string }) {
   }, [studentId]);
 
   if (!data) {
-    return <p className="text-sm text-slate-400">Chargement du suivi…</p>;
+    return <p className="text-sm text-slate-400">Chargement du suivi</p>;
   }
 
   const now = Date.now();
@@ -164,7 +164,7 @@ export function StudentFollowup({ studentId }: { studentId: string }) {
           {past.map((lesson) => (
             <li key={lesson.id} className="flex items-center justify-between text-sm bg-slate-50 rounded-xl px-3 py-2">
               <span>
-                {new Date(lesson.starts_at).toLocaleString("fr-FR")} · {lesson.duration_minutes} min
+                {new Date(lesson.starts_at).toLocaleString("fr-FR")}, {lesson.duration_minutes} min
               </span>
               <button
                 type="button"
@@ -198,7 +198,7 @@ export function StudentFollowup({ studentId }: { studentId: string }) {
                 pagePath: pageText.trim() && pagePath ? pagePath : undefined,
               });
               if (result.error) {
-                setNotice(PAGE_ERRORS[result.error] || "Le devoir n’a pas été enregistré.");
+                setNotice(PAGE_ERRORS[result.error] || "Le devoir n'a pas été enregistré.");
                 return;
               }
               setHomeworkTitle("");
@@ -254,7 +254,7 @@ export function StudentFollowup({ studentId }: { studentId: string }) {
                         pagePath: editPageText.trim() && editPath ? editPath : null,
                       });
                       if (result.error) {
-                        setNotice(PAGE_ERRORS[result.error] || "La modification n’a pas abouti.");
+                        setNotice(PAGE_ERRORS[result.error] || "La modification n'a pas abouti.");
                         return;
                       }
                       setEditingId(null);
@@ -295,8 +295,8 @@ export function StudentFollowup({ studentId }: { studentId: string }) {
                 <div className="flex items-center justify-between gap-3">
                   <span>
                     {item.title}
-                    {item.page_title ? ` · ${item.page_title}` : ""}
-                    {item.status === "done" ? " · fait" : ""}
+                    {item.page_title ? `, ${item.page_title}` : ""}
+                    {item.status === "done" ? ", fait" : ""}
                   </span>
                   <span className="flex gap-3 shrink-0">
                     <button
@@ -370,7 +370,7 @@ export function StudentFollowup({ studentId }: { studentId: string }) {
             <option value="">Choisir une fiche</option>
             {data.sheets.map((sheet) => (
               <option key={sheet.courseId} value={sheet.courseId}>
-                {sheet.level} — {sheet.chapter} — {sheet.courseTitle}
+                {sheet.level}, {sheet.chapter}, {sheet.courseTitle}
               </option>
             ))}
           </select>
@@ -382,7 +382,7 @@ export function StudentFollowup({ studentId }: { studentId: string }) {
           {data.assigned.map((item) => (
             <li key={item.course_id} className="flex items-center justify-between text-sm bg-slate-50 rounded-xl px-3 py-2">
               <span>
-                {item.course_title} · {item.chapter}
+                {item.course_title}, {item.chapter}
               </span>
               <button
                 type="button"

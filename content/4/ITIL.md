@@ -3,7 +3,7 @@ title: Introduction à ITIL
 description: Gestion des services informatiques et bonnes pratiques (ITIL v4)
 level: '4'
 chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
-icon: "\U0001F9ED"
+icon: "compass"
 prerequisites: []
 audience: public
 ---

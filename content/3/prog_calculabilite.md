@@ -4,7 +4,7 @@ description: 'Limites de l''informatique : ce qui peut être calculé ou non.'
 level: TNSI
 order: 100
 chapter: Langages et Programmation
-icon: "\U0001F6D1"
+icon: "octagon-x"
 badgeId: terminale_calculabilite
 prerequisites:
   - prog_recursivite

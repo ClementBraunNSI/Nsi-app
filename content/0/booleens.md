@@ -3,7 +3,7 @@ title: Logique booléenne
 description: 'Les valeurs Vrai/Faux et les opérateurs logiques (ET, OU, NON).'
 level: SNI
 chapter: Representation_de_base
-icon: "\U0001F518"
+icon: "circle-dot"
 prerequisites:
   - binaire
 audience: public
@@ -23,9 +23,9 @@ En informatique, on utilise deux valeurs :
 - **FAUX** (False, 0, ou Non)
 
 ### Exemples de la vie quotidienne
-- "La lumière est allumée" → VRAI ou FAUX
-- "Il pleut aujourd'hui" → VRAI ou FAUX
-- "J'ai 15 ans" → VRAI ou FAUX
+- "La lumière est allumée" : VRAI ou FAUX
+- "Il pleut aujourd'hui" : VRAI ou FAUX
+- "J'ai 15 ans" : VRAI ou FAUX
 
 ## Les opérateurs booléens
 
@@ -44,7 +44,7 @@ L'opérateur **ET** renvoie VRAI seulement si **les deux** conditions sont vraie
 
 **Exemple :**
 
-- "J'ai mon téléphone ET j'ai du réseau" → Je peux appeler
+- "J'ai mon téléphone ET j'ai du réseau" : Je peux appeler
 - Si j'ai mon téléphone mais pas de réseau : FAUX
 - Si j'ai du réseau mais pas mon téléphone : FAUX
 - Si j'ai les deux : VRAI
@@ -70,7 +70,7 @@ L'opérateur **OU** renvoie VRAI si **au moins une** des conditions est vraie.
 | VRAI  | VRAI  | VRAI   |
 
 **Exemple :**
-- "Je vais au cinéma OU je reste à la maison" → Une des deux actions sera vraie
+- "Je vais au cinéma OU je reste à la maison" : Une des deux actions sera vraie
 - Si je vais au cinéma : VRAI
 - Si je reste à la maison : VRAI
 - Si je fais les deux ou aucun des deux, c'est selon le contexte

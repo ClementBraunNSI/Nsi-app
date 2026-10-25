@@ -4,14 +4,14 @@ description: Implémentation et utilisation des structures de données linéaire
 level: TNSI
 order: 150
 chapter: Structures de données
-icon: "\U0001F4DA"
+icon: "library"
 badgeId: terminale_structures_lineaires
 prerequisites:
   - poo_classes_objets
 audience: public
 ---
 
-# 📚 Structures de Données Linéaires
+# <Icone nom="library" /> Structures de Données Linéaires
 
 Pour organiser les données, nous avons besoin de structures adaptées. En Terminale, nous étudions trois structures abstraites fondamentales : les **Listes**, les **Piles** et les **Files**.
 

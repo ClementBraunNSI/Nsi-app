@@ -7,7 +7,7 @@ const ALGORITHMS = [
   { id: 'selection', name: 'Tri par Sélection', color: 'bg-blue-500' },
   { id: 'insertion', name: 'Tri par Insertion', color: 'bg-emerald-500' },
   { id: 'bubble', name: 'Tri à Bulles', color: 'bg-orange-500' },
-  { id: 'python', name: 'Tri Natif (Timsort)', color: 'bg-purple-500' }
+  { id: 'python', name: 'Tri Natif (Timsort)', color: 'bg-orange-500' }
 ];
 
 export default function SortingComparator() {

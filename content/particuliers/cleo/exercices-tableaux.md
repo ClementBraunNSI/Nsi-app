@@ -3,7 +3,7 @@ title: C - Tableaux - Exercices
 description: Exercices pratiques sur les tableaux en C
 level: particuliers
 chapter: Programmation en C
-icon: "\U0001F4CA"
+icon: "chart-column"
 prerequisites:
   - exercices-fonctions
 audience:

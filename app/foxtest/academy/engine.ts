@@ -141,7 +141,7 @@ export function translatePythonError(raw: string): string {
     return "Nom inconnu. Utilise seulement les fonctions autorisées pour ce défi, et vérifie l'orthographe.";
   }
   if (msg.includes("typeerror")) {
-    return "Type inattendu. Vérifie ce que tu passes à la fonction (un nombre, une chaîne…).";
+    return "Type inattendu. Vérifie ce que tu passes à la fonction (un nombre, une chaîne, etc.).";
   }
   if (msg.includes("maximum recursion") || msg.includes("too many actions")) {
     return "Le programme semble bloquer (boucle infinie). Ajoute une condition d'arrêt.";

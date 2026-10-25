@@ -4,7 +4,7 @@ description: 'Méthode de résolution par décomposition (Tri fusion, etc.).'
 level: TNSI
 order: 120
 chapter: Algorithmique
-icon: "\U0001F52A"
+icon: "scissors"
 badgeId: terminale_diviser_regner
 prerequisites:
   - algo_recherche_textuelle

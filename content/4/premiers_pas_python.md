@@ -49,7 +49,7 @@ age = int(age)
 
 Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une autre chaîne. On ne peut pas lui ajouter 1. Après `int(age)`, c'est l'entier 19, et le calcul devient possible. Oublier la conversion est la première erreur de ce chapitre : le programme ne se plaint pas à l'`input`, il se plaint à l'opération suivante.
 
-### Exercice 1.1 — Mon premier message
+### Exercice 1.1 : Mon premier message
 **Créer un programme qui affiche "Bienvenue en Python !" dans le terminal.**
 
 <Correction>
@@ -58,7 +58,7 @@ print("Bienvenue en Python !")
 ```
 </Correction>
 
-### Exercice 1.2 — Afficher mon prénom
+### Exercice 1.2 : Afficher mon prénom
 **Créer une variable `prenom` avec votre prénom, puis l'afficher avec `print()`.**
 
 <Correction>
@@ -68,7 +68,7 @@ print(prenom)
 ```
 </Correction>
 
-### Exercice 1.3 — Dire bonjour
+### Exercice 1.3 : Dire bonjour
 **Demander le prénom de l'utilisateur avec `input()`, puis afficher "Bonjour" suivi de son prénom.**
 
 <Correction>
@@ -78,7 +78,7 @@ print("Bonjour", prenom)
 ```
 </Correction>
 
-### Exercice 1.4 — Mon âge
+### Exercice 1.4 : Mon âge
 **Demander l'âge de l'utilisateur et afficher "Vous avez X ans" (où X est l'âge saisi).**
 
 <Correction>
@@ -88,7 +88,7 @@ print("Vous avez " + age + " ans")
 ```
 </Correction>
 
-### Exercice 1.5 — Deux informations
+### Exercice 1.5 : Deux informations
 **Demander le prénom et la ville de l'utilisateur, puis afficher les deux informations dans une seule phrase.**
 
 <Correction>
@@ -99,7 +99,7 @@ print("Je m'appelle " + prenom + " et j'habite " + ville)
 ```
 </Correction>
 
-### Exercice 1.6 — Animal préféré
+### Exercice 1.6 : Animal préféré
 **Demander l'animal préféré de l'utilisateur, le stocker dans une variable, puis afficher "Mon animal préféré est" suivi de l'animal.**
 
 <Correction>
@@ -188,7 +188,7 @@ if not pluie:
 
 `permis == True` se simplifie souvent en `if permis`, puisque la variable est déjà un booléen. Les deux formes disent la même chose. Autant lire la plus courte une fois qu'elle ne surprend plus.
 
-### Exercice 2.1 — Comparaison de deux nombres
+### Exercice 2.1 : Comparaison de deux nombres
 **Demander deux nombres à l'utilisateur et afficher lequel est le plus grand. Si les deux nombres sont égaux, afficher "Les nombres sont égaux".**
 
 <Correction>
@@ -204,7 +204,7 @@ else:
 ```
 </Correction>
 
-### Exercice 2.2 — Vérification de longueur
+### Exercice 2.2 : Vérification de longueur
 **Demander un mot à l'utilisateur. Si le mot contient plus de 5 lettres, afficher "Mot long", sinon afficher "Mot court".**
 *Indice : `len(s)` renvoie la longueur de la chaîne `s`.*
 
@@ -218,8 +218,8 @@ else:
 ```
 </Correction>
 
-### Exercice 2.3 — Catégorie d'âge
-**Demander l'âge de l'utilisateur et afficher sa catégorie : 0–12 : Enfant ; 13–17 : Adolescent ; 18–59 : Adulte ; 60+ : Senior.**
+### Exercice 2.3 : Catégorie d'âge
+**Demander l'âge de l'utilisateur et afficher sa catégorie : 0-12 : Enfant ; 13-17 : Adolescent ; 18-59 : Adulte ; 60+ : Senior.**
 
 <Correction>
 ```python
@@ -235,7 +235,7 @@ else:
 ```
 </Correction>
 
-### Exercice 2.4 — Calculatrice de moyenne
+### Exercice 2.4 : Calculatrice de moyenne
 **Demander deux notes à l'utilisateur et calculer leur moyenne. Si la moyenne ≥ 10 : afficher "Vous passez en classe supérieure" ; sinon : afficher "Vous devez redoubler".**
 
 <Correction>
@@ -250,7 +250,7 @@ else:
 ```
 </Correction>
 
-### Exercice 2.5 — Prix du billet de train
+### Exercice 2.5 : Prix du billet de train
 **Demander l'âge de l'utilisateur et la distance du trajet (km). Calculer le prix avec : base = distance × 0.20€ ; enfant (< 12) : −50% ; senior (≥ 65) : −30% ; si distance > 200 : −10€ supplémentaires. Afficher le prix final.**
 
 <Correction>
@@ -325,7 +325,7 @@ resultat = calculer_double(5)
 print("Le double est :", resultat)
 ```
 
-### Exercice 3.1 — Ma première fonction
+### Exercice 3.1 : Ma première fonction
 **Créer une fonction `afficher_message()` qui affiche "Bienvenue dans mon programme !". Appeler cette fonction 3 fois.**
 
 <Correction>
@@ -339,7 +339,7 @@ afficher_message()
 ```
 </Correction>
 
-### Exercice 3.2 — Fonction avec paramètre
+### Exercice 3.2 : Fonction avec paramètre
 **Créer une fonction `saluer(nom)` qui prend un nom et affiche "Bonjour" suivi du nom. Appeler avec différents noms.**
 
 <Correction>
@@ -352,7 +352,7 @@ saluer("Bob")
 ```
 </Correction>
 
-### Exercice 3.3 — Calcul du carré
+### Exercice 3.3 : Calcul du carré
 **Créer une fonction `calculer_carre(nombre)` qui retourne le carré. Demander un nombre, utiliser la fonction et afficher le résultat.**
 
 <Correction>
@@ -365,7 +365,7 @@ print(calculer_carre(n))
 ```
 </Correction>
 
-### Exercice 3.4 — Vérification de parité
+### Exercice 3.4 : Vérification de parité
 **Créer une fonction `est_pair(nombre)` qui retourne `True` si le nombre est pair et `False` sinon. Demander un nombre et afficher s'il est pair ou impair.**
 *Rappel : pair si `nombre % 2 == 0`.*
 
@@ -382,7 +382,7 @@ else:
 ```
 </Correction>
 
-### Exercice 3.5 — Calcul de prix TTC
+### Exercice 3.5 : Calcul de prix TTC
 **Créer une fonction `calculer_ttc(prix_ht, taux_tva)` qui retourne le prix TTC (HT × (1 + taux/100)). Demander les valeurs et afficher le prix TTC.**
 
 <Correction>
@@ -396,7 +396,7 @@ print(calculer_ttc(ht, tva))
 ```
 </Correction>
 
-### Exercice 3.6 — Calculatrice complète
+### Exercice 3.6 : Calculatrice complète
 **Créer `addition`, `soustraction`, `multiplication`, `division` puis une fonction `calculatrice()` qui demande deux nombres et une opération, appelle la fonction appropriée et affiche le résultat.**
 
 <Correction>
@@ -474,23 +474,23 @@ for i in range(1, 10):
 
 On prend `for` quand on sait quoi parcourir. On prend `while` quand l'arrêt dépend d'une condition qu'on ne sait pas compter à l'avance, une saisie, une valeur qui décroît.
 
-### Exercice 4.1 — 1 à 100
+### Exercice 4.1 : 1 à 100
 **Écrire une fonction `liste_de_1_a_100()` qui retourne la liste des nombres de 1 à 100.**
 
-### Exercice 4.2 — Table de multiplication
+### Exercice 4.2 : Table de multiplication
 **Écrire une fonction `table_multiplication(n)` qui retourne une liste de 10 chaînes sous la forme `"i x n = produit"` pour `i` allant de 1 à 10.**
 
-### Exercice 4.3 — Somme de 1 à 100
+### Exercice 4.3 : Somme de 1 à 100
 **Écrire une fonction `somme_1_a_100()` qui retourne la somme des entiers de 1 à 100.**
 
-### Exercice 4.4 — Pairs 1..100
+### Exercice 4.4 : Pairs 1..100
 **Écrire une fonction `pairs_1_a_100()` qui retourne la liste des nombres pairs entre 1 et 100.**
 
-### Exercice 4.5 — Compter les voyelles
+### Exercice 4.5 : Compter les voyelles
 **Écrire une fonction `compter_voyelles(chaine)` qui retourne le nombre de voyelles dans `chaine`.**
 *Indice : utiliser un ensemble comme `voyelles = "aeiouyAEIOUY"`.*
 
-### Exercice 4.6 — Inverser une chaîne
+### Exercice 4.6 : Inverser une chaîne
 **Écrire une fonction `inverser_chaine(chaine)` qui retourne `chaine` inversée.**
 *Indice : l'opérateur + permet de mettre 2 chaînes de caractères à la suite.*
 ```python
@@ -500,34 +500,34 @@ chaine1+chaine2 => "bonjouraurevoir"
 chaine2+chaine1 => "aurevoirbonjour"
 ```
 
-### Exercice 4.7 — Somme des chiffres
+### Exercice 4.7 : Somme des chiffres
 **Écrire une fonction `somme_chiffres(n)` qui retourne la somme des chiffres de l'entier `n`.**
 
-### Exercice 4.8 — Jusqu'au premier négatif
+### Exercice 4.8 : Jusqu'au premier négatif
 **Écrire une fonction `compter_positifs_avant_negatif(entiers)` qui parcourt la liste `entiers` (ex: `[1,5,2,-5,1,2,6,-9]`) et retourne le nombre de valeurs lues avant de rencontrer le premier négatif (ou la longueur si aucun négatif).**
 
-### Exercice 4.9 — Multiples de 3
+### Exercice 4.9 : Multiples de 3
 **Écrire une fonction `multiples_de_trois(start, count)` qui retourne la liste obtenue en partant de `start` et en le multipliant par 3, `count` fois de suite.**
 
-### Exercice 4.10 — Divisions par 2
+### Exercice 4.10 : Divisions par 2
 **Écrire une fonction `nb_divisions_par_2(n)` qui retourne le nombre de fois où `n` est divisible par 2 (division entière) jusqu'à devenir strictement inférieur à 2.**
 
-### Exercice 4.11 — Diviseurs et primalité
+### Exercice 4.11 : Diviseurs et primalité
 **Écrire une fonction `diviseurs_propres(n)` qui retourne la liste des diviseurs de `n` (hors 1 et `n`). Puis écrire `est_premier(n)` qui retourne `True` si `n` est premier.**
 
-### Exercice 4.12 — Conjecture de Syracuse
+### Exercice 4.12 : Conjecture de Syracuse
 **Écrire une fonction `sequence_syracuse(n)` qui retourne la liste des termes de la suite de Syracuse en partant de `n` jusqu'à 1 (si pair: `n // 2`, sinon: `3*n + 1`).**
 
-### Exercice 4.13 — Occurrences d’un caractère
-**Écrire une fonction `compter_occurrences_caractere(chaine, c)` qui retourne le nombre d’occurrences de `c` dans `chaine` en parcourant la chaîne caractère par caractère.**
+### Exercice 4.13 : Occurrences d'un caractère
+**Écrire une fonction `compter_occurrences_caractere(chaine, c)` qui retourne le nombre d'occurrences de `c` dans `chaine` en parcourant la chaîne caractère par caractère.**
 
-### Exercice 4.14 — Supprimer un caractère
+### Exercice 4.14 : Supprimer un caractère
 **Écrire une fonction `supprimer_caractere(chaine, c)` qui retourne une nouvelle chaîne sans aucune occurrence de `c`.**
 
-### Exercice 4.15 — Doubler chaque caractère
-**Écrire une fonction `doubler_caracteres(chaine)` qui retourne une chaîne où chaque caractère de `chaine` est répété deux fois (ex: `"abc" → "aabbcc"`).**
+### Exercice 4.15 : Doubler chaque caractère
+**Écrire une fonction `doubler_caracteres(chaine)` qui retourne une chaîne où chaque caractère de `chaine` est répété deux fois (ex: `"abc" -> "aabbcc"`).**
 
-### Exercice 4.16 — Alterner majuscules/minuscules
+### Exercice 4.16 : Alterner majuscules/minuscules
 **Écrire une fonction `alterner_casse(chaine)` qui retourne la chaîne avec une lettre sur deux en majuscule.**
 
 </ExerciseSection>
@@ -576,10 +576,10 @@ liste.insert(1, 99)         # [3, 99, 1, 4, 2, 5, 6]
 # Retirer / dépiler
 liste.remove(99)            # supprime la première occurrence de 99
 x = liste.pop()             # retire et retourne le dernier élément
-y = liste.pop(2)            # retire à l’indice 2
+y = liste.pop(2)            # retire à l'indice 2
 
 # Compter / trouver indice
-c = liste.count(3)          # nombre d’occurrences de 3
+c = liste.count(3)          # nombre d'occurrences de 3
 i = liste.index(4)          # première position de 4
 
 # Trier / inverser
@@ -607,28 +607,28 @@ y = coord[1]  # 20
 # coord[0] = 99  # Erreur : tuple immuable
 ```
 
-### Exercice 5.1 — Somme des éléments
+### Exercice 5.1 : Somme des éléments
 **Écrire une fonction `somme_elements(liste)` qui retourne la somme des éléments de `liste`.**
 
-### Exercice 5.2 — Compter les pairs
+### Exercice 5.2 : Compter les pairs
 **Écrire une fonction `compter_pairs(liste)` qui retourne le nombre d'éléments pairs dans `liste`.**
 
-### Exercice 5.3 — Longueurs des chaînes
+### Exercice 5.3 : Longueurs des chaînes
 **Écrire une fonction `longueur_chaines(liste)` qui retourne une nouvelle liste contenant la longueur de chaque chaîne de `liste`.**
 
-### Exercice 5.4 — Produit des éléments
+### Exercice 5.4 : Produit des éléments
 **Écrire une fonction `produit_elements(liste)` qui retourne le produit des éléments; pour une liste vide, retourner `1`.**
 
-### Exercice 5.5 — Occurrences
+### Exercice 5.5 : Occurrences
 **Écrire une fonction `compter_occurrences(liste, valeur)` qui retourne le nombre d'occurrences de `valeur` dans `liste`.**
 
-### Exercice 5.6 — Inverser une liste
+### Exercice 5.6 : Inverser une liste
 **Écrire une fonction `inverser_liste(liste)` qui retourne une nouvelle liste avec les éléments dans l'ordre inverse.**
 
-### Exercice 5.7 — Concaténation
+### Exercice 5.7 : Concaténation
 **Écrire une fonction `concatener_listes(a, b)` qui retourne une nouvelle liste contenant les éléments de `a` suivis de ceux de `b`.**
 
-### Exercice 5.8 — Premiers éléments
+### Exercice 5.8 : Premiers éléments
 **Écrire une fonction `premiers_elements(liste, n)` qui retourne les `n` premiers éléments de `liste` (ou toute la liste si `n` est plus grand).**
 
 </ExerciseSection>

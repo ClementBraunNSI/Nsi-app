@@ -31,12 +31,12 @@ export function PrivateLessonDates() {
     reload();
   }, []);
 
-  if (!schedule) return <p className="text-sm text-slate-400">Chargement des prochains cours…</p>;
+  if (!schedule) return <p className="text-sm text-slate-400">Chargement des prochains cours</p>;
 
   return (
     <section className="rounded-3xl border border-orange-100 bg-orange-50/60 p-5 space-y-4">
       <div>
-        <h2 className="text-lg font-black text-slate-800">Prochain cours</h2>
+        <h2 className="text-lg font-bold text-slate-800">Prochain cours</h2>
         <p className="text-sm text-slate-500">La date enregistrée ici est celle du prochain cours particulier de cet élève.</p>
       </div>
       {schedule.rows.length === 0 ? (
@@ -63,7 +63,7 @@ export function PrivateLessonDates() {
                         })
                       : await createLesson({ studentId: row.id, startsAt });
                     if (result.error) {
-                      setNotice("La date n’a pas été enregistrée.");
+                      setNotice("La date n'a pas été enregistrée.");
                       return;
                     }
                     reload();

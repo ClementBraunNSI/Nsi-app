@@ -221,7 +221,7 @@ export default function GraphVisualizer() {
                     <tr className="bg-slate-50">
                       <th className="p-3 border-b border-r border-slate-200"></th>
                       {nodeIds.map(l => (
-                        <th key={l} className={`p-3 border-b border-slate-200 text-sm ${hoveredNode === l ? 'text-orange-600 font-black' : 'text-slate-500'}`}>{l}</th>
+                        <th key={l} className={`p-3 border-b border-slate-200 text-sm ${hoveredNode === l ? 'text-orange-600 font-bold' : 'text-slate-500'}`}>{l}</th>
                       ))}
                     </tr>
                   </thead>
@@ -230,7 +230,7 @@ export default function GraphVisualizer() {
                       const rowLabel = nodeIds[i];
                       return (
                         <tr key={i} className={hoveredNode === rowLabel ? 'bg-orange-50/50' : ''}>
-                          <th className={`p-3 border-r border-slate-200 bg-slate-50 text-sm ${hoveredNode === rowLabel ? 'text-orange-600 font-black' : 'text-slate-500'}`}>{rowLabel}</th>
+                          <th className={`p-3 border-r border-slate-200 bg-slate-50 text-sm ${hoveredNode === rowLabel ? 'text-orange-600 font-bold' : 'text-slate-500'}`}>{rowLabel}</th>
                           {row.map((val, j) => {
                             const colLabel = nodeIds[j];
                             const isHighlight = val === 1 && hoveredNode && (hoveredNode === rowLabel || hoveredNode === colLabel);
@@ -240,8 +240,8 @@ export default function GraphVisualizer() {
                                 key={j} 
                                 onClick={() => !isSelf && toggleEdge(rowLabel, colLabel)}
                                 className={`p-3 border border-slate-100 text-sm transition-colors 
-                                  ${isSelf ? 'bg-slate-100 text-slate-300' : 'cursor-pointer hover:bg-orange-100'} 
-                                  ${isHighlight ? 'text-orange-600 font-black bg-orange-50' : (val === 1 ? 'text-slate-800 font-bold' : 'text-slate-400')}`}
+ ${isSelf ? 'bg-slate-100 text-slate-300' : 'cursor-pointer hover:bg-orange-100'} 
+                                  ${isHighlight ? 'text-orange-600 font-bold bg-orange-50' : (val === 1 ? 'text-slate-800 font-bold' : 'text-slate-400')}`}
                               >
                                 {val}
                               </td>

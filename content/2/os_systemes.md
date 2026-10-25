@@ -5,7 +5,7 @@ description: >-
   fonctionnement.
 level: premiere
 chapter: Systèmes d'exploitation
-icon: "\U0001F4BB"
+icon: "laptop"
 badgeId: premiere_systemes_exploitation
 prerequisites:
   - archi_von_neumann

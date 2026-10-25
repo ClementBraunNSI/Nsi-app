@@ -57,7 +57,7 @@ export default async function StudentCoursesPage() {
                       </div>
                       <Badge tone="orange">Privé</Badge>
                     </div>
-                    <h3 className="text-lg font-black text-slate-900 group-hover:text-orange-600 transition-colors line-clamp-2">
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-orange-600 transition-colors line-clamp-2">
                       {course.title}
                     </h3>
                     <div className="mt-4 flex items-center text-sm text-slate-500">

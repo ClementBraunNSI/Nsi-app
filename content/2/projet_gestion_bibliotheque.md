@@ -3,21 +3,21 @@ title: 'Structures : Bibliothèque'
 description: Système de gestion d'une collection de livres numériques en Python
 level: premiere
 chapter: Projets
-icon: "\U0001F4DA"
+icon: "library"
 badgeId: premiere_gestion_bibliotheque
 prerequisites:
   - projet_tournoi_esport
 audience: public
 ---
 
-# 📚 Projet - Système de Gestion de Bibliothèque Numérique
+# <Icone nom="library" /> Projet - Système de Gestion de Bibliothèque Numérique
 
 Le but de ce projet est de créer un programme qui gère une collection de livres : ajout, recherche, affichage, suppression, et conservation des données dans un fichier CSV entre deux lancements.
 Dans ce projet, chaque livre est un dictionnaire, et la bibliothèque est une liste de ces dictionnaires.
 
 L'ISBN identifie un livre : deux fiches ne partagent pas le même ISBN.
 
-## 1. Les livres 📖
+## 1. Les livres <Icone nom="book-open" />
 
 Une fiche contient :
 
@@ -87,7 +87,7 @@ Une fiche contient :
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Le fichier CSV 💾
+## 2. Le fichier CSV <Icone nom="save" />
 
 Fichier `bibliotheque.csv` attendu quand les deux livres sont encore là, virgule comme séparateur, UTF-8 :
 
@@ -121,7 +121,7 @@ L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictRea
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Menu et suppression 🗑️
+## 3. Menu et suppression <Icone nom="trash-2" />
 
 <ExerciseTabs courseId="proj_lib_ui" courseTitle="Menu Principal">
   <ExerciseSection id="lib-ui-2" label="Suppression" type="lecture">

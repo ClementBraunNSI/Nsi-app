@@ -3,13 +3,13 @@ title: Mission AP3
 description: Evolution de la mission AP2 vers une architecture MVC et une application graphique C#
 level: '4'
 chapter: BTS SIO 1 SLAM AP
-icon: "🧩"
+icon: "puzzle"
 prerequisites:
   - missionap2
 audience: public
 ---
 
-# Mission AP3 — AutoRent en MVC et en application graphique
+# Mission AP3 : AutoRent en MVC et en application graphique
 
 Le but de cette mission est de faire évoluer AutoRent, pas d'en changer le métier.
 Durée : 12 h (4 h par semaine, 3 semaines), atelier de professionnalisation, semestre 2. Suite directe de la mission AP2.
@@ -23,14 +23,14 @@ Les véhicules, les états, le devis et l'export restent ceux de l'AP2. On ne re
 
 **Compétences :** B1.3 Développer la présence en ligne. B2.1 Concevoir et développer une solution applicative. B2.2 Assurer la maintenance corrective ou évolutive.
 
-## 1. La veille, avant de toucher au code 📎
+## 1. La veille, avant de toucher au code <Icone nom="paperclip" />
 
 Note d'une page, pas plus.
 
 1. Rôle du modèle, de la vue et du contrôleur. Ce que le MVC change pour la maintenance, par rapport à une page PHP qui mélange la requête, le calcul et l'HTML. Quels points sécurisent l'architecture : échappement du HTML, requêtes qui ne collent pas une saisie brute, fichiers inclus par l'instruction prévue par le langage.
 2. Dans l'application graphique : ce qui est métier (devis, filtre, export) et ce qui est interface (bouton, grille, message). Un clic appelle le métier. Il ne recalcule pas le devis dans le gestionnaire d'événement.
 
-## 2. Le web en MVC 🧩
+## 2. Le web en MVC <Icone nom="puzzle" />
 
 La page d'accueil est la vitrine : tous les véhicules **disponibles**, en grille. Les véhicules en maintenance ou loués ne s'y affichent pas. Sur le jeu d'essai de l'AP2, la grille contient la Peugeot 208, pas la Yamaha MT-07, pas le Fiat Ducato.
 
@@ -65,7 +65,7 @@ La page d'accueil est la vitrine : tous les véhicules **disponibles**, en grill
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. L'application graphique 🖼️
+## 3. L'application graphique <Icone nom="image" />
 
 L'écran principal montre la flotte, pas seulement les disponibles : c'est l'outil de l'agent. La vitrine web, elle, continue de ne montrer que les disponibles.
 
@@ -89,7 +89,7 @@ Au démarrage, les données sont chargées (fichier source, ou sauvegarde locale
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Ce qu'on rend 📦
+## 4. Ce qu'on rend <Icone nom="package" />
 
 - Le projet C# graphique, commenté, sans le menu console.
 - Le site MVC : modèles, contrôleurs, vues, CSS externe.

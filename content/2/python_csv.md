@@ -3,7 +3,7 @@ title: Traitement de données en tables
 description: "Charger un CSV en liste de dictionnaires, puis projeter et sélectionner des données."
 level: premiere
 chapter: Dictionnaires et Tables
-icon: "\U0001F4CA"
+icon: "chart-column"
 badgeId: premiere_traitement_tables_csv
 prerequisites:
   - python_dictionnaires
@@ -59,7 +59,7 @@ for ligne in villes:
 
 # Deux colonnes : nom + département
 for ligne in villes:
-    print(ligne["nom_commune"], "→", ligne["nom_departement"])
+    print(ligne["nom_commune"], "->", ligne["nom_departement"])
 ```
 
 La première boucle ne garde que le nom. La seconde en garde deux. Dans les deux cas, Lille et L'Abergement-Clémenciat passent toutes les deux.
@@ -97,15 +97,15 @@ On enchaîne souvent les deux opérations : d'abord les lignes du Nord, ensuite 
 
 **Faciles**
 
-1. `afficher_noms_communes(villes)` — affiche tous les noms (projection).
-2. `afficher_communes_par_code_postal(villes, code_postal)` — filtre par code postal (sélection).
-3. `afficher_communes_avec_coordonnees(villes)` — nom, latitude, longitude (projection).
+1. `afficher_noms_communes(villes)` : affiche tous les noms (projection).
+2. `afficher_communes_par_code_postal(villes, code_postal)` : filtre par code postal (sélection).
+3. `afficher_communes_avec_coordonnees(villes)` : nom, latitude, longitude (projection).
 
 **Intermédiaires**
 
-1. `afficher_communes_par_departement(villes, departement)` — sélection sur le département.
-2. `afficher_noms_longueur_min(villes, longueur)` — renvoie les noms assez longs.
-3. `afficher_communes_par_latitude(villes, max_latitude)` — latitude inférieure au seuil (penser à convertir en `float`).
+1. `afficher_communes_par_departement(villes, departement)` : sélection sur le département.
+2. `afficher_noms_longueur_min(villes, longueur)` : renvoie les noms assez longs.
+3. `afficher_communes_par_latitude(villes, max_latitude)` : latitude inférieure au seuil (penser à convertir en `float`).
 
 Pour fermer : un CSV est une table en texte, `DictReader` en fait une liste de dictionnaires, les clés sont les descripteurs. La projection choisit les colonnes, la sélection filtre les lignes. Les valeurs lues sont des chaînes. `with` ferme le fichier. Le geste habituel est : sélectionner, puis projeter.
 

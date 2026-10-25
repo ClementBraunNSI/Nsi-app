@@ -3,7 +3,7 @@ title: Histoire de l'Informatique
 description: 'Les grandes étapes, figures et machines qui ont façonné le monde numérique.'
 level: premiere
 chapter: Histoire
-icon: "\U0001F4DC"
+icon: "scroll-text"
 badgeId: histoire_info
 prerequisites: []
 audience: public

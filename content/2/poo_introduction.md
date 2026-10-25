@@ -4,7 +4,7 @@ description: >-
   Classes, objets, attributs et méthodes : premiers pas en programmation orientée objet.
 level: premiere
 chapter: Programmation Orientée Objet
-icon: "\U0001F4E6"
+icon: "package"
 badgeId: premiere_introduction_poo
 prerequisites: []
 audience: public

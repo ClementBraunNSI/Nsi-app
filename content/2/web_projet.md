@@ -3,21 +3,21 @@ title: 'Web : Site Personnel'
 description: Créer une page web sur un tableau revisité avec des renards.
 level: premiere
 chapter: Projets
-icon: "🚀"
+icon: "rocket"
 badgeId: premiere_projet
 prerequisites:
   - projet_empreinte_carbone
 audience: public
 ---
 
-# 🚀 Projet - Un tableau revisité par les renards
+# <Icone nom="rocket" /> Projet - Un tableau revisité par les renards
 
 Le but de ce projet est de créer une page web qui présente un tableau connu, puis une version de ce tableau où des renards ont pris la place des personnages.
 Dans ce projet, la page raconte une courte histoire à partir de cette scène, et le visiteur bascule entre les deux images.
 
 Le sujet est bien un tableau, sa version renard, et une histoire.
 
-## 1. Le tableau et les fichiers 🖼️
+## 1. Le tableau et les fichiers <Icone nom="image" />
 
 Vous partez d'un vrai tableau, que vous pouvez décrire et dont vous pouvez montrer une reproduction que vous avez le droit d'utiliser en classe (fichier fourni, ou image que vous dessinez). La page indique l'auteur, la date et le lieu de conservation.
 
@@ -67,7 +67,7 @@ Blocs HTML, dans cet ordre : un titre de page, une section « Le tableau origina
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Le bouton qui change l'image 🦊
+## 2. Le bouton qui change l'image <Renard />
 
 Les programmes ci-dessous sont des points de départ. Adaptez les identifiants, les textes et les chemins à votre page. Copier un bloc sans le relier à vos sections ne suffit pas : le bouton doit agir sur votre image.
 

@@ -146,7 +146,7 @@ export default function LinearVsBinarySearch() {
 
       <div className="mb-8 text-center">
         <span className="text-slate-500 font-medium">Cible à trouver : </span>
-        <span className="text-3xl font-black text-slate-800 ml-2">{target}</span>
+        <span className="text-3xl font-bold text-slate-800 ml-2">{target}</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

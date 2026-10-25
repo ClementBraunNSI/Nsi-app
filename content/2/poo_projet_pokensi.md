@@ -3,14 +3,14 @@ title: 'Dictionnaires : PokéNSI'
 description: Création d'un jeu inspiré de Pokémon en Python
 level: premiere
 chapter: Projets
-icon: "\U0001F47E"
+icon: "gamepad-2"
 badgeId: premiere_pokensi
 prerequisites:
   - projet_jeux_video
 audience: public
 ---
 
-# 👾 Projet - PokéNSI (Partie 1)
+# <Icone nom="gamepad-2" /> Projet - PokéNSI (Partie 1)
 
 Le but de ce projet est de créer un jeu inspiré de Pokémon en utilisant Python.
 Dans cette première partie, nous allons nous concentrer sur la création du Pokédex et la mise en place du système de combat.
@@ -20,19 +20,19 @@ Dans cette première partie, nous allons nous concentrer sur la création du Pok
 - [Base de données Pokedex](resources/pokedex.csv)
 - [Base de données Attaques](resources/attaques.csv)
 
-## 1. Le Pokédex 📱
+## 1. Le Pokédex <Icone nom="smartphone" />
 
 Le Pokédex est une base de données qui contient tous les Pokémon du jeu. Chaque Pokémon est représenté par un **dictionnaire** :
 
-- `nom` (str) 📝
-- `hp` (int) ❤️
-- `atq` (int) ⚔️
-- `def` (int) 🛡️
-- `attaques` (list) 💥
-- `evolution` (str) ✨
-- `niveau_evolution` (int) 📈
-- `niveau` (int) 📊
-- `xp` (int) ⭐
+- `nom` (str) <Icone nom="notebook-pen" />
+- `hp` (int) <Icone nom="heart" />
+- `atq` (int) <Icone nom="swords" />
+- `def` (int) <Icone nom="shield" />
+- `attaques` (list) <Icone nom="zap" />
+- `evolution` (str) <Icone nom="star" />
+- `niveau_evolution` (int) <Icone nom="trending-up" />
+- `niveau` (int) <Icone nom="chart-column" />
+- `xp` (int)<Renards n="1" />
 
 <ExerciseTabs courseId="proj_poke_dex" courseTitle="Création du Pokédex">
   <ExerciseSection id="poke-dex-1" label="Initialisation" type="python">
@@ -85,9 +85,9 @@ Le Pokédex est une base de données qui contient tous les Pokémon du jeu. Chaq
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Le système de combat ⚔️
+## 2. Le système de combat <Icone nom="swords" />
 
-### Les attaques 💥
+### Les attaques <Icone nom="zap" />
 
 L'ensemble des attaques est disponible dans `attaques.csv`.
 
@@ -118,10 +118,10 @@ L'ensemble des attaques est disponible dans `attaques.csv`.
       $$
 
       Avec :
-      - $N$ : Niveau du Pokémon attaquant 📊
-      - $Atq$ : Points d'attaque de l'attaquant ⚔️
-      - $Puissance$ : Puissance de l'attaque utilisée 💥
-      - $Def$ : Points de défense de la cible 🛡️
+      - $N$ : Niveau du Pokémon attaquant <Icone nom="chart-column" />
+      - $Atq$ : Points d'attaque de l'attaquant <Icone nom="swords" />
+      - $Puissance$ : Puissance de l'attaque utilisée <Icone nom="zap" />
+      - $Def$ : Points de défense de la cible <Icone nom="shield" />
 
       Implémentez la fonction `calculer_degats(attaquant, defenseur, nom_attaque, dico_attaques)`.
     </Enonce>
@@ -139,7 +139,7 @@ L'ensemble des attaques est disponible dans `attaques.csv`.
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Simulation ⚡
+## 3. Simulation <Icone nom="zap" />
 
 <ExerciseTabs courseId="proj_poke_sim" courseTitle="Simulation">
   <ExerciseSection id="poke-sim-1" label="Duel" type="python">

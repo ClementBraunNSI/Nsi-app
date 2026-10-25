@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight, LayoutGrid, Zap } from 'lucide-react';
+import { CourseIcon } from "@/components/ui/CourseIcon";
 
 type CourseItem = {
   slug: string;
@@ -89,7 +90,7 @@ export default function ChapterTabsView({ chapters, niveaux, theme }: Props) {
             >
               <div className="flex items-start gap-5 min-w-0">
                 <span className={`text-4xl ${cours.isPrivate ? 'text-[var(--accent)]' : ''}`}>
-                  {cours.icon}
+                  <CourseIcon name={cours.icon} />
                 </span>
                 <div className="min-w-0">
                   <h3 className={`font-semibold tracking-tight text-lg transition-colors duration-150 truncate ${

@@ -3,7 +3,7 @@ title: 'TP Python : Réseaux sociaux'
 description: 'Modéliser un réseau d''amis avec networkx (graphes) et pandas.'
 level: seconde
 chapter: Réseaux sociaux
-icon: "🐍"
+icon: "code"
 prerequisites:
   - Cours_Reseaux_Sociaux
 audience: public
@@ -11,9 +11,9 @@ audience: public
 
 <ExerciseTabs courseId="tp-python-reseaux" courseTitle="TP Python : Réseaux sociaux" packages="networkx,pandas">
 
-  <ExerciseSection id="rs-0" label="Important ⚠️ - Avant de commencer" type="lecture">
+  <ExerciseSection id="rs-0" label="Important - Avant de commencer" type="lecture">
     <Enonce>
-      ### Important ⚠️ - Avant de commencer
+      ### Important <Icone nom="triangle-alert" /> - Avant de commencer
 
       En cours, vous avez vu qu'un réseau social peut se modéliser par un **graphe** : des **sommets** (utilisateurs) reliés par des **arêtes** (amitiés).
 
@@ -43,9 +43,9 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-1" label="Introduction 🦊 - Créer un graphe" type="python">
+  <ExerciseSection id="rs-1" label="Introduction - Créer un graphe" type="python">
     <Enonce>
-      ### Introduction 🦊 - Créer un graphe
+      ### Introduction <Renards n="1" /> - Créer un graphe
 
       **Mission :** Créez un graphe non orienté `reseau` avec **networkx**, ajoutez les utilisateurs `"Alice"`, `"Bob"` et `"Charlie"` comme sommets, puis stockez le nombre d'utilisateurs dans `nb_utilisateurs`.
 
@@ -64,16 +64,16 @@ assert set(reseau.nodes()) == {"Alice", "Bob", "Charlie"}, "Ajoutez Alice, Bob e
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-2" label="Introduction 🦊 - Relier des amis" type="python">
+  <ExerciseSection id="rs-2" label="Introduction - Relier des amis" type="python">
     <Enonce>
-      ### Introduction 🦊 - Relier des amis
+      ### Introduction <Renards n="1" /> - Relier des amis
 
       Une **amitié** entre deux personnes est une **arête** du graphe.
 
       **Mission :** Créez un graphe `reseau` avec les utilisateurs Alice, Bob et Charlie. Ajoutez les amitiés suivantes :
 
-      - Alice ↔ Bob
-      - Bob ↔ Charlie
+      - Alice et Bob
+      - Bob et Charlie
 
       Stockez le nombre d'amitiés dans `nb_amities`.
 
@@ -93,9 +93,9 @@ assert not reseau.has_edge("Alice", "Charlie"), "Alice et Charlie ne sont pas am
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-3" label="Introduction 🦊 - Nombre d'amis" type="python">
+  <ExerciseSection id="rs-3" label="Introduction - Nombre d'amis" type="python">
     <Enonce>
-      ### Introduction 🦊 - Nombre d'amis
+      ### Introduction <Renards n="1" /> - Nombre d'amis
 
       Le **degré** d'un sommet = son nombre d'amis dans le réseau.
 
@@ -132,9 +132,9 @@ assert amis_bob == 3, "Bob a 3 amis dans ce réseau."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-4" label="Introduction 🦊 - Vérifier une amitié" type="python">
+  <ExerciseSection id="rs-4" label="Introduction - Vérifier une amitié" type="python">
     <Enonce>
-      ### Introduction 🦊 - Vérifier une amitié
+      ### Introduction <Renards n="1" /> - Vérifier une amitié
 
       **Mission :** À partir du graphe fourni, vérifiez si **Alice** et **Charlie** sont amis. Stockez le résultat (`True` ou `False`) dans `alice_charlie_amis`.
 
@@ -167,9 +167,9 @@ assert alice_charlie_amis == False, "Alice et Charlie ne sont pas amis directeme
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-5" label="Facile 🦊 - Tableau des profils" type="python">
+  <ExerciseSection id="rs-5" label="Facile - Tableau des profils" type="python">
     <Enonce>
-      ### Facile 🦊 - Tableau des profils
+      ### Facile <Renards n="1" /> - Tableau des profils
 
       On peut croiser un **tableau pandas** (profils) et un **graphe** (amitiés).
 
@@ -201,9 +201,9 @@ assert ville_charlie == profils_ref.loc[profils_ref["Prénom"] == "Charlie", "Vi
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-6" label="Facile 🦊 - L'utilisateur le plus populaire" type="python">
+  <ExerciseSection id="rs-6" label="Facile - L'utilisateur le plus populaire" type="python">
     <Enonce>
-      ### Facile 🦊 - L'utilisateur le plus populaire
+      ### Facile <Renards n="1" /> - L'utilisateur le plus populaire
 
       **Mission :** Dans le graphe fourni, trouvez l'utilisateur qui a le **plus d'amis** et stockez son prénom dans `plus_populaire`.
 
@@ -242,9 +242,9 @@ assert plus_populaire == "Alice", "Alice a le plus d'amis."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="rs-7" label="Facile 🦊 - Graphe depuis un tableau" type="python">
+  <ExerciseSection id="rs-7" label="Facile - Graphe depuis un tableau" type="python">
     <Enonce>
-      ### Facile 🦊 - Graphe depuis un tableau
+      ### Facile <Renards n="1" /> - Graphe depuis un tableau
 
       **Mission :** Créez un graphe `reseau` à partir du tableau de **paires d'amis** ci-dessous (chaque ligne = une amitié). Stockez le nombre total d'arêtes dans `nb_amities`.
 

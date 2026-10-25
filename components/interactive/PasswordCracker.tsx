@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { LockOpen } from 'lucide-react';
 
 export default function PasswordCracker() {
   const [password, setPassword] = useState('');
@@ -49,12 +50,12 @@ export default function PasswordCracker() {
   return (
     <div className="border rounded-xl p-8 bg-slate-900 text-white shadow-lg my-8 font-mono">
       <h3 className="text-xl font-bold text-orange-400 mb-6 flex items-center gap-2">
-        🔓 Simulateur de Brute-Force
+        <LockOpen size={22} aria-hidden /> Simulateur de brute-force
       </h3>
 
       <div className="flex flex-col gap-6">
         <div>
-          <label className="text-xs text-slate-400 uppercase tracking-wider font-bold">Ton mot de passe (max 5 chars pour la démo)</label>
+          <label className="text-xs text-slate-400 font-bold">Ton mot de passe (max 5 chars pour la démo)</label>
           <div className="flex gap-4 mt-2">
             <input 
               type="text" 
@@ -91,7 +92,7 @@ export default function PasswordCracker() {
         </div>
 
         <div className="bg-black p-6 rounded-xl border border-orange-900/30 relative overflow-hidden">
-          <div className="absolute top-2 right-4 text-xs text-orange-800 animate-pulse">SYSTEM_ACCESS: {status === 'cracked' ? 'GRANTED' : 'DENIED'}</div>
+          <div className="absolute top-2 right-4 text-xs text-orange-800">SYSTEM_ACCESS: {status === 'cracked' ? 'GRANTED' : 'DENIED'}</div>
           
           <div className="flex flex-col items-center justify-center h-24">
             {status === 'idle' && <span className="text-slate-600 text-sm">En attente de cible...</span>}

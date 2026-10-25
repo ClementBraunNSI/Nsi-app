@@ -26,17 +26,17 @@ export default function AchievementUnlockedModal({ achievement, onClose }: Achie
 
   return (
     <div
-      className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-500"
+      className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900 animate-in fade-in duration-500"
       onClick={onClose}
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="succes-debloque-titre"
-        className="bg-white rounded-[3rem] p-10 max-w-md w-full text-center shadow-2xl animate-in zoom-in duration-500 border-4 border-purple-100 relative overflow-hidden"
+        className="bg-white rounded-[3rem] p-10 max-w-md w-full text-center shadow-2xl animate-in zoom-in duration-500 border-4 border-orange-100 relative overflow-hidden"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-purple-50 to-transparent -z-10" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-orange-50 to-transparent -z-10" />
 
         <button
           type="button"
@@ -49,12 +49,12 @@ export default function AchievementUnlockedModal({ achievement, onClose }: Achie
 
         <AcademyVictoryFox className="mb-3" />
 
-        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-purple-100 text-purple-600 text-xs font-black uppercase tracking-widest mb-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-orange-100 text-orange-600 text-xs font-bold mb-4">
           <Icon size={14} />
           Nouveau Succès !
         </div>
 
-        <h2 id="succes-debloque-titre" className="text-3xl font-black text-slate-900 mb-2 italic uppercase tracking-tighter">
+        <h2 id="succes-debloque-titre" className="text-3xl font-bold text-slate-900 mb-2 italic tracking-tighter">
           {achievement.title}
         </h2>
 
@@ -69,7 +69,7 @@ export default function AchievementUnlockedModal({ achievement, onClose }: Achie
         )}
 
         <div className="mt-8 pt-6 border-t border-slate-100">
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+          <p className="text-xs font-bold text-slate-400">
             Continue comme ça !
           </p>
         </div>

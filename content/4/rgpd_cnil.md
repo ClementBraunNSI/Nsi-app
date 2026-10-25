@@ -5,7 +5,7 @@ description: >-
   droits des citoyens
 level: BTS
 chapter: 'BTS SIO 1 : B3 - CyberSécurité'
-icon: ⚖️
+icon: "scale"
 prerequisites:
   - cours_owasp_web
 audience: public
@@ -29,7 +29,7 @@ Certaines données sont **sensibles**. Leur traitement est interdit par principe
 
 La **CNIL**, Commission nationale de l'informatique et des libertés, est le régulateur français. C'est une autorité administrative indépendante, créée par la loi Informatique et Libertés du **6 janvier 1978**. Elle agit au nom de l'État sans recevoir d'ordres du gouvernement sur ses contrôles.
 
-Quatre missions. Elle **informe** et protège les droits : elle répond aux particuliers, reçoit les plaintes — plus de 14 000 par an — et aide à exercer les droits. Elle **accompagne** la conformité : boîtes à outils, référentiels de secteur, guides, labels. Elle **anticipe**, par la veille de son laboratoire d'innovation, le LINC, sur ce que l'IA, les téléphones et les objets connectés font à la vie privée. Elle **contrôle** et sanctionne, sur place ou en ligne.
+Quatre missions. Elle **informe** et protège les droits : elle répond aux particuliers, reçoit les plaintes, plus de 14 000 par an, et aide à exercer les droits. Elle **accompagne** la conformité : boîtes à outils, référentiels de secteur, guides, labels. Elle **anticipe**, par la veille de son laboratoire d'innovation, le LINC, sur ce que l'IA, les téléphones et les objets connectés font à la vie privée. Elle **contrôle** et sanctionne, sur place ou en ligne.
 
 Les contrôles prennent quatre formes. En **ligne**, depuis les locaux de la CNIL : cookies, mentions, formulaires. Sur **pièces** : courriers, registres, contrats de sous-traitance. Sur **place** : une visite, inopinée ou annoncée, les serveurs, le personnel. En **audition** : les responsables sont convoqués à la CNIL. Plusieurs centaines de contrôles ont lieu chaque année.
 
@@ -79,7 +79,7 @@ Un consentement n'est valable que s'il est **libre** (pas de pénalité si l'on 
 
 ## Ce que la personne peut exiger
 
-Chaque personne — salarié, client, usager — exerce ses droits auprès du responsable de traitement.
+Chaque personne (salarié, client, usager) exerce ses droits auprès du responsable de traitement.
 
 Le **droit d'accès** (article 15) permet de demander si l'organisme détient des données sur soi, et d'en obtenir une copie lisible. C'est aussi le moyen de vérifier qu'elles sont exactes.
 
@@ -89,7 +89,7 @@ Le **droit à l'effacement**, souvent appelé droit à l'oubli (article 17), dem
 
 Le **droit à la limitation** (article 18) gèle l'usage, le temps de vérifier une contestation. Les données restent. On ne s'en sert plus pour la finalité contestée, tant que le doute n'est pas levé.
 
-Le **droit à la portabilité** (article 20) rend les données dans un format structuré, lisible par une machine — CSV, XML — pour les transmettre à un autre organisme. Changer d'opérateur, ou de plateforme de musique, en emportant son historique. Il joue surtout quand le traitement repose sur le consentement ou le contrat, et qu'il est automatisé.
+Le **droit à la portabilité** (article 20) rend les données dans un format structuré, lisible par une machine (CSV, XML) pour les transmettre à un autre organisme. Changer d'opérateur, ou de plateforme de musique, en emportant son historique. Il joue surtout quand le traitement repose sur le consentement ou le contrat, et qu'il est automatisé.
 
 Le **droit d'opposition** (article 21) refuse un usage précis. Pour la prospection commerciale, il est absolu : on n'a pas à se justifier pour ne plus recevoir de publicité. Pour le reste, il faut un motif légitime, sauf si le traitement relève de l'intérêt public.
 
@@ -101,7 +101,7 @@ Le **registre des activités de traitement** est le document central. Il décrit
 
 L'**analyse d'impact**, AIPD ou DPIA, est obligatoire quand le traitement présente un risque élevé pour les droits et libertés : données de santé, surveillance systématique, profilage. On y décrit les risques et les mesures qui les réduisent, avant de lancer, pas après la plainte.
 
-En cas de **violation** — vol, perte, accès non autorisé — le responsable notifie la CNIL dans les **72 heures**. Si le risque est élevé pour les personnes, il les prévient aussi, individuellement. Le délai court à partir du moment où l'on a connaissance de la violation. Attendre d'avoir tout compris n'arrête pas l'horloge.
+En cas de **violation** (vol, perte, accès non autorisé), le responsable notifie la CNIL dans les **72 heures**. Si le risque est élevé pour les personnes, il les prévient aussi, individuellement. Le délai court à partir du moment où l'on a connaissance de la violation. Attendre d'avoir tout compris n'arrête pas l'horloge.
 
 ## Dès la conception, pas en rustine
 
@@ -121,7 +121,7 @@ La Commission européenne peut reconnaître qu'un pays offre un niveau **adéqua
 
 Ailleurs, il faut des **garanties**. Les *Binding Corporate Rules*, règles d'entreprise contraignantes, lient les entités d'un groupe multinational. Les **clauses contractuelles types** sont des modèles rédigés par la Commission, signés entre l'exportateur et l'importateur.
 
-Les États-Unis passent par le *Data Privacy Framework* : le transfert est facilité vers les entreprises américaines qui y sont certifiées, pas vers n'importe quelle société du pays. Pour le cloud — AWS, Azure, Google Cloud — la question est la localisation des serveurs et le droit qui s'y applique. Héberger des données sensibles hors de l'Union demande de savoir dans quel pays elles se trouvent, et sur quel outil juridique le transfert repose.
+Les États-Unis passent par le *Data Privacy Framework* : le transfert est facilité vers les entreprises américaines qui y sont certifiées, pas vers n'importe quelle société du pays. Pour le cloud (AWS, Azure, Google Cloud), la question est la localisation des serveurs et le droit qui s'y applique. Héberger des données sensibles hors de l'Union demande de savoir dans quel pays elles se trouvent, et sur quel outil juridique le transfert repose.
 
 ## Les amendes
 
@@ -131,7 +131,7 @@ La CNIL sanctionne. Les plafonds sont faits pour compter dans un bilan. Jusqu'à
 
 Toute collecte en ligne s'accompagne d'une **politique de confidentialité**. Elle est accessible depuis toutes les pages, en général dans le pied de page. Elle est écrite pour être comprise, pas pour être déchiffrée par un juriste. Elle dit les finalités, les destinataires, les durées, les droits.
 
-Les **cookies** non essentiels — publicité, mesure d'audience qui n'est pas strictement nécessaire, réseaux sociaux — ne se déposent qu'après un consentement. Le bandeau propose d'accepter, de refuser, de personnaliser. Refuser doit être aussi simple qu'accepter. Le choix se conserve ; six mois est la durée que la CNIL recommande avant de redemander.
+Les **cookies** non essentiels (publicité, mesure d'audience qui n'est pas strictement nécessaire, réseaux sociaux) ne se déposent qu'après un consentement. Le bandeau propose d'accepter, de refuser, de personnaliser. Refuser doit être aussi simple qu'accepter. Le choix se conserve ; six mois est la durée que la CNIL recommande avant de redemander.
 
 ## Le formulaire de contact
 
@@ -139,10 +139,10 @@ Vous écrivez un formulaire pour un site vitrine. Chaque ligne se juge au princi
 
 | Élément | Conforme RGPD ? | Correction / Explication |
 | :--- | :--- | :--- |
-| Champ "Nom" (Obligatoire) | ✅ OUI | Nécessaire pour répondre (Minimisation). |
-| Champ "Date de naissance" (Obligatoire) | ❌ NON | Inutile pour une simple prise de contact (Minimisation). |
-| Case pré-cochée : "Je veux recevoir la newsletter" | ❌ NON | Le consentement doit être un acte positif. La case doit être vide par défaut. |
-| Mention : "Vos données sont conservées 3 ans après le dernier contact" | ✅ OUI | Durée de conservation définie et transparente. |
-| Lien vers la "Politique de confidentialité" | ✅ OUI | Obligation de transparence (Information). |
+| Champ "Nom" (Obligatoire) | <Icone nom="circle-check" /> OUI | Nécessaire pour répondre (Minimisation). |
+| Champ "Date de naissance" (Obligatoire) | <Icone nom="circle-x" /> NON | Inutile pour une simple prise de contact (Minimisation). |
+| Case pré-cochée : "Je veux recevoir la newsletter" | <Icone nom="circle-x" /> NON | Le consentement doit être un acte positif. La case doit être vide par défaut. |
+| Mention : "Vos données sont conservées 3 ans après le dernier contact" | <Icone nom="circle-check" /> OUI | Durée de conservation définie et transparente. |
+| Lien vers la "Politique de confidentialité" | <Icone nom="circle-check" /> OUI | Obligation de transparence (Information). |
 
 Le nom sert à répondre : il est nécessaire, donc compatible avec la minimisation. La date de naissance ne sert à rien pour un message. La case déjà cochée fabrique un consentement que la personne n'a pas donné. La durée écrite et le lien vers la politique sont le minimum de transparence. Un formulaire juste est souvent un formulaire plus court.

@@ -4,7 +4,7 @@ description: >-
   Listes et tuples : accès par indice, parcours, et modifications des listes.
 level: premiere
 chapter: Structures de données linéaires
-icon: "\U0001F517"
+icon: "link"
 badgeId: premiere_cours
 prerequisites: []
 audience: public
@@ -61,7 +61,7 @@ La première boucle donne les valeurs, quand l'indice ne sert pas. La seconde do
 
 ## Modifier une liste
 
-`append` ajoute à la fin. `pop` retire un élément et le renvoie : sans argument, c'est le dernier ; avec un indice, c'est la case demandée. `remove` cherche une **valeur** et retire sa première occurrence. `pop` et `remove` ne répondent donc pas à la même question. L'un demande « la case numéro… », l'autre « la valeur… ».
+`append` ajoute à la fin. `pop` retire un élément et le renvoie : sans argument, c'est le dernier ; avec un indice, c'est la case demandée. `remove` cherche une **valeur** et retire sa première occurrence. `pop` et `remove` ne répondent donc pas à la même question. L'un demande « la case numéro... », l'autre « la valeur... ».
 
 ```python
 nombres = []

@@ -484,7 +484,7 @@ export default function CsvDetective({ scenario: scenarioProp = scenario1 }: { s
   return (
     <div className="border rounded-xl p-6 bg-slate-50 shadow-xl my-8 font-sans transition-all duration-500">
       <div className="mb-4">
-        <h3 className="text-xl font-black text-slate-800">{scenario.title}</h3>
+        <h3 className="text-xl font-bold text-slate-800">{scenario.title}</h3>
         <p className="text-slate-500">{scenario.description}</p>
       </div>
 
@@ -493,10 +493,10 @@ export default function CsvDetective({ scenario: scenarioProp = scenario1 }: { s
         <div className="flex gap-4 overflow-x-auto pb-2">
           {scenario.steps.map((s, i) => (
             <div key={s.id} className={`flex items-center gap-2 ${i <= currentStep ? 'text-orange-600' : 'text-slate-300'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 flex-shrink-0 ${i < currentStep ? 'bg-orange-600 border-orange-600 text-white' : i === currentStep ? 'border-orange-600 animate-pulse' : 'border-slate-200'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 flex-shrink-0 ${i < currentStep ? 'bg-orange-600 border-orange-600 text-white' : i === currentStep ? 'border-orange-600' : 'border-slate-200'}`}>
                 {i < currentStep ? <CheckCircle2 size={16} /> : s.id}
               </div>
-              <span className="text-xs font-bold uppercase tracking-wider hidden sm:block whitespace-nowrap">{s.label}</span>
+              <span className="text-xs font-bold hidden sm:block whitespace-nowrap">{s.label}</span>
             </div>
           ))}
         </div>
@@ -506,14 +506,14 @@ export default function CsvDetective({ scenario: scenarioProp = scenario1 }: { s
       </div>
 
       {/* Instruction Card */}
-      <div className={`mb-6 p-6 rounded-xl border-l-4 transition-all transform ${feedback === 'success' ? 'bg-green-50 border-green-500 scale-105' : feedback === 'error' ? 'bg-red-50 border-red-500 animate-bounce' : 'bg-orange-50 border-orange-500'}`}>
+      <div className={`mb-6 p-6 rounded-xl border-l-4 transition-all transform ${feedback === 'success' ? 'bg-green-50 border-green-500 scale-105' : feedback === 'error' ? 'bg-red-50 border-red-500' : 'bg-orange-50 border-orange-500'}`}>
         <div className="flex justify-between items-center flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-white rounded-full shadow-sm text-orange-600">
               {currentStepConfig.icon}
             </div>
             <div>
-              <p className="text-sm text-orange-600 font-bold uppercase">Indice actuel</p>
+              <p className="text-sm text-orange-600 font-bold">Indice actuel</p>
               <p className="text-lg text-slate-800 font-semibold">{currentStepConfig.instruction}</p>
             </div>
           </div>
@@ -528,7 +528,7 @@ export default function CsvDetective({ scenario: scenarioProp = scenario1 }: { s
 
       {/* Zone de filtres contextuels selon l'étape */}
       <div className="mb-6 p-4 bg-white rounded-xl shadow-sm border border-slate-200">
-        <h4 className="text-sm font-bold text-slate-500 uppercase mb-3 flex items-center gap-2">
+        <h4 className="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2">
           <Search size={16} /> Filtres disponibles
         </h4>
         
@@ -617,7 +617,7 @@ export default function CsvDetective({ scenario: scenarioProp = scenario1 }: { s
             {table.getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
-                  <th key={header.id} className="px-6 py-4 font-bold uppercase cursor-pointer hover:text-orange-600" onClick={header.column.getToggleSortingHandler()}>
+                  <th key={header.id} className="px-6 py-4 font-bold cursor-pointer hover:text-orange-600" onClick={header.column.getToggleSortingHandler()}>
                     <div className="flex items-center gap-1">
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.getIsSorted() && (header.column.getIsSorted() === 'asc' ? <ChevronUp size={14} /> : <ChevronDown size={14} />)}
@@ -643,7 +643,7 @@ export default function CsvDetective({ scenario: scenarioProp = scenario1 }: { s
       
       {currentStep === scenario.steps.length - 1 && feedback === 'success' && (
         <div className="mt-8 p-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl text-white text-center shadow-2xl animate-in fade-in zoom-in duration-500">
-          <h2 className="text-3xl font-black mb-2">ENQUÊTE RÉSOLUE ! 🚔</h2>
+          <h2 className="text-3xl font-bold mb-2">Enquête résolue !</h2>
           <p className="text-lg opacity-90">Le coupable a été identifié avec succès.</p>
         </div>
       )}

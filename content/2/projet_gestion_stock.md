@@ -5,19 +5,19 @@ description: >-
   commerce
 level: premiere
 chapter: Projets
-icon: "\U0001F4E6"
+icon: "package"
 badgeId: premiere_gestion_stock
 prerequisites:
   - projet_gestion_bibliotheque
 audience: public
 ---
 
-# 📦 Projet - Système de Gestion de Stock
+# <Icone nom="package" /> Projet - Système de Gestion de Stock
 
 Le but de ce projet est de simuler la réserve et la caisse d'un petit commerce.
 Dans ce projet, le catalogue est une liste de dictionnaires, et une vente est une liste de couples `(id_produit, quantite)`. On ne retire du stock qu'une fois toute la vente vérifiée : un article manquant annule le ticket entier.
 
-## 1. Le catalogue 🏷️
+## 1. Le catalogue <Icone nom="tag" />
 
 Une fiche produit contient :
 
@@ -66,7 +66,7 @@ Une fiche produit contient :
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Les mouvements 📥
+## 2. Les mouvements <Icone nom="inbox" />
 
 <ExerciseTabs courseId="proj_stock_mvt" courseTitle="Mouvements">
   <ExerciseSection id="stock-mvt-1" label="Mise à jour" type="lecture">
@@ -100,7 +100,7 @@ Une fiche produit contient :
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. La vente 🧾
+## 3. La vente <Icone nom="receipt" />
 
 Une vente est une liste de tuples `(id_produit, quantite)`.
 
@@ -146,7 +146,7 @@ panier = [("LIV001", 2), ("STY002", 1)]
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Menu et rendu 🛒
+## 4. Menu et rendu <Icone nom="shopping-cart" />
 
 <ExerciseTabs courseId="proj_stock_ui" courseTitle="Menu">
   <ExerciseSection id="stock-ui-1" label="Menu principal" type="lecture">

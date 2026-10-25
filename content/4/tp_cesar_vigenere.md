@@ -3,7 +3,7 @@ title: TP - Chiffrement et Déchiffrement
 description: 'Implémentation des chiffrements de César, Vigenère et RSA en Python.'
 level: BTS SIO
 chapter: 'BTS SIO 1 : B3 - CyberSécurité'
-icon: "\U0001F510"
+icon: "lock-keyhole"
 prerequisites:
   - chiffrement_hachage
 audience: public
@@ -23,9 +23,9 @@ audience: public
       *   L'opérateur `% 26` pour revenir au début de l'alphabet
 
       ## Rappels utiles
-      *   Longueur d'une chaîne : `len("BONJOUR")` → 7
-      *   Accès à un caractère : `"BONJOUR"[0]` → 'B'
-      *   Position d'un caractère : `"BONJOUR".index('N')` → 2
+      *   Longueur d'une chaîne : `len("BONJOUR")` donne 7
+      *   Accès à un caractère : `"BONJOUR"[0]` donne 'B'
+      *   Position d'un caractère : `"BONJOUR".index('N')` donne 2
       *   L'opérateur `%` permet de faire des calculs circulaires
 
       ### Aide-mémoire : opérateur %
@@ -50,9 +50,9 @@ audience: public
 
       ### Principe
       Le chiffre de César consiste à décaler chaque lettre de l'alphabet d'un nombre fixe de positions (la clé).
-      *   A → D
-      *   B → E
-      *   Z → C (retour au début grâce à % 26)
+      *   A devient D
+      *   B devient E
+      *   Z devient C (retour au début grâce à % 26)
 
       #### Exemple
       ```
@@ -61,7 +61,7 @@ audience: public
       Chiffré : ERQMRXU
       ```
 
-      ### Exercice 1.1 · Fonction indice_dans_alphabet
+      ### Exercice 1.1 : Fonction indice_dans_alphabet
       Écrire une fonction qui prend une lettre majuscule, retourne son indice dans ALPHABET, et -1 si ce n'est pas une lettre.
       ```python
       ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -71,7 +71,7 @@ audience: public
       print(indice_dans_alphabet(' '))  # Attendu : -1
       ```
 
-      ### Exercice 1.2 · Chiffrement d'un caractère
+      ### Exercice 1.2 : Chiffrement d'un caractère
       Écrire `chiffrer_caractere_cesar(caractere, cle)`. Formule : `(indice_actuel + cle) % 26`.
       ```python
       print(chiffrer_caractere_cesar('A', 3))  # D
@@ -80,7 +80,7 @@ audience: public
       print(chiffrer_caractere_cesar(' ', 3))  # ' '
       ```
 
-      ### Exercice 1.3 · Message complet
+      ### Exercice 1.3 : Message complet
       Écrire `chiffrer_cesar(message, cle)` en utilisant la fonction précédente.
       ```python
       print(chiffrer_cesar("BONJOUR", 3))           # ERQMRXU
@@ -88,7 +88,7 @@ audience: public
       print(chiffrer_cesar("ABC XYZ", 1))           # BCD YZA
       ```
 
-      ### Exercice 1.4 · Déchiffrement
+      ### Exercice 1.4 : Déchiffrement
       Pour déchiffrer, soustraire la clé : `(indice_actuel - cle) % 26`.
       ```python
       message = "BONJOUR"
@@ -98,7 +98,7 @@ audience: public
       print(dechiffre)         # BONJOUR
       ```
 
-      ### Exercice 1.5 · Cassage par force brute
+      ### Exercice 1.5 : Cassage par force brute
       Tester toutes les clés (0 à 25) et afficher chaque résultat avec la clé.
       ```
       Cle 0 : ERQMRXU
@@ -125,13 +125,13 @@ audience: public
       ```
       Message : BONJOUR (indices: 1,14,13,9,14,20,17)
       Clé :     CLE     (indices: 2,11,4 répétés)
-      Calcul :  (1+2)%26=3→D, (14+11)%26=25→Z, (13+4)%26=17→R,
-                (9+2)%26=11→L, (14+11)%26=25→Z, (20+4)%26=24→Y,
-                (17+2)%26=19→T
+      Calcul :  (1+2)%26=3->D, (14+11)%26=25->Z, (13+4)%26=17->R,
+                (9+2)%26=11->L, (14+11)%26=25->Z, (20+4)%26=24->Y,
+                (17+2)%26=19->T
       Résultat : DZRLZYT
       ```
 
-      ### Exercice 2.1 · Conversion lettre → décalage
+      ### Exercice 2.1 : Conversion lettre, donc décalage
       Écrire `lettre_vers_decalage(lettre)` en utilisant `indice_dans_alphabet()`.
       ```python
       print(lettre_vers_decalage('A'))  # 0
@@ -139,7 +139,7 @@ audience: public
       print(lettre_vers_decalage('Z'))  # 25
       ```
 
-      ### Exercice 2.2 · Chiffrement de Vigenère
+      ### Exercice 2.2 : Chiffrement de Vigenère
       Écrire `chiffrer_vigenere(message, cle)`. Ignorer les caractères non alphabétiques, répéter la clé, et calculer `(indice_lettre + decalage) % 26`.
 
       ```python
@@ -194,7 +194,7 @@ audience: public
       **Chiffrement d'un nombre m :** c = (m^e) % n
       **Déchiffrement d'un nombre c :** m = (c^d) % n
 
-      ### Exercice 3.1 · Vérifier si un nombre est premier
+      ### Exercice 3.1 : Vérifier si un nombre est premier
       Écrire une fonction `est_premier(n)` qui retourne True si le nombre est premier, False sinon.
 
       **Algorithme :**
@@ -210,7 +210,7 @@ audience: public
       print(est_premier(97))   # Attendu : True
       ```
 
-      ### Exercice 3.2 · Calculer le PGCD
+      ### Exercice 3.2 : Calculer le PGCD
       Écrire une fonction `pgcd(a, b)` qui calcule le Plus Grand Commun Diviseur de deux nombres (algorithme d'Euclide).
 
       **Algorithme d'Euclide :**
@@ -228,7 +228,7 @@ audience: public
       print(pgcd(100, 50))  # Attendu : 50
       ```
 
-      ### Exercice 3.3 · Calculer l'inverse modulaire
+      ### Exercice 3.3 : Calculer l'inverse modulaire
       Écrire une fonction `inverse_modulaire(e, phi)` qui retourne d tel que (d × e) % phi = 1, et None si aucun inverse n'existe.
 
       **Algorithme (méthode simple) :**
@@ -244,7 +244,7 @@ audience: public
       print(inverse_modulaire(17, 3120))   # Attendu : 2753
       ```
 
-      ### Exercice 3.4 · Générer les clés RSA
+      ### Exercice 3.4 : Générer les clés RSA
       Écrire une fonction `generer_cles_rsa(p, q)` qui retourne `((e, n), (d, n))`.
 
       1.  Calculer n = p × q
@@ -260,7 +260,7 @@ audience: public
       ```
       *Note :* Utiliser de petits nombres premiers pour l'exercice.
 
-      ### Exercice 3.5 · Chiffrer un nombre avec RSA
+      ### Exercice 3.5 : Chiffrer un nombre avec RSA
       Écrire une fonction `chiffrer_nombre_rsa(m, cle_publique)` qui calcule `(m^e) % n`. Utiliser `pow(m, e, n)`.
 
       ```python
@@ -270,7 +270,7 @@ audience: public
       print(f"Message {message_num} chiffré : {chiffre}")
       ```
 
-      ### Exercice 3.6 · Déchiffrer un nombre avec RSA
+      ### Exercice 3.6 : Déchiffrer un nombre avec RSA
       Écrire une fonction `dechiffrer_nombre_rsa(c, cle_privee)` qui calcule `(c^d) % n`.
 
       ```python
@@ -281,7 +281,7 @@ audience: public
       print(f"Message déchiffré : {dechiffre}")  # Attendu : 123
       ```
 
-      ### Exercice 3.7 · Chiffrer un message texte avec RSA
+      ### Exercice 3.7 : Chiffrer un message texte avec RSA
       Convertir chaque lettre en indice dans ALPHABET, chiffrer ces indices, puis reconstituer le message.
 
       **Fonctions attendues :**

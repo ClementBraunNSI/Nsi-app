@@ -5,7 +5,7 @@ description: >-
   (Fruits, Iris, Spam).
 level: premiere
 chapter: Algorithmique
-icon: "\U0001F3AF"
+icon: "target"
 badgeId: premiere_tp_knn
 prerequisites:
   - algo_tris

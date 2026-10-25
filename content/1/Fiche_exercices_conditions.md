@@ -3,16 +3,16 @@ title: 'Fiche d''exercices : Les conditions en Python'
 description: Exercices sur les conditions (if/else) en Python.
 level: seconde
 chapter: Programmation Python
-icon: ❓
+icon: "circle-question-mark"
 prerequisites:
   - Fiche_exercices_boucles
 audience: public
 ---
 
 <ExerciseTabs courseId="fiche-conditions" courseTitle="Fiche Conditions">
-  <ExerciseSection id="conditions-1" label="Important ⚠️ - Consignes importantes" type="lecture">
+  <ExerciseSection id="conditions-1" label="Important - Consignes importantes" type="lecture">
     <Enonce>
-      ### Important ⚠️ - Consignes importantes
+      ### Important <Icone nom="triangle-alert" /> - Consignes importantes
 
       **Pour tous les exercices :**
 
@@ -24,9 +24,9 @@ audience: public
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-2" label="Introduction 🦊 - Majorité" type="python">
+  <ExerciseSection id="conditions-2" label="Introduction - Majorité" type="python">
     <Enonce>
-      ### Introduction 🦊 - Majorité
+      ### Introduction <Renards n="1" /> - Majorité
 
       **Écrire un programme qui :**
 
@@ -48,9 +48,9 @@ else:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-3" label="Introduction 🦊 - Nombre positif ou négatif" type="python">
+  <ExerciseSection id="conditions-3" label="Introduction - Nombre positif ou négatif" type="python">
     <Enonce>
-      ### Introduction 🦊 - Nombre positif ou négatif
+      ### Introduction <Renards n="1" /> - Nombre positif ou négatif
 
       **Écrire un programme qui :**
 
@@ -73,9 +73,9 @@ else:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-4" label="Introduction 🦊 - Comparaison de deux nombres" type="python">
+  <ExerciseSection id="conditions-4" label="Introduction - Comparaison de deux nombres" type="python">
     <Enonce>
-      ### Introduction 🦊 - Comparaison de deux nombres
+      ### Introduction <Renards n="1" /> - Comparaison de deux nombres
 
       **Écrire un programme qui :**
 
@@ -93,9 +93,9 @@ assert maximum == max(a, b), f"Le maximum entre {a} et {b} devrait être {max(a,
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-5" label="Introduction 🦊 - Mot de passe" type="python">
+  <ExerciseSection id="conditions-5" label="Introduction - Mot de passe" type="python">
     <Enonce>
-      ### Introduction 🦊 - Mot de passe
+      ### Introduction <Renards n="1" /> - Mot de passe
 
       **Écrire un programme qui :**
 
@@ -117,9 +117,9 @@ else:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-6" label="Introduction 🦊 - Nombre pair ou impair" type="python">
+  <ExerciseSection id="conditions-6" label="Introduction - Nombre pair ou impair" type="python">
     <Enonce>
-      ### Introduction 🦊 - Nombre pair ou impair
+      ### Introduction <Renards n="1" /> - Nombre pair ou impair
 
       **Écrire un programme qui :**
 
@@ -142,9 +142,9 @@ else:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-7" label="Introduction 🦊 - Calculatrice simple" type="python">
+  <ExerciseSection id="conditions-7" label="Introduction - Calculatrice simple" type="python">
     <Enonce>
-      ### Introduction 🦊 - Calculatrice simple
+      ### Introduction <Renards n="1" /> - Calculatrice simple
 
       **Écrire un programme qui :**
 
@@ -152,7 +152,7 @@ else:
       - Affiche le résultat de l'opération
       - Gère le cas de la division par zéro
 
-      ## 🌟 Niveau Facile
+      ## <Icone nom="star" /> Niveau Facile
 
       *Pour la vérification, stockez les deux nombres dans `a` et `b`, l'opération dans `op` (chaine de caractères) et le résultat calculé dans `resultat`. En cas d'erreur (division par zéro), `resultat` peut valoir `None` ou un message d'erreur.*
     </Enonce>
@@ -178,9 +178,9 @@ elif op == '/':
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-8" label="Facile 🦊 - Note et mention" type="python">
+  <ExerciseSection id="conditions-8" label="Facile - Note et mention" type="python">
     <Enonce>
-      ### Facile 🦊 - Note et mention
+      ### Facile <Renards n="1" /> - Note et mention
 
       **Écrire un programme qui :**
 
@@ -208,9 +208,9 @@ else: assert "insuffisant" in m
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-9" label="Facile 🦊 - Température et conseil" type="python">
+  <ExerciseSection id="conditions-9" label="Facile - Température et conseil" type="python">
     <Enonce>
-      ### Facile 🦊 - Température et conseil
+      ### Facile <Renards n="1" /> - Température et conseil
 
       **Écrire un programme qui :**
 
@@ -236,9 +236,9 @@ else: assert "t-shirt" in c
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-10" label="Facile 🦊 - Jours du mois" type="python">
+  <ExerciseSection id="conditions-10" label="Facile - Jours du mois" type="python">
     <Enonce>
-      ### Facile 🦊 - Jours du mois
+      ### Facile <Renards n="1" /> - Jours du mois
 
       **Écrire un programme qui :**
 
@@ -262,9 +262,9 @@ else:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="conditions-11" label="Facile 🦊 - Triangle possible" type="python">
+  <ExerciseSection id="conditions-11" label="Facile - Triangle possible" type="python">
     <Enonce>
-      ### Facile 🦊 - Triangle possible
+      ### Facile <Renards n="1" /> - Triangle possible
 
       **Écrire un programme qui :**
 

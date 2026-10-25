@@ -3,16 +3,16 @@ title: C - Les Tableaux à 2 Dimensions
 description: Manipuler des matrices statiques et dynamiques
 level: particuliers
 chapter: Programmation en C
-icon: "\U0001F3D7️"
+icon: "construction"
 prerequisites:
   - cours-tableaux
 audience:
   accounts: []
 ---
 
-# 🏗️ C — Les Tableaux à 2 Dimensions (Matrices)
+# <Icone nom="construction" /> C : Les Tableaux à 2 Dimensions (Matrices)
 
-## 📚 Introduction
+## <Icone nom="library" /> Introduction
 
 Un tableau à 2 dimensions permet de représenter des données sous forme de grille (lignes et colonnes), comme :
 - Une image (pixels)
@@ -61,7 +61,7 @@ for (int i = 0; i < 3; i++) {
 }
 ```
 
-> ⚠️ **Limitation** : La taille doit être connue à la compilation et la mémoire est limitée (stack overflow si le tableau est trop grand).
+> <Icone nom="triangle-alert" /> **Limitation** : La taille doit être connue à la compilation et la mémoire est limitée (stack overflow si le tableau est trop grand).
 
 ---
 
@@ -142,7 +142,7 @@ void afficher(int **tab, int lignes, int colonnes) {
 
 ---
 
-## 🔍 Résumé
+## <Icone nom="search" /> Résumé
 
 | Caractéristique | Statique (`int t[N][M]`) | Dynamique (`int **t`) |
 |-----------------|--------------------------|-----------------------|

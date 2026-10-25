@@ -1,7 +1,7 @@
 ---
 title: 'Exercices : Les Boucles'
-description: 'for, while, range et parcours de chaînes — fiche progressive par niveau.'
-icon: "\U0001F504"
+description: 'for, while, range et parcours de chaînes : fiche progressive par niveau.'
+icon: "refresh-cw"
 chapter: Introduction à Python
 badgeId: premiere_exercices_boucles
 meta: 'for, while, range et parcours de chaînes'
@@ -21,7 +21,7 @@ audience: public
     <Enonce>
     ### Exercice 1.1 [Introduction] : Chaîne de nombres
     **Écrire une fonction `chaine_numeros_jusqua` qui prend un entier `limite` et renvoie une chaîne des entiers de 1 à `limite` séparés par des virgules.**
-    *Exemple : `chaine_numeros_jusqua(5)` → `"1,2,3,4,5"`.*
+    *Exemple : `chaine_numeros_jusqua(5)` donne `"1,2,3,4,5"`.*
 
     <Correction>
     ```python
@@ -199,7 +199,7 @@ assert compter_pairs_jusqua(7) == 3
     <Enonce>
     ### Exercice 2.2 [Facile] : Compter les voyelles
     **Écrire une fonction `compter_voyelles` qui prend une chaîne `phrase` et renvoie le nombre de voyelles.**
-    *Rappel : `lettre in voyelles` teste si un caractère appartient à une chaîne (`"a" in "aeiou"` → `True`).*
+    *Rappel : `lettre in voyelles` teste si un caractère appartient à une chaîne (`"a" in "aeiou"` : `True`).*
 
     <Correction>
     ```python
@@ -487,7 +487,7 @@ assert maximum_chiffres("105") == 5
   <ExerciseSection id="boucles-4-1" label="4.1 [Avancé] - Nième Fibonacci" type="python">
     <Enonce>
     ### Exercice 4.1 [Avancé] : Nième Fibonacci
-    **Écrire une fonction `fibonacci_nieme` qui prend un entier `n` ≥ 1 et renvoie le `n`-ième terme de Fibonacci (suite commençant par 1, 1, 2, 3, 5…).**
+    **Écrire une fonction `fibonacci_nieme` qui prend un entier `n` ≥ 1 et renvoie le `n`-ième terme de Fibonacci (suite commençant par 1, 1, 2, 3, 5, etc.).**
 
     <Correction>
     ```python
@@ -734,7 +734,7 @@ assert compter_premiers_jusqua(2) == 1
     <Enonce>
     ### Exercice 5.4 [Difficile] : Chaîne Syracuse
     **Écrire une fonction `chaine_syracuse` qui prend un entier `depart` et renvoie la suite de Syracuse sous forme de chaîne, valeurs séparées par `>` jusqu'à `1`.**
-    *Exemple : `chaine_syracuse(10)` → `"10>5>16>8>4>2>1"`.*
+    *Exemple : `chaine_syracuse(10)` donne `"10>5>16>8>4>2>1"`.*
 
     <Correction>
     ```python
@@ -763,7 +763,7 @@ assert chaine_syracuse(1) == "1"
   <ExerciseSection id="boucles-5-5" label="5.5 [Difficile] - Carré par additions impaires" type="python">
     <Enonce>
     ### Exercice 5.5 [Difficile] : Carré par additions impaires
-    **Écrire une fonction `carre_par_additions` qui prend un entier `n` ≥ 0 et calcule `n²` en additionnant les `n` premiers impairs (1 + 3 + 5 + …).**
+    **Écrire une fonction `carre_par_additions` qui prend un entier `n` ≥ 0 et calcule `n²` en additionnant les `n` premiers impairs (1 + 3 + 5 + ...).**
 
     <Correction>
     ```python
@@ -818,7 +818,7 @@ assert somme_impairs_jusqua(6) == 9
     <Enonce>
     ### Exercice 6.1 [Expert] : Plus longue série
     **Écrire une fonction `plus_longue_serie` qui prend une chaîne `texte` et renvoie la longueur de la plus longue série de caractères identiques consécutifs.**
-    *Exemple : `plus_longue_serie("aaabbcc")` → `3`.*
+    *Exemple : `plus_longue_serie("aaabbcc")` donne `3`.*
 
     <Correction>
     ```python

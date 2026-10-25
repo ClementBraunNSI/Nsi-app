@@ -5,7 +5,7 @@ description: >-
   séquentiel
 level: premiere
 chapter: Architecture matérielle
-icon: ⚙️
+icon: "settings"
 badgeId: premiere_von_neumann
 prerequisites: []
 audience: public
@@ -33,8 +33,8 @@ graph TD
     end
 
     subgraph IO [Entrées / Sorties]
-        Input[Clavier, souris…]
-        Output[Écran, imprimante…]
+        Input[Clavier, souris...]
+        Output[Écran, imprimante...]
     end
 
     CPU <==>|Bus données / adresse / contrôle| Memory

@@ -3,18 +3,18 @@ title: "Mission AP1"
 description: "Construction d'un SITE pour le GEI (HTML PHP)"
 level: "4"
 chapter: "BTS SIO 1 SLAM AP"
-icon: "🚀"
+icon: "rocket"
 audience: public
 ---
 
-# Mission AP1 — Site du GEI
+# Mission AP1 : Site du GEI
 
 Le but de cette mission est de répondre à l'appel d'offres du Groupement des Entreprises d'Insertion : un site dynamique, consultable sur téléphone, branché sur une base de données.
 Durée : 16 h (4 h par semaine, 4 semaines), atelier de professionnalisation, semestre 2. Travail en binôme.
 
 **Compétences :** B1.3 Développer la présence en ligne de l'organisation. B1.4 Travailler en mode projet. B2.1 Concevoir et développer une solution applicative. B2.2 Assurer la maintenance corrective ou évolutive d'une solution applicative.
 
-## 1. Le contexte 🏢
+## 1. Le contexte <Icone nom="building-2" />
 
 Le GEI, créé en 1988, représente 1 200 entreprises d'insertion en France. Elles emploient chaque année 65 000 salariés (collecte, tri, recyclage, environnement, tourisme, restauration, et d'autres secteurs). Le site doit installer cette identité : image actuelle, entreprises lisibles, communication cohérente, pages utilisables sur mobile.
 
@@ -30,9 +30,9 @@ Cinq rubriques, dans la navigation :
 
 *Attention à l'usage de l'IA : elle peut aider à comparer des pistes. Elle ne rédige pas le site à votre place. Le code rendu est le vôtre, commenté en français.*
 
-## 2. Les pages, avec un exemple à tenir 🗺️
+## 2. Les pages, avec un exemple à tenir <Icone nom="map" />
 
-### Accueil — contenus éditoriaux
+### Accueil : contenus éditoriaux
 
 Deux familles de contenus, stockées en base, pas écrites en dur dans chaque page.
 
@@ -101,7 +101,7 @@ Pour chaque mention obligatoire d'un site professionnel que vous ne pouvez pas r
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Le déroulement, semaine après semaine 🗓️
+## 3. Le déroulement, semaine après semaine <Icone nom="calendar-days" />
 
 Chaque étape est montrée au professeur avant la suivante.
 
@@ -141,7 +141,7 @@ Chaque étape est montrée au professeur avant la suivante.
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Ce qu'on rend 📦
+## 4. Ce qu'on rend <Icone nom="package" />
 
 - L'arborescence du site : noms de dossiers et de fichiers cohérents, code commenté en français, HTML5 et CSS tenus.
 - Le cahier des charges.

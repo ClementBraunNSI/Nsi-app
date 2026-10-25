@@ -3,16 +3,16 @@ title: 'Fiche d''exercices : Les boucles en Python'
 description: Exercices sur les boucles (for/while) en Python.
 level: seconde
 chapter: Programmation Python
-icon: "\U0001F504"
+icon: "refresh-cw"
 prerequisites:
   - structures_conditionnelles
 audience: public
 ---
 
 <ExerciseTabs courseId="fiche-boucles" courseTitle="Fiche Boucles">
-  <ExerciseSection id="boucles-1" label="Important ⚠️ - Consignes importantes" type="lecture">
+  <ExerciseSection id="boucles-1" label="Important - Consignes importantes" type="lecture">
     <Enonce>
-      ### Important ⚠️ - Consignes importantes
+      ### Important <Icone nom="triangle-alert" /> - Consignes importantes
 
       **Pour tous les exercices :**
 
@@ -24,9 +24,9 @@ audience: public
     </Enonce>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-2" label="Introduction 🦊 - Compte à rebours" type="python">
+  <ExerciseSection id="boucles-2" label="Introduction - Compte à rebours" type="python">
     <Enonce>
-      ### Introduction 🦊 - Compte à rebours
+      ### Introduction <Renards n="1" /> - Compte à rebours
 
       **Écrire un programme qui :**
 
@@ -45,9 +45,9 @@ assert rebours == list(range(n, -1, -1)), f"Le compte à rebours est incorrect p
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-3" label="Introduction 🦊 - Tables de multiplication" type="python">
+  <ExerciseSection id="boucles-3" label="Introduction - Tables de multiplication" type="python">
     <Enonce>
-      ### Introduction 🦊 - Tables de multiplication
+      ### Introduction <Renards n="1" /> - Tables de multiplication
 
       **Écrire un programme qui :**
 
@@ -68,9 +68,9 @@ assert table == expected, f"La table de multiplication pour {n} est incorrecte."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-4" label="Introduction 🦊 - Escalier d'étoiles" type="python">
+  <ExerciseSection id="boucles-4" label="Introduction - Escalier d'étoiles" type="python">
     <Enonce>
-      ### Introduction 🦊 - Escalier d'étoiles
+      ### Introduction <Renards n="1" /> - Escalier d'étoiles
 
       **Écrire un programme qui :**
 
@@ -108,9 +108,9 @@ assert lignes == expected, f"L'escalier est incorrect pour n={n}."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-5" label="Introduction 🦊 - Somme des nombres" type="python">
+  <ExerciseSection id="boucles-5" label="Introduction - Somme des nombres" type="python">
     <Enonce>
-      ### Introduction 🦊 - Somme des nombres
+      ### Introduction <Renards n="1" /> - Somme des nombres
 
       **Écrire un programme qui :**
 
@@ -130,9 +130,9 @@ assert somme == expected, f"La somme des nombres de 1 à {n} doit être {expecte
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-6" label="Introduction 🦊 - Puissance de 2" type="python">
+  <ExerciseSection id="boucles-6" label="Introduction - Puissance de 2" type="python">
     <Enonce>
-      ### Introduction 🦊 - Puissance de 2
+      ### Introduction <Renards n="1" /> - Puissance de 2
 
       **Écrire un programme qui :**
 
@@ -152,9 +152,9 @@ assert puissances == expected, f"Les puissances de 2 jusqu'à 2^{n} sont incorre
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-7" label="Introduction 🦊 - Message répété" type="python">
+  <ExerciseSection id="boucles-7" label="Introduction - Message répété" type="python">
     <Enonce>
-      ### Introduction 🦊 - Message répété
+      ### Introduction <Renards n="1" /> - Message répété
 
       **Écrire un programme qui :**
 
@@ -162,7 +162,7 @@ assert puissances == expected, f"Les puissances de 2 jusqu'à 2^{n} sont incorre
       - Demande un nombre de répétitions
       - Affiche la phrase autant de fois que demandé
 
-      ## 🌟 Niveau Facile
+      ## <Icone nom="star" /> Niveau Facile
 
       *Pour la vérification, stockez la phrase dans `phrase`, le nombre de répétitions dans `n`, et créez une liste `resultats` contenant la phrase répétée `n` fois.*
     </Enonce>
@@ -178,9 +178,9 @@ assert all(r == phrase for r in resultats), "Tous les éléments doivent être �
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-8" label="Facile 🦊 - Calculatrice continue" type="python">
+  <ExerciseSection id="boucles-8" label="Facile - Calculatrice continue" type="python">
     <Enonce>
-      ### Facile 🦊 - Calculatrice continue
+      ### Facile <Renards n="1" /> - Calculatrice continue
 
       **Écrire un programme qui :**
 
@@ -189,7 +189,7 @@ assert all(r == phrase for r in resultats), "Tous les éléments doivent être �
       - Demande si on veut continuer (oui/non)
       - Recommence si la réponse est "oui"
 
-      ## 🔥 Niveau Intermédiaire
+      ## <Icone nom="flame" /> Niveau Intermédiaire
 
       *Pour la vérification, assurez-vous que votre boucle se termine correctement quand on entre 'non'. Aucune variable spécifique n'est vérifiée automatiquement ici car cest un programme interactif.*
     </Enonce>
@@ -201,9 +201,9 @@ assert True
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-9" label="Intermédiaire 🦊🦊 - Devinette avec limite" type="python">
+  <ExerciseSection id="boucles-9" label="Intermédiaire - Devinette avec limite" type="python">
     <Enonce>
-      ### Intermédiaire 🦊🦊 - Devinette avec limite
+      ### Intermédiaire <Renards n="2" /> - Devinette avec limite
 
       **Écrire un programme qui :**
 
@@ -220,9 +220,9 @@ assert 'essais_restants' in locals() or 'essais' in locals(), "Utilisez une vari
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="boucles-10" label="Intermédiaire 🦊🦊 - Caisse enregistreuse" type="python">
+  <ExerciseSection id="boucles-10" label="Intermédiaire - Caisse enregistreuse" type="python">
     <Enonce>
-      ### Intermédiaire 🦊🦊 - Caisse enregistreuse
+      ### Intermédiaire <Renards n="2" /> - Caisse enregistreuse
 
       **Écrire un programme qui :**
 

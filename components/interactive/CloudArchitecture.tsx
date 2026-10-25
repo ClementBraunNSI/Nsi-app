@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Cloud, Smartphone, Server, Upload, Download, Database, Wifi } from 'lucide-react';
+import { Cloud, Smartphone, Server, Upload, Download, Database, Wifi, Earth, Shield, Handshake } from 'lucide-react';
 
 export default function CloudArchitecture() {
   const [activeAction, setActiveAction] = useState<'idle' | 'upload' | 'download'>('idle');
@@ -37,7 +37,7 @@ export default function CloudArchitecture() {
   return (
     <div className="flex flex-col gap-6 my-8 border rounded-xl overflow-hidden shadow-lg bg-white p-6">
       <h3 className="text-xl font-bold text-slate-800 text-center mb-2">
-        ☁️ Le Cloud Computing
+        <Cloud size={22} className="mr-2 inline align-[-4px] text-orange-500" aria-hidden />Le Cloud Computing
       </h3>
       <p className="text-center text-slate-500 text-sm mb-6">
         Le "Nuage" n'est pas magique : ce sont des ordinateurs (serveurs) stockés ailleurs !
@@ -49,7 +49,7 @@ export default function CloudArchitecture() {
           <Smartphone size={48} className="text-slate-700" />
           <span className="font-bold text-slate-700">Votre Appareil</span>
           <div className="w-full bg-white p-2 rounded border border-slate-200 min-h-[60px] text-xs">
-            <div className="text-slate-400 mb-1 uppercase text-[10px]">Stockage Local</div>
+            <div className="text-slate-400 mb-1 text-[10px]">Stockage Local</div>
             {localData.map((f, i) => (
               <div key={i} className="flex items-center gap-1 text-slate-600">
                 <div className="w-2 h-2 bg-slate-400 rounded-full"></div> {f}
@@ -111,7 +111,7 @@ export default function CloudArchitecture() {
           </div>
           <span className="font-bold text-slate-700">Data Center</span>
           <div className="w-full bg-white p-2 rounded border border-slate-200 min-h-[60px] text-xs">
-            <div className="text-slate-400 mb-1 uppercase text-[10px]">Stockage Cloud</div>
+            <div className="text-slate-400 mb-1 text-[10px]">Stockage Cloud</div>
             {serverData.map((f, i) => (
               <div key={i} className="flex items-center gap-1 text-slate-600">
                 <div className="w-2 h-2 bg-orange-500 rounded-full"></div> {f}
@@ -125,9 +125,9 @@ export default function CloudArchitecture() {
       <div className="bg-slate-50 p-4 rounded-lg text-sm text-slate-600">
         <strong>Pourquoi utiliser le Cloud ?</strong>
         <ul className="list-disc pl-4 mt-2 space-y-1">
-          <li>🌍 <strong>Accessibilité :</strong> Vos données sont accessibles partout, depuis n'importe quel appareil.</li>
-          <li>🛡️ <strong>Sécurité :</strong> Si vous perdez votre téléphone, vos données sont sauves dans le Data Center.</li>
-          <li>🤝 <strong>Partage :</strong> Facile de donner accès à un fichier via un simple lien.</li>
+          <li><Earth size={16} className="mr-1.5 inline align-[-3px] text-orange-500" aria-hidden /><strong>Accessibilité :</strong> Vos données sont accessibles partout, depuis n'importe quel appareil.</li>
+          <li><Shield size={16} className="mr-1.5 inline align-[-3px] text-orange-500" aria-hidden /><strong>Sécurité :</strong> Si vous perdez votre téléphone, vos données sont sauves dans le Data Center.</li>
+          <li><Handshake size={16} className="mr-1.5 inline align-[-3px] text-orange-500" aria-hidden /><strong>Partage :</strong> Facile de donner accès à un fichier via un simple lien.</li>
         </ul>
       </div>
     </div>

@@ -3,7 +3,7 @@ title: Notice sur HTML
 description: 'Introduction au HTML, structure d''un fichier et principales balises.'
 level: '2'
 chapter: Web
-icon: "\U0001F4DD"
+icon: "notebook-pen"
 prerequisites: []
 audience: public
 ---

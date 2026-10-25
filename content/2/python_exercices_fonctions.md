@@ -1,6 +1,6 @@
 ---
 title: 'Exercices : Les Fonctions'
-icon: "🧩"
+icon: "puzzle"
 chapter: Introduction à Python
 badgeId: les-fonctions-python
 meta: 'Définition, Paramètres et Valeurs de retour'

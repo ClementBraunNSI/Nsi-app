@@ -5,7 +5,7 @@ description: >-
   données MariaDB.
 level: '2'
 chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
-icon: "\U0001F4BE"
+icon: "save"
 prerequisites: []
 audience: public
 ---

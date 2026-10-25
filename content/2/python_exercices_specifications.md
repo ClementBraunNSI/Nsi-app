@@ -1,6 +1,6 @@
 ---
 title: 'Exercices : Spécification'
-icon: "\U0001F4CB"
+icon: "clipboard-list"
 chapter: Introduction à Python
 badgeId: specifications-python
 meta: 'Docstrings, Type Hinting et Documentation'
@@ -10,7 +10,7 @@ prerequisites:
 audience: public
 ---
 
-## 🐞 Chasseur de Bugs
+## <Icone nom="bug" /> Chasseur de Bugs
 
 Avant de passer aux exercices de spécification, entraînez-vous à repérer les erreurs courantes de **nommage**, de **typage** et de **logique** qui rendent le code difficile à spécifier ou à maintenir.
 
@@ -24,7 +24,7 @@ Une **assertion** est un moyen de vérifier qu'une condition est vraie à un mom
 graph TD
     A[Début du programme] --> B{Assertion vraie ?}
     B -- Oui --> C[Le programme continue]
-    B -- Non --> D[❌ CRASH : AssertionError]
+    B -- Non --> D[CRASH : AssertionError]
     D --> E[Fin prématurée]
 ```
 

@@ -2,10 +2,10 @@
 title: Galerie d'images en HTML
 description: >-
   Mini-activité pour intégrer des images dans une page HTML (balise img, alt,
-  chemins) — ressource liée au chapitre Web.
+  chemins) : ressource liée au chapitre Web.
 level: premiere
 chapter: Web et Interaction
-icon: "\U0001F3A8"
+icon: "palette"
 badgeId: premiere_galerie_d_art
 prerequisites:
   - web_html
@@ -38,7 +38,7 @@ Exemple minimal :
 ```html
 <figure>
   <img src="oeuvres/cri_renard.png" alt="Parodie du Cri avec un renard">
-  <figcaption>Le Cri — version renard</figcaption>
+  <figcaption>Le Cri - version renard</figcaption>
 </figure>
 ```
 
@@ -56,7 +56,7 @@ Préférez les chemins relatifs dans un projet élève (`index.html` + dossier `
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Galerie d'art — renards</title>
+  <title>Galerie d'art - renards</title>
 </head>
 <body>
   <h1>Galerie d'art</h1>
@@ -89,13 +89,13 @@ Préférez les chemins relatifs dans un projet élève (`index.html` + dossier `
 
 ## Aperçu des images de démonstration
 
-![Le Cri — renard](/content/2/10_Web_et_HTTP/cri_renard.png)
+![Le Cri : renard](/content/2/10_Web_et_HTTP/cri_renard.png)
 
-![La Vague — renard](/content/2/10_Web_et_HTTP/kanagawa_fox.png)
+![La Vague : renard](/content/2/10_Web_et_HTTP/kanagawa_fox.png)
 
-![Nuit étoilée — renard](/content/2/10_Web_et_HTTP/starry_night_fox.png)
+![Nuit étoilée : renard](/content/2/10_Web_et_HTTP/starry_night_fox.png)
 
-![Le Voyageur — renard](/content/2/10_Web_et_HTTP/voyageur_renard.png)
+![Le Voyageur : renard](/content/2/10_Web_et_HTTP/voyageur_renard.png)
 
 ## Piège fréquent
 

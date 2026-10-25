@@ -47,7 +47,7 @@ export function Admonition({ type = 'info', title, children }: AdmonitionProps) 
     <div className={`my-6 rounded-lg border-l-4 shadow-sm overflow-hidden ${colorClass}`}>
       <div className="flex items-center gap-3 px-4 py-3 border-b border-black/5 bg-black/5">
         <Icon size={20} className="shrink-0" />
-        <span className="font-bold text-sm uppercase tracking-wide">
+        <span className="font-bold text-sm">
           {title || type}
         </span>
       </div>

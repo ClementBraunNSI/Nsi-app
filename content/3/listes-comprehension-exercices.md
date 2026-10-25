@@ -6,14 +6,14 @@ description: >-
 level: TNSI
 order: 85
 chapter: Langages et Programmation
-icon: "\U0001F40D"
+icon: "code"
 badgeId: terminale_listes_comp
 prerequisites:
   - prog_modularite_mise_au_point
 audience: public
 ---
 
-# 🐍 Listes par compréhension
+# <Icone nom="code" /> Listes par compréhension
 
 Les listes par compréhension sont un moyen concis et puissant de créer des listes en Python. Elles remplacent souvent les boucles `for` classiques pour la construction de listes.
 

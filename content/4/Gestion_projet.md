@@ -3,7 +3,7 @@ title: Gestion de Projet Informatique
 description: 'Fondamentaux de la gestion de projet, rôles, méthodes et outils'
 level: '4'
 chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
-icon: "\U0001F4CA"
+icon: "chart-column"
 prerequisites:
   - Patrimoine_informatique
 audience: public
@@ -13,7 +13,7 @@ audience: public
 
 BTS SIO, bloc 1. Un service informatique ne s'installe pas tout seul. Derrière un site, une application, un réseau mis en place, il y a un **projet** : un ensemble d'activités temporaires, uniques et coordonnées, menées pour atteindre un objectif précis, dans un délai fixé, avec des ressources limitées. Le projet a un début et une fin. Passé cette fin, on n'est plus en train de le construire. On l'exploite.
 
-Quatre traits le séparent du travail courant. L'**objectif** est un résultat attendu, écrit, mesurable, et tenable dans le temps imparti. La **temporalité** pose une date de début et une date de fin. L'**unicité** veut dire que le livrable n'existait pas tel quel : refaire le même site pour un autre client, c'est un autre projet. Les **ressources** — budget, personnes, moyens techniques — sont comptées. On ne peut pas en ajouter sans le décider.
+Quatre traits le séparent du travail courant. L'**objectif** est un résultat attendu, écrit, mesurable, et tenable dans le temps imparti. La **temporalité** pose une date de début et une date de fin. L'**unicité** veut dire que le livrable n'existait pas tel quel : refaire le même site pour un autre client, c'est un autre projet. Les **ressources** (budget, personnes, moyens techniques) sont comptées. On ne peut pas en ajouter sans le décider.
 
 Ces trois contraintes se tiennent dans ce qu'on appelle le **triangle** qualité, délai, coût. En bouger un déplace les deux autres. Raccourcir le délai sans retirer de fonctionnalités augmente le coût, ou abîme la qualité. Promettre les trois en même temps sans le dire, c'est laisser le projet choisir à votre place, plus tard, en général au moment de la recette.
 
@@ -37,7 +37,7 @@ Rien de cela ne tient si l'information ne circule pas. Un retard qu'on tait, un 
 
 ## Le diagramme de Gantt
 
-Le **diagramme de Gantt** place chaque tâche sur une échelle de temps. On y lit la date de début et de fin, les liens entre tâches — ce qui doit finir avant qu'autre chose commence, ce qui peut avancer en parallèle — et l'écart entre le prévu et le réalisé. La plus longue chaîne de tâches qui dépendent les unes des autres est le **chemin critique**. Elle fixe la durée minimale du projet. Raccourcir une tâche qui n'est pas sur cette chaîne ne raccourcit pas le projet.
+Le **diagramme de Gantt** place chaque tâche sur une échelle de temps. On y lit la date de début et de fin, les liens entre tâches (ce qui doit finir avant qu'autre chose commence, ce qui peut avancer en parallèle) et l'écart entre le prévu et le réalisé. La plus longue chaîne de tâches qui dépendent les unes des autres est le **chemin critique**. Elle fixe la durée minimale du projet. Raccourcir une tâche qui n'est pas sur cette chaîne ne raccourcit pas le projet.
 
 Voici un développement d'application web sur douze semaines. Les cases marquées sont les semaines où la tâche est ouverte.
 
@@ -91,4 +91,4 @@ git push origin feature/ma-fonctionnalite
 # Envoie la branche sur le serveur distant
 ```
 
-Cloner, brancher, commiter, pousser. Le reste du projet — qui décide du contenu, dans quel ordre, avec quelle méthode — se joue en dehors de ces quatre commandes. Git garde l'historique. Il ne remplace ni le Gantt, ni le product owner, ni la conversation qui dit si la fonctionnalité est la bonne.
+Cloner, brancher, commiter, pousser. Le reste du projet (qui décide du contenu, dans quel ordre, avec quelle méthode) se joue en dehors de ces quatre commandes. Git garde l'historique. Il ne remplace ni le Gantt, ni le product owner, ni la conversation qui dit si la fonctionnalité est la bonne.

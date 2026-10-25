@@ -4,7 +4,7 @@ description: "Série d'exercices guidés sur les notions clés du programme"
 level: TNSI
 order: 230
 chapter: Entrainement
-icon: "🧪"
+icon: "flask-conical"
 badgeId: terminale_exercices_fondamentaux
 prerequisites:
   - prog_recursivite

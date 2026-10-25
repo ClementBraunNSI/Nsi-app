@@ -67,7 +67,8 @@ export default function EncapsulationVisualizer() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h3 className="text-xl font-bold text-slate-800">
-            {mode === 'encapsulation' ? '📦 Encapsulation' : '📦 Désencapsulation'}
+            <Package size={20} className="mr-2 inline align-[-3px] text-orange-500" aria-hidden />
+            {mode === 'encapsulation' ? 'Encapsulation' : 'Désencapsulation'}
           </h3>
           <p className="text-sm text-slate-500">
             {mode === 'encapsulation' 
@@ -138,7 +139,7 @@ export default function EncapsulationVisualizer() {
                   transform: `scale(${1})`,
                 }}
               >
-                <div className="flex items-center gap-2 text-white font-bold text-xs uppercase tracking-wider mb-1">
+                <div className="flex items-center gap-2 text-white font-bold text-xs mb-1">
                   {layer.icon}
                   {layer.name}
                 </div>
@@ -156,7 +157,7 @@ export default function EncapsulationVisualizer() {
             <div className="text-slate-400 italic">Cliquez sur "Suivant" pour commencer l'envoi...</div>
           )}
           {step === maxSteps && mode === 'desencapsulation' && (
-            <div className="text-green-600 font-bold text-lg">Message reçu ! 🎉</div>
+            <div className="text-green-600 font-bold text-lg">Message reçu !</div>
           )}
         </div>
 

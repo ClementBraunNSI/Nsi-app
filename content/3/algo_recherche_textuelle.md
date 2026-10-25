@@ -4,7 +4,7 @@ description: 'Recherche de motifs dans un texte : Naïf et Boyer-Moore.'
 level: TNSI
 order: 110
 chapter: Algorithmique
-icon: "\U0001F50D"
+icon: "search"
 badgeId: terminale_algo_texte
 prerequisites: []
 audience: public

@@ -3,7 +3,7 @@ title: C - Affectations & Types - Exercices
 description: Exercices pratiques sur les variables et opérateurs en C
 level: particuliers
 chapter: Programmation en C
-icon: "\U0001F4DD"
+icon: "notebook-pen"
 prerequisites:
   - cours-structures-controle
 audience:

@@ -3,22 +3,22 @@ title: 'Dictionnaires : App Bancaire'
 description: Création d'une application bancaire simple en Python
 level: premiere
 chapter: Projets
-icon: "\U0001F3E6"
+icon: "landmark"
 badgeId: premiere_application_bancaire
 prerequisites:
   - projet_simulation_propagation
 audience: public
 ---
 
-# 🏦 Projet - Application Bancaire Simple
+# <Icone nom="landmark" /> Projet - Application Bancaire Simple
 
 Le but de ce projet est de créer une petite banque en console, en Python.
 Dans ce projet, nous allons ranger les comptes dans un dictionnaire, puis écrire le dépôt, le retrait, la consultation et le menu.
 
 **Ressources :**
-- [Code de départ](resources/app_back.py) — s'il est fourni en classe, il ne contient pas les fonctions à écrire. Sinon, partez d'un fichier vide `banque.py`.
+- [Code de départ](resources/app_back.py) : s'il est fourni en classe, il ne contient pas les fonctions à écrire. Sinon, partez d'un fichier vide `banque.py`.
 
-## 1. Les comptes 💳
+## 1. Les comptes <Icone nom="credit-card" />
 
 Chaque compte est un dictionnaire. La clé de `comptes` est le numéro, une chaîne. La valeur contient le nom, le solde et l'historique.
 
@@ -66,7 +66,7 @@ Le solde initial n'est pas une transaction : `transactions` commence vide. Les f
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Dépôt et retrait 💶
+## 2. Dépôt et retrait <Icone nom="euro" />
 
 Chaque ligne d'historique commence par `+ ` ou `- `, puis le montant. Exemples : `"+ 200.0"`, `"- 50.0"`. L'ordre est celui des opérations, de la plus ancienne à la plus récente.
 
@@ -117,7 +117,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Le menu 🏧
+## 3. Le menu <Icone nom="banknote" />
 
 <ExerciseTabs courseId="proj_bank_ui" courseTitle="Interface">
   <ExerciseSection id="bank-ui-1" label="Menu principal" type="lecture">
@@ -141,7 +141,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Simulation et rendu 🧪
+## 4. Simulation et rendu <Icone nom="flask-conical" />
 
 <ExerciseTabs courseId="proj_bank_test" courseTitle="Validation">
   <ExerciseSection id="bank-test-1" label="Scénario de test" type="lecture">

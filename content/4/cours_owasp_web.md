@@ -6,7 +6,7 @@ description: >-
 level: BTS SIO
 chapter: 'BTS SIO 1 : B3 - CyberSécurité'
 badgeId: bts_owasp_web
-icon: "\U0001F6E1️"
+icon: "shield"
 prerequisites:
   - premiers_pas_python
 audience: public
@@ -21,7 +21,7 @@ audience: public
 
     L'**OWASP** (*Open Web Application Security Project*) publie un classement des familles de failles les plus graves dans les applications web. L'édition 2021 s'appuie sur l'analyse de plus de 500 000 applications. Ce n'est pas une liste de bugs à copier. C'est l'ordre dans lequel une application réelle se fait prendre, et ce que cela a déjà coûté. Chaque entrée ci-dessous dit le mécanisme, un cas, et ce qui aurait fermé la porte.
 
-    ### A01:2021 — Contrôle d'accès défaillant
+    ### A01:2021, Contrôle d'accès défaillant
 
     Le contrôle d'accès casse quand le serveur ne vérifie pas le droit, et se contente de cacher un bouton. L'attaquant change un identifiant, rejoue une requête, et agit comme un administrateur ou lit les données de quelqu'un d'autre. On appelle **IDOR** le cas précis où l'objet est désigné par un identifiant que l'on peut deviner : `/facture/123` devient `/facture/124`, et la facture d'un autre client s'affiche.
 
@@ -34,9 +34,9 @@ audience: public
     2. Quelle est la différence entre l'**authentification** (qui je suis) et l'**autorisation** (ce que j'ai le droit de faire) ?
     3. Pourquoi cacher un bouton « Admin » dans l'interface (CSS `display: none`) n'est-il pas une mesure de sécurité suffisante ?
 
-    ### A02:2021 — Défaillances cryptographiques
+    ### A02:2021, Défaillances cryptographiques
 
-    Les données sensibles — mots de passe, cartes, santé — sont mal protégées au repos ou pendant le transport. HTTP au lieu de HTTPS. Un algorithme trop faible. Un mot de passe qu'on peut revenir en clair parce qu'on l'a chiffré au lieu de le hacher.
+    Les données sensibles (mots de passe, cartes, santé) sont mal protégées au repos ou pendant le transport. HTTP au lieu de HTTPS. Un algorithme trop faible. Un mot de passe qu'on peut revenir en clair parce qu'on l'a chiffré au lieu de le hacher.
 
     En 2013, environ **153 millions** de comptes Adobe ont été compromis : les mots de passe étaient chiffrés, donc réversibles, et non hachés. Adobe a payé **1,1 million de dollars** de frais juridiques, plus un règlement dont le montant n'a pas été publié, sans compter l'atteinte à la réputation.
 
@@ -47,11 +47,11 @@ audience: public
     2. Quel protocole sécurisé (port 443) doit remplacer HTTP ?
     3. Qu'est-ce que le sel (*salt*), et pourquoi est-il indispensable quand on hache un mot de passe ?
 
-    ### A03:2021 — Injection
+    ### A03:2021, Injection
 
     Une donnée venue de l'utilisateur est recollée dans une commande, SQL, système ou LDAP. L'interpréteur ne distingue plus la donnée du code. Ce qui devait être une valeur devient une instruction.
 
-    En 2015, une injection SQL sur une page obsolète de TalkTalk a exposé les données d'environ **157 000 clients**. L'opérateur a perdu **101 000 clients**, payé une amende de **400 000 livres** — record à l'époque — et le coût total de la remédiation a été estimé à **77 millions de livres**.
+    En 2015, une injection SQL sur une page obsolète de TalkTalk a exposé les données d'environ **157 000 clients**. L'opérateur a perdu **101 000 clients**, payé une amende de **400 000 livres**, record à l'époque, et le coût total de la remédiation a été estimé à **77 millions de livres**.
 
     En SQL, la défense qui tient est la **requête préparée** : la commande est fixée, les valeurs voyagent à part. On valide les entrées par une liste de ce qui est autorisé, pas par une liste de ce qu'on espère interdire. Un ORM (Entity Framework, Hibernate, Eloquent) fait cet échappement s'il est utilisé pour ce qu'il sait faire, pas si on lui passe une requête déjà concaténée.
 
@@ -60,11 +60,11 @@ audience: public
     2. Quelle instruction SQL permet souvent de combiner les résultats de deux tables lors d'une injection ?
     3. Pourquoi la validation côté client, en JavaScript, ne protège-t-elle pas contre les injections SQL ?
 
-    ### A04:2021 — Conception non sécurisée
+    ### A04:2021, Conception non sécurisée
 
     La faille est dans les règles métier, avant la première ligne. Une conception fragile ne devient pas sûre parce qu'on l'a bien codée. Le principe souvent cité : on ne sécurise pas par le code une conception qui est déjà fausse.
 
-    En 2021, des données de Parler ont été aspirées en masse — de l'ordre de **99 %** du contenu — parce que les publications portaient des identifiants séquentiels, sans contrôle d'accès. Le service a fermé plusieurs semaines, la confiance des investisseurs a disparu, les boutiques Apple et Google ont retiré l'application.
+    En 2021, des données de Parler ont été aspirées en masse, de l'ordre de **99 %** du contenu, parce que les publications portaient des identifiants séquentiels, sans contrôle d'accès. Le service a fermé plusieurs semaines, la confiance des investisseurs a disparu, les boutiques Apple et Google ont retiré l'application.
 
     On pense la sécurité au moment du besoin, pas à la recette. On modélise les menaces avant de coder. On évite les identifiants qu'on devine en ajoutant un : un UUID ne se parcourt pas comme une suite d'entiers.
 
@@ -73,7 +73,7 @@ audience: public
     2. Donnez un exemple de fonctionnalité commode pour l'utilisateur et dangereuse par conception (la récupération de compte, par exemple).
     3. Qu'est-ce que le *rate limiting*, et quelle attaque de conception atténue-t-il ?
 
-    ### A05:2021 — Mauvaise configuration
+    ### A05:2021, Mauvaise configuration
 
     Le système est resté tel que l'installeur l'a livré. Compte d'administration par défaut. Stockage cloud ouvert au monde. Message d'erreur qui imprime la pile d'appels, les chemins, la version.
 
@@ -86,20 +86,20 @@ audience: public
     2. Quelle est la règle sur les messages d'erreur montrés à l'utilisateur ?
     3. Citez une pratique simple pour protéger l'accès à un dossier d'administration.
 
-    ### A06:2021 — Composants vulnérables ou obsolètes
+    ### A06:2021, Composants vulnérables ou obsolètes
 
     L'application embarque une bibliothèque dont la faille est déjà publique, un CVE. Le correctif existe. Il n'est pas appliqué.
 
     En 2017, Equifax a exposé les données d'environ **147 millions** de personnes à cause d'une faille d'Apache Struts, corrigée deux mois avant l'attaque, et non installée. Le règlement des poursuites a été accepté jusqu'à **700 millions de dollars**.
 
-    On tient l'inventaire de ce qu'on embarque — c'est l'analyse de composition logicielle. On automatise la détection : `npm audit`, OWASP Dependency-Check. On met à jour. Une dépendance qu'on ne sait pas nommer est une dépendance qu'on ne saura pas corriger.
+    On tient l'inventaire de ce qu'on embarque, c'est l'analyse de composition logicielle. On automatise la détection : `npm audit`, OWASP Dependency-Check. On met à jour. Une dépendance qu'on ne sait pas nommer est une dépendance qu'on ne saura pas corriger.
 
     **Questions**
     1. Qu'est-ce qu'une CVE (*Common Vulnerabilities and Exposures*) ?
     2. Pourquoi maintenir le système et les logiciels à jour ?
     3. Quel fichier liste souvent les dépendances d'un projet web, en PHP ou en JavaScript ?
 
-    ### A07:2021 — Identification et authentification défaillantes
+    ### A07:2021, Identification et authentification défaillantes
 
     L'identité est mal vérifiée. Mots de passe trop courts. Pas de second facteur. Session qui ne meurt pas. Ou l'inverse : on accepte un mot de passe déjà volé ailleurs.
 
@@ -112,7 +112,7 @@ audience: public
     2. Pourquoi limiter le nombre de tentatives de connexion, par exemple à cinq ?
     3. Quel mécanisme, souvent sur le téléphone, ajoute une preuve au-delà du mot de passe ?
 
-    ### A08:2021 — Intégrité du logiciel et des données
+    ### A08:2021, Intégrité du logiciel et des données
 
     On exécute une mise à jour, un paquet, un objet désérialisé, sans avoir vérifié qu'il est bien celui qu'on croit. Le pipeline qui construit le logiciel peut être le point d'entrée.
 
@@ -125,7 +125,7 @@ audience: public
     2. Dans une attaque de la chaîne d'approvisionnement, qui est visé en premier ?
     3. Qu'est-ce que la désérialisation d'un objet ?
 
-    ### A09:2021 — Journalisation et surveillance insuffisantes
+    ### A09:2021, Journalisation et surveillance insuffisantes
 
     L'intrusion a eu lieu. Personne ne l'a vue, parce qu'aucun journal ne garde les événements utiles, ou parce que les journaux existent et ne sont jamais lus.
 
@@ -138,7 +138,7 @@ audience: public
     2. Pourquoi envoyer les journaux vers un serveur distinct plutôt que de les laisser seulement sur la machine ?
     3. Quel est le risque principal si une intrusion n'est pas détectée vite ?
 
-    ### A10:2021 — Falsification de requête côté serveur (SSRF)
+    ### A10:2021, Falsification de requête côté serveur (SSRF)
 
     L'application accepte une URL, et c'est le **serveur** qui va la chercher. L'attaquant lui donne une adresse interne, que lui ne peut pas joindre depuis l'extérieur : un service d'administration, les métadonnées d'un cloud, un port qui n'écoute que sur localhost.
 
@@ -244,24 +244,24 @@ audience: public
 
     La SQL touche les trois, parce qu'elle parle à la base. La XSS touche d'abord le navigateur de celui qui lit la page. Elle devient grave quand ce navigateur est celui d'un administrateur, ou quand le cookie volé ouvre le compte.
 
-    **Scénario.** Une injection SQL a exfiltré la base clients — noms, adresses, mots de passe déjà hachés — et le dump est sur un forum. Les articles 33 et 34 du RGPD s'appliquent. On notifie la CNIL, au plus tard sous **72 heures**, parce que les droits des personnes sont en jeu. On notifie les personnes si le risque pour elles est élevé : un mot de passe haché avec un algorithme faible, ou réutilisé ailleurs, l'est souvent. On inscrit la violation au registre. Le hachage ne dispense pas de la notification. Il change l'analyse du risque, il ne l'annule pas.
+    **Scénario.** Une injection SQL a exfiltré la base clients (noms, adresses, mots de passe déjà hachés) et le dump est sur un forum. Les articles 33 et 34 du RGPD s'appliquent. On notifie la CNIL, au plus tard sous **72 heures**, parce que les droits des personnes sont en jeu. On notifie les personnes si le risque pour elles est élevé : un mot de passe haché avec un algorithme faible, ou réutilisé ailleurs, l'est souvent. On inscrit la violation au registre. Le hachage ne dispense pas de la notification. Il change l'analyse du risque, il ne l'annule pas.
 
-    ### Exercice 1 — Alerte au DSI
+    ### Exercice 1 : Alerte au DSI
 
     Rédigez le message technique au directeur des systèmes d'information après la découverte d'une XSS stockée dans les commentaires d'un site de vente.
 
-    - **Objet :** Alerte sécurité critique — faille XSS, module commentaires
+    - **Objet :** Alerte sécurité critique, faille XSS, module commentaires
     - **Description :** un script malveillant persistant a été détecté
     - **Impact :** vol de session possible pour les visiteurs, clients et administrateurs
     - **Tout de suite :** désactiver le module de commentaires, purger les entrées suspectes
 
-    ### Exercice 2 — Le score dépend du contexte
+    ### Exercice 2 : Le score dépend du contexte
 
     Une injection SQL est découverte sur le site vitrine de la boulangerie du quartier. Le site montre des photos de pains et les horaires. Pas de compte client, pas d'espace membre, pas de donnée personnelle. La base ne contient que les tables `produits` et `horaires`.
 
     Discutez le score CVSS de cette faille à partir de ce contexte : la même injection, sur une base clients, n'a pas le même impact.
 
-    ### Exercice 3 — Lire un journal
+    ### Exercice 3 : Lire un journal
 
     Extrait Apache. Pour chaque ligne, dites s'il s'agit d'une tentative d'attaque et, si oui, laquelle.
 
@@ -270,7 +270,7 @@ audience: public
     3. `192.168.1.15 - - [12/Mar/2024:10:02:00] "GET /admin/config.xml HTTP/1.1" 403 202`
     4. `192.168.1.15 - - [12/Mar/2024:10:03:00] "POST /upload.php HTTP/1.1" 200 1542` (le fichier envoyé s'appelle `shell.php`)
 
-    ### Exercice 4 — Une politique de mots de passe
+    ### Exercice 4 : Une politique de mots de passe
 
     Règles actuelles d'une PME : 6 caractères minimum, aucune règle de composition, renouvellement obligatoire tous les 30 jours, aucun blocage après des échecs.
 

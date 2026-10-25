@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
+import { CircleCheck, CircleQuestionMark, Flag, Lightbulb, Mail, MailOpen, Settings } from 'lucide-react';
 import ReactFlow, { 
   addEdge, 
   MiniMap, 
@@ -33,7 +34,7 @@ const initialNodes: Node[] = [
   { 
     id: 'packet', 
     position: POSITIONS.pc1, 
-    data: { label: '✉️' }, 
+    data: { label: <Mail size={22} aria-hidden /> }, 
     style: { 
       opacity: 0,
       background: 'transparent',
@@ -70,7 +71,7 @@ export default function PacketTracer() {
   const onConnect = useCallback((params: any) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   // Helper to update visual state
-  const updateVisuals = (activeNodeId: string | null, activeEdgeId: string | null, packetPos: {x: number, y: number} | null, packetLabel: string = '✉️') => {
+  const updateVisuals = (activeNodeId: string | null, activeEdgeId: string | null, packetPos: {x: number, y: number} | null, packetLabel: React.ReactNode = <Mail size={22} aria-hidden />) => {
     setNodes((nds) => nds.map((node) => {
       if (node.id === 'packet') {
         return {
@@ -128,84 +129,84 @@ export default function PacketTracer() {
         node: 'pc-1',
         edge: null,
         pos: POSITIONS.pc1,
-        icon: '✉️'
+        icon: <Mail size={22} aria-hidden />
       },
       {
         log: "PC Alice : Envoi vers la passerelle par défaut (Routeur A)",
         node: 'pc-1',
         edge: 'e1-2',
         pos: POSITIONS.router1, // Move to Router A
-        icon: '✉️'
+        icon: <Mail size={22} aria-hidden />
       },
       {
         log: "Routeur A : Réception. Analyse des routes disponibles...",
         node: 'router-1',
         edge: null,
         pos: POSITIONS.router1,
-        icon: '⚙️' // Processing
+        icon: <Settings size={22} aria-hidden /> // Processing
       },
       {
-        log: "Routeur A : Route vers Routeur C (Rouge) -> Encombrée (50ms) ❌",
+        log: "Routeur A : Route vers Routeur C (Rouge) -> Encombrée (50ms)",
         node: 'router-1',
         edge: null, // Just thinking
         pos: POSITIONS.router1,
-        icon: '🤔'
+        icon: <CircleQuestionMark size={22} aria-hidden />
       },
       {
-        log: "Routeur A : Route vers Routeur B (Vert) -> Rapide (10ms) ✅",
+        log: "Routeur A : Route vers Routeur B (Vert) -> Rapide (10ms)",
         node: 'router-1',
         edge: null,
         pos: POSITIONS.router1,
-        icon: '💡'
+        icon: <Lightbulb size={22} aria-hidden />
       },
       {
         log: "Routeur A : Décision prise -> Passage par Routeur B",
         node: 'router-1',
         edge: 'e2-3',
         pos: POSITIONS.router2, // Move to Router B
-        icon: '✉️'
+        icon: <Mail size={22} aria-hidden />
       },
       {
         log: "Routeur B : Transmission vers le Serveur Web",
         node: 'router-2',
         edge: 'e3-5',
         pos: POSITIONS.server, // Move to Server
-        icon: '✉️'
+        icon: <Mail size={22} aria-hidden />
       },
       {
         log: "Serveur Web : Paquet reçu ! Préparation de la réponse (PONG)",
         node: 'server',
         edge: null,
         pos: POSITIONS.server,
-        icon: '✅'
+        icon: <CircleCheck size={22} aria-hidden />
       },
       {
         log: "Serveur Web : Réponse envoyée vers Routeur B...",
         node: 'server',
         edge: 'e3-5',
         pos: POSITIONS.router2, // Move back to Router B
-        icon: '📩' // Response packet
+        icon: <MailOpen size={22} aria-hidden /> // Response packet
       },
       {
         log: "Routeur B : Transmission vers Routeur A...",
         node: 'router-2',
         edge: 'e2-3',
         pos: POSITIONS.router1, // Move back to Router A
-        icon: '📩'
+        icon: <MailOpen size={22} aria-hidden />
       },
       {
         log: "Routeur A : Transmission vers PC Alice",
         node: 'router-1',
         edge: 'e1-2',
         pos: POSITIONS.pc1, // Move back to PC
-        icon: '📩'
+        icon: <MailOpen size={22} aria-hidden />
       },
       {
         log: "PC Alice : PING réussi ! (Temps total estimé: 24ms)",
         node: 'pc-1',
         edge: null,
         pos: POSITIONS.pc1,
-        icon: '🏁'
+        icon: <Flag size={22} aria-hidden />
       }
     ];
 
@@ -265,7 +266,7 @@ export default function PacketTracer() {
       </div>
 
       <div className="h-48 bg-slate-900 text-orange-400 font-mono text-xs p-4 overflow-y-auto border-t border-slate-700 scroll-smooth">
-        <div className="mb-2 text-slate-500 uppercase tracking-widest font-bold text-[10px]">Console Réseau</div>
+        <div className="mb-2 text-slate-500 font-bold text-[10px]">Console Réseau</div>
         {logs.length === 0 && <span className="opacity-50">En attente de commande...</span>}
         {logs.map((log, i) => (
           <div key={i} className="mb-1 border-l-2 border-transparent hover:border-orange-500 pl-2 transition-colors">

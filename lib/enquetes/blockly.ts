@@ -44,7 +44,7 @@ export function defineEnqueteBlocks() {
 
   Blockly.Blocks["enquete_requete"] = {
     init(this: Blockly.Block) {
-      this.appendDummyInput().appendField("🔎 Chercher dans la table").appendField(new Blockly.FieldDropdown(tableOptions), "TABLE");
+      this.appendDummyInput().appendField("Chercher dans la table").appendField(new Blockly.FieldDropdown(tableOptions), "TABLE");
       this.appendStatementInput("CLAUSES").setCheck("clause").appendField("puis");
       this.setColour(HUE.query);
       this.setTooltip("Le point de départ : la table où chercher. Accroche dessous les filtres et les options.");
@@ -92,7 +92,7 @@ export function defineEnqueteBlocks() {
 
   Blockly.Blocks["enquete_relier"] = {
     init(this: Blockly.Block) {
-      this.appendDummyInput().appendField("🔗 relier la table").appendField(new Blockly.FieldDropdown(tableOptions), "TABLE");
+      this.appendDummyInput().appendField("relier la table").appendField(new Blockly.FieldDropdown(tableOptions), "TABLE");
       this.appendDummyInput()
         .appendField("quand")
         .appendField(new Blockly.FieldDropdown(columnOptions), "LEFT")
@@ -138,7 +138,7 @@ export function defineEnqueteBlocks() {
 
   Blockly.Blocks["enquete_compter"] = {
     init(this: Blockly.Block) {
-      this.appendDummyInput().appendField("🔢 compter les lignes pour chaque").appendField(new Blockly.FieldDropdown(columnOptions), "COL");
+      this.appendDummyInput().appendField("compter les lignes pour chaque").appendField(new Blockly.FieldDropdown(columnOptions), "COL");
       this.setPreviousStatement(true, "clause");
       this.setNextStatement(true, "clause");
       this.setColour(HUE.count);

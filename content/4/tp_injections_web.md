@@ -2,7 +2,7 @@
 title: 'TP SISR : Audit et Sécurisation d''une Application Web'
 chapter: 'BTS SIO 1 : B3 - CyberSécurité'
 badgeId: bts_sql_audit_rgpd
-meta: 'Durée : 4 heures · Objectif : Attaquer, Comprendre, Réparer'
+meta: 'Durée : 4 heures. Objectif : Attaquer, Comprendre, Réparer'
 prerequisites:
   - injections_sql
 audience: public

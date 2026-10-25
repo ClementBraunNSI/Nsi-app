@@ -3,21 +3,21 @@ title: 'Boucles : Simulation de Propagation'
 description: Modéliser la propagation d'une rumeur ou d'un virus dans une population.
 level: premiere
 chapter: Projets
-icon: "\U0001F9A0"
+icon: "bug"
 badgeId: premiere_projet_virus
 prerequisites:
   - projet_systeme_vote
 audience: public
 ---
 
-# 🦠 Projet - Simulation de Propagation
+# <Icone nom="bug" /> Projet - Simulation de Propagation
 
 Le but de ce projet est de simuler, jour après jour, la propagation d'une rumeur dans une population fermée.
 Dans ce projet, nous allons écrire une boucle `while` qui s'arrête quand tout le monde est au courant, sans jamais dépasser la population.
 
 Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelles personnes. Les « infectés » du programme sont les personnes qui connaissent la rumeur et la transmettent encore. Dans la version de base, personne n'oublie.
 
-## 1. Le modèle 📣
+## 1. Le modèle <Icone nom="megaphone" />
 
 *   Au jour 0, une seule personne connaît la rumeur (`infectes = 1`).
 *   Chaque jour, les nouveaux cas valent `infectes * taux`.

@@ -3,20 +3,20 @@ title: 'Atelier Données : Le Détective CSV'
 description: Apprendre à filtrer et trier des données structurées.
 level: '2'
 chapter: Données structurées
-icon: "\U0001F4CA"
+icon: "chart-column"
 prerequisites:
   - activite_blockly
 audience: public
 ---
 
-# 📊 Atelier Données : Enquête sur le CSV
+# <Icone nom="chart-column" /> Atelier Données : Enquête sur le CSV
 
 Les données sont souvent stockées dans des fichiers **CSV** (Comma Separated Values). Pour les exploiter, on utilise des outils de tri et de filtrage.
 
 <ExerciseTabs courseId="csv-detective" courseTitle="Enquêtes de Données">
   <ExerciseSection id="enquete-1" label="Enquête 1 - Le Vol du Musée" type="lecture">
     <Enonce>
-### 🎨 Enquête 1 : Le Vol du Musée
+### <Icone nom="palette" /> Enquête 1 : Le Vol du Musée
 
 Un tableau de valeur a disparu du Musée des Beaux-Arts. Le voleur s'est glissé parmi les visiteurs et le personnel.
 
@@ -30,7 +30,7 @@ Un tableau de valeur a disparu du Musée des Beaux-Arts. Le voleur s'est glissé
 
   <ExerciseSection id="enquete-2" label="Enquête 2 - L'Attaque Fantôme" type="lecture">
     <Enonce>
-### 💻 Enquête 2 : L'Attaque Fantôme
+### <Icone nom="laptop" /> Enquête 2 : L'Attaque Fantôme
 
 Une intrusion informatique a été détectée sur les serveurs de l'école. L'adresse IP a été tracée jusqu'en Asie.
 
@@ -44,7 +44,7 @@ Une intrusion informatique a été détectée sur les serveurs de l'école. L'ad
 
   <ExerciseSection id="enquete-3" label="Enquête 3 - L'Affaire du Poison" type="lecture">
     <Enonce>
-### 🧪 Enquête 3 : L'Affaire du Poison (Difficile)
+### <Icone nom="flask-conical" /> Enquête 3 : L'Affaire du Poison (Difficile)
 
 Des produits chimiques dangereux ont été dérobés dans un laboratoire du Sud-Ouest de la France.
 
@@ -56,7 +56,7 @@ Des produits chimiques dangereux ont été dérobés dans un laboratoire du Sud-
 
   <ExerciseSection id="enquete-4" label="Enquête 4 - Le Réseau Portuaire" type="lecture">
     <Enonce>
-### 🚢 Enquête 4 : Le Réseau Portuaire (Expert)
+### <Icone nom="ship" /> Enquête 4 : Le Réseau Portuaire (Expert)
 
 Un réseau de contrebande utilise les grands ports européens. Nous devons intercepter le passeur.
 

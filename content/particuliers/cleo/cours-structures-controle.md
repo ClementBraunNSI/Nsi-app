@@ -3,18 +3,18 @@ title: C - Structures de Contrôle
 description: 'Conditions, choix et boucles pour diriger vos programmes'
 level: particuliers
 chapter: Programmation en C
-icon: "\U0001F500"
+icon: "shuffle"
 prerequisites:
   - cours-tableaux-2d
 audience:
   accounts: []
 ---
 
-# 🔀 C — Structures de Contrôle
+# <Icone nom="shuffle" /> C : Structures de Contrôle
 
 ## Conditions, choix et boucles pour diriger vos programmes
 
-## 🚦 Les Conditions (if / else)
+## <Icone nom="traffic-cone" /> Les Conditions (if / else)
 
 ### Décisions
 
@@ -66,7 +66,7 @@ int main() {
 }
 ```
 
-## 🔄 Les Boucles
+## <Icone nom="refresh-cw" /> Les Boucles
 
 ### Boucle while
 

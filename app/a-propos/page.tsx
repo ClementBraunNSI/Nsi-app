@@ -1,7 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Mail, GraduationCap, Code2, Heart, Trees, MapPin, Globe } from 'lucide-react';
+import Image from 'next/image';
+import { Mail, GraduationCap, Code2, Heart, Trees, MapPin, Globe, Building2, Library, Waves, Compass, School, Sailboat, Landmark, Backpack, type LucideIcon } from 'lucide-react';
+import { FoxHead } from '@/components/ui/FoxHead';
 
 export const metadata: Metadata = {
   title: 'Clément Braun, enseignant NSI',
@@ -25,11 +27,11 @@ const ABOUT_JSON_LD = {
 };
 
 const CONTRIBUTORS = [
-  { name: "Clément Braun", role: "Auteur principal", avatar: "🦊", desc: "Enseignant NSI et concepteur de la plateforme." },
-  { name: "Nicolas DELPLACE", role: "Lycée de l'Escaut", avatar: "🏢", desc: "Enseignant d'informatique à Valenciennes." },
-  { name: "Stéphane RAMSTEIN", role: "Lycée Raymond Queneau", avatar: "📚", desc: "Enseignant d'informatique à Villeneuve-d'Ascq." },
-  { name: "Benoit PAPEGAY", role: "Université de Lille", avatar: "🎓", desc: "Enseignant-chercheur et contributeur pédagogique." },
-  { name: "Mathieu MARCHAND", role: "Lycée Benjamin Franklin", avatar: "🌊", desc: "Enseignant d'informatique à Auray." }
+  { name: "Clément Braun", role: "Auteur principal", avatar: <FoxHead size={30} />, desc: "Enseignant NSI et concepteur de la plateforme." },
+  { name: "Nicolas DELPLACE", role: "Lycée de l'Escaut", avatar: <Building2 size={24} />, desc: "Enseignant d'informatique à Valenciennes." },
+  { name: "Stéphane RAMSTEIN", role: "Lycée Raymond Queneau", avatar: <Library size={24} />, desc: "Enseignant d'informatique à Villeneuve-d'Ascq." },
+  { name: "Benoit PAPEGAY", role: "Université de Lille", avatar: <GraduationCap size={24} />, desc: "Enseignant-chercheur et contributeur pédagogique." },
+  { name: "Mathieu MARCHAND", role: "Lycée Benjamin Franklin", avatar: <Waves size={24} />, desc: "Enseignant d'informatique à Auray." }
 ];
 
 type TimelineEstablishment = {
@@ -39,7 +41,7 @@ type TimelineEstablishment = {
 
 type TimelineStep = {
   year: string;
-  icon: string;
+  icon: LucideIcon;
   subject: string;
   current?: boolean;
   establishments: TimelineEstablishment[];
@@ -48,7 +50,7 @@ type TimelineStep = {
 const TIMELINE: TimelineStep[] = [
   {
     year: "2026 - 2027",
-    icon: "🧭",
+    icon: Compass,
     subject: "SNT / NSI",
     current: true,
     establishments: [
@@ -57,7 +59,7 @@ const TIMELINE: TimelineStep[] = [
   },
   {
     year: "2025 - 2026",
-    icon: "🏫",
+    icon: School,
     subject: "SNT / BTS SIO",
     establishments: [
       { place: "Lycée Paul Duez", city: "Cambrai (59)" },
@@ -67,19 +69,19 @@ const TIMELINE: TimelineStep[] = [
   },
   {
     year: "2024 - 2025",
-    icon: "⛵",
+    icon: Sailboat,
     subject: "SNT / NSI",
     establishments: [{ place: "Lycée Charles de Gaulle", city: "Vannes (56)" }, {place : "Lycée Benjamin Franklin", city: "Auray (56)"}],
   },
   {
     year: "2022 - 2024",
-    icon: "🏛️",
+    icon: Landmark,
     subject: "SNT / NSI",
     establishments: [{ place: "Lycée Raymond Queneau", city: "Villeneuve-d'Ascq (59)" }],
   },
   {
     year: "2021 - 2022",
-    icon: "🎒",
+    icon: Backpack,
     subject: "SNT / NSI",
     establishments: [{ place: "Lycée Louis Pasteur", city: "Hénin-Beaumont (62)" }],
   },
@@ -104,7 +106,7 @@ export default function AboutPage() {
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--accent-soft)] text-[var(--accent)] rounded-full text-xs font-semibold mb-3">
-              <GraduationCap size={14} fill="currentColor" /> Enseignant certifié · TZR
+              <GraduationCap size={14} fill="currentColor" /> Enseignant certifié, TZR
             </div>
             <p className="mb-6 text-sm font-semibold text-[var(--fg)]">Certifié de NSI</p>
             <h1 className="text-5xl md:text-7xl font-semibold text-[var(--fg)] mb-8 tracking-tight">
@@ -150,8 +152,8 @@ export default function AboutPage() {
               </a>
             </div>
           </div>
-          <div className="w-64 h-64 bg-[var(--accent)] rounded-[var(--radius)] flex items-center justify-center text-[8rem]">
-            <span>🦊</span>
+          <div className="w-64 h-64 bg-[var(--surface-2)] rounded-[var(--radius)] flex items-center justify-center">
+            <Image src="/images/fox_assis.svg" alt="Le renard de la tanière" width={240} height={240} />
           </div>
         </div>
       </header>
@@ -170,7 +172,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-6 text-emerald-100 text-lg leading-relaxed">
               <p>
-                Le choix du renard n'est pas seulement esthétique. C'est un animal qui <strong>fédère</strong> par son intelligence et sa capacité d'adaptation — des qualités essentielles en informatique.
+                Le choix du renard n'est pas seulement esthétique. C'est un animal qui <strong>fédère</strong> par son intelligence et sa capacité d'adaptation, des qualités essentielles en informatique.
               </p>
               <p>
                 Mais au-delà du code, le renard est un symbole fort de notre lien avec la nature. À travers ce thème, je souhaite rappeler l'importance de la <strong>préservation de la biodiversité</strong>. Apprendre les sciences numériques, c'est aussi comprendre le monde qui nous entoure pour mieux le protéger.
@@ -247,8 +249,8 @@ export default function AboutPage() {
                 </div>
 
                 {/* Badge Central */}
-                <div className="relative z-10 w-16 h-16 bg-[var(--accent)] rounded-2xl flex items-center justify-center text-2xl border-4 border-[var(--bg)]">
-                  {step.icon}
+                <div className="relative z-10 w-16 h-16 bg-[var(--accent)] rounded-2xl flex items-center justify-center text-white border-4 border-[var(--bg)]">
+                  {React.createElement(step.icon, { size: 26, "aria-hidden": true })}
                 </div>
 
                 {/* Espaceur pour l'équilibre (Desktop) */}
@@ -268,7 +270,7 @@ export default function AboutPage() {
               "Seul on va plus vite, ensemble on va plus loin." Ce projet mutualise les travaux de collègues passionnés rencontrés au fil de mon parcours.
             </p>
             <p className="mt-4 max-w-2xl text-[var(--muted)] leading-relaxed">
-              À côté de ce projet, d’autres enseignants de SNT et de NSI publient leurs propres cours.
+              À côté de ce projet, d'autres enseignants de SNT et de NSI publient leurs propres cours.
             </p>
             <Link
               href="/autres-cours-nsi"
@@ -281,7 +283,7 @@ export default function AboutPage() {
           <div className="flex flex-wrap justify-center gap-6">
             {CONTRIBUTORS.map((person, i) => (
               <div key={i} className="bg-[var(--surface)] p-6 rounded-[var(--radius)] border border-[var(--border)] text-center w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(20%-1.5rem)] min-w-[220px] hover:border-[var(--accent)] transition-colors">
-                <div className="w-14 h-14 bg-[var(--surface-2)] rounded-2xl flex items-center justify-center text-2xl mb-5 mx-auto">
+                <div className="w-14 h-14 bg-[var(--surface-2)] rounded-2xl flex items-center justify-center text-[var(--accent)] mb-5 mx-auto">
                   {person.avatar}
                 </div>
                 <h3 className="font-semibold text-[var(--fg)] text-lg mb-1 tracking-tight">{person.name}</h3>

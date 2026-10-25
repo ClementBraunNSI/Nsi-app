@@ -4,7 +4,7 @@ description: >-
   Définir, appeler et documenter des fonctions pour modulariser un programme.
 level: premiere
 chapter: Introduction à Python
-icon: "\U0001F40D"
+icon: "code"
 badgeId: premiere_python_fonctions
 prerequisites:
   - python_types_base

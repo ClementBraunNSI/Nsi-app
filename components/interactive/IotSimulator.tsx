@@ -3,8 +3,9 @@
 
 import React, { useState } from 'react';
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
+import { Siren, Sun, Wrench } from 'lucide-react';
 
-function Draggable({ id, label, icon }: { id: string, label: string, icon: string }) {
+function Draggable({ id, label, icon }: { id: string, label: string, icon: React.ReactNode }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
   
   const style = transform ? {
@@ -35,7 +36,7 @@ function Droppable({ id, children, active }: { id: string, children?: React.Reac
         active ? 'bg-orange-50 border-orange-400' : 'bg-slate-50 border-slate-300'
       }`}
     >
-      {children || <span className="text-slate-400 text-xs font-bold uppercase">Déposer ici</span>}
+      {children || <span className="text-slate-400 text-xs font-bold">Déposer ici</span>}
     </div>
   );
 }
@@ -64,18 +65,20 @@ export default function IotSimulator() {
 
   return (
     <div className="border rounded-xl p-8 bg-slate-50 shadow-lg my-8">
-      <h3 className="text-xl font-bold mb-6 text-slate-800">🛠️ Le Système d'Alarme (IoT)</h3>
+      <h3 className="flex items-center gap-2 text-xl font-bold mb-6 text-slate-800">
+        <Wrench size={22} className="text-orange-500" aria-hidden /> Le Système d'Alarme (IoT)
+      </h3>
       
       <DndContext onDragEnd={handleDragEnd}>
         <div className="flex flex-col md:flex-row gap-12">
           
           {/* Component Palette */}
           <div className="flex flex-col gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100">
-            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Composants</h4>
+            <h4 className="text-xs font-bold text-slate-400 mb-2">Composants</h4>
             <div className="flex flex-wrap gap-4">
-              <Draggable id="sensor-light" label="Capteur Lum." icon="☀️" />
+              <Draggable id="sensor-light" label="Capteur Lum." icon={<Sun size={26} aria-hidden />} />
               <Draggable id="logic-and" label="Porte ET" icon="&" />
-              <Draggable id="actuator-siren" label="Sirène" icon="🚨" />
+              <Draggable id="actuator-siren" label="Sirène" icon={<Siren size={26} aria-hidden />} />
             </div>
           </div>
 
@@ -88,7 +91,7 @@ export default function IotSimulator() {
               <div className="flex flex-col items-center gap-2">
                 <span className="text-xs font-bold text-slate-500">ENTRÉE</span>
                 <Droppable id="sensor" active={!!slots.sensor}>
-                  {slots.sensor === 'sensor-light' && <div className="text-3xl">☀️</div>}
+                  {slots.sensor === 'sensor-light' && <Sun size={32} className="text-amber-500" aria-hidden />}
                 </Droppable>
               </div>
 
@@ -102,7 +105,7 @@ export default function IotSimulator() {
               <div className="flex flex-col items-center gap-2">
                 <span className="text-xs font-bold text-slate-500">SORTIE</span>
                 <Droppable id="actuator" active={!!slots.actuator}>
-                  {slots.actuator === 'actuator-siren' && <div className={`text-4xl transition-all ${isActuatorActive ? 'animate-bounce scale-125' : 'opacity-50'}`}>🚨</div>}
+                  {slots.actuator === 'actuator-siren' && <Siren size={36} className={`transition-all ${isActuatorActive ? 'scale-125 text-red-600' : 'opacity-50'}`} aria-hidden />}
                 </Droppable>
               </div>
             </div>
@@ -137,7 +140,7 @@ export default function IotSimulator() {
 
       {/* Status */}
       <div className={`mt-6 p-4 rounded-lg text-center font-bold border ${isActuatorActive ? 'bg-orange-50 text-orange-600 border-orange-200' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
-        État du système : {isActuatorActive ? "ALARME ACTIVÉE ! 🚨" : "Veille..."}
+        État du système : {isActuatorActive ? "Alarme activée !" : "Veille..."}
       </div>
     </div>
   );

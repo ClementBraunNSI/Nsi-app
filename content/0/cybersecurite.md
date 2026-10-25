@@ -3,7 +3,7 @@ title: "Cybersécurité"
 description: "Introduction aux enjeux de la sécurité informatique, chiffrement et bonnes pratiques."
 level: SNI
 chapter: "Cybersecurite"
-icon: "🔒"
+icon: "lock"
 audience: public
 ---
 
@@ -51,14 +51,14 @@ Chaque jour, des milliards de données circulent sur Internet :
 
 **Situation sans sécurisation :**
 ```
-Vous → [Mot de passe : 1234] → Site web
+Vous -> [Mot de passe : 1234] -> Site web
          ↑
     Pirate qui intercepte : "J'ai ton mot de passe !"
 ```
 
 **Situation avec sécurisation (HTTPS) :**
 ```
-Vous → [Mot de passe chiffré : %Kj#9@mL] → Site web
+Vous -> [Mot de passe chiffré : %Kj#9@mL] -> Site web
          ↑
     Pirate qui intercepte : "Je ne comprends rien !"
 ```
@@ -78,8 +78,8 @@ Le **chiffrement** est une technique qui transforme un message clair en message 
 
 **Schéma :**
 ```
-Message clair → [CHIFFREMENT avec CLÉ] → Message chiffré
-Message chiffré → [DÉCHIFFREMENT avec CLÉ] → Message clair
+Message clair -> [CHIFFREMENT avec CLÉ] -> Message chiffré
+Message chiffré -> [DÉCHIFFREMENT avec CLÉ] -> Message clair
 ```
 
 ## Méthodes de chiffrement simples
@@ -90,13 +90,13 @@ Le **code de César** est l'une des plus anciennes méthodes de chiffrement. Ell
 
 **Principe avec un décalage de 3 :**
 ```
-A → D
-B → E
-C → F
+A -> D
+B -> E
+C -> F
 ...
-X → A
-Y → B
-Z → C
+X -> A
+Y -> B
+Z -> C
 ```
 
 **Exemple :**

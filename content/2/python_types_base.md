@@ -4,7 +4,7 @@ subtitle: Les types fondamentaux pour structurer vos données
 description: "Booléens, entiers, flottants et chaînes : reconnaître un type et l'utiliser correctement."
 level: premiere
 chapter: Introduction à Python
-icon: "\U0001F522"
+icon: "hash"
 badgeId: premiere_types_base
 prerequisites:
   - python_constructions_elementaires
@@ -23,9 +23,9 @@ Un **booléen** (`bool`) n'a que deux valeurs, `True` et `False`. C'est le type 
 
 | Opérateur | Signification | Exemple |
 | --- | --- | --- |
-| `and` | Vrai si **les deux** sont vrais | `True and False` → `False` |
-| `or` | Vrai si **au moins un** est vrai | `True or False` → `True` |
-| `not` | Inverse la valeur | `not True` → `False` |
+| `and` | Vrai si **les deux** sont vrais | `True and False` donne `False` |
+| `or` | Vrai si **au moins un** est vrai | `True or False` donne `True` |
+| `not` | Inverse la valeur | `not True` donne `False` |
 
 ```python
 age = 16

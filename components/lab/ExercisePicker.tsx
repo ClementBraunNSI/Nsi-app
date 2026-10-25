@@ -24,7 +24,7 @@ export function ExercisePicker({
 }: Props) {
   return (
     <div>
-      <p className="mb-2 text-xs font-black uppercase tracking-wider text-slate-500">3. Exercice</p>
+      <p className="mb-2 text-xs font-bold text-slate-500">3. Exercice</p>
       <div className="relative">
         <button
           type="button"

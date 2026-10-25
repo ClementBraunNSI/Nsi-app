@@ -2,7 +2,7 @@
 title: 'Ressouces : Lab vulnérable'
 chapter: Ressources nécessaires
 badgeId: bts_sql_audit_rgpd
-meta: 'Durée : 2 heures · Objectif : Comprendre pour mieux protéger'
+meta: 'Durée : 2 heures. Objectif : Comprendre pour mieux protéger'
 prerequisites:
   - ressources_vehicules
 audience: public
@@ -90,7 +90,7 @@ if (isset($_POST['new_message'])) {
 <body>
 
 <div class="container">
-    <h1>💀 Lab Sécurité : SQLi & XSS</h1>
+    <h1>Lab Sécurité : SQLi & XSS</h1>
 
     <?php if (!isset($_SESSION['user'])): ?>
         <!-- PAGE DE LOGIN -->
@@ -122,7 +122,7 @@ if (isset($_POST['new_message'])) {
         <hr>
 
         <!-- SECTION XSS REFLECTED -->
-        <h3>🔍 Recherche (XSS Reflected)</h3>
+        <h3>Recherche (XSS Reflected)</h3>
         <form method="GET">
             <input type="text" name="q" placeholder="Rechercher une note...">
             <button type="submit">Rechercher</button>
@@ -161,7 +161,7 @@ if (isset($_POST['new_message'])) {
         <hr>
 
         <!-- SECTION XSS STORED -->
-        <h3>📢 Livre d'or (XSS Stored)</h3>
+        <h3>Livre d'or (XSS Stored)</h3>
         <p>Laissez un message à l'administrateur.</p>
         
         <form method="POST">

@@ -4,7 +4,7 @@ description: Exercices pratiques sur SQL et les bases de données
 level: TNSI
 order: 70
 chapter: Bases de Données
-icon: "\U0001F4BE"
+icon: "save"
 badgeId: terminale_sql_exos
 prerequisites:
   - sql-bases-donnees

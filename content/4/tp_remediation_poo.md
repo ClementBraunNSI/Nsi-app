@@ -16,7 +16,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
   
   <ExerciseSection id="tp-remed-exo1" label="Étape 1 - La Syntaxe de Base" type="autre">
     <Enonce>
-    ## 🧱 Étape 1 : Syntaxe C# et Création de Classe
+    ## <Icone nom="brick-wall" /> Étape 1 : Syntaxe C# et Création de Classe
 
     La première étape pour réussir en C# est de maîtriser sa syntaxe stricte. Une classe est un **plan de construction** (un moule).
 
@@ -25,7 +25,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     2. **Le Constructeur :** Il porte **exactement le même nom que la classe**. Il n'a **pas de type de retour** (ni `void`, ni `int`).
     3. **Pas de `static` partout :** Le mot clé `static` signifie "appartient au moule global". Or, en POO, on veut que chaque objet ait ses propres valeurs. **Retirez le mot `static` de vos méthodes et propriétés !**
 
-    ### 📋 Travail à faire
+    ### <Icone nom="clipboard-list" /> Travail à faire
 
     Créez une classe `Joueur` dans un fichier C# propre :
 
@@ -46,17 +46,17 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
   <ExerciseSection id="tp-remed-exo2" label="Étape 2 - L'Instanciation (Le mot 'new')" type="autre">
     <Enonce>
-    ## 🪄 Étape 2 : L'Instanciation (Donner vie au code)
+    ## <Icone nom="wand" /> Étape 2 : L'Instanciation (Donner vie au code)
 
     Une classe est juste un plan. Pour l'utiliser, il faut créer des **Objets** à partir de ce plan. C'est ce qu'on appelle l'**Instanciation**.
     En C#, cela nécessite obligatoirement l'utilisation du mot-clé `new`.
 
     <Admonition type="danger" title="L'erreur classique">
-    `Joueur j1 = Joueur("Alex", 10);` ❌ **FAUX !** (C'est du Python, pas du C#).
-    `Joueur j1 = new Joueur("Alex", 10);` ✅ **VRAI !**
+    `Joueur j1 = Joueur("Alex", 10);` <Icone nom="circle-x" /> **FAUX !** (C'est du Python, pas du C#).
+    `Joueur j1 = new Joueur("Alex", 10);` <Icone nom="circle-check" /> **VRAI !**
     </Admonition>
 
-    ### 📋 Travail à faire
+    ### <Icone nom="clipboard-list" /> Travail à faire
 
     Dans votre méthode `Main` :
     1. Créez un joueur nommé "Shadow" de niveau 5.
@@ -68,7 +68,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
   <ExerciseSection id="tp-remed-exo3" label="Étape 3 - Interaction entre Objets (Le mot 'this')" type="autre">
     <Enonce>
-    ## ⚔️ Étape 3 : Interaction entre Objets
+    ## <Icone nom="swords" /> Étape 3 : Interaction entre Objets
 
     Le but de la POO est de faire interagir des objets entre eux. 
     Lorsqu'un objet A interagit avec un objet B, l'objet A est représenté par le mot-clé `this` (moi-même), et l'objet B est passé en paramètre.
@@ -78,7 +78,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     Pour lire le pseudo du joueur actuel, on écrit `this.Pseudo` (ou juste `Pseudo`), mais **JAMAIS** `Joueur.Pseudo`.
     </Admonition>
 
-    ### 📋 Travail à faire
+    ### <Icone nom="clipboard-list" /> Travail à faire
 
     Retournez dans votre classe `Joueur` et ajoutez une méthode `Attaquer` :
     
@@ -95,12 +95,12 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
   <ExerciseSection id="tp-remed-exo4" label="Étape 4 - Les Listes d'Objets" type="autre">
     <Enonce>
-    ## 📦 Étape 4 : Stocker des objets dans une Liste
+    ## <Icone nom="package" /> Étape 4 : Stocker des objets dans une Liste
 
     Dans le DS, beaucoup ont bloqué sur la notion de `List<Renard>`.
     Une liste est un objet de la classe `List`. Pour l'utiliser, il faut donc l'instancier avec `new` !
 
-    ### 📋 Travail à faire
+    ### <Icone nom="clipboard-list" /> Travail à faire
 
     Créez une nouvelle classe `Guilde` :
     
@@ -116,11 +116,11 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
   <ExerciseSection id="tp-remed-exo5" label="Étape 5 - Algorithmes de recherche dans une Liste" type="autre">
     <Enonce>
-    ## 🔍 Étape 5 : Explorer et analyser une Liste
+    ## <Icone nom="search" /> Étape 5 : Explorer et analyser une Liste
 
     Maintenant que vous savez ajouter des éléments dans une liste, il faut savoir exploiter ces données. Dans le DS, c'était le rôle des méthodes `PeutAccueillir` ou `VerifierHarmonie`.
 
-    ### 📋 Travail à faire
+    ### <Icone nom="clipboard-list" /> Travail à faire
 
     Dans votre classe `Guilde`, ajoutez les méthodes suivantes :
 
@@ -144,11 +144,11 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
   <ExerciseSection id="tp-remed-exo6" label="Étape 6 - Interaction entre Guildes (Le Boss Final)" type="autre">
     <Enonce>
-    ## 🏰 Étape 6 : GvG (Guilde vs Guilde)
+    ## <Icone nom="castle" /> Étape 6 : GvG (Guilde vs Guilde)
 
     C'est l'épreuve finale. Vous allez faire interagir deux objets `Guilde` entre eux, en utilisant les méthodes que vous venez de créer !
 
-    ### 📋 Travail à faire
+    ### <Icone nom="clipboard-list" /> Travail à faire
 
     Dans la classe `Guilde`, créez la méthode suivante :
 

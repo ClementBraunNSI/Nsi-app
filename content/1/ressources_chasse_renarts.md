@@ -3,7 +3,7 @@ title: 'Ressources : Fichiers Chasse aux Ren-Arts'
 description: 'Modèles HTML/CSS et archive ZIP pour le projet Chasse aux Ren-Arts.'
 level: seconde
 chapter: Web
-icon: "\U0001F4E6"
+icon: "package"
 badgeId: seconde_ressources_renards
 prerequisites: []
 audience: public

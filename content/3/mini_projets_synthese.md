@@ -4,7 +4,7 @@ description: "Mobiliser plusieurs notions du programme sur des projets courts"
 level: TNSI
 order: 250
 chapter: Projets
-icon: "🛠️"
+icon: "wrench"
 badgeId: terminale_mini_projets
 prerequisites:
   - entrainement_epreuve_pratique
@@ -18,21 +18,21 @@ Chaque sujet ci-dessous se suit comme un projet : données de départ, fonctions
 
 On en choisit un. Le programme principal affiche l'exemple du sujet, pour qu'on puisse contrôler le résultat sans tout retaper.
 
-## 1. Réseau de villes 🛣️
+## 1. Réseau de villes <Icone nom="route" />
 
 Un graphe pondéré relie des villes. Le poids d'une arête est une distance en kilomètres. On calcule un plus court chemin avec l'algorithme de Dijkstra, puis on affiche le trajet et son coût.
 
-Graphe de départ. Les arêtes ne sont pas orientées : Lyon–Paris vaut aussi Paris–Lyon.
+Graphe de départ. Les arêtes ne sont pas orientées : Lyon-Paris vaut aussi Paris-Lyon.
 
 | Arête | Distance (km) |
 | --- | --- |
-| Lyon–Paris | 460 |
-| Lyon–Marseille | 310 |
-| Paris–Lille | 220 |
-| Paris–Marseille | 770 |
-| Marseille–Lille | 1000 |
+| Lyon-Paris | 460 |
+| Lyon-Marseille | 310 |
+| Paris-Lille | 220 |
+| Paris-Marseille | 770 |
+| Marseille-Lille | 1000 |
 
-Le plus court chemin de Lyon à Lille passe par Paris : 460 + 220 = 680 km. Lyon–Marseille–Lille vaut 1310 km. Paris–Marseille–Lille n'est pas un chemin de Lyon vers Lille au départ.
+Le plus court chemin de Lyon à Lille passe par Paris : 460 + 220 = 680 km. Lyon-Marseille-Lille vaut 1310 km. Paris-Marseille-Lille n'est pas un chemin de Lyon vers Lille au départ.
 
 ```python
 graphe = {
@@ -68,16 +68,16 @@ graphe = {
       Affichage attendu :
 
       ```text
-      Lyon → Paris → Lille
+      Lyon -> Paris -> Lille
       Coût : 680 km
       ```
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `villes.py` : le graphe de l'exemple, `voisins`, `ajouter_route`, `plus_court_chemin`, et un affichage du trajet Lyon–Lille. Commentaire d'en-tête avec le nom et la classe. En quelques lignes sous le résultat, dites pourquoi 680 est meilleur que 1310 : on compare des sommes de poids, pas le nombre de villes.
+**Ce qu'on rend.** Un fichier `villes.py` : le graphe de l'exemple, `voisins`, `ajouter_route`, `plus_court_chemin`, et un affichage du trajet Lyon-Lille. Commentaire d'en-tête avec le nom et la classe. En quelques lignes sous le résultat, dites pourquoi 680 est meilleur que 1310 : on compare des sommes de poids, pas le nombre de villes.
 
-## 2. Catalogue de véhicules 🚗
+## 2. Catalogue de véhicules <Icone nom="car" />
 
 Une petite base SQL décrit des véhicules. Une route d'API renvoie du JSON. Une page, ou un script, consulte ce catalogue.
 
@@ -126,7 +126,7 @@ Trois lignes de départ :
 
 **Ce qu'on rend.** Le script SQL (`schema.sql` avec la création, les trois insertions et la requête), le code de la route `GET /vehicules`, et la page ou le script qui affiche la Peugeot et le Ducato. Commentaire d'en-tête avec le nom et la classe.
 
-## 3. Analyse de logs 📜
+## 3. Analyse de logs <Icone nom="scroll-text" />
 
 Un fichier de logs du système est lu ligne à ligne. On en tire des indicateurs, puis on compare deux façons de les calculer.
 
@@ -174,7 +174,7 @@ Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. L
 
 **Ce qu'on rend.** `logs.py`, le fichier `systeme.log` de l'exemple, les fonctions, l'affichage des indicateurs (6, 3, 1, 2 et le mot `disque`), et le commentaire qui compare les deux stratégies. Commentaire d'en-tête avec le nom et la classe.
 
-## 4. Simulateur d'épreuve pratique 🎲
+## 4. Simulateur d'épreuve pratique <Icone nom="dices" />
 
 Une banque de questions est tirée au sort. Un test simple dit si la réponse proposée est celle attendue. Le sujet ne corrige pas une copie entière : il vérifie une réponse contre le jeu d'essai de la question.
 

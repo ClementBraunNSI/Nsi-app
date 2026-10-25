@@ -3,7 +3,7 @@ title: L'Héritage et le Polymorphisme en C#
 description: 'Approfondissement sur l''héritage, les classes abstraites et le polymorphisme.'
 level: '2'
 chapter: 'BTS SIO 1 : B2 - Développement (SLAM)'
-icon: "\U0001F9EC"
+icon: "dna"
 prerequisites:
   - introduction_poo
 audience: public
@@ -11,7 +11,7 @@ audience: public
 
 # L'héritage en C#
 
-Une classe `Voiture` et une classe `Moto` répéteraient les mêmes champs — une marque, une méthode pour démarrer — si chacune était écrite à part. L'**héritage** évite cette copie. La **classe dérivée**, la fille, reçoit les propriétés et les méthodes de la **classe de base**, la mère, et n'ajoute que ce qui lui est propre. C'est le principe **DRY** : *Don't Repeat Yourself*, on n'écrit pas deux fois le même comportement.
+Une classe `Voiture` et une classe `Moto` répéteraient les mêmes champs (une marque, une méthode pour démarrer) si chacune était écrite à part. L'**héritage** évite cette copie. La **classe dérivée**, la fille, reçoit les propriétés et les méthodes de la **classe de base**, la mère, et n'ajoute que ce qui lui est propre. C'est le principe **DRY** : *Don't Repeat Yourself*, on n'écrit pas deux fois le même comportement.
 
 En C#, le symbole `:` place la fille à droite de la mère.
 

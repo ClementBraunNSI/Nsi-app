@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Send, Eye, EyeOff, Server, Globe, FileText, ArrowRight } from 'lucide-react';
+import { Send, Eye, EyeOff, Server, Globe, FileText, ArrowRight, ArrowLeftRight, Download, Upload } from 'lucide-react';
 
 export default function HttpMethodVisualizer() {
   const [method, setMethod] = useState<'GET' | 'POST'>('GET');
@@ -35,7 +35,7 @@ export default function HttpMethodVisualizer() {
   return (
     <div className="flex flex-col gap-6 my-8 border rounded-xl overflow-hidden shadow-lg bg-white p-6">
       <h3 className="text-xl font-bold text-slate-800 text-center mb-2">
-        🆚 Comparateur GET vs POST
+        <ArrowLeftRight size={22} className="mr-2 inline align-[-4px] text-orange-500" aria-hidden />Comparateur GET vs POST
       </h3>
       
       <div className="flex justify-center gap-4 mb-4">
@@ -43,13 +43,13 @@ export default function HttpMethodVisualizer() {
           onClick={() => { setMethod('GET'); setShowResult(false); }}
           className={`px-6 py-2 rounded-lg font-bold transition-colors border-2 ${method === 'GET' ? 'bg-slate-100 border-slate-500 text-slate-700' : 'border-slate-200 text-slate-500 hover:bg-slate-50'}`}
         >
-          📥 Méthode GET
+          <Download size={16} className="mr-2 inline align-[-3px]" aria-hidden />Méthode GET
         </button>
         <button 
           onClick={() => { setMethod('POST'); setShowResult(false); }}
           className={`px-6 py-2 rounded-lg font-bold transition-colors border-2 ${method === 'POST' ? 'bg-orange-100 border-orange-500 text-orange-700' : 'border-slate-200 text-slate-500 hover:bg-slate-50'}`}
         >
-          📤 Méthode POST
+          <Upload size={16} className="mr-2 inline align-[-3px]" aria-hidden />Méthode POST
         </button>
       </div>
 
@@ -62,7 +62,7 @@ export default function HttpMethodVisualizer() {
             </h4>
             
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <div className="text-xs font-bold text-slate-500 uppercase">Formulaire de Connexion</div>
+              <div className="text-xs font-bold text-slate-500">Formulaire de Connexion</div>
               <input 
                 type="text" 
                 value={formData.username}
@@ -132,14 +132,14 @@ export default function HttpMethodVisualizer() {
 
             {showResult ? (
               <div className="w-full bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono text-xs">
-                <div className="text-slate-400 mb-2 uppercase font-bold tracking-wider border-b pb-1">Requête Reçue</div>
+                <div className="text-slate-400 mb-2 font-bold border-b pb-1">Requête Reçue</div>
                 <div className="mb-2">
                   <span className="text-orange-600 font-bold">{method}</span> <span className="text-slate-600">/login HTTP/1.1</span>
                 </div>
                 
                 {method === 'POST' && (
                   <div className="mt-4 pt-2 border-t border-dashed border-slate-300">
-                    <div className="text-slate-400 mb-1 uppercase font-bold text-[10px]">Corps de la requête (Body)</div>
+                    <div className="text-slate-400 mb-1 font-bold text-[10px]">Corps de la requête (Body)</div>
                     <div className="text-orange-600 bg-orange-50 p-2 rounded">
                       username={formData.username}&password={formData.password}
                     </div>
@@ -148,7 +148,7 @@ export default function HttpMethodVisualizer() {
                 
                 {method === 'GET' && (
                   <div className="mt-4 pt-2 border-t border-dashed border-slate-300">
-                    <div className="text-slate-400 mb-1 uppercase font-bold text-[10px]">Paramètres URL</div>
+                    <div className="text-slate-400 mb-1 font-bold text-[10px]">Paramètres URL</div>
                     <div className="text-slate-600 bg-slate-100 p-2 rounded">
                       username: {formData.username}<br/>
                       password: {formData.password}

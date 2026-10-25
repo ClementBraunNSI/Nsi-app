@@ -4,7 +4,7 @@ description: Classes, encapsulation, composition et héritage en Python.
 level: TNSI
 order: 146
 chapter: Langages et Programmation
-icon: "\U0001F3D7️"
+icon: "construction"
 badgeId: terminale_exercices_poo
 prerequisites:
   - poo_classes_objets

@@ -3,7 +3,7 @@ title: 'Atelier Localisation : Trilateration'
 description: Comprendre le fonctionnement du GPS avec les satellites.
 level: '2'
 chapter: Localisation
-icon: "\U0001F4E1"
+icon: "radio-tower"
 prerequisites:
   - Cours_Localisation
 audience: public
@@ -12,7 +12,7 @@ audience: public
 <ExerciseTabs courseId="trilateration-gps" courseTitle="Atelier GPS : La Trilateration">
   <ExerciseSection id="mission-gps" label="Mission : Retrouver le Renard" type="lecture">
     <Enonce>
-### 📡 Mission : Retrouver le Renard
+### <Icone nom="radio-tower" /> Mission : Retrouver le Renard
 
 Pour calculer ta position, ton téléphone écoute les signaux d'au moins 3 satellites. C'est le principe de la **trilatération**.
 

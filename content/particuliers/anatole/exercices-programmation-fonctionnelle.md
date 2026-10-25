@@ -1,6 +1,6 @@
 ---
 title: 'Exercices : Programmation fonctionnelle'
-description: 'map, filter, reduce et enchaînements — fiche progressive par niveau.'
+description: 'map, filter, reduce et enchaînements : fiche progressive par niveau.'
 icon: "λ"
 chapter: Programmation fonctionnelle
 level: particuliers

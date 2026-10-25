@@ -5,7 +5,7 @@ description: >-
   logiques en Python.
 level: premiere
 chapter: Représentation des données
-icon: ✅
+icon: "circle-check"
 badgeId: premiere_fiche_exercices_bool
 prerequisites:
   - donnees_caracteres
@@ -15,7 +15,7 @@ groupeTitre: "Booléens"
 ---
 
 
-# 🔄 Fiche d'exercices : Booléens et Comparaisons
+# <Icone nom="refresh-cw" /> Fiche d'exercices : Booléens et Comparaisons
 
 Cette fiche propose une série d'exercices progressifs pour maîtriser les booléens et les opérations logiques en Python.
 

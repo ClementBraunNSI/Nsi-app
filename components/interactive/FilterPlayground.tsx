@@ -124,7 +124,7 @@ export default function FilterPlayground() {
             style={{ backgroundColor: `rgb(${filtered.r}, ${filtered.g}, ${filtered.b})` }}
           />
           <div className="flex-1">
-            <div className="text-xs font-bold text-slate-500 uppercase mb-1">Résultat</div>
+            <div className="text-xs font-bold text-slate-500 mb-1">Résultat</div>
             <div className="font-mono text-lg font-bold text-slate-800 mb-2">
               rgb({filtered.r}, {filtered.g}, {filtered.b})
             </div>

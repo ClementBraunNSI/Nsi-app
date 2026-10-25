@@ -3,7 +3,7 @@ title: Booléens et Fonctions booléennes
 description: L'algèbre de George Boole et la logique binaire
 level: premiere
 chapter: Représentation des données
-icon: "\U0001F4A1"
+icon: "lightbulb"
 badgeId: premiere_booleens
 prerequisites: []
 audience: public
@@ -19,14 +19,14 @@ Une **variable booléenne** contient l'une de ces deux valeurs. Une **fonction b
 
 ## Quatre opérations
 
-Le **NON**, noté \(\overline{a}\) ou `not`, inverse. Il n'a qu'une entrée.
+Le **NON**, noté $\overline{a}$ ou `not`, inverse. Il n'a qu'une entrée.
 
 | a | s |
 |:-:|:-:|
 | 0 | 1 |
 | 1 | 0 |
 
-Le **ET**, noté \(a \cdot b\) ou `and`, n'est vrai que si les deux entrées le sont. Une seule suffit à le rendre faux. C'est l'opération exigeante.
+Le **ET**, noté $a \cdot b$ ou `and`, n'est vrai que si les deux entrées le sont. Une seule suffit à le rendre faux. C'est l'opération exigeante.
 
 | a | b | s |
 |:-:|:-:|:-:|
@@ -35,7 +35,7 @@ Le **ET**, noté \(a \cdot b\) ou `and`, n'est vrai que si les deux entrées le 
 | 1 | 0 | 0 |
 | 1 | 1 | 1 |
 
-Le **OU**, noté \(a + b\) ou `or`, est vrai dès qu'une entrée au moins est vraie. Les deux vraies ensemble restent vraies : ce n'est pas un choix exclusif.
+Le **OU**, noté $a + b$ ou `or`, est vrai dès qu'une entrée au moins est vraie. Les deux vraies ensemble restent vraies : ce n'est pas un choix exclusif.
 
 | a | b | s |
 |:-:|:-:|:-:|
@@ -44,7 +44,7 @@ Le **OU**, noté \(a + b\) ou `or`, est vrai dès qu'une entrée au moins est vr
 | 1 | 0 | 1 |
 | 1 | 1 | 1 |
 
-Le **OU exclusif**, le XOR, noté \(a \oplus b\), est vrai quand exactement une entrée est vraie. Deux zéros : faux. Deux uns : faux aussi. C'est le « l'un ou l'autre, pas les deux ».
+Le **OU exclusif**, le XOR, noté $a \oplus b$, est vrai quand exactement une entrée est vraie. Deux zéros : faux. Deux uns : faux aussi. C'est le « l'un ou l'autre, pas les deux ».
 
 | a | b | s |
 |:-:|:-:|:-:|
@@ -53,13 +53,13 @@ Le **OU exclusif**, le XOR, noté \(a \oplus b\), est vrai quand exactement une 
 | 1 | 0 | 1 |
 | 1 | 1 | 0 |
 
-En notation algébrique, \(+\) veut dire OU, \(\times\) ou \(\cdot\) veut dire ET, et la barre veut dire NON. Ce ne sont pas l'addition et la multiplication des entiers, même si les symboles se ressemblent. \(1 + 1\) en booléen vaut 1, pas 2.
+En notation algébrique, $+$ veut dire OU, $\times$ ou $\cdot$ veut dire ET, et la barre veut dire NON. Ce ne sont pas l'addition et la multiplication des entiers, même si les symboles se ressemblent. $1 + 1$ en booléen vaut 1, pas 2.
 
 ## Calculer une expression
 
-Soit \(S = (a + b) \times c\), avec \(a = 1\), \(b = 0\), \(c = 0\).
+Soit $S = (a + b) \times c$, avec $a = 1$, $b = 0$, $c = 0$.
 
-D'abord \(a + b = 1 + 0 = 1\). Ensuite \(1 \times 0 = 0\). Donc \(S = 0\).
+D'abord $a + b = 1 + 0 = 1$. Ensuite $1 \times 0 = 0$. Donc $S = 0$.
 
 La priorité usuelle place le NON avant le ET, et le ET avant le OU. Les parenthèses lèvent le doute, et il vaut mieux les écrire que de compter sur la mémoire de tout le monde.
 

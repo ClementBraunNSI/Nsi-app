@@ -28,7 +28,7 @@ export default function ApiPlayground() {
   return (
     <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-lg my-6">
       <div className="p-4 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex flex-col gap-4 md:flex-row items-center">
-        <div className="flex items-center gap-2 text-slate-500 font-bold text-xs uppercase tracking-wider mr-2">
+        <div className="flex items-center gap-2 text-slate-500 font-bold text-xs mr-2">
           <Globe size={16} /> API Tester
         </div>
         <div className="flex rounded-lg shadow-sm w-full">
@@ -52,7 +52,7 @@ export default function ApiPlayground() {
           <button 
             onClick={handleSend}
             disabled={loading}
-            className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-r-lg flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-orange-200 dark:shadow-none"
+            className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-r-lg flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md dark:shadow-none"
           >
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
             Envoyer

@@ -11,7 +11,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const enquete = getEnquete(slug);
-  return enquete ? { title: `${enquete.title} · Enquêtes de la forêt`, description: enquete.pitch } : { title: "Enquête introuvable" };
+  return enquete ? { title: `${enquete.title} | Enquêtes de la forêt`, description: enquete.pitch } : { title: "Enquête introuvable" };
 }
 
 export default async function EnquetePage({ params }: { params: Promise<{ slug: string }> }) {

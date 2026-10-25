@@ -21,7 +21,7 @@ import { ExerciseStatement } from '@/components/lab/ExerciseStatement';
 import { LabEditor } from '@/components/lab/LabEditor';
 import { LabOutput, type ConsoleState } from '@/components/lab/LabOutput';
 
-const IDLE_CONSOLE: ConsoleState = { tone: 'idle', text: 'En attente d’exécution…' };
+const IDLE_CONSOLE: ConsoleState = { tone: 'idle', text: 'En attente d\'exécution' };
 
 function cleanStatement(content: string) {
   if (!content) return '';
@@ -159,7 +159,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
 
   const ensurePython = async () => {
     if (pyodideRef.current) return pyodideRef.current;
-    setStatusLine('Chargement de Python…');
+    setStatusLine('Chargement de Python');
     const started = Date.now();
     while (!pyodideRef.current && Date.now() - started < 20000) {
       await new Promise((resolve) => setTimeout(resolve, 250));
@@ -173,7 +173,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
   const runPython = async () => {
     const pyodide = await ensurePython();
     if (exercise.pythonPackages?.length) {
-      setStatusLine(`Chargement des modules : ${exercise.pythonPackages.join(', ')}…`);
+      setStatusLine(`Chargement des modules : ${exercise.pythonPackages.join(', ')}`);
       await loadPythonPackages(pyodide, exercise.pythonPackages);
     }
     const leaked: string[] = [];
@@ -188,7 +188,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
   const handleExecute = async () => {
     setRunning('execute');
     setTab('console');
-    setStatusLine(exercise.type === 'sql' ? 'Exécution de la requête SQL…' : 'Exécution du programme…');
+    setStatusLine(exercise.type === 'sql' ? 'Exécution de la requête SQL' : 'Exécution du programme');
     try {
       if (exercise.type === 'sql') {
         if (!sqlDb) {
@@ -223,7 +223,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     setRunning('test');
     setTab('tests');
     setReport(null);
-    setStatusLine(exercise.type === 'sql' ? 'Vérification de la requête…' : 'Vérification…');
+    setStatusLine(exercise.type === 'sql' ? 'Vérification de la requête' : 'Vérification en cours');
     try {
       if (exercise.type === 'sql' && sqlDb) {
         setSqlResults(null);
@@ -345,7 +345,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
                 <ChevronLeft size={16} />
               </Link>
             ) : (
-              <button type="button" className="exercise-nav-arrow" disabled aria-label="Pas d’exercice précédent">
+              <button type="button" className="exercise-nav-arrow" disabled aria-label="Pas d'exercice précédent">
                 <ChevronLeft size={16} />
               </button>
             )}
@@ -355,7 +355,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
                 <ChevronRight size={16} />
               </Link>
             ) : (
-              <button type="button" className="exercise-nav-arrow" disabled aria-label="Pas d’exercice suivant">
+              <button type="button" className="exercise-nav-arrow" disabled aria-label="Pas d'exercice suivant">
                 <ChevronRight size={16} />
               </button>
             )}
@@ -396,12 +396,12 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
             </span>
             <button type="button" onClick={handleExecute} disabled={running !== null} className="exercise-run">
               <Play size={15} fill="currentColor" aria-hidden />
-              {running === 'execute' ? 'Exécution…' : 'Exécuter'}
+              {running === 'execute' ? 'Exécution en cours' : 'Exécuter'}
             </button>
             {exercise.hasVerification ? (
               <button type="button" onClick={handleTest} disabled={running !== null} className="exercise-test">
                 <Check size={15} aria-hidden />
-                {running === 'test' ? 'Vérification…' : 'Vérifier'}
+                {running === 'test' ? 'Vérification en cours' : 'Vérifier'}
               </button>
             ) : null}
           </div>

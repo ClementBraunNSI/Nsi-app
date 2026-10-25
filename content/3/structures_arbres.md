@@ -4,7 +4,7 @@ description: 'Structures hiérarchiques, vocabulaire et algorithmes de base.'
 level: TNSI
 order: 160
 chapter: Structures de données
-icon: "\U0001F333"
+icon: "tree-deciduous"
 badgeId: terminale_arbres
 prerequisites:
   - structures_lineaires

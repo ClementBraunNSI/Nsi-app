@@ -84,7 +84,7 @@ export default function MotDePassePage() {
           disabled={pending}
           className="w-full rounded-xl bg-[var(--accent)] py-3 text-sm font-semibold text-[var(--accent-fg)] disabled:opacity-60"
         >
-          {pending ? "Enregistrement…" : "Enregistrer"}
+          {pending ? "Enregistrement en cours" : "Enregistrer"}
         </button>
         <button
           type="button"

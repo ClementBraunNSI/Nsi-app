@@ -5,7 +5,7 @@ description: >-
   numériques
 level: BTS
 chapter: 'BTS SIO 1 : B3 - CyberSécurité'
-icon: "\U0001F510"
+icon: "lock-keyhole"
 prerequisites:
   - rgpd_cnil
 audience: public
@@ -33,14 +33,14 @@ Le **chiffrement** transforme un message clair, lisible, en un message illisible
 
 ```text
 Message clair + Clé de chiffrement = Message chiffré
-"Bonjour" + Clé → "X8#mK@2pQ"
+"Bonjour" + Clé -> "X8#mK@2pQ"
 ```
 
 Le **déchiffrement** est l'opération légitime inverse. On possède la clé prévue, on retrouve le clair.
 
 ```text
 Message chiffré + Clé de déchiffrement = Message clair
-"X8#mK@2pQ" + Clé → "Bonjour"
+"X8#mK@2pQ" + Clé -> "Bonjour"
 ```
 
 Le **décryptage** est autre chose. C'est retrouver le clair **sans** la clé : force brute, analyse des fréquences, exploitation d'une faille. C'est le travail de celui qui attaque. Déchiffrer, c'est avec la clé. Décrypter, c'est sans.
@@ -71,7 +71,7 @@ devient
 
 `D E F G H I J K L M N O P Q R S T U V W X Y Z A B C`
 
-`RENARD` donne `UHQDUG` : R→U, E→H, N→Q, A→D, R→U, D→G. Les deux R deviennent deux U. C'est précisément la faiblesse. En français, le E est la lettre la plus fréquente. Si une lettre domine le message chiffré, c'est souvent un E. L'**analyse de fréquence** reconstitue l'alphabet sans essayer les 26 clés une par une. César se casse à la main.
+`RENARD` donne `UHQDUG` : R devient U, E devient H, N devient Q, A devient D, R devient U, D devient G. Les deux R deviennent deux U. C'est précisément la faiblesse. En français, le E est la lettre la plus fréquente. Si une lettre domine le message chiffré, c'est souvent un E. L'**analyse de fréquence** reconstitue l'alphabet sans essayer les 26 clés une par une. César se casse à la main.
 
 ## Une lettre, plusieurs visages
 
@@ -163,7 +163,7 @@ Se voir pour échanger la clé ne passe pas à l'échelle. La poster est lent, e
 
 ## Deux clés, des rôles contraires
 
-Le chiffrement **asymétrique** donne à chaque personne une **paire**. La **clé publique** se diffuse. La **clé privée** ne quitte pas son propriétaire. Ce qui est chiffré avec l'une ne se déchiffre qu'avec l'autre. Chiffrer avec la publique de Bob ne se lit qu'avec la privée de Bob. Chiffrer avec la privée d'Alice ne se lit qu'avec la publique d'Alice. La seconde opération ne cache rien à qui possède la publique — tout le monde. Elle sert à signer, pas à rendre confidentiel.
+Le chiffrement **asymétrique** donne à chaque personne une **paire**. La **clé publique** se diffuse. La **clé privée** ne quitte pas son propriétaire. Ce qui est chiffré avec l'une ne se déchiffre qu'avec l'autre. Chiffrer avec la publique de Bob ne se lit qu'avec la privée de Bob. Chiffrer avec la privée d'Alice ne se lit qu'avec la publique d'Alice. La seconde opération ne cache rien à qui possède la publique, tout le monde. Elle sert à signer, pas à rendre confidentiel.
 
 Alice veut écrire à Bob sans secret préalable. Elle prend la clé publique de Bob, qui est publiée. Elle chiffre avec. Elle envoie le chiffré. Charlie peut le copier : sans la privée de Bob, il ne lit pas. Bob déchiffre avec sa privée, que lui seul a.
 
@@ -229,7 +229,7 @@ Alice signe ainsi. Elle calcule l'empreinte du message.
 
 ```text
 Message : "Les renards roux..."
-↓ SHA-256
+  | SHA-256
 Hash : a3f5b8c9e1d2f4a7...
 ```
 

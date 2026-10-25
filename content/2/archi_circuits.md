@@ -3,7 +3,7 @@ title: Circuits électroniques
 description: 'Portes logiques, transistors et tables de vérité'
 level: premiere
 chapter: Architecture matérielle
-icon: "\U0001F50C"
+icon: "plug"
 badgeId: premiere_circuits
 prerequisites:
   - archi_von_neumann
@@ -85,4 +85,4 @@ Pour fermer : les portes sont les briques booléennes du processeur, réalisées
 
 ## Pour s'entraîner
 
-[Exercices — circuits](/cours/2/archi_circuits_exercices)
+[Exercices : circuits](/cours/2/archi_circuits_exercices)

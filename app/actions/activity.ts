@@ -206,7 +206,7 @@ export async function getStudentActivity(): Promise<{
     const sheet = exercise?.courseTitle || row.course_id;
     bucket.dated.push({
       at: row.completed_at,
-      label: `Exercice validé · ${name}${sheet ? ` · ${sheet}` : ""}`,
+      label: `Exercice validé : ${name}${sheet ? ` (${sheet})` : ""}`,
       work: true,
     });
   }
@@ -216,7 +216,7 @@ export async function getStudentActivity(): Promise<{
     if (!bucket || !row.unlocked_at) continue;
     bucket.dated.push({
       at: row.unlocked_at,
-      label: `Fiche terminée · ${row.badge_name}`,
+      label: `Fiche terminée : ${row.badge_name}`,
       work: true,
     });
   }
@@ -226,7 +226,7 @@ export async function getStudentActivity(): Promise<{
     if (!bucket || !row.completed_at) continue;
     bucket.dated.push({
       at: row.completed_at,
-      label: `Devoir de classe rendu · ${titles.get(row.homework_id) || "Devoir"}`,
+      label: `Devoir de classe rendu : ${titles.get(row.homework_id) || "Devoir"}`,
       work: true,
     });
   }
@@ -237,7 +237,7 @@ export async function getStudentActivity(): Promise<{
     if (!bucket) continue;
     bucket.undated.push({
       at: null,
-      label: `Devoir particulier rendu · ${row.title} · date de rendu non enregistrée`,
+      label: `Devoir particulier rendu : ${row.title} (date de rendu non enregistrée)`,
       work: true,
     });
   }

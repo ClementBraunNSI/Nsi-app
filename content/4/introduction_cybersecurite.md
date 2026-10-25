@@ -16,7 +16,7 @@ Les organisations font tourner leur activité sur des systèmes d'information : 
 
 ## Confidentialité, intégrité, disponibilité
 
-Le modèle **CIA** — en français on dit aussi **DIC**, en commençant par la disponibilité — tient en trois exigences. Un contrôle qui n'en sert qu'une peut en abîmer une autre. Chiffrer un disque protège la confidentialité. Perdre la clé détruit la disponibilité.
+Le modèle **CIA** (en français on dit aussi **DIC**, en commençant par la disponibilité) tient en trois exigences. Un contrôle qui n'en sert qu'une peut en abîmer une autre. Chiffrer un disque protège la confidentialité. Perdre la clé détruit la disponibilité.
 
 La **confidentialité** veut que l'information ne soit lisible que par les personnes et les processus autorisés. Données personnelles, secrets de fabrication, mots de passe. On chiffre au repos et pendant le transport, on authentifie puis on autorise, on classe les données selon ce qu'elles coûteraient si elles sortaient, on passe par un VPN quand l'accès se fait depuis l'extérieur.
 

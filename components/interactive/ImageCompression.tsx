@@ -65,7 +65,7 @@ export default function ImageCompression() {
           <ZoomIn size={20} />
         </button>
 
-        <div className="absolute top-4 left-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-bold backdrop-blur-sm">
+        <div className="absolute top-4 left-4 bg-black text-white px-3 py-1 rounded-full text-xs font-bold">
           {current.size}
         </div>
       </div>

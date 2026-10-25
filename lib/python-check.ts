@@ -26,10 +26,10 @@ export type RunReport = {
   validationNote?: string;
 };
 
-export const SAVE_WARNING = 'La validation n’a pas pu être enregistrée.';
+export const SAVE_WARNING = 'La validation n\'a pas pu être enregistrée.';
 
 /** Le serveur n'a pas pu exécuter la vérification : ce n'est pas une erreur de l'élève. */
-export const CHECK_UNAVAILABLE = 'La vérification n’a pas pu être lancée.';
+export const CHECK_UNAVAILABLE = 'La vérification n\'a pas pu être lancée.';
 
 export function buildPythonCheckSource(userCode: string, verification: string | null): string {
   const payload = JSON.stringify({ user: userCode ?? '', tests: verification ?? '' });
@@ -41,7 +41,7 @@ __nsi_out
 
 function asText(value: unknown, limit = 8000): string {
   if (typeof value !== 'string') return '';
-  return value.length > limit ? `${value.slice(0, limit)}\n… (affichage tronqué)` : value;
+  return value.length > limit ? `${value.slice(0, limit)}\n... (affichage tronqué)` : value;
 }
 
 function asTest(value: unknown): RunTest | null {
@@ -139,7 +139,7 @@ export function unexpectedRunReport(message: string): RunReport {
     prints: '',
     testPrints: '',
     stderr: '',
-    error: last.length > 400 ? `${last.slice(0, 399)}…` : last,
+    error: last.length > 400 ? `${last.slice(0, 399)}...` : last,
     errorDetail: message.length > 2500 ? message.slice(-2500) : message,
     testsSkipped: true,
   };
@@ -196,7 +196,7 @@ export function reportFromQuery(input: {
     return {
       status: 'success',
       validated: true,
-      tests: [{ ok: true, label: 'La vérification SQL s’est exécutée.' }],
+      tests: [{ ok: true, label: 'La vérification SQL s\'est exécutée.' }],
       prints: '',
       testPrints: '',
       stderr: '',

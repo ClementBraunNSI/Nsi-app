@@ -3,7 +3,7 @@ title: "Représentation des nombres en bases"
 description: "Comprendre les bases 2, 10, 16 et la conversion entre elles."
 level: SNI
 chapter: "Representation_de_base"
-icon: "🔢"
+icon: "hash"
 audience: public
 ---
 

@@ -3,7 +3,7 @@ title: 'TP - Micro:bit'
 description: 'S''initier à la programmation embarquée avec la carte Micro:bit'
 level: seconde
 chapter: Micro-controleurs
-icon: "\U0001F916"
+icon: "bot"
 prerequisites:
   - activite_objets_connectes
 audience: public
@@ -49,14 +49,14 @@ while True:
 
 ## 3. Exercices
 
-### 🌟 Exercice 1 : Affichage simple (⭐)
+### <Icone nom="star" /> Exercice 1 : Affichage simple <Renards n="1" />
 Affichez le motif d'un visage souriant (`Image.HAPPY`) sur l'écran LED.
 
-### 🎨 Exercice 2 : Message défilant (⭐)
+### <Icone nom="palette" /> Exercice 2 : Message défilant <Renards n="1" />
 Faites défiler votre prénom sur l'écran LED.
 *Indice : Utilisez `display.scroll()`.*
 
-### 🎮 Exercice 3 : Interaction Bouton (⭐⭐)
+### <Icone nom="gamepad-2" /> Exercice 3 : Interaction Bouton <Renards n="2" />
 Affichez un cœur quand on appuie sur le bouton A.
 
 ```python
@@ -69,10 +69,10 @@ while True:
         display.clear()
 ```
 
-### 🎨 Exercice 4 : Animation (⭐⭐)
+### <Icone nom="palette" /> Exercice 4 : Animation <Renards n="2" />
 Alternez entre deux images toutes les secondes (par exemple un cœur et un carré) indéfiniment.
 
-### 🦊 Exercice 5 : Pixel Art (⭐⭐⭐)
+### <Renard /> Exercice 5 : Pixel Art <Renards n="3" />
 Créez votre propre image (par exemple une tête de renard) en définissant l'intensité de chaque LED (de 0 à 9).
 
 ![Renard](/content/1/fox_microbit.png)
@@ -87,6 +87,6 @@ mon_image = Image("09090:"
 display.show(mon_image)
 ```
 
-### 🌟 Exercice 6 : Compteur (⭐⭐)
+### <Icone nom="star" /> Exercice 6 : Compteur <Renards n="2" />
 Créez un programme qui affiche "A" quand on appuie sur A, et "B" quand on appuie sur B.
 *Bonus : Incrémentez un compteur à chaque appui et affichez sa valeur.*

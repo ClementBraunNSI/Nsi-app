@@ -1,9 +1,9 @@
 ---
 title: Introduction au CSS
-description: Mise en forme des pages web — sélecteurs, couleurs et mise en page de base.
+description: 'Mise en forme des pages web : sélecteurs, couleurs et mise en page de base.'
 level: premiere
 chapter: Web et Interaction
-icon: "🎨"
+icon: "palette"
 badgeId: premiere_css_intro
 prerequisites:
   - web_html

@@ -25,7 +25,7 @@ export default function MultiLangCodeBlock({ code }: MultiLangCodeBlockProps) {
             <button
               key={lang}
               onClick={() => setActiveLang(lang)}
-              className={`px-3 py-1 rounded-md text-xs font-bold uppercase transition-colors ${
+              className={`px-3 py-1 rounded-md text-xs font-bold transition-colors ${
                 activeLang === lang 
                   ? 'bg-orange-500 text-white' 
                   : 'text-slate-500 hover:text-slate-300'

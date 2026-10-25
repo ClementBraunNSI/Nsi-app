@@ -56,7 +56,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
     return (
       <ResourceNotFound
         title="Parcours introuvable"
-        description="Ce niveau n’existe pas."
+        description="Ce niveau n'existe pas."
         actionHref="/"
         actionLabel="Tous les cours"
       />
@@ -92,7 +92,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
           description: "Cours particulier réservé",
           level: "particuliers",
           chapter: "Cours particuliers",
-          icon: "🎓",
+          icon: "graduation-cap",
           href: coursePath("particuliers", slug),
           isPrivate: true,
         }];
@@ -113,7 +113,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         description: String(data.description || ""),
         level: String(data.level || folder),
         chapter: String(data.chapter || "Général"),
-        icon: String(data.icon || "📘"),
+        icon: String(data.icon || "book-open"),
         isPrivate: isRestrictedCourse(data),
         group: parseCourseGroup(data),
         audience: data,
@@ -134,7 +134,7 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         <EmptyState
           icon={<GraduationCap size={28} />}
           title={`Aucun contenu pour ${level.label}`}
-          description="Ce parcours n’a pas encore de leçon publiée."
+          description="Ce parcours n'a pas encore de leçon publiée."
           action={
             <Link
               href="/"
@@ -180,9 +180,10 @@ export default async function PageNiveau({ params }: { params: Promise<{ niveaux
         }
         title={level.label}
         description={level.description}
+        mediaSize="large"
         media={
           levelFox ? (
-            <Image src={levelFox} alt={`Renard ${level.label}`} fill className="object-contain" sizes="160px" />
+            <Image src={levelFox} alt={`Renard ${level.label}`} fill className="object-contain object-bottom" sizes="(max-width: 640px) 60vw, 320px" priority />
           ) : undefined
         }
       />

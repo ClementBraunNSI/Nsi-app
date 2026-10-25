@@ -3,7 +3,7 @@ title: 'Le binaire : Définition'
 description: 'Comprendre la base 2, les bits, octets et les conversions avec le décimal.'
 level: '2'
 chapter: Internet
-icon: "\U0001F522"
+icon: "hash"
 prerequisites:
   - Cours_Internet
 audience: public
@@ -23,9 +23,9 @@ C'est une décomposition selon la base. Ici, la base vaut 10. Le même geste va 
 
 ## Du binaire vers le décimal
 
-Un nombre binaire est lui aussi positionnel. La colonne de droite vaut \(2^0\), celle d'à côté \(2^1\), puis \(2^2\), et ainsi de suite vers la gauche.
+Un nombre binaire est lui aussi positionnel. La colonne de droite vaut $2^0$, celle d'à côté $2^1$, puis $2^2$, et ainsi de suite vers la gauche.
 
-Prenons \(11001\) en base 2 :
+Prenons $11001$ en base 2 :
 
 $$11001_2 = 1 \times 2^4 + 1 \times 2^3 + 0 \times 2^2 + 0 \times 2^1 + 1 \times 2^0 = 16 + 8 + 0 + 0 + 1 = 25_{10}$$
 

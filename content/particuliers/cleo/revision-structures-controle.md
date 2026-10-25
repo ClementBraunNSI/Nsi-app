@@ -1,15 +1,15 @@
 ---
-title: "Révision — Structures de contrôle"
+title: "Révision : Structures de contrôle"
 description: "Fiche synthèse : if / else, switch, for, while"
 level: particuliers
-chapter: "Programmation en C — Révisions"
-icon: "🔀"
+chapter: "Programmation en C : Révisions"
+icon: "shuffle"
 revisionSheet: true
 audience:
   accounts: []
 ---
 
-# 🔀 Révision — Structures de contrôle
+# <Icone nom="shuffle" /> Révision : Structures de contrôle
 
 ## Conditions : `if` / `else`
 

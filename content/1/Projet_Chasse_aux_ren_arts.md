@@ -3,7 +3,7 @@ title: 'Projet : Chasse aux Ren Arts'
 description: 'Création d''un site web : La chasse aux Ren-Arts'
 level: '2'
 chapter: Web
-icon: "\U0001F409"
+icon: "flame"
 prerequisites:
   - activite_web_interactive
 audience: public
@@ -14,7 +14,7 @@ versionCode: "FR"
 image: /images/fox_chasse_renard.png
 ---
 
-# 🦊 Projet : Chasse aux Ren'Arts
+# <Renard /> Projet : Chasse aux Ren'Arts
 
 Le but de ce projet est de créer la page web de votre tableau pour la chasse aux Ren'Arts.
 Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de repérage, puis choisir le fond, la couleur du texte et la police.
@@ -25,7 +25,7 @@ Dans ce projet, nous allons remplir la maquette HTML, retirer les bordures de re
 
 Les images du site vont dans un dossier `images`. Le nom dans `src` doit être exactement celui du fichier.
 
-## 1. Remplir la maquette 🖼️
+## 1. Remplir la maquette <Icone nom="image" />
 
 Voilà la maquette ouverte dans le navigateur. Chaque bloc de couleur est une `div` : une division de la page. La feuille de style ne se modifie pas pendant cette étape.
 
@@ -74,7 +74,7 @@ Exemple de liste, à réécrire avec votre tableau. On ne recopie pas ces noms s
 </ul>
 ```
 
-## 2. Retirer les bordures ✂️
+## 2. Retirer les bordures <Icone nom="scissors" />
 
 `style.css` rassemble le style. Une classe s'écrit ainsi :
 
@@ -142,7 +142,7 @@ Variantes à reconnaître aussi : `border: 2px solid black;`, `border-width`, `b
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Fond, texte, police 🎨
+## 3. Fond, texte, police <Icone nom="palette" />
 
 La classe `container` contient toute la page. La modifier change presque tout le site. Si elle apparaît deux fois, complétez celle qui contient déjà `display: flex;`.
 
@@ -191,7 +191,7 @@ La classe `container` contient toute la page. La modifier change presque tout le
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Ce qu'on rend 📦
+## 4. Ce qu'on rend <Icone nom="package" />
 
 Une archive du dossier entier `projet_site_eleve`, pas seulement `index.html`. Sinon les images et le CSS manquent à l'ouverture.
 

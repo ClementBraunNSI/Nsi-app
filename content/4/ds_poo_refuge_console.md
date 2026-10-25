@@ -1,16 +1,16 @@
 ---
 title: 'DS : Gestion d''un refuge animalier (C# / POO)'
-description: 'Devoir surveillé de 2h — application console C# (encapsulation, héritage, polymorphisme).'
+description: 'Devoir surveillé de 2h : application console C# (encapsulation, héritage, polymorphisme).'
 level: '4'
 chapter: BTS SIO 1 SLAM
-icon: "\U0001F43A"
+icon: "paw-print"
 prerequisites:
   - introduction_poo
   - exercices_poo
 audience: public
 ---
 
-# DS Pratique — Refuge animalier « La Tanière du Renard »
+# DS Pratique : Refuge animalier « La Tanière du Renard »
 
 **Durée :** 2 heures  
 **Matériel autorisé :** cours, documentation C# (papier ou en ligne), notes personnelles  
@@ -52,17 +52,17 @@ ANIMAL (Id, Nom, Age, Etat)
   • Etat : {Disponible, EnSoin, Adopte}
 
 CHIEN (IdAnimal, Race, EstEducateur)
-  • IdAnimal : entier, clé primaire, clé étrangère → ANIMAL(Id)
+  • IdAnimal : entier, clé primaire, clé étrangère -> ANIMAL(Id)
   • Race : texte
   • EstEducateur : booléen
 
 CHAT (IdAnimal, Pelage, EstSterilise)
-  • IdAnimal : entier, clé primaire, clé étrangère → ANIMAL(Id)
+  • IdAnimal : entier, clé primaire, clé étrangère -> ANIMAL(Id)
   • Pelage : texte
   • EstSterilise : booléen
 
 NAC (IdAnimal, Espece, DureeVieMoyenne)
-  • IdAnimal : entier, clé primaire, clé étrangère → ANIMAL(Id)
+  • IdAnimal : entier, clé primaire, clé étrangère -> ANIMAL(Id)
   • Espece : texte
   • DureeVieMoyenne : entier (en années), strictement positif
 ```
@@ -246,7 +246,7 @@ Cout mensuel estime : 55,00 EUR
 
 ## 4) Déroulement du DS (2 heures)
 
-### Partie 1 — Analyse et conception (25 min, sur papier)
+### Partie 1 : Analyse et conception (25 min, sur papier)
 
 1. Donner le diagramme de classe du sujet (tables, clés primaires, clés étrangères, cardinalités). Indiquer clairement le lien entre `ANIMAL` et chaque spécialisation (`CHIEN`, `CHAT`, `NAC`).
 2. Répondre brièvement (5 lignes max par question) :
@@ -254,13 +254,13 @@ Cout mensuel estime : 55,00 EUR
    - Pourquoi utiliser une `List<Animal>` plutôt que trois listes séparées ?
    - À quoi servent `virtual` et `override` dans ce sujet ?
 
-### Partie 2 — Développement C# (1 h 35)
+### Partie 2 : Développement C# (1 h 35)
 
 **Travail à réaliser :**
 
 1. Créer un projet Console C# (`RefugeTaniere`).
 2. Placer le fichier `refuge.csv` dans le dossier du projet (ou copier depuis `/assets/ds-refuge/refuge.csv`).
-3. Implémenter la hiérarchie `Animal` → `Chien`, `Chat`, `Nac`.
+3. Implémenter la hiérarchie : `Animal` et ses sous-classes `Chien`, `Chat`, `Nac`.
 4. Implémenter la classe `Refuge` avec la `List<Animal>`, les méthodes de gestion et les méthodes CSV.
 5. Implémenter le menu dans `Program` en s'appuyant sur un objet `Refuge`.
 6. Tester au minimum les cas suivants :

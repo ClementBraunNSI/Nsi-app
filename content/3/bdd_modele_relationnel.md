@@ -4,7 +4,7 @@ description: "Théorie des bases de données : tables, clés, schéma."
 level: TNSI
 order: 50
 chapter: "Bases de Données"
-icon: "🗄️"
+icon: "database"
 badgeId: "terminale_bdd_modele"
 prerequisites: []
 audience: public

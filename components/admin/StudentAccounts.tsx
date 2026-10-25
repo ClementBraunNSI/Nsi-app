@@ -16,10 +16,10 @@ const LEVELS = [
 ];
 
 const ERRORS: Record<string, string> = {
-  forbidden: "Action réservée à l’enseignant.",
-  invalid: "Vérifie le nom, l’email, la classe et le niveau.",
+  forbidden: "Action réservée à l'enseignant.",
+  invalid: "Vérifie le nom, l'email, la classe et le niveau.",
   email_taken: "Cet email est déjà utilisé.",
-  save_failed: "L’enregistrement n’a pas abouti.",
+  save_failed: "L'enregistrement n'a pas abouti.",
   missing_key: "La clé serveur Supabase manque sur cet environnement.",
   protected: "Le compte enseignant reste en place.",
   weak_password: "Le mot de passe contient au moins 8 caractères.",
@@ -100,8 +100,8 @@ export function StudentAccountDialog({
           });
         }}
       >
-        <h2 className="text-xl font-black text-slate-800">
-          {mode === "create" ? "Nouvel élève" : "Modifier l’élève"}
+        <h2 className="text-xl font-bold text-slate-800">
+          {mode === "create" ? "Nouvel élève" : "Modifier l'élève"}
         </h2>
         <label className="block text-sm font-semibold text-slate-600">
           Nom
@@ -207,7 +207,7 @@ export function DeleteStudentDialog({
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60">
       <div className="bg-white rounded-3xl w-full max-w-md p-6 space-y-4 shadow-2xl">
-        <h2 className="text-xl font-black text-slate-800">Supprimer {student.full_name || "cet élève"}</h2>
+        <h2 className="text-xl font-bold text-slate-800">Supprimer {student.full_name || "cet élève"}</h2>
         <p className="text-sm text-slate-600">
           Le compte {student.email} sera retiré, avec ses devoirs, séances et messages.
         </p>

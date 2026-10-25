@@ -4,7 +4,7 @@ description: "Les grandes étapes, de l'Antiquité à l'IA moderne."
 level: TNSI
 order: 10
 chapter: "Histoire"
-icon: "📜"
+icon: "scroll-text"
 badgeId: "terminale_histoire"
 prerequisites: []
 audience: public

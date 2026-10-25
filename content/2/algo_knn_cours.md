@@ -5,7 +5,7 @@ description: >-
   ses applications en classification et régression.
 level: premiere
 chapter: Algorithmique
-icon: "\U0001F9E0"
+icon: "brain"
 badgeId: premiere_cours
 prerequisites: []
 audience: public
@@ -25,7 +25,7 @@ On choisit d'abord $k$, le nombre de voisins que l'on accepte de consulter. On c
 
 !!! example "Exemple"
     Points de classes **A** et **B**, point inconnu **X**, $K = 3$.
-    Si parmi les 3 plus proches on a 2 A et 1 B → on classe X comme **A**.
+    Si parmi les 3 plus proches on a 2 A et 1 B, on classe X comme **A**.
 
 Le vote ne regarde pas les points plus loin. Un nuage entier de B, s'il est au-delà des trois voisins, ne compte pas.
 

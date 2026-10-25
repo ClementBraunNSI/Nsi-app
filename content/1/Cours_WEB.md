@@ -5,7 +5,7 @@ description: >-
   Client-Serveur, HTTP, HTML et DNS.
 level: '2'
 chapter: Web
-icon: "\U0001F310"
+icon: "globe"
 prerequisites:
   - Cours_html
 audience: public

@@ -33,7 +33,7 @@ function expectWin(id: number, solution: Move[], salt = id * 31) {
   expect(replay(world, solution)).toEqual(world.goal);
 }
 
-describe("Académie des renards — cartes gagnables", () => {
+describe("Académie des renards : cartes gagnables", () => {
   it("construit tous les mondes avec un départ et un objectif valides", () => {
     for (const level of LEVELS) {
       const world = buildWorld(level);

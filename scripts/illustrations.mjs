@@ -62,6 +62,8 @@ ${pth("M1266 337Q1201 425 1155 468L1222 530Q1249 450 1266 337Z", C.k)}
 </g>`;
 
 const FACE = [
+  // Fond crème sous le museau : bouche les interstices entre les joues et la mâchoire.
+  poly("735,662 1366,662 1080,815 1023,815", C.cr),
   poly("983,437 1051,437 1051,760 1028,766 995,660 968,613 912,598 862,634 735,662", C.ol),
   poly("1119,437 1051,437 1051,760 1074,766 1107,660 1133,613 1190,598 1240,634 1366,662", C.o),
   poly("862,634 912,598 938,643 995,660 1028,766 980,700", C.rc),
@@ -385,6 +387,40 @@ ${poly("1149,856 1171,855 1171,862 1149,863", "#A7ABB0")}
 @keyframes spark{0%,40%{opacity:1;transform:scale(1)}20%{opacity:.4;transform:scale(.7)}60%,100%{opacity:0}}`,
 );
 
+// ---------- 5. Chapitre « Intelligence artificielle » (SNT) ----------
+// Même composition que les autres images de chapitre : le renard de profil dans une tache crème,
+// face à l'objet du chapitre, ici une fenêtre de conversation avec une IA.
+
+const CHAT_PANEL = "#FBF3E4";
+const CHAT_BEIGE = "#E6D3B1";
+
+const chapIA = svg(
+  "0 0 1254 1254",
+  "Le renard discute avec une IA",
+  `${pth("M150 985C70 900 80 760 170 700C230 660 250 600 260 540C280 420 380 330 500 340C560 345 600 300 660 285C760 260 860 300 900 380C930 440 1010 430 1080 470C1180 530 1210 660 1170 760C1150 820 1170 880 1150 940C1140 970 1120 985 1100 990Z", C.y)}
+<circle cx="760" cy="330" r="9" fill="#F3D9A8"/><circle cx="1110" cy="560" r="8" fill="#F3D9A8"/><circle cx="360" cy="600" r="8" fill="#F3D9A8"/>
+<path d="M760 330L860 300M360 600L430 560" stroke="#F3D9A8" stroke-width="4"/>
+<ellipse cx="640" cy="988" rx="500" ry="22" fill="${C.g}"/>
+<g>
+<rect x="700" y="400" width="430" height="410" rx="18" fill="${CHAT_PANEL}"/>
+<rect x="700" y="400" width="430" height="54" rx="18" fill="${C.k}"/>
+<rect x="700" y="436" width="430" height="18" fill="${C.k}"/>
+<circle cx="736" cy="427" r="9" fill="${C.o}"/><circle cx="764" cy="427" r="9" fill="#E8B04A"/><circle cx="792" cy="427" r="9" fill="#B9B26A"/>
+<rect x="830" y="419" width="270" height="16" rx="8" fill="#5A4E44"/>
+<rect x="740" y="490" width="250" height="88" rx="16" fill="${CHAT_BEIGE}"/>
+<rect x="762" y="512" width="190" height="12" rx="6" fill="#CDB892"/><rect x="762" y="536" width="150" height="12" rx="6" fill="#CDB892"/>
+<rect x="870" y="602" width="220" height="70" rx="16" fill="${C.ol}"/>
+<rect x="892" y="622" width="170" height="12" rx="6" fill="#FFF3E2"/><rect x="892" y="644" width="110" height="12" rx="6" fill="#FFF3E2"/>
+<rect x="740" y="696" width="200" height="58" rx="16" fill="${CHAT_BEIGE}"/>
+<rect x="762" y="718" width="150" height="12" rx="6" fill="#CDB892"/>
+<rect x="730" y="770" width="370" height="2" fill="${CHAT_BEIGE}"/>
+<rect class="cursor" x="752" y="782" width="6" height="18" fill="${C.k}"/>
+</g>
+${await sideFox(1.05, -38, 133)}`,
+  `.cursor{animation:cursor 1.1s steps(1) infinite}
+@keyframes cursor{0%{opacity:1}50%{opacity:0}}`,
+);
+
 const files = {
   "fox_assis.svg": foxAssis,
   "fox_enquetes.svg": enquetes,
@@ -392,6 +428,7 @@ const files = {
   "http_404.svg": await build404(),
   "http_403.svg": http403,
   "http_500.svg": http500,
+  "chapitres/1/chap_ia.svg": chapIA,
 };
 
 for (const [name, content] of Object.entries(files)) {

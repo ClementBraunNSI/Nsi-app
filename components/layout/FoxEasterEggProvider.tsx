@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { FoxHead } from "@/components/ui/FoxHead";
 
 type FoxContextValue = {
   found: string[];
@@ -147,10 +148,10 @@ export function FoxEasterEggProvider({ children }: { children: React.ReactNode }
                 animationDuration: `${reducedMotion ? 1.6 : 2.4 + (seed % 5) * 0.35}s`,
               }}
             >
-              🦊
+              <FoxHead size={34} />
             </span>
           ))}
-          <div className="absolute left-1/2 top-20 -translate-x-1/2 rounded-2xl bg-white/95 px-5 py-3 text-sm font-black text-orange-600 shadow-xl border border-orange-100 fox-toast">
+          <div className="absolute left-1/2 top-20 -translate-x-1/2 rounded-2xl bg-white/95 px-5 py-3 text-sm font-bold text-orange-600 shadow-xl border border-orange-100 fox-toast">
             {foxHint || "Renard débloqué"}
           </div>
         </div>
@@ -158,7 +159,7 @@ export function FoxEasterEggProvider({ children }: { children: React.ReactNode }
       {showCollection && (
         <div className="fixed inset-0 z-[180] bg-slate-900/40 flex items-center justify-center p-4" onClick={() => setShowCollection(false)}>
           <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-lg font-black text-slate-900 mb-1">Collection de renards</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-1">Collection de renards</h3>
             <p className="text-sm text-slate-500 mb-4">Renards trouvés: {found.length}/{SECRET_IDS.length}</p>
             <div className="grid grid-cols-2 gap-2">
               {SECRET_IDS.map((id) => {

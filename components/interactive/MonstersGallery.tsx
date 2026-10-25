@@ -53,7 +53,7 @@ export default function MonstersGallery() {
   if (!manifest) {
     return (
       <div className="my-8 rounded-2xl border border-slate-200 bg-slate-50 p-8 text-center text-slate-500">
-        Chargement de la galerie…
+        Chargement de la galerie
       </div>
     );
   }
@@ -73,7 +73,7 @@ export default function MonstersGallery() {
         <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-white/20">
           <GraduationCap size={28} />
         </div>
-        <h2 className="text-2xl font-black">Année {year.label}</h2>
+        <h2 className="text-2xl font-bold">Année {year.label}</h2>
         <p className="mt-2 text-orange-100">
           {openYear === year.id ? 'Masquer les classes' : 'Cliquez pour découvrir les créations des élèves'}
         </p>
@@ -88,7 +88,7 @@ export default function MonstersGallery() {
               onClick={() => setSelectedClass(classGroup)}
               className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:border-orange-300 hover:shadow-md"
             >
-              <h3 className="text-xl font-black text-orange-500">{classGroup.label}</h3>
+              <h3 className="text-xl font-bold text-orange-500">{classGroup.label}</h3>
               <p className="mt-1 text-sm text-slate-500">{classGroup.group}</p>
               <span className="mt-3 inline-flex items-center gap-1 rounded-full bg-orange-50 px-3 py-1 text-xs font-bold text-orange-600">
                 <Users size={12} />
@@ -111,11 +111,11 @@ export default function MonstersGallery() {
           </button>
 
           <div className="rounded-2xl border border-orange-100 bg-orange-50/50 p-6 text-center">
-            <h3 className="text-2xl font-black text-orange-600">
+            <h3 className="text-2xl font-bold text-orange-600">
               Monstres de la classe {selectedClass.label}
             </h3>
             <p className="mt-1 text-slate-600">
-              Créations du projet bestiaire — année {year.label}
+              Créations du projet bestiaire, année {year.label}
             </p>
           </div>
 

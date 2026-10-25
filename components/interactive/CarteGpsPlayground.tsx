@@ -230,7 +230,7 @@ else:
         </div>
 
         <div className="flex flex-col bg-[#1e1e1e] text-sm text-slate-300">
-          <div className="flex items-center gap-2 border-b border-[#333] px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-500">
+          <div className="flex items-center gap-2 border-b border-[#333] px-4 py-2 text-xs font-bold text-slate-500">
             <Terminal size={14} />
             Console
           </div>

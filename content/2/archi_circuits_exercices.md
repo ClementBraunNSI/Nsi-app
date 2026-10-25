@@ -3,7 +3,7 @@ title: 'Exercices : Circuits Logiques'
 description: 'Cours sur Exercices : Circuits Logiques'
 level: premiere
 chapter: Architecture matérielle
-icon: ⚡
+icon: "zap"
 badgeId: premiere_fiche_exo_circuits
 prerequisites:
   - archi_circuits
@@ -294,7 +294,7 @@ groupeTitre: "Circuits logiques"
 
     **Analysez ce multiplexeur 2 vers 1 :**
 
-    Un multiplexeur 2→1 a :
+    Un multiplexeur 2 vers 1 a :
     - Deux entrées de données : `D0`, `D1`
     - Une entrée de sélection : `S`
     - Une sortie : `Y`

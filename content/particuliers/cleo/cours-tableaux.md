@@ -3,18 +3,18 @@ title: C - Les Tableaux
 description: Stocker et manipuler plusieurs variables ensemble
 level: particuliers
 chapter: Programmation en C
-icon: "\U0001F4E6"
+icon: "package"
 prerequisites:
   - cours-fonctions
 audience:
   accounts: []
 ---
 
-# 📦 C — Les Tableaux
+# <Icone nom="package" /> C : Les Tableaux
 
 ## Stocker et manipuler plusieurs variables ensemble
 
-## 📚 Qu'est-ce qu'un tableau ?
+## <Icone nom="library" /> Qu'est-ce qu'un tableau ?
 
 ### Définition
 
@@ -32,7 +32,7 @@ double prix[10];     // Tableau de 10 décimaux
 char lettres[26];    // Tableau de 26 caractères
 ```
 
-## 🎯 Initialisation et accès
+## <Icone nom="target" /> Initialisation et accès
 
 ### Initialisation complète
 
@@ -54,7 +54,7 @@ int premier = scores[0];      // Récupérer la valeur
 scores[2] = 35;              // Modifier la valeur
 ```
 
-## 🔄 Parcourir un tableau
+## <Icone nom="refresh-cw" /> Parcourir un tableau
 
 ### Avec une boucle for
 
@@ -84,7 +84,7 @@ int main() {
 }
 ```
 
-## 🔍 Recherche dans un tableau
+## <Icone nom="search" /> Recherche dans un tableau
 
 ```c
 #include <stdio.h>
@@ -114,7 +114,7 @@ int main() {
 }
 ```
 
-## ⚠️ Points importants
+## <Icone nom="triangle-alert" /> Points importants
 
 !!! warning "Dépassement de tableau"
     - Ne jamais accéder à un indice supérieur à la taille du tableau

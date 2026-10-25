@@ -1,15 +1,15 @@
 ---
-title: "Révision — Tris de tableaux en C"
+title: "Révision : Tris de tableaux en C"
 description: "Bulles, cocktail, sélection, insertion : idées, code et complexité"
 level: particuliers
-chapter: "Programmation en C — Révisions"
-icon: "🔄"
+chapter: "Programmation en C : Révisions"
+icon: "refresh-cw"
 revisionSheet: true
 audience:
   accounts: []
 ---
 
-# 🔄 Révision — Tris de tableaux en C
+# <Icone nom="refresh-cw" /> Révision : Tris de tableaux en C
 
 ## Rappel
 
@@ -53,7 +53,7 @@ void tri_bulles(int tab[], int n) {
 
 ## 2. Tri cocktail (*shaker sort*)
 
-**Idée :** comme bulles, mais on balaie le tableau **dans les deux sens** : une passe gauche → droite, puis droite → gauche. Cela peut déplacer plus vite de « gros » éléments coincés au milieu.
+**Idée :** comme bulles, mais on balaie le tableau **dans les deux sens** : une passe de gauche à droite, puis de droite à gauche. Cela peut déplacer plus vite de « gros » éléments coincés au milieu.
 
 ```c
 void tri_cocktail(int tab[], int n) {
@@ -112,7 +112,7 @@ void tri_cocktail(int tab[], int n) {
 
 **Idée :** si les valeurs sont des **entiers positifs bornés** (ex. notes entre 0 et 20), on **compte** chaque valeur puis on reconstruit le tableau trié.
 
-*   **Complexité** : O(n + k) avec k l'amplitude des valeurs — **très efficace** quand k est petit.
+*   **Complexité** : O(n + k) avec k l'amplitude des valeurs, **très efficace** quand k est petit.
 *   Ne convient pas si les valeurs sont très grandes ou non entières.
 
 ---

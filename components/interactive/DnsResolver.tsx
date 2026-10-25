@@ -97,7 +97,7 @@ export default function DnsResolver() {
     if (stopRef.current) return;
     setStep(1);
     setActiveServerId(1);
-    addLog(`🔍 Navigateur : Je cherche l'IP de ${domain}...`);
+    addLog(`Navigateur : Je cherche l'IP de ${domain}...`);
     
     // Request animation
     setPacketState('request');
@@ -107,7 +107,7 @@ export default function DnsResolver() {
     if (stopRef.current) return;
     setPacketState('processing');
     await wait(1000);
-    addLog(`🌍 Serveur Racine : Je ne sais pas, demandez au TLD (${info.tld}).`);
+    addLog(`Serveur racine : Je ne sais pas, demandez au TLD (${info.tld}).`);
     
     // Response animation
     if (stopRef.current) return;
@@ -118,7 +118,7 @@ export default function DnsResolver() {
     if (stopRef.current) return;
     setStep(2);
     setActiveServerId(2);
-    addLog(`👉 Navigateur : Contact du serveur TLD (${info.tld})...`);
+    addLog(`Navigateur : Contact du serveur TLD (${info.tld})...`);
     
     setPacketState('request');
     await wait(1500);
@@ -126,7 +126,7 @@ export default function DnsResolver() {
     if (stopRef.current) return;
     setPacketState('processing');
     await wait(1000);
-    addLog(`📂 Serveur ${info.tld} : Le domaine est géré par ${info.domain}.`);
+    addLog(`Serveur ${info.tld} : Le domaine est géré par ${info.domain}.`);
     
     if (stopRef.current) return;
     setPacketState('response');
@@ -136,7 +136,7 @@ export default function DnsResolver() {
     if (stopRef.current) return;
     setStep(3);
     setActiveServerId(3);
-    addLog(`👉 Navigateur : Contact du serveur autoritaire (${info.domain})...`);
+    addLog(`Navigateur : Contact du serveur autoritaire (${info.domain})...`);
     
     setPacketState('request');
     await wait(1500);
@@ -144,7 +144,7 @@ export default function DnsResolver() {
     if (stopRef.current) return;
     setPacketState('processing');
     await wait(1000);
-    addLog(`✅ Serveur Autoritaire : Voici l'IP : ${info.ip}`);
+    addLog(`Serveur autoritaire : Voici l'IP : ${info.ip}`);
     
     if (stopRef.current) return;
     setPacketState('response');
@@ -164,7 +164,7 @@ export default function DnsResolver() {
     <div className="flex flex-col gap-6 my-8 border rounded-xl overflow-hidden shadow-lg bg-white p-6">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between border-b pb-6">
         <div className="flex-1 w-full">
-          <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">Nom de domaine à résoudre</label>
+          <label className="text-xs font-bold text-slate-500 mb-1 block">Nom de domaine à résoudre</label>
           <div className="flex gap-2">
             <input 
               type="text" 
@@ -226,7 +226,7 @@ export default function DnsResolver() {
               
               {/* Active Step Description */}
               {activeServerId === s.id && packetState === 'processing' && (
-                <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 bg-slate-800 text-white text-xs p-2 rounded-lg shadow-xl text-center animate-bounce">
+                <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 bg-slate-800 text-white text-xs p-2 rounded-lg shadow-xl text-center">
                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div>
                   {s.description}
                 </div>
@@ -265,7 +265,7 @@ export default function DnsResolver() {
       {/* Result & Logs */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
         <div className="bg-slate-50 rounded-xl p-4 border h-48 overflow-y-auto font-mono text-xs scroll-smooth">
-          <div className="text-slate-400 mb-2 uppercase font-bold tracking-wider flex justify-between">
+          <div className="text-slate-400 mb-2 font-bold flex justify-between">
             <span>Journal de résolution</span>
             {isPaused && <span className="text-amber-500 animate-pulse">PAUSE</span>}
           </div>

@@ -22,7 +22,7 @@ export default async function StudentActivityDetailPage({
           description="Fiches terminées et exercices validés par cet élève."
           actions={
             <Link href="/admin/activite" className="text-sm font-semibold text-orange-600">
-              Retour à l’activité
+              Retour à l'activité
             </Link>
           }
         />

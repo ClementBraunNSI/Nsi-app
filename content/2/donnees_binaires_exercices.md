@@ -5,7 +5,7 @@ description: >-
   opérations arithmétiques et complément à deux.
 level: premiere
 chapter: Représentation des données
-icon: "\U0001F4BE"
+icon: "save"
 badgeId: premiere_fiche_exercices_binaires
 prerequisites:
   - donnees_booleens_exercices
@@ -15,7 +15,7 @@ groupeTitre: "Entiers en binaire et hexadécimal"
 ---
 
 
-# 🔢 Fiche d'exercices : Binaire et Hexadécimal
+# <Icone nom="hash" /> Fiche d'exercices : Binaire et Hexadécimal
 
 Cette fiche couvre les conversions entre bases, les opérations arithmétiques binaires, le complément à deux et l'implémentation de conversions en Python.
 

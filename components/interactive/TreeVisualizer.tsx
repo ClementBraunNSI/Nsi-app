@@ -232,7 +232,7 @@ export default function TreeVisualizer() {
             </h4>
             <div className="max-h-[180px] overflow-y-auto pr-2 custom-scrollbar">
               <table className="w-full text-sm text-left text-slate-600">
-                <thead className="text-xs text-slate-400 uppercase bg-slate-50 sticky top-0">
+                <thead className="text-xs text-slate-400 bg-slate-50 sticky top-0">
                   <tr>
                     <th className="px-3 py-2 rounded-tl-lg">Valeur</th>
                     <th className="px-3 py-2">Parent</th>

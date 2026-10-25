@@ -45,7 +45,7 @@ export function PrivateHomeworkPanel() {
     reload();
   }, []);
 
-  if (!board) return <p className="text-sm text-slate-400">Chargement des devoirs particuliers…</p>;
+  if (!board) return <p className="text-sm text-slate-400">Chargement des devoirs particuliers</p>;
 
   return (
     <div className="space-y-8">
@@ -66,7 +66,7 @@ export function PrivateHomeworkPanel() {
               setNotice(
                 result.error === "private_student"
                   ? "Ce cours particulier se donne à un élève inscrit en cours particuliers."
-                  : "Le devoir n’a pas été enregistré.",
+                  : "Le devoir n'a pas été enregistré.",
               );
               return;
             }
@@ -79,7 +79,7 @@ export function PrivateHomeworkPanel() {
           });
         }}
       >
-        <h2 className="text-lg font-black text-slate-800">Nouveau devoir particulier</h2>
+        <h2 className="text-lg font-bold text-slate-800">Nouveau devoir particulier</h2>
         <select
           required
           value={studentId}
@@ -128,7 +128,7 @@ export function PrivateHomeworkPanel() {
         </div>
         {notice && <p className="text-sm text-red-600">{notice}</p>}
         {board.students.length === 0 && (
-          <p className="text-sm text-slate-500">Aucun élève n’est inscrit en cours particuliers.</p>
+          <p className="text-sm text-slate-500">Aucun élève n'est inscrit en cours particuliers.</p>
         )}
       </form>
 
@@ -152,7 +152,7 @@ export function PrivateHomeworkPanel() {
                         pagePath: editPageText.trim() && editPath ? editPath : null,
                       });
                       if (result.error) {
-                        setNotice("La modification n’a pas abouti.");
+                        setNotice("La modification n'a pas abouti.");
                         return;
                       }
                       setEditing(null);
@@ -189,9 +189,9 @@ export function PrivateHomeworkPanel() {
                     <p className="font-bold text-slate-800">{item.title}</p>
                     <p className="text-slate-500">
                       {item.student_name}
-                      {item.page_title ? ` · ${item.page_title}` : ""}
-                      {item.due_at ? ` · pour le ${new Date(item.due_at).toLocaleString("fr-FR")}` : ""}
-                      {item.status === "done" ? " · fait" : ""}
+                      {item.page_title ? `, ${item.page_title}` : ""}
+                      {item.due_at ? `, pour le ${new Date(item.due_at).toLocaleString("fr-FR")}` : ""}
+                      {item.status === "done" ? ", fait" : ""}
                     </p>
                   </div>
                   <div className="flex gap-3">

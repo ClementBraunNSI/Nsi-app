@@ -3,7 +3,7 @@ title: Entiers Positifs en Binaire et Hexadécimal
 description: Comprendre les systèmes de numération et les conversions entre bases
 level: premiere
 chapter: Représentation des données
-icon: "\U0001F522"
+icon: "hash"
 badgeId: premiere_entiers_positifs
 prerequisites: []
 audience: public
@@ -83,4 +83,4 @@ Pour fermer : une base $b$ a $b$ symboles, et la valeur d'une écriture est la s
 
 ## Pour s'entraîner
 
-[Exercices — données binaires](/cours/2/donnees_binaires_exercices)
+[Exercices : données binaires](/cours/2/donnees_binaires_exercices)

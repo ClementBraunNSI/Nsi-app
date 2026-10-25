@@ -3,7 +3,7 @@ title: "Constructions élémentaires en Python"
 description: "Variables, opérateurs, entrées-sorties, conditions et boucles : les briques de base d'un programme."
 level: premiere
 chapter: Introduction à Python
-icon: "🧱"
+icon: "brick-wall"
 badgeId: premiere_python_intro
 prerequisites: []
 audience: public
@@ -31,13 +31,13 @@ Les opérateurs arithmétiques s'écrivent presque comme en cours de maths. Deux
 
 | Opérateur | Opération | Exemple |
 | --- | --- | --- |
-| `+` | Addition | `3 + 2` → `5` |
-| `-` | Soustraction | `5 - 3` → `2` |
-| `*` | Multiplication | `4 * 3` → `12` |
-| `/` | Division réelle | `7 / 2` → `3.5` |
-| `//` | Division entière | `7 // 2` → `3` |
-| `%` | Reste (modulo) | `7 % 2` → `1` |
-| `**` | Puissance | `2 ** 3` → `8` |
+| `+` | Addition | `3 + 2` donne `5` |
+| `-` | Soustraction | `5 - 3` donne `2` |
+| `*` | Multiplication | `4 * 3` donne `12` |
+| `/` | Division réelle | `7 / 2` donne `3.5` |
+| `//` | Division entière | `7 // 2` donne `3` |
+| `%` | Reste (modulo) | `7 % 2` donne `1` |
+| `**` | Puissance | `2 ** 3` donne `8` |
 
 ```python
 a = 3 + 2

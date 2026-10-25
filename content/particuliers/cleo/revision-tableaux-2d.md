@@ -1,15 +1,15 @@
 ---
-title: "Révision — Tableaux 2D (matrices)"
+title: "Révision : Tableaux 2D (matrices)"
 description: "Fiche synthèse : grille, double boucle, indices [i][j]"
 level: particuliers
-chapter: "Programmation en C — Révisions"
-icon: "🏗️"
+chapter: "Programmation en C : Révisions"
+icon: "construction"
 revisionSheet: true
 audience:
   accounts: []
 ---
 
-# 🏗️ Révision — Tableaux à deux dimensions
+# <Icone nom="construction" /> Révision : Tableaux à deux dimensions
 
 ## Idée
 

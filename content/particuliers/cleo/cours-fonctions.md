@@ -3,18 +3,18 @@ title: C - Fonctions
 description: Organiser le code en fonctions réutilisables
 level: particuliers
 chapter: Programmation en C
-icon: ⚙️
+icon: "settings"
 prerequisites:
   - cours-affectations-types
 audience:
   accounts: []
 ---
 
-# ⚙️ C — Fonctions
+# <Icone nom="settings" /> C : Fonctions
 
 ## Organiser le code en fonctions réutilisables
 
-## 🎯 Qu'est-ce qu'une fonction ?
+## <Icone nom="target" /> Qu'est-ce qu'une fonction ?
 
 ### Définition
 
@@ -33,7 +33,7 @@ type_retour nom_fonction(paramètres) {
 }
 ```
 
-## 🔧 Déclaration et utilisation
+## <Icone nom="wrench" /> Déclaration et utilisation
 
 ### Fonction simple sans paramètres
 
@@ -82,7 +82,7 @@ int main() {
 }
 ```
 
-## 🧠 Portée des variables (Scope)
+## <Icone nom="brain" /> Portée des variables (Scope)
 
 ### Variables locales
 Déclarées **dans une fonction**. Elles n'existent que dans cette fonction.
@@ -105,7 +105,7 @@ void augmenter_score() {
 }
 ```
 
-## 📝 Exercices
+## <Icone nom="notebook-pen" /> Exercices
 
 ### 1. Carré d'un nombre
 Écrire une fonction `int carre(int n)` qui renvoie le carré de `n`.

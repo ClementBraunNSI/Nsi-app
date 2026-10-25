@@ -3,7 +3,7 @@ title: "Introduction aux réseaux"
 description: "Comprendre les fondements de la communication numérique, le modèle TCP/IP et l'adressage"
 level: premiere
 chapter: "Réseaux et Internet"
-icon: "🕸️"
+icon: "network"
 badgeId: "premiere_cours"
 audience: public
 ---
@@ -37,10 +37,10 @@ En notation **CIDR**, on écrit l'adresse suivie de `/n`, où *n* est le nombre 
 ```
 masque   11111111.11111111.00000000.00000000
 IP       01111011.00100000.00101001.01001010
-ET       01111011.00100000.00000000.00000000  → 123.32.0.0
+ET       01111011.00100000.00000000.00000000  -> 123.32.0.0
 ```
 
-Deux adresses de chaque réseau sont réservées : l'adresse du réseau elle-même, et l'adresse de **broadcast**, qui s'adresse à toutes les machines d'un coup. Le nombre d'hôtes utilisables vaut donc à peu près \(2^{\text{bits hôtes}} - 2\).
+Deux adresses de chaque réseau sont réservées : l'adresse du réseau elle-même, et l'adresse de **broadcast**, qui s'adresse à toutes les machines d'un coup. Le nombre d'hôtes utilisables vaut donc à peu près $2^{\text{bits hôtes}} - 2$.
 
 Les anciennes classes A, B et C fixaient des tailles de réseau une fois pour toutes. On ne s'en sert plus pour découper : le CIDR autorise des masques de longueur variable, adaptés au nombre de machines qu'on a vraiment.
 

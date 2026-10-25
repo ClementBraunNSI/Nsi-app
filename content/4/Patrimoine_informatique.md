@@ -3,7 +3,7 @@ title: Patrimoine Informatique
 description: Recensement et identification des ressources numériques (SIO Bloc 1)
 level: '4'
 chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
-icon: "\U0001F9E9"
+icon: "puzzle"
 prerequisites:
   - Methodes_agiles
 audience: public
@@ -11,13 +11,13 @@ audience: public
 
 # Patrimoine informatique
 
-BTS SIO, bloc 1. Avant de sécuriser, de sauvegarder ou de remplacer quoi que ce soit, il faut savoir ce que l'organisation possède. Le **patrimoine numérique** regroupe les ressources dont le système d'information a besoin pour fonctionner : le matériel, les logiciels, et ce qui n'est ni l'un ni l'autre — comptes, droits, bases, procédures. Un serveur qu'on a oublié dans un placard fait encore partie du patrimoine. Il fait aussi partie de la surface d'attaque.
+BTS SIO, bloc 1. Avant de sécuriser, de sauvegarder ou de remplacer quoi que ce soit, il faut savoir ce que l'organisation possède. Le **patrimoine numérique** regroupe les ressources dont le système d'information a besoin pour fonctionner : le matériel, les logiciels, et ce qui n'est ni l'un ni l'autre, comptes, droits, bases, procédures. Un serveur qu'on a oublié dans un placard fait encore partie du patrimoine. Il fait aussi partie de la surface d'attaque.
 
 Tenir cet inventaire à jour est une exigence de la norme **ISO/IEC 27001:2022**, pas seulement une bonne habitude de technicien. L'annexe **A.5.9** demande que les actifs liés à l'information et aux installations qui la traitent soient identifiés, et qu'un inventaire en soit établi et tenu à jour. L'annexe **A.5.10** demande une organisation qui garantisse que ces informations et ces ressources sont protégées, utilisées et gérées comme il faut. L'annexe **A.5.36** demande que l'organisation voie l'ensemble de ses actifs au regard de ses politiques de sécurité, de ses règles et des standards qu'elle s'impose. Sans liste, ces trois contrôles ne peuvent pas être démontrés à un auditeur.
 
 ## Pourquoi l'inventaire change le quotidien
 
-Les ordres de grandeur qu'on retient en cours donnent une idée de l'écart, pas une promesse chiffrée au pourcent près. Un inventaire centralisé réduit souvent le temps moyen de rétablissement, le MTTR, de l'ordre de 20 à 30 %, parce qu'on ne cherche plus la machine ni son rôle au moment de la panne. La conformité et le tri des licences font baisser les coûts logiciels d'environ 15 à 25 % : on arrête de payer des sièges que personne n'ouvre. Quand les dépendances sont dessinées, la couverture de sauvegarde gagne de l'ordre de 30 à 50 %, parce qu'on sait enfin ce qui doit partir avec quoi. Une **CMDB** tenue — une base des configurations, on y revient — peut faire reculer jusqu'à 40 % les incidents liés à du matériel ou du logiciel dont l'obsolescence n'était suivie par personne.
+Les ordres de grandeur qu'on retient en cours donnent une idée de l'écart, pas une promesse chiffrée au pourcent près. Un inventaire centralisé réduit souvent le temps moyen de rétablissement, le MTTR, de l'ordre de 20 à 30 %, parce qu'on ne cherche plus la machine ni son rôle au moment de la panne. La conformité et le tri des licences font baisser les coûts logiciels d'environ 15 à 25 % : on arrête de payer des sièges que personne n'ouvre. Quand les dépendances sont dessinées, la couverture de sauvegarde gagne de l'ordre de 30 à 50 %, parce qu'on sait enfin ce qui doit partir avec quoi. Une **CMDB** tenue (une base des configurations, on y revient) peut faire reculer jusqu'à 40 % les incidents liés à du matériel ou du logiciel dont l'obsolescence n'était suivie par personne.
 
 Pour une ESN, une entreprise de services du numérique (on disait SSII), le même inventaire sert à cinq décisions. On voit les équipements sous-utilisés ou déjà trop vieux, et l'on évite de racheter ce qui dort. On repère vite ce qui sort des règles internes de sécurité. On ordonne les remplacements au lieu de les subir. On sait quelles licences sont en trop, ou en moins, avant un contrôle de l'éditeur. Et l'on dispose de chiffres pour justifier un investissement, au lieu d'une impression.
 

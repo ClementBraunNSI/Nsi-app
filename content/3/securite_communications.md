@@ -4,7 +4,7 @@ description: 'Chiffrement symétrique, asymétrique et protocoles sécurisés.'
 level: TNSI
 order: 40
 chapter: 'Architectures matérielles, OS & Réseaux'
-icon: "\U0001F512"
+icon: "lock"
 badgeId: terminale_securite
 prerequisites:
   - reseaux_routage

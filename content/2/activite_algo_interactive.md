@@ -3,7 +3,7 @@ title: 'Atelier Algo : La Course au Tri'
 description: Visualiser comment un algorithme trie des données.
 level: premiere
 chapter: Algorithmique
-icon: "\U0001F3CE️"
+icon: "car-front"
 badgeId: premiere_activite_algo
 prerequisites:
   - algo_knn_cours
@@ -13,16 +13,16 @@ groupeTitre: "Algorithmes de tri"
 version: "Atelier"
 ---
 
-# 🏎️ Atelier Algo : La Course au Tri
+# <Icone nom="car-front" /> Atelier Algo : La Course au Tri
 
 Trier des données est l'une des tâches les plus courantes en informatique. Mais comment l'ordinateur s'y prend-il ?
 
-## 🎯 Observation
+## <Icone nom="target" /> Observation
 Voici le **Tri à Bulles**. Il compare deux éléments côte à côte et les échange s'ils sont dans le mauvais ordre. Il recommence jusqu'à ce que tout soit trié.
 
 Clique sur **"Lancer le Tri"** et observe les échanges en temps réel.
 
 <AlgorithmRace />
 
-## 🧠 Analyse
+## <Icone nom="brain" /> Analyse
 Est-ce que cette méthode te semble rapide ? Imagine s'il y avait 1 million de barres à trier...

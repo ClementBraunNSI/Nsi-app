@@ -1,15 +1,15 @@
 ---
-title: "Révision — Tableaux (1D)"
+title: "Révision : Tableaux (1D)"
 description: "Fiche synthèse : déclaration, indices, parcours for"
 level: particuliers
-chapter: "Programmation en C — Révisions"
-icon: "📦"
+chapter: "Programmation en C : Révisions"
+icon: "package"
 revisionSheet: true
 audience:
   accounts: []
 ---
 
-# 📦 Révision — Tableaux à une dimension
+# <Icone nom="package" /> Révision : Tableaux à une dimension
 
 ## Définition rapide
 

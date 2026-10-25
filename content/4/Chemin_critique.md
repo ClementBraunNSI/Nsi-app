@@ -3,7 +3,7 @@ title: Le Chemin Critique
 description: Méthode de planification et d'optimisation de projets
 level: '4'
 chapter: 'BTS SIO 2 : B1 - Support et mise à disposition de services informatiques'
-icon: "\U0001F3AF"
+icon: "target"
 prerequisites:
   - Gestion_risques
 audience: public
@@ -33,13 +33,13 @@ Prenons une application mobile.
 
 A dure 5 jours et ne dépend de rien. B et C partent ensuite, en parallèle. D attend B. E attend que C **et** D soient finies : elle commence à la date la plus tardive des deux.
 
-Le chemin A, B, D, E, F, G dure $5 + 8 + 12 + 6 + 7 + 3 = 41$ jours. Le chemin A, C, E, F, G dure $5 + 15 + 6 + 7 + 3 = 36$ jours. Le plus long est le premier. Le chemin critique est A → B → D → E → F → G, et le projet ne peut pas durer moins de 41 jours. C se termine au jour 20, alors que D se termine au jour 25. E attend D. C a donc cinq jours de marge totale : un retard de C inférieur à cinq jours ne touche pas la fin. Un retard d'un jour sur B, sur D, sur E, sur F ou sur G décale la livraison d'un jour.
+Le chemin A, B, D, E, F, G dure $5 + 8 + 12 + 6 + 7 + 3 = 41$ jours. Le chemin A, C, E, F, G dure $5 + 15 + 6 + 7 + 3 = 36$ jours. Le plus long est le premier. Le chemin critique est A, B, D, E, F, G, et le projet ne peut pas durer moins de 41 jours. C se termine au jour 20, alors que D se termine au jour 25. E attend D. C a donc cinq jours de marge totale : un retard de C inférieur à cinq jours ne touche pas la fin. Un retard d'un jour sur B, sur D, sur E, sur F ou sur G décale la livraison d'un jour.
 
 Le même outil sert dès qu'un livrable dépend d'un enchaînement : un déploiement, un chantier, un lancement. On l'utilise pour savoir où mettre les gens, où un glissement est encore absorbable, et quoi dire aux parties prenantes quand elles demandent pourquoi telle tâche ne peut pas attendre.
 
 ## Exercices pratiques
 
-### Exercice 1 – Mise en place d'un serveur web
+### Exercice 1 : Mise en place d'un serveur web
 
 **Contexte :** Un projet de mise en place d'un serveur web est découpé en tâches :
 
@@ -58,4 +58,4 @@ Le même outil sert dès qu'un livrable dépend d'un enchaînement : un déploie
 2. **Calculer tous les chemins possibles** : Identifier tous les chemins du début à la fin et calculer leur durée.
 3. **Déterminer le chemin critique** : Trouver le chemin le plus long et la durée totale du projet.
 
-### Exercice 2 – Développement d'une application interne
+### Exercice 2 : Développement d'une application interne

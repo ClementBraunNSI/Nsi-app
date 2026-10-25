@@ -1,7 +1,7 @@
 ---
 title: 'Exercices : Les listes'
-description: 'Création, parcours, modification et algorithmes sur les listes — fiche progressive par niveau.'
-icon: "\U0001F5B1️"
+description: 'Création, parcours, modification et algorithmes sur les listes : fiche progressive par niveau.'
+icon: "mouse"
 chapter: Structures de données linéaires
 badgeId: premiere_exercices_listes
 meta: 'Listes Python : indices, parcours, méthodes et algorithmes'
@@ -757,7 +757,7 @@ assert supprimer_valeur([1, 2, 3, 2, 4], 2) == [1, 3, 4]
     <Enonce>
     ### Exercice 6.1 [Expert] : Rotation à gauche
     **Écrire une fonction `rotation_gauche` qui prend une liste non vide et renvoie une nouvelle liste où le premier élément est déplacé à la fin.**
-    *Exemple : `[1, 2, 3, 4]` → `[2, 3, 4, 1]`.*
+    *Exemple : `[1, 2, 3, 4]` donne `[2, 3, 4, 1]`.*
 
     <Correction>
     ```python

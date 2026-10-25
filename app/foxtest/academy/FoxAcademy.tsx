@@ -13,10 +13,13 @@ import {
   Lock,
   Map as MapIcon,
   Play,
+  Rabbit,
   RotateCcw,
   Save,
+  Turtle,
   X,
 } from "lucide-react";
+import { FoxHead } from "@/components/ui/FoxHead";
 import Board, { type FoxAction } from "./Board";
 import { CHAPTERS, COMMANDS } from "./commands";
 import { executeStudentCode, translatePythonError } from "./engine";
@@ -41,7 +44,7 @@ function generateResumeCode() {
 }
 
 function chapterName(id: ChapterId) {
-  return CHAPTERS[id].label.split("·")[1]?.trim() || CHAPTERS[id].label;
+  return CHAPTERS[id].label.split(". ")[1]?.trim() || CHAPTERS[id].label;
 }
 
 type Feedback = { tone: "error" | "info"; text: string } | null;
@@ -434,14 +437,14 @@ export default function FoxAcademy() {
           {showSave ? (
             <div className={styles.savePopover} role="dialog" aria-label="Sauvegarde">
               <p>
-                Ton code de reprise : <strong>{resumeCode || "…"}</strong>
+                Ton code de reprise : <strong>{resumeCode || "en cours de création"}</strong>
               </p>
               <p className={styles.muted}>Note-le pour reprendre ta partie sur cet appareil.</p>
               <div className={styles.resumeRow}>
                 <input
                   value={resumeInput}
                   onChange={(event) => setResumeInput(event.target.value.toUpperCase())}
-                  placeholder="FOX-…"
+                  placeholder="FOX-XXXXXXXX"
                   aria-label="Code de reprise"
                 />
                 <button type="button" onClick={loadResume}>
@@ -498,7 +501,8 @@ export default function FoxAcademy() {
               {stepState.total > 0 ? `Étape ${stepState.current} / ${stepState.total}` : "Le renard attend ton programme"}
             </span>
             <button type="button" className={`${styles.chip} ${fast ? styles.chipOn : ""}`} onClick={() => setFast((value) => !value)} aria-pressed={fast}>
-              {fast ? "🐇 Rapide" : "🐢 Normal"}
+              {fast ? <Rabbit size={14} aria-hidden /> : <Turtle size={14} aria-hidden />}
+              {fast ? "Rapide" : "Normal"}
             </button>
             <button type="button" className={styles.chip} onClick={() => placeFox(buildWorld(level, Date.now()))} disabled={isRunning}>
               <RotateCcw size={13} /> Replacer
@@ -510,7 +514,7 @@ export default function FoxAcademy() {
         <section className={styles.codeColumn} aria-label="Programme">
           <article className={styles.mission}>
             <p className={styles.missionEyebrow}>
-              Défi {level.id} · {chapterName(level.chapter)}
+              Défi {level.id} : {chapterName(level.chapter)}
               {starsByLevel[level.id] ? <span className={styles.missionStars}>{"★".repeat(starsByLevel[level.id])}</span> : null}
             </p>
             <h1 className={styles.missionTitle}>{level.title}</h1>
@@ -576,7 +580,7 @@ export default function FoxAcademy() {
 
           {feedback ? (
             <div className={`${styles.feedback} ${feedback.tone === "error" ? styles.feedbackError : ""}`} role="alert">
-              <span aria-hidden>{feedback.tone === "error" ? "🦊💥" : "🦊"}</span>
+              <FoxHead size={30} />
               <p>
                 {feedback.text}
                 {errorLine ? <em> (ligne {errorLine})</em> : null}
@@ -590,12 +594,12 @@ export default function FoxAcademy() {
           <div className={styles.runBar}>
             <p className={styles.lineCount}>
               {lines} ligne{lines > 1 ? "s" : ""}
-              {level.maxLines ? <> · max {level.maxLines}</> : null}
+              {level.maxLines ? <> (maximum {level.maxLines})</> : null}
               <span className={styles.shortcut}>Ctrl + Entrée</span>
             </p>
             <button type="button" onClick={run} disabled={isRunning || !isPyodideReady} className={styles.runButton}>
               {isRunning || !isPyodideReady ? <LoaderCircle size={17} className="animate-spin" /> : <Play size={17} fill="currentColor" />}
-              {isRunning ? "Le renard avance…" : isPyodideReady ? "Lancer le renard" : "Chargement de Python…"}
+              {isRunning ? "Le renard avance" : isPyodideReady ? "Lancer le renard" : "Chargement de Python"}
             </button>
           </div>
         </section>

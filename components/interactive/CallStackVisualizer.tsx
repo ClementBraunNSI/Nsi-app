@@ -73,7 +73,7 @@ export default function CallStackVisualizer() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Visualisation de la pile */}
         <div className="bg-slate-50 rounded-xl p-6 border border-slate-100 min-h-[300px] flex flex-col justify-end">
-          <div className="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-200 pb-2">
+          <div className="text-center text-xs font-bold text-slate-400 mb-4 border-b border-slate-200 pb-2">
             Pile Mémoire (Call Stack)
           </div>
           
@@ -82,8 +82,8 @@ export default function CallStackVisualizer() {
               <div 
                 key={`${step}-${index}`}
                 className={`
-                  p-3 rounded-lg border font-mono text-sm text-center shadow-sm transition-all duration-300
-                  ${index === currentStep.stack.length - 1 
+ p-3 rounded-lg border font-mono text-sm text-center shadow-sm transition-all duration-300
+ ${index === currentStep.stack.length - 1 
                     ? 'bg-orange-50 border-orange-200 text-orange-700 font-bold scale-[1.02]' 
                     : 'bg-white border-slate-200 text-slate-600'}
                 `}
@@ -106,13 +106,13 @@ export default function CallStackVisualizer() {
         <div className="flex flex-col justify-center">
           <div className="bg-slate-50 text-slate-800 p-6 rounded-xl border border-slate-100 relative">
             <Info size={20} className="absolute top-4 right-4 text-orange-400" />
-            <div className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-2">Étape {step + 1} / {steps.length}</div>
+            <div className="text-xs font-bold text-orange-500 mb-2">Étape {step + 1} / {steps.length}</div>
             <p className="text-base font-medium leading-relaxed">{currentStep.action}</p>
           </div>
           
           {step > 0 && step < steps.length - 1 && (
             <div className="mt-4 p-4 bg-white border border-slate-200 rounded-xl text-sm flex flex-col gap-1 shadow-sm">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Opération en mémoire</span>
+              <span className="text-xs font-bold text-slate-400">Opération en mémoire</span>
               {currentStep.stack.length > steps[step-1].stack.length ? (
                 <span className="text-blue-600 font-medium flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-blue-500"></div> Empilement (Push)</span>
               ) : (

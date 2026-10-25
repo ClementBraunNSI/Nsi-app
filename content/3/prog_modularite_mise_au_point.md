@@ -6,7 +6,7 @@ description: >-
 level: TNSI
 order: 80
 chapter: Langages et Programmation
-icon: "🐛"
+icon: "bug"
 badgeId: terminale_modularite
 prerequisites: []
 audience: public

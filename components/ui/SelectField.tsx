@@ -8,7 +8,7 @@ type SelectFieldProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
 export function SelectField({ label, hint, className = "", children, ...props }: SelectFieldProps) {
   return (
     <label className="block">
-      {label && <span className="mb-2 block text-xs font-black uppercase tracking-wider text-slate-500">{label}</span>}
+      {label && <span className="mb-2 block text-xs font-bold text-slate-500">{label}</span>}
       <select
         className={`w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 ${className}`}
         {...props}

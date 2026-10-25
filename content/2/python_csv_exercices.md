@@ -3,7 +3,7 @@ title: 'Exercices : Traitement CSV'
 description: 'Cours sur Exercices : Traitement CSV'
 level: premiere
 chapter: Dictionnaires et Tables
-icon: "\U0001F4D1"
+icon: "files"
 badgeId: premiere_fiche_exercices_csv
 prerequisites:
   - python_exercices_dictionnaires

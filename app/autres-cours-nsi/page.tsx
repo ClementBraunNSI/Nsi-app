@@ -4,7 +4,7 @@ import ColleagueDirectory from "@/components/ColleagueDirectory";
 export const metadata: Metadata = {
   title: "Autres cours NSI",
   description:
-    "Sites de cours tenus par d’autres enseignants de SNT et de NSI en France, en complément de La tanière du code.",
+    "Sites de cours tenus par d'autres enseignants de SNT et de NSI en France, en complément de La tanière du code.",
   alternates: {
     canonical: "https://www.clementbraun.info/autres-cours-nsi",
   },
@@ -18,8 +18,8 @@ export default function AutresCoursNsiPage() {
           Autres cours NSI
         </h1>
         <p className="mt-5 max-w-3xl text-base leading-relaxed text-[var(--muted)]">
-          Ces sites sont tenus par d’autres enseignants de SNT et de NSI, en France. Ils complètent
-          La tanière du code. La liste suit l’ordre alphabétique des noms : niveaux, contenu, lien.
+          Ces sites sont tenus par d'autres enseignants de SNT et de NSI, en France. Ils complètent
+          La tanière du code. La liste suit l'ordre alphabétique des noms : niveaux, contenu, lien.
         </p>
       </header>
       <ColleagueDirectory />

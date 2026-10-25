@@ -3,7 +3,7 @@ title: Simulation de Serveurs WEB et DNS
 description: Mise en place de serveurs WEB et DNS dans un réseau simulé avec Filius.
 level: '2'
 chapter: Internet
-icon: "\U0001F30D"
+icon: "earth"
 prerequisites:
   - Activite
 audience: public
@@ -12,19 +12,19 @@ audience: public
 > **Objectif de l'activité**
 > Comprendre le fonctionnement des **serveurs WEB** et **DNS** en simulant un environnement réseau complet avec Filius.
 
-## 1. 🔧 Création du réseau
+## 1. <Icone nom="wrench" /> Création du réseau
 
 > **Prérequis**
 > Reprendre le réseau du TP précédent comme base de travail.
 
-## 2. 🖥️ Configuration d'un serveur WEB
+## 2. <Icone nom="monitor" /> Configuration d'un serveur WEB
 
 1. Ajouter un ordinateur dans le réseau `192.168.5.0` et le configurer pour y avoir accès.
 2. En mode lecture, ajouter le **logiciel de serveur web** sur l'ordinateur.
 3. Double-cliquer sur l'application serveur web et **démarrer le serveur**.
 4. Sur la machine `192.168.1.11`, ajouter le logiciel de navigation internet et entrer l'adresse IP du serveur web dans la barre d'adresse. La page devrait s'actualiser.
 
-## 3. 🌐 Configuration d'un serveur DNS
+## 3. <Icone nom="globe" /> Configuration d'un serveur DNS
 
 > **Préparation**
 > Ajouter une interface au routeur et créer un réseau `192.168.2.11` avec un ordinateur.
@@ -33,7 +33,7 @@ audience: public
 2. Comme nom de domaine, ajouter `www.nsi.fr` et associer l'adresse `192.168.3.12` (notre serveur WEB).
 3. Ajouter l'adresse du serveur DNS pour tous les ordinateurs.
 
-## 4. 📄 Ajout de votre page web personnalisée
+## 4. <Icone nom="file-text" /> Ajout de votre page web personnalisée
 
 1. Sur le serveur WEB, ajouter l'application **explorateur de fichiers**.
 2. Importer votre fichier `index.html` et le placer dans le dossier **webserver**.

@@ -3,7 +3,7 @@ title: Représentation du texte en binaire
 description: 'Codage des caractères (ASCII, Unicode).'
 level: SNI
 chapter: Representation_de_base
-icon: "\U0001F4DD"
+icon: "notebook-pen"
 prerequisites:
   - images
 audience: public

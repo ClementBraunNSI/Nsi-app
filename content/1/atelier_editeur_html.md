@@ -3,7 +3,7 @@ title: 'Atelier : éditeur HTML en direct'
 description: 'Écrire du code HTML et observer immédiatement le rendu dans le navigateur.'
 level: '1'
 chapter: Web
-icon: "\U0001F4BB"
+icon: "laptop"
 prerequisites:
   - Cours_html
 audience: public

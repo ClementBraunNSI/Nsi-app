@@ -3,7 +3,7 @@ title: C - Fonctions - Exercices
 description: Organiser le code en fonctions réutilisables
 level: particuliers
 chapter: Programmation en C
-icon: ⚙️
+icon: "settings"
 prerequisites:
   - exercices-tableaux-2d
 audience:

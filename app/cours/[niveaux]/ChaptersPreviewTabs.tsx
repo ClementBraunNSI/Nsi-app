@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { BookOpen, ChevronRight, FileText, FlaskConical, FolderKanban, Layers, X, Zap } from "lucide-react";
+import { BookOpen, ChevronRight, FileText, FlaskConical, FolderKanban, Image as ImageIcon, Layers, Package, X, Zap } from "lucide-react";
 import { chapterImageFromData, getResourceKind, type ResourceKind } from "@/lib/chapter-utils";
 import { GROUP_EXTRA_LINKS, type CourseGroupRef } from "@/lib/course-groups";
 import { CHASSE_BASE_IMAGE } from "@/lib/chasse-project-editions";
@@ -151,17 +151,68 @@ function GroupPicker({ group, onClose }: { group: GroupEntry; onClose: () => voi
           <div className="lvl-pick-extras">
             {group.annexes.map((annex) => (
               <Link key={annex.href} href={annex.href} onClick={onClose}>
-                📦 {annex.group?.version || annex.title}
+                <Package size={14} aria-hidden /> {annex.group?.version || annex.title}
               </Link>
             ))}
             {extras.map((extra) => (
               <Link key={extra.href} href={extra.href} onClick={onClose}>
-                🖼️ {extra.label}
+                <ImageIcon size={14} aria-hidden /> {extra.label}
               </Link>
             ))}
           </div>
         ) : null}
       </div>
+    </div>
+  );
+}
+
+/** Tuile d'une notion : le titre ouvre la première ressource, un bouton par ressource juste en dessous. */
+function GroupTile({ group }: { group: GroupEntry }) {
+  const first = group.members[0];
+  const meta = KIND_META[first.kind];
+  const extras = GROUP_EXTRA_LINKS[group.id] || [];
+  const seen = new Map<string, number>();
+  const labels = group.members.map((member) => {
+    const label = memberLabel(member);
+    const count = (seen.get(label) || 0) + 1;
+    seen.set(label, count);
+    return { member, label, count };
+  });
+  const total = (label: string) => labels.filter((item) => item.label === label).length;
+
+  return (
+    <div className="lvl-tile is-group">
+      <span className={`lvl-tile-ic ${meta.className}`}>
+        <Layers size={18} />
+      </span>
+      <span className="min-w-0 flex-1">
+        <Link href={first.href} className="lvl-group-title">
+          <b>{group.title}</b>
+        </Link>
+        <span className="lvl-res-row">
+          {labels.map(({ member, label, count }) => {
+            const Icon = KIND_META[member.kind].icon;
+            return (
+              <Link key={member.href} href={member.href} className="lvl-res" title={member.title}>
+                <Icon size={14} aria-hidden />
+                {total(label) > 1 ? `${label} ${count}` : label}
+              </Link>
+            );
+          })}
+          {group.annexes.map((annex) => (
+            <Link key={annex.href} href={annex.href} className="lvl-res is-annex" title={annex.title}>
+              <Package size={14} aria-hidden />
+              {annex.group?.version || annex.title}
+            </Link>
+          ))}
+          {extras.map((extra) => (
+            <Link key={extra.href} href={extra.href} className="lvl-res is-annex">
+              <ImageIcon size={14} aria-hidden />
+              {extra.label}
+            </Link>
+          ))}
+        </span>
+      </span>
     </div>
   );
 }
@@ -226,7 +277,7 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, folder }: Props
               className={`lvl-chapter ${active ? "is-active" : ""} ${chapter.isPrivate ? "is-private" : ""}`}
             >
               <span className="lvl-thumb">
-                {image ? <Image src={image} alt="" fill className="object-cover" sizes="48px" /> : null}
+                {image ? <Image src={image} alt="" fill className="object-cover" sizes="64px" /> : null}
               </span>
               <span className="min-w-0 flex-1">
                 <b className="flex items-center gap-1">
@@ -246,7 +297,7 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, folder }: Props
         <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
           <div className="flex min-w-0 items-center gap-3">
             <span className="lvl-thumb is-large">
-              {selectedImage ? <Image src={selectedImage} alt="" fill className="object-cover" sizes="64px" priority /> : null}
+              {selectedImage ? <Image src={selectedImage} alt="" fill className="object-cover" sizes="160px" priority /> : null}
             </span>
             <div className="min-w-0">
               <h2 className="truncate text-2xl font-semibold tracking-tight text-[var(--fg)]">{selectedChapter.name}</h2>
@@ -300,6 +351,8 @@ export default function ChaptersPreviewTabs({ chapters, niveaux, folder }: Props
                 const { group } = entry;
                 const first = group.members[0];
                 const meta = KIND_META[first.kind];
+                // Une notion (cours, exercices, TP…) : chaque ressource a son bouton, sans fenêtre à ouvrir.
+                if (!group.versions) return <GroupTile key={`groupe-${group.id}`} group={group} />;
                 return (
                   <button
                     key={`groupe-${group.id}`}

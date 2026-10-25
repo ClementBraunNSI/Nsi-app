@@ -3,9 +3,9 @@ title: 'TP : Algorithmes de Tri'
 description: Comprendre et implémenter les tris par sélection et insertion
 level: premiere
 chapter: Algorithmique
-icon: "\U0001F4F6"
+icon: "wifi"
 badgeId: premiere_tris
-meta: 'Durée : 2 heures · Objectif : Implémenter les algorithmes classiques'
+meta: 'Durée : 2 heures. Objectif : Implémenter les algorithmes classiques'
 prerequisites:
   - algo_dichotomie
 audience: public

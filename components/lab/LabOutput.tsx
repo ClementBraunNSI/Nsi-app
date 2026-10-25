@@ -90,7 +90,7 @@ export function LabOutput({ exercise, tab, onTab, onClear, onRetryTest, consoleS
           unavailable ? (
             <div className="exercise-result-oops">
               <p>
-                <b>La vérification n’a pas pu se lancer.</b> Ton code n’est pas en cause : réessaie dans un instant.
+                <b>La vérification n'a pas pu se lancer.</b> Ton code n'est pas en cause : réessaie dans un instant.
               </p>
               <button type="button" onClick={onRetryTest}>
                 <RotateCw size={14} aria-hidden /> Réessayer

@@ -5,7 +5,7 @@ description: >-
   échanges de données.
 level: '2'
 chapter: Internet
-icon: "\U0001F50C"
+icon: "plug"
 prerequisites:
   - activite_internet_interactive
 audience: public
@@ -14,7 +14,7 @@ audience: public
 > **Objectif de l'activité**
 > Maîtriser la création de **réseaux** et **sous-réseaux** en simulant le comportement des paquets de données avec le logiciel Filius.
 
-## 🔧 Approche du logiciel Filius
+## <Icone nom="wrench" /> Approche du logiciel Filius
 
 ![Interface Filius](/content/1/notice_filius.png)
 
@@ -22,20 +22,20 @@ audience: public
 
 ![Modes Filius](/content/1/modes_filius.png)
 
-### ✏️ Annotation
+### <Icone nom="pencil" /> Annotation
 Permet d'annoter le schéma réseau pour une meilleure compréhension.
 
-### 🔨 Construction
+### <Icone nom="hammer" /> Construction
 Permet d'ajouter des éléments (ordinateurs, routeurs, câbles) sur le schéma.
 
-### ▶️ Lecture
+### <Icone nom="play" /> Lecture
 Permet d'utiliser la simulation pour étudier les échanges de données en temps réel.
 
-## 🏗️ Construction d'un réseau simple
+## <Icone nom="construction" /> Construction d'un réseau simple
 
 ![Schéma réseau simple](/content/1/s1.png)
 
-## 🚀 Un réseau plus étoffé
+## <Icone nom="rocket" /> Un réseau plus étoffé
 
 > **Évolution**
 > Après avoir compris le fonctionnement de base de Filius, nous allons maintenant étoffer le réseau précédent pour une configuration plus complexe.

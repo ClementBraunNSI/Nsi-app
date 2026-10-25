@@ -3,12 +3,12 @@ title: "Introduction aux Structures en C"
 description: "Les bases de la programmation structurée en C : struct, typedef et pointeurs."
 level: particuliers
 chapter: "Programmation en C"
-icon: "🏗️"
+icon: "construction"
 audience:
   accounts: []
 ---
 
-## 🌟 Introduction
+## <Icone nom="star" /> Introduction
 
 Le langage C n'est pas un langage orienté objet comme C# ou Java. Il ne possède pas de "classes". Cependant, il permet de regrouper des données liées entre elles grâce aux **structures**.
 
@@ -16,13 +16,13 @@ C'est l'ancêtre direct de la notion d'objet.
 
 > **Pourquoi utiliser des structures ?**
 >
-> - ✅ **Organisation** : Regrouper des variables qui ont un sens ensemble (ex: x et y pour un Point).
-> - ✅ **Clarté** : Manipuler une seule variable (`personne`) au lieu de plusieurs (`nom`, `age`, `taille`).
-> - ✅ **Modularité** : Passer des paquets de données complexes à vos fonctions.
+> - <Icone nom="circle-check" /> **Organisation** : Regrouper des variables qui ont un sens ensemble (ex: x et y pour un Point).
+> - <Icone nom="circle-check" /> **Clarté** : Manipuler une seule variable (`personne`) au lieu de plusieurs (`nom`, `age`, `taille`).
+> - <Icone nom="circle-check" /> **Modularité** : Passer des paquets de données complexes à vos fonctions.
 
 ---
 
-## 📦 Le Concept de Structure (`struct`)
+## <Icone nom="package" /> Le Concept de Structure (`struct`)
 
 Une structure est un type de données personnalisé qui permet de stocker plusieurs variables de types différents sous un même nom.
 
@@ -57,7 +57,7 @@ struct Etudiant e1;
 
 ---
 
-## 🏗️ Créer et Utiliser des Structures
+## <Icone nom="construction" /> Créer et Utiliser des Structures
 
 ### Exemple Concret : Un Point Géométrique
 
@@ -88,7 +88,7 @@ int main() {
 
 ---
 
-## 🔄 Structures et Fonctions (Passage par Valeur vs Adresse)
+## <Icone nom="refresh-cw" /> Structures et Fonctions (Passage par Valeur vs Adresse)
 
 En C, par défaut, les arguments sont passés **par valeur** (copie). Si vous modifiez une structure dans une fonction, l'original n'est pas modifié !
 
@@ -133,7 +133,7 @@ int main() {
 
 ---
 
-## 🛠️ Exemple Complet : Gestion d'un rectangle
+## <Icone nom="wrench" /> Exemple Complet : Gestion d'un rectangle
 
 Voici l'équivalent C d'une classe `Rectangle` simple.
 
@@ -188,7 +188,7 @@ int main() {
 }
 ```
 
-## ⚠️ Pièges Courants
+## <Icone nom="triangle-alert" /> Pièges Courants
 
 1.  **Oublier le `&`** lors de l'appel d'une fonction qui attend un pointeur.
 2.  **Utiliser `.` au lieu de `->`** avec un pointeur (le compilateur va râler).

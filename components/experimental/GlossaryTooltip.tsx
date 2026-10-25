@@ -48,12 +48,12 @@ export default function GlossaryTooltip({ term, children }: GlossaryTooltipProps
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
         className="
-          cursor-help 
-          text-orange-600 dark:text-orange-400 font-bold
-          hover:underline decoration-orange-300 decoration-2 underline-offset-2
-          transition-all duration-200
-          relative inline-block
-        "
+ cursor-help 
+ text-orange-600 dark:text-orange-400 font-bold
+ hover:underline decoration-orange-300 decoration-2 underline-offset-2
+ transition-all duration-200
+ relative inline-block
+ "
         aria-label={`Définition de ${entry.term}`}
       >
         {children || term}
@@ -71,7 +71,7 @@ export default function GlossaryTooltip({ term, children }: GlossaryTooltipProps
                 {entry.term}
               </span>
               {entry.category && (
-                <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 bg-slate-800 dark:bg-slate-100 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] font-bold text-slate-400 bg-slate-800 dark:bg-slate-100 px-1.5 py-0.5 rounded">
                   {entry.category}
                 </span>
               )}

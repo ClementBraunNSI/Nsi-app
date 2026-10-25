@@ -3,7 +3,7 @@ title: "Construire son Portfolio Professionnel"
 description: "Méthodologie pour l'épreuve E4 : Structure, Méthode STAR et choix technologiques."
 level: "4"
 chapter: "BTS SIO 2 : E4 - Support et mise à disposition de services informatiques"
-icon: "💼"
+icon: "briefcase"
 audience: public
 ---
 
@@ -35,7 +35,7 @@ Le jury ne connaît ni votre entreprise, ni vos tuteurs. Avant de montrer votre 
 >
 > Pour structurer chaque mission, utilisez **la méthode STAR** (Situation, Tâche, Action, Résultat). Cela permet de raconter une histoire logique et professionnelle.
 
-### 🦊 Exemple concret d'une mission présentée avec STAR (Profil SISR)
+### <Renard /> Exemple concret d'une mission présentée avec STAR (Profil SISR)
 
 > **Mission : Déploiement d'une infrastructure pour un refuge animalier**
 >
@@ -44,7 +44,7 @@ Le jury ne connaît ni votre entreprise, ni vos tuteurs. Avant de montrer votre 
 > *   **(A) Action :** J'ai déployé un pont Wi-Fi (antennes Ubiquiti) entre les deux bâtiments. J'ai ensuite installé et configuré un NAS Synology avec une gestion stricte des droits d'accès (ACL) : un dossier chiffré pour les vétérinaires et un espace partagé pour les bénévoles. Enfin, j'ai scripté des sauvegardes incrémentales vers le cloud.
 > *   **(R) Résultat :** Les vétérinaires accèdent désormais aux dossiers en temps réel depuis les enclos. Aucune perte de données n'a été signalée depuis 6 mois grâce aux sauvegardes automatisées.
 
-### 🦊 Exemple concret d'une mission présentée avec STAR (Profil SLAM)
+### <Renard /> Exemple concret d'une mission présentée avec STAR (Profil SLAM)
 
 > **Mission : Digitalisation des parrainages d'animaux**
 >
@@ -72,8 +72,8 @@ Le jury ne connaît ni votre entreprise, ni vos tuteurs. Avant de montrer votre 
 
 Ne vous contentez pas de raconter ce que vous avez fait : **prouvez-le !**
 
-### 💻 Pour les profils SLAM
+### <Icone nom="laptop" /> Pour les profils SLAM
 Intégrez des "snippets" de code propres, affichez vos schémas de base de données (MCD/UML), montrez l'évolution de vos maquettes Figma vers le résultat final, et liez vos dépôts Git.
 
-### 🔌 Pour les profils SISR
+### <Icone nom="plug" /> Pour les profils SISR
 Utilisez des schémas réseaux (Packet Tracer, Draw.io) pour illustrer la topologie (VLANs, routeurs). Mettez en valeur vos scripts d'automatisation (PowerShell, Bash) et intégrez des captures d'écran de vos interfaces d'administration (Règles pfSense, GPO, dashboard Grafana).

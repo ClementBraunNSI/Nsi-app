@@ -4,7 +4,7 @@ description: "Révision ABR, implémentations et complexité"
 level: TNSI
 order: 170
 chapter: "Structures de données"
-icon: "🌳"
+icon: "tree-deciduous"
 badgeId: terminale_abr
 prerequisites:
   - structures_arbres
@@ -27,7 +27,7 @@ Pour chercher une clé, on la compare à la racine. Plus petite : on descend à 
 
 L'insertion suit le même chemin. On descend jusqu'à un lien vide, et l'on y accroche un nouveau nœud. On ne réorganise rien. C'est pour cela que l'ordre d'arrivée des clés change la forme de l'arbre. Insérer 5, puis 3, puis 8 donne une racine 5 avec 3 à gauche et 8 à droite. Insérer déjà trié, 1 puis 2 puis 3 puis 4, descend toujours à droite : l'arbre dégénère en liste chaînée.
 
-Dans un ABR **équilibré**, la hauteur est de l'ordre de $\log_2 n$. Recherche, insertion et suppression coûtent alors $O(\log_2 n)$ : un nombre de comparaisons proportionnel à la hauteur. Dans le pire des cas, l'arbre-liste, la hauteur vaut $n - 1$ et le coût redevient $O(n)$, comme un parcours de liste. L'équilibrage — arbres AVL, arbres rouge-noir — réorganise après les insertions pour que la hauteur reste logarithmique. On n'en écrit pas le code ici. On retient pourquoi il existe : sans lui, le coût annoncé n'est qu'un espoir sur l'ordre des données.
+Dans un ABR **équilibré**, la hauteur est de l'ordre de $\log_2 n$. Recherche, insertion et suppression coûtent alors $O(\log_2 n)$ : un nombre de comparaisons proportionnel à la hauteur. Dans le pire des cas, l'arbre-liste, la hauteur vaut $n - 1$ et le coût redevient $O(n)$, comme un parcours de liste. L'équilibrage (arbres AVL, arbres rouge-noir) réorganise après les insertions pour que la hauteur reste logarithmique. On n'en écrit pas le code ici. On retient pourquoi il existe : sans lui, le coût annoncé n'est qu'un espoir sur l'ordre des données.
 
 Le minimum est le nœud qu'on atteint en descendant toujours à gauche. Le maximum, toujours à droite. Leur recherche coûte aussi la hauteur, pas la taille : on suit un seul chemin.
 

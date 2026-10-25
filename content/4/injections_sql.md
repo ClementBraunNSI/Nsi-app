@@ -2,7 +2,7 @@
 title: 'TP - Sécurité Web : Injections SQL'
 chapter: 'BTS SIO 1 : B3 - CyberSécurité'
 badgeId: bts_sql_injection
-meta: 'Durée : 2 heures · Objectif : Comprendre pour mieux protéger'
+meta: 'Durée : 2 heures. Objectif : Comprendre pour mieux protéger'
 prerequisites:
   - tp_cesar_vigenere
 audience: public
@@ -139,7 +139,7 @@ Les injections SQL restent l'une des vulnérabilités les plus critiques du web 
     | Politique de mots de passe forts | |
 
     **Dans le compte rendu :** Schématiser la défense en profondeur : dessiner les couches depuis Internet jusqu'à la base de données.
-    `[Internet] → [ ? ] → [ ? ] → [ ? ] → [ ? ] → [Base de données]`
+    `[Internet] -> [ ? ] -> [ ? ] -> [ ? ] -> [ ? ] -> [Base de données]`
 
     ### Exercice 3.4 (Bonus) : Automatisation
     **Contexte :** Bloquer manuellement les IP (comme vu dans l'exercice 2.2) est impossible à grande échelle.

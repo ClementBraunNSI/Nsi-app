@@ -3,7 +3,7 @@ title: 'Mini-projet : Carte GPS du Renard'
 description: 'Modifier du code Python pour placer des points sur une carte interactive avec folium.'
 level: seconde
 chapter: Localisation
-icon: "🗺️"
+icon: "map"
 prerequisites:
   - tp_python_localisation
 audience: public
@@ -18,7 +18,7 @@ La carte se met à jour à droite quand le programme crée une variable nommée 
 
 *Attention : le programme doit toujours contenir `carte = folium.Map(...)`. Sans cette variable, rien ne s'affiche.*
 
-## 1. Une carte de France 🗺️
+## 1. Une carte de France <Icone nom="map" />
 
 Lancez ce code sans le modifier. Le centre `[46.5, 2.5]` vise le milieu de la France, et `zoom_start=6` montre le pays entier. Le message `Carte de France chargée !` confirme que le programme a tourné.
 
@@ -28,7 +28,7 @@ carte = folium.Map(location=[46.5, 2.5], zoom_start=6)
 
 print('Carte de France chargée !')" />
 
-## 2. Le marqueur de Paris 📍
+## 2. Le marqueur de Paris <Icone nom="map-pin" />
 
 Un marqueur se pose avec `folium.Marker([latitude, longitude], popup='...', tooltip='...').add_to(carte)`.
 
@@ -38,7 +38,7 @@ Paris : latitude `48.8566`, longitude `2.3522`.
 
 carte = folium.Map(location=[46.5, 2.5], zoom_start=6)
 
-# ↓ Décommentez les 2 lignes suivantes
+# Décommentez les 2 lignes suivantes
 # folium.Marker([48.8566, 2.3522], popup='Paris', tooltip='Capitale').add_to(carte)
 # print('Marqueur Paris ajouté')
 
@@ -46,7 +46,7 @@ print('Décommentez le code pour afficher Paris')" />
 
 Enlevez le `#` au début des deux lignes commentées, puis exécutez. Un clic sur le marqueur affiche `Paris`. Le survol affiche `Capitale`.
 
-## 3. Lyon et Marseille 🏙️
+## 3. Lyon et Marseille <Icone nom="building-2" />
 
 Paris est déjà placé. Ajoutez Lyon et Marseille en complétant les `TODO`, sur le même modèle que Paris.
 
@@ -74,7 +74,7 @@ folium.Marker([45.7640, 4.8357], popup='Lyon').add_to(carte)
 
 Après exécution, les trois villes sont cliquables. Si un marqueur manque, relisez la latitude et la longitude : un couple inversé place la ville au mauvais endroit.
 
-## 4. Une boucle sur les lieux 🔁
+## 4. Une boucle sur les lieux <Icone nom="repeat" />
 
 Plutôt que répéter le même code, on parcourt une liste de dictionnaires. `lieu['lat']` donne la latitude, `lieu['lon']` la longitude, `lieu['nom']` le nom.
 
@@ -103,7 +103,7 @@ for lieu in lieux:
 
 Les quatre villes du tableau apparaissent : Paris, Lyon, Marseille et Lille. Ajouter une cinquième ville se fait dans la liste `lieux`, pas en recopiant un `Marker`.
 
-## 5. Votre lieu 🏫
+## 5. Votre lieu <Icone nom="school" />
 
 Personnalisez la carte avec votre ville ou votre établissement. Cherchez les coordonnées sur [openstreetmap.org](https://www.openstreetmap.org) : clic droit, puis « Afficher l'adresse ».
 
@@ -126,7 +126,7 @@ print('Ajoutez votre marqueur vert')" />
 
 Décommentez la ligne du marqueur vert et remplacez `NOM`, `LAT` et `LON`. Le marqueur vert est le vôtre : il se distingue de Paris et de Lyon. `folium.Icon(color='green')` fixe la couleur.
 
-## 6. Le trajet (bonus) 🧵
+## 6. Le trajet (bonus) <Icone nom="workflow" />
 
 Un trajet se dessine avec `folium.PolyLine` : une ligne entre plusieurs coordonnées, dans l'ordre de la liste.
 
@@ -142,13 +142,13 @@ trajet = [
 folium.Marker(trajet[0], popup='Paris').add_to(carte)
 folium.Marker(trajet[1], popup='Lyon').add_to(carte)
 
-# ↓ Décommentez pour tracer le trajet
+# Décommentez pour tracer le trajet
 # folium.PolyLine(trajet, color='blue', weight=4, opacity=0.8).add_to(carte)
 
-print('Tracez le trajet Paris → Lyon')" />
+print('Tracez le trajet Paris-Lyon')" />
 
 Décommentez la ligne `PolyLine`. Une ligne bleue relie Paris à Lyon. `weight=4` règle l'épaisseur, `opacity=0.8` la transparence.
 
-**Ce qu'on rend.** Le programme de l'étape 5, avec Paris, Lyon, et votre marqueur vert aux coordonnées que vous avez cherchées. Le nom dans `popup` est celui de votre lieu. Si vous faites le bonus, le trajet Paris → Lyon est dans le même fichier.
+**Ce qu'on rend.** Le programme de l'étape 5, avec Paris, Lyon, et votre marqueur vert aux coordonnées que vous avez cherchées. Le nom dans `popup` est celui de votre lieu. Si vous faites le bonus, le trajet Paris-Lyon est dans le même fichier.
 
 Sur votre ordinateur, en dehors de cette page, `carte.save('ma_carte.html')` écrit la carte dans un fichier qu'on ouvre dans le navigateur.

@@ -25,7 +25,7 @@ export default function SuccessModal({ courseTitle, courseId, onConfirm, onDismi
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900 animate-in fade-in duration-300"
       onClick={dismiss}
     >
       <div
@@ -46,7 +46,7 @@ export default function SuccessModal({ courseTitle, courseId, onConfirm, onDismi
 
         <AcademyVictoryFox className="mb-2" />
 
-        <h2 id="succes-fiche-titre" className="text-3xl font-black text-slate-900 mb-4 italic uppercase tracking-tighter">
+        <h2 id="succes-fiche-titre" className="text-3xl font-bold text-slate-900 mb-4 italic tracking-tighter">
           Félicitations !
         </h2>
         <p className="text-slate-500 mb-6 leading-relaxed font-medium">
@@ -64,7 +64,7 @@ export default function SuccessModal({ courseTitle, courseId, onConfirm, onDismi
         <button
           type="button"
           onClick={onConfirm}
-          className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-black uppercase tracking-widest transition-all shadow-lg shadow-orange-100 active:scale-95 flex items-center justify-center gap-3"
+          className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-bold transition-all shadow-lg active:scale-95 flex items-center justify-center gap-3"
         >
           Super ! <PartyPopper size={20} />
         </button>

@@ -65,7 +65,7 @@ export function PageSuggest({
         aria-controls={listId}
         aria-autocomplete="list"
         autoComplete="off"
-        placeholder="Titre d’une page du site"
+        placeholder="Titre d'une page du site"
         onChange={(event) => {
           onChange({ text: event.target.value, path: "" });
           setOpen(true);
@@ -102,7 +102,7 @@ export function PageSuggest({
               >
                 <span className="font-medium text-slate-800">{page.title}</span>
                 <span className="mt-0.5 block text-xs text-slate-400">
-                  {page.privateLesson ? "Particulier · " : ""}
+                  {page.privateLesson ? "Particulier : " : ""}
                   {page.levelLabel}
                 </span>
               </button>

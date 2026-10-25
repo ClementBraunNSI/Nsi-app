@@ -52,8 +52,8 @@ export default function FillInTheBlanks({ text, blanks }: FillInTheBlanksProps) 
                     setResults(prev => ({ ...prev, [id]: null })); // Reset validation on type
                   }}
                   className={`
-                    w-32 px-3 py-1 border-b-2 text-center font-bold outline-none transition-all rounded-t-md
-                    ${isCorrect === true 
+ w-32 px-3 py-1 border-b-2 text-center font-bold outline-none transition-all rounded-t-md
+ ${isCorrect === true 
                       ? 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400' 
                       : isCorrect === false 
                         ? 'border-red-500 bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400' 
@@ -87,7 +87,7 @@ export default function FillInTheBlanks({ text, blanks }: FillInTheBlanksProps) 
         </button>
         <button
           onClick={checkAnswers}
-          className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-colors shadow-lg shadow-orange-100 dark:shadow-none flex items-center gap-2"
+          className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-colors shadow-lg dark:shadow-none flex items-center gap-2"
         >
           <Check size={18} /> Vérifier
         </button>

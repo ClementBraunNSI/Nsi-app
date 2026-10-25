@@ -3,13 +3,13 @@ title: Mission AP2
 description: Développement d'une application de gestion de flotte (C# / CSV / Web)
 level: '4'
 chapter: BTS SIO 1 SLAM AP
-icon: "\U0001F697"
+icon: "car"
 prerequisites:
   - missionap1
 audience: public
 ---
 
-# Mission AP2 — Gestion de flotte AutoRent
+# Mission AP2 : Gestion de flotte AutoRent
 
 Le but de cette mission est de moderniser la gestion du parc d'AutoRent, une agence de location.
 Durée : 16 h (4 h par semaine, 4 semaines), atelier de professionnalisation, semestre 2.
@@ -24,7 +24,7 @@ Le siège envoie chaque jour un CSV brut. Vous construisez deux outils qui se pa
 **Ressources :**
 - [Fichier flotte.csv](/assets/ap2/flotte.csv)
 
-## 1. La veille, avant le code 📎
+## 1. La veille, avant le code <Icone nom="paperclip" />
 
 Note d'une page, pas plus, à rendre avec le projet.
 
@@ -32,7 +32,7 @@ Note d'une page, pas plus, à rendre avec le projet.
 2. Polymorphisme : à quoi servent `virtual` et `override`, et comment une `List<Vehicule>` contient à la fois des voitures et des motos.
 3. Un schéma, même crayonné, où `Voiture` et `Moto` héritent de `Vehicule`. Le camping-car s'y ajoute dans la section suivante.
 
-## 2. Les données 🚗
+## 2. Les données <Icone nom="car" />
 
 Le CSV source, séparateur point-virgule. `Divers1` et `Divers2` changent de sens selon le type : à vous de les ranger dans les bonnes propriétés.
 
@@ -73,7 +73,7 @@ La moto : cylindrée 689, permis A. Le camping-car : longueur 7,2 m, 4 couchages
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. La console du gestionnaire 🖥️
+## 3. La console du gestionnaire <Icone nom="monitor" />
 
 Au démarrage, l'application charge `flotte.csv`. Le menu ne plante pas sur un choix invalide : il réaffiche les options.
 
@@ -120,9 +120,9 @@ Au démarrage, l'application charge `flotte.csv`. Le menu ne plante pas sur un c
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. La vitrine web 🌐
+## 4. La vitrine web <Icone nom="globe" />
 
-`index.php` lit `disponibles.csv`. Chaque type a une icône (🚗, 🏍️ ou 🚐). Les caractéristiques spécifiques sont des badges : par exemple `Permis A` pour une moto, `5 places` pour la 208. Les cartes sont en grille, le CSS est dans un fichier à part.
+`index.php` lit `disponibles.csv`. Chaque type a une icône (<Icone nom="car" />, <Icone nom="bike" /> ou <Icone nom="bus" />). Les caractéristiques spécifiques sont des badges : par exemple `Permis A` pour une moto, `5 places` pour la 208. Les cartes sont en grille, le CSS est dans un fichier à part.
 
 Des boutons filtrent l'affichage : Tout, Voitures, Motos, Camping-cars. Sur l'export d'exemple, Tout et Voitures montrent la 208. Motos ne montre rien.
 
@@ -136,7 +136,7 @@ Des boutons filtrent l'affichage : Tout, Voitures, Motos, Camping-cars. Sur l'ex
   </ExerciseSection>
 </ExerciseTabs>
 
-## 5. Ce qu'on rend 📦
+## 5. Ce qu'on rend <Icone nom="package" />
 
 - Le projet C# (solution complète, code commenté), qui charge l'exemple et dont le devis 10 jours de la 208 affiche 315.
 - Le diagramme de classes, avec les trois héritages et `AfficherDetails`.

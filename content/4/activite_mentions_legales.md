@@ -2,7 +2,7 @@
 title: 'TP : Audit RGPD d''un site web réel'
 chapter: 'BTS SIO 1 : B3 - CyberSécurité'
 badgeId: bts_sql_audit_rgpd
-meta: 'Durée : 2 heures · Objectif : Comprendre pour mieux protéger'
+meta: 'Durée : 2 heures. Objectif : Comprendre pour mieux protéger'
 prerequisites:
   - tp_blockchain_python
 audience: public
@@ -12,12 +12,12 @@ audience: public
 
   <ExerciseSection id="tp-rgpd-partie1" label="1. Outils & Découverte" type="autre">
     <Enonce>
-    ## 🔍 Partie 1 : Découverte des outils d'audit (20 min)
+    ## <Icone nom="search" /> Partie 1 : Découverte des outils d'audit (20 min)
 
     ### Contexte
     Avant de réaliser un audit complet, vous devez prendre en main les outils qui permettent d'analyser la conformité technique d'un site web.
 
-    ### 🛠 Outils à utiliser
+    ### <Icone nom="wrench" /> Outils à utiliser
 
     **1. Extension navigateur : Cookie-Editor**
     - **Installation :** Recherchez "Cookie-Editor" sur le Web Store de votre navigateur.
@@ -27,7 +27,7 @@ audience: public
     - **Lien :** https://www.cookiebot.com/fr/cookie-checker/
     - **Usage :** Génère un rapport automatique sur la conformité du bandeau de consentement et la classification des cookies.
 
-    ### 📋 Exercice de prise en main
+    ### <Icone nom="clipboard-list" /> Exercice de prise en main
     **Site de démonstration :** `https://www.lemonde.fr`
 
     **Étape 1 : Analyse manuelle (Cookie-Editor)**
@@ -43,7 +43,7 @@ audience: public
 
   <ExerciseSection id="tp-rgpd-partie2" label="2. Audit Complet" type="autre">
     <Enonce>
-    ## 🛡️ Partie 2 : Audit complet d'un site web (50 min)
+    ## <Icone nom="shield" /> Partie 2 : Audit complet d'un site web (50 min)
 
     ### Contexte
     Choisissez un site parmi la liste suivante pour réaliser votre audit :
@@ -51,7 +51,7 @@ audience: public
     - *Média :* 20minutes.fr, lequipe.fr
     - *Institutionnel :* ameli.fr, service-public.fr
 
-    ### 📋 Grille d'audit à compléter
+    ### <Icone nom="clipboard-list" /> Grille d'audit à compléter
 
     #### A. Inventaire des Cookies
     | Critère | Résultat |
@@ -80,12 +80,12 @@ audience: public
 
   <ExerciseSection id="tp-rgpd-partie3" label="3. Recommandations" type="autre">
     <Enonce>
-    ## 📋 Partie 3 : Recommandations de mise en conformité (40 min)
+    ## <Icone nom="clipboard-list" /> Partie 3 : Recommandations de mise en conformité (40 min)
 
     ### Contexte
     Suite à votre audit, vous devez proposer des solutions techniques et organisationnelles pour corriger les violations identifiées.
 
-    ### 💡 Catalogue des solutions
+    ### <Icone nom="lightbulb" /> Catalogue des solutions
     | Violation détectée | Solution recommandée | Complexité |
     | :--- | :--- | :--- |
     | Cookies déposés avant consentement | Implémenter une CMP (Axeptio, Didomi) | Moyenne |
@@ -93,7 +93,7 @@ audience: public
     | Case newsletter pré-cochée | Modifier le formulaire (décoché par défaut) | Faible |
     | Conservation illimitée | Définir une politique de rétention + purge | Moyenne |
 
-    ### 📋 Travail à faire
+    ### <Icone nom="clipboard-list" /> Travail à faire
     **Sélectionnez les 3 violations les plus graves** constatées lors de votre audit et complétez pour chacune :
     1. **Nature de la violation**
     2. **Risque associé** (pour l'entreprise ou l'utilisateur)
@@ -104,7 +104,7 @@ audience: public
 
   <ExerciseSection id="tp-rgpd-partie4" label="4. Mentions Légales" type="autre">
     <Enonce>
-    ## ⚖️ Partie 4 : Rédaction des mentions légales (30 min)
+    ## <Icone nom="scale" /> Partie 4 : Rédaction des mentions légales (30 min)
 
     ### Contexte
     Votre client, l'association **"Le Refuge des Renards Polaires"**, lance son site. Vous devez rédiger la structure HTML de ses mentions légales.
@@ -115,7 +115,7 @@ audience: public
     - **Directrice :** Marie Dubois
     - **Hébergeur :** OVH, 2 rue Kellermann, 59100 Roubaix
 
-    ### 📋 Exercice de Code
+    ### <Icone nom="clipboard-list" /> Exercice de Code
     Rédigez le code HTML5 sémantique de la page.
 
     **Structure attendue :**

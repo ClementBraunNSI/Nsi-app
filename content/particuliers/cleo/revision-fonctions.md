@@ -1,15 +1,15 @@
 ---
-title: "Révision — Fonctions"
+title: "Révision : Fonctions"
 description: "Fiche synthèse : prototype, paramètres, return, void"
 level: particuliers
-chapter: "Programmation en C — Révisions"
-icon: "⚙️"
+chapter: "Programmation en C : Révisions"
+icon: "settings"
 revisionSheet: true
 audience:
   accounts: []
 ---
 
-# ⚙️ Révision — Fonctions
+# <Icone nom="settings" /> Révision : Fonctions
 
 ## Idée principale
 

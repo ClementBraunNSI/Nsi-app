@@ -1,6 +1,6 @@
 ---
 title: 'Exercices : Les Conditions'
-icon: "🔀"
+icon: "shuffle"
 chapter: Introduction à Python
 badgeId: premiere_exercices_conditions
 meta: 'if, if/else, if/elif/else et opérateurs logiques'
@@ -298,7 +298,7 @@ assert categorie_imc(32) == "obesite"
   <ExerciseSection id="conditions-2-5" label="2.5 [Moyen] - Jour de la semaine" type="python">
     <Enonce>
     ### Exercice 2.5 [Moyen] : Jour de la semaine
-    **Écrire une fonction `jour_semaine` qui prend un entier `n` entre 1 et 7 et renvoie le nom du jour : `1 → "lundi"`, `2 → "mardi"`, …, `7 → "dimanche"`. Si `n` est hors de cette plage, renvoyer `"invalide"`.**
+    **Écrire une fonction `jour_semaine` qui prend un entier `n` entre 1 et 7 et renvoie le nom du jour : `1 -> "lundi"`, `2 -> "mardi"`, ..., `7 -> "dimanche"`. Si `n` est hors de cette plage, renvoyer `"invalide"`.**
 
     <Correction>
     ```python
@@ -640,7 +640,7 @@ assert date_valide(29, 2, 2026) is False
     <Enonce>
     ### Exercice 4.4 [Difficile] : Pierre-feuille-ciseaux
     **Écrire une fonction `pfc` qui prend les choix de deux joueurs (`"pierre"`, `"feuille"` ou `"ciseaux"`) et renvoie `1` si le joueur 1 gagne, `2` si le joueur 2 gagne, `0` en cas d'égalité. Renvoie `-1` si un choix est invalide.**
-    *Rappel : on peut aussi tester l'appartenance d'un caractère à une chaîne avec `in` (ex. `"a" in "abc"` → `True`). Ici, validez chaque choix avec des comparaisons `==`.*
+    *Rappel : on peut aussi tester l'appartenance d'un caractère à une chaîne avec `in` (ex. `"a" in "abc"` : `True`). Ici, validez chaque choix avec des comparaisons `==`.*
 
     <Correction>
     ```python

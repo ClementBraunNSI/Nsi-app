@@ -4,7 +4,7 @@ description: 'Optimisation de problèmes complexes (Rendu de monnaie, Fibonacci)
 level: TNSI
 order: 130
 chapter: Algorithmique
-icon: ⚡
+icon: "zap"
 badgeId: terminale_prog_dynamique
 prerequisites:
   - algo_diviser_pour_regner

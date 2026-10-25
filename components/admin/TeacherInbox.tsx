@@ -67,11 +67,11 @@ export function TeacherInbox() {
         {thread ? (
           <>
             <header className="mb-4">
-              <h2 className="text-xl font-black text-slate-800">{thread.student.full_name}</h2>
+              <h2 className="text-xl font-bold text-slate-800">{thread.student.full_name}</h2>
               <p className="text-sm text-slate-500">
                 {thread.student.has_private_lessons ? "Cours particuliers" : "Élève de classe"}
-                {thread.student.classe ? ` · ${thread.student.classe}` : ""}
-                {thread.student.email ? ` · ${thread.student.email}` : ""}
+                {thread.student.classe ? `, ${thread.student.classe}` : ""}
+                {thread.student.email ? `, ${thread.student.email}` : ""}
               </p>
             </header>
             <div className="flex-1 space-y-2 overflow-y-auto max-h-[24rem] mb-4">
@@ -141,7 +141,7 @@ function ThreadGroup({
 }) {
   return (
     <section>
-      <div className="px-4 py-3 border-b border-slate-100 bg-slate-50 text-xs font-black uppercase tracking-widest text-slate-500">
+      <div className="px-4 py-3 border-b border-slate-100 bg-slate-50 text-xs font-bold text-slate-500">
         {title}
         <span className="ml-2 text-slate-400">{students.length}</span>
       </div>
@@ -161,14 +161,14 @@ function ThreadGroup({
                 <div className="flex items-center justify-between gap-2">
                   <p className="font-bold text-slate-800 truncate">{student.full_name || "Élève"}</p>
                   {student.unread > 0 && (
-                    <span className="text-[10px] font-black bg-orange-500 text-white rounded-full px-2 py-0.5">
+                    <span className="text-[10px] font-bold bg-orange-500 text-white rounded-full px-2 py-0.5">
                       {student.unread}
                     </span>
                   )}
                 </div>
                 <p className="text-xs text-slate-400 truncate">
                   {student.has_private_lessons ? "Particulier" : student.classe || "Classe"}
-                  {student.lastBody ? ` · ${student.lastBody}` : ""}
+                  {student.lastBody ? ` : ${student.lastBody}` : ""}
                 </p>
               </button>
             </li>

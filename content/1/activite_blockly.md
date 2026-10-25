@@ -3,7 +3,7 @@ title: 'Activité : Manipuler des données en tableau'
 description: 'Découvrir le tri, le filtre et les statistiques sur un tableur avant l''enquête CSV.'
 level: seconde
 chapter: Données structurées
-icon: "\U0001F9E9"
+icon: "puzzle"
 prerequisites:
   - donnees_structurees
 audience: public
@@ -11,7 +11,7 @@ audience: public
 
 # Activité : Manipuler des données en tableau
 
-Avant de programmer ou d'enquêter sur un fichier CSV, il faut comprendre comment **exploiter un tableau** : trier, filtrer et calculer des statistiques — comme dans Excel ou Google Sheets.
+Avant de programmer ou d'enquêter sur un fichier CSV, il faut comprendre comment **exploiter un tableau** : trier, filtrer et calculer des statistiques, comme dans Excel ou Google Sheets.
 
 ## Les trois opérations de base
 
@@ -35,7 +35,7 @@ Manipulez la base de données ci-dessous. Essayez de :
 
 Si vous souhaitez découvrir la **programmation par blocs** appliquée aux données, vous pouvez aussi explorer cette activité externe sur Algorea :
 
-[Activité Blockly — Données structurées (Algorea)](https://old.parcours.algorea.org/contents/4707-4702-1067253748629066205-653650670442840123-1174881031623574659-1302936453571687221/)
+[Activité Blockly : Données structurées (Algorea)](https://old.parcours.algorea.org/contents/4707-4702-1067253748629066205-653650670442840123-1174881031623574659-1302936453571687221/)
 
 ---
 

@@ -4,7 +4,7 @@ description: >-
   Piles (LIFO) et files (FIFO) : principe, opérations, et implantation avec des listes.
 level: premiere
 chapter: Structures de données linéaires
-icon: "\U0001F95E"
+icon: "layers"
 badgeId: premiere_piles_files
 prerequisites:
   - structures_lineaires_cours
@@ -29,10 +29,10 @@ Une liste Python laisse lire, insérer et retirer à peu près n'importe quelle 
 | `est_vide()` | indique si la pile est vide |
 
 ```text
-P vide        →  []
-empiler(10)   →  [10]        sommet = 10
-empiler(20)   →  [10, 20]    sommet = 20
-depiler()     →  20 ; reste [10]
+P vide        ->  []
+empiler(10)   ->  [10]        sommet = 10
+empiler(20)   ->  [10, 20]    sommet = 20
+depiler()     ->  20 ; reste [10]
 ```
 
 `sommet` regarde sans prendre. `depiler` prend. Sur une pile vide, les deux n'ont rien à rendre : on teste `est_vide` avant.
@@ -49,10 +49,10 @@ depiler()     →  20 ; reste [10]
 | `est_vide()` | indique si la file est vide |
 
 ```text
-F vide        →  []
-enfiler(A)    →  [A]         tête = A
-enfiler(B)    →  [A, B]      tête = A, queue = B
-defiler()     →  A ; reste [B]
+F vide        ->  []
+enfiler(A)    ->  [A]         tête = A
+enfiler(B)    ->  [A, B]      tête = A, queue = B
+defiler()     ->  A ; reste [B]
 ```
 
 A est entré avant B, A sort avant B. C'est l'inverse de la pile, où 20, entré après 10, sortait avant.
@@ -102,7 +102,7 @@ print(depiler(p))  # 20
 `depiler` renvoie 20, pas 10. Si l'on avait fait `pop(0)`, on aurait retiré le fond de la pile, et le LIFO serait cassé. Symétriquement, `pop()` sans argument sur une file retire la queue, donc le dernier entré : l'ordre FIFO est cassé. La tête de la file, dans cette implantation, est l'indice 0.
 
 !!! tip "Variante avec classes"
-    Si le chapitre POO est déjà vu, on peut encapsuler la même liste dans une classe `Pile` / `File` (`self.data = []`). Le principe LIFO/FIFO ne change pas — seule l'organisation du code change.
+    Si le chapitre POO est déjà vu, on peut encapsuler la même liste dans une classe `Pile` / `File` (`self.data = []`). Le principe LIFO/FIFO ne change pas, seule l'organisation du code change.
 
 !!! warning "Coût de `pop(0)`"
     Retirer en tête d'une liste coûte cher (décalage des éléments). Pour une file performante en Python, on utilise `collections.deque` ; en cours, `pop(0)` suffit pour comprendre le modèle.

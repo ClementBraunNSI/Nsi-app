@@ -129,13 +129,13 @@ function ExerciseProgressBar({ total, completed }: { total: number, completed: n
     <div className="bg-white border border-slate-100 rounded-[2rem] p-6 mb-8 shadow-sm">
       <div className="flex justify-between items-center mb-4">
         <div>
-          <h4 className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Progression de la fiche</h4>
-          <div className="text-2xl font-black text-slate-900 italic uppercase">
+          <h4 className="text-slate-400 text-[10px] font-bold mb-1">Progression de la fiche</h4>
+          <div className="text-2xl font-bold text-slate-900 italic">
             {progress}% <span className="text-orange-500">Terminé</span>
           </div>
         </div>
         {isFinished && (
-          <div className="bg-orange-500 p-3 rounded-2xl text-white shadow-lg animate-bounce">
+          <div className="bg-orange-500 p-3 rounded-2xl text-white shadow-lg">
             <Trophy size={28} />
           </div>
         )}
@@ -339,11 +339,11 @@ export function ExerciseTabs({
 
       {/* ProgressBar removed as requested */}
 
-      <div className="sticky top-4 z-20 mb-5 overflow-hidden rounded-[2rem] border border-slate-200 bg-white/95 shadow-[0_18px_42px_-34px_rgba(15,23,42,0.55)] backdrop-blur">
+      <div className="sticky top-4 z-20 mb-5 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_18px_42px_-34px_rgba(15,23,42,0.55)]">
         <div className="border-b border-slate-100 bg-slate-50/80 px-5 py-4">
-          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-500">Niveaux de difficulté</p>
+          <p className="text-[10px] font-bold text-orange-500">Niveaux de difficulté</p>
           <p className="mt-1 text-sm text-slate-500">
-            Introduction, Facile, Moyen, Avancé, Difficile, Expert — puis choisis l'exercice.
+            Introduction, Facile, Moyen, Avancé, Difficile, Expert, puis choisis l'exercice.
           </p>
         </div>
         <div className="flex flex-wrap gap-2 p-4">
@@ -356,14 +356,14 @@ export function ExerciseTabs({
                 key={cat}
                 type="button"
                 onClick={() => setActiveGroup(cat)}
-                className={`rounded-2xl border px-4 py-3 text-sm font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
+                className={`rounded-2xl border px-4 py-3 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 ${
                   isActive
                     ? styles.active
                     : `bg-white text-slate-600 border-slate-200 ${styles.idle}`
                 }`}
               >
                 <span>{cat}</span>
-                <span className={`ml-2 text-[10px] font-black uppercase tracking-wider ${isActive ? 'text-white/80' : 'text-slate-400'}`}>
+                <span className={`ml-2 text-[10px] font-bold ${isActive ? 'text-white/80' : 'text-slate-400'}`}>
                   {count}
                 </span>
               </button>
@@ -392,7 +392,7 @@ export function ExerciseTabs({
               }`}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="truncate font-black">{cleanExerciseLabel(child.props.label)}</span>
+                <span className="truncate font-bold">{cleanExerciseLabel(child.props.label)}</span>
                 {isDone && (
                   <span className={`inline-flex items-center justify-center rounded-full p-1 ${isActive ? 'bg-white/25' : 'bg-emerald-100'}`}>
                     <Check size={12} className={isActive ? 'text-white' : 'text-emerald-600'} />
@@ -419,7 +419,7 @@ export function ExerciseTabs({
 export function Enonce({ children }: { children: React.ReactNode }) {
   return (
     <div className="rounded-[1.6rem] border border-orange-100 bg-orange-50/35 p-5 md:p-7">
-      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-orange-100 bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-orange-500">
+      <div className="mb-4 flex items-center gap-2 text-xs font-semibold text-orange-600">
         <Code2 size={13} />
         Énoncé
       </div>
@@ -441,7 +441,7 @@ export function ExerciseSection({ id, children, type }: TabProps & { type?: stri
         href={`/exercice/${encodeURIComponent(id)}`}
         className="exercise-start"
       >
-        Réaliser l’exercice
+        Réaliser l'exercice
         <ArrowRight size={16} aria-hidden="true" />
       </Link>
     );

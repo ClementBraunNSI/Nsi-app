@@ -12,7 +12,7 @@ export const COLLEAGUES: Colleague[] = [
     name: "Lucas Relmy",
     site: "https://lucasrelmynsi.gitlab.io/site_cours/",
     phrase:
-      "Parcours de Seconde SNT, Première et Terminale NSI, du web et de Python jusqu’aux graphes et aux bases de données.",
+      "Parcours de Seconde SNT, Première et Terminale NSI, du web et de Python jusqu'aux graphes et aux bases de données.",
     tags: ["Première", "Terminale"],
   },
   {
@@ -26,14 +26,14 @@ export const COLLEAGUES: Colleague[] = [
     name: "Stéphane Ramstein",
     site: "https://stephane_ramstein.gitlab.io/nsi/",
     phrase:
-      "Un portail pour la spécialité NSI : programmes, logiciels, sujets du bac, concours et orientation vers les études d’informatique.",
+      "Un portail pour la spécialité NSI : programmes, logiciels, sujets du bac, concours et orientation vers les études d'informatique.",
     tags: ["Première", "Terminale", "Outils", "Bac"],
   },
   {
     name: "Mathieu Marchand",
     site: "https://mmarchand-nsi.github.io/",
     phrase:
-      "Cours de Première et de Terminale NSI, projets en Flask, en images et en jeux, et une page d’outils de développement.",
+      "Cours de Première et de Terminale NSI, projets en Flask, en images et en jeux, et une page d'outils de développement.",
     tags: ["Première", "Terminale", "Outils"],
   },
   {
@@ -54,7 +54,7 @@ export const COLLEAGUES: Colleague[] = [
     name: "Mathieu Cardoso",
     site: "https://profcardoso.github.io/",
     phrase:
-      "Sommaire de cours de Seconde SNT, Première et Terminale NSI, avec exercices, liens d’entraînement et un club informatique.",
+      "Sommaire de cours de Seconde SNT, Première et Terminale NSI, avec exercices, liens d'entraînement et un club informatique.",
     tags: ["SNT", "Première", "Terminale"],
   },
   {
@@ -68,7 +68,7 @@ export const COLLEAGUES: Colleague[] = [
     name: "Timothé Vanoverberghe",
     site: "https://vanoverberghe.github.io/prof/NSI_Tale/index_Tale/",
     phrase:
-      "Cours de Terminale NSI, de la programmation objet aux graphes, et une banque de sujets d’épreuve pratique corrigés.",
+      "Cours de Terminale NSI, de la programmation objet aux graphes, et une banque de sujets d'épreuve pratique corrigés.",
     tags: ["Terminale", "Bac"],
   },
   {
@@ -82,7 +82,7 @@ export const COLLEAGUES: Colleague[] = [
     name: "Corentin Dupont",
     site: "https://www.lycode.xyz/",
     phrase:
-      "Cours de Seconde SNT, Première et Terminale NSI, du web et des réseaux jusqu’aux épreuves du bac et au Grand Oral.",
+      "Cours de Seconde SNT, Première et Terminale NSI, du web et des réseaux jusqu'aux épreuves du bac et au Grand Oral.",
     tags: ["Première", "SNT", "Terminale"],
   },
   {

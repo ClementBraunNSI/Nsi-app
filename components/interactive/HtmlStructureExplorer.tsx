@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Eye, Code, ArrowRight } from 'lucide-react';
+import { Eye, Code, ArrowRight, Construction, Lightbulb, Pointer } from 'lucide-react';
 
 export default function HtmlStructureExplorer() {
   const [activeTab, setActiveTab] = useState<'visual' | 'code'>('visual');
@@ -43,13 +43,13 @@ export default function HtmlStructureExplorer() {
   return (
     <div className="flex flex-col gap-6 my-8 border rounded-xl overflow-hidden shadow-lg bg-white p-6">
       <h3 className="text-xl font-bold text-slate-800 text-center mb-4">
-        🏗️ Explorateur de Structure HTML
+        <Construction size={22} className="mr-2 inline align-[-4px] text-orange-500" aria-hidden />Explorateur de structure HTML
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Visual Tree */}
         <div className="relative border-2 border-dashed border-slate-200 rounded-xl p-4 bg-slate-50 min-h-[300px]">
-          <div className="absolute top-2 left-2 text-xs font-bold text-slate-400 uppercase tracking-widest">Arborescence (DOM)</div>
+          <div className="absolute top-2 left-2 text-xs font-bold text-slate-400">Arborescence (DOM)</div>
           
           <div 
             className={`mt-6 p-4 border-2 rounded-lg cursor-pointer transition-all ${tags.html.color} ${selectedTag === 'html' ? 'ring-4 ring-blue-200 scale-105 shadow-lg' : 'hover:shadow-md'}`}
@@ -111,18 +111,18 @@ export default function HtmlStructureExplorer() {
                 </p>
                 {selectedTag === 'head' && (
                   <div className="mt-4 p-3 bg-yellow-50 text-yellow-800 text-sm rounded border border-yellow-200">
-                    💡 Astuce : Ce qui est dans le head n'est <strong>jamais</strong> affiché directement dans la page web !
+                    <Lightbulb size={15} className="mr-1.5 inline align-[-2px]" aria-hidden />Astuce : Ce qui est dans le head n'est <strong>jamais</strong> affiché directement dans la page web !
                   </div>
                 )}
                 {selectedTag === 'body' && (
                   <div className="mt-4 p-3 bg-green-50 text-green-800 text-sm rounded border border-green-200">
-                    💡 Astuce : C'est ici que vous écrirez 99% de votre code HTML.
+                    <Lightbulb size={15} className="mr-1.5 inline align-[-2px]" aria-hidden />Astuce : C'est ici que vous écrirez 99% de votre code HTML.
                   </div>
                 )}
               </>
             ) : (
               <div className="text-slate-400">
-                <div className="animate-bounce mb-4 text-4xl">👆</div>
+                <Pointer size={36} className="mx-auto mb-4" aria-hidden />
                 <p>Cliquez sur un élément de l'arborescence à gauche pour voir à quoi il sert !</p>
               </div>
             )}

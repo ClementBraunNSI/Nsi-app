@@ -52,7 +52,7 @@ export default function BinarySearchVisualizer() {
     if (low > high) {
       setFound(false);
       setMessage(`La zone de recherche est vide (début ${low} > fin ${high}). La valeur n'est pas présente.`);
-      setHistory(prev => [...prev, `Fin : ${low} > ${high} → Non trouvé`]);
+      setHistory(prev => [...prev, `Fin : ${low} > ${high} : non trouvé`]);
       return;
     }
 
@@ -64,14 +64,14 @@ export default function BinarySearchVisualizer() {
     if (midValue === target) {
       setFound(true);
       setMessage(`Trouvé ! La valeur ${target} est à l'index ${currentMid}.`);
-      setHistory(prev => [...prev, `Milieu = ${currentMid} (valeur ${midValue}) == Cible → Trouvé !`]);
+      setHistory(prev => [...prev, `Milieu = ${currentMid} (valeur ${midValue}) == Cible : trouvé !`]);
     } else if (midValue < target) {
       setMessage(`La valeur centrale ${midValue} est plus petite que ${target}. On cherche à droite.`);
-      setHistory(prev => [...prev, `Milieu = ${currentMid} (valeur ${midValue}) < Cible → Droite`]);
+      setHistory(prev => [...prev, `Milieu = ${currentMid} (valeur ${midValue}) < Cible : on continue à droite`]);
       setLow(currentMid + 1);
     } else {
       setMessage(`La valeur centrale ${midValue} est plus grande que ${target}. On cherche à gauche.`);
-      setHistory(prev => [...prev, `Milieu = ${currentMid} (valeur ${midValue}) > Cible → Gauche`]);
+      setHistory(prev => [...prev, `Milieu = ${currentMid} (valeur ${midValue}) > Cible : on continue à gauche`]);
       setHigh(currentMid - 1);
     }
   };
@@ -106,7 +106,7 @@ export default function BinarySearchVisualizer() {
 
       <div className="mb-8 text-center">
         <span className="text-slate-500 font-medium">Valeur cherchée (Cible) : </span>
-        <span className="text-3xl font-black text-emerald-600 ml-2">{target}</span>
+        <span className="text-3xl font-bold text-emerald-600 ml-2">{target}</span>
       </div>
 
       {/* Visualization Area */}
@@ -135,8 +135,8 @@ export default function BinarySearchVisualizer() {
                         : "#3b82f6" // Blue-500
                 }}
                 className={`
-                  relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-lg shadow-sm font-bold text-white transition-colors duration-300
-                  ${isOutOfRange ? "text-slate-400" : ""}
+ relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-lg shadow-sm font-bold text-white transition-colors duration-300
+ ${isOutOfRange ? "text-slate-400" : ""}
                 `}
               >
                 {value}
@@ -217,7 +217,7 @@ export default function BinarySearchVisualizer() {
       {/* History Log */}
       {history.length > 0 && (
         <div className="mt-6 border-t border-slate-100 pt-4">
-          <h4 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">Historique des étapes</h4>
+          <h4 className="text-sm font-bold text-slate-500 mb-2">Historique des étapes</h4>
           <div className="space-y-1">
             {history.map((step, i) => (
               <div key={i} className="text-xs text-slate-600 font-mono flex items-center gap-2">

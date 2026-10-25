@@ -1,5 +1,6 @@
 "use client";
 
+import { PawPrint } from "lucide-react";
 import type { ChapterId, Direction, Position, World } from "./types";
 import { posKey, samePos } from "./world";
 import { Bush, Flower, Hills, Mushroom, Nest, Pebble, PineTree, RoundTree, Tuft } from "./Scenery";
@@ -123,7 +124,7 @@ export default function Board({ world, foxPos, foxDir, foxAction, signLabel, cha
                   {plain && pawDir === undefined ? <TileDecor x={x} y={y} seed={seed} chapter={chapter} /> : null}
                   {pawDir !== undefined && !isGoal && !samePos(foxPos, { x, y }) ? (
                     <span className={styles.paw} style={{ transform: `rotate(${pawRotation[pawDir]}deg)` }} aria-hidden>
-                      🐾
+                      <PawPrint size="1em" strokeWidth={2.4} />
                     </span>
                   ) : null}
                   {isRock && (

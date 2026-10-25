@@ -3,15 +3,15 @@ title: "Atelier Photo : Le modèle RVB"
 description: "Comprendre comment les couleurs sont formées avec Rouge, Vert et Bleu."
 level: "2"
 chapter: "Photographie Numérique"
-icon: "🎨"
+icon: "palette"
 audience: public
 ---
 
-# 🎨 Atelier Photo : Le modèle RVB
+# <Icone nom="palette" /> Atelier Photo : Le modèle RVB
 
 Les écrans utilisent le modèle **RVB** (Rouge, Vert, Bleu) pour afficher des millions de couleurs. Chaque pixel est composé de ces trois sous-pixels.
 
-## 🎯 Expérimentation
+## <Icone nom="target" /> Expérimentation
 Utilise les curseurs ci-dessous pour mélanger les couleurs.
 
 - **Noir** : R=0, G=0, B=0
@@ -22,7 +22,7 @@ Utilise les curseurs ci-dessous pour mélanger les couleurs.
 
 <PixelManipulator />
 
-## 📸 Traitement d'Image
+## <Icone nom="camera" /> Traitement d'Image
 Maintenant, appliquons ces concepts sur une vraie image. Tu peux modifier les canaux Rouge, Vert et Bleu de l'image ci-dessous, ou appliquer des filtres.
 
 <ImageManipulator src="/content/1/maya.png" />

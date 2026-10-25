@@ -3,21 +3,21 @@ title: 'Variables : Calculateur d''Empreinte Carbone'
 description: Créer un outil pour estimer l'impact écologique d'un trajet.
 level: premiere
 chapter: Projets
-icon: "\U0001F331"
+icon: "sprout"
 badgeId: premiere_projet_carbone
 prerequisites:
   - projet_gestion_stock
 audience: public
 ---
 
-# 🌱 Projet - Calculateur d'Empreinte Carbone
+# <Icone nom="sprout" /> Projet - Calculateur d'Empreinte Carbone
 
 Le but de ce projet est de créer un programme qui estime les émissions de CO2 d'un trajet selon le mode de transport.
 Dans ce projet, nous allons travailler les variables, `input`, les conversions de type et les conditions.
 
 Les facteurs ci-dessous sont des ordres de grandeur pour l'exercice, pas un bilan carbone officiel.
 
-## 1. Les facteurs 🚲
+## 1. Les facteurs <Icone nom="bike" />
 
 | Choix | Mode | Facteur |
 | --- | --- | --- |

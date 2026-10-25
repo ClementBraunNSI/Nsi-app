@@ -3,7 +3,7 @@ title: 'TP Python : Photographie numérique'
 description: 'Manipuler des pixels et des images avec la bibliothèque Pillow (PIL).'
 level: seconde
 chapter: Photographie Numérique
-icon: "🐍"
+icon: "code"
 prerequisites:
   - photographie_couleur
 audience: public
@@ -11,9 +11,9 @@ audience: public
 
 <ExerciseTabs courseId="tp-python-photo" courseTitle="TP Python : Photographie" packages="Pillow">
 
-  <ExerciseSection id="photo-0" label="Important ⚠️ - Avant de commencer" type="lecture">
+  <ExerciseSection id="photo-0" label="Important - Avant de commencer" type="lecture">
     <Enonce>
-      ### Important ⚠️ - Avant de commencer
+      ### Important <Icone nom="triangle-alert" /> - Avant de commencer
 
       Ce TP utilise **Pillow** (importé avec `from PIL import Image`), la bibliothèque Python de référence pour le **traitement d'image**.
 
@@ -41,13 +41,13 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-1" label="Introduction 🦊 - Créer une image" type="python">
+  <ExerciseSection id="photo-1" label="Introduction - Créer une image" type="python">
     <Enonce>
-      ### Introduction 🦊 - Créer une image
+      ### Introduction <Renards n="1" /> - Créer une image
 
       **Mission :** Créez une image RGB de **1×1 pixel** entièrement **rouge** avec Pillow. Stockez l'image dans `image`, sa largeur dans `largeur` et sa hauteur dans `hauteur`.
 
-      *Indice :* `Image.new("RGB", (largeur, hauteur), color=(r, v, b))` — le rouge pur correspond à `(255, 0, 0)`.
+      *Indice :* `Image.new("RGB", (largeur, hauteur), color=(r, v, b))`, le rouge pur correspond à `(255, 0, 0)`.
     </Enonce>
     <Verification>
 ```python
@@ -62,9 +62,9 @@ assert image.getpixel((0, 0)) == (255, 0, 0), "Le pixel doit être rouge pur."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-2" label="Introduction 🦊 - Lire un pixel" type="python">
+  <ExerciseSection id="photo-2" label="Introduction - Lire un pixel" type="python">
     <Enonce>
-      ### Introduction 🦊 - Lire un pixel
+      ### Introduction <Renards n="1" /> - Lire un pixel
 
       **Mission :** Créez une image RGB de **3×3 pixels** remplie de noir `(0, 0, 0)`, puis coloriez le **pixel central** en vert `(0, 255, 0)` avec `putpixel`. Stockez la couleur du pixel central dans `pixel_centre`.
 
@@ -82,9 +82,9 @@ assert pixel_centre == (0, 255, 0), "Le pixel central doit être vert pur."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-3" label="Introduction 🦊 - Définition d'une image" type="python">
+  <ExerciseSection id="photo-3" label="Introduction - Définition d'une image" type="python">
     <Enonce>
-      ### Introduction 🦊 - Définition d'une image
+      ### Introduction <Renards n="1" /> - Définition d'une image
 
       La **définition** d'une image est le nombre total de pixels : largeur × hauteur.
 
@@ -105,9 +105,9 @@ assert definition == 480000, "800 × 600 = 480 000 pixels."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-4" label="Facile 🦊 - Passer en niveaux de gris" type="python">
+  <ExerciseSection id="photo-4" label="Facile - Passer en niveaux de gris" type="python">
     <Enonce>
-      ### Facile 🦊 - Passer en niveaux de gris
+      ### Facile <Renards n="1" /> - Passer en niveaux de gris
 
       Pillow peut convertir une image couleur en **niveaux de gris** (noir et blanc) avec `.convert("L")`.
 
@@ -130,9 +130,9 @@ assert gris == attendu, "Le niveau de gris doit correspondre à la conversion Pi
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-5" label="Facile 🦊 - Filtre négatif" type="python">
+  <ExerciseSection id="photo-5" label="Facile - Filtre négatif" type="python">
     <Enonce>
-      ### Facile 🦊 - Filtre négatif
+      ### Facile <Renards n="1" /> - Filtre négatif
 
       Le filtre **négatif** inverse chaque composante : `nouveau = 255 - ancien`.
 
@@ -155,9 +155,9 @@ assert image_negatif.getpixel((0, 0)) == attendu, "L'image doit contenir le pixe
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-6" label="Facile 🦊 - Mégapixels" type="python">
+  <ExerciseSection id="photo-6" label="Facile - Mégapixels" type="python">
     <Enonce>
-      ### Facile 🦊 - Mégapixels
+      ### Facile <Renards n="1" /> - Mégapixels
 
       Un **mégapixel** (Mpx) = 1 million de pixels.
 
@@ -178,9 +178,9 @@ assert megapixels == 12, "Convertissez en mégapixels."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="photo-7" label="Facile 🦊 - Bande de pixels colorés" type="python">
+  <ExerciseSection id="photo-7" label="Facile - Bande de pixels colorés" type="python">
     <Enonce>
-      ### Facile 🦊 - Bande de pixels colorés
+      ### Facile <Renards n="1" /> - Bande de pixels colorés
 
       **Mission :** Créez une image **4×1 pixels** (bande horizontale) avec les couleurs suivantes de gauche à droite :
 

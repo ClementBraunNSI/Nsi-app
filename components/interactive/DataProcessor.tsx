@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Filter, ArrowUpDown, Calculator, Database, RefreshCw } from 'lucide-react';
+import { Filter, ArrowUpDown, ArrowUp, ArrowDown, Calculator, Database, RefreshCw } from 'lucide-react';
 
 type ElementType = 'Feu' | 'Eau' | 'Plante' | 'Électrique' | 'Normal';
 
@@ -108,7 +108,7 @@ export default function DataProcessor() {
         
         {/* Filter Group */}
         <div className="flex flex-col gap-2">
-          <span className="text-xs font-bold text-slate-500 uppercase flex items-center gap-1">
+          <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
             <Filter className="w-3 h-3" /> Filtrer par Type
           </span>
           <div className="flex gap-2">
@@ -130,7 +130,7 @@ export default function DataProcessor() {
 
         {/* Sort Group */}
         <div className="flex flex-col gap-2 ml-auto">
-           <span className="text-xs font-bold text-slate-500 uppercase flex items-center gap-1">
+           <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
             <ArrowUpDown className="w-3 h-3" /> Trier par
           </span>
           <div className="flex gap-2">
@@ -142,7 +142,7 @@ export default function DataProcessor() {
                   : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 hover:border-orange-500'
               }`}
             >
-              Niveau {sortConfig?.key === 'niveau' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+              Niveau {sortConfig?.key === 'niveau' && (sortConfig.direction === 'asc' ? <ArrowUp size={12} className="inline" aria-label="croissant" /> : <ArrowDown size={12} className="inline" aria-label="décroissant" />)}
             </button>
             <button
               onClick={() => handleSort('poids')}
@@ -152,7 +152,7 @@ export default function DataProcessor() {
                   : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 hover:border-orange-500'
               }`}
             >
-              Poids {sortConfig?.key === 'poids' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+              Poids {sortConfig?.key === 'poids' && (sortConfig.direction === 'asc' ? <ArrowUp size={12} className="inline" aria-label="croissant" /> : <ArrowDown size={12} className="inline" aria-label="décroissant" />)}
             </button>
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function DataProcessor() {
       {/* Table Area */}
       <div className="p-0 overflow-x-auto">
         <table className="w-full text-sm text-left">
-          <thead className="bg-slate-50 text-slate-500 font-bold uppercase text-xs">
+          <thead className="bg-slate-50 text-slate-500 font-bold text-xs">
             <tr>
               <th className="px-6 py-3">ID</th>
               <th className="px-6 py-3">Nom</th>

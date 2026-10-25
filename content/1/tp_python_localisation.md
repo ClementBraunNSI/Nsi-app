@@ -3,7 +3,7 @@ title: 'TP Python : Géolocalisation'
 description: 'Manipuler des coordonnées GPS avec pandas, folium (cartes) et geopy (distances). Puis mini-projet carte interactive.'
 level: seconde
 chapter: Localisation
-icon: "🐍"
+icon: "code"
 prerequisites:
   - Cours_Localisation
 audience: public
@@ -11,9 +11,9 @@ audience: public
 
 <ExerciseTabs courseId="tp-python-localisation" courseTitle="TP Python : Géolocalisation" packages="pandas,folium,geopy">
 
-  <ExerciseSection id="loc-0" label="Important ⚠️ - Avant de commencer" type="lecture">
+  <ExerciseSection id="loc-0" label="Important - Avant de commencer" type="lecture">
     <Enonce>
-      ### Important ⚠️ - Avant de commencer
+      ### Important <Icone nom="triangle-alert" /> - Avant de commencer
 
       Ce TP utilise des **bibliothèques Python** pour travailler sur la géolocalisation :
 
@@ -44,9 +44,9 @@ assert True, "Consignes lues."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-1" label="Introduction 🦊 - Tableau de villes" type="python">
+  <ExerciseSection id="loc-1" label="Introduction - Tableau de villes" type="python">
     <Enonce>
-      ### Introduction 🦊 - Tableau de villes
+      ### Introduction <Renards n="1" /> - Tableau de villes
 
       On peut stocker des lieux dans un **tableau pandas**, comme un fichier Excel de coordonnées GPS.
 
@@ -78,9 +78,9 @@ assert abs(float(latitude_lyon) - float(villes_ref.loc[villes_ref["Ville"] == "L
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-2" label="Introduction 🦊 - Distance GPS" type="python">
+  <ExerciseSection id="loc-2" label="Introduction - Distance GPS" type="python">
     <Enonce>
-      ### Introduction 🦊 - Distance GPS
+      ### Introduction <Renards n="1" /> - Distance GPS
 
       La bibliothèque **geopy** calcule la distance réelle entre deux points GPS (en kilomètres).
 
@@ -108,14 +108,14 @@ marseille = (43.2965, 5.3698)
 attendu = round(geodesic(paris, marseille).km, 1)
 
 assert 'distance_km' in locals(), "Créez la variable distance_km."
-assert abs(float(distance_km) - attendu) < 1.0, "Calculez la distance Paris → Marseille avec geopy."
+assert abs(float(distance_km) - attendu) < 1.0, "Calculez la distance Paris -> Marseille avec geopy."
 ```
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-3" label="Introduction 🦊 - Créer une carte" type="python">
+  <ExerciseSection id="loc-3" label="Introduction - Créer une carte" type="python">
     <Enonce>
-      ### Introduction 🦊 - Créer une carte
+      ### Introduction <Renards n="1" /> - Créer une carte
 
       **folium** permet de créer une **carte interactive** centrée sur des coordonnées.
 
@@ -135,9 +135,9 @@ assert int(zoom) == 6, "Le zoom initial doit être 6."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-4" label="Facile 🦊 - Placer des marqueurs" type="python">
+  <ExerciseSection id="loc-4" label="Facile - Placer des marqueurs" type="python">
     <Enonce>
-      ### Facile 🦊 - Placer des marqueurs
+      ### Facile <Renards n="1" /> - Placer des marqueurs
 
       On peut **placer des marqueurs** sur une carte folium, comme des points GPS.
 
@@ -160,9 +160,9 @@ assert nb_marqueurs == 2, "Ajoutez exactement 2 marqueurs (Paris et Lyon)."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-5" label="Facile 🦊 - Carte depuis un tableau" type="python">
+  <ExerciseSection id="loc-5" label="Facile - Carte depuis un tableau" type="python">
     <Enonce>
-      ### Facile 🦊 - Carte depuis un tableau
+      ### Facile <Renards n="1" /> - Carte depuis un tableau
 
       **Mission :** Créez le DataFrame `villes` ci-dessous, puis une carte `carte` avec un marqueur pour **chaque ville** du tableau (utilisez une boucle `for`).
 
@@ -189,9 +189,9 @@ assert nb_marqueurs == 3, "Placez un marqueur par ville."
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-6" label="Facile 🦊 - Ville la plus au nord" type="python">
+  <ExerciseSection id="loc-6" label="Facile - Ville la plus au nord" type="python">
     <Enonce>
-      ### Facile 🦊 - Ville la plus au nord
+      ### Facile <Renards n="1" /> - Ville la plus au nord
 
       La **latitude** indique la position Nord/Sud : plus elle est élevée, plus on est au nord.
 
@@ -226,9 +226,9 @@ assert ville_nord == attendu, "Trouvez la ville avec la latitude la plus élevé
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="loc-7" label="Facile 🦊 - Exporter la carte en HTML" type="python">
+  <ExerciseSection id="loc-7" label="Facile - Exporter la carte en HTML" type="python">
     <Enonce>
-      ### Facile 🦊 - Exporter la carte en HTML
+      ### Facile <Renards n="1" /> - Exporter la carte en HTML
 
       Une carte folium peut être **exportée en HTML**, comme une page web.
 

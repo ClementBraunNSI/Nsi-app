@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { CarFront } from 'lucide-react';
 
 export default function AlgorithmRace() {
   const [array, setArray] = useState([50, 20, 90, 10, 60, 80, 30, 70, 40]);
@@ -44,7 +45,9 @@ export default function AlgorithmRace() {
   return (
     <div className="border rounded-xl p-8 bg-slate-50 shadow-lg my-8">
       <div className="flex justify-between items-center mb-8">
-        <h3 className="text-xl font-bold text-slate-800">🏎️ La Course du Tri à Bulles</h3>
+        <h3 className="flex items-center gap-2 text-xl font-bold text-slate-800">
+          <CarFront size={22} className="text-orange-500" aria-hidden /> La Course du Tri à Bulles
+        </h3>
         <div className="flex gap-4">
           <button onClick={reset} className="text-slate-500 hover:text-slate-800 text-sm font-bold">Réinitialiser</button>
           <button 

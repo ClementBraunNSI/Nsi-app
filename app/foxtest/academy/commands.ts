@@ -56,7 +56,7 @@ export const CHAPTERS: Record<
   { label: string; concept: string; memo: { title: string; body: string }[] }
 > = {
   sequence: {
-    label: "1 · Appels de fonctions",
+    label: "1. Appels de fonctions",
     concept: "Les instructions s'exécutent dans l'ordre, de haut en bas.",
     memo: [
       {
@@ -70,7 +70,7 @@ export const CHAPTERS: Record<
     ],
   },
   variables: {
-    label: "2 · Variables",
+    label: "2. Variables",
     concept: "On mémorise une valeur pour la réutiliser.",
     memo: [
       {
@@ -79,12 +79,12 @@ export const CHAPTERS: Record<
       },
       {
         title: "Types",
-        body: "lire_nombre() renvoie un entier (3, 4, 5…). Une variable conserve ce nombre jusqu'à ce qu'on la change.",
+        body: "lire_nombre() renvoie un entier (3, 4, 5, etc.). Une variable conserve ce nombre jusqu'à ce qu'on la change.",
       },
     ],
   },
   conditions: {
-    label: "3 · Conditions",
+    label: "3. Conditions",
     concept: "Le programme choisit une branche selon une situation.",
     memo: [
       {
@@ -94,7 +94,7 @@ export const CHAPTERS: Record<
     ],
   },
   for: {
-    label: "4 · Boucle for",
+    label: "4. Boucle for",
     concept: "On répète un bloc un nombre connu de fois.",
     memo: [
       {
@@ -108,7 +108,7 @@ export const CHAPTERS: Record<
     ],
   },
   while: {
-    label: "5 · Boucle while",
+    label: "5. Boucle while",
     concept: "On répète tant qu'une condition est vraie.",
     memo: [
       {

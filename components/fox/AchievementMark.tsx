@@ -21,7 +21,7 @@ export function AchievementMark({
 
   const known = ACHIEVEMENTS.find((achievement) => achievement.id === id);
   const Icon = known?.icon ?? Trophy;
-  const tone = earned ? known?.color || "bg-purple-100 text-purple-600" : "bg-slate-100 text-slate-400 grayscale opacity-60";
+  const tone = earned ? known?.color || "bg-orange-100 text-orange-600" : "bg-slate-100 text-slate-400 grayscale opacity-60";
   const label = earned ? `Succès ${title}` : `Succès ${title}, pas encore obtenu`;
 
   return (
