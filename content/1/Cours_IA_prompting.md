@@ -115,7 +115,7 @@ Ce que vous tapez dans un assistant part sur les serveurs de l'entreprise qui le
 
 Générer un texte ou une image a aussi un coût matériel. Chaque requête fait travailler des serveurs dans des centres de données, qui consomment de l'électricité et de l'eau pour se refroidir. Une recherche simple dans un moteur de recherche coûte bien moins. On réserve donc l'IA aux tâches où elle aide vraiment, et on évite de lancer vingt générations au hasard en espérant que l'une soit bonne.
 
-## Pour fermer
+## À retenir
 
 Une IA générative prolonge ce qu'on lui donne en choisissant, à chaque étape, ce qui est le plus probable. Elle ne sait pas si c'est vrai. Un bon prompt réduit la part de hasard : il précise le rôle, le contexte, la tâche, le format, les contraintes, et donne des exemples si besoin. On avance par essais successifs, on relit, on vérifie les faits dans une source fiable, et on ne confie jamais de données personnelles.
 

@@ -59,7 +59,7 @@ Une récursion peut se réécrire avec une boucle. Quand les appels ne sont pas 
 
 La version itérative de la factorielle garde un accumulateur et n'empile rien. Elle est souvent plus économe. La version récursive est souvent plus courte à écrire quand la structure est déjà un arbre, un graphe, ou un découpage comme les tours de Hanoï : le cas de base et l'appel collent à la définition du problème.
 
-Pour fermer : une fonction récursive s'appelle elle-même, avec un cas de base qui arrête, et des arguments qui s'en rapprochent. Chaque appel attend sur la pile jusqu'au `return`. Oublier le cas de base, ou descendre trop profond, lève `RecursionError`. On choisit la récursion quand elle rend le problème lisible, et la boucle quand l'empilement n'apporte rien.
+En résumé, une fonction récursive s'appelle elle-même, avec un cas de base qui arrête, et des arguments qui s'en rapprochent. Chaque appel attend sur la pile jusqu'au `return`. Oublier le cas de base, ou descendre trop profond, lève `RecursionError`. On choisit la récursion quand elle rend le problème lisible, et la boucle quand l'empilement n'apporte rien.
 
 <ExerciseTabs courseId="terminale_recursivite" courseTitle="Exercices Récursivité">
 

@@ -85,7 +85,7 @@ print(type("7"))    # <class 'str'>
 
 Deux pièges reviennent tout le temps. `"15" + "3"` donne `"153"`, la concaténation, pas `18`. Il faut convertir d'abord : `int("15") + int("3")`. Et `=` affecte une valeur, tandis que `==` compare. Dans un `if`, on veut presque toujours `==`. Mélanger des types incompatibles, comme `"3" + 1`, provoque une `TypeError` : Python refuse d'additionner un texte et un nombre.
 
-Pour fermer : `bool` pour les conditions, `int` et `float` pour les calculs, `str` pour le texte. `/` donne un flottant, `//` et `%` le quotient et le reste. Une chaîne s'indexe à partir de 0. `type` révèle, `int`, `float` et `str` convertissent.
+En résumé, `bool` pour les conditions, `int` et `float` pour les calculs, `str` pour le texte. `/` donne un flottant, `//` et `%` le quotient et le reste. Une chaîne s'indexe à partir de 0. `type` révèle, `int`, `float` et `str` convertissent.
 
 ## Pour s'entraîner
 

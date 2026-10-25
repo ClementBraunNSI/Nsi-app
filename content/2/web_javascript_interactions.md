@@ -83,7 +83,7 @@ monBouton.addEventListener("click", function() {
 
 Le geste tient en trois temps : **sélectionner**, **écouter**, **réagir**. On vérifie que l'élément existe avant de lui poser un écouteur. `input` sert à suivre une saisie lettre par lettre. `submit` sert au moment où le formulaire part.
 
-Pour fermer : JavaScript s'occupe du comportement, le DOM est l'arbre de la page. `getElementById` et `querySelector` ciblent. `textContent` et `.style` mettent à jour. `addEventListener` réagit. `.value` lit un champ. On n'utilise un nœud qu'une fois certain qu'il est là.
+En résumé, JavaScript s'occupe du comportement, le DOM est l'arbre de la page. `getElementById` et `querySelector` ciblent. `textContent` et `.style` mettent à jour. `addEventListener` réagit. `.value` lit un champ. On n'utilise un nœud qu'une fois certain qu'il est là.
 
 ## Pour s'entraîner / Suite
 

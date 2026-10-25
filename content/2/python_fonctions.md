@@ -76,7 +76,7 @@ def est_pair(n: int) -> bool:
 
 `n % 2 == 0` est déjà un booléen. Le `return` le renvoie tel quel. Pas besoin d'un `if`.
 
-Pour fermer : `def` définit, l'appel avec parenthèses lance. Paramètres et arguments ne sont pas le même mot. `return` fournit le résultat, `print` se contente de l'afficher. Les variables locales restent dans la fonction. On passe des paramètres et on renvoie, plutôt que de tout accrocher à `global`.
+En résumé, `def` définit, l'appel avec parenthèses lance. Paramètres et arguments ne sont pas le même mot. `return` fournit le résultat, `print` se contente de l'afficher. Les variables locales restent dans la fonction. On passe des paramètres et on renvoie, plutôt que de tout accrocher à `global`.
 
 ## Pour s'entraîner
 

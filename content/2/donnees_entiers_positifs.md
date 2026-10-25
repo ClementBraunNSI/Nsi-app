@@ -79,7 +79,7 @@ $$1111\,1111_{(2)} = \mathrm{FF}_{(16)} = 255_{(10)}$$
 
 Dans l'autre sens, du décimal vers l'hexadécimal, ce sont des divisions successives par **16**, et on lit encore les restes de bas en haut. $255 \div 16 = 15$ reste $15$, qu'on écrit F. Puis $15 \div 16 = 0$ reste $15$, encore F. D'où $\mathrm{FF}_{(16)}$.
 
-Pour fermer : une base $b$ a $b$ symboles, et la valeur d'une écriture est la somme des chiffres multipliés par les puissances de $b$. En binaire, les colonnes doublent. Du décimal vers le binaire, on divise par 2 et on lit les restes du dernier au premier. Un chiffre hexadécimal vaut quatre bits, et F vaut $1111_{(2)}$. Un octet, ce sont huit bits. On indique la base dès qu'un lecteur pourrait se tromper.
+En résumé, une base $b$ a $b$ symboles, et la valeur d'une écriture est la somme des chiffres multipliés par les puissances de $b$. En binaire, les colonnes doublent. Du décimal vers le binaire, on divise par 2 et on lit les restes du dernier au premier. Un chiffre hexadécimal vaut quatre bits, et F vaut $1111_{(2)}$. Un octet, ce sont huit bits. On indique la base dès qu'un lecteur pourrait se tromper.
 
 ## Pour s'entraîner
 

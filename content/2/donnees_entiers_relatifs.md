@@ -54,7 +54,7 @@ La retenue sortie du quatrième bit est jetée. Le résultat est bien $6 - 4 = 2
 | Addition correcte | Non | Oui |
 | Usage actuel | Non | Standard |
 
-Pour fermer : le bit de signe seul fabrique deux zéros et casse l'addition. Le complément à deux inverse les bits puis ajoute 1. Sur $n$ bits, on représente de $-2^{n-1}$ à $2^{n-1}-1$. On additionne comme pour les positifs et on tronque à $n$ bits. Le bit de poids fort vaut $-2^{n-1}$. C'est le codage des processeurs.
+En résumé, le bit de signe seul fabrique deux zéros et casse l'addition. Le complément à deux inverse les bits puis ajoute 1. Sur $n$ bits, on représente de $-2^{n-1}$ à $2^{n-1}-1$. On additionne comme pour les positifs et on tronque à $n$ bits. Le bit de poids fort vaut $-2^{n-1}$. C'est le codage des processeurs.
 
 ## Pour s'entraîner
 

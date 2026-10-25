@@ -107,7 +107,7 @@ On enchaîne souvent les deux opérations : d'abord les lignes du Nord, ensuite 
 2. `afficher_noms_longueur_min(villes, longueur)` : renvoie les noms assez longs.
 3. `afficher_communes_par_latitude(villes, max_latitude)` : latitude inférieure au seuil (penser à convertir en `float`).
 
-Pour fermer : un CSV est une table en texte, `DictReader` en fait une liste de dictionnaires, les clés sont les descripteurs. La projection choisit les colonnes, la sélection filtre les lignes. Les valeurs lues sont des chaînes. `with` ferme le fichier. Le geste habituel est : sélectionner, puis projeter.
+En résumé, un CSV est une table en texte, `DictReader` en fait une liste de dictionnaires, les clés sont les descripteurs. La projection choisit les colonnes, la sélection filtre les lignes. Les valeurs lues sont des chaînes. `with` ferme le fichier. Le geste habituel est : sélectionner, puis projeter.
 
 ## Pour s'entraîner
 

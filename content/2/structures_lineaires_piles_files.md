@@ -109,7 +109,7 @@ print(depiler(p))  # 20
 
 `pop(0)` recopie toutes les cases suivantes d'un cran. Pour quelques dizaines d'éléments, on ne le sent pas. Pour une longue file, le décalage domine. `collections.deque` retire en tête sans ce décalage. En Première, `pop(0)` suffit pour que le modèle soit juste. On n'ira pas non plus lire l'élément du milieu : à ce moment-là, ce n'est plus ni une pile ni une file, c'est redevenu une liste.
 
-Pour fermer : la pile est LIFO, comme les assiettes. La file est FIFO, comme la caisse. On empile, on dépile, on regarde le sommet. On enfile, on défile, on regarde la tête. Une liste Python peut servir de support si les fonctions respectent l'interface. Sommet et queue en fin de liste rendent `append` et `pop()` naturels pour la pile. On ne dépile pas une structure vide.
+En résumé, la pile est LIFO, comme les assiettes. La file est FIFO, comme la caisse. On empile, on dépile, on regarde le sommet. On enfile, on défile, on regarde la tête. Une liste Python peut servir de support si les fonctions respectent l'interface. Sommet et queue en fin de liste rendent `append` et `pop()` naturels pour la pile. On ne dépile pas une structure vide.
 
 ## Pour s'entraîner
 

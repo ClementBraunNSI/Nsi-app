@@ -99,7 +99,7 @@ while n <= 5:
 
 Les deux boucles affichent les mêmes nombres. Dans le `for`, `range` fournit les valeurs. Dans le `while`, c'est vous qui avancez `n`. Si vous oubliez `n = n + 1`, `n` reste à 1, la condition reste vraie, et le programme ne sort plus.
 
-Pour fermer : `=` affecte, `==` compare. `input` renvoie une chaîne, à convertir avant un calcul. `if`, `elif` et `else` choisissent un chemin. `for` répète un nombre de fois connu, `while` répète tant qu'une condition tient. L'indentation dessine les blocs. Le reste du programme se lit de haut en bas, sauf quand un test ou une boucle dévie.
+En résumé, `=` affecte, `==` compare. `input` renvoie une chaîne, à convertir avant un calcul. `if`, `elif` et `else` choisissent un chemin. `for` répète un nombre de fois connu, `while` répète tant qu'une condition tient. L'indentation dessine les blocs. Le reste du programme se lit de haut en bas, sauf quand un test ou une boucle dévie.
 
 ## Pour s'entraîner
 
