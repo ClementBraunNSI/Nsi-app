@@ -12,6 +12,7 @@ import SplashText from "@/components/SplashText";
 import { AnimatedFox } from "@/components/home/AnimatedFox";
 import ColleagueTeaser from "@/components/ColleagueTeaser";
 import { GAME_NAME } from "@/app/foxtest/academy/meta";
+import HomeMobile from "./HomeMobile";
 
 export type HomeLevel = {
   folder: string;
@@ -222,7 +223,14 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
         className="fox-secret-spot absolute top-24 right-8 z-20"
       />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+      <HomeMobile
+        levels={levels}
+        dashboard={dashboard}
+        privateCard={privateCard}
+        search={{ query: searchQuery, setQuery: setSearchQuery, results, isSearching, quick: QUICK_SEARCHES }}
+      />
+
+      <div className="home-desktop mx-auto max-w-7xl px-4 sm:px-8">
         <header className="home-hero">
           <div className="min-w-0">
             {dashboard ? <Greeting dashboard={dashboard} /> : null}

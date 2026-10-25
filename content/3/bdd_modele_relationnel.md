@@ -50,7 +50,7 @@ L'**intégrité référentielle** impose la clé étrangère. On ne peut pas sai
     *   Un auteur a un nom, un prénom et une date de naissance.
     *   Un livre a un titre, une année de parution et un auteur.
     
-    1.  Proposez un schéma relationnel avec les clés primaires et étrangères.
+    1.  Proposer un schéma relationnel avec les clés primaires et étrangères.
     
     </Enonce>
   </ExerciseSection>

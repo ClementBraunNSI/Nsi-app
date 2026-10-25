@@ -12,7 +12,7 @@ audience: public
     <Enonce>
 ## Introduction
 
-La **cybersécurité** désigne l'ensemble des techniques et pratiques visant à protéger les systèmes informatiques, les réseaux et les données contre les attaques, les dommages ou les accès non autorisés. À l'ère du numérique, où nous partageons constamment des informations en ligne, comprendre les enjeux de la cybersécurité est devenu essentiel.
+La **cybersécurité** désigne l'ensemble des techniques et pratiques visant à protéger les systèmes informatiques, les réseaux et les données contre les attaques, les dommages ou les accès non autorisés. À l'ère du numérique, où les informations se partagent constamment en ligne, comprendre les enjeux de la cybersécurité est devenu essentiel.
 
 ## Les enjeux de la sécurisation des échanges sur Internet
 
@@ -117,13 +117,13 @@ assert True
     <Enonce>
 ### Activité pratique : Déchiffrement
 
-Vous avez intercepté un message chiffré avec le code de César (décalage de 1).
+Un message chiffré avec le code de César (décalage de 1) a été intercepté.
 
 **Message chiffré :** "QZUIPO"
 
-Déchiffrez ce message pour retrouver le mot original et stockez-le dans la variable `message_clair` (sous forme de chaîne de caractères).
+Déchiffrer ce message pour retrouver le mot original et le stocker dans la variable `message_clair` (sous forme de chaîne de caractères).
 
-**Indice :** Reculez chaque lettre d'un rang dans l'alphabet.
+**Indice :** Reculer chaque lettre d'un rang dans l'alphabet.
 
 ```python
 message_clair = "..." 

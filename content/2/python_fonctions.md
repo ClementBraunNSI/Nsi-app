@@ -41,7 +41,7 @@ Ici `longueur` et `largeur` sont les paramètres. `5` et `3` sont les arguments.
 !!! warning "`print` n'est pas `return`"
     `print` affiche à l'écran. `return` transmet une valeur utilisable ensuite (`x = ma_fonction()`). Les deux rôles sont différents.
 
-Si vous remplacez `return` par `print`, l'aire s'affiche, mais `a` vaut `None`. On a vu le résultat, on ne l'a pas récupéré. Afficher et renvoyer sont deux gestes.
+En remplaçant `return` par `print`, l'aire s'affiche, mais `a` vaut `None`. On a vu le résultat, on ne l'a pas récupéré. Afficher et renvoyer sont deux gestes.
 
 Oublier les parenthèses est l'autre confusion. `aire_rectangle` désigne la fonction elle-même. `aire_rectangle(2, 3)` lance le calcul.
 
@@ -66,7 +66,7 @@ En Première, on préfère **passer des paramètres** et **retourner un résulta
 
 ## Nommer et documenter
 
-Un nom décrit l'action : `calculer_moyenne`, pas `f`. Une fonction porte **une** responsabilité. Si vous devez dire « et aussi » pour expliquer ce qu'elle fait, elle en fait trop. La **docstring**, la chaîne juste sous `def`, dit en une phrase ce que la fonction renvoie. C'est la première chose qu'on lit six mois plus tard.
+Un nom décrit l'action : `calculer_moyenne`, pas `f`. Une fonction porte **une** responsabilité. S'il faut dire « et aussi » pour expliquer ce qu'elle fait, elle en fait trop. La **docstring**, la chaîne juste sous `def`, dit en une phrase ce que la fonction renvoie. C'est la première chose qu'on lit six mois plus tard.
 
 ```python
 def est_pair(n: int) -> bool:
@@ -76,7 +76,7 @@ def est_pair(n: int) -> bool:
 
 `n % 2 == 0` est déjà un booléen. Le `return` le renvoie tel quel. Pas besoin d'un `if`.
 
-Pour fermer : `def` définit, l'appel avec parenthèses lance. Paramètres et arguments ne sont pas le même mot. `return` fournit le résultat, `print` se contente de l'afficher. Les variables locales restent dans la fonction. On passe des paramètres et on renvoie, plutôt que de tout accrocher à `global`.
+En résumé, `def` définit, l'appel avec parenthèses lance. Paramètres et arguments ne sont pas le même mot. `return` fournit le résultat, `print` se contente de l'afficher. Les variables locales restent dans la fonction. On passe des paramètres et on renvoie, plutôt que de tout accrocher à `global`.
 
 ## Pour s'entraîner
 

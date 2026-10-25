@@ -67,7 +67,7 @@ On range les données et les comportements au même endroit, donc on sait où mo
 
 Oublier `self` en premier paramètre d'une méthode provoque une erreur à l'appel, parce que Python passe quand même l'instance, et elle atterrit dans le mauvais paramètre. L'autre confusion est de prendre la classe pour l'objet. `Compte.deposer(50)` n'a pas de compte sur lequel travailler. C'est `c1.deposer(50)` : la méthode s'appelle sur l'instance.
 
-Pour fermer le vocabulaire : la classe est le moule, l'objet est l'instance, les attributs sont les données, les méthodes sont les actions. `__init__` les initialise. « Attribut » appartient à la POO, « clé » au dictionnaire, « affectation » à une ligne comme `x = ...`.
+Pour résumer le vocabulaire : la classe est le moule, l'objet est l'instance, les attributs sont les données, les méthodes sont les actions. `__init__` les initialise. « Attribut » appartient à la POO, « clé » au dictionnaire, « affectation » à une ligne comme `x = ...`.
 
 ## Pour s'entraîner
 

@@ -38,7 +38,7 @@ audience: public
     ### Exercice 1.2 : Accès à un élément
     **Afficher l'élément à l'indice 1 du tuple `mon_tuple`.**
     
-    *Pour la vérification, stockez le résultat dans une variable `element_1`.*
+    *Pour la vérification, stocker le résultat dans une variable `element_1`.*
     
     <Correction>
     ```python
@@ -82,7 +82,7 @@ audience: public
     ### Exercice 2.2 : Accès à un élément
     **Afficher l'élément à l'indice 2 de la liste `ma_liste`.**
     
-    *Pour la vérification, stockez le résultat dans une variable `element_2`.*
+    *Pour la vérification, stocker le résultat dans une variable `element_2`.*
     
     <Correction>
     ```python
@@ -191,7 +191,7 @@ audience: public
     ### Exercice 3.2 : Premier et dernier élément
     **Afficher le premier et le dernier élément de la liste `nombres` en utilisant les indices.**
     
-    *Stockez le premier élément dans `premier` et le dernier dans `dernier`.*
+    *Stocker le premier élément dans `premier` et le dernier dans `dernier`.*
     
     <Correction>
     ```python
@@ -328,7 +328,7 @@ audience: public
     ### Exercice 4.3 : Répétition
     **Multiplier la liste `liste_A` par 2 pour obtenir une liste répétée deux fois. Afficher le résultat.**
     
-    *Stockez le résultat dans `liste_A_repetee`.*
+    *Stocker le résultat dans `liste_A_repetee`.*
     
     <Correction>
     ```python

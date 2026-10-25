@@ -11,7 +11,7 @@ groupeTitre: "Prompter une IA"
 
 # L'IA générative et l'art du prompt
 
-Une IA générative écrit un texte, dessine une image ou compose une musique à partir d'une simple phrase. Elle donne l'impression de comprendre. En réalité, elle prolonge ce que vous lui donnez, du mieux qu'elle peut. Ce que vous écrivez au départ compte donc énormément. On va voir comment elle fonctionne, comment lui parler, et pourquoi il faut toujours relire ce qu'elle produit.
+Une IA générative écrit un texte, dessine une image ou compose une musique à partir d'une simple phrase. Elle donne l'impression de comprendre. En réalité, elle prolonge ce qu'on lui donne, du mieux qu'elle peut. Ce qui est écrit au départ compte donc énormément. On va voir comment elle fonctionne, comment lui parler, et pourquoi il faut toujours relire ce qu'elle produit.
 
 > **Définition**
 > Une **IA générative** est un programme qui produit un contenu nouveau (texte, image, son, code) à partir d'une consigne, en s'appuyant sur ce qu'il a appris dans une très grande quantité d'exemples.
@@ -20,9 +20,9 @@ Une IA générative écrit un texte, dessine une image ou compose une musique à
 
 Un assistant comme ChatGPT, Le Chat ou Gemini repose sur un **grand modèle de langage**. On l'a entraîné sur des milliards de phrases tirées de livres, de sites et d'articles. Il n'a pas appris des faits rangés dans des tiroirs. Il a appris quels mots ont l'habitude de se suivre.
 
-Quand vous posez une question, il calcule le mot le plus probable pour commencer sa réponse, puis le suivant, puis encore le suivant. Une réponse entière est une longue suite de paris. La plupart du temps, ces paris tombent juste, parce que le modèle a vu beaucoup de textes corrects. Parfois non, et il continue avec la même assurance.
+Quand une question lui est posée, il calcule le mot le plus probable pour commencer sa réponse, puis le suivant, puis encore le suivant. Une réponse entière est une longue suite de paris. La plupart du temps, ces paris tombent juste, parce que le modèle a vu beaucoup de textes corrects. Parfois non, et il continue avec la même assurance.
 
-Les générateurs d'images fonctionnent autrement, mais l'idée est voisine. Ils partent d'un brouillard de pixels au hasard et le corrigent par petites touches, guidés par votre phrase, jusqu'à obtenir une image qui lui correspond.
+Les générateurs d'images fonctionnent autrement, mais l'idée est voisine. Ils partent d'un brouillard de pixels au hasard et le corrigent par petites touches, guidés par la phrase du prompt, jusqu'à obtenir une image qui lui correspond.
 
 Deux conséquences sont utiles à retenir. La même question posée deux fois peut donner deux réponses différentes, car une part de hasard est volontairement laissée dans le choix des mots. Et deux IA différentes, entraînées sur des textes différents, ne répondent pas pareil.
 
@@ -31,9 +31,9 @@ Deux conséquences sont utiles à retenir. La même question posée deux fois pe
 > **Définition**
 > Un **prompt** est le texte que l'on donne à une IA générative pour obtenir un résultat : une question, une consigne, un contexte, des exemples.
 
-Écrire un prompt ressemble à donner une consigne à quelqu'un qui ne vous connaît pas, qui ne sait rien de votre cours et qui ne peut pas vous demander ce que vous vouliez dire. Tout ce que vous ne précisez pas, l'IA le choisit à votre place, souvent de la façon la plus banale.
+Écrire un prompt ressemble à donner une consigne à quelqu'un d'inconnu, qui ne sait rien du cours et qui ne peut pas demander ce qu'on voulait dire. Tout ce qui n'est pas précisé, l'IA le choisit à la place de l'auteur du prompt, souvent de la façon la plus banale.
 
-Comparez ces deux demandes.
+Comparer ces deux demandes.
 
 | Prompt | Ce qu'on obtient en général |
 |--------|-----------------------------|
@@ -57,7 +57,7 @@ On n'a pas besoin de tous les ingrédients à chaque fois. Plus la tâche est pr
 
 **Activité : décortiquer un prompt**
 
-**Dans le prompt suivant, retrouvez chacun des six ingrédients. Lesquels manquent ?**
+**Dans le prompt suivant, retrouver chacun des six ingrédients. Lesquels manquent ?**
 
 > Tu es un guide touristique. Présente la ville de Lille à une classe de seconde qui la visite pour la première fois. Fais une liste de 5 lieux, avec une phrase pour chacun.
 
@@ -69,11 +69,11 @@ On obtient rarement le bon résultat du premier coup. Ce n'est pas un échec : c
 - « Le ton est trop sérieux, rends-le plus drôle. »
 - « Remplace la phrase sur le beffroi, elle contient une erreur de date. »
 
-Une astuce marche très bien quand on ne sait pas par où commencer : demander à l'IA de poser ses questions avant de répondre. « Avant d'écrire, pose-moi les 3 questions dont tu as besoin pour bien faire ce travail. » Elle vous oblige alors à préciser ce que vous aviez en tête.
+Une astuce marche très bien quand on ne sait pas par où commencer : demander à l'IA de poser ses questions avant de répondre. « Avant d'écrire, pose-moi les 3 questions dont tu as besoin pour bien faire ce travail. » Elle oblige alors à préciser ce qu'on avait en tête.
 
 ## Décrire une image avec des mots
 
-Pour une image, le prompt doit décrire ce qu'on verrait. L'IA ne devine pas un style ou un cadrage que vous n'avez pas nommés.
+Pour une image, le prompt doit décrire ce qu'on verrait. L'IA ne devine pas un style ou un cadrage qui n'ont pas été nommés.
 
 | Élément | Exemple |
 |---------|---------|
@@ -101,13 +101,13 @@ Une IA reproduit aussi les **biais** des textes qu'elle a lus. Si, dans ces text
 
 ## L'utiliser sans se mettre en danger
 
-Ce que vous tapez dans un assistant part sur les serveurs de l'entreprise qui le fait fonctionner. Il peut être conservé, relu, et parfois servir à entraîner les modèles suivants.
+Ce qui est tapé dans un assistant part sur les serveurs de l'entreprise qui le fait fonctionner. Il peut être conservé, relu, et parfois servir à entraîner les modèles suivants.
 
 | Règle | Pourquoi |
 |-------|----------|
 | Ne jamais donner son nom complet, son adresse, son numéro, ni ceux d'un camarade | Ce sont des données personnelles, on ne sait pas ce qu'elles deviennent. |
 | Ne jamais téléverser la photo de quelqu'un sans son accord | Le droit à l'image s'applique aussi aux IA. Fabriquer une fausse image de quelqu'un peut être une infraction. |
-| Utiliser les outils indiqués par le professeur, avec un compte autorisé | Chaque service fixe un âge minimum dans ses conditions d'utilisation. Avant 15 ans, l'accord d'un parent est nécessaire en France pour le traitement de ses données. |
+| Utiliser les outils indiqués en classe, avec un compte autorisé | Chaque service fixe un âge minimum dans ses conditions d'utilisation. Avant 15 ans, l'accord d'un parent est nécessaire en France pour le traitement de ses données. |
 | Dire quand un travail a été fait avec une IA | Rendre un texte généré comme si on l'avait écrit soi-même, c'est tricher. |
 
 > **Définition**
@@ -115,8 +115,8 @@ Ce que vous tapez dans un assistant part sur les serveurs de l'entreprise qui le
 
 Générer un texte ou une image a aussi un coût matériel. Chaque requête fait travailler des serveurs dans des centres de données, qui consomment de l'électricité et de l'eau pour se refroidir. Une recherche simple dans un moteur de recherche coûte bien moins. On réserve donc l'IA aux tâches où elle aide vraiment, et on évite de lancer vingt générations au hasard en espérant que l'une soit bonne.
 
-## Pour fermer
+## À retenir
 
 Une IA générative prolonge ce qu'on lui donne en choisissant, à chaque étape, ce qui est le plus probable. Elle ne sait pas si c'est vrai. Un bon prompt réduit la part de hasard : il précise le rôle, le contexte, la tâche, le format, les contraintes, et donne des exemples si besoin. On avance par essais successifs, on relit, on vérifie les faits dans une source fiable, et on ne confie jamais de données personnelles.
 
-Dans les exercices, vous allez comparer plusieurs IA sur les mêmes demandes. Le TP final est un concours : par binômes, il faudra obtenir le résultat le plus proche possible d'une cible imposée.
+Les exercices comparent plusieurs IA sur les mêmes demandes. Le TP final est un concours : par binômes, il faudra obtenir le résultat le plus proche possible d'une cible imposée.

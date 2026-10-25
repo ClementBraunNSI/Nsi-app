@@ -64,7 +64,7 @@ assert True
     ### Exercice 1.3 : Somme de deux nombres
     **Écrire un programme qui permet d'afficher la somme de deux nombres entiers de la forme `'La somme est x+y'` avec x et y définis précédemment.**
 
-    *Pour la vérification, stockez `x`, `y` et le résultat de la somme dans une variable `s`.*
+    *Pour la vérification, stocker `x`, `y` et le résultat de la somme dans une variable `s`.*
 
     <Correction>
     ```python
@@ -89,7 +89,7 @@ assert s == x + y, "La somme est incorrecte."
     ### Exercice 1.4 : Affichage amélioré
     **Améliorer le programme précédent pour qu'il affiche `'La somme de x et y est x+y'`.**
 
-    *Pour la vérification, stockez `x`, `y` et le résultat de la somme dans une variable `s`.*
+    *Pour la vérification, stocker `x`, `y` et le résultat de la somme dans une variable `s`.*
 
     <Correction>
     ```python
@@ -115,7 +115,7 @@ assert s == x + y, "La somme est incorrecte."
     **Écrire un programme qui instancie deux chaînes de caractères, les concatène et affiche le résultat sous la forme :**
     `'La chaîne résultante est : [résultat]'`.
 
-    *Pour la vérification, stockez les chaînes dans `chaine_a`, `chaine_b` et le résultat concaténé dans `resultat`.*
+    *Pour la vérification, stocker les chaînes dans `chaine_a`, `chaine_b` et le résultat concaténé dans `resultat`.*
 
     <Correction>
     ```python
@@ -209,7 +209,7 @@ assert True
     ### Exercice 1.7 : Parité d'un nombre
     **Écrire un programme qui demande un nombre à l'utilisateur et affiche dans le terminal si ce nombre est pair ou impair.**
 
-    *Pour la vérification, stockez le nombre saisi dans une variable `a`.*
+    *Pour la vérification, stocker le nombre saisi dans une variable `a`.*
 
     <Correction>
     ```python
@@ -234,7 +234,7 @@ assert 'a' in locals(), "La variable 'a' n'est pas définie."
     **Écrire un programme qui permet de trouver la valeur maximale entre trois variables entières saisies.**
     Ce programme affichera dans la console : *"Le nombre [x] est plus grand que [y] et [z]"*.
 
-    *Pour la vérification, stockez les trois valeurs dans `val_1`, `val_2`, `val_3` et la valeur maximale trouvée dans `maximum`.*
+    *Pour la vérification, stocker les trois valeurs dans `val_1`, `val_2`, `val_3` et la valeur maximale trouvée dans `maximum`.*
 
     <Correction>
     
@@ -274,7 +274,7 @@ assert maximum == max(val_1, val_2, val_3), "Le maximum calculé est incorrect."
     
     Le programme affichera : *L'opération a [opérateur] b vaut ...*
 
-    *Pour la vérification, stockez les valeurs dans `a`, `b`, `operateur` et le résultat dans `resultat`.*
+    *Pour la vérification, stocker les valeurs dans `a`, `b`, `operateur` et le résultat dans `resultat`.*
 
     <Correction>
     
@@ -323,7 +323,7 @@ elif operateur == '/':
     - `perte` si le prix de vente est inférieur.
     - `pas de marge` si c'est égal.
 
-    *Pour la vérification, stockez les prix dans `cout_de_production` et `prix_de_vente`, et le message affiché dans `message`.*
+    *Pour la vérification, stocker les prix dans `cout_de_production` et `prix_de_vente`, et le message affiché dans `message`.*
 
     <Correction>
     
@@ -362,7 +362,7 @@ else: assert "marge" in message
     - `Passable` : 10 ≤ note < 12
     - `Échec` : note < 10
 
-    *Pour la vérification, stockez la note dans `note` et la mention dans `mention`.*
+    *Pour la vérification, stocker la note dans `note` et la mention dans `mention`.*
 
     <Correction>
     

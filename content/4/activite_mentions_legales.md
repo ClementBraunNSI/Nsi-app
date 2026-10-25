@@ -15,12 +15,12 @@ audience: public
     ## <Icone nom="search" /> Partie 1 : Découverte des outils d'audit (20 min)
 
     ### Contexte
-    Avant de réaliser un audit complet, vous devez prendre en main les outils qui permettent d'analyser la conformité technique d'un site web.
+    Avant de réaliser un audit complet, prendre en main les outils qui permettent d'analyser la conformité technique d'un site web.
 
     ### <Icone nom="wrench" /> Outils à utiliser
 
     **1. Extension navigateur : Cookie-Editor**
-    - **Installation :** Recherchez "Cookie-Editor" sur le Web Store de votre navigateur.
+    - **Installation :** Rechercher "Cookie-Editor" sur le Web Store du navigateur.
     - **Usage :** Permet d'observer en temps réel les cookies déposés, leur nom et leur durée de vie.
 
     **2. Outil en ligne : Cookiebot Cookie Scanner**
@@ -31,13 +31,13 @@ audience: public
     **Site de démonstration :** `https://www.lemonde.fr`
 
     **Étape 1 : Analyse manuelle (Cookie-Editor)**
-    - Ouvrez le site en navigation privée.
-    - Listez le nombre de cookies déposés avant toute interaction.
-    - Identifiez 3 cookies (Nom et Durée de vie).
+    - Ouvrir le site en navigation privée.
+    - Lister le nombre de cookies déposés avant toute interaction.
+    - Identifier 3 cookies (Nom et Durée de vie).
 
     **Étape 2 : Analyse automatisée (Cookiebot)**
-    - Lancez un scan sur l'URL du site.
-    - Relevez le nombre de cookies par catégorie : Essentiels, Analytiques, Marketing.
+    - Lancer un scan sur l'URL du site.
+    - Relever le nombre de cookies par catégorie : Essentiels, Analytiques, Marketing.
     </Enonce>
   </ExerciseSection>
 
@@ -46,7 +46,7 @@ audience: public
     ## <Icone nom="shield" /> Partie 2 : Audit complet d'un site web (50 min)
 
     ### Contexte
-    Choisissez un site parmi la liste suivante pour réaliser votre audit :
+    Choisir un site parmi la liste suivante pour réaliser l'audit :
     - *E-commerce :* fnac.com, cdiscount.com
     - *Média :* 20minutes.fr, lequipe.fr
     - *Institutionnel :* ameli.fr, service-public.fr
@@ -66,7 +66,7 @@ audience: public
     - Peut-on personnaliser ses choix par catégorie ?
 
     #### C. Formulaires et Collecte
-    Trouvez un formulaire (contact ou inscription) et vérifiez :
+    Trouver un formulaire (contact ou inscription) et vérifier :
     - La présence d'une mention d'information RGPD.
     - Si les cases de consentement (newsletter) sont pré-cochées (Interdit).
     - La présence d'un lien vers la politique de confidentialité.
@@ -83,7 +83,7 @@ audience: public
     ## <Icone nom="clipboard-list" /> Partie 3 : Recommandations de mise en conformité (40 min)
 
     ### Contexte
-    Suite à votre audit, vous devez proposer des solutions techniques et organisationnelles pour corriger les violations identifiées.
+    À la suite de l'audit, proposer des solutions techniques et organisationnelles pour corriger les violations identifiées.
 
     ### <Icone nom="lightbulb" /> Catalogue des solutions
     | Violation détectée | Solution recommandée | Complexité |
@@ -94,7 +94,7 @@ audience: public
     | Conservation illimitée | Définir une politique de rétention + purge | Moyenne |
 
     ### <Icone nom="clipboard-list" /> Travail à faire
-    **Sélectionnez les 3 violations les plus graves** constatées lors de votre audit et complétez pour chacune :
+    **Sélectionner les 3 violations les plus graves** constatées lors de l'audit et compléter pour chacune :
     1. **Nature de la violation**
     2. **Risque associé** (pour l'entreprise ou l'utilisateur)
     3. **Solution préconisée** (issue du catalogue)
@@ -107,7 +107,7 @@ audience: public
     ## <Icone nom="scale" /> Partie 4 : Rédaction des mentions légales (30 min)
 
     ### Contexte
-    Votre client, l'association **"Le Refuge des Renards Polaires"**, lance son site. Vous devez rédiger la structure HTML de ses mentions légales.
+    Le client, l'association **"Le Refuge des Renards Polaires"**, lance son site. Rédiger la structure HTML de ses mentions légales.
 
     **Informations Client :**
     - **Statut :** Association loi 1901
@@ -116,7 +116,7 @@ audience: public
     - **Hébergeur :** OVH, 2 rue Kellermann, 59100 Roubaix
 
     ### <Icone nom="clipboard-list" /> Exercice de Code
-    Rédigez le code HTML5 sémantique de la page.
+    Rédiger le code HTML5 sémantique de la page.
 
     **Structure attendue :**
     - `<header>` avec le titre principal.

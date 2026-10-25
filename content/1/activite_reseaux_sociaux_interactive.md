@@ -14,6 +14,6 @@ Un réseau social peut être modélisé par un **graphe** :
 - Les **arêtes** (lignes) sont les liens d'amitié.
 
 ## <Icone nom="target" /> Visualisation
-Clique sur un personnage pour voir ses amis directs (voisins) et comment il est connecté aux autres.
+Cliquer sur un personnage pour voir ses amis directs (voisins) et comment il est connecté aux autres.
 
 <SocialGraph />

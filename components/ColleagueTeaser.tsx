@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function ColleagueTeaser() {
   return (
-    <section className="relative z-10 border-t border-[var(--border)] py-16">
-      <div className="mx-auto max-w-3xl px-8">
-        <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-6 py-6 md:px-8">
+    <section className="relative z-10 border-t border-[var(--border)] py-10 sm:py-16">
+      <div className="mx-auto max-w-3xl px-4 sm:px-8">
+        <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-5 py-6 md:px-8">
           <h2 className="text-2xl font-semibold tracking-tight text-[var(--fg)]">Sites de collègues</h2>
           <p className="mt-3 text-base leading-relaxed text-[var(--muted)]">
             D'autres enseignants de SNT et de NSI publient leurs sites de cours en France.

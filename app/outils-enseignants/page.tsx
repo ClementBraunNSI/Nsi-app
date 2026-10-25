@@ -76,7 +76,7 @@ const TOOLS = [
 export default function OutilsEnseignantsPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <main className="mx-auto max-w-5xl px-6 py-16">
+      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-16">
         <p className="text-sm font-semibold text-slate-500">
           Pour les enseignants
         </p>
@@ -113,7 +113,7 @@ export default function OutilsEnseignantsPage() {
               <article
                 key={tool.id}
                 id={tool.id}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
               >
                 <div className="flex items-start gap-3">
                   <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white ${tool.color}`}>
@@ -133,9 +133,9 @@ export default function OutilsEnseignantsPage() {
           })}
         </section>
 
-        <section className="mt-14 rounded-2xl border border-slate-200 bg-white p-6">
+        <section className="mt-14 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
           <h2 className="text-lg font-bold">Installation pour un collègue</h2>
-          <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-600">
+          <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-600 [overflow-wrap:anywhere]">
             <li>
               Télécharger le{' '}
               <a className="font-semibold text-indigo-600 underline" href="/downloads/nsi-outils-enseignants.zip">

@@ -129,7 +129,7 @@ audience: public
     }
     ```
 
-    `>` et `<` comparent. `>=` et `<=` incluent l'égalité. `==` teste l'égalité et `!=` teste la différence. Comme en Python, `=` affecte et `==` compare. Une condition qui affecte par erreur ne dit pas ce que vous croyez.
+    `>` et `<` comparent. `>=` et `<=` incluent l'égalité. `==` teste l'égalité et `!=` teste la différence. Comme en Python, `=` affecte et `==` compare. Une condition qui affecte par erreur ne dit pas ce qu'on croit.
 
     Plusieurs issues s'écrivent avec `else if`. Les tests se lisent dans l'ordre, et le premier qui est vrai gagne. Un âge de 10 satisfait aussi `<= 17`. S'il est testé en second, la branche « Enfant » ne s'exécute jamais.
 

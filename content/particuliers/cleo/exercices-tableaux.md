@@ -14,7 +14,7 @@ audience:
   <ExerciseSection id="exo-1-1" label="1.1 - Déclaration et initialisation" type="autre">
     <Enonce>
     ### Exercice 1.1 : Créer et afficher un tableau
-    **Créez un programme qui :**
+    **Créer un programme qui :**
     - Déclare un tableau de 5 entiers : `int nombres[5] = {3, 7, 1, 9, 4};`
     - Affiche tous les éléments du tableau
     - Affiche la somme des éléments
@@ -50,7 +50,7 @@ audience:
   <ExerciseSection id="exo-1-2" label="1.2 - Recherche du maximum" type="autre">
     <Enonce>
     ### Exercice 1.2 : Trouver le maximum
-    **Créez un programme qui :**
+    **Créer un programme qui :**
     - Déclare un tableau de notes : `int notes[6] = {12, 15, 8, 19, 14, 16};`
     - Trouve et affiche la note maximale
     - Affiche l'indice de la note maximale
@@ -89,7 +89,7 @@ audience:
   <ExerciseSection id="exo-1-3" label="1.3 - Inversion d'un tableau" type="autre">
     <Enonce>
     ### Exercice 1.3 : Inverser un tableau
-    **Créez un programme qui :**
+    **Créer un programme qui :**
     - Déclare un tableau : `int tab[5] = {1, 2, 3, 4, 5};`
     - Crée un deuxième tableau contenant les éléments dans l'ordre inverse
     - Affiche les deux tableaux

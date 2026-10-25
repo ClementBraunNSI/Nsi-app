@@ -15,7 +15,7 @@ Ce cours relève du bloc 1 du BTS SIO. Un service informatique ne s'installe pas
 
 Quatre traits le séparent du travail courant. L'**objectif** est un résultat attendu, écrit, mesurable, et tenable dans le temps imparti. La **temporalité** pose une date de début et une date de fin. L'**unicité** veut dire que le livrable n'existait pas tel quel : refaire le même site pour un autre client, c'est un autre projet. Les **ressources** (budget, personnes, moyens techniques) sont comptées. On ne peut pas en ajouter sans le décider.
 
-Ces trois contraintes se tiennent dans ce qu'on appelle le **triangle** qualité, délai, coût. En bouger un déplace les deux autres. Raccourcir le délai sans retirer de fonctionnalités augmente le coût, ou abîme la qualité. Promettre les trois en même temps sans le dire, c'est laisser le projet choisir à votre place, plus tard, en général au moment de la recette.
+Ces trois contraintes se tiennent dans ce qu'on appelle le **triangle** qualité, délai, coût. En bouger un déplace les deux autres. Raccourcir le délai sans retirer de fonctionnalités augmente le coût, ou abîme la qualité. Promettre les trois en même temps sans le dire, c'est laisser le projet choisir à la place de l'équipe, plus tard, en général au moment de la recette.
 
 ## Qui fait quoi
 

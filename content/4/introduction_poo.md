@@ -36,7 +36,7 @@ public class NomDeLaClasse
 }
 ```
 
-Voici un chien complet. Les propriétés sont en syntaxe automatique : `{ get; set; }` crée, derrière, une variable que vous n'écrivez pas. Le **constructeur** porte le même nom que la classe. Il n'a pas de type de retour. Il s'exécute au `new`, et c'est le moment de donner un nom, une race, un âge, un poids. Les méthodes utilisent ces valeurs. `Manger` augmente un peu le poids : l'action modifie l'état, et l'état reste dans l'objet.
+Voici un chien complet. Les propriétés sont en syntaxe automatique : `{ get; set; }` crée, derrière, une variable qu'on n'écrit pas. Le **constructeur** porte le même nom que la classe. Il n'a pas de type de retour. Il s'exécute au `new`, et c'est le moment de donner un nom, une race, un âge, un poids. Les méthodes utilisent ces valeurs. `Manger` augmente un peu le poids : l'action modifie l'état, et l'état reste dans l'objet.
 
 ```csharp
 using System;
@@ -177,7 +177,7 @@ public class Personne
 
 ## Plusieurs façons de construire
 
-Si vous n'écrivez aucun constructeur, C# en fournit un, vide, sans paramètre. Dès que vous en écrivez un, celui-là disparaît. Il faut le remettre à la main si vous en avez encore besoin.
+Sans constructeur écrit, C# en fournit un, vide, sans paramètre. Dès qu'un constructeur est écrit, celui-là disparaît. Il faut le remettre à la main s'il sert encore.
 
 ```csharp
 public class Point

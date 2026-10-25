@@ -95,7 +95,7 @@ void tri_cocktail(int tab[], int n) {
 
 *   **Complexité** : **O(n²)** (double boucle).
 
-*(Tu as déjà le détail dans les exercices `exercices-tris`.)*
+*(Le détail est déjà dans les exercices `exercices-tris`.)*
 
 ---
 
@@ -127,7 +127,7 @@ void tri_cocktail(int tab[], int n) {
 | Insertion | Insère dans partie triée | O(n²) |
 | Dénombrement | Compte par valeur | O(n + k) |
 
-## Lien avec ton fichier `tris.c`
+## Lien avec le fichier `tris.c`
 
 Réutilise les prototypes du cours : mêmes conventions de noms (`triSelection`, etc.) pour rester cohérente avec les exercices corrigés.
 

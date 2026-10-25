@@ -102,9 +102,9 @@ export default function AboutPage() {
       />
       
       {/* Hero Section - Identité Professionnelle */}
-      <header className="max-w-7xl mx-auto px-8 pt-24 pb-16">
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="flex-1 text-center md:text-left">
+      <header className="max-w-7xl mx-auto px-4 pt-8 pb-12 sm:px-8 sm:pt-24 sm:pb-16">
+        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+          <div className="flex-1 text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--accent-soft)] text-[var(--accent)] rounded-full text-xs font-semibold mb-3">
               <GraduationCap size={14} fill="currentColor" /> Enseignant certifié, TZR
             </div>
@@ -127,7 +127,7 @@ export default function AboutPage() {
               <p>La <strong className="font-semibold text-[var(--accent)]">NSI</strong> est la spécialité de <strong className="font-semibold text-[var(--accent)]">Première</strong> et de <strong className="font-semibold text-[var(--accent)]">Terminale</strong>.</p>
               <p>Ce site est d'abord destiné à <strong className="font-semibold text-[var(--accent)]">mes classes</strong>.</p>
             </div>
-            <nav aria-label="Niveaux" className="flex flex-wrap justify-center md:justify-start gap-4">
+            <nav aria-label="Niveaux" className="flex flex-wrap gap-3 sm:gap-4">
               <Link href="/cours/snt" className="flex items-center gap-2 px-4 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-sm font-medium text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">
                 SNT
               </Link>
@@ -146,14 +146,14 @@ export default function AboutPage() {
               <p className="mt-2 text-base font-medium text-[var(--fg)]">clementbraun@ac-lille.fr</p>
               <a
                 href="mailto:clementbraun@ac-lille.fr"
-                className="mt-6 inline-flex items-center gap-3 px-10 py-5 bg-[var(--accent)] text-[var(--accent-fg)] rounded-[var(--radius)] font-semibold hover:opacity-90 transition-opacity"
+                className="mt-6 inline-flex items-center gap-3 px-6 py-4 sm:px-10 sm:py-5 bg-[var(--accent)] text-[var(--accent-fg)] rounded-[var(--radius)] font-semibold hover:opacity-90 transition-opacity"
               >
                 <Mail size={24} /> Me contacter par mail
               </a>
             </div>
           </div>
-          <div className="w-64 h-64 bg-[var(--surface-2)] rounded-[var(--radius)] flex items-center justify-center">
-            <Image src="/images/fox_assis.svg" alt="Le renard de la tanière" width={240} height={240} />
+          <div className="order-first md:order-none w-40 h-40 sm:w-64 sm:h-64 shrink-0 bg-[var(--surface-2)] rounded-[var(--radius)] flex items-center justify-center">
+            <Image src="/images/fox_assis.svg" alt="Le renard de la tanière" width={240} height={240} className="h-[88%] w-[88%]" />
           </div>
         </div>
       </header>
@@ -161,16 +161,16 @@ export default function AboutPage() {
      
 
       {/* Section : Pourquoi le Renard ? (Biodiversité) */}
-      <section className="max-w-7xl mx-auto px-8 py-20">
-        <div className="bg-emerald-900 rounded-[var(--radius)] p-10 md:p-20 text-white overflow-hidden relative">
+      <section className="max-w-7xl mx-auto px-4 py-10 sm:px-8 sm:py-20">
+        <div className="bg-emerald-900 rounded-[var(--radius)] p-6 sm:p-10 md:p-20 text-white overflow-hidden relative">
           <div className="relative z-10 max-w-3xl">
             <div className="flex items-center gap-3 mb-6 text-emerald-300 font-semibold text-sm">
               <Trees size={24} /> Écosystème & Engagement
             </div>
-            <h2 className="text-4xl md:text-5xl font-semibold mb-8 leading-tight tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-6 sm:mb-8 leading-tight tracking-tight">
               Bien plus qu'une simple <span className="text-emerald-300">mascotte.</span>
             </h2>
-            <div className="space-y-6 text-emerald-100 text-lg leading-relaxed">
+            <div className="space-y-5 text-emerald-100 text-base sm:text-lg leading-relaxed">
               <p>
                 Le choix du renard n'est pas seulement esthétique. C'est un animal qui <strong>fédère</strong> par son intelligence et sa capacité d'adaptation, des qualités essentielles en informatique.
               </p>
@@ -186,9 +186,9 @@ export default function AboutPage() {
       </section>
 
              {/* Section : Parcours */}
-      <section className="max-w-7xl mx-auto px-8 py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-semibold text-[var(--fg)] mb-4 tracking-tight">L'itinéraire du renard</h2>
+      <section className="max-w-7xl mx-auto px-4 py-12 sm:px-8 sm:py-24">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-[var(--fg)] mb-4 tracking-tight">L'itinéraire du renard</h2>
           <p className="text-[var(--muted)]">Parcours d'enseignant de NSI, entre terrils, métropole et océan.</p>
         </div>
 
@@ -211,12 +211,12 @@ export default function AboutPage() {
             />
           </svg>
 
-          <div className="space-y-14">
+          <div className="space-y-8 sm:space-y-14">
             {TIMELINE.map((step, i) => (
-              <div key={step.year} className={`flex flex-col md:flex-row items-center gap-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+              <div key={step.year} className={`flex flex-col md:flex-row items-center gap-3 md:gap-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                 {/* Bloc Contenu */}
                 <div className="flex-1 w-full md:w-auto">
-                  <div className={`relative p-8 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                  <div className={`relative p-5 sm:p-8 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                     <div className={`flex flex-wrap items-center gap-2 ${i % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
                       <span className="text-[var(--accent)] font-semibold text-sm">{step.year}</span>
                       {step.current ? (
@@ -249,7 +249,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Badge Central */}
-                <div className="relative z-10 w-16 h-16 bg-[var(--accent)] rounded-2xl flex items-center justify-center text-white border-4 border-[var(--bg)]">
+                <div className="order-first md:order-none relative z-10 w-12 h-12 md:w-16 md:h-16 bg-[var(--accent)] rounded-2xl flex items-center justify-center text-white border-4 border-[var(--bg)]">
                   {React.createElement(step.icon, { size: 26, "aria-hidden": true })}
                 </div>
 
@@ -262,10 +262,10 @@ export default function AboutPage() {
       </section>
 
       {/* Rappel des contributeurs - Réutilisation de tes données existantes */}
-      <section className="bg-[var(--surface-2)] py-24 border-t border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="mb-16 text-center md:text-left">
-            <h2 className="text-4xl font-semibold text-[var(--fg)] mb-4 tracking-tight">Une démarche collaborative</h2>
+      <section className="bg-[var(--surface-2)] py-14 sm:py-24 border-t border-[var(--border)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8">
+          <div className="mb-10 sm:mb-16 text-left">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-[var(--fg)] mb-4 tracking-tight">Une démarche collaborative</h2>
             <p className="text-[var(--muted)] font-medium max-w-2xl italic">
               "Seul on va plus vite, ensemble on va plus loin." Ce projet mutualise les travaux de collègues passionnés rencontrés au fil de mon parcours.
             </p>
@@ -280,7 +280,7 @@ export default function AboutPage() {
             </Link>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             {CONTRIBUTORS.map((person, i) => (
               <div key={i} className="bg-[var(--surface)] p-6 rounded-[var(--radius)] border border-[var(--border)] text-center w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(20%-1.5rem)] min-w-[220px] hover:border-[var(--accent)] transition-colors">
                 <div className="w-14 h-14 bg-[var(--surface-2)] rounded-2xl flex items-center justify-center text-[var(--accent)] mb-5 mx-auto">
@@ -288,7 +288,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="font-semibold text-[var(--fg)] text-lg mb-1 tracking-tight">{person.name}</h3>
                 <p className="text-[var(--accent)] font-semibold text-xs mb-3">{person.role}</p>
-                <p className="text-[var(--muted)] text-[13px] leading-relaxed">{person.desc}</p>
+                <p className="text-[var(--muted)] text-sm leading-relaxed">{person.desc}</p>
               </div>
             ))}
           </div>

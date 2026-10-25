@@ -95,11 +95,11 @@ Chaque élément est une **boîte**. De l'intérieur vers l'extérieur : le **co
 
 `display: flex` range les enfants sur une ligne. `gap` pose un espace entre eux, sans bricoler des marges. `justify-content: center` centre la rangée. `flex-wrap: wrap` autorise le retour à la ligne quand la fenêtre se rétrécit. Pour une colonne, on ajoute `flex-direction: column`.
 
-Pour fermer : le CSS habille, le HTML structure. On lie la feuille avec `<link rel="stylesheet">`. On cible par l'élément, la classe ou l'identifiant. La cascade tranche les conflits par la spécificité, puis par l'ordre. Une boîte, c'est contenu, padding, bordure, marge. Flexbox aligne une rangée sans calculer les positions à la main.
+En résumé, le CSS habille, le HTML structure. On lie la feuille avec `<link rel="stylesheet">`. On cible par l'élément, la classe ou l'identifiant. La cascade tranche les conflits par la spécificité, puis par l'ordre. Une boîte, c'est contenu, padding, bordure, marge. Flexbox aligne une rangée sans calculer les positions à la main.
 
 ## Pour s'entraîner / Suite
 
-Appliquez une feuille de style à une page HTML déjà structurée, puis enchaînez avec [Interactions JavaScript](/cours/2/web_javascript_interactions) pour rendre la page dynamique.
+Appliquer une feuille de style à une page HTML déjà structurée, puis enchaîner avec [Interactions JavaScript](/cours/2/web_javascript_interactions) pour rendre la page dynamique.
 
 !!! info "Programme Première"
     Le BO attend la capacité à structurer une page (HTML) et à en contrôler la présentation (CSS), avant d'ajouter des scripts côté client.

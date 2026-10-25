@@ -81,7 +81,7 @@ Le simulateur ci-dessous assemble des capteurs et une porte ET. La question est 
 
 <IotSimulator />
 
-Pour fermer : les portes sont les briques booléennes du processeur, réalisées avec des transistors. NON inverse, ET s'écrit $\wedge$, OU s'écrit $\vee$, XOR s'écrit $\oplus$. La table de vérité dit tout le comportement. On combine les portes en équations, avec la priorité parenthèses, NON, ET, OU. Un même comportement admet plusieurs écritures équivalentes.
+En résumé, les portes sont les briques booléennes du processeur, réalisées avec des transistors. NON inverse, ET s'écrit $\wedge$, OU s'écrit $\vee$, XOR s'écrit $\oplus$. La table de vérité dit tout le comportement. On combine les portes en équations, avec la priorité parenthèses, NON, ET, OU. Un même comportement admet plusieurs écritures équivalentes.
 
 ## Pour s'entraîner
 

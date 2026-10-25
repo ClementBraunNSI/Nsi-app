@@ -38,11 +38,11 @@ Permet d'utiliser la simulation pour étudier les échanges de données en temps
 ## <Icone nom="rocket" /> Un réseau plus étoffé
 
 > **Évolution**
-> Après avoir compris le fonctionnement de base de Filius, nous allons maintenant étoffer le réseau précédent pour une configuration plus complexe.
+> Après avoir compris le fonctionnement de base de Filius, il s'agit maintenant d'étoffer le réseau précédent pour une configuration plus complexe.
 
 ![Schéma réseau étoffé](/content/1/s2.png)
 
 Réaliser le schéma ci-dessus en utilisant le mode construction de Filius.
 
 > **Objectif pratique**
-> Cette activité vous permettra de comprendre concrètement comment les **routeurs** interconnectent différents réseaux et gèrent le routage des paquets de données.
+> Cette activité permet de comprendre concrètement comment les **routeurs** interconnectent différents réseaux et gèrent le routage des paquets de données.

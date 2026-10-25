@@ -10,7 +10,7 @@ audience: public
 
 # Introduction aux réseaux
 
-En Seconde, vous avez vu un réseau comme un ensemble de machines reliées. En Première, on met des noms précis sur ce qui circule, et on sépare des mots que le langage courant mélange. Une machine a besoin d'une identité locale, l'adresse MAC, et d'une adresse logique, l'adresse IP. Les données partent en paquets. IP cherche le chemin. TCP, ou parfois UDP, s'occupe du transport entre deux programmes.
+En Seconde, un réseau a été vu comme un ensemble de machines reliées. En Première, on met des noms précis sur ce qui circule, et on sépare des mots que le langage courant mélange. Une machine a besoin d'une identité locale, l'adresse MAC, et d'une adresse logique, l'adresse IP. Les données partent en paquets. IP cherche le chemin. TCP, ou parfois UDP, s'occupe du transport entre deux programmes.
 
 Un **réseau** relie des machines pour qu'elles échangent des données. Le **réseau local**, le LAN, reste dans un même lieu, la maison ou la salle, derrière un switch ou une box. **Internet** est un réseau de réseaux, tenu par des routeurs. Le **Web** n'est ni l'un ni l'autre : c'est une application, des pages et des liens, qui a besoin d'Internet pour fonctionner, comme le mail ou le streaming. Dire « Internet » en parlant d'un site, c'est prendre le service pour la route.
 

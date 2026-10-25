@@ -13,7 +13,7 @@ audience: public
 
 # Classes et objets
 
-La programmation orientée objet organise un programme autour d'**objets** qui se parlent, plutôt qu'autour d'une longue suite de fonctions auxquelles on repasse les mêmes données. C'est le style dominant en Java, en C++, en C# et, pour une grande partie du code, en Python. L'idée n'est pas nouvelle pour vous si vous avez vu le cours de Première. On la reprend ici avec le vocabulaire de Terminale, et avec une question de plus : qu'est-ce qu'on a le droit de toucher depuis l'extérieur de l'objet.
+La programmation orientée objet organise un programme autour d'**objets** qui se parlent, plutôt qu'autour d'une longue suite de fonctions auxquelles on repasse les mêmes données. C'est le style dominant en Java, en C++, en C# et, pour une grande partie du code, en Python. L'idée n'est pas nouvelle après le cours de Première. On la reprend ici avec le vocabulaire de Terminale, et avec une question de plus : qu'est-ce qu'on a le droit de toucher depuis l'extérieur de l'objet.
 
 Une **classe** est le moule. Elle décrit ce que tous les objets de cette famille ont en commun. Le plan d'une voiture ne roule pas. Une **instance**, l'objet, est une réalisation de ce plan : la voiture rouge de M. Dupont n'est pas la voiture bleue de Mme Martin, même si les deux sortent du même moule.
 
@@ -39,7 +39,7 @@ class Voiture:
 
 `__init__` s'exécute à la naissance de l'objet. C'est là qu'on donne une valeur initiale aux attributs. `vitesse` n'est pas un paramètre : toute voiture neuve part de zéro, donc la classe le décide elle-même.
 
-Créer l'objet, c'est appeler la classe. Python fabrique l'instance et appelle `__init__` pour vous.
+Créer l'objet, c'est appeler la classe. Python fabrique l'instance et appelle `__init__` automatiquement.
 
 ```python
 # Instanciation (Création de l'objet)
@@ -52,7 +52,7 @@ print(ma_voiture.marque)  # Affiche "Peugeot"
 ma_voiture.accelerer(50)  # Affiche "La Peugeot accélère à 50 km/h."
 ```
 
-`self` est l'objet en train d'exécuter la méthode. Il est obligatoire en premier paramètre, même si, à l'appel, vous ne le passez pas : `ma_voiture.accelerer(50)` fournit `ma_voiture` comme `self`, et `50` comme `gain`. C'est grâce à `self` qu'on distingue `self.vitesse`, qui survit entre deux appels, d'une variable locale qui meurt à la fin de la fonction.
+`self` est l'objet en train d'exécuter la méthode. Il est obligatoire en premier paramètre, même si, à l'appel, il n'est pas passé : `ma_voiture.accelerer(50)` fournit `ma_voiture` comme `self`, et `50` comme `gain`. C'est grâce à `self` qu'on distingue `self.vitesse`, qui survit entre deux appels, d'une variable locale qui meurt à la fin de la fonction.
 
 ## Cacher le mécanisme
 
@@ -84,9 +84,9 @@ class CompteBancaire:
   <ExerciseSection id="poo-ex-1" label="Création de Classe" type="python">
     <Enonce>
     ### La Classe `Chien` <Icone nom="dog" />
-    1.  Créez une classe `Chien` avec les attributs `nom` et `race`.
-    2.  Ajoutez une méthode `aboyer()` qui affiche "Wouaf ! Je suis [nom] !".
-    3.  Créez un chien nommé "Rex", de race "Berger Allemand", et faites-le aboyer.
+    1.  Créer une classe `Chien` avec les attributs `nom` et `race`.
+    2.  Ajouter une méthode `aboyer()` qui affiche "Wouaf ! Je suis [nom] !".
+    3.  Créer un chien nommé "Rex", de race "Berger Allemand", et le faire aboyer.
     
     </Enonce>
   </ExerciseSection>
@@ -94,12 +94,12 @@ class CompteBancaire:
   <ExerciseSection id="poo-ex-2" label="RPG Simple" type="python">
     <Enonce>
     ### Personnage de Jeu <Icone nom="swords" />
-    Créez une classe `Personnage` :
+    Créer une classe `Personnage` :
     1.  Attributs : `pseudo`, `pv` (points de vie, defaut 100), `force`.
     2.  Méthode `attaquer(self, cible)` : Enlève `self.force` aux PV de la `cible`.
     3.  Méthode `est_vivant(self)` : Renvoie `True` si PV > 0, sinon `False`.
 
-    Simulez un combat entre deux personnages.
+    Simuler un combat entre deux personnages.
     
     </Enonce>
   </ExerciseSection>

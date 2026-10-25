@@ -18,7 +18,7 @@ C'est l'ancêtre direct de la notion d'objet.
 >
 > - <Icone nom="circle-check" /> **Organisation** : Regrouper des variables qui ont un sens ensemble (ex: x et y pour un Point).
 > - <Icone nom="circle-check" /> **Clarté** : Manipuler une seule variable (`personne`) au lieu de plusieurs (`nom`, `age`, `taille`).
-> - <Icone nom="circle-check" /> **Modularité** : Passer des paquets de données complexes à vos fonctions.
+> - <Icone nom="circle-check" /> **Modularité** : Passer des paquets de données complexes à les fonctions.
 
 ---
 
@@ -37,7 +37,7 @@ struct Personne {
 };
 ```
 
-Ici, nous avons créé un nouveau type appelé `struct Personne`.
+Ici, un nouveau type appelé `struct Personne` a été créé.
 
 ### Utilisation avec `typedef`
 
@@ -90,7 +90,7 @@ int main() {
 
 ## <Icone nom="refresh-cw" /> Structures et Fonctions (Passage par Valeur vs Adresse)
 
-En C, par défaut, les arguments sont passés **par valeur** (copie). Si vous modifiez une structure dans une fonction, l'original n'est pas modifié !
+En C, par défaut, les arguments sont passés **par valeur** (copie). Modifier une structure dans une fonction ne modifie pas l'original !
 
 ### Problème : Modification impossible par défaut
 
@@ -192,7 +192,7 @@ int main() {
 
 1.  **Oublier le `&`** lors de l'appel d'une fonction qui attend un pointeur.
 2.  **Utiliser `.` au lieu de `->`** avec un pointeur (le compilateur va râler).
-3.  **Copie involontaire** : Passer une très grosse structure par valeur recopie toutes ses données, ce qui est lent. Préférez passer un pointeur `const` si vous ne voulez pas modifier les données.
+3.  **Copie involontaire** : Passer une très grosse structure par valeur recopie toutes ses données, ce qui est lent. Préférer passer un pointeur `const` si les données ne doivent pas être modifiées.
 
 ```c
 // Efficace et sûr (lecture seule sans copie)

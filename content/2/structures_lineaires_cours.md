@@ -95,7 +95,7 @@ cubes = [n ** 3 for n in range(1, 5)]
 
 On lit la première ainsi : les `i` de `range(10)` pour lesquels `i` est pair. La seconde : le cube de chaque `n` de 1 à 4, puisque `range` exclut la borne de droite. Quand la logique devient longue, ou quand les boucles s'imbriquent, un `for` classique se relit mieux. La compréhension n'est pas une obligation de style.
 
-Pour fermer : une structure linéaire est ordonnée, et l'on y accède par un indice qui part de 0. Le tuple, entre parenthèses, est immuable. La liste, entre crochets, est mutable. `len`, l'indexation et `for` servent aux deux. `append`, `pop` et `remove` ne servent qu'à la liste. `+` crée une nouvelle séquence. Une compréhension s'écrit `[expr for x in iterable if cond]`.
+En résumé, une structure linéaire est ordonnée, et l'on y accède par un indice qui part de 0. Le tuple, entre parenthèses, est immuable. La liste, entre crochets, est mutable. `len`, l'indexation et `for` servent aux deux. `append`, `pop` et `remove` ne servent qu'à la liste. `+` crée une nouvelle séquence. Une compréhension s'écrit `[expr for x in iterable if cond]`.
 
 ## Pour s'entraîner
 

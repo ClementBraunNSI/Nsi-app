@@ -104,7 +104,7 @@ La recherche séquentielle compare éventuellement chaque case : dans le pire de
 
 Trier puis chercher n'est pas toujours rentable. Trier coûte plus cher qu'une seule recherche séquentielle. Si l'on ne cherche qu'une fois, le tri peut être du gaspillage. Si l'on cherche souvent dans la même liste, on paie le tri une fois et chaque recherche ensuite est logarithmique.
 
-Pour fermer : la dichotomie ne vaut que sur une liste triée. Chaque étape élimine environ la moitié des candidats, en resserrant `debut` et `fin`. `milieu` est un indice, `liste[milieu]` est la valeur. La complexité est logarithmique. L'absence se signale par `-1`. Sans le tri, le résultat ne mérite pas confiance.
+En résumé, la dichotomie ne vaut que sur une liste triée. Chaque étape élimine environ la moitié des candidats, en resserrant `debut` et `fin`. `milieu` est un indice, `liste[milieu]` est la valeur. La complexité est logarithmique. L'absence se signale par `-1`. Sans le tri, le résultat ne mérite pas confiance.
 
 ## Pour s'entraîner
 

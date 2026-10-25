@@ -78,4 +78,4 @@ scp TP1.py eleve@192.168.1.10:/home/eleve/
 
 Cette ligne envoie `TP1.py`, pris dans le dossier courant, vers `/home/eleve/` sur la machine `192.168.1.10`. Le fichier d'en face a le même nom, sauf si l'on en écrit un autre à la fin du chemin.
 
-Pour fermer : `pwd`, `ls` et `cd` situent et déplacent. `mkdir`, `touch`, `cp`, `mv`, `rm` et `cat` font vivre les fichiers. `rm` est définitif, et `-r` agit sur tout un dossier. `chmod` règle `rwx`, souvent en octal, comme `755`. `ssh` ouvre une connexion vers une machine distante et `scp` y transfère des fichiers. Un chemin relatif part d'ici, un chemin absolu part de `/`.
+En résumé, `pwd`, `ls` et `cd` situent et déplacent. `mkdir`, `touch`, `cp`, `mv`, `rm` et `cat` font vivre les fichiers. `rm` est définitif, et `-r` agit sur tout un dossier. `chmod` règle `rwx`, souvent en octal, comme `755`. `ssh` ouvre une connexion vers une machine distante et `scp` y transfère des fichiers. Un chemin relatif part d'ici, un chemin absolu part de `/`.

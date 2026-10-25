@@ -94,7 +94,7 @@ def planification_taches(taches):
 
 `x[2]` est la fin, le troisième élément du triplet. `sorted` ne modifie pas la liste d'origine. `debut >= derniere_fin` autorise une tâche qui commence à l'instant où la précédente finit. On suppose ici que les horaires sont des nombres, et que 0 est avant toutes les fins.
 
-Pour fermer : un glouton choisit le meilleur local et ne regrette pas. C'est simple. Ce n'est optimal que pour certains problèmes : la monnaie canonique de l'euro, les tâches triées par fin. Ailleurs, un contre-exemple suffit à le dire. Ceux à connaître sont la monnaie `{1, 3, 4}` pour un montant de 6, et le sac où A vaut 100 mais où B, C et D ensemble valent plus. La question à se poser à chaque nouvel énoncé : existe-t-il un cas où ce choix immédiat rate mieux ?
+En résumé, un glouton choisit le meilleur local et ne regrette pas. C'est simple. Ce n'est optimal que pour certains problèmes : la monnaie canonique de l'euro, les tâches triées par fin. Ailleurs, un contre-exemple suffit à le dire. Ceux à connaître sont la monnaie `{1, 3, 4}` pour un montant de 6, et le sac où A vaut 100 mais où B, C et D ensemble valent plus. La question à se poser à chaque nouvel énoncé : existe-t-il un cas où ce choix immédiat rate mieux ?
 
 ## Pour s'entraîner
 

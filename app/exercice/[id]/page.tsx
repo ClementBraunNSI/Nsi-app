@@ -1,9 +1,13 @@
+import type { Viewport } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { getAuthContext } from '@/lib/auth';
 import { exercisePageTarget } from '@/lib/exercise-type';
 import { getExerciseById, getExerciseSheetNav, getExternalExercise } from '@/app/actions/getExercises';
 import { ExerciseWorkspace } from '@/components/lab/ExerciseWorkspace';
+
+// Sur Android, le clavier réduit la page au lieu de la recouvrir : l'IDE garde l'éditeur et ses boutons visibles.
+export const viewport: Viewport = { interactiveWidget: 'resizes-content' };
 
 export default async function ExercisePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

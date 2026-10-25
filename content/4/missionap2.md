@@ -14,7 +14,7 @@ audience: public
 Le but de cette mission est de moderniser la gestion du parc d'AutoRent, une agence de location.
 Durée : 16 h (4 h par semaine, 4 semaines), atelier de professionnalisation, semestre 2.
 
-Le siège envoie chaque jour un CSV brut. Vous construisez deux outils qui se parlent par un fichier :
+Le siège envoie chaque jour un CSV brut. Deux outils sont à construire, qui se parlent par un fichier :
 
 1. une application console C#, qui lit, contrôle et structure les véhicules ;
 2. une page web (HTML, CSS, PHP), qui montre aux clients uniquement les véhicules disponibles.
@@ -34,7 +34,7 @@ La note tient sur une page au maximum et se rend avec le projet.
 
 ## 2. Les données <Icone nom="car" />
 
-Le CSV source utilise le point-virgule comme séparateur. `Divers1` et `Divers2` changent de sens selon le type : à vous de les ranger dans les bonnes propriétés.
+Le CSV source utilise le point-virgule comme séparateur. `Divers1` et `Divers2` changent de sens selon le type : il faut les ranger dans les bonnes propriétés.
 
 ```csv
 Type;Immatriculation;Marque;Modele;Prix;Km;Etat;Divers1;Divers2
@@ -58,7 +58,7 @@ La moto : cylindrée 689, permis A. Le camping-car : longueur 7,2 m, 4 couchages
 
       La colonne `Type` choisit la classe à construire. Une ligne `Voiture` ne devient pas une `Moto`.
 
-      *Attention : un prix négatif est refusé, la ligne n'entre pas dans la liste. Une immatriculation qui n'a pas la forme deux lettres, trois chiffres, deux lettres (comme `AB-123-CD`) est refusée aussi. Affichez la ligne rejetée, et continuez le fichier.*
+      *Attention : un prix négatif est refusé, la ligne n'entre pas dans la liste. Une immatriculation qui n'a pas la forme deux lettres, trois chiffres, deux lettres (comme `AB-123-CD`) est refusée aussi. Afficher la ligne rejetée, et continuer le fichier.*
 
       Après chargement de l'exemple : 3 véhicules, dont 1 disponible (la 208). La moto est en maintenance, le camping-car est loué.
     </Enonce>
@@ -140,7 +140,7 @@ Des boutons filtrent l'affichage : Tout, Voitures, Motos, Camping-cars. Sur l'ex
 
 - Le projet C# (solution complète, code commenté), qui charge l'exemple et dont le devis 10 jours de la 208 affiche 315.
 - Le diagramme de classes, avec les trois héritages et `AfficherDetails`.
-- Les fichiers PHP et CSS, et le `disponibles.csv` produit par votre export.
+- Les fichiers PHP et CSS, et le `disponibles.csv` produit par l'export.
 - Un guide utilisateur PDF : comment lancer la console, exporter, puis ouvrir la page.
 
 Le back-office prépare les données, le front-office les montre. Le format de `disponibles.csv` est décrit dans le guide : une personne qui n'a pas écrit le C# doit pouvoir le relire.

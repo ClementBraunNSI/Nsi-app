@@ -19,9 +19,9 @@ Le sujet est bien un tableau, sa version renard, et une histoire.
 
 ## 1. Le tableau et les fichiers <Icone nom="image" />
 
-Vous partez d'un vrai tableau, que vous pouvez décrire et dont vous pouvez montrer une reproduction que vous avez le droit d'utiliser en classe (fichier fourni, ou image que vous dessinez). La page indique l'auteur, la date et le lieu de conservation.
+Le point de départ est un vrai tableau, à décrire, dont une reproduction utilisable en classe peut être montrée (fichier fourni, ou image dessinée). La page indique l'auteur, la date et le lieu de conservation.
 
-L'exemple fixe la quantité de texte. Vous pouvez le suivre avec *La Nuit étoilée*, ou le remplacer par un autre tableau. Dans ce cas, gardez les mêmes blocs, avec vos propres phrases.
+L'exemple fixe la quantité de texte. Il peut être suivi avec *La Nuit étoilée*, ou remplacé par un autre tableau. Dans ce cas, garder les mêmes blocs, avec les propres phrases.
 
 *   **Original.** Vincent van Gogh, 1889, huile sur toile, Museum of Modern Art, New York. Quatre à six lignes : le ciel tourbillonne au-dessus d'un village, un cyprès occupe le premier plan, la peinture est visible en touches épaisses.
 *   **Version renard.** Le cyprès devient un renard dressé, ou un renard est assis sur le clocher. Quatre à six lignes sur ce qui a changé et ce qui reste (le ciel, le village, les couleurs).
@@ -39,7 +39,7 @@ projet-tableau-renard/
     └── script.js
 ```
 
-Les extensions peuvent être `.png` si vos fichiers le sont, à condition que le HTML utilise la même extension. Les chemins fonctionnent quand on ouvre `index.html` depuis le dossier rendu.
+Les extensions peuvent être `.png` si les fichiers le sont, à condition que le HTML utilise la même extension. Les chemins fonctionnent quand on ouvre `index.html` depuis le dossier rendu.
 
 `index.html` relie la feuille de style et le script. Les règles d'apparence sont dans `style.css`, pas dans un gros attribut `style` répété sur chaque balise. Le JavaScript est dans `script.js`.
 
@@ -48,7 +48,7 @@ Blocs HTML, dans cet ordre : un titre de page, une section « Le tableau origina
 <ExerciseTabs courseId="premiere_projet" courseTitle="Tableau et renards">
   <ExerciseSection id="web-projet-1" label="La page" type="python">
     <Enonce>
-      Créez l'arborescence du sujet. `index.html` contient un titre `h1`, trois sections avec des `h2` (« Le tableau original », « La version renard », « L'histoire »), et les textes aux longueurs indiquées.
+      Créer l'arborescence du sujet. `index.html` contient un titre `h1`, trois sections avec des `h2` (« Le tableau original », « La version renard », « L'histoire »), et les textes aux longueurs indiquées.
 
       L'original cite l'auteur, la date et le lieu de conservation. L'histoire fait entre huit et douze lignes et raconte une scène.
 
@@ -58,18 +58,18 @@ Blocs HTML, dans cet ordre : un titre de page, une section « Le tableau origina
 
   <ExerciseSection id="web-projet-2" label="La mise en forme" type="lecture">
     <Enonce>
-      Dans `style.css`, limitez la largeur du contenu, espacez les sections, et faites tenir l'image dans la page (`max-width: 100%`).
+      Dans `style.css`, limiter la largeur du contenu, espacer les sections, et faire tenir l'image dans la page (`max-width: 100%`).
 
       La page reste lisible sur une fenêtre étroite : le texte ne dépasse pas de l'écran, l'image ne dépasse pas la largeur de la page.
 
-      Le bouton a un style distinct du texte. La classe `mode-nuit`, si vous la faites, change le fond et la couleur du texte. La classe `cachee`, si vous l'utilisez, masque l'histoire au chargement.
+      Le bouton a un style distinct du texte. La classe `mode-nuit`, si elle est faite, change le fond et la couleur du texte. La classe `cachee`, si elle est utilisée, masque l'histoire au chargement.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
 ## 2. Le bouton qui change l'image <Renard />
 
-Les programmes ci-dessous sont des points de départ. Adaptez les identifiants, les textes et les chemins à votre page. Copier un bloc sans le relier à vos sections ne suffit pas : le bouton doit agir sur votre image.
+Les programmes ci-dessous sont des points de départ. Adapter les identifiants, les textes et les chemins à la page. Copier un bloc sans le relier aux sections ne suffit pas : le bouton doit agir sur l'image.
 
 ```html
 <button id="bouton-image">Voir la version renard</button>
@@ -145,9 +145,9 @@ boutonHistoire.addEventListener("click", function () {
     <Enonce>
       Dans `script.js`, le bouton d'image alterne les deux sources et les deux `alt`, et son texte alterne `Voir la version renard` et `Voir l'original`.
 
-      Ajoutez en plus soit le mode nuit, soit l'affichage de l'histoire. Les identifiants HTML et ceux lus par `getElementById` sont les mêmes.
+      Ajouter en plus soit le mode nuit, soit l'affichage de l'histoire. Les identifiants HTML et ceux lus par `getElementById` sont les mêmes.
 
-      Contrôle : au premier clic on voit les renards, au second on revient au tableau, et l'image ne se casse pas (pas d'icône de fichier manquant). Ouvrez la page en double-cliquant sur `index.html`.
+      Contrôle : au premier clic on voit les renards, au second on revient au tableau, et l'image ne se casse pas (pas d'icône de fichier manquant). Ouvrir la page en double-cliquant sur `index.html`.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -159,4 +159,4 @@ boutonHistoire.addEventListener("click", function () {
 *   `scripts/script.js`
 *   les deux images dans `images/`
 
-Le zip porte votre nom et votre prénom, par exemple `NOM_Prenom_tableau_renard.zip`. On doit pouvoir l'extraire et ouvrir `index.html` sans remettre les images à la main.
+Le zip porte le nom et le prénom de l'élève, par exemple `NOM_Prenom_tableau_renard.zip`. On doit pouvoir l'extraire et ouvrir `index.html` sans remettre les images à la main.

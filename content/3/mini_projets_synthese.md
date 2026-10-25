@@ -46,24 +46,24 @@ graphe = {
 <ExerciseTabs courseId="term_mini_villes" courseTitle="Réseau de villes">
   <ExerciseSection id="mini-villes-1" label="Le graphe" type="lecture">
     <Enonce>
-      Écrivez `voisins(graphe, ville)` qui renvoie le dictionnaire des villes atteignables et de leurs distances. `voisins(graphe, "Lyon")` vaut `{"Paris": 460, "Marseille": 310}`. Ville absente : renvoyez `{}`.
+      Écrire `voisins(graphe, ville)` qui renvoie le dictionnaire des villes atteignables et de leurs distances. `voisins(graphe, "Lyon")` vaut `{"Paris": 460, "Marseille": 310}`. Ville absente : renvoyer `{}`.
 
-      Écrivez `ajouter_route(graphe, a, b, km)`. Elle ajoute l'arête dans les deux sens. Une distance inférieure ou égale à 0 est refusée : la fonction renvoie `False` et le graphe ne change pas.
+      Écrire `ajouter_route(graphe, a, b, km)`. Elle ajoute l'arête dans les deux sens. Une distance inférieure ou égale à 0 est refusée : la fonction renvoie `False` et le graphe ne change pas.
     </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="mini-villes-2" label="Dijkstra" type="lecture">
     <Enonce>
-      Écrivez `plus_court_chemin(graphe, depart, arrivee)`.
+      Écrire `plus_court_chemin(graphe, depart, arrivee)`.
 
       1. La distance du départ vaut 0, les autres valent l'infini (`float("inf")`).
-      2. Tant qu'il reste une ville non figée, choisissez celle dont la distance connue est la plus petite.
-      3. Relâchez ses arêtes : si passer par elle raccourcit un voisin, mettez à jour la distance et le prédécesseur.
-      4. Reconstruisez la liste des villes de `depart` vers `arrivee` en remontant les prédécesseurs.
+      2. Tant qu'il reste une ville non figée, choisir celle dont la distance connue est la plus petite.
+      3. Relâcher ses arêtes : si passer par elle raccourcit un voisin, mettre à jour la distance et le prédécesseur.
+      4. Reconstruire la liste des villes de `depart` vers `arrivee` en remontant les prédécesseurs.
 
       La fonction renvoie le couple `(trajet, cout)`. Sur l'exemple, `plus_court_chemin(graphe, "Lyon", "Lille")` vaut `(["Lyon", "Paris", "Lille"], 680)`.
 
-      *Attention : si `arrivee` n'est pas atteignable, renvoyez `([], float("inf"))`. Ne renvoyez pas un chemin partiel.*
+      *Attention : si `arrivee` n'est pas atteignable, renvoyer `([], float("inf"))`. Ne pas renvoyer un chemin partiel.*
 
       Affichage attendu :
 
@@ -75,7 +75,7 @@ graphe = {
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `villes.py` : le graphe de l'exemple, `voisins`, `ajouter_route`, `plus_court_chemin`, et un affichage du trajet Lyon-Lille. Commentaire d'en-tête avec le nom et la classe. En quelques lignes sous le résultat, dites pourquoi 680 est meilleur que 1310 : on compare des sommes de poids, pas le nombre de villes.
+**Ce qu'on rend.** Un fichier `villes.py` : le graphe de l'exemple, `voisins`, `ajouter_route`, `plus_court_chemin`, et un affichage du trajet Lyon-Lille. Commentaire d'en-tête avec le nom et la classe. En quelques lignes sous le résultat, dire pourquoi 680 est meilleur que 1310 : on compare des sommes de poids, pas le nombre de villes.
 
 ## 2. Catalogue de véhicules <Icone nom="car" />
 
@@ -92,9 +92,9 @@ Trois lignes de départ :
 <ExerciseTabs courseId="term_mini_vehicules" courseTitle="Catalogue véhicules">
   <ExerciseSection id="mini-veh-1" label="La base" type="sql">
     <Enonce>
-      Écrivez le `CREATE TABLE vehicule` avec les colonnes du tableau. `immat` est la clé primaire. `prix_jour` est un nombre strictement positif, `places` un entier supérieur ou égal à 1, `etat` vaut `disponible`, `maintenance` ou `loue`.
+      Écrire le `CREATE TABLE vehicule` avec les colonnes du tableau. `immat` est la clé primaire. `prix_jour` est un nombre strictement positif, `places` un entier supérieur ou égal à 1, `etat` vaut `disponible`, `maintenance` ou `loue`.
 
-      Insérez les trois lignes. La requête des véhicules disponibles, triés par prix croissant, renvoie la Peugeot 208 (35) puis le Fiat Ducato (120). La Yamaha n'y est pas.
+      Insérer les trois lignes. La requête des véhicules disponibles, triés par prix croissant, renvoie la Peugeot 208 (35) puis le Fiat Ducato (120). La Yamaha n'y est pas.
 
       ```sql
       SELECT immat, marque, modele, prix_jour
@@ -107,7 +107,7 @@ Trois lignes de départ :
 
   <ExerciseSection id="mini-veh-2" label="L'API" type="lecture">
     <Enonce>
-      Exposez `GET /vehicules`. Sans paramètre, la réponse est la liste JSON des véhicules disponibles, dans l'ordre de la requête. Avec `?places=4`, seul le Ducato reste : on filtre `places >= 4`.
+      Exposer `GET /vehicules`. Sans paramètre, la réponse est la liste JSON des véhicules disponibles, dans l'ordre de la requête. Avec `?places=4`, seul le Ducato reste : on filtre `places >= 4`.
 
       Exemple de corps, prix en nombre, pas en texte :
 
@@ -146,7 +146,7 @@ Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. L
 <ExerciseTabs courseId="term_mini_logs" courseTitle="Analyse de logs">
   <ExerciseSection id="mini-logs-1" label="Une passe" type="lecture">
     <Enonce>
-      Écrivez `analyser(chemin)` qui ouvre le fichier et, en une seule lecture, remplit un dictionnaire :
+      Écrire `analyser(chemin)` qui ouvre le fichier et, en une seule lecture, remplit un dictionnaire :
 
       ```python
       {"lignes": 6, "INFO": 3, "WARN": 1, "ERROR": 2}
@@ -154,7 +154,7 @@ Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. L
 
       Une ligne vide est ignorée. Une ligne sans niveau parmi `INFO`, `WARN`, `ERROR` compte dans `lignes` et dans une clé `AUTRE`, sans faire planter la fonction.
 
-      Écrivez `compter_mot(chemin, mot)` qui renvoie le nombre de lignes contenant `mot`. `compter_mot(chemin, "disque")` vaut `2`. La comparaison est exacte sur le mot isolé, pas sur un morceau : `dis` ne compte pas `disque`.
+      Écrire `compter_mot(chemin, mot)` qui renvoie le nombre de lignes contenant `mot`. `compter_mot(chemin, "disque")` vaut `2`. La comparaison est exacte sur le mot isolé, pas sur un morceau : `dis` ne compte pas `disque`.
     </Enonce>
   </ExerciseSection>
 
@@ -165,9 +165,9 @@ Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. L
       - Stratégie A : une passe, on ajoute la ligne dès qu'on voit `ERROR`. On lit n lignes une fois.
       - Stratégie B : on charge toutes les lignes, on les trie par l'heure, puis on filtre `ERROR`. Le tri domine.
 
-      Sur le fichier d'exemple, les deux stratégies renvoient les deux lignes d'erreur, d'abord `08:02:10`, puis `08:03:40`. Le fichier est déjà trié : les résultats coïncident. Ils peuvent diverger si une ligne plus tardive est écrite avant une ligne plus ancienne : dites-le dans un commentaire.
+      Sur le fichier d'exemple, les deux stratégies renvoient les deux lignes d'erreur, d'abord `08:02:10`, puis `08:03:40`. Le fichier est déjà trié : les résultats coïncident. Ils peuvent diverger si une ligne plus tardive est écrite avant une ligne plus ancienne : le dire dans un commentaire.
 
-      Sous le programme, justifiez les coûts. A est linéaire en le nombre de lignes. B coûte le tri, de l'ordre de n log n, plus la lecture. Pour ce fichier de 6 lignes l'écart ne se voit pas. Dites à partir de quel besoin B devient utile : quand l'ordre du fichier n'est pas l'ordre des heures.
+      Sous le programme, justifier les coûts. A est linéaire en le nombre de lignes. B coûte le tri, de l'ordre de n log n, plus la lecture. Pour ce fichier de 6 lignes l'écart ne se voit pas. Dire à partir de quel besoin B devient utile : quand l'ordre du fichier n'est pas l'ordre des heures.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -203,17 +203,17 @@ banque = [
 <ExerciseTabs courseId="term_mini_epreuve" courseTitle="Simulateur">
   <ExerciseSection id="mini-ep-1" label="La banque" type="python">
     <Enonce>
-      Écrivez `ajouter_question(banque, identifiant, enonce, reponse)`. Identifiant déjà présent : renvoyez `False`, la banque ne change pas. Sinon ajoutez le dictionnaire et renvoyez `True`.
+      Écrire `ajouter_question(banque, identifiant, enonce, reponse)`. Identifiant déjà présent : renvoyer `False`, la banque ne change pas. Sinon ajouter le dictionnaire et renvoyer `True`.
 
-      Écrivez `tirer(banque, rng)` qui choisit une question. `rng` est un générateur dont vous fixez la graine (`random.Random(0)`), pour que deux lancements avec la même graine donnent la même question. Banque vide : renvoyez `None`.
+      Écrire `tirer(banque, rng)` qui choisit une question. `rng` est un générateur dont la graine est fixée (`random.Random(0)`), pour que deux lancements avec la même graine donnent la même question. Banque vide : renvoyer `None`.
 
-      Avec la graine 0 et la banque ci-dessus, affichez l'`id` tiré et vérifiez qu'un second appel à `tirer` avec un nouveau `Random(0)` redonne le même `id`.
+      Avec la graine 0 et la banque ci-dessus, afficher l'`id` tiré et vérifier qu'un second appel à `tirer` avec un nouveau `Random(0)` redonne le même `id`.
     </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="mini-ep-2" label="Le test" type="lecture">
     <Enonce>
-      Écrivez `valider(question, proposition)`. Elle renvoie `True` si `proposition`, après `strip`, est égale à `question["reponse"]`. La comparaison des textes est exacte, majuscules comprises : `dijkstra` ne valide pas `Dijkstra`.
+      Écrire `valider(question, proposition)`. Elle renvoie `True` si `proposition`, après `strip`, est égale à `question["reponse"]`. La comparaison des textes est exacte, majuscules comprises : `dijkstra` ne valide pas `Dijkstra`.
 
       ```python
       valider(banque[0], "3")    # True
@@ -233,4 +233,4 @@ banque = [
 1. Le résultat de l'exemple est celui annoncé (680 km, les deux véhicules disponibles, les compteurs du log, ou les trois `valider`).
 2. Les fonctions se relisent : noms stables, cas refusé qui ne modifie pas les données.
 3. Le choix d'algorithme est justifié sur l'exemple, pas seulement nommé.
-4. Vous pouvez expliquer le déroulement à l'oral, sur votre jeu d'essai.
+4. Le déroulement peut s'expliquer à l'oral, sur son jeu d'essai.

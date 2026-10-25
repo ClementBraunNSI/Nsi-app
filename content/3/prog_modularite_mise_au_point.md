@@ -1,7 +1,7 @@
 ---
 title: Modularité et Mise au Point
 description: >-
-  Apprenez à structurer vos programmes, gérer les erreurs et valider votre code
+  Structurer ses programmes, gérer les erreurs et valider son code
   avec des tests.
 level: TNSI
 order: 80
@@ -108,8 +108,8 @@ La précondition porte sur la liste entière : elle n'est pas vide, sinon la div
 <ExerciseTabs courseId="prog_mod_assert" courseTitle="Assertions">
   <ExerciseSection id="mod-assert-1" label="Pratique" type="python">
     <Enonce>
-      Écrivez une fonction `racine_carree(x)` qui utilise `math.sqrt`.
-      Ajoutez une assertion pour vérifier que `x` est positif ou nul.
+      Écrire une fonction `racine_carree(x)` qui utilise `math.sqrt`.
+      Ajouter une assertion pour vérifier que `x` est positif ou nul.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -166,12 +166,12 @@ Un test raconte un cas : des arguments, un résultat. Il ne relit pas le corps d
 <ExerciseTabs courseId="prog_mod_doctest" courseTitle="Doctests">
   <ExerciseSection id="mod-doctest-1" label="Écrire un doctest" type="python">
     <Enonce>
-      Ajoutez des doctests à la fonction suivante qui vérifie si un nombre est pair.
+      Ajouter des doctests à la fonction suivante qui vérifie si un nombre est pair.
       ```python
       def est_pair(n):
           return n % 2 == 0
       ```
-      Testez avec 4 (True), 5 (False) et 0 (True).
+      Tester avec 4 (True), 5 (False) et 0 (True).
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>

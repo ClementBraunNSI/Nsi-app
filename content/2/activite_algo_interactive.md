@@ -20,7 +20,7 @@ Trier des données est l'une des tâches les plus courantes en informatique. Mai
 ## <Icone nom="target" /> Observation
 Voici le **Tri à Bulles**. Il compare deux éléments côte à côte et les échange s'ils sont dans le mauvais ordre. Il recommence jusqu'à ce que tout soit trié.
 
-Clique sur **"Lancer le Tri"** et observe les échanges en temps réel.
+Cliquer sur **"Lancer le Tri"** et observer les échanges en temps réel.
 
 <AlgorithmRace />
 

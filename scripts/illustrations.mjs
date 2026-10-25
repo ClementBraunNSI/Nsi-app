@@ -387,6 +387,140 @@ ${poly("1149,856 1171,855 1171,862 1149,863", "#A7ABB0")}
 @keyframes spark{0%,40%{opacity:1;transform:scale(1)}20%{opacity:.4;transform:scale(.7)}60%,100%{opacity:0}}`,
 );
 
+// --- IDE sur téléphone : le renard regarde le téléphone passer en format paysage ---
+// Même monde que la page 403 : le buisson de 404.png, le renard de profil, et à la place de la barrière
+// un téléphone qui pivote. En portrait, l'éditeur est à l'étroit ; en paysage, l'énoncé et le code tiennent côte à côte.
+
+const PHONE = { x: 935, y: 585, w: 190, h: 370 };
+const TURN_R = 245;
+
+function turnArrow(from, to) {
+  const at = (deg, r = TURN_R) => [Math.cos((deg * Math.PI) / 180) * r, Math.sin((deg * Math.PI) / 180) * r];
+  const [x1, y1] = at(from);
+  const [x2, y2] = at(to);
+  // Sens inverse des aiguilles d'une montre, comme le téléphone : la pointe suit la tangente.
+  const rad = (to * Math.PI) / 180;
+  const dir = [Math.sin(rad), -Math.cos(rad)];
+  const out = [Math.cos(rad), Math.sin(rad)];
+  const tip = [x2 + dir[0] * 34, y2 + dir[1] * 34];
+  const left = [x2 + out[0] * 30 - dir[0] * 6, y2 + out[1] * 30 - dir[1] * 6];
+  const right = [x2 - out[0] * 30 - dir[0] * 6, y2 - out[1] * 30 - dir[1] * 6];
+  const pts = [tip, left, right].map(([x, y]) => `${x.toFixed(0)},${y.toFixed(0)}`).join(" ");
+  return `<path d="M${x1.toFixed(0)} ${y1.toFixed(0)}A${TURN_R} ${TURN_R} 0 0 0 ${x2.toFixed(0)} ${y2.toFixed(0)}" fill="none" stroke="${C.o}" stroke-width="22" stroke-linecap="round"/>
+${poly(pts, C.o)}`;
+}
+
+/** Lignes de code : [x, largeur, couleur] par ligne, à partir de `top`, tous les `step`. */
+const codeLines = (rows, x0, top, step, h = 9) =>
+  rows
+    .map((row, i) => row.map(([dx, w, fill]) => `<rect x="${x0 + dx}" y="${top + i * step}" width="${w}" height="${h}" rx="${h / 2}" fill="${fill}"/>`).join(""))
+    .join("\n");
+
+const KW = "#F97316";
+const TXT = "#D4D4D8";
+const STR = "#FDBA74";
+const DIM = "#52525B";
+
+// Portrait : l'éditeur seul, les lignes débordent de l'écran.
+const SCREEN_PORTRAIT = `<g class="a screen-p">
+<rect x="-83" y="-140" width="166" height="20" fill="#23262D"/>
+<circle cx="-68" cy="-130" r="4" fill="${C.o}"/><circle cx="-56" cy="-130" r="4" fill="#E8B04A"/>
+${codeLines(
+  [
+    [[-62, 34, KW], [-24, 120, TXT]],
+    [[-46, 50, KW], [8, 110, STR]],
+    [[-46, 150, TXT]],
+    [[-30, 40, KW], [14, 96, TXT]],
+    [[-30, 130, STR]],
+    [[-46, 64, KW], [22, 70, TXT]],
+    [[-62, 160, DIM]],
+    [[-62, 36, KW], [-22, 140, TXT]],
+    [[-46, 120, STR]],
+  ],
+  0,
+  -104,
+  24,
+)}
+${[...Array(9).keys()].map((i) => `<rect x="-76" y="${-104 + i * 24}" width="8" height="9" rx="2" fill="${DIM}"/>`).join("")}
+<rect x="-83" y="128" width="166" height="37" fill="#23262D"/>
+<rect x="-30" y="137" width="60" height="18" rx="9" fill="${C.o}"/>
+</g>`;
+
+// Paysage, dessiné à plat puis tourné de 90° : une fois le téléphone couché, l'énoncé à gauche, le code à droite.
+const SCREEN_LANDSCAPE = `<g class="a screen-l"><g transform="rotate(90)">
+<rect x="-165" y="-83" width="112" height="166" fill="${C.cr}"/>
+<rect x="-150" y="-62" width="58" height="9" rx="4.5" fill="${C.o}"/>
+${codeLines([[[0, 80, C.g]], [[0, 70, C.g]], [[0, 84, C.g]], [[0, 52, C.g]], [[0, 76, C.g]]], -150, -40, 18, 7)}
+<rect x="-53" y="-83" width="218" height="20" fill="#23262D"/>
+<circle cx="-40" cy="-73" r="4" fill="${C.o}"/><circle cx="-28" cy="-73" r="4" fill="#E8B04A"/>
+${[...Array(5).keys()].map((i) => `<rect x="-45" y="${-50 + i * 20}" width="8" height="8" rx="2" fill="${DIM}"/>`).join("")}
+${codeLines(
+  [
+    [[0, 30, KW], [36, 70, TXT]],
+    [[16, 44, KW], [66, 54, STR]],
+    [[16, 96, TXT]],
+    [[32, 36, KW], [74, 50, TXT]],
+    [[16, 40, KW], [62, 64, STR]],
+  ],
+  -28,
+  -50,
+  20,
+  8,
+)}
+<rect x="96" y="56" width="58" height="18" rx="9" fill="${C.o}"/>
+${poly("120,60 120,70 129,65", "#FFFFFF")}
+</g></g>`;
+
+const phone = () => {
+  const { w, h } = PHONE;
+  return `<g class="a phone">
+<rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="34" fill="${C.k}"/>
+<rect x="${w / 2 - 2}" y="-110" width="8" height="54" rx="3" fill="#3B2F2C"/>
+<rect x="${w / 2 - 2}" y="-40" width="8" height="34" rx="3" fill="#3B2F2C"/>
+<g clip-path="url(#ide-screen)">
+<rect x="-83" y="-165" width="166" height="330" fill="#1B1D22"/>
+${SCREEN_PORTRAIT}
+${SCREEN_LANDSCAPE}
+</g>
+<rect x="-24" y="-176" width="48" height="8" rx="4" fill="#0E0F12"/>
+</g>`;
+};
+
+const CHECK = `<g class="a ok">
+<circle cx="0" cy="0" r="34" fill="#5E9E4E"/>
+<path d="M-15 1L-4 12L16 -10" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</g>`;
+
+const idePaysage = svg(
+  "170 300 1110 590",
+  "Le renard tourne le téléphone en format paysage pour utiliser l'éditeur de code",
+  `<defs><clipPath id="ide-screen"><rect x="-83" y="-165" width="166" height="330" rx="20"/></clipPath></defs>
+${SCENE_GROUND}
+${await bush404()}
+<ellipse cx="${PHONE.x}" cy="842" rx="150" ry="13" fill="${C.g}"/>
+<g transform="translate(${PHONE.x} ${PHONE.y})">
+<g class="a turn">${turnArrow(-30, -150)}
+${turnArrow(150, 30)}</g>
+${phone()}
+<g transform="translate(${TURN_R - 70} ${-TURN_R + 120})">${CHECK}</g>
+</g>
+${groundLeaves([[230, 866, 20], [1230, 872, -15]])}
+${await sideFox(0.66, 164, 312.7)}`,
+  `.tail1{animation:tail1 4.5s ease-in-out infinite alternate}
+@keyframes tail1{from{transform:rotate(-2deg)}to{transform:rotate(2.5deg)}}
+.ear1{animation:ear-l 8s infinite}
+.phone{transform-origin:50% 50%;animation:turn 6s ease-in-out infinite}
+@keyframes turn{0%,16%{transform:rotate(0)}36%,80%{transform:rotate(-90deg)}96%,100%{transform:rotate(0)}}
+.screen-p{animation:screen-p 6s ease-in-out infinite}
+@keyframes screen-p{0%,22%{opacity:1}30%,86%{opacity:0}94%,100%{opacity:1}}
+.screen-l{animation:screen-l 6s ease-in-out infinite}
+@keyframes screen-l{0%,22%{opacity:0}30%,86%{opacity:1}94%,100%{opacity:0}}
+.turn{transform-origin:50% 50%;animation:arrows 6s ease-in-out infinite}
+@keyframes arrows{0%,16%{transform:rotate(0);opacity:1}32%{transform:rotate(-70deg);opacity:0}84%{transform:rotate(0);opacity:0}96%,100%{transform:rotate(0);opacity:1}}
+.ok{transform-origin:50% 50%;animation:ok 6s ease-in-out infinite}
+@keyframes ok{0%,36%{transform:scale(0);opacity:0}42%{transform:scale(1.15);opacity:1}46%,76%{transform:scale(1);opacity:1}82%,100%{transform:scale(0);opacity:0}}`,
+);
+
 // ---------- 5. Chapitre « Intelligence artificielle » (SNT) ----------
 // Même composition que les autres images de chapitre : le renard de profil dans une tache crème,
 // face à l'objet du chapitre, ici une fenêtre de conversation avec une IA.
@@ -428,6 +562,7 @@ const files = {
   "http_404.svg": await build404(),
   "http_403.svg": http403,
   "http_500.svg": http500,
+  "ide_paysage.svg": idePaysage,
   "chapitres/1/chap_ia.svg": chapIA,
 };
 

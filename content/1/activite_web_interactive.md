@@ -9,23 +9,23 @@ prerequisites:
 audience: public
 ---
 
-# <Icone nom="globe" /> Atelier Web : Crée ta première page
+# <Icone nom="globe" /> Atelier Web : créer sa première page
 
-Dans cet atelier interactif, tu peux modifier le code HTML et CSS à gauche et voir le résultat instantanément à droite.
+Dans cet atelier interactif, le code HTML et CSS se modifie à gauche et le résultat s'affiche instantanément à droite.
 
 ## <Icone nom="target" /> Objectifs
-1. Change le texte du titre `<h1>`.
-2. Ajoute une image avec `<img src="https://placehold.co/100" />`.
-3. Change la couleur du titre en `blue` dans la section `<style>`.
+1. Changer le texte du titre `<h1>`.
+2. Ajouter une image avec `<img src="https://placehold.co/100" />`.
+3. Changer la couleur du titre en `blue` dans la section `<style>`.
 
 <WebPreview />
 
-## <Icone nom="lightbulb" /> À toi de jouer !
-Essaie d'ajouter un bouton :
+## <Icone nom="lightbulb" /> Mise en pratique
+Essayer d'ajouter un bouton :
 ```html
 <button>Clique-moi !</button>
 ```
-Et donne-lui un style :
+Puis lui donner un style :
 ```css
 button {
   background: orange;

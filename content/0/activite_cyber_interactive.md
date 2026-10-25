@@ -12,8 +12,8 @@ audience: public
 Une attaque par **Brute Force** consiste à tester toutes les combinaisons possibles jusqu'à trouver le bon mot de passe.
 
 ## <Icone nom="target" /> Simulation
-Entre un mot de passe court (ex: "a1") et lance l'attaque. Regarde combien de temps il faut pour le trouver.
-Essaie ensuite avec un mot de passe un peu plus long (ex: "a1b2").
+Entrer un mot de passe court (ex: "a1") et lancer l'attaque. Regarder combien de temps il faut pour le trouver.
+Essayer ensuite avec un mot de passe un peu plus long (ex: "a1b2").
 
 <PasswordCracker />
 

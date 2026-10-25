@@ -2,13 +2,12 @@ import { createRequire } from 'node:module';
 import { describe, expect, it } from 'vitest';
 import { ENQUETES } from '../lib/enquetes/cases';
 import { buildSqlScript, isCulprit, tableToCsv } from '../lib/enquetes/build';
+import { friendlySqlError, runStatements, type SqlDb } from '../lib/enquetes/engines';
 
 const require = createRequire(import.meta.url);
 
-type Db = { exec: (sql: string) => { columns: string[]; values: unknown[][] }[]; close: () => void };
-
-async function openCase(script: string): Promise<Db> {
-  const initSqlJs = require('sql.js/dist/sql-asm.js') as () => Promise<{ Database: new () => Db }>;
+async function openCase(script: string): Promise<SqlDb> {
+  const initSqlJs = require('sql.js/dist/sql-asm.js') as () => Promise<{ Database: new () => SqlDb }>;
   const SQL = await initSqlJs();
   const db = new SQL.Database();
   db.exec(script);
@@ -61,5 +60,47 @@ suspects = [a["nom"] for a in animaux
       rows: [['bonjour, "toi"']],
     });
     expect(csv).toBe('a\n"bonjour, ""toi"""\n');
+  });
+});
+
+describe('erreurs SQL', () => {
+  async function run(query: string) {
+    const db = await openCase(buildSqlScript(ENQUETES[0]));
+    try {
+      return runStatements(db, query);
+    } finally {
+      db.close();
+    }
+  }
+
+  it('affichent le mot fautif et sa ligne', async () => {
+    const cases: [string, string, number][] = [
+      ['SELEC * FROM rapports', 'près de « SELEC »', 1],
+      // Le premier « date » est correct : c'est celui de la ligne 3 qui bloque.
+      ['SELECT date, lieu\nFROM rapports\nORDER date', 'près de « date »', 3],
+      ['SELECT * FROM rapports;\nSELECT * FROM temoignage', 'La table « temoignage »', 2],
+      ['SELECT nom2\nFROM rapports', 'La colonne « nom2 »', 1],
+      ["SELECT * FROM rapports\nWHERE lieu = 'x", "Le texte « 'x »", 2],
+      ['SELECT * FROM rapports\nWHERE', 'après « WHERE »', 2],
+      ['SELECT * FROM rapports WHERE id IN (\n  SELECT rapport_id FROM temoignages', 'parenthèse « ( »', 1],
+      ['SELECT rapports.id\nFROM rapports JOIN temoignages\nON id = rapport_id', 'La colonne « id »', 3],
+      ["-- SELEC\nSELECT * FROM rapports WHERE lieu = 'SELEC'\nAND SELEC", 'La colonne « SELEC »', 3],
+    ];
+    for (const [query, message, line] of cases) {
+      const outcome = await run(query);
+      expect(outcome.error, query).toContain(message);
+      expect(outcome.errorLine, query).toBe(line);
+    }
+  });
+
+  it('gardent le message brut quand il n’y a pas de traduction', () => {
+    expect(friendlySqlError('datatype mismatch')).toBe('Erreur SQL : datatype mismatch');
+    expect(friendlySqlError('')).toBe('Erreur SQL inconnue.');
+  });
+
+  it('n’empêchent pas d’exécuter chaque instruction', async () => {
+    const outcome = await run('SELECT COUNT(*) FROM rapports;; SELECT 1 AS un');
+    expect(outcome.error).toBeUndefined();
+    expect(outcome.results.map((result) => result.columns)).toEqual([['COUNT(*)'], ['un']]);
   });
 });

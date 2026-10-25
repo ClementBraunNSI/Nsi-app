@@ -16,7 +16,7 @@ La machine ne stocke que des bits. Une lettre n'est donc pas un dessin : c'est u
 
 ## Un caractère est un entier
 
-Lettre, chiffre, ponctuation, espace, emoji : pour le processeur, ce sont des entiers. En ASCII comme en Unicode, la lettre **A** a le code **65**, qu'on écrit aussi $41_{(16)}$. Changer de symbole, c'est changer de nombre. Le glyphe que vous voyez à l'écran est le dessin que la police associe à ce nombre.
+Lettre, chiffre, ponctuation, espace, emoji : pour le processeur, ce sont des entiers. En ASCII comme en Unicode, la lettre **A** a le code **65**, qu'on écrit aussi $41_{(16)}$. Changer de symbole, c'est changer de nombre. Le glyphe affiché à l'écran est le dessin que la police associe à ce nombre.
 
 ## ASCII, cent vingt-huit places
 
@@ -51,7 +51,7 @@ b'\xc3\xa9'   # deux octets en UTF-8
 
 Table de référence : [charset.org/utf-8](https://www.charset.org/utf-8)
 
-Pour fermer : un caractère est un symbole relié à un nombre. ASCII code 128 caractères sur 7 bits, ceux de l'alphabet latin de base. Unicode numérote tous les symboles par des points de code. UTF-8 range ces numéros sur 1 à 4 octets, en restant compatible avec ASCII. En Python, `ord`, `chr` et `.encode("utf-8")` font voir la différence.
+En résumé, un caractère est un symbole relié à un nombre. ASCII code 128 caractères sur 7 bits, ceux de l'alphabet latin de base. Unicode numérote tous les symboles par des points de code. UTF-8 range ces numéros sur 1 à 4 octets, en restant compatible avec ASCII. En Python, `ord`, `chr` et `.encode("utf-8")` font voir la différence.
 
 ## Pour s'entraîner
 

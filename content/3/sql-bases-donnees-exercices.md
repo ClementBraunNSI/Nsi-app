@@ -17,13 +17,13 @@ groupeTitre: "SQL et bases de données"
   <ExerciseSection id="exo-1-1" label="Niveau 0 - INSERT, UPDATE, DELETE" type="sql">
     <Enonce>
     ### Exercice 1.1 : Créer une table étudiants
-    **Créez une table `etudiants` avec les colonnes :**
+    **Créer une table `etudiants` avec les colonnes :**
     - `id` (INTEGER PRIMARY KEY)
     - `nom` (VARCHAR(50))
     - `prenom` (VARCHAR(50))
     - `age` (INTEGER)
     
-    **Insérez 3 étudiants :**
+    **Insérer 3 étudiants :**
     - Martin Alice 17 ans
     - Dupont Bob 18 ans
     - Durand Claire 17 ans
@@ -35,7 +35,7 @@ groupeTitre: "SQL et bases de données"
     ```
     </Verification>
     ### Exercice 1.2 : Requêtes avec conditions
-    **À partir de la table étudiants, écrivez les requêtes :**
+    **À partir de la table étudiants, écrire les requêtes :**
     1. Afficher tous les étudiants
     2. Afficher seulement les noms et prénoms
     3. Afficher les étudiants de 17 ans
@@ -48,7 +48,7 @@ groupeTitre: "SQL et bases de données"
     </Verification>
   
     ### Exercice 1.3 : Modifier et supprimer
-    **À partir de la table étudiants, écrivez les requêtes :**
+    **À partir de la table étudiants, écrire les requêtes :**
     5. Modifier l'âge de Martin pour le mettre à 18 ans
     6. Supprimer l'étudiant Durand
     7. Augmenter l'âge de tous les étudiants de 1 an
@@ -64,7 +64,7 @@ groupeTitre: "SQL et bases de données"
   <ExerciseSection id="level-1-biblio" label="Niveau 1 - La Bibliothèque" type="sql">
     <Enonce>
     ### Contexte : La Bibliothèque
-    Vous gérez une petite base de données contenant une table `Livres`.
+    Une petite base de données contient une table `Livres`.
     
     | id | titre | auteur | annee_publication | genre | disponible |
     |----|-------|--------|-------------------|-------|------------|
@@ -90,7 +90,7 @@ groupeTitre: "SQL et bases de données"
   <ExerciseSection id="level-2-concession" label="Niveau 2 - La Concession" type="sql">
     <Enonce>
     ### Contexte : La Concession Automobile
-    Vous analysez le stock d'une concession automobile.
+    Il s'agit d'analyser le stock d'une concession automobile.
     
     | id | marque | modele | couleur | annee | prix | kilométrage |
     |----|--------|--------|---------|-------|------|-------------|
@@ -114,7 +114,7 @@ groupeTitre: "SQL et bases de données"
   <ExerciseSection id="level-3-refuge" label="Niveau 3 - Le Refuge" type="sql">
     <Enonce>
     ### Contexte : Le Refuge des Renards
-    Vous gérez un refuge pour renards réparti sur trois tables.
+    La base d'un refuge pour renards est répartie sur trois tables.
 
     **Table `Soignants`**
     | id | nom | specialite |

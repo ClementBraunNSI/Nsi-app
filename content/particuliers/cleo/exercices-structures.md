@@ -25,7 +25,7 @@ audience:
     3.  Dans le `main`, créer une variable `reveil` initialisée à 9h, 5min, 2sec et l'afficher.
 
     ### Rappel Formatage
-    Utilisez `%02d` dans `printf` pour forcer l'affichage sur 2 chiffres (ex: 5 devient 05).
+    Utiliser `%02d` dans `printf` pour forcer l'affichage sur 2 chiffres (ex: 5 devient 05).
     </Enonce>
     <Correction>
     ```c
@@ -63,7 +63,7 @@ audience:
     3.  Formule : $\sqrt{(x_b - x_a)^2 + (y_b - y_a)^2}$
     4.  Tester avec le point A(0,0) et B(3,4). Le résultat doit être 5.0.
 
-    *Note : N'oubliez pas d'inclure `<math.h>` et de compiler avec `-lm` si nécessaire.*
+    *Note : Ne pas oublier d'inclure `<math.h>` et de compiler avec `-lm` si nécessaire.*
     </Enonce>
     <Correction>
     ```c
@@ -140,7 +140,7 @@ audience:
 
     ### Étapes
     1.  Reprendre la structure `Heure` de l'exercice 1.
-    2.  Écrire une fonction `tick(Heure *t)` (Notez le pointeur !) qui ajoute une seconde à l'heure.
+    2.  Écrire une fonction `tick(Heure *t)` (Noter le pointeur !) qui ajoute une seconde à l'heure.
     3.  **Attention aux retenues :**
         *   Si secondes > 59 -> secondes = 0 et minutes + 1
         *   Si minutes > 59 -> minutes = 0 et heures + 1

@@ -63,7 +63,7 @@ public class Etudiant : Personne
 }
 ```
 
-`: base(nom)` s'exécute avant le corps du constructeur de `Etudiant`. Le nom est rangé par la mère. La classe est rangée par la fille. Si vous omettez `: base(...)`, le compilateur cherche un constructeur `Personne()` sans argument. Ici, il n'existe pas. La compilation échoue. Ce n'est pas un oubli anodin : la fille n'a pas le droit de naître sans que la mère ait initialisé ce qu'elle possède.
+`: base(nom)` s'exécute avant le corps du constructeur de `Etudiant`. Le nom est rangé par la mère. La classe est rangée par la fille. Sans `: base(...)`, le compilateur cherche un constructeur `Personne()` sans argument. Ici, il n'existe pas. La compilation échoue. Ce n'est pas un oubli anodin : la fille n'a pas le droit de naître sans que la mère ait initialisé ce qu'elle possède.
 
 ## Une méthode, plusieurs comportements
 
@@ -158,4 +158,4 @@ public sealed class CompteSecurise
 // public class Piratage : CompteSecurise -> ERREUR COMPILATION
 ```
 
-On peut aussi sceller une méthode déjà redéfinie, pour que les petites-filles ne puissent plus la remplacer. La chaîne s'arrête là où vous posez `sealed`.
+On peut aussi sceller une méthode déjà redéfinie, pour que les petites-filles ne puissent plus la remplacer. La chaîne s'arrête là où `sealed` est posé.

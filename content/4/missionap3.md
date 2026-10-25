@@ -17,7 +17,7 @@ Durée : 12 h (4 h par semaine, 3 semaines), atelier de professionnalisation, se
 L'AP2 a livré une console C# et une page PHP qui lit `disponibles.csv`. Deux évolutions sont obligatoires :
 
 1. remplacer la page PHP procédurale par une architecture MVC ;
-2. remplacer la console par une application graphique (WinForms, WPF, Avalonia, ou une technologie équivalente validée par l'enseignant).
+2. remplacer la console par une application graphique (WinForms, WPF, Avalonia, ou une technologie équivalente validée en classe).
 
 Les véhicules, les états, le devis et l'export restent ceux de l'AP2. On ne recommence pas le sujet.
 
@@ -37,7 +37,7 @@ La page d'accueil est la vitrine : tous les véhicules **disponibles**, en grill
 <ExerciseTabs courseId="sio_ap3_mvc" courseTitle="MVC">
   <ExerciseSection id="ap3-mvc-1" label="Les trois couches" type="autre">
     <Enonce>
-      Rangez le projet en modèle, vue et contrôleur.
+      Ranger le projet en modèle, vue et contrôleur.
 
       - Le modèle porte un véhicule (immatriculation, marque, modèle, prix, état, champs spécifiques) et refuse un prix négatif.
       - Le contrôleur lit la demande et choisit la vue. Il ne contient pas le CSS.
@@ -60,7 +60,7 @@ La page d'accueil est la vitrine : tous les véhicules **disponibles**, en grill
 
       Les fichiers externes (CSS, et le CSV s'il est lu côté serveur) sont appelés avec l'instruction prévue, pas collés dans une chaîne ouverte à une saisie. Le CSS est dans un fichier externe. Les composants qui se répètent (carte véhicule, badge) sont écrits une fois.
 
-      Relisez le cours sur les injections SQL et les failles XSS, et indiquez dans un commentaire de la vue où l'encodage a lieu.
+      Relire le cours sur les injections SQL et les failles XSS, et indiquer dans un commentaire de la vue où l'encodage a lieu.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>

@@ -1,6 +1,6 @@
 ---
 title: C - Structures de Contrôle
-description: 'Conditions, choix et boucles pour diriger vos programmes'
+description: 'Conditions, choix et boucles pour diriger ses programmes'
 level: particuliers
 chapter: Programmation en C
 icon: "shuffle"
@@ -12,7 +12,7 @@ audience:
 
 # <Icone nom="shuffle" /> C : Structures de Contrôle
 
-## Conditions, choix et boucles pour diriger vos programmes
+## Conditions, choix et boucles pour diriger les programmes
 
 ## <Icone nom="traffic-cone" /> Les Conditions (if / else)
 

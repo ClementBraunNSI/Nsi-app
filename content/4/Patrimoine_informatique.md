@@ -83,6 +83,6 @@ La **CMDB** (*Configuration Management Database*) est la base qui rassemble tout
 
 ## Inventaire du projet d'atelier
 
-L'objectif est de produire l'inventaire des ressources dont votre projet d'atelier a besoin, pas un parc imaginaire.
+L'objectif est de produire l'inventaire des ressources dont le projet d'atelier a besoin, pas un parc imaginaire.
 
-Listez le matériel, les logiciels et les ressources immatérielles. Remplissez le tableau d'inventaire. Marquez les ressources critiques. Décrivez les dépendances. Proposez comment les sauvegardes sont organisées. Indiquez ce que vous améliorerez en maintenance et en sécurité. Une ressource qui n'a ni propriétaire, ni sauvegarde, ni dépendance notée n'est pas encore inventoriée : elle est seulement citée.
+Lister le matériel, les logiciels et les ressources immatérielles. Remplir le tableau d'inventaire. Marquer les ressources critiques. Décrire les dépendances. Proposer comment les sauvegardes sont organisées. Indiquer ce qui sera amélioré en maintenance et en sécurité. Une ressource qui n'a ni propriétaire, ni sauvegarde, ni dépendance notée n'est pas encore inventoriée : elle est seulement citée.

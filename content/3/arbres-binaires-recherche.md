@@ -37,24 +37,24 @@ Supprimer dépend du nœud visé. Une feuille se décroche. Un nœud avec un seu
 
 ### Question 1 : Dessiner l'arbre
 
-**Construisez l'ABR obtenu par insertion successive des valeurs suivantes :**
+**Construire l'ABR obtenu par insertion successive des valeurs suivantes :**
 
 `[50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45]`
 
-**Dessinez l'arbre final et indiquez pour chaque nœud :**
+**Dessiner l'arbre final et indiquer pour chaque nœud :**
 - Sa profondeur (niveau dans l'arbre, la racine étant niveau 0)
 - Si c'est une feuille ou non
 
 ### Question 2 : Parcours
 
-**Donnez l'ordre de visite des nœuds pour les parcours suivants :**
+**Donner l'ordre de visite des nœuds pour les parcours suivants :**
 - **Parcours préfixe** (racine, gauche, droite)
 - **Parcours infixe** (gauche, racine, droite)
 - **Parcours postfixe** (gauche, droite, racine)
 
 ### Question 3 : Recherche
 
-**Recherchez la valeur 35 dans l'arbre construit. Détaillez le chemin parcouru.**
+**Rechercher la valeur 35 dans l'arbre construit. Détailler le chemin parcouru.**
 
 **Quelle est la complexité de cette recherche dans le meilleur et le pire des cas ?**
 
@@ -62,7 +62,7 @@ Supprimer dépend du nœud visé. Une feuille se décroche. Un nœud avec un seu
 
 ### Classe Noeud
 
-**Implémentez une classe `Noeud` représentant un nœud d'ABR avec :**
+**Implémenter une classe `Noeud` représentant un nœud d'ABR avec :**
 - Un attribut `valeur`
 - Un attribut `gauche` (initialisé à None)
 - Un attribut `droit` (initialisé à None)
@@ -77,7 +77,7 @@ class Noeud:
 
 ### Classe ABR
 
-**Implémentez une classe `ABR` avec les méthodes suivantes :**
+**Implémenter une classe `ABR` avec les méthodes suivantes :**
 
 #### Insertion
 ```python
@@ -115,7 +115,7 @@ def hauteur(self):
 
 ### Trouver le minimum et le maximum
 
-**Implémentez deux méthodes pour trouver :**
+**Implémenter deux méthodes pour trouver :**
 - La valeur minimale dans l'ABR
 - La valeur maximale dans l'ABR
 
@@ -123,49 +123,49 @@ def hauteur(self):
 
 ### Suppression d'un nœud
 
-**Implémentez la méthode de suppression d'un nœud en tenant compte des 3 cas :**
+**Implémenter la méthode de suppression d'un nœud en tenant compte des 3 cas :**
 1. Le nœud est une feuille
 2. Le nœud a un seul enfant
 3. Le nœud a deux enfants
 
-**Pour le cas 3, utilisez la méthode du prédécesseur infixe.**
+**Pour le cas 3, utiliser la méthode du prédécesseur infixe.**
 
 ### Validation d'ABR
 
-**Écrivez une fonction qui vérifie qu'un arbre binaire donné est bien un ABR.**
+**Écrire une fonction qui vérifie qu'un arbre binaire donné est bien un ABR.**
 
-**Indice :** Utilisez un parcours infixe et vérifiez que les valeurs sont dans l'ordre croissant.
+**Indice :** Utiliser un parcours infixe et vérifier que les valeurs sont dans l'ordre croissant.
 
 ## Exercice 4 : Complexité et optimisation
 
 ### Cas dégénéré
 
-**Donnez un exemple de séquence d'insertions qui produit un ABR dégénéré (en liste chaînée).**
+**Donner un exemple de séquence d'insertions qui produit un ABR dégénéré (en liste chaînée).**
 
 **Quelle est la hauteur de cet arbre ? Quelle est sa complexité pour les opérations ?**
 
 ### Arbres équilibrés
 
-**Expliquez pourquoi l'équilibrage est important pour maintenir de bonnes performances.**
+**Expliquer pourquoi l'équilibrage est important pour maintenir de bonnes performances.**
 
-**Nommez deux types d'arbres équilibrés et leurs caractéristiques principales.**
+**Nommer deux types d'arbres équilibrés et leurs caractéristiques principales.**
 
 ## Pour aller plus loin
 
 ### Parcours par niveau
 
-**Implémentez un parcours en largeur (BFS) pour visiter tous les nœuds niveau par niveau.**
+**Implémenter un parcours en largeur (BFS) pour visiter tous les nœuds niveau par niveau.**
 
 ### Conversion en liste chaînée
 
-**Écrivez une fonction qui "aplatit" un ABR en une liste chaînée triée en utilisant uniquement les pointeurs existants.**
+**Écrire une fonction qui "aplatit" un ABR en une liste chaînée triée en utilisant uniquement les pointeurs existants.**
 
 ### Arbre miroir
 
-**Créez une fonction qui génère l'arbre miroir d'un ABR donné (gauche et droite inversés).**
+**Créer une fonction qui génère l'arbre miroir d'un ABR donné (gauche et droite inversés).**
 
 !!! success "Conseils"
-    - Commencez par dessiner les arbres pour visualiser les opérations
-    - Testez votre code avec des exemples simples
-    - Vérifiez que les propriétés d'ABR sont maintenues après chaque opération
-    - Utilisez le parcours infixe pour vérifier l'ordre des éléments
+    - Commencer par dessiner les arbres pour visualiser les opérations
+    - Tester le code avec des exemples simples
+    - Vérifier que les propriétés d'ABR sont maintenues après chaque opération
+    - Utiliser le parcours infixe pour vérifier l'ordre des éléments

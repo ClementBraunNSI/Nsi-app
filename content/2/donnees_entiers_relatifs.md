@@ -40,7 +40,7 @@ Exemple : $-14$ sur 8 bits.
 
 Donc $-14_{(10)} = 11110010_{(2)}$ en complément à deux sur 8 bits. Oublier le $+1$ laisse le complément à un, qui n'est pas le codage de la machine. Changer de taille en cours de route non plus : un nombre sur 4 bits n'a pas les mêmes zéros de tête que sur 8 bits, et l'inversion ne donne pas le même résultat.
 
-On vérifie par l'addition. Sur 4 bits, prenons $6 + (-4)$, puisque 14 ne tient pas dans 4 bits en positif.
+On vérifie par l'addition. Sur 4 bits, on prend $6 + (-4)$, puisque 14 ne tient pas dans 4 bits en positif.
 
 - $6 = 0110_{(2)}$
 - $-4$ : valeur absolue $0100$, inversion $1011$, plus un $\rightarrow 1100_{(2)}$
@@ -54,7 +54,7 @@ La retenue sortie du quatrième bit est jetée. Le résultat est bien $6 - 4 = 2
 | Addition correcte | Non | Oui |
 | Usage actuel | Non | Standard |
 
-Pour fermer : le bit de signe seul fabrique deux zéros et casse l'addition. Le complément à deux inverse les bits puis ajoute 1. Sur $n$ bits, on représente de $-2^{n-1}$ à $2^{n-1}-1$. On additionne comme pour les positifs et on tronque à $n$ bits. Le bit de poids fort vaut $-2^{n-1}$. C'est le codage des processeurs.
+En résumé, le bit de signe seul fabrique deux zéros et casse l'addition. Le complément à deux inverse les bits puis ajoute 1. Sur $n$ bits, on représente de $-2^{n-1}$ à $2^{n-1}-1$. On additionne comme pour les positifs et on tronque à $n$ bits. Le bit de poids fort vaut $-2^{n-1}$. C'est le codage des processeurs.
 
 ## Pour s'entraîner
 

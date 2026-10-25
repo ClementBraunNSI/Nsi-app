@@ -83,11 +83,11 @@ monBouton.addEventListener("click", function() {
 
 Le geste tient en trois temps : **sélectionner**, **écouter**, **réagir**. On vérifie que l'élément existe avant de lui poser un écouteur. `input` sert à suivre une saisie lettre par lettre. `submit` sert au moment où le formulaire part.
 
-Pour fermer : JavaScript s'occupe du comportement, le DOM est l'arbre de la page. `getElementById` et `querySelector` ciblent. `textContent` et `.style` mettent à jour. `addEventListener` réagit. `.value` lit un champ. On n'utilise un nœud qu'une fois certain qu'il est là.
+En résumé, JavaScript s'occupe du comportement, le DOM est l'arbre de la page. `getElementById` et `querySelector` ciblent. `textContent` et `.style` mettent à jour. `addEventListener` réagit. `.value` lit un champ. On n'utilise un nœud qu'une fois certain qu'il est là.
 
 ## Pour s'entraîner / Suite
 
-Entraînez-vous avec les exercices ci-dessous. Ensuite, le cours [Web et HTTP](/cours/2/web_protocoles) situe ces pages dans le modèle client-serveur.
+S'entraîner avec les exercices ci-dessous. Ensuite, le cours [Web et HTTP](/cours/2/web_protocoles) situe ces pages dans le modèle client-serveur.
 
 ## Exercices pratiques
 
@@ -97,7 +97,7 @@ Entraînez-vous avec les exercices ci-dessous. Ensuite, le cours [Web et HTTP](/
     <Enonce>
     ### Objectif : Créer un compteur de likes
     
-    Nous allons créer un bouton qui incrémente un compteur affiché à l'écran.
+    Créer un bouton qui incrémente un compteur affiché à l'écran.
     
     **Code HTML fourni :**
     ```html

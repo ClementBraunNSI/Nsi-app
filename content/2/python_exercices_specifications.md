@@ -12,7 +12,7 @@ audience: public
 
 ## <Icone nom="bug" /> Chasseur de Bugs
 
-Avant de passer aux exercices de spécification, entraînez-vous à repérer les erreurs courantes de **nommage**, de **typage** et de **logique** qui rendent le code difficile à spécifier ou à maintenir.
+Avant de passer aux exercices de spécification, s'entraîner à repérer les erreurs courantes de **nommage**, de **typage** et de **logique** qui rendent le code difficile à spécifier ou à maintenir.
 
 <BugHunter />
 
@@ -29,7 +29,7 @@ graph TD
 ```
 
 **Exemple visuel :**
-Imaginez une machine qui ne doit accepter que des nombres positifs.
+Imaginer une machine qui ne doit accepter que des nombres positifs.
 ```python
 x = -5
 assert x > 0, "Alerte ! x doit être positif"
@@ -153,12 +153,12 @@ assert abs(surface(1) - 3.14159) < 0.0001, "Le calcul de surface semble incorrec
   <ExerciseSection id="specs-3-1" label="3.1 - Synthèse (Somme, Moyenne, Périmètre)" type="python">
     <Enonce>
     ### Exercice 3.1 : Somme, Moyenne et Périmètre
-    **Écrivez les fonctions complètes (code + spécification) pour :**
+    **Écrire les fonctions complètes (code + spécification) pour :**
     1. Calculer la somme d'une liste (`calculer_somme_liste`).
     2. Calculer la moyenne de deux nombres (`calculer_moyenne`).
     3. Calculer le périmètre d'un rectangle (`calculer_perimetre_rectangle`).
 
-    *Pour la vérification, définissez les trois fonctions avec leurs docstrings.*
+    *Pour la vérification, définir les trois fonctions avec leurs docstrings.*
 
     <Correction>
     ```python

@@ -59,14 +59,14 @@ Une récursion peut se réécrire avec une boucle. Quand les appels ne sont pas 
 
 La version itérative de la factorielle garde un accumulateur et n'empile rien. Elle est souvent plus économe. La version récursive est souvent plus courte à écrire quand la structure est déjà un arbre, un graphe, ou un découpage comme les tours de Hanoï : le cas de base et l'appel collent à la définition du problème.
 
-Pour fermer : une fonction récursive s'appelle elle-même, avec un cas de base qui arrête, et des arguments qui s'en rapprochent. Chaque appel attend sur la pile jusqu'au `return`. Oublier le cas de base, ou descendre trop profond, lève `RecursionError`. On choisit la récursion quand elle rend le problème lisible, et la boucle quand l'empilement n'apporte rien.
+En résumé, une fonction récursive s'appelle elle-même, avec un cas de base qui arrête, et des arguments qui s'en rapprochent. Chaque appel attend sur la pile jusqu'au `return`. Oublier le cas de base, ou descendre trop profond, lève `RecursionError`. On choisit la récursion quand elle rend le problème lisible, et la boucle quand l'empilement n'apporte rien.
 
 <ExerciseTabs courseId="terminale_recursivite" courseTitle="Exercices Récursivité">
 
   <ExerciseSection id="rec-ex-1" label="Somme Récursive" type="python">
     <Enonce>
     ### Somme des entiers
-    Écrivez une fonction récursive `somme(n)` qui calcule la somme des entiers de 0 à `n`.
+    Écrire une fonction récursive `somme(n)` qui calcule la somme des entiers de 0 à `n`.
     *   Exemple : `somme(4)` doit renvoyer `4 + 3 + 2 + 1 + 0 = 10`.
     
     **Indices :**
@@ -84,7 +84,7 @@ Pour fermer : une fonction récursive s'appelle elle-même, avec un cas de base 
     *   $F_1 = 1$
     *   $F_n = F_{n-1} + F_{n-2}$ pour $n \ge 2$
     
-    Écrivez la fonction récursive `fibonacci(n)`.
+    Écrire la fonction récursive `fibonacci(n)`.
     
     </Enonce>
   </ExerciseSection>
@@ -93,7 +93,7 @@ Pour fermer : une fonction récursive s'appelle elle-même, avec un cas de base 
     <Enonce>
     ### Détection de Palindrome
     Un palindrome se lit pareil dans les deux sens (ex: "LAVAL", "RADAR").
-    Écrivez une fonction récursive `est_palindrome(mot)` qui renvoie `True` ou `False`.
+    Écrire une fonction récursive `est_palindrome(mot)` qui renvoie `True` ou `False`.
     
     **Principe :**
     *   Si le mot a 0 ou 1 lettre -> C'est un palindrome (Base).

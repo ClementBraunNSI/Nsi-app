@@ -46,7 +46,7 @@ for (int i = 0; i < lignes; i++) {
 
 *   Nombre d'éléments total = `lignes * colonnes`.
 *   Bien distinguer **indice de ligne** et **indice de colonne** dans l'énoncé.
-*   Si tu utilises `malloc` pour du 2D dynamique, revoir le cours : c'est une étape de plus que le 1D.
+*   Pour du 2D dynamique avec `malloc`, revoir le cours : c'est une étape de plus que le 1D.
 
 ## Mini-checklist
 

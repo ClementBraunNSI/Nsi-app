@@ -70,7 +70,7 @@ audience: public
 
     **Questions**
     1. Quel est le principe de la défense en profondeur ?
-    2. Donnez un exemple de fonctionnalité commode pour l'utilisateur et dangereuse par conception (la récupération de compte, par exemple).
+    2. Donner un exemple de fonctionnalité commode pour l'utilisateur et dangereuse par conception (la récupération de compte, par exemple).
     3. Qu'est-ce que le *rate limiting*, et quelle attaque de conception atténue-t-il ?
 
     ### A05:2021, Mauvaise configuration
@@ -84,7 +84,7 @@ audience: public
     **Questions**
     1. Pourquoi changer les mots de passe par défaut des routeurs et des serveurs ?
     2. Quelle est la règle sur les messages d'erreur montrés à l'utilisateur ?
-    3. Citez une pratique simple pour protéger l'accès à un dossier d'administration.
+    3. Citer une pratique simple pour protéger l'accès à un dossier d'administration.
 
     ### A06:2021, Composants vulnérables ou obsolètes
 
@@ -148,7 +148,7 @@ audience: public
 
     **Questions**
     1. Dans une SSRF, qui envoie la requête : le navigateur du client, ou le serveur web ?
-    2. Citez une ressource interne qu'un attaquant viserait ainsi, dans un cloud par exemple.
+    2. Citer une ressource interne qu'un attaquant viserait ainsi, dans un cloud par exemple.
     3. Comment une liste blanche d'URL limite-t-elle cette faille ?
   </ExerciseSection>
 
@@ -181,8 +181,8 @@ audience: public
     ```
 
     **Questions**
-    1. Écrivez un payload SQL permettant de contourner une authentification (`WHERE user='...' AND pass='...'`).
-    2. Expliquez pourquoi `htmlspecialchars()` ne protège pas contre les injections SQL.
+    1. Écrire un payload SQL permettant de contourner une authentification (`WHERE user='...' AND pass='...'`).
+    2. Expliquer pourquoi `htmlspecialchars()` ne protège pas contre les injections SQL.
     3. Dans une requête `UNION SELECT`, quelle contrainte porte sur les colonnes ?
 
     ### Cross-site scripting (XSS)
@@ -197,7 +197,7 @@ audience: public
 
     **Questions**
     1. Quelle fonction PHP native protège efficacement contre la XSS au moment de l'affichage ?
-    2. Écrivez un court script JavaScript qui affiche le cookie de l'utilisateur dans une alerte.
+    2. Écrire un court script JavaScript qui affiche le cookie de l'utilisateur dans une alerte.
     3. Quelle différence de persistance y a-t-il entre une XSS stockée et une XSS réfléchie ?
 
     ### Cross-site request forgery (CSRF)
@@ -248,7 +248,7 @@ audience: public
 
     ### Exercice 1 : Alerte au DSI
 
-    Rédigez le message technique au directeur des systèmes d'information après la découverte d'une XSS stockée dans les commentaires d'un site de vente.
+    Rédiger le message technique au directeur des systèmes d'information après la découverte d'une XSS stockée dans les commentaires d'un site de vente.
 
     - **Objet :** Alerte sécurité critique, faille XSS, module commentaires
     - **Description :** un script malveillant persistant a été détecté
@@ -259,11 +259,11 @@ audience: public
 
     Une injection SQL est découverte sur le site vitrine de la boulangerie du quartier. Le site montre des photos de pains et les horaires. Il n'a ni compte client, ni espace membre, ni donnée personnelle. La base ne contient que les tables `produits` et `horaires`.
 
-    Discutez le score CVSS de cette faille à partir de ce contexte : la même injection, sur une base clients, n'a pas le même impact.
+    Discuter le score CVSS de cette faille à partir de ce contexte : la même injection, sur une base clients, n'a pas le même impact.
 
     ### Exercice 3 : Lire un journal
 
-    Extrait Apache. Pour chaque ligne, dites s'il s'agit d'une tentative d'attaque et, si oui, laquelle.
+    Extrait Apache. Pour chaque ligne, dire s'il s'agit d'une tentative d'attaque et, si oui, laquelle.
 
     1. `192.168.1.15 - - [12/Mar/2024:10:00:00] "GET /login.php?user=admin'-- HTTP/1.1" 200 1542`
     2. `192.168.1.15 - - [12/Mar/2024:10:01:00] "GET /search.php?q=<script>alert(1)</script> HTTP/1.1" 200 542`
@@ -274,7 +274,7 @@ audience: public
 
     Règles actuelles d'une PME : 6 caractères minimum, aucune règle de composition, renouvellement obligatoire tous les 30 jours, aucun blocage après des échecs.
 
-    Relevez trois faiblesses critiques, et proposez une version corrigée, conforme aux recommandations de l'ANSSI.
+    Relever trois faiblesses critiques, et proposer une version corrigée, conforme aux recommandations de l'ANSSI.
   </ExerciseSection>
 
 </ExerciseTabs>

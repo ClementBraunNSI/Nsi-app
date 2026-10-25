@@ -23,10 +23,10 @@ prenom = "Maya"
 print("Bonjour", prenom)
 ```
 
-L'interpréteur ci-dessous exécute ce que vous tapez, sans quitter la page. Changez le message, relancez, et regardez ce qui sort.
+L'interpréteur ci-dessous exécute ce qui est tapé, sans quitter la page. Changer le message, relancer, et regarder ce qui sort.
 
-<Admonition type="experiment" title="Testez votre code en direct !">
-Utilisez l'interpréteur ci-dessous pour tester vos commandes Python sans quitter la page. Essayez de modifier le message !
+<Admonition type="experiment" title="Tester son code en direct !">
+Utiliser l'interpréteur ci-dessous pour tester les commandes Python sans quitter la page. Essayer de modifier le message !
 </Admonition>
 
 <PythonPlayground initialCode="print('Hello NSI !')
@@ -59,7 +59,7 @@ print("Bienvenue en Python !")
 </Correction>
 
 ### Exercice 1.2 : Afficher mon prénom
-**Créer une variable `prenom` avec votre prénom, puis l'afficher avec `print()`.**
+**Créer une variable `prenom` avec son prénom, puis l'afficher avec `print()`.**
 
 <Correction>
 ```python

@@ -26,7 +26,7 @@ L'objectif de ce TP est de mettre en pratique l'algorithme des K Plus Proches Vo
 
 ### Contexte
 
-Nous avons des données sur des fruits, caractérisés par leur **douceur** (1 à 10) et leur **acidité** (1 à 10). Nous voulons prédire si un nouveau fruit est une "Pomme" ou une "Orange".
+Des données décrivent des fruits, caractérisés par leur **douceur** (1 à 10) et leur **acidité** (1 à 10). Il s'agit de prédire si un nouveau fruit est une "Pomme" ou une "Orange".
 
 **Données d'entraînement :**
 
@@ -66,7 +66,7 @@ Nous avons des données sur des fruits, caractérisés par leur **douceur** (1 �
 
 ### Contexte
 
-Nous allons appliquer KNN à un ensemble simplifié de fleurs Iris, caractérisées par la longueur de leurs sépales et pétales.
+KNN s'applique ici à un ensemble simplifié de fleurs Iris, caractérisées par la longueur de leurs sépales et pétales.
 Types : **Setosa** et **Versicolor**.
 
 **Données d'entraînement :**
@@ -84,7 +84,7 @@ Types : **Setosa** et **Versicolor**.
 
 !!! tip "À réaliser"
     1.  **Représenter les données** : Liste de dictionnaires.
-    2.  **Calculer la distance** : Réutiliser votre fonction (avec `[longueur_sepale, longueur_petale]`).
+    2.  **Calculer la distance** : Réutiliser la fonction précédente (avec `[longueur_sepale, longueur_petale]`).
     3.  **Trouver les K voisins** : Trouver les voisins de la Fleur Y.
     4.  **Prédire** : Prédire la classe de la **Fleur Y** avec **K=5**.
 
@@ -110,4 +110,4 @@ Mesures : **Nombre de mots clés suspects** et **Longueur de l'email** (échelle
 
 !!! tip "À réaliser"
     1.  Représenter les données.
-    2.  Utiliser vos fonctions KNN pour prédire la classe de l'**Email Z** avec **K=3**.
+    2.  Utiliser les fonctions KNN pour prédire la classe de l'**Email Z** avec **K=3**.

@@ -23,11 +23,11 @@ if (condition) {
 }
 ```
 
-*   **Attention** : `=` (affectation) n'est pas `==` (égalité). En condition, tu veux presque toujours `==`.
+*   **Attention** : `=` (affectation) n'est pas `==` (égalité). En condition, il faut presque toujours `==`.
 
 ## `switch` (choix multiples)
 
-Utile quand tu compares **une variable** à plusieurs **valeurs entières** ou caractères :
+Utile pour comparer **une variable** à plusieurs **valeurs entières** ou caractères :
 
 ```c
 switch (choix) {

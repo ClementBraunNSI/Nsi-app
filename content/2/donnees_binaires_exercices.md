@@ -25,7 +25,7 @@ Cette fiche couvre les conversions entre bases, les opérations arithmétiques b
 <Enonce>
 
 **1. Conversion Binaire vers Décimal**
-Convertissez les nombres suivants en décimal :
+Convertir les nombres suivants en décimal :
 - $1101_{2}$
 - $10101_{2}$
 - $111000_{2}$
@@ -33,7 +33,7 @@ Convertissez les nombres suivants en décimal :
 - $110110_{2}$
 
 **2. Conversion Décimal vers Binaire**
-Convertissez les nombres suivants en binaire :
+Convertir les nombres suivants en binaire :
 - $13_{10}$
 - $42_{10}$
 - $255_{10}$
@@ -108,7 +108,7 @@ assert int('2A', 16) == 42
 <ExerciseSection title="2. Opérations Binaires" difficulty="medium" type="lecture">
 <Enonce>
 
-Effectuez les opérations suivantes sans convertir en décimal (posez les opérations) :
+Effectuer les opérations suivantes sans convertir en décimal (poser les opérations) :
 
 **Additions :**
 1. $1101_{2} + 101_{2}$
@@ -180,13 +180,13 @@ assert 0b1111 * 0b10 == 0b11110
 - $0001\ 1110_{2}$
 
 **2. Décimal vers Complément à Deux (8 bits) :**
-Convertissez les nombres négatifs suivants :
+Convertir les nombres négatifs suivants :
 - $-5_{10}$
 - $-18_{10}$
 - $-128_{10}$
 
 **3. Complément à Deux vers Décimal :**
-Convertissez les nombres binaires (signés sur 8 bits) en décimal :
+Convertir les nombres binaires (signés sur 8 bits) en décimal :
 - $1111\ 1011_{2}$
 - $1110\ 1110_{2}$
 
@@ -236,11 +236,11 @@ assert c2_8bit_to_int(0b11101110) == -18
 <Enonce>
 
 **Exercice 1 :**
-Implémentez la fonction `base10_vers_binaire(n: int) -> str` qui convertit un entier positif en sa représentation binaire (sous forme de chaîne, sans le préfixe '0b').
-Utilisez l'algorithme des divisions successives.
+Implémenter la fonction `base10_vers_binaire(n: int) -> str` qui convertit un entier positif en sa représentation binaire (sous forme de chaîne, sans le préfixe '0b').
+Utiliser l'algorithme des divisions successives.
 
 **Exercice 2 :**
-Implémentez la fonction `binaire_vers_base10(binaire: str) -> int` qui convertit une chaîne binaire en entier.
+Implémenter la fonction `binaire_vers_base10(binaire: str) -> int` qui convertit une chaîne binaire en entier.
 
 </Enonce>
 <Correction>

@@ -11,7 +11,7 @@ audience: public
 
 # Photographie couleur
 
-Un écran ne peint pas. Il allume de toutes petites lumières, et c'est votre œil qui en fait une couleur. Pour comprendre le codage, il faut donc commencer par la rétine, pas par le fichier.
+Un écran ne peint pas. Il allume de toutes petites lumières, et c'est l'œil qui en fait une couleur. Pour comprendre le codage, il faut donc commencer par la rétine, pas par le fichier.
 
 ## Ce que l'œil fait déjà
 
@@ -19,7 +19,7 @@ Deux familles de cellules, sur la rétine, reçoivent la lumière.
 
 ![Schéma de l'oeil](/content/1/oeil.png)
 
-Les **bâtonnets** sont très sensibles. Ils permettent de voir quand il fait sombre, mais ils ne distinguent pas les couleurs : la nuit, le monde passe en gris. Les **cônes** demandent plus de lumière. Il en existe trois sortes, sensibles surtout au rouge, au vert et au bleu. Toute la couleur que vous percevez est une combinaison de ces trois réponses.
+Les **bâtonnets** sont très sensibles. Ils permettent de voir quand il fait sombre, mais ils ne distinguent pas les couleurs : la nuit, le monde passe en gris. Les **cônes** demandent plus de lumière. Il en existe trois sortes, sensibles surtout au rouge, au vert et au bleu. Toute la couleur perçue est une combinaison de ces trois réponses.
 
 L'appareil photo numérique reprend la même idée : une optique qui concentre la lumière, un diaphragme qui en dose la quantité, une mise au point, puis une surface qui enregistre. Le capteur joue le rôle de la rétine.
 
@@ -113,7 +113,7 @@ classDiagram
     FichierJPEG *-- EXIF : Contient
 ```
 
-La marque, l'heure et le flash sont déjà des informations. La position GPS en est une autre : elle peut dire où vous étiez au moment de la photo. Publier l'image sans retirer ces champs, c'est parfois publier une adresse. Le chapitre [Localisation](./Cours_Localisation.md) revient sur ce point.
+La marque, l'heure et le flash sont déjà des informations. La position GPS en est une autre : elle peut dire où se trouvait le photographe au moment de la photo. Publier l'image sans retirer ces champs, c'est parfois publier une adresse. Le chapitre [Localisation](./Cours_Localisation.md) revient sur ce point.
 
 ## Le droit à l'image
 

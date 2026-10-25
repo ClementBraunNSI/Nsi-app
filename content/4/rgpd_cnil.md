@@ -135,14 +135,14 @@ Les **cookies** non essentiels (publicité, mesure d'audience qui n'est pas stri
 
 ## Le formulaire de contact
 
-Vous écrivez un formulaire pour un site vitrine. Chaque ligne se juge au principe, pas au réflexe « plus on en sait, mieux c'est ».
+Un formulaire est à écrire pour un site vitrine. Chaque ligne se juge au principe, pas au réflexe « plus on en sait, mieux c'est ».
 
 | Élément | Conforme RGPD ? | Correction / Explication |
 | :--- | :--- | :--- |
 | Champ "Nom" (Obligatoire) | <Icone nom="circle-check" /> OUI | Nécessaire pour répondre (Minimisation). |
 | Champ "Date de naissance" (Obligatoire) | <Icone nom="circle-x" /> NON | Inutile pour une simple prise de contact (Minimisation). |
 | Case pré-cochée : "Je veux recevoir la newsletter" | <Icone nom="circle-x" /> NON | Le consentement doit être un acte positif. La case doit être vide par défaut. |
-| Mention : "Vos données sont conservées 3 ans après le dernier contact" | <Icone nom="circle-check" /> OUI | Durée de conservation définie et transparente. |
+| Mention : "Les données sont conservées 3 ans après le dernier contact" | <Icone nom="circle-check" /> OUI | Durée de conservation définie et transparente. |
 | Lien vers la "Politique de confidentialité" | <Icone nom="circle-check" /> OUI | Obligation de transparence (Information). |
 
 Le nom sert à répondre : il est nécessaire, donc compatible avec la minimisation. La date de naissance ne sert à rien pour un message. La case déjà cochée fabrique un consentement que la personne n'a pas donné. La durée écrite et le lien vers la politique sont le minimum de transparence. Un formulaire juste est souvent un formulaire plus court.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Editor from "@monaco-editor/react";
 import { RotateCcw } from "lucide-react";
 import type { LabExercise } from "@/app/actions/getExercises";
@@ -13,6 +13,8 @@ type Props = {
   onCodeChange: (value: string) => void;
   onReset: () => void;
   beforeMount: (monaco: any) => void;
+  /** Boutons Exécuter et Vérifier repris dans la barre de l'éditeur (téléphone en paysage). */
+  barActions?: ReactNode;
 };
 
 /** Monaco ne gère pas la saisie tactile : sur téléphone et tablette, on bascule sur CodeArea. */
@@ -28,7 +30,7 @@ function useTouchEditor() {
   return touch;
 }
 
-export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeMount }: Props) {
+export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeMount, barActions }: Props) {
   const touch = useTouchEditor();
   const language = exercise.type === "sql" ? "sql" : "python";
 
@@ -36,6 +38,7 @@ export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeM
     <div className="exercise-editor">
       <div className="exercise-editor-bar">
         <span className="exercise-file">{language === "sql" ? "main.sql" : "main.py"}</span>
+        {barActions}
         <button
           type="button"
           onClick={onReset}

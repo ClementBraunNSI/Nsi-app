@@ -8,23 +8,23 @@ prerequisites: []
 audience: public
 ---
 
-# Activité : recherche sur une liste de sujets (2 h), rendu au professeur
+# Activité : recherche sur une liste de sujets (2 h), avec un rendu écrit
 
-**Objectif :** à partir d'un **sujet parmi la liste ci-dessous**, mener une **recherche documentaire sérieuse** et rendre une **fiche écrite** qui pourra nourrir votre **veille** et vos arguments pour l'**oral de synthèse professionnelle (E6)**.
+**Objectif :** à partir d'un **sujet parmi la liste ci-dessous**, mener une **recherche documentaire sérieuse** et rendre une **fiche écrite** qui pourra nourrir la **veille** et les arguments pour l'**oral de synthèse professionnelle (E6)**.
 
-> **Ce que vous rendez :** un document (PDF ou traitement de texte) selon le **modèle de rendu** en fin de fiche, **avant la date limite** fixée par le professeur.
+> **À rendre :** un document (PDF ou traitement de texte) selon le **modèle de rendu** en fin de fiche, **avant la date limite** fixée.
 
 ---
 
 ## 1) Organisation 
 
-Vous choisirez 4 sujets à aborder et faire une fiche de veille correspondante. Ce travail peut être fait en binôme.
+Choisir 4 sujets à aborder et faire une fiche de veille pour chacun. Ce travail peut être fait en binôme.
 
 ---
 
 ## 2) Liste de sujets
 
-Chaque sujet est volontairement **large mais borné** : votre travail consiste à le **resserrer** en une problématique en une phrase dans le rendu.
+Chaque sujet est volontairement **large mais borné** : le travail consiste à le **resserrer** en une problématique en une phrase dans le rendu.
 
 | N° | Sujet | Piste SLAM / SISR |
 | :---: | :--- | :--- |
@@ -51,7 +51,7 @@ Chaque sujet est volontairement **large mais borné** : votre travail consiste �
 
 ## 3) Exigences sur les sources (minimum à respecter dans le rendu)
 
-Votre recherche doit s'appuyer sur **au moins 4 sources distinctes**, dont :
+La recherche doit s'appuyer sur **au moins 4 sources distinctes**, dont :
 
 * **au moins 1** source **institutionnelle ou normative** (ex. ANSSI, CNIL, documentation européenne, guides officiels) ;
 * **au moins 1** source **technique** (documentation éditeur, RFC, documentation projet open source, guide OWASP, etc.) ;
@@ -62,7 +62,7 @@ Pour **chaque** source retenue dans le rendu : **titre, auteur ou organisme, dat
 
 ---
 
-## 4) Modèle de rendu (à reproduire dans votre document)
+## 4) Modèle de rendu (à reproduire dans le document)
 
 **En-tête :** Nom, prénom(s), Classe, Spécialité (SLAM / SISR), **N° et intitulé du sujet**
 
@@ -73,7 +73,7 @@ Pour **chaque** source retenue dans le rendu : **titre, auteur ou organisme, dat
    * contexte / enjeux ;  
    * éléments techniques ou organisationnels importants ;  
    * risques ou limites éventuels.  
-5. **Lien avec l'E6** (1 paragraphe) : en quoi ce sujet peut vous aider à argumenter à l'oral (projet, stage, mission type, choix technologique).  
-6. **Piste de prolongement** : une question que vous aimeriez creuser ensuite.
+5. **Lien avec l'E6** (1 paragraphe) : en quoi ce sujet peut aider à argumenter à l'oral (projet, stage, mission type, choix technologique).  
+6. **Piste de prolongement** : une question à creuser ensuite.
 
-**Volume indicatif :** 1,5 à 2 pages (hors page de sources si vous les détaillez longuement).
+**Volume indicatif :** 1,5 à 2 pages (hors page de sources si elles sont détaillées longuement).

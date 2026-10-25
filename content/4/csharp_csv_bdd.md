@@ -223,6 +223,6 @@ public void AjouterClient(string nom, string email)
 
 ## Exercice
 
-1. Créez une base `gestion_stock` avec une table `produits (id, nom, prix)`.
-2. Créez une application console C#.
-3. Codez une méthode `ImporterCSV()` qui lit un fichier `produits.csv` et insère chaque produit dans la base de données MariaDB.
+1. Créer une base `gestion_stock` avec une table `produits (id, nom, prix)`.
+2. Créer une application console C#.
+3. Coder une méthode `ImporterCSV()` qui lit un fichier `produits.csv` et insère chaque produit dans la base de données MariaDB.

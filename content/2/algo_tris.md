@@ -55,9 +55,9 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
     
     <SortingVisualizer algorithm="selection" />
 
-    ### 4. À vous de jouer !
+    ### 4. Mise en pratique
 
-    Nous allons implémenter ce tri étape par étape.
+    Ce tri s'implémente étape par étape.
 
     **Exercice A : Trouver le minimum**
     Écrire une fonction `indice_min(liste, debut)` qui renvoie **l'indice** de la valeur la plus petite dans la partie de la liste commençant à `debut`.
@@ -72,7 +72,7 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
     ```
 
     **Exercice B : L'algorithme complet**
-    Utilisez la fonction précédente pour écrire `tri_selection(liste)`.
+    Utiliser la fonction précédente pour écrire `tri_selection(liste)`.
     Cette fonction ne renvoie rien mais modifie la liste directement (tri en place).
 
     ```python
@@ -147,7 +147,7 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
     
     <SortingVisualizer algorithm="insertion" />
 
-    ### 4. À vous de jouer !
+    ### 4. Mise en pratique
 
     **Exercice A : Insérer une valeur**
     Le cœur de l'algorithme est de prendre une valeur à un indice `i` et de la faire "remonter" vers la gauche tant qu'elle est plus petite que son voisin de gauche.

@@ -143,11 +143,11 @@ Pour `FOX` avec la clé `KEY`, les codes sont F=70, O=79, X=88, K=75, E=69, Y=89
   00001101  = 13
 ```
 
-13 n'est pas un caractère imprimable. En chiffrement, c'est normal : le chiffré n'a pas à se lire. À vous de terminer O⊕E et X⊕Y.
+13 n'est pas un caractère imprimable. En chiffrement, c'est normal : le chiffré n'a pas à se lire. Reste à terminer O⊕E et X⊕Y.
 
-**César.** Chiffrez `RENARD ROUX` avec un décalage de 7. L'espace ne se décale pas. R+7 donne Y ; au-delà de Z, on reprend à A. Déchiffrez ensuite `ZLJHYL`, toujours avec 7 : on soustrait le décalage au lieu de l'ajouter.
+**César.** Chiffrer `RENARD ROUX` avec un décalage de 7. L'espace ne se décale pas. R+7 donne Y ; au-delà de Z, on reprend à A. Déchiffrer ensuite `ZLJHYL`, toujours avec 7 : on soustrait le décalage au lieu de l'ajouter.
 
-**Vigenère.** Chiffrez `ALICE` avec la clé `BOB`. La clé se répète en `BOBBO`. A+B (décalage 1) donne B, L+O (14) donne Z, I+B donne J, C+B donne D, E+O donne S. Le chiffré est `BZJDS`. Refaites le tableau lettre par lettre avant de vérifier ce résultat : le cours donne la réponse pour que vous puissiez contrôler le geste, pas pour le sauter.
+**Vigenère.** Chiffrer `ALICE` avec la clé `BOB`. La clé se répète en `BOBBO`. A+B (décalage 1) donne B, L+O (14) donne Z, I+B donne J, C+B donne D, E+O donne S. Le chiffré est `BZJDS`. Refaire le tableau lettre par lettre avant de vérifier ce résultat : le cours donne la réponse pour contrôler le geste, pas pour le sauter.
 
 ## Ce qu'on utilise vraiment
 
@@ -217,7 +217,7 @@ Sous Linux ou macOS :
 sha256sum nom_fichier.txt
 ```
 
-Créez un fichier avec votre nom, calculez l'empreinte, changez une lettre, recalculez. Les deux empreintes ne se ressemblent pas. C'est l'avalanche, visible.
+Créer un fichier avec son nom, calculer l'empreinte, changer une lettre, recalculer. Les deux empreintes ne se ressemblent pas. C'est l'avalanche, visible.
 
 On hache pour vérifier un téléchargement ou une sauvegarde. On hache les mots de passe : la base ne contient pas le secret, elle contient une empreinte, et la vérification recalcule. On signe l'empreinte d'un document plutôt que le document, parce que la signature asymétrique est lente et l'empreinte est courte. Une chaîne de blocs range dans chaque bloc l'empreinte du précédent : modifier un bloc ancien casse toutes les empreintes qui suivent. Deux fichiers identiques ont la même empreinte, ce qui détecte un doublon. Si deux fichiers différents avaient la même empreinte, ce serait une collision, et c'est précisément ce qu'un algorithme encore recommandé rend impraticable.
 
@@ -270,7 +270,7 @@ La confiance se lit en chaîne. L'**autorité racine** est préinstallée dans l
 
 À l'ouverture d'une page HTTPS, le navigateur reçoit le certificat, vérifie la signature de l'intermédiaire, vérifie que cet intermédiaire remonte à une racine installée, vérifie les dates, vérifie que le nom de domaine du certificat est celui de l'adresse. Si la chaîne tient, le cadenas s'affiche. Sinon, le navigateur affiche un avertissement. Cet avertissement n'est pas un simple détail d'interface : il signale que la chaîne de confiance a cassé.
 
-Ouvrez le cadenas d'un site HTTPS et lisez le certificat : l'autorité, la date de fin, la clé publique. Vous y voyez la chaîne, pas un logo.
+Ouvrir le cadenas d'un site HTTPS et lire le certificat : l'autorité, la date de fin, la clé publique. On y voit la chaîne, pas un logo.
 
 ## Ce que cela devient dans les protocoles
 

@@ -105,8 +105,8 @@ Oublier de fermer une balise, ou glisser du texte visible dans `<head>`, casse l
 
 `name` est le nom du champ côté serveur : c'est la clé que le programme lira. `id` sert au document. `for` sur le `<label>` reprend cet `id`, pour que cliquer sur le texte « Nom » place le curseur dans le champ. `required` empêche l'envoi si le champ est vide. Le navigateur fait ce contrôle avant même d'appeler le serveur.
 
-Pour fermer : le HTML dit la structure et le sens, le navigateur construit la page à partir des balises. Un document, c'est un type, puis `<head>` pour les métadonnées et `<body>` pour le contenu. On préfère les balises qui nomment les zones. Liens, images avec `alt`, listes, tableaux et formulaires sont le vocabulaire de base. Le HTML ne remplace ni le CSS ni le JavaScript.
+En résumé, le HTML dit la structure et le sens, le navigateur construit la page à partir des balises. Un document, c'est un type, puis `<head>` pour les métadonnées et `<body>` pour le contenu. On préfère les balises qui nomment les zones. Liens, images avec `alt`, listes, tableaux et formulaires sont le vocabulaire de base. Le HTML ne remplace ni le CSS ni le JavaScript.
 
 ## Pour s'entraîner / Suite
 
-Testez la structure avec l'explorateur et l'aperçu ci-dessus, puis passez à [Introduction au CSS](/cours/2/web_css_introduction) pour la mise en forme, puis [Interactions JavaScript](/cours/2/web_javascript_interactions).
+Tester la structure avec l'explorateur et l'aperçu ci-dessus, puis passer à [Introduction au CSS](/cours/2/web_css_introduction) pour la mise en forme, puis [Interactions JavaScript](/cours/2/web_javascript_interactions).

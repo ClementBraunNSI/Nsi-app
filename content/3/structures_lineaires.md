@@ -13,7 +13,7 @@ audience: public
 
 # <Icone nom="library" /> Structures de Données Linéaires
 
-Pour organiser les données, nous avons besoin de structures adaptées. En Terminale, nous étudions trois structures abstraites fondamentales : les **Listes**, les **Piles** et les **Files**.
+Pour organiser les données, il faut des structures adaptées. En Terminale, trois structures abstraites fondamentales sont étudiées : les **Listes**, les **Piles** et les **Files**.
 
 ## 1. Les Listes Chaînées (Linked Lists)
 
@@ -96,7 +96,7 @@ C'est comme une file d'attente à la cantine. On ajoute à la fin (queue), on re
         *   Si la pile est vide avant de dépiler -> Erreur (trop de fermantes).
     4.  À la fin, la pile doit être vide.
     
-    Écrivez la fonction `verifier_parentheses(expression)`.
+    Écrire la fonction `verifier_parentheses(expression)`.
     
     </Enonce>
   </ExerciseSection>
@@ -106,12 +106,12 @@ C'est comme une file d'attente à la cantine. On ajoute à la fin (queue), on re
     ### Simulation de croisement (File)
     On modélise un feu rouge avec une File. Les voitures arrivent et s'ajoutent à la file. Quand le feu passe au vert, la première voiture part.
     
-    Utilisez `collections.deque` (plus efficace que list pour les files).
-    1.  Créez une file vide.
-    2.  Ajoutez "Voiture A", "Voiture B".
-    3.  Faites partir une voiture.
-    4.  Ajoutez "Voiture C".
-    5.  Affichez la prochaine voiture à partir.
+    Utiliser `collections.deque` (plus efficace que list pour les files).
+    1.  Créer une file vide.
+    2.  Ajouter "Voiture A", "Voiture B".
+    3.  Faire partir une voiture.
+    4.  Ajouter "Voiture C".
+    5.  Afficher la prochaine voiture à partir.
     
     </Enonce>
   </ExerciseSection>

@@ -13,7 +13,7 @@ audience: public
 # <Icone nom="bug" /> Projet - Simulation de Propagation
 
 Le but de ce projet est de simuler, jour après jour, la propagation d'une rumeur dans une population fermée.
-Dans ce projet, nous allons écrire une boucle `while` qui s'arrête quand tout le monde est au courant, sans jamais dépasser la population.
+Ce projet consiste à écrire une boucle `while` qui s'arrête quand tout le monde est au courant, sans jamais dépasser la population.
 
 Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelles personnes. Les « infectés » du programme sont les personnes qui connaissent la rumeur et la transmettent encore. Dans la version de base, personne n'oublie.
 
@@ -30,7 +30,7 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
 <ExerciseTabs courseId="premiere_projet_virus" courseTitle="Simulation Rumeur">
   <ExerciseSection id="proj-virus-1" label="Le plafond" type="lecture">
     <Enonce>
-      Écrivez `nouveaux_cas(infectes, taux)` et `plafonner(infectes, population)`.
+      Écrire `nouveaux_cas(infectes, taux)` et `plafonner(infectes, population)`.
 
       ```python
       def nouveaux_cas(infectes: float, taux: float) -> float:
@@ -46,17 +46,17 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
 
   <ExerciseSection id="proj-virus-2" label="La boucle" type="python">
     <Enonce>
-      Écrivez `simuler(population, taux)`. Elle affiche chaque jour et renvoie le nombre de jours écoulés.
+      Écrire `simuler(population, taux)`. Elle affiche chaque jour et renvoie le nombre de jours écoulés.
 
       - `jours` commence à 0, `infectes` commence à 1.
-      - Affichez `Jour 0 : 1 / ...` avant la boucle.
-      - Tant que `infectes` est inférieur à `population` : calculez les nouveaux cas, ajoutez-les, plafonnez, augmentez `jours` de 1, affichez la ligne du jour.
-      - Après la boucle, affichez `Toute la population est touchée en X jour(s).`
-      - Renvoyez `jours`.
+      - Afficher `Jour 0 : 1 / ...` avant la boucle.
+      - Tant que `infectes` est inférieur à `population` : calculer les nouveaux cas, les ajouter, plafonner, augmenter `jours` de 1, afficher la ligne du jour.
+      - Après la boucle, afficher `Toute la population est touchée en X jour(s).`
+      - Renvoyer `jours`.
 
       *Attention : si la population vaut 1 dès le départ, la boucle ne tourne pas et la fonction renvoie 0.*
 
-      Vérifiez les trois exemples par des appels directs, avant d'ajouter `input`.
+      Vérifier les trois exemples par des appels directs, avant d'ajouter `input`.
 
       Population 30, taux 2. Le jour 4 : 27 × 2 = 54 nouveaux cas, 27 + 54 = 81, ramené à 30. `simuler(30, 2)` renvoie `4`.
 
@@ -82,11 +82,11 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
 
   <ExerciseSection id="proj-virus-3" label="La saisie" type="python">
     <Enonce>
-      Écrivez le programme principal du fichier `rumeur.py`.
+      Écrire le programme principal du fichier `rumeur.py`.
 
-      1. Demandez `Population totale : `. `input` renvoie un texte : convertissez-le en `int`. Reposez la question tant que la valeur est inférieure à 1.
-      2. Demandez `Taux de propagation : `. Convertissez-le en `float`. Reposez la question tant que la valeur est inférieure ou égale à 0. Un taux nul figerait la boucle : le programme ne doit pas l'accepter.
-      3. Appelez `simuler` avec ces deux valeurs.
+      1. Demander `Population totale : `. `input` renvoie un texte : le convertir en `int`. Reposer la question tant que la valeur est inférieure à 1.
+      2. Demander `Taux de propagation : `. Le convertir en `float`. Reposer la question tant que la valeur est inférieure ou égale à 0. Un taux nul figerait la boucle : le programme ne doit pas l'accepter.
+      3. Appeler `simuler` avec ces deux valeurs.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -96,4 +96,4 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
 ## 2. Pour aller plus loin
 
 *   **Oubli.** Chaque jour, après les nouveaux cas, une personne informée oublie la rumeur et ne la transmet plus, tant qu'il reste au moins deux transmetteurs. Elle compte encore dans un total `deja_au_courant` (elle l'a entendue). La boucle s'arrête quand `deja_au_courant` atteint la population. Deux variables suffisent : on ne stocke pas les noms.
-*   **Barre.** Sur 20 caractères, affichez la part déjà touchée, par exemple `Jour 3 : [##################..] 27/30`. Le nombre de `#` vaut `int(20 * infectes / population)`.
+*   **Barre.** Sur 20 caractères, afficher la part déjà touchée, par exemple `Jour 3 : [##################..] 27/30`. Le nombre de `#` vaut `int(20 * infectes / population)`.

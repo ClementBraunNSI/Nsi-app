@@ -13,7 +13,7 @@ audience: public
 
 # Ordonnancement et mémoire
 
-En Première, le système d'exploitation était la couche entre vos programmes et le matériel. En Terminale, on regarde deux partages concrets : qui a le droit d'utiliser le processeur maintenant, et comment plusieurs programmes croient chacun disposer d'une mémoire continue alors qu'ils se la disputent.
+En Première, le système d'exploitation était la couche entre les programmes et le matériel. En Terminale, on regarde deux partages concrets : qui a le droit d'utiliser le processeur maintenant, et comment plusieurs programmes croient chacun disposer d'une mémoire continue alors qu'ils se la disputent.
 
 ## Processus et threads
 

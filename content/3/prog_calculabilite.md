@@ -19,7 +19,7 @@ On a parfois l'impression qu'un ordinateur assez puissant finira par répondre �
 
 La **machine de Turing** est un modèle théorique, volontairement simple. Elle a un **ruban** infini, découpé en cases, qui lui sert de mémoire. Une **tête** lit et écrit une case, puis se déplace d'un cran. Un **état** interne retient où elle en est dans son raisonnement. Une **table de transition** dit, pour chaque état et chaque symbole lu, quoi écrire, de quel côté bouger, et dans quel état passer. Cette table est le programme.
 
-La thèse de Church-Turing affirme que tout ce qu'un algorithme peut calculer, une machine de Turing peut le calculer. Votre ordinateur n'est pas « plus puissant » qu'elle au sens de ce qu'il peut finir par obtenir. Il est seulement plus commode, et plus rapide. S'il existe un problème qu'aucune machine de Turing ne résout, aucun langage de programmation ne le résoudra non plus.
+La thèse de Church-Turing affirme que tout ce qu'un algorithme peut calculer, une machine de Turing peut le calculer. Un ordinateur n'est pas « plus puissant » qu'elle au sens de ce qu'il peut finir par obtenir. Il est seulement plus commode, et plus rapide. S'il existe un problème qu'aucune machine de Turing ne résout, aucun langage de programmation ne le résoudra non plus.
 
 ## Calculable, décidable
 

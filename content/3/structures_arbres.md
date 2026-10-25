@@ -19,7 +19,7 @@ Une liste range des éléments à la suite. Un **arbre** les range en niveaux : 
 
 Un arbre est un ensemble de **nœuds** reliés par des arêtes, sans cycle, avec un nœud distingué. La **racine** est ce nœud du haut, le seul qui n'a pas de parent. Une **feuille** n'a pas d'enfant. Un **nœud interne** en a au moins un. La **taille** est le nombre de nœuds.
 
-La **hauteur** demande qu'on fixe une convention, parce que les énoncés ne s'accordent pas. Compter les **arêtes** du plus long chemin de la racine à une feuille donne une hauteur 0 à une racine seule. C'est la convention la plus fréquente en NSI. Les exercices de cette page comptent autrement : 0 pour l'arbre vide, 1 pour une racine seule, c'est-à-dire le nombre de nœuds sur le plus long chemin. On le dit ici pour que la fonction que vous écrirez réponde à l'énoncé, et pour que vous sachiez traduire si un autre cours annonce 0.
+La **hauteur** demande qu'on fixe une convention, parce que les énoncés ne s'accordent pas. Compter les **arêtes** du plus long chemin de la racine à une feuille donne une hauteur 0 à une racine seule. C'est la convention la plus fréquente en NSI. Les exercices de cette page comptent autrement : 0 pour l'arbre vide, 1 pour une racine seule, c'est-à-dire le nombre de nœuds sur le plus long chemin. On le précise ici pour que la fonction écrite réponde à l'énoncé, et pour savoir traduire si un autre cours annonce 0.
 
 ```
 / (Racine)
@@ -75,7 +75,7 @@ Un **parcours en largeur** visite niveau par niveau : la racine, puis ses enfant
   <ExerciseSection id="arbre-ex-1" label="Taille et Hauteur" type="python">
     <Enonce>
     ### Calculer la Taille et la Hauteur
-    Écrivez deux fonctions récursives :
+    Écrire deux fonctions récursives :
     1.  `taille(arbre)` : Renvoie le nombre de nœuds.
     2.  `hauteur(arbre)` : Renvoie la hauteur (0 pour un arbre vide, 1 pour racine seule, etc.).
     
@@ -85,9 +85,9 @@ Un **parcours en largeur** visite niveau par niveau : la racine, puis ses enfant
   <ExerciseSection id="arbre-ex-2" label="Parcours Infixe" type="python">
     <Enonce>
     ### Affichage Infixe
-    Écrivez une fonction récursive `afficher_infixe(noeud)` qui affiche les valeurs de l'arbre dans l'ordre infixe (Gauche - Racine - Droite).
+    Écrire une fonction récursive `afficher_infixe(noeud)` qui affiche les valeurs de l'arbre dans l'ordre infixe (Gauche - Racine - Droite).
     
-    Testez avec l'arbre :
+    Tester avec l'arbre :
     ```
           10
          /  \

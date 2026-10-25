@@ -14,7 +14,7 @@ Pour un ordinateur, une image n'est qu'une suite de nombres. Dans une image en n
 - **1** = Noir
 
 ## <Icone nom="target" /> Création
-Dessine sur la grille de gauche. Observe comment ton dessin est instantanément traduit en langage machine (binaire) et en code hexadécimal à droite.
+Dessiner sur la grille de gauche. Observer comment le dessin est instantanément traduit en langage machine (binaire) et en code hexadécimal à droite.
 
 <BinaryPixelArt />
 

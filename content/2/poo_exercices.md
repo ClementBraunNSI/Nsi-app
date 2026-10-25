@@ -21,7 +21,7 @@ groupeTitre: "Programmation orientée objet"
 
 ### Partie 1 : La Classe `Voiture`
 
-Nous reprenons la classe `Voiture` du cours.
+Reprendre la classe `Voiture` du cours.
 
 ```python
 class Voiture:
@@ -52,9 +52,9 @@ class Voiture:
 ```
 
 !!! question "À faire"
-    1.  **Méthode `__str__`** : Modifiez-la pour qu'elle indique si la voiture est (Démarrée) ou (Arrêtée).
-    2.  **Méthode `repeindre`** : Créez une méthode qui change l'attribut `couleur` et affiche un message "La voiture passe de [ancienne] à [nouvelle]".
-    3.  **Tests** : Créez 2 voitures, testez le démarrage, l'arrêt et la peinture.
+    1.  **Méthode `__str__`** : La modifier pour qu'elle indique si la voiture est (Démarrée) ou (Arrêtée).
+    2.  **Méthode `repeindre`** : Créer une méthode qui change l'attribut `couleur` et affiche un message "La voiture passe de [ancienne] à [nouvelle]".
+    3.  **Tests** : Créer 2 voitures, tester le démarrage, l'arrêt et la peinture.
 
 ### Partie 2 : La Classe `Concessionnaire`
 

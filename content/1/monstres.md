@@ -11,9 +11,9 @@ audience: public
 
 # Galerie des Monstres
 
-Découvrez les créations des élèves de **Seconde** pour le [projet bestiaire](Projet_creation_site.md) : chaque monstre a été intégré dans une page HTML personnelle.
+Découvrir les créations des élèves de **Seconde** pour le [projet bestiaire](Projet_creation_site.md) : chaque monstre a été intégré dans une page HTML personnelle.
 
-Sélectionnez une **année**, puis une **classe**, pour parcourir les illustrations.
+Sélectionner une **année**, puis une **classe**, pour parcourir les illustrations.
 
 <MonstersGallery />
 

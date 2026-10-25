@@ -30,7 +30,7 @@ Une fiche contient :
 <ExerciseTabs courseId="proj_lib_struct" courseTitle="Structure des Données">
   <ExerciseSection id="lib-struct-1" label="Initialisation" type="python">
     <Enonce>
-      Créez `bibliotheque = []`. Chaque élément sera un dictionnaire avec les clés `titre`, `auteur`, `annee_publication`, `genre` et `isbn`.
+      Créer `bibliotheque = []`. Chaque élément sera un dictionnaire avec les clés `titre`, `auteur`, `annee_publication`, `genre` et `isbn`.
 
       Les fonctions se testent d'abord sans fichier, sur cette liste écrite dans le programme.
     </Enonce>
@@ -38,11 +38,11 @@ Une fiche contient :
 
   <ExerciseSection id="lib-struct-2" label="Ajout d'un livre" type="python">
     <Enonce>
-      Écrivez `ajouter_livre(bibliotheque, titre, auteur, annee, genre, isbn)`.
+      Écrire `ajouter_livre(bibliotheque, titre, auteur, annee, genre, isbn)`.
 
-      Parcourez la liste. Si un livre a déjà cet `isbn`, affichez `ISBN déjà présent.` et renvoyez `False`. La liste ne gagne pas de doublon.
+      Parcourir la liste. Si un livre a déjà cet `isbn`, afficher `ISBN déjà présent.` et renvoyer `False`. La liste ne gagne pas de doublon.
 
-      Sinon construisez le dictionnaire, ajoutez-le en fin de liste, et renvoyez `True`. `annee` est stockée en `int`.
+      Sinon construire le dictionnaire, l'ajouter en fin de liste, et renvoyer `True`. `annee` est stockée en `int`.
 
       ```python
       bibliotheque = []
@@ -60,13 +60,13 @@ Une fiche contient :
 
   <ExerciseSection id="lib-struct-3" label="Recherche" type="lecture">
     <Enonce>
-      Écrivez `rechercher_livres(bibliotheque, critere, valeur)`.
+      Écrire `rechercher_livres(bibliotheque, critere, valeur)`.
 
-      Si `critere` n'est pas l'une des cinq clés, renvoyez `[]`. Sinon renvoyez la liste des livres dont le champ, converti en texte avec `str(livre[critere])`, est égal à `valeur`. L'année `"1862"` tapée au clavier trouve ainsi l'entier `1862`. L'ordre d'ajout est conservé.
+      Si `critere` n'est pas l'une des cinq clés, renvoyer `[]`. Sinon renvoyer la liste des livres dont le champ, converti en texte avec `str(livre[critere])`, est égal à `valeur`. L'année `"1862"` tapée au clavier trouve ainsi l'entier `1862`. L'ordre d'ajout est conservé.
 
       La comparaison est exacte : `"victor hugo"` ne trouve pas `"Victor Hugo"`.
 
-      *Testez avec :*
+      *Tester avec :*
 
       - `rechercher_livres(bibliotheque, "auteur", "Victor Hugo")` : les deux dictionnaires de Hugo, tant qu'aucun n'a été supprimé ;
       - `rechercher_livres(bibliotheque, "annee_publication", "1862")` : uniquement Les Misérables ;
@@ -76,13 +76,13 @@ Une fiche contient :
 
   <ExerciseSection id="lib-struct-4" label="Affichage" type="lecture">
     <Enonce>
-      Écrivez `afficher_livre(livre)` : une seule ligne, avec le séparateur ` | `, dans l'ordre Titre, Auteur, Année, Genre, ISBN.
+      Écrire `afficher_livre(livre)` : une seule ligne, avec le séparateur ` | `, dans l'ordre Titre, Auteur, Année, Genre, ISBN.
 
       ```text
       Titre : Les Misérables | Auteur : Victor Hugo | Année : 1862 | Genre : Roman | ISBN : 978123
       ```
 
-      Écrivez `afficher_tout(bibliotheque)`. Liste vide : `La bibliothèque est vide.` Sinon, une ligne par livre via `afficher_livre`.
+      Écrire `afficher_tout(bibliotheque)`. Liste vide : `La bibliothèque est vide.` Sinon, une ligne par livre via `afficher_livre`.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -102,9 +102,9 @@ L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictRea
 <ExerciseTabs courseId="proj_lib_data" courseTitle="Persistance des Données">
   <ExerciseSection id="lib-data-1" label="Sauvegarde" type="lecture">
     <Enonce>
-      Écrivez `sauvegarder(bibliotheque, nom_fichier)` avec le module `csv` et `DictWriter`.
+      Écrire `sauvegarder(bibliotheque, nom_fichier)` avec le module `csv` et `DictWriter`.
 
-      `fieldnames` vaut, dans cet ordre : `titre`, `auteur`, `annee_publication`, `genre`, `isbn`. Écrivez l'en-tête, puis une ligne par livre. Ouvrez le fichier en écriture UTF-8.
+      `fieldnames` vaut, dans cet ordre : `titre`, `auteur`, `annee_publication`, `genre`, `isbn`. Écrire l'en-tête, puis une ligne par livre. Ouvrir le fichier en écriture UTF-8.
 
       Après les deux ajouts de l'exemple, le fichier produit a trois lignes : l'en-tête et les deux livres. L'ISBN `978123` est sur la ligne des Misérables.
     </Enonce>
@@ -112,11 +112,11 @@ L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictRea
 
   <ExerciseSection id="lib-data-2" label="Chargement" type="lecture">
     <Enonce>
-      Écrivez `charger(nom_fichier)`.
+      Écrire `charger(nom_fichier)`.
 
-      Si le fichier n'existe pas, renvoyez `[]` sans message d'erreur bloquant. Le programme démarre quand même. S'il existe, lisez-le avec `DictReader` et reconstruisez la liste. Convertissez `annee_publication` en `int` à ce moment-là.
+      Si le fichier n'existe pas, renvoyer `[]` sans message d'erreur bloquant. Le programme démarre quand même. S'il existe, le lire avec `DictReader` et reconstruire la liste. Convertir `annee_publication` en `int` à ce moment-là.
 
-      Test : sauvegardez, repartez de `bibliotheque = []`, rechargez. `rechercher_livres(..., "auteur", "Victor Hugo")` retrouve les deux livres, et `annee_publication` supporte une comparaison avec l'entier `1862`.
+      Test : sauvegarder, repartir de `bibliotheque = []`, recharger. `rechercher_livres(..., "auteur", "Victor Hugo")` retrouve les deux livres, et `annee_publication` supporte une comparaison avec l'entier `1862`.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -126,9 +126,9 @@ L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictRea
 <ExerciseTabs courseId="proj_lib_ui" courseTitle="Menu Principal">
   <ExerciseSection id="lib-ui-2" label="Suppression" type="lecture">
     <Enonce>
-      Écrivez `supprimer_livre(bibliotheque, isbn)`.
+      Écrire `supprimer_livre(bibliotheque, isbn)`.
 
-      Parcourez la liste. Au premier livre dont l'ISBN est exactement celui demandé, retirez-le et renvoyez `True`. On enlève au plus un livre. Si aucun livre ne correspond, affichez `ISBN introuvable.` et renvoyez `False`. La liste ne change pas.
+      Parcourir la liste. Au premier livre dont l'ISBN est exactement celui demandé, le retirer et renvoyer `True`. On enlève au plus un livre. Si aucun livre ne correspond, afficher `ISBN introuvable.` et renvoyer `False`. La liste ne change pas.
 
       Sur l'exemple, `supprimer_livre(bibliotheque, "978456")` renvoie `True`. Il ne reste que Les Misérables. Un second appel avec `"978456"` renvoie `False`.
     </Enonce>
@@ -136,7 +136,7 @@ L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictRea
 
   <ExerciseSection id="lib-ui-1" label="Menu interactif" type="lecture">
     <Enonce>
-      Écrivez `menu_principal`. Au début de la fonction, chargez les données avec `bibliotheque = charger("bibliotheque.csv")`.
+      Écrire `menu_principal`. Au début de la fonction, charger les données avec `bibliotheque = charger("bibliotheque.csv")`.
 
       ```text
       --- MA BIBLIOTHÈQUE ---

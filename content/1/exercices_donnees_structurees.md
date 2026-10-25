@@ -15,7 +15,7 @@ groupeTitre: "Données structurées"
 
 **Objectif :** Identifier les différents formats de données structurées.
 
-Associez chaque format à sa description :
+Associer chaque format à sa description :
 
 | Format | Description |
 |--------|-------------|
@@ -26,7 +26,7 @@ Associez chaque format à sa description :
 
 # Exercice 2 : Manipulation du format CSV
 
-**Contexte :** Vous disposez d'un fichier CSV contenant des informations sur des animaux.
+**Contexte :** Un fichier CSV contient des informations sur des animaux.
 
 ```csv
 Nom,Espece,Habitat,Poids_kg,Longueur_cm
@@ -39,7 +39,7 @@ Bella,Biche,Clairière,45,95
 1.  Combien d'animaux sont répertoriés dans ce fichier ?
 2.  Quels sont les champs (colonnes) de ce fichier CSV ?
 3.  Quel animal pèse le plus lourd ?
-4.  Ajoutez une ligne pour un écureuil nommé "Noisette" de l'espèce "Écureuil roux", vivant en "Forêt de conifères", pesant 0.3 kg et mesurant 20 cm.
+4.  Ajouter une ligne pour un écureuil nommé "Noisette" de l'espèce "Écureuil roux", vivant en "Forêt de conifères", pesant 0.3 kg et mesurant 20 cm.
 
 # Exercice 3 : Découverte du format JSON
 
@@ -66,7 +66,7 @@ Bella,Biche,Clairière,45,95
 2.  Dans quelle région vit-il ?
 3.  Combien d'aliments différents consomme-t-il ?
 4.  Quel type de données représente le champ "alimentation" ? (Objet, Tableau, Chaîne, Nombre ?)
-5.  Ajoutez un champ "age" avec la valeur 3 dans les caractéristiques de Rusty.
+5.  Ajouter un champ "age" avec la valeur 3 dans les caractéristiques de Rusty.
 
 # Exercice 4 : Bases de données relationnelles
 
@@ -89,7 +89,7 @@ Bella,Biche,Clairière,45,95
 1.  Quel est le rôle de la colonne "Espece_ID" dans la table "Animaux" ?
 2.  À quelle famille appartient Rusty ?
 3.  Combien d'animaux omnivores y a-t-il dans la réserve ?
-4.  Écrivez une requête SQL simple pour afficher tous les noms d'animaux : `SELECT _____ FROM _____;`
+4.  Écrire une requête SQL simple pour afficher tous les noms d'animaux : `SELECT _____ FROM _____;`
 
 # Exercice 5 : Métadonnées
 
@@ -116,13 +116,13 @@ Bella,Biche,Clairière,45,95
 
 # Exercice 6 : Applications pratiques
 
-1.  Donnez un exemple d'utilisation des données structurées dans :
+1.  Donner un exemple d'utilisation des données structurées dans :
     - La domotique
     - La santé
     - Le commerce en ligne
     - Les réseaux sociaux
 
-2.  Pour gérer une bibliothèque, quels formats utiliseriez-vous pour :
+2.  Pour gérer une bibliothèque, quels formats utiliser pour :
     - Stocker la liste des livres
     - Configurer l'application
     - Rechercher des livres

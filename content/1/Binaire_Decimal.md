@@ -9,7 +9,7 @@ prerequisites:
 audience: public
 ---
 
-Nous comptons d'habitude en base 10. Cela veut dire que nous disposons de dix symboles, de 0 à 9, et que la position d'un chiffre change sa valeur. L'informatique n'a pas dix symboles. Elle en a deux : 0 et 1. On les appelle des **bits**. Huit bits regroupés forment un **octet**.
+On compte d'habitude en base 10. Cela veut dire qu'on dispose de dix symboles, de 0 à 9, et que la position d'un chiffre change sa valeur. L'informatique n'a pas dix symboles. Elle en a deux : 0 et 1. On les appelle des **bits**. Huit bits regroupés forment un **octet**.
 
 Pourquoi deux seulement ? Parce qu'un circuit est à l'aise avec une question fermée : le courant passe, ou il ne passe pas. Tout le reste, les nombres, le texte, les images, se reconstruit à partir de cette alternative.
 
@@ -46,4 +46,4 @@ On divise le nombre par 2. Le reste, 0 ou 1, est un bit du résultat. Le quotien
 
 ![div_succ](/content/1/div_succ.png)
 
-L'ordre compte. Le premier reste obtenu est le bit de droite, le bit de poids faible. On lit ensuite les restes dans le sens de la flèche du schéma, du dernier calcul vers le premier. Si vous les recopiez dans l'ordre où ils apparaissent, le nombre est écrit à l'envers.
+L'ordre compte. Le premier reste obtenu est le bit de droite, le bit de poids faible. On lit ensuite les restes dans le sens de la flèche du schéma, du dernier calcul vers le premier. Recopiés dans l'ordre où ils apparaissent, ils donnent le nombre écrit à l'envers.

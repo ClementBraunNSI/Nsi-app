@@ -1,6 +1,6 @@
 ---
 title: "Projet : Zor'prendido en el cuadro"
-description: 'Site web Chasse aux Ren-Arts, classe de Seconde, récit en espagnol avec votre professeur.e d''espagnol.'
+description: 'Site web Chasse aux Ren-Arts, classe de Seconde, récit écrit en cours d''espagnol.'
 image: /images/fox_chasse_renard_espagnol_v2.png
 level: '2'
 chapter: Web
@@ -19,11 +19,11 @@ versionCode: "ES"
 Le but de ce projet est de créer la page web d'une œuvre réelle, puis d'y faire entrer un renard.
 Dans ce projet, la recherche, les faits sur l'œuvre et la page se font en français. L'histoire du tableau se rédige en espagnol.
 
-Classe de **Seconde**. Cette année, le projet se mène avec votre professeur.e d'**espagnol**.
+Classe de **Seconde**. Cette année, le projet se mène avec le cours d'**espagnol**.
 
-**Répartition.** En SNT, vous documentez l'œuvre et vous construisez la page. En espagnol, vous écrivez le récit à partir de cette œuvre, puis vous le faites relire avant de le coller dans le site. C'est la production d'expression écrite du cours d'espagnol.
+**Répartition.** En SNT, l'œuvre est documentée et la page construite. En espagnol, le récit est écrit à partir de cette œuvre, puis relu avant d'être collé dans le site. C'est la production d'expression écrite du cours d'espagnol.
 
-Dans le fichier HTML fourni, le modèle écrit parfois « renardisé ». Il s'agit du même objet : votre tableau renardifié. Le renard n'a pas à figurer déjà dans l'œuvre : c'est la version renardifiée qui le fait entrer dans la scène.
+Dans le fichier HTML fourni, le modèle écrit parfois « renardisé ». Il s'agit du même objet : le tableau renardifié. Le renard n'a pas à figurer déjà dans l'œuvre : c'est la version renardifiée qui le fait entrer dans la scène.
 
 **Ressources :**
 - [Notice sur HTML](Cours_html.md) : titres, paragraphes, listes, images.
@@ -31,15 +31,15 @@ Dans le fichier HTML fourni, le modèle écrit parfois « renardisé ». Il s'ag
 
 ## 1. La fiche de l'œuvre <Icone nom="search" />
 
-Avant de remplir la page, vous constituez une fiche sur un tableau réel. Elle alimente la liste du site, et le cours d'espagnol : le récit s'appuie sur ces faits et sur l'image.
+Avant de remplir la page, une fiche est constituée sur un tableau réel. Elle alimente la liste du site, et le cours d'espagnol : le récit s'appuie sur ces faits et sur l'image.
 
 Choix de l'œuvre :
 
 - une œuvre peinte ou dessinée, d'un artiste identifié, conservée dans un musée ou une collection publique ;
-- vous pouvez montrer l'image et nommer la personne qui l'a faite ;
-- entre deux œuvres, gardez celle dont la notice de musée indique la date, le lieu de conservation et la technique.
+- l'image peut être montrée, avec le nom de la personne qui l'a faite ;
+- entre deux œuvres, garder celle dont la notice de musée indique la date, le lieu de conservation et la technique.
 
-Regardez l'image avant la notice, et notez cinq détails :
+Regarder l'image avant la notice, et noter cinq détails :
 
 1. Qui ou quoi occupe le premier plan (personnage, animal, objet).
 2. Le lieu, avec un indice visible : intérieur, rue ou paysage (fenêtre, sol, ciel, meuble).
@@ -47,21 +47,21 @@ Regardez l'image avant la notice, et notez cinq détails :
 4. La lumière ou les couleurs dominantes.
 5. Une pose ou une action (quelqu'un lit, marche, se retourne, regarde hors du cadre).
 
-Recopiez cette fiche au cahier ou dans un fichier. Apportez-la au cours d'espagnol, avec l'image.
+Recopier cette fiche au cahier ou dans un fichier. L'apporter au cours d'espagnol, avec l'image.
 
 - **Artiste** : nom, prénom, dates de naissance et de mort si on les trouve, pays ou ville d'activité.
 - **Titre** : titre dans la langue d'origine, et titre français s'il diffère.
-- **Date** : année, ou fourchette du type « vers 1665 ». Indiquez quelle source donne cette date.
+- **Date** : année, ou fourchette du type « vers 1665 ». Indiquer quelle source donne cette date.
 - **Mouvement** : nom du courant, plus la phrase qui le relie à ce tableau.
 - **Lieu de conservation** : musée, ville, pays. Numéro d'inventaire si la notice le donne.
 - **Technique et matériaux** : par exemple huile sur toile, tempera sur bois, pastel sur papier.
 - **Dimensions** : hauteur × largeur, avec l'unité (cm).
 - **Ce qui est représenté** : les cinq détails vus sur l'image.
-- **Sources** : au moins deux. Pour chacune : nom du site ou de l'ouvrage, adresse de la page ou référence du livre, date de consultation, et ce que vous y avez pris (la date, les dimensions, le mouvement). Une information absente se marque « non trouvé », avec la source de ce qui a été trouvé.
+- **Sources** : au moins deux. Pour chacune : nom du site ou de l'ouvrage, adresse de la page ou référence du livre, date de consultation, et ce qui y a été pris (la date, les dimensions, le mouvement). Une information absente se marque « non trouvé », avec la source de ce qui a été trouvé.
 
 ## 2. Le récit en espagnol <Icone nom="pen-line" />
 
-Vous écrivez un seul récit, découpé en trois parties. La fiche, le titre factuel de l'œuvre et la liste des caractéristiques restent en français.
+Un seul récit est écrit, découpé en trois parties. La fiche, le titre factuel de l'œuvre et la liste des caractéristiques restent en français.
 
 1. La scène telle qu'elle est peinte : le lieu, les personnages, les objets. Au moins trois des cinq détails de la fiche apparaissent dans le texte.
 2. Une action qui avance : quelqu'un entre, une porte s'ouvre, un regard change, un objet passe de main en main.
@@ -87,13 +87,13 @@ Chaque bloc de couleur est une `div`. La feuille de style ne se modifie pas pend
       3. Bloc rouge de droite : la suite du récit en espagnol, celle où le renard entre dans cette scène, dans un `p`. Les deux paragraphes forment un seul texte. Additionnés, ils comptent au moins 100 mots, visée 100 à 150.
       4. Bloc bleu foncé : la fiche, en français, en liste `ul` / `li`. Chaque puce est une caractéristique : artiste, titre, date, mouvement, lieu de conservation, technique, matériaux, dimensions, cinq détails vus, puis les deux sources (nom, page, date de consultation).
       5. Bloc rose de gauche : l'image du tableau original, puis un `h3` avec le nom du tableau, l'artiste et la date, tels qu'ils figurent sur la fiche.
-      6. Bloc rose de droite : l'image du tableau renardifié, puis un `h3` avec le nom que vous donnez à cette version.
+      6. Bloc rose de droite : l'image du tableau renardifié, puis un `h3` avec le nom donné à cette version.
 
       ```html
       <img class="image_principale" src="images/image.png" alt="nom_du_tableau"/>
       ```
 
-      Remplacez `image.png` par votre fichier, par exemple `images/original.png` et `images/renard.png`. Toutes les images sont dans le dossier `images`. `alt` reprend le titre de l'image et ne compte pas dans les 100 mots.
+      Remplacer `image.png` par le fichier voulu, par exemple `images/original.png` et `images/renard.png`. Toutes les images sont dans le dossier `images`. `alt` reprend le titre de l'image et ne compte pas dans les 100 mots.
 
       Les noms, les dates, les sources et le récit sont les vôtres. On ne recopie pas un exemple trouvé ailleurs.
 
@@ -120,10 +120,10 @@ border-color: red;
     <Enonce>
       Dans `style.css` :
 
-      1. Repérez toutes les lignes qui contiennent `border`. La classe `.container` peut apparaître plusieurs fois.
-      2. Supprimez uniquement ces lignes.
-      3. Conservez `display`, `flex-direction`, `gap`, `text-align`, `width`, `height` et `object-fit`.
-      4. Enregistrez, puis actualisez.
+      1. Repérer toutes les lignes qui contiennent `border`. La classe `.container` peut apparaître plusieurs fois.
+      2. Supprimer uniquement ces lignes.
+      3. Conserver `display`, `flex-direction`, `gap`, `text-align`, `width`, `height` et `object-fit`.
+      4. Enregistrer, puis actualiser.
 
       ```css
       .presentation {
@@ -150,12 +150,12 @@ border-color: red;
 
 ## 5. Fond, texte, police <Icone nom="palette" />
 
-Si `.container` apparaît deux fois, complétez celle qui contient déjà `display: flex;`.
+Si `.container` apparaît deux fois, compléter celle qui contient déjà `display: flex;`.
 
 <ExerciseTabs courseId="snt_chasse_espagnol_fond" courseTitle="Fond">
   <ExerciseSection id="chasse-es-3" label="container" type="python">
     <Enonce>
-      Ajoutez le fond, la couleur du texte et la police.
+      Ajouter le fond, la couleur du texte et la police.
 
       ```css
       .container {
@@ -179,7 +179,7 @@ Si `.container` apparaît deux fois, complétez celle qui contient déjà `displ
 
 ## 6. Ce qu'on rend, et comment c'est lu <Icone nom="package" />
 
-Deux professeurs lisent le même site. Chacun note ce qui relève de son cours. Le lien entre le récit et le tableau se vérifie à deux : la fiche et l'image sont sur la page.
+Le même site est évalué en SNT et en espagnol. Chaque matière note ce qui relève de son cours. Le lien entre le récit et le tableau se vérifie dans les deux : la fiche et l'image sont sur la page.
 
 ### Traces de recherche (SNT)
 
@@ -197,7 +197,7 @@ Deux professeurs lisent le même site. Chacun note ce qui relève de son cours. 
 
 ### Langue (espagnol)
 
-- Le récit est en espagnol, relu avec le professeur ou la professeure d'espagnol.
+- Le récit est en espagnol, relu en cours d'espagnol.
 - Les phrases sont reliées.
 - Le temps choisi est tenu.
 - On comprend l'histoire. Des erreurs locales peuvent rester si elles n'empêchent pas de suivre la scène.
@@ -218,4 +218,4 @@ Deux professeurs lisent le même site. Chacun note ce qui relève de son cours. 
 
 Archive du dossier entier `projet_site_eleve`. Le récit en espagnol est déjà dans `index.html` : les deux cours évaluent cette même page.
 
-Sous Windows 11 : clic droit sur le dossier, **Compresser dans un fichier ZIP** (ou **Afficher plus d'options**, puis **Envoyer vers** > **Dossier compressé**). Renommez, par exemple `NOM_Prenom_projet_site_eleve.zip`, et déposez sur Pronote.
+Sous Windows 11 : clic droit sur le dossier, **Compresser dans un fichier ZIP** (ou **Afficher plus d'options**, puis **Envoyer vers** > **Dossier compressé**). Renommer, par exemple `NOM_Prenom_projet_site_eleve.zip`, et déposer sur Pronote.

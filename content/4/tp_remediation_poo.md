@@ -23,22 +23,22 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     ### Les règles d'or (à lire attentivement) :
     1. **Les Propriétés :** On utilise `get; set;` pour définir une propriété accessible de l'extérieur.
     2. **Le Constructeur :** Il porte **exactement le même nom que la classe**. Il n'a **pas de type de retour** (ni `void`, ni `int`).
-    3. **Pas de `static` partout :** Le mot clé `static` signifie "appartient au moule global". Or, en POO, on veut que chaque objet ait ses propres valeurs. **Retirez le mot `static` de vos méthodes et propriétés !**
+    3. **Pas de `static` partout :** Le mot clé `static` signifie "appartient au moule global". Or, en POO, on veut que chaque objet ait ses propres valeurs. **Retirer le mot `static` des méthodes et propriétés !**
 
     ### <Icone nom="clipboard-list" /> Travail à faire
 
-    Créez une classe `Joueur` dans un fichier C# propre :
+    Créer une classe `Joueur` dans un fichier C# propre :
 
-    1. Déclarez les propriétés suivantes (avec `{ get; set; }`) :
+    1. Déclarer les propriétés suivantes (avec `{ get; set; }`) :
        - `Pseudo` (texte)
        - `Niveau` (entier)
        - `EstPremium` (booléen)
 
-    2. Créez le constructeur :
+    2. Créer le constructeur :
        - Il doit prendre en paramètre le `pseudo` et le `niveau`.
        - Il doit initialiser `EstPremium` à `false` par défaut.
 
-    3. Créez une méthode `AfficherProfil()` :
+    3. Créer une méthode `AfficherProfil()` :
        - Elle ne prend **aucun paramètre**.
        - Elle affiche dans la console : *"Joueur [Pseudo] - Niveau [Niveau]"*.
     </Enonce>
@@ -58,11 +58,11 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
     ### <Icone nom="clipboard-list" /> Travail à faire
 
-    Dans votre méthode `Main` :
-    1. Créez un joueur nommé "Shadow" de niveau 5.
-    2. Créez un deuxième joueur nommé "Light" de niveau 42.
-    3. Passez le joueur "Light" en Premium (`EstPremium = true`).
-    4. Appelez la méthode `AfficherProfil()` sur vos deux joueurs.
+    Dans la méthode `Main` :
+    1. Créer un joueur nommé "Shadow" de niveau 5.
+    2. Créer un deuxième joueur nommé "Light" de niveau 42.
+    3. Passer le joueur "Light" en Premium (`EstPremium = true`).
+    4. Appeler la méthode `AfficherProfil()` sur les deux joueurs.
     </Enonce>
   </ExerciseSection>
 
@@ -74,13 +74,13 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     Lorsqu'un objet A interagit avec un objet B, l'objet A est représenté par le mot-clé `this` (moi-même), et l'objet B est passé en paramètre.
 
     <Admonition type="warning" title="La règle du 'this'">
-    Ne confondez jamais la classe (`Joueur`) et l'instance (`this`).
+    Ne confonder jamais la classe (`Joueur`) et l'instance (`this`).
     Pour lire le pseudo du joueur actuel, on écrit `this.Pseudo` (ou juste `Pseudo`), mais **JAMAIS** `Joueur.Pseudo`.
     </Admonition>
 
     ### <Icone nom="clipboard-list" /> Travail à faire
 
-    Retournez dans votre classe `Joueur` et ajoutez une méthode `Attaquer` :
+    Retourner dans la classe `Joueur` et ajouter une méthode `Attaquer` :
     
     1. La méthode s'appelle `Attaquer(Joueur cible)`.
     2. Elle compare le niveau du joueur actuel (`this.Niveau`) avec le niveau de la cible (`cible.Niveau`).
@@ -89,7 +89,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     4. Sinon :
        - Afficher : *"[Mon Pseudo] a perdu contre [Pseudo de la cible]..."*
 
-    Testez cette méthode dans le `Main` en faisant attaquer "Shadow" contre "Light", puis "Light" contre "Shadow".
+    Tester cette méthode dans le `Main` en faisant attaquer "Shadow" contre "Light", puis "Light" contre "Shadow".
     </Enonce>
   </ExerciseSection>
 
@@ -102,15 +102,15 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
 
     ### <Icone nom="clipboard-list" /> Travail à faire
 
-    Créez une nouvelle classe `Guilde` :
+    Créer une nouvelle classe `Guilde` :
     
-    1. Ajoutez une propriété `NomGuilde` (texte).
-    2. Ajoutez une propriété privée `_membres` de type `List<Joueur>`.
-    3. Créez le constructeur de la Guilde (il prend le nom en paramètre, et **doit initialiser la liste à vide avec `new List<Joueur>()`**).
-    4. Créez une méthode `AjouterMembre(Joueur j)` qui utilise `_membres.Add(j)`.
-    5. Créez une méthode `AfficherMembres()` qui fait un `foreach` pour afficher le pseudo de chaque joueur de la guilde.
+    1. Ajouter une propriété `NomGuilde` (texte).
+    2. Ajouter une propriété privée `_membres` de type `List<Joueur>`.
+    3. Créer le constructeur de la Guilde (il prend le nom en paramètre, et **doit initialiser la liste à vide avec `new List<Joueur>()`**).
+    4. Créer une méthode `AjouterMembre(Joueur j)` qui utilise `_membres.Add(j)`.
+    5. Créer une méthode `AfficherMembres()` qui fait un `foreach` pour afficher le pseudo de chaque joueur de la guilde.
 
-    Dans le `Main`, créez une guilde "Les Phénix", ajoutez-y vos joueurs, et affichez les membres.
+    Dans le `Main`, créer une guilde "Les Phénix", y ajouter les joueurs, et afficher les membres.
     </Enonce>
   </ExerciseSection>
 
@@ -118,27 +118,27 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     <Enonce>
     ## <Icone nom="search" /> Étape 5 : Explorer et analyser une Liste
 
-    Maintenant que vous savez ajouter des éléments dans une liste, il faut savoir exploiter ces données. Dans le DS, c'était le rôle des méthodes `PeutAccueillir` ou `VerifierHarmonie`.
+    Une fois les éléments ajoutés dans une liste, il faut savoir exploiter ces données. Dans le DS, c'était le rôle des méthodes `PeutAccueillir` ou `VerifierHarmonie`.
 
     ### <Icone nom="clipboard-list" /> Travail à faire
 
-    Dans votre classe `Guilde`, ajoutez les méthodes suivantes :
+    Dans la classe `Guilde`, ajouter les méthodes suivantes :
 
     1. **`CalculerNiveauMoyen()`** : 
        - Retourne un `double`.
        - Calcule et retourne la moyenne des niveaux de tous les membres de la guilde. 
-       - *Attention : gérez le cas où la guilde est vide (retournez 0).*
+       - *Attention : gérer le cas où la guilde est vide (retourner 0).*
 
     2. **`TrouverMeilleurJoueur()`** :
        - Retourne un objet `Joueur`.
        - Parcourt la liste pour trouver le joueur avec le niveau le plus élevé et le retourne.
-       - *Astuce : créez une variable temporaire `Joueur meilleur = _membres[0];` avant votre boucle.*
+       - *Astuce : créer une variable temporaire `Joueur meilleur = _membres[0];` avant la boucle.*
 
     3. **`ExclureMembre(string pseudoCible)`** :
        - Retourne un `bool` (`true` si le joueur a été trouvé et exclu, `false` sinon).
-       - Cherche le joueur par son pseudo dans la liste et le supprime (utilisez `_membres.Remove(joueur)`).
+       - Cherche le joueur par son pseudo dans la liste et le supprime (utiliser `_membres.Remove(joueur)`).
 
-    Testez ces méthodes dans votre `Main`.
+    Tester ces méthodes dans le `Main`.
     </Enonce>
   </ExerciseSection>
 
@@ -146,19 +146,19 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     <Enonce>
     ## <Icone nom="castle" /> Étape 6 : GvG (Guilde vs Guilde)
 
-    C'est l'épreuve finale. Vous allez faire interagir deux objets `Guilde` entre eux, en utilisant les méthodes que vous venez de créer !
+    C'est l'épreuve finale. Faire interagir deux objets `Guilde` entre eux, avec les méthodes qui viennent d'être créées !
 
     ### <Icone nom="clipboard-list" /> Travail à faire
 
-    Dans la classe `Guilde`, créez la méthode suivante :
+    Dans la classe `Guilde`, créer la méthode suivante :
 
     **`DeclarerGuerre(Guilde guildeAdverse)`** :
     - La méthode ne retourne rien (`void`).
     - Elle compare le niveau moyen de la guilde actuelle (`this`) avec celui de la `guildeAdverse`.
     - La guilde avec le niveau moyen le plus bas **perd son meilleur joueur** ! Ce joueur est exclu de la guilde perdante, et rejoint automatiquement la guilde gagnante.
-    - Affichez dans la console un résumé épique du combat (qui gagne, qui est transféré).
+    - Afficher dans la console un résumé épique du combat (qui gagne, qui est transféré).
 
-    Dans le `Main`, créez deux guildes, remplissez-les de joueurs de niveaux différents, et lancez la guerre !
+    Dans le `Main`, créer deux guildes, les remplir de joueurs de niveaux différents, et lancer la guerre !
     </Enonce>
   </ExerciseSection>
 

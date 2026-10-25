@@ -33,7 +33,7 @@ Aujourd'hui, plus de quatre milliards de personnes utilisent ce réseau pour éc
 
 ![Réseau ARPANET](/content/1/arpanet.jpeg)
 
-> Au départ, on ne voulait relier que trois universités : Stanford, Los Angeles et l'Utah. Le réseau que vous avez dans la poche est sorti de ce projet très limité.
+> Au départ, on ne voulait relier que trois universités : Stanford, Los Angeles et l'Utah. Le réseau qu'on a dans la poche est sorti de ce projet très limité.
 
 ![Carte mondiale d'Internet](/content/1/geo-mercator.svg)
 
@@ -42,7 +42,7 @@ Aujourd'hui, plus de quatre milliards de personnes utilisent ce réseau pour éc
 > **Définition : réseau informatique**
 > Un **réseau informatique** est un ensemble de machines reliées, par différents moyens, qui communiquent entre elles pour échanger des données.
 
-Regardez une salle de classe, ou une maison. Il y a des appareils, des boîtiers, et des câbles ou des ondes. Chacun a un rôle, et on les confond souvent parce que la box du salon en cumule plusieurs.
+Regarder une salle de classe, ou une maison. Il y a des appareils, des boîtiers, et des câbles ou des ondes. Chacun a un rôle, et on les confond souvent parce que la box du salon en cumule plusieurs.
 
 Les **machines** sont celles qui veulent parler : ordinateur, tablette, console, téléphone. Le **switch** les relie entre elles tant qu'elles restent dans le même réseau local. La box de la maison fait souvent ce travail. Un switch dédié, avec des prises RJ45, fait la même chose dans une salle informatique.
 
@@ -66,13 +66,13 @@ Elle s'écrit en six blocs de deux caractères hexadécimaux, par exemple `a1:b2
 Pour sortir sur Internet, la MAC ne suffit plus. Il faut une adresse que les routeurs du monde entier sachent lire.
 
 > **Adresse IP**
-> Une **adresse IP** (*Internet Protocol*), en version 4, est formée de quatre nombres compris entre 0 et 255. La machine les manipule en binaire. Nous, nous les lisons en décimal.
+> Une **adresse IP** (*Internet Protocol*), en version 4, est formée de quatre nombres compris entre 0 et 255. La machine les manipule en binaire. Les humains les lisent en décimal.
 
-`127.0.0.1` est un exemple que vous croiserez souvent : c'est *localhost*, l'adresse par laquelle une machine se parle à elle-même.
+`127.0.0.1` est un exemple qu'on croise souvent : c'est *localhost*, l'adresse par laquelle une machine se parle à elle-même.
 
 ## Le masque, ou comment savoir si l'on reste chez soi
 
-Une adresse IP seule ne dit pas tout. Il faut aussi un **masque** pour séparer la partie qui désigne le réseau de la partie qui désigne la machine. Pensez à une adresse postale : le masque indique où s'arrête le nom du quartier et où commence le numéro de la maison.
+Une adresse IP seule ne dit pas tout. Il faut aussi un **masque** pour séparer la partie qui désigne le réseau de la partie qui désigne la machine. Penser à une adresse postale : le masque indique où s'arrête le nom du quartier et où commence le numéro de la maison.
 
 Avec `192.168.1.42` et le masque `255.255.255.0`, les trois premiers nombres, `192.168.1`, désignent le réseau local. Le `42` désigne la machine dans ce réseau. La question pratique est simple : cette machine est-elle chez moi, ou faut-il passer par le routeur ? À la maison ou au lycée, le masque le plus courant est justement `255.255.255.0`, qu'on note aussi `/24`.
 
@@ -92,11 +92,11 @@ Les adresses disent *qui* parle. Elles ne disent pas encore *comment* le message
 > **Protocole TCP/IP**
 > **TCP/IP** est le protocole de communication qui permet l'échange de données entre machines sur Internet. C'est le langage commun grâce auquel des appareils très différents arrivent à se comprendre.
 
-On découpe ce travail en quatre couches. Chacune a un rôle précis, et aucune ne fait le travail des autres. Cliquez sur chaque couche pour voir ce qu'elle prend en charge, avec une analogie simple.
+On découpe ce travail en quatre couches. Chacune a un rôle précis, et aucune ne fait le travail des autres. Cliquer sur chaque couche pour voir ce qu'elle prend en charge, avec une analogie simple.
 
 <TcpIpLayers />
 
-Quand vous demandez une page web, les données descendent ces couches les unes après les autres, un peu comme des enveloppes empilées. C'est l'encapsulation.
+Quand une page web est demandée, les données descendent ces couches les unes après les autres, un peu comme des enveloppes empilées. C'est l'encapsulation.
 
 <EncapsulationVisualizer />
 
@@ -111,13 +111,13 @@ Le simulateur ci-dessus permet de lancer un ping et de voir le trajet d'un paque
 Les machines se parlent avec des adresses IP, par exemple `142.250.179.142`. Personne n'a envie de retenir ça pour ouvrir un site. On préfère `google.com`.
 
 > **DNS (Domain Name System)**
-> Le **DNS** est l'annuaire d'Internet. Il traduit un nom de domaine, lisible par nous, en adresse IP, lisible par les machines.
+> Le **DNS** est l'annuaire d'Internet. Il traduit un nom de domaine, lisible par un humain, en adresse IP, lisible par les machines.
 
-C'est le même geste que lorsque vous cherchez « Maman » dans le répertoire du téléphone : vous connaissez le nom, l'appareil compose le numéro. Le DNS fait cela pour les sites.
+C'est le même geste que chercher « Maman » dans le répertoire du téléphone : on connaît le nom, l'appareil compose le numéro. Le DNS fait cela pour les sites.
 
 ## Deux façons de s'organiser
 
-La plupart des services que vous utilisez, le Web, le mail, le streaming, suivent le modèle **client-serveur**. Vous, le client, demandez quelque chose. Le serveur, chez Google ou chez Netflix, le fournit. Au restaurant, vous commandez et la cuisine prépare : les rôles ne sont pas les mêmes.
+La plupart des services du quotidien, le Web, le mail, le streaming, suivent le modèle **client-serveur**. Le client demande quelque chose. Le serveur, chez Google ou chez Netflix, le fournit. Au restaurant, le client commande et la cuisine prépare : les rôles ne sont pas les mêmes.
 
 Le **pair-à-pair**, ou P2P, fonctionne autrement. Il n'y a pas de machine centrale. Chaque ordinateur est à la fois client et serveur, et les données passent directement de l'un à l'autre. C'est plus proche d'un repas où chacun apporte un plat et le partage.
 
