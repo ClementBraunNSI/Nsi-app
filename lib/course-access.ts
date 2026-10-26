@@ -81,10 +81,7 @@ export function canAccessCourse(data: { audience?: unknown } | null | undefined,
   if (viewer.isElevated) return true;
   const audience = parseAudience(data);
 
-  if (viewer.hasPrivateLessons) {
-    return accountListed(audience, viewer);
-  }
-
+  // Un élève en cours particuliers voit les cours publics comme tout le monde, en plus des fiches qui le nomment.
   if (audience.kind === "public") return true;
   if (!viewer.isAuthenticated) return false;
   if (audience.kind === "class") {

@@ -122,7 +122,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] p-8 font-sans">
+    <div className="min-h-screen bg-[#FDFCFB] px-0 py-4 sm:p-8 font-sans">
       <div className="max-w-7xl mx-auto space-y-8">
         
         <PageHeader
@@ -255,8 +255,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* 3. Tableau des Élèves */}
-          <div className="overflow-hidden rounded-2xl border border-slate-100">
-            <table className="w-full text-left">
+          <div className="overflow-x-auto rounded-2xl border border-slate-100">
+            <table className="w-full min-w-[40rem] text-left">
               <thead className="bg-slate-50/50 border-b border-slate-100">
                 <tr>
                   <th className="px-6 py-4 text-xs font-bold text-slate-400 italic">Élève</th>
@@ -565,7 +565,7 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
                     ))}
                   </div>
                 ) : (
-                  <div className="p-10 text-center bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
+                  <div className="p-6 sm:p-10 text-center bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
                     <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3 text-slate-300">
                       <Award size={24} />
                     </div>
@@ -593,7 +593,7 @@ function StudentDetailsModal({ student, onClose }: { student: any, onClose: () =
                     ))}
                   </div>
                 ) : (
-                  <div className="p-10 text-center bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
+                  <div className="p-6 sm:p-10 text-center bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
                     <p className="text-slate-500 font-bold">Aucun succès débloqué</p>
                     <p className="text-slate-400 text-sm">Les succès de fiche et les paliers apparaîtront ici.</p>
                   </div>

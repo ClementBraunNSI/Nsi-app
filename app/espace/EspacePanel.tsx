@@ -459,7 +459,7 @@ function Overlay({
 }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60">
-      <div className="bg-[var(--surface)] rounded-[2rem] p-8 max-w-3xl w-full relative max-h-[80vh] overflow-y-auto border border-[var(--border)]">
+      <div className="bg-[var(--surface)] rounded-[2rem] p-5 sm:p-8 max-w-3xl w-full relative max-h-[80vh] overflow-y-auto border border-[var(--border)]">
         <button
           type="button"
           onClick={onClose}

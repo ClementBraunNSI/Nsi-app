@@ -58,11 +58,11 @@ const privateAnatole = {
 };
 
 describe("course audience", () => {
-  it("keeps a public course open to visitors and class students", () => {
+  it("keeps a public course open to visitors, class students and private-lesson students", () => {
     expect(parseAudience(publicSheet)).toEqual({ kind: "public" });
     expect(canAccessCourse(publicSheet, loggedOut)).toBe(true);
     expect(canAccessCourse(publicSheet, classAnatole)).toBe(true);
-    expect(canAccessCourse(publicSheet, privateAnatole)).toBe(false);
+    expect(canAccessCourse(publicSheet, privateAnatole)).toBe(true);
   });
 
   it("lists the private Anatole account and hides that sheet from class Anatole and visitors", () => {
