@@ -183,7 +183,7 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
               <p className="animate-pulse font-medium">Chargement de la progression</p>
             </div>
           ) : failed || !data ? (
-            <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center">
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-6 sm:p-10 text-center">
               <p className="font-bold text-slate-600">La progression n'a pas pu être chargée.</p>
             </div>
           ) : (
@@ -230,7 +230,7 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
               )}
 
               {levels.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center">
+                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-6 sm:p-10 text-center">
                   <p className="font-bold text-slate-600">Aucune fiche pour ce niveau.</p>
                   <p className="mt-1 text-sm text-slate-400">Les fiches du site apparaîtront ici, même sans exercice validé.</p>
                 </div>
@@ -282,7 +282,7 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
                   </ul>
                 </div>
               ) : visibleSheets.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center">
+                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-6 sm:p-10 text-center">
                   <p className="font-bold text-slate-600">Aucune fiche pour ce niveau.</p>
                   <p className="mt-1 text-sm text-slate-400">Les fiches du site apparaîtront ici, même sans exercice validé.</p>
                 </div>
