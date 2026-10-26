@@ -44,12 +44,28 @@ assert True, "Consignes lues."
   </ExerciseSection>
 
   <ExerciseSection id="rs-1" label="Introduction - Créer un graphe" type="python">
+    <CodeDepart>
+    ```python
+    import networkx as nx
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Créer un graphe
 
       **Mission :** Créer un graphe non orienté `reseau` avec **networkx**, ajouter les utilisateurs `"Alice"`, `"Bob"` et `"Charlie"` comme sommets, puis stocker le nombre d'utilisateurs dans `nb_utilisateurs`.
 
       *Indice :* `import networkx as nx`, `G = nx.Graph()`, `G.add_node("...")`, `G.number_of_nodes()`.
+
+    <Correction>
+    ```python
+    reseau = nx.Graph()
+    reseau.add_node("Alice")
+    reseau.add_node("Bob")
+    reseau.add_node("Charlie")
+    nb_utilisateurs = reseau.number_of_nodes()
+    print(nb_utilisateurs)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -65,6 +81,11 @@ assert set(reseau.nodes()) == {"Alice", "Bob", "Charlie"}, "Ajoutez Alice, Bob e
   </ExerciseSection>
 
   <ExerciseSection id="rs-2" label="Introduction - Relier des amis" type="python">
+    <CodeDepart>
+    ```python
+    import networkx as nx
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Relier des amis
 
@@ -78,6 +99,17 @@ assert set(reseau.nodes()) == {"Alice", "Bob", "Charlie"}, "Ajoutez Alice, Bob e
       Stocker le nombre d'amitiés dans `nb_amities`.
 
       *Indice :* `G.add_edge("Alice", "Bob")` crée une arête entre deux amis.
+
+    <Correction>
+    ```python
+    reseau = nx.Graph()
+    reseau.add_nodes_from(["Alice", "Bob", "Charlie"])
+    reseau.add_edge("Alice", "Bob")
+    reseau.add_edge("Bob", "Charlie")
+    nb_amities = reseau.number_of_edges()
+    print(nb_amities)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -94,6 +126,18 @@ assert not reseau.has_edge("Alice", "Charlie"), "Alice et Charlie ne sont pas am
   </ExerciseSection>
 
   <ExerciseSection id="rs-3" label="Introduction - Nombre d'amis" type="python">
+    <CodeDepart>
+    ```python
+    import networkx as nx
+
+    reseau = nx.Graph()
+    reseau.add_edges_from([
+        ("Alice", "Bob"),
+        ("Bob", "Charlie"),
+        ("Bob", "Diana"),
+    ])
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Nombre d'amis
 
@@ -113,6 +157,13 @@ assert not reseau.has_edge("Alice", "Charlie"), "Alice et Charlie ne sont pas am
       ```
 
       *Indice :* `reseau.degree("Bob")` ou `len(list(reseau.neighbors("Bob")))`.
+
+    <Correction>
+    ```python
+    amis_bob = reseau.degree("Bob")
+    print(amis_bob)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -133,6 +184,17 @@ assert amis_bob == 3, "Bob a 3 amis dans ce réseau."
   </ExerciseSection>
 
   <ExerciseSection id="rs-4" label="Introduction - Vérifier une amitié" type="python">
+    <CodeDepart>
+    ```python
+    import networkx as nx
+
+    reseau = nx.Graph()
+    reseau.add_edges_from([
+        ("Alice", "Bob"),
+        ("Bob", "Charlie"),
+    ])
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Vérifier une amitié
 
@@ -149,6 +211,13 @@ assert amis_bob == 3, "Bob a 3 amis dans ce réseau."
       ```
 
       *Indice :* `reseau.has_edge("Alice", "Charlie")`
+
+    <Correction>
+    ```python
+    alice_charlie_amis = reseau.has_edge("Alice", "Charlie")
+    print(alice_charlie_amis)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -168,6 +237,11 @@ assert alice_charlie_amis == False, "Alice et Charlie ne sont pas amis directeme
   </ExerciseSection>
 
   <ExerciseSection id="rs-5" label="Facile - Tableau des profils" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pd
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Tableau des profils
 
@@ -182,6 +256,18 @@ assert alice_charlie_amis == False, "Alice et Charlie ne sont pas amis directeme
       | Charlie | 15 | Marseille |
 
       *Indice :* filtrer avec `profils[profils["Prénom"] == "Charlie"]`.
+
+    <Correction>
+    ```python
+    profils = pd.DataFrame({
+        "Prénom": ["Alice", "Bob", "Charlie"],
+        "Âge": [15, 16, 15],
+        "Ville": ["Lyon", "Paris", "Marseille"],
+    })
+    ville_charlie = profils[profils["Prénom"] == "Charlie"]["Ville"].iloc[0]
+    print(ville_charlie)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -202,6 +288,19 @@ assert ville_charlie == profils_ref.loc[profils_ref["Prénom"] == "Charlie", "Vi
   </ExerciseSection>
 
   <ExerciseSection id="rs-6" label="Facile - L'utilisateur le plus populaire" type="python">
+    <CodeDepart>
+    ```python
+    import networkx as nx
+
+    reseau = nx.Graph()
+    reseau.add_edges_from([
+        ("Alice", "Bob"),
+        ("Alice", "Charlie"),
+        ("Alice", "Diana"),
+        ("Bob", "Charlie"),
+    ])
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - L'utilisateur le plus populaire
 
@@ -220,6 +319,13 @@ assert ville_charlie == profils_ref.loc[profils_ref["Prénom"] == "Charlie", "Vi
       ```
 
       *Indice :* `nx.degree(reseau)` renvoie le degré de chaque sommet. Chercher le maximum.
+
+    <Correction>
+    ```python
+    plus_populaire = max(reseau.nodes, key=lambda personne: reseau.degree(personne))
+    print(plus_populaire)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -243,6 +349,12 @@ assert plus_populaire == "Alice", "Alice a le plus d'amis."
   </ExerciseSection>
 
   <ExerciseSection id="rs-7" label="Facile - Graphe depuis un tableau" type="python">
+    <CodeDepart>
+    ```python
+    import networkx as nx
+    import pandas as pd
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Graphe depuis un tableau
 
@@ -256,6 +368,20 @@ assert plus_populaire == "Alice", "Alice a le plus d'amis."
       | Alice | Diana |
 
       *Indice :* créer un DataFrame puis parcourir les lignes pour appeler `add_edge`.
+
+    <Correction>
+    ```python
+    paires = pd.DataFrame({
+        "Utilisateur 1": ["Alice", "Bob", "Charlie", "Alice"],
+        "Utilisateur 2": ["Bob", "Charlie", "Diana", "Diana"],
+    })
+    reseau = nx.Graph()
+    for _, ligne in paires.iterrows():
+        reseau.add_edge(ligne["Utilisateur 1"], ligne["Utilisateur 2"])
+    nb_amities = reseau.number_of_edges()
+    print(nb_amities)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python

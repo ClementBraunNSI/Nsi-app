@@ -102,7 +102,36 @@ Trois lignes de départ :
       WHERE etat = 'disponible'
       ORDER BY prix_jour;
       ```
+
+    <Correction>
+    ```sql
+    CREATE TABLE vehicule (
+      immat TEXT PRIMARY KEY,
+      marque TEXT,
+      modele TEXT,
+      prix_jour REAL CHECK (prix_jour > 0),
+      places INTEGER CHECK (places >= 1),
+      etat TEXT CHECK (etat IN ('disponible', 'maintenance', 'loue'))
+    );
+    INSERT INTO vehicule VALUES ('AB-123-CD', 'Peugeot', '208', 35, 5, 'disponible');
+    INSERT INTO vehicule VALUES ('EF-456-GH', 'Yamaha', 'MT-07', 45, 2, 'maintenance');
+    INSERT INTO vehicule VALUES ('IJ-789-KL', 'Fiat', 'Ducato', 120, 4, 'disponible');
+
+    SELECT immat, marque, modele, prix_jour
+    FROM vehicule
+    WHERE etat = 'disponible'
+    ORDER BY prix_jour;
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```sql
+    CREATE TABLE vehicule (immat TEXT PRIMARY KEY, marque TEXT, modele TEXT, prix_jour REAL CHECK (prix_jour > 0), places INTEGER CHECK (places >= 1), etat TEXT CHECK (etat IN ('disponible', 'maintenance', 'loue')));
+    INSERT INTO vehicule VALUES ('AB-123-CD', 'Peugeot', '208', 35, 5, 'disponible'), ('EF-456-GH', 'Yamaha', 'MT-07', 45, 2, 'maintenance'), ('IJ-789-KL', 'Fiat', 'Ducato', 120, 4, 'disponible');
+    -- controle
+    SELECT immat, marque, modele, prix_jour, places, etat, (SELECT COUNT(*) FROM vehicule) FROM vehicule ORDER BY immat;
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="mini-veh-2" label="L'API" type="lecture">
@@ -144,7 +173,20 @@ Les lignes ont cette forme, une par événement :
 Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. Le mot `disque` apparaît 2 fois. La première erreur est à `08:02:10`.
 
 <ExerciseTabs courseId="term_mini_logs" courseTitle="Analyse de logs">
-  <ExerciseSection id="mini-logs-1" label="Une passe" type="lecture">
+  <ExerciseSection id="mini-logs-1" label="Une passe" type="python">
+    <CodeDepart>
+    ```python
+    # Le fichier d'exemple est créé ici pour pouvoir tester dans l'éditeur.
+    with open("systeme.log", "w", encoding="utf-8") as f:
+        f.write("""2026-03-12 08:01:02 INFO demarrage
+    2026-03-12 08:01:05 WARN disque
+    2026-03-12 08:02:10 ERROR reseau
+    2026-03-12 08:02:11 INFO requete
+    2026-03-12 08:03:40 ERROR disque
+    2026-03-12 08:04:00 INFO arret
+    """)
+    ```
+    </CodeDepart>
     <Enonce>
       Écrire `analyser(chemin)` qui ouvre le fichier et, en une seule lecture, remplit un dictionnaire :
 
@@ -155,7 +197,52 @@ Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. L
       Une ligne vide est ignorée. Une ligne sans niveau parmi `INFO`, `WARN`, `ERROR` compte dans `lignes` et dans une clé `AUTRE`, sans faire planter la fonction.
 
       Écrire `compter_mot(chemin, mot)` qui renvoie le nombre de lignes contenant `mot`. `compter_mot(chemin, "disque")` vaut `2`. La comparaison est exacte sur le mot isolé, pas sur un morceau : `dis` ne compte pas `disque`.
+
+    <Correction>
+    ```python
+    def analyser(chemin):
+        compteurs = {"lignes": 0, "INFO": 0, "WARN": 0, "ERROR": 0}
+        with open(chemin, encoding="utf-8") as f:
+            for ligne in f:
+                mots = ligne.split()
+                if len(mots) == 0:
+                    continue
+                compteurs["lignes"] += 1
+                niveau = mots[2] if len(mots) > 2 else ""
+                if niveau in ("INFO", "WARN", "ERROR"):
+                    compteurs[niveau] += 1
+                else:
+                    compteurs["AUTRE"] = compteurs.get("AUTRE", 0) + 1
+        return compteurs
+
+    def compter_mot(chemin, mot):
+        total = 0
+        with open(chemin, encoding="utf-8") as f:
+            for ligne in f:
+                if mot in ligne.split():
+                    total += 1
+        return total
+
+    print(analyser("systeme.log"))
+    print(compter_mot("systeme.log", "disque"))
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    with open("essai.log", "w", encoding="utf-8") as __f:
+        __f.write("2026-03-12 08:01:02 INFO demarrage\n2026-03-12 08:01:05 WARN disque\n2026-03-12 08:02:10 ERROR reseau\n2026-03-12 08:02:11 INFO requete\n2026-03-12 08:03:40 ERROR disque\n2026-03-12 08:04:00 INFO arret\n")
+    assert analyser("essai.log") == {"lignes": 6, "INFO": 3, "WARN": 1, "ERROR": 2}, "Sur le fichier d'exemple : 6 lignes, 3 INFO, 1 WARN, 2 ERROR."
+    assert compter_mot("essai.log", "disque") == 2, "Le mot disque apparaît sur 2 lignes."
+    assert compter_mot("essai.log", "dis") == 0, "dis n'est pas un mot du fichier : 0."
+    with open("bizarre.log", "w", encoding="utf-8") as __f:
+        __f.write("2026-03-12 09:00:00 INFO a\n\n2026-03-12 09:00:01 DEBUG b\nligne sans niveau\n")
+    __r = analyser("bizarre.log")
+    assert __r["lignes"] == 3, "Les lignes vides sont ignorées : 3 lignes."
+    assert __r.get("AUTRE") == 2, "Une ligne sans niveau connu compte dans AUTRE."
+    assert __r["INFO"] == 1, "La ligne INFO est comptée."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="mini-logs-2" label="Deux stratégies" type="lecture">
@@ -202,16 +289,80 @@ banque = [
 
 <ExerciseTabs courseId="term_mini_epreuve" courseTitle="Simulateur">
   <ExerciseSection id="mini-ep-1" label="La banque" type="python">
+    <CodeDepart>
+    ```python
+    import random
+
+    banque = [
+        {"id": "q1", "enonce": "Que renvoie len([1, 2, 2]) ?", "reponse": "3"},
+        {"id": "q2", "enonce": "Quel algorithme de plus court chemin sur un graphe à poids positifs ?", "reponse": "Dijkstra"},
+        {"id": "q3", "enonce": "Une clé primaire peut-elle être répétée ? (oui/non)", "reponse": "non"},
+    ]
+    ```
+    </CodeDepart>
     <Enonce>
       Écrire `ajouter_question(banque, identifiant, enonce, reponse)`. Identifiant déjà présent : renvoyer `False`, la banque ne change pas. Sinon ajouter le dictionnaire et renvoyer `True`.
 
       Écrire `tirer(banque, rng)` qui choisit une question. `rng` est un générateur dont la graine est fixée (`random.Random(0)`), pour que deux lancements avec la même graine donnent la même question. Banque vide : renvoyer `None`.
 
       Avec la graine 0 et la banque ci-dessus, afficher l'`id` tiré et vérifier qu'un second appel à `tirer` avec un nouveau `Random(0)` redonne le même `id`.
+
+    <Correction>
+    ```python
+    def ajouter_question(banque, identifiant, enonce, reponse):
+        for question in banque:
+            if question["id"] == identifiant:
+                return False
+        banque.append({"id": identifiant, "enonce": enonce, "reponse": reponse})
+        return True
+
+    def tirer(banque, rng):
+        if len(banque) == 0:
+            return None
+        return rng.choice(banque)
+
+    premiere = tirer(banque, random.Random(0))
+    seconde = tirer(banque, random.Random(0))
+    print(premiere["id"], seconde["id"] == premiere["id"])
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    import random
+    essai = [{"id": "a", "enonce": "?", "reponse": "1"}]
+    assert ajouter_question(essai, "b", "Deux ?", "2") is True, "Un identifiant nouveau : la question est ajoutée et la fonction renvoie True."
+    assert len(essai) == 2 and essai[1] == {"id": "b", "enonce": "Deux ?", "reponse": "2"}, "La question ajoutée est un dictionnaire id, enonce, reponse."
+    assert ajouter_question(essai, "a", "Autre", "x") is False, "Un identifiant déjà présent : la fonction renvoie False."
+    assert len(essai) == 2, "Un identifiant déjà présent : la banque ne change pas."
+    assert tirer([], random.Random(0)) is None, "Banque vide : tirer renvoie None."
+    copie = [dict(q) for q in banque]
+    q1 = tirer(copie, random.Random(0))
+    q2 = tirer(copie, random.Random(0))
+    assert q1 in copie, "tirer renvoie une question de la banque."
+    assert q1["id"] == q2["id"], "Deux tirages avec random.Random(0) donnent la même question."
+    assert len({tirer(copie, random.Random(g))["id"] for g in range(30)}) > 1, "tirer doit utiliser le générateur rng reçu."
+    ```
+    </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="mini-ep-2" label="Le test" type="lecture">
+  <ExerciseSection id="mini-ep-2" label="Le test" type="python">
+    <CodeDepart>
+    ```python
+    import random
+
+    banque = [
+        {"id": "q1", "enonce": "Que renvoie len([1, 2, 2]) ?", "reponse": "3"},
+        {"id": "q2", "enonce": "Quel algorithme de plus court chemin sur un graphe à poids positifs ?", "reponse": "Dijkstra"},
+        {"id": "q3", "enonce": "Une clé primaire peut-elle être répétée ? (oui/non)", "reponse": "non"},
+    ]
+
+    def tirer(banque, rng):
+        if len(banque) == 0:
+            return None
+        return rng.choice(banque)
+    ```
+    </CodeDepart>
     <Enonce>
       Écrire `valider(question, proposition)`. Elle renvoie `True` si `proposition`, après `strip`, est égale à `question["reponse"]`. La comparaison des textes est exacte, majuscules comprises : `dijkstra` ne valide pas `Dijkstra`.
 
@@ -222,7 +373,38 @@ banque = [
       ```
 
       Le programme principal tire une question, affiche l'énoncé, lit une réponse avec `input`, puis affiche `Juste.` ou `À revoir.` selon `valider`. Il affiche aussi, sans saisie, les trois appels ci-dessus, pour qu'on contrôle le fichier sans jouer le dialogue.
+
+    <Correction>
+    ```python
+    def valider(question, proposition):
+        return proposition.strip() == question["reponse"]
+
+    print(valider(banque[0], "3"))
+    print(valider(banque[0], "2"))
+    print(valider(banque[1], "Dijkstra"))
+
+    question = tirer(banque, random.Random())
+    print(question["enonce"])
+    reponse = input("Réponse : ")
+    if valider(question, reponse):
+        print("Juste.")
+    else:
+        print("À revoir.")
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["3"]
+    q = {"id": "t", "enonce": "?", "reponse": "Dijkstra"}
+    assert valider(q, "Dijkstra") is True, "La bonne réponse est validée."
+    assert valider(q, "  Dijkstra \n") is True, "Les espaces autour de la proposition sont retirés avec strip."
+    assert valider(q, "dijkstra") is False, "La comparaison respecte les majuscules."
+    assert valider({"id": "n", "enonce": "?", "reponse": "3"}, "2") is False, "Une mauvaise réponse n'est pas validée."
+    assert "True" in SORTIE and "False" in SORTIE, "Le programme affiche les trois appels de valider."
+    assert "Juste." in SORTIE or "À revoir." in SORTIE, "Le dialogue affiche Juste. ou À revoir. après la saisie."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 

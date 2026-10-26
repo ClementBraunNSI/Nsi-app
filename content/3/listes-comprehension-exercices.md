@@ -24,6 +24,12 @@ Syntaxe de base : `[expression for element in sequence if condition]`
 <ExerciseTabs courseId="listes-comprehension-exos" courseTitle="Maitre de la compréhension">
 
   <ExerciseSection id="level-1-facile" label="Niveau 1 - Facile" type="python">
+    <CodeDepart>
+    ```python
+    mots = ["chat", "chien", "oiseau", "poisson"]
+    animaux = ["abeille", "chat", "anaconda", "chien", "aigle"]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercices d'échauffement (4 exercices)
 
@@ -45,6 +51,14 @@ Syntaxe de base : `[expression for element in sequence if condition]`
     Créer une liste `commence_par_a` ne contenant que les animaux dont le nom commence par 'a'.
     *(Résultat attendu : `['abeille', 'anaconda', 'aigle']`)*
 
+    <Correction>
+    ```python
+    carres = [x ** 2 for x in range(11)]
+    pairs = [x for x in range(21) if x % 2 == 0]
+    longueurs = [len(mot) for mot in mots]
+    commence_par_a = [animal for animal in animaux if animal[0] == "a"]
+    ```
+    </Correction>
     </Enonce>
     <Verification>
     ```python
@@ -68,27 +82,43 @@ Syntaxe de base : `[expression for element in sequence if condition]`
   </ExerciseSection>
 
   <ExerciseSection id="level-2-moyen" label="Niveau 2 - Moyen" type="python">
+    <CodeDepart>
+    ```python
+    phrase = "Python est un langage puissant et rapide"
+    texte = "Programmation"
+    matrice = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercices intermédiaires (5 exercices)
 
     **1. Multiples de 3 mais pas de 5**
-    Créer une liste contenant les nombres de 0 à 50 inclus qui sont divisibles par 3 mais **pas** par 5.
+    Créer une liste `resultat_1` contenant les nombres de 0 à 50 inclus qui sont divisibles par 3 mais **pas** par 5.
 
     **2. Tuples (nombre, cube)**
-    Créer une liste de tuples `(x, x**3)` pour les entiers `x` de 1 à 10.
+    Créer une liste `resultat_2` de tuples `(x, x**3)` pour les entiers `x` de 1 à 10.
 
     **3. Filtrage et transformation**
     Soit `phrase = "Python est un langage puissant et rapide"`.
-    Créer une liste contenant les mots de cette phrase (séparés par des espaces) qui ont plus de 4 lettres, en les mettant tous en majuscules.
+    Créer une liste `resultat_3` contenant les mots de cette phrase (séparés par des espaces) qui ont plus de 4 lettres, en les mettant tous en majuscules.
 
     **4. Extraction de voyelles**
     Soit `texte = "Programmation"`.
-    Créer une liste contenant toutes les voyelles présentes dans `texte`, dans l'ordre d'apparition.
+    Créer une liste `resultat_4` contenant toutes les voyelles présentes dans `texte`, dans l'ordre d'apparition (`y` compte comme une voyelle).
 
     **5. Aplatir une matrice**
     Soit la matrice `matrice = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]`.
     Créer une liste unique `plat` contenant tous les éléments de la matrice à la suite (`[1, 2, 3, 4, ...]`).
 
+    <Correction>
+    ```python
+    resultat_1 = [x for x in range(51) if x % 3 == 0 and x % 5 != 0]
+    resultat_2 = [(x, x ** 3) for x in range(1, 11)]
+    resultat_3 = [mot.upper() for mot in phrase.split() if len(mot) > 4]
+    resultat_4 = [lettre for lettre in texte if lettre in "aeiouyAEIOUY"]
+    plat = [x for ligne in matrice for x in ligne]
+    ```
+    </Correction>
     </Enonce>
     <Verification>
     ```python
@@ -120,33 +150,53 @@ Syntaxe de base : `[expression for element in sequence if condition]`
   </ExerciseSection>
 
   <ExerciseSection id="level-3-difficile" label="Niveau 3 - Difficile" type="python">
+    <CodeDepart>
+    ```python
+    couleurs = ['Pique', 'Cœur', 'Carreau', 'Trèfle']
+    valeurs = ['7', '8', '9', '10', 'Valet', 'Dame', 'Roi', 'As']
+    matrice = [[1, 2, 3], [4, 5, 6]]
+    liste_a = [1, 2, 3, 4, 5]
+    liste_b = [4, 5, 6, 7, 8]
+    mots = ["radar", "python", "kayak", "algo", "ressasser"]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercices avancés (6 exercices)
 
     **1. Nombres premiers**
-    Créer une liste contenant tous les nombres premiers entre 2 et 50.
+    Créer une liste `premiers` contenant tous les nombres premiers entre 2 et 50.
     *Astuce : Utiliser `all()` dans la condition.*
 
     **2. Jeu de cartes (Produit cartésien)**
     Soient `couleurs = ['Pique', 'Cœur', 'Carreau', 'Trèfle']` et `valeurs = ['7', '8', '9', '10', 'Valet', 'Dame', 'Roi', 'As']`.
-    Créer une liste de tuples `(valeur, couleur)` représentant toutes les cartes possibles.
+    Créer une liste `cartes` de tuples `(valeur, couleur)` représentant toutes les cartes possibles.
 
     **3. Transposée d'une matrice**
     Soit `matrice = [[1, 2, 3], [4, 5, 6]]` (2 lignes, 3 colonnes).
-    Créer sa transposée (3 lignes, 2 colonnes) : `[[1, 4], [2, 5], [3, 6]]`.
+    Créer sa transposée `transposee` (3 lignes, 2 colonnes) : `[[1, 4], [2, 5], [3, 6]]`.
 
     **4. Intersection de deux listes**
     Soient `liste_a = [1, 2, 3, 4, 5]` et `liste_b = [4, 5, 6, 7, 8]`.
-    Créer une liste contenant les éléments présents dans les deux listes.
+    Créer une liste `intersection` contenant les éléments présents dans les deux listes, dans l'ordre de `liste_a`.
 
     **5. Table de multiplication**
-    Générer une liste de listes représentant la table de multiplication de 1 à 5.
+    Générer une liste de listes `table` représentant la table de multiplication de 1 à 5.
     `[[1, 2, 3, 4, 5], [2, 4, 6, 8, 10], ...]`
 
     **6. Palindromes**
     Soit `mots = ["radar", "python", "kayak", "algo", "ressasser"]`.
-    Créer une liste contenant uniquement les mots qui sont des palindromes (se lisent pareil dans les deux sens).
+    Créer une liste `palindromes` contenant uniquement les mots qui sont des palindromes (se lisent pareil dans les deux sens).
 
+    <Correction>
+    ```python
+    premiers = [n for n in range(2, 51) if all(n % d != 0 for d in range(2, n))]
+    cartes = [(v, c) for c in couleurs for v in valeurs]
+    transposee = [[ligne[i] for ligne in matrice] for i in range(len(matrice[0]))]
+    intersection = [x for x in liste_a if x in liste_b]
+    table = [[i * j for j in range(1, 6)] for i in range(1, 6)]
+    palindromes = [mot for mot in mots if mot == mot[::-1]]
+    ```
+    </Correction>
     </Enonce>
     <Verification>
     ```python
@@ -158,7 +208,8 @@ Syntaxe de base : `[expression for element in sequence if condition]`
     assert 'cartes' in locals(), "La variable 'cartes' n'est pas définie."
     couleurs = ['Pique', 'Cœur', 'Carreau', 'Trèfle']
     valeurs = ['7', '8', '9', '10', 'Valet', 'Dame', 'Roi', 'As']
-    assert cartes == [(v, c) for c in couleurs for v in valeurs], "La liste 'cartes' est incorrecte."
+    assert len(cartes) == 32, "Le jeu doit compter 32 cartes."
+    assert sorted(cartes) == sorted((v, c) for c in couleurs for v in valeurs), "La liste 'cartes' est incorrecte : chaque tuple est (valeur, couleur)."
 
     # 3. Transposée d'une matrice
     assert 'transposee' in locals(), "La variable 'transposee' n'est pas définie."

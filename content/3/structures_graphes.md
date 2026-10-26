@@ -74,16 +74,63 @@ Les deux ont besoin d'un ensemble de sommets marqués. Sans cette marque, la str
     
     1.  Représenter ce graphe sous forme de dictionnaire d'adjacence.
     2.  Écrire une fonction `sont_amis(graphe, p1, p2)` qui renvoie True s'ils sont connectés directement.
-    
+
+    <Correction>
+    ```python
+    graphe = {
+        "Alice": ["Bob", "Charlie"],
+        "Bob": ["Alice", "David"],
+        "Charlie": ["Alice"],
+        "David": ["Bob"],
+    }
+
+    def sont_amis(graphe, p1, p2):
+        return p2 in graphe[p1]
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert 'graphe' in globals(), "Le dictionnaire d'adjacence doit s'appeler graphe."
+    assert {k: sorted(v) for k, v in graphe.items()} == {"Alice": ["Bob", "Charlie"], "Bob": ["Alice", "David"], "Charlie": ["Alice"], "David": ["Bob"]}, "Le dictionnaire ne décrit pas les amitiés de l'énoncé."
+    assert sont_amis(graphe, "Alice", "Bob") is True, "Alice et Bob sont amis."
+    assert sont_amis(graphe, "David", "Bob") is True, "David et Bob sont amis."
+    assert sont_amis(graphe, "Alice", "David") is False, "Alice et David ne sont pas amis directement."
+    assert sont_amis({"X": ["Y"], "Y": ["X"], "Z": []}, "Z", "X") is False, "sont_amis doit utiliser le graphe reçu en paramètre."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="graphe-ex-2" label="Voisins" type="python">
+    <CodeDepart>
+    ```python
+    graphe = {
+        "Alice": ["Bob", "Charlie"],
+        "Bob": ["Alice", "David"],
+        "Charlie": ["Alice"],
+        "David": ["Bob"],
+    }
+    ```
+    </CodeDepart>
     <Enonce>
     ### Trouver les voisins
     Écrire une fonction `nb_amis(graphe, personne)` qui renvoie le nombre d'amis d'une personne.
-    
+
+    <Correction>
+    ```python
+    def nb_amis(graphe, personne):
+        return len(graphe[personne])
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    reseau = {"Alice": ["Bob", "Charlie"], "Bob": ["Alice", "David"], "Charlie": ["Alice"], "David": ["Bob"]}
+    assert nb_amis(reseau, "Alice") == 2, "Alice a 2 amis."
+    assert nb_amis(reseau, "Charlie") == 1, "Charlie a 1 ami."
+    assert nb_amis({"Seul": []}, "Seul") == 0, "Une personne sans ami en a 0."
+    ```
+    </Verification>
   </ExerciseSection>
 
 </ExerciseTabs>

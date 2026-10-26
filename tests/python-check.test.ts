@@ -6,12 +6,16 @@ import { describe, expect, it } from 'vitest';
 import { everyTestPassed, finalizeReport, parsePythonCheckResult, buildPythonCheckSource } from '../lib/python-check';
 import { PYTHON_CHECK_RUNNER } from '../lib/python-check-runner';
 
+// Windows lit sinon le code source en cp1252 : les accents des messages se perdent.
+const PYTHON_ENV = { ...process.env, PYTHONUTF8: '1', PYTHONIOENCODING: 'utf-8' };
+
 function runCheck(user: string, tests: string | null) {
   const source = `${buildPythonCheckSource(user, tests)}\nprint(__nsi_out)\n`;
   const raw = execFileSync('python3', ['-c', source], {
     encoding: 'utf8',
     maxBuffer: 20_000_000,
     timeout: 20000,
+    env: PYTHON_ENV,
   });
   return parsePythonCheckResult(raw);
 }
@@ -162,6 +166,25 @@ describe('python exercise check', () => {
     expect(report.tests).toEqual([]);
   });
 
+  it('answers input() with the ENTREES of the tests and shows them like a terminal', () => {
+    const user = 'nom = input("Nom ? ")\nage = int(input("Âge ? "))\nprint(nom, age + 1)\n';
+    const report = runCheck(user, 'ENTREES = ["Marguerite", "4"]\nassert age == 4\nassert nom == "Marguerite"');
+    expect(report.validated).toBe(true);
+    expect(report.prints).toContain('Nom ? Marguerite');
+    expect(report.prints).toContain('Marguerite 5');
+
+    const rerun = runCheck(
+      'n = int(input())\nprint("pair" if n % 2 == 0 else "impair")\n',
+      'ENTREES = ["3"]\nassert SORTIE.strip().endswith("impair")\nvariables, sortie = relancer(["8"])\nassert variables["n"] == 8\nassert sortie.strip().endswith("pair") and "impair" not in sortie',
+    );
+    expect(rerun.validated).toBe(true);
+    expect(rerun.tests).toHaveLength(3);
+
+    const short = runCheck(user, 'ENTREES = ["Marguerite"]\nassert age == 4');
+    expect(short.validated).toBe(false);
+    expect(short.error).toMatch(/saisies/);
+  });
+
   it('refuses to validate when the runner claims success but a test failed', () => {
     const report = finalizeReport({
       status: 'success',
@@ -231,7 +254,10 @@ describe('existing exercise verifications', () => {
         const corrections = [...body.matchAll(/<Correction>([\s\S]*?)<\/Correction>/g)]
           .flatMap((match) => pythonBlocks(match[1] || ''));
         if (corrections.length === 0) continue;
-        const user = corrections.join('\n\n');
+        // Ces aides n'existent que dans le programme de vérification : une exécution brute ne peut pas les rejouer.
+        if (/\b(ENTREES|SORTIE|relancer|PROGRAMME)\b/.test(tests)) continue;
+        const starter = body.match(/<CodeDepart>([\s\S]*?)<\/CodeDepart>/);
+        const user = [...(starter ? pythonBlocks(starter[1] || '') : []), ...corrections].join('\n\n');
         if (/\binput\s*\(/.test(user) || /\binput\s*\(/.test(tests)) continue;
         cases.push({
           id: `${path.basename(file)}:${idMatch?.[1] || cases.length}`,
@@ -256,11 +282,15 @@ class _Timeout(Exception):
 def _alarm(signum, frame):
     raise _Timeout()
 
-signal.signal(signal.SIGALRM, _alarm)
+# SIGALRM n'existe pas sous Windows : la limite de temps n'y est pas appliquée.
+_ALARM = hasattr(signal, "SIGALRM")
+if _ALARM:
+    signal.signal(signal.SIGALRM, _alarm)
 cases = json.loads(open(sys.argv[1], encoding="utf-8").read())
 out = []
 for case in cases:
-    signal.alarm(3)
+    if _ALARM:
+        signal.alarm(3)
     try:
         report = _nsi_run(case["user"], case["tests"])
         ns = {"__name__": "__main__", "__builtins__": __builtins__}
@@ -286,7 +316,8 @@ for case in cases:
     except Exception as exc:
         out.append({"id": case["id"], "crash": type(exc).__name__ + ": " + str(exc)})
     finally:
-        signal.alarm(0)
+        if _ALARM:
+            signal.alarm(0)
 open(sys.argv[2], "w", encoding="utf-8").write(json.dumps(out, ensure_ascii=False))
 `);
 
@@ -295,7 +326,7 @@ open(sys.argv[2], "w", encoding="utf-8").write(json.dumps(out, ensure_ascii=Fals
       encoding: 'utf8',
       maxBuffer: 50_000_000,
       timeout: 90000,
-      env: { ...process.env, MPLBACKEND: 'Agg' },
+      env: { ...PYTHON_ENV, MPLBACKEND: 'Agg' },
     });
     const results = JSON.parse(fs.readFileSync(resultPath, 'utf8')) as Array<{
       id: string;

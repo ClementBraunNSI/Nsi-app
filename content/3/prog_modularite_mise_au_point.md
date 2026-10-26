@@ -110,7 +110,30 @@ La précondition porte sur la liste entière : elle n'est pas vide, sinon la div
     <Enonce>
       Écrire une fonction `racine_carree(x)` qui utilise `math.sqrt`.
       Ajouter une assertion pour vérifier que `x` est positif ou nul.
+
+    <Correction>
+    ```python
+    import math
+
+    def racine_carree(x):
+        assert x >= 0, "x doit être positif ou nul"
+        return math.sqrt(x)
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert racine_carree(9) == 3, "racine_carree(9) doit renvoyer 3."
+    assert racine_carree(0) == 0, "racine_carree(0) doit renvoyer 0."
+    assert abs(racine_carree(2) - 1.41421356) < 1e-6, "racine_carree(2) doit renvoyer environ 1.414."
+    refus = False
+    try:
+        racine_carree(-4)
+    except AssertionError:
+        refus = True
+    assert refus, "racine_carree(-4) doit déclencher une AssertionError."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 
@@ -165,6 +188,13 @@ Un test raconte un cas : des arguments, un résultat. Il ne relit pas le corps d
 
 <ExerciseTabs courseId="prog_mod_doctest" courseTitle="Doctests">
   <ExerciseSection id="mod-doctest-1" label="Écrire un doctest" type="python">
+    <CodeDepart>
+    ```python
+    def est_pair(n):
+        """Renvoie True si n est pair."""
+        return n % 2 == 0
+    ```
+    </CodeDepart>
     <Enonce>
       Ajouter des doctests à la fonction suivante qui vérifie si un nombre est pair.
       ```python
@@ -172,7 +202,38 @@ Un test raconte un cas : des arguments, un résultat. Il ne relit pas le corps d
           return n % 2 == 0
       ```
       Tester avec 4 (True), 5 (False) et 0 (True).
+
+    <Correction>
+    ```python
+    def est_pair(n):
+        """Renvoie True si n est pair.
+
+        >>> est_pair(4)
+        True
+        >>> est_pair(5)
+        False
+        >>> est_pair(0)
+        True
+        """
+        return n % 2 == 0
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    import doctest
+    exemples = [e for test in doctest.DocTestFinder().find(est_pair, "est_pair", globs={"est_pair": est_pair}) for e in test.examples]
+    appels = " ".join(e.source for e in exemples)
+    assert len(exemples) >= 3, "La docstring doit contenir au moins trois exemples >>>."
+    assert "est_pair(4)" in appels, "Un exemple doit tester est_pair(4)."
+    assert "est_pair(5)" in appels, "Un exemple doit tester est_pair(5)."
+    assert "est_pair(0)" in appels, "Un exemple doit tester est_pair(0)."
+    lanceur = doctest.DocTestRunner(verbose=False)
+    for test in doctest.DocTestFinder().find(est_pair, "est_pair", globs={"est_pair": est_pair}):
+        lanceur.run(test, out=lambda _texte: None)
+    assert lanceur.failures == 0, "Les résultats attendus écrits dans les doctests doivent être justes."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 

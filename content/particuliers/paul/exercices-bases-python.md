@@ -360,7 +360,7 @@ vaches = int(input("Combien de vaches ? "))
 print("Le lendemain, avec un veau de plus :", vaches + 1)
 ```
 
-Les exercices suivants se lancent avec le bouton **Exécuter** : une fenêtre pose chaque question, il suffit d'y taper la réponse. Ils n'ont pas de vérification automatique, la correction permet de comparer.
+Avec le bouton **Exécuter**, une fenêtre pose chaque question et il suffit d'y taper la réponse. Le bouton **Vérifier** essaie le programme avec des réponses préparées à l'avance, puis contrôle ce qu'il affiche.
 
 <ExerciseTabs courseId="paul-bases-python-input" courseTitle="Questions au fermier">
 
@@ -382,6 +382,14 @@ Les exercices suivants se lancent avec le bouton **Exécuter** : une fenêtre po
     ```
     </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["Jean"]
+    assert SORTIE.strip().splitlines()[-1].split() == ["Bonjour", "Jean"], "Si le fermier répond Jean, afficher : Bonjour Jean"
+    variables, sortie = relancer(["Lucie"])
+    assert sortie.strip().splitlines()[-1].split() == ["Bonjour", "Lucie"], "Si le fermier répond Lucie, afficher : Bonjour Lucie"
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="paul-4-2" label="4.2 [Facile] - Le nom de la vache" type="python">
@@ -399,6 +407,14 @@ Les exercices suivants se lancent avec le bouton **Exécuter** : une fenêtre po
     ```
     </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["Marguerite", "Montbéliarde"]
+    assert SORTIE.strip().splitlines()[-1] == "Marguerite est une vache de race Montbéliarde.", "Afficher : Marguerite est une vache de race Montbéliarde."
+    variables, sortie = relancer(["Biquette", "Normande"])
+    assert sortie.strip().splitlines()[-1] == "Biquette est une vache de race Normande.", "Avec Biquette et Normande : Biquette est une vache de race Normande."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="paul-4-3" label="4.3 [Moyen] - Litres par vache" type="python">
@@ -423,6 +439,15 @@ Les exercices suivants se lancent avec le bouton **Exécuter** : une fenêtre po
     ```
     </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["900", "45"]
+    derniere = SORTIE.strip().splitlines()[-1]
+    assert "20" in derniere, "900 litres pour 45 vaches : 20 litres par vache."
+    variables, sortie = relancer(["700", "28"])
+    assert "25" in sortie.strip().splitlines()[-1], "700 litres pour 28 vaches : 25 litres par vache."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="paul-4-4" label="4.4 [Moyen] - Combien de bidons ?" type="python">
@@ -447,6 +472,17 @@ Les exercices suivants se lancent avec le bouton **Exécuter** : une fenêtre po
     ```
     </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["1250"]
+    lignes = [" ".join(l.split()) for l in SORTIE.strip().splitlines()]
+    assert "Bidons pleins : 31" in lignes, "1250 litres : Bidons pleins : 31"
+    assert "Litres restants : 10" in lignes, "1250 litres : Litres restants : 10"
+    variables, sortie = relancer(["80"])
+    lignes = [" ".join(l.split()) for l in sortie.strip().splitlines()]
+    assert "Bidons pleins : 2" in lignes and "Litres restants : 0" in lignes, "80 litres : 2 bidons, 0 litre restant."
+    ```
+    </Verification>
   </ExerciseSection>
 
 </ExerciseTabs>

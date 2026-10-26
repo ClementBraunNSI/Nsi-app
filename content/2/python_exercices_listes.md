@@ -599,6 +599,7 @@ assert maximum([3, 1, 9, 2]) == 9
     <Enonce>
     ### Exercice 5.1 [Difficile] : Voyelles dans des mots
     **Écrire une fonction `compter_voyelles_mots` qui prend une liste de chaînes et renvoie le nombre total de voyelles dans tous les mots.**
+    *Les voyelles sont a, e, i, o, u et y, en minuscule ou en majuscule.*
 
     <Correction>
     ```python
@@ -616,8 +617,11 @@ assert maximum([3, 1, 9, 2]) == 9
     <Verification>
     ```python
 assert 'compter_voyelles_mots' in locals(), "La fonction 'compter_voyelles_mots' n'est pas définie."
-assert compter_voyelles_mots(["chat", "chien"]) == 3
-assert compter_voyelles_mots(["bonjour", "python"]) == 4
+assert compter_voyelles_mots(["chat", "chien"]) == 3, "['chat', 'chien'] contient 3 voyelles."
+assert compter_voyelles_mots(["bonjour", "python"]) == 5, "['bonjour', 'python'] contient 5 voyelles (le y compte)."
+assert compter_voyelles_mots([]) == 0, "Une liste vide contient 0 voyelle."
+assert compter_voyelles_mots(["NSI", "Eau"]) == 4, "Les majuscules comptent aussi."
+
     ```
     </Verification>
   </ExerciseSection>

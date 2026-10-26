@@ -199,6 +199,7 @@ assert compter_pairs_jusqua(7) == 3
     <Enonce>
     ### Exercice 2.2 [Facile] : Compter les voyelles
     **Écrire une fonction `compter_voyelles` qui prend une chaîne `phrase` et renvoie le nombre de voyelles.**
+    *Les voyelles sont a, e, i, o, u et y, en minuscule ou en majuscule.*
     *Rappel : `lettre in voyelles` teste si un caractère appartient à une chaîne (`"a" in "aeiou"` : `True`).*
 
     <Correction>
@@ -216,8 +217,11 @@ assert compter_pairs_jusqua(7) == 3
     <Verification>
     ```python
 assert 'compter_voyelles' in locals(), "La fonction 'compter_voyelles' n'est pas définie."
-assert compter_voyelles("bonjour") == 3
-assert compter_voyelles("NSI") == 0
+assert compter_voyelles("bonjour") == 3, "compter_voyelles('bonjour') doit renvoyer 3."
+assert compter_voyelles("NSI") == 1, "compter_voyelles('NSI') doit renvoyer 1 : le I majuscule est une voyelle."
+assert compter_voyelles("rythme") == 2, "compter_voyelles('rythme') doit renvoyer 2 : y et e."
+assert compter_voyelles("") == 0, "Une phrase vide ne contient aucune voyelle."
+
     ```
     </Verification>
   </ExerciseSection>
@@ -533,8 +537,11 @@ assert fibonacci_nieme(7) == 13
     <Verification>
     ```python
 assert 'compter_lettre' in locals(), "La fonction 'compter_lettre' n'est pas définie."
-assert compter_lettre("banane", "a") == 3
-assert compter_lettre("nsi", "z") == 0
+assert compter_lettre("banane", "a") == 2, "compter_lettre('banane', 'a') doit renvoyer 2."
+assert compter_lettre("banane", "n") == 2, "compter_lettre('banane', 'n') doit renvoyer 2."
+assert compter_lettre("nsi", "z") == 0, "compter_lettre('nsi', 'z') doit renvoyer 0."
+assert compter_lettre("aaa", "a") == 3, "compter_lettre('aaa', 'a') doit renvoyer 3."
+
     ```
     </Verification>
   </ExerciseSection>

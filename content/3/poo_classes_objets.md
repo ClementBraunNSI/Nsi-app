@@ -87,8 +87,37 @@ class CompteBancaire:
     1.  Créer une classe `Chien` avec les attributs `nom` et `race`.
     2.  Ajouter une méthode `aboyer()` qui affiche "Wouaf ! Je suis [nom] !".
     3.  Créer un chien nommé "Rex", de race "Berger Allemand", et le faire aboyer.
-    
+
+    <Correction>
+    ```python
+    class Chien:
+        def __init__(self, nom, race):
+            self.nom = nom
+            self.race = race
+
+        def aboyer(self):
+            print("Wouaf ! Je suis " + self.nom + " !")
+
+    rex = Chien("Rex", "Berger Allemand")
+    rex.aboyer()
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    import io, contextlib
+    assert 'Chien' in globals() and isinstance(Chien, type), "La classe Chien n'est pas définie."
+    medor = Chien("Médor", "Caniche")
+    assert medor.nom == "Médor", "L'attribut nom doit contenir le nom donné."
+    assert medor.race == "Caniche", "L'attribut race doit contenir la race donnée."
+    sortie = io.StringIO()
+    with contextlib.redirect_stdout(sortie):
+        medor.aboyer()
+    assert sortie.getvalue().strip() == "Wouaf ! Je suis Médor !", "aboyer() doit afficher Wouaf ! Je suis Médor !"
+    chiens = [v for v in globals().values() if isinstance(v, Chien) and v is not medor]
+    assert any(c.nom == "Rex" and c.race == "Berger Allemand" for c in chiens), "Un chien Rex, de race Berger Allemand, doit être créé."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="poo-ex-2" label="RPG Simple" type="python">
@@ -100,8 +129,46 @@ class CompteBancaire:
     3.  Méthode `est_vivant(self)` : Renvoie `True` si PV > 0, sinon `False`.
 
     Simuler un combat entre deux personnages.
-    
+
+    <Correction>
+    ```python
+    class Personnage:
+        def __init__(self, pseudo, force, pv=100):
+            self.pseudo = pseudo
+            self.pv = pv
+            self.force = force
+
+        def attaquer(self, cible):
+            cible.pv = cible.pv - self.force
+
+        def est_vivant(self):
+            return self.pv > 0
+
+    guerrier = Personnage("Guerrier", 30)
+    mage = Personnage("Mage", 25)
+    while guerrier.est_vivant() and mage.est_vivant():
+        guerrier.attaquer(mage)
+        if mage.est_vivant():
+            mage.attaquer(guerrier)
+    print(guerrier.pseudo, guerrier.pv, mage.pseudo, mage.pv)
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert 'Personnage' in globals() and isinstance(Personnage, type), "La classe Personnage n'est pas définie."
+    a = Personnage(pseudo="A", force=30)
+    b = Personnage(pseudo="B", force=10)
+    assert a.pv == 100, "Les PV valent 100 par défaut."
+    assert a.pseudo == "A" and a.force == 30, "Les attributs pseudo et force doivent contenir les valeurs données."
+    a.attaquer(b)
+    assert b.pv == 70, "Après une attaque de force 30, la cible passe de 100 à 70 PV."
+    assert a.pv == 100, "L'attaquant ne perd pas de PV en attaquant."
+    assert b.est_vivant() is True, "Avec 70 PV, le personnage est vivant."
+    a.attaquer(b); a.attaquer(b); a.attaquer(b)
+    assert b.est_vivant() is False, "Avec 0 PV ou moins, le personnage n'est plus vivant."
+    ```
+    </Verification>
   </ExerciseSection>
 
 </ExerciseTabs>

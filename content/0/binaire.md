@@ -91,6 +91,16 @@ Exemple :
 ```python
 n1 = 12  # Si la réponse est 12
 ```
+
+    <Correction>
+    ```python
+    n1 = 29
+    n2 = 21
+    n3 = 63
+    n4 = 17
+    n5 = 23
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python

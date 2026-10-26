@@ -97,8 +97,32 @@ C'est comme une file d'attente à la cantine. On ajoute à la fin (queue), on re
     4.  À la fin, la pile doit être vide.
     
     Écrire la fonction `verifier_parentheses(expression)`.
-    
+
+    <Correction>
+    ```python
+    def verifier_parentheses(expression):
+        pile = []
+        for caractere in expression:
+            if caractere == "(":
+                pile.append(caractere)
+            elif caractere == ")":
+                if len(pile) == 0:
+                    return False
+                pile.pop()
+        return len(pile) == 0
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert verifier_parentheses("(a + b) * (c)") is True, "(a + b) * (c) est bien parenthésée."
+    assert verifier_parentheses("(a + b") is False, "(a + b : il manque une parenthèse fermante."
+    assert verifier_parentheses("a + b)") is False, "a + b) : une fermante n'a pas d'ouvrante."
+    assert verifier_parentheses(")(") is False, ")( : la fermante arrive avant l'ouvrante."
+    assert verifier_parentheses("") is True, "Une expression vide est bien parenthésée."
+    assert verifier_parentheses("((x))()") is True, "((x))() est bien parenthésée."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="struct-ex-2" label="Croisement Routier" type="python">
@@ -112,8 +136,29 @@ C'est comme une file d'attente à la cantine. On ajoute à la fin (queue), on re
     3.  Faire partir une voiture.
     4.  Ajouter "Voiture C".
     5.  Afficher la prochaine voiture à partir.
-    
+
+    <Correction>
+    ```python
+    from collections import deque
+
+    file = deque()
+    file.append("Voiture A")
+    file.append("Voiture B")
+    file.popleft()
+    file.append("Voiture C")
+    print(file[0])
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    from collections import deque
+    assert 'file' in globals(), "La file doit s'appeler file."
+    assert isinstance(file, deque), "file doit être une collections.deque."
+    assert list(file) == ["Voiture B", "Voiture C"], "La file doit contenir Voiture B puis Voiture C."
+    assert SORTIE.strip().splitlines()[-1] == "Voiture B", "Le programme doit afficher la prochaine voiture à partir : Voiture B."
+    ```
+    </Verification>
   </ExerciseSection>
 
 </ExerciseTabs>

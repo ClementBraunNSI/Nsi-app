@@ -4122,3 +4122,39 @@ input, textarea {
     margin: -2.5rem -0.5rem -2.5rem 0;
   }
 }
+
+/* Carte des sites des collègues (components/ColleagueMap.tsx) */
+.colleague-pin-ring { opacity: 0; transition: opacity 0.2s; }
+.colleague-pin[data-active] .colleague-pin-ring,
+.colleague-pin:focus-visible .colleague-pin-ring { opacity: 1; }
+.colleague-pin-tag { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.2s var(--ease-out); }
+.colleague-pin:hover .colleague-pin-tag,
+.colleague-pin[data-active] .colleague-pin-tag { transform: scale(1.12); }
+.colleague-card { border-top: 3px solid var(--pin); animation: colleague-card-in 0.25s var(--ease-out); }
+@keyframes colleague-card-in { from { opacity: 0; } }
+@media (min-width: 1024px) {
+  .colleague-card {
+    position: absolute;
+    z-index: 2;
+    width: 20rem;
+    left: var(--card-x);
+    top: var(--card-y);
+    transform: translate(var(--card-shift), var(--card-lift));
+  }
+  /* Petite pointe tournée vers le terrier choisi. */
+  .colleague-card::before {
+    content: "";
+    position: absolute;
+    left: var(--tip);
+    width: 14px;
+    height: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transform: translateX(-50%) rotate(45deg);
+  }
+  .colleague-card:not([data-below])::before { bottom: -8px; border-top: 0; border-left: 0; }
+  .colleague-card[data-below]::before { top: -9px; border-bottom: 0; border-right: 0; background: var(--surface); border-top-color: var(--pin); border-left-color: var(--pin); border-width: 3px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .colleague-pin-tag, .colleague-card { transition: none; animation: none; }
+}

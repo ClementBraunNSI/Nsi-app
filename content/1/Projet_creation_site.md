@@ -32,7 +32,7 @@ Chaque bloc de couleur est une `div` : une division de la page. La feuille de st
 À cause d'un souci d'affichage, le nom du monstre correspond au bloc violet.
 
 <ExerciseTabs courseId="snt_bestiaire" courseTitle="Bestiaire">
-  <ExerciseSection id="bestiaire-1" label="Le contenu" type="python">
+  <ExerciseSection id="bestiaire-1" label="Le contenu" type="autre">
     <Enonce>
       Dans `index.html` :
 
@@ -118,7 +118,7 @@ On rencontre aussi `border: 2px solid black;`, `border-width`, `border-style`.
 La classe `container` englobe la page. C'est là qu'on pose le fond et la couleur du texte.
 
 <ExerciseTabs courseId="snt_bestiaire" courseTitle="Bestiaire">
-  <ExerciseSection id="bestiaire-3" label="Le fond" type="python">
+  <ExerciseSection id="bestiaire-3" label="Le fond" type="autre">
     <Enonce>
       Dans la classe `.container` de `style.css`, ajouter le fond et le texte blanc. Si la classe existe déjà, la compléter. Ne pas créer une deuxième classe du même nom à la fin du fichier en oubliant la première.
 

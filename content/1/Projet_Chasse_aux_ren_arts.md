@@ -147,7 +147,7 @@ Variantes à reconnaître aussi : `border: 2px solid black;`, `border-width`, `b
 La classe `container` contient toute la page. La modifier change presque tout le site. Si elle apparaît deux fois, compléter celle qui contient déjà `display: flex;`.
 
 <ExerciseTabs courseId="snt_chasse_renarts_fond" courseTitle="Fond">
-  <ExerciseSection id="chasse-fr-3" label="container" type="python">
+  <ExerciseSection id="chasse-fr-3" label="container" type="autre">
     <Enonce>
       Dans `.container`, ajouter le fond, la couleur du texte et la police. Point de départ :
 

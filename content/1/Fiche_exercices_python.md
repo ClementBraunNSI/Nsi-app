@@ -35,12 +35,20 @@ assert True, "Consignes lues."
       **Écrire un programme qui affiche "Bonjour le monde !"**
 
       *Pour la vérification, stocker le texte dans une variable `message` avant de l'afficher.*
+
+    <Correction>
+    ```python
+    message = "Bonjour le monde !"
+    print(message)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'message' in locals(), "La variable 'message' n'est pas définie."
-assert message == "Bonjour le monde !", "Le message doit être 'Bonjour le monde !'"
-```
+    ```python
+    assert 'message' in globals(), "La variable 'message' n'est pas définie."
+    assert message == "Bonjour le monde !", "Le message doit être 'Bonjour le monde !'"
+    assert SORTIE.strip() == "Bonjour le monde !", "Le programme affiche Bonjour le monde !"
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -51,14 +59,23 @@ assert message == "Bonjour le monde !", "Le message doit être 'Bonjour le monde
       **Écrire un programme qui affiche son prénom et son âge sur deux lignes différentes.**
 
       *Utiliser les variables `prenom` (texte) et `age` (entier).*
+
+    <Correction>
+    ```python
+    prenom = "Maya"
+    age = 16
+    print(prenom)
+    print(age)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'prenom' in locals(), "La variable 'prenom' n'est pas définie."
-assert 'age' in locals(), "La variable 'age' n'est pas définie."
-assert isinstance(prenom, str), "Le prénom doit être du texte."
-assert isinstance(age, int), "L'âge doit être un nombre entier."
-```
+    ```python
+    assert 'prenom' in globals() and isinstance(prenom, str), "La variable prenom contient le prénom (du texte)."
+    assert 'age' in globals() and isinstance(age, int), "La variable age contient l'âge (un entier)."
+    lignes = [l.strip() for l in SORTIE.strip().splitlines()]
+    assert len(lignes) == 2 and prenom in lignes[0] and str(age) in lignes[1], "Le prénom puis l'âge, sur deux lignes différentes."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -69,12 +86,20 @@ assert isinstance(age, int), "L'âge doit être un nombre entier."
       **Écrire un programme qui calcule et affiche le résultat de 15 + 27.**
 
       *Stocker le résultat dans une variable nommée `resultat`.*
+
+    <Correction>
+    ```python
+    resultat = 15 + 27
+    print(resultat)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'resultat' in locals(), "La variable 'resultat' n'est pas définie."
-assert resultat == 42, "Le calcul 15 + 27 devrait donner 42."
-```
+    ```python
+    assert 'resultat' in globals(), "La variable 'resultat' n'est pas définie."
+    assert resultat == 42, "Le calcul 15 + 27 donne 42."
+    assert "42" in SORTIE, "Le programme affiche 42."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -87,14 +112,21 @@ assert resultat == 42, "Le calcul 15 + 27 devrait donner 42."
       - Crée une variable `nom` avec le nom de l'élève
       - Crée une variable `age` avec l'âge de l'élève
       - Affiche ces informations
+
+    <Correction>
+    ```python
+    nom = "Martin"
+    age = 16
+    print(nom, age)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'nom' in locals(), "La variable 'nom' n'est pas définie."
-assert 'age' in locals(), "La variable 'age' n'est pas définie."
-assert isinstance(nom, str), "La variable 'nom' doit être du texte (str)."
-assert isinstance(age, int), "La variable 'age' doit être un nombre entier (int)."
-```
+    ```python
+    assert 'nom' in globals() and isinstance(nom, str), "La variable 'nom' doit être du texte (str)."
+    assert 'age' in globals() and isinstance(age, int), "La variable 'age' doit être un nombre entier (int)."
+    assert nom in SORTIE and str(age) in SORTIE, "Le programme affiche le nom et l'âge."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -105,12 +137,20 @@ assert isinstance(age, int), "La variable 'age' doit être un nombre entier (int
       **Écrire un programme qui demande le prénom de l'utilisateur et lui dit bonjour.**
 
       *Stocker la réponse de l'utilisateur dans une variable `prenom`.*
+
+    <Correction>
+    ```python
+    prenom = input("Quel est ton prénom ? ")
+    print("Bonjour", prenom)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'prenom' in locals(), "La variable 'prenom' n'est pas définie."
-assert isinstance(prenom, str), "La variable 'prenom' doit être du texte."
-```
+    ```python
+    ENTREES = ["Maya"]
+    assert prenom == "Maya", "prenom contient la réponse saisie."
+    assert "Bonjour" in SORTIE and "Maya" in SORTIE.strip().splitlines()[-1], "Pour la saisie Maya, afficher Bonjour Maya."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -125,16 +165,22 @@ assert isinstance(prenom, str), "La variable 'prenom' doit être du texte."
       - Affiche le résultat
 
       ## <Icone nom="star" /> Niveau Facile
+
+    <Correction>
+    ```python
+    a = 12
+    b = 30
+    somme = a + b
+    print(somme)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'a' in locals(), "La variable 'a' n'est pas définie."
-assert 'b' in locals(), "La variable 'b' n'est pas définie."
-assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
-assert isinstance(a, (int, float)), "La variable 'a' doit être un nombre."
-assert isinstance(b, (int, float)), "La variable 'b' doit être un nombre."
-assert somme == a + b, "Le calcul de la somme est incorrect."
-```
+    ```python
+    assert isinstance(a, (int, float)) and isinstance(b, (int, float)), "a et b sont des nombres."
+    assert somme == a + b, "somme vaut a + b."
+    assert str(somme) in SORTIE, "Le programme affiche la somme."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -146,16 +192,25 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
 
       *Utiliser les variables `a`, `b` et `somme`.*
       *Ne pas oublier de convertir les entrées en nombres avec `int()` ou `float()`*
+
+    <Correction>
+    ```python
+    a = int(input("Premier nombre : "))
+    b = int(input("Deuxième nombre : "))
+    somme = a + b
+    print(somme)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'a' in locals(), "La variable 'a' n'est pas définie."
-assert 'b' in locals(), "La variable 'b' n'est pas définie."
-assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
-assert isinstance(a, (int, float)), "La variable 'a' doit être un nombre."
-assert isinstance(b, (int, float)), "La variable 'b' doit être un nombre."
-assert somme == a + b, "Le calcul de la somme est incorrect."
-```
+    ```python
+    ENTREES = ["12", "30"]
+    assert a == 12 and b == 30, "Les saisies 12 et 30 sont converties en nombres dans a et b."
+    assert somme == 42, "12 + 30 = 42 dans somme."
+    assert "42" in SORTIE, "Le programme affiche 42."
+    variables, sortie = relancer(["5", "-8"])
+    assert variables["somme"] == -3, "5 + (-8) = -3."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -167,16 +222,26 @@ assert somme == a + b, "Le calcul de la somme est incorrect."
 
       *Utiliser les variables `longueur`, `largeur` et `perimetre`.*
       *Rappel : Périmètre = 2 × (longueur + largeur)*
+
+    <Correction>
+    ```python
+    longueur = float(input("Longueur : "))
+    largeur = float(input("Largeur : "))
+    perimetre = 2 * (longueur + largeur)
+    print(perimetre)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'longueur' in locals(), "La variable 'longueur' n'est pas définie."
-assert 'largeur' in locals(), "La variable 'largeur' n'est pas définie."
-assert 'perimetre' in locals(), "La variable 'perimetre' n'est pas définie."
-assert isinstance(longueur, (int, float)), "La longueur doit être un nombre."
-assert isinstance(largeur, (int, float)), "La largeur doit être un nombre."
-assert perimetre == 2 * (longueur + largeur), "Le calcul du périmètre est incorrect."
-```
+    ```python
+    import re as _re
+    def _nombres(texte):
+        return [float(x) for x in _re.findall(r"-?\d+(?:[.,]\d+)?", texte.replace(",", "."))]
+    ENTREES = ["5", "3"]
+    assert longueur == 5 and largeur == 3, "Les saisies sont converties en nombres."
+    assert perimetre == 16, "Rectangle 5 × 3 : périmètre 16."
+    assert 16 in _nombres(SORTIE), "Le programme affiche le périmètre."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -188,14 +253,25 @@ assert perimetre == 2 * (longueur + largeur), "Le calcul du périmètre est inco
 
       *Utiliser les variables `rayon` et `aire`.*
       *Rappel : Aire = π × rayon² (utiliser 3.14 pour π)*
+
+    <Correction>
+    ```python
+    rayon = float(input("Rayon : "))
+    aire = 3.14 * rayon ** 2
+    print(aire)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'rayon' in locals(), "La variable 'rayon' n'est pas définie."
-assert 'aire' in locals(), "La variable 'aire' n'est pas définie."
-assert isinstance(rayon, (int, float)), "Le rayon doit être un nombre."
-assert abs(aire - (3.14 * rayon ** 2)) < 0.01, "Le calcul de l'aire est incorrect."
-```
+    ```python
+    import re as _re
+    def _nombres(texte):
+        return [float(x) for x in _re.findall(r"-?\d+(?:[.,]\d+)?", texte.replace(",", "."))]
+    ENTREES = ["2"]
+    assert rayon == 2, "Le rayon saisi est converti en nombre."
+    assert abs(aire - 12.56) < 0.01, "Rayon 2 : aire 3.14 × 4 = 12.56."
+    assert any(abs(x - 12.56) < 0.01 for x in _nombres(SORTIE)), "Le programme affiche l'aire."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -207,14 +283,25 @@ assert abs(aire - (3.14 * rayon ** 2)) < 0.01, "Le calcul de l'aire est incorrec
 
       *Utiliser les variables `celsius` et `fahrenheit`.*
       *Formule : F = C × 9/5 + 32*
+
+    <Correction>
+    ```python
+    celsius = float(input("Température en °C : "))
+    fahrenheit = celsius * 9 / 5 + 32
+    print(fahrenheit)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'celsius' in locals(), "La variable 'celsius' n'est pas définie."
-assert 'fahrenheit' in locals(), "La variable 'fahrenheit' n'est pas définie."
-assert isinstance(celsius, (int, float)), "La température doit être un nombre."
-assert abs(fahrenheit - (celsius * 9/5 + 32)) < 0.01, "Le calcul de la conversion est incorrect."
-```
+    ```python
+    import re as _re
+    def _nombres(texte):
+        return [float(x) for x in _re.findall(r"-?\d+(?:[.,]\d+)?", texte.replace(",", "."))]
+    ENTREES = ["100"]
+    assert isinstance(celsius, (int, float)), "La température est un nombre."
+    assert abs(fahrenheit - (celsius * 9 / 5 + 32)) < 0.01, "F = C × 9/5 + 32."
+    assert any(abs(x - fahrenheit) < 0.01 for x in _nombres(SORTIE)), "Le programme affiche la température en Fahrenheit."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -227,16 +314,27 @@ assert abs(fahrenheit - (celsius * 9/5 + 32)) < 0.01, "Le calcul de la conversio
       - Demande un prix hors taxes (`prix_ht`)
       - Calcule le montant de la TVA (20%) (`montant_tva`)
       - Affiche le prix TTC (`prix_ttc`)
+
+    <Correction>
+    ```python
+    prix_ht = float(input("Prix HT : "))
+    montant_tva = prix_ht * 0.2
+    prix_ttc = prix_ht + montant_tva
+    print(prix_ttc)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'prix_ht' in locals(), "La variable 'prix_ht' n'est pas définie."
-assert 'montant_tva' in locals(), "La variable 'montant_tva' n'est pas définie."
-assert 'prix_ttc' in locals(), "La variable 'prix_ttc' n'est pas définie."
-assert isinstance(prix_ht, (int, float)), "Le prix HT doit être un nombre."
-assert abs(montant_tva - (prix_ht * 0.2)) < 0.01, "Le calcul de la TVA est incorrect."
-assert abs(prix_ttc - (prix_ht + montant_tva)) < 0.01, "Le calcul du prix TTC est incorrect."
-```
+    ```python
+    import re as _re
+    def _nombres(texte):
+        return [float(x) for x in _re.findall(r"-?\d+(?:[.,]\d+)?", texte.replace(",", "."))]
+    ENTREES = ["50"]
+    assert prix_ht == 50, "Le prix HT saisi est converti en nombre."
+    assert abs(montant_tva - 10) < 0.01, "TVA de 20 % sur 50 : 10."
+    assert abs(prix_ttc - 60) < 0.01, "Prix TTC : 60."
+    assert any(abs(x - 60) < 0.01 for x in _nombres(SORTIE)), "Le programme affiche le prix TTC."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -252,12 +350,23 @@ assert abs(prix_ttc - (prix_ht + montant_tva)) < 0.01, "Le calcul du prix TTC es
       *Utiliser la méthode `.upper()` pour mettre en majuscules*
 
       ## <Icone nom="flame" /> Niveau Intermédiaire
+
+    <Correction>
+    ```python
+    prenom = input("Prénom : ")
+    nom = input("Nom : ")
+    nom_complet = (prenom + " " + nom).upper()
+    print(nom_complet)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-assert 'prenom' in locals(), "La variable 'prenom' n'est pas définie."
-assert 'nom' in locals(), "La variable 'nom' n'est pas définie."
-assert 'nom_complet' in locals(), "La variable 'nom_complet' n'est pas définie."
-assert nom_complet == (prenom + " " + nom).upper() or nom_complet == (prenom + nom).upper() or nom_complet == (nom + " " + prenom).upper() or nom_complet == (nom + prenom).upper(), "Le nom complet n'est pas correctement formé ou mis en majuscules."
+    ```python
+    ENTREES = ["Maya", "Martin"]
+    assert prenom == "Maya" and nom == "Martin", "prenom et nom contiennent les saisies."
+    assert nom_complet in ("MAYA MARTIN", "MAYAMARTIN", "MARTIN MAYA", "MARTINMAYA"), "nom_complet est le nom complet en majuscules."
+    assert nom_complet in SORTIE, "Le programme affiche le nom complet."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -268,20 +377,25 @@ assert nom_complet == (prenom + " " + nom).upper() or nom_complet == (prenom + n
       **Écrire un programme qui demande deux nombres (`a` et `b`) et effectue les quatre opérations de base.**
 
       *Stocker les résultats dans : `somme`, `difference`, `produit`, `quotient`.*
+
+    <Correction>
+    ```python
+    a = float(input("a : "))
+    b = float(input("b : "))
+    somme = a + b
+    difference = a - b
+    produit = a * b
+    quotient = a / b
+    print(somme, difference, produit, quotient)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'a' in locals(), "La variable 'a' n'est pas définie."
-assert 'b' in locals(), "La variable 'b' n'est pas définie."
-assert 'somme' in locals(), "La variable 'somme' n'est pas définie."
-assert 'difference' in locals(), "La variable 'difference' n'est pas définie."
-assert 'produit' in locals(), "La variable 'produit' n'est pas définie."
-assert 'quotient' in locals(), "La variable 'quotient' n'est pas définie."
-assert somme == a + b, "Erreur dans la somme."
-assert difference == a - b, "Erreur dans la différence."
-assert produit == a * b, "Erreur dans le produit."
-assert quotient == a / b, "Erreur dans le quotient."
-```
+    ```python
+    ENTREES = ["8", "2"]
+    assert a == 8 and b == 2, "Les saisies 8 et 2 sont converties en nombres."
+    assert somme == 10 and difference == 6 and produit == 16 and quotient == 4, "8 et 2 : somme 10, différence 6, produit 16, quotient 4."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -293,17 +407,23 @@ assert quotient == a / b, "Erreur dans le quotient."
 
       *Variable d'entrée : `metres`*
       *Variables de sortie : `cm`, `mm`, `km`*
+
+    <Correction>
+    ```python
+    metres = float(input("Mètres : "))
+    cm = metres * 100
+    mm = metres * 1000
+    km = metres / 1000
+    print(cm, mm, km)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'metres' in locals(), "La variable 'metres' n'est pas définie."
-assert 'cm' in locals(), "La variable 'cm' n'est pas définie."
-assert 'mm' in locals(), "La variable 'mm' n'est pas définie."
-assert 'km' in locals(), "La variable 'km' n'est pas définie."
-assert cm == metres * 100, "Erreur conversion cm."
-assert mm == metres * 1000, "Erreur conversion mm."
-assert km == metres / 1000, "Erreur conversion km."
-```
+    ```python
+    ENTREES = ["2500"]
+    assert metres == 2500, "La saisie est convertie en nombre."
+    assert cm == 250000 and mm == 2500000 and km == 2.5, "2500 m : 250000 cm, 2500000 mm, 2.5 km."
+    ```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

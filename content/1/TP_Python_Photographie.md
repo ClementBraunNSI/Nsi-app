@@ -42,12 +42,25 @@ assert True, "Consignes lues."
   </ExerciseSection>
 
   <ExerciseSection id="photo-1" label="Introduction - Créer une image" type="python">
+    <CodeDepart>
+    ```python
+    from PIL import Image
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Créer une image
 
       **Mission :** Créer une image RGB de **1×1 pixel** entièrement **rouge** avec Pillow. Stocker l'image dans `image`, sa largeur dans `largeur` et sa hauteur dans `hauteur`.
 
       *Indice :* `Image.new("RGB", (largeur, hauteur), color=(r, v, b))`, le rouge pur correspond à `(255, 0, 0)`.
+
+    <Correction>
+    ```python
+    image = Image.new("RGB", (1, 1), color=(255, 0, 0))
+    largeur, hauteur = image.size
+    print(largeur, hauteur)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -63,12 +76,26 @@ assert image.getpixel((0, 0)) == (255, 0, 0), "Le pixel doit être rouge pur."
   </ExerciseSection>
 
   <ExerciseSection id="photo-2" label="Introduction - Lire un pixel" type="python">
+    <CodeDepart>
+    ```python
+    from PIL import Image
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Lire un pixel
 
       **Mission :** Créer une image RGB de **3×3 pixels** remplie de noir `(0, 0, 0)`, puis colorier le **pixel central** en vert `(0, 255, 0)` avec `putpixel`. Stocker la couleur du pixel central dans `pixel_centre`.
 
       *Indice :* le centre d'une image 3×3 est à la position `(1, 1)`. Lire avec `getpixel((x, y))`.
+
+    <Correction>
+    ```python
+    image = Image.new("RGB", (3, 3), color=(0, 0, 0))
+    image.putpixel((1, 1), (0, 255, 0))
+    pixel_centre = image.getpixel((1, 1))
+    print(pixel_centre)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -83,6 +110,11 @@ assert pixel_centre == (0, 255, 0), "Le pixel central doit être vert pur."
   </ExerciseSection>
 
   <ExerciseSection id="photo-3" label="Introduction - Définition d'une image" type="python">
+    <CodeDepart>
+    ```python
+    from PIL import Image
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Définition d'une image
 
@@ -91,6 +123,15 @@ assert pixel_centre == (0, 255, 0), "Le pixel central doit être vert pur."
       **Mission :** Créer une image RGB de **800×600 pixels** (couleur au choix). Stocker la largeur, la hauteur et la définition (nombre total de pixels) dans `largeur`, `hauteur` et `definition`.
 
       *Indice :* `image.size` renvoie `(largeur, hauteur)`.
+
+    <Correction>
+    ```python
+    image = Image.new("RGB", (800, 600), color=(0, 0, 255))
+    largeur, hauteur = image.size
+    definition = largeur * hauteur
+    print(definition)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -106,6 +147,11 @@ assert definition == 480000, "800 × 600 = 480 000 pixels."
   </ExerciseSection>
 
   <ExerciseSection id="photo-4" label="Facile - Passer en niveaux de gris" type="python">
+    <CodeDepart>
+    ```python
+    from PIL import Image
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Passer en niveaux de gris
 
@@ -114,6 +160,15 @@ assert definition == 480000, "800 × 600 = 480 000 pixels."
       **Mission :** Créer une image 1×1 de couleur `(100, 50, 105)`, la convertir en niveaux de gris dans `image_nb`, puis stocker le niveau de gris du pixel dans `gris`.
 
       *Indice :* `image_nb = image.convert("L")` puis `getpixel((0, 0))`.
+
+    <Correction>
+    ```python
+    image = Image.new("RGB", (1, 1), color=(100, 50, 105))
+    image_nb = image.convert("L")
+    gris = image_nb.getpixel((0, 0))
+    print(gris)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -131,6 +186,11 @@ assert gris == attendu, "Le niveau de gris doit correspondre à la conversion Pi
   </ExerciseSection>
 
   <ExerciseSection id="photo-5" label="Facile - Filtre négatif" type="python">
+    <CodeDepart>
+    ```python
+    from PIL import Image
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Filtre négatif
 
@@ -139,6 +199,16 @@ assert gris == attendu, "Le niveau de gris doit correspondre à la conversion Pi
       **Mission :** À partir d'une image 1×1 de couleur `(200, 80, 0)`, calculer la couleur inversée et créer une **nouvelle image** `image_negatif` avec ce pixel. Stocker la couleur dans `pixel_inverse`.
 
       *Indice :* appliquer `255 - valeur` sur chaque composante RVB.
+
+    <Correction>
+    ```python
+    image = Image.new("RGB", (1, 1), color=(200, 80, 0))
+    r, v, b = image.getpixel((0, 0))
+    pixel_inverse = (255 - r, 255 - v, 255 - b)
+    image_negatif = Image.new("RGB", (1, 1), color=pixel_inverse)
+    print(pixel_inverse)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -156,6 +226,11 @@ assert image_negatif.getpixel((0, 0)) == attendu, "L'image doit contenir le pixe
   </ExerciseSection>
 
   <ExerciseSection id="photo-6" label="Facile - Mégapixels" type="python">
+    <CodeDepart>
+    ```python
+    from PIL import Image
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Mégapixels
 
@@ -164,6 +239,16 @@ assert image_negatif.getpixel((0, 0)) == attendu, "L'image doit contenir le pixe
       **Mission :** Créer une image de **4000×3000 pixels**. Calculer sa définition dans `definition` et le nombre de mégapixels (entier) dans `megapixels`.
 
       *Indice :* `megapixels = definition // 1_000_000`
+
+    <Correction>
+    ```python
+    image = Image.new("RGB", (4000, 3000))
+    largeur, hauteur = image.size
+    definition = largeur * hauteur
+    megapixels = definition // 1_000_000
+    print(megapixels)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -179,6 +264,11 @@ assert megapixels == 12, "Convertissez en mégapixels."
   </ExerciseSection>
 
   <ExerciseSection id="photo-7" label="Facile - Bande de pixels colorés" type="python">
+    <CodeDepart>
+    ```python
+    from PIL import Image
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Bande de pixels colorés
 
@@ -192,6 +282,17 @@ assert megapixels == 12, "Convertissez en mégapixels."
       Stocker l'image dans `bande` et la couleur du **dernier pixel** (à droite) dans `dernier_pixel`.
 
       *Indice :* créer une image noire 4×1, puis `putpixel((x, 0), couleur)` pour chaque colonne.
+
+    <Correction>
+    ```python
+    bande = Image.new("RGB", (4, 1), color=(0, 0, 0))
+    couleurs = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 255)]
+    for x in range(4):
+        bande.putpixel((x, 0), couleurs[x])
+    dernier_pixel = bande.getpixel((3, 0))
+    print(dernier_pixel)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python

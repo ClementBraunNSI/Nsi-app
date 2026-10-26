@@ -49,15 +49,33 @@ function stripRepeatedTitle(enonce: string, label: string) {
   return enonce.trim();
 }
 
-/** Drop solution and test source before markdown is sent to the browser. The énoncé stays. */
+/** Drop solution, test source and editor starter code before markdown is sent to the browser. The énoncé stays. */
 export function stripHiddenExerciseBlocks(markdown: string) {
   return (markdown || '')
     .replace(/<Correction>[\s\S]*?<\/Correction>/gi, '')
-    .replace(/<Verification>[\s\S]*?<\/Verification>/gi, '');
+    .replace(/<Verification>[\s\S]*?<\/Verification>/gi, '')
+    .replace(/<CodeDepart>[\s\S]*?<\/CodeDepart>/gi, '')
+    .replace(/<BaseSQL>[\s\S]*?<\/BaseSQL>/gi, '');
+}
+
+/**
+ * L'IDE lit l'énoncé en Markdown, pas en MDX : les composants du site (`<Renards n="1" />`,
+ * `<Icone nom="star" />`, un visualiseur…) et les commentaires MDX entre accolades s'y afficheraient en texte brut.
+ * Les blocs de code restent intacts.
+ */
+export function stripSiteComponents(markdown: string) {
+  return (markdown || '')
+    .split(/(```[\s\S]*?```)/g)
+    .map((part) => (part.startsWith('```')
+      ? part
+      : part
+        .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+        .replace(/[ \t]*<[A-Z][A-Za-z0-9]*\b[^<>]*\/>/g, '')))
+    .join('');
 }
 
 function withoutHiddenSolution(content: string) {
-  return stripHiddenExerciseBlocks(content);
+  return stripSiteComponents(stripHiddenExerciseBlocks(content));
 }
 
 /** Split an énoncé into the blocks the sheet actually wrote. Correction and hidden solutions are dropped. */

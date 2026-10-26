@@ -255,10 +255,51 @@ def _empty_report(**extra):
     return report
 
 
+def _planned_inputs(tests):
+    """ENTREES = [...] dans le jeu de tests : les réponses données à input(), dans l'ordre."""
+    try:
+        tree = ast.parse(tests)
+    except SyntaxError:
+        return None
+    for node in tree.body:
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and node.targets[0].id == "ENTREES"
+        ):
+            try:
+                values = ast.literal_eval(node.value)
+            except ValueError:
+                return None
+            if isinstance(values, (list, tuple)):
+                return [str(value) for value in values]
+    return None
+
+
+def _scripted_input(values):
+    queue = list(values)
+
+    def _input(prompt=""):
+        if prompt:
+            sys.stdout.write(str(prompt))
+        if not queue:
+            raise EOFError("Le programme demande plus de saisies que le test n'en prévoit.")
+        value = queue.pop(0)
+        # Comme dans un terminal : la saisie apparaît après la question.
+        sys.stdout.write(value + "\n")
+        return value
+
+    return _input
+
+
 def _nsi_run(user_code, tests):
     user_code = user_code or ""
     tests = tests or ""
     ns = {"__name__": "__main__", "__builtins__": __builtins__}
+    planned = _planned_inputs(tests) if tests.strip() else None
+    if planned is not None:
+        ns["input"] = _scripted_input(planned)
     user_error, stdout, stderr = _capture_exec(user_code, ns, "<programme>")
     stdout = _clip(stdout)
     stderr = _clip(stderr)
@@ -275,6 +316,24 @@ def _nsi_run(user_code, tests):
     if not tests.strip():
         return _empty_report(stdout=stdout, stderr=stderr)
 
+    # Ce que le programme a affiché, lisible par les tests : assert "Bonjour" in SORTIE
+    ns["SORTIE"] = stdout
+    # Le code écrit, pour les consignes de forme : assert "[" not in PROGRAMME
+    ns["PROGRAMME"] = user_code
+
+    def _relancer(entrees=()):
+        """Relance le programme avec d'autres saisies : variables, affichage = relancer(["12", "5"])."""
+        autre = {
+            "__name__": "__main__",
+            "__builtins__": __builtins__,
+            "input": _scripted_input([str(value) for value in entrees]),
+        }
+        erreur, sortie, _ = _capture_exec(user_code, autre, "<programme>")
+        if erreur is not None:
+            raise erreur
+        return autre, sortie
+
+    ns["relancer"] = _relancer
     results = []
     _install_helpers(ns, results)
     try:

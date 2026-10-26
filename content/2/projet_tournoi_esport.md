@@ -27,10 +27,48 @@ Deux listes parallèles mémorisent les données : `scores[i]` est le score de `
       Partir de `equipes = []`. Tant que l'utilisateur n'a pas écrit exactement `fin`, demander `Nom de l'équipe : ` et ajouter le nom avec `append`. Un nom vide est ignoré : on repose la question. Si `fin` arrive alors que la liste est vide, afficher `Il faut au moins une équipe.` et continuer la saisie.
 
       Un essai `Lynx`, `Hiboux`, `Renards`, `fin` produit exactement `["Lynx", "Hiboux", "Renards"]`.
+
+    <Correction>
+    ```python
+    def inscrire_equipes():
+        equipes = []
+        nom = input("Nom de l'équipe : ")
+        while nom != "fin" or len(equipes) == 0:
+            if nom == "fin":
+                print("Il faut au moins une équipe.")
+            elif nom != "":
+                equipes.append(nom)
+            nom = input("Nom de l'équipe : ")
+        return equipes
+
+    print(inscrire_equipes())
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["Lynx", "Hiboux", "Renards", "fin"]
+    import io, contextlib
+    def _sortie(fonction, *arguments):
+        tampon = io.StringIO()
+        with contextlib.redirect_stdout(tampon):
+            valeur = fonction(*arguments)
+        return valeur, tampon.getvalue()
+    saisies = []
+    def input(question=""):
+        return saisies.pop(0)
+    saisies[:] = ["Lynx", "Hiboux", "Renards", "fin"]
+    valeur, _ = _sortie(inscrire_equipes)
+    assert valeur == ["Lynx", "Hiboux", "Renards"], "Lynx, Hiboux, Renards, fin donne ['Lynx', 'Hiboux', 'Renards']."
+    saisies[:] = ["fin", "", "Aigles", "fin"]
+    valeur, texte = _sortie(inscrire_equipes)
+    assert saisies == [] and valeur == ["Aigles"], "fin sur une liste vide continue la saisie ; un nom vide est ignoré."
+    assert "Il faut au moins une équipe." in texte, "fin sur une liste vide affiche Il faut au moins une équipe."
+    ```
+    </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="proj-esport-2" label="Scores et moyenne" type="lecture">
+  <ExerciseSection id="proj-esport-2" label="Scores et moyenne" type="python">
     <Enonce>
       Écrire `saisir_scores(equipes)` et `moyenne(scores)`.
 
@@ -48,10 +86,51 @@ Deux listes parallèles mémorisent les données : `scores[i]` est le score de `
       ```
 
       `moyenne(scores)` vaut `15.0`. La somme vaut 45, il y a 3 équipes.
+
+    <Correction>
+    ```python
+    def saisir_scores(equipes):
+        scores = []
+        for nom in equipes:
+            texte = input("Score de " + nom + " : ")
+            while not texte.isdigit():
+                texte = input("Score de " + nom + " : ")
+            scores.append(int(texte))
+        return scores
+
+    def moyenne(scores):
+        if len(scores) == 0:
+            return 0.0
+        somme = 0
+        for score in scores:
+            somme = somme + score
+        return somme / len(scores)
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["12", "18", "15"]
+    import io, contextlib
+    def _sortie(fonction, *arguments):
+        tampon = io.StringIO()
+        with contextlib.redirect_stdout(tampon):
+            valeur = fonction(*arguments)
+        return valeur, tampon.getvalue()
+    saisies = []
+    def input(question=""):
+        return saisies.pop(0)
+    assert moyenne([12, 18, 15]) == 15.0, "moyenne([12, 18, 15]) vaut 15.0."
+    assert moyenne([]) == 0.0, "moyenne([]) renvoie 0.0 sans planter."
+    assert moyenne([1, 2]) == 1.5, "moyenne([1, 2]) vaut 1.5."
+    saisies[:] = ["12", "dix-huit", "-3", "18", "15"]
+    valeur, _ = _sortie(saisir_scores, ["Lynx", "Hiboux", "Renards"])
+    assert valeur == [12, 18, 15] and saisies == [], "Un texte ou un négatif est redemandé pour la même équipe ; les scores sont des int."
+    ```
+    </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="proj-esport-3" label="Vainqueur" type="lecture">
+  <ExerciseSection id="proj-esport-3" label="Vainqueur" type="python">
     <Enonce>
       Écrire `vainqueurs(equipes, scores)`. Elle renvoie les noms des équipes dont le score est égal au maximum.
 
@@ -60,7 +139,38 @@ Deux listes parallèles mémorisent les données : `scores[i]` est le score de `
       `[12, 18, 15]` donne `["Hiboux"]`. `[10, 14, 14]` donne `["Hiboux", "Renards"]`.
 
       L'affichage met `Vainqueur :` au singulier s'il n'y en a qu'un, et `Vainqueurs :` suivi des noms séparés par une virgule et une espace s'il y en a plusieurs.
+
+    <Correction>
+    ```python
+    def vainqueurs(equipes, scores):
+        maximum = scores[0]
+        for i in range(len(scores)):
+            if scores[i] > maximum:
+                maximum = scores[i]
+        noms = []
+        for i in range(len(scores)):
+            if scores[i] == maximum:
+                noms.append(equipes[i])
+        return noms
+
+    def afficher_vainqueurs(noms):
+        if len(noms) == 1:
+            print("Vainqueur :", noms[0])
+        else:
+            print("Vainqueurs :", ", ".join(noms))
+
+    afficher_vainqueurs(vainqueurs(["Lynx", "Hiboux", "Renards"], [10, 14, 14]))
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert vainqueurs(["Lynx", "Hiboux", "Renards"], [12, 18, 15]) == ["Hiboux"], "[12, 18, 15] donne ['Hiboux']."
+    assert vainqueurs(["Lynx", "Hiboux", "Renards"], [10, 14, 14]) == ["Hiboux", "Renards"], "[10, 14, 14] donne ['Hiboux', 'Renards']."
+    assert vainqueurs(["Seule"], [0]) == ["Seule"], "Une seule équipe est la vainqueure."
+    assert "Vainqueur" in SORTIE, "Le programme affiche Vainqueur : ou Vainqueurs :"
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="proj-esport-4" label="Classement" type="python">
@@ -74,7 +184,39 @@ Deux listes parallèles mémorisent les données : `scores[i]` est le score de `
       Sur `[10, 14, 14]`, il vaut `[("Hiboux", 14), ("Renards", 14), ("Lynx", 10)]`. Hiboux reste devant Renards, parce qu'il a été inscrit avant.
 
       Afficher ensuite les lignes `1. Hiboux (18)`, avec le rang qui commence à 1.
+
+    <Correction>
+    ```python
+    def classement(equipes, scores):
+        couples = []
+        for i in range(len(equipes)):
+            couples.append((equipes[i], scores[i]))
+        couples.sort(key=lambda couple: couple[1], reverse=True)
+        rang = 1
+        for nom, score in couples:
+            print(str(rang) + ". " + nom + " (" + str(score) + ")")
+            rang = rang + 1
+        return couples
+
+    classement(["Lynx", "Hiboux", "Renards"], [12, 18, 15])
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    import io, contextlib
+    def _sortie(fonction, *arguments):
+        tampon = io.StringIO()
+        with contextlib.redirect_stdout(tampon):
+            valeur = fonction(*arguments)
+        return valeur, tampon.getvalue()
+    valeur, texte = _sortie(classement, ["Lynx", "Hiboux", "Renards"], [12, 18, 15])
+    assert valeur == [("Hiboux", 18), ("Renards", 15), ("Lynx", 12)], "Classement de [12, 18, 15] : Hiboux, Renards, Lynx."
+    assert [l.strip() for l in texte.strip().splitlines()] == ["1. Hiboux (18)", "2. Renards (15)", "3. Lynx (12)"], "Afficher 1. Hiboux (18), puis 2. Renards (15), puis 3. Lynx (12)."
+    valeur, _ = _sortie(classement, ["Lynx", "Hiboux", "Renards"], [10, 14, 14])
+    assert valeur == [("Hiboux", 14), ("Renards", 14), ("Lynx", 10)], "À score égal, l'équipe inscrite en premier reste devant."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 

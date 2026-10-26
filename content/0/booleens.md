@@ -139,6 +139,15 @@ Déterminer le résultat des expressions logiques suivantes et les assigner aux 
 ```python
 r1 = False # Si vous pensez que c'est Faux
 ```
+
+    <Correction>
+    ```python
+    r1 = True
+    r2 = False
+    r3 = False
+    r4 = True
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python

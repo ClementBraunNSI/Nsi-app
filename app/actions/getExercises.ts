@@ -20,6 +20,10 @@ export interface LabExercise {
   courseId: string; // The Badge ID associated with the sheet
   courseTitle: string;
   content: string; // The markdown content of the exercise
+  /** <CodeDepart> : code déjà présent dans l'éditeur (données de l'énoncé, en-tête à compléter). */
+  starterCode?: string;
+  /** <BaseSQL> : tables et lignes chargées avant chaque requête, dans le navigateur comme pour la vérification. */
+  sqlSetup?: string;
   pythonPackages?: string[]; // Pyodide packages to load before execution
   chapter: string;
   level: string;
@@ -58,6 +62,8 @@ function toPublicExercise(ex: CatalogExercise): LabExercise {
     courseId: ex.courseId,
     courseTitle: ex.courseTitle,
     content: ex.content,
+    starterCode: ex.starterCode,
+    sqlSetup: ex.sqlSetup,
     pythonPackages: ex.pythonPackages,
     chapter: ex.chapter,
     level: ex.level,
@@ -203,6 +209,18 @@ function buildExerciseCatalog(): { exercises: CatalogExercise[]; external: Exter
               .trim();
           }
 
+          const starterMatch = rawContent.match(/<CodeDepart>([\s\S]*?)<\/CodeDepart>/);
+          const starterCode = starterMatch
+            ? dedent(starterMatch[1]).replace(/^```(python|sql)?\s*\n?/, '').replace(/\n?```\s*$/, '').trim()
+            : '';
+
+          // La base de la section, sinon la dernière base écrite plus haut dans la fiche.
+          const setupMatch = rawContent.match(/<BaseSQL>([\s\S]*?)<\/BaseSQL>/)
+            ?? [...beforeSection.matchAll(/<BaseSQL>([\s\S]*?)<\/BaseSQL>/g)].at(-1);
+          const sqlSetup = setupMatch
+            ? dedent(setupMatch[1]).replace(/^```(sql)?\s*\n?/, '').replace(/\n?```\s*$/, '').trim()
+            : '';
+
           exerciseContent = stripHiddenExerciseBlocks(exerciseContent);
           
           // One final trim
@@ -237,6 +255,8 @@ function buildExerciseCatalog(): { exercises: CatalogExercise[]; external: Exter
             courseId: nearestCourseId,
             courseTitle: nearestCourseTitle,
             content: exerciseContent, // The markdown content inside <Enonce> or the section
+            starterCode: starterCode || undefined,
+            sqlSetup: writtenType === 'sql' && sqlSetup ? sqlSetup : undefined,
             verificationCode: verificationCode,
             pythonPackages: pythonPackages.length > 0 ? pythonPackages : undefined,
             chapter: data.chapter || 'Divers',
@@ -473,7 +493,7 @@ export async function checkExerciseSolution(exerciseId: string, code: string): P
   let report: RunReport;
   try {
     report = exercise.type === 'sql'
-      ? await runSqlCheck(source, verification)
+      ? await runSqlCheck(source, verification, exercise.sqlSetup ?? '')
       : await runPythonCheck(source, verification, exercise.pythonPackages ?? []);
   } catch {
     report = unexpectedRunReport(CHECK_UNAVAILABLE);

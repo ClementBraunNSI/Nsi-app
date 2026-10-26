@@ -12,7 +12,7 @@ audience:
 
 <ExerciseTabs courseId="c-tris-exos" courseTitle="C - Algorithmes de Tri - Exercices">
   
-  <ExerciseSection id="tri-selection" label="1. Tri par Sélection" type="autre">
+  <ExerciseSection id="cleo-tris-tri-selection" label="1. Tri par Sélection" type="autre">
     <Enonce>
     ### Principe du Tri par Sélection
     Le tri par sélection consiste à rechercher le plus petit élément du tableau et à l'échanger avec le premier élément. On recommence ensuite avec le reste du tableau (à partir du deuxième élément), et ainsi de suite.
@@ -46,7 +46,7 @@ audience:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="tri-insertion" label="2. Tri par Insertion" type="autre">
+  <ExerciseSection id="cleo-tris-tri-insertion" label="2. Tri par Insertion" type="autre">
     <Enonce>
     ### Principe du Tri par Insertion
     Le tri par insertion fonctionne comme le tri d'un jeu de cartes en main. On prend les éléments un par un et on les insère à leur bonne place dans la partie déjà triée du tableau.
@@ -78,7 +78,7 @@ audience:
     </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="tri-denombrement" label="3. Tri par Dénombrement (Counting Sort)" type="autre">
+  <ExerciseSection id="cleo-tris-tri-denombrement" label="3. Tri par Dénombrement (Counting Sort)" type="autre">
     <Enonce>
     ### Principe du Tri par Dénombrement
     C'est un tri non comparatif. Il compte le nombre d'occurrences de chaque valeur distincte. Cette technique est efficace quand les valeurs sont des entiers compris dans un intervalle spécifique (borné).

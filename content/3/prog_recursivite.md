@@ -72,8 +72,24 @@ En résumé, une fonction récursive s'appelle elle-même, avec un cas de base q
     **Indices :**
     *   Cas de base : Quelle est la somme si n = 0 ?
     *   Récursion : `somme(n) = n + somme(...)` ?
-    
+
+    <Correction>
+    ```python
+    def somme(n):
+        if n == 0:
+            return 0
+        return n + somme(n - 1)
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert somme(0) == 0, "somme(0) doit renvoyer 0 (cas de base)."
+    assert somme(4) == 10, "somme(4) doit renvoyer 10."
+    assert somme(10) == 55, "somme(10) doit renvoyer 55."
+    assert "somme" in somme.__code__.co_names, "La fonction doit être récursive : elle s'appelle elle-même."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="rec-ex-2" label="Fibonacci" type="python">
@@ -85,8 +101,26 @@ En résumé, une fonction récursive s'appelle elle-même, avec un cas de base q
     *   $F_n = F_{n-1} + F_{n-2}$ pour $n \ge 2$
     
     Écrire la fonction récursive `fibonacci(n)`.
-    
+
+    <Correction>
+    ```python
+    def fibonacci(n):
+        if n < 2:
+            return n
+        return fibonacci(n - 1) + fibonacci(n - 2)
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert fibonacci(0) == 0, "fibonacci(0) doit renvoyer 0."
+    assert fibonacci(1) == 1, "fibonacci(1) doit renvoyer 1."
+    assert fibonacci(2) == 1, "fibonacci(2) doit renvoyer 1."
+    assert fibonacci(7) == 13, "fibonacci(7) doit renvoyer 13."
+    assert fibonacci(15) == 610, "fibonacci(15) doit renvoyer 610."
+    assert "fibonacci" in fibonacci.__code__.co_names, "La fonction doit être récursive."
+    ```
+    </Verification>
   </ExerciseSection>
   
   <ExerciseSection id="rec-ex-3" label="Palindrome" type="python">
@@ -99,8 +133,30 @@ En résumé, une fonction récursive s'appelle elle-même, avec un cas de base q
     *   Si le mot a 0 ou 1 lettre -> C'est un palindrome (Base).
     *   Si la première et la dernière lettre sont différentes -> Faux.
     *   Sinon -> On teste le sous-mot sans la première ni la dernière lettre.
-    
+
+    <Correction>
+    ```python
+    def est_palindrome(mot):
+        if len(mot) <= 1:
+            return True
+        if mot[0] != mot[-1]:
+            return False
+        return est_palindrome(mot[1:-1])
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert est_palindrome("RADAR") is True, "RADAR est un palindrome."
+    assert est_palindrome("LAVAL") is True, "LAVAL est un palindrome."
+    assert est_palindrome("RENARD") is False, "RENARD n'est pas un palindrome."
+    assert est_palindrome("") is True, "Le mot vide est un palindrome."
+    assert est_palindrome("A") is True, "Un mot d'une lettre est un palindrome."
+    assert est_palindrome("ABBA") is True, "ABBA est un palindrome."
+    assert est_palindrome("ABCA") is False, "ABCA n'est pas un palindrome."
+    assert "est_palindrome" in est_palindrome.__code__.co_names, "La fonction doit être récursive."
+    ```
+    </Verification>
   </ExerciseSection>
 
 </ExerciseTabs>

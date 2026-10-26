@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ColleagueDirectory from "@/components/ColleagueDirectory";
+import ColleagueMap from "@/components/ColleagueMap";
 
 export const metadata: Metadata = {
   title: "Autres cours NSI",
@@ -13,16 +13,16 @@ export const metadata: Metadata = {
 export default function AutresCoursNsiPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)] font-sans selection:bg-[var(--accent-soft)] selection:text-[var(--accent)]">
-      <header className="mx-auto max-w-5xl px-8 pb-8 pt-16">
-        <h1 className="text-4xl font-semibold tracking-tight text-[var(--fg)]">
+      <header className="mx-auto max-w-6xl px-4 pb-8 pt-10 sm:px-8 sm:pt-16">
+        <h1 className="text-3xl font-semibold tracking-tight text-[var(--fg)] sm:text-4xl">
           Autres cours NSI
         </h1>
         <p className="mt-5 max-w-3xl text-base leading-relaxed text-[var(--muted)]">
-          Ces sites sont tenus par d'autres enseignants de SNT et de NSI, en France. Ils complètent
-          La tanière du code. La liste suit l'ordre alphabétique des noms : niveaux, contenu, lien.
+          Autour de la tanière s'étend un territoire : la prairie de Seconde, la forêt de Première, les montagnes de
+          Terminale et le rocher du bac. Chaque terrier mène au site d'un autre enseignant de SNT ou de NSI, en France.
         </p>
       </header>
-      <ColleagueDirectory />
+      <ColleagueMap />
     </div>
   );
 }

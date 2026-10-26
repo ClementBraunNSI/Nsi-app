@@ -50,6 +50,18 @@ assert True, "Consignes lues."
   </ExerciseSection>
 
   <ExerciseSection id="donnees-1" label="Introduction - Lire un CSV avec pandas" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pnd
+    from io import StringIO
+
+    csv_texte = """Nom,Espece,Habitat,Poids_kg,Longueur_cm
+    Rusty,Vulpes vulpes,Forêt tempérée,6.5,58
+    Arctic,Vulpes lagopus,Toundra arctique,3.2,46
+    Fennec,Vulpes zerda,Désert,1.5,24
+    Silver,Vulpes vulpes,Forêt boréale,7.1,61"""
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Lire un CSV avec pandas
 
@@ -68,6 +80,14 @@ assert True, "Consignes lues."
       **Mission :** Charger ces données dans un DataFrame `df` avec `pnd.read_csv(StringIO(...))`, puis stocker le **nombre de renards** (lignes de données) dans `nb_renards`.
 
       *Indice :* `len(df)` compte les lignes du tableau.
+
+    <Correction>
+    ```python
+    df = pnd.read_csv(StringIO(csv_texte))
+    nb_renards = len(df)
+    print(nb_renards)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -90,6 +110,19 @@ assert nb_renards == len(attendu), "nb_renards doit correspondre au nombre de li
   </ExerciseSection>
 
   <ExerciseSection id="donnees-2" label="Introduction - Les colonnes du tableau" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pnd
+    from io import StringIO
+
+    csv_texte = """Nom,Espece,Habitat,Poids_kg,Longueur_cm
+    Rusty,Vulpes vulpes,Forêt tempérée,6.5,58
+    Arctic,Vulpes lagopus,Toundra arctique,3.2,46
+    Fennec,Vulpes zerda,Désert,1.5,24
+    Silver,Vulpes vulpes,Forêt boréale,7.1,61"""
+    df = pnd.read_csv(StringIO(csv_texte))
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Les colonnes du tableau
 
@@ -111,6 +144,14 @@ assert nb_renards == len(attendu), "nb_renards doit correspondre au nombre de li
       ```
 
       *Indice :* `df.columns` donne les noms de colonnes. Convertir en liste avec `.tolist()`.
+
+    <Correction>
+    ```python
+    colonnes = df.columns.tolist()
+    nb_colonnes = len(colonnes)
+    print(colonnes, nb_colonnes)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -134,6 +175,19 @@ assert "Poids_kg" in colonnes, "Le fichier contient une colonne Poids_kg."
   </ExerciseSection>
 
   <ExerciseSection id="donnees-3" label="Introduction - Lire une cellule" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pnd
+    from io import StringIO
+
+    csv_texte = """Nom,Espece,Habitat,Poids_kg,Longueur_cm
+    Rusty,Vulpes vulpes,Forêt tempérée,6.5,58
+    Arctic,Vulpes lagopus,Toundra arctique,3.2,46
+    Fennec,Vulpes zerda,Désert,1.5,24
+    Silver,Vulpes vulpes,Forêt boréale,7.1,61"""
+    df = pnd.read_csv(StringIO(csv_texte))
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Lire une cellule
 
@@ -155,6 +209,13 @@ assert "Poids_kg" in colonnes, "Le fichier contient une colonne Poids_kg."
       ```
 
       *Indice :* filtrer d'abord la ligne : `df[df["Nom"] == "Fennec"]`, puis lire la colonne `Poids_kg`.
+
+    <Correction>
+    ```python
+    poids_fennec = df[df["Nom"] == "Fennec"]["Poids_kg"].iloc[0]
+    print(poids_fennec)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -176,6 +237,19 @@ assert float(poids_fennec) == attendu, "Lisez le poids du Fennec dans le tableau
   </ExerciseSection>
 
   <ExerciseSection id="donnees-4" label="Facile - Filtrer un tableau" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pnd
+    from io import StringIO
+
+    csv_texte = """Nom,Espece,Habitat,Poids_kg,Longueur_cm
+    Rusty,Vulpes vulpes,Forêt tempérée,6.5,58
+    Arctic,Vulpes lagopus,Toundra arctique,3.2,46
+    Fennec,Vulpes zerda,Désert,1.5,24
+    Silver,Vulpes vulpes,Forêt boréale,7.1,61"""
+    df = pnd.read_csv(StringIO(csv_texte))
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Filtrer un tableau
 
@@ -197,6 +271,14 @@ assert float(poids_fennec) == attendu, "Lisez le poids du Fennec dans le tableau
       ```
 
       *Indice :* `df[df["Habitat"].str.contains("Désert")]`
+
+    <Correction>
+    ```python
+    df_desert = df[df["Habitat"].str.contains("Désert")]
+    nb_resultats = len(df_desert)
+    print(df_desert)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -220,6 +302,19 @@ assert nb_resultats == len(attendu), "nb_resultats doit correspondre au filtre."
   </ExerciseSection>
 
   <ExerciseSection id="donnees-5" label="Facile - Trier un tableau" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pnd
+    from io import StringIO
+
+    csv_texte = """Nom,Espece,Habitat,Poids_kg,Longueur_cm
+    Rusty,Vulpes vulpes,Forêt tempérée,6.5,58
+    Arctic,Vulpes lagopus,Toundra arctique,3.2,46
+    Fennec,Vulpes zerda,Désert,1.5,24
+    Silver,Vulpes vulpes,Forêt boréale,7.1,61"""
+    df = pnd.read_csv(StringIO(csv_texte))
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Trier un tableau
 
@@ -241,6 +336,14 @@ assert nb_resultats == len(attendu), "nb_resultats doit correspondre au filtre."
       ```
 
       *Indice :* `df.sort_values("Poids_kg")` trie du plus petit au plus grand.
+
+    <Correction>
+    ```python
+    df_trie = df.sort_values("Poids_kg")
+    plus_lourd = df_trie.iloc[-1]["Nom"]
+    print(plus_lourd)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -264,6 +367,24 @@ assert plus_lourd == attendu.iloc[-1]["Nom"], "plus_lourd est le renard le plus 
   </ExerciseSection>
 
   <ExerciseSection id="donnees-6" label="Facile - Lire un JSON" type="python">
+    <CodeDepart>
+    ```python
+    import json
+
+    fiche_texte = '''
+    {
+      "renard": {
+        "nom": "Rusty",
+        "habitat": {
+          "type": "Forêt tempérée",
+          "region": "Europe"
+        },
+        "alimentation": ["rongeurs", "oiseaux", "insectes", "fruits"]
+      }
+    }
+    '''
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Lire un JSON
 
@@ -290,6 +411,15 @@ assert plus_lourd == attendu.iloc[-1]["Nom"], "plus_lourd est le renard le plus 
 
       - la `region` d'habitat dans `region`
       - le nombre d'aliments dans `nb_aliments`
+
+    <Correction>
+    ```python
+    fiche = json.loads(fiche_texte)
+    region = fiche["renard"]["habitat"]["region"]
+    nb_aliments = len(fiche["renard"]["alimentation"])
+    print(region, nb_aliments)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -319,6 +449,19 @@ assert nb_aliments == len(fiche_ref["renard"]["alimentation"]), "Comptez les ali
   </ExerciseSection>
 
   <ExerciseSection id="donnees-7" label="Facile - Statistique sur une colonne" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pnd
+    from io import StringIO
+
+    csv_texte = """Nom,Espece,Habitat,Poids_kg,Longueur_cm
+    Rusty,Vulpes vulpes,Forêt tempérée,6.5,58
+    Arctic,Vulpes lagopus,Toundra arctique,3.2,46
+    Fennec,Vulpes zerda,Désert,1.5,24
+    Silver,Vulpes vulpes,Forêt boréale,7.1,61"""
+    df = pnd.read_csv(StringIO(csv_texte))
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Statistique sur une colonne
 
@@ -340,6 +483,14 @@ assert nb_aliments == len(fiche_ref["renard"]["alimentation"]), "Comptez les ali
       ```
 
       *Indice :* `df["Poids_kg"].mean()` et `df["Poids_kg"].max()`
+
+    <Correction>
+    ```python
+    poids_moyen = df["Poids_kg"].mean()
+    poids_max = df["Poids_kg"].max()
+    print(poids_moyen, poids_max)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python

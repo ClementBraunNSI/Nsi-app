@@ -53,16 +53,22 @@ assert True
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert True
-```
+    ```python
+    lignes = []
+    for ligne in SORTIE.splitlines():
+        valeurs = ligne.replace("True", "1").replace("False", "0").split()
+        if len(valeurs) == 3 and all(v in ("0", "1") for v in valeurs):
+            lignes.append(tuple(int(v) for v in valeurs))
+    assert len(lignes) == 4, "La table doit afficher 4 lignes de trois valeurs : a, b et a xor b."
+    assert set(lignes) == {(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)}, "Le xor vaut 1 quand a et b sont différents, 0 sinon."
+    ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-1-3" label="1.3 - Somme de deux nombres" type="python">
     <Enonce>
     ### Exercice 1.3 : Somme de deux nombres
-    **Écrire un programme qui permet d'afficher la somme de deux nombres entiers de la forme `'La somme est x+y'` avec x et y définis précédemment.**
+    **Écrire un programme qui affiche la somme de deux nombres entiers `x` et `y` définis au début du programme, sous la forme `La somme est 7` (pour `x = 4` et `y = 3`).**
 
     *Pour la vérification, stocker `x`, `y` et le résultat de la somme dans une variable `s`.*
 
@@ -76,18 +82,19 @@ assert True
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'x' in locals() and 'y' in locals(), "Les variables x et y doivent être définies."
-assert 's' in locals(), "La variable 's' n'est pas définie."
-assert s == x + y, "La somme est incorrecte."
-```
+    ```python
+    assert 'x' in globals() and 'y' in globals(), "Les variables x et y doivent être définies."
+    assert 's' in globals(), "La variable 's' n'est pas définie."
+    assert s == x + y, "s doit valoir x + y."
+    assert SORTIE.split() == ["La", "somme", "est", str(s)], "L'affichage doit être : La somme est " + str(x + y)
+    ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-1-4" label="1.4 - Affichage amélioré" type="python">
     <Enonce>
     ### Exercice 1.4 : Affichage amélioré
-    **Améliorer le programme précédent pour qu'il affiche `'La somme de x et y est x+y'`.**
+    **Améliorer le programme précédent pour qu'il affiche `La somme de 4 et 3 est 7` (avec les valeurs de `x`, `y` et de leur somme).**
 
     *Pour la vérification, stocker `x`, `y` et le résultat de la somme dans une variable `s`.*
 
@@ -101,11 +108,12 @@ assert s == x + y, "La somme est incorrecte."
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'x' in locals() and 'y' in locals(), "Les variables x et y doivent être définies."
-assert 's' in locals(), "La variable 's' n'est pas définie."
-assert s == x + y, "La somme est incorrecte."
-```
+    ```python
+    assert 'x' in globals() and 'y' in globals(), "Les variables x et y doivent être définies."
+    assert 's' in globals(), "La variable 's' n'est pas définie."
+    assert s == x + y, "s doit valoir x + y."
+    assert SORTIE.split() == ["La", "somme", "de", str(x), "et", str(y), "est", str(s)], "L'affichage doit être : La somme de " + str(x) + " et " + str(y) + " est " + str(x + y)
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -127,11 +135,13 @@ assert s == x + y, "La somme est incorrecte."
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'chaine_a' in locals() and 'chaine_b' in locals(), "Les variables chaine_a et chaine_b doivent être définies."
-assert 'resultat' in locals(), "La variable resultat n'est pas définie."
-assert resultat == chaine_a + chaine_b, "La concaténation est incorrecte."
-```
+    ```python
+    assert 'chaine_a' in globals() and 'chaine_b' in globals(), "Les variables chaine_a et chaine_b doivent être définies."
+    assert isinstance(chaine_a, str) and isinstance(chaine_b, str), "chaine_a et chaine_b doivent être des chaînes de caractères."
+    assert 'resultat' in globals(), "La variable resultat n'est pas définie."
+    assert resultat == chaine_a + chaine_b, "resultat doit être la concaténation chaine_a + chaine_b."
+    assert "La chaîne résultante est" in SORTIE and resultat in SORTIE, "L'affichage doit être : La chaîne résultante est : " + resultat
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -222,45 +232,55 @@ assert True
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'a' in locals(), "La variable 'a' n'est pas définie."
-```
+    ```python
+    ENTREES = ["7"]
+    assert 'a' in globals(), "La variable 'a' n'est pas définie."
+    assert a == 7, "a doit contenir le nombre saisi, converti en entier."
+    assert SORTIE.strip().splitlines()[-1].strip().endswith("impair"), "Pour 7, le programme doit afficher impair."
+    variables, sortie = relancer(["12"])
+    assert sortie.strip().splitlines()[-1].strip().endswith("pair") and "impair" not in sortie, "Pour 12, le programme doit afficher pair."
+    variables, sortie = relancer(["0"])
+    assert "impair" not in sortie, "0 est pair."
+    ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-2-1" label="2.1 - Maximum entre trois nombres" type="python">
     <Enonce>
     ### Exercice 2.1 : Maximum entre trois nombres
-    **Écrire un programme qui permet de trouver la valeur maximale entre trois variables entières saisies.**
-    Ce programme affichera dans la console : *"Le nombre [x] est plus grand que [y] et [z]"*.
+    **Écrire un programme qui demande trois entiers différents avec `input` et trouve le plus grand.**
+    Ce programme affiche par exemple `Le nombre 9 est plus grand que 4 et 2` pour les saisies 4, 9 et 2 : le maximum, puis les deux autres nombres dans l'ordre de saisie.
 
     *Pour la vérification, stocker les trois valeurs dans `val_1`, `val_2`, `val_3` et la valeur maximale trouvée dans `maximum`.*
 
     <Correction>
-    
     ```python
     val_1 = int(input("Valeur 1 : "))
     val_2 = int(input("Valeur 2 : "))
     val_3 = int(input("Valeur 3 : "))
-
     if val_1 > val_2 and val_1 > val_3:
         maximum = val_1
-        print(val_1, " est la plus grande")
+        print("Le nombre", val_1, "est plus grand que", val_2, "et", val_3)
     elif val_2 > val_1 and val_2 > val_3:
         maximum = val_2
-        print(val_2, " est la plus grande")
-    elif val_3 > val_1 and val_3 > val_2:
+        print("Le nombre", val_2, "est plus grand que", val_1, "et", val_3)
+    else:
         maximum = val_3
-        print(val_3, " est la plus grande")
+        print("Le nombre", val_3, "est plus grand que", val_1, "et", val_2)
     ```
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'val_1' in locals() and 'val_2' in locals() and 'val_3' in locals(), "Les variables val_1, val_2, val_3 doivent être définies."
-assert 'maximum' in locals(), "La variable 'maximum' n'est pas définie."
-assert maximum == max(val_1, val_2, val_3), "Le maximum calculé est incorrect."
-```
+    ```python
+    ENTREES = ["4", "9", "2"]
+    assert 'maximum' in globals(), "La variable 'maximum' n'est pas définie."
+    assert maximum == 9, "Pour 4, 9 et 2, le maximum est 9."
+    assert "Le nombre 9 est plus grand que 4 et 2" in " ".join(SORTIE.split()), "Pour 4, 9 et 2, afficher : Le nombre 9 est plus grand que 4 et 2"
+    for saisies, attendu in ([["15", "3", "8"], 15], [["1", "2", "30"], 30], [["-5", "-1", "-9"], -1]):
+        variables, sortie = relancer(saisies)
+        assert variables["maximum"] == attendu, "Pour " + ", ".join(saisies) + ", le maximum est " + str(attendu) + "."
+        assert ("Le nombre " + str(attendu) + " est plus grand que") in " ".join(sortie.split()), "Pour " + ", ".join(saisies) + ", afficher : Le nombre " + str(attendu) + " est plus grand que …"
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -272,17 +292,17 @@ assert maximum == max(val_1, val_2, val_3), "Le maximum calculé est incorrect."
     1. Deux nombres entiers `a` et `b`.
     2. Un opérateur (`+`, `-`, `*`, `/`).
     
-    Le programme affichera : *L'opération a [opérateur] b vaut ...*
+    Les saisies se font dans cet ordre : `a`, puis `b`, puis l'opérateur.
+    Le programme affiche par exemple `L'opération 6 * 7 vaut 42`.
 
     *Pour la vérification, stocker les valeurs dans `a`, `b`, `operateur` et le résultat dans `resultat`.*
 
     <Correction>
-    
     ```python
     a = int(input("Entrez un premier nombre : "))
     b = int(input("Entrez un second nombre : "))
     operateur = input("Entrez un opérateur (+ - / *) : ")
-
+    resultat = None
     if operateur == "+":
         resultat = a + b
     elif operateur == "-":
@@ -293,32 +313,29 @@ assert maximum == max(val_1, val_2, val_3), "Le maximum calculé est incorrect."
         if b != 0:
             resultat = a / b
         else:
-            resultat = None
             print("Division par zéro impossible")
-    
     if resultat is not None:
-        print(resultat)
+        print("L'opération", a, operateur, b, "vaut", resultat)
     ```
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'a' in locals() and 'b' in locals(), "Les variables a et b doivent être définies."
-assert 'operateur' in locals(), "La variable operateur doit être définie."
-assert 'resultat' in locals(), "La variable resultat doit être définie."
-if operateur == '+': assert resultat == a + b
-elif operateur == '-': assert resultat == a - b
-elif operateur == '*': assert resultat == a * b
-elif operateur == '/': 
-    if b != 0: assert abs(resultat - (a/b)) < 0.0001
-```
+    ```python
+    ENTREES = ["6", "7", "*"]
+    assert 'resultat' in globals(), "La variable resultat doit être définie."
+    assert resultat == 42, "6 * 7 vaut 42."
+    assert "L'opération 6 * 7 vaut 42" in " ".join(SORTIE.split()), "Afficher : L'opération 6 * 7 vaut 42"
+    for saisies, attendu in ([["9", "4", "+"], 13], [["9", "4", "-"], 5], [["9", "4", "/"], 2.25]):
+        variables, sortie = relancer(saisies)
+        assert variables["resultat"] == attendu, saisies[0] + " " + saisies[2] + " " + saisies[1] + " vaut " + str(attendu) + "."
+    ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-2-3" label="2.3 - Profit ou perte" type="python">
     <Enonce>
     ### Exercice 2.3 : Profit ou perte
-    **Écrire un programme qui, étant donné deux valeurs `cout_de_production` et `prix_de_vente` (saisies par l'utilisateur), affiche dans le terminal :**
+    **Écrire un programme qui demande d'abord le coût de production, puis le prix de vente (deux entiers saisis avec `input`), et affiche dans le terminal :**
     - `profit` si le prix de vente est supérieur au coût.
     - `perte` si le prix de vente est inférieur.
     - `pas de marge` si c'est égal.
@@ -326,11 +343,9 @@ elif operateur == '/':
     *Pour la vérification, stocker les prix dans `cout_de_production` et `prix_de_vente`, et le message affiché dans `message`.*
 
     <Correction>
-    
     ```python
-    prix_de_vente = int(input("Entrez un prix de vente : "))
     cout_de_production = int(input("Entrez un coût de production : "))
-
+    prix_de_vente = int(input("Entrez un prix de vente : "))
     if prix_de_vente > cout_de_production:
         message = "profit"
     elif prix_de_vente == cout_de_production:
@@ -342,20 +357,23 @@ elif operateur == '/':
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'prix_de_vente' in locals() and 'cout_de_production' in locals(), "Les variables de prix doivent être définies."
-assert 'message' in locals(), "La variable message doit être définie."
-if prix_de_vente > cout_de_production: assert "profit" in message
-elif prix_de_vente < cout_de_production: assert "perte" in message
-else: assert "marge" in message
-```
+    ```python
+    ENTREES = ["10", "15"]
+    assert cout_de_production == 10 and prix_de_vente == 15, "Saisir d'abord le coût de production, puis le prix de vente, convertis en entiers."
+    assert message == "profit", "Coût 10 et prix 15 : profit."
+    assert SORTIE.strip().splitlines()[-1].strip().endswith("profit"), "Le programme doit afficher profit."
+    variables, sortie = relancer(["15", "10"])
+    assert variables["message"] == "perte", "Coût 15 et prix 10 : perte."
+    variables, sortie = relancer(["12", "12"])
+    assert variables["message"] == "pas de marge", "Coût et prix égaux : pas de marge."
+    ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="types-3-1" label="3.1 - Mentions au baccalauréat" type="python">
     <Enonce>
     ### Exercice 3.1 : Mentions au baccalauréat
-    **Écrire un programme qui prend une note sur 20 et affiche dans le terminal la mention correspondante :**
+    **Écrire un programme qui demande une note sur 20 (un nombre décimal, saisi avec `input`) et affiche dans le terminal la mention correspondante :**
     - `Très bien` : note ≥ 16
     - `Bien` : 14 ≤ note < 16
     - `Assez bien` : 12 ≤ note < 14
@@ -384,16 +402,15 @@ else: assert "marge" in message
     </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'note' in locals(), "La variable note doit être définie."
-assert 'mention' in locals(), "La variable mention doit être définie."
-m = mention.lower()
-if note >= 16: assert "très bien" in m
-elif note >= 14: assert "bien" in m and "très" not in m and "assez" not in m
-elif note >= 12: assert "assez bien" in m
-elif note >= 10: assert "passable" in m
-else: assert "échec" in m or "echec" in m
-```
+    ```python
+    ENTREES = ["17"]
+    assert note == 17, "La note saisie doit être convertie en nombre."
+    assert mention == "Très bien", "17 : Très bien."
+    assert "Très bien" in SORTIE, "Le programme doit afficher la mention."
+    for saisie, attendu in (("16", "Très bien"), ("15.5", "Bien"), ("14", "Bien"), ("12", "Assez bien"), ("11.5", "Passable"), ("10", "Passable"), ("9.5", "Échec")):
+        variables, sortie = relancer([saisie])
+        assert variables["mention"] == attendu, saisie + " : " + attendu + "."
+    ```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>
