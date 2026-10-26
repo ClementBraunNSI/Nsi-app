@@ -22,7 +22,7 @@ Le correcteur ouvre le fichier et vérifie ces règles avant de lire le reste.
 
 **Types autorisés :** `int`, `float`, `str`, `bool`.
 
-**Instructions autorisées :** `if` / `elif` / `else`, `while`, `for`, `range`, `def`, `return`, `input`, `print`, les opérateurs arithmétiques et les comparaisons.
+**Instructions autorisées :** `if` / `elif` / `else`, `while`, `for`, `range`, `def`, `return`, `global`, `input`, `print`, les opérateurs arithmétiques et les comparaisons.
 
 Une chaîne est un seul texte : un choix (`"1"`), une réponse (`"oui"`), un message affiché. On peut coller deux textes avec `+`. On peut comparer deux textes avec `==`.
 
@@ -79,14 +79,76 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
       print(libelle_article("2"))     # cookie
       print(libelle_article("0"))     # inconnu
       ```
+
+    <Correction>
+    ```python
+    def est_choix_valide(choix):
+        return choix == "1" or choix == "2" or choix == "3"
+
+    def prix_article(choix):
+        if choix == "1":
+            return 1.2
+        if choix == "2":
+            return 0.8
+        if choix == "3":
+            return 3.5
+        return -1.0
+
+    def libelle_article(choix):
+        if choix == "1":
+            return "jus"
+        if choix == "2":
+            return "cookie"
+        if choix == "3":
+            return "sandwich"
+        return "inconnu"
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert est_choix_valide("2") is True and est_choix_valide("1") is True and est_choix_valide("3") is True, "1, 2 et 3 sont des choix valides."
+    assert est_choix_valide("jus") is False and est_choix_valide("4") is False and est_choix_valide("") is False, "Un autre texte n'est pas un choix valide."
+    assert prix_article("1") == 1.2 and prix_article("2") == 0.8 and prix_article("3") == 3.5, "Prix : jus 1.2, cookie 0.8, sandwich 3.5."
+    assert prix_article("9") == -1.0, "Un choix inconnu donne -1.0."
+    assert libelle_article("1") == "jus" and libelle_article("2") == "cookie" and libelle_article("3") == "sandwich", "Libellés : jus, cookie, sandwich."
+    assert libelle_article("0") == "inconnu", "Un choix inconnu donne inconnu."
+    import ast as _ast
+    _arbre = _ast.parse(PROGRAMME)
+    assert not any(isinstance(n, (_ast.List, _ast.Dict, _ast.Tuple, _ast.Set, _ast.ListComp, _ast.DictComp, _ast.SetComp, _ast.Subscript)) for n in _ast.walk(_arbre)), "Contrainte du projet : ni liste, ni dictionnaire, ni tuple, ni crochets."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 
 ## 2. Une ligne de ticket <Icone nom="euro" />
 
 <ExerciseTabs courseId="proj_caisse_ligne" courseTitle="Montant et monnaie">
-  <ExerciseSection id="caisse-ligne-1" label="montant_ligne" type="lecture">
+  <ExerciseSection id="caisse-ligne-1" label="montant_ligne" type="python">
+    <CodeDepart>
+    ```python
+    def est_choix_valide(choix):
+        return choix == "1" or choix == "2" or choix == "3"
+
+    def prix_article(choix):
+        if choix == "1":
+            return 1.2
+        if choix == "2":
+            return 0.8
+        if choix == "3":
+            return 3.5
+        return -1.0
+
+    def libelle_article(choix):
+        if choix == "1":
+            return "jus"
+        if choix == "2":
+            return "cookie"
+        if choix == "3":
+            return "sandwich"
+        return "inconnu"
+    ```
+    </CodeDepart>
     <Enonce>
       Écrire `montant_ligne(choix, quantite)`. Elle renvoie le prix unitaire multiplié par la quantité.
 
@@ -97,10 +159,30 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
       print(montant_ligne("1", 0))  # -1.0
       print(montant_ligne("4", 1))  # -1.0
       ```
+
+    <Correction>
+    ```python
+    def montant_ligne(choix, quantite):
+        if not est_choix_valide(choix) or quantite < 1:
+            return -1.0
+        return prix_article(choix) * quantite
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert montant_ligne("3", 2) == 7.0, "montant_ligne('3', 2) vaut 7.0."
+    assert abs(montant_ligne("2", 4) - 3.2) < 1e-9, "montant_ligne('2', 4) vaut 3.2."
+    assert montant_ligne("1", 0) == -1.0, "Une quantité inférieure à 1 donne -1.0."
+    assert montant_ligne("4", 1) == -1.0, "Un choix inconnu donne -1.0."
+    import ast as _ast
+    _arbre = _ast.parse(PROGRAMME)
+    assert not any(isinstance(n, (_ast.List, _ast.Dict, _ast.Tuple, _ast.Set, _ast.ListComp, _ast.DictComp, _ast.SetComp, _ast.Subscript)) for n in _ast.walk(_arbre)), "Contrainte du projet : ni liste, ni dictionnaire, ni tuple, ni crochets."
+    ```
+    </Verification>
   </ExerciseSection>
 
-  <ExerciseSection id="caisse-ligne-2" label="rendu_monnaie" type="lecture">
+  <ExerciseSection id="caisse-ligne-2" label="rendu_monnaie" type="python">
     <Enonce>
       Écrire `rendu_monnaie(a_payer, donne)`. Elle renvoie `donne - a_payer` quand le client a donné assez, y compris quand les deux montants sont égaux (la monnaie vaut alors `0.0`).
 
@@ -111,7 +193,23 @@ En Python les prix s'écrivent avec un point : `1.2`, `0.8`, `3.5`. À l'écran,
       print(rendu_monnaie(7.0, 7.0))   # 0.0
       print(rendu_monnaie(7.0, 5.0))   # -1.0
       ```
+
+    <Correction>
+    ```python
+    def rendu_monnaie(a_payer, donne):
+        if donne < a_payer:
+            return -1.0
+        return donne - a_payer
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert rendu_monnaie(7.0, 10.0) == 3.0, "rendu_monnaie(7.0, 10.0) vaut 3.0."
+    assert rendu_monnaie(7.0, 7.0) == 0.0, "Montants égaux : la monnaie vaut 0.0."
+    assert rendu_monnaie(7.0, 5.0) == -1.0, "Montant insuffisant : -1.0."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 
@@ -146,7 +244,41 @@ Montant insuffisant. Vente annulée.
 `servir_client()` renvoie alors `0.0`. Les compteurs de la journée ne bougent pas.
 
 <ExerciseTabs courseId="proj_caisse_client" courseTitle="Un client">
-  <ExerciseSection id="caisse-client-1" label="servir_client" type="lecture">
+  <ExerciseSection id="caisse-client-1" label="servir_client" type="python">
+    <CodeDepart>
+    ```python
+    def est_choix_valide(choix):
+        return choix == "1" or choix == "2" or choix == "3"
+
+    def prix_article(choix):
+        if choix == "1":
+            return 1.2
+        if choix == "2":
+            return 0.8
+        if choix == "3":
+            return 3.5
+        return -1.0
+
+    def libelle_article(choix):
+        if choix == "1":
+            return "jus"
+        if choix == "2":
+            return "cookie"
+        if choix == "3":
+            return "sandwich"
+        return "inconnu"
+
+    def montant_ligne(choix, quantite):
+        if not est_choix_valide(choix) or quantite < 1:
+            return -1.0
+        return prix_article(choix) * quantite
+
+    def rendu_monnaie(a_payer, donne):
+        if donne < a_payer:
+            return -1.0
+        return donne - a_payer
+    ```
+    </CodeDepart>
     <Enonce>
       Écrire `servir_client()`. Elle ne reçoit aucun paramètre. Elle parle au client avec `input` et renvoie un `float`.
 
@@ -155,11 +287,69 @@ Montant insuffisant. Vente annulée.
       - Afficher `À payer : X.XX €` à partir de `montant_ligne`.
       - Lire le montant donné. S'il est insuffisant, afficher `Montant insuffisant. Vente annulée.` et renvoyer `0.0`.
       - Sinon afficher `Monnaie : X.XX €` et renvoyer le montant à payer.
+      - Pour que le programme principal sache quoi compter, une vente encaissée range aussi le choix et la quantité dans deux variables globales, `dernier_choix` et `derniere_quantite` (déclarées avec `global` au début de la fonction).
 
       La quantité lue par `input` est un `str` : la convertir en `int` une fois le texte obtenu. Les essais du sujet sont des nombres entiers, sans espace autour.
 
       *Attention : pas de liste pour mémoriser les essais. Un `while` et quelques variables suffisent.*
+
+    <Correction>
+    ```python
+    dernier_choix = ""
+    derniere_quantite = 0
+
+    def servir_client():
+        global dernier_choix, derniere_quantite
+        choix = input("Article (1 jus, 2 cookie, 3 sandwich) : ")
+        while not est_choix_valide(choix):
+            print("Choix invalide.")
+            choix = input("Article (1 jus, 2 cookie, 3 sandwich) : ")
+        quantite = int(input("Quantité : "))
+        while quantite < 1:
+            print("Quantité invalide.")
+            quantite = int(input("Quantité : "))
+        a_payer = montant_ligne(choix, quantite)
+        print("À payer : " + format(a_payer, ".2f") + " €")
+        donne = float(input("Montant donné : "))
+        monnaie = rendu_monnaie(a_payer, donne)
+        if monnaie < 0:
+            print("Montant insuffisant. Vente annulée.")
+            return 0.0
+        print("Monnaie : " + format(monnaie, ".2f") + " €")
+        dernier_choix = choix
+        derniere_quantite = quantite
+        return a_payer
+
+    print(servir_client())
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    import io, contextlib
+    def _sortie(fonction, *arguments):
+        tampon = io.StringIO()
+        with contextlib.redirect_stdout(tampon):
+            valeur = fonction(*arguments)
+        return valeur, tampon.getvalue()
+    ENTREES = ["3", "2", "10"]
+    saisies = []
+    def input(question=""):
+        print(question, end="")
+        return saisies.pop(0)
+    saisies[:] = ["3", "2", "10"]
+    valeur, texte = _sortie(servir_client)
+    assert valeur == 7.0, "2 sandwiches payés 10 € : servir_client renvoie 7.0, l'argent encaissé."
+    assert "À payer : 7.00 €" in texte and "Monnaie : 3.00 €" in texte, "Afficher À payer : 7.00 € puis Monnaie : 3.00 €"
+    assert dernier_choix == "3" and derniere_quantite == 2, "Une vente encaissée range dernier_choix = '3' et derniere_quantite = 2."
+    saisies[:] = ["9", "2", "0", "4", "2"]
+    valeur, texte = _sortie(servir_client)
+    assert saisies == [], "Choix et quantité invalides : on redemande, avant de parler d'argent."
+    assert "Choix invalide." in texte and "Quantité invalide." in texte, "Afficher Choix invalide. puis Quantité invalide."
+    assert "À payer : 3.20 €" in texte, "4 cookies : À payer : 3.20 €"
+    assert valeur == 0.0 and "Montant insuffisant. Vente annulée." in texte, "2 € pour 3.20 € : Montant insuffisant. Vente annulée. et la fonction renvoie 0.0."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 
@@ -177,17 +367,116 @@ On ne conserve pas le détail de chaque ticket. Seuls les cinq compteurs survive
 
 <ExerciseTabs courseId="proj_caisse_journee" courseTitle="La récréation">
   <ExerciseSection id="caisse-journee-1" label="Plusieurs clients" type="python">
+    <CodeDepart>
+    ```python
+    def est_choix_valide(choix):
+        return choix == "1" or choix == "2" or choix == "3"
+
+    def prix_article(choix):
+        if choix == "1":
+            return 1.2
+        if choix == "2":
+            return 0.8
+        if choix == "3":
+            return 3.5
+        return -1.0
+
+    def libelle_article(choix):
+        if choix == "1":
+            return "jus"
+        if choix == "2":
+            return "cookie"
+        if choix == "3":
+            return "sandwich"
+        return "inconnu"
+
+    def montant_ligne(choix, quantite):
+        if not est_choix_valide(choix) or quantite < 1:
+            return -1.0
+        return prix_article(choix) * quantite
+
+    def rendu_monnaie(a_payer, donne):
+        if donne < a_payer:
+            return -1.0
+        return donne - a_payer
+
+    dernier_choix = ""
+    derniere_quantite = 0
+
+    def servir_client():
+        global dernier_choix, derniere_quantite
+        choix = input("Article (1 jus, 2 cookie, 3 sandwich) : ")
+        while not est_choix_valide(choix):
+            print("Choix invalide.")
+            choix = input("Article (1 jus, 2 cookie, 3 sandwich) : ")
+        quantite = int(input("Quantité : "))
+        while quantite < 1:
+            print("Quantité invalide.")
+            quantite = int(input("Quantité : "))
+        a_payer = montant_ligne(choix, quantite)
+        print("À payer : " + format(a_payer, ".2f") + " €")
+        donne = float(input("Montant donné : "))
+        monnaie = rendu_monnaie(a_payer, donne)
+        if monnaie < 0:
+            print("Montant insuffisant. Vente annulée.")
+            return 0.0
+        print("Monnaie : " + format(monnaie, ".2f") + " €")
+        dernier_choix = choix
+        derniere_quantite = quantite
+        return a_payer
+    ```
+    </CodeDepart>
     <Enonce>
       Écrire le programme principal.
 
       1. Lire le nombre maximum de clients. Tant que cette valeur est inférieure à 1, reposer la question.
       2. Initialiser `total` à `0.0` et les quatre compteurs entiers à `0` : `nb_ventes`, `nb_jus`, `nb_cookies`, `nb_sandwiches`.
       3. Avec `for numero in range(1, nb_max + 1)`, servir un client.
-      4. N'augmentez les compteurs que si `servir_client` a renvoyé un montant supérieur à 0. Ajouter la quantité vendue au bon compteur : deux sandwiches augmentent `nb_sandwiches` de 2.
+      4. N'augmenter les compteurs que si `servir_client` a renvoyé un montant supérieur à 0. Ajouter `derniere_quantite` au compteur de l'article `dernier_choix` : deux sandwiches augmentent `nb_sandwiches` de 2.
       5. Après chaque client réellement appelé, lire `Un autre client ? (oui/non) : `. Si la réponse n'est pas exactement `oui`, sortir de la journée.
 
+      Les fonctions des étapes précédentes sont déjà dans l'éditeur.
       Rejouer l'exemple du bilan : 2 sandwiches payés 10 €, puis 1 jus payé 1,20 €, puis arrêt. Une troisième vente annulée ne compte pas. Le total vaut `8.2`, `nb_ventes` vaut 2, `nb_sandwiches` vaut 2, `nb_jus` vaut 1.
+
+    <Correction>
+    ```python
+    nb_max = int(input("Nombre maximum de clients : "))
+    while nb_max < 1:
+        nb_max = int(input("Nombre maximum de clients : "))
+    total = 0.0
+    nb_ventes = 0
+    nb_jus = 0
+    nb_cookies = 0
+    nb_sandwiches = 0
+    for numero in range(1, nb_max + 1):
+        montant = servir_client()
+        if montant > 0:
+            total = total + montant
+            nb_ventes = nb_ventes + 1
+            if dernier_choix == "1":
+                nb_jus = nb_jus + derniere_quantite
+            elif dernier_choix == "2":
+                nb_cookies = nb_cookies + derniere_quantite
+            else:
+                nb_sandwiches = nb_sandwiches + derniere_quantite
+        if input("Un autre client ? (oui/non) : ") != "oui":
+            break
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["0", "5", "3", "2", "10", "oui", "1", "1", "2", "oui", "2", "1", "0.5", "non"]
+    assert total == 8.2 or abs(total - 8.2) < 1e-9, "2 sandwiches puis 1 jus : total vaut 8.2."
+    assert nb_ventes == 2, "La vente annulée ne compte pas : nb_ventes vaut 2."
+    assert nb_sandwiches == 2 and nb_jus == 1 and nb_cookies == 0, "nb_sandwiches vaut 2, nb_jus 1, nb_cookies 0."
+    assert SORTIE.count("Nombre maximum de clients") == 2, "Un nombre maximum de 0 est refusé : la question est reposée."
+    variables, sortie = relancer(["2", "1", "1", "5", "non"])
+    assert variables["nb_ventes"] == 1 and variables["nb_jus"] == 1, "Une réponse autre que oui termine la journée."
+    variables, sortie = relancer(["1", "2", "1", "1", "oui"])
+    assert sortie.count("Un autre client") == 1, "Le nombre maximum de clients limite la boucle."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 
@@ -217,7 +506,7 @@ Messages du plus vendu :
 Les trois nombres se comparent avec des `if`. On n'assemble pas les noms dans une collection pour les trier.
 
 <ExerciseTabs courseId="proj_caisse_bilan" courseTitle="Bilan">
-  <ExerciseSection id="caisse-bilan-1" label="resume_journee" type="lecture">
+  <ExerciseSection id="caisse-bilan-1" label="resume_journee" type="python">
     <Enonce>
       Écrire `resume_journee(nb_ventes, total, nb_jus, nb_cookies, nb_sandwiches)`. Elle affiche le bilan et ne renvoie rien.
 
@@ -226,7 +515,60 @@ Les trois nombres se comparent avec des `if`. On n'assemble pas les noms dans un
       - Comparer `nb_jus`, `nb_cookies` et `nb_sandwiches` pour produire l'un des trois messages.
 
       Test d'égalité : 3 jus, 3 cookies, 1 sandwich affiche `Égalité : jus et cookie (3 chacun)`.
+
+    <Correction>
+    ```python
+    def resume_journee(nb_ventes, total, nb_jus, nb_cookies, nb_sandwiches):
+        if nb_ventes == 0:
+            print("Aucune vente.")
+            return
+        print("--- Bilan de la récré ---")
+        print("Ventes encaissées :", nb_ventes)
+        print("Total : " + format(total, ".2f") + " €")
+        print("Ticket moyen : " + format(total / nb_ventes, ".2f") + " €")
+        print("Jus :", nb_jus)
+        print("Cookies :", nb_cookies)
+        print("Sandwiches :", nb_sandwiches)
+        if nb_jus == nb_cookies and nb_cookies == nb_sandwiches:
+            print("Égalité : jus, cookie et sandwich (" + str(nb_jus) + " chacun)")
+        elif nb_jus > nb_cookies and nb_jus > nb_sandwiches:
+            print("Le plus vendu : jus (" + str(nb_jus) + ")")
+        elif nb_cookies > nb_jus and nb_cookies > nb_sandwiches:
+            print("Le plus vendu : cookie (" + str(nb_cookies) + ")")
+        elif nb_sandwiches > nb_jus and nb_sandwiches > nb_cookies:
+            print("Le plus vendu : sandwich (" + str(nb_sandwiches) + ")")
+        elif nb_jus == nb_cookies:
+            print("Égalité : jus et cookie (" + str(nb_jus) + " chacun)")
+        elif nb_jus == nb_sandwiches:
+            print("Égalité : jus et sandwich (" + str(nb_jus) + " chacun)")
+        else:
+            print("Égalité : cookie et sandwich (" + str(nb_cookies) + " chacun)")
+
+    resume_journee(2, 8.2, 1, 0, 2)
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    import io, contextlib
+    def _sortie(fonction, *arguments):
+        tampon = io.StringIO()
+        with contextlib.redirect_stdout(tampon):
+            valeur = fonction(*arguments)
+        return valeur, tampon.getvalue()
+    _, texte = _sortie(resume_journee, 2, 8.2, 1, 0, 2)
+    lignes = [l.strip() for l in texte.strip().splitlines()]
+    assert lignes == ["--- Bilan de la récré ---", "Ventes encaissées : 2", "Total : 8.20 €", "Ticket moyen : 4.10 €", "Jus : 1", "Cookies : 0", "Sandwiches : 2", "Le plus vendu : sandwich (2)"], "Le bilan de l'exemple n'a pas les huit lignes attendues."
+    _, texte = _sortie(resume_journee, 0, 0.0, 0, 0, 0)
+    assert texte.strip() == "Aucune vente.", "Aucune vente : afficher seulement Aucune vente."
+    _, texte = _sortie(resume_journee, 3, 5.6, 3, 3, 1)
+    assert texte.strip().splitlines()[-1] == "Égalité : jus et cookie (3 chacun)", "3 jus, 3 cookies, 1 sandwich : Égalité : jus et cookie (3 chacun)"
+    _, texte = _sortie(resume_journee, 3, 11.0, 2, 2, 2)
+    assert texte.strip().splitlines()[-1] == "Égalité : jus, cookie et sandwich (2 chacun)", "Trois égalités : Égalité : jus, cookie et sandwich (2 chacun)"
+    _, texte = _sortie(resume_journee, 2, 2.0, 1, 4, 0)
+    assert texte.strip().splitlines()[-1] == "Le plus vendu : cookie (4)", "4 cookies devant : Le plus vendu : cookie (4)"
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 

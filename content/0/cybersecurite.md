@@ -128,6 +128,12 @@ Déchiffrer ce message pour retrouver le mot original et le stocker dans la vari
 ```python
 message_clair = "..." 
 ```
+
+    <Correction>
+    ```python
+    message_clair = "PYTHON"
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python

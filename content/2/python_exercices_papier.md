@@ -34,6 +34,11 @@ audience: public
   </ExerciseSection>
 
   <ExerciseSection id="exo-1-2" label="1.2 - Accès élément tuple" type="python">
+    <CodeDepart>
+    ```python
+    mon_tuple = ("pomme", "banane", "cerise")
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 1.2 : Accès à un élément
     **Afficher l'élément à l'indice 1 du tuple `mon_tuple`.**
@@ -49,10 +54,9 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'mon_tuple' in locals(), "Veuillez d'abord définir 'mon_tuple'."
-    assert 'element_1' in locals(), "La variable 'element_1' n'est pas définie."
-    assert element_1 == mon_tuple[1], "La variable 'element_1' ne contient pas la bonne valeur."
-    assert element_1 == "banane", "L'élément à l'indice 1 devrait être 'banane'."
+    assert 'element_1' in globals(), "La variable 'element_1' n'est pas définie."
+    assert element_1 == "banane", "L'élément à l'indice 1 de mon_tuple est 'banane'."
+    assert "banane" in SORTIE, "Le programme doit afficher l'élément trouvé."
     ```
     </Verification>
   </ExerciseSection>
@@ -78,6 +82,11 @@ audience: public
   </ExerciseSection>
 
   <ExerciseSection id="exo-2-2" label="2.2 - Accès élément liste" type="python">
+    <CodeDepart>
+    ```python
+    ma_liste = ["chien", "chat", "lapin"]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 2.2 : Accès à un élément
     **Afficher l'élément à l'indice 2 de la liste `ma_liste`.**
@@ -93,15 +102,19 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'ma_liste' in locals(), "Veuillez d'abord définir 'ma_liste'."
-    assert 'element_2' in locals(), "La variable 'element_2' n'est pas définie."
-    assert element_2 == ma_liste[2], "La variable 'element_2' ne contient pas la bonne valeur."
-    assert element_2 == "lapin", "L'élément à l'indice 2 devrait être 'lapin'."
+    assert 'element_2' in globals(), "La variable 'element_2' n'est pas définie."
+    assert element_2 == "lapin", "L'élément à l'indice 2 de ma_liste est 'lapin'."
+    assert "lapin" in SORTIE, "Le programme doit afficher l'élément trouvé."
     ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="exo-2-3" label="2.3 - Modification liste" type="python">
+    <CodeDepart>
+    ```python
+    ma_liste = ["chien", "chat", "lapin"]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 2.3 : Modification d'un élément
     **Remplacer l'élément `"lapin"` par `"hamster"` dans `ma_liste`. Afficher la liste mise à jour.**
@@ -115,14 +128,18 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'ma_liste' in locals(), "La variable 'ma_liste' n'est pas définie."
-    assert ma_liste[2] == "hamster", "Le 3ème élément devrait être 'hamster'."
-    assert len(ma_liste) == 3, "La taille de la liste ne devrait pas changer."
+    assert ma_liste == ["chien", "chat", "hamster"], "ma_liste doit valoir ['chien', 'chat', 'hamster']."
+    assert "hamster" in SORTIE, "Le programme doit afficher la liste mise à jour."
     ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="exo-2-4" label="2.4 - Ajout élément" type="python">
+    <CodeDepart>
+    ```python
+    ma_liste = ["chien", "chat", "hamster"]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 2.4 : Ajout d'un élément
     **Ajouter l'élément `"oiseau"` à la fin de la liste `ma_liste`. Afficher la liste.**
@@ -136,33 +153,32 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'ma_liste' in locals(), "La variable 'ma_liste' n'est pas définie."
-    assert ma_liste[-1] == "oiseau", "Le dernier élément devrait être 'oiseau'."
-    assert len(ma_liste) == 4, "La liste devrait contenir 4 éléments."
+    assert ma_liste == ["chien", "chat", "hamster", "oiseau"], "ma_liste doit valoir ['chien', 'chat', 'hamster', 'oiseau']."
+    assert "oiseau" in SORTIE, "Le programme doit afficher la liste."
     ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="exo-2-5" label="2.5 - Ajout multiple" type="python">
+    <CodeDepart>
+    ```python
+    ma_liste = ["chien", "chat", "hamster", "oiseau"]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 2.5 : Ajout de plusieurs éléments
     **Ajouter les éléments `"poisson"` et `"tortue"` à la liste en une seule opération (concaténation).**
-    
+
     <Correction>
     ```python
     ma_liste = ma_liste + ["poisson", "tortue"]
-    # Ou
-    ma_liste.extend(["poisson", "tortue"])
     print(ma_liste)
     ```
     </Correction>
     </Enonce>
     <Verification>
     ```python
-    assert 'ma_liste' in locals(), "La variable 'ma_liste' n'est pas définie."
-    assert "poisson" in ma_liste, "'poisson' devrait être dans la liste."
-    assert "tortue" in ma_liste, "'tortue' devrait être dans la liste."
-    assert len(ma_liste) >= 6, "La liste devrait contenir au moins 6 éléments."
+    assert ma_liste == ["chien", "chat", "hamster", "oiseau", "poisson", "tortue"], "ma_liste doit se terminer par 'poisson' puis 'tortue', une seule fois chacun."
     ```
     </Verification>
   </ExerciseSection>
@@ -187,6 +203,11 @@ audience: public
   </ExerciseSection>
 
   <ExerciseSection id="exo-3-2" label="3.2 - Premier et dernier" type="python">
+    <CodeDepart>
+    ```python
+    nombres = [3, 8, 12, 5, 10]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 3.2 : Premier et dernier élément
     **Afficher le premier et le dernier élément de la liste `nombres` en utilisant les indices.**
@@ -203,16 +224,21 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'nombres' in locals(), "Veuillez d'abord définir 'nombres'."
-    assert 'premier' in locals(), "La variable 'premier' n'est pas définie."
-    assert 'dernier' in locals(), "La variable 'dernier' n'est pas définie."
-    assert premier == 3, "Le premier élément devrait être 3."
-    assert dernier == 10, "Le dernier élément devrait être 10."
+    assert 'premier' in globals(), "La variable 'premier' n'est pas définie."
+    assert 'dernier' in globals(), "La variable 'dernier' n'est pas définie."
+    assert premier == 3, "Le premier élément de nombres est 3."
+    assert dernier == 10, "Le dernier élément de nombres est 10."
+    assert "3" in SORTIE and "10" in SORTIE, "Le programme doit afficher le premier et le dernier élément."
     ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="exo-3-3" label="3.3 - Parcours liste" type="python">
+    <CodeDepart>
+    ```python
+    nombres = [3, 8, 12, 5, 10]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 3.3 : Parcours avec indices
     **Utiliser une boucle pour afficher tous les éléments de la liste `nombres` avec leur indice correspondant.**
@@ -226,13 +252,19 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'nombres' in locals(), "La variable 'nombres' n'est pas définie."
-    # Pas de vérification stricte pour l'affichage, on vérifie juste que la liste existe.
+    lignes = [l for l in SORTIE.strip().splitlines() if l.strip()]
+    assert len(lignes) == 5, "Le programme doit afficher une ligne par élément : 5 lignes."
+    assert all(str(i) in lignes[i] and str(v) in lignes[i] for i, v in enumerate([3, 8, 12, 5, 10])), "Chaque ligne doit contenir l'indice et l'élément : 0 et 3, puis 1 et 8, etc."
     ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="exo-3-4" label="3.4 - Ajout fin" type="python">
+    <CodeDepart>
+    ```python
+    nombres = [3, 8, 12, 5, 10]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 3.4 : Ajout à la fin
     **Ajouter le nombre `15` à la fin de la liste `nombres`, puis afficher la liste.**
@@ -246,13 +278,18 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'nombres' in locals(), "La variable 'nombres' n'est pas définie."
-    assert nombres[-1] == 15, "Le dernier élément devrait être 15."
+    assert nombres == [3, 8, 12, 5, 10, 15], "nombres doit valoir [3, 8, 12, 5, 10, 15]."
+    assert "15" in SORTIE, "Le programme doit afficher la liste."
     ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="exo-3-5" label="3.5 - Insertion" type="python">
+    <CodeDepart>
+    ```python
+    nombres = [3, 8, 12, 5, 10, 15]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 3.5 : Insertion
     **Insérer le nombre `7` à l'indice 1 dans `nombres`. Afficher la nouvelle liste.**
@@ -266,35 +303,33 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'nombres' in locals(), "La variable 'nombres' n'est pas définie."
-    assert nombres[1] == 7, "L'élément à l'indice 1 devrait être 7."
+    assert nombres == [3, 7, 8, 12, 5, 10, 15], "nombres doit valoir [3, 7, 8, 12, 5, 10, 15]."
+    assert "7" in SORTIE, "Le programme doit afficher la nouvelle liste."
     ```
     </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="exo-3-6" label="3.6 - Suppression" type="python">
+    <CodeDepart>
+    ```python
+    nombres = [3, 7, 8, 12, 5, 10, 15]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 3.6 : Suppression
     **Supprimer l'élément à l'indice 3 de la liste `nombres`. Afficher la liste mise à jour.**
-    
+
     <Correction>
     ```python
     del nombres[3]
-    # Ou
-    nombres.pop(3)
     print(nombres)
     ```
     </Correction>
     </Enonce>
     <Verification>
     ```python
-    assert 'nombres' in locals(), "La variable 'nombres' n'est pas définie."
-    # La liste initiale était [3, 8, 12, 5, 10]
-    # + 15 -> [3, 8, 12, 5, 10, 15]
-    # insert 7 à 1 -> [3, 7, 8, 12, 5, 10, 15]
-    # del 3 (valeur 12) -> [3, 7, 8, 5, 10, 15]
-    assert 12 not in nombres, "L'élément 12 devrait avoir été supprimé."
-    assert nombres[3] == 5, "Le nouvel élément à l'indice 3 devrait être 5."
+    assert nombres == [3, 7, 8, 5, 10, 15], "Après suppression de l'indice 3, nombres doit valoir [3, 7, 8, 5, 10, 15]."
+    assert "[3, 7, 8, 5, 10, 15]" in SORTIE, "Le programme doit afficher la liste mise à jour."
     ```
     </Verification>
   </ExerciseSection>
@@ -324,6 +359,12 @@ audience: public
   </ExerciseSection>
 
   <ExerciseSection id="exo-4-3" label="4.3 - Répétition" type="python">
+    <CodeDepart>
+    ```python
+    liste_A = ["rouge", "bleu", "vert"]
+    liste_B = ["jaune", "noir"]
+    ```
+    </CodeDepart>
     <Enonce>
     ### Exercice 4.3 : Répétition
     **Multiplier la liste `liste_A` par 2 pour obtenir une liste répétée deux fois. Afficher le résultat.**
@@ -339,9 +380,9 @@ audience: public
     </Enonce>
     <Verification>
     ```python
-    assert 'liste_A' in locals(), "La variable 'liste_A' n'est pas définie."
-    assert 'liste_A_repetee' in locals(), "La variable 'liste_A_repetee' n'est pas définie."
-    assert liste_A_repetee == ["rouge", "bleu", "vert", "rouge", "bleu", "vert"], "La liste répétée est incorrecte."
+    assert 'liste_A_repetee' in globals(), "La variable 'liste_A_repetee' n'est pas définie."
+    assert liste_A_repetee == ["rouge", "bleu", "vert", "rouge", "bleu", "vert"], "liste_A * 2 répète la liste deux fois."
+    assert liste_A == ["rouge", "bleu", "vert"], "liste_A ne doit pas être modifiée."
     ```
     </Verification>
   </ExerciseSection>

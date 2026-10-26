@@ -45,6 +45,11 @@ assert True, "Consignes lues."
   </ExerciseSection>
 
   <ExerciseSection id="loc-1" label="Introduction - Tableau de villes" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pd
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Tableau de villes
 
@@ -59,6 +64,18 @@ assert True, "Consignes lues."
       | Marseille | 43.2965 | 5.3698 |
 
       *Indice :* `pd.DataFrame({...})` ou une liste de dictionnaires. Pour lire une ville : `villes[villes["Ville"] == "Lyon"]`.
+
+    <Correction>
+    ```python
+    villes = pd.DataFrame({
+        "Ville": ["Paris", "Lyon", "Marseille"],
+        "Latitude": [48.8566, 45.7640, 43.2965],
+        "Longitude": [2.3522, 4.8357, 5.3698],
+    })
+    latitude_lyon = villes[villes["Ville"] == "Lyon"]["Latitude"].iloc[0]
+    print(latitude_lyon)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -79,6 +96,11 @@ assert abs(float(latitude_lyon) - float(villes_ref.loc[villes_ref["Ville"] == "L
   </ExerciseSection>
 
   <ExerciseSection id="loc-2" label="Introduction - Distance GPS" type="python">
+    <CodeDepart>
+    ```python
+    from geopy.distance import geodesic
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Distance GPS
 
@@ -98,6 +120,15 @@ assert abs(float(latitude_lyon) - float(villes_ref.loc[villes_ref["Ville"] == "L
 
       distance = geodesic((lat1, lon1), (lat2, lon2)).km
       ```
+
+    <Correction>
+    ```python
+    paris = (48.8566, 2.3522)
+    marseille = (43.2965, 5.3698)
+    distance_km = round(geodesic(paris, marseille).km, 1)
+    print(distance_km)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -114,6 +145,11 @@ assert abs(float(distance_km) - attendu) < 1.0, "Calculez la distance Paris -> M
   </ExerciseSection>
 
   <ExerciseSection id="loc-3" label="Introduction - Créer une carte" type="python">
+    <CodeDepart>
+    ```python
+    import folium
+    ```
+    </CodeDepart>
     <Enonce>
       ### Introduction <Renards n="1" /> - Créer une carte
 
@@ -124,6 +160,14 @@ assert abs(float(distance_km) - attendu) < 1.0, "Calculez la distance Paris -> M
       Vérifier que la carte est bien créée en stockant son niveau de zoom dans `zoom` (`carte.options['zoom']`).
 
       *Indice :* `import folium` puis `folium.Map(location=[...], zoom_start=...)`
+
+    <Correction>
+    ```python
+    carte = folium.Map(location=[46.5, 2.5], zoom_start=6)
+    zoom = carte.options["zoom"]
+    print(zoom)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -136,6 +180,11 @@ assert int(zoom) == 6, "Le zoom initial doit être 6."
   </ExerciseSection>
 
   <ExerciseSection id="loc-4" label="Facile - Placer des marqueurs" type="python">
+    <CodeDepart>
+    ```python
+    import folium
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Placer des marqueurs
 
@@ -149,6 +198,19 @@ assert int(zoom) == 6, "Le zoom initial doit être 6."
       Stocker la carte dans `carte` et le **nombre de marqueurs ajoutés** dans `nb_marqueurs` (compter les objets `Marker` dans `carte._children`).
 
       *Indice :* `folium.Marker([lat, lon], popup="...").add_to(carte)`
+
+    <Correction>
+    ```python
+    carte = folium.Map(location=[46.5, 2.5], zoom_start=6)
+    folium.Marker([48.8566, 2.3522], popup="Paris").add_to(carte)
+    folium.Marker([45.7640, 4.8357], popup="Lyon").add_to(carte)
+    nb_marqueurs = 0
+    for enfant in carte._children.values():
+        if isinstance(enfant, folium.Marker):
+            nb_marqueurs = nb_marqueurs + 1
+    print(nb_marqueurs)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -161,6 +223,12 @@ assert nb_marqueurs == 2, "Ajoutez exactement 2 marqueurs (Paris et Lyon)."
   </ExerciseSection>
 
   <ExerciseSection id="loc-5" label="Facile - Carte depuis un tableau" type="python">
+    <CodeDepart>
+    ```python
+    import folium
+    import pandas as pd
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Carte depuis un tableau
 
@@ -175,6 +243,24 @@ assert nb_marqueurs == 2, "Ajoutez exactement 2 marqueurs (Paris et Lyon)."
       Stocker le nombre de marqueurs dans `nb_marqueurs`.
 
       *Indice :* parcourir le DataFrame avec `for _, ligne in villes.iterrows():`
+
+    <Correction>
+    ```python
+    villes = pd.DataFrame({
+        "Ville": ["Paris", "Lyon", "Marseille"],
+        "Latitude": [48.8566, 45.7640, 43.2965],
+        "Longitude": [2.3522, 4.8357, 5.3698],
+    })
+    carte = folium.Map(location=[46.5, 2.5], zoom_start=6)
+    for _, ligne in villes.iterrows():
+        folium.Marker([ligne["Latitude"], ligne["Longitude"]], popup=ligne["Ville"]).add_to(carte)
+    nb_marqueurs = 0
+    for enfant in carte._children.values():
+        if isinstance(enfant, folium.Marker):
+            nb_marqueurs = nb_marqueurs + 1
+    print(nb_marqueurs)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -190,6 +276,17 @@ assert nb_marqueurs == 3, "Placez un marqueur par ville."
   </ExerciseSection>
 
   <ExerciseSection id="loc-6" label="Facile - Ville la plus au nord" type="python">
+    <CodeDepart>
+    ```python
+    import pandas as pd
+
+    villes = pd.DataFrame({
+        "Ville": ["Paris", "Lyon", "Marseille", "Lille"],
+        "Latitude": [48.8566, 45.7640, 43.2965, 50.6292],
+        "Longitude": [2.3522, 4.8357, 5.3698, 3.0573],
+    })
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Ville la plus au nord
 
@@ -208,6 +305,13 @@ assert nb_marqueurs == 3, "Placez un marqueur par ville."
       ```
 
       *Indice :* `villes.loc[villes["Latitude"].idxmax(), "Ville"]`
+
+    <Correction>
+    ```python
+    ville_nord = villes.loc[villes["Latitude"].idxmax(), "Ville"]
+    print(ville_nord)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python
@@ -227,6 +331,11 @@ assert ville_nord == attendu, "Trouvez la ville avec la latitude la plus élevé
   </ExerciseSection>
 
   <ExerciseSection id="loc-7" label="Facile - Exporter la carte en HTML" type="python">
+    <CodeDepart>
+    ```python
+    import folium
+    ```
+    </CodeDepart>
     <Enonce>
       ### Facile <Renards n="1" /> - Exporter la carte en HTML
 
@@ -237,6 +346,16 @@ assert ville_nord == attendu, "Trouvez la ville avec la latitude la plus élevé
       Vérifier que le HTML contient bien le mot `"Tour Eiffel"` dans une variable booléenne `contient_nom`.
 
       *Indice :* `html_carte = carte._repr_html_()` puis `"Tour Eiffel" in html_carte`
+
+    <Correction>
+    ```python
+    carte = folium.Map(location=[48.8584, 2.2945], zoom_start=15)
+    folium.Marker([48.8584, 2.2945], popup="Tour Eiffel").add_to(carte)
+    html_carte = carte._repr_html_()
+    contient_nom = "Tour Eiffel" in html_carte
+    print(contient_nom)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
 ```python

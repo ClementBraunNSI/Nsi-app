@@ -153,7 +153,7 @@ border-color: red;
 Si `.container` apparaît deux fois, compléter celle qui contient déjà `display: flex;`.
 
 <ExerciseTabs courseId="snt_chasse_espagnol_fond" courseTitle="Fond">
-  <ExerciseSection id="chasse-es-3" label="container" type="python">
+  <ExerciseSection id="chasse-es-3" label="container" type="autre">
     <Enonce>
       Ajouter le fond, la couleur du texte et la police.
 

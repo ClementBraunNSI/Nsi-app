@@ -73,16 +73,66 @@ Un **parcours en largeur** visite niveau par niveau : la racine, puis ses enfant
 <ExerciseTabs courseId="terminale_arbres" courseTitle="Exercices Arbres">
 
   <ExerciseSection id="arbre-ex-1" label="Taille et Hauteur" type="python">
+    <CodeDepart>
+    ```python
+    class Noeud:
+        def __init__(self, valeur):
+            self.valeur = valeur
+            self.gauche = None
+            self.droit = None
+    ```
+    </CodeDepart>
     <Enonce>
     ### Calculer la Taille et la Hauteur
     Écrire deux fonctions récursives :
     1.  `taille(arbre)` : Renvoie le nombre de nœuds.
     2.  `hauteur(arbre)` : Renvoie la hauteur (0 pour un arbre vide, 1 pour racine seule, etc.).
-    
+
+    <Correction>
+    ```python
+    def taille(arbre):
+        if arbre is None:
+            return 0
+        return 1 + taille(arbre.gauche) + taille(arbre.droit)
+
+    def hauteur(arbre):
+        if arbre is None:
+            return 0
+        return 1 + max(hauteur(arbre.gauche), hauteur(arbre.droit))
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    racine = Noeud(10)
+    racine.gauche = Noeud(5)
+    racine.droit = Noeud(15)
+    racine.gauche.gauche = Noeud(2)
+    racine.gauche.gauche.droit = Noeud(3)
+    assert taille(None) == 0, "L'arbre vide a une taille de 0."
+    assert hauteur(None) == 0, "L'arbre vide a une hauteur de 0."
+    assert taille(Noeud(1)) == 1, "Une racine seule a une taille de 1."
+    assert hauteur(Noeud(1)) == 1, "Une racine seule a une hauteur de 1."
+    assert taille(racine) == 5, "L'arbre de test a 5 nœuds."
+    assert hauteur(racine) == 4, "L'arbre de test a une hauteur de 4 (10, 5, 2, 3)."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="arbre-ex-2" label="Parcours Infixe" type="python">
+    <CodeDepart>
+    ```python
+    class Noeud:
+        def __init__(self, valeur):
+            self.valeur = valeur
+            self.gauche = None
+            self.droit = None
+
+    racine = Noeud(10)
+    racine.gauche = Noeud(5)
+    racine.droit = Noeud(15)
+    ```
+    </CodeDepart>
     <Enonce>
     ### Affichage Infixe
     Écrire une fonction récursive `afficher_infixe(noeud)` qui affiche les valeurs de l'arbre dans l'ordre infixe (Gauche - Racine - Droite).
@@ -94,8 +144,39 @@ Un **parcours en largeur** visite niveau par niveau : la racine, puis ses enfant
         5    15
     ```
     Cela devrait afficher : `5 10 15`
-    
+
+    <Correction>
+    ```python
+    def afficher_infixe(noeud):
+        if noeud is not None:
+            afficher_infixe(noeud.gauche)
+            print(noeud.valeur, end=" ")
+            afficher_infixe(noeud.droit)
+
+    afficher_infixe(racine)
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    import io, contextlib
+    def __sortie(arbre):
+        tampon = io.StringIO()
+        with contextlib.redirect_stdout(tampon):
+            afficher_infixe(arbre)
+        return tampon.getvalue().split()
+    petit = Noeud(10)
+    petit.gauche = Noeud(5)
+    petit.droit = Noeud(15)
+    assert __sortie(petit) == ["5", "10", "15"], "L'arbre 10 / 5 / 15 doit afficher 5 10 15."
+    grand = Noeud(8)
+    grand.gauche = Noeud(3)
+    grand.gauche.droit = Noeud(6)
+    grand.droit = Noeud(12)
+    assert __sortie(grand) == ["3", "6", "8", "12"], "Ordre infixe : sous-arbre gauche, racine, sous-arbre droit."
+    assert __sortie(None) == [], "L'arbre vide n'affiche rien."
+    ```
+    </Verification>
   </ExerciseSection>
 
 </ExerciseTabs>

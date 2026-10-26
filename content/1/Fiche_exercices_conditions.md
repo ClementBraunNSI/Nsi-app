@@ -35,16 +35,26 @@ audience: public
       - Affiche "Vous êtes mineur" sinon
 
       *Pour la vérification, stocker l'âge saisi dans une variable `age` et le message affiché dans une variable `message`.*
+
+    <Correction>
+    ```python
+    age = int(input("Âge : "))
+    if age >= 18:
+        message = "Vous êtes majeur"
+    else:
+        message = "Vous êtes mineur"
+    print(message)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'age' in locals(), "La variable 'age' n'est pas définie."
-assert 'message' in locals(), "La variable 'message' n'est pas définie."
-if age >= 18:
-    assert "majeur" in message.lower(), f"Pour age={age}, le message doit contenir 'majeur'."
-else:
-    assert "mineur" in message.lower(), f"Pour age={age}, le message doit contenir 'mineur'."
-```
+    ```python
+    ENTREES = ["18"]
+    assert age == 18 and message == "Vous êtes majeur", "18 ans : Vous êtes majeur."
+    assert "Vous êtes majeur" in SORTIE, "Le programme affiche le message."
+    variables, sortie = relancer(["17"])
+    assert variables["message"] == "Vous êtes mineur" and "Vous êtes mineur" in sortie, "17 ans : Vous êtes mineur."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -58,18 +68,30 @@ else:
       - Affiche si le nombre est positif, négatif ou nul
 
       *Pour la vérification, stocker le nombre dans `n` et le message affiché dans `message`.*
+
+    <Correction>
+    ```python
+    n = float(input("Nombre : "))
+    if n > 0:
+        message = "positif"
+    elif n < 0:
+        message = "négatif"
+    else:
+        message = "nul"
+    print(message)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'n' in locals(), "La variable 'n' n'est pas définie."
-assert 'message' in locals(), "La variable 'message' n'est pas définie."
-if n > 0:
-    assert "positif" in message.lower(), f"Pour n={n}, le message doit indiquer positif."
-elif n < 0:
-    assert "négatif" in message.lower(), f"Pour n={n}, le message doit indiquer négatif."
-else:
-    assert "nul" in message.lower(), f"Pour n={n}, le message doit indiquer nul."
-```
+    ```python
+    ENTREES = ["5"]
+    assert n == 5 and "positif" in message, "5 est positif."
+    variables, sortie = relancer(["-2"])
+    assert "négatif" in variables["message"] or "negatif" in variables["message"], "-2 est négatif."
+    variables, sortie = relancer(["0"])
+    assert "nul" in variables["message"], "0 est nul."
+    assert "nul" in sortie, "Le programme affiche le message."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -83,13 +105,32 @@ else:
       - Affiche lequel est le plus grand (ou s'ils sont égaux)
 
       *Pour la vérification, stocker les deux nombres dans `a` et `b`, et stocker la valeur la plus grande dans une variable `maximum` (ou `a` ou `b` si égaux).*
+
+    <Correction>
+    ```python
+    a = float(input("Premier nombre : "))
+    b = float(input("Deuxième nombre : "))
+    if a > b:
+        maximum = a
+        print(a, "est le plus grand")
+    elif b > a:
+        maximum = b
+        print(b, "est le plus grand")
+    else:
+        maximum = a
+        print("Les deux nombres sont égaux")
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'a' in locals() and 'b' in locals(), "Les variables 'a' et 'b' doivent être définies."
-assert 'maximum' in locals(), "La variable 'maximum' n'est pas définie."
-assert maximum == max(a, b), f"Le maximum entre {a} et {b} devrait être {max(a, b)}."
-```
+    ```python
+    ENTREES = ["3", "8"]
+    assert a == 3 and b == 8 and maximum == 8, "Pour 3 et 8, maximum vaut 8."
+    variables, sortie = relancer(["9", "2"])
+    assert variables["maximum"] == 9, "Pour 9 et 2, maximum vaut 9."
+    variables, sortie = relancer(["4", "4"])
+    assert variables["maximum"] == 4 and ("égaux" in sortie or "egaux" in sortie), "Pour 4 et 4, afficher qu'ils sont égaux."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -104,16 +145,26 @@ assert maximum == max(a, b), f"Le maximum entre {a} et {b} devrait être {max(a,
       - Affiche "Accès refusé" sinon
 
       *Pour la vérification, stocker le mot de passe entré dans `mdp` et le message final dans `message`.*
+
+    <Correction>
+    ```python
+    mdp = input("Mot de passe : ")
+    if mdp == "secret123":
+        message = "Accès autorisé"
+    else:
+        message = "Accès refusé"
+    print(message)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'mdp' in locals(), "La variable 'mdp' n'est pas définie."
-assert 'message' in locals(), "La variable 'message' n'est pas définie."
-if mdp == "secret123":
-    assert "autorisé" in message.lower(), "Le message doit indiquer 'Accès autorisé'."
-else:
-    assert "refusé" in message.lower(), "Le message doit indiquer 'Accès refusé'."
-```
+    ```python
+    ENTREES = ["secret123"]
+    assert mdp == "secret123" and message == "Accès autorisé", "Le bon mot de passe : Accès autorisé."
+    assert "Accès autorisé" in SORTIE, "Le programme affiche le message."
+    variables, sortie = relancer(["Secret123"])
+    assert variables["message"] == "Accès refusé", "Un autre mot de passe (même à une majuscule près) : Accès refusé."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -129,16 +180,27 @@ else:
       *Astuce : Un nombre est pair si le reste de sa division par 2 est égal à 0. En Python, on utilise l'opérateur `%` pour obtenir le reste d'une division.*
 
       *Pour la vérification, stocker le nombre dans `n` et le message dans `message`.*
+
+    <Correction>
+    ```python
+    n = int(input("Nombre entier : "))
+    if n % 2 == 0:
+        message = "pair"
+    else:
+        message = "impair"
+    print(message)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'n' in locals(), "La variable 'n' n'est pas définie."
-assert 'message' in locals(), "La variable 'message' n'est pas définie."
-if n % 2 == 0:
-    assert "pair" in message.lower() and "impair" not in message.lower(), f"{n} est pair."
-else:
-    assert "impair" in message.lower(), f"{n} est impair."
-```
+    ```python
+    ENTREES = ["8"]
+    assert n == 8 and "pair" in message and "impair" not in message, "8 est pair."
+    variables, sortie = relancer(["7"])
+    assert "impair" in variables["message"], "7 est impair."
+    variables, sortie = relancer(["0"])
+    assert "impair" not in variables["message"], "0 est pair."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -148,33 +210,46 @@ else:
 
       **Écrire un programme qui :**
 
-      - Demande deux nombres et une opération (+, -, *, /)
+      - Demande deux nombres, puis une opération (+, -, *, /)
       - Affiche le résultat de l'opération
       - Gère le cas de la division par zéro
 
       ## <Icone nom="star" /> Niveau Facile
 
       *Pour la vérification, stocker les deux nombres dans `a` et `b`, l'opération dans `op` (chaine de caractères) et le résultat calculé dans `resultat`. En cas d'erreur (division par zéro), `resultat` peut valoir `None` ou un message d'erreur.*
+
+    <Correction>
+    ```python
+    a = float(input("Premier nombre : "))
+    b = float(input("Deuxième nombre : "))
+    op = input("Opération (+, -, *, /) : ")
+    if op == "+":
+        resultat = a + b
+    elif op == "-":
+        resultat = a - b
+    elif op == "*":
+        resultat = a * b
+    elif op == "/":
+        if b == 0:
+            resultat = None
+            print("Division par zéro impossible")
+        else:
+            resultat = a / b
+    print(resultat)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'a' in locals() and 'b' in locals(), "Variables 'a' et 'b' requises."
-assert 'op' in locals(), "Variable 'op' requise."
-assert 'resultat' in locals(), "Variable 'resultat' requise."
-
-if op == '+':
-    assert resultat == a + b
-elif op == '-':
-    assert resultat == a - b
-elif op == '*':
-    assert resultat == a * b
-elif op == '/':
-    if b != 0:
-        assert abs(resultat - (a / b)) < 0.0001
-    else:
-        # Just check that it didn't crash and maybe handled it
-        pass
-```
+    ```python
+    ENTREES = ["6", "7", "*"]
+    assert a == 6 and b == 7 and op == "*", "Saisies dans l'ordre : a, b, puis l'opération."
+    assert resultat == 42, "6 * 7 = 42."
+    for saisies, attendu in ((["9", "4", "+"], 13), (["9", "4", "-"], 5), (["9", "4", "/"], 2.25)):
+        variables, sortie = relancer(saisies)
+        assert variables["resultat"] == attendu, saisies[0] + " " + saisies[2] + " " + saisies[1] + " = " + str(attendu) + "."
+    variables, sortie = relancer(["5", "0", "/"])
+    assert variables["resultat"] is None or isinstance(variables["resultat"], str), "Division par zéro : resultat vaut None ou un message, sans planter."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -193,18 +268,32 @@ elif op == '/':
         - Note < 10 : "Insuffisant"
 
       *Pour la vérification, stocker la note dans `note` et la mention dans `mention`.*
+
+    <Correction>
+    ```python
+    note = float(input("Note sur 20 : "))
+    if note >= 16:
+        mention = "Très bien"
+    elif note >= 14:
+        mention = "Bien"
+    elif note >= 12:
+        mention = "Assez bien"
+    elif note >= 10:
+        mention = "Passable"
+    else:
+        mention = "Insuffisant"
+    print(mention)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'note' in locals(), "La variable 'note' n'est pas définie."
-assert 'mention' in locals(), "La variable 'mention' n'est pas définie."
-m = mention.lower()
-if note >= 16: assert "très bien" in m
-elif note >= 14: assert "bien" in m and "très" not in m and "assez" not in m
-elif note >= 12: assert "assez bien" in m
-elif note >= 10: assert "passable" in m
-else: assert "insuffisant" in m
-```
+    ```python
+    ENTREES = ["17"]
+    assert note == 17 and mention == "Très bien", "17 : Très bien."
+    for saisie, attendu in (("16", "Très bien"), ("15", "Bien"), ("14", "Bien"), ("12", "Assez bien"), ("10", "Passable"), ("9.5", "Insuffisant")):
+        variables, sortie = relancer([saisie])
+        assert variables["mention"] == attendu and attendu in sortie, saisie + " : " + attendu + "."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -222,17 +311,30 @@ else: assert "insuffisant" in m
         - Plus de 25°C : "T-shirt recommandé"
 
       *Pour la vérification, stocker la température dans `temp` et le conseil dans `conseil`.*
+
+    <Correction>
+    ```python
+    temp = float(input("Température : "))
+    if temp < 0:
+        conseil = "Porter un manteau d'hiver"
+    elif temp <= 15:
+        conseil = "Porter une veste"
+    elif temp <= 25:
+        conseil = "Un pull suffit"
+    else:
+        conseil = "T-shirt recommandé"
+    print(conseil)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'temp' in locals(), "La variable 'temp' n'est pas définie."
-assert 'conseil' in locals(), "La variable 'conseil' n'est pas définie."
-c = conseil.lower()
-if temp < 0: assert "manteau" in c or "hiver" in c
-elif 0 <= temp <= 15: assert "veste" in c
-elif 16 <= temp <= 25: assert "pull" in c
-else: assert "t-shirt" in c
-```
+    ```python
+    ENTREES = ["-5"]
+    assert temp == -5 and conseil == "Porter un manteau d'hiver", "-5 °C : Porter un manteau d'hiver."
+    for saisie, attendu in (("0", "Porter une veste"), ("15", "Porter une veste"), ("16", "Un pull suffit"), ("25", "Un pull suffit"), ("30", "T-shirt recommandé")):
+        variables, sortie = relancer([saisie])
+        assert variables["conseil"] == attendu, saisie + " °C : " + attendu + "."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -247,18 +349,28 @@ else: assert "t-shirt" in c
       - Considère février avec 28 jours
 
       *Pour la vérification, stocker le numéro du mois dans `mois` et le nombre de jours dans `jours`.*
+
+    <Correction>
+    ```python
+    mois = int(input("Numéro du mois : "))
+    if mois == 2:
+        jours = 28
+    elif mois == 4 or mois == 6 or mois == 9 or mois == 11:
+        jours = 30
+    else:
+        jours = 31
+    print(jours)
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'mois' in locals(), "La variable 'mois' n'est pas définie."
-assert 'jours' in locals(), "La variable 'jours' n'est pas définie."
-if mois == 2:
-    assert jours == 28
-elif mois in [4, 6, 9, 11]:
-    assert jours == 30
-else:
-    assert jours == 31
-```
+    ```python
+    ENTREES = ["2"]
+    assert mois == 2 and jours == 28, "Février : 28 jours."
+    for saisie, attendu in (("1", 31), ("4", 30), ("6", 30), ("7", 31), ("8", 31), ("9", 30), ("11", 30), ("12", 31)):
+        variables, sortie = relancer([saisie])
+        assert variables["jours"] == attendu, "Mois " + saisie + " : " + str(attendu) + " jours."
+    ```
     </Verification>
   </ExerciseSection>
 
@@ -272,14 +384,29 @@ else:
       - Vérifie si on peut former un triangle avec ces longueurs
 
       *Pour la vérification, stocker les trois longueurs dans `a`, `b`, `c` et une variable booléenne `possible` (True si possible, False sinon).*
+
+    <Correction>
+    ```python
+    a = float(input("Longueur a : "))
+    b = float(input("Longueur b : "))
+    c = float(input("Longueur c : "))
+    possible = a < b + c and b < a + c and c < a + b
+    if possible:
+        print("Triangle possible")
+    else:
+        print("Triangle impossible")
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'a' in locals() and 'b' in locals() and 'c' in locals(), "Variables a, b, c requises."
-assert 'possible' in locals(), "Variable 'possible' requise."
-correct = (a < b + c) and (b < a + c) and (c < a + b)
-assert possible == correct, f"Pour {a}, {b}, {c}, le résultat devrait être {correct}."
-```
+    ```python
+    ENTREES = ["3", "4", "5"]
+    assert (a, b, c) == (3, 4, 5) and possible is True, "3, 4, 5 forment un triangle."
+    variables, sortie = relancer(["1", "2", "10"])
+    assert variables["possible"] is False, "1, 2, 10 ne forment pas de triangle."
+    variables, sortie = relancer(["10", "2", "3"])
+    assert variables["possible"] is False, "10, 2, 3 ne forment pas de triangle : chaque côté doit être plus petit que la somme des deux autres."
+    ```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

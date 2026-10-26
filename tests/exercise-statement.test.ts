@@ -2,6 +2,25 @@ import { describe, expect, it } from 'vitest';
 import { splitStatement } from '../lib/exercise-statement';
 
 describe('exercise statement sections', () => {
+  it('drops site components and MDX comments that the IDE markdown cannot render, but keeps code', () => {
+    const parts = splitStatement(
+      [
+        '### Facile <Renards n="1" /> - Calcul de périmètre',
+        '',
+        '**Écrire un programme** <Icone nom="star" /> qui calcule le périmètre.',
+        '{/* note pour la fiche */}',
+        '<SortingVisualizer algorithm="selection" />',
+        '```python',
+        'html = "<Balise />"',
+        '```',
+      ].join('\n'),
+      'Facile - Calcul de périmètre',
+    );
+    expect(parts.enonce).not.toMatch(/Renards|Icone|SortingVisualizer|note pour la fiche/);
+    expect(parts.enonce).toContain('**Écrire un programme** qui calcule le périmètre.');
+    expect(parts.enonce).toContain('html = "<Balise />"');
+  });
+
   it('keeps the task and does not invent consignes, hints, examples, or the solution', () => {
     const parts = splitStatement(
       [

@@ -28,7 +28,7 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
 `taux` vaut 2 quand chaque personne informée en informe deux nouvelles.
 
 <ExerciseTabs courseId="premiere_projet_virus" courseTitle="Simulation Rumeur">
-  <ExerciseSection id="proj-virus-1" label="Le plafond" type="lecture">
+  <ExerciseSection id="proj-virus-1" label="Le plafond" type="python">
     <Enonce>
       Écrire `nouveaux_cas(infectes, taux)` et `plafonner(infectes, population)`.
 
@@ -41,10 +41,42 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
       ```
 
       `nouveaux_cas(27, 2)` renvoie `54`. `plafonner(81, 30)` renvoie `30`. `plafonner(27, 30)` renvoie `27`. On peut utiliser `min`, ou un `if`.
+
+    <Correction>
+    ```python
+    def nouveaux_cas(infectes, taux):
+        return infectes * taux
+
+    def plafonner(infectes, population):
+        if infectes > population:
+            return population
+        return infectes
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert nouveaux_cas(27, 2) == 54, "nouveaux_cas(27, 2) renvoie 54."
+    assert nouveaux_cas(3, 0.5) == 1.5, "nouveaux_cas(3, 0.5) renvoie 1.5."
+    assert plafonner(81, 30) == 30, "plafonner(81, 30) renvoie 30."
+    assert plafonner(27, 30) == 27, "plafonner(27, 30) renvoie 27."
+    assert plafonner(30, 30) == 30, "plafonner(30, 30) renvoie 30."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="proj-virus-2" label="La boucle" type="python">
+    <CodeDepart>
+    ```python
+    def nouveaux_cas(infectes, taux):
+        return infectes * taux
+
+    def plafonner(infectes, population):
+        if infectes > population:
+            return population
+        return infectes
+    ```
+    </CodeDepart>
     <Enonce>
       Écrire `simuler(population, taux)`. Elle affiche chaque jour et renvoie le nombre de jours écoulés.
 
@@ -77,17 +109,95 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
       Jour 0 : 1 / 1
       Toute la population est touchée en 0 jour(s).
       ```
+
+    <Correction>
+    ```python
+    def simuler(population, taux):
+        jours = 0
+        infectes = 1
+        print("Jour", jours, ":", infectes, "/", population)
+        while infectes < population:
+            infectes = plafonner(infectes + nouveaux_cas(infectes, taux), population)
+            jours = jours + 1
+            print("Jour", jours, ":", infectes, "/", population)
+        print("Toute la population est touchée en", jours, "jour(s).")
+        return jours
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    import io, contextlib
+    def _sortie(fonction, *arguments):
+        tampon = io.StringIO()
+        with contextlib.redirect_stdout(tampon):
+            valeur = fonction(*arguments)
+        return valeur, tampon.getvalue()
+    valeur, texte = _sortie(simuler, 30, 2)
+    assert valeur == 4, "simuler(30, 2) renvoie 4."
+    lignes = [" ".join(l.split()) for l in texte.strip().splitlines()]
+    assert lignes == ["Jour 0 : 1 / 30", "Jour 1 : 3 / 30", "Jour 2 : 9 / 30", "Jour 3 : 27 / 30", "Jour 4 : 30 / 30", "Toute la population est touchée en 4 jour(s)."], "Les six lignes de l'exemple population 30, taux 2."
+    valeur, _ = _sortie(simuler, 8, 1)
+    assert valeur == 3, "simuler(8, 1) renvoie 3."
+    valeur, texte = _sortie(simuler, 1, 2)
+    assert valeur == 0, "simuler(1, 2) renvoie 0 : la boucle ne tourne pas."
+    assert [" ".join(l.split()) for l in texte.strip().splitlines()] == ["Jour 0 : 1 / 1", "Toute la population est touchée en 0 jour(s)."], "Population 1 : deux lignes."
+    ```
+    </Verification>
   </ExerciseSection>
 
   <ExerciseSection id="proj-virus-3" label="La saisie" type="python">
+    <CodeDepart>
+    ```python
+    def nouveaux_cas(infectes, taux):
+        return infectes * taux
+
+    def plafonner(infectes, population):
+        if infectes > population:
+            return population
+        return infectes
+
+    def simuler(population, taux):
+        jours = 0
+        infectes = 1
+        print("Jour", jours, ":", infectes, "/", population)
+        while infectes < population:
+            infectes = plafonner(infectes + nouveaux_cas(infectes, taux), population)
+            jours = jours + 1
+            print("Jour", jours, ":", infectes, "/", population)
+        print("Toute la population est touchée en", jours, "jour(s).")
+        return jours
+    ```
+    </CodeDepart>
     <Enonce>
       Écrire le programme principal du fichier `rumeur.py`.
 
       1. Demander `Population totale : `. `input` renvoie un texte : le convertir en `int`. Reposer la question tant que la valeur est inférieure à 1.
       2. Demander `Taux de propagation : `. Le convertir en `float`. Reposer la question tant que la valeur est inférieure ou égale à 0. Un taux nul figerait la boucle : le programme ne doit pas l'accepter.
       3. Appeler `simuler` avec ces deux valeurs.
+
+    <Correction>
+    ```python
+    population = int(input("Population totale : "))
+    while population < 1:
+        population = int(input("Population totale : "))
+    taux = float(input("Taux de propagation : "))
+    while taux <= 0:
+        taux = float(input("Taux de propagation : "))
+    simuler(population, taux)
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    ENTREES = ["0", "30", "0", "-1", "2"]
+    assert population == 30, "Une population inférieure à 1 est redemandée."
+    assert taux == 2.0, "Un taux nul ou négatif est redemandé ; le taux est un float."
+    assert "Toute la population est touchée en 4 jour(s)." in " ".join(SORTIE.split()), "Population 30, taux 2 : touchée en 4 jour(s)."
+    variables, sortie = relancer(["8", "1"])
+    assert "en 3 jour(s)" in " ".join(sortie.split()), "Population 8, taux 1 : 3 jour(s)."
+    ```
+    </Verification>
   </ExerciseSection>
 </ExerciseTabs>
 

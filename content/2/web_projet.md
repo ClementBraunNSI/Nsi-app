@@ -46,7 +46,7 @@ Les extensions peuvent être `.png` si les fichiers le sont, à condition que le
 Blocs HTML, dans cet ordre : un titre de page, une section « Le tableau original », une section « La version renard », une section « L'histoire ».
 
 <ExerciseTabs courseId="premiere_projet" courseTitle="Tableau et renards">
-  <ExerciseSection id="web-projet-1" label="La page" type="python">
+  <ExerciseSection id="web-projet-1" label="La page" type="autre">
     <Enonce>
       Créer l'arborescence du sujet. `index.html` contient un titre `h1`, trois sections avec des `h2` (« Le tableau original », « La version renard », « L'histoire »), et les textes aux longueurs indiquées.
 
@@ -141,7 +141,7 @@ boutonHistoire.addEventListener("click", function () {
 ```
 
 <ExerciseTabs courseId="premiere_projet" courseTitle="Interaction">
-  <ExerciseSection id="web-projet-3" label="L'interaction" type="python">
+  <ExerciseSection id="web-projet-3" label="L'interaction" type="autre">
     <Enonce>
       Dans `script.js`, le bouton d'image alterne les deux sources et les deux `alt`, et son texte alterne `Voir la version renard` et `Voir l'original`.
 

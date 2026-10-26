@@ -40,8 +40,32 @@ La recherche dichotomique vue en Première est du même esprit, avec une économ
     `L1 = [1, 3, 5, 7]` et `L2 = [2, 4, 6, 8]`
     
     Écrire une fonction `fusion(l1, l2)` qui renvoie une seule liste triée `[1, 2, 3, 4, 5, 6, 7, 8]` en parcourant les listes une seule fois.
-    
+
+    <Correction>
+    ```python
+    def fusion(l1, l2):
+        resultat = []
+        i, j = 0, 0
+        while i < len(l1) and j < len(l2):
+            if l1[i] <= l2[j]:
+                resultat.append(l1[i])
+                i += 1
+            else:
+                resultat.append(l2[j])
+                j += 1
+        return resultat + l1[i:] + l2[j:]
+    ```
+    </Correction>
     </Enonce>
+    <Verification>
+    ```python
+    assert fusion([1, 3, 5, 7], [2, 4, 6, 8]) == [1, 2, 3, 4, 5, 6, 7, 8], "fusion([1, 3, 5, 7], [2, 4, 6, 8]) doit renvoyer [1, 2, 3, 4, 5, 6, 7, 8]."
+    assert fusion([], [1, 2]) == [1, 2], "Une liste vide : on renvoie l'autre liste."
+    assert fusion([1, 2, 9], []) == [1, 2, 9], "Une liste vide : on renvoie l'autre liste."
+    assert fusion([1, 4, 4], [2, 4]) == [1, 2, 4, 4, 4], "Les doublons sont gardés."
+    assert fusion([5, 6, 7], [1, 2]) == [1, 2, 5, 6, 7], "Les éléments restants de la plus longue liste sont ajoutés à la fin."
+    ```
+    </Verification>
   </ExerciseSection>
 
 </ExerciseTabs>

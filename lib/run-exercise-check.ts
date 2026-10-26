@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
   CHECK_UNAVAILABLE,
+  finalizeReport,
   parsePythonCheckResult,
   reportForClient,
   reportFromQuery,
@@ -12,6 +13,7 @@ import {
   type RunReport,
 } from './python-check';
 import { PYTHON_CHECK_RUNNER } from './python-check-runner';
+import { compareSql, formatSqlResult, type SqlDatabaseLike } from './sql-compare';
 
 const require = createRequire(import.meta.url);
 const MAX_OUTPUT = 2_000_000;
@@ -104,13 +106,8 @@ export async function runPythonCheck(userCode: string, verification: string, pac
   }
 }
 
-type SqlDatabase = {
-  exec: (sql: string) => { columns: string[]; values: unknown[][] }[];
-  close: () => void;
-};
-
 type SqlModule = {
-  Database: new () => SqlDatabase;
+  Database: new () => SqlDatabaseLike;
 };
 
 let sqlModule: Promise<SqlModule> | null = null;
@@ -123,27 +120,22 @@ function loadSql(): Promise<SqlModule> {
   return sqlModule;
 }
 
-export async function runSqlCheck(userCode: string, verification: string): Promise<RunReport> {
-  let db: SqlDatabase | null = null;
+export async function runSqlCheck(userCode: string, verification: string, setup = ''): Promise<RunReport> {
   try {
     const SQL = await loadSql();
-    db = new SQL.Database();
-    try {
-      db.exec(userCode);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '';
-      return reportForClient(reportFromQuery({ phase: 'student-error', message }));
+    const outcome = compareSql(() => new SQL.Database(), setup, userCode, verification);
+    if (outcome.phase === 'student-error') {
+      return reportForClient(reportFromQuery({ phase: 'student-error', message: outcome.message }));
     }
-    try {
-      db.exec(verification);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '';
-      return reportForClient(reportFromQuery({ phase: 'verification-error', message }));
+    if (outcome.phase === 'reference-error') {
+      return reportForClient(reportFromQuery({ phase: 'verification-error', message: outcome.message }));
     }
-    return reportForClient(reportFromQuery({ phase: 'verified' }));
+    return reportForClient(finalizeReport({
+      status: 'success',
+      tests: outcome.tests,
+      stdout: outcome.result ? formatSqlResult(outcome.result) : '',
+    }));
   } catch {
     return unexpectedRunReport(UNAVAILABLE);
-  } finally {
-    db?.close();
   }
 }

@@ -1,10 +1,14 @@
 export type ColleagueTag = "SNT" | "Première" | "Terminale" | "Outils" | "Bac";
 
+/** Coin de la carte où se trouve le terrier : là où le site est le plus fort, choisi à la main. */
+export type ColleagueTerritory = "SNT" | "Première" | "Terminale" | "Bac";
+
 export type Colleague = {
   name: string;
   site: string;
   phrase: string;
   tags: ColleagueTag[];
+  territory: ColleagueTerritory;
 };
 
 export const COLLEAGUES: Colleague[] = [
@@ -14,6 +18,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Parcours de Seconde SNT, Première et Terminale NSI, du web et de Python jusqu'aux graphes et aux bases de données.",
     tags: ["Première", "Terminale"],
+    territory: "Première",
   },
   {
     name: "Erwan Demerville",
@@ -21,6 +26,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Cours, exercices et sujets de bac de Première et Terminale NSI, avec Python, piles, files et un projet de jeu en Pyxel.",
     tags: ["Première", "Terminale", "Bac"],
+    territory: "Bac",
   },
   {
     name: "Stéphane Ramstein",
@@ -28,6 +34,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Un portail pour la spécialité NSI : programmes, logiciels, sujets du bac, concours et orientation vers les études d'informatique.",
     tags: ["Première", "Terminale", "Outils", "Bac"],
+    territory: "Bac",
   },
   {
     name: "Mathieu Marchand",
@@ -35,6 +42,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Cours de Première et de Terminale NSI, projets en Flask, en images et en jeux, et une page d'outils de développement.",
     tags: ["Première", "Terminale", "Outils"],
+    territory: "Première",
   },
   {
     name: "Nicolas Leal",
@@ -42,6 +50,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Cours et activités de Seconde SNT, Première et Terminale NSI, des objets numériques aux algorithmes et aux bases de données.",
     tags: ["SNT", "Première", "Terminale"],
+    territory: "SNT",
   },
   {
     name: "Théo Quertier",
@@ -49,6 +58,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Cours de SNT et de NSI, de la Seconde à la Terminale, autour des réseaux, des données et de la programmation.",
     tags: ["SNT", "Première", "Terminale"],
+    territory: "SNT",
   },
   {
     name: "Mathieu Cardoso",
@@ -56,6 +66,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Sommaire de cours de Seconde SNT, Première et Terminale NSI, avec exercices, liens d'entraînement et un club informatique.",
     tags: ["SNT", "Première", "Terminale"],
+    territory: "SNT",
   },
   {
     name: "Nicolas Mathieu",
@@ -63,6 +74,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Cours de Seconde, Première et Terminale, fiches mémo et modules interactifs sur le binaire, les tris et les structures de données.",
     tags: ["Première", "Terminale"],
+    territory: "Première",
   },
   {
     name: "Timothé Vanoverberghe",
@@ -70,6 +82,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Cours de Terminale NSI, de la programmation objet aux graphes, et une banque de sujets d'épreuve pratique corrigés.",
     tags: ["Terminale", "Bac"],
+    territory: "Terminale",
   },
   {
     name: "Perrine Clabau",
@@ -77,6 +90,7 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Cours de Première NSI en Python, des fonctions aux boucles, et parcours SNT sur le web, Internet et la photographie.",
     tags: ["Première", "SNT"],
+    territory: "SNT",
   },
   {
     name: "Corentin Dupont",
@@ -84,15 +98,16 @@ export const COLLEAGUES: Colleague[] = [
     phrase:
       "Cours de Seconde SNT, Première et Terminale NSI, du web et des réseaux jusqu'aux épreuves du bac et au Grand Oral.",
     tags: ["Première", "SNT", "Terminale"],
+    territory: "Bac",
   },
   {
     name: "Florian Mathieu",
-    site: "https://florianmathieu.prof/ ",
+    site: "https://florianmathieu.prof/",
     phrase:
-      "Outils d'apprentissage pour créer son sujet de bac, de veille informatique et cours de la seconde à la Terminale NSI. ",
+      "Outils d'apprentissage pour créer son sujet de bac, de veille informatique et cours de la seconde à la Terminale NSI.",
     tags: ["Première", "SNT", "Terminale"],
-  }
-  
+    territory: "Terminale",
+  },
 ];
 
 export const COLLEAGUE_TAG_ORDER: ColleagueTag[] = [

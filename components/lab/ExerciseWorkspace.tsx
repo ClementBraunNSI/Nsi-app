@@ -53,9 +53,10 @@ function consoleFromReport(report: RunReport, emptyLine: string): ConsoleState {
 }
 
 export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; nav: ExerciseSheetNav | null }) {
-  const [code, setCodeState] = useState('');
+  const starter = exercise.starterCode ?? '';
+  const [code, setCodeState] = useState(starter);
   // Le raccourci clavier peut partir avant le rendu qui suit la frappe : on lit toujours le dernier texte saisi.
-  const codeRef = useRef('');
+  const codeRef = useRef(starter);
   const setCode = (value: string) => {
     codeRef.current = value;
     setCodeState(value);
@@ -73,7 +74,6 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
   // Tablette et téléphone en paysage : l'énoncé se replie pour laisser toute la place au code.
   const [statementOpen, setStatementOpen] = useState(true);
   const portraitPhone = usePortraitPhone();
-  const [sqlDb, setSqlDb] = useState<any>(null);
   const [sqlJs, setSqlJs] = useState<any>(null);
   const pyodideRef = useRef<any>(null);
   const pendingQueueRef = useRef<Achievement[]>([]);
@@ -109,7 +109,6 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
         const initSqlJs = (await import('sql.js')).default;
         const SQL = await initSqlJs({ locateFile: (file: string) => `/sql/${file}` });
         setSqlJs(SQL);
-        setSqlDb(new SQL.Database());
       } catch (error) {
         console.error('Erreur lors du chargement de sql.js:', error);
       }
@@ -130,16 +129,24 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
   }, [exercise.id]);
 
   useEffect(() => {
-    setCode('');
+    setCode(starter);
     setSqlResults(null);
     setReport(null);
     setStatusLine(null);
     setConsoleState(IDLE_CONSOLE);
     setTab('console');
-    if (exercise.type === 'sql' && sqlJs) {
-      setSqlDb(new sqlJs.Database());
+  }, [exercise.id, starter]);
+
+  /** Chaque exécution part d'une copie neuve de la base de départ, comme la vérification. */
+  const runSql = () => {
+    const db = new sqlJs.Database();
+    try {
+      if (exercise.sqlSetup) db.exec(exercise.sqlSetup);
+      return db.exec(codeRef.current) as { columns: string[]; values: any[][] }[];
+    } finally {
+      db.close();
     }
-  }, [exercise.id, exercise.type, sqlJs]);
+  };
 
   const presentCheck = (outcome: ExerciseCheckResult) => {
     const next = outcome.report;
@@ -195,13 +202,13 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     setStatusLine(exercise.type === 'sql' ? 'Exécution de la requête SQL' : 'Exécution du programme');
     try {
       if (exercise.type === 'sql') {
-        if (!sqlDb) {
+        if (!sqlJs) {
           setConsoleState(consoleFromReport(unexpectedRunReport('Base de données non initialisée'), emptyLine));
           return;
         }
         setSqlResults(null);
         try {
-          const results = sqlDb.exec(codeRef.current);
+          const results = runSql();
           if (results.length > 0) {
             const lastResult = results[results.length - 1];
             setSqlResults({ columns: lastResult.columns, values: lastResult.values });
@@ -229,10 +236,10 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     setReport(null);
     setStatusLine(exercise.type === 'sql' ? 'Vérification de la requête' : 'Vérification en cours');
     try {
-      if (exercise.type === 'sql' && sqlDb) {
+      if (exercise.type === 'sql' && sqlJs) {
         setSqlResults(null);
         try {
-          const results = sqlDb.exec(codeRef.current);
+          const results = runSql();
           if (results.length > 0) {
             const lastResult = results[results.length - 1];
             setSqlResults({ columns: lastResult.columns, values: lastResult.values });
@@ -393,7 +400,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
             code={code}
             busy={running !== null}
             onCodeChange={setCode}
-            onReset={() => setCode('')}
+            onReset={() => setCode(starter)}
             beforeMount={handleEditorWillMount}
             barActions={
               <span className="exercise-bar-actions">

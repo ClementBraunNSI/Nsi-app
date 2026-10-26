@@ -21,7 +21,7 @@ Cette fiche propose une série d'exercices progressifs pour maîtriser les bool�
 
 <ExerciseTabs courseId="premiere_fiche_exercices_bool" courseTitle="Exercices Booléens">
 
-<ExerciseSection title="1. Comprendre les booléens" difficulty="easy" type="python">
+<ExerciseSection id="booleens-1" label="1 [Facile] - Comprendre les booléens" type="python">
 <Enonce>
 
 Quel sera le résultat de ces expressions ? `True` ou `False`.
@@ -33,9 +33,16 @@ Quel sera le résultat de ces expressions ? `True` ou `False`.
 5. `not False`
 6. `5 != 5`
 
-Compléter le code ci-dessous pour vérifier les réponses.
+Écrire un programme qui affiche le résultat de chaque expression, une ligne par expression, dans l'ordre, pour vérifier les réponses.
 
 </Enonce>
+<Verification>
+```python
+valeurs = [l.split()[-1] for l in SORTIE.strip().splitlines() if l.split()]
+assert len(valeurs) == 6, "Le programme doit afficher six lignes, une par expression."
+assert valeurs == ["True", "False", "True", "True", "True", "False"], "Les six résultats attendus : True, False, True, True, True, False."
+```
+</Verification>
 <Correction>
 
 ```python
@@ -55,21 +62,9 @@ print(f"6. {5 != 5}")
 ```
 
 </Correction>
-<Verification>
-
-```python
-assert (10 > 5) == True
-assert (7 == 9) == False
-assert (3 <= 3) == True
-assert (False != True) == True
-assert (not False) == True
-assert (5 != 5) == False
-```
-
-</Verification>
 </ExerciseSection>
 
-<ExerciseSection title="2. Comparaisons simples" difficulty="easy" type="lecture">
+<ExerciseSection id="booleens-2" label="2 [Facile] - Comparaisons simples" type="lecture">
 <Enonce>
 
 Donner le résultat des expressions suivantes :
@@ -111,7 +106,7 @@ assert (3 < 8) == True
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="3. Opérateurs logiques" difficulty="medium" type="lecture">
+<ExerciseSection id="booleens-3" label="3 [Moyen] - Opérateurs logiques" type="lecture">
 <Enonce>
 
 Pour chaque expression, déterminer le résultat (`True` ou `False`) :
@@ -153,7 +148,7 @@ assert (not ((3 != 3) or (5 < 2))) == True
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="4. Expressions complexes" difficulty="medium" type="lecture">
+<ExerciseSection id="booleens-4" label="4 [Moyen] - Expressions complexes" type="lecture">
 <Enonce>
 
 Évaluer les expressions suivantes étape par étape :
@@ -191,7 +186,7 @@ assert (((5 > 3) or (2 < 1)) and (not (4 == 4))) == False
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="5. Fonctions booléennes" difficulty="important" type="python">
+<ExerciseSection id="booleens-5" label="5 [Avancé] - Fonctions booléennes" type="python">
 <Enonce>
 
 Écrire les fonctions Python suivantes qui retournent un booléen :
@@ -240,7 +235,7 @@ assert est_triangle_rectangle(3, 4, 6) == False
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection title="6. Applications pratiques" difficulty="hard" type="python">
+<ExerciseSection id="booleens-6" label="6 [Difficile] - Applications pratiques" type="python">
 <Enonce>
 
 Résoudre les problèmes suivants en écrivant les fonctions correspondantes :

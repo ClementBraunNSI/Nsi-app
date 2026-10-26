@@ -210,16 +210,26 @@ assert True
 3. `version` (flottant) valant 3.12
 
 **Puis afficher la phrase :** "En 2024, j'apprends Python 3.12" en utilisant ces variables.
+
+    <Correction>
+    ```python
+    annee = 2024
+    langage = "Python"
+    version = 3.12
+    print(f"En {annee}, j'apprends {langage} {version}")
+    ```
+    </Correction>
     </Enonce>
     <Verification>
-```python
-assert 'annee' in locals() and annee == 2024, "La variable 'annee' doit valoir 2024."
-assert 'langage' in locals() and langage == "Python", "La variable 'langage' doit valoir 'Python'."
-assert 'version' in locals() and version == 3.12, "La variable 'version' doit valoir 3.12."
-assert isinstance(annee, int), "'annee' doit être un entier."
-assert isinstance(langage, str), "'langage' doit être une chaîne."
-assert isinstance(version, float), "'version' doit être un flottant."
-```
+    ```python
+    assert 'annee' in globals() and annee == 2024, "La variable 'annee' doit valoir 2024."
+    assert 'langage' in globals() and langage == "Python", "La variable 'langage' doit valoir 'Python'."
+    assert 'version' in globals() and version == 3.12, "La variable 'version' doit valoir 3.12."
+    assert isinstance(annee, int), "'annee' doit être un entier."
+    assert isinstance(langage, str), "'langage' doit être une chaîne."
+    assert isinstance(version, float), "'version' doit être un flottant."
+    assert "En 2024, j'apprends Python 3.12" in SORTIE, "Afficher exactement : En 2024, j'apprends Python 3.12"
+    ```
     </Verification>
   </ExerciseSection>
 </ExerciseTabs>

@@ -95,17 +95,30 @@ describe('server exercise check', () => {
     expect(report.prints).toContain("'function': 'bloque'");
   });
 
-  it('grades SQL without returning the verification query', async () => {
-    const passed = await runSqlCheck(
-      'CREATE TABLE etudiants(id INTEGER); INSERT INTO etudiants VALUES (1);',
-      'SELECT * FROM etudiants;',
-    );
-    const failed = await runSqlCheck('SELECT * FROM missing;', 'SELECT 1;');
+  it('grades SQL by comparing results on the starting database, without returning the expected query', async () => {
+    const setup = "CREATE TABLE Livres(id INTEGER, titre TEXT, annee INTEGER); INSERT INTO Livres VALUES (1, 'Dune', 1965), (2, '1984', 1949), (3, 'Fondation', 1951);";
+    const expected = 'SELECT titre FROM Livres WHERE annee > 1950;';
+    const passed = await runSqlCheck("SELECT titre FROM Livres WHERE annee >= 1951", expected, setup);
+    const wrongRows = await runSqlCheck('SELECT titre FROM Livres', expected, setup);
+    const broken = await runSqlCheck('SELECT * FROM missing;', expected, setup);
 
-    expect(passed.status).toBe('success');
     expect(passed.validated).toBe(true);
-    expect(failed.status).toBe('error');
+    expect(wrongRows.validated).toBe(false);
+    expect(wrongRows.tests[0].detail).toMatch(/2 ligne\(s\) attendue\(s\), 3 obtenue/);
+    expect(broken.status).toBe('error');
+    expect(JSON.stringify(passed)).not.toContain('annee > 1950');
+
+    const ordered = 'SELECT titre FROM Livres ORDER BY annee;';
+    const unordered = await runSqlCheck('SELECT titre FROM Livres', ordered, setup);
+    expect(unordered.tests[0].detail).toMatch(/ordre/);
+  });
+
+  it('checks a modification with a control query read on both databases', async () => {
+    const setup = "CREATE TABLE etudiants(id INTEGER, nom TEXT, age INTEGER); INSERT INTO etudiants VALUES (1, 'Martin', 17), (2, 'Durand', 17);";
+    const verification = "UPDATE etudiants SET age = 18 WHERE nom = 'Martin';\n-- controle\nSELECT nom, age FROM etudiants ORDER BY id;";
+    const passed = await runSqlCheck("UPDATE etudiants SET age = age + 1 WHERE id = 1;", verification, setup);
+    const failed = await runSqlCheck('UPDATE etudiants SET age = 18;', verification, setup);
+    expect(passed.validated).toBe(true);
     expect(failed.validated).toBe(false);
-    expect(JSON.stringify(passed)).not.toContain('SELECT * FROM etudiants');
   });
 });
