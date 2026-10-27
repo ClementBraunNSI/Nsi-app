@@ -19,7 +19,7 @@ audience: public
       - Ne pas oublier les deux points `:` après la boucle
       - Faire attention à l'indentation dans la boucle
       - Tester le code avec différentes valeurs
-      - Créer un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
+      - Ouvrir chaque exercice avec le bouton **Réaliser l'exercice** : le code s'écrit dans l'éditeur du site, le bouton **Vérifier** le teste et le travail est enregistré
       - Recopier les programmes sur le cahier pour pouvoir les réviser plus tard
     </Enonce>
   </ExerciseSection>

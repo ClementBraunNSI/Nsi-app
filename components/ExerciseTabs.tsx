@@ -7,12 +7,23 @@ import { ACHIEVEMENTS, Achievement } from '@/lib/achievements';
 import AchievementUnlockedModal from './AchievementUnlockedModal';
 import SuccessModal from './SuccessModal';
 import InteractiveShell from './interactive/InteractiveShell';
-import { showsRealizeButton } from '@/lib/exercise-type';
+import { acceptsWrittenAnswer, isEditorExercise, showsRealizeButton } from '@/lib/exercise-type';
+import WrittenAnswer from './WrittenAnswer';
 
 interface TabProps {
   id: string;
   label: string;
+  type?: string;
   children: React.ReactNode;
+}
+
+/** Premier exercice à faire sur le site : un onglet de consignes ne doit pas cacher les exercices. */
+function firstPractice(children: React.ReactElement<TabProps>[]) {
+  return (
+    children.find((child) => isEditorExercise(child.props.type)) ??
+    children.find((child) => acceptsWrittenAnswer(child.props.type, child.props.label)) ??
+    children[0]
+  )?.props.id;
 }
 
 const LEVEL_MAP: Record<string, { label: string; code: string }> = {
@@ -152,7 +163,7 @@ function ExerciseProgressBar({ total, completed }: { total: number, completed: n
 
 
 
-const PracticeContext = React.createContext<string | null>(null);
+const PracticeContext = React.createContext<{ role: string | null; courseId: string }>({ role: null, courseId: '' });
 
 export function ExerciseTabs({
   children,
@@ -165,7 +176,7 @@ export function ExerciseTabs({
 }) {
   // Filter only valid React elements to avoid text nodes (whitespace) causing issues
   const childrenArray = React.Children.toArray(children).filter(React.isValidElement) as React.ReactElement<TabProps>[];
-  const [activeTab, setActiveTab] = useState(childrenArray[0]?.props.id);
+  const [activeTab, setActiveTab] = useState(firstPractice(childrenArray));
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
@@ -198,7 +209,7 @@ export function ExerciseTabs({
   const filteredChildren = childrenArray.filter((child) => difficultyByChild.get(child.props.id) === activeGroup);
 
   useEffect(() => {
-    const first = filteredChildren[0]?.props.id || childrenArray[0]?.props.id;
+    const first = firstPractice(filteredChildren) || childrenArray[0]?.props.id;
     if (first) setActiveTab(first);
   }, [activeGroup, childrenArray.length]);
 
@@ -320,7 +331,7 @@ export function ExerciseTabs({
   };
 
   return (
-    <PracticeContext.Provider value={role}>
+    <PracticeContext.Provider value={{ role, courseId }}>
     <InteractiveShell
       title={courseTitle || "Parcours d'exercices"}
       description="Le renard garde ta progression : choisis une difficulté, puis avance exercice par exercice."
@@ -431,8 +442,8 @@ export function Enonce({ children }: { children: React.ReactNode }) {
 }
 
 
-export function ExerciseSection({ id, children, type }: TabProps & { type?: string }) {
-  const role = React.useContext(PracticeContext);
+export function ExerciseSection({ id, label, children, type }: TabProps) {
+  const { role } = React.useContext(PracticeContext);
   const nodes = React.Children.toArray(children);
   if (id && showsRealizeButton(type, role)) {
     const button = (
@@ -450,6 +461,9 @@ export function ExerciseSection({ id, children, type }: TabProps & { type?: stri
     );
     if (enonceIndex >= 0) nodes.splice(enonceIndex + 1, 0, button);
     else nodes.push(button);
+  } else if (id && (role === 'student' || role === 'invite') && acceptsWrittenAnswer(type, label)) {
+    // Sans éditeur : la réponse s'écrit ici, puis l'enseignant la valide.
+    nodes.push(<WrittenAnswer key="reponse" exerciseId={id} />);
   }
   return <div>{nodes}</div>;
 }

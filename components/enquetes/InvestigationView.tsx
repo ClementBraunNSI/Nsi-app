@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Blocks, Check, Code2, Database, History, Lightbulb, NotebookPen, RotateCcw, Search, Table2, Target } from "lucide-react";
 import { checkAccusation, resumeEnquete } from "@/app/actions/enquetes";
+import type { EnqueteReward } from "@/lib/enquetes/rewards";
+import RewardsDialog from "@/components/enquetes/RewardsDialog";
 import type { PublicEnquete } from "@/lib/enquetes/types";
 import { clearCase, markSolved, readProgress, readSolutions, readSolved, saveProgress, type Mode, type Solution } from "@/lib/enquetes/progress";
 
@@ -38,6 +40,7 @@ export default function InvestigationView({ enquete: firstStage, next }: Props) 
   const [openTable, setOpenTable] = useState<string | null>(null);
   const [restored, setRestored] = useState(false);
   const [resetCount, setResetCount] = useState(0);
+  const [rewards, setRewards] = useState<EnqueteReward[]>([]);
 
   // Reprend l'enquête là où l'élève l'avait laissée sur cet appareil, à la bonne étape.
   useEffect(() => {
@@ -121,8 +124,9 @@ export default function InvestigationView({ enquete: firstStage, next }: Props) 
     event.preventDefault();
     if (!answer.trim() || checking) return;
     setChecking(true);
-    const result = await checkAccusation(enquete.slug, answer, found).catch(() => ({ correct: false as const }));
+    const result = await checkAccusation(enquete.slug, answer, found, { hints: hintCount, attempts }).catch(() => ({ correct: false as const }));
     setChecking(false);
+    if (result.correct && result.rewards?.length) setRewards(result.rewards);
     if (result.correct && result.next) {
       // Un coupable de trouvé, mais l'enquête continue : l'étape suivante est déjà enregistrée.
       const solved = [...found, result.culprit];
@@ -160,6 +164,7 @@ export default function InvestigationView({ enquete: firstStage, next }: Props) 
 
   return (
     <div className="enq-page">
+      {rewards.length > 0 ? <RewardsDialog rewards={rewards} onClose={() => setRewards([])} /> : null}
       <header className="enq-head">
         <Link href="/enquetes" className="enq-back">
           <ArrowLeft size={16} /> Toutes les enquêtes

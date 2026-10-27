@@ -1,10 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/utils/supabase/server";
-import { createAdminClient } from "@/utils/supabase/admin";
 import { getAuthContext } from "@/lib/auth";
-import { exerciseIdsForPage } from "@/lib/page-exercises";
+import { syncHomeworkFor } from "@/lib/homework-sync";
 
 function revalidateHomework() {
   revalidatePath("/espace");
@@ -16,56 +14,5 @@ function revalidateHomework() {
 export async function syncMyHomework(): Promise<void> {
   const auth = await getAuthContext();
   if (!auth.user || auth.role !== "student") return;
-
-  const supabase = await createClient();
-  const userId = auth.user.id;
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("classe")
-    .eq("id", userId)
-    .maybeSingle();
-
-  const [progressRes, ownRes, classRes, doneRes] = await Promise.all([
-    supabase.from("user_progress").select("exercise_id").eq("user_id", userId),
-    supabase
-      .from("homework")
-      .select("id, page_path, status, student_id")
-      .eq("student_id", userId),
-    profile?.classe
-      ? supabase
-          .from("homework")
-          .select("id, page_path, student_id, classe")
-          .eq("classe", profile.classe)
-          .is("student_id", null)
-      : Promise.resolve({ data: [] as { id: string; page_path: string | null; student_id: null; classe: string }[] }),
-    supabase.from("homework_completions").select("homework_id").eq("user_id", userId),
-  ]);
-
-  const doneIds = new Set((progressRes.data || []).map((row) => row.exercise_id));
-  const already = new Set((doneRes.data || []).map((row) => row.homework_id));
-  const admin = createAdminClient();
-  if (!admin) return;
-  let changed = false;
-
-  const ready = (pagePath: string | null) => {
-    const ids = exerciseIdsForPage(pagePath);
-    return ids.length > 0 && ids.every((id) => doneIds.has(id));
-  };
-
-  for (const row of ownRes.data || []) {
-    if (row.status === "done" || !ready(row.page_path)) continue;
-    const { error } = await admin.from("homework").update({ status: "done" }).eq("id", row.id).eq("student_id", userId);
-    if (!error) changed = true;
-  }
-
-  for (const row of classRes.data || []) {
-    if (already.has(row.id) || !ready(row.page_path)) continue;
-    const { error } = await admin.from("homework_completions").insert({
-      homework_id: row.id,
-      user_id: userId,
-    });
-    if (!error) changed = true;
-  }
-
-  if (changed) revalidateHomework();
+  if (await syncHomeworkFor(auth.user.id)) revalidateHomework();
 }

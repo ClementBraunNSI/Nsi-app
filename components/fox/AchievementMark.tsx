@@ -2,6 +2,7 @@ import { Trophy } from "lucide-react";
 import { ACHIEVEMENTS } from "@/lib/achievements";
 import { sheetCourseIdFromAchievement } from "@/lib/sheet-badge-art";
 import { SheetBadgeFox } from "@/components/fox/SheetBadgeFox";
+import { enqueteAchievement } from "@/lib/enquetes/rewards";
 
 export function AchievementMark({
   id,
@@ -17,6 +18,21 @@ export function AchievementMark({
   const courseId = sheetCourseIdFromAchievement(id);
   if (courseId) {
     return <SheetBadgeFox courseId={courseId} title={title} earned={earned} size={size} />;
+  }
+
+  const enquete = enqueteAchievement(id);
+  if (enquete) {
+    return (
+      <img
+        src={enquete.image}
+        alt={earned ? `Succès ${title}` : `Succès ${title}, pas encore obtenu`}
+        width={size}
+        height={size}
+        draggable={false}
+        className={`shrink-0 object-contain ${earned ? "" : "opacity-60 grayscale"}`}
+        style={{ width: size, height: size }}
+      />
+    );
   }
 
   const known = ACHIEVEMENTS.find((achievement) => achievement.id === id);
