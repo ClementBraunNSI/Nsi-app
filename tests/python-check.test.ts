@@ -327,6 +327,8 @@ open(sys.argv[2], "w", encoding="utf-8").write(json.dumps(out, ensure_ascii=Fals
       maxBuffer: 50_000_000,
       timeout: 90000,
       env: { ...PYTHON_ENV, MPLBACKEND: 'Agg' },
+      // Les corrections écrivent des fichiers (pokedex.csv, systeme.log…) : pas dans le dépôt.
+      cwd: dir,
     });
     const results = JSON.parse(fs.readFileSync(resultPath, 'utf8')) as Array<{
       id: string;

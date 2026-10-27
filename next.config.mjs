@@ -2,10 +2,17 @@
 const nextConfig = {
   // Cette option aide Turbopack à trouver ses repères
   transpilePackages: ['lucide-react'],
-  // La vérification des exercices lance lib/pyodide-check-child.cjs, qui charge Pyodide :
-  // aucun import ne les relie, il faut donc les embarquer explicitement avec la page d'exercice.
+  // La vérification des exercices lance lib/pyodide-check-child.cjs, qui charge Pyodide,
+  // et charge sql.js par un require dynamique : aucun import ne les relie,
+  // il faut donc les embarquer explicitement avec la page d'exercice.
   outputFileTracingIncludes: {
-    '/exercice/[id]': ['./lib/pyodide-check-child.cjs', './node_modules/pyodide/**/*'],
+    '/exercice/[id]': [
+      './lib/pyodide-check-child.cjs',
+      './lib/pyodide-extra-packages.cjs',
+      './lib/pyodide-wheels/*.whl',
+      './node_modules/pyodide/**/*',
+      './node_modules/sql.js/dist/sql-asm.js',
+    ],
   },
   async redirects() {
     return [

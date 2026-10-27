@@ -1,4 +1,4 @@
-import type { Cell, Enquete, PublicEnquete, Table } from "./types";
+import { stagesOf, toPublic, type Cell, type Enquete, type PublicEnquete, type Table } from "./types";
 
 function sqlValue(value: Cell) {
   if (value === null) return "NULL";
@@ -39,11 +39,33 @@ export function normalizeName(value: string) {
 }
 
 /** Accepte « Zélie », « zelie », « Zélie la belette »… */
-export function isCulprit(enquete: Enquete, answer: string) {
+export function isCulprit(enquete: Pick<Enquete, "culprit">, answer: string) {
   const guess = normalizeName(answer);
   const culprit = normalizeName(enquete.culprit);
   if (!guess) return false;
   return guess === culprit || guess.split(/[\s,.;'’-]+/).includes(culprit);
+}
+
+/** Nombre d'étapes élucidées : les réponses données, dans l'ordre, tant qu'elles désignent le bon coupable. */
+export function solvedCount(enquete: Enquete, found: string[]) {
+  const stages = stagesOf(enquete);
+  let count = 0;
+  while (count < stages.length && count < found.length && isCulprit(stages[count], found[count])) count += 1;
+  return count;
+}
+
+export type Accusation =
+  | { correct: false }
+  | { correct: true; culprit: string; explanation: string; twist?: string; next?: PublicEnquete };
+
+/** Vérifie une accusation à l'étape où en est l'élève. Une bonne réponse avant la dernière étape ouvre la suivante. */
+export function accuse(enquete: Enquete, found: string[], answer: string): Accusation {
+  const stages = stagesOf(enquete);
+  const index = solvedCount(enquete, found);
+  const stage = stages[index];
+  if (!stage || !isCulprit(stage, answer)) return { correct: false };
+  if (index === stages.length - 1) return { correct: true, culprit: stage.culprit, explanation: stage.explanation };
+  return { correct: true, culprit: stage.culprit, explanation: stage.explanation, twist: stage.twist, next: toPublic(enquete, index + 1) };
 }
 
 /** Toutes les colonnes, sous la forme « table.colonne », pour les menus de Blockly. */

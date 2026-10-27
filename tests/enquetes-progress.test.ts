@@ -47,6 +47,16 @@ describe('avancée des enquêtes', () => {
     expect(readOutcome('barrage-perce', 'python')).toBeNull();
   });
 
+  it('garde les coupables trouvés étape par étape, et « recommencer » les efface', () => {
+    expect(readProgress('gland-d-or').found).toEqual([]);
+    saveProgress('gland-d-or', { found: ['Roux'], hints: 0 });
+    saveProgress('gland-d-or', { hints: 2 });
+    expect(readProgress('gland-d-or')).toMatchObject({ found: ['Roux'], hints: 2 });
+    expect(caseStatus('gland-d-or')).toBe('started');
+    clearCase('gland-d-or');
+    expect(readProgress('gland-d-or').found).toEqual([]);
+  });
+
   it('« recommencer » efface une seule enquête, sans toucher aux autres', () => {
     saveProgress('oeufs-croques', { hints: 1 });
     localStorage.setItem('enquete-oeufs-croques-notes', 'Zélie ?');

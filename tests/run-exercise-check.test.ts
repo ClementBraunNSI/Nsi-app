@@ -95,6 +95,16 @@ describe('server exercise check', () => {
     expect(report.prints).toContain("'function': 'bloque'");
   });
 
+  it('loads folium and geopy from the wheels shipped in lib/pyodide-wheels', async () => {
+    const report = await runPythonCheck(
+      'import folium\nfrom geopy.distance import geodesic\ncarte = folium.Map(location=[46.5, 2.5], zoom_start=6)\nd = geodesic((48.8566, 2.3522), (43.2965, 5.3698)).km',
+      'assert carte.options["zoom"] == 6\nassert 600 < d < 700',
+      ['pandas', 'folium', 'geopy'],
+    );
+    expect(report.error).toBeUndefined();
+    expect(report.validated).toBe(true);
+  }, 90000);
+
   it('grades SQL by comparing results on the starting database, without returning the expected query', async () => {
     const setup = "CREATE TABLE Livres(id INTEGER, titre TEXT, annee INTEGER); INSERT INTO Livres VALUES (1, 'Dune', 1965), (2, '1984', 1949), (3, 'Fondation', 1951);";
     const expected = 'SELECT titre FROM Livres WHERE annee > 1950;';

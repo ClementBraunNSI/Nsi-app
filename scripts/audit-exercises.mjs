@@ -17,7 +17,7 @@ const require = createRequire(import.meta.url);
 const ROOT = process.cwd();
 const CONTENT = path.join(ROOT, 'content');
 const args = process.argv.slice(2);
-const jsonOut = args.includes('--json') ? args[args.indexOf('--json') + 1] : null;
+const jsonOut = args.includes('--json') ? path.resolve(args[args.indexOf('--json') + 1]) : null;
 const filter = args.find((arg, i) => !arg.startsWith('--') && args[i - 1] !== '--json') || '';
 
 const TYPES = new Set(['python', 'sql', 'lecture', 'autre']);
@@ -135,16 +135,21 @@ async function main() {
     if (list.length > 1) list.forEach((s) => add(s, 'id-en-double', `${id} ×${list.length}`));
   }
 
+  // Sous Node, Pyodide écrit dans le vrai dossier courant : les fichiers créés par les tests restent hors du dépôt.
+  const bac = fs.mkdtempSync(path.join(os.tmpdir(), 'nsi-audit-'));
+  process.chdir(bac);
+  process.on('exit', () => {
+    process.chdir(ROOT);
+    fs.rmSync(bac, { recursive: true, force: true });
+  });
   const { loadPyodide } = require('pyodide');
   const pyodide = await loadPyodide({ packageCacheDir: path.join(os.tmpdir(), 'nsi-pyodide-packages'), stdout: () => {}, stderr: () => {} });
   pyodide.runPython(runnerSource());
+  // Même chargement des modules que le vérificateur du site, roues de lib/pyodide-wheels comprises.
+  const { loadExercisePackagesInto } = require('../lib/pyodide-extra-packages.cjs');
   const loaded = new Set();
   const runPython = async (user, tests, packages) => {
-    const missing = packages.map((p) => (p === 'PIL' ? 'Pillow' : p)).filter((p) => !loaded.has(p));
-    if (missing.length) {
-      await pyodide.loadPackage(missing, { messageCallback: () => {}, errorCallback: () => {} });
-      missing.forEach((p) => loaded.add(p));
-    }
+    await loadExercisePackagesInto(pyodide, packages, loaded);
     // Chaque exercice dans un espace de noms neuf, comme le processus séparé du site.
     pyodide.globals.set('__nsi_user', user);
     pyodide.globals.set('__nsi_tests', tests);
