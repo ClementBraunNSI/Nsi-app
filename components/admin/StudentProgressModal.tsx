@@ -6,6 +6,7 @@ import { SheetBadgeFox } from '@/components/fox/SheetBadgeFox';
 import { AchievementMark } from '@/components/fox/AchievementMark';
 import { getStudentSheetProgress, type StudentSheetProgress, type StudentProgressSheet } from '@/app/actions/studentProgress';
 import { isAbortError } from '@/lib/is-abort-error';
+import { SubmissionsReview } from '@/components/admin/SubmissionsReview';
 import { levelLabel, pickDefaultLevel, sortLevels, validatedPhrase, type SheetProgressStatus } from '@/lib/student-progress';
 
 type ProgressStudent = {
@@ -76,6 +77,7 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
   const [loading, setLoading] = useState(true);
   const [level, setLevel] = useState('');
   const [sheetId, setSheetId] = useState<string | null>(null);
+  const [view, setView] = useState<'fiches' | 'travail'>('fiches');
 
   useEffect(() => {
     let cancelled = false;
@@ -84,6 +86,7 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
     setData(null);
     setLevel('');
     setSheetId(null);
+    setView('fiches');
 
     getStudentSheetProgress(student.id)
       .then((result) => {
@@ -188,8 +191,32 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
             </div>
           ) : (
             <>
+              <div className="flex flex-wrap gap-2" role="tablist" aria-label="Affichage">
+                {([
+                  ['fiches', 'Fiches et badges'],
+                  ['travail', 'Travail rendu'],
+                ] as const).map(([id, text]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    role="tab"
+                    aria-selected={view === id}
+                    onClick={() => setView(id)}
+                    className={`rounded-2xl px-4 py-2 text-sm font-bold transition ${
+                      view === id ? 'bg-slate-800 text-white' : 'border border-slate-200 bg-white text-slate-500'
+                    }`}
+                  >
+                    {text}
+                  </button>
+                ))}
+              </div>
+
+              {view === 'travail' ? (
+                <SubmissionsReview studentId={student.id} />
+              ) : (
+              <>
               <p className="text-sm text-slate-500">
-                Un exercice compte comme validé seulement si les tests sont réussis.
+                Un exercice compte comme validé quand ses tests sont réussis, ou quand le travail rendu est validé dans l'onglet Travail rendu.
               </p>
 
               {data.achievements.length > 0 && (
@@ -299,6 +326,8 @@ export function StudentProgressModal({ student, onClose }: { student: ProgressSt
                     ))}
                   </div>
                 </>
+              )}
+              </>
               )}
             </>
           )}

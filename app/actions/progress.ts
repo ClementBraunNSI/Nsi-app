@@ -1,5 +1,4 @@
 import { revalidatePath } from 'next/cache';
-import { createClient } from '@/utils/supabase/server';
 import { createAdminClient } from '@/utils/supabase/admin';
 import { getAuthContext } from '@/lib/auth';
 import {
@@ -10,8 +9,8 @@ import {
   type Achievement,
   type AchievementStats,
 } from '@/lib/achievements';
-import { getExercisesForCourses, listAccessibleSheetSummaries } from '@/app/actions/getExercises';
-import { syncMyHomework } from '@/app/actions/homeworkCompletion';
+import { findWrittenExercise, getExercisesForCourses, listAccessibleSheetSummaries } from '@/app/actions/getExercises';
+import { syncHomeworkFor } from '@/lib/homework-sync';
 
 export type ValidationResult = {
   error: string | null;
@@ -39,7 +38,25 @@ export async function saveValidatedExercise(input: {
   if (auth.role !== 'student' && auth.role !== 'invite') {
     return { ...empty, error: 'forbidden' };
   }
-  const userId = auth.user.id;
+  return awardExercise(auth.user.id, input);
+}
+
+/**
+ * Enregistre un exercice validé pour un élève, puis le badge de la fiche et les succès qu'il débloque.
+ * Appelée après les tests réussis de l'élève, ou quand un enseignant valide son travail.
+ * Le serveur seul l'appelle : l'identité de l'élève est déjà vérifiée par l'appelant.
+ */
+export async function awardExercise(
+  userId: string,
+  input: { exerciseId: string; courseId: string; courseTitle: string },
+): Promise<ValidationResult> {
+  const empty: ValidationResult = {
+    error: null,
+    sheetComplete: false,
+    newBadge: false,
+    newAchievement: null,
+    newAchievements: [],
+  };
 
   const exerciseId = String(input.exerciseId || '').trim();
   const courseId = String(input.courseId || '').trim();
@@ -49,13 +66,23 @@ export async function saveValidatedExercise(input: {
   }
 
   const sheetExercises = await getExercisesForCourses([courseId]);
-  if (!sheetExercises.some((exercise) => exercise.id === exerciseId)) {
-    return { ...empty, error: 'invalid' };
-  }
-
-  const supabase = await createClient();
   const admin = createAdminClient();
   if (!admin) return { ...empty, error: 'save_failed' };
+
+  if (!sheetExercises.some((exercise) => exercise.id === exerciseId)) {
+    // Exercice à réponse écrite, validé par l'enseignant : il compte comme fait, sans badge de fiche.
+    const written = await findWrittenExercise(exerciseId);
+    if (!written || written.courseId !== courseId) return { ...empty, error: 'invalid' };
+    const { error } = await admin
+      .from('user_progress')
+      .upsert({ exercise_id: exerciseId, user_id: userId, course_id: courseId }, { onConflict: 'user_id, exercise_id' });
+    if (error) return { ...empty, error: 'save_failed' };
+    if (await syncHomeworkFor(userId)) revalidatePath('/admin/devoirs');
+    revalidatePath('/espace');
+    return empty;
+  }
+  // Lecture avec la clé de service : un enseignant qui valide doit voir les lignes de l'élève.
+  const supabase = admin;
 
   const { data: priorRow } = await supabase
     .from('user_progress')
@@ -76,7 +103,7 @@ export async function saveValidatedExercise(input: {
 
   if (error) return { ...empty, error: 'save_failed' };
 
-  await syncMyHomework();
+  if (await syncHomeworkFor(userId)) revalidatePath('/admin/devoirs');
   const [progressRes, badgesRes, achievementsRes, exerciseCountRes, sheets] = await Promise.all([
     supabase
       .from('user_progress')

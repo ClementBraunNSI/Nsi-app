@@ -7,11 +7,12 @@ import matter from 'gray-matter';
 import { getAuthContext, viewerFromAuth } from '@/lib/auth';
 import { canAccessCourse } from '@/lib/course-access';
 import { contentRoot } from '@/lib/content-path';
-import { canOpenExerciseIde, isEditorExercise, readExerciseType } from '@/lib/exercise-type';
+import { acceptsWrittenAnswer, canOpenExerciseIde, isEditorExercise, readExerciseType } from '@/lib/exercise-type';
 import { stripHiddenExerciseBlocks } from '@/lib/exercise-statement';
 import { coursePath } from '@/lib/nsi-levels';
 import { CHECK_UNAVAILABLE, SAVE_WARNING, everyTestPassed, testsUnavailableReport, unexpectedRunReport, type RunReport } from '@/lib/python-check';
 import { runPythonCheck, runSqlCheck } from '@/lib/run-exercise-check';
+import { recordSubmission } from '@/lib/submissions';
 import type { Achievement } from '@/lib/achievements';
 
 export interface LabExercise {
@@ -44,6 +45,16 @@ export type ExternalExercise = {
   courseTitle: string;
   pagePath?: string;
   runtime: 'autre';
+  audience?: unknown;
+};
+
+/** Exercice sans éditeur (lecture, autre) : l'élève rend une réponse écrite, corrigée par l'enseignant. */
+export type WrittenExercise = {
+  id: string;
+  label: string;
+  courseId: string;
+  courseTitle: string;
+  pagePath?: string;
   audience?: unknown;
 };
 
@@ -94,12 +105,13 @@ function getFilesRecursively(dir: string): string[] {
   return results;
 }
 
-function buildExerciseCatalog(): { exercises: CatalogExercise[]; external: ExternalExercise[] } {
+function buildExerciseCatalog(): { exercises: CatalogExercise[]; external: ExternalExercise[]; written: WrittenExercise[] } {
   const contentDir = contentRoot();
-  if (!fs.existsSync(contentDir)) return { exercises: [], external: [] };
+  if (!fs.existsSync(contentDir)) return { exercises: [], external: [], written: [] };
 
   const exercises: CatalogExercise[] = [];
   const external: ExternalExercise[] = [];
+  const written: WrittenExercise[] = [];
   const levels = fs.readdirSync(contentDir).filter(f => !f.startsWith('.'));
 
   const LEVEL_MAPPING: Record<string, string> = {
@@ -236,6 +248,16 @@ function buildExerciseCatalog(): { exercises: CatalogExercise[]; external: Exter
           const pagePath = coursePath(relParts[0], relParts.slice(1).join('/').replace(/\.mdx?$/, ''));
 
           if (!isEditorExercise(writtenType)) {
+            if (acceptsWrittenAnswer(writtenType, sectionLabel)) {
+              written.push({
+                id: sectionId,
+                label: sectionLabel,
+                courseId: nearestCourseId,
+                courseTitle: nearestCourseTitle,
+                pagePath,
+                audience: data.audience,
+              });
+            }
             if (writtenType === 'autre') {
               external.push({
                 id: sectionId,
@@ -295,7 +317,7 @@ function buildExerciseCatalog(): { exercises: CatalogExercise[]; external: Exter
     uniqueExercises.push({ ...ex, id: finalId });
   }
 
-  return { exercises: uniqueExercises, external };
+  return { exercises: uniqueExercises, external, written };
 }
 
 export type SheetSummary = {
@@ -442,6 +464,32 @@ export async function getExerciseById(exerciseId: string): Promise<LabExercise |
 }
 
 /** Exercice présent sur une fiche, mais pas réalisable dans l'éditeur Python/SQL. */
+/** Exercice à réponse écrite que l'utilisateur connecté a le droit de voir. */
+export async function findWrittenExercise(exerciseId: string): Promise<Omit<WrittenExercise, 'audience'> | null> {
+  const id = String(exerciseId || '').trim();
+  if (!id || id.length > 200) return null;
+
+  const auth = await getAuthContext();
+  if (!auth.user) return null;
+
+  const exercise = buildExerciseCatalog().written.find((item) => item.id === id);
+  if (!exercise || !canAccessCourse(exercise, viewerFromAuth(auth))) return null;
+  const { audience: _audience, ...rest } = exercise;
+  return rest;
+}
+
+/** Libellés de tous les exercices, éditeur et réponse écrite : pour l'écran de correction. */
+export async function listExerciseLabels(): Promise<Record<string, { label: string; courseTitle: string; pagePath?: string }>> {
+  const auth = await getAuthContext();
+  if (!auth.user || !auth.isElevated) return {};
+  const { exercises, written } = buildExerciseCatalog();
+  const labels: Record<string, { label: string; courseTitle: string; pagePath?: string }> = {};
+  for (const item of [...exercises, ...written]) {
+    labels[item.id] = { label: item.label, courseTitle: item.courseTitle, pagePath: item.pagePath };
+  }
+  return labels;
+}
+
 export async function getExternalExercise(exerciseId: string): Promise<ExternalExercise | null> {
   const id = String(exerciseId || '').trim();
   if (!id || id.length > 200) return null;
@@ -508,7 +556,19 @@ export async function checkExerciseSolution(exerciseId: string, code: string): P
     };
   }
 
-  if (!everyTestPassed(report)) {
+  const passed = everyTestPassed(report);
+  // Chaque essai vérifié est gardé : l'enseignant relit le code, et peut valider un essai que les tests refusent.
+  await recordSubmission({
+    userId: auth.user.id,
+    exerciseId: exercise.id,
+    courseId: exercise.courseId,
+    kind: 'code',
+    content: source,
+    passed,
+    status: passed ? 'auto' : 'en_attente',
+  });
+
+  if (!passed) {
     return { report, newBadge: false, newAchievements: [], recorded: false };
   }
 

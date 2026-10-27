@@ -188,6 +188,8 @@ function hashString(value: string) {
 
 /** Public URL for a generated sheet badge. Null when this course has no dedicated file. */
 export function sheetBadgeSrc(courseId: string): string | null {
+  // Badges d'enquête : image générée par scripts/enquete-badges.mjs.
+  if (courseId.startsWith("enquete-")) return `/images/badges/${courseId}.png`;
   if (!Object.prototype.hasOwnProperty.call(SHEET_FOX_ASSIGNMENTS, courseId)) return null;
   return `/images/badges/${courseId}.png`;
 }

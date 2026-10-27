@@ -8,6 +8,7 @@ import { getExercisesForCourses, listAccessibleSheetSummaries } from '@/app/acti
 import { syncMyHomework } from '@/app/actions/homeworkCompletion';
 import { exerciseIdsForPage } from '@/lib/page-exercises';
 import { ACHIEVEMENTS, completedChapterNames } from '@/lib/achievements';
+import { ENQUETE_ACHIEVEMENTS } from '@/lib/enquetes/rewards';
 
 export type EspaceHomework = {
   id: string;
@@ -306,6 +307,18 @@ export async function getStudentEspaceData(): Promise<EspaceData | null> {
       description: achievement.description,
       source: 'global',
       earned: Boolean(storedAchievements.get(achievement.id)) || achievement.condition(stats),
+    });
+  }
+  // Succès des enquêtes : seulement ceux que le serveur a enregistrés.
+  for (const achievement of ENQUETE_ACHIEVEMENTS) {
+    if (seen.has(achievement.id)) continue;
+    seen.add(achievement.id);
+    achievements.push({
+      id: achievement.id,
+      title: achievement.title,
+      description: achievement.description,
+      source: 'global',
+      earned: Boolean(storedAchievements.get(achievement.id)),
     });
   }
   achievements.sort(

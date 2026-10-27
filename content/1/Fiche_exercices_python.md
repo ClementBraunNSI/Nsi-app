@@ -16,9 +16,9 @@ audience: public
 
       **Pour tous les exercices :**
 
-      - Créer un fichier Python différent pour chaque exercice (ex: `exercice1.py`, `exercice2.py`, etc.)
+      - Ouvrir chaque exercice avec le bouton **Réaliser l'exercice** : le code s'écrit dans l'éditeur du site, le bouton **Vérifier** le teste et le travail est enregistré
       - Tester le code en l'exécutant
-      - N'hésitez pas à modifier les valeurs pour voir comment le programme réagit
+      - Modifier les valeurs pour voir comment le programme réagit
       - Recopier les programmes sur le cahier pour pouvoir les réviser plus tard
     </Enonce>
     <Verification>

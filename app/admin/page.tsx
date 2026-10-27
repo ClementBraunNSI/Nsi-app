@@ -9,6 +9,7 @@ import { PageHeader } from '@/components/ui';
 import { PrivateLessonDates } from '@/components/admin/PrivateLessonDates';
 import { StudentFollowup } from '@/components/admin/StudentFollowup';
 import { StudentProgressModal } from '@/components/admin/StudentProgressModal';
+import { SubmissionsReview } from '@/components/admin/SubmissionsReview';
 import { SheetBadgeFox } from '@/components/fox/SheetBadgeFox';
 import { AchievementMark } from '@/components/fox/AchievementMark';
 import { DeleteStudentDialog, StudentAccountDialog } from '@/components/admin/StudentAccounts';
@@ -166,6 +167,16 @@ export default function AdminDashboard() {
         </div>
 
         {audience === 'particuliers' && <PrivateLessonDates />}
+
+        <details className="rounded-3xl border border-orange-200 bg-white p-5 shadow-sm">
+          <summary className="cursor-pointer text-lg font-bold text-slate-800">
+            Réponses écrites à corriger
+            <span className="ml-2 text-sm font-medium text-slate-400">exercices sans éditeur, tous élèves</span>
+          </summary>
+          <div className="mt-4">
+            <SubmissionsReview />
+          </div>
+        </details>
 
         {/* --- BARRE DE NAVIGATION (TABS) --- */}
         <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-1">

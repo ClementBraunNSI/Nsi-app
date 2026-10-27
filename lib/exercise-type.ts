@@ -15,6 +15,17 @@ export function isEditorExercise(type: string | null | undefined): type is "pyth
   return type === "python" || type === "sql";
 }
 
+/** Onglet de consignes ou de cours : rien à rendre. */
+const NOT_AN_EXERCISE = /consigne|avant de commencer|le cours|rappels/i;
+
+/**
+ * Exercice sans éditeur (lecture ou autre) auquel l'élève répond par écrit sur le site :
+ * la réponse est enregistrée, puis validée ou renvoyée par l'enseignant.
+ */
+export function acceptsWrittenAnswer(type: string | null | undefined, label: string | null | undefined) {
+  return (type === "lecture" || type === "autre") && !NOT_AN_EXERCISE.test(label || "");
+}
+
 /** Élève, invite, admin ou enseignant connecté. Un visiteur sans rôle ne passe pas. */
 export function canOpenExerciseIde(role: string | null | undefined) {
   const normalized = (role || "").toLowerCase().trim();
