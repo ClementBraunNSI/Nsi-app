@@ -177,6 +177,50 @@ export const SHEET_FOX_ASSIGNMENTS: Record<string, SheetFoxArt> = {
   "c-tris-exos": { pose: "cheer", prop: "bars", scene: "night" },
 };
 
+/** Fiches dont le badge est généré par scripts/badge-illustrations.mjs (renard + accessoire). */
+export const GENERATED_SHEET_BADGES = new Set([
+  "paul-bases-python",
+  "paul-bases-python-input",
+  "premiere_projet",
+  "programmation-fonctionnelle",
+  "proj_caisse_bilan",
+  "proj_caisse_client",
+  "proj_caisse_journee",
+  "proj_caisse_ligne",
+  "proj_caisse_prix",
+  "sio_ap1_etapes",
+  "sio_ap1_pages",
+  "sio_ap2_console",
+  "sio_ap2_modele",
+  "sio_ap2_web",
+  "sio_ap3_gui",
+  "sio_ap3_mvc",
+  "sio_foxmon_attaques",
+  "sio_foxmon_carte",
+  "sio_foxmon_combat",
+  "sio_foxmon_degats",
+  "sio_foxmon_heritage",
+  "sio_foxmon_objets",
+  "sio_foxmon_pnj",
+  "sio_foxmon_save",
+  "sio_foxmon_xp",
+  "snt_bestiaire",
+  "snt_chasse_renarts",
+  "snt_chasse_renarts_css",
+  "snt_chasse_renarts_fond",
+  "snt_chasse_anglais",
+  "snt_chasse_anglais_css",
+  "snt_chasse_anglais_fond",
+  "snt_chasse_espagnol",
+  "snt_chasse_espagnol_css",
+  "snt_chasse_espagnol_fond",
+  "term_mini_epreuve",
+  "term_mini_logs",
+  "term_mini_vehicules",
+  "term_mini_villes",
+  "terminale_exercices_poo",
+]);
+
 function hashString(value: string) {
   let hash = 2166136261;
   for (let i = 0; i < value.length; i += 1) {
@@ -190,7 +234,7 @@ function hashString(value: string) {
 export function sheetBadgeSrc(courseId: string): string | null {
   // Badges d'enquête : image générée par scripts/enquete-badges.mjs.
   if (courseId.startsWith("enquete-")) return `/images/badges/${courseId}.png`;
-  if (!Object.prototype.hasOwnProperty.call(SHEET_FOX_ASSIGNMENTS, courseId)) return null;
+  if (!Object.prototype.hasOwnProperty.call(SHEET_FOX_ASSIGNMENTS, courseId) && !GENERATED_SHEET_BADGES.has(courseId)) return null;
   return `/images/badges/${courseId}.png`;
 }
 

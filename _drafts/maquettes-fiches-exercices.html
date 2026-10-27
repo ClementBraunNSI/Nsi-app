@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiches d'exercices – maquettes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef; --surface: #fffcf8; --surface-2: #f1ece4; --fg: #14110e; --muted: #5c564e; --subtle: #8a8278;
+  --border: rgba(20,17,14,.10); --accent: #ea580c; --accent-soft: #fff1e6; --ok: #16a34a; --ok-soft: #e7f6ec; --ko: #dc2626; --ko-soft: #fdecec;
+  --shadow: 0 1px 1px rgba(20,17,14,.03), 0 22px 50px -32px rgba(20,17,14,.28);
+  --d1: #16a34a; --d2: #0ea5e9; --d3: #8b5cf6; --d4: #f59e0b; --d5: #dc2626;
+  --code-bg: #1d1a17; --code-fg: #f3ede4;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 Inter, system-ui, sans-serif; }
+button { font: inherit; color: inherit; cursor: pointer; }
+code, pre, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 24px 16px 80px; }
+.intro h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -.02em; }
+.intro p { margin: 0; color: var(--muted); max-width: 70ch; }
+.switch { position: sticky; top: 0; z-index: 30; display: flex; gap: 6px; flex-wrap: wrap; padding: 12px 0; background: var(--bg); border-bottom: 1px solid var(--border); margin: 18px 0 22px; }
+.switch button { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 14px; }
+.switch button[aria-pressed="true"] { background: var(--fg); color: #fff; border-color: var(--fg); }
+.proposal { display: none; }
+.proposal.on { display: block; }
+.why { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin: 0 0 18px; }
+.why div { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; font-size: 14px; color: var(--muted); }
+.why b { display: block; color: var(--fg); font-size: 13px; margin-bottom: 2px; }
+.frame { background: var(--surface); border: 1px solid var(--border); border-radius: 22px; box-shadow: var(--shadow); overflow: hidden; }
+
+/* Éléments communs */
+.sheet-head { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.sheet-head img { width: 52px; height: 52px; object-fit: contain; border-radius: 12px; background: var(--accent-soft); }
+.sheet-head h2 { margin: 0; font-size: 18px; }
+.sheet-head small { color: var(--subtle); }
+.meter { margin-left: auto; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.meter .bar { width: 140px; height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.meter .bar i { display: block; height: 100%; width: 28%; background: var(--accent); border-radius: inherit; }
+.tag { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 99px; background: var(--surface-2); color: var(--muted); }
+.tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--subtle)); }
+.statement h3 { margin: 0 0 6px; font-size: 19px; letter-spacing: -.01em; }
+.statement p { margin: 8px 0; color: #2b2622; }
+.statement code { background: var(--accent-soft); color: #b4400a; padding: 1px 6px; border-radius: 6px; font-size: 13px; }
+.example { margin-top: 12px; border: 1px dashed var(--border); border-radius: 12px; padding: 10px 12px; font-size: 13px; background: var(--surface); }
+.example b { font-size: 12px; color: var(--subtle); display: block; margin-bottom: 4px; }
+.editor { background: var(--code-bg); color: var(--code-fg); border-radius: 14px; overflow: hidden; font-size: 13.5px; }
+.editor .bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #27231f; color: #b8afa3; font-size: 12px; }
+.editor .bar .dots { display: flex; gap: 5px; } .editor .bar .dots i { width: 9px; height: 9px; border-radius: 50%; background: #4b443d; }
+.editor pre { margin: 0; padding: 14px 16px; line-height: 1.65; min-height: 150px; }
+.k { color: #ff9e64; } .f { color: #7dcfff; } .s { color: #9ece6a; } .n { color: #e0af68; } .cm { color: #8a8278; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.btn { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 9px 14px; font-weight: 600; font-size: 14px; }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn.ghost { background: transparent; }
+.tests { margin-top: 12px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; font-size: 13px; }
+.tests div { display: flex; gap: 10px; align-items: center; padding: 8px 12px; border-top: 1px solid var(--border); }
+.tests div:first-child { border-top: 0; }
+.tests .ok { color: var(--ok); font-weight: 700; } .tests .ko { color: var(--ko); font-weight: 700; }
+.tests .mono { color: var(--muted); }
+.done-dot { width: 18px; height: 18px; border-radius: 50%; display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.st-done { background: var(--ok); color: #fff; } .st-try { background: #fde68a; color: #92400e; } .st-todo { border: 2px solid var(--border); }
+
+/* A — Parcours latéral */
+.a-grid { display: grid; grid-template-columns: 290px 1fr; min-height: 640px; }
+.a-side { border-right: 1px solid var(--border); background: var(--surface-2); padding: 14px 10px; overflow: auto; max-height: 720px; }
+.a-group { margin-bottom: 10px; }
+.a-group > p { margin: 6px 8px; font-size: 12px; font-weight: 700; color: var(--muted); display: flex; justify-content: space-between; }
+.a-item { width: 100%; display: flex; align-items: center; gap: 10px; border: 0; background: none; text-align: left; padding: 7px 8px; border-radius: 10px; font-size: 14px; }
+.a-item:hover { background: rgba(255,255,255,.7); }
+.a-item.cur { background: var(--surface); box-shadow: inset 3px 0 0 var(--accent); font-weight: 600; }
+.a-item .num { font-size: 12px; color: var(--subtle); width: 26px; }
+.a-main { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 20px; align-content: start; }
+.a-main .statement { grid-column: 1 / -1; }
+.a-foot { grid-column: 1 / -1; display: flex; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 14px; }
+
+/* B — Plan de travail plein écran */
+.b-strip { display: flex; align-items: center; gap: 6px; padding: 10px 16px; border-bottom: 1px solid var(--border); overflow-x: auto; }
+.b-strip .sep { width: 1px; height: 22px; background: var(--border); margin: 0 4px; flex-shrink: 0; }
+.b-chip { flex-shrink: 0; min-width: 40px; height: 32px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface); font-size: 12.5px; font-weight: 600; position: relative; }
+.b-chip::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 3px; height: 3px; border-radius: 3px; background: var(--c); opacity: .8; }
+.b-chip.done { background: var(--ok-soft); border-color: #bfe5cb; }
+.b-chip.cur { outline: 2px solid var(--accent); outline-offset: 1px; }
+.b-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); min-height: 560px; }
+.b-left { padding: 22px; border-right: 1px solid var(--border); }
+.b-right { padding: 16px; background: #f4efe7; display: flex; flex-direction: column; }
+.b-right .editor { flex: 1; }
+.b-nav { display: flex; justify-content: space-between; margin-top: 18px; }
+.hint { margin-top: 14px; border-radius: 12px; background: var(--accent-soft); padding: 10px 12px; font-size: 13.5px; }
+.hint summary { font-weight: 600; cursor: pointer; }
+
+/* C — Tableau + tiroir */
+.c-wrap { position: relative; min-height: 640px; }
+.c-filters { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 20px; border-bottom: 1px solid var(--border); }
+.c-filters button { border: 1px solid var(--border); background: var(--surface); border-radius: 99px; padding: 5px 12px; font-size: 13px; font-weight: 600; }
+.c-filters button.on { background: var(--fg); color: #fff; }
+.c-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.c-table th { text-align: left; font-size: 12px; color: var(--subtle); font-weight: 600; padding: 10px 20px; border-bottom: 1px solid var(--border); }
+.c-table td { padding: 11px 20px; border-bottom: 1px solid var(--border); }
+.c-table tr { cursor: pointer; }
+.c-table tbody tr:hover { background: var(--accent-soft); }
+.c-table tr.cur { background: var(--accent-soft); }
+.c-drawer { position: absolute; top: 0; right: 0; bottom: 0; width: min(560px, 100%); background: var(--surface); border-left: 1px solid var(--border); box-shadow: -30px 0 60px -40px rgba(20,17,14,.5); padding: 20px; overflow: auto; }
+.c-drawer .close { float: right; }
+
+/* D — Échelle de difficulté */
+.d-ladder { padding: 20px; display: grid; gap: 14px; }
+.d-row { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: start; }
+.d-row > header { padding-top: 8px; }
+.d-row > header b { display: block; font-size: 14px; }
+.d-row > header small { color: var(--subtle); font-size: 12px; }
+.d-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+.d-card { border: 1px solid var(--border); background: var(--surface); border-radius: 14px; padding: 12px; text-align: left; border-top: 4px solid var(--c); min-height: 86px; display: flex; flex-direction: column; gap: 6px; }
+.d-card .t { font-weight: 600; font-size: 14px; }
+.d-card .m { margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--subtle); }
+.d-card.cur { box-shadow: 0 0 0 2px var(--accent); }
+.d-open { grid-column: 1 / -1; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); padding: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.d-lock { opacity: .55; }
+.d-lock .d-card { pointer-events: none; }
+
+@media (max-width: 860px) {
+  .a-grid, .b-grid, .a-main, .d-open { grid-template-columns: 1fr; }
+  .a-side { max-height: none; border-right: 0; border-bottom: 1px solid var(--border); }
+  .b-left { border-right: 0; border-bottom: 1px solid var(--border); }
+  .d-row { grid-template-columns: 1fr; }
+  .meter .bar { width: 80px; }
+  .c-table th:nth-child(4), .c-table td:nth-child(4) { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="intro">
+    <h1>Fiches d'exercices : quatre dispositions</h1>
+    <p>Maquettes sur la fiche « Les Conditions » (25 exercices). Chaque proposition est cliquable : choisir un exercice, filtrer, ouvrir. Le code et les tests sont factices.</p>
+  </header>
+
+  <nav class="switch" aria-label="Propositions">
+    <button data-p="a" aria-pressed="true">A · Parcours latéral</button>
+    <button data-p="b" aria-pressed="false">B · Plan de travail</button>
+    <button data-p="c" aria-pressed="false">C · Tableau + tiroir</button>
+    <button data-p="d" aria-pressed="false">D · Échelle de difficulté</button>
+  </nav>
+
+  <!-- A -->
+  <section class="proposal on" id="p-a">
+    <div class="why">
+      <div><b>Idée</b>Comme un cours en ligne : la liste complète à gauche, l'exercice au centre, l'éditeur juste sous l'énoncé.</div>
+      <div><b>Points forts</b>Les 25 exercices restent visibles, l'avancement se lit d'un coup d'œil, plus besoin de changer de page pour coder.</div>
+      <div><b>Limite</b>Demande de la largeur : sur téléphone la liste passe au-dessus, repliable.</div>
+    </div>
+    <div class="frame">
+      <div class="sheet-head"><img src="../public/images/badges/les-conditions-python.png" alt=""><div><h2>Les Conditions</h2><small>Première NSI · Introduction à Python</small></div>
+        <div class="meter"><span>7 / 25 validés</span><span class="bar"><i></i></span></div></div>
+      <div class="a-grid">
+        <aside class="a-side" id="a-side"></aside>
+        <div class="a-main" id="a-main"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section class="proposal" id="p-b">
+    <div class="why">
+      <div><b>Idée</b>Un espace de travail : énoncé à gauche, éditeur et tests à droite, une barre de pastilles en haut pour sauter d'un exercice à l'autre.</div>
+      <div><b>Points forts</b>Tout tient sur un écran, rythme « exercice suivant » très fluide, idéal en classe sur ordinateur.</div>
+      <div><b>Limite</b>Les titres des exercices ne se lisent qu'au survol des pastilles.</div>
+    </div>
+    <div class="frame">
+      <div class="sheet-head"><img src="../public/images/badges/les-conditions-python.png" alt=""><div><h2>Les Conditions</h2><small>Première NSI</small></div>
+        <div class="meter"><span>7 / 25</span><span class="bar"><i></i></span></div></div>
+      <div class="b-strip" id="b-strip"></div>
+      <div class="b-grid">
+        <div class="b-left" id="b-left"></div>
+        <div class="b-right" id="b-right"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C -->
+  <section class="proposal" id="p-c">
+    <div class="why">
+      <div><b>Idée</b>Une vue d'ensemble en tableau (difficulté, état, essais) ; un clic ouvre l'exercice dans un tiroir à droite.</div>
+      <div><b>Points forts</b>Très lisible pour reprendre une fiche commencée et pour l'enseignant qui suit la classe ; filtre par difficulté et par état.</div>
+      <div><b>Limite</b>Moins « jeu » ; le tiroir devient plein écran sur téléphone.</div>
+    </div>
+    <div class="frame c-wrap" id="c-wrap">
+      <div class="sheet-head"><img src="../public/images/badges/les-conditions-python.png" alt=""><div><h2>Les Conditions</h2><small>Première NSI</small></div>
+        <div class="meter"><span>7 / 25</span><span class="bar"><i></i></span></div></div>
+      <div class="c-filters" id="c-filters"></div>
+      <table class="c-table"><thead><tr><th>Exercice</th><th>Difficulté</th><th>État</th><th>Essais</th></tr></thead><tbody id="c-body"></tbody></table>
+      <aside class="c-drawer" id="c-drawer" hidden></aside>
+    </div>
+  </section>
+
+  <!-- D -->
+  <section class="proposal" id="p-d">
+    <div class="why">
+      <div><b>Idée</b>Les difficultés en marches d'escalier ; chaque exercice est une carte ; la carte choisie s'ouvre sous sa ligne avec l'éditeur.</div>
+      <div><b>Points forts</b>Progression visible et motivante ; option : débloquer le niveau suivant après 3 exercices validés.</div>
+      <div><b>Limite</b>Page plus longue ; on fait défiler entre les niveaux.</div>
+    </div>
+    <div class="frame">
+      <div class="sheet-head"><img src="../public/images/badges/les-conditions-python.png" alt=""><div><h2>Les Conditions</h2><small>Première NSI</small></div>
+        <div class="meter"><span>7 / 25</span><span class="bar"><i></i></span></div></div>
+      <div class="d-ladder" id="d-ladder"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const LEVELS = [
+  { name: 'Facile', c: 'var(--d1)' }, { name: 'Moyen', c: 'var(--d2)' }, { name: 'Avancé', c: 'var(--d3)' },
+  { name: 'Difficile', c: 'var(--d4)' }, { name: 'Expert', c: 'var(--d5)' },
+];
+const TITLES = [
+  ['Majeur ou mineur', 'Nombre positif', 'Parité', "Salutation selon l'heure", 'Maximum de deux nombres', 'Tarif musée'],
+  ["Signe d'un nombre", 'Mention au collège', 'Tarif cinéma', 'Catégorie IMC', 'Jour de la semaine', "Trimestre de l'année"],
+  ['Mot de passe valide', 'Triangle rectangle', 'Année bissextile', 'Accès au serveur', 'Plage de température', 'Type de triangle'],
+  ['FizzBuzz', 'Quadrant', "Validité d'une date", 'Pierre-feuille-ciseaux'],
+  ['Impôt progressif', 'Nombre premier', 'Résolution ax² + bx + c = 0'],
+];
+const STATES = { '1.1': 'done', '1.2': 'done', '1.3': 'done', '1.4': 'done', '1.5': 'done', '1.6': 'try', '2.1': 'done', '2.2': 'done', '2.3': 'try' };
+const EX = [];
+TITLES.forEach((list, li) => list.forEach((t, i) => {
+  const num = `${li + 1}.${i + 1}`;
+  EX.push({ num, title: t, level: li, state: STATES[num] || 'todo', tries: STATES[num] === 'done' ? 1 + (i % 3) : STATES[num] === 'try' ? 4 : 0 });
+}));
+let cur = '1.6';
+const find = (n) => EX.find((e) => e.num === n);
+const dot = (s) => `<span class="done-dot st-${s}">${s === 'done' ? '✓' : s === 'try' ? '…' : ''}</span>`;
+const tag = (l) => `<span class="tag" style="--c:${LEVELS[l].c}">${LEVELS[l].name}</span>`;
+const stateLabel = { done: 'Validé', try: 'En cours', todo: 'À faire' };
+
+function statement(e) {
+  return `<div class="statement">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px">${tag(e.level)}<span class="tag">Exercice ${e.num}</span></div>
+    <h3>${e.title}</h3>
+    <p>Écrire une fonction <code>tarif_musee</code> qui prend un âge (entier) et renvoie le prix d'entrée : <code>0</code> avant 12 ans, <code>5</code> jusqu'à 25 ans inclus, <code>9</code> sinon.</p>
+    <p>Utiliser <code>if</code> / <code>elif</code> / <code>else</code>.</p>
+    <div class="example"><b>Exemples attendus</b><span class="mono">tarif_musee(8) → 0 · tarif_musee(25) → 5 · tarif_musee(40) → 9</span></div>
+  </div>`;
+}
+function editor() {
+  return `<div class="editor"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>exercice.py</span><span style="margin-left:auto">Python</span></div>
+<pre><span class="k">def</span> <span class="f">tarif_musee</span>(age):
+    <span class="k">if</span> age &lt; <span class="n">12</span>:
+        <span class="k">return</span> <span class="n">0</span>
+    <span class="k">elif</span> age &lt; <span class="n">25</span>:
+        <span class="k">return</span> <span class="n">5</span>
+    <span class="k">else</span>:
+        <span class="k">return</span> <span class="n">9</span>
+<span class="cm"># 4 essais · brouillon enregistré</span></pre></div>`;
+}
+function tests() {
+  return `<div class="tests">
+    <div><span class="ok">✓</span><span class="mono">tarif_musee(8) == 0</span></div>
+    <div><span class="ok">✓</span><span class="mono">tarif_musee(40) == 9</span></div>
+    <div><span class="ko">✗</span><span class="mono">tarif_musee(25) == 5</span><span style="margin-left:auto;color:var(--ko)">obtenu 9</span></div>
+  </div>`;
+}
+const runBar = (next = true) => `<div class="actions"><button class="btn primary">▶ Vérifier</button><button class="btn">Exécuter</button><button class="btn ghost">Réinitialiser</button>${next ? '<button class="btn ghost" style="margin-left:auto">Exercice suivant →</button>' : ''}</div>`;
+
+// A
+function renderA() {
+  document.getElementById('a-side').innerHTML = LEVELS.map((l, li) => {
+    const items = EX.filter((e) => e.level === li);
+    const done = items.filter((e) => e.state === 'done').length;
+    return `<div class="a-group"><p><span>${l.name}</span><span>${done}/${items.length}</span></p>${items.map((e) =>
+      `<button class="a-item ${e.num === cur ? 'cur' : ''}" data-n="${e.num}">${dot(e.state)}<span class="num">${e.num}</span><span>${e.title}</span></button>`).join('')}</div>`;
+  }).join('');
+  document.getElementById('a-main').innerHTML = `${statement(find(cur))}<div>${editor()}${runBar(false)}</div><div><p style="margin:0 0 6px;font-weight:600;font-size:14px">Tests</p>${tests()}</div>
+    <div class="a-foot"><button class="btn ghost">← Précédent</button><button class="btn">Suivant →</button></div>`;
+}
+// B
+function renderB() {
+  document.getElementById('b-strip').innerHTML = LEVELS.map((l, li) => EX.filter((e) => e.level === li).map((e) =>
+    `<button class="b-chip ${e.state === 'done' ? 'done' : ''} ${e.num === cur ? 'cur' : ''}" style="--c:${l.c}" title="${e.title}" data-n="${e.num}">${e.num}</button>`).join('')).join('<span class="sep"></span>');
+  document.getElementById('b-left').innerHTML = `${statement(find(cur))}
+    <details class="hint"><summary>Un indice</summary>La borne 25 est incluse : quel opérateur de comparaison convient ?</details>
+    <div class="b-nav"><button class="btn ghost">← 1.5</button><button class="btn">2.1 →</button></div>`;
+  document.getElementById('b-right').innerHTML = `${editor()}${runBar(false)}${tests()}`;
+}
+// C
+let cFilter = 'all';
+function renderC() {
+  const f = document.getElementById('c-filters');
+  const opts = [['all', 'Tous'], ['todo', 'À faire'], ['try', 'En cours'], ['done', 'Validés'], ...LEVELS.map((l, i) => [`l${i}`, l.name])];
+  f.innerHTML = opts.map(([k, v]) => `<button class="${cFilter === k ? 'on' : ''}" data-f="${k}">${v}</button>`).join('');
+  const list = EX.filter((e) => cFilter === 'all' || e.state === cFilter || `l${e.level}` === cFilter);
+  document.getElementById('c-body').innerHTML = list.map((e) =>
+    `<tr data-n="${e.num}" class="${e.num === cur && !document.getElementById('c-drawer').hidden ? 'cur' : ''}"><td><span style="color:var(--subtle);margin-right:8px">${e.num}</span>${e.title}</td><td>${tag(e.level)}</td><td style="display:flex;gap:8px;align-items:center">${dot(e.state)}${stateLabel[e.state]}</td><td>${e.tries || '–'}</td></tr>`).join('');
+}
+function openDrawer() {
+  const d = document.getElementById('c-drawer');
+  d.hidden = false;
+  d.innerHTML = `<button class="btn ghost close" data-close>✕</button>${statement(find(cur))}<div style="margin-top:14px">${editor()}${runBar()}${tests()}</div>`;
+  renderC();
+}
+// D
+function renderD() {
+  document.getElementById('d-ladder').innerHTML = LEVELS.map((l, li) => {
+    const items = EX.filter((e) => e.level === li);
+    const done = items.filter((e) => e.state === 'done').length;
+    const locked = li >= 3;
+    const open = items.some((e) => e.num === cur) && !locked;
+    return `<div class="d-row ${locked ? 'd-lock' : ''}"><header><b>${l.name}</b><small>${locked ? '🔒 3 exercices « Avancé » à valider' : `${done}/${items.length} validés`}</small></header>
+      <div class="d-cards">${items.map((e) => `<button class="d-card ${e.num === cur ? 'cur' : ''}" style="--c:${l.c}" data-n="${e.num}"><span class="t">${e.title}</span><span class="m"><span>${e.num}</span>${dot(e.state)}</span></button>`).join('')}
+      ${open ? `<div class="d-open">${statement(find(cur))}<div>${editor()}${runBar()}${tests()}</div></div>` : ''}</div></div>`;
+  }).join('');
+}
+
+function renderAll() { renderA(); renderB(); renderC(); renderD(); }
+document.addEventListener('click', (ev) => {
+  const sw = ev.target.closest('.switch button');
+  if (sw) {
+    document.querySelectorAll('.switch button').forEach((b) => b.setAttribute('aria-pressed', b === sw));
+    document.querySelectorAll('.proposal').forEach((p) => p.classList.toggle('on', p.id === `p-${sw.dataset.p}`));
+    return;
+  }
+  const f = ev.target.closest('[data-f]');
+  if (f) { cFilter = f.dataset.f; renderC(); return; }
+  if (ev.target.closest('[data-close]')) { document.getElementById('c-drawer').hidden = true; renderC(); return; }
+  const n = ev.target.closest('[data-n]');
+  if (n) {
+    cur = n.dataset.n;
+    renderA(); renderB(); renderD();
+    if (n.closest('#c-wrap')) openDrawer(); else renderC();
+  }
+});
+renderAll();
+</script>
+</body>
+</html>

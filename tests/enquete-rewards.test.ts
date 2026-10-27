@@ -5,6 +5,8 @@ import { earnedAchievementIds, ENQUETE_ACHIEVEMENTS, enqueteBadgeId } from '../l
 import { ENQUETES } from '../lib/enquetes/cases';
 import { sheetBadgeSrc } from '../lib/sheet-badge-art';
 import { acceptsWrittenAnswer } from '../lib/exercise-type';
+import { ACHIEVEMENTS, achievementImage } from '../lib/achievements';
+import { chapterImageFromData } from '../lib/chapter-utils';
 
 const ALL = ['a', 'b', 'c'];
 
@@ -29,6 +31,57 @@ describe('enquête rewards', () => {
     }
     for (const achievement of ENQUETE_ACHIEVEMENTS) {
       expect(fs.existsSync(path.join(process.cwd(), 'public', achievement.image))).toBe(true);
+    }
+  });
+});
+
+describe('badge and achievement illustrations', () => {
+  const exists = (src: string) => fs.existsSync(path.join(process.cwd(), 'public', src));
+
+  it('has a fox illustration for every exercise sheet', () => {
+    const ids = new Set<string>();
+    const walk = (dir: string) => {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) walk(full);
+        else if (/\.mdx?$/.test(entry.name)) {
+          for (const match of fs.readFileSync(full, 'utf8').matchAll(/courseId="([^"]+)"/g)) ids.add(match[1]);
+        }
+      }
+    };
+    walk(path.join(process.cwd(), 'content'));
+    const missing = [...ids].filter((id) => {
+      const src = sheetBadgeSrc(id);
+      return !src || !exists(src);
+    });
+    expect(missing).toEqual([]);
+  });
+
+  it('has a level-fox illustration for every chapter', () => {
+    const missing: string[] = [];
+    for (const folder of fs.readdirSync(path.join(process.cwd(), 'content'))) {
+      const walk = (dir: string) => {
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+          const full = path.join(dir, entry.name);
+          if (entry.isDirectory()) walk(full);
+          else if (/\.mdx?$/.test(entry.name)) {
+            const match = fs.readFileSync(full, 'utf8').match(/^chapter:\s*(.+)$/m);
+            if (!match) continue;
+            const name = match[1].trim().replace(/^["']|["']$/g, '');
+            const src = chapterImageFromData(folder, name);
+            if (!src?.startsWith('/images/chapitres/') || !exists(src)) missing.push(`${folder} : ${name}`);
+          }
+        }
+      };
+      walk(path.join(process.cwd(), 'content', folder));
+    }
+    expect([...new Set(missing)]).toEqual([]);
+  });
+
+  it('has an illustration for every site achievement', () => {
+    for (const achievement of ACHIEVEMENTS) {
+      const src = achievementImage(achievement.id);
+      expect(src && exists(src)).toBe(true);
     }
   });
 });
