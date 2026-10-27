@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiches d'exercices – maquettes 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef; --surface: #fffcf8; --surface-2: #f1ece4; --fg: #14110e; --muted: #5c564e; --subtle: #8a8278;
+  --border: rgba(20,17,14,.10); --accent: #ea580c; --accent-soft: #fff1e6; --ok: #16a34a; --ok-soft: #e7f6ec; --ko: #dc2626;
+  --shadow: 0 1px 1px rgba(20,17,14,.03), 0 22px 50px -32px rgba(20,17,14,.28);
+  --d1: #16a34a; --d2: #0ea5e9; --d3: #8b5cf6; --d4: #f59e0b; --d5: #dc2626;
+  --code-bg: #1d1a17; --code-bar: #27231f; --code-fg: #f3ede4;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 Inter, system-ui, sans-serif; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.mono, pre, code { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 80px; }
+.intro h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -.02em; }
+.intro p { margin: 0; color: var(--muted); max-width: 78ch; }
+.bar-top { position: sticky; top: 0; z-index: 40; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; padding: 12px 0; background: var(--bg); border-bottom: 1px solid var(--border); margin: 18px 0 22px; }
+.seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface-2); }
+.seg button { border: 0; background: none; border-radius: 999px; padding: 7px 13px; font-weight: 600; font-size: 14px; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.seg.who button[aria-pressed="true"] { background: var(--fg); color: #fff; }
+.proposal { display: none; } .proposal.on { display: block; }
+.why { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin: 0 0 18px; }
+.why div { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; font-size: 14px; color: var(--muted); }
+.why b { display: block; color: var(--fg); font-size: 13px; margin-bottom: 2px; }
+.frame { background: var(--surface); border: 1px solid var(--border); border-radius: 22px; box-shadow: var(--shadow); overflow: hidden; position: relative; }
+
+/* Commun */
+.head { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.head .pic { width: 46px; height: 46px; border-radius: 12px; background: var(--accent-soft) url(../public/images/badges/les-conditions-python.png) center/contain no-repeat; flex-shrink: 0; }
+.head h2 { margin: 0; font-size: 18px; } .head small { color: var(--subtle); }
+.meter { margin-left: auto; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.meter i { display: block; width: 120px; height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--accent) 28%, var(--surface-2) 28%); }
+.tag { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 99px; background: var(--surface-2); color: var(--muted); }
+.tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--subtle)); }
+.st { width: 18px; height: 18px; border-radius: 50%; display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.st-done { background: var(--ok); color: #fff; } .st-try { background: #fde68a; color: #92400e; } .st-todo { border: 2px solid var(--border); }
+.statement h3 { margin: 4px 0 6px; font-size: 19px; letter-spacing: -.01em; }
+.statement p { margin: 8px 0; }
+.statement code { background: var(--accent-soft); color: #b4400a; padding: 1px 6px; border-radius: 6px; font-size: 13px; }
+.example { margin-top: 10px; border: 1px dashed var(--border); border-radius: 12px; padding: 10px 12px; font-size: 13px; }
+.example b { font-size: 12px; color: var(--subtle); display: block; margin-bottom: 4px; }
+.btn { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 8px 13px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn.dark { background: var(--fg); color: #fff; border-color: var(--fg); }
+.btn.ghost { background: transparent; }
+.login { display: flex; gap: 14px; align-items: center; border: 1px solid #f6d4bd; background: var(--accent-soft); border-radius: 14px; padding: 14px 16px; font-size: 14px; }
+.login .fox { width: 44px; height: 44px; flex-shrink: 0; background: url(../public/images/fox_2.png) center/contain no-repeat; }
+.login p { margin: 0; color: var(--muted); } .login b { color: var(--fg); }
+.login .btn { margin-left: auto; }
+
+/* Éditeur */
+.ide { background: var(--code-bg); color: var(--code-fg); display: flex; flex-direction: column; min-height: 0; border-radius: 14px; overflow: hidden; }
+.ide-bar { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: var(--code-bar); color: #b8afa3; font-size: 12.5px; flex-shrink: 0; }
+.ide-bar .file { background: var(--code-bg); color: var(--code-fg); padding: 4px 10px; border-radius: 7px 7px 0 0; margin-bottom: -7px; }
+.ide-bar .sp { margin-left: auto; }
+.ide-bar button { border: 0; background: #3a342e; color: #f3ede4; border-radius: 7px; padding: 4px 9px; font-size: 12px; font-weight: 600; }
+.ide-bar button.run { background: var(--accent); }
+.code { flex: 1; overflow: auto; display: flex; font-size: 13.5px; line-height: 1.6; min-height: 0; }
+.code .ln { padding: 12px 8px 12px 14px; text-align: right; color: #5f574f; user-select: none; }
+.code pre { margin: 0; padding: 12px 16px 12px 6px; flex: 1; }
+.k { color: #ff9e64; } .f { color: #7dcfff; } .s { color: #9ece6a; } .n { color: #e0af68; } .cm { color: #8a8278; }
+.dock { background: #15120f; border-top: 1px solid #332d27; flex-shrink: 0; }
+.dock-tabs { display: flex; gap: 2px; padding: 6px 8px 0; }
+.dock-tabs button { border: 0; background: none; color: #a39a8f; font-size: 12.5px; font-weight: 600; padding: 6px 10px; border-radius: 7px 7px 0 0; }
+.dock-tabs button.on { background: #221e1a; color: #fff; }
+.dock-body { background: #221e1a; padding: 10px 14px; font-size: 13px; min-height: 110px; }
+.dock-body .row { display: flex; gap: 10px; padding: 3px 0; }
+.ok { color: #4ade80; font-weight: 700; } .ko { color: #f87171; font-weight: 700; } .dim { color: #a39a8f; }
+.grip { height: 8px; cursor: row-resize; background: #2b2621; display: grid; place-items: center; }
+.grip::after { content: ""; width: 34px; height: 3px; border-radius: 3px; background: #4b443d; }
+
+/* E — Fiche à lire + atelier plein écran */
+.e-doc { display: grid; grid-template-columns: 220px 1fr; }
+.e-toc { border-right: 1px solid var(--border); padding: 16px 10px; font-size: 13.5px; position: sticky; top: 60px; align-self: start; max-height: 80vh; overflow: auto; }
+.e-toc p { margin: 10px 8px 4px; font-size: 12px; font-weight: 700; color: var(--subtle); }
+.e-toc a { display: flex; gap: 8px; align-items: center; padding: 4px 8px; border-radius: 8px; color: inherit; text-decoration: none; }
+.e-toc a:hover { background: var(--surface-2); }
+.e-list { padding: 8px 24px 24px; }
+.e-ex { padding: 20px 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start; }
+.e-ex .side { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; min-width: 170px; }
+.e-ex .side small { color: var(--subtle); font-size: 12px; }
+.studio { position: fixed; inset: 0; z-index: 100; background: #0f0d0b; display: grid; grid-template-rows: auto 1fr; }
+.studio[hidden] { display: none; }
+.studio-top { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: #1d1a17; color: #f3ede4; font-size: 14px; }
+.studio-top select { background: #2b2621; color: #f3ede4; border: 0; border-radius: 8px; padding: 6px 10px; font: inherit; }
+.studio-top .btn { background: #2b2621; color: #f3ede4; border-color: #3a342e; }
+.studio-body { display: grid; grid-template-columns: var(--left, 380px) 6px 1fr; min-height: 0; }
+.studio-left { background: var(--surface); overflow: auto; padding: 20px; }
+.studio-left.closed { display: none; }
+.vgrip { cursor: col-resize; background: #2b2621; }
+.studio .ide { border-radius: 0; }
+
+/* F — Mode concentration */
+.f-wrap { display: grid; grid-template-columns: 56px 1fr; min-height: 720px; }
+.f-rail { background: var(--surface-2); border-right: 1px solid var(--border); padding: 10px 6px; display: flex; flex-direction: column; gap: 4px; overflow: auto; max-height: 820px; }
+.f-rail button { border: 0; border-radius: 9px; padding: 6px 0; font-size: 12px; font-weight: 600; background: none; position: relative; }
+.f-rail button::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px; border-radius: 3px; background: var(--c); }
+.f-rail button.done { color: var(--ok); }
+.f-rail button.cur { background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.f-rail hr { border: 0; border-top: 1px solid var(--border); width: 70%; margin: 4px auto; }
+.f-main { display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.f-brief { padding: 16px 20px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 14px; }
+.f-brief.folded .more { display: none; }
+.f-brief .tools { display: flex; gap: 6px; align-items: start; }
+.f-work { padding: 14px; background: #f4efe7; display: flex; }
+.f-work .ide { flex: 1; height: 620px; }
+
+/* G — Carnet */
+.g-book { padding: 10px 24px 24px; max-width: 980px; margin: 0 auto; }
+.g-cell { margin: 18px 0; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); overflow: hidden; }
+.g-cell header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; }
+.g-cell header h3 { margin: 0; font-size: 16px; flex: 1; }
+.g-cell .body { padding: 0 16px 16px; display: none; }
+.g-cell.open .body { display: block; }
+.g-cell .ide { margin-top: 12px; }
+.g-cell .grow { height: auto; }
+.g-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--subtle); margin-top: 8px; }
+
+/* H — Deux zones : sujet à gauche, IDE collant à droite */
+.h-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+.h-read { padding: 8px 24px 24px; border-right: 1px solid var(--border); }
+.h-read .item { padding: 16px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.h-read .item.cur { box-shadow: inset 3px 0 0 var(--accent); padding-left: 12px; }
+.h-read .item .statement { display: none; }
+.h-read .item.cur .statement { display: block; }
+.h-read .item .line { display: flex; gap: 10px; align-items: center; font-weight: 600; }
+.h-dock { position: sticky; top: 60px; align-self: start; height: calc(100vh - 80px); padding: 14px; background: #f4efe7; display: flex; flex-direction: column; gap: 8px; }
+.h-dock .ide { flex: 1; }
+.h-dock .hd { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--muted); }
+
+@media (max-width: 880px) {
+  .e-doc, .h-grid, .f-wrap { grid-template-columns: 1fr; }
+  .e-toc { display: none; }
+  .e-ex { grid-template-columns: 1fr; } .e-ex .side { align-items: flex-start; }
+  .f-rail { flex-direction: row; max-height: none; overflow-x: auto; }
+  .f-rail button { min-width: 40px; }
+  .studio-body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .vgrip { display: none; }
+  .h-dock { position: static; height: 70vh; }
+  .meter i { width: 70px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="intro">
+    <h1>Fiches d'exercices : quatre autres dispositions</h1>
+    <p>Chaque proposition se regarde en deux états : <b>visiteur</b> (aucun compte, pas d'éditeur, la fiche se lit comme un sujet) et <b>élève connecté</b> (éditeur et tests). L'éditeur est pensé pour des programmes longs : grand, redimensionnable, avec console et tests en bas.</p>
+  </header>
+
+  <div class="bar-top">
+    <div class="seg" role="group" aria-label="Propositions">
+      <button data-p="e" aria-pressed="true">E · Sujet + atelier plein écran</button>
+      <button data-p="f" aria-pressed="false">F · Mode concentration</button>
+      <button data-p="g" aria-pressed="false">G · Carnet</button>
+      <button data-p="h" aria-pressed="false">H · Sujet + éditeur fixe</button>
+    </div>
+    <div class="seg who" role="group" aria-label="Qui regarde">
+      <button data-who="visitor" aria-pressed="false">Visiteur</button>
+      <button data-who="student" aria-pressed="true">Élève connecté</button>
+    </div>
+  </div>
+
+  <section class="proposal on" id="p-e">
+    <div class="why">
+      <div><b>Idée</b>La fiche reste un sujet à lire, d'un seul tenant, avec un sommaire. Pour coder, un bouton ouvre un <b>atelier plein écran</b> : énoncé repliable à gauche, très grand éditeur, console et tests en bas.</div>
+      <div><b>Visiteur</b>Lit tous les énoncés comme un polycopié ; un encart propose de se connecter pour coder sur le site.</div>
+      <div><b>Élève</b>Chaque exercice affiche son état et « Ouvrir l'atelier » ; on passe d'un exercice à l'autre sans quitter l'atelier.</div>
+    </div>
+    <div class="frame">
+      <div class="head"><span class="pic"></span><div><h2>Les Conditions</h2><small>Première NSI · 25 exercices</small></div><div class="meter only-student"><span>7 / 25</span><i></i></div></div>
+      <div class="e-doc"><nav class="e-toc" id="e-toc"></nav><div class="e-list" id="e-list"></div></div>
+    </div>
+  </section>
+
+  <section class="proposal" id="p-f">
+    <div class="why">
+      <div><b>Idée</b>Un espace de travail façon environnement de développement : rail étroit des exercices à gauche, énoncé en bandeau repliable en haut, <b>l'éditeur prend tout le reste</b>.</div>
+      <div><b>Visiteur</b>Même page sans éditeur : l'énoncé se déplie en entier, avec les exemples, et un encart de connexion.</div>
+      <div><b>Élève</b>Replier l'énoncé donne un éditeur de presque toute la hauteur ; la poignée en bas agrandit la console.</div>
+    </div>
+    <div class="frame">
+      <div class="head"><span class="pic"></span><div><h2>Les Conditions</h2><small>Première NSI</small></div><div class="meter only-student"><span>7 / 25</span><i></i></div></div>
+      <div class="f-wrap"><nav class="f-rail" id="f-rail"></nav><div class="f-main" id="f-main"></div></div>
+    </div>
+  </section>
+
+  <section class="proposal" id="p-g">
+    <div class="why">
+      <div><b>Idée</b>Un carnet, comme Jupyter ou Capytale : chaque exercice est un bloc qui se déplie ; l'éditeur <b>grandit avec le code</b> et un bouton l'agrandit en plein écran.</div>
+      <div><b>Visiteur</b>Les blocs ne contiennent que l'énoncé et les exemples.</div>
+      <div><b>Élève</b>Le code reste sous l'énoncé, le brouillon est gardé, l'état apparaît sur chaque bloc fermé.</div>
+    </div>
+    <div class="frame"><div class="head"><span class="pic"></span><div><h2>Les Conditions</h2><small>Première NSI</small></div><div class="meter only-student"><span>7 / 25</span><i></i></div></div>
+      <div class="g-book" id="g-book"></div></div>
+  </section>
+
+  <section class="proposal" id="p-h">
+    <div class="why">
+      <div><b>Idée</b>Deux colonnes : à gauche la liste des sujets qu'on fait défiler (l'exercice choisi s'ouvre), à droite un <b>éditeur fixe de toute la hauteur de l'écran</b>.</div>
+      <div><b>Visiteur</b>Une seule colonne de lecture, centrée ; la colonne de droite disparaît.</div>
+      <div><b>Élève</b>L'éditeur suit le défilement ; changer d'exercice à gauche change le fichier à droite.</div>
+    </div>
+    <div class="frame"><div class="head"><span class="pic"></span><div><h2>Les Conditions</h2><small>Première NSI</small></div><div class="meter only-student"><span>7 / 25</span><i></i></div></div>
+      <div class="h-grid" id="h-grid"><div class="h-read" id="h-read"></div><div class="h-dock" id="h-dock"></div></div></div>
+  </section>
+</div>
+
+<div class="studio" id="studio" hidden></div>
+
+<script>
+const LEVELS = [
+  { name: 'Facile', c: 'var(--d1)' }, { name: 'Moyen', c: 'var(--d2)' }, { name: 'Avancé', c: 'var(--d3)' },
+  { name: 'Difficile', c: 'var(--d4)' }, { name: 'Expert', c: 'var(--d5)' },
+];
+const TITLES = [
+  ['Majeur ou mineur', 'Nombre positif', 'Parité', "Salutation selon l'heure", 'Maximum de deux nombres', 'Tarif musée'],
+  ["Signe d'un nombre", 'Mention au collège', 'Tarif cinéma', 'Catégorie IMC', 'Jour de la semaine', "Trimestre de l'année"],
+  ['Mot de passe valide', 'Triangle rectangle', 'Année bissextile', 'Accès au serveur', 'Plage de température', 'Type de triangle'],
+  ['FizzBuzz', 'Quadrant', "Validité d'une date", 'Pierre-feuille-ciseaux'],
+  ['Impôt progressif', 'Nombre premier', 'Résolution ax² + bx + c = 0'],
+];
+const STATES = { '1.1': 'done', '1.2': 'done', '1.3': 'done', '1.4': 'done', '1.5': 'done', '1.6': 'done', '2.1': 'done', '4.3': 'try' };
+const EX = [];
+TITLES.forEach((list, li) => list.forEach((t, i) => { const num = `${li + 1}.${i + 1}`; EX.push({ num, title: t, level: li, state: STATES[num] || 'todo' }); }));
+let cur = '4.3';
+let who = 'student';
+const find = (n) => EX.find((e) => e.num === n);
+const st = (s) => `<span class="st st-${s}">${s === 'done' ? '✓' : s === 'try' ? '…' : ''}</span>`;
+const tag = (l) => `<span class="tag" style="--c:${LEVELS[l].c}">${LEVELS[l].name}</span>`;
+const student = () => who === 'student';
+
+function statement(e, full = true) {
+  return `<div class="statement"><div style="display:flex;gap:8px;align-items:center">${tag(e.level)}<span class="tag">Exercice ${e.num}</span></div>
+    <h3>${e.title}</h3>
+    <p>Écrire une fonction <code>date_valide(j, m, a)</code> qui renvoie <code>True</code> si la date existe, <code>False</code> sinon. Les années bissextiles sont prises en compte.</p>
+    ${full ? `<p>Découper le problème : une fonction <code>bissextile(a)</code>, une fonction <code>nb_jours(m, a)</code>, puis <code>date_valide</code>.</p>
+    <div class="example"><b>Exemples attendus</b><span class="mono">date_valide(29, 2, 2024) → True · date_valide(29, 2, 2023) → False · date_valide(31, 4, 2025) → False</span></div>` : ''}
+  </div>`;
+}
+const CODE = `<span class="k">def</span> <span class="f">bissextile</span>(a):
+    <span class="s">"""Renvoie True si l'année a est bissextile."""</span>
+    <span class="k">if</span> a % <span class="n">400</span> == <span class="n">0</span>:
+        <span class="k">return</span> <span class="k">True</span>
+    <span class="k">if</span> a % <span class="n">100</span> == <span class="n">0</span>:
+        <span class="k">return</span> <span class="k">False</span>
+    <span class="k">return</span> a % <span class="n">4</span> == <span class="n">0</span>
+
+
+<span class="k">def</span> <span class="f">nb_jours</span>(m, a):
+    <span class="s">"""Nombre de jours du mois m de l'année a."""</span>
+    <span class="k">if</span> m == <span class="n">2</span>:
+        <span class="k">if</span> <span class="f">bissextile</span>(a):
+            <span class="k">return</span> <span class="n">29</span>
+        <span class="k">return</span> <span class="n">28</span>
+    <span class="k">if</span> m <span class="k">in</span> (<span class="n">4</span>, <span class="n">6</span>, <span class="n">9</span>, <span class="n">11</span>):
+        <span class="k">return</span> <span class="n">30</span>
+    <span class="k">return</span> <span class="n">31</span>
+
+
+<span class="k">def</span> <span class="f">date_valide</span>(j, m, a):
+    <span class="k">if</span> m &lt; <span class="n">1</span> <span class="k">or</span> m &gt; <span class="n">12</span>:
+        <span class="k">return</span> <span class="k">False</span>
+    <span class="k">if</span> j &lt; <span class="n">1</span>:
+        <span class="k">return</span> <span class="k">False</span>
+    <span class="k">return</span> j &lt;= <span class="f">nb_jours</span>(m, a)
+
+
+<span class="cm"># Essais personnels</span>
+<span class="f">print</span>(<span class="f">date_valide</span>(<span class="n">29</span>, <span class="n">2</span>, <span class="n">2024</span>))
+<span class="f">print</span>(<span class="f">date_valide</span>(<span class="n">31</span>, <span class="n">4</span>, <span class="n">2025</span>))`;
+const LINES = CODE.split('\n').length;
+
+function ide({ height = '', expand = true, dock = true } = {}) {
+  return `<div class="ide" style="${height ? `height:${height}` : ''}">
+    <div class="ide-bar"><span class="file">exercice_${cur.replace('.', '_')}.py</span><span class="sp dim">${LINES} lignes · brouillon enregistré</span>
+      <button>Réinitialiser</button><button>Exécuter</button><button class="run">▶ Vérifier</button>${expand ? '<button data-studio title="Plein écran">⤢</button>' : ''}</div>
+    <div class="code"><div class="ln mono">${Array.from({ length: LINES }, (_, i) => i + 1).join('<br>')}</div><pre>${CODE}</pre></div>
+    ${dock ? `<div class="grip" title="Glisser pour agrandir la console"></div><div class="dock">
+      <div class="dock-tabs"><button class="on">Tests 3/4</button><button>Console</button><button>Indice</button></div>
+      <div class="dock-body mono">
+        <div class="row"><span class="ok">✓</span>date_valide(29, 2, 2024) == True</div>
+        <div class="row"><span class="ok">✓</span>date_valide(29, 2, 2023) == False</div>
+        <div class="row"><span class="ok">✓</span>date_valide(31, 4, 2025) == False</div>
+        <div class="row"><span class="ko">✗</span>date_valide(29, 2, 1900) == False <span class="dim" style="margin-left:auto">obtenu True</span></div>
+      </div></div>` : ''}
+  </div>`;
+}
+const loginCard = (text = 'Se connecter pour écrire et vérifier son code directement sur le site.') =>
+  `<div class="login"><span class="fox"></span><p><b>Exercice à faire en ligne</b><br>${text}</p><button class="btn dark">Se connecter</button></div>`;
+
+/* E */
+function renderE() {
+  document.getElementById('e-toc').innerHTML = LEVELS.map((l, li) => `<p>${l.name}</p>${EX.filter((e) => e.level === li).map((e) =>
+    `<a href="#e-${e.num}">${student() ? st(e.state) : ''}<span class="dim" style="width:24px">${e.num}</span>${e.title}</a>`).join('')}`).join('');
+  document.getElementById('e-list').innerHTML = (student() ? '' : `<div style="margin-top:16px">${loginCard('La fiche se lit librement. Une fois connecté, chaque exercice s\'ouvre dans un atelier avec éditeur et tests.')}</div>`)
+    + EX.filter((e) => ['1.6', '2.1', '4.3', '5.1'].includes(e.num)).map((e) => `<article class="e-ex" id="e-${e.num}">${statement(e)}
+      ${student() ? `<div class="side">${st(e.state)}<small>${e.state === 'done' ? 'Validé' : e.state === 'try' ? 'En cours · 5 essais' : 'À faire'}</small><button class="btn primary" data-open="${e.num}">Ouvrir l'atelier ⤢</button></div>` : '<div></div>'}</article>`).join('')
+    + `<p class="dim" style="font-size:13px;margin-top:14px">… les 21 autres énoncés suivent de la même façon.</p>`;
+}
+function openStudio(n) {
+  cur = n;
+  const s = document.getElementById('studio');
+  s.hidden = false;
+  s.innerHTML = `<div class="studio-top"><button class="btn" data-close>✕ Fermer</button><button class="btn" data-fold>☰ Énoncé</button>
+      <select>${EX.map((e) => `<option ${e.num === cur ? 'selected' : ''}>${e.num} · ${e.title}</option>`).join('')}</select>
+      <span style="margin-left:auto" class="dim">Les Conditions · 7 / 25 validés</span><button class="btn">← Précédent</button><button class="btn">Suivant →</button></div>
+    <div class="studio-body" id="studio-body"><aside class="studio-left" id="studio-left">${statement(find(cur))}</aside><div class="vgrip" id="vgrip" title="Glisser pour élargir"></div>${ide({ expand: false })}</div>`;
+}
+
+/* F */
+let fFold = false;
+function renderF() {
+  document.getElementById('f-rail').innerHTML = LEVELS.map((l, li) => EX.filter((e) => e.level === li).map((e) =>
+    `<button style="--c:${l.c}" class="${student() && e.state === 'done' ? 'done' : ''} ${e.num === cur ? 'cur' : ''}" data-n="${e.num}" title="${e.title}">${e.num}</button>`).join('')).join('<hr>');
+  const e = find(cur);
+  document.getElementById('f-main').innerHTML = student()
+    ? `<div class="f-brief ${fFold ? 'folded' : ''}"><div>${fFold ? `<div style="display:flex;gap:8px;align-items:center">${tag(e.level)}<b>${e.num} · ${e.title}</b></div>` : statement(e)}</div>
+        <div class="tools"><button class="btn" data-ffold>${fFold ? 'Afficher l\'énoncé' : 'Replier l\'énoncé'}</button><button class="btn" data-studio>⤢</button></div></div>
+       <div class="f-work">${ide({ height: fFold ? '700px' : '560px', expand: false })}</div>`
+    : `<div class="f-brief" style="grid-template-columns:1fr">${statement(e)}<div style="margin-top:10px">${loginCard()}</div></div>
+       <div style="padding:20px;display:flex;justify-content:space-between"><button class="btn ghost">← Précédent</button><button class="btn">Suivant →</button></div>`;
+}
+
+/* G */
+let gOpen = new Set(['4.3']);
+function renderG() {
+  document.getElementById('g-book').innerHTML = (student() ? '' : `<div style="margin-top:14px">${loginCard()}</div>`)
+    + LEVELS.map((l, li) => `<h4 style="margin:22px 0 0;color:var(--subtle);font-size:13px">${l.name}</h4>` + EX.filter((e) => e.level === li).slice(0, li === 3 ? 4 : 2).map((e) => {
+      const open = gOpen.has(e.num);
+      return `<section class="g-cell ${open ? 'open' : ''}"><header data-g="${e.num}">${student() ? st(e.state) : ''}<span class="dim mono" style="font-size:12px">${e.num}</span><h3>${e.title}</h3>${tag(e.level)}<span class="dim">${open ? '▴' : '▾'}</span></header>
+        <div class="body">${statement(e)}${student() ? `${ide()}<div class="g-meta"><span>L'éditeur s'allonge avec le code (${LINES} lignes ici).</span><span>Dernier essai : il y a 3 min</span></div>` : ''}</div></section>`;
+    }).join('')).join('');
+}
+
+/* H */
+function renderH() {
+  const grid = document.getElementById('h-grid');
+  grid.style.gridTemplateColumns = student() ? '' : '1fr';
+  document.getElementById('h-read').innerHTML = (student() ? '' : `<div style="margin-top:14px">${loginCard()}</div>`)
+    + EX.map((e) => `<div class="item ${e.num === cur ? 'cur' : ''}" data-n="${e.num}"><div class="line">${student() ? st(e.state) : ''}<span class="dim mono" style="font-size:12px">${e.num}</span>${e.title}<span style="margin-left:auto">${tag(e.level)}</span></div>${statement(e)}</div>`).join('');
+  const dock = document.getElementById('h-dock');
+  dock.style.display = student() ? '' : 'none';
+  dock.innerHTML = `<div class="hd"><span>Exercice ${cur} · ${find(cur).title}</span><button class="btn" data-studio>⤢ Plein écran</button></div>${ide({ expand: false })}`;
+}
+
+function renderAll() {
+  document.querySelectorAll('.only-student').forEach((el) => { el.style.display = student() ? '' : 'none'; });
+  renderE(); renderF(); renderG(); renderH();
+}
+
+document.addEventListener('click', (ev) => {
+  const t = ev.target;
+  const p = t.closest('[data-p]');
+  if (p) {
+    document.querySelectorAll('[data-p]').forEach((b) => b.setAttribute('aria-pressed', b === p));
+    document.querySelectorAll('.proposal').forEach((s) => s.classList.toggle('on', s.id === `p-${p.dataset.p}`));
+    return;
+  }
+  const w = t.closest('[data-who]');
+  if (w) { who = w.dataset.who; document.querySelectorAll('[data-who]').forEach((b) => b.setAttribute('aria-pressed', b === w)); renderAll(); return; }
+  if (t.closest('[data-open]')) { openStudio(t.closest('[data-open]').dataset.open); return; }
+  if (t.closest('[data-studio]')) { openStudio(cur); return; }
+  if (t.closest('[data-close]')) { document.getElementById('studio').hidden = true; return; }
+  if (t.closest('[data-fold]')) { document.getElementById('studio-left').classList.toggle('closed'); document.getElementById('studio-body').style.setProperty('--left', document.getElementById('studio-left').classList.contains('closed') ? '0px' : '380px'); return; }
+  if (t.closest('[data-ffold]')) { fFold = !fFold; renderF(); return; }
+  const g = t.closest('[data-g]');
+  if (g) { const n = g.dataset.g; gOpen.has(n) ? gOpen.delete(n) : gOpen.add(n); renderG(); return; }
+  const n = t.closest('[data-n]');
+  if (n) { cur = n.dataset.n; renderF(); renderH(); }
+});
+// Poignée verticale de l'atelier : élargir ou réduire l'énoncé.
+document.addEventListener('pointerdown', (ev) => {
+  if (ev.target.id !== 'vgrip') return;
+  const body = document.getElementById('studio-body');
+  const move = (e) => body.style.setProperty('--left', `${Math.min(Math.max(e.clientX, 240), window.innerWidth * 0.6)}px`);
+  const up = () => { removeEventListener('pointermove', move); removeEventListener('pointerup', up); };
+  addEventListener('pointermove', move); addEventListener('pointerup', up);
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.getElementById('studio').hidden = true; });
+renderAll();
+</script>
+</body>
+</html>

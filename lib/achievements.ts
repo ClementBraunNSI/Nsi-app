@@ -44,6 +44,11 @@ export function globalAchievementsUnlockedBetween(before: AchievementStats, afte
   return ACHIEVEMENTS.filter((item) => item.condition(after) && !previous.has(item.id));
 }
 
+/** Illustration d'un succès du site (générée par scripts/badge-illustrations.mjs), ou null. */
+export function achievementImage(id: string): string | null {
+  return ACHIEVEMENTS.some((achievement) => achievement.id === id) ? `/images/succes/${id}.png` : null;
+}
+
 export function achievementForSheet(courseId: string, courseTitle: string): Achievement {
   return {
     id: `fiche:${courseId}`,

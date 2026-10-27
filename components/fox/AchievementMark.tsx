@@ -1,5 +1,5 @@
 import { Trophy } from "lucide-react";
-import { ACHIEVEMENTS } from "@/lib/achievements";
+import { ACHIEVEMENTS, achievementImage } from "@/lib/achievements";
 import { sheetCourseIdFromAchievement } from "@/lib/sheet-badge-art";
 import { SheetBadgeFox } from "@/components/fox/SheetBadgeFox";
 import { enqueteAchievement } from "@/lib/enquetes/rewards";
@@ -20,11 +20,11 @@ export function AchievementMark({
     return <SheetBadgeFox courseId={courseId} title={title} earned={earned} size={size} />;
   }
 
-  const enquete = enqueteAchievement(id);
-  if (enquete) {
+  const image = enqueteAchievement(id)?.image ?? achievementImage(id);
+  if (image) {
     return (
       <img
-        src={enquete.image}
+        src={image}
         alt={earned ? `Succès ${title}` : `Succès ${title}, pas encore obtenu`}
         width={size}
         height={size}

@@ -6,6 +6,7 @@ import { Achievement } from '@/lib/achievements';
 import { sheetCourseIdFromAchievement } from '@/lib/sheet-badge-art';
 import { AcademyVictoryFox } from '@/components/fox/AcademyVictoryFox';
 import { SheetBadgeFox } from '@/components/fox/SheetBadgeFox';
+import { AchievementMark } from '@/components/fox/AchievementMark';
 
 interface AchievementUnlockedModalProps {
   achievement: Achievement;
@@ -62,11 +63,13 @@ export default function AchievementUnlockedModal({ achievement, onClose }: Achie
           {achievement.description}
         </p>
 
-        {courseId && (
-          <div className="mt-6 flex justify-center">
+        <div className="mt-6 flex justify-center">
+          {courseId ? (
             <SheetBadgeFox courseId={courseId} title={achievement.title} size={84} />
-          </div>
-        )}
+          ) : (
+            <AchievementMark id={achievement.id} title={achievement.title} size={96} />
+          )}
+        </div>
 
         <div className="mt-8 pt-6 border-t border-slate-100">
           <p className="text-xs font-bold text-slate-400">

@@ -52,7 +52,34 @@ function consoleFromReport(report: RunReport, emptyLine: string): ConsoleState {
   return { tone: 'ok', text };
 }
 
-export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; nav: ExerciseSheetNav | null }) {
+const draftKey = (exerciseId: string) => `code-brouillon-${exerciseId}`;
+
+function readDraft(exerciseId: string): string | null {
+  try {
+    return localStorage.getItem(draftKey(exerciseId));
+  } catch {
+    return null;
+  }
+}
+
+function writeDraft(exerciseId: string, value: string, starter: string) {
+  try {
+    if (value && value !== starter) localStorage.setItem(draftKey(exerciseId), value);
+    else localStorage.removeItem(draftKey(exerciseId));
+  } catch {
+    /* stockage indisponible : le brouillon n'est pas gardé */
+  }
+}
+
+type WorkspaceProps = {
+  exercise: LabExercise;
+  nav: ExerciseSheetNav | null;
+  /** Dans une fiche : seulement l'éditeur, le résultat et les boutons (l'énoncé est affiché par la fiche). */
+  embedded?: boolean;
+  onCompleted?: (exerciseId: string) => void;
+};
+
+export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted }: WorkspaceProps) {
   const starter = exercise.starterCode ?? '';
   const [code, setCodeState] = useState(starter);
   // Le raccourci clavier peut partir avant le rendu qui suit la frappe : on lit toujours le dernier texte saisi.
@@ -60,6 +87,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
   const setCode = (value: string) => {
     codeRef.current = value;
     setCodeState(value);
+    writeDraft(exercise.id, value, starter);
   };
   const [running, setRunning] = useState<'execute' | 'test' | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -129,7 +157,10 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
   }, [exercise.id]);
 
   useEffect(() => {
-    setCode(starter);
+    // Le code en cours reste d'une visite à l'autre (et d'un exercice à l'autre dans une fiche).
+    const draft = readDraft(exercise.id) ?? starter;
+    codeRef.current = draft;
+    setCodeState(draft);
     setSqlResults(null);
     setReport(null);
     setStatusLine(null);
@@ -154,6 +185,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
     setReport(next);
     if (!outcome.recorded || !everyTestPassed(next) || next.saveWarning) return;
     setIsCompleted(true);
+    onCompleted?.(exercise.id);
     const unlocked = outcome.newAchievements ?? [];
     if (outcome.newBadge) {
       pendingQueueRef.current = unlocked;
@@ -304,10 +336,8 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
 
   const backHref = exercise.pagePath || '/';
 
-  return (
+  const modals = (
     <>
-    <IdeRotatePrompt backHref={backHref} label={exercise.label} />
-    <div className="exercise-workspace" inert={portraitPhone}>
       {showSuccessModal && pendingBadge && (
         <SuccessModal
           courseTitle={pendingBadge.courseTitle}
@@ -336,6 +366,76 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
           }}
         />
       )}
+    </>
+  );
+
+  const work = (
+    <div className="exercise-work">
+      <LabEditor
+        exercise={exercise}
+        code={code}
+        busy={running !== null}
+        onCodeChange={setCode}
+        onReset={() => setCode(starter)}
+        beforeMount={handleEditorWillMount}
+        barActions={
+          <span className="exercise-bar-actions">
+            <button type="button" onClick={handleExecute} disabled={running !== null} className="exercise-bar-run">
+              <Play size={13} fill="currentColor" aria-hidden />
+              {running === 'execute' ? 'En cours' : 'Exécuter'}
+            </button>
+            {exercise.hasVerification ? (
+              <button type="button" onClick={handleTest} disabled={running !== null} className="exercise-bar-test">
+                <Check size={13} aria-hidden />
+                {running === 'test' ? 'En cours' : 'Vérifier'}
+              </button>
+            ) : null}
+          </span>
+        }
+      />
+      <LabOutput
+        exercise={exercise}
+        tab={tab}
+        onTab={setTab}
+        onClear={handleClear}
+        onRetryTest={handleTest}
+        consoleState={consoleState}
+        sqlResults={sqlResults}
+        report={report}
+        statusLine={statusLine}
+      />
+      <div className="exercise-actions">
+        <span className="exercise-shortcut" aria-hidden>
+          <kbd>Ctrl</kbd>+<kbd>Entrée</kbd> exécute
+        </span>
+        <button type="button" onClick={handleExecute} disabled={running !== null} className="exercise-run">
+          <Play size={15} fill="currentColor" aria-hidden />
+          {running === 'execute' ? 'Exécution en cours' : 'Exécuter'}
+        </button>
+        {exercise.hasVerification ? (
+          <button type="button" onClick={handleTest} disabled={running !== null} className="exercise-test">
+            <Check size={15} aria-hidden />
+            {running === 'test' ? 'Vérification en cours' : 'Vérifier'}
+          </button>
+        ) : null}
+      </div>
+    </div>
+  );
+
+  if (embedded) {
+    return (
+      <>
+        {modals}
+        <div className="sheet-ide">{work}</div>
+      </>
+    );
+  }
+
+  return (
+    <>
+    <IdeRotatePrompt backHref={backHref} label={exercise.label} />
+    <div className="exercise-workspace" inert={portraitPhone}>
+      {modals}
 
       <header className="exercise-toolbar">
         <Link href={backHref} className="exercise-back" title="Retour à la fiche">
@@ -394,56 +494,7 @@ export function ExerciseWorkspace({ exercise, nav }: { exercise: LabExercise; na
 
       <div className={statementOpen ? 'exercise-body' : 'exercise-body is-focus'}>
         <ExerciseStatement label={exercise.label} content={cleanStatement(exercise.content)} />
-        <div className="exercise-work">
-          <LabEditor
-            exercise={exercise}
-            code={code}
-            busy={running !== null}
-            onCodeChange={setCode}
-            onReset={() => setCode(starter)}
-            beforeMount={handleEditorWillMount}
-            barActions={
-              <span className="exercise-bar-actions">
-                <button type="button" onClick={handleExecute} disabled={running !== null} className="exercise-bar-run">
-                  <Play size={13} fill="currentColor" aria-hidden />
-                  {running === 'execute' ? 'En cours' : 'Exécuter'}
-                </button>
-                {exercise.hasVerification ? (
-                  <button type="button" onClick={handleTest} disabled={running !== null} className="exercise-bar-test">
-                    <Check size={13} aria-hidden />
-                    {running === 'test' ? 'En cours' : 'Vérifier'}
-                  </button>
-                ) : null}
-              </span>
-            }
-          />
-          <LabOutput
-            exercise={exercise}
-            tab={tab}
-            onTab={setTab}
-            onClear={handleClear}
-            onRetryTest={handleTest}
-            consoleState={consoleState}
-            sqlResults={sqlResults}
-            report={report}
-            statusLine={statusLine}
-          />
-          <div className="exercise-actions">
-            <span className="exercise-shortcut" aria-hidden>
-              <kbd>Ctrl</kbd>+<kbd>Entrée</kbd> exécute
-            </span>
-            <button type="button" onClick={handleExecute} disabled={running !== null} className="exercise-run">
-              <Play size={15} fill="currentColor" aria-hidden />
-              {running === 'execute' ? 'Exécution en cours' : 'Exécuter'}
-            </button>
-            {exercise.hasVerification ? (
-              <button type="button" onClick={handleTest} disabled={running !== null} className="exercise-test">
-                <Check size={15} aria-hidden />
-                {running === 'test' ? 'Vérification en cours' : 'Vérifier'}
-              </button>
-            ) : null}
-          </div>
-        </div>
+        {work}
       </div>
     </div>
     </>
