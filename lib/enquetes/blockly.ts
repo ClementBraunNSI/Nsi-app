@@ -32,6 +32,8 @@ const OPERATORS: [string, string][] = [
   ["≥", ">="],
   ["contient", "CONTAINS"],
   ["commence par", "STARTS"],
+  ["est vide", "NULL"],
+  ["n'est pas vide", "NOT_NULL"],
 ];
 
 const HUE = { query: 25, filter: 200, link: 160, show: 280, count: 340 } as const;
@@ -218,6 +220,9 @@ function condition(block: Blockly.Block) {
   const value = String(block.getFieldValue("VALUE") ?? "");
   if (op === "CONTAINS") return `${col} LIKE ${literal(`%${value.trim()}%`)}`;
   if (op === "STARTS") return `${col} LIKE ${literal(`${value.trim()}%`)}`;
+  // Une case vide vaut NULL : elle se teste avec IS NULL, la valeur tapée est ignorée.
+  if (op === "NULL") return `${col} IS NULL`;
+  if (op === "NOT_NULL") return `${col} IS NOT NULL`;
   return `${col} ${op} ${literal(value)}`;
 }
 

@@ -266,7 +266,313 @@ const BARRAGE: Enquete = {
   ],
 };
 
-export const ENQUETES: Enquete[] = [OEUFS, MIEL, BARRAGE];
+/** Pièges photo du soir de la fête, puis de tout l'après-midi (dépouillés à l'étape 2). */
+const PASSAGES_SOIR: Table["rows"] = [
+  [40, 19, "Grand Chêne", "2026-10-31", "19:30"],
+  [41, 10, "Grand Chêne", "2026-10-31", "20:10"],
+  [42, 18, "Grand Chêne", "2026-10-31", "20:20"],
+  [43, 1, "Grand Chêne", "2026-10-31", "20:30"],
+  [44, 13, "Grand Chêne", "2026-10-31", "20:35"],
+  [45, 10, "Grand Chêne", "2026-10-31", "20:40"],
+  [46, 16, "Grand Chêne", "2026-10-31", "20:50"],
+  [47, 22, "Clairière", "2026-10-31", "20:30"],
+  [48, 22, "Grand Chêne", "2026-10-31", "21:20"],
+  [49, 23, "Clairière", "2026-10-31", "20:15"],
+  [50, 1, "Terrier des Ronces", "2026-10-31", "21:40"],
+  [51, 13, "Vieux Moulin", "2026-10-31", "21:05"],
+];
+
+const PASSAGES_APRES_MIDI: Table["rows"] = [
+  [30, 22, "Relais des Ronces", "2026-10-31", "10:02"],
+  [31, 9, "Relais du Vieux Moulin", "2026-10-31", "14:28"],
+  [32, 20, "Relais du Vieux Moulin", "2026-10-31", "16:35"],
+  [33, 13, "Relais du Vieux Moulin", "2026-10-31", "16:38"],
+  [34, 2, "Vieux Moulin", "2026-10-31", "16:40"],
+  [35, 6, "Relais du Vieux Moulin", "2026-10-31", "16:45"],
+  [36, 16, "Relais de la Clairière", "2026-10-31", "16:52"],
+  [37, 1, "Terrier des Ronces", "2026-10-31", "17:10"],
+  [38, 20, "Relais du Vieux Moulin", "2026-10-31", "17:30"],
+];
+
+/** Enquête 4 : une longue affaire en quatre étapes. Chaque coupable trouvé relance l'enquête. */
+const GLAND: Enquete = {
+  slug: "gland-d-or",
+  numero: 4,
+  title: "L'affaire du Gland d'Or",
+  difficulty: "Difficile",
+  skills: ["Une enquête en quatre étapes", "Valeurs manquantes (NULL)", "Repérer un changement dans le temps", "Regrouper et additionner"],
+  pitch: "Le trophée de la forêt a disparu pendant la Nuit des Lanternes. Un coupable est vite désigné. Un peu trop vite ?",
+  stageTitle: "Le vol de la Nuit des Lanternes",
+  story: [
+    "Le 31 octobre 2026, toute la forêt fête la Nuit des Lanternes au pied du Grand Chêne. À 21 h, au moment de la remise des prix, la vitrine est vide : le Gland d'Or, trophée de la forêt depuis cent ans, a disparu.",
+    "À 20 h, il était encore à sa place. Le garde forestier a rassemblé les rapports, les témoignages et les photos des pièges de la soirée.",
+  ],
+  objective: "Trouver le nom de l'animal qui a volé le Gland d'Or.",
+  tables: [
+    rapports([
+      [10, "2026-10-30", "Grand Chêne", "Les lanternes de la fête sont accrochées. Le Gland d'Or est exposé dans sa vitrine."],
+      [11, "2026-10-31", "Grand Chêne", "Le Gland d'Or a disparu de sa vitrine entre 20 h et 21 h, pendant la Nuit des Lanternes. Trois témoins ont été entendus."],
+      [12, "2026-10-31", "Mare aux Iris", "Une lanterne est tombée à l'eau. Aucun blessé."],
+    ]),
+    temoignages([
+      [10, 11, "Gaspard", "Je surveillais la fête depuis ma branche. Vers 20 h 30, un grand animal au pelage roux s'est glissé derrière la vitrine. Plus de 50 cm, croa, j'en suis sûr."],
+      [11, 11, "Noisette", "J'habite dans le Grand Chêne. J'ai fait plusieurs allers-retours pour aller chercher des lanternes."],
+      [12, 11, "Cerise", "Je tenais le stand de tisane, loin de la vitrine. Je n'ai rien vu."],
+      [13, 12, "Crôa", "Plouf. C'était la lanterne verte."],
+    ]),
+    passages(PASSAGES_SOIR),
+    ANIMAUX,
+  ],
+  culprit: "Roux",
+  hints: [
+    "Le rapport du 31 octobre au Grand Chêne donne l'heure du vol, et ses témoignages (rapport_id) décrivent le voleur.",
+    "Dans passages, garder les photos prises au « Grand Chêne » le 2026-10-31 entre 20:00 et 21:00, puis relier chaque passage à son animal (animal_id).",
+    "Parmi ces animaux, un seul a un pelage roux et mesure plus de 50 cm.",
+  ],
+  explanation:
+    "D'après Gaspard, le voleur est un grand animal roux de plus de 50 cm. Entre 20 h et 21 h, un seul animal photographié au Grand Chêne correspond : Roux le renard, à 20 h 30. Noisette est rousse, mais elle ne mesure que 23 cm.",
+  twist:
+    "Roux ne nie pas être venu au Grand Chêne : il avait rendez-vous. Un message glissé sous sa porte dans l'après-midi lui demandait d'être derrière la vitrine à 20 h 30. Ce message n'est pas signé, et le Gland d'Or reste introuvable dans son terrier. Et si quelqu'un avait voulu que Roux soit vu près de la vitrine ?",
+  solutionSql: [
+    "SELECT * FROM temoignages WHERE rapport_id = 11",
+    "SELECT DISTINCT animaux.nom FROM passages JOIN animaux ON animaux.id = passages.animal_id WHERE passages.lieu = 'Grand Chêne' AND passages.date = '2026-10-31' AND passages.heure BETWEEN '20:00' AND '21:00' AND animaux.pelage LIKE '%roux%' AND animaux.taille_cm > 50",
+  ],
+  next: [
+    {
+      title: "Le message sans signature",
+      story: [
+        "Roux montre le message reçu le 31 octobre : « Rendez-vous derrière la vitrine du Grand Chêne à 20 h 30. Un ami. » Aucun nom, mais le courrier de la forêt garde une trace de chaque lettre déposée à un relais.",
+        "Les photos des pièges de tout l'après-midi du 31 ont été dépouillées, et le Comptoir du Ruisseau a transmis son registre des ventes.",
+      ],
+      objective: "Trouver le nom de l'animal qui a écrit le message sans signature.",
+      tables: [
+        {
+          name: "courrier",
+          description: "Les lettres déposées aux relais du courrier de la forêt.",
+          columns: [
+            { name: "id", type: "INTEGER", description: "Numéro de la lettre" },
+            { name: "expediteur_id", type: "INTEGER", description: "Qui l'a signée (animaux.id), vide si elle n'est pas signée" },
+            { name: "destinataire_id", type: "INTEGER", description: "À qui elle est adressée (animaux.id)" },
+            { name: "date", type: "TEXT", description: "Date du dépôt (AAAA-MM-JJ)" },
+            { name: "heure", type: "TEXT", description: "Heure du dépôt (HH:MM)" },
+            { name: "relais", type: "TEXT", description: "Relais où la lettre a été déposée" },
+            { name: "papier", type: "TEXT", description: "Sur quoi elle est écrite" },
+          ],
+          rows: [
+            [1, 4, 16, "2026-10-29", "09:10", "Relais du Grand Chêne", "papier de lin"],
+            [2, 3, 23, "2026-10-30", "11:00", "Relais de la Clairière", "feuille de chêne"],
+            [3, null, 14, "2026-10-30", "15:20", "Relais du Ruisseau", "feuille de chêne"],
+            [4, 22, 1, "2026-10-31", "10:05", "Relais des Ronces", "papier de lin"],
+            [5, 9, 7, "2026-10-31", "14:30", "Relais du Vieux Moulin", "feuille de chêne"],
+            [6, null, 1, "2026-10-31", "16:40", "Relais du Vieux Moulin", "écorce de bouleau"],
+            [7, null, 19, "2026-10-31", "16:55", "Relais de la Clairière", "écorce de bouleau"],
+          ],
+        },
+        passages([...PASSAGES_APRES_MIDI, ...PASSAGES_SOIR]),
+        {
+          name: "achats",
+          description: "Les ventes du Comptoir du Ruisseau en octobre.",
+          columns: [
+            { name: "id", type: "INTEGER", description: "Numéro de la vente" },
+            { name: "animal_id", type: "INTEGER", description: "Acheteur (animaux.id)" },
+            { name: "date", type: "TEXT", description: "Date (AAAA-MM-JJ)" },
+            { name: "article", type: "TEXT", description: "Ce qui a été acheté" },
+            { name: "quantite", type: "INTEGER", description: "Quantité" },
+          ],
+          rows: [
+            [20, 14, "2026-10-15", "peinture dorée", 2],
+            [21, 16, "2026-10-20", "écorce de bouleau", 3],
+            [22, 10, "2026-10-20", "peinture dorée", 1],
+            [23, 19, "2026-10-22", "lanterne", 40],
+            [24, 7, "2026-10-24", "peinture dorée", 1],
+            [25, 17, "2026-10-26", "peinture dorée", 1],
+            [26, 21, "2026-10-27", "gland", 1],
+            [27, 13, "2026-10-28", "écorce de bouleau", 2],
+            [28, 6, "2026-10-29", "feuille de chêne", 5],
+            [29, 20, "2026-10-30", "graines", 12],
+            [30, 13, "2026-10-30", "lanterne", 2],
+          ],
+        },
+      ],
+      culprit: "Filou",
+      hints: [
+        "Dans courrier, chercher les lettres reçues par Roux (destinataire_id = 1) qui n'ont pas d'expéditeur. Une valeur manquante se teste avec IS NULL, pas avec = NULL.",
+        "Le message a été déposé à un relais, à une heure précise. Les pièges photo (passages) montrent qui se trouvait à ce relais dans les dix minutes autour du dépôt.",
+        "Le message est écrit sur un papier particulier. Parmi les animaux présents au relais, un seul en a acheté au Comptoir (table achats).",
+      ],
+      explanation:
+        "Le seul message sans expéditeur reçu par Roux a été déposé au Relais du Vieux Moulin le 31 à 16 h 40, sur de l'écorce de bouleau. Tamia, Filou et Musc sont passés au relais à ce moment-là, mais seul Filou le raton laveur a acheté de l'écorce de bouleau ce mois-ci.",
+      twist:
+        "Filou avoue avoir écrit le message. Dans son terrier, la garde retrouve le Gland d'Or, caché sous des feuilles ! Mais sur la balance du poste, le trophée ne pèse que 9 g au lieu de 40 g : c'est un faux, un gland ordinaire recouvert de peinture dorée. Filou jure avoir été payé pour écrire le message et emporter le gland de la vitrine pendant la fête, sans savoir qu'il était faux. Le vrai Gland d'Or avait donc disparu avant la Nuit des Lanternes.",
+      solutionSql: [
+        "SELECT * FROM courrier WHERE destinataire_id = 1 AND expediteur_id IS NULL",
+        "SELECT animaux.nom FROM passages JOIN animaux ON animaux.id = passages.animal_id WHERE passages.lieu = 'Relais du Vieux Moulin' AND passages.date = '2026-10-31' AND passages.heure BETWEEN '16:30' AND '16:50'",
+        "SELECT DISTINCT animaux.nom FROM passages JOIN animaux ON animaux.id = passages.animal_id WHERE passages.lieu = 'Relais du Vieux Moulin' AND passages.date = '2026-10-31' AND passages.heure BETWEEN '16:30' AND '16:50' AND animaux.id IN (SELECT animal_id FROM achats WHERE article = 'écorce de bouleau')",
+      ],
+    },
+    {
+      title: "Le faux trophée",
+      story: [
+        "Le Gland d'Or retrouvé chez Filou est une copie. Le vrai a donc été échangé plus tôt, pendant qu'il était exposé dans sa vitrine.",
+        "La vitrine du Grand Chêne pèse le trophée deux fois par jour, à 8 h et à 20 h. Le registre des gardes indique qui avait la clé de la vitrine, heure par heure.",
+      ],
+      objective: "Trouver le nom de l'animal qui a remplacé le vrai Gland d'Or par la copie.",
+      tables: [
+        {
+          name: "pesees",
+          description: "Les pesées automatiques du trophée dans sa vitrine.",
+          columns: [
+            { name: "id", type: "INTEGER", description: "Numéro de la pesée" },
+            { name: "date", type: "TEXT", description: "Date (AAAA-MM-JJ)" },
+            { name: "heure", type: "TEXT", description: "Heure (HH:MM)" },
+            { name: "poids_g", type: "INTEGER", description: "Poids mesuré, en grammes" },
+          ],
+          rows: [
+            [1, "2026-10-25", "08:00", 40],
+            [2, "2026-10-25", "20:00", 40],
+            [3, "2026-10-26", "08:00", 41],
+            [4, "2026-10-26", "20:00", 40],
+            [5, "2026-10-27", "08:00", 40],
+            [6, "2026-10-27", "20:00", 40],
+            [7, "2026-10-28", "08:00", 40],
+            [8, "2026-10-28", "20:00", 9],
+            [9, "2026-10-29", "08:00", 9],
+            [10, "2026-10-29", "20:00", 9],
+            [11, "2026-10-30", "08:00", 9],
+            [12, "2026-10-30", "20:00", 9],
+            [13, "2026-10-31", "08:00", 9],
+            [14, "2026-10-31", "20:00", 9],
+          ],
+        },
+        {
+          name: "gardes",
+          description: "Qui gardait la clé de la vitrine, et quand.",
+          columns: [
+            { name: "id", type: "INTEGER", description: "Numéro de la garde" },
+            { name: "animal_id", type: "INTEGER", description: "Le gardien (animaux.id)" },
+            { name: "date", type: "TEXT", description: "Date (AAAA-MM-JJ)" },
+            { name: "debut", type: "TEXT", description: "Début de la garde (HH:MM)" },
+            { name: "fin", type: "TEXT", description: "Fin de la garde (HH:MM)" },
+          ],
+          rows: [
+            [1, 4, "2026-10-26", "08:00", "12:00"],
+            [2, 16, "2026-10-26", "12:00", "16:00"],
+            [3, 7, "2026-10-26", "16:00", "20:00"],
+            [4, 17, "2026-10-27", "08:00", "12:00"],
+            [5, 23, "2026-10-27", "12:00", "16:00"],
+            [6, 4, "2026-10-27", "16:00", "20:00"],
+            [7, 16, "2026-10-28", "08:00", "12:00"],
+            [8, 17, "2026-10-28", "12:00", "16:00"],
+            [9, 23, "2026-10-28", "16:00", "20:00"],
+            [10, 7, "2026-10-29", "08:00", "12:00"],
+            [11, 17, "2026-10-29", "12:00", "16:00"],
+            [12, 16, "2026-10-29", "16:00", "20:00"],
+            [13, 23, "2026-10-30", "08:00", "12:00"],
+            [14, 4, "2026-10-30", "12:00", "16:00"],
+            [15, 7, "2026-10-30", "16:00", "20:00"],
+          ],
+        },
+      ],
+      culprit: "Hermès",
+      hints: [
+        "Trier les pesées par date puis par heure : à quel moment le poids passe-t-il de 40 g à 9 g ? L'échange a eu lieu entre ces deux pesées.",
+        "Dans gardes, garder les gardes de ce jour-là, entre ces deux pesées, et relier chaque garde à son animal.",
+        "La copie est recouverte de peinture dorée. Parmi ces gardiens, un seul en a acheté au Comptoir (table achats).",
+      ],
+      explanation:
+        "Le trophée pesait encore 40 g le 28 octobre à 8 h, et 9 g le même jour à 20 h : l'échange a eu lieu ce jour-là. Plume, Hermès et Pépin ont gardé la vitrine entre ces deux pesées, mais seule Hermès l'hermine avait acheté de la peinture dorée, deux jours plus tôt.",
+      twist:
+        "Hermès finit par avouer l'échange. Mais le vrai Gland d'Or n'est plus chez elle : elle l'a remis le soir même à un commanditaire qui cache son visage, et qui l'a payée par la Banque des Glands, en plusieurs petits virements pour ne pas attirer l'attention. Filou, lui aussi, a été payé par virement. Il reste à suivre l'argent.",
+      solutionSql: [
+        "SELECT date, heure, poids_g FROM pesees ORDER BY date, heure",
+        "SELECT animaux.nom, gardes.debut, gardes.fin FROM gardes JOIN animaux ON animaux.id = gardes.animal_id WHERE gardes.date = '2026-10-28' AND gardes.debut < '20:00' AND gardes.fin > '08:00'",
+        "SELECT animaux.nom FROM gardes JOIN animaux ON animaux.id = gardes.animal_id WHERE gardes.date = '2026-10-28' AND gardes.debut < '20:00' AND gardes.fin > '08:00' AND animaux.id IN (SELECT animal_id FROM achats WHERE article = 'peinture dorée')",
+      ],
+    },
+    {
+      title: "Suivre les glands",
+      story: [
+        "La Banque des Glands accepte d'ouvrir ses registres : tous les comptes de la forêt et tous les virements d'octobre. Certains comptes portent un surnom plutôt qu'un nom.",
+        "Selon Hermès, le commanditaire lui a versé 200 glands en tout, sans jamais dépasser 50 glands par virement. Le même commanditaire a payé Filou.",
+      ],
+      objective: "Trouver le nom de l'animal qui a commandé le vol du vrai Gland d'Or.",
+      tables: [
+        {
+          name: "comptes",
+          description: "Les comptes ouverts à la Banque des Glands.",
+          columns: [
+            { name: "id", type: "INTEGER", description: "Numéro du compte" },
+            { name: "titulaire_id", type: "INTEGER", description: "À qui appartient le compte (animaux.id)" },
+            { name: "intitule", type: "TEXT", description: "Nom affiché sur le compte : un prénom ou un surnom" },
+            { name: "ouverture", type: "TEXT", description: "Date d'ouverture (AAAA-MM-JJ)" },
+          ],
+          rows: [
+            [101, 1, "Roux", "2024-03-02"],
+            [102, 13, "Filou", "2025-06-14"],
+            [103, 17, "Hermès", "2023-11-08"],
+            [104, 18, "Sanglou", "2022-01-19"],
+            [105, 3, "Biscotte", "2025-02-27"],
+            [106, 21, "Gaspard", "2021-09-03"],
+            [107, 21, "Ombre", "2026-10-20"],
+            [108, 10, "Noisette", "2024-05-11"],
+            [109, 16, "Plume", "2023-04-30"],
+            [110, 6, "Musc", "2025-10-02"],
+            [111, 23, "Pépin", "2024-12-24"],
+            [112, 19, "Cerise", "2022-07-07"],
+            [113, 19, "Les Lanternes", "2026-09-15"],
+          ],
+        },
+        {
+          name: "virements",
+          description: "Les virements d'octobre, d'un compte à un autre.",
+          columns: [
+            { name: "id", type: "INTEGER", description: "Numéro du virement" },
+            { name: "de_compte", type: "INTEGER", description: "Compte qui paie (comptes.id)" },
+            { name: "vers_compte", type: "INTEGER", description: "Compte qui reçoit (comptes.id)" },
+            { name: "date", type: "TEXT", description: "Date (AAAA-MM-JJ)" },
+            { name: "montant", type: "INTEGER", description: "Montant, en glands" },
+            { name: "motif", type: "TEXT", description: "Motif écrit par celui qui paie" },
+          ],
+          rows: [
+            [1, 112, 113, "2026-10-20", 100, "budget de la fête"],
+            [2, 106, 107, "2026-10-21", 250, "épargne"],
+            [3, 110, 102, "2026-10-24", 8, "remboursement"],
+            [4, 109, 103, "2026-10-26", 5, "tisane"],
+            [5, 104, 103, "2026-10-27", 200, "remboursement"],
+            [6, 105, 103, "2026-10-27", 10, "cours de saut"],
+            [7, 107, 103, "2026-10-28", 50, "noisettes"],
+            [8, 107, 103, "2026-10-28", 50, "noisettes"],
+            [9, 101, 108, "2026-10-29", 12, "lanternes"],
+            [10, 105, 103, "2026-10-29", 10, "cours de saut"],
+            [11, 107, 103, "2026-10-29", 50, "champignons"],
+            [12, 113, 102, "2026-10-30", 15, "installation des lanternes"],
+            [13, 107, 102, "2026-10-30", 30, "petit travail"],
+            [14, 107, 103, "2026-10-30", 50, "champignons"],
+            [15, 106, 111, "2026-10-30", 5, "graines"],
+            [16, 105, 103, "2026-10-31", 10, "cours de saut"],
+            [17, 113, 102, "2026-10-31", 15, "installation des lanternes"],
+            [18, 113, 103, "2026-10-31", 20, "aide à la fête"],
+          ],
+        },
+      ],
+      culprit: "Gaspard",
+      hints: [
+        "Commencer par trouver, dans comptes, les numéros des comptes d'Hermès et de Filou.",
+        "Regrouper les virements reçus par Hermès selon le compte qui paie : combien de virements (COUNT), quel total (SUM), quel plus gros montant (MAX) ? Un seul compte a versé 200 glands sans jamais dépasser 50.",
+        "Vérifier que ce compte a aussi payé Filou, puis chercher à qui il appartient : comptes.titulaire_id renvoie à animaux.id.",
+      ],
+      explanation:
+        "Un seul compte a versé 200 glands à Hermès, en quatre virements de 50 : « Ombre », qui a aussi payé Filou la veille de la fête. Ce compte, ouvert le 20 octobre, appartient à Gaspard le corbeau. Tout s'explique : Gaspard a acheté un gland ordinaire le 27, l'a fait peindre et échanger le 28, puis a organisé un faux vol le soir de la fête pour que personne ne pense à peser l'ancien trophée. Son témoignage a lancé l'enquête sur la piste de Roux, et aucun piège photo ne l'a jamais vu passer : il vole. Le vrai Gland d'Or brillait au fond de son nid, en haut du Grand Chêne.",
+      solutionSql: [
+        "SELECT * FROM comptes WHERE intitule IN ('Hermès', 'Filou')",
+        "SELECT de_compte, COUNT(*) AS nombre, SUM(montant) AS total, MAX(montant) AS plus_gros FROM virements WHERE vers_compte = 103 GROUP BY de_compte",
+        "SELECT animaux.nom FROM comptes JOIN animaux ON animaux.id = comptes.titulaire_id WHERE comptes.id IN (SELECT de_compte FROM virements WHERE vers_compte = 103 GROUP BY de_compte HAVING SUM(montant) = 200 AND MAX(montant) <= 50) AND comptes.id IN (SELECT de_compte FROM virements WHERE vers_compte = 102)",
+      ],
+    },
+  ],
+};
+
+export const ENQUETES: Enquete[] = [OEUFS, MIEL, BARRAGE, GLAND];
 
 export function getEnquete(slug: string): Enquete | undefined {
   return ENQUETES.find((item) => item.slug === slug);

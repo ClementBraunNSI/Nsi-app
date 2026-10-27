@@ -3,8 +3,8 @@
 import { FormEvent, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ArrowLeft, Blocks, Code2, Database, Lightbulb, NotebookPen, RotateCcw, Search, Table2, Target } from "lucide-react";
-import { checkAccusation } from "@/app/actions/enquetes";
+import { ArrowLeft, ArrowRight, Blocks, Check, Code2, Database, History, Lightbulb, NotebookPen, RotateCcw, Search, Table2, Target } from "lucide-react";
+import { checkAccusation, resumeEnquete } from "@/app/actions/enquetes";
 import type { PublicEnquete } from "@/lib/enquetes/types";
 import { clearCase, markSolved, readProgress, readSolutions, readSolved, saveProgress, type Mode, type Solution } from "@/lib/enquetes/progress";
 
@@ -20,7 +20,13 @@ const MODES: { id: Mode; label: string; detail: string; icon: typeof Blocks }[] 
 
 type Props = { enquete: PublicEnquete; next: { slug: string; title: string } | null };
 
-export default function InvestigationView({ enquete, next }: Props) {
+/** Coupable trouvé avant la dernière étape : le rebondissement, et l'étape qu'il ouvre. */
+type Twist = Solution & { twist: string; next: PublicEnquete };
+
+export default function InvestigationView({ enquete: firstStage, next }: Props) {
+  const [enquete, setEnquete] = useState(firstStage);
+  const [found, setFound] = useState<string[]>([]);
+  const [twist, setTwist] = useState<Twist | null>(null);
   const [mode, setMode] = useState<Mode>("blockly");
   const [hintCount, setHintCount] = useState(0);
   const [notes, setNotes] = useState("");
@@ -33,30 +39,47 @@ export default function InvestigationView({ enquete, next }: Props) {
   const [restored, setRestored] = useState(false);
   const [resetCount, setResetCount] = useState(0);
 
-  // Reprend l'enquête là où l'élève l'avait laissée sur cet appareil.
+  // Reprend l'enquête là où l'élève l'avait laissée sur cet appareil, à la bonne étape.
   useEffect(() => {
+    let cancelled = false;
+    const slug = firstStage.slug;
+    setRestored(false);
+    setTwist(null);
     try {
       const savedMode = localStorage.getItem("enquetes-mode") as Mode | null;
       if (savedMode && MODES.some((item) => item.id === savedMode)) setMode(savedMode);
-      setNotes(localStorage.getItem(`enquete-${enquete.slug}-notes`) || "");
+      setNotes(localStorage.getItem(`enquete-${slug}-notes`) || "");
     } catch {
       /* stockage indisponible */
     }
-    const progress = readProgress(enquete.slug);
-    setHintCount(Math.min(progress.hints, enquete.hints.length));
-    setAttempts(progress.attempts);
-    setAnswer(progress.answer);
-    setOpenTable(progress.openTable);
-    const known = readSolutions()[enquete.slug];
-    if (known && readSolved().includes(enquete.slug)) {
-      setSolution(known);
-      setVerdict("right");
-    } else {
-      setSolution(null);
-      setVerdict("none");
-    }
-    setRestored(true);
-  }, [enquete.slug, enquete.hints.length, resetCount]);
+    const progress = readProgress(slug);
+    const restore = (view: PublicEnquete, solved: string[]) => {
+      if (cancelled) return;
+      setEnquete(view);
+      setFound(solved);
+      setHintCount(Math.min(progress.hints, view.hints.length));
+      setAttempts(progress.attempts);
+      setAnswer(progress.answer);
+      setOpenTable(progress.openTable);
+      const known = readSolutions()[slug];
+      if (known && readSolved().includes(slug)) {
+        setSolution(known);
+        setVerdict("right");
+      } else {
+        setSolution(null);
+        setVerdict("none");
+      }
+      setRestored(true);
+    };
+    if (firstStage.stage && progress.found.length) {
+      resumeEnquete(slug, progress.found)
+        .then((result) => restore(result?.view ?? firstStage, progress.found.slice(0, result?.solved ?? 0)))
+        .catch(() => restore(firstStage, []));
+    } else restore(firstStage, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [firstStage, resetCount]);
 
   const showHint = () => {
     const next = Math.min(hintCount + 1, enquete.hints.length);
@@ -98,13 +121,19 @@ export default function InvestigationView({ enquete, next }: Props) {
     event.preventDefault();
     if (!answer.trim() || checking) return;
     setChecking(true);
-    const result = await checkAccusation(enquete.slug, answer).catch(() => ({ correct: false as const }));
+    const result = await checkAccusation(enquete.slug, answer, found).catch(() => ({ correct: false as const }));
     setChecking(false);
-    if (result.correct) {
-      const found: Solution = { culprit: result.culprit, explanation: result.explanation };
-      setSolution(found);
+    if (result.correct && result.next) {
+      // Un coupable de trouvé, mais l'enquête continue : l'étape suivante est déjà enregistrée.
+      const solved = [...found, result.culprit];
+      setFound(solved);
+      setTwist({ culprit: result.culprit, explanation: result.explanation, twist: result.twist ?? "", next: result.next });
+      saveProgress(enquete.slug, { found: solved, hints: 0, attempts: 0, answer: "" });
+    } else if (result.correct) {
+      const final: Solution = { culprit: result.culprit, explanation: result.explanation };
+      setSolution(final);
       setVerdict("right");
-      markSolved(enquete.slug, found);
+      markSolved(enquete.slug, final);
       saveProgress(enquete.slug, { answer: "" });
       void import("canvas-confetti").then(({ default: confetti }) =>
         confetti({ particleCount: 110, spread: 75, origin: { y: 0.6 }, colors: ["#ea580c", "#fdba74", "#fef3c7", "#16a34a"] }),
@@ -115,6 +144,19 @@ export default function InvestigationView({ enquete, next }: Props) {
       saveProgress(enquete.slug, { attempts: attempts + 1 });
     }
   };
+
+  const openNextStage = () => {
+    if (!twist) return;
+    setEnquete(twist.next);
+    setTwist(null);
+    setHintCount(0);
+    setAttempts(0);
+    setAnswer("");
+    setVerdict("none");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const stage = enquete.stage;
 
   return (
     <div className="enq-page">
@@ -127,6 +169,21 @@ export default function InvestigationView({ enquete, next }: Props) {
             Enquête {enquete.numero}, niveau {enquete.difficulty.toLowerCase()}
           </p>
           <h1>{enquete.title}</h1>
+          {stage ? (
+            <ol className="enq-steps" aria-label={`Étape ${stage.index + 1} sur ${stage.total}`}>
+              {Array.from({ length: stage.total }, (_, index) => {
+                const done = index < stage.index || (index === stage.index && (verdict === "right" || twist !== null));
+                return (
+                  <li key={index} className={done ? "is-done" : index === stage.index ? "is-current" : ""} aria-current={index === stage.index ? "step" : undefined}>
+                    {done ? <Check size={12} strokeWidth={3} /> : index + 1}
+                  </li>
+                );
+              })}
+              <span>
+                Étape {stage.index + 1} sur {stage.total}
+              </span>
+            </ol>
+          ) : null}
         </div>
         <div className="enq-modes" role="tablist" aria-label="Façon de mener l'enquête">
           {MODES.map((item) => {
@@ -155,8 +212,28 @@ export default function InvestigationView({ enquete, next }: Props) {
         <aside className="enq-dossier">
           <section className="enq-card">
             <h2>
-              <Search size={15} /> Le dossier
+              <Search size={15} /> {stage ? `Étape ${stage.index + 1} : ${stage.title}` : "Le dossier"}
             </h2>
+            {enquete.solvedStages?.length ? (
+              <details className="enq-history">
+                <summary>
+                  <History size={14} /> Ce qui a été établi ({enquete.solvedStages.length} {enquete.solvedStages.length > 1 ? "étapes" : "étape"})
+                </summary>
+                <ol>
+                  {enquete.solvedStages.map((done, index) => (
+                    <li key={done.title}>
+                      <b>
+                        Étape {index + 1} : {done.title}
+                      </b>
+                      <p>
+                        Coupable désigné : <b>{done.culprit}</b>. {done.explanation}
+                      </p>
+                      <p className="enq-history-twist">{done.twist}</p>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            ) : null}
             {enquete.story.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -198,7 +275,7 @@ export default function InvestigationView({ enquete, next }: Props) {
 
           <section className="enq-card">
             <h2>
-              <Lightbulb size={15} /> Indices
+              <Lightbulb size={15} /> Indices{stage ? ` de l'étape ${stage.index + 1}` : ""}
             </h2>
             {enquete.hints.slice(0, hintCount).map((hint, index) => (
               <p key={hint} className="enq-hint">
@@ -237,12 +314,27 @@ export default function InvestigationView({ enquete, next }: Props) {
           {restored && mode === "python" ? <CodeMode key={`${enquete.slug}-python-${resetCount}`} enquete={enquete} language="python" /> : null}
           {restored && mode === "sql" ? <CodeMode key={`${enquete.slug}-sql-${resetCount}`} enquete={enquete} language="sql" /> : null}
 
-          <form className={`enq-accuse ${verdict === "right" ? "is-solved" : ""}`} onSubmit={accuse}>
-            {verdict === "right" && solution ? (
+          <form className={`enq-accuse ${verdict === "right" ? "is-solved" : ""} ${twist ? "is-twist" : ""}`} onSubmit={accuse}>
+            {twist && stage ? (
+              <div className="enq-solved" role="status">
+                <div className="enq-solved-fox is-twist" aria-hidden />
+                <div>
+                  <p className="enq-eyebrow">
+                    Coupable désigné : {twist.culprit}. Vraiment ?
+                  </p>
+                  <h2>Pas si vite…</h2>
+                  <p>{twist.explanation}</p>
+                  <p className="enq-twist">{twist.twist}</p>
+                  <button type="button" className="enq-run-button" onClick={openNextStage}>
+                    Aller plus loin : étape {stage.index + 2} sur {stage.total} <ArrowRight size={16} />
+                  </button>
+                </div>
+              </div>
+            ) : verdict === "right" && solution ? (
               <div className="enq-solved">
                 <div className="enq-solved-fox" aria-hidden />
                 <div>
-                  <p className="enq-eyebrow">Affaire résolue !</p>
+                  <p className="enq-eyebrow">{stage ? "Affaire enfin résolue !" : "Affaire résolue !"}</p>
                   <h2>Le coupable est {solution.culprit}.</h2>
                   <p>{solution.explanation}</p>
                   <Link href={next ? `/enquetes/${next.slug}` : "/enquetes"} className="enq-run-button">

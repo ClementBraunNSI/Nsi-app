@@ -9,9 +9,10 @@ export const SOLUTIONS_KEY = "enquetes-solutions";
 
 export type Mode = "blockly" | "python" | "sql";
 export type Solution = { culprit: string; explanation: string };
-export type CaseProgress = { hints: number; attempts: number; answer: string; openTable: string | null };
+/** found : coupables déjà trouvés, étape par étape, dans une enquête en plusieurs étapes. hints et attempts valent pour l'étape en cours. */
+export type CaseProgress = { hints: number; attempts: number; answer: string; openTable: string | null; found: string[] };
 
-const EMPTY: CaseProgress = { hints: 0, attempts: 0, answer: "", openTable: null };
+const EMPTY: CaseProgress = { hints: 0, attempts: 0, answer: "", openTable: null, found: [] };
 const MAX_SAVED_ROWS = 200;
 const MAX_SAVED_PRINT = 20_000;
 

@@ -3,17 +3,22 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Blocks, Check, Code2, Database, Hourglass } from "lucide-react";
-import { caseStatus } from "@/lib/enquetes/progress";
+import { ArrowRight, Blocks, Check, Code2, Database, Hourglass, Layers } from "lucide-react";
+import { caseStatus, readProgress } from "@/lib/enquetes/progress";
 import type { Enquete } from "@/lib/enquetes/types";
 
-type Summary = Pick<Enquete, "slug" | "numero" | "title" | "difficulty" | "pitch" | "skills">;
+/** stages : nombre d'étapes (1 pour une enquête classique). */
+type Summary = Pick<Enquete, "slug" | "numero" | "title" | "difficulty" | "pitch" | "skills"> & { stages: number };
 
 const MOOD = ["is-neutral", "is-thinking", "is-dizzy"];
 
 export default function HubView({ enquetes }: { enquetes: Summary[] }) {
   const [status, setStatus] = useState<Record<string, ReturnType<typeof caseStatus>>>({});
-  useEffect(() => setStatus(Object.fromEntries(enquetes.map((enquete) => [enquete.slug, caseStatus(enquete.slug)]))), [enquetes]);
+  const [reached, setReached] = useState<Record<string, number>>({});
+  useEffect(() => {
+    setStatus(Object.fromEntries(enquetes.map((enquete) => [enquete.slug, caseStatus(enquete.slug)])));
+    setReached(Object.fromEntries(enquetes.map((enquete) => [enquete.slug, Math.min(readProgress(enquete.slug).found.length + 1, enquete.stages)])));
+  }, [enquetes]);
 
   return (
     <div className="enq-hub">
@@ -57,9 +62,14 @@ export default function HubView({ enquetes }: { enquetes: Summary[] }) {
                         <Check size={13} /> Résolue
                       </span>
                     ) : null}
+                    {enquete.stages > 1 ? (
+                      <span className="enq-stages">
+                        <Layers size={12} /> {enquete.stages} étapes
+                      </span>
+                    ) : null}
                     {started ? (
                       <span className="enq-started">
-                        <Hourglass size={12} /> En cours
+                        <Hourglass size={12} /> {enquete.stages > 1 ? `Étape ${reached[enquete.slug] ?? 1} en cours` : "En cours"}
                       </span>
                     ) : null}
                   </span>
