@@ -42,12 +42,17 @@ export default function SubjectsEditor({ board, onChange }: { board: EvaluationB
 
   return (
     <section className="space-y-5">
-      <p className="text-sm text-slate-600">
-        Chaque élève reçoit l&apos;un de ces sujets, tiré au hasard (les sujets sont distribués à parts égales). Les sujets, leurs tests et leurs corrections
-        restent en base : ils ne sont ni dans le dépôt du site ni dans une adresse accessible aux élèves. Format : celui des fiches,
-        avec des blocs <code>&lt;ExerciseSection&gt;</code> de type <code>python</code> ou <code>sql</code>, un <code>&lt;Enonce&gt;</code>, un
-        <code>&lt;CodeDepart&gt;</code> facultatif, les tests dans <code>&lt;Verification&gt;</code> et la <code>&lt;Correction&gt;</code>.
-      </p>
+      <div className="adm-eval-help">
+        <p>
+          Chaque élève reçoit l&apos;un de ces sujets, tiré au hasard et distribué à parts égales. Sujets, tests et corrections restent en base :
+          ni dans le dépôt du site, ni à une adresse accessible aux élèves.
+        </p>
+        <p>
+          Format des fiches : des blocs <code>&lt;ExerciseSection&gt;</code> de type <code>python</code> ou <code>sql</code>, avec un{" "}
+          <code>&lt;Enonce&gt;</code>, un <code>&lt;CodeDepart&gt;</code> facultatif, les tests dans <code>&lt;Verification&gt;</code> et la{" "}
+          <code>&lt;Correction&gt;</code>.
+        </p>
+      </div>
       {started ? <p className="adm-eval-warning">Des élèves ont déjà reçu un sujet : une modification s&apos;applique aussi à leur copie en cours.</p> : null}
       {notice ? <p className="adm-eval-ok">{notice}</p> : null}
 

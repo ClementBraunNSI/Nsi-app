@@ -13,7 +13,7 @@ import {
   type UnlockedIncident,
 } from "@/app/actions/evaluations";
 import type { EvaluationExercise } from "@/lib/evaluation-subject";
-import { formatRemaining, INCIDENT_LABELS, isAllowedPaste, type IncidentKind } from "@/lib/evaluation-guard";
+import { formatRemaining, INCIDENT_LABELS, isAllowedPaste, LOCK_FALLBACK, LOCK_MESSAGES, type IncidentKind } from "@/lib/evaluation-guard";
 import { ExerciseStatement } from "@/components/lab/ExerciseStatement";
 import { ExerciseWorkspace } from "@/components/lab/ExerciseWorkspace";
 import {
@@ -27,7 +27,7 @@ import {
 
 type Props = {
   evaluation: { id: string; title: string; durationMinutes: number | null };
-  attempt: { id: string; locked: boolean; deadline: string | null };
+  attempt: { id: string; locked: boolean; lockReason?: IncidentKind | null; deadline: string | null };
   exercises: EvaluationExercise[];
   answers: Record<string, string>;
 };
@@ -54,6 +54,8 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
   );
   const [selectedId, setSelectedId] = useState(exercises[0]?.id ?? "");
   const [locked, setLocked] = useState(attempt.locked);
+  // Cause affichée à l'élève : le dernier incident qui a verrouillé la page.
+  const [lockReason, setLockReason] = useState<IncidentKind | null>(attempt.lockReason ?? null);
   const [needsShare, setNeedsShare] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
   const [saveState, setSaveState] = useState<"saved" | "saving" | "error">("saved");
@@ -131,6 +133,7 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
       const firstLock = !lockedRef.current;
       lockedRef.current = true;
       setLocked(true);
+      setLockReason(kind);
       void (async () => {
         // Le code écrit juste avant reste enregistré : la sauvegarde est refusée une fois verrouillée.
         if (firstLock) await flushSaves();
@@ -302,6 +305,7 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
         lockedRef.current = true;
         setLocked(true);
       }
+      if (result.locked && result.lockReason) setLockReason(result.lockReason);
     };
     const timer = window.setInterval(beat, HEARTBEAT);
     return () => window.clearInterval(timer);
@@ -480,6 +484,7 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
         <div className="eval-overlay is-lock" ref={lockRef}>
           <LockPanel
             attemptId={attempt.id}
+            reason={lockReason}
             onResume={() => {
               lockedRef.current = false;
               setLocked(false);
@@ -493,7 +498,7 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
   );
 }
 
-function LockPanel({ attemptId, onResume }: { attemptId: string; onResume: () => void }) {
+function LockPanel({ attemptId, reason, onResume }: { attemptId: string; reason: IncidentKind | null; onResume: () => void }) {
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -545,7 +550,8 @@ function LockPanel({ attemptId, onResume }: { attemptId: string; onResume: () =>
     <form className="eval-card" onSubmit={unlock}>
       <Lock size={30} aria-hidden />
       <h2>Attente du professeur</h2>
-      <p>L&apos;évaluation est verrouillée : la page a quitté le premier plan, ou un texte venu d&apos;ailleurs a été collé. Le professeur va saisir le code de déverrouillage.</p>
+      <p className="eval-lock-reason">{(reason && LOCK_MESSAGES[reason]) || LOCK_FALLBACK}</p>
+      <p>L&apos;évaluation est verrouillée. Le professeur va venir saisir le code de déverrouillage.</p>
       <label className="eval-code">
         <span>Code du professeur</span>
         <input

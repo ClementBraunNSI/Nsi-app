@@ -21,6 +21,18 @@ export const INCIDENT_LABELS: Record<IncidentKind, string> = {
   reprise: "Page rouverte",
 };
 
+/** Message affiché à l'élève sur l'écran verrouillé, selon la cause. */
+export const LOCK_MESSAGES: Partial<Record<IncidentKind, string>> = {
+  onglet: "La page de l'évaluation a été quittée : changement d'onglet, fenêtre réduite ou autre bureau.",
+  application: "Une autre application ou une autre fenêtre est passée au premier plan.",
+  collage: "Un texte venu d'ailleurs a été collé dans l'éditeur.",
+  depot: "Un texte ou un fichier venu d'ailleurs a été glissé dans la page.",
+  double_onglet: "L'évaluation a été ouverte dans un second onglet ou une seconde fenêtre.",
+  partage_arrete: "Le partage de l'écran a été arrêté.",
+};
+
+export const LOCK_FALLBACK = "La page a quitté le premier plan, ou un texte venu d'ailleurs a été collé.";
+
 /** Fermeture et réouverture sont notées sans verrouiller : extinction du poste, plantage du navigateur. */
 export function incidentLocks(kind: IncidentKind) {
   return kind !== "fermeture" && kind !== "reprise";

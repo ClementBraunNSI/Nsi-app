@@ -85,11 +85,19 @@ export async function reportEvaluationIncident(attemptId: string, kind: Incident
   return { ok: true, incidentId: data === null ? null : Number(data) };
 }
 
-export async function evaluationHeartbeat(attemptId: string): Promise<Result<{ locked: boolean; status: string; evaluationStatus: string }>> {
+export async function evaluationHeartbeat(
+  attemptId: string,
+): Promise<Result<{ locked: boolean; status: string; evaluationStatus: string; lockReason: IncidentKind | null }>> {
   const supabase = await createClient();
   const { data, error } = await supabase.rpc('eval_heartbeat', { p_attempt: attemptId });
   if (error || !data) return fail(messageOf(error, 'Connexion perdue.'));
-  return { ok: true, locked: Boolean(data.locked), status: String(data.status), evaluationStatus: String(data.evaluationStatus) };
+  return {
+    ok: true,
+    locked: Boolean(data.locked),
+    status: String(data.status),
+    evaluationStatus: String(data.evaluationStatus),
+    lockReason: data.lockReason ?? null,
+  };
 }
 
 export type UnlockedIncident = { kind: IncidentKind; detail: string; screenshot: string | null; createdAt: string };
@@ -296,6 +304,8 @@ export type BoardRow = {
   classe: string | null;
   attemptId: string | null;
   status: 'pas_commencee' | 'en_cours' | 'verrouillee' | 'rendue';
+  /** Cause du verrouillage en cours : le dernier incident qui verrouille, pas encore débloqué. */
+  lockReason: IncidentKind | null;
   subjectLabel: string | null;
   unlockCode: string | null;
   failedUnlocks: number;
@@ -340,7 +350,7 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
     supabase.from('evaluation_subjects').select('id, label, source, exercises, grading, position').eq('evaluation_id', id).order('position'),
     supabase
       .from('evaluation_attempts')
-      .select('id, user_id, subject_id, status, locked, unlock_code, failed_unlocks, started_at, submitted_at, last_seen_at, evaluation_answers(exercise_id, code, passed, graded_at, updated_at), evaluation_incidents(id, locks, resolved_at)')
+      .select('id, user_id, subject_id, status, locked, unlock_code, failed_unlocks, started_at, submitted_at, last_seen_at, evaluation_answers(exercise_id, code, passed, graded_at, updated_at), evaluation_incidents(id, kind, locks, resolved_at, created_at)')
       .eq('evaluation_id', id),
     evaluation.classes?.length
       ? supabase.from('profiles').select('id, full_name, classe, role').in('classe', evaluation.classes).eq('role', 'student')
@@ -367,12 +377,16 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
     const graded = answers.filter(isGraded);
     const incidents: any[] = attempt?.evaluation_incidents ?? [];
     const tested = new Set((subject?.grading ?? []).filter((item: EvaluationGrading) => item.verification?.trim()).map((item: EvaluationGrading) => item.id));
+    const openLocks = incidents
+      .filter((incident) => incident.locks && !incident.resolved_at)
+      .sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at) || b.id - a.id);
     return {
       studentId,
       name: person.name,
       classe: person.classe,
       attemptId: attempt?.id ?? null,
       status: !attempt ? 'pas_commencee' : attempt.status === 'rendue' ? 'rendue' : attempt.locked ? 'verrouillee' : 'en_cours',
+      lockReason: attempt?.locked && attempt.status !== 'rendue' ? (openLocks[0]?.kind ?? null) : null,
       subjectLabel: subject?.label ?? null,
       unlockCode: attempt?.unlock_code ?? null,
       failedUnlocks: attempt?.failed_unlocks ?? 0,
@@ -380,7 +394,7 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
       submittedAt: attempt?.submitted_at ?? null,
       lastSeenAt: attempt?.last_seen_at ?? null,
       incidents: incidents.length,
-      openIncidents: incidents.filter((incident) => incident.locks && !incident.resolved_at).length,
+      openIncidents: openLocks.length,
       exercisesWritten: written,
       exercisesTotal: exercises.length,
       passed: graded.filter((answer) => answer.passed).length,
