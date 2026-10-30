@@ -5061,3 +5061,14 @@ input, textarea {
 .eval-rules { list-style: decimal; }
 /* Partage d'écran à relancer : le sujet est masqué tant que l'écran n'est pas partagé. */
 .eval-overlay.is-opaque { background: var(--bg); backdrop-filter: none; }
+
+/* Évaluation (administration) : même présentation que les autres pages, onglets dans une carte. */
+.adm-eval-back { display: inline-flex; align-items: center; gap: 0.35rem; margin-bottom: -0.75rem; font-size: 0.85rem; font-weight: 650; color: #64748b; }
+.adm-eval-back:hover { color: var(--accent); }
+.adm-eval-card { display: grid; gap: 1.25rem; padding: 0.5rem 1.25rem 1.5rem; border: 1px solid #e2e8f0; border-radius: 1rem; background: #fff; }
+.adm-eval-card .adm-eval-tabs { margin: 0 -1.25rem; padding: 0 1rem; }
+.adm-eval-help { display: grid; gap: 0.35rem; padding: 0.8rem 1rem; border-radius: 0.8rem; background: #f8fafc; font-size: 0.86rem; color: #475569; }
+.adm-eval-help p { margin: 0; }
+.adm-eval-help code, .adm-eval-card code { padding: 0.05rem 0.35rem; border-radius: 0.35rem; background: #fff1e6; color: #c2410c; font-size: 0.82em; }
+.adm-eval-reason { color: #b91c1c !important; font-weight: 600; }
+.eval-lock-reason { padding: 0.6rem 0.8rem; border-radius: 0.7rem; background: #fee2e2; color: #991b1b !important; font-weight: 650; }

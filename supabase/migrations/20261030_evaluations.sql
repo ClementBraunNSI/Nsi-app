@@ -305,6 +305,20 @@ end;
 $$;
 
 -- Ce que l'élève voit : l'évaluation, sa tentative, son sujet (sans tests) et son code enregistré.
+-- Cause du verrouillage en cours : le dernier incident qui verrouille, pas encore débloqué.
+create or replace function private.eval_lock_reason(p_attempt uuid)
+returns text
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select i.kind from public.evaluation_incidents i
+  where i.attempt_id = p_attempt and i.locks and i.resolved_at is null
+  order by i.created_at desc, i.id desc
+  limit 1;
+$$;
+
 create or replace function public.eval_my_attempt(p_evaluation uuid)
 returns jsonb
 language plpgsql
@@ -349,6 +363,7 @@ begin
     'evaluation', jsonb_build_object('id', v_eval.id, 'title', v_eval.title, 'description', v_eval.description,
       'durationMinutes', v_eval.duration_minutes, 'status', v_eval.status),
     'attempt', jsonb_build_object('id', v_attempt.id, 'status', v_attempt.status, 'locked', v_attempt.locked,
+      'lockReason', case when v_attempt.locked then private.eval_lock_reason(v_attempt.id) end,
       'startedAt', v_attempt.started_at, 'submittedAt', v_attempt.submitted_at,
       'deadline', private.eval_deadline(v_attempt.started_at, v_eval.duration_minutes)),
     'exercises', coalesce(v_exercises, '[]'::jsonb),
@@ -409,7 +424,8 @@ begin
     update public.evaluation_attempts set last_seen_at = now() where id = v_attempt.id;
   end if;
   select status into v_status from public.evaluations where id = v_attempt.evaluation_id;
-  return jsonb_build_object('locked', v_attempt.locked, 'status', v_attempt.status, 'evaluationStatus', v_status);
+  return jsonb_build_object('locked', v_attempt.locked, 'status', v_attempt.status, 'evaluationStatus', v_status,
+    'lockReason', case when v_attempt.locked then private.eval_lock_reason(v_attempt.id) end);
 end;
 $$;
 
@@ -460,8 +476,10 @@ begin
   returning id into v_id;
 
   if v_locks then
+    -- Nouveau code à chaque manipulation : un code vu une fois ne resservira pas.
     update public.evaluation_attempts
-      set locked = true, locked_at = case when locked then locked_at else now() end, last_seen_at = now()
+      set locked = true, locked_at = case when locked then locked_at else now() end, last_seen_at = now(),
+          unlock_code = private.eval_unlock_code(), failed_unlocks = 0
       where id = v_attempt.id;
   else
     update public.evaluation_attempts set last_seen_at = now() where id = v_attempt.id;
@@ -560,6 +578,7 @@ revoke all on function private.eval_unlock_code() from public, anon, authenticat
 revoke all on function private.eval_deadline(timestamptz, integer) from public, anon;
 revoke all on function private.eval_own_attempt(uuid) from public, anon, authenticated;
 revoke all on function private.eval_close_if_over(public.evaluation_attempts) from public, anon, authenticated;
+revoke all on function private.eval_lock_reason(uuid) from public, anon, authenticated;
 
 revoke all on function public.eval_pending_count() from public, anon;
 revoke all on function public.eval_list_mine() from public, anon;

@@ -14,6 +14,8 @@ import {
   type BoardRow,
   type EvaluationBoard,
 } from "@/app/actions/evaluations";
+import { INCIDENT_LABELS } from "@/lib/evaluation-guard";
+import { PageHeader } from "@/components/ui";
 import EvaluationForm from "./EvaluationForm";
 import SubjectsEditor from "./SubjectsEditor";
 import AttemptPanel from "./AttemptPanel";
@@ -101,35 +103,49 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
-        <Link href="/admin/evaluations" className="adm-eval-secondary"><ArrowLeft size={15} aria-hidden /> Évaluations</Link>
-        <span className={`adm-eval-status is-${evaluation.status}`}>{STATUS_LABELS[evaluation.status]}</span>
-      </div>
-      <header className="adm-eval-head">
-        <div className="min-w-0">
-          <h1>{evaluation.title}</h1>
-          <p>
-            {evaluation.classes.join(", ") || "Aucune classe"} · {board.subjects.length} sujet{board.subjects.length > 1 ? "s" : ""} ·{" "}
-            {evaluation.durationMinutes ? `${evaluation.durationMinutes} min par élève` : "sans limite de temps"}
-          </p>
-        </div>
-        <div className="adm-eval-actions">
-          {evaluation.status !== "ouverte" ? (
-            <button type="button" className="adm-eval-primary" disabled={busy} onClick={() => changeStatus("ouverte")}>
-              <Play size={15} aria-hidden /> {evaluation.status === "fermee" ? "Rouvrir" : "Ouvrir aux élèves"}
-            </button>
-          ) : (
-            <button type="button" className="adm-eval-danger" disabled={busy} onClick={() => changeStatus("fermee")}>
-              <Square size={15} aria-hidden /> Fermer et ramasser les copies
-            </button>
-          )}
-          <a className="adm-eval-secondary" href={`/admin/evaluations/${evaluation.id}/export`}>
-            <Download size={15} aria-hidden /> Toutes les copies (.zip)
-          </a>
-        </div>
-      </header>
+      <Link href="/admin/evaluations" className="adm-eval-back"><ArrowLeft size={15} aria-hidden /> Toutes les évaluations</Link>
+      <PageHeader
+        eyebrow={
+          <span className="inline-flex items-center gap-2">
+            Évaluation
+            <span className={`adm-eval-status is-${evaluation.status}`}>{STATUS_LABELS[evaluation.status]}</span>
+          </span>
+        }
+        title={evaluation.title}
+        description={`${evaluation.classes.join(", ") || "Aucune classe"} · ${board.subjects.length} sujet${board.subjects.length > 1 ? "s" : ""} · ${
+          evaluation.durationMinutes ? `${evaluation.durationMinutes} min par élève` : "sans limite de temps"
+        }`}
+        actions={
+          <div className="adm-eval-actions">
+            {evaluation.status !== "ouverte" ? (
+              <button
+                type="button"
+                className="adm-eval-primary"
+                disabled={busy || board.subjects.length === 0 || evaluation.classes.length === 0}
+                title={board.subjects.length === 0 ? "Ajouter d'abord un sujet" : evaluation.classes.length === 0 ? "Choisir d'abord une classe" : undefined}
+                onClick={() => changeStatus("ouverte")}
+              >
+                <Play size={15} aria-hidden /> {evaluation.status === "fermee" ? "Rouvrir" : "Ouvrir aux élèves"}
+              </button>
+            ) : (
+              <button type="button" className="adm-eval-danger" disabled={busy} onClick={() => changeStatus("fermee")}>
+                <Square size={15} aria-hidden /> Fermer et ramasser les copies
+              </button>
+            )}
+            {board.rows.some((row) => row.attemptId) ? (
+              <a className="adm-eval-secondary" href={`/admin/evaluations/${evaluation.id}/export`}>
+                <Download size={15} aria-hidden /> Toutes les copies (.zip)
+              </a>
+            ) : null}
+          </div>
+        }
+      />
+      {board.subjects.length === 0 && evaluation.status === "brouillon" ? (
+        <p className="adm-eval-warning">Prochaine étape : ajouter au moins un sujet dans l&apos;onglet « Sujets », puis ouvrir l&apos;évaluation aux élèves.</p>
+      ) : null}
       {message ? <p className="adm-eval-error">{message}</p> : null}
 
+      <div className="adm-eval-card">
       <nav className="adm-eval-tabs" aria-label="Sections de l'évaluation">
         {(["suivi", "sujets", "reglages"] as Tab[]).map((key) => (
           <button key={key} type="button" aria-pressed={tab === key} onClick={() => setTab(key)}>
@@ -181,6 +197,7 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
                         </td>
                         <td>
                           <span className={`adm-eval-row-status is-${row.status}`}>{ROW_STATUS[row.status]}</span>
+                          {row.lockReason ? <small className="adm-eval-reason">{INCIDENT_LABELS[row.lockReason]}</small> : null}
                           {offline ? <small className="adm-eval-offline">hors ligne</small> : null}
                         </td>
                         <td className="adm-eval-code">{row.unlockCode ?? "—"}{row.failedUnlocks ? <small>{row.failedUnlocks} essai{row.failedUnlocks > 1 ? "s" : ""} faux</small> : null}</td>
@@ -250,6 +267,8 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
           </div>
         </section>
       ) : null}
+
+      </div>
 
       {openAttempt ? (
         <AttemptPanel

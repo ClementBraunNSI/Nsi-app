@@ -4,6 +4,7 @@ import { ArrowLeft, Check } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/utils/supabase/server";
 import type { EvaluationExercise } from "@/lib/evaluation-subject";
+import type { IncidentKind } from "@/lib/evaluation-guard";
 import EvaluationStart from "@/components/evaluations/EvaluationStart";
 import EvaluationRunner from "@/components/evaluations/EvaluationRunner";
 import ResourceNotFound from "@/components/ResourceNotFound";
@@ -13,7 +14,15 @@ export const metadata = { title: "Évaluation", robots: { index: false } };
 
 type Payload = {
   evaluation: { id: string; title: string; description: string; durationMinutes: number | null; status: string };
-  attempt: null | { id: string; status: "en_cours" | "rendue"; locked: boolean; startedAt: string; submittedAt: string | null; deadline: string | null };
+  attempt: null | {
+    id: string;
+    status: "en_cours" | "rendue";
+    locked: boolean;
+    lockReason: IncidentKind | null;
+    startedAt: string;
+    submittedAt: string | null;
+    deadline: string | null;
+  };
   exercises?: EvaluationExercise[];
   answers?: { exerciseId: string; code: string }[];
 };
@@ -73,7 +82,7 @@ export default async function EvaluationPage({ params }: { params: Promise<{ id:
   return (
     <EvaluationRunner
       evaluation={{ id: evaluation.id, title: evaluation.title, durationMinutes: evaluation.durationMinutes }}
-      attempt={{ id: attempt.id, locked: attempt.locked, deadline: attempt.deadline }}
+      attempt={{ id: attempt.id, locked: attempt.locked, lockReason: attempt.lockReason, deadline: attempt.deadline }}
       exercises={payload.exercises ?? []}
       answers={answers}
     />
