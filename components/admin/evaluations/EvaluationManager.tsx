@@ -8,7 +8,7 @@ import {
   answersToGrade,
   deleteEvaluation,
   getEvaluationBoard,
-  gradeEvaluationAnswer,
+  gradeEvaluationAnswers,
   setEvaluationStatus,
   updateEvaluation,
   type BoardRow,
@@ -69,7 +69,7 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
     await refresh();
   };
 
-  // Correction automatique, un exercice à la fois (chaque appel lance les tests sur le serveur).
+  // Correction automatique par lots de 8 exercices, corrigés quatre à la fois sur le serveur.
   const gradeAll = useCallback(async (manual = false) => {
     if (gradingRef.current) return;
     gradingRef.current = true;
@@ -77,9 +77,10 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
     work.forEach((item) => triedRef.current.add(`${item.attemptId}:${item.exerciseId}`));
     setGrading({ done: 0, total: work.length });
     let done = 0;
-    for (const item of work) {
-      await gradeEvaluationAnswer(item.attemptId, item.exerciseId);
-      done += 1;
+    for (let start = 0; start < work.length; start += 8) {
+      const batch = work.slice(start, start + 8);
+      await gradeEvaluationAnswers(batch);
+      done += batch.length;
       setGrading({ done, total: work.length });
     }
     gradingRef.current = false;

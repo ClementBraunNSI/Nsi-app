@@ -105,7 +105,21 @@ function getFilesRecursively(dir: string): string[] {
   return results;
 }
 
-function buildExerciseCatalog(): { exercises: CatalogExercise[]; external: ExternalExercise[]; written: WrittenExercise[] } {
+type ExerciseCatalog = { exercises: CatalogExercise[]; external: ExternalExercise[]; written: WrittenExercise[] };
+
+let catalogCache: ExerciseCatalog | null = null;
+
+/**
+ * Catalogue des exercices de toutes les fiches. En production, les fichiers de cours ne changent qu'au déploiement :
+ * il est construit une fois par serveur. En développement, il est relu à chaque appel pour suivre les modifications.
+ */
+function buildExerciseCatalog(): ExerciseCatalog {
+  if (process.env.NODE_ENV !== 'production') return scanExerciseCatalog();
+  catalogCache ??= scanExerciseCatalog();
+  return catalogCache;
+}
+
+function scanExerciseCatalog(): ExerciseCatalog {
   const contentDir = contentRoot();
   if (!fs.existsSync(contentDir)) return { exercises: [], external: [], written: [] };
 

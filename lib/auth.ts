@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { isElevatedUser, type CourseViewer } from "@/lib/course-access";
@@ -29,7 +30,13 @@ function safeNextPath(next?: string | null): string {
   return next;
 }
 
-export async function getAuthContext(): Promise<AuthContext> {
+/**
+ * Session et profil de l'utilisateur, lus une seule fois par requête : la page, ses métadonnées
+ * et les actions qu'elle appelle partagent le même résultat au lieu de rappeler Supabase.
+ */
+export const getAuthContext = cache(loadAuthContext);
+
+async function loadAuthContext(): Promise<AuthContext> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {

@@ -530,7 +530,41 @@ export async function resetAttempt(attemptId: string): Promise<Result> {
 export async function gradeEvaluationAnswer(attemptId: string, exerciseId: string): Promise<Result<{ passed: boolean }>> {
   const ctx = await teacher();
   if (!ctx) return fail(NOT_ALLOWED);
-  const { data: attempt } = await ctx.supabase
+  return gradeOne(ctx.supabase, attemptId, exerciseId);
+}
+
+// Exercices corrigés en même temps dans un même appel : chacun lance son propre processus Python.
+const GRADING_CONCURRENCY = 4;
+const GRADING_BATCH = 8;
+
+/**
+ * Correction d'un lot d'exercices (au plus 8), quatre à la fois.
+ * Next.js traite les actions d'une même page l'une après l'autre : le parallélisme se fait donc ici, côté serveur.
+ */
+export async function gradeEvaluationAnswers(items: { attemptId: string; exerciseId: string }[]): Promise<Result<{ graded: number }>> {
+  const ctx = await teacher();
+  if (!ctx) return fail(NOT_ALLOWED);
+  const batch = items.slice(0, GRADING_BATCH);
+  let next = 0;
+  let graded = 0;
+  const worker = async () => {
+    while (next < batch.length) {
+      const item = batch[next];
+      next += 1;
+      const result = await gradeOne(ctx.supabase, item.attemptId, item.exerciseId);
+      if (result.ok) graded += 1;
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(GRADING_CONCURRENCY, batch.length) }, worker));
+  return { ok: true, graded };
+}
+
+async function gradeOne(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  attemptId: string,
+  exerciseId: string,
+): Promise<Result<{ passed: boolean }>> {
+  const { data: attempt } = await supabase
     .from('evaluation_attempts')
     .select('id, evaluation_subjects(exercises, grading), evaluation_answers(exercise_id, code, updated_at)')
     .eq('id', attemptId)
@@ -552,7 +586,7 @@ export async function gradeEvaluationAnswer(attemptId: string, exerciseId: strin
     report = unexpectedRunReport(CHECK_UNAVAILABLE);
   }
   const passed = everyTestPassed(report);
-  const { error } = await ctx.supabase
+  const { error } = await supabase
     .from('evaluation_answers')
     .update({
       passed,
