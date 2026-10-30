@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/admin/activite", label: "Activité" },
   { href: "/admin/messages", label: "Messagerie" },
   { href: "/admin/devoirs", label: "Devoirs" },
+  { href: "/admin/evaluations", label: "Évaluations" },
 ];
 
 export function AdminNav() {

@@ -95,7 +95,7 @@ function splitExerciseLabel(label: string): { number: string; title: string } {
   return match ? { number: match[1], title: match[2] } : { number: '', title: clean };
 }
 
-const LEVEL_FOLDERS = new Set(['0', '1', '2', '3', '4', 'particuliers']);
+const LEVEL_FOLDERS = new Set(['0', '1', '2', '3', '4', 'ressources', 'particuliers']);
 
 /** Niveau de la fiche, lu dans l'adresse (/cours/<niveau>/...), pour le renard du bon niveau. */
 function levelFromPath(pathname: string | null): string {

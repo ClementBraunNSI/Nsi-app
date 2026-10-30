@@ -15,6 +15,8 @@ type Props = {
   beforeMount: (monaco: any) => void;
   /** Boutons Exécuter et Vérifier repris dans la barre de l'éditeur (téléphone en paysage). */
   barActions?: ReactNode;
+  /** Évaluation : pas de menu contextuel (« Coller ») ni de dépôt de fichier ou de texte extérieur. */
+  lockdown?: boolean;
 };
 
 /** Monaco ne gère pas la saisie tactile : sur téléphone et tablette, on bascule sur CodeArea. */
@@ -30,7 +32,7 @@ function useTouchEditor() {
   return touch;
 }
 
-export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeMount, barActions }: Props) {
+export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeMount, barActions, lockdown = false }: Props) {
   const touch = useTouchEditor();
   const language = exercise.type === "sql" ? "sql" : "python";
 
@@ -73,6 +75,8 @@ export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeM
               overviewRulerLanes: 0,
               renderLineHighlight: "line",
               lineNumbersMinChars: 3,
+              contextmenu: !lockdown,
+              dropIntoEditor: { enabled: !lockdown },
             }}
           />
         )}

@@ -406,13 +406,13 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                   <span className="home-ex-p">Les grands classiques revisités par les élèves.</span>
                 </span>
               </Link>
-              <Link href="/cours/c" className="home-ex">
+              <Link href="/cours/ressources" className="home-ex">
                 <span className="home-ex-pic">
                   <Image src="/images/fox_c.svg" alt="" width={74} height={70} />
                 </span>
                 <span>
-                  <b>Programmation en C</b>
-                  <span className="home-ex-p">Types, tableaux, fonctions, structures et tris.</span>
+                  <b>Ressources supplémentaires</b>
+                  <span className="home-ex-p">Cours et exercices en plus, triés par langage : le C pour commencer.</span>
                 </span>
               </Link>
               {privateCard.show ? (

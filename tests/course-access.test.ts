@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { canAccessCourse, parseAudience } from "../lib/course-access";
+import { canonicalAppPath } from "../lib/nsi-levels";
 import {
   exercisePageTarget,
   isEditorExercise,
@@ -14,9 +15,9 @@ import {
 const PRIVATE_ANATOLE = "77a341a1-dc82-4fe5-a94c-d24ce93c4cbe";
 const CLASS_ANATOLE = "91cf974e-05c1-43c9-9417-6fd64a6fb124";
 
-const cleoSheet = matter(
+const cSheet = matter(
   fs.readFileSync(
-    path.join(process.cwd(), "content/particuliers/cleo/cours-affectations-types.md"),
+    path.join(process.cwd(), "content/ressources/c/cours-affectations-types.md"),
     "utf8",
   ),
 ).data;
@@ -73,12 +74,23 @@ describe("course audience", () => {
     expect(canAccessCourse(privateSheet, { ...classAnatole, userEmail: "anatole@clementbraun.info" })).toBe(false);
   });
 
-  it("keeps Cleo's empty account list visible only to an elevated account", () => {
-    expect(parseAudience(cleoSheet)).toEqual({ kind: "accounts", accounts: [] });
-    expect(canAccessCourse(cleoSheet, loggedOut)).toBe(false);
-    expect(canAccessCourse(cleoSheet, classAnatole)).toBe(false);
-    expect(canAccessCourse(cleoSheet, privateAnatole)).toBe(false);
-    expect(canAccessCourse(cleoSheet, { ...loggedOut, isElevated: true })).toBe(true);
+  it("opens the C extra resources to everyone, logged in or not", () => {
+    expect(parseAudience(cSheet)).toEqual({ kind: "public" });
+    expect(canAccessCourse(cSheet, loggedOut)).toBe(true);
+    expect(canAccessCourse(cSheet, classAnatole)).toBe(true);
+    expect(canAccessCourse(cSheet, privateAnatole)).toBe(true);
+  });
+
+  it("keeps every current private-lesson page restricted to named accounts", () => {
+    const dir = path.join(process.cwd(), "content/particuliers");
+    const pages = fs.readdirSync(dir, { recursive: true }).map(String).filter((name) => /\.mdx?$/.test(name));
+    expect(pages.length).toBeGreaterThan(0);
+    for (const page of pages) {
+      const data = matter(fs.readFileSync(path.join(dir, page), "utf8")).data;
+      const audience = parseAudience(data);
+      expect(audience.kind, page).toBe("accounts");
+      expect(canAccessCourse(data, loggedOut), page).toBe(false);
+    }
   });
 
   it("gives a class student that class and not another", () => {
@@ -115,5 +127,14 @@ describe("written exercise type", () => {
     expect(labPageTarget({ signedIn: true, elevated: true })).toBe("/");
     expect(labPageTarget({ signedIn: true, elevated: false })).toBe("/espace");
     expect(labPageTarget({ signedIn: false, elevated: false })).toBe("/connexion?next=%2Flab");
+  });
+});
+
+describe("old C level addresses", () => {
+  it("sends the former C pages to the extra resources and private pages to their new level", () => {
+    expect(canonicalAppPath("/cours/c")).toBe("/cours/ressources");
+    expect(canonicalAppPath("/cours/c/cleo/cours-fonctions")).toBe("/cours/ressources/c/cours-fonctions");
+    expect(canonicalAppPath("/cours/c/paul/exercices-bases-python")).toBe("/cours/particuliers/paul/exercices-bases-python");
+    expect(canonicalAppPath("/cours/ressources/c/cours-fonctions")).toBeNull();
   });
 });

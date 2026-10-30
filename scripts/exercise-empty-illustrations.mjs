@@ -21,7 +21,8 @@ const LEVELS = {
   2: { file: 'fox_2.png', flip: false },
   3: { file: 'fox_3.png', flip: true },
   4: { file: 'fox_4.png', flip: true },
-  particuliers: { file: 'fox_c.svg', flip: false },
+  ressources: { file: 'fox_c.svg', flip: false },
+  particuliers: { file: 'fox_2.png', flip: false },
 };
 
 // Fiche d'exercices penchée : lignes, états (validé, en cours, à faire), et une flèche vers la gauche.

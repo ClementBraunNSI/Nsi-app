@@ -3,11 +3,12 @@ import matter from "gray-matter";
 import HomeView, { type HomeLevel } from "./HomeView";
 import { isPublicCourse } from "@/lib/course-access";
 import { listMarkdownFilesForContentLevel } from "@/lib/course-utils";
-import { NSI_LEVEL_ORDER, getNsiLevel } from "@/lib/nsi-levels";
+import { NESTED_LEVELS, NSI_LEVEL_ORDER, getNsiLevel } from "@/lib/nsi-levels";
 
 /** Chapitres et ressources publics de chaque niveau, pour les tuiles de l'accueil. */
 function levelSummaries(): HomeLevel[] {
-  return NSI_LEVEL_ORDER.filter((folder) => folder !== "particuliers").map((folder) => {
+  // Ressources et cours particuliers ont leur propre tuile, ce ne sont pas des niveaux de classe.
+  return NSI_LEVEL_ORDER.filter((folder) => !NESTED_LEVELS.has(folder)).map((folder) => {
     const level = getNsiLevel(folder);
     const chapters = new Set<string>();
     let resources = 0;
