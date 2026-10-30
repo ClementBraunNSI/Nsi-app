@@ -77,9 +77,14 @@ type WorkspaceProps = {
   /** Dans une fiche : seulement l'éditeur, le résultat et les boutons (l'énoncé est affiché par la fiche). */
   embedded?: boolean;
   onCompleted?: (exerciseId: string) => void;
+  /** Évaluation : code enregistré sur le serveur, qui passe avant le brouillon du navigateur. */
+  initialCode?: string;
+  onCodeChange?: (code: string) => void;
+  /** Évaluation : pas de menu contextuel ni de dépôt de texte venu d'ailleurs dans l'éditeur. */
+  lockdown?: boolean;
 };
 
-export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted }: WorkspaceProps) {
+export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted, initialCode, onCodeChange, lockdown = false }: WorkspaceProps) {
   const starter = exercise.starterCode ?? '';
   const [code, setCodeState] = useState(starter);
   // Le raccourci clavier peut partir avant le rendu qui suit la frappe : on lit toujours le dernier texte saisi.
@@ -88,6 +93,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
     codeRef.current = value;
     setCodeState(value);
     writeDraft(exercise.id, value, starter);
+    onCodeChange?.(value);
   };
   const [running, setRunning] = useState<'execute' | 'test' | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -158,7 +164,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
 
   useEffect(() => {
     // Le code en cours reste d'une visite à l'autre (et d'un exercice à l'autre dans une fiche).
-    const draft = readDraft(exercise.id) ?? starter;
+    const draft = initialCode ?? readDraft(exercise.id) ?? starter;
     codeRef.current = draft;
     setCodeState(draft);
     setSqlResults(null);
@@ -378,6 +384,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
         onCodeChange={setCode}
         onReset={() => setCode(starter)}
         beforeMount={handleEditorWillMount}
+        lockdown={lockdown}
         barActions={
           <span className="exercise-bar-actions">
             <button type="button" onClick={handleExecute} disabled={running !== null} className="exercise-bar-run">

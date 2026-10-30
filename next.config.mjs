@@ -13,6 +13,14 @@ const nextConfig = {
       './node_modules/pyodide/**/*',
       './node_modules/sql.js/dist/sql-asm.js',
     ],
+    // Correction automatique des évaluations, lancée depuis le tableau de bord de l'enseignant.
+    '/admin/evaluations/[id]': [
+      './lib/pyodide-check-child.cjs',
+      './lib/pyodide-extra-packages.cjs',
+      './lib/pyodide-wheels/*.whl',
+      './node_modules/pyodide/**/*',
+      './node_modules/sql.js/dist/sql-asm.js',
+    ],
   },
   async redirects() {
     return [

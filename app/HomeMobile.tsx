@@ -54,12 +54,12 @@ const ACTIVITIES = [
     cta: "Visiter",
   },
   {
-    href: "/cours/c",
+    href: "/cours/ressources",
     image: "/images/fox_c.svg",
     size: [118, 112],
     eyebrow: "Ouvert à tous",
-    title: "Programmation en C",
-    text: "Types, tableaux, fonctions, structures et tris.",
+    title: "Ressources supplémentaires",
+    text: "Cours et exercices en plus, triés par langage : le C pour commencer.",
     cta: "Commencer",
   },
 ] as const;

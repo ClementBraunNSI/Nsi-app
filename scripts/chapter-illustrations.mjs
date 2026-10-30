@@ -19,7 +19,8 @@ const LEVEL_FOX = {
   2: 'fox_2.png',
   3: 'fox_3.png',
   4: 'fox_4.png',
-  particuliers: 'fox_c.svg',
+  ressources: 'fox_c.svg',
+  particuliers: 'fox_2.png',
 };
 
 // Accessoire de chaque chapitre, par niveau, clé = nom normalisé (comme normalizeChapterName).
@@ -74,10 +75,13 @@ const CHAPTERS = {
     'bts sio 2 : e4 - support et mise a disposition de services informatiques': 'server',
     'ressources necessaires': 'pages',
   },
+  // Un chapitre par langage.
+  ressources: {
+    'langage c': 'clang',
+    'langage c : revisions': 'cards',
+  },
+  // Cours des élèves suivis en ce moment.
   particuliers: {
-    'programmation en c': 'clang',
-    'programmation en c : revisions': 'cards',
-    'c : programmation structuree': 'stack',
     'bases de python': 'terminal',
     'programmation fonctionnelle': 'lambda',
   },

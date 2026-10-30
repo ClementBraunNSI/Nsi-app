@@ -49,10 +49,11 @@
     "bts sio 2 : e4 - support et mise a disposition de services informatiques": "/images/chapitres/4/chap_bts-sio-2-e4-support-et-mise-a-disposition-de-services-informatiques.png",
     "ressources necessaires": "/images/chapitres/4/chap_ressources-necessaires.png"
   },
+  "ressources": {
+    "langage c": "/images/chapitres/ressources/chap_langage-c.png",
+    "langage c : revisions": "/images/chapitres/ressources/chap_langage-c-revisions.png"
+  },
   "particuliers": {
-    "programmation en c": "/images/chapitres/particuliers/chap_programmation-en-c.png",
-    "programmation en c : revisions": "/images/chapitres/particuliers/chap_programmation-en-c-revisions.png",
-    "c : programmation structuree": "/images/chapitres/particuliers/chap_c-programmation-structuree.png",
     "bases de python": "/images/chapitres/particuliers/chap_bases-de-python.png",
     "programmation fonctionnelle": "/images/chapitres/particuliers/chap_programmation-fonctionnelle.png"
   }

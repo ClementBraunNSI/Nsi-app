@@ -9,13 +9,15 @@ export function useAuthSession() {
   const [user, setUser] = useState<any>(null);
   const [role, setRole] = useState<string | null>(null);
   const [fullName, setFullName] = useState<string | null>(null);
+  const [classe, setClasse] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const loadRole = async (userId: string) => {
-      const { data } = await supabase.from("profiles").select("role, full_name").eq("id", userId).single();
+      const { data } = await supabase.from("profiles").select("role, full_name, classe").eq("id", userId).single();
       setRole(data?.role ?? null);
       setFullName(typeof data?.full_name === "string" && data.full_name.trim() ? data.full_name.trim() : null);
+      setClasse(typeof data?.classe === "string" && data.classe.trim() ? data.classe.trim() : null);
       return data?.role ?? null;
     };
 
@@ -47,6 +49,7 @@ export function useAuthSession() {
       if (event === "SIGNED_OUT") {
         setRole(null);
         setFullName(null);
+        setClasse(null);
         router.push("/");
       }
     });
@@ -63,5 +66,5 @@ export function useAuthSession() {
     await supabase.auth.signOut();
   };
 
-  return { user, role, fullName, signIn, signOut };
+  return { user, role, fullName, classe, signIn, signOut };
 }

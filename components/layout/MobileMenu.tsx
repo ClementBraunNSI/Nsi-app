@@ -6,7 +6,7 @@ import type { LucideIcon } from "lucide-react";
 import { LayoutDashboard, LogIn, LogOut } from "lucide-react";
 import { AccessibilityOptions, type AccessibilityProps } from "./AccessibilityMenu";
 
-export type MenuLink = { href: string; label: string; icon: LucideIcon; match: (path: string) => boolean };
+export type MenuLink = { href: string; label: string; icon: LucideIcon; match: (path: string) => boolean; badge?: number; badgeLabel?: string };
 
 type Props = AccessibilityProps & {
   open: boolean;
@@ -49,10 +49,11 @@ export default function MobileMenu({ open, onClose, pathname, links, signedIn, s
       <div className="mobile-menu-backdrop" aria-hidden="true" onClick={onClose} />
       <div id="menu-mobile" ref={panelRef} className="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu">
         <nav aria-label="Navigation principale" className="mobile-menu-links">
-          {links.map(({ href, label, icon: Icon, match }) => (
+          {links.map(({ href, label, icon: Icon, match, badge, badgeLabel }) => (
             <Link key={href} href={href} onClick={onClose} className={match(pathname) ? "is-active" : undefined} aria-current={match(pathname) ? "page" : undefined}>
               <Icon size={20} aria-hidden />
               {label}
+              {badge ? <span className="nav-badge" aria-label={badgeLabel}>{badge}</span> : null}
             </Link>
           ))}
         </nav>

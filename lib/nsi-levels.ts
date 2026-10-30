@@ -1,4 +1,11 @@
-export const NSI_LEVEL_ORDER = ['0', '1', '2', '3', '4', 'particuliers'] as const;
+export const NSI_LEVEL_ORDER = ['0', '1', '2', '3', '4', 'ressources', 'particuliers'] as const;
+
+/**
+ * Niveaux qui ne sont pas des parcours de classe : `ressources` (cours en plus, ouverts à tous,
+ * un dossier par langage) et `particuliers` (cours des élèves suivis en ce moment, un dossier par élève).
+ * Quand un élève arrête, ses pages passent dans `ressources/<langage>/` avec `audience: public`.
+ */
+export const NESTED_LEVELS = new Set(['ressources', 'particuliers']);
 
 export const NSI_LEVELS = {
   '0': {
@@ -51,13 +58,23 @@ export const NSI_LEVELS = {
     profileCode: 'SIO',
     featured: false,
   },
-  particuliers: {
-    urlSlug: 'c',
-    label: 'Programmation en C',
-    short: 'C',
+  ressources: {
+    urlSlug: 'ressources',
+    label: 'Ressources supplémentaires',
+    short: 'Plus',
     audience: 'Ouvert à tous',
-    description: 'Types, tableaux, fonctions, structures et tris. Accessible sans compte.',
+    description: 'Cours et exercices en plus des programmes, triés par langage. Accessibles sans compte.',
     image: '/images/fox_c.svg',
+    profileCode: '',
+    featured: false,
+  },
+  particuliers: {
+    urlSlug: 'particuliers',
+    label: 'Cours particuliers',
+    short: 'Perso',
+    audience: 'Sur invitation',
+    description: 'Fiches préparées pour les élèves suivis en cours particuliers.',
+    image: '/images/fox_2.png',
     profileCode: '',
     featured: false,
   },
@@ -175,6 +192,16 @@ export function canonicalAppPath(pathname: string): string | null {
     const folder = contentFolderFromParam(niveauxMatch[1]);
     if (!folder) return `/cours${niveauxMatch[2] || ""}`;
     return `${coursePath(folder)}${niveauxMatch[2] || ""}`;
+  }
+
+  // Anciennes adresses du niveau « Programmation en C » (/cours/c) : le C est passé dans les ressources.
+  const oldCMatch = path.match(/^\/cours\/c(\/.*)?$/);
+  if (oldCMatch) {
+    const rest = oldCMatch[1] || "";
+    if (!rest) return coursePath("ressources");
+    const cleo = rest.match(/^\/cleo\/(.+)$/);
+    if (cleo) return coursePath("ressources", `c/${cleo[1]}`);
+    return `${coursePath("particuliers")}${rest}`;
   }
 
   const coursMatch = path.match(/^\/cours\/([^/]+)(\/.*)?$/);

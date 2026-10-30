@@ -3,17 +3,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, House, Info, LayoutDashboard, LogIn, LogOut, Menu, X } from "lucide-react";
+import { ClipboardCheck, Eye, House, Info, LayoutDashboard, LogIn, LogOut, Menu, X } from "lucide-react";
 import AccessibilityMenu from "./AccessibilityMenu";
 import MobileMenu, { type MenuLink } from "./MobileMenu";
 import { useFoxEasterEgg } from "./FoxEasterEggProvider";
 import { firstNameOf } from "@/lib/first-name";
+import { usePendingEvaluations } from "./usePendingEvaluations";
 
 type Props = {
   pathname: string;
   user: any;
   role: string | null;
   fullName: string | null;
+  classe: string | null;
   signOut: () => Promise<void>;
   dyslexicMode: boolean;
   darkMode: boolean;
@@ -34,6 +36,7 @@ export default function SiteHeader({
   user,
   role,
   fullName,
+  classe,
   signOut,
   dyslexicMode,
   darkMode,
@@ -53,6 +56,24 @@ export default function SiteHeader({
   const elevated = role === "admin" || role === "enseignant";
   const spaceHref = elevated ? "/admin" : "/espace";
   const spaceLabel = elevated ? "Administration" : "Mon espace";
+  // Élève de classe : évaluations à faire ; enseignant : copies verrouillées qui attendent un déblocage.
+  const showEvaluations = Boolean(user) && (elevated || Boolean(classe));
+  const pendingEvaluations = usePendingEvaluations(showEvaluations, pathname);
+  const links: MenuLink[] = showEvaluations
+    ? [
+        ...NAV,
+        {
+          href: elevated ? "/admin/evaluations" : "/evaluations",
+          label: "Évaluations",
+          icon: ClipboardCheck,
+          match: (path: string) => path.startsWith("/evaluations") || path.startsWith("/admin/evaluations"),
+          badge: pendingEvaluations,
+          badgeLabel: elevated
+            ? `${pendingEvaluations} copie${pendingEvaluations > 1 ? "s" : ""} verrouillée${pendingEvaluations > 1 ? "s" : ""}`
+            : `${pendingEvaluations} évaluation${pendingEvaluations > 1 ? "s" : ""} à faire`,
+        },
+      ]
+    : NAV;
   const accessibility = {
     dyslexicMode,
     darkMode,
@@ -127,13 +148,14 @@ export default function SiteHeader({
 
         <div className="site-header-desktop flex min-w-0 flex-1 items-center justify-end gap-3 text-sm font-semibold lg:gap-7">
           <div className="hide-scrollbar flex min-w-0 items-center gap-5 overflow-x-auto">
-          {NAV.map((item) => (
+          {links.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`shrink-0 whitespace-nowrap ${item.match(pathname) ? "text-[var(--accent)]" : "text-[var(--muted)] hover:text-[var(--accent)] transition-colors"}`}
+              className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap ${item.match(pathname) ? "text-[var(--accent)]" : "text-[var(--muted)] hover:text-[var(--accent)] transition-colors"}`}
             >
               {item.label}
+              {item.badge ? <span className="nav-badge" aria-label={item.badgeLabel}>{item.badge}</span> : null}
             </Link>
           ))}
           </div>
@@ -195,7 +217,7 @@ export default function SiteHeader({
         open={menuOpen}
         onClose={closeMenu}
         pathname={pathname}
-        links={NAV}
+        links={links}
         signedIn={Boolean(user)}
         spaceHref={spaceHref}
         spaceLabel={spaceLabel}

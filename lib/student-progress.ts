@@ -6,6 +6,7 @@ export const LEVEL_LABELS: Record<string, string> = {
   '1NSI': '1ère NSI',
   TNSI: 'Terminale NSI',
   SIO: 'BTS SIO',
+  ressources: 'Ressources supplémentaires',
   particuliers: 'Cours particuliers',
 };
 

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { resolveContentLevelDir } from '@/lib/content-path';
+import { NESTED_LEVELS } from '@/lib/nsi-levels';
 
 export interface CourseSummary {
   title: string;
@@ -12,12 +13,12 @@ export interface CourseSummary {
 
 const SKIP_DIRS = new Set(['build', 'node_modules', '.git']);
 
-/** Fichiers .md/.mdx sous content/{level} : plat sauf `particuliers` (sous-dossiers élèves / thèmes). */
+/** Fichiers .md/.mdx sous content/{level} : plat sauf `ressources` (un dossier par langage) et `particuliers` (un dossier par élève). */
 export function listMarkdownFilesForContentLevel(level: string): { filePath: string; slug: string }[] {
   const contentDir = resolveContentLevelDir(level);
   if (!contentDir) return [];
 
-  if (level === 'particuliers') {
+  if (NESTED_LEVELS.has(level)) {
     const out: { filePath: string; slug: string }[] = [];
     const walk = (dir: string, rel: string) => {
       for (const name of fs.readdirSync(dir)) {
