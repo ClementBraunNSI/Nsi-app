@@ -1,5 +1,7 @@
 import { Check, X } from "lucide-react";
 import type { RunReport, RunTest } from "@/lib/python-check";
+import { explainFailedTest, explainPythonError } from "@/lib/python-error-help";
+import { ErrorHelpBox } from "@/components/lab/ErrorHelpBox";
 
 function displayLabel(test: RunTest) {
   if (!test.ok) return test.label;
@@ -23,8 +25,9 @@ function usable(value: string | undefined) {
   return value !== undefined && value.length > 0 && value.length <= 180;
 }
 
-function FailedTest({ test, index }: { test: RunTest; index: number }) {
+function FailedTest({ test, index, code }: { test: RunTest; index: number; code?: string }) {
   const labels = valueLabels(test);
+  const help = code === undefined ? null : explainFailedTest(test, code);
   const showValues = usable(test.expected) && usable(test.actual) && (test.actual !== test.expected || test.printCompare);
   return (
     <li className="exercise-test is-bad">
@@ -47,6 +50,7 @@ function FailedTest({ test, index }: { test: RunTest; index: number }) {
           </div>
         </div>
       ) : null}
+      {help ? <ErrorHelpBox help={help} /> : null}
     </li>
   );
 }
@@ -59,14 +63,19 @@ function joinedPrints(report: RunReport) {
   return parts.filter(Boolean).join("\n\n");
 }
 
-/** Tests ratés en premier et détaillés ; tests réussis réduits à une ligne. */
-export function RunResultPanel({ report }: { report: RunReport }) {
+/**
+ * Tests ratés en premier et détaillés ; tests réussis réduits à une ligne.
+ * Avec le code de l'élève (exercice Python), chaque erreur et chaque test raté reçoit une explication en français.
+ */
+export function RunResultPanel({ report, code }: { report: RunReport; code?: string }) {
   const indexed = report.tests.map((test, index) => ({ test, index }));
   const failed = indexed.filter(({ test }) => !test.ok);
   const passedTests = indexed.filter(({ test }) => test.ok);
   const total = report.tests.length;
   const allOk = report.status === "success" && total > 0 && failed.length === 0;
   const prints = joinedPrints(report);
+  // Le programme a planté avant les tests : l'explication porte sur cette erreur.
+  const crashHelp = code !== undefined && total === 0 && report.error ? explainPythonError(report.error, report.errorDetail, code) : null;
 
   return (
     <div id="exercice-resultat" className="exercise-test-panel" role="status">
@@ -82,11 +91,12 @@ export function RunResultPanel({ report }: { report: RunReport }) {
       </p>
       {report.validationNote ? <p className="exercise-validation-note">Aperçu enseignant : {report.validationNote.toLowerCase()}</p> : null}
       {total > 0 && report.error ? <p className="exercise-test-detail">{report.error}</p> : null}
+      {crashHelp ? <ErrorHelpBox help={crashHelp} /> : null}
 
       {failed.length > 0 ? (
         <ul className="exercise-test-list">
           {failed.map(({ test, index }) => (
-            <FailedTest key={`${test.label}-${index}`} test={test} index={index} />
+            <FailedTest key={`${test.label}-${index}`} test={test} index={index} code={code} />
           ))}
         </ul>
       ) : null}

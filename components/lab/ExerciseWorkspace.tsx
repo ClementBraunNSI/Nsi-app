@@ -410,6 +410,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
         sqlResults={sqlResults}
         report={report}
         statusLine={statusLine}
+        code={code}
       />
       <div className="exercise-actions">
         <span className="exercise-shortcut" aria-hidden>
