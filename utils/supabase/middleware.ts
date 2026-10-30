@@ -2,6 +2,36 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import { isAbortError } from '@/lib/is-abort-error'
 
+// Compte sans mot de passe à changer : la réponse est gardée 10 minutes dans un cookie signé par le serveur,
+// pour ne pas relire le profil à chaque page. Un compte qui doit changer son mot de passe est revérifié à chaque fois.
+// Sans clé serveur pour signer (développement), rien n'est gardé : le profil est relu comme avant.
+const PASSWORD_OK_COOKIE = 'nsi-mdp-ok'
+const PASSWORD_OK_SECONDS = 600
+
+let signingKey: Promise<CryptoKey> | null = null
+
+function passwordOkKey() {
+  const secret = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!secret) return null
+  signingKey ??= crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])
+  return signingKey
+}
+
+async function passwordOkSignature(userId: string, expires: number) {
+  const key = passwordOkKey()
+  if (!key) return null
+  const signature = await crypto.subtle.sign('HMAC', await key, new TextEncoder().encode(`${PASSWORD_OK_COOKIE}:${userId}:${expires}`))
+  return btoa(String.fromCharCode(...new Uint8Array(signature))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+/** Cookie « mot de passe déjà changé » encore valable pour cet utilisateur, et bien signé par le serveur. */
+async function passwordKnownOk(value: string | undefined, userId: string) {
+  const [owner, expiresText, signature] = (value ?? '').split('.')
+  const expires = Number(expiresText)
+  if (owner !== userId || !Number.isFinite(expires) || expires < Date.now() || !signature) return false
+  return signature === (await passwordOkSignature(userId, expires))
+}
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {
@@ -55,14 +85,32 @@ export async function updateSession(request: NextRequest) {
   )
 
   try {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (user) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('must_change_password')
-        .eq('id', user.id)
-        .maybeSingle()
-      const mustChange = Boolean(profile?.must_change_password)
+    // getClaims vérifie le jeton sur place quand le projet signe avec ses clés publiques ; sinon il interroge Supabase
+    // comme getUser. Dans les deux cas la session expirée est rafraîchie et les cookies mis à jour.
+    const { data } = await supabase.auth.getClaims()
+    const userId = typeof data?.claims?.sub === 'string' ? data.claims.sub : null
+    if (userId) {
+      const knownOk = await passwordKnownOk(request.cookies.get(PASSWORD_OK_COOKIE)?.value, userId)
+      let mustChange = false
+      if (!knownOk) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('must_change_password')
+          .eq('id', userId)
+          .maybeSingle()
+        mustChange = Boolean(profile?.must_change_password)
+        const expires = Date.now() + PASSWORD_OK_SECONDS * 1000
+        const signature = mustChange ? null : await passwordOkSignature(userId, expires)
+        if (signature) {
+          response.cookies.set(PASSWORD_OK_COOKIE, `${userId}.${expires}.${signature}`, {
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: request.nextUrl.protocol === 'https:',
+            path: '/',
+            maxAge: PASSWORD_OK_SECONDS,
+          })
+        }
+      }
       const path = request.nextUrl.pathname
       const target = mustChange && path !== '/mot-de-passe'
         ? '/mot-de-passe'

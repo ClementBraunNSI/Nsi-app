@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
@@ -48,14 +48,89 @@ function childEnv(): NodeJS.ProcessEnv {
   return env;
 }
 
-function runPythonProcess(userCode: string, verification: string, packages: string[], cwd: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    // Sans eval ni new Function, `obj.constructor("return import('fs')")()` ne rouvre pas le disque.
-    const child = spawn(process.execPath, ['--disallow-code-generation-from-strings', CHILD_SCRIPT], {
-      cwd,
-      env: childEnv(),
-      stdio: ['pipe', 'pipe', 'pipe'],
+/*
+ * Charger Pyodide prend l'essentiel du temps d'une vérification (environ 1,3 s ; le code de l'élève, quelques ms).
+ * Un processus est donc lancé à l'avance : il charge Pyodide puis attend le code sur son entrée standard.
+ * Chaque vérification garde son propre processus, jeté ensuite : rien ne passe d'un élève à l'autre.
+ */
+type Runner = { child: ChildProcessWithoutNullStreams; cwd: string };
+
+// Un processus prêt qui ne sert pas est arrêté au bout de ce délai, pour rendre la mémoire.
+const IDLE_LIMIT = 10 * 60_000;
+
+let ready: Runner | null = null;
+let warming = false;
+let idleTimer: ReturnType<typeof setTimeout> | null = null;
+
+async function spawnRunner(): Promise<Runner> {
+  const cwd = await mkdtemp(path.join(tmpdir(), 'nsi-run-'));
+  // Sans eval ni new Function, `obj.constructor("return import('fs')")()` ne rouvre pas le disque.
+  const child = spawn(process.execPath, ['--disallow-code-generation-from-strings', CHILD_SCRIPT], {
+    cwd,
+    env: childEnv(),
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
+  child.once('exit', () => {
+    if (ready?.child === child) ready = null;
+    void rm(cwd, { recursive: true, force: true });
+  });
+  child.once('error', () => {});
+  return { child, cwd };
+}
+
+/** Le processus d'avance ne doit pas retenir le serveur (ni les tests) quand plus rien d'autre ne tourne. */
+function detach(runner: Runner, detached: boolean) {
+  const streams = [runner.child.stdin, runner.child.stdout, runner.child.stderr] as unknown as { ref?: () => void; unref?: () => void }[];
+  if (detached) {
+    runner.child.unref();
+    streams.forEach((stream) => stream?.unref?.());
+  } else {
+    runner.child.ref();
+    streams.forEach((stream) => stream?.ref?.());
+  }
+}
+
+function prepareNext() {
+  if (ready || warming || process.env.NSI_PYTHON_PREWARM === '0') return;
+  warming = true;
+  spawnRunner()
+    .then((runner) => {
+      detach(runner, true);
+      ready = runner;
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        if (ready === runner) {
+          ready = null;
+          runner.child.kill('SIGKILL');
+        }
+      }, IDLE_LIMIT);
+      idleTimer.unref?.();
+    })
+    .catch(() => {})
+    .finally(() => {
+      warming = false;
     });
+}
+
+/** Prend le processus prêt s'il est encore vivant, sinon en lance un ; prépare aussitôt le suivant. */
+async function takeRunner(): Promise<Runner> {
+  const candidate = ready;
+  ready = null;
+  if (idleTimer) clearTimeout(idleTimer);
+  let runner: Runner;
+  if (candidate && candidate.child.exitCode === null && candidate.child.signalCode === null && !candidate.child.killed) {
+    detach(candidate, false);
+    runner = candidate;
+  } else {
+    runner = await spawnRunner();
+  }
+  prepareNext();
+  return runner;
+}
+
+function runPythonProcess(userCode: string, verification: string, packages: string[], runner: Runner): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const { child } = runner;
     const chunks: Buffer[] = [];
     let size = 0;
     let settled = false;
@@ -92,9 +167,9 @@ function runPythonProcess(userCode: string, verification: string, packages: stri
 }
 
 export async function runPythonCheck(userCode: string, verification: string, packages: string[] = []): Promise<RunReport> {
-  const cwd = await mkdtemp(path.join(tmpdir(), 'nsi-run-'));
+  const runner = await takeRunner();
   try {
-    const stdout = await runPythonProcess(userCode, verification, packages, cwd);
+    const stdout = await runPythonProcess(userCode, verification, packages, runner);
     return reportFromStdout(stdout) ?? unexpectedRunReport(UNAVAILABLE);
   } catch (error) {
     const stdout = error && typeof error === 'object' && 'stdout' in error && typeof error.stdout === 'string'
@@ -102,7 +177,8 @@ export async function runPythonCheck(userCode: string, verification: string, pac
       : '';
     return reportFromStdout(stdout) ?? unexpectedRunReport(UNAVAILABLE);
   } finally {
-    await rm(cwd, { recursive: true, force: true });
+    // Le dossier temporaire part avec le processus (voir spawnRunner).
+    if (runner.child.exitCode === null) runner.child.kill('SIGKILL');
   }
 }
 
