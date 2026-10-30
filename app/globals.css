@@ -5072,3 +5072,48 @@ input, textarea {
 .adm-eval-help code, .adm-eval-card code { padding: 0.05rem 0.35rem; border-radius: 0.35rem; background: #fff1e6; color: #c2410c; font-size: 0.82em; }
 .adm-eval-reason { color: #b91c1c !important; font-weight: 600; }
 .eval-lock-reason { padding: 0.6rem 0.8rem; border-radius: 0.7rem; background: #fee2e2; color: #991b1b !important; font-weight: 650; }
+
+/* Explication en français d'une erreur Python ou d'un test raté (éditeur des exercices). */
+.error-help {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.6rem 0 0;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid color-mix(in srgb, #f59e0b 45%, transparent);
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, #fef3c7 85%, var(--surface));
+  color: #422006;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+.error-help p { margin: 0; }
+.error-help-title { display: flex; align-items: flex-start; gap: 0.45rem; font-weight: 700; }
+.error-help-title svg { flex-shrink: 0; margin-top: 0.15rem; color: #d97706; }
+.error-help-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; }
+.error-help-line span { font-size: 0.75rem; font-weight: 700; color: #92400e; }
+.error-help-line code {
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.35rem;
+  background: #1b1d22;
+  color: #fde68a;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.8rem;
+  white-space: pre;
+}
+.error-help-hint { padding-left: 0.6rem; border-left: 3px solid #f59e0b; font-weight: 600; }
+
+/* Une ligne de test raté porte aussi la classe du bouton « Vérifier » (exercise-test) :
+   on lui retire l'allure de bouton (texte blanc, pastille centrée) pour un bloc lisible, empilé. */
+.exercise-test-list .exercise-test {
+  display: block;
+  min-height: 0;
+  color: var(--fg);
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: left;
+  transition: none;
+}
+.exercise-test-list .exercise-test:hover {
+  transform: none;
+  filter: none;
+}

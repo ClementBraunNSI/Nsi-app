@@ -4,6 +4,8 @@ import { Check, Loader2, Play, RotateCw, X } from "lucide-react";
 import type { LabExercise } from "@/app/actions/getExercises";
 import { CHECK_UNAVAILABLE, type RunReport } from "@/lib/python-check";
 import { RunResultPanel } from "@/components/lab/RunResultPanel";
+import { ErrorHelpBox } from "@/components/lab/ErrorHelpBox";
+import { explainPythonError } from "@/lib/python-error-help";
 
 type SqlResults = { columns: string[]; values: any[][] } | null;
 
@@ -23,13 +25,15 @@ type Props = {
   sqlResults: SqlResults;
   report: RunReport | null;
   statusLine: string | null;
+  /** Code de l'élève : sert à pointer la ligne fautive et à repérer les fautes de frappe. */
+  code: string;
 };
 
 /**
  * Un seul panneau de résultat : ce que le programme affiche après « Exécuter »,
  * la liste des tests après « Vérifier ». Le petit sélecteur n'apparaît que si les deux existent.
  */
-export function LabOutput({ exercise, tab, onTab, onClear, onRetryTest, consoleState, sqlResults, report, statusLine }: Props) {
+export function LabOutput({ exercise, tab, onTab, onClear, onRetryTest, consoleState, sqlResults, report, statusLine, code }: Props) {
   const ran = consoleState.tone !== "idle" || sqlResults !== null;
   const both = exercise.hasVerification && report !== null && ran;
   const view: "console" | "tests" = report && (tab === "tests" || !ran) ? "tests" : "console";
@@ -64,6 +68,8 @@ export function LabOutput({ exercise, tab, onTab, onClear, onRetryTest, consoleS
   }
 
   const unavailable = view === "tests" && report?.error === CHECK_UNAVAILABLE;
+  const python = exercise.type !== "sql";
+  const consoleHelp = python && consoleState.tone === "error" ? explainPythonError(consoleState.text, consoleState.detail, code) : null;
 
   return (
     <section className="exercise-result" aria-live="polite">
@@ -97,11 +103,12 @@ export function LabOutput({ exercise, tab, onTab, onClear, onRetryTest, consoleS
               </button>
             </div>
           ) : (
-            <RunResultPanel report={report} />
+            <RunResultPanel report={report} code={python ? code : undefined} />
           )
         ) : (
           <>
             <pre className={`exercise-console is-${consoleState.tone}`}>{consoleState.text}</pre>
+            {consoleHelp ? <ErrorHelpBox help={consoleHelp} /> : null}
             {consoleState.detail ? (
               <details className="exercise-console-detail">
                 <summary>Détail technique</summary>
