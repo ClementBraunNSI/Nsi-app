@@ -1,0 +1,102 @@
+/* Tailles en em : le mode projection agrandit le texte de la fiche, les indices suivent. */
+.hints {
+  display: grid;
+  gap: 0.6em;
+  margin-top: 1.1em;
+}
+
+.hint {
+  border: 1px solid color-mix(in srgb, #eab308 35%, var(--border));
+  border-radius: 0.75em;
+  background: color-mix(in srgb, #fef9c3 45%, var(--surface));
+  padding: 0.6em 0.9em 0.2em;
+}
+
+:global(.dark) .hint {
+  background: color-mix(in srgb, #eab308 8%, var(--surface));
+}
+
+.pseudo {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+}
+
+:global(.dark) .pseudo {
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+
+.name {
+  margin: 0 0 0.25em !important;
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #a16207;
+}
+
+:global(.dark) .name {
+  color: #facc15;
+}
+
+.pseudo .name {
+  color: var(--accent);
+}
+
+.body > :first-child {
+  margin-top: 0;
+}
+
+.body pre {
+  margin: 0.4em 0 0.8em;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em 0.9em;
+}
+
+.next,
+.reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.next {
+  padding: 0.4em 0.95em;
+  border: 1px solid color-mix(in srgb, #eab308 45%, var(--border));
+  background: color-mix(in srgb, #fde68a 50%, var(--surface));
+  color: var(--fg);
+  font-size: 0.85em;
+}
+
+.next:hover {
+  background: color-mix(in srgb, #fde68a 75%, var(--surface));
+}
+
+:global(.dark) .next {
+  background: color-mix(in srgb, #eab308 16%, var(--surface));
+}
+
+.reset {
+  padding: 0.3em 0.2em;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 0.8em;
+}
+
+.reset:hover {
+  color: var(--fg);
+}
+
+.left {
+  font-size: 0.82em;
+  color: var(--muted);
+}

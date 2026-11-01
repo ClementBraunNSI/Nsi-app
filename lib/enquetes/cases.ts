@@ -572,7 +572,322 @@ const GLAND: Enquete = {
   ],
 };
 
-export const ENQUETES: Enquete[] = [OEUFS, MIEL, BARRAGE, GLAND];
+/** Pièges photo du Bois des Détours : la Clairière le 27, puis le Coin aux Cèpes (étape 3), puis le Vieux Moulin (étape 4). */
+const PASSAGES_CLAIRIERE: Table["rows"] = [
+  [60, 19, "Clairière", "2026-10-27", "07:20"],
+  [61, 3, "Clairière", "2026-10-27", "07:40"],
+  [62, 20, "Clairière", "2026-10-27", "08:10"],
+  [63, 18, "Clairière", "2026-10-27", "08:25"],
+  [64, 23, "Clairière", "2026-10-27", "08:50"],
+  [65, 14, "Clairière", "2026-10-27", "09:30"],
+  [66, 16, "Clairière", "2026-10-27", "10:05"],
+  [67, 15, "Mare aux Iris", "2026-10-27", "07:30"],
+  [68, 7, "Pont de Pierre", "2026-10-27", "07:45"],
+];
+
+const PASSAGES_CEPES: Table["rows"] = [
+  [70, 3, "Coin aux Cèpes", "2026-10-20", "15:10"],
+  [71, 10, "Coin aux Cèpes", "2026-10-22", "11:30"],
+  [72, 23, "Coin aux Cèpes", "2026-10-24", "09:15"],
+  [73, 6, "Coin aux Cèpes", "2026-10-25", "10:00"],
+  [74, 23, "Coin aux Cèpes", "2026-10-26", "10:40"],
+  [75, 6, "Coin aux Cèpes", "2026-10-28", "08:00"],
+  [76, 6, "Coin aux Cèpes", "2026-10-28", "10:00"],
+  [77, 6, "Coin aux Cèpes", "2026-10-28", "12:00"],
+  [78, 6, "Coin aux Cèpes", "2026-10-29", "08:00"],
+  [79, 6, "Coin aux Cèpes", "2026-10-29", "10:00"],
+  [80, 6, "Coin aux Cèpes", "2026-10-29", "12:00"],
+  [81, 6, "Coin aux Cèpes", "2026-10-30", "08:00"],
+  [82, 6, "Coin aux Cèpes", "2026-10-30", "10:00"],
+  [83, 6, "Coin aux Cèpes", "2026-10-30", "12:00"],
+];
+
+const PASSAGES_MOULIN: Table["rows"] = [
+  [90, 2, "Vieux Moulin", "2026-10-28", "09:30"],
+  [91, 23, "Vieux Moulin", "2026-10-28", "10:50"],
+  [92, 13, "Vieux Moulin", "2026-10-29", "08:20"],
+  [93, 23, "Vieux Moulin", "2026-10-29", "09:05"],
+  [94, 23, "Vieux Moulin", "2026-10-30", "11:10"],
+  [95, 20, "Vieux Moulin", "2026-10-30", "11:45"],
+];
+
+const pieges = (cepes: string): Table => ({
+  name: "pieges",
+  description: "Les pièges photo de la forêt et le réglage de leur horloge.",
+  columns: [
+    { name: "lieu", type: "TEXT", description: "Lieu du piège photo" },
+    { name: "horloge", type: "TEXT", description: "Heure affichée sur les photos : heure d'hiver ou heure d'été" },
+    { name: "remarque", type: "TEXT", description: "Ce que la garde a noté en vérifiant le piège" },
+  ],
+  rows: [
+    ["Clairière", "heure d'été", "L'horloge n'a pas été changée le 25 octobre."],
+    ["Mare aux Iris", "heure d'hiver", "RAS"],
+    ["Pont de Pierre", "heure d'hiver", "RAS"],
+    ["Coin aux Cèpes", "heure d'hiver", cepes],
+    ["Vieux Moulin", "heure d'hiver", "RAS"],
+  ],
+});
+
+/** Enquête 5 : une forêt qui fait tourner en rond, et une enquête qui finit par revenir à son point de départ. */
+const DETOURS: Enquete = {
+  slug: "bois-des-detours",
+  numero: 5,
+  title: "Le Bois des Détours",
+  difficulty: "Difficile",
+  skills: ["Des sentiers qui tournent en rond", "Comparer deux colonnes", "Se méfier des horloges", "Sous-requête avec NOT IN", "Relier une table à elle-même"],
+  pitch: "Chaque promeneur qui entre dans le Bois des Détours ressort… par où il est entré. Les panneaux mentent, la carte aussi, et les registres s'amusent avec les enquêteurs.",
+  stageTitle: "Les panneaux qui mentent",
+  story: [
+    "Depuis le 28 octobre 2026, le Bois des Détours porte bien son nom : chaque promeneur qui part de la Clairière vers le Vieux Moulin finit par revenir… à la Clairière. Biscotte, Tamia et Pépin le lièvre en ont fait l'expérience, Pépin trois matins de suite.",
+    "Le 30 octobre, la garde forestière inspecte le bois : plusieurs panneaux n'indiquent pas le bon sentier. Elle a relevé le plan exact des sentiers, ce qui est écrit sur chaque panneau et les traces laissées dessus.",
+  ],
+  objective: "Trouver le nom de l'animal qui a tourné les panneaux du Bois des Détours.",
+  tables: [
+    rapports([
+      [20, "2026-10-28", "Clairière", "Biscotte est partie vers le Vieux Moulin à 9 h. Elle est revenue à la Clairière à 10 h, sans avoir vu le moulin."],
+      [21, "2026-10-29", "Clairière", "Pépin s'est perdu dans le Bois des Détours toute la matinée. Il est revenu à la Clairière vers 11 h, épuisé."],
+      [22, "2026-10-29", "Mare aux Iris", "Tamia est passée deux fois devant la mare en voulant aller au Pont de Pierre."],
+      [23, "2026-10-30", "Bois des Détours", "Inspection : plusieurs panneaux n'annoncent pas la bonne destination. Les traces relevées sur chaque panneau ont été identifiées."],
+    ]),
+    temoignages([
+      [20, 23, "Hulotte", "Le 28, avant l'aube, un renard roux tripotait les panneaux. Je ne l'ai vu que de dos."],
+      [21, 23, "Gaspard", "Roux, évidemment. Croa."],
+      [22, 21, "Pépin", "J'ai suivi les panneaux, tout droit, et je suis retombé sur ma Clairière. Trois matins de suite !"],
+      [23, 20, "Biscotte", "Le panneau disait « Carrefour du Hêtre ». Je me suis retrouvée devant la Mare aux Iris."],
+    ]),
+    {
+      name: "sentiers",
+      description: "Le plan exact du Bois des Détours : chaque sentier, dans un sens de marche.",
+      columns: [
+        { name: "id", type: "INTEGER", description: "Numéro du sentier" },
+        { name: "depart", type: "TEXT", description: "Lieu d'où part le sentier" },
+        { name: "arrivee", type: "TEXT", description: "Lieu où il mène vraiment" },
+      ],
+      rows: [
+        [1, "Clairière", "Carrefour du Hêtre"],
+        [2, "Carrefour du Hêtre", "Clairière"],
+        [3, "Clairière", "Mare aux Iris"],
+        [4, "Mare aux Iris", "Clairière"],
+        [5, "Carrefour du Hêtre", "Pont de Pierre"],
+        [6, "Pont de Pierre", "Carrefour du Hêtre"],
+        [7, "Carrefour du Hêtre", "Coin aux Cèpes"],
+        [8, "Coin aux Cèpes", "Carrefour du Hêtre"],
+        [9, "Pont de Pierre", "Vieux Moulin"],
+        [10, "Vieux Moulin", "Pont de Pierre"],
+        [11, "Coin aux Cèpes", "Vieux Moulin"],
+        [12, "Vieux Moulin", "Coin aux Cèpes"],
+        [13, "Mare aux Iris", "Pont de Pierre"],
+        [14, "Pont de Pierre", "Mare aux Iris"],
+      ],
+    },
+    {
+      name: "panneaux",
+      description: "Les panneaux plantés au départ de chaque sentier.",
+      columns: [
+        { name: "id", type: "INTEGER", description: "Numéro du panneau" },
+        { name: "sentier_id", type: "INTEGER", description: "Sentier sur lequel il est planté (sentiers.id)" },
+        { name: "carrefour", type: "TEXT", description: "Lieu où se trouve le panneau" },
+        { name: "indique", type: "TEXT", description: "Destination écrite sur le panneau" },
+      ],
+      rows: [
+        [101, 1, "Clairière", "Mare aux Iris"],
+        [102, 2, "Carrefour du Hêtre", "Clairière"],
+        [103, 3, "Clairière", "Carrefour du Hêtre"],
+        [104, 4, "Mare aux Iris", "Pont de Pierre"],
+        [105, 5, "Carrefour du Hêtre", "Pont de Pierre"],
+        [106, 6, "Pont de Pierre", "Carrefour du Hêtre"],
+        [107, 7, "Carrefour du Hêtre", "Coin aux Cèpes"],
+        [108, 8, "Coin aux Cèpes", "Carrefour du Hêtre"],
+        [109, 9, "Pont de Pierre", "Vieux Moulin"],
+        [110, 10, "Vieux Moulin", "Pont de Pierre"],
+        [111, 11, "Coin aux Cèpes", "Vieux Moulin"],
+        [112, 12, "Vieux Moulin", "Coin aux Cèpes"],
+        [113, 13, "Mare aux Iris", "Clairière"],
+        [114, 14, "Pont de Pierre", "Mare aux Iris"],
+      ],
+    },
+    {
+      name: "traces",
+      description: "Les traces relevées sur les panneaux, et l'animal à qui elles appartiennent.",
+      columns: [
+        { name: "id", type: "INTEGER", description: "Numéro de la trace" },
+        { name: "panneau_id", type: "INTEGER", description: "Panneau où elle a été trouvée (panneaux.id)" },
+        { name: "date", type: "TEXT", description: "Date estimée (AAAA-MM-JJ)" },
+        { name: "trace", type: "TEXT", description: "Ce qui a été trouvé" },
+        { name: "animal_id", type: "INTEGER", description: "Animal identifié (animaux.id)" },
+      ],
+      rows: [
+        [1, 101, "2026-10-26", "peinture fraîche", 5],
+        [2, 103, "2026-10-26", "peinture fraîche", 5],
+        [3, 104, "2026-10-26", "peinture fraîche", 5],
+        [4, 105, "2026-10-26", "peinture fraîche", 5],
+        [5, 113, "2026-10-27", "empreinte de renard", 1],
+        [6, 107, "2026-10-27", "plume noire", 21],
+        [7, 101, "2026-10-28", "poils roux et blancs", 22],
+        [8, 103, "2026-10-28", "poils roux et blancs", 22],
+        [9, 104, "2026-10-28", "empreinte de renard", 22],
+        [10, 113, "2026-10-28", "poils roux et blancs", 22],
+        [11, 103, "2026-10-29", "empreinte de lièvre", 23],
+        [12, 109, "2026-10-29", "poils gris et noirs", 7],
+      ],
+    },
+    ANIMAUX,
+  ],
+  culprit: "Ambre",
+  hints: [
+    "Relier chaque panneau à son sentier (panneaux.sentier_id = sentiers.id), puis garder les panneaux dont la destination écrite (indique) n'est pas la vraie arrivée. L'opérateur « différent de » s'écrit <> en SQL.",
+    "Depuis la Clairière, suivre le panneau « Carrefour du Hêtre » : où mène-t-il vraiment ? Puis, de là, suivre le panneau « Pont de Pierre ». Le chemin revient à son point de départ.",
+    "Dans traces, compter pour chaque animal le nombre de panneaux menteurs différents qu'il a touchés (COUNT(DISTINCT …) avec GROUP BY). Un seul les a tous touchés.",
+  ],
+  explanation:
+    "Quatre panneaux mentent, échangés deux par deux : à la Clairière, le panneau « Carrefour du Hêtre » envoie vers la Mare aux Iris, et à la Mare, le panneau « Pont de Pierre » renvoie à la Clairière. Le promeneur tourne en rond. Roux n'a laissé de trace que sur un panneau, Piquet sur trois (il les a repeints le 26). Seule Ambre la renarde, aussi rousse que Roux, a touché les quatre, le 28 avant l'aube.",
+  twist:
+    "Ambre avoue avoir tourné les quatre panneaux, mais pour bien faire : le 28 avant l'aube, elle les a comparés à la grande carte affichée à la Clairière, et ils ne correspondaient pas. Elle les a donc « corrigés ». Or Piquet les avait repeints le 26, et ils étaient justes. Ce n'étaient pas les panneaux qui mentaient, c'était la carte. Qui l'a affichée ?",
+  solutionSql: [
+    "SELECT panneaux.id, panneaux.carrefour, panneaux.indique, sentiers.arrivee FROM panneaux JOIN sentiers ON sentiers.id = panneaux.sentier_id WHERE panneaux.indique <> sentiers.arrivee",
+    "SELECT animaux.nom FROM traces JOIN panneaux ON panneaux.id = traces.panneau_id JOIN sentiers ON sentiers.id = panneaux.sentier_id JOIN animaux ON animaux.id = traces.animal_id WHERE panneaux.indique <> sentiers.arrivee GROUP BY animaux.nom HAVING COUNT(DISTINCT panneaux.id) = 4",
+  ],
+  next: [
+    {
+      title: "La carte de la Clairière",
+      story: [
+        "Le 27 octobre, la garde fait sa ronde à la Clairière à 7 h : l'ancienne carte est au tableau. À 8 h, une nouvelle carte l'a remplacée, punaisée à plus d'un mètre du sol. Seul un animal d'au moins 100 cm a pu l'atteindre.",
+        "La montre de la garde est à l'heure d'hiver, comme toute la forêt depuis le 25 octobre. La nouvelle carte a été recopiée dans un registre, et la garde a joint la liste des pièges photo avec le réglage de leur horloge.",
+      ],
+      objective: "Trouver le nom de l'animal qui a affiché la fausse carte à la Clairière.",
+      tables: [
+        {
+          name: "carte",
+          description: "La carte affichée à la Clairière depuis le 27 octobre : où mène chaque sentier, d'après elle.",
+          columns: [
+            { name: "sentier_id", type: "INTEGER", description: "Sentier dessiné sur la carte (sentiers.id)" },
+            { name: "arrivee", type: "TEXT", description: "Lieu où il mène, d'après la carte" },
+          ],
+          rows: [
+            [1, "Mare aux Iris"],
+            [2, "Clairière"],
+            [3, "Carrefour du Hêtre"],
+            [4, "Pont de Pierre"],
+            [5, "Pont de Pierre"],
+            [6, "Carrefour du Hêtre"],
+            [9, "Vieux Moulin"],
+            [10, "Pont de Pierre"],
+            [13, "Clairière"],
+            [14, "Mare aux Iris"],
+          ],
+        },
+        pieges("RAS"),
+        passages(PASSAGES_CLAIRIERE),
+      ],
+      culprit: "Sanglou",
+      hints: [
+        "Relier carte et sentiers par le numéro du sentier : la carte donne-t-elle les vraies arrivées ? Ses erreurs sont exactement les « corrections » d'Ambre.",
+        "Dans passages, garder les photos de la Clairière du 27 octobre entre 7 h et 8 h, puis les relier à animaux. Mais d'abord, lire la table pieges : à quelle heure est réglé le piège de la Clairière ?",
+        "Une horloge restée à l'heure d'été avance d'une heure : 7 h à la montre de la garde s'affiche 08:00 sur le piège. Chercher donc entre 08:00 et 09:00, puis garder les animaux d'au moins 100 cm.",
+      ],
+      explanation:
+        "La carte affichée donne une fausse arrivée à quatre sentiers, ceux qu'Ambre a « corrigés ». Le piège de la Clairière est resté à l'heure d'été : ses photos ont une heure d'avance, et la ronde de 7 h à 8 h correspond à 08:00 à 09:00 sur le piège. Un seul animal d'au moins 100 cm y apparaît : Sanglou le sanglier, à 08:25, donc 7 h 25. Cerise, photographiée à 07:20, était en réalité passée à 6 h 20, avant la première ronde.",
+      twist:
+        "Sanglou reconnaît avoir punaisé la carte, mais il ne l'a pas dessinée : il l'a trouvée roulée devant son terrier le 26 au soir, avec un mot : « Nouvelle carte du Bois, à afficher demain matin à la Clairière. La garde. » La garde n'a jamais écrit ce mot. Une fausse carte sert toujours à quelque chose : en la comparant à la vraie, il doit être possible de voir à qui profite le détour.",
+      solutionSql: [
+        "SELECT carte.sentier_id, carte.arrivee, sentiers.arrivee FROM carte JOIN sentiers ON sentiers.id = carte.sentier_id WHERE carte.arrivee <> sentiers.arrivee",
+        "SELECT * FROM pieges WHERE lieu = 'Clairière'",
+        "SELECT animaux.nom FROM passages JOIN animaux ON animaux.id = passages.animal_id WHERE passages.lieu = 'Clairière' AND passages.date = '2026-10-27' AND passages.heure BETWEEN '08:00' AND '09:00' AND animaux.taille_cm >= 100",
+      ],
+    },
+    {
+      title: "À qui profite le détour ?",
+      story: [
+        "La fausse carte ne se contente pas d'échanger des sentiers : certains n'y figurent plus du tout. Un lieu entier du Bois des Détours a disparu de la carte, et plus aucun promeneur ne peut le trouver.",
+        "La garde a dépouillé les photos de tous les pièges du bois depuis le 20 octobre.",
+      ],
+      objective: "Trouver le nom du seul animal photographié, depuis l'affichage de la fausse carte, au lieu que cette carte fait disparaître.",
+      tables: [passages([...PASSAGES_CLAIRIERE, ...PASSAGES_CEPES])],
+      culprit: "Musc",
+      hints: [
+        "Quels lieux sont des arrivées dans sentiers, mais jamais dans carte ? Une sous-requête avec NOT IN répond à la question.",
+        "La carte a été affichée le 27 octobre. Dans passages, garder les photos de ce lieu prises à partir de cette date : les dates s'écrivent AAAA-MM-JJ, elles se comparent donc comme du texte.",
+        "Relier ces passages à animaux. Avec DISTINCT, un seul nom reste.",
+      ],
+      explanation:
+        "Sur la fausse carte, aucun sentier ne mène plus au Coin aux Cèpes : les quatre sentiers qui le desservent ont disparu. Depuis le 27 octobre, le piège du Coin aux Cèpes n'a photographié qu'un seul animal, trois fois par matin : Musc le putois. Biscotte, Noisette et Pépin y sont passés, mais avant la fausse carte.",
+      twist:
+        "Musc n'a rien d'un voleur : depuis des années, il est le gardien des cèpes, et il les compte trois fois par matin, à 8 h, 10 h et midi. Son cahier montre pourtant que des cèpes disparaissent entre deux de ses tournées, alors qu'aucun autre animal n'apparaît sur les photos. En vérifiant le piège, la garde découvre qu'il ne filme que le sentier nord. Le voleur arrive donc par le sentier sud, celui du Vieux Moulin, à des heures où personne ne pense à le chercher là.",
+      solutionSql: [
+        "SELECT DISTINCT arrivee FROM sentiers WHERE arrivee NOT IN (SELECT arrivee FROM carte)",
+        "SELECT DISTINCT animaux.nom FROM passages JOIN animaux ON animaux.id = passages.animal_id WHERE passages.lieu = 'Coin aux Cèpes' AND passages.date >= '2026-10-27'",
+      ],
+    },
+    {
+      title: "Retour au point de départ",
+      story: [
+        "Le cahier de comptage de Musc est versé au dossier. Depuis le 28 octobre, plusieurs animaux sont venus déclarer au poste de garde qu'ils s'étaient perdus dans le Bois des Détours, avec l'heure de leur départ et celle de leur retour.",
+        "Un promeneur perdu n'est attendu nulle part, et personne ne s'étonne de ne pas le voir. Les photos du piège du Vieux Moulin ont été ajoutées aux passages.",
+      ],
+      objective: "Trouver le nom de l'animal qui ramasse les cèpes en cachette.",
+      tables: [
+        {
+          name: "comptages",
+          description: "Le cahier de Musc : le nombre de cèpes au Coin aux Cèpes, à chaque tournée.",
+          columns: [
+            { name: "id", type: "INTEGER", description: "Numéro du comptage, dans l'ordre des tournées" },
+            { name: "date", type: "TEXT", description: "Date (AAAA-MM-JJ)" },
+            { name: "heure", type: "TEXT", description: "Heure du comptage (HH:MM)" },
+            { name: "cepes", type: "INTEGER", description: "Nombre de cèpes comptés" },
+          ],
+          rows: [
+            [1, "2026-10-28", "08:00", 40],
+            [2, "2026-10-28", "10:00", 40],
+            [3, "2026-10-28", "12:00", 31],
+            [4, "2026-10-29", "08:00", 52],
+            [5, "2026-10-29", "10:00", 44],
+            [6, "2026-10-29", "12:00", 44],
+            [7, "2026-10-30", "08:00", 50],
+            [8, "2026-10-30", "10:00", 50],
+            [9, "2026-10-30", "12:00", 41],
+          ],
+        },
+        {
+          name: "declarations",
+          description: "Les animaux venus déclarer qu'ils s'étaient perdus dans le Bois des Détours.",
+          columns: [
+            { name: "id", type: "INTEGER", description: "Numéro de la déclaration" },
+            { name: "animal_id", type: "INTEGER", description: "Qui s'est perdu (animaux.id)" },
+            { name: "date", type: "TEXT", description: "Date (AAAA-MM-JJ)" },
+            { name: "debut", type: "TEXT", description: "Heure du départ (HH:MM)" },
+            { name: "fin", type: "TEXT", description: "Heure du retour (HH:MM)" },
+            { name: "texte", type: "TEXT", description: "Ce que l'animal a raconté" },
+          ],
+          rows: [
+            [1, 3, "2026-10-28", "09:00", "10:00", "Partie vers le Vieux Moulin, revenue à la Clairière."],
+            [2, 23, "2026-10-28", "10:00", "12:00", "J'ai tourné en rond toute la matinée."],
+            [3, 20, "2026-10-29", "08:00", "10:30", "Deux fois devant la Mare aux Iris !"],
+            [4, 23, "2026-10-29", "08:00", "11:00", "Encore perdu. Ces panneaux sont ensorcelés."],
+            [5, 23, "2026-10-30", "09:30", "12:00", "Troisième matin perdu. Que fait la garde ?"],
+            [6, 3, "2026-10-30", "10:00", "11:00", "Je voulais seulement aller au Pont de Pierre."],
+            [7, 16, "2026-10-30", "10:00", "12:00", "Égarée en rentrant de la chasse."],
+          ],
+        },
+        pieges("Le piège ne filme que le sentier nord, celui du Carrefour du Hêtre. Le sentier sud, celui du Vieux Moulin, n'est pas surveillé."),
+        passages([...PASSAGES_CLAIRIERE, ...PASSAGES_CEPES, ...PASSAGES_MOULIN]),
+      ],
+      culprit: "Pépin",
+      hints: [
+        "Trier comptages par id : entre quelles tournées le nombre de cèpes baisse-t-il ? Pour comparer chaque comptage au suivant, relier la table à elle-même : comptages AS avant JOIN comptages AS apres ON apres.id = avant.id + 1.",
+        "Pendant une baisse, le voleur n'était pas chez lui. Dans declarations, chercher qui se disait perdu pendant toute la baisse : départ au plus tard à la première tournée, retour au plus tôt à la suivante, le même jour.",
+        "Un seul animal se disait perdu pendant les trois baisses. Les photos du Vieux Moulin, un lieu que les promeneurs perdus n'atteignent jamais, confirment la piste.",
+      ],
+      explanation:
+        "Les cèpes disparaissent trois fois : le 28 entre 10 h et midi, le 29 entre 8 h et 10 h, le 30 entre 10 h et midi. Pépin le lièvre se disait perdu à chacun de ces moments, et pourtant le piège du Vieux Moulin l'a photographié pendant chacune de ses « errances » : il rejoignait le Coin aux Cèpes par le sentier sud, que le piège ne voit pas. Tout s'explique : Pépin a découvert le coin à cèpes le 24, a dessiné la fausse carte qui le fait disparaître, l'a fait afficher par Sanglou, puis a joué les promeneurs perdus pour se donner un alibi. Le plaignant du premier jour était le coupable, et il habite… à la Clairière, le point de départ de tous les détours.",
+      solutionSql: [
+        "SELECT avant.date, avant.heure, apres.heure, avant.cepes - apres.cepes AS disparus FROM comptages AS avant JOIN comptages AS apres ON apres.id = avant.id + 1 AND apres.date = avant.date WHERE apres.cepes < avant.cepes",
+        "SELECT animaux.nom FROM declarations JOIN animaux ON animaux.id = declarations.animal_id JOIN comptages AS avant ON avant.date = declarations.date JOIN comptages AS apres ON apres.id = avant.id + 1 AND apres.date = avant.date WHERE apres.cepes < avant.cepes AND declarations.debut <= avant.heure AND declarations.fin >= apres.heure GROUP BY animaux.nom HAVING COUNT(*) = 3",
+      ],
+    },
+  ],
+};
+
+export const ENQUETES: Enquete[] = [OEUFS, MIEL, BARRAGE, GLAND, DETOURS];
 
 export function getEnquete(slug: string): Enquete | undefined {
   return ENQUETES.find((item) => item.slug === slug);

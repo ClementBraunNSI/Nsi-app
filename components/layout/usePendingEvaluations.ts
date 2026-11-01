@@ -10,6 +10,15 @@ const REFRESH = 30_000;
  * copies verrouillées qui attendent l'enseignant pour un compte admin ou enseignant.
  */
 export function usePendingEvaluations(enabled: boolean, pathname: string) {
+  return usePendingCount("eval_pending_count", enabled, pathname);
+}
+
+/** Pastille du lien « Défi » : défi du lundi ouvert et pas encore réussi. */
+export function usePendingChallenge(enabled: boolean, pathname: string) {
+  return usePendingCount("challenge_pending_count", enabled, pathname);
+}
+
+function usePendingCount(rpc: "eval_pending_count" | "challenge_pending_count", enabled: boolean, pathname: string) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -19,7 +28,7 @@ export function usePendingEvaluations(enabled: boolean, pathname: string) {
     }
     let cancelled = false;
     const load = async () => {
-      const { data, error } = await supabase.rpc("eval_pending_count");
+      const { data, error } = await supabase.rpc(rpc);
       if (!cancelled && !error) setCount(Number(data) || 0);
     };
     void load();
@@ -28,7 +37,7 @@ export function usePendingEvaluations(enabled: boolean, pathname: string) {
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [enabled, pathname]);
+  }, [enabled, pathname, rpc]);
 
   return count;
 }

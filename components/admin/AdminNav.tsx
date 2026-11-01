@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/admin/messages", label: "Messagerie" },
   { href: "/admin/devoirs", label: "Devoirs" },
   { href: "/admin/evaluations", label: "Évaluations" },
+  { href: "/admin/defis", label: "Défis" },
 ];
 
 export function AdminNav() {

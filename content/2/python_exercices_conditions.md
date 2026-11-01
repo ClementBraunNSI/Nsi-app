@@ -10,765 +10,1530 @@ prerequisites:
 audience: public
 ---
 
+Les exercices vont de **Introduction** à **Expert**, puis viennent les **mini-projets**, pour qui avance vite.
+Chaque exercice propose des indices à ouvrir un par un : le dernier donne le pseudo-code, qui reste à traduire en Python.
+Les noms de variables et de fonctions demandés servent aux tests du bouton **Vérifier** : les garder tels quels.
+
 <ExerciseTabs courseId="les-conditions-python" courseTitle="Les Conditions">
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 1 : FACILE (1.1 à 1.6)            */}
-  {/* ========================================== */}
+<ExerciseSection id="1nsi-cond-1-1" label="1.1 [Introduction] - Valeur absolue" type="python">
+<Enonce>
+### Valeur absolue
 
-  <ExerciseSection id="conditions-1-1" label="1.1 [Facile] - Majeur ou mineur" type="python">
-    <Enonce>
-    ### Exercice 1.1 [Facile] : Majeur ou mineur
-    **Écrire une fonction `est_majeur` qui prend un âge (entier) en paramètre et renvoie `True` si la personne est majeure (âge supérieur ou égal à 18), `False` sinon. Utiliser un `if` / `else`.**
+Écrire une fonction `valeur_absolue(x)` qui renvoie `x` s'il est positif ou nul, et `-x` sinon.
 
-    <Correction>
-    ```python
-    def est_majeur(age: int) -> bool:
-        if age >= 18:
-            return True
-        else:
-            return False
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'est_majeur' in locals(), "La fonction 'est_majeur' n'est pas définie."
-assert est_majeur(20) is True, "20 ans : majeur."
-assert est_majeur(15) is False, "15 ans : mineur."
-assert est_majeur(18) is True, "18 ans : majeur."
-    ```
-    </Verification>
-  </ExerciseSection>
+Contrainte : sans la fonction `abs`.
 
-  <ExerciseSection id="conditions-1-2" label="1.2 [Facile] - Nombre positif" type="python">
-    <Enonce>
-    ### Exercice 1.2 [Facile] : Nombre positif
-    **Écrire une fonction `est_positif` qui prend un nombre (entier ou flottant) et renvoie `True` s'il est strictement supérieur à 0, `False` sinon.**
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def est_positif(n: float) -> bool:
-        if n > 0:
-            return True
-        else:
-            return False
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'est_positif' in locals(), "La fonction 'est_positif' n'est pas définie."
-assert est_positif(3) is True
-assert est_positif(0) is False
-assert est_positif(-2) is False
-    ```
-    </Verification>
-  </ExerciseSection>
+Un seul test suffit : `x` est-il négatif ?
 
-  <ExerciseSection id="conditions-1-3" label="1.3 [Facile] - Parité" type="python">
-    <Enonce>
-    ### Exercice 1.3 [Facile] : Parité
-    **Écrire une fonction `parite` qui prend un entier `n` et renvoie la chaîne `"pair"` si `n` est pair, `"impair"` sinon.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def parite(n: int) -> str:
-        if n % 2 == 0:
-            return "pair"
-        else:
-            return "impair"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'parite' in locals(), "La fonction 'parite' n'est pas définie."
-assert parite(4) == "pair"
-assert parite(7) == "impair"
-assert parite(0) == "pair"
-    ```
-    </Verification>
-  </ExerciseSection>
+Une fonction peut contenir plusieurs `return` : le premier exécuté termine la fonction.
 
-  <ExerciseSection id="conditions-1-4" label="1.4 [Facile] - Salutation selon l'heure" type="python">
-    <Enonce>
-    ### Exercice 1.4 [Facile] : Salutation selon l'heure
-    **Écrire une fonction `salutation` qui prend une heure (entier entre 0 et 23) et renvoie `"Bonjour"` si l'heure est strictement inférieure à 18, `"Bonsoir"` sinon.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def salutation(heure: int) -> str:
-        if heure < 18:
-            return "Bonjour"
-        else:
-            return "Bonsoir"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'salutation' in locals(), "La fonction 'salutation' n'est pas définie."
-assert salutation(9) == "Bonjour"
-assert salutation(18) == "Bonsoir"
-assert salutation(22) == "Bonsoir"
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION valeur_absolue(x)
+    SI x < 0 ALORS RENVOYER -x
+    RENVOYER x
+FIN FONCTION
+```
 
-  <ExerciseSection id="conditions-1-5" label="1.5 [Facile] - Maximum de deux nombres" type="python">
-    <Enonce>
-    ### Exercice 1.5 [Facile] : Maximum de deux nombres
-    **Écrire une fonction `maximum` qui prend deux nombres `a` et `b` et renvoie le plus grand des deux, sans utiliser la fonction native `max()`.**
+</Indice>
+</Indices>
 
-    <Correction>
-    ```python
-    def maximum(a: float, b: float) -> float:
-        if a > b:
-            return a
-        else:
-            return b
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'maximum' in locals(), "La fonction 'maximum' n'est pas définie."
-assert maximum(12, 5) == 12
-assert maximum(3, 9) == 9
-assert maximum(7, 7) == 7
-    ```
-    </Verification>
-  </ExerciseSection>
+<Correction>
 
-  <ExerciseSection id="conditions-1-6" label="1.6 [Facile] - Tarif musée" type="python">
-    <Enonce>
-    ### Exercice 1.6 [Facile] : Tarif musée
-    **Écrire une fonction `tarif_musee` qui prend un âge et renvoie `0` si l'âge est strictement inférieur à 12 ans, `8` sinon.**
+```python
+def valeur_absolue(x: float) -> float:
+    if x < 0:
+        return -x
+    return x
+```
 
-    <Correction>
-    ```python
-    def tarif_musee(age: int) -> int:
-        if age < 12:
-            return 0
-        else:
-            return 8
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'tarif_musee' in locals(), "La fonction 'tarif_musee' n'est pas définie."
-assert tarif_musee(8) == 0
-assert tarif_musee(12) == 8
-assert tarif_musee(25) == 8
-    ```
-    </Verification>
-  </ExerciseSection>
+</Correction>
+</Enonce>
+<Verification>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 2 : MOYEN (2.1 à 2.6)             */}
-  {/* ========================================== */}
+```python
+assert valeur_absolue(-5) == 5 and valeur_absolue(5) == 5, "-5 et 5 donnent 5."
+assert valeur_absolue(0) == 0 and valeur_absolue(-2.5) == 2.5, "0 donne 0, -2.5 donne 2.5."
+assert "abs(" not in PROGRAMME, "Sans abs."
+```
 
-  <ExerciseSection id="conditions-2-1" label="2.1 [Moyen] - Signe d'un nombre" type="python">
-    <Enonce>
-    ### Exercice 2.1 [Moyen] : Signe d'un nombre
-    **Écrire une fonction `signe` qui prend un entier et renvoie `"positif"` s'il est strictement supérieur à 0, `"negatif"` s'il est strictement inférieur à 0, `"nul"` sinon. Utiliser `if` / `elif` / `else`.**
+</Verification>
+</ExerciseSection>
 
-    <Correction>
-    ```python
-    def signe(n: int) -> str:
-        if n > 0:
-            return "positif"
-        elif n < 0:
-            return "negatif"
-        else:
-            return "nul"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'signe' in locals(), "La fonction 'signe' n'est pas définie."
-assert signe(5) == "positif"
-assert signe(-3) == "negatif"
-assert signe(0) == "nul"
-    ```
-    </Verification>
-  </ExerciseSection>
+<ExerciseSection id="1nsi-cond-1-2" label="1.2 [Introduction] - Accorder un nom" type="python">
+<Enonce>
+### Accorder un nom
 
-  <ExerciseSection id="conditions-2-2" label="2.2 [Moyen] - Mention au collège" type="python">
-    <Enonce>
-    ### Exercice 2.2 [Moyen] : Mention au collège
-    **Écrire une fonction `mention` qui prend une note sur 20 et renvoie :**
-    - `"TB"` si la note est supérieure ou égale à 16
-    - `"B"` si la note est supérieure ou égale à 14 (et inférieure à 16)
-    - `"AB"` si la note est supérieure ou égale à 12 (et inférieure à 14)
-    - `"Passable"` si la note est supérieure ou égale à 10 (et inférieure à 12)
-    - `"Insuffisant"` sinon
+Écrire une fonction `accorder(n, nom)` qui renvoie le nombre suivi du nom, au pluriel (avec un `s`) à partir de 2.
 
-    <Correction>
-    ```python
-    def mention(note: float) -> str:
-        if note >= 16:
-            return "TB"
-        elif note >= 14:
-            return "B"
-        elif note >= 12:
-            return "AB"
-        elif note >= 10:
-            return "Passable"
-        else:
-            return "Insuffisant"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'mention' in locals(), "La fonction 'mention' n'est pas définie."
-assert mention(16) == "TB"
-assert mention(14) == "B"
-assert mention(11.5) == "Passable"
-assert mention(8) == "Insuffisant"
-    ```
-    </Verification>
-  </ExerciseSection>
+Exemples : `accorder(3, "renard")` renvoie `"3 renards"`, `accorder(1, "renard")` renvoie `"1 renard"`, `accorder(0, "renard")` renvoie `"0 renard"`.
 
-  <ExerciseSection id="conditions-2-3" label="2.3 [Moyen] - Tarif cinéma" type="python">
-    <Enonce>
-    ### Exercice 2.3 [Moyen] : Tarif cinéma
-    **Écrire une fonction `prix_cinema` qui prend un âge et renvoie le prix en euros : `5` si moins de 14 ans, `8` si moins de 26 ans, `11` sinon.**
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def prix_cinema(age: int) -> int:
-        if age < 14:
-            return 5
-        elif age < 26:
-            return 8
-        else:
-            return 11
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'prix_cinema' in locals(), "La fonction 'prix_cinema' n'est pas définie."
-assert prix_cinema(10) == 5
-assert prix_cinema(20) == 8
-assert prix_cinema(30) == 11
-    ```
-    </Verification>
-  </ExerciseSection>
+En français, 0 et 1 s'écrivent au singulier : le pluriel commence à 2.
 
-  <ExerciseSection id="conditions-2-4" label="2.4 [Moyen] - Catégorie IMC" type="python">
-    <Enonce>
-    ### Exercice 2.4 [Moyen] : Catégorie IMC
-    **Écrire une fonction `categorie_imc` qui prend un IMC (flottant) et renvoie :**
-    - `"maigreur"` si IMC &lt; 18.5
-    - `"normal"` si 18.5 ≤ IMC &lt; 25
-    - `"surpoids"` si 25 ≤ IMC &lt; 30
-    - `"obesite"` sinon
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def categorie_imc(imc: float) -> str:
-        if imc < 18.5:
-            return "maigreur"
-        elif imc < 25:
-            return "normal"
-        elif imc < 30:
-            return "surpoids"
-        else:
-            return "obesite"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'categorie_imc' in locals(), "La fonction 'categorie_imc' n'est pas définie."
-assert categorie_imc(17) == "maigreur"
-assert categorie_imc(22) == "normal"
-assert categorie_imc(27) == "surpoids"
-assert categorie_imc(32) == "obesite"
-    ```
-    </Verification>
-  </ExerciseSection>
+`str(n)` convertit le nombre pour le coller au texte.
 
-  <ExerciseSection id="conditions-2-5" label="2.5 [Moyen] - Jour de la semaine" type="python">
-    <Enonce>
-    ### Exercice 2.5 [Moyen] : Jour de la semaine
-    **Écrire une fonction `jour_semaine` qui prend un entier `n` entre 1 et 7 et renvoie le nom du jour : `1 -> "lundi"`, `2 -> "mardi"`, ..., `7 -> "dimanche"`. Si `n` est hors de cette plage, renvoyer `"invalide"`.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def jour_semaine(n: int) -> str:
-        if n == 1:
-            return "lundi"
-        elif n == 2:
-            return "mardi"
-        elif n == 3:
-            return "mercredi"
-        elif n == 4:
-            return "jeudi"
-        elif n == 5:
-            return "vendredi"
-        elif n == 6:
-            return "samedi"
-        elif n == 7:
-            return "dimanche"
-        else:
-            return "invalide"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'jour_semaine' in locals(), "La fonction 'jour_semaine' n'est pas définie."
-assert jour_semaine(1) == "lundi"
-assert jour_semaine(7) == "dimanche"
-assert jour_semaine(0) == "invalide"
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION accorder(n, nom)
+    SI n ≥ 2 ALORS RENVOYER texte(n) + " " + nom + "s"
+    RENVOYER texte(n) + " " + nom
+FIN FONCTION
+```
 
-  <ExerciseSection id="conditions-2-6" label="2.6 [Moyen] - Trimestre de l'année" type="python">
-    <Enonce>
-    ### Exercice 2.6 [Moyen] : Trimestre de l'année
-    **Écrire une fonction `trimestre` qui prend un numéro de mois (1 à 12) et renvoie `1`, `2`, `3` ou `4` selon le trimestre. Renvoyer `0` si le mois est invalide.**
+</Indice>
+</Indices>
 
-    <Correction>
-    ```python
-    def trimestre(mois: int) -> int:
-        if mois < 1 or mois > 12:
-            return 0
-        elif mois <= 3:
-            return 1
-        elif mois <= 6:
-            return 2
-        elif mois <= 9:
-            return 3
-        else:
-            return 4
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'trimestre' in locals(), "La fonction 'trimestre' n'est pas définie."
-assert trimestre(2) == 1
-assert trimestre(5) == 2
-assert trimestre(11) == 4
-assert trimestre(13) == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+<Correction>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 3 : AVANCÉ (3.1 à 3.6)            */}
-  {/* ========================================== */}
+```python
+def accorder(n: int, nom: str) -> str:
+    if n >= 2:
+        return str(n) + " " + nom + "s"
+    return str(n) + " " + nom
+```
 
-  <ExerciseSection id="conditions-3-1" label="3.1 [Avancé] - Mot de passe valide" type="python">
-    <Enonce>
-    ### Exercice 3.1 [Avancé] : Mot de passe valide
-    **Écrire une fonction `mot_de_passe_valide` qui prend une chaîne `mdp` et renvoie `True` si sa longueur est au moins 8 **et** qu'elle contient au moins un chiffre (`"0"` à `"9"`), `False` sinon.**
+</Correction>
+</Enonce>
+<Verification>
 
-    <Correction>
-    ```python
-    def mot_de_passe_valide(mdp: str) -> bool:
-        if len(mdp) < 8:
-            return False
-        for car in mdp:
-            if car.isdigit():
-                return True
-        return False
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'mot_de_passe_valide' in locals(), "La fonction 'mot_de_passe_valide' n'est pas définie."
-assert mot_de_passe_valide("abcdefgh1") is True
-assert mot_de_passe_valide("abcdefgh") is False
-assert mot_de_passe_valide("abc1") is False
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+assert accorder(3, "renard") == "3 renards", "3 renards."
+assert accorder(1, "renard") == "1 renard" and accorder(0, "terrier") == "0 terrier", "0 et 1 : singulier."
+assert accorder(2, "point") == "2 points", "2 points."
+```
 
-  <ExerciseSection id="conditions-3-2" label="3.2 [Avancé] - Triangle rectangle" type="python">
-    <Enonce>
-    ### Exercice 3.2 [Avancé] : Triangle rectangle
-    **Écrire une fonction `est_triangle_rectangle` qui prend trois longueurs `a`, `b`, `c` (flottants positifs) et renvoie `True` si elles forment un triangle rectangle (théorème de Pythagore), `False` sinon. Tester les trois combinaisons possibles pour l'hypoténuse, sans utiliser de liste.**
+</Verification>
+</ExerciseSection>
 
-    <Correction>
-    ```python
-    def est_triangle_rectangle(a: float, b: float, c: float) -> bool:
-        a2, b2, c2 = a * a, b * b, c * c
-        return (
-            abs(a2 + b2 - c2) < 0.0001
-            or abs(a2 + c2 - b2) < 0.0001
-            or abs(b2 + c2 - a2) < 0.0001
-        )
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'est_triangle_rectangle' in locals(), "La fonction 'est_triangle_rectangle' n'est pas définie."
-assert est_triangle_rectangle(3, 4, 5) is True
-assert est_triangle_rectangle(3, 4, 6) is False
-    ```
-    </Verification>
-  </ExerciseSection>
+<ExerciseSection id="1nsi-cond-1-3" label="1.3 [Introduction] - Feu tricolore" type="python">
+<Enonce>
+### Feu tricolore
 
-  <ExerciseSection id="conditions-3-3" label="3.3 [Avancé] - Année bissextile" type="python">
-    <Enonce>
-    ### Exercice 3.3 [Avancé] : Année bissextile
-    **Écrire une fonction `est_bissextile` qui prend une année et renvoie `True` si elle est bissextile : divisible par 400, ou divisible par 4 mais pas par 100.**
+Écrire une fonction `consigne(couleur)` qui renvoie `"passer"` pour `"vert"`, `"ralentir"` pour `"orange"`, `"s'arrêter"` pour `"rouge"` et `"inconnu"` pour toute autre couleur.
 
-    <Correction>
-    ```python
-    def est_bissextile(annee: int) -> bool:
-        if annee % 400 == 0:
-            return True
-        elif annee % 100 == 0:
-            return False
-        elif annee % 4 == 0:
-            return True
-        else:
-            return False
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'est_bissextile' in locals(), "La fonction 'est_bissextile' n'est pas définie."
-assert est_bissextile(2024) is True
-assert est_bissextile(2100) is False
-assert est_bissextile(2000) is True
-    ```
-    </Verification>
-  </ExerciseSection>
+<Indices>
+<Indice>
 
-  <ExerciseSection id="conditions-3-4" label="3.4 [Avancé] - Accès au serveur" type="python">
-    <Enonce>
-    ### Exercice 3.4 [Avancé] : Accès au serveur
-    **Écrire une fonction `acces_autorise` qui prend un nom d'utilisateur (`str`) et un mot de passe (`str`). Renvoie `True` uniquement si l'utilisateur est `"admin"` **et** le mot de passe est `"nsi2026"`, sinon `False`.**
+Une comparaison par couleur, enchaînées avec `elif`.
 
-    <Correction>
-    ```python
-    def acces_autorise(utilisateur: str, mot_de_passe: str) -> bool:
-        if utilisateur == "admin" and mot_de_passe == "nsi2026":
-            return True
-        else:
-            return False
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'acces_autorise' in locals(), "La fonction 'acces_autorise' n'est pas définie."
-assert acces_autorise("admin", "nsi2026") is True
-assert acces_autorise("admin", "wrong") is False
-assert acces_autorise("eleve", "nsi2026") is False
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="conditions-3-5" label="3.5 [Avancé] - Plage de température" type="python">
-    <Enonce>
-    ### Exercice 3.5 [Avancé] : Plage de température
-    **Écrire une fonction `alerte_temperature` qui prend une température en °C et renvoie :**
-    - `"critique"` si température &lt; 0 **ou** température &gt; 35
-    - `"attention"` si température &lt; 5 **ou** température &gt; 30
-    - `"ok"` sinon
+Le cas `else` attrape toutes les couleurs non prévues.
 
-    <Correction>
-    ```python
-    def alerte_temperature(temp: float) -> str:
-        if temp < 0 or temp > 35:
-            return "critique"
-        elif temp < 5 or temp > 30:
-            return "attention"
-        else:
-            return "ok"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'alerte_temperature' in locals(), "La fonction 'alerte_temperature' n'est pas définie."
-assert alerte_temperature(-2) == "critique"
-assert alerte_temperature(32) == "attention"
-assert alerte_temperature(20) == "ok"
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="conditions-3-6" label="3.6 [Avancé] - Type de triangle" type="python">
-    <Enonce>
-    ### Exercice 3.6 [Avancé] : Type de triangle
-    **Écrire une fonction `type_triangle` qui prend trois côtés `a`, `b`, `c`. Si les trois côtés ne peuvent pas former un triangle (inégalité triangulaire), renvoyer `"invalide"`. Sinon renvoyer `"equilateral"`, `"isocele"` ou `"scalene"`.**
+```text
+FONCTION consigne(couleur)
+    SI couleur = "vert" ALORS RENVOYER "passer"
+    SINON SI couleur = "orange" ALORS RENVOYER "ralentir"
+    SINON SI couleur = "rouge" ALORS RENVOYER "s'arrêter"
+    SINON RENVOYER "inconnu"
+FIN FONCTION
+```
 
-    <Correction>
-    ```python
-    def type_triangle(a: float, b: float, c: float) -> str:
-        if a + b <= c or a + c <= b or b + c <= a:
-            return "invalide"
-        if a == b == c:
-            return "equilateral"
-        elif a == b or a == c or b == c:
-            return "isocele"
-        else:
-            return "scalene"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'type_triangle' in locals(), "La fonction 'type_triangle' n'est pas définie."
-assert type_triangle(3, 3, 3) == "equilateral"
-assert type_triangle(3, 3, 5) == "isocele"
-assert type_triangle(3, 4, 5) == "scalene"
-assert type_triangle(1, 2, 5) == "invalide"
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+</Indices>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 4 : DIFFICILE (4.1 à 4.4)         */}
-  {/* ========================================== */}
+<Correction>
 
-  <ExerciseSection id="conditions-4-1" label="4.1 [Difficile] - FizzBuzz" type="python">
-    <Enonce>
-    ### Exercice 4.1 [Difficile] : FizzBuzz
-    **Écrire une fonction `fizzbuzz` qui prend un entier `n` et renvoie :**
-    - `"FizzBuzz"` si `n` est divisible par 3 **et** par 5
-    - `"Fizz"` si divisible par 3 seulement
-    - `"Buzz"` si divisible par 5 seulement
-    - la chaîne du nombre sinon (ex. `"7"`)
+```python
+def consigne(couleur: str) -> str:
+    if couleur == "vert":
+        return "passer"
+    elif couleur == "orange":
+        return "ralentir"
+    elif couleur == "rouge":
+        return "s'arrêter"
+    else:
+        return "inconnu"
+```
 
-    <Correction>
-    ```python
-    def fizzbuzz(n: int) -> str:
-        if n % 3 == 0 and n % 5 == 0:
-            return "FizzBuzz"
-        elif n % 3 == 0:
-            return "Fizz"
-        elif n % 5 == 0:
-            return "Buzz"
-        else:
-            return str(n)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'fizzbuzz' in locals(), "La fonction 'fizzbuzz' n'est pas définie."
-assert fizzbuzz(15) == "FizzBuzz"
-assert fizzbuzz(9) == "Fizz"
-assert fizzbuzz(10) == "Buzz"
-assert fizzbuzz(7) == "7"
-    ```
-    </Verification>
-  </ExerciseSection>
+</Correction>
+</Enonce>
+<Verification>
 
-  <ExerciseSection id="conditions-4-2" label="4.2 [Difficile] - Quadrant" type="python">
-    <Enonce>
-    ### Exercice 4.2 [Difficile] : Quadrant
-    **Écrire une fonction `quadrant` qui prend les coordonnées `(x, y)` d'un point (flottants). Renvoie `0` si le point est sur un axe, sinon `1`, `2`, `3` ou `4` selon le quadrant cartésien.**
+```python
+assert consigne("vert") == "passer" and consigne("orange") == "ralentir", "Vert et orange."
+assert consigne("rouge") == "s'arrêter", "Rouge."
+assert consigne("bleu") == "inconnu" and consigne("Rouge") == "inconnu", "Toute autre valeur : inconnu."
+```
 
-    <Correction>
-    ```python
-    def quadrant(x: float, y: float) -> int:
-        if x == 0 or y == 0:
-            return 0
-        elif x > 0 and y > 0:
-            return 1
-        elif x < 0 and y > 0:
-            return 2
-        elif x < 0 and y < 0:
-            return 3
-        else:
-            return 4
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'quadrant' in locals(), "La fonction 'quadrant' n'est pas définie."
-assert quadrant(0, 5) == 0
-assert quadrant(3, 4) == 1
-assert quadrant(-2, 3) == 2
-assert quadrant(-1, -1) == 3
-assert quadrant(2, -3) == 4
-    ```
-    </Verification>
-  </ExerciseSection>
+</Verification>
+</ExerciseSection>
 
-  <ExerciseSection id="conditions-4-3" label="4.3 [Difficile] - Validité d'une date" type="python">
-    <Enonce>
-    ### Exercice 4.3 [Difficile] : Validité d'une date
-    **Écrire une fonction `date_valide` qui prend un jour, un mois et une année. Renvoie `True` si la date est valide, `False` sinon. On suppose 28 jours en février (sans gérer les années bissextiles).**
+<ExerciseSection id="1nsi-cond-1-4" label="1.4 [Introduction] - Le plus petit" type="python">
+<Enonce>
+### Le plus petit
 
-    <Correction>
-    ```python
-    def date_valide(jour: int, mois: int, annee: int) -> bool:
-        if mois < 1 or mois > 12 or annee < 1:
-            return False
-        if mois == 1 or mois == 3 or mois == 5 or mois == 7 or mois == 8 or mois == 10 or mois == 12:
-            max_jour = 31
-        elif mois == 4 or mois == 6 or mois == 9 or mois == 11:
-            max_jour = 30
-        else:
-            max_jour = 28
-        return 1 <= jour <= max_jour
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'date_valide' in locals(), "La fonction 'date_valide' n'est pas définie."
-assert date_valide(31, 1, 2026) is True
-assert date_valide(31, 4, 2026) is False
-assert date_valide(29, 2, 2026) is False
-    ```
-    </Verification>
-  </ExerciseSection>
+Écrire une fonction `plus_petit(a, b)` qui renvoie le plus petit des deux nombres.
 
-  <ExerciseSection id="conditions-4-4" label="4.4 [Difficile] - Pierre-feuille-ciseaux" type="python">
-    <Enonce>
-    ### Exercice 4.4 [Difficile] : Pierre-feuille-ciseaux
-    **Écrire une fonction `pfc` qui prend les choix de deux joueurs (`"pierre"`, `"feuille"` ou `"ciseaux"`) et renvoie `1` si le joueur 1 gagne, `2` si le joueur 2 gagne, `0` en cas d'égalité. Renvoie `-1` si un choix est invalide.**
-    *Rappel : on peut aussi tester l'appartenance d'un caractère à une chaîne avec `in` (ex. `"a" in "abc"` : `True`). Ici, valider chaque choix avec des comparaisons `==`.*
+Contrainte : sans la fonction `min`.
 
-    <Correction>
-    ```python
-    def choix_valide(choix: str) -> bool:
-        return choix == "pierre" or choix == "feuille" or choix == "ciseaux"
+<Indices>
+<Indice>
 
-    def pfc(j1: str, j2: str) -> int:
-        if not choix_valide(j1) or not choix_valide(j2):
-            return -1
-        if j1 == j2:
-            return 0
-        if (j1 == "pierre" and j2 == "ciseaux") or (j1 == "feuille" and j2 == "pierre") or (j1 == "ciseaux" and j2 == "feuille"):
+Comparer `a` et `b` et renvoyer celui qui gagne la comparaison.
+
+</Indice>
+<Indice>
+
+En cas d'égalité, renvoyer l'un ou l'autre ne change rien.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION plus_petit(a, b)
+    SI a < b ALORS RENVOYER a
+    RENVOYER b
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def plus_petit(a: float, b: float) -> float:
+    if a < b:
+        return a
+    return b
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert plus_petit(3, 8) == 3 and plus_petit(8, 3) == 3, "3 et 8 dans les deux ordres."
+assert plus_petit(-1, -4) == -4 and plus_petit(2, 2) == 2, "Négatifs et égalité."
+import re
+assert not re.search(r"\bmin\s*\(", PROGRAMME), "Sans min."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-2-1" label="2.1 [Facile] - Bonjour ou bonsoir" type="python">
+<Enonce>
+### Bonjour ou bonsoir
+
+Écrire une fonction `salutation(heure)` (un entier de 0 à 23) qui renvoie :
+- `"Bonjour"` de 6 h à 17 h inclus ;
+- `"Bonsoir"` de 18 h à 21 h inclus ;
+- `"Bonne nuit"` le reste du temps.
+
+<Indices>
+<Indice>
+
+Écrire chaque plage sous la forme `6 <= heure <= 17`.
+
+</Indice>
+<Indice>
+
+La nuit est à cheval sur minuit : plutôt que de la décrire, la laisser au `else`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION salutation(heure)
+    SI 6 ≤ heure ≤ 17 ALORS RENVOYER "Bonjour"
+    SINON SI 18 ≤ heure ≤ 21 ALORS RENVOYER "Bonsoir"
+    SINON RENVOYER "Bonne nuit"
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def salutation(heure: int) -> str:
+    if 6 <= heure <= 17:
+        return "Bonjour"
+    elif 18 <= heure <= 21:
+        return "Bonsoir"
+    else:
+        return "Bonne nuit"
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+for h, s in [(6, "Bonjour"), (17, "Bonjour"), (18, "Bonsoir"), (21, "Bonsoir"), (22, "Bonne nuit"), (0, "Bonne nuit"), (5, "Bonne nuit")]:
+    assert salutation(h) == s, f"{h} h : {s}."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-2-2" label="2.2 [Facile] - Catégorie d'IMC" type="python">
+<Enonce>
+### Catégorie d'IMC
+
+L'indice de masse corporelle vaut `poids / taille²` (poids en kg, taille en m).
+
+Écrire une fonction `categorie_imc(poids, taille)` qui renvoie `"maigreur"` (IMC sous 18,5), `"normal"` (sous 25), `"surpoids"` (sous 30) ou `"obésité"`.
+
+<Indices>
+<Indice>
+
+Calculer l'IMC une seule fois dans une variable, puis enchaîner les tests.
+
+</Indice>
+<Indice>
+
+`taille ** 2` calcule le carré.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION categorie_imc(poids, taille)
+    imc ← poids / taille²
+    SI imc < 18,5 ALORS RENVOYER "maigreur"
+    SINON SI imc < 25 ALORS RENVOYER "normal"
+    SINON SI imc < 30 ALORS RENVOYER "surpoids"
+    SINON RENVOYER "obésité"
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def categorie_imc(poids: float, taille: float) -> str:
+    imc = poids / taille ** 2
+    if imc < 18.5:
+        return "maigreur"
+    elif imc < 25:
+        return "normal"
+    elif imc < 30:
+        return "surpoids"
+    else:
+        return "obésité"
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert categorie_imc(50, 1.75) == "maigreur", "50 kg, 1,75 m : maigreur."
+assert categorie_imc(70, 1.75) == "normal", "70 kg, 1,75 m : normal."
+assert categorie_imc(85, 1.75) == "surpoids", "85 kg, 1,75 m : surpoids."
+assert categorie_imc(100, 1.75) == "obésité", "100 kg, 1,75 m : obésité."
+assert categorie_imc(25, 1) == "surpoids" and categorie_imc(18.5, 1) == "normal", "Les seuils 25 et 18,5."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-2-3" label="2.3 [Facile] - Points de permis" type="python">
+<Enonce>
+### Points de permis
+
+Écrire une fonction `points_retires(vitesse, limite)` qui renvoie le nombre de points retirés selon l'excès de vitesse (`vitesse - limite`) :
+- pas d'excès : 0 point ;
+- excès de moins de 20 km/h : 1 point ;
+- de 20 à moins de 30 : 2 points ;
+- de 30 à moins de 40 : 3 points ;
+- de 40 à moins de 50 : 4 points ;
+- 50 km/h ou plus : 6 points.
+
+<Indices>
+<Indice>
+
+Calculer l'excès d'abord. Un excès négatif ou nul ne retire rien.
+
+</Indice>
+<Indice>
+
+Les tranches se testent dans l'ordre croissant avec `elif excès < 20`, `elif excès < 30`…
+
+</Indice>
+<Indice>
+
+```text
+FONCTION points_retires(vitesse, limite)
+    exces ← vitesse - limite
+    SI exces ≤ 0 ALORS RENVOYER 0
+    SINON SI exces < 20 ALORS RENVOYER 1
+    SINON SI exces < 30 ALORS RENVOYER 2
+    SINON SI exces < 40 ALORS RENVOYER 3
+    SINON SI exces < 50 ALORS RENVOYER 4
+    SINON RENVOYER 6
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def points_retires(vitesse: int, limite: int) -> int:
+    exces = vitesse - limite
+    if exces <= 0:
+        return 0
+    elif exces < 20:
+        return 1
+    elif exces < 30:
+        return 2
+    elif exces < 40:
+        return 3
+    elif exces < 50:
+        return 4
+    else:
+        return 6
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+cas = [(50, 50, 0), (45, 50, 0), (69, 50, 1), (70, 50, 2), (125, 90, 3), (170, 130, 4), (100, 50, 6)]
+for v, l, p in cas:
+    assert points_retires(v, l) == p, f"{v} km/h pour {l} : {p} point(s)."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-2-4" label="2.4 [Facile] - Quadrant" type="python">
+<Enonce>
+### Quadrant
+
+Écrire une fonction `quadrant(x, y)` qui renvoie le numéro du quadrant du point `(x, y)` : 1 en haut à droite, 2 en haut à gauche, 3 en bas à gauche, 4 en bas à droite. Un point sur un axe renvoie 0.
+
+<Indices>
+<Indice>
+
+Traiter d'abord le cas d'un point sur un axe : `x == 0 or y == 0`.
+
+</Indice>
+<Indice>
+
+Ensuite, le signe de `y` dit « haut » ou « bas », et celui de `x` « droite » ou « gauche ».
+
+</Indice>
+<Indice>
+
+```text
+FONCTION quadrant(x, y)
+    SI x = 0 OU y = 0 ALORS RENVOYER 0
+    SI y > 0 ALORS
+        SI x > 0 ALORS RENVOYER 1 SINON RENVOYER 2
+    SINON
+        SI x < 0 ALORS RENVOYER 3 SINON RENVOYER 4
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def quadrant(x: float, y: float) -> int:
+    if x == 0 or y == 0:
+        return 0
+    if y > 0:
+        if x > 0:
             return 1
         return 2
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'pfc' in locals(), "La fonction 'pfc' n'est pas définie."
-assert pfc("pierre", "ciseaux") == 1
-assert pfc("feuille", "pierre") == 1
-assert pfc("pierre", "pierre") == 0
-assert pfc("pierre", "feuille") == 2
-assert pfc("dragon", "pierre") == -1
-    ```
-    </Verification>
-  </ExerciseSection>
+    if x < 0:
+        return 3
+    return 4
+```
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 5 : EXPERT (5.1 à 5.3)            */}
-  {/* ========================================== */}
+</Correction>
+</Enonce>
+<Verification>
 
-  <ExerciseSection id="conditions-5-1" label="5.1 [Expert] - Impôt progressif" type="python">
-    <Enonce>
-    ### Exercice 5.1 [Expert] : Impôt progressif
-    **Écrire une fonction `impot` qui calcule l'impôt sur un revenu annuel `r` (entier positif) selon les tranches :**
-    - 0 % jusqu'à 10 000 €
-    - 10 % de 10 001 à 25 000 €
-    - 20 % au-delà de 25 000 €
+```python
+assert quadrant(2, 3) == 1 and quadrant(-2, 3) == 2, "Quadrants 1 et 2."
+assert quadrant(-2, -3) == 3 and quadrant(2, -3) == 4, "Quadrants 3 et 4."
+assert quadrant(0, 5) == 0 and quadrant(5, 0) == 0 and quadrant(0, 0) == 0, "Sur un axe : 0."
+```
 
-    Renvoyer l'impôt total (entier, troncature par `int()`).
+</Verification>
+</ExerciseSection>
 
-    <Correction>
-    ```python
-    def impot(revenu: int) -> int:
-        if revenu <= 10000:
-            return 0
-        elif revenu <= 25000:
-            return int((revenu - 10000) * 0.10)
-        else:
-            return int(1500 + (revenu - 25000) * 0.20)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'impot' in locals(), "La fonction 'impot' n'est pas définie."
-assert impot(8000) == 0
-assert impot(20000) == 1000
-assert impot(30000) == 2500
-    ```
-    </Verification>
-  </ExerciseSection>
+<ExerciseSection id="1nsi-cond-3-1" label="3.1 [Moyen] - La valeur du milieu" type="python">
+<Enonce>
+### La valeur du milieu
 
-  <ExerciseSection id="conditions-5-2" label="5.2 [Expert] - Nombre premier" type="python">
-    <Enonce>
-    ### Exercice 5.2 [Expert] : Nombre premier
-    **Écrire une fonction `est_premier` qui prend un entier `n` et renvoie `True` si `n` est premier, `False` sinon. Les nombres inférieurs ou égaux à 1 ne sont pas premiers.**
+Écrire une fonction `milieu(a, b, c)` qui renvoie la valeur du milieu de trois nombres (celle qui n'est ni la plus petite ni la plus grande).
 
-    <Correction>
-    ```python
-    def est_premier(n: int) -> bool:
-        if n <= 1:
-            return False
-        for i in range(2, n):
-            if n % i == 0:
-                return False
+Exemple : `milieu(7, 2, 5)` renvoie `5`.
+
+Contrainte : sans `sorted`, `sort`, `min` ni `max`.
+
+<Indices>
+<Indice>
+
+`a` est au milieu si elle est entre `b` et `c`, dans un sens ou dans l'autre : `b <= a <= c or c <= a <= b`.
+
+</Indice>
+<Indice>
+
+Si `a` n'est pas au milieu, tester `b` de la même façon ; sinon c'est `c`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION milieu(a, b, c)
+    SI (b ≤ a ≤ c) OU (c ≤ a ≤ b) ALORS RENVOYER a
+    SINON SI (a ≤ b ≤ c) OU (c ≤ b ≤ a) ALORS RENVOYER b
+    SINON RENVOYER c
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def milieu(a: float, b: float, c: float) -> float:
+    if b <= a <= c or c <= a <= b:
+        return a
+    elif a <= b <= c or c <= b <= a:
+        return b
+    else:
+        return c
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+from itertools import permutations
+for t in permutations([2, 5, 7]):
+    assert milieu(*t) == 5, f"milieu{t} vaut 5."
+assert milieu(4, 4, 9) == 4 and milieu(9, 4, 9) == 9 and milieu(1, 1, 1) == 1, "Avec des valeurs égales."
+import re
+assert not re.search(r"\b(sorted|sort|min|max)\s*\(", PROGRAMME), "Sans sorted, sort, min ni max."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-3-2" label="3.2 [Moyen] - Triangle rectangle" type="python">
+<Enonce>
+### Triangle rectangle
+
+Écrire une fonction `est_rectangle(a, b, c)` qui renvoie `True` si un triangle de côtés entiers `a`, `b`, `c` est rectangle. Les côtés sont donnés **dans n'importe quel ordre**.
+
+Rappel : un triangle est rectangle si le carré du plus grand côté est égal à la somme des carrés des deux autres.
+
+<Indices>
+<Indice>
+
+Plutôt que de chercher le plus grand côté, tester les trois possibilités pour l'hypoténuse, reliées par `or`.
+
+</Indice>
+<Indice>
+
+`a ** 2 == b ** 2 + c ** 2` est un premier cas ; il en reste deux.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION est_rectangle(a, b, c)
+    RENVOYER (a² = b² + c²) OU (b² = a² + c²) OU (c² = a² + b²)
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def est_rectangle(a: int, b: int, c: int) -> bool:
+    return a ** 2 == b ** 2 + c ** 2 or b ** 2 == a ** 2 + c ** 2 or c ** 2 == a ** 2 + b ** 2
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert est_rectangle(3, 4, 5) is True and est_rectangle(5, 3, 4) is True and est_rectangle(4, 5, 3) is True, "3, 4, 5 dans tous les ordres."
+assert est_rectangle(5, 12, 13) is True, "5, 12, 13 est rectangle."
+assert est_rectangle(2, 3, 4) is False and est_rectangle(1, 1, 1) is False, "2, 3, 4 et 1, 1, 1 ne le sont pas."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-3-3" label="3.3 [Moyen] - Frais de port" type="python">
+<Enonce>
+### Frais de port
+
+Écrire une fonction `frais_port(poids, express)` : `poids` est en kg (un flottant), `express` un booléen. Le tarif normal est de 5 € jusqu'à 1 kg, 8 € jusqu'à 5 kg et 12 € au-delà. L'envoi express coûte le double.
+
+<Indices>
+<Indice>
+
+Fixer d'abord le tarif normal dans une variable, puis le doubler si besoin : deux étapes séparées.
+
+</Indice>
+<Indice>
+
+`if express:` suffit, inutile d'écrire `== True`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION frais_port(poids, express)
+    SI poids ≤ 1 ALORS prix ← 5
+    SINON SI poids ≤ 5 ALORS prix ← 8
+    SINON prix ← 12
+    SI express ALORS prix ← prix × 2
+    RENVOYER prix
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def frais_port(poids: float, express: bool) -> float:
+    if poids <= 1:
+        prix = 5
+    elif poids <= 5:
+        prix = 8
+    else:
+        prix = 12
+    if express:
+        prix = prix * 2
+    return prix
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert frais_port(0.5, False) == 5 and frais_port(1, False) == 5, "Jusqu'à 1 kg : 5 €."
+assert frais_port(1.2, False) == 8 and frais_port(5, False) == 8, "Jusqu'à 5 kg : 8 €."
+assert frais_port(5.1, False) == 12, "Au-delà : 12 €."
+assert frais_port(0.5, True) == 10 and frais_port(3, True) == 16 and frais_port(10, True) == 24, "Express : le double."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-3-4" label="3.4 [Moyen] - Jour suivant" type="python">
+<Enonce>
+### Jour suivant
+
+Écrire une fonction `jour_suivant(jour)` qui renvoie le nom du jour qui suit `jour` (en minuscules) : `"lundi"` donne `"mardi"`, `"dimanche"` donne `"lundi"`.
+
+Contrainte : sans liste.
+
+<Indices>
+<Indice>
+
+Une suite de `if` / `elif` fonctionne, mais il existe plus court.
+
+</Indice>
+<Indice>
+
+Le texte `" lundi mardi mercredi jeudi vendredi samedi dimanche lundi "` contient chaque jour suivi du suivant. `texte.find(mot)` donne la position d'un mot dans un texte.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION jour_suivant(jour)
+    SI jour = "lundi" ALORS RENVOYER "mardi"
+    SINON SI jour = "mardi" ALORS RENVOYER "mercredi"
+    …
+    SINON SI jour = "samedi" ALORS RENVOYER "dimanche"
+    SINON RENVOYER "lundi"
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def jour_suivant(jour: str) -> str:
+    if jour == "lundi":
+        return "mardi"
+    elif jour == "mardi":
+        return "mercredi"
+    elif jour == "mercredi":
+        return "jeudi"
+    elif jour == "jeudi":
+        return "vendredi"
+    elif jour == "vendredi":
+        return "samedi"
+    elif jour == "samedi":
+        return "dimanche"
+    else:
+        return "lundi"
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+for i, j in enumerate(jours):
+    assert jour_suivant(j) == jours[(i + 1) % 7], f"Après {j} : {jours[(i + 1) % 7]}."
+assert "[" not in PROGRAMME, "Sans liste."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-4-1" label="4.1 [Difficile] - Comparer deux versions" type="python">
+<Enonce>
+### Comparer deux versions
+
+Les versions d'un logiciel s'écrivent `"majeure.mineure"`, par exemple `"1.10"`. Attention : `"1.10"` est plus récente que `"1.9"`.
+
+Écrire une fonction `comparer(v1, v2)` qui renvoie `-1` si `v1` est plus ancienne, `1` si elle est plus récente et `0` si les versions sont égales.
+
+<Indices>
+<Indice>
+
+Comparer les textes directement est faux (`"1.10" < "1.9"`) : il faut comparer des nombres.
+
+</Indice>
+<Indice>
+
+`v1.split(".")` sépare la majeure et la mineure ; `int(...)` les convertit.
+
+</Indice>
+<Indice>
+
+Comparer d'abord les majeures. Les mineures ne départagent que si les majeures sont égales.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION comparer(v1, v2)
+    maj1, min1 ← entiers des deux parties de v1
+    maj2, min2 ← entiers des deux parties de v2
+    SI maj1 ≠ maj2 ALORS
+        SI maj1 < maj2 ALORS RENVOYER -1 SINON RENVOYER 1
+    SINON SI min1 ≠ min2 ALORS
+        SI min1 < min2 ALORS RENVOYER -1 SINON RENVOYER 1
+    RENVOYER 0
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def comparer(v1: str, v2: str) -> int:
+    maj1, min1 = v1.split(".")
+    maj2, min2 = v2.split(".")
+    maj1, min1, maj2, min2 = int(maj1), int(min1), int(maj2), int(min2)
+    if maj1 != maj2:
+        if maj1 < maj2:
+            return -1
+        return 1
+    if min1 != min2:
+        if min1 < min2:
+            return -1
+        return 1
+    return 0
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert comparer("1.9", "1.10") == -1 and comparer("1.10", "1.9") == 1, "1.10 est plus récente que 1.9."
+assert comparer("2.0", "1.99") == 1 and comparer("0.5", "3.1") == -1, "La majeure décide d'abord."
+assert comparer("4.2", "4.2") == 0, "Versions égales."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-4-2" label="4.2 [Difficile] - Main de blackjack" type="python">
+<Enonce>
+### Main de blackjack
+
+Au blackjack, les cartes de 2 à 10 valent leur nombre, le valet, la dame et le roi (`"V"`, `"D"`, `"R"`) valent 10, et l'as (`"A"`) vaut 11 ou 1, au choix du joueur.
+
+Écrire une fonction `valeur_main(c1, c2)` qui renvoie la meilleure valeur d'une main de deux cartes données sous forme de texte (`"7"`, `"R"`, `"A"`…), sans dépasser 21 si c'est possible.
+
+Exemples : `"A"` et `"R"` valent 21 ; `"A"` et `"A"` valent 12.
+
+<Indices>
+<Indice>
+
+Écrire d'abord une fonction auxiliaire `valeur_carte(c)` qui compte l'as pour 11.
+
+</Indice>
+<Indice>
+
+Avec deux cartes, seul le cas de deux as dépasse 21 : un des deux as compte alors 1.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION valeur_carte(c)
+    SI c = "A" ALORS RENVOYER 11
+    SINON SI c ∈ ("V", "D", "R") ALORS RENVOYER 10
+    SINON RENVOYER entier(c)
+FONCTION valeur_main(c1, c2)
+    total ← valeur_carte(c1) + valeur_carte(c2)
+    SI total > 21 ALORS total ← total - 10
+    RENVOYER total
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def valeur_carte(c: str) -> int:
+    if c == "A":
+        return 11
+    elif c == "V" or c == "D" or c == "R":
+        return 10
+    else:
+        return int(c)
+
+
+def valeur_main(c1: str, c2: str) -> int:
+    total = valeur_carte(c1) + valeur_carte(c2)
+    if total > 21:
+        total = total - 10
+    return total
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert valeur_main("A", "R") == 21 and valeur_main("R", "A") == 21, "As et roi : 21."
+assert valeur_main("A", "A") == 12, "Deux as : 12."
+assert valeur_main("7", "8") == 15 and valeur_main("10", "D") == 20, "7 + 8 et 10 + dame."
+assert valeur_main("2", "A") == 13 and valeur_main("V", "9") == 19, "2 + as et valet + 9."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-4-3" label="4.3 [Difficile] - Heure bien écrite" type="python">
+<Enonce>
+### Heure bien écrite
+
+Écrire une fonction `heure_valide(texte)` qui renvoie `True` si `texte` est une heure au format `"HH:MM"` : exactement 5 caractères, deux chiffres, `:`, deux chiffres, des heures de 00 à 23 et des minutes de 00 à 59.
+
+<Indices>
+<Indice>
+
+Vérifier la forme avant les valeurs : convertir `"ab"` avec `int` provoquerait une erreur.
+
+</Indice>
+<Indice>
+
+Une fois la forme validée, `int(texte[0:2])` et `int(texte[3:5])` donnent les heures et les minutes.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION heure_valide(texte)
+    SI longueur(texte) ≠ 5 OU texte[2] ≠ ":" ALORS RENVOYER FAUX
+    SI texte[0:2] ou texte[3:5] ne sont pas que des chiffres ALORS RENVOYER FAUX
+    RENVOYER entier(texte[0:2]) ≤ 23 ET entier(texte[3:5]) ≤ 59
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def heure_valide(texte: str) -> bool:
+    if len(texte) != 5 or texte[2] != ":":
+        return False
+    if not texte[0:2].isdigit() or not texte[3:5].isdigit():
+        return False
+    return int(texte[0:2]) <= 23 and int(texte[3:5]) <= 59
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+for t in ["00:00", "23:59", "07:30", "12:05"]:
+    assert heure_valide(t) is True, f"{t} est valide."
+for t in ["24:00", "12:60", "7:30", "07h30", "ab:cd", "07:3", "", "123:45"]:
+    assert heure_valide(t) is False, f"« {t} » est refusée."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-4-4" label="4.4 [Difficile] - Déplacement du roi" type="python">
+<Enonce>
+### Déplacement du roi
+
+Sur un échiquier, une case s'écrit avec une colonne de `a` à `h` et une ligne de `1` à `8`, par exemple `"e4"`. Le roi se déplace d'une case dans n'importe quelle direction.
+
+Écrire une fonction `roi_peut_aller(depart, arrivee)` qui renvoie `True` si le roi peut aller de `depart` à `arrivee` en un coup (rester sur place n'est pas un coup).
+
+<Indices>
+<Indice>
+
+`ord("e") - ord("a")` vaut 4 : `ord` transforme une lettre en nombre, ce qui permet de calculer un écart de colonnes.
+
+</Indice>
+<Indice>
+
+Le coup est permis si l'écart de colonnes et l'écart de lignes valent au plus 1 en valeur absolue, sans être tous deux nuls.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION roi_peut_aller(depart, arrivee)
+    dc ← |ord(arrivee[0]) - ord(depart[0])|
+    dl ← |entier(arrivee[1]) - entier(depart[1])|
+    RENVOYER dc ≤ 1 ET dl ≤ 1 ET (dc, dl) ≠ (0, 0)
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def roi_peut_aller(depart: str, arrivee: str) -> bool:
+    dc = abs(ord(arrivee[0]) - ord(depart[0]))
+    dl = abs(int(arrivee[1]) - int(depart[1]))
+    return dc <= 1 and dl <= 1 and (dc, dl) != (0, 0)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+for a in ["d3", "d4", "d5", "e3", "e5", "f3", "f4", "f5"]:
+    assert roi_peut_aller("e4", a) is True, f"De e4 à {a} : permis."
+for a in ["e4", "e6", "c4", "g6", "e2"]:
+    assert roi_peut_aller("e4", a) is False, f"De e4 à {a} : interdit."
+assert roi_peut_aller("a1", "b2") is True and roi_peut_aller("h8", "a1") is False, "Dans les coins."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-5-1" label="5.1 [Expert] - Impôt progressif" type="python">
+<Enonce>
+### Impôt progressif
+
+L'impôt sur le revenu est **progressif** : chaque tranche du revenu est taxée à son propre taux.
+
+| Tranche du revenu | Taux |
+|---|---|
+| jusqu'à 11 294 € | 0 % |
+| de 11 294 € à 28 797 € | 11 % |
+| de 28 797 € à 82 341 € | 30 % |
+| au-delà de 82 341 € | 41 % |
+
+Écrire une fonction `impot(revenu)` qui renvoie l'impôt dû, arrondi à l'euro.
+
+Exemple : pour 30 000 €, l'impôt vaut `(28797 - 11294) × 0,11 + (30000 - 28797) × 0,30`, soit 2286 €.
+
+<Indices>
+<Indice>
+
+Erreur classique : appliquer le taux de la dernière tranche à **tout** le revenu. Seule la partie du revenu dans chaque tranche est taxée à son taux.
+
+</Indice>
+<Indice>
+
+Partir de la tranche la plus haute : si le revenu la dépasse, taxer l'excédent puis ramener le revenu à la borne de la tranche, et ainsi de suite en descendant.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION impot(revenu)
+    total ← 0
+    SI revenu > 82341 ALORS total ← total + (revenu - 82341) × 0,41 ; revenu ← 82341
+    SI revenu > 28797 ALORS total ← total + (revenu - 28797) × 0,30 ; revenu ← 28797
+    SI revenu > 11294 ALORS total ← total + (revenu - 11294) × 0,11
+    RENVOYER arrondi(total)
+FIN FONCTION
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def impot(revenu: float) -> int:
+    total = 0
+    if revenu > 82341:
+        total = total + (revenu - 82341) * 0.41
+        revenu = 82341
+    if revenu > 28797:
+        total = total + (revenu - 28797) * 0.30
+        revenu = 28797
+    if revenu > 11294:
+        total = total + (revenu - 11294) * 0.11
+    return round(total)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert impot(30000) == 2286, "30 000 € : 2286 €."
+assert impot(10000) == 0 and impot(11294) == 0, "Sous 11 294 € : pas d'impôt."
+assert impot(20000) == 958, "20 000 € : 958 €."
+assert impot(100000) == 25229, "100 000 € : 25 229 €."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-5-2" label="5.2 [Expert] - Le lendemain" type="python">
+<Enonce>
+### Le lendemain
+
+Écrire une fonction `lendemain(j, m, a)` qui renvoie le tuple `(jour, mois, annee)` du jour qui suit la date valide `j/m/a`, en tenant compte de la longueur des mois et des années bissextiles.
+
+Exemples : `lendemain(28, 2, 2026)` renvoie `(1, 3, 2026)` ; `lendemain(31, 12, 2026)` renvoie `(1, 1, 2027)`.
+
+<Indices>
+<Indice>
+
+Écrire d'abord une fonction `jours_dans_mois(m, a)` : c'est le cœur du problème.
+
+</Indice>
+<Indice>
+
+Ajouter 1 au jour ; s'il dépasse la longueur du mois, passer au mois suivant ; si le mois dépasse 12, passer à l'année suivante.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION jours_dans_mois(m, a)
+    SI m = 2 ALORS RENVOYER 29 si a est bissextile, 28 sinon
+    SI m ∈ (4, 6, 9, 11) ALORS RENVOYER 30
+    RENVOYER 31
+FONCTION lendemain(j, m, a)
+    j ← j + 1
+    SI j > jours_dans_mois(m, a) ALORS j ← 1 ; m ← m + 1
+    SI m > 12 ALORS m ← 1 ; a ← a + 1
+    RENVOYER (j, m, a)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def jours_dans_mois(m: int, a: int) -> int:
+    if m == 2:
+        if (a % 4 == 0 and a % 100 != 0) or a % 400 == 0:
+            return 29
+        return 28
+    if m == 4 or m == 6 or m == 9 or m == 11:
+        return 30
+    return 31
+
+
+def lendemain(j: int, m: int, a: int) -> tuple:
+    j = j + 1
+    if j > jours_dans_mois(m, a):
+        j = 1
+        m = m + 1
+    if m > 12:
+        m = 1
+        a = a + 1
+    return (j, m, a)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert lendemain(28, 2, 2026) == (1, 3, 2026), "28/02/2026 : 01/03/2026."
+assert lendemain(28, 2, 2024) == (29, 2, 2024) and lendemain(29, 2, 2024) == (1, 3, 2024), "Février bissextile."
+assert lendemain(31, 12, 2026) == (1, 1, 2027), "Passage à la nouvelle année."
+assert lendemain(30, 4, 2026) == (1, 5, 2026) and lendemain(30, 5, 2026) == (31, 5, 2026), "Mois de 30 et 31 jours."
+assert lendemain(28, 2, 1900) == (1, 3, 1900), "1900 n'est pas bissextile."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-5-3" label="5.3 [Expert] - Score au tennis" type="python">
+<Enonce>
+### Score au tennis
+
+Dans un jeu de tennis, les points s'annoncent `0`, `15`, `30`, `40`. À partir de 3 points chacun, on annonce `"égalité"`, puis `"avantage joueur 1"` (ou 2) avec un point d'avance. Un joueur gagne le jeu avec au moins 4 points et 2 points d'écart.
+
+Écrire une fonction `annonce(p1, p2)` qui reçoit le nombre de points gagnés par chaque joueur et renvoie l'annonce : `"15-0"`, `"40-30"`, `"égalité"`, `"avantage joueur 2"`, `"jeu joueur 1"`…
+
+<Indices>
+<Indice>
+
+Traiter d'abord la fin du jeu (au moins 4 points et 2 d'écart), puis le cas où les deux ont au moins 3 points, enfin le score ordinaire.
+
+</Indice>
+<Indice>
+
+Pour le score ordinaire, une fonction `nom_point(p)` traduit 0, 1, 2, 3 en `"0"`, `"15"`, `"30"`, `"40"`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION annonce(p1, p2)
+    SI p1 ≥ 4 ET p1 - p2 ≥ 2 ALORS RENVOYER "jeu joueur 1"
+    SI p2 ≥ 4 ET p2 - p1 ≥ 2 ALORS RENVOYER "jeu joueur 2"
+    SI p1 ≥ 3 ET p2 ≥ 3 ALORS
+        SI p1 = p2 ALORS RENVOYER "égalité"
+        SI p1 > p2 ALORS RENVOYER "avantage joueur 1" SINON RENVOYER "avantage joueur 2"
+    RENVOYER nom_point(p1) + "-" + nom_point(p2)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def nom_point(p: int) -> str:
+    if p == 0:
+        return "0"
+    elif p == 1:
+        return "15"
+    elif p == 2:
+        return "30"
+    return "40"
+
+
+def annonce(p1: int, p2: int) -> str:
+    if p1 >= 4 and p1 - p2 >= 2:
+        return "jeu joueur 1"
+    if p2 >= 4 and p2 - p1 >= 2:
+        return "jeu joueur 2"
+    if p1 >= 3 and p2 >= 3:
+        if p1 == p2:
+            return "égalité"
+        if p1 > p2:
+            return "avantage joueur 1"
+        return "avantage joueur 2"
+    return nom_point(p1) + "-" + nom_point(p2)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+cas = [((0, 0), "0-0"), ((1, 0), "15-0"), ((3, 2), "40-30"), ((2, 3), "30-40"), ((3, 3), "égalité"), ((4, 3), "avantage joueur 1"),
+       ((5, 6), "avantage joueur 2"), ((4, 2), "jeu joueur 1"), ((4, 0), "jeu joueur 1"), ((6, 8), "jeu joueur 2"), ((7, 7), "égalité")]
+for (a, b), s in cas:
+    assert annonce(a, b) == s, f"{a} points contre {b} : {s}."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-5-4" label="5.4 [Expert] - Départager deux équipes" type="python">
+<Enonce>
+### Départager deux équipes
+
+En championnat, deux équipes sont départagées par le nombre de points, puis par la différence de buts (buts marqués moins buts encaissés), puis par le nombre de buts marqués.
+
+Écrire une fonction `devant(pts1, bp1, bc1, pts2, bp2, bc2)` qui renvoie `1` si l'équipe 1 est devant, `2` si c'est l'équipe 2, et `0` si rien ne les départage.
+
+<Indices>
+<Indice>
+
+Chaque critère ne compte que si les précédents sont à égalité : enchaîner les tests dans l'ordre.
+
+</Indice>
+<Indice>
+
+Calculer les deux différences de buts dans des variables avant de comparer.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION devant(pts1, bp1, bc1, pts2, bp2, bc2)
+    SI pts1 ≠ pts2 ALORS RENVOYER 1 si pts1 > pts2, 2 sinon
+    d1 ← bp1 - bc1 ; d2 ← bp2 - bc2
+    SI d1 ≠ d2 ALORS RENVOYER 1 si d1 > d2, 2 sinon
+    SI bp1 ≠ bp2 ALORS RENVOYER 1 si bp1 > bp2, 2 sinon
+    RENVOYER 0
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def devant(pts1: int, bp1: int, bc1: int, pts2: int, bp2: int, bc2: int) -> int:
+    if pts1 != pts2:
+        return 1 if pts1 > pts2 else 2
+    d1 = bp1 - bc1
+    d2 = bp2 - bc2
+    if d1 != d2:
+        return 1 if d1 > d2 else 2
+    if bp1 != bp2:
+        return 1 if bp1 > bp2 else 2
+    return 0
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert devant(30, 20, 25, 28, 40, 10) == 1, "Plus de points : devant, même avec moins de buts."
+assert devant(30, 20, 15, 30, 25, 18) == 2, "Points égaux : la différence de buts (+5 contre +7)."
+assert devant(30, 22, 12, 30, 20, 10) == 1, "Même différence : le plus de buts marqués."
+assert devant(30, 20, 10, 30, 20, 10) == 0, "Rien ne les départage."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-6-1" label="6.1 [Mini-projet] - Arbitre de Uno" type="python">
+<Enonce>
+### Arbitre de Uno
+
+Réaliser l'arbitre d'une partie de Uno, qui applique les règles sans jamais se tromper.
+
+**Les cartes** sont des textes : une couleur (`R` rouge, `V` vert, `B` bleu, `J` jaune) suivie d'une valeur : un chiffre (`"R7"`), `+2` (`"B+2"`), `I` pour inversion (`"VI"`) ou `P` pour passe (`"JP"`). Les cartes noires n'ont pas de couleur : `"N"` (joker) et `"N+4"`.
+
+**Objectifs**
+- `couleur(carte)` : la lettre de couleur, ou `None` pour une carte noire ; `valeur(carte)` : le reste du texte (`""` pour le joker).
+- `peut_jouer(carte, dessus, couleur_active)` : une carte noire se joue toujours ; une autre carte se joue si sa couleur est la couleur active, ou si sa valeur est celle de la carte du dessus.
+- `points(carte)` : la valeur du chiffre pour une carte numérotée, 20 pour `+2`, `I` et `P`, 50 pour une carte noire.
+- `a_piocher(carte)` : 2 pour un `+2`, 4 pour un `+4`, 0 sinon.
+- `nouveau_sens(carte, sens)` : le sens du jeu (`1` ou `-1`) après la carte ; une inversion le change.
+- `suivant(joueur, carte, sens, nb)` : le numéro (de 0 à `nb - 1`) du joueur qui joue après `joueur`, qui vient de poser `carte`. `sens` est le sens **après** la carte. Une carte passe (ainsi qu'un `+2` ou un `+4`) saute le joueur suivant ; à deux joueurs, une inversion saute aussi le joueur suivant.
+- `meilleur_coup(c1, c2, c3, dessus, couleur_active)` : parmi les trois cartes de la main, celle à jouer : la carte **de couleur** jouable qui rapporte le plus de points (la première en cas d'égalité) ; s'il n'y en a pas, une carte noire jouable ; sinon `None`.
+
+<Indices>
+<Indice>
+
+Écrire les petites fonctions d'abord (`couleur`, `valeur`, `points`) : les suivantes les utilisent toutes.
+
+</Indice>
+<Indice>
+
+Une carte noire se reconnaît à son premier caractère `"N"`. Pour `points`, `valeur(carte).isdigit()` distingue les cartes numérotées.
+
+</Indice>
+<Indice>
+
+Pour `suivant`, calculer le nombre de pas (1 ou 2), puis `(joueur + pas × sens) % nb` : le modulo gère aussi le passage de 0 à `nb - 1` en sens inverse.
+
+</Indice>
+<Indice>
+
+```text
+(cœur du programme : le joueur suivant)
+FONCTION suivant(joueur, carte, sens, nb)
+    v ← valeur(carte)
+    SI v ∈ ("P", "+2", "+4") OU (v = "I" ET nb = 2) ALORS pas ← 2
+    SINON pas ← 1
+    RENVOYER reste de (joueur + pas × sens) par nb
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def couleur(carte: str):
+    if carte[0] == "N":
+        return None
+    return carte[0]
+
+
+def valeur(carte: str) -> str:
+    return carte[1:]
+
+
+def peut_jouer(carte: str, dessus: str, couleur_active: str) -> bool:
+    if couleur(carte) is None:
         return True
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'est_premier' in locals(), "La fonction 'est_premier' n'est pas définie."
-assert est_premier(1) is False
-assert est_premier(2) is True
-assert est_premier(15) is False
-assert est_premier(17) is True
-    ```
-    </Verification>
-  </ExerciseSection>
+    return couleur(carte) == couleur_active or valeur(carte) == valeur(dessus)
 
-  <ExerciseSection id="conditions-5-3" label="5.3 [Expert] - Résolution ax² + bx + c = 0" type="python">
-    <Enonce>
-    ### Exercice 5.3 [Expert] : Résolution ax² + bx + c = 0
-    **Écrire une fonction `discriminant` qui prend `a`, `b`, `c` (flottants) et renvoie :**
-    - `"degre_invalide"` si `a == 0`
-    - `"deux_solutions"` si Δ &gt; 0
-    - `"une_solution"` si Δ == 0
-    - `"aucune_solution"` si Δ &lt; 0
 
-    avec Δ = b² − 4ac.
+def points(carte: str) -> int:
+    if couleur(carte) is None:
+        return 50
+    if valeur(carte).isdigit():
+        return int(valeur(carte))
+    return 20
 
-    <Correction>
-    ```python
-    def discriminant(a: float, b: float, c: float) -> str:
-        if a == 0:
-            return "degre_invalide"
-        delta = b ** 2 - 4 * a * c
-        if delta > 0:
-            return "deux_solutions"
-        elif delta == 0:
-            return "une_solution"
-        else:
-            return "aucune_solution"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'discriminant' in locals(), "La fonction 'discriminant' n'est pas définie."
-assert discriminant(0, 2, 1) == "degre_invalide"
-assert discriminant(1, -3, 2) == "deux_solutions"
-assert discriminant(1, -2, 1) == "une_solution"
-assert discriminant(1, 0, 1) == "aucune_solution"
-    ```
-    </Verification>
-  </ExerciseSection>
+
+def a_piocher(carte: str) -> int:
+    if valeur(carte) == "+2":
+        return 2
+    if valeur(carte) == "+4":
+        return 4
+    return 0
+
+
+def nouveau_sens(carte: str, sens: int) -> int:
+    if valeur(carte) == "I":
+        return -sens
+    return sens
+
+
+def suivant(joueur: int, carte: str, sens: int, nb: int) -> int:
+    v = valeur(carte)
+    if v in ("P", "+2", "+4") or (v == "I" and nb == 2):
+        pas = 2
+    else:
+        pas = 1
+    return (joueur + pas * sens) % nb
+
+
+def meilleur_coup(c1: str, c2: str, c3: str, dessus: str, couleur_active: str):
+    choix = None
+    if couleur(c1) is not None and peut_jouer(c1, dessus, couleur_active):
+        choix = c1
+    if couleur(c2) is not None and peut_jouer(c2, dessus, couleur_active) and (choix is None or points(c2) > points(choix)):
+        choix = c2
+    if couleur(c3) is not None and peut_jouer(c3, dessus, couleur_active) and (choix is None or points(c3) > points(choix)):
+        choix = c3
+    if choix is None:
+        if couleur(c1) is None:
+            choix = c1
+        elif couleur(c2) is None:
+            choix = c2
+        elif couleur(c3) is None:
+            choix = c3
+    return choix
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert couleur("R7") == "R" and couleur("N+4") is None and couleur("N") is None, "Couleurs."
+assert valeur("B+2") == "+2" and valeur("VI") == "I" and valeur("N") == "", "Valeurs."
+assert peut_jouer("R3", "B3", "B") and peut_jouer("B9", "B3", "B") and peut_jouer("N+4", "R1", "R"), "Même valeur, même couleur, carte noire."
+assert not peut_jouer("R5", "B3", "B") and peut_jouer("J+2", "R+2", "R") and peut_jouer("V2", "N", "V"), "Après un joker, c'est la couleur choisie qui compte."
+assert not peut_jouer("R2", "N", "V"), "Après un joker vert, un rouge ne passe pas."
+assert points("R7") == 7 and points("R0") == 0 and points("BP") == 20 and points("N") == 50, "Points."
+assert a_piocher("V+2") == 2 and a_piocher("N+4") == 4 and a_piocher("R2") == 0, "Cartes à piocher."
+assert nouveau_sens("JI", 1) == -1 and nouveau_sens("JI", -1) == 1 and nouveau_sens("J5", -1) == -1, "Sens du jeu."
+assert suivant(0, "R5", 1, 4) == 1 and suivant(0, "R5", -1, 4) == 3, "Joueur suivant dans les deux sens."
+assert suivant(2, "RP", 1, 4) == 0 and suivant(3, "N+4", 1, 4) == 1 and suivant(0, "B+2", -1, 4) == 2, "Les cartes qui sautent un joueur."
+assert suivant(1, "VI", -1, 4) == 0 and suivant(0, "VI", -1, 2) == 0, "Inversion à 4, puis à 2 joueurs."
+assert meilleur_coup("R2", "B+2", "R9", "R5", "R") == "R9", "La carte de couleur qui rapporte le plus."
+assert meilleur_coup("B+2", "R2", "N", "B7", "B") == "B+2", "Une carte de couleur passe avant la carte noire."
+assert meilleur_coup("V1", "N+4", "J3", "B7", "B") == "N+4" and meilleur_coup("V1", "J2", "J3", "B7", "B") is None, "Carte noire en dernier recours, sinon None."
+assert meilleur_coup("R4", "B4", "V8", "J4", "J") == "R4", "Égalité : la première."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-cond-6-2" label="6.2 [Mini-projet] - Fiche de paie" type="python">
+<Enonce>
+### Fiche de paie
+
+Réaliser le module de calcul d'une fiche de paie simplifiée, avec le prélèvement de l'impôt à la source.
+
+**Règles**
+- Salaire brut mensuel : les 151,67 premières heures sont payées au taux horaire ; les heures suivantes, jusqu'à 186,67 h, sont majorées de 25 % ; au-delà, de 50 %.
+- Cotisations sociales : 22 % du brut. Net = brut - cotisations.
+- Parts fiscales : 1 pour une personne seule, 2 pour un couple (`"marie"` ou `"pacse"`), plus 0,5 part pour chacun des deux premiers enfants et 1 part par enfant à partir du troisième. Une personne seule avec au moins un enfant reçoit 0,5 part de plus.
+- Impôt annuel : le revenu imposable est divisé par le nombre de parts ; l'impôt progressif est calculé sur ce quotient (0 % jusqu'à 11 294 €, 11 % jusqu'à 28 797 €, 30 % jusqu'à 82 341 €, 41 % jusqu'à 177 106 €, 45 % au-delà), puis multiplié par le nombre de parts.
+- Revenu imposable annuel : 90 % du net annuel.
+
+**Objectifs**
+- `brut(taux, heures)`, `cotisations(brut_mensuel)` et `net(brut_mensuel)`, arrondis au centime.
+- `parts(situation, enfants)` : `situation` vaut `"celibataire"`, `"marie"` ou `"pacse"`.
+- `impot_annuel(revenu_imposable, nb_parts)`, arrondi à l'euro.
+- `taux_prelevement(net_mensuel, situation, enfants)` : l'impôt annuel divisé par le net annuel, en pourcentage arrondi au dixième.
+- `fiche(taux, heures, situation, enfants)` : le tuple `(brut, net, prelevement, net_a_payer)` du mois, le prélèvement étant le net multiplié par le taux, arrondi au centime.
+
+<Indices>
+<Indice>
+
+Chaque règle devient une fonction ; `fiche` ne fait qu'assembler les autres. Tester chaque fonction séparément avant d'écrire la suivante.
+
+</Indice>
+<Indice>
+
+Pour le brut, découper les heures en trois tranches : `min(heures, 151.67)`, puis ce qui dépasse jusqu'à 186,67, puis le reste. Une tranche négative vaut 0 : `max(0, …)`.
+
+</Indice>
+<Indice>
+
+L'impôt progressif se calcule tranche par tranche, du haut vers le bas, comme dans l'exercice sur l'impôt.
+
+</Indice>
+<Indice>
+
+```text
+(cœur du programme : l'impôt avec le quotient familial)
+FONCTION impot_annuel(revenu, nb_parts)
+    q ← revenu / nb_parts ; total ← 0
+    SI q > 177106 ALORS total ← total + (q - 177106) × 0,45 ; q ← 177106
+    SI q > 82341 ALORS total ← total + (q - 82341) × 0,41 ; q ← 82341
+    SI q > 28797 ALORS total ← total + (q - 28797) × 0,30 ; q ← 28797
+    SI q > 11294 ALORS total ← total + (q - 11294) × 0,11
+    RENVOYER arrondi(total × nb_parts)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def brut(taux: float, heures: float) -> float:
+    normales = min(heures, 151.67)
+    a_25 = max(0, min(heures, 186.67) - 151.67)
+    a_50 = max(0, heures - 186.67)
+    return round(taux * (normales + 1.25 * a_25 + 1.5 * a_50), 2)
+
+
+def cotisations(brut_mensuel: float) -> float:
+    return round(brut_mensuel * 0.22, 2)
+
+
+def net(brut_mensuel: float) -> float:
+    return round(brut_mensuel - cotisations(brut_mensuel), 2)
+
+
+def parts(situation: str, enfants: int) -> float:
+    p = 2 if situation in ("marie", "pacse") else 1
+    if enfants >= 1 and p == 1:
+        p = p + 0.5
+    p = p + 0.5 * min(enfants, 2) + max(0, enfants - 2)
+    return p
+
+
+def impot_annuel(revenu_imposable: float, nb_parts: float) -> int:
+    q = revenu_imposable / nb_parts
+    total = 0
+    if q > 177106:
+        total = total + (q - 177106) * 0.45
+        q = 177106
+    if q > 82341:
+        total = total + (q - 82341) * 0.41
+        q = 82341
+    if q > 28797:
+        total = total + (q - 28797) * 0.30
+        q = 28797
+    if q > 11294:
+        total = total + (q - 11294) * 0.11
+    return round(total * nb_parts)
+
+
+def taux_prelevement(net_mensuel: float, situation: str, enfants: int) -> float:
+    annuel = net_mensuel * 12
+    return round(impot_annuel(annuel * 0.9, parts(situation, enfants)) / annuel * 100, 1)
+
+
+def fiche(taux: float, heures: float, situation: str, enfants: int) -> tuple:
+    b = brut(taux, heures)
+    n = net(b)
+    prelevement = round(n * taux_prelevement(n, situation, enfants) / 100, 2)
+    return (b, n, prelevement, round(n - prelevement, 2))
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert brut(12, 151.67) == 1820.04 and brut(12, 100) == 1200, "Sans heures supplémentaires."
+assert brut(20, 170) == round(20 * (151.67 + 1.25 * 18.33), 2) and brut(10, 200) == round(10 * (151.67 + 1.25 * 35 + 1.5 * 13.33), 2), "Heures majorées à 25 % puis 50 %."
+assert cotisations(2000) == 440 and net(2000) == 1560, "Cotisations et net."
+assert parts("celibataire", 0) == 1 and parts("marie", 0) == 2 and parts("pacse", 2) == 3, "Parts sans enfant ou avec deux."
+assert parts("marie", 3) == 4 and parts("celibataire", 1) == 2 and parts("celibataire", 3) == 3.5, "Troisième enfant ; parent seul."
+assert impot_annuel(10000, 1) == 0 and impot_annuel(30000, 1) == 2286, "Impôt d'une personne seule."
+assert impot_annuel(60000, 2) == 2 * 2286, "Couple : le quotient familial divise le revenu par deux."
+assert impot_annuel(200000, 1) == round((200000 - 177106) * 0.45 + (177106 - 82341) * 0.41 + (82341 - 28797) * 0.30 + (28797 - 11294) * 0.11), "Toutes les tranches."
+assert taux_prelevement(1000, "celibataire", 0) == 0 and taux_prelevement(3000, "celibataire", 0) == round(impot_annuel(32400, 1) / 36000 * 100, 1), "Taux de prélèvement."
+assert taux_prelevement(3000, "marie", 2) < taux_prelevement(3000, "celibataire", 0), "Plus de parts : taux plus bas."
+b, n, p, a = fiche(25, 160, "celibataire", 0)
+assert b == brut(25, 160) and n == net(b) and p == round(n * taux_prelevement(n, "celibataire", 0) / 100, 2) and a == round(n - p, 2), "Fiche complète."
+assert fiche(11, 151.67, "marie", 1)[2] == 0, "Petit salaire d'un couple : pas de prélèvement."
+```
+
+</Verification>
+</ExerciseSection>
 
 </ExerciseTabs>

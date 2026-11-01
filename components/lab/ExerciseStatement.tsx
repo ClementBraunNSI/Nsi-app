@@ -7,6 +7,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { BookOpen, ChevronDown, Lightbulb } from "lucide-react";
 import { splitStatement } from "@/lib/exercise-statement";
+import { HintSteps } from "@/components/mdx/Indices";
 
 type Props = {
   label: string;
@@ -78,6 +79,7 @@ export function ExerciseStatement({ label, content }: Props) {
         </Fold>
       ) : null}
       {parts.exemples ? <Fold title="Exemples">{parts.exemples}</Fold> : null}
+      {parts.hints ? <HintSteps key={label} items={parts.hints.map((hint, index) => <Markdown key={index}>{hint}</Markdown>)} /> : null}
     </div>
   );
 }

@@ -82,9 +82,11 @@ type WorkspaceProps = {
   onCodeChange?: (code: string) => void;
   /** Évaluation : pas de menu contextuel ni de dépôt de texte venu d'ailleurs dans l'éditeur. */
   lockdown?: boolean;
+  /** Vérification propre à la page (défi du lundi) ; par défaut, celle des exercices des fiches. */
+  checker?: (code: string) => Promise<ExerciseCheckResult>;
 };
 
-export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted, initialCode, onCodeChange, lockdown = false }: WorkspaceProps) {
+export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted, initialCode, onCodeChange, lockdown = false, checker }: WorkspaceProps) {
   const starter = exercise.starterCode ?? '';
   const [code, setCodeState] = useState(starter);
   // Le raccourci clavier peut partir avant le rendu qui suit la frappe : on lit toujours le dernier texte saisi.
@@ -286,7 +288,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
           setSqlResults(null);
         }
       }
-      presentCheck(await checkExerciseSolution(exercise.id, codeRef.current));
+      presentCheck(await (checker ? checker(codeRef.current) : checkExerciseSolution(exercise.id, codeRef.current)));
     } catch (error: any) {
       const next = unexpectedRunReport(error?.message || 'Erreur inattendue.');
       setConsoleState(consoleFromReport(next, emptyLine));

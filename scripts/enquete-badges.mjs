@@ -61,6 +61,17 @@ const PROPS = {
     <polygon points="468,372 454,336 410,322 410,378" fill="#78350f"/>
     <polygon points="404,322 410,292 422,296 416,324" fill="#78350f"/>
     <polygon points="452,300 460,286 468,300 460,314" fill="#fef3c7"/>`,
+  // Bois des Détours : poteau aux panneaux contradictoires, flèche qui revient sur elle-même.
+  signpost: `
+    <ellipse cx="410" cy="474" rx="62" ry="10" fill="#000" opacity=".08"/>
+    <polygon points="400,330 410,326 410,472 400,470" fill="#a8693c"/>
+    <polygon points="410,326 420,330 420,470 410,472" fill="#8a5330"/>
+    <polygon points="358,340 452,340 476,360 452,380 358,380" fill="#e8c37a"/>
+    <polygon points="358,360 476,360 452,380 358,380" fill="#d6aa58"/>
+    <polygon points="464,392 370,392 346,412 370,432 464,432" fill="#e8c37a"/>
+    <polygon points="464,412 346,412 370,432 464,432" fill="#d6aa58"/>
+    <path d="M372 312 Q410 278 448 312" fill="none" stroke="#ea580c" stroke-width="10" stroke-linecap="round"/>
+    <polygon points="360,300 384,306 368,326" fill="#ea580c"/>`,
   // Dossier bouclé : chemise kraft, tampon vert.
   folder: `
     <ellipse cx="410" cy="474" rx="72" ry="10" fill="#000" opacity=".08"/>
@@ -105,6 +116,7 @@ const ITEMS = [
   { out: path.join(BADGES, 'enquete-miel-envole.png'), fox: 'sit', prop: 'honey' },
   { out: path.join(BADGES, 'enquete-barrage-perce.png'), fox: 'think', prop: 'dam' },
   { out: path.join(BADGES, 'enquete-gland-d-or.png'), fox: 'cheer', prop: 'acorn' },
+  { out: path.join(BADGES, 'enquete-bois-des-detours.png'), fox: 'think', prop: 'signpost' },
   // Succès des enquêtes.
   { out: path.join(SUCCES, 'enquete_premier_dossier.png'), fox: 'cheer', prop: 'folder' },
   { out: path.join(SUCCES, 'enquete_flair.png'), fox: 'think', prop: 'magnifier' },

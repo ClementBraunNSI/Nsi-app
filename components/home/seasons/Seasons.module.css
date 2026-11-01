@@ -1,0 +1,144 @@
+/* Décors saisonniers du renard de l'accueil. Chargé avec le décor du moment seulement ; rien ne bouge si l'appareil demande moins d'animations. */
+.bat { fill: #3b2d4f; }
+:global(.dark) .bat { fill: #b9aad6; }
+.snow { fill: #bfd2e6; }
+:global(.dark) .snow { fill: #f1f5f9; }
+.drift { fill: #e3ecf5; }
+:global(.dark) .drift { fill: #dbe5ef; }
+.driftShade { fill: #c9d8e8; }
+:global(.dark) .driftShade { fill: #b8c8d9; }
+.plane { fill: #ffffff; stroke: #94a3b8; stroke-width: 4; stroke-linejoin: round; }
+
+/* Sur mobile (app/HomeMobile.tsx), le renard touche le texte à gauche et le bord de la carte à droite :
+   on retire le ciel et les particules des bords, et on rapproche du renard ce qui est posé au sol. */
+:global(.hm-fox) .sky,
+:global(.hm-fox) .edge { display: none; }
+:global(.hm-fox) .ground { transform-box: view-box; transform-origin: 1640px 1556px; transform: translate(-230px, 0) scale(0.8); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .layer { animation: appear 700ms ease-out both; }
+  :global([data-calm]) .layer,
+  :global([data-calm]) .layer * { animation-play-state: paused; }
+
+  .fall { animation: fall var(--d) linear var(--delay) infinite; }
+  .sway { animation: sway var(--sd) ease-in-out var(--sdelay, 0s) infinite alternate; }
+  .swing { animation: swing var(--d, 2.6s) ease-in-out var(--delay, 0s) infinite alternate; }
+  .spin { animation: spin var(--d, 40s) linear infinite; }
+  .flap { animation: flap var(--d, 0.2s) ease-in-out infinite alternate; }
+  .flapX { animation: flapX var(--d, 0.3s) ease-in-out infinite alternate; }
+  .flicker { animation: flicker 2.3s linear infinite; }
+  .glow { animation: glow 2.3s ease-in-out infinite; }
+  .twinkle { animation: twinkle var(--d, 2.4s) ease-in-out var(--delay, 0s) infinite; }
+  .burst { animation: burst var(--d, 3.2s) ease-out var(--delay, 0s) infinite; }
+  .hop { animation: hop 5.5s ease-in-out var(--delay, 0s) infinite; }
+  .bob { animation: bob 1.5s ease-in-out infinite; }
+  .glint { animation: glint 5s ease-in-out var(--delay, 0s) infinite; }
+  .pulse { animation: pulse 4s ease-in-out infinite; }
+  .roll { animation: roll 7s ease-in-out infinite; }
+  .bat1 { animation: bat1 9s ease-in-out infinite; }
+  .bat2 { animation: bat2 11s ease-in-out infinite; }
+  .bat3 { animation: bat3 7.5s ease-in-out infinite; }
+  .plane { animation: plane 10s ease-in-out infinite; }
+  .butterfly { animation: butterfly 12s ease-in-out infinite; }
+}
+
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes fall {
+  0% { transform: translateY(var(--from)); opacity: 0; }
+  6% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(var(--to)); opacity: 0; }
+}
+@keyframes sway {
+  from { transform: translateX(calc(var(--sx) * -1)) rotate(calc(var(--sr) * -1)); }
+  to { transform: translateX(var(--sx)) rotate(var(--sr)); }
+}
+@keyframes swing {
+  from { transform: rotate(calc(var(--a, 6deg) * -1)); }
+  to { transform: rotate(var(--a, 6deg)); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(0.2); } }
+@keyframes flapX { from { transform: scaleX(1); } to { transform: scaleX(0.25); } }
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  17% { opacity: 0.7; }
+  21% { opacity: 0.95; }
+  46% { opacity: 0.78; }
+  52% { opacity: 1; }
+  74% { opacity: 0.62; }
+  79% { opacity: 0.92; }
+}
+@keyframes glow {
+  0%, 100% { opacity: 0.14; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.08); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.55) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(20deg); }
+}
+@keyframes burst {
+  0% { opacity: 0; transform: scale(0.15); }
+  8% { opacity: 1; }
+  38% { opacity: 1; transform: scale(1); }
+  58%, 100% { opacity: 0; transform: scale(1.12); }
+}
+@keyframes hop {
+  0%, 70%, 100% { transform: translateY(0) scale(1, 1); }
+  74% { transform: translateY(0) scale(1.06, 0.92); }
+  80% { transform: translateY(-80px) scale(0.96, 1.05); }
+  86% { transform: translateY(0) scale(1.05, 0.94); }
+  90% { transform: translateY(-30px) scale(1, 1); }
+  94% { transform: translateY(0) scale(1, 1); }
+}
+@keyframes bob {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.14, 0.88); }
+}
+@keyframes glint {
+  0%, 60%, 100% { opacity: 0.15; }
+  68% { opacity: 0.9; }
+  76% { opacity: 0.15; }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+@keyframes roll {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50% { transform: translateX(-120px) rotate(-150deg); }
+}
+@keyframes bat1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(230px, -150px) rotate(-8deg); }
+  50% { transform: translate(470px, -40px) rotate(6deg); }
+  75% { transform: translate(250px, 110px) rotate(10deg); }
+}
+@keyframes bat2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  30% { transform: translate(-260px, -120px) rotate(8deg); }
+  60% { transform: translate(-90px, 140px) rotate(-6deg); }
+  80% { transform: translate(110px, 40px) rotate(-10deg); }
+}
+@keyframes bat3 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-170px, 120px) rotate(-10deg); }
+}
+@keyframes plane {
+  0% { transform: translate(-260px, 120px) rotate(14deg); opacity: 0; }
+  8% { opacity: 1; }
+  30% { transform: translate(420px, -150px) rotate(-12deg); }
+  52% { transform: translate(900px, -40px) rotate(8deg); }
+  74% { transform: translate(1300px, -210px) rotate(-16deg); }
+  92% { opacity: 1; }
+  100% { transform: translate(1820px, -120px) rotate(4deg); opacity: 0; }
+}
+@keyframes butterfly {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-150px, -170px) rotate(-12deg); }
+  40% { transform: translate(-420px, -120px) rotate(-4deg); }
+  55% { transform: translate(-330px, 60px) rotate(10deg); }
+  75% { transform: translate(-60px, 140px) rotate(14deg); }
+  88% { transform: translate(90px, 40px) rotate(4deg); }
+}

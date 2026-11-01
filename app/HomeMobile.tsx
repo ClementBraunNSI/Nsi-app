@@ -187,7 +187,7 @@ export default function HomeMobile({ levels, dashboard, privateCard, search }: P
             Des cours clairs, des exercices corrigés automatiquement et un parcours de progression, de la seconde au BTS.
           </p>
           <span className="hm-fox-box">
-            <AnimatedFox className="hm-fox" />
+            <AnimatedFox className="hm-fox" seasonal />
           </span>
         </div>
       </header>

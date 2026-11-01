@@ -11,839 +11,1470 @@ prerequisites:
 audience: public
 ---
 
+Les exercices vont de **Introduction** à **Expert**, puis viennent les **mini-projets**, pour qui avance vite.
+Chaque exercice propose des indices à ouvrir un par un : le dernier donne le pseudo-code, qui reste à traduire en Python.
+Les noms de variables et de fonctions demandés servent aux tests du bouton **Vérifier** : les garder tels quels.
+
 <ExerciseTabs courseId="les-listes-python" courseTitle="Les listes">
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 1 : INTRODUCTION (1.1 à 1.6)      */}
-  {/* ========================================== */}
+<ExerciseSection id="1nsi-listes-1-1" label="1.1 [Introduction] - Premier et dernier" type="python">
+<Enonce>
+### Premier et dernier
 
-  <ExerciseSection id="listes-1-1" label="1.1 [Introduction] - Création d'un tuple" type="python">
-    <Enonce>
-    ### Exercice 1.1 [Introduction] : Création d'un tuple
-    **Écrire une fonction `creer_tuple` qui renvoie le tuple `('a', 'b', 'c', 'd')`.**
+Écrire une fonction `extremites(liste)` qui renvoie une nouvelle liste contenant le premier et le dernier élément de `liste` (non vide).
 
-    <Correction>
-    ```python
-    def creer_tuple() -> tuple:
-        return ('a', 'b', 'c', 'd')
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'creer_tuple' in locals(), "La fonction 'creer_tuple' n'est pas définie."
-assert creer_tuple() == ('a', 'b', 'c', 'd')
-    ```
-    </Verification>
-  </ExerciseSection>
+Exemple : `extremites([4, 8, 15, 16])` renvoie `[4, 16]`.
 
-  <ExerciseSection id="listes-1-2" label="1.2 [Introduction] - Création d'une liste" type="python">
-    <Enonce>
-    ### Exercice 1.2 [Introduction] : Création d'une liste
-    **Écrire une fonction `creer_liste` qui renvoie la liste `['a', 'b', 'c', 'd']`.**
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def creer_liste() -> list:
-        return ['a', 'b', 'c', 'd']
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'creer_liste' in locals(), "La fonction 'creer_liste' n'est pas définie."
-assert creer_liste() == ['a', 'b', 'c', 'd']
-    ```
-    </Verification>
-  </ExerciseSection>
+Le premier élément a l'indice 0.
 
-  <ExerciseSection id="listes-1-3" label="1.3 [Introduction] - Accès par indice" type="python">
-    <Enonce>
-    ### Exercice 1.3 [Introduction] : Accès par indice
-    **Écrire une fonction `deuxieme_element` qui prend une liste non vide et renvoie son deuxième élément (indice 1).**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def deuxieme_element(liste: list):
-        return liste[1]
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'deuxieme_element' in locals(), "La fonction 'deuxieme_element' n'est pas définie."
-assert deuxieme_element(['x', 'y', 'z']) == 'y'
-assert deuxieme_element([10, 20, 30]) == 20
-    ```
-    </Verification>
-  </ExerciseSection>
+`liste[-1]` désigne le dernier élément, quelle que soit la longueur.
 
-  <ExerciseSection id="listes-1-4" label="1.4 [Introduction] - Modifier un élément" type="python">
-    <Enonce>
-    ### Exercice 1.4 [Introduction] : Modifier un élément
-    **Écrire une fonction `remplacer_deuxieme` qui prend une liste et une valeur `nouveau`, remplace le deuxième élément par `nouveau`, et renvoie la liste modifiée.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def remplacer_deuxieme(liste: list, nouveau) -> list:
-        liste[1] = nouveau
-        return liste
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'remplacer_deuxieme' in locals(), "La fonction 'remplacer_deuxieme' n'est pas définie."
-assert remplacer_deuxieme(['a', 'b', 'c'], 'z') == ['a', 'z', 'c']
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION extremites(liste)
+    RENVOYER [liste[0], liste[dernier indice]]
+```
 
-  <ExerciseSection id="listes-1-5" label="1.5 [Introduction] - Ajouter à la fin" type="python">
-    <Enonce>
-    ### Exercice 1.5 [Introduction] : Ajouter à la fin
-    **Écrire une fonction `ajouter_fin` qui prend une liste et une valeur, ajoute la valeur à la fin avec `.append()`, et renvoie la liste.**
+</Indice>
+</Indices>
 
-    <Correction>
-    ```python
-    def ajouter_fin(liste: list, valeur) -> list:
-        liste.append(valeur)
-        return liste
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'ajouter_fin' in locals(), "La fonction 'ajouter_fin' n'est pas définie."
-assert ajouter_fin(['a', 'b'], 'f') == ['a', 'b', 'f']
-    ```
-    </Verification>
-  </ExerciseSection>
+<Correction>
 
-  <ExerciseSection id="listes-1-6" label="1.6 [Introduction] - Supprimer le premier" type="python">
-    <Enonce>
-    ### Exercice 1.6 [Introduction] : Supprimer le premier
-    **Écrire une fonction `supprimer_premier` qui prend une liste non vide, supprime son premier élément avec `.pop(0)`, et renvoie la liste.**
+```python
+def extremites(liste: list) -> list:
+    return [liste[0], liste[-1]]
+```
 
-    <Correction>
-    ```python
-    def supprimer_premier(liste: list) -> list:
-        liste.pop(0)
-        return liste
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'supprimer_premier' in locals(), "La fonction 'supprimer_premier' n'est pas définie."
-assert supprimer_premier(['a', 'b', 'c']) == ['b', 'c']
-    ```
-    </Verification>
-  </ExerciseSection>
+</Correction>
+</Enonce>
+<Verification>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 2 : FACILE (2.1 à 2.6)            */}
-  {/* ========================================== */}
+```python
+assert extremites([4, 8, 15, 16]) == [4, 16], "[4, 8, 15, 16] : [4, 16]."
+assert extremites(["a"]) == ["a", "a"], "Un seul élément : il est à la fois premier et dernier."
+assert extremites([1, 2]) == [1, 2], "Deux éléments."
+```
 
-  <ExerciseSection id="listes-2-1" label="2.1 [Facile] - Somme des éléments" type="python">
-    <Enonce>
-    ### Exercice 2.1 [Facile] : Somme des éléments
-    **Écrire une fonction `somme_elements` qui prend une liste de nombres et renvoie la somme de tous ses éléments (boucle `for`).**
+</Verification>
+</ExerciseSection>
 
-    <Correction>
-    ```python
-    def somme_elements(liste: list) -> int:
-        somme = 0
-        for elt in liste:
-            somme += elt
-        return somme
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'somme_elements' in locals(), "La fonction 'somme_elements' n'est pas définie."
-assert somme_elements([1, 2, 3, 4]) == 10
-assert somme_elements([]) == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+<ExerciseSection id="1nsi-listes-1-2" label="1.2 [Introduction] - Somme d'une liste" type="python">
+<Enonce>
+### Somme d'une liste
 
-  <ExerciseSection id="listes-2-2" label="2.2 [Facile] - Compter les pairs" type="python">
-    <Enonce>
-    ### Exercice 2.2 [Facile] : Compter les pairs
-    **Écrire une fonction `compter_pairs` qui prend une liste d'entiers et renvoie le nombre d'éléments pairs.**
+Écrire une fonction `somme(liste)` qui renvoie la somme des nombres de `liste` (0 pour une liste vide).
 
-    <Correction>
-    ```python
-    def compter_pairs(liste: list) -> int:
-        compteur = 0
-        for elt in liste:
-            if elt % 2 == 0:
-                compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_pairs' in locals(), "La fonction 'compter_pairs' n'est pas définie."
-assert compter_pairs([1, 2, 3, 4, 5]) == 2
-    ```
-    </Verification>
-  </ExerciseSection>
+Contrainte : sans la fonction `sum`.
 
-  <ExerciseSection id="listes-2-3" label="2.3 [Facile] - Longueur d'une liste" type="python">
-    <Enonce>
-    ### Exercice 2.3 [Facile] : Longueur d'une liste
-    **Écrire une fonction `longueur_liste` qui prend une liste et renvoie son nombre d'éléments, sans utiliser `len()`.**
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def longueur_liste(liste: list) -> int:
-        compteur = 0
-        for _ in liste:
-            compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'longueur_liste' in locals(), "La fonction 'longueur_liste' n'est pas définie."
-assert longueur_liste([1, 2, 3]) == 3
-assert longueur_liste([]) == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+`for x in liste:` parcourt directement les valeurs.
 
-  <ExerciseSection id="listes-2-4" label="2.4 [Facile] - Dernier élément" type="python">
-    <Enonce>
-    ### Exercice 2.4 [Facile] : Dernier élément
-    **Écrire une fonction `dernier_element` qui prend une liste non vide et renvoie son dernier élément, sans utiliser d'indice négatif ni `len()`.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def dernier_element(liste: list):
-        index = 0
-        for _ in liste:
-            index += 1
-        return liste[index - 1]
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'dernier_element' in locals(), "La fonction 'dernier_element' n'est pas définie."
-assert dernier_element([10, 20, 30]) == 30
-assert dernier_element(['a']) == 'a'
-    ```
-    </Verification>
-  </ExerciseSection>
+Un total qui part de 0 et grandit à chaque tour.
 
-  <ExerciseSection id="listes-2-5" label="2.5 [Facile] - Présence d'une valeur" type="python">
-    <Enonce>
-    ### Exercice 2.5 [Facile] : Présence d'une valeur
-    **Écrire une fonction `contient` qui prend une liste et une valeur, et renvoie `True` si la valeur est présente, `False` sinon (parcours avec boucle, sans `in`).**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def contient(liste: list, valeur) -> bool:
-        for elt in liste:
-            if elt == valeur:
-                return True
-        return False
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'contient' in locals(), "La fonction 'contient' n'est pas définie."
-assert contient([1, 2, 3], 2) is True
-assert contient([1, 2, 3], 9) is False
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION somme(liste)
+    total ← 0
+    POUR CHAQUE x DE liste : total ← total + x
+    RENVOYER total
+```
 
-  <ExerciseSection id="listes-2-6" label="2.6 [Facile] - Doubler les valeurs" type="python">
-    <Enonce>
-    ### Exercice 2.6 [Facile] : Doubler les valeurs
-    **Écrire une fonction `doubler_valeurs` qui prend une liste de nombres et renvoie une **nouvelle** liste où chaque élément est multiplié par 2.**
+</Indice>
+</Indices>
 
-    <Correction>
-    ```python
-    def doubler_valeurs(liste: list) -> list:
-        resultat = []
-        for elt in liste:
-            resultat.append(elt * 2)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'doubler_valeurs' in locals(), "La fonction 'doubler_valeurs' n'est pas définie."
-assert doubler_valeurs([1, 2, 3]) == [2, 4, 6]
-assert doubler_valeurs([]) == []
-    ```
-    </Verification>
-  </ExerciseSection>
+<Correction>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 3 : MOYEN (3.1 à 3.6)             */}
-  {/* ========================================== */}
+```python
+def somme(liste: list) -> float:
+    total = 0
+    for x in liste:
+        total = total + x
+    return total
+```
 
-  <ExerciseSection id="listes-3-1" label="3.1 [Moyen] - Filtrer les positifs" type="python">
-    <Enonce>
-    ### Exercice 3.1 [Moyen] : Filtrer les positifs
-    **Écrire une fonction `filtrer_positifs` qui prend une liste de nombres et renvoie une nouvelle liste avec uniquement les nombres strictement positifs.**
+</Correction>
+</Enonce>
+<Verification>
 
-    <Correction>
-    ```python
-    def filtrer_positifs(liste: list) -> list:
-        positifs = []
-        for elt in liste:
-            if elt > 0:
-                positifs.append(elt)
-        return positifs
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'filtrer_positifs' in locals(), "La fonction 'filtrer_positifs' n'est pas définie."
-assert filtrer_positifs([-1, 0, 3, -7, 8]) == [3, 8]
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+assert somme([3, 5, 2]) == 10 and somme([]) == 0, "[3, 5, 2] : 10 ; vide : 0."
+assert somme([-4, 4, 1.5]) == 1.5, "Avec des négatifs et des décimaux."
+import re
+assert not re.search(r"\bsum\s*\(", PROGRAMME), "Sans sum."
+```
 
-  <ExerciseSection id="listes-3-2" label="3.2 [Moyen] - Valeurs uniques" type="python">
-    <Enonce>
-    ### Exercice 3.2 [Moyen] : Valeurs uniques
-    **Écrire une fonction `valeurs_uniques` qui prend une liste et renvoie une nouvelle liste sans doublons, en conservant l'ordre d'apparition.**
+</Verification>
+</ExerciseSection>
 
-    <Correction>
-    ```python
-    def valeurs_uniques(liste: list) -> list:
-        resultat = []
-        for elt in liste:
-            if elt not in resultat:
-                resultat.append(elt)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'valeurs_uniques' in locals(), "La fonction 'valeurs_uniques' n'est pas définie."
-assert valeurs_uniques([1, 2, 2, 3, 4, 4]) == [1, 2, 3, 4]
-    ```
-    </Verification>
-  </ExerciseSection>
+<ExerciseSection id="1nsi-listes-1-3" label="1.3 [Introduction] - Liste des carrés" type="python">
+<Enonce>
+### Liste des carrés
 
-  <ExerciseSection id="listes-3-3" label="3.3 [Moyen] - Concaténer des chaînes" type="python">
-    <Enonce>
-    ### Exercice 3.3 [Moyen] : Concaténer des chaînes
-    **Écrire une fonction `concatener_chaines` qui prend une liste de chaînes et renvoie leur concaténation.**
+Écrire une fonction `carres(n)` qui renvoie la liste `[1, 4, 9, …, n²]` des carrés des entiers de 1 à `n`.
 
-    <Correction>
-    ```python
-    def concatener_chaines(liste: list) -> str:
-        resultat = ""
-        for chaine in liste:
-            resultat += chaine
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'concatener_chaines' in locals(), "La fonction 'concatener_chaines' n'est pas définie."
-assert concatener_chaines(["Bonjour", " ", "le", " ", "monde"]) == "Bonjour le monde"
-    ```
-    </Verification>
-  </ExerciseSection>
+<Indices>
+<Indice>
 
-  <ExerciseSection id="listes-3-4" label="3.4 [Moyen] - Inverser une liste" type="python">
-    <Enonce>
-    ### Exercice 3.4 [Moyen] : Inverser une liste
-    **Écrire une fonction `inverser_liste` qui prend une liste et renvoie une nouvelle liste avec les éléments dans l'ordre inverse.**
+Partir d'une liste vide `[]` et la remplir dans une boucle.
 
-    <Correction>
-    ```python
-    def inverser_liste(liste: list) -> list:
-        resultat = []
-        for i in range(len(liste) - 1, -1, -1):
-            resultat.append(liste[i])
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'inverser_liste' in locals(), "La fonction 'inverser_liste' n'est pas définie."
-assert inverser_liste([1, 2, 3]) == [3, 2, 1]
-assert inverser_liste([]) == []
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="listes-3-5" label="3.5 [Moyen] - Séparer pairs et impairs" type="python">
-    <Enonce>
-    ### Exercice 3.5 [Moyen] : Séparer pairs et impairs
-    **Écrire une fonction `separer_pairs_impairs` qui prend une liste d'entiers et renvoie un tuple `(pairs, impairs)`.**
+`liste.append(x)` ajoute `x` à la fin de la liste.
 
-    <Correction>
-    ```python
-    def separer_pairs_impairs(liste: list) -> tuple:
-        pairs = []
-        impairs = []
-        for elt in liste:
-            if elt % 2 == 0:
-                pairs.append(elt)
+</Indice>
+<Indice>
+
+```text
+FONCTION carres(n)
+    resultat ← liste vide
+    POUR i ALLANT DE 1 À n : ajouter i² à la fin de resultat
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def carres(n: int) -> list:
+    resultat = []
+    for i in range(1, n + 1):
+        resultat.append(i ** 2)
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert carres(4) == [1, 4, 9, 16], "carres(4)."
+assert carres(0) == [] and carres(1) == [1], "carres(0) et carres(1)."
+assert len(carres(100)) == 100 and carres(100)[-1] == 10000, "carres(100) a 100 éléments, le dernier vaut 10000."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-1-4" label="1.4 [Introduction] - Combien de positifs ?" type="python">
+<Enonce>
+### Combien de positifs ?
+
+Écrire une fonction `nb_positifs(liste)` qui renvoie le nombre d'éléments strictement positifs de `liste`.
+
+<Indices>
+<Indice>
+
+Un compteur et une condition dans la boucle.
+
+</Indice>
+<Indice>
+
+0 n'est pas strictement positif.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION nb_positifs(liste)
+    n ← 0
+    POUR CHAQUE x DE liste : SI x > 0 ALORS n ← n + 1
+    RENVOYER n
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def nb_positifs(liste: list) -> int:
+    n = 0
+    for x in liste:
+        if x > 0:
+            n = n + 1
+    return n
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert nb_positifs([3, -1, 0, 7, -5]) == 2, "[3, -1, 0, 7, -5] : 2."
+assert nb_positifs([]) == 0 and nb_positifs([-1, -2]) == 0, "Aucun positif."
+assert nb_positifs([0.5, 1, 2]) == 3, "Trois positifs."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-2-1" label="2.1 [Facile] - Maximum" type="python">
+<Enonce>
+### Maximum
+
+Écrire une fonction `maximum(liste)` qui renvoie la plus grande valeur d'une liste non vide.
+
+Contrainte : sans `max` ni `sort`.
+
+<Indices>
+<Indice>
+
+Le premier élément sert de maximum provisoire.
+
+</Indice>
+<Indice>
+
+Chaque élément plus grand que le maximum provisoire le remplace.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION maximum(liste)
+    m ← liste[0]
+    POUR CHAQUE x DE liste : SI x > m ALORS m ← x
+    RENVOYER m
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def maximum(liste: list) -> float:
+    m = liste[0]
+    for x in liste:
+        if x > m:
+            m = x
+    return m
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert maximum([3, 9, 2, 9, 4]) == 9, "[3, 9, 2, 9, 4] : 9."
+assert maximum([-7, -3, -12]) == -3, "Que des négatifs : -3 (et pas 0)."
+assert maximum([42]) == 42, "Un seul élément."
+import re
+assert not re.search(r"\b(max|sorted)\s*\(|\.sort\s*\(", PROGRAMME), "Sans max ni tri."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-2-2" label="2.2 [Facile] - Moyenne" type="python">
+<Enonce>
+### Moyenne
+
+Écrire une fonction `moyenne(liste)` qui renvoie la moyenne des nombres de `liste`, arrondie au centième, ou `None` si la liste est vide.
+
+<Indices>
+<Indice>
+
+Une liste vide ferait diviser par zéro : la traiter en premier.
+
+</Indice>
+<Indice>
+
+`len(liste)` donne le nombre d'éléments.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION moyenne(liste)
+    SI liste vide ALORS RENVOYER None
+    total ← somme des éléments
+    RENVOYER arrondi(total / longueur(liste), 2 chiffres)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def moyenne(liste: list):
+    if len(liste) == 0:
+        return None
+    total = 0
+    for x in liste:
+        total = total + x
+    return round(total / len(liste), 2)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert moyenne([12, 15, 9]) == 12, "[12, 15, 9] : 12."
+assert moyenne([10, 11, 15.5]) == 12.17, "Arrondi au centième."
+assert moyenne([]) is None, "Liste vide : None."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-2-3" label="2.3 [Facile] - Garder les pairs" type="python">
+<Enonce>
+### Garder les pairs
+
+Écrire une fonction `pairs(liste)` qui renvoie une **nouvelle** liste contenant seulement les nombres pairs de `liste`, dans le même ordre. La liste d'origine ne doit pas être modifiée.
+
+<Indices>
+<Indice>
+
+Construire une liste vide, puis y ajouter les éléments qui passent le test.
+
+</Indice>
+<Indice>
+
+Un nombre est pair si `x % 2 == 0`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION pairs(liste)
+    resultat ← liste vide
+    POUR CHAQUE x DE liste : SI x pair ALORS ajouter x à resultat
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def pairs(liste: list) -> list:
+    resultat = []
+    for x in liste:
+        if x % 2 == 0:
+            resultat.append(x)
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+donnees = [5, 8, 2, 7, 10, 3]
+assert pairs(donnees) == [8, 2, 10], "[5, 8, 2, 7, 10, 3] : [8, 2, 10]."
+assert donnees == [5, 8, 2, 7, 10, 3], "La liste d'origine n'est pas modifiée."
+assert pairs([1, 3]) == [] and pairs([]) == [], "Aucun pair."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-2-4" label="2.4 [Facile] - Liste à l'envers" type="python">
+<Enonce>
+### Liste à l'envers
+
+Écrire une fonction `a_l_envers(liste)` qui renvoie une nouvelle liste avec les éléments dans l'ordre inverse.
+
+Contrainte : sans `reverse`, `reversed` ni `[::-1]`.
+
+<Indices>
+<Indice>
+
+Parcourir les indices du dernier au premier : `range(len(liste) - 1, -1, -1)`.
+
+</Indice>
+<Indice>
+
+Ou bien insérer chaque élément au début : `resultat.insert(0, x)`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION a_l_envers(liste)
+    resultat ← liste vide
+    POUR i ALLANT DE longueur(liste) - 1 À 0 (en descendant)
+        ajouter liste[i] à resultat
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def a_l_envers(liste: list) -> list:
+    resultat = []
+    for i in range(len(liste) - 1, -1, -1):
+        resultat.append(liste[i])
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+donnees = [1, 2, 3, 4]
+assert a_l_envers(donnees) == [4, 3, 2, 1] and donnees == [1, 2, 3, 4], "Nouvelle liste, l'originale ne change pas."
+assert a_l_envers([]) == [] and a_l_envers(["x"]) == ["x"], "Vide et un élément."
+assert "reverse" not in PROGRAMME and "[::-1]" not in PROGRAMME, "Sans reverse ni [::-1]."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-3-1" label="3.1 [Moyen] - Où est le minimum ?" type="python">
+<Enonce>
+### Où est le minimum ?
+
+Écrire une fonction `indice_min(liste)` qui renvoie l'**indice** du plus petit élément d'une liste non vide (le premier en cas d'égalité).
+
+<Indices>
+<Indice>
+
+Garder en mémoire l'indice du minimum provisoire, pas sa valeur : la valeur se retrouve avec `liste[i_min]`.
+
+</Indice>
+<Indice>
+
+Parcourir les indices avec `range(len(liste))`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION indice_min(liste)
+    i_min ← 0
+    POUR i ALLANT DE 1 À longueur(liste) - 1
+        SI liste[i] < liste[i_min] ALORS i_min ← i
+    RENVOYER i_min
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def indice_min(liste: list) -> int:
+    i_min = 0
+    for i in range(1, len(liste)):
+        if liste[i] < liste[i_min]:
+            i_min = i
+    return i_min
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert indice_min([5, 3, 8, 1, 9]) == 3, "[5, 3, 8, 1, 9] : indice 3."
+assert indice_min([2, 1, 1]) == 1, "En cas d'égalité, le premier."
+assert indice_min([7]) == 0 and indice_min([0, 4]) == 0, "Au début."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-3-2" label="3.2 [Moyen] - Sans doublons" type="python">
+<Enonce>
+### Sans doublons
+
+Écrire une fonction `sans_doublons(liste)` qui renvoie une nouvelle liste où chaque valeur n'apparaît qu'une fois, en gardant l'ordre des **premières** apparitions.
+
+Exemple : `[3, 1, 3, 2, 1]` donne `[3, 1, 2]`.
+
+<Indices>
+<Indice>
+
+Ajouter un élément au résultat seulement s'il n'y est pas déjà.
+
+</Indice>
+<Indice>
+
+`x not in resultat` teste l'absence de `x` dans la liste.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION sans_doublons(liste)
+    resultat ← liste vide
+    POUR CHAQUE x DE liste
+        SI x n'est pas dans resultat ALORS ajouter x à resultat
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def sans_doublons(liste: list) -> list:
+    resultat = []
+    for x in liste:
+        if x not in resultat:
+            resultat.append(x)
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert sans_doublons([3, 1, 3, 2, 1]) == [3, 1, 2], "[3, 1, 3, 2, 1] : [3, 1, 2]."
+assert sans_doublons([]) == [] and sans_doublons([4, 4, 4]) == [4], "Vide, puis tout identique."
+assert sans_doublons(["b", "a", "b"]) == ["b", "a"], "Avec des textes."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-3-3" label="3.3 [Moyen] - Rotation" type="python">
+<Enonce>
+### Rotation
+
+Écrire une fonction `rotation(liste, k)` qui renvoie une nouvelle liste décalée de `k` positions vers la droite : les éléments qui sortent à droite reviennent à gauche.
+
+Exemple : `rotation([1, 2, 3, 4, 5], 2)` renvoie `[4, 5, 1, 2, 3]`. `k` peut dépasser la longueur.
+
+<Indices>
+<Indice>
+
+L'élément d'indice `i` va à l'indice `(i + k) % n`, avec `n` la longueur.
+
+</Indice>
+<Indice>
+
+Commencer par une liste de la bonne taille, par exemple `[None] * n`, puis placer chaque élément.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION rotation(liste, k)
+    n ← longueur(liste)
+    resultat ← liste de n cases vides
+    POUR i ALLANT DE 0 À n - 1
+        resultat[reste de (i + k) par n] ← liste[i]
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def rotation(liste: list, k: int) -> list:
+    n = len(liste)
+    resultat = [None] * n
+    for i in range(n):
+        resultat[(i + k) % n] = liste[i]
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert rotation([1, 2, 3, 4, 5], 2) == [4, 5, 1, 2, 3], "Décalage de 2."
+assert rotation([1, 2, 3], 0) == [1, 2, 3] and rotation([1, 2, 3], 3) == [1, 2, 3], "Décalage de 0 ou de la longueur : rien ne change."
+assert rotation([1, 2, 3], 4) == [3, 1, 2], "Décalage de 4 sur 3 éléments : comme 1."
+assert rotation([], 5) == [], "Liste vide."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-3-4" label="3.4 [Moyen] - Liste triée ?" type="python">
+<Enonce>
+### Liste triée ?
+
+Écrire une fonction `est_triee(liste)` qui renvoie `True` si les éléments sont rangés dans l'ordre croissant (des valeurs égales qui se suivent sont permises).
+
+Contrainte : sans `sorted` ni `sort`.
+
+<Indices>
+<Indice>
+
+Comparer chaque élément à son voisin de droite : `liste[i]` et `liste[i + 1]`.
+
+</Indice>
+<Indice>
+
+Attention à l'indice de fin : le dernier voisin de droite existe pour `i = len(liste) - 2`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION est_triee(liste)
+    POUR i ALLANT DE 0 À longueur(liste) - 2
+        SI liste[i] > liste[i + 1] ALORS RENVOYER FAUX
+    RENVOYER VRAI
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def est_triee(liste: list) -> bool:
+    for i in range(len(liste) - 1):
+        if liste[i] > liste[i + 1]:
+            return False
+    return True
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert est_triee([1, 2, 2, 5]) is True and est_triee([]) is True and est_triee([3]) is True, "Listes triées."
+assert est_triee([1, 3, 2]) is False and est_triee([2, 1]) is False, "Listes non triées."
+assert est_triee(["a", "b", "c"]) is True, "Avec des textes."
+assert "sort" not in PROGRAMME, "Sans tri."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-4-1" label="4.1 [Difficile] - Deuxième plus grand" type="python">
+<Enonce>
+### Deuxième plus grand
+
+Écrire une fonction `deuxieme(liste)` qui renvoie la deuxième plus grande valeur **distincte** de `liste`, ou `None` s'il n'y en a pas.
+
+Exemples : `[4, 9, 7, 9]` donne `7` ; `[5, 5]` donne `None`.
+
+Contrainte : un seul parcours de la liste, sans tri.
+
+<Indices>
+<Indice>
+
+Garder deux variables pendant le parcours : `premier` et `second`, au départ à `None`.
+
+</Indice>
+<Indice>
+
+Une valeur plus grande que `premier` fait descendre `premier` en `second`. Une valeur entre les deux ne remplace que `second`. Une valeur égale à `premier` ne change rien.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION deuxieme(liste)
+    premier ← None ; second ← None
+    POUR CHAQUE x DE liste
+        SI premier = None OU x > premier ALORS
+            second ← premier ; premier ← x
+        SINON SI x < premier ET (second = None OU x > second) ALORS
+            second ← x
+    RENVOYER second
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def deuxieme(liste: list):
+    premier = None
+    second = None
+    for x in liste:
+        if premier is None or x > premier:
+            second = premier
+            premier = x
+        elif x < premier and (second is None or x > second):
+            second = x
+    return second
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert deuxieme([4, 9, 7, 9]) == 7, "[4, 9, 7, 9] : 7."
+assert deuxieme([5, 5]) is None and deuxieme([1]) is None and deuxieme([]) is None, "Pas de deuxième valeur : None."
+assert deuxieme([1, 2, 3, 4]) == 3 and deuxieme([4, 3, 2, 1]) == 3, "Dans les deux ordres."
+assert deuxieme([-1, -5, -1, -3]) == -3, "Avec des négatifs."
+assert "sort" not in PROGRAMME, "Sans tri."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-4-2" label="4.2 [Difficile] - Plus longue hausse" type="python">
+<Enonce>
+### Plus longue hausse
+
+Écrire une fonction `plus_longue_hausse(liste)` qui renvoie la longueur de la plus longue suite d'éléments **consécutifs** strictement croissants.
+
+Exemple : dans `[1, 3, 5, 2, 4, 6, 8, 1]`, la plus longue hausse est `2, 4, 6, 8`, de longueur 4. Une liste vide donne 0.
+
+<Indices>
+<Indice>
+
+Garder la longueur de la hausse en cours, et la plus grande longueur vue.
+
+</Indice>
+<Indice>
+
+Quand un élément est plus grand que le précédent, la hausse en cours s'allonge ; sinon, elle repart à 1.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION plus_longue_hausse(liste)
+    SI liste vide ALORS RENVOYER 0
+    en_cours ← 1 ; record ← 1
+    POUR i ALLANT DE 1 À longueur(liste) - 1
+        SI liste[i] > liste[i - 1] ALORS en_cours ← en_cours + 1 SINON en_cours ← 1
+        record ← max(record, en_cours)
+    RENVOYER record
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def plus_longue_hausse(liste: list) -> int:
+    if len(liste) == 0:
+        return 0
+    en_cours = 1
+    record = 1
+    for i in range(1, len(liste)):
+        if liste[i] > liste[i - 1]:
+            en_cours = en_cours + 1
+        else:
+            en_cours = 1
+        if en_cours > record:
+            record = en_cours
+    return record
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert plus_longue_hausse([1, 3, 5, 2, 4, 6, 8, 1]) == 4, "Exemple : 4."
+assert plus_longue_hausse([]) == 0 and plus_longue_hausse([7]) == 1, "Vide et un élément."
+assert plus_longue_hausse([5, 4, 3]) == 1 and plus_longue_hausse([2, 2, 2]) == 1, "Aucune hausse stricte."
+assert plus_longue_hausse([1, 2, 3, 4]) == 4, "Toute la liste."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-4-3" label="4.3 [Difficile] - Supprimer sur place" type="python">
+<Enonce>
+### Supprimer sur place
+
+Écrire une fonction `supprimer(liste, x)` qui retire **toutes** les apparitions de `x` de `liste`, en modifiant la liste elle-même (sans en créer une nouvelle). Elle ne renvoie rien.
+
+Exemple : après `supprimer(l, 2)`, la liste `l = [2, 1, 2, 2, 3]` devient `[1, 3]`.
+
+<Indices>
+<Indice>
+
+Retirer un élément pendant un `for` sur la même liste fait sauter des éléments : préférer un `while` avec un indice.
+
+</Indice>
+<Indice>
+
+Si `liste[i] == x`, `liste.pop(i)` le retire et l'indice ne doit **pas** avancer ; sinon, avancer.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION supprimer(liste, x)
+    i ← 0
+    TANT QUE i < longueur(liste)
+        SI liste[i] = x ALORS retirer l'élément d'indice i de liste
+        SINON i ← i + 1
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def supprimer(liste: list, x) -> None:
+    i = 0
+    while i < len(liste):
+        if liste[i] == x:
+            liste.pop(i)
+        else:
+            i = i + 1
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+l = [2, 1, 2, 2, 3]
+meme = l
+assert supprimer(l, 2) is None, "La fonction ne renvoie rien."
+assert l == [1, 3] and meme is l, "La liste elle-même est modifiée : [1, 3]."
+l = [4, 4, 4]
+supprimer(l, 4)
+assert l == [], "Tout est retiré."
+l = [1, 2, 3]
+supprimer(l, 9)
+assert l == [1, 2, 3], "Rien à retirer."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-4-4" label="4.4 [Difficile] - Histogramme des notes" type="python">
+<Enonce>
+### Histogramme des notes
+
+Écrire une fonction `histogramme(notes)` qui reçoit une liste de notes entières de 0 à 20 et renvoie une liste de **21** entiers : la case d'indice `k` contient le nombre d'élèves ayant eu la note `k`.
+
+Exemple : `histogramme([12, 15, 12])` renvoie une liste de 21 zéros, sauf `2` en case 12 et `1` en case 15.
+
+<Indices>
+<Indice>
+
+Créer d'abord la liste de 21 zéros : `[0] * 21`.
+
+</Indice>
+<Indice>
+
+Chaque note sert directement d'indice : `compte[note] = compte[note] + 1`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION histogramme(notes)
+    compte ← liste de 21 zéros
+    POUR CHAQUE note DE notes
+        compte[note] ← compte[note] + 1
+    RENVOYER compte
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def histogramme(notes: list) -> list:
+    compte = [0] * 21
+    for note in notes:
+        compte[note] = compte[note] + 1
+    return compte
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+h = histogramme([12, 15, 12])
+assert len(h) == 21 and h[12] == 2 and h[15] == 1 and sum(h) == 3, "Deux 12 et un 15."
+assert histogramme([]) == [0] * 21, "Aucune note : 21 zéros."
+assert histogramme([0, 20, 20])[0] == 1 and histogramme([0, 20, 20])[20] == 2, "Les bornes 0 et 20."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-5-1" label="5.1 [Expert] - Crible d'Ératosthène" type="python">
+<Enonce>
+### Crible d'Ératosthène
+
+Le crible d'Ératosthène trouve tous les nombres premiers jusqu'à `n` : on part de la liste des entiers de 2 à `n`, et pour chaque nombre encore « non barré », on barre tous ses multiples.
+
+Écrire une fonction `crible(n)` qui renvoie la liste des nombres premiers inférieurs ou égaux à `n`, en appliquant cette méthode.
+
+<Indices>
+<Indice>
+
+Une liste de booléens `est_premier` de taille `n + 1` : la case `k` dit si `k` est encore non barré.
+
+</Indice>
+<Indice>
+
+Pour chaque `k` non barré, barrer `2k`, `3k`… avec `range(2 * k, n + 1, k)`. On peut même commencer à `k * k`.
+
+</Indice>
+<Indice>
+
+Il reste à rassembler les indices restés à `True`, à partir de 2.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION crible(n)
+    est_premier ← liste de n + 1 valeurs VRAI
+    POUR k ALLANT DE 2 À n
+        SI est_premier[k] ALORS
+            POUR m ALLANT DE k × k À n PAR PAS DE k : est_premier[m] ← FAUX
+    RENVOYER la liste des k de 2 à n tels que est_premier[k]
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def crible(n: int) -> list:
+    est_premier = [True] * (n + 1)
+    for k in range(2, n + 1):
+        if est_premier[k]:
+            for m in range(k * k, n + 1, k):
+                est_premier[m] = False
+    premiers = []
+    for k in range(2, n + 1):
+        if est_premier[k]:
+            premiers.append(k)
+    return premiers
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert crible(30) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29], "Jusqu'à 30."
+assert crible(1) == [] and crible(2) == [2], "Petites valeurs."
+assert len(crible(100000)) == 9592, "9592 nombres premiers jusqu'à 100 000 (et le calcul doit rester rapide)."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-5-2" label="5.2 [Expert] - Meilleure affaire" type="python">
+<Enonce>
+### Meilleure affaire
+
+La liste `prix` donne le cours d'une action jour après jour. On peut l'acheter un jour et la revendre un jour **plus tard**.
+
+Écrire une fonction `meilleur_gain(prix)` qui renvoie le plus grand gain possible (0 si aucun gain n'est possible).
+
+Contrainte : un seul parcours de la liste (pas de boucles imbriquées).
+
+<Indices>
+<Indice>
+
+Si l'on revend au jour `i`, il fallait acheter au plus bas prix vu **avant** le jour `i`.
+
+</Indice>
+<Indice>
+
+Pendant le parcours, tenir à jour deux valeurs : le prix minimal rencontré et le meilleur gain trouvé.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION meilleur_gain(prix)
+    SI prix vide ALORS RENVOYER 0
+    plus_bas ← prix[0] ; gain ← 0
+    POUR CHAQUE p DE prix
+        gain ← max(gain, p - plus_bas)
+        plus_bas ← min(plus_bas, p)
+    RENVOYER gain
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def meilleur_gain(prix: list) -> float:
+    if len(prix) == 0:
+        return 0
+    plus_bas = prix[0]
+    gain = 0
+    for p in prix:
+        if p - plus_bas > gain:
+            gain = p - plus_bas
+        if p < plus_bas:
+            plus_bas = p
+    return gain
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert meilleur_gain([7, 1, 5, 3, 6, 4]) == 5, "Acheter à 1, vendre à 6 : 5."
+assert meilleur_gain([7, 6, 4, 3, 1]) == 0, "Le cours ne fait que baisser : 0."
+assert meilleur_gain([3, 8, 1, 4]) == 5, "Acheter à 3, vendre à 8 (vendre avant d'acheter est interdit)."
+assert meilleur_gain([]) == 0 and meilleur_gain([5]) == 0, "Liste vide ou un seul jour."
+import random
+grands = [random.randint(1, 1000) for _ in range(200000)]
+assert meilleur_gain(grands) <= 999, "Une longue liste se traite rapidement."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-5-3" label="5.3 [Expert] - Tranche de somme maximale" type="python">
+<Enonce>
+### Tranche de somme maximale
+
+Écrire une fonction `somme_max(liste)` qui renvoie la plus grande somme d'une tranche d'éléments **consécutifs** (non vide) d'une liste non vide.
+
+Exemple : dans `[-2, 1, -3, 4, -1, 2, 1, -5, 4]`, la tranche `[4, -1, 2, 1]` a la plus grande somme : 6.
+
+Contrainte : un seul parcours de la liste.
+
+<Indices>
+<Indice>
+
+Pour chaque position, se demander : quelle est la meilleure somme d'une tranche qui **se termine ici** ?
+
+</Indice>
+<Indice>
+
+Cette somme vaut soit l'élément seul, soit l'élément ajouté à la meilleure somme qui se terminait juste avant : on garde le plus grand des deux.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION somme_max(liste)
+    ici ← liste[0] ; record ← liste[0]
+    POUR i ALLANT DE 1 À longueur(liste) - 1
+        ici ← max(liste[i], ici + liste[i])
+        record ← max(record, ici)
+    RENVOYER record
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def somme_max(liste: list) -> float:
+    ici = liste[0]
+    record = liste[0]
+    for i in range(1, len(liste)):
+        ici = max(liste[i], ici + liste[i])
+        record = max(record, ici)
+    return record
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert somme_max([-2, 1, -3, 4, -1, 2, 1, -5, 4]) == 6, "Exemple : 6."
+assert somme_max([-3, -1, -2]) == -1, "Que des négatifs : le plus grand seul."
+assert somme_max([5, -1, 5]) == 9 and somme_max([2]) == 2, "Toute la liste, puis un seul élément."
+import random
+grands = [random.randint(-50, 50) for _ in range(200000)]
+assert somme_max(grands) >= max(grands), "Une longue liste se traite rapidement."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-5-4" label="5.4 [Expert] - Triangle de Pascal" type="python">
+<Enonce>
+### Triangle de Pascal
+
+Dans le triangle de Pascal, chaque ligne commence et finit par 1, et chaque autre nombre est la somme des deux nombres situés au-dessus de lui :
+
+```
+1
+1 1
+1 2 1
+1 3 3 1
+```
+
+Écrire une fonction `ligne_pascal(n)` qui renvoie la ligne numéro `n` (la première ligne est la ligne 0) sous forme de liste.
+
+<Indices>
+<Indice>
+
+Partir de la ligne 0, `[1]`, et construire les lignes suivantes une par une à partir de la précédente.
+
+</Indice>
+<Indice>
+
+La nouvelle ligne vaut `[1]`, puis les sommes `precedente[i] + precedente[i + 1]`, puis `[1]`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION ligne_pascal(n)
+    ligne ← [1]
+    RÉPÉTER n FOIS
+        nouvelle ← [1]
+        POUR i ALLANT DE 0 À longueur(ligne) - 2
+            ajouter ligne[i] + ligne[i + 1] à nouvelle
+        ajouter 1 à nouvelle
+        ligne ← nouvelle
+    RENVOYER ligne
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def ligne_pascal(n: int) -> list:
+    ligne = [1]
+    for _ in range(n):
+        nouvelle = [1]
+        for i in range(len(ligne) - 1):
+            nouvelle.append(ligne[i] + ligne[i + 1])
+        nouvelle.append(1)
+        ligne = nouvelle
+    return ligne
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert ligne_pascal(0) == [1] and ligne_pascal(1) == [1, 1], "Lignes 0 et 1."
+assert ligne_pascal(3) == [1, 3, 3, 1] and ligne_pascal(4) == [1, 4, 6, 4, 1], "Lignes 3 et 4."
+assert ligne_pascal(20)[10] == 184756 and len(ligne_pascal(20)) == 21, "Ligne 20."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-6-1" label="6.1 [Mini-projet] - Mastermind : l'ordinateur cherche" type="python">
+<Enonce>
+### Mastermind : l'ordinateur cherche
+
+Au Mastermind, un code est une liste de couleurs (par exemple `["R", "V", "R", "B"]`, avec des couleurs choisies parmi `"RVBJOM"`). La réponse à un essai est le tuple `(bien_places, mal_places)` ; chaque pion du secret ne compte qu'une fois.
+
+Réaliser un ordinateur qui trouve n'importe quel code secret de 4 pions parmi 6 couleurs.
+
+**Objectifs**
+- `evaluer(secret, essai)` : la réponse à un essai (`evaluer(["R","R","V","B"], ["V","R","R","R"])` vaut `(1, 2)`).
+- `tous_les_codes(couleurs, n)` : la liste de tous les codes de `n` pions, dans l'ordre « du dictionnaire » des couleurs données (pour `"AB"` et `n = 2` : `AA`, `AB`, `BA`, `BB`), sans `itertools`.
+- `coherent(code, historique)` : `historique` est une liste de couples `(essai, reponse)` ; le code est cohérent s'il aurait donné les mêmes réponses à tous ces essais s'il était le secret.
+- `ordinateur(historique, couleurs, n)` : le premier code de `tous_les_codes(couleurs, n)` cohérent avec l'historique.
+- `resoudre(secret, couleurs)` : l'ordinateur joue contre `secret` et renvoie la liste de ses essais, jusqu'au bon code compris. Avec 6 couleurs et 4 pions, il trouve **toujours en 9 essais au plus**, et rapidement.
+
+<Indices>
+<Indice>
+
+Pour les mal placés, compter les pions communs (pour chaque couleur, le minimum des deux comptes) puis retirer les bien placés.
+
+</Indice>
+<Indice>
+
+`tous_les_codes` se construit étape par étape : partir de `[[]]`, puis, `n` fois, prolonger chaque code partiel par chacune des couleurs.
+
+</Indice>
+<Indice>
+
+Pour aller vite dans `resoudre`, garder la liste des codes encore possibles et la **filtrer** après chaque réponse, plutôt que de tout revérifier depuis le début.
+
+</Indice>
+<Indice>
+
+```text
+(cœur du programme : la stratégie de l'ordinateur)
+FONCTION resoudre(secret, couleurs)
+    possibles ← tous_les_codes(couleurs, longueur(secret)) ; essais ← []
+    RÉPÉTER
+        essai ← possibles[0] ; ajouter essai à essais
+        reponse ← evaluer(secret, essai)
+        SI reponse = (longueur(secret), 0) ALORS RENVOYER essais
+        possibles ← [c POUR c DANS possibles SI evaluer(c, essai) = reponse]
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def evaluer(secret: list, essai: list) -> tuple:
+    bien = 0
+    for i in range(len(secret)):
+        if secret[i] == essai[i]:
+            bien = bien + 1
+    communs = 0
+    for couleur in set(essai):
+        communs = communs + min(secret.count(couleur), essai.count(couleur))
+    return (bien, communs - bien)
+
+
+def tous_les_codes(couleurs: str, n: int) -> list:
+    codes = [[]]
+    for _ in range(n):
+        nouveaux = []
+        for code in codes:
+            for c in couleurs:
+                nouveaux.append(code + [c])
+        codes = nouveaux
+    return codes
+
+
+def coherent(code: list, historique: list) -> bool:
+    for essai, reponse in historique:
+        if evaluer(code, essai) != reponse:
+            return False
+    return True
+
+
+def ordinateur(historique: list, couleurs: str, n: int):
+    for code in tous_les_codes(couleurs, n):
+        if coherent(code, historique):
+            return code
+    return None
+
+
+def resoudre(secret: list, couleurs: str) -> list:
+    possibles = tous_les_codes(couleurs, len(secret))
+    essais = []
+    while True:
+        essai = possibles[0]
+        essais.append(essai)
+        reponse = evaluer(secret, essai)
+        if reponse == (len(secret), 0):
+            return essais
+        possibles = [c for c in possibles if evaluer(c, essai) == reponse]
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+import random
+assert evaluer(["R", "R", "V", "B"], ["V", "R", "R", "R"]) == (1, 2), "Exemple de l'énoncé."
+assert evaluer(list("RVBJ"), list("RVBJ")) == (4, 0) and evaluer(list("RRRR"), list("VVVV")) == (0, 0), "Tout juste, tout faux."
+assert evaluer(list("RVBJ"), list("JBVR")) == (0, 4), "Tout mal placé."
+assert tous_les_codes("AB", 2) == [["A", "A"], ["A", "B"], ["B", "A"], ["B", "B"]], "Codes de 2 pions."
+assert len(tous_les_codes("RVBJOM", 4)) == 1296 and tous_les_codes("RVBJOM", 4)[7] == list("RRVV"), "1296 codes, dans l'ordre."
+h = [(list("RRVV"), (1, 1))]
+assert coherent(list("RBRB"), h) and not coherent(list("RRBB"), h), "Cohérence avec l'historique."
+assert ordinateur([], "RVBJOM", 4) == list("RRRR") and ordinateur(h, "RVBJOM", 4) == list("RVBB"), "Premier code cohérent."
+for secret in [list("OMJB"), list("MMMM"), list("RRRR"), list("BJRV")] + [[random.choice("RVBJOM") for _ in range(4)] for _ in range(40)]:
+    essais = resoudre(secret, "RVBJOM")
+    assert essais[-1] == secret and len(essais) <= 9, f"Le code {''.join(secret)} est trouvé en 9 essais au plus."
+    assert all(coherent(essais[k], [(e, evaluer(secret, e)) for e in essais[:k]]) for k in range(len(essais))), "Chaque essai respecte les réponses précédentes."
+assert "itertools" not in PROGRAMME, "Sans itertools."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-6-2" label="6.2 [Mini-projet] - Classement du championnat" type="python">
+<Enonce>
+### Classement du championnat
+
+Les matchs d'un championnat sont rangés dans une liste ; chaque match est une liste `[domicile, exterieur, buts_domicile, buts_exterieur]`. Une victoire rapporte 3 points, un nul 1, une défaite 0.
+
+Réaliser le logiciel de la ligue.
+
+**Objectifs**
+- `equipes(matchs)` : la liste triée des équipes, sans doublon.
+- `bilan(matchs, equipe)` : la liste `[joues, gagnes, nuls, perdus, buts_pour, buts_contre, difference, points]`.
+- `classement(matchs)` : la liste des équipes, de la première à la dernière : par points, puis différence de buts, puis buts marqués (décroissants), puis par ordre alphabétique. **Ce classement est trié à la main**, sans `sort` ni `sorted`.
+- `forme(matchs, equipe, k)` : le texte des `k` derniers résultats de l'équipe, du plus ancien au plus récent (`"V"`, `"N"` ou `"D"`), par exemple `"VVNDV"` (moins de `k` lettres si l'équipe a moins joué).
+- `invincibilite(matchs, equipe)` : la plus longue suite de matchs consécutifs de l'équipe sans défaite.
+- `face_a_face(matchs, a, b)` : la liste `[victoires de a, nuls, victoires de b]` sur leurs confrontations.
+
+<Indices>
+<Indice>
+
+`bilan` est la fonction centrale : parcourir les matchs où l'équipe joue, en distinguant si elle est à domicile ou à l'extérieur. Les autres fonctions s'appuient dessus.
+
+</Indice>
+<Indice>
+
+Pour trier à la main, une fonction `devant(a, b)` qui dit si l'équipe `a` doit être classée avant `b` simplifie le tri par insertion. Comparer des listes `[points, difference, buts_pour]` fait déjà l'essentiel.
+
+</Indice>
+<Indice>
+
+Une fonction `resultats(matchs, equipe)` qui renvoie la liste des lettres `V`, `N`, `D` dans l'ordre sert à `forme` et à `invincibilite`.
+
+</Indice>
+<Indice>
+
+```text
+(cœur du programme : le classement par insertion)
+FONCTION devant(a, b) : comparer (points, différence, buts pour) de a et de b, puis les noms
+FONCTION classement(matchs)
+    liste ← liste vide
+    POUR CHAQUE e DE equipes(matchs)
+        i ← longueur(liste)
+        TANT QUE i > 0 ET devant(e, liste[i - 1]) : i ← i - 1
+        insérer e à la position i de liste
+    RENVOYER liste
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def equipes(matchs: list) -> list:
+    noms = []
+    for d, e, bd, be in matchs:
+        for nom in (d, e):
+            if nom not in noms:
+                noms.append(nom)
+    return sorted(noms)
+
+
+def bilan(matchs: list, equipe: str) -> list:
+    j = g = n = p = bp = bc = 0
+    for d, e, bd, be in matchs:
+        if equipe == d:
+            pour, contre = bd, be
+        elif equipe == e:
+            pour, contre = be, bd
+        else:
+            continue
+        j = j + 1
+        bp = bp + pour
+        bc = bc + contre
+        if pour > contre:
+            g = g + 1
+        elif pour == contre:
+            n = n + 1
+        else:
+            p = p + 1
+    return [j, g, n, p, bp, bc, bp - bc, 3 * g + n]
+
+
+def devant(matchs: list, a: str, b: str) -> bool:
+    ba, bb = bilan(matchs, a), bilan(matchs, b)
+    cle_a = [ba[7], ba[6], ba[4]]
+    cle_b = [bb[7], bb[6], bb[4]]
+    if cle_a != cle_b:
+        return cle_a > cle_b
+    return a < b
+
+
+def classement(matchs: list) -> list:
+    liste = []
+    for e in equipes(matchs):
+        i = len(liste)
+        while i > 0 and devant(matchs, e, liste[i - 1]):
+            i = i - 1
+        liste.insert(i, e)
+    return liste
+
+
+def resultats(matchs: list, equipe: str) -> list:
+    lettres = []
+    for d, e, bd, be in matchs:
+        if equipe in (d, e):
+            pour, contre = (bd, be) if equipe == d else (be, bd)
+            lettres.append("V" if pour > contre else ("N" if pour == contre else "D"))
+    return lettres
+
+
+def forme(matchs: list, equipe: str, k: int) -> str:
+    return "".join(resultats(matchs, equipe)[-k:]) if k > 0 else ""
+
+
+def invincibilite(matchs: list, equipe: str) -> int:
+    en_cours = record = 0
+    for r in resultats(matchs, equipe):
+        en_cours = en_cours + 1 if r != "D" else 0
+        record = max(record, en_cours)
+    return record
+
+
+def face_a_face(matchs: list, a: str, b: str) -> list:
+    bilan_ab = [0, 0, 0]
+    for d, e, bd, be in matchs:
+        if {d, e} == {a, b}:
+            buts_a, buts_b = (bd, be) if d == a else (be, bd)
+            if buts_a > buts_b:
+                bilan_ab[0] += 1
+            elif buts_a == buts_b:
+                bilan_ab[1] += 1
             else:
-                impairs.append(elt)
-        return pairs, impairs
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'separer_pairs_impairs' in locals(), "La fonction 'separer_pairs_impairs' n'est pas définie."
-assert separer_pairs_impairs([1, 2, 3, 4, 5]) == ([2, 4], [1, 3, 5])
-    ```
-    </Verification>
-  </ExerciseSection>
+                bilan_ab[2] += 1
+    return bilan_ab
+```
 
-  <ExerciseSection id="listes-3-6" label="3.6 [Moyen] - Diviseurs" type="python">
-    <Enonce>
-    ### Exercice 3.6 [Moyen] : Diviseurs
-    **Écrire une fonction `diviseurs` qui prend un entier positif et renvoie la liste de tous ses diviseurs.**
+</Correction>
+</Enonce>
+<Verification>
 
-    <Correction>
-    ```python
-    def diviseurs(valeur: int) -> list:
-        resultat = []
-        for i in range(1, valeur + 1):
-            if valeur % i == 0:
-                resultat.append(i)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'diviseurs' in locals(), "La fonction 'diviseurs' n'est pas définie."
-assert diviseurs(6) == [1, 2, 3, 6]
-assert diviseurs(10) == [1, 2, 5, 10]
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+M = [
+    ["Lyon", "Metz", 2, 0], ["Brest", "Nice", 1, 1], ["Metz", "Brest", 3, 1], ["Nice", "Lyon", 0, 0],
+    ["Lyon", "Brest", 1, 2], ["Metz", "Nice", 2, 2], ["Brest", "Lyon", 0, 3], ["Nice", "Metz", 4, 1],
+    ["Lyon", "Nice", 1, 1], ["Brest", "Metz", 2, 2],
+]
+assert equipes(M) == ["Brest", "Lyon", "Metz", "Nice"], "Quatre équipes, triées."
+assert bilan(M, "Lyon") == [5, 2, 2, 1, 7, 3, 4, 8], "Bilan de Lyon."
+assert bilan(M, "Nice") == [5, 1, 4, 0, 8, 5, 3, 7] and bilan(M, "Paris") == [0, 0, 0, 0, 0, 0, 0, 0], "Bilan de Nice ; équipe absente."
+assert classement(M) == ["Lyon", "Nice", "Metz", "Brest"], "Classement."
+egal = [["B", "A", 1, 1], ["C", "D", 0, 0]]
+assert classement(egal) == ["A", "B", "C", "D"], "Égalité parfaite : ordre alphabétique (A et B ont marqué plus que C et D)."
+assert forme(M, "Lyon", 3) == "DVN" and forme(M, "Metz", 10) == "DVNDN", "Forme récente."
+assert invincibilite(M, "Nice") == 5 and invincibilite(M, "Lyon") == 2, "Séries sans défaite."
+assert face_a_face(M, "Lyon", "Brest") == [1, 0, 1] and face_a_face(M, "Nice", "Lyon") == [0, 2, 0], "Confrontations."
+import re
+corps = PROGRAMME.split("def classement", 1)[-1].split("\ndef ", 1)[0]
+assert not re.search(r"\bsorted\s*\(|\.sort\s*\(", corps), "Le classement est trié à la main."
+```
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 4 : AVANCÉ (4.1 à 4.6)            */}
-  {/* ========================================== */}
-
-  <ExerciseSection id="listes-4-1" label="4.1 [Avancé] - Liste croissante" type="python">
-    <Enonce>
-    ### Exercice 4.1 [Avancé] : Liste croissante
-    **Écrire une fonction `est_croissante` qui prend une liste d'entiers et renvoie `True` si les éléments sont en ordre croissant (non strict), `False` sinon.**
-
-    <Correction>
-    ```python
-    def est_croissante(liste: list) -> bool:
-        for i in range(len(liste) - 1):
-            if liste[i] > liste[i + 1]:
-                return False
-        return True
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'est_croissante' in locals(), "La fonction 'est_croissante' n'est pas définie."
-assert est_croissante([1, 2, 3, 4]) is True
-assert est_croissante([1, 3, 2, 4]) is False
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-4-2" label="4.2 [Avancé] - Échange de valeurs" type="python">
-    <Enonce>
-    ### Exercice 4.2 [Avancé] : Échange de valeurs
-    **Écrire une fonction `echange` qui prend une liste et deux indices `i`, `j`, échange les valeurs à ces positions **en place**, et ne renvoie rien (`None`).**
-
-    <Correction>
-    ```python
-    def echange(liste: list, i: int, j: int) -> None:
-        liste[i], liste[j] = liste[j], liste[i]
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-l = [1, 2, 3, 4]
-echange(l, 1, 2)
-assert l == [1, 3, 2, 4]
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-4-3" label="4.3 [Avancé] - Rangement par rapport à une valeur" type="python">
-    <Enonce>
-    ### Exercice 4.3 [Avancé] : Rangement par rapport à une valeur
-    **Écrire une fonction `rangement_valeurs` qui prend une liste et une valeur `seuil`, et renvoie un tuple de trois listes : éléments inférieurs, égaux, supérieurs.**
-
-    <Correction>
-    ```python
-    def rangement_valeurs(liste: list, seuil: int) -> tuple:
-        inferieurs = []
-        egaux = []
-        superieurs = []
-        for elt in liste:
-            if elt > seuil:
-                superieurs.append(elt)
-            elif elt == seuil:
-                egaux.append(elt)
-            else:
-                inferieurs.append(elt)
-        return inferieurs, egaux, superieurs
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'rangement_valeurs' in locals(), "La fonction 'rangement_valeurs' n'est pas définie."
-assert rangement_valeurs([1, 7, 4, 3, 6, 2, 8], 5) == ([1, 4, 3, 2], [], [7, 6, 8])
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-4-4" label="4.4 [Avancé] - Recherche d'un élément" type="python">
-    <Enonce>
-    ### Exercice 4.4 [Avancé] : Recherche d'un élément
-    **Écrire une fonction `presence` qui prend une valeur et une liste, et renvoie `True` si la valeur est dans la liste, `False` sinon (boucle, sans opérateur `in`).**
-
-    <Correction>
-    ```python
-    def presence(valeur, liste: list) -> bool:
-        for elt in liste:
-            if elt == valeur:
-                return True
-        return False
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'presence' in locals(), "La fonction 'presence' n'est pas définie."
-assert presence(3, [1, 2, 3, 4]) is True
-assert presence(5, [1, 2, 3, 4]) is False
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-4-5" label="4.5 [Avancé] - Minimum" type="python">
-    <Enonce>
-    ### Exercice 4.5 [Avancé] : Minimum d'une liste
-    **Écrire une fonction `minimum` qui prend une liste de nombres non vide et renvoie la valeur minimale, sans utiliser `min()`.**
-
-    <Correction>
-    ```python
-    def minimum(liste: list) -> int:
-        mini = liste[0]
-        for elt in liste:
-            if elt < mini:
-                mini = elt
-        return mini
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'minimum' in locals(), "La fonction 'minimum' n'est pas définie."
-assert minimum([3, 1, 9, 2]) == 1
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-4-6" label="4.6 [Avancé] - Maximum" type="python">
-    <Enonce>
-    ### Exercice 4.6 [Avancé] : Maximum d'une liste
-    **Écrire une fonction `maximum` qui prend une liste de nombres non vide et renvoie la valeur maximale, sans utiliser `max()`.**
-
-    <Correction>
-    ```python
-    def maximum(liste: list) -> int:
-        maxi = liste[0]
-        for elt in liste:
-            if elt > maxi:
-                maxi = elt
-        return maxi
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'maximum' in locals(), "La fonction 'maximum' n'est pas définie."
-assert maximum([3, 1, 9, 2]) == 9
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  {/* ========================================== */}
-  {/* CATÉGORIE 5 : DIFFICILE (5.1 à 5.6)         */}
-  {/* ========================================== */}
-
-  <ExerciseSection id="listes-5-1" label="5.1 [Difficile] - Voyelles dans des mots" type="python">
-    <Enonce>
-    ### Exercice 5.1 [Difficile] : Voyelles dans des mots
-    **Écrire une fonction `compter_voyelles_mots` qui prend une liste de chaînes et renvoie le nombre total de voyelles dans tous les mots.**
-    *Les voyelles sont a, e, i, o, u et y, en minuscule ou en majuscule.*
-
-    <Correction>
-    ```python
-    def compter_voyelles_mots(mots: list) -> int:
-        voyelles = "aeiouyAEIOUY"
-        total = 0
-        for mot in mots:
-            for lettre in mot:
-                if lettre in voyelles:
-                    total += 1
-        return total
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_voyelles_mots' in locals(), "La fonction 'compter_voyelles_mots' n'est pas définie."
-assert compter_voyelles_mots(["chat", "chien"]) == 3, "['chat', 'chien'] contient 3 voyelles."
-assert compter_voyelles_mots(["bonjour", "python"]) == 5, "['bonjour', 'python'] contient 5 voyelles (le y compte)."
-assert compter_voyelles_mots([]) == 0, "Une liste vide contient 0 voyelle."
-assert compter_voyelles_mots(["NSI", "Eau"]) == 4, "Les majuscules comptent aussi."
-
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-5-2" label="5.2 [Difficile] - Valeurs en double" type="python">
-    <Enonce>
-    ### Exercice 5.2 [Difficile] : Valeurs en double
-    **Écrire une fonction `valeurs_en_double` qui prend une liste et renvoie une nouvelle liste des éléments qui apparaissent au moins deux fois (une seule fois chacun dans le résultat).**
-
-    <Correction>
-    ```python
-    def valeurs_en_double(liste: list) -> list:
-        doublons = []
-        deja_vus = []
-        for elt in liste:
-            if elt in deja_vus and elt not in doublons:
-                doublons.append(elt)
-            else:
-                deja_vus.append(elt)
-        return doublons
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'valeurs_en_double' in locals(), "La fonction 'valeurs_en_double' n'est pas définie."
-assert sorted(valeurs_en_double([1, 2, 2, 3, 4, 4, 5])) == [2, 4]
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-5-3" label="5.3 [Difficile] - Indice d'un élément" type="python">
-    <Enonce>
-    ### Exercice 5.3 [Difficile] : Indice d'un élément
-    **Écrire une fonction `indice_element` qui prend une liste et une valeur, et renvoie l'indice de la première occurrence, ou `-1` si absente.**
-
-    <Correction>
-    ```python
-    def indice_element(liste: list, valeur) -> int:
-        for i in range(len(liste)):
-            if liste[i] == valeur:
-                return i
-        return -1
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'indice_element' in locals(), "La fonction 'indice_element' n'est pas définie."
-assert indice_element([10, 20, 30], 20) == 1
-assert indice_element([10, 20, 30], 40) == -1
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-5-4" label="5.4 [Difficile] - Fusion sans doublons" type="python">
-    <Enonce>
-    ### Exercice 5.4 [Difficile] : Fusion sans doublons
-    **Écrire une fonction `fusionner_sans_doublons` qui prend deux listes et renvoie une nouvelle liste avec tous les éléments des deux, sans doublons (ordre conservé).**
-
-    <Correction>
-    ```python
-    def fusionner_sans_doublons(liste1: list, liste2: list) -> list:
-        resultat = []
-        for elt in liste1:
-            if elt not in resultat:
-                resultat.append(elt)
-        for elt in liste2:
-            if elt not in resultat:
-                resultat.append(elt)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'fusionner_sans_doublons' in locals(), "La fonction 'fusionner_sans_doublons' n'est pas définie."
-assert sorted(fusionner_sans_doublons([1, 2, 3], [2, 3, 4])) == [1, 2, 3, 4]
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-5-5" label="5.5 [Difficile] - Compter les occurrences" type="python">
-    <Enonce>
-    ### Exercice 5.5 [Difficile] : Compter les occurrences
-    **Écrire une fonction `compter_occurrences` qui prend une liste et une valeur, et renvoie combien de fois cette valeur apparaît.**
-
-    <Correction>
-    ```python
-    def compter_occurrences(liste: list, valeur) -> int:
-        compteur = 0
-        for elt in liste:
-            if elt == valeur:
-                compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_occurrences' in locals(), "La fonction 'compter_occurrences' n'est pas définie."
-assert compter_occurrences([1, 2, 2, 3, 2], 2) == 3
-assert compter_occurrences([1, 2, 3], 9) == 0
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-5-6" label="5.6 [Difficile] - Supprimer une valeur" type="python">
-    <Enonce>
-    ### Exercice 5.6 [Difficile] : Supprimer une valeur
-    **Écrire une fonction `supprimer_valeur` qui prend une liste et une valeur, et renvoie une **nouvelle** liste sans aucune occurrence de cette valeur.**
-
-    <Correction>
-    ```python
-    def supprimer_valeur(liste: list, valeur) -> list:
-        resultat = []
-        for elt in liste:
-            if elt != valeur:
-                resultat.append(elt)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'supprimer_valeur' in locals(), "La fonction 'supprimer_valeur' n'est pas définie."
-assert supprimer_valeur([1, 2, 3, 2, 4], 2) == [1, 3, 4]
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  {/* ========================================== */}
-  {/* CATÉGORIE 6 : EXPERT (6.1 à 6.3)            */}
-  {/* ========================================== */}
-
-  <ExerciseSection id="listes-6-1" label="6.1 [Expert] - Rotation à gauche" type="python">
-    <Enonce>
-    ### Exercice 6.1 [Expert] : Rotation à gauche
-    **Écrire une fonction `rotation_gauche` qui prend une liste non vide et renvoie une nouvelle liste où le premier élément est déplacé à la fin.**
-    *Exemple : `[1, 2, 3, 4]` donne `[2, 3, 4, 1]`.*
-
-    <Correction>
-    ```python
-    def rotation_gauche(liste: list) -> list:
-        if len(liste) == 0:
-            return []
-        resultat = []
-        for i in range(1, len(liste)):
-            resultat.append(liste[i])
-        resultat.append(liste[0])
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'rotation_gauche' in locals(), "La fonction 'rotation_gauche' n'est pas définie."
-assert rotation_gauche([1, 2, 3, 4]) == [2, 3, 4, 1]
-assert rotation_gauche([7]) == [7]
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-6-2" label="6.2 [Expert] - Fusion de deux listes triées" type="python">
-    <Enonce>
-    ### Exercice 6.2 [Expert] : Fusion de deux listes triées
-    **Écrire une fonction `fusion_triee` qui prend deux listes d'entiers déjà triées par ordre croissant et renvoie une nouvelle liste triée contenant tous les éléments, sans utiliser `sort()` ni `sorted()`.**
-
-    <Correction>
-    ```python
-    def fusion_triee(liste1: list, liste2: list) -> list:
-        resultat = []
-        i = 0
-        j = 0
-        while i < len(liste1) and j < len(liste2):
-            if liste1[i] <= liste2[j]:
-                resultat.append(liste1[i])
-                i += 1
-            else:
-                resultat.append(liste2[j])
-                j += 1
-        while i < len(liste1):
-            resultat.append(liste1[i])
-            i += 1
-        while j < len(liste2):
-            resultat.append(liste2[j])
-            j += 1
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'fusion_triee' in locals(), "La fonction 'fusion_triee' n'est pas définie."
-assert fusion_triee([1, 3, 5], [2, 4, 6]) == [1, 2, 3, 4, 5, 6]
-assert fusion_triee([], [2, 3]) == [2, 3]
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="listes-6-3" label="6.3 [Expert] - Médiane d'une liste" type="python">
-    <Enonce>
-    ### Exercice 6.3 [Expert] : Médiane d'une liste
-    **Écrire une fonction `mediane` qui prend une liste de nombres **non vide** déjà triée par ordre croissant et renvoie sa médiane (élément central si la longueur est impaire).**
-
-    <Correction>
-    ```python
-    def mediane(liste: list) -> float:
-        milieu = len(liste) // 2
-        if len(liste) % 2 == 1:
-            return liste[milieu]
-        return (liste[milieu - 1] + liste[milieu]) / 2
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'mediane' in locals(), "La fonction 'mediane' n'est pas définie."
-assert mediane([1, 2, 3]) == 2
-assert mediane([1, 2, 3, 4]) == 2.5
-    ```
-    </Verification>
-  </ExerciseSection>
+</Verification>
+</ExerciseSection>
 
 </ExerciseTabs>

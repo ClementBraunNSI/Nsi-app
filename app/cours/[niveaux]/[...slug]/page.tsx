@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Presentation } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -93,8 +93,11 @@ export async function generateMetadata({ params }: { params: Promise<{ niveaux: 
 // Importation des composants pour les onglets
 import { ExerciseTabs, ExerciseSection, Enonce } from '@/components/ExerciseTabs';
 import { Correction, Verification } from '@/components/SolutionBlocks';
+import { RevealCorrection } from '@/components/projection/RevealCorrection';
+import ProjectionShell from '@/components/projection/ProjectionShell';
 import { Admonition } from '@/components/Admonition';
 import { Icone, Renard, Renards } from '@/components/mdx/CourseMarks';
+import { Indice, Indices } from '@/components/mdx/Indices';
 import { transformAdmonitions } from '@/lib/admonition-utils';
 import { stripHiddenExerciseBlocks } from '@/lib/exercise-statement';
 // Widgets interactifs MDX: lazy-load pour réduire le bundle "cours"
@@ -194,10 +197,10 @@ export default async function CoursePage({
   searchParams,
 }: {
   params: Promise<{ niveaux: string, slug: string[] }>;
-  searchParams: Promise<{ edition?: string }>;
+  searchParams: Promise<{ edition?: string; projection?: string }>;
 }) {
   const { niveaux, slug } = await params;
-  const { edition } = await searchParams;
+  const { edition, projection } = await searchParams;
   
   const slugStr = Array.isArray(slug) 
     ? slug.map(s => decodeURIComponent(s)).join('/') 
@@ -239,8 +242,12 @@ export default async function CoursePage({
     );
   }
 
+  // Mode projection : réservé à un compte admin ou enseignant ; ignoré pour tous les autres.
+  const projecting = projection === '1' && auth.isElevated;
+
   // Solution and test blocks are removed before MDX reaches the browser.
-  const contentWithAdmonitions = transformAdmonitions(stripHiddenExerciseBlocks(content));
+  // En projection, la correction reste, cachée derrière un bouton (RevealCorrection).
+  const contentWithAdmonitions = transformAdmonitions(stripHiddenExerciseBlocks(content, { keepCorrection: projecting }));
 
   // Navigation entre les cours
   const { prev, next } = getAdjacentCourses(folder, slugStr);
@@ -248,13 +255,15 @@ export default async function CoursePage({
   const baseMdxComponents = {
     ExerciseTabs,
     ExerciseSection,
-    Correction,
+    Correction: projecting ? RevealCorrection : Correction,
     Enonce,
     Verification,
     Admonition,
     Icone,
     Renard,
     Renards,
+    Indices,
+    Indice,
     SqlEditor,
     SqlTable,
     WebPreview,
@@ -362,7 +371,18 @@ export default async function CoursePage({
             }
             title={data.title || slugStr.replace(/[_-]/g, ' ')}
             description={data.description}
-            actions={data.meta ? <span className="course-meta-pill">{data.meta}</span> : undefined}
+            actions={
+              data.meta || auth.isElevated ? (
+                <span className="inline-flex flex-wrap items-center gap-2">
+                  {data.meta ? <span className="course-meta-pill">{data.meta}</span> : null}
+                  {auth.isElevated ? (
+                    <Link href={`${coursePath(niveaux, slugStr)}?projection=1`} className="course-project-button">
+                      <Presentation size={15} aria-hidden /> Projeter
+                    </Link>
+                  ) : null}
+                </span>
+              ) : undefined
+            }
             media={
               levelFox ? (
                 <Image src={levelFox} alt={`Renard ${level.label}`} fill className="object-contain" sizes="160px" />
@@ -380,6 +400,17 @@ export default async function CoursePage({
           )}
 
           <div className="course-content">
+            {projecting ? (
+              <ProjectionShell title={data.title || slugStr} exitHref={coursePath(niveaux, slugStr)}>
+                <article className="prose prose-slate max-w-none course-prose course-prose-wide">
+                  <MDXRemote
+                    source={contentWithAdmonitions}
+                    components={mdxComponents}
+                    options={{ mdxOptions: { remarkPlugins: [remarkGfm, remarkMath], rehypePlugins: [rehypeKatex] } }}
+                  />
+                </article>
+              </ProjectionShell>
+            ) : (
             <article className="prose prose-slate max-w-none course-prose course-prose-wide">
               <MDXRemote 
                 source={contentWithAdmonitions}
@@ -392,6 +423,7 @@ export default async function CoursePage({
                 }}
               />
             </article>
+            )}
           </div>
 
           <CourseNavigation 

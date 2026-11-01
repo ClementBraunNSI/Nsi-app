@@ -77,6 +77,9 @@ const SHEETS = {
   'terminale_bdd_modele': ['book', 'table'],
   'terminale_graphes': ['think', 'graph'],
   'tp_spotify_1': ['sit', 'headphones'],
+  'premiere_exercices': ['think', 'target'],
+  'premiere_exercices_poo': ['sit', 'cube'],
+  'terminale_exercices_fondamentaux': ['reader', 'flowchart'],
 };
 
 // Succès du site (lib/achievements.ts), nommés par leur id.
@@ -97,6 +100,11 @@ const ACHIEVEMENTS = {
   maitre_comprehension: ['think', 'bulb'],
   premiere_explorer: ['calm', 'compass'],
   premiere_expert: ['cheer', 'gradcap', true],
+  // Défi du lundi.
+  defi_premier: ['cheer', 'calendar'],
+  defi_serie_3: ['wink', 'flame'],
+  defi_serie_5: ['think', 'stairs'],
+  defi_serie_10: ['cheer', 'crown'],
 };
 
 const foxCache = new Map();

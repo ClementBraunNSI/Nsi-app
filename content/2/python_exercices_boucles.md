@@ -11,901 +11,1536 @@ prerequisites:
 audience: public
 ---
 
+Les exercices vont de **Introduction** à **Expert**, puis viennent les **mini-projets**, pour qui avance vite.
+Chaque exercice propose des indices à ouvrir un par un : le dernier donne le pseudo-code, qui reste à traduire en Python.
+Les noms de variables et de fonctions demandés servent aux tests du bouton **Vérifier** : les garder tels quels.
+
 <ExerciseTabs courseId="les-boucles-python" courseTitle="Les Boucles">
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 1 : INTRODUCTION (1.1 à 1.6)      */}
-  {/* ========================================== */}
+<ExerciseSection id="1nsi-boucles-1-1" label="1.1 [Introduction] - Somme des carrés" type="python">
+<Enonce>
+### Somme des carrés
 
-  <ExerciseSection id="boucles-1-1" label="1.1 [Introduction] - Chaîne de nombres" type="python">
-    <Enonce>
-    ### Exercice 1.1 [Introduction] : Chaîne de nombres
-    **Écrire une fonction `chaine_numeros_jusqua` qui prend un entier `limite` et renvoie une chaîne des entiers de 1 à `limite` séparés par des virgules.**
-    *Exemple : `chaine_numeros_jusqua(5)` donne `"1,2,3,4,5"`.*
+Écrire une fonction `somme_carres(n)` qui renvoie `1² + 2² + … + n²` (et 0 pour `n = 0`).
 
-    <Correction>
-    ```python
-    def chaine_numeros_jusqua(limite: int) -> str:
-        resultat = ""
-        for i in range(1, limite + 1):
-            if resultat:
-                resultat += ","
-            resultat += str(i)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'chaine_numeros_jusqua' in locals(), "La fonction 'chaine_numeros_jusqua' n'est pas définie."
-assert chaine_numeros_jusqua(5) == "1,2,3,4,5"
-assert chaine_numeros_jusqua(1) == "1"
-    ```
-    </Verification>
-  </ExerciseSection>
+<Indices>
+<Indice>
 
-  <ExerciseSection id="boucles-1-2" label="1.2 [Introduction] - Table de multiplication" type="python">
-    <Enonce>
-    ### Exercice 1.2 [Introduction] : Table de multiplication
-    **Écrire une fonction `ligne_table_multiplication` qui prend un entier `n` et renvoie une chaîne des 10 produits `n×1` à `n×10`, séparés par des virgules.**
+Un accumulateur qui part de 0 et une boucle `for i in range(1, n + 1)`.
 
-    <Correction>
-    ```python
-    def ligne_table_multiplication(n: int) -> str:
-        resultat = ""
-        for i in range(1, 11):
-            if resultat:
-                resultat += ","
-            resultat += str(n * i)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'ligne_table_multiplication' in locals(), "La fonction 'ligne_table_multiplication' n'est pas définie."
-assert ligne_table_multiplication(7) == "7,14,21,28,35,42,49,56,63,70"
-assert ligne_table_multiplication(3) == "3,6,9,12,15,18,21,24,27,30"
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="boucles-1-3" label="1.3 [Introduction] - Somme de 1 à 100" type="python">
-    <Enonce>
-    ### Exercice 1.3 [Introduction] : Somme de 1 à 100
-    **Écrire une fonction `somme_jusqua` qui prend un entier `limite` et renvoie la somme des entiers de 1 à `limite` inclus.**
+À chaque tour, ajouter `i ** 2`.
 
-    <Correction>
-    ```python
-    def somme_jusqua(limite: int) -> int:
-        somme = 0
-        for i in range(1, limite + 1):
-            somme += i
-        return somme
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'somme_jusqua' in locals(), "La fonction 'somme_jusqua' n'est pas définie."
-assert somme_jusqua(100) == 5050
-assert somme_jusqua(10) == 55
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="boucles-1-4" label="1.4 [Introduction] - Compter de 0 à n" type="python">
-    <Enonce>
-    ### Exercice 1.4 [Introduction] : Compter de 0 à n
-    **Écrire une fonction `compter_entiers_zero_a_n` qui prend un entier `n` (≥ 0) et renvoie combien d'entiers il y a de 0 à `n` inclus.**
+```text
+FONCTION somme_carres(n)
+    total ← 0
+    POUR i ALLANT DE 1 À n
+        total ← total + i²
+    RENVOYER total
+```
 
-    <Correction>
-    ```python
-    def compter_entiers_zero_a_n(n: int) -> int:
-        compteur = 0
-        for _ in range(n + 1):
-            compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_entiers_zero_a_n' in locals(), "La fonction 'compter_entiers_zero_a_n' n'est pas définie."
-assert compter_entiers_zero_a_n(5) == 6
-assert compter_entiers_zero_a_n(0) == 1
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+</Indices>
 
-  <ExerciseSection id="boucles-1-5" label="1.5 [Introduction] - Majuscules" type="python">
-    <Enonce>
-    ### Exercice 1.5 [Introduction] : Majuscules
-    **Écrire une fonction `en_majuscules` qui prend une chaîne `texte` et renvoie la même chaîne en majuscules, en parcourant chaque caractère avec une boucle `for` et `car.upper()`.**
+<Correction>
 
-    <Correction>
-    ```python
-    def en_majuscules(texte: str) -> str:
-        resultat = ""
-        for car in texte:
-            resultat += car.upper()
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'en_majuscules' in locals(), "La fonction 'en_majuscules' n'est pas définie."
-assert en_majuscules("nsi") == "NSI"
-assert en_majuscules("") == ""
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+def somme_carres(n: int) -> int:
+    total = 0
+    for i in range(1, n + 1):
+        total = total + i ** 2
+    return total
+```
 
-  <ExerciseSection id="boucles-1-6" label="1.6 [Introduction] - Ligne d'étoiles" type="python">
-    <Enonce>
-    ### Exercice 1.6 [Introduction] : Ligne d'étoiles
-    **Écrire une fonction `ligne_etoiles` qui prend un entier `n` et renvoie une chaîne de `n` caractères `*`.**
+</Correction>
+</Enonce>
+<Verification>
 
-    <Correction>
-    ```python
-    def ligne_etoiles(n: int) -> str:
-        resultat = ""
-        for _ in range(n):
-            resultat += "*"
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'ligne_etoiles' in locals(), "La fonction 'ligne_etoiles' n'est pas définie."
-assert ligne_etoiles(4) == "****"
-assert ligne_etoiles(0) == ""
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+assert somme_carres(3) == 14, "1 + 4 + 9 = 14."
+assert somme_carres(0) == 0 and somme_carres(1) == 1, "Pour 0 et 1."
+assert somme_carres(10) == 385, "Jusqu'à 10 : 385."
+```
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 2 : FACILE (2.1 à 2.6)            */}
-  {/* ========================================== */}
+</Verification>
+</ExerciseSection>
 
-  <ExerciseSection id="boucles-2-1" label="2.1 [Facile] - Compter les pairs" type="python">
-    <Enonce>
-    ### Exercice 2.1 [Facile] : Compter les pairs
-    **Écrire une fonction `compter_pairs_jusqua` qui prend un entier `limite` et renvoie le nombre d'entiers pairs entre 1 et `limite` inclus.**
+<ExerciseSection id="1nsi-boucles-1-2" label="1.2 [Introduction] - Rire en boucle" type="python">
+<Enonce>
+### Rire en boucle
 
-    <Correction>
-    ```python
-    def compter_pairs_jusqua(limite: int) -> int:
-        compteur = 0
-        for i in range(1, limite + 1):
-            if i % 2 == 0:
-                compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_pairs_jusqua' in locals(), "La fonction 'compter_pairs_jusqua' n'est pas définie."
-assert compter_pairs_jusqua(10) == 5
-assert compter_pairs_jusqua(7) == 3
-    ```
-    </Verification>
-  </ExerciseSection>
+Écrire une fonction `repeter(mot, n, separateur)` qui renvoie `mot` répété `n` fois, avec `separateur` **entre** les répétitions (pas à la fin).
 
-  <ExerciseSection id="boucles-2-2" label="2.2 [Facile] - Compter les voyelles" type="python">
-    <Enonce>
-    ### Exercice 2.2 [Facile] : Compter les voyelles
-    **Écrire une fonction `compter_voyelles` qui prend une chaîne `phrase` et renvoie le nombre de voyelles.**
-    *Les voyelles sont a, e, i, o, u et y, en minuscule ou en majuscule.*
-    *Rappel : `lettre in voyelles` teste si un caractère appartient à une chaîne (`"a" in "aeiou"` : `True`).*
+Exemple : `repeter("ha", 3, "-")` renvoie `"ha-ha-ha"`. Pour `n = 0`, le résultat est `""`.
 
-    <Correction>
-    ```python
-    def compter_voyelles(phrase: str) -> int:
-        voyelles = "aeiouyAEIOUY"
-        compteur = 0
-        for lettre in phrase:
-            if lettre in voyelles:
-                compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_voyelles' in locals(), "La fonction 'compter_voyelles' n'est pas définie."
-assert compter_voyelles("bonjour") == 3, "compter_voyelles('bonjour') doit renvoyer 3."
-assert compter_voyelles("NSI") == 1, "compter_voyelles('NSI') doit renvoyer 1 : le I majuscule est une voyelle."
-assert compter_voyelles("rythme") == 2, "compter_voyelles('rythme') doit renvoyer 2 : y et e."
-assert compter_voyelles("") == 0, "Une phrase vide ne contient aucune voyelle."
+Contrainte : avec une boucle, sans `join` ni `*`.
 
-    ```
-    </Verification>
-  </ExerciseSection>
+<Indices>
+<Indice>
 
-  <ExerciseSection id="boucles-2-3" label="2.3 [Facile] - Inverser une chaîne" type="python">
-    <Enonce>
-    ### Exercice 2.3 [Facile] : Inverser une chaîne
-    **Écrire une fonction `inverser` qui prend une chaîne `texte` et renvoie cette chaîne à l'envers avec une boucle `for`.**
+Le séparateur s'ajoute avant chaque mot, sauf avant le premier.
 
-    <Correction>
-    ```python
-    def inverser(texte: str) -> str:
-        resultat = ""
-        for car in texte:
-            resultat = car + resultat
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'inverser' in locals(), "La fonction 'inverser' n'est pas définie."
-assert inverser("bonjour") == "ruojnob"
-assert inverser("radar") == "radar"
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="boucles-2-4" label="2.4 [Facile] - Somme des chiffres" type="python">
-    <Enonce>
-    ### Exercice 2.4 [Facile] : Somme des chiffres
-    **Écrire une fonction `somme_chiffres` qui prend une chaîne ou un entier représentant un nombre et renvoie la somme de ses chiffres.**
+Une autre façon : ajouter `mot + separateur` à chaque tour, puis retirer le dernier séparateur à la fin.
 
-    <Correction>
-    ```python
-    def somme_chiffres(nombre) -> int:
-        texte = str(nombre)
-        somme = 0
-        for chiffre in texte:
-            if chiffre in "0123456789":
-                somme += int(chiffre)
-        return somme
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'somme_chiffres' in locals(), "La fonction 'somme_chiffres' n'est pas définie."
-assert somme_chiffres("123") == 6
-assert somme_chiffres(1001) == 2
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="boucles-2-5" label="2.5 [Facile] - Somme des pairs" type="python">
-    <Enonce>
-    ### Exercice 2.5 [Facile] : Somme des pairs
-    **Écrire une fonction `somme_pairs_jusqua` qui prend un entier `n` et renvoie la somme de tous les entiers pairs de 1 à `n` inclus.**
+```text
+FONCTION repeter(mot, n, separateur)
+    resultat ← ""
+    POUR i ALLANT DE 0 À n - 1
+        SI i > 0 ALORS resultat ← resultat + separateur
+        resultat ← resultat + mot
+    RENVOYER resultat
+```
 
-    <Correction>
-    ```python
-    def somme_pairs_jusqua(n: int) -> int:
-        somme = 0
-        for i in range(1, n + 1):
-            if i % 2 == 0:
-                somme += i
-        return somme
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'somme_pairs_jusqua' in locals(), "La fonction 'somme_pairs_jusqua' n'est pas définie."
-assert somme_pairs_jusqua(10) == 30
-assert somme_pairs_jusqua(6) == 12
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+</Indices>
 
-  <ExerciseSection id="boucles-2-6" label="2.6 [Facile] - Compter les consonnes" type="python">
-    <Enonce>
-    ### Exercice 2.6 [Facile] : Compter les consonnes
-    **Écrire une fonction `compter_consonnes` qui prend une chaîne alphabétique et renvoie le nombre de consonnes. Utiliser `lettre in voyelles` pour repérer les voyelles.**
+<Correction>
 
-    <Correction>
-    ```python
-    def compter_consonnes(texte: str) -> int:
-        voyelles = "aeiouyAEIOUY"
-        compteur = 0
-        for lettre in texte:
-            if lettre.isalpha() and lettre not in voyelles:
-                compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_consonnes' in locals(), "La fonction 'compter_consonnes' n'est pas définie."
-assert compter_consonnes("bonjour") == 4
-assert compter_consonnes("aeiou") == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+def repeter(mot: str, n: int, separateur: str) -> str:
+    resultat = ""
+    for i in range(n):
+        if i > 0:
+            resultat = resultat + separateur
+        resultat = resultat + mot
+    return resultat
+```
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 3 : MOYEN (3.1 à 3.6)             */}
-  {/* ========================================== */}
+</Correction>
+</Enonce>
+<Verification>
 
-  <ExerciseSection id="boucles-3-1" label="3.1 [Moyen] - Caractères avant un arrêt" type="python">
-    <Enonce>
-    ### Exercice 3.1 [Moyen] : Caractères avant un arrêt
-    **Écrire une fonction `caracteres_avant` qui prend une chaîne `texte` et un caractère `arret`, et renvoie tous les caractères **avant** la première occurrence de `arret`. Si `arret` est absent, renvoyer toute la chaîne.**
+```python
+assert repeter("ha", 3, "-") == "ha-ha-ha", "ha ×3 avec - : ha-ha-ha."
+assert repeter("ou", 1, "!") == "ou" and repeter("x", 0, ",") == "", "Une fois, puis zéro fois."
+assert repeter("bip", 4, " ") == "bip bip bip bip", "Avec une espace."
+assert "join" not in PROGRAMME and "*" not in PROGRAMME, "Sans join ni *."
+```
 
-    <Correction>
-    ```python
-    def caracteres_avant(texte: str, arret: str) -> str:
-        resultat = ""
-        for car in texte:
-            if car == arret:
-                break
-            resultat += car
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'caracteres_avant' in locals(), "La fonction 'caracteres_avant' n'est pas définie."
-assert caracteres_avant("bonjour", "j") == "bon"
-assert caracteres_avant("nsi", "z") == "nsi"
-    ```
-    </Verification>
-  </ExerciseSection>
+</Verification>
+</ExerciseSection>
 
-  <ExerciseSection id="boucles-3-2" label="3.2 [Moyen] - Multiples de 3" type="python">
-    <Enonce>
-    ### Exercice 3.2 [Moyen] : Multiples de 3
-    **Écrire une fonction `dernier_multiple_3` qui part d'un entier `depart`, multiplie 10 fois par 3, et renvoie la dernière valeur obtenue.**
+<ExerciseSection id="1nsi-boucles-1-3" label="1.3 [Introduction] - Compter une lettre" type="python">
+<Enonce>
+### Compter une lettre
 
-    <Correction>
-    ```python
-    def dernier_multiple_3(depart: int) -> int:
-        valeur = depart
-        for _ in range(10):
-            valeur *= 3
-        return valeur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'dernier_multiple_3' in locals(), "La fonction 'dernier_multiple_3' n'est pas définie."
-assert dernier_multiple_3(1) == 59049
-assert dernier_multiple_3(2) == 118098
-    ```
-    </Verification>
-  </ExerciseSection>
+Écrire une fonction `compter(texte, lettre)` qui renvoie le nombre d'apparitions de `lettre` dans `texte`.
 
-  <ExerciseSection id="boucles-3-3" label="3.3 [Moyen] - Divisions par 2" type="python">
-    <Enonce>
-    ### Exercice 3.3 [Moyen] : Divisions par 2
-    **Écrire une fonction `divisions_par_deux` qui prend un entier `n` et renvoie combien de divisions entières par 2 sont possibles avant d'obtenir une valeur ≤ 1 (boucle `while`).**
+Contrainte : sans la méthode `count`.
 
-    <Correction>
-    ```python
-    def divisions_par_deux(n: int) -> int:
-        compteur = 0
-        while n > 1:
-            n //= 2
-            compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'divisions_par_deux' in locals(), "La fonction 'divisions_par_deux' n'est pas définie."
-assert divisions_par_deux(16) == 4
-assert divisions_par_deux(10) == 3
-assert divisions_par_deux(1) == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+<Indices>
+<Indice>
 
-  <ExerciseSection id="boucles-3-4" label="3.4 [Moyen] - Factorielle" type="python">
-    <Enonce>
-    ### Exercice 3.4 [Moyen] : Factorielle
-    **Écrire une fonction `factorielle` qui prend un entier `n` ≥ 0 et renvoie `n!`. Par convention, `factorielle(0)` vaut 1.**
+Parcourir `texte` caractère par caractère avec `for c in texte:`.
 
-    <Correction>
-    ```python
-    def factorielle(n: int) -> int:
-        resultat = 1
-        for i in range(1, n + 1):
-            resultat *= i
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'factorielle' in locals(), "La fonction 'factorielle' n'est pas définie."
-assert factorielle(0) == 1
-assert factorielle(5) == 120
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="boucles-3-5" label="3.5 [Moyen] - Moyenne des chiffres" type="python">
-    <Enonce>
-    ### Exercice 3.5 [Moyen] : Moyenne des chiffres
-    **Écrire une fonction `moyenne_chiffres` qui prend une chaîne de chiffres (ex. `"2040"`) et renvoie la moyenne de ses chiffres, sans utiliser `sum()` ni `len()`.**
+Un compteur augmente de 1 quand `c == lettre`.
 
-    <Correction>
-    ```python
-    def moyenne_chiffres(texte: str) -> float:
-        total = 0
-        compteur = 0
-        for car in texte:
-            if car in "0123456789":
-                total += int(car)
-                compteur += 1
-        return total / compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'moyenne_chiffres' in locals(), "La fonction 'moyenne_chiffres' n'est pas définie."
-assert moyenne_chiffres("2040") == 1.5
-assert moyenne_chiffres("55") == 5.0
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  <ExerciseSection id="boucles-3-6" label="3.6 [Moyen] - Maximum des chiffres" type="python">
-    <Enonce>
-    ### Exercice 3.6 [Moyen] : Maximum des chiffres
-    **Écrire une fonction `maximum_chiffres` qui prend une chaîne de chiffres non vide et renvoie le plus grand chiffre, sans utiliser `max()`.**
+```text
+FONCTION compter(texte, lettre)
+    n ← 0
+    POUR CHAQUE c DE texte
+        SI c = lettre ALORS n ← n + 1
+    RENVOYER n
+```
 
-    <Correction>
-    ```python
-    def maximum_chiffres(texte: str) -> int:
-        meilleur = int(texte[0])
-        for car in texte[1:]:
-            valeur = int(car)
-            if valeur > meilleur:
-                meilleur = valeur
-        return meilleur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'maximum_chiffres' in locals(), "La fonction 'maximum_chiffres' n'est pas définie."
-assert maximum_chiffres("392") == 9
-assert maximum_chiffres("105") == 5
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+</Indices>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 4 : AVANCÉ (4.1 à 4.6)            */}
-  {/* ========================================== */}
+<Correction>
 
-  <ExerciseSection id="boucles-4-1" label="4.1 [Avancé] - Nième Fibonacci" type="python">
-    <Enonce>
-    ### Exercice 4.1 [Avancé] : Nième Fibonacci
-    **Écrire une fonction `fibonacci_nieme` qui prend un entier `n` ≥ 1 et renvoie le `n`-ième terme de Fibonacci (suite commençant par 1, 1, 2, 3, 5, etc.).**
+```python
+def compter(texte: str, lettre: str) -> int:
+    n = 0
+    for c in texte:
+        if c == lettre:
+            n = n + 1
+    return n
+```
 
-    <Correction>
-    ```python
-    def fibonacci_nieme(n: int) -> int:
-        if n == 1 or n == 2:
-            return 1
-        precedent = 1
-        courant = 1
-        for _ in range(3, n + 1):
-            suivant = precedent + courant
-            precedent = courant
-            courant = suivant
-        return courant
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'fibonacci_nieme' in locals(), "La fonction 'fibonacci_nieme' n'est pas définie."
-assert fibonacci_nieme(1) == 1
-assert fibonacci_nieme(6) == 8
-assert fibonacci_nieme(7) == 13
-    ```
-    </Verification>
-  </ExerciseSection>
+</Correction>
+</Enonce>
+<Verification>
 
-  <ExerciseSection id="boucles-4-2" label="4.2 [Avancé] - Compter une lettre" type="python">
-    <Enonce>
-    ### Exercice 4.2 [Avancé] : Compter une lettre
-    **Écrire une fonction `compter_lettre` qui prend une chaîne `texte` et un caractère `lettre`, puis renvoie le nombre d'occurrences.**
+```python
+assert compter("abracadabra", "a") == 5, "5 a dans abracadabra."
+assert compter("renard", "z") == 0 and compter("", "a") == 0, "Absente ou texte vide : 0."
+assert compter("Aa", "a") == 1, "La majuscule est une autre lettre."
+assert "count" not in PROGRAMME, "Sans count."
+```
 
-    <Correction>
-    ```python
-    def compter_lettre(texte: str, lettre: str) -> int:
-        compteur = 0
-        for car in texte:
-            if car == lettre:
-                compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_lettre' in locals(), "La fonction 'compter_lettre' n'est pas définie."
-assert compter_lettre("banane", "a") == 2, "compter_lettre('banane', 'a') doit renvoyer 2."
-assert compter_lettre("banane", "n") == 2, "compter_lettre('banane', 'n') doit renvoyer 2."
-assert compter_lettre("nsi", "z") == 0, "compter_lettre('nsi', 'z') doit renvoyer 0."
-assert compter_lettre("aaa", "a") == 3, "compter_lettre('aaa', 'a') doit renvoyer 3."
+</Verification>
+</ExerciseSection>
 
-    ```
-    </Verification>
-  </ExerciseSection>
+<ExerciseSection id="1nsi-boucles-1-4" label="1.4 [Introduction] - Multiples de 3 ou de 5" type="python">
+<Enonce>
+### Multiples de 3 ou de 5
 
-  <ExerciseSection id="boucles-4-3" label="4.3 [Avancé] - Palindrome" type="python">
-    <Enonce>
-    ### Exercice 4.3 [Avancé] : Palindrome
-    **Écrire une fonction `est_palindrome` qui prend une chaîne `texte` et renvoie `True` si elle se lit à l'identique à l'envers (boucle sur les indices).**
+Écrire une fonction `somme_multiples(n)` qui renvoie la somme de tous les entiers **strictement inférieurs** à `n` qui sont multiples de 3 ou de 5.
 
-    <Correction>
-    ```python
-    def est_palindrome(texte: str) -> bool:
-        for i in range(len(texte) // 2):
-            if texte[i] != texte[-1 - i]:
-                return False
-        return True
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'est_palindrome' in locals(), "La fonction 'est_palindrome' n'est pas définie."
-assert est_palindrome("radar") is True
-assert est_palindrome("python") is False
-    ```
-    </Verification>
-  </ExerciseSection>
+Exemple : sous 10, ce sont 3, 5, 6 et 9, de somme 23.
 
-  <ExerciseSection id="boucles-4-4" label="4.4 [Avancé] - PGCD par soustractions" type="python">
-    <Enonce>
-    ### Exercice 4.4 [Avancé] : PGCD par soustractions
-    **Écrire une fonction `pgcd_soustractions` qui calcule le PGCD de deux entiers positifs par soustractions successives (`while`).**
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def pgcd_soustractions(a: int, b: int) -> int:
-        while a != b:
-            if a > b:
-                a -= b
-            else:
-                b -= a
-        return a
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'pgcd_soustractions' in locals(), "La fonction 'pgcd_soustractions' n'est pas définie."
-assert pgcd_soustractions(12, 18) == 6
-assert pgcd_soustractions(7, 5) == 1
-    ```
-    </Verification>
-  </ExerciseSection>
+Parcourir tous les entiers de 1 à `n - 1` : `range(1, n)` s'arrête déjà avant `n`.
 
-  <ExerciseSection id="boucles-4-5" label="4.5 [Avancé] - Conversion en binaire" type="python">
-    <Enonce>
-    ### Exercice 4.5 [Avancé] : Conversion en binaire
-    **Écrire une fonction `vers_binaire` qui prend un entier `n` ≥ 0 et renvoie sa représentation binaire (chaîne), par divisions successives par 2.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def vers_binaire(n: int) -> str:
-        if n == 0:
-            return "0"
-        binaire = ""
-        while n > 0:
-            binaire = str(n % 2) + binaire
-            n //= 2
-        return binaire
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'vers_binaire' in locals(), "La fonction 'vers_binaire' n'est pas définie."
-assert vers_binaire(0) == "0"
-assert vers_binaire(6) == "110"
-assert vers_binaire(13) == "1101"
-    ```
-    </Verification>
-  </ExerciseSection>
+Un nombre multiple de 3 **et** de 5 (comme 15) ne doit être compté qu'une fois : un seul test avec `or`.
 
-  <ExerciseSection id="boucles-4-6" label="4.6 [Avancé] - Première position" type="python">
-    <Enonce>
-    ### Exercice 4.6 [Avancé] : Première position
-    **Écrire une fonction `premiere_position` qui prend une chaîne `texte` et un caractère `cible`, et renvoie l'indice de la première occurrence, ou `-1` si absent.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def premiere_position(texte: str, cible: str) -> int:
-        for i in range(len(texte)):
-            if texte[i] == cible:
-                return i
-        return -1
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'premiere_position' in locals(), "La fonction 'premiere_position' n'est pas définie."
-assert premiere_position("banane", "a") == 1
-assert premiere_position("nsi", "z") == -1
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION somme_multiples(n)
+    total ← 0
+    POUR i ALLANT DE 1 À n - 1
+        SI i multiple de 3 OU i multiple de 5 ALORS total ← total + i
+    RENVOYER total
+```
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 5 : DIFFICILE (5.1 à 5.6)         */}
-  {/* ========================================== */}
+</Indice>
+</Indices>
 
-  <ExerciseSection id="boucles-5-1" label="5.1 [Difficile] - Nombre premier" type="python">
-    <Enonce>
-    ### Exercice 5.1 [Difficile] : Nombre premier
-    **Écrire une fonction `est_premier` qui prend un entier `n` > 1 et renvoie `True` s'il n'a aucun diviseur strict entre 2 et `n - 1`.**
+<Correction>
 
-    <Correction>
-    ```python
-    def est_premier(n: int) -> bool:
-        if n <= 1:
+```python
+def somme_multiples(n: int) -> int:
+    total = 0
+    for i in range(1, n):
+        if i % 3 == 0 or i % 5 == 0:
+            total = total + i
+    return total
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert somme_multiples(10) == 23, "Sous 10 : 23."
+assert somme_multiples(16) == 60, "Sous 16 : 60 (15 compté une seule fois)."
+assert somme_multiples(1000) == 233168, "Sous 1000 : 233168."
+assert somme_multiples(3) == 0, "Sous 3 : 0."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-2-1" label="2.1 [Facile] - Puissance" type="python">
+<Enonce>
+### Puissance
+
+Écrire une fonction `puissance(x, n)` qui renvoie `x` à la puissance `n` (`n` entier positif ou nul).
+
+Contrainte : sans `**` ni `pow`.
+
+<Indices>
+<Indice>
+
+`x` puissance `n`, c'est `x` multiplié `n` fois par lui-même.
+
+</Indice>
+<Indice>
+
+Le résultat part de 1, l'élément neutre de la multiplication : ainsi `x⁰` vaut bien 1.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION puissance(x, n)
+    resultat ← 1
+    RÉPÉTER n FOIS
+        resultat ← resultat × x
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def puissance(x: float, n: int) -> float:
+    resultat = 1
+    for _ in range(n):
+        resultat = resultat * x
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert puissance(2, 10) == 1024 and puissance(5, 3) == 125, "2¹⁰ et 5³."
+assert puissance(7, 0) == 1 and puissance(0, 0) == 1, "Puissance 0 : 1."
+assert puissance(-2, 3) == -8 and puissance(1.5, 2) == 2.25, "Négatif et décimal."
+assert "**" not in PROGRAMME and "pow" not in PROGRAMME, "Sans ** ni pow."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-2-2" label="2.2 [Facile] - Compter les majuscules" type="python">
+<Enonce>
+### Compter les majuscules
+
+Écrire une fonction `nb_majuscules(texte)` qui renvoie le nombre de lettres majuscules de `A` à `Z` (sans accent) dans `texte`.
+
+Contrainte : sans `isupper`.
+
+<Indices>
+<Indice>
+
+Les caractères se comparent comme des mots du dictionnaire : `"A" <= c <= "Z"` teste si `c` est une majuscule.
+
+</Indice>
+<Indice>
+
+Même structure qu'un compteur de lettres, seule la condition change.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION nb_majuscules(texte)
+    n ← 0
+    POUR CHAQUE c DE texte
+        SI "A" ≤ c ≤ "Z" ALORS n ← n + 1
+    RENVOYER n
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def nb_majuscules(texte: str) -> int:
+    n = 0
+    for c in texte:
+        if "A" <= c <= "Z":
+            n = n + 1
+    return n
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert nb_majuscules("La Tanière Du Code") == 4, "4 majuscules."
+assert nb_majuscules("nsi") == 0 and nb_majuscules("") == 0, "Aucune."
+assert nb_majuscules("NSI 2026 !") == 3, "Chiffres et ponctuation ne comptent pas."
+assert "isupper" not in PROGRAMME, "Sans isupper."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-2-3" label="2.3 [Facile] - Première position" type="python">
+<Enonce>
+### Première position
+
+Écrire une fonction `position(texte, c)` qui renvoie l'indice de la **première** apparition du caractère `c` dans `texte`, ou `-1` s'il n'y apparaît pas.
+
+Contrainte : sans `find` ni `index`.
+
+<Indices>
+<Indice>
+
+Pour connaître la position, parcourir les indices : `for i in range(len(texte)):` puis regarder `texte[i]`.
+
+</Indice>
+<Indice>
+
+Dès que le caractère est trouvé, `return i` arrête la fonction. Si la boucle se termine sans le trouver, renvoyer `-1` après la boucle.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION position(texte, c)
+    POUR i ALLANT DE 0 À longueur(texte) - 1
+        SI texte[i] = c ALORS RENVOYER i
+    RENVOYER -1
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def position(texte: str, c: str) -> int:
+    for i in range(len(texte)):
+        if texte[i] == c:
+            return i
+    return -1
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert position("renard", "n") == 2, "n est à l'indice 2 de renard."
+assert position("banane", "a") == 1, "La première apparition compte."
+assert position("renard", "z") == -1 and position("", "a") == -1, "Absent : -1."
+assert position("abc", "a") == 0 and position("abc", "c") == 2, "Au début et à la fin."
+assert "find" not in PROGRAMME and "index" not in PROGRAMME, "Sans find ni index."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-2-4" label="2.4 [Facile] - Sans espaces" type="python">
+<Enonce>
+### Sans espaces
+
+Écrire une fonction `sans_espaces(texte)` qui renvoie le texte privé de toutes ses espaces.
+
+Contrainte : sans `replace`, `split` ni `join`.
+
+<Indices>
+<Indice>
+
+Construire un nouveau texte en ne recopiant que les caractères à garder.
+
+</Indice>
+<Indice>
+
+`if c != " ":` sélectionne les caractères à recopier.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION sans_espaces(texte)
+    resultat ← ""
+    POUR CHAQUE c DE texte
+        SI c ≠ " " ALORS resultat ← resultat + c
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def sans_espaces(texte: str) -> str:
+    resultat = ""
+    for c in texte:
+        if c != " ":
+            resultat = resultat + c
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert sans_espaces("le renard roux") == "lerenardroux", "Les espaces disparaissent."
+assert sans_espaces("   ") == "" and sans_espaces("nsi") == "nsi", "Que des espaces, ou aucune."
+assert sans_espaces(" a b ") == "ab", "Au début et à la fin aussi."
+assert "replace" not in PROGRAMME and "split" not in PROGRAMME and "join" not in PROGRAMME, "Sans replace, split ni join."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-3-1" label="3.1 [Moyen] - Racine entière" type="python">
+<Enonce>
+### Racine entière
+
+Écrire une fonction `racine_entiere(n)` qui renvoie le plus grand entier `k` tel que `k × k <= n` (`n` entier positif ou nul).
+
+Exemples : `racine_entiere(17)` renvoie `4`, `racine_entiere(16)` renvoie `4`.
+
+Contrainte : sans `**`, `sqrt` ni `math`.
+
+<Indices>
+<Indice>
+
+On ne sait pas d'avance combien de tours faire : une boucle `while`.
+
+</Indice>
+<Indice>
+
+Augmenter `k` tant que le carré **suivant**, `(k + 1) × (k + 1)`, reste inférieur ou égal à `n`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION racine_entiere(n)
+    k ← 0
+    TANT QUE (k + 1) × (k + 1) ≤ n
+        k ← k + 1
+    RENVOYER k
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def racine_entiere(n: int) -> int:
+    k = 0
+    while (k + 1) * (k + 1) <= n:
+        k = k + 1
+    return k
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert racine_entiere(17) == 4 and racine_entiere(16) == 4 and racine_entiere(15) == 3, "Autour de 16."
+assert racine_entiere(0) == 0 and racine_entiere(1) == 1 and racine_entiere(3) == 1, "Petites valeurs."
+assert racine_entiere(1000000) == 1000, "Un million : 1000."
+assert "**" not in PROGRAMME and "sqrt" not in PROGRAMME and "math" not in PROGRAMME, "Sans **, sqrt ni math."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-3-2" label="3.2 [Moyen] - Palindrome" type="python">
+<Enonce>
+### Palindrome
+
+Un palindrome se lit de la même façon dans les deux sens (`"kayak"`, `"ressasser"`).
+
+Écrire une fonction `est_palindrome(mot)` qui renvoie `True` si `mot` en est un.
+
+Contrainte : comparer les lettres avec leurs indices, sans `[::-1]` ni `reversed`.
+
+<Indices>
+<Indice>
+
+La première lettre doit être égale à la dernière, la deuxième à l'avant-dernière, etc. L'indice symétrique de `i` est `len(mot) - 1 - i`.
+
+</Indice>
+<Indice>
+
+Il suffit d'aller jusqu'au milieu, et de renvoyer `False` dès qu'une paire diffère.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION est_palindrome(mot)
+    n ← longueur(mot)
+    POUR i ALLANT DE 0 À n // 2 - 1
+        SI mot[i] ≠ mot[n - 1 - i] ALORS RENVOYER FAUX
+    RENVOYER VRAI
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def est_palindrome(mot: str) -> bool:
+    n = len(mot)
+    for i in range(n // 2):
+        if mot[i] != mot[n - 1 - i]:
             return False
-        for diviseur in range(2, n):
-            if n % diviseur == 0:
+    return True
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+for m in ["kayak", "ressasser", "a", "", "abba"]:
+    assert est_palindrome(m) is True, f"« {m} » est un palindrome."
+for m in ["renard", "ab", "abca"]:
+    assert est_palindrome(m) is False, f"« {m} » n'en est pas un."
+assert "[::-1]" not in PROGRAMME and "reversed" not in PROGRAMME, "Sans [::-1] ni reversed."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-3-3" label="3.3 [Moyen] - Somme des chiffres" type="python">
+<Enonce>
+### Somme des chiffres
+
+Écrire une fonction `somme_chiffres(n)` qui renvoie la somme des chiffres de l'entier positif `n`.
+
+Exemple : `somme_chiffres(2026)` renvoie `10`.
+
+Contrainte : par le calcul, sans convertir `n` en texte.
+
+<Indices>
+<Indice>
+
+`n % 10` donne le dernier chiffre, `n // 10` le retire.
+
+</Indice>
+<Indice>
+
+Répéter tant qu'il reste des chiffres, c'est-à-dire tant que `n > 0`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION somme_chiffres(n)
+    total ← 0
+    TANT QUE n > 0
+        total ← total + reste de n par 10
+        n ← quotient de n par 10
+    RENVOYER total
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def somme_chiffres(n: int) -> int:
+    total = 0
+    while n > 0:
+        total = total + n % 10
+        n = n // 10
+    return total
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert somme_chiffres(2026) == 10, "2 + 0 + 2 + 6 = 10."
+assert somme_chiffres(0) == 0 and somme_chiffres(7) == 7, "0 et 7."
+assert somme_chiffres(999999) == 54, "999999 : 54."
+assert "str(" not in PROGRAMME, "Sans conversion en texte."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-3-4" label="3.4 [Moyen] - Casse alternée" type="python">
+<Enonce>
+### Casse alternée
+
+Écrire une fonction `alterner(texte)` qui renvoie le texte avec les caractères d'indice pair en majuscules et ceux d'indice impair en minuscules.
+
+Exemple : `alterner("renard")` renvoie `"ReNaRd"`.
+
+<Indices>
+<Indice>
+
+La position compte : parcourir les indices avec `range(len(texte))`.
+
+</Indice>
+<Indice>
+
+`i % 2 == 0` repère les indices pairs.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION alterner(texte)
+    resultat ← ""
+    POUR i ALLANT DE 0 À longueur(texte) - 1
+        SI i pair ALORS resultat ← resultat + majuscule(texte[i])
+        SINON resultat ← resultat + minuscule(texte[i])
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def alterner(texte: str) -> str:
+    resultat = ""
+    for i in range(len(texte)):
+        if i % 2 == 0:
+            resultat = resultat + texte[i].upper()
+        else:
+            resultat = resultat + texte[i].lower()
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert alterner("renard") == "ReNaRd", "renard : ReNaRd."
+assert alterner("PYTHON") == "PyThOn", "PYTHON : PyThOn."
+assert alterner("") == "" and alterner("a b") == "A B", "Texte vide, puis avec une espace."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-4-1" label="4.1 [Difficile] - Compression" type="python">
+<Enonce>
+### Compression
+
+Écrire une fonction `compresser(texte)` qui remplace chaque suite de caractères identiques par le caractère suivi du nombre de répétitions.
+
+Exemple : `compresser("aaabccdddd")` renvoie `"a3b1c2d4"`. Un texte vide donne `""`.
+
+<Indices>
+<Indice>
+
+Garder le caractère courant et un compteur. Quand le caractère change, écrire la paire et repartir avec le nouveau caractère.
+
+</Indice>
+<Indice>
+
+La dernière suite n'est suivie d'aucun changement : l'écrire après la boucle.
+
+</Indice>
+<Indice>
+
+Le texte vide est un cas à part, à traiter au début.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION compresser(texte)
+    SI texte vide ALORS RENVOYER ""
+    resultat ← "" ; courant ← texte[0] ; n ← 0
+    POUR CHAQUE c DE texte
+        SI c = courant ALORS n ← n + 1
+        SINON
+            resultat ← resultat + courant + texte(n)
+            courant ← c ; n ← 1
+    RENVOYER resultat + courant + texte(n)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def compresser(texte: str) -> str:
+    if texte == "":
+        return ""
+    resultat = ""
+    courant = texte[0]
+    n = 0
+    for c in texte:
+        if c == courant:
+            n = n + 1
+        else:
+            resultat = resultat + courant + str(n)
+            courant = c
+            n = 1
+    return resultat + courant + str(n)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert compresser("aaabccdddd") == "a3b1c2d4", "aaabccdddd : a3b1c2d4."
+assert compresser("") == "" and compresser("z") == "z1", "Vide, puis un seul caractère."
+assert compresser("abab") == "a1b1a1b1", "Pas de suite : que des 1."
+assert compresser("xxxxxxxxxxxx") == "x12", "Douze x."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-4-2" label="4.2 [Difficile] - Nombres amicaux" type="python">
+<Enonce>
+### Nombres amicaux
+
+Deux nombres sont **amicaux** si chacun est égal à la somme des diviseurs de l'autre (diviseurs autres que le nombre lui-même). Exemple : 220 et 284.
+
+Écrire deux fonctions :
+- `somme_diviseurs(n)` : la somme des diviseurs de `n` autres que `n` ;
+- `sont_amicaux(a, b)` : `True` si `a` et `b` sont amicaux et différents.
+
+<Indices>
+<Indice>
+
+Pour `somme_diviseurs`, tester tous les entiers de 1 à `n // 2`.
+
+</Indice>
+<Indice>
+
+`sont_amicaux` appelle deux fois `somme_diviseurs`, une fois pour chaque nombre.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION somme_diviseurs(n)
+    total ← 0
+    POUR d ALLANT DE 1 À n // 2
+        SI d divise n ALORS total ← total + d
+    RENVOYER total
+FONCTION sont_amicaux(a, b)
+    RENVOYER a ≠ b ET somme_diviseurs(a) = b ET somme_diviseurs(b) = a
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def somme_diviseurs(n: int) -> int:
+    total = 0
+    for d in range(1, n // 2 + 1):
+        if n % d == 0:
+            total = total + d
+    return total
+
+
+def sont_amicaux(a: int, b: int) -> bool:
+    return a != b and somme_diviseurs(a) == b and somme_diviseurs(b) == a
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert somme_diviseurs(220) == 284 and somme_diviseurs(284) == 220, "220 et 284."
+assert somme_diviseurs(1) == 0 and somme_diviseurs(12) == 16, "1 et 12."
+assert sont_amicaux(220, 284) is True and sont_amicaux(1184, 1210) is True, "Deux paires amicales."
+assert sont_amicaux(6, 6) is False and sont_amicaux(10, 20) is False, "6 avec lui-même, ou 10 et 20 : non."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-4-3" label="4.3 [Difficile] - Code de César" type="python">
+<Enonce>
+### Code de César
+
+Le code de César décale chaque lettre de l'alphabet : avec un décalage de 3, `a` devient `d` et `z` devient `c`.
+
+Écrire une fonction `cesar(texte, decalage)` qui chiffre un texte en minuscules. Les caractères qui ne sont pas des lettres de `a` à `z` restent inchangés. Le décalage peut être négatif (pour déchiffrer).
+
+<Indices>
+<Indice>
+
+`ord(c) - ord("a")` donne le rang de la lettre (0 pour `a`, 25 pour `z`) ; `chr` fait le chemin inverse.
+
+</Indice>
+<Indice>
+
+Après `z`, on revient à `a` : le rang décalé se ramène entre 0 et 25 avec `% 26` (qui marche aussi avec un nombre négatif en Python).
+
+</Indice>
+<Indice>
+
+```text
+FONCTION cesar(texte, decalage)
+    resultat ← ""
+    POUR CHAQUE c DE texte
+        SI "a" ≤ c ≤ "z" ALORS
+            rang ← reste de (ord(c) - ord("a") + decalage) par 26
+            resultat ← resultat + chr(ord("a") + rang)
+        SINON resultat ← resultat + c
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def cesar(texte: str, decalage: int) -> str:
+    resultat = ""
+    for c in texte:
+        if "a" <= c <= "z":
+            rang = (ord(c) - ord("a") + decalage) % 26
+            resultat = resultat + chr(ord("a") + rang)
+        else:
+            resultat = resultat + c
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert cesar("abc", 3) == "def" and cesar("xyz", 3) == "abc", "Décalage de 3."
+assert cesar("le renard !", 1) == "mf sfobse !", "Les espaces et la ponctuation restent."
+assert cesar(cesar("tanière du code", 7), -7) == "tanière du code", "Chiffrer puis déchiffrer redonne le texte (è reste è)."
+assert cesar("nsi", 26) == "nsi" and cesar("a", -1) == "z", "Décalage de 26, puis négatif."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-4-4" label="4.4 [Difficile] - Damier" type="python">
+<Enonce>
+### Damier
+
+Écrire une fonction `damier(n)` qui renvoie un damier de `n` lignes et `n` colonnes, sous forme d'un seul texte : `#` et `.` alternent, la case en haut à gauche est `#`, et les lignes sont séparées par `"\n"` (pas de retour à la ligne final).
+
+Pour `n = 3` : `"#.#\n.#.\n#.#"`.
+
+<Indices>
+<Indice>
+
+Deux boucles imbriquées : une pour les lignes `l`, une pour les colonnes `c`.
+
+</Indice>
+<Indice>
+
+La case est `#` quand `l + c` est pair.
+
+</Indice>
+<Indice>
+
+Ajouter `"\n"` à la fin de chaque ligne sauf la dernière.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION damier(n)
+    texte ← ""
+    POUR l ALLANT DE 0 À n - 1
+        POUR c ALLANT DE 0 À n - 1
+            SI l + c pair ALORS texte ← texte + "#" SINON texte ← texte + "."
+        SI l < n - 1 ALORS texte ← texte + retour à la ligne
+    RENVOYER texte
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def damier(n: int) -> str:
+    texte = ""
+    for l in range(n):
+        for c in range(n):
+            if (l + c) % 2 == 0:
+                texte = texte + "#"
+            else:
+                texte = texte + "."
+        if l < n - 1:
+            texte = texte + "\n"
+    return texte
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert damier(3) == "#.#\n.#.\n#.#", "Damier 3 × 3."
+assert damier(1) == "#" and damier(0) == "", "1 × 1 puis 0."
+assert damier(4).split("\n") == ["#.#.", ".#.#", "#.#.", ".#.#"], "Damier 4 × 4."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-5-1" label="5.1 [Expert] - Premier suivant" type="python">
+<Enonce>
+### Premier suivant
+
+Écrire une fonction `premier_suivant(n)` qui renvoie le plus petit nombre premier **strictement supérieur** à `n`.
+
+Exemples : `premier_suivant(10)` renvoie `11`, `premier_suivant(13)` renvoie `17`.
+
+<Indices>
+<Indice>
+
+Écrire d'abord une fonction `est_premier(k)`, puis tester `n + 1`, `n + 2`… jusqu'au premier qui convient.
+
+</Indice>
+<Indice>
+
+Dans `est_premier`, inutile de chercher un diviseur au-delà de la racine : `while d * d <= k`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION est_premier(k)
+    SI k < 2 ALORS RENVOYER FAUX
+    d ← 2
+    TANT QUE d × d ≤ k
+        SI d divise k ALORS RENVOYER FAUX
+        d ← d + 1
+    RENVOYER VRAI
+FONCTION premier_suivant(n)
+    k ← n + 1
+    TANT QUE NON est_premier(k) : k ← k + 1
+    RENVOYER k
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def est_premier(k: int) -> bool:
+    if k < 2:
+        return False
+    d = 2
+    while d * d <= k:
+        if k % d == 0:
+            return False
+        d = d + 1
+    return True
+
+
+def premier_suivant(n: int) -> int:
+    k = n + 1
+    while not est_premier(k):
+        k = k + 1
+    return k
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert premier_suivant(10) == 11 and premier_suivant(13) == 17, "Après 10 : 11 ; après 13 : 17."
+assert premier_suivant(0) == 2 and premier_suivant(1) == 2 and premier_suivant(2) == 3, "Petites valeurs."
+assert premier_suivant(1000000) == 1000003, "Après un million : 1000003."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-5-2" label="5.2 [Expert] - Algorithme de Luhn" type="python">
+<Enonce>
+### Algorithme de Luhn
+
+Les numéros de carte bancaire contiennent un contrôle d'erreur, l'algorithme de Luhn :
+1. en partant de la **droite**, doubler un chiffre sur deux, en commençant par le deuxième ;
+2. si un chiffre doublé dépasse 9, lui retirer 9 ;
+3. additionner tous les chiffres (doublés ou non) : le numéro est valide si la somme est un multiple de 10.
+
+Écrire une fonction `luhn_valide(numero)` où `numero` est un texte de chiffres.
+
+<Indices>
+<Indice>
+
+Parcourir le texte de droite à gauche : `range(len(numero) - 1, -1, -1)`, en comptant la position depuis la droite.
+
+</Indice>
+<Indice>
+
+La position depuis la droite vaut `len(numero) - 1 - i` : les chiffres à doubler ont une position impaire.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION luhn_valide(numero)
+    total ← 0
+    POUR i ALLANT DE 0 À longueur(numero) - 1
+        chiffre ← entier(numero[i])
+        SI (longueur(numero) - 1 - i) impair ALORS
+            chiffre ← chiffre × 2
+            SI chiffre > 9 ALORS chiffre ← chiffre - 9
+        total ← total + chiffre
+    RENVOYER total multiple de 10
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def luhn_valide(numero: str) -> bool:
+    total = 0
+    for i in range(len(numero)):
+        chiffre = int(numero[i])
+        if (len(numero) - 1 - i) % 2 == 1:
+            chiffre = chiffre * 2
+            if chiffre > 9:
+                chiffre = chiffre - 9
+        total = total + chiffre
+    return total % 10 == 0
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert luhn_valide("79927398713") is True, "79927398713 est valide."
+assert luhn_valide("4970101234567899") is False, "Un chiffre faux est détecté."
+assert luhn_valide("4970101234567893") is True, "4970101234567893 est valide."
+assert luhn_valide("0") is True and luhn_valide("18") is True and luhn_valide("19") is False, "Numéros courts."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-5-3" label="5.3 [Expert] - Décomposition en facteurs premiers" type="python">
+<Enonce>
+### Décomposition en facteurs premiers
+
+Écrire une fonction `decomposer(n)` (`n` au moins 2) qui renvoie la décomposition de `n` en facteurs premiers sous forme de texte, les facteurs du plus petit au plus grand, séparés par ` x `.
+
+Exemples : `decomposer(60)` renvoie `"2 x 2 x 3 x 5"`, `decomposer(13)` renvoie `"13"`.
+
+<Indices>
+<Indice>
+
+Essayer de diviser `n` par `d = 2`, 3, 4… : tant que `d` divise `n`, noter `d` et diviser `n` par `d`. Un diviseur non premier comme 4 ne divisera plus jamais, car ses facteurs 2 auront déjà été retirés.
+
+</Indice>
+<Indice>
+
+S'arrêter quand `n` vaut 1. Pour le séparateur, ajouter ` x ` seulement si le texte n'est pas encore vide.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION decomposer(n)
+    texte ← "" ; d ← 2
+    TANT QUE n > 1
+        TANT QUE d divise n
+            SI texte ≠ "" ALORS texte ← texte + " x "
+            texte ← texte + texte(d)
+            n ← n // d
+        d ← d + 1
+    RENVOYER texte
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def decomposer(n: int) -> str:
+    texte = ""
+    d = 2
+    while n > 1:
+        while n % d == 0:
+            if texte != "":
+                texte = texte + " x "
+            texte = texte + str(d)
+            n = n // d
+        d = d + 1
+    return texte
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert decomposer(60) == "2 x 2 x 3 x 5", "60 = 2 x 2 x 3 x 5."
+assert decomposer(13) == "13" and decomposer(2) == "2", "Nombres premiers."
+assert decomposer(1024) == " x ".join(["2"] * 10), "1024 = 2 puissance 10."
+assert decomposer(9991) == "97 x 103", "9991 = 97 x 103."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-5-4" label="5.4 [Expert] - Chiffres romains" type="python">
+<Enonce>
+### Chiffres romains
+
+Écrire une fonction `romain(n)` qui renvoie l'écriture en chiffres romains de l'entier `n` (de 1 à 3999).
+
+Le code de départ donne deux tuples alignés : `VALEURS` et `SYMBOLES` (`900` s'écrit `CM`, `4` s'écrit `IV`…). Exemple : `romain(1994)` renvoie `"MCMXCIV"`.
+
+<Indices>
+<Indice>
+
+Méthode gloutonne : prendre la plus grande valeur qui tient dans `n`, écrire son symbole, la retirer de `n`, et recommencer.
+
+</Indice>
+<Indice>
+
+Une boucle `for` parcourt les indices des tuples ; à l'intérieur, une boucle `while` répète un symbole tant que sa valeur tient.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION romain(n)
+    texte ← ""
+    POUR i ALLANT DE 0 À longueur(VALEURS) - 1
+        TANT QUE n ≥ VALEURS[i]
+            texte ← texte + SYMBOLES[i]
+            n ← n - VALEURS[i]
+    RENVOYER texte
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+VALEURS = (1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+SYMBOLES = ("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+
+
+def romain(n: int) -> str:
+    texte = ""
+    for i in range(len(VALEURS)):
+        while n >= VALEURS[i]:
+            texte = texte + SYMBOLES[i]
+            n = n - VALEURS[i]
+    return texte
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+VALEURS = (1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+SYMBOLES = ("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+
+
+def romain(n: int) -> str:
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+assert romain(1994) == "MCMXCIV", "1994 : MCMXCIV."
+assert romain(4) == "IV" and romain(9) == "IX" and romain(14) == "XIV", "4, 9, 14."
+assert romain(2026) == "MMXXVI" and romain(3999) == "MMMCMXCIX", "2026 et 3999."
+assert romain(1) == "I" and romain(40) == "XL", "1 et 40."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-6-1" label="6.1 [Mini-projet] - Calendrier perpétuel" type="python">
+<Enonce>
+### Calendrier perpétuel
+
+Réaliser un calendrier perpétuel : à partir du seul fait que le **1er janvier 1900 était un lundi**, retrouver le jour de la semaine de n'importe quelle date et afficher le calendrier d'un mois.
+
+Contrainte : sans les modules `datetime` ni `calendar`.
+
+**Objectifs**
+- `bissextile(a)` et `jours_mois(m, a)`.
+- `jours_depuis_1900(j, m, a)` : le nombre de jours écoulés entre le 01/01/1900 et la date (0 pour le 01/01/1900), pour une date à partir de 1900.
+- `jour_semaine(j, m, a)` : 0 pour lundi, 1 pour mardi… 6 pour dimanche ; `nom_jour(j, m, a)` : `"lundi"`, `"mardi"`…
+- `calendrier(m, a)` : le calendrier du mois sous forme de texte. Première ligne `Lu Ma Me Je Ve Sa Di`, puis une ligne par semaine : chaque jour est écrit sur 2 caractères (aligné à droite), les cases sont séparées par une espace, les cases vides avant le 1er sont des espaces, et aucune ligne ne finit par une espace. Les lignes sont séparées par `"\n"`.
+- `vendredis_13(a)` : le nombre de vendredis 13 de l'année.
+- `prochain_vendredi_13(j, m, a)` : le tuple `(jour, mois, annee)` du premier vendredi 13 **strictement après** la date donnée.
+
+Exemple : le 1er novembre 2026 est un dimanche ; `calendrier(11, 2026)` commence par `Lu Ma Me Je Ve Sa Di` puis une ligne de 19 espaces suivies de `1`.
+
+<Indices>
+<Indice>
+
+Tout repose sur `jours_depuis_1900` : additionner la longueur des années complètes depuis 1900, puis des mois complets de l'année, puis les jours. Le jour de la semaine est alors ce nombre modulo 7.
+
+</Indice>
+<Indice>
+
+Pour le calendrier, construire chaque ligne case par case : avant le 1er, autant de cases vides que `jour_semaine(1, m, a)` ; après chaque dimanche, passer à la ligne. `.rstrip()` retire les espaces de fin d'une ligne.
+
+</Indice>
+<Indice>
+
+Le texte `"lundi mardi mercredi jeudi vendredi samedi dimanche"` et `split()` donnent les noms des jours.
+
+</Indice>
+<Indice>
+
+```text
+(cœur du programme : le nombre de jours depuis 1900)
+FONCTION jours_depuis_1900(j, m, a)
+    total ← 0
+    POUR annee ALLANT DE 1900 À a - 1 : total ← total + (366 si bissextile(annee) sinon 365)
+    POUR mois ALLANT DE 1 À m - 1 : total ← total + jours_mois(mois, a)
+    RENVOYER total + j - 1
+jour_semaine(j, m, a) = reste de jours_depuis_1900(j, m, a) par 7
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def bissextile(a: int) -> bool:
+    return (a % 4 == 0 and a % 100 != 0) or a % 400 == 0
+
+
+def jours_mois(m: int, a: int) -> int:
+    if m == 2:
+        return 29 if bissextile(a) else 28
+    if m in (4, 6, 9, 11):
+        return 30
+    return 31
+
+
+def jours_depuis_1900(j: int, m: int, a: int) -> int:
+    total = 0
+    for annee in range(1900, a):
+        total = total + (366 if bissextile(annee) else 365)
+    for mois in range(1, m):
+        total = total + jours_mois(mois, a)
+    return total + j - 1
+
+
+def jour_semaine(j: int, m: int, a: int) -> int:
+    return jours_depuis_1900(j, m, a) % 7
+
+
+def nom_jour(j: int, m: int, a: int) -> str:
+    return "lundi mardi mercredi jeudi vendredi samedi dimanche".split()[jour_semaine(j, m, a)]
+
+
+def calendrier(m: int, a: int) -> str:
+    texte = "Lu Ma Me Je Ve Sa Di"
+    ligne = ""
+    case = jour_semaine(1, m, a)
+    for _ in range(case):
+        ligne = ligne + "   "
+    for j in range(1, jours_mois(m, a) + 1):
+        ligne = ligne + f"{j:2d} "
+        case = case + 1
+        if case == 7:
+            texte = texte + "\n" + ligne.rstrip()
+            ligne = ""
+            case = 0
+    if ligne != "":
+        texte = texte + "\n" + ligne.rstrip()
+    return texte
+
+
+def vendredis_13(a: int) -> int:
+    n = 0
+    for m in range(1, 13):
+        if jour_semaine(13, m, a) == 4:
+            n = n + 1
+    return n
+
+
+def prochain_vendredi_13(j: int, m: int, a: int) -> tuple:
+    if j >= 13:
+        m = m + 1
+        if m > 12:
+            m = 1
+            a = a + 1
+    while jour_semaine(13, m, a) != 4:
+        m = m + 1
+        if m > 12:
+            m = 1
+            a = a + 1
+    return (13, m, a)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+import datetime
+assert bissextile(2024) and not bissextile(1900) and bissextile(2000) and jours_mois(2, 2026) == 28, "Années bissextiles."
+assert jours_depuis_1900(1, 1, 1900) == 0 and jours_depuis_1900(1, 1, 1901) == 365, "Jours depuis 1900."
+for d in [datetime.date(1900, 3, 1), datetime.date(1969, 7, 21), datetime.date(2000, 2, 29), datetime.date(2026, 11, 1), datetime.date(2099, 12, 31)]:
+    assert jour_semaine(d.day, d.month, d.year) == d.weekday(), f"Jour de la semaine du {d}."
+assert nom_jour(1, 11, 2026) == "dimanche" and nom_jour(14, 7, 2000) == "vendredi", "Noms des jours."
+cal = calendrier(11, 2026).split("\n")
+assert cal[0] == "Lu Ma Me Je Ve Sa Di" and cal[1] == " " * 19 + "1", "En-tête et première semaine de novembre 2026."
+assert cal[2] == " 2  3  4  5  6  7  8" and cal[-1] == "30" and len(cal) == 7, "Semaines suivantes et dernière ligne."
+fev = calendrier(2, 2027).split("\n")
+assert fev[1] == " 1  2  3  4  5  6  7" and fev[-1] == "22 23 24 25 26 27 28" and len(fev) == 5, "Février 2027 commence un lundi et tient sur 4 semaines."
+assert all(not l.endswith(" ") for l in cal + fev), "Aucune ligne ne finit par une espace."
+assert vendredis_13(2026) == 3 and vendredis_13(2027) == 1, "Vendredis 13 en 2026 et 2027."
+assert prochain_vendredi_13(1, 11, 2026) == (13, 11, 2026) and prochain_vendredi_13(13, 11, 2026) == (13, 8, 2027), "Prochains vendredis 13."
+assert "datetime" not in PROGRAMME and "calendar" not in PROGRAMME, "Sans datetime ni calendar."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-boucles-6-2" label="6.2 [Mini-projet] - Pendu imbattable" type="python">
+<Enonce>
+### Pendu imbattable
+
+Réaliser un jeu du pendu, puis un ordinateur qui y joue très bien.
+
+Le **dictionnaire** est un texte de mots en minuscules séparés par des espaces. Un **motif** est un mot dont les lettres non trouvées sont remplacées par `_` (`"r_n_r_"`). Les lettres déjà proposées sont rangées dans un texte, par exemple `"rnz"`.
+
+**Objectifs**
+- `masque(mot, proposees)` : le motif du mot quand les lettres de `proposees` ont été proposées.
+- `partie(mot, propositions, vies)` : simule une partie où le joueur propose les lettres de `propositions` dans l'ordre. Une lettre déjà proposée est ignorée ; une lettre absente du mot coûte une vie. La partie s'arrête dès que le mot est trouvé ou que les vies sont épuisées (les lettres restantes sont ignorées). Renvoie le tuple `(gagne, erreurs, motif_final)`.
+- `compatible(mot, motif, proposees)` : `True` si `mot` peut être le mot caché : même longueur, mêmes lettres aux positions découvertes, et aucune lettre déjà proposée aux positions encore cachées (elle aurait été découverte).
+- `meilleure_lettre(dictionnaire, motif, proposees)` : parmi les lettres pas encore proposées, celle qui apparaît dans le plus grand nombre de mots **compatibles** (la première dans l'alphabet en cas d'égalité).
+- `ordinateur(mot, dictionnaire, vies)` : l'ordinateur joue seul en proposant à chaque fois la meilleure lettre. Renvoie le tuple `(gagne, propositions)` où `propositions` est le texte des lettres proposées, dans l'ordre.
+
+<Indices>
+<Indice>
+
+`partie` et `ordinateur` partagent le même déroulement : une boucle, une lettre, une mise à jour des vies et du motif. Écrire `masque` d'abord : un mot est trouvé quand son motif ne contient plus de `_`.
+
+</Indice>
+<Indice>
+
+Dans `compatible`, parcourir les positions : une position découverte impose la lettre, une position cachée interdit les lettres déjà proposées.
+
+</Indice>
+<Indice>
+
+Pour `meilleure_lettre`, compter les mots compatibles qui **contiennent** chaque lettre (un mot compte une fois, même si la lettre y apparaît plusieurs fois).
+
+</Indice>
+<Indice>
+
+```text
+(cœur du programme : le choix de l'ordinateur)
+FONCTION meilleure_lettre(dictionnaire, motif, proposees)
+    meilleure ← "" ; record ← -1
+    POUR CHAQUE lettre DE "abcdefghijklmnopqrstuvwxyz"
+        SI lettre ∉ proposees ALORS
+            n ← nombre de mots du dictionnaire compatibles avec (motif, proposees) qui contiennent lettre
+            SI n > record ALORS meilleure ← lettre ; record ← n
+    RENVOYER meilleure
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+ALPHABET = "abcdefghijklmnopqrstuvwxyz"
+
+
+def masque(mot: str, proposees: str) -> str:
+    resultat = ""
+    for c in mot:
+        resultat = resultat + (c if c in proposees else "_")
+    return resultat
+
+
+def partie(mot: str, propositions: str, vies: int) -> tuple:
+    proposees = ""
+    erreurs = 0
+    for lettre in propositions:
+        if "_" not in masque(mot, proposees) or erreurs >= vies:
+            break
+        if lettre in proposees:
+            continue
+        proposees = proposees + lettre
+        if lettre not in mot:
+            erreurs = erreurs + 1
+    motif = masque(mot, proposees)
+    return ("_" not in motif, erreurs, motif)
+
+
+def compatible(mot: str, motif: str, proposees: str) -> bool:
+    if len(mot) != len(motif):
+        return False
+    for i in range(len(mot)):
+        if motif[i] == "_":
+            if mot[i] in proposees:
                 return False
-        return True
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'est_premier' in locals(), "La fonction 'est_premier' n'est pas définie."
-assert est_premier(13) is True
-assert est_premier(15) is False
-    ```
-    </Verification>
-  </ExerciseSection>
+        elif mot[i] != motif[i]:
+            return False
+    return True
 
-  <ExerciseSection id="boucles-5-2" label="5.2 [Difficile] - Temps de vol Syracuse" type="python">
-    <Enonce>
-    ### Exercice 5.2 [Difficile] : Temps de vol Syracuse
-    **Écrire une fonction `syracuse_vol` qui prend un entier `n` et renvoie le nombre d'étapes pour atteindre 1 (conjecture de Syracuse).**
 
-    <Correction>
-    ```python
-    def syracuse_vol(n: int) -> int:
-        etapes = 0
-        while n > 1:
-            if n % 2 == 0:
-                n //= 2
-            else:
-                n = n * 3 + 1
-            etapes += 1
-        return etapes
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'syracuse_vol' in locals(), "La fonction 'syracuse_vol' n'est pas définie."
-assert syracuse_vol(1) == 0
-assert syracuse_vol(3) == 7
-assert syracuse_vol(10) == 6
-    ```
-    </Verification>
-  </ExerciseSection>
+def meilleure_lettre(dictionnaire: str, motif: str, proposees: str) -> str:
+    meilleure = ""
+    record = -1
+    for lettre in ALPHABET:
+        if lettre not in proposees:
+            n = 0
+            for mot in dictionnaire.split():
+                if compatible(mot, motif, proposees) and lettre in mot:
+                    n = n + 1
+            if n > record:
+                meilleure = lettre
+                record = n
+    return meilleure
 
-  <ExerciseSection id="boucles-5-3" label="5.3 [Difficile] - Compter les premiers" type="python">
-    <Enonce>
-    ### Exercice 5.3 [Difficile] : Compter les premiers
-    **Écrire une fonction `compter_premiers_jusqua` qui prend un entier `n` et renvoie combien de nombres premiers il y a entre 2 et `n` inclus.**
 
-    <Correction>
-    ```python
-    def compter_premiers_jusqua(n: int) -> int:
-        compteur = 0
-        for candidat in range(2, n + 1):
-            premier = True
-            for diviseur in range(2, candidat):
-                if candidat % diviseur == 0:
-                    premier = False
-                    break
-            if premier:
-                compteur += 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_premiers_jusqua' in locals(), "La fonction 'compter_premiers_jusqua' n'est pas définie."
-assert compter_premiers_jusqua(10) == 4
-assert compter_premiers_jusqua(2) == 1
-    ```
-    </Verification>
-  </ExerciseSection>
+def ordinateur(mot: str, dictionnaire: str, vies: int) -> tuple:
+    proposees = ""
+    erreurs = 0
+    while "_" in masque(mot, proposees) and erreurs < vies:
+        lettre = meilleure_lettre(dictionnaire, masque(mot, proposees), proposees)
+        proposees = proposees + lettre
+        if lettre not in mot:
+            erreurs = erreurs + 1
+    return ("_" not in masque(mot, proposees), proposees)
+```
 
-  <ExerciseSection id="boucles-5-4" label="5.4 [Difficile] - Chaîne Syracuse" type="python">
-    <Enonce>
-    ### Exercice 5.4 [Difficile] : Chaîne Syracuse
-    **Écrire une fonction `chaine_syracuse` qui prend un entier `depart` et renvoie la suite de Syracuse sous forme de chaîne, valeurs séparées par `>` jusqu'à `1`.**
-    *Exemple : `chaine_syracuse(10)` donne `"10>5>16>8>4>2>1"`.*
+</Correction>
+</Enonce>
+<Verification>
 
-    <Correction>
-    ```python
-    def chaine_syracuse(depart: int) -> str:
-        resultat = str(depart)
-        n = depart
-        while n != 1:
-            if n % 2 == 0:
-                n //= 2
-            else:
-                n = n * 3 + 1
-            resultat += ">" + str(n)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'chaine_syracuse' in locals(), "La fonction 'chaine_syracuse' n'est pas définie."
-assert chaine_syracuse(10) == "10>5>16>8>4>2>1"
-assert chaine_syracuse(1) == "1"
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+D = "renard loup lapin blaireau belette fouine herisson chevreuil sanglier ecureuil hibou chouette corbeau pie mesange merle grive moineau pinson faucon"
+assert masque("renard", "rnz") == "r_n_r_" and masque("loup", "") == "____" and masque("pie", "pie") == "pie", "Motifs."
+assert partie("loup", "aeloup", 6) == (True, 2, "loup"), "Gagné avec 2 erreurs."
+assert partie("loup", "llzzyxo", 2) == (False, 2, "l___"), "Lettre répétée ignorée ; perdu après 2 erreurs."
+assert partie("pie", "piexyz", 1) == (True, 0, "pie"), "Les lettres après la victoire sont ignorées."
+assert compatible("renard", "r_n_r_", "rnz") and not compatible("sanglier", "r_n_r_", "rnz"), "Compatibilité et longueur."
+assert not compatible("lapin", "l____", "lpz") and compatible("loup", "l__p", "lpz"), "Une lettre proposée ne peut pas rester cachée."
+assert meilleure_lettre(D, "_____", "") == "i", "Sur les mots de 5 lettres, i est dans le plus de mots."
+assert meilleure_lettre(D, "r_____", "r") == "a" and meilleure_lettre("ab ac", "__", "") == "a", "Choix avec un motif ; égalité alphabétique."
+for mot in D.split():
+    gagne, props = ordinateur(mot, D, 3)
+    assert gagne and sum(1 for c in props if c not in mot) < 3, f"L'ordinateur trouve « {mot} » avec moins de 3 erreurs."
+gagne, props = ordinateur("renard", D, 6)
+assert props[0] in "aeinr" and masque("renard", props) == "renard", "Il commence par une lettre fréquente et trouve le mot."
+```
 
-  <ExerciseSection id="boucles-5-5" label="5.5 [Difficile] - Carré par additions impaires" type="python">
-    <Enonce>
-    ### Exercice 5.5 [Difficile] : Carré par additions impaires
-    **Écrire une fonction `carre_par_additions` qui prend un entier `n` ≥ 0 et calcule `n²` en additionnant les `n` premiers impairs (1 + 3 + 5 + ...).**
-
-    <Correction>
-    ```python
-    def carre_par_additions(n: int) -> int:
-        somme = 0
-        impair = 1
-        for _ in range(n):
-            somme += impair
-            impair += 2
-        return somme
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'carre_par_additions' in locals(), "La fonction 'carre_par_additions' n'est pas définie."
-assert carre_par_additions(4) == 16
-assert carre_par_additions(0) == 0
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="boucles-5-6" label="5.6 [Difficile] - Somme des impairs" type="python">
-    <Enonce>
-    ### Exercice 5.6 [Difficile] : Somme des impairs
-    **Écrire une fonction `somme_impairs_jusqua` qui prend un entier `n` et renvoie la somme des impairs positifs ≤ `n`.**
-
-    <Correction>
-    ```python
-    def somme_impairs_jusqua(n: int) -> int:
-        somme = 0
-        for i in range(1, n + 1, 2):
-            somme += i
-        return somme
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'somme_impairs_jusqua' in locals(), "La fonction 'somme_impairs_jusqua' n'est pas définie."
-assert somme_impairs_jusqua(5) == 9
-assert somme_impairs_jusqua(6) == 9
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  {/* ========================================== */}
-  {/* CATÉGORIE 6 : EXPERT (6.1 à 6.3)            */}
-  {/* ========================================== */}
-
-  <ExerciseSection id="boucles-6-1" label="6.1 [Expert] - Plus longue série" type="python">
-    <Enonce>
-    ### Exercice 6.1 [Expert] : Plus longue série
-    **Écrire une fonction `plus_longue_serie` qui prend une chaîne `texte` et renvoie la longueur de la plus longue série de caractères identiques consécutifs.**
-    *Exemple : `plus_longue_serie("aaabbcc")` donne `3`.*
-
-    <Correction>
-    ```python
-    def plus_longue_serie(texte: str) -> int:
-        if texte == "":
-            return 0
-        meilleur = 1
-        courant = 1
-        for i in range(1, len(texte)):
-            if texte[i] == texte[i - 1]:
-                courant += 1
-                if courant > meilleur:
-                    meilleur = courant
-            else:
-                courant = 1
-        return meilleur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'plus_longue_serie' in locals(), "La fonction 'plus_longue_serie' n'est pas définie."
-assert plus_longue_serie("aaabbcc") == 3
-assert plus_longue_serie("abc") == 1
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="boucles-6-2" label="6.2 [Expert] - Chiffrement de César" type="python">
-    <Enonce>
-    ### Exercice 6.2 [Expert] : Chiffrement de César
-    **Écrire une fonction `cesar` qui prend une chaîne de lettres minuscules `texte` et un entier `decalage`, puis renvoie le texte chiffré (décalage circulaire). Utiliser `if "a" <= lettre <= "z"` pour filtrer les lettres.**
-
-    <Correction>
-    ```python
-    def cesar(texte: str, decalage: int) -> str:
-        resultat = ""
-        for lettre in texte:
-            if "a" <= lettre <= "z":
-                code = (ord(lettre) - ord("a") + decalage) % 26
-                resultat += chr(code + ord("a"))
-            else:
-                resultat += lettre
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'cesar' in locals(), "La fonction 'cesar' n'est pas définie."
-assert cesar("abc", 3) == "def"
-assert cesar("xyz", 3) == "abc"
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="boucles-6-3" label="6.3 [Expert] - Doublement d'un capital" type="python">
-    <Enonce>
-    ### Exercice 6.3 [Expert] : Doublement d'un capital
-    **Écrire une fonction `annees_doublement` qui prend un capital initial et un taux d'intérêt annuel, et renvoie le nombre d'années pour doubler le capital (`while`).**
-
-    <Correction>
-    ```python
-    def annees_doublement(capital: float, taux: float) -> int:
-        cible = capital * 2
-        annees = 0
-        while capital < cible:
-            capital += capital * taux
-            annees += 1
-        return annees
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'annees_doublement' in locals(), "La fonction 'annees_doublement' n'est pas définie."
-assert annees_doublement(1000, 0.05) == 15
-assert annees_doublement(100, 0.10) == 8
-    ```
-    </Verification>
-  </ExerciseSection>
+</Verification>
+</ExerciseSection>
 
 </ExerciseTabs>

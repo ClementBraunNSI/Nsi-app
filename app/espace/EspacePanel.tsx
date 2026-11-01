@@ -6,6 +6,7 @@ import {
   Award,
   BookOpen,
   Calendar,
+  CalendarDays,
   CheckCircle2,
   ClipboardList,
   MessageSquare,
@@ -146,6 +147,17 @@ export function EspacePanel({ data }: { data: EspaceData }) {
             </div>
           }
         />
+
+        {data.profile.classe ? (
+          <Link href="/defi" className="challenge-banner">
+            <CalendarDays size={20} aria-hidden />
+            <span className="min-w-0 flex-1">
+              <b>Défi du lundi</b>
+              <small>Un exercice inédit chaque semaine, à réussir avant lundi prochain.</small>
+            </span>
+            <span className="challenge-banner-cta">Y aller</span>
+          </Link>
+        ) : null}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <Card className="lg:col-span-1">

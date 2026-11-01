@@ -4,6 +4,8 @@ export type StatementParts = {
   indice?: string;
   indiceTitle?: string;
   exemples?: string;
+  /** <Indices> : indices révélés un par un, le dernier est le pseudo-code. */
+  hints?: string[];
 };
 
 type SectionKind = 'consignes' | 'indice' | 'exemples' | 'correction';
@@ -50,9 +52,10 @@ function stripRepeatedTitle(enonce: string, label: string) {
 }
 
 /** Drop solution, test source and editor starter code before markdown is sent to the browser. The énoncé stays. */
-export function stripHiddenExerciseBlocks(markdown: string) {
-  return (markdown || '')
-    .replace(/<Correction>[\s\S]*?<\/Correction>/gi, '')
+export function stripHiddenExerciseBlocks(markdown: string, options: { keepCorrection?: boolean } = {}) {
+  // La correction n'est gardée que pour le mode projection d'un compte enseignant (révélée au clic).
+  const withoutCorrection = options.keepCorrection ? (markdown || '') : (markdown || '').replace(/<Correction>[\s\S]*?<\/Correction>/gi, '');
+  return withoutCorrection
     .replace(/<Verification>[\s\S]*?<\/Verification>/gi, '')
     .replace(/<CodeDepart>[\s\S]*?<\/CodeDepart>/gi, '')
     .replace(/<BaseSQL>[\s\S]*?<\/BaseSQL>/gi, '');
@@ -74,13 +77,30 @@ export function stripSiteComponents(markdown: string) {
     .join('');
 }
 
-function withoutHiddenSolution(content: string) {
-  return stripSiteComponents(stripHiddenExerciseBlocks(content));
+function dedentBlock(text: string) {
+  const lines = text.replace(/^\s*\n/, '').replace(/\s+$/, '').split('\n');
+  const indents = lines.filter((line) => line.trim()).map((line) => line.search(/\S/));
+  const min = indents.length ? Math.min(...indents) : 0;
+  return lines.map((line) => line.slice(Math.min(min, line.search(/\S|$/)))).join('\n').trim();
+}
+
+/** Sort les blocs <Indices> de l'énoncé : chaque <Indice> devient un texte Markdown. */
+export function extractHints(markdown: string): { rest: string; hints: string[] } {
+  const hints: string[] = [];
+  const rest = (markdown || '').replace(/<Indices>([\s\S]*?)<\/Indices>/g, (_, block: string) => {
+    for (const hint of block.matchAll(/<Indice>([\s\S]*?)<\/Indice>/g)) {
+      const text = stripSiteComponents(dedentBlock(hint[1]));
+      if (text) hints.push(text);
+    }
+    return '';
+  });
+  return { rest, hints };
 }
 
 /** Split an énoncé into the blocks the sheet actually wrote. Correction and hidden solutions are dropped. */
 export function splitStatement(content: string, label = ''): StatementParts {
-  const source = withoutHiddenSolution(content);
+  const { rest, hints } = extractHints(stripHiddenExerciseBlocks(content));
+  const source = stripSiteComponents(rest);
   const buckets: Record<'enonce' | 'consignes' | 'indice' | 'exemples', string[]> = {
     enonce: [],
     consignes: [],
@@ -120,5 +140,6 @@ export function splitStatement(content: string, label = ''): StatementParts {
     indice,
     indiceTitle: indice ? indiceTitle || 'Indice' : undefined,
     exemples: pack(buckets.exemples),
+    hints: hints.length ? hints : undefined,
   };
 }
