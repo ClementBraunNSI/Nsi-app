@@ -117,10 +117,10 @@ export default function AboutPage() {
             </h1>
             <p className="mb-8 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] px-5 py-4 text-base leading-relaxed text-[var(--muted)]">
               Bonjour à tous,
-              Je suis Clément BRAUN, <strong className="font-semibold text-[var(--accent)]">enseignant certifié de sciences informatiques</strong> dans l'académie de Lille, passioné d'informatique, de programmation et des nouvelles technologies. <br/>
-              Certains se demanderont pourquoi j'ai choisi le renard comme mascotte? C'est simple, c'est un animal intelligent, malin et très curieux. Mais c'est aussi un animal qui est attaché à son groupe lorsque les ressources sont abondantes.
-              Ce site contient toutes les ressources necessaires à la réussite des élèves en <strong className="font-semibold text-[var(--accent)]">seconde, première et terminale</strong> et plus encore. 
-              Choisir le renard a dont été une évidence, les ressources étant présentes en nombre, tous peuvent donc progresser et réussir en mettant à l'honneur l'entraide et la solidarité.
+              Je suis Clément BRAUN, <strong className="font-semibold text-[var(--accent)]">enseignant certifié de sciences informatiques</strong> dans l'académie de Lille, passionné d'informatique, de programmation et des nouvelles technologies. <br/>
+              Certains se demanderont pourquoi j'ai choisi le renard comme mascotte. C'est un animal intelligent, malin et très curieux. Mais c'est aussi un animal qui est attaché à son groupe lorsque les ressources sont abondantes.
+              Ce site contient toutes les ressources nécessaires à la réussite des élèves en <strong className="font-semibold text-[var(--accent)]">seconde, première et terminale</strong> et plus encore. 
+              Choisir le renard a donc été une évidence : comme les ressources sont nombreuses, chacun peut progresser et réussir, en misant sur l'entraide et la solidarité.
             </p>
             <div className="mb-8 space-y-2 text-lg leading-relaxed text-[var(--muted)]">
               <p>La <strong className="font-semibold text-[var(--accent)]">SNT</strong> s'adresse à tous les élèves de <strong className="font-semibold text-[var(--accent)]">seconde</strong>.</p>
@@ -168,14 +168,14 @@ export default function AboutPage() {
               <Trees size={24} /> Écosystème & Engagement
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-6 sm:mb-8 leading-tight tracking-tight">
-              Bien plus qu'une simple <span className="text-emerald-300">mascotte.</span>
+              Pourquoi un <span className="text-emerald-300">renard</span> ?
             </h2>
             <div className="space-y-5 text-emerald-100 text-base sm:text-lg leading-relaxed">
               <p>
-                Le choix du renard n'est pas seulement esthétique. C'est un animal qui <strong>fédère</strong> par son intelligence et sa capacité d'adaptation, des qualités essentielles en informatique.
+                Le renard a été choisi pour son intelligence et sa capacité d'adaptation, deux qualités utiles en informatique, et parce qu'il <strong>fédère</strong> facilement.
               </p>
               <p>
-                Mais au-delà du code, le renard est un symbole fort de notre lien avec la nature. À travers ce thème, je souhaite rappeler l'importance de la <strong>préservation de la biodiversité</strong>. Apprendre les sciences numériques, c'est aussi comprendre le monde qui nous entoure pour mieux le protéger.
+                Il rappelle aussi notre lien avec la nature. À travers ce thème, je souhaite rappeler l'importance de la <strong>préservation de la biodiversité</strong>, car les sciences numériques aident aussi à comprendre le monde qui nous entoure et à le protéger.
               </p>
             </div>
           </div>

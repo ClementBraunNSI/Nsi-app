@@ -141,9 +141,9 @@ audience: public
     1.  Reprendre la structure `Heure` de l'exercice 1.
     2.  Écrire une fonction `tick(Heure *t)` (Noter le pointeur !) qui ajoute une seconde à l'heure.
     3.  **Attention aux retenues :**
-        *   Si secondes > 59 -> secondes = 0 et minutes + 1
-        *   Si minutes > 59 -> minutes = 0 et heures + 1
-        *   Si heures > 23 -> heures = 0
+        *   Si secondes > 59, alors secondes = 0 et minutes augmente de 1
+        *   Si minutes > 59, alors minutes = 0 et heures augmente de 1
+        *   Si heures > 23, alors heures = 0
     4.  Tester en passant de `23:59:59` à `00:00:00`.
     </Enonce>
     <Correction>

@@ -78,7 +78,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 
       *Attention : l'indice x est la colonne, y est la ligne. `lignes[y][x]` se range dans `grille[x, y]`.*
 
-      Écrire `Afficher()` : une double boucle dessine la grille. Écrire `EstTraversable(int x, int y)` : faux sur un `#`, faux hors de la grille. Écrire `EstHauteHerbe(int x, int y)` : vrai seulement sur `*`.
+      Écrire `Afficher()`, qui dessine la grille avec une double boucle, puis `EstTraversable(int x, int y)`, qui renvoie faux sur un `#` ou hors de la grille, et enfin `EstHauteHerbe(int x, int y)`, qui ne renvoie vrai que sur une case `*`.
 
       `EstTraversable(2, 2)` vaut vrai. `EstTraversable(0, 0)` vaut faux. `EstHauteHerbe(9, 1)` vaut vrai (le premier `*` de la deuxième ligne).
     </Enonce>
@@ -86,7 +86,7 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 
   <ExerciseSection id="foxmon-carte-2" label="Le dresseur" type="autre">
     <Enonce>
-      Créer `Dresseur` : `Nom`, `X`, `Y`. Départ : nom `Joueur`, position `(2, 2)`.
+      Créer la classe `Dresseur`, avec `Nom`, `X` et `Y`. Au départ, le dresseur s'appelle `Joueur` et se trouve en `(2, 2)`.
 
       ```csharp
       namespace FoxMon;
@@ -118,9 +118,9 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
       4. `Console.ReadKey(true)` : la touche n'est pas recopiée à l'écran
       5. flèche haut, bas, gauche, droite : appeler `Deplacer` avec le bon couple `(dx, dy)`
 
-      `Console.SetCursorPosition(x, y)` place le curseur pour le `@`. Sans `Clear`, la carte s'empile vers le bas : ce n'est pas le rendu attendu.
+      `Console.SetCursorPosition(x, y)` place le curseur pour le `@`. Sans `Clear`, les cartes successives s'affichent les unes sous les autres, ce qui n'est pas le rendu attendu.
 
-      Contrôle : dix pas vers la droite ne traversent pas un `#`. Le `@` reste sur la dernière case traversable.
+      Pour vérifier, faire dix pas vers la droite : le `@` ne doit traverser aucun `#` et doit rester sur la dernière case traversable.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -144,9 +144,9 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 
       Le combat remplace la carte. Dans `Main`, un booléen `enCombat` décide de la vue.
 
-      - `enCombat` faux : carte et flèches.
-      - Rencontre : `enCombat = true`, puis `Console.Clear()`.
-      - Combat fini (fuite, victoire ou capture) : `enCombat = false`, `Console.Clear()`, le dresseur est toujours sur la même case.
+      - quand `enCombat` est faux, la carte s'affiche et les flèches déplacent le dresseur ;
+      - lors d'une rencontre, `enCombat` passe à `true`, puis l'écran est effacé avec `Console.Clear()` ;
+      - à la fin du combat (fuite, victoire ou capture), `enCombat` repasse à `false` et l'écran est effacé, le dresseur étant toujours sur la même case.
 
       Le dresseur envoie le premier FoxMon de son équipe dont les PV sont supérieurs à 0. S'il n'en a aucun, la rencontre affiche `Aucun FoxMon en état.` et le combat n'a pas lieu.
     </Enonce>
@@ -154,27 +154,27 @@ Carte de test : largeur 20, hauteur 10. Apparition conseillée : `X = 2`, `Y = 2
 
   <ExerciseSection id="foxmon-combat-3" label="Le tour" type="autre">
     <Enonce>
-      Le joueur choisit : Attaquer, Capturer, Fuir.
+      Le joueur choisit entre Attaquer, Capturer et Fuir.
 
-      La table simple de cette séance : Eau contre Feu multiplie les dégâts par 2, et le programme affiche `C'est super efficace !`. Les autres couples de cette séance gardent le multiplicateur 1. La formule complète est à l'étape 7 : ne l'inventez pas encore.
+      La table simple de cette séance : Eau contre Feu multiplie les dégâts par 2, et le programme affiche `C'est super efficace !`. Les autres couples de cette séance gardent le multiplicateur 1. La formule complète est à l'étape 7 , et il ne faut pas l'anticiper.
 
-      Exemple : un RenardEau de puissance 10 attaque un RenardFeu. Dégâts affichés : 20, avec la phrase. Les PV du défenseur baissent de 20, et ne descendent pas sous 0.
+      Par exemple, quand un RenardEau de puissance 10 attaque un RenardFeu, le programme affiche 20 dégâts et la phrase ci-dessus. Les PV du défenseur baissent de 20, et ne descendent pas sous 0.
 
-      Le combat s'arrête quand l'un des deux est KO (PV à 0), quand la capture réussit, ou quand la fuite est choisie. La fuite de cette séance réussit toujours : on retrouvera la carte. La capture détaillée est à l'étape 5. En attendant, Capturer affiche `Pas encore disponible.` et le tour passe.
+      Le combat s'arrête quand l'un des deux est KO (PV à 0), quand la capture réussit, ou quand la fuite est choisie. Pour cette séance, la fuite réussit toujours et ramène sur la carte. La capture détaillée est à l'étape 5. En attendant, Capturer affiche `Pas encore disponible.` et le tour passe.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
 ## 3. L'héritage <Icone nom="dna" />
 
-Les `if` sur le type se regroupent dans des classes.
+Les `if` qui testent le type sont remplacés par des classes.
 
 <ExerciseTabs courseId="sio_foxmon_heritage" courseTitle="Héritage">
   <ExerciseSection id="foxmon-heritage-1" label="Mère et filles" type="autre">
     <Enonce>
       `FoxMon` devient la classe mère. Elle garde les PV, le niveau, la vitesse, et une méthode qui dit si le renard est KO (`Pv <= 0`).
 
-      Créer `RenardFeu`, `RenardEau` et `RenardPlante`. Le constructeur de chaque fille fixe le type et les statistiques de base. On ne les redemande pas à l'appel.
+      Créer `RenardFeu`, `RenardEau` et `RenardPlante`. Le constructeur de chaque fille fixe le type et les statistiques de base. Il n'est donc pas nécessaire de les fournir à l'appel.
 
       | Classe | Type | PV max | Vitesse |
       | --- | --- | --- | --- |
@@ -189,7 +189,7 @@ Les `if` sur le type se regroupent dans des classes.
 
 ## 4. Les attaques, lues dans un CSV <Icone nom="file-text" />
 
-Un FoxMon connaît jusqu'à 4 attaques. On ne les écrit pas une par une dans le code : elles viennent d'un fichier.
+Un FoxMon connaît jusqu'à 4 attaques. Elles ne sont pas écrites une par une dans le code, mais lues dans un fichier.
 
 ```csv
 Nom,Type,Puissance,Precision
@@ -204,23 +204,23 @@ Tranch'Herbe,Plante,55,95
     <Enonce>
       Créer la classe `Attaque` : `Nom`, `Type`, `Puissance`, `Precision`.
 
-      Créer `PanelAttaques` avec `ChargerToutesLesAttaques()`, qui lit `attaques.csv` à la racine du projet (`File.ReadAllLines`, puis `Split(',')`). La première ligne est l'en-tête : on ne l'instancie pas. Chaque ligne suivante devient une `Attaque`. Puissance et précision sont des entiers.
+      Créer `PanelAttaques` avec `ChargerToutesLesAttaques()`, qui lit `attaques.csv` à la racine du projet (`File.ReadAllLines`, puis `Split(',')`). La première ligne est l'en-tête, qui ne donne pas d'attaque. Chaque ligne suivante devient une `Attaque`. Puissance et précision sont des entiers.
 
       Après chargement du fichier ci-dessus, la liste contient 4 attaques. `Crocs Feu` a la puissance 65 et la précision 95.
 
-      Ajouter `List<Attaque> AttaquesConnues` sur `FoxMon`. À la création d'un `RenardFeu`, lui donner `Charge` et `Crocs Feu`. Pas plus de 4. Une cinquième est refusée.
+      Ajouter `List<Attaque> AttaquesConnues` sur `FoxMon`. À la création d'un `RenardFeu`, lui donner `Charge` et `Crocs Feu`. Un FoxMon ne peut pas connaître plus de 4 attaques : une cinquième est refusée.
     </Enonce>
   </ExerciseSection>
 
   <ExerciseSection id="foxmon-atk-2" label="Toucher ou rater" type="autre">
     <Enonce>
-      En combat, Attaquer affiche les attaques connues et le joueur en choisit une par son numéro. Un numéro hors liste redemande.
+      En combat, Attaquer affiche les attaques connues et le joueur en choisit une par son numéro. Si le numéro n'est pas dans la liste, la question est reposée.
 
-      Tirer un entier entre 1 et 100. S'il est strictement supérieur à `Precision`, l'attaque échoue : afficher `Raté !`, les PV ne bougent pas.
+      Tirer un entier entre 1 et 100. S'il est strictement supérieur à `Precision`, l'attaque échoue : afficher `Raté !` sans modifier les PV.
 
       `Charge` (précision 100) ne rate pas. `Crocs Feu` (95) rate quand le tir vaut 96, 97, 98, 99 ou 100.
 
-      Pour le test, fixer le tir à 96 : `Crocs Feu` rate. Le fixer à 95 : l'attaque part.
+      Pour tester, fixer le tir à 96 : `Crocs Feu` rate. Avec un tir fixé à 95, l'attaque touche.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -245,7 +245,7 @@ Tranch'Herbe,Plante,55,95
 
   <ExerciseSection id="foxmon-obj-2" label="La probabilité" type="autre">
     <Enonce>
-      Contre un sauvage seulement :
+      La capture n'est possible que contre un FoxMon sauvage :
 
       ```text
       p = 0,35 * (1 - PVactuels / PVmax) * multiplicateurBalle
@@ -255,7 +255,7 @@ Tranch'Herbe,Plante,55,95
 
       Exemple : PV max 20, PV actuels 10. `p = 0,35 * (1 - 10/20) * 1 = 0,175`. Sur un tir entre 0 et 1, la capture réussit si le tir est strictement inférieur à 0,175.
 
-      Réussite : le sauvage rejoint l'équipe s'il reste une place (moins de 6). Équipe pleine : il va dans une liste `Stockage`, et le message le dit. Échec : `La capture a échoué.`, la balle est consommée, le tour se termine.
+      Si la capture réussit, le sauvage rejoint l'équipe s'il reste une place (moins de 6). Si l'équipe est pleine, il va dans une liste `Stockage`, et un message l'indique. Si la capture échoue, le programme affiche `La capture a échoué.`, la balle est consommée et le tour se termine.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -267,18 +267,18 @@ Tranch'Herbe,Plante,55,95
     <Enonce>
       Un PNJ a un nom, une position, une portée de vision et une équipe. S'il regarde vers la gauche et que le joueur entre dans les cases à portée, le combat démarre. Une fois vaincu, il ne relance pas le combat.
 
-      Exemple : rival en `(10, 6)`, vision 4, équipe `RenardFeu` puis `RenardPlante`. Le joueur en `(8, 6)` est à distance 2 : le combat part. Le joueur en `(5, 6)` est à distance 5 : rien.
+      Par exemple, le rival est en `(10, 6)`, avec une vision de 4 et une équipe composée d'un `RenardFeu` puis d'un `RenardPlante`. Un joueur en `(8, 6)` est à distance 2 : le combat démarre. Un joueur en `(5, 6)` est à distance 5 : il ne se passe rien.
 
-      Règles du combat de dresseur : pas de capture. Le joueur peut changer de FoxMon, parmi ceux qui ne sont pas KO. L'adversaire envoie le premier de son équipe encore en état, et il attaque avec sa première attaque.
+      Lors d'un combat contre un dresseur, la capture est impossible. Le joueur peut changer de FoxMon, parmi ceux qui ne sont pas KO. L'adversaire envoie le premier de son équipe encore en état, et il attaque avec sa première attaque.
 
-      Victoire quand toute l'équipe adverse est KO. Le rival laisse alors 100 pièces et une potion. Défaite quand toute l'équipe du joueur est KO : retour à la case `(2, 2)`, les PV de l'équipe repassent au max, l'argent ne descend pas.
+      Le joueur gagne quand toute l'équipe adverse est KO : le rival lui laisse alors 100 pièces et une potion. Il perd quand toute son équipe est KO : il retourne alors en `(2, 2)`, les PV de son équipe reviennent au maximum, et son argent ne diminue pas.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-## 7. Dégâts, types, critiques <Icone nom="swords" />
+## 7. Dégâts, types et coups critiques <Icone nom="swords" />
 
-Table utilisée à partir de cette séance. Le type de l'attaque est comparé au type du défenseur.
+Voici la table utilisée à partir de cette séance. Le type de l'attaque est comparé au type du défenseur.
 
 | Attaque contre défenseur | Multiplicateur |
 | --- | --- |
@@ -295,12 +295,12 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
       degats = puissance * multiplicateurType * critique * variable
       ```
 
-      - critique : 10 % de chance, alors le facteur vaut 1,5, sinon 1
-      - variable : tiré entre 0,85 et 1,00 inclus
+      - critique : 1,5 avec une probabilité de 10 %, et 1 sinon
+      - variable : nombre tiré au hasard entre 0,85 et 1,00 inclus
 
       Le résultat est un entier, arrondi à l'inférieur, au moins 1 si l'attaque touche et que la puissance est positive.
 
-      Contrôles, critique forcé à non, variable forcée à 1 :
+      Contrôles, sans coup critique et avec une variable fixée à 1 :
 
       - `Crocs Feu` (65) sur un `RenardPlante` : 65 × 2 = 130, message `C'est super efficace !`
       - `Crocs Feu` sur un `RenardEau` : 65 × 0,5 = 32, message `Ce n'est pas très efficace...`
@@ -322,7 +322,7 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
 
       À chaque niveau : +2 PV max, +1 vitesse. Les PV actuels gagnent aussi les 2 points (un renard à 18/18 passe à 20/20).
 
-      Évolution, selon le niveau, sans changer les PV déjà gagnés :
+      Le FoxMon évolue selon son niveau, sans perdre les PV déjà gagnés :
 
       - niveau inférieur à 8 : le nom d'espèce affiché est Renardeau
       - de 8 à 15 inclus : Renard
@@ -364,16 +364,16 @@ Table utilisée à partir de cette séance. Le type de l'attaque est comparé au
 <ExerciseTabs courseId="sio_foxmon_save" courseTitle="Sauvegarde">
   <ExerciseSection id="foxmon-save-1" label="Écrire et relire" type="autre">
     <Enonce>
-      Une classe `Sauvegarde` contient : position du dresseur, équipe (espèce, surnom, niveau, PV, XP, attaques), inventaire, argent, noms des PNJ déjà vaincus.
+      Une classe `Sauvegarde` contient la position du dresseur, l'équipe (espèce, surnom, niveau, PV, XP, attaques), l'inventaire, l'argent et les noms des PNJ déjà vaincus.
 
       `Sauvegarder` écrit ce contenu en JSON avec `System.Text.Json`. `Charger` le relit. Les deux sont dans le menu, accessibles depuis la carte (touches indiquées à l'écran, par exemple `S` et `C`).
 
-      Contrôle : avancer, capturer ou soigner, sauvegarder, quitter le programme, relancer, charger. Le `@` est à la même case, l'équipe a les mêmes PV, le rival déjà vaincu ne relance pas le combat.
+      Pour vérifier, avancer, capturer ou soigner un FoxMon, sauvegarder, quitter le programme, le relancer et charger la partie. Le `@` doit être sur la même case, l'équipe doit avoir les mêmes PV, et le rival déjà vaincu ne doit pas relancer le combat.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-## 10. Ce qu'on rend <Icone nom="package" />
+## 10. Le travail à rendre <Icone nom="package" />
 
 Le dossier `FoxMon`, qui compile, avec un fichier par classe dans le namespace `FoxMon` :
 
@@ -384,4 +384,4 @@ Le dossier `FoxMon`, qui compile, avec un fichier par classe dans le namespace `
 - la capture `p = 0,175` sur l'exemple 10/20, interdite contre un dresseur ;
 - la sauvegarde JSON qu'on recharge après avoir quitté.
 
-Placer en tête de `Program.cs` un commentaire avec son nom et sa classe. Une fois que ce dossier tourne, et seulement alors, l'étape suivante consiste à porter l'affichage vers WinForms, WPF ou MonoGame. Le métier (dégâts, capture, sauvegarde) ne se réécrit pas dans les boutons.
+Placer en tête de `Program.cs` un commentaire avec son nom et sa classe. Une fois que ce dossier tourne, et seulement alors, l'étape suivante consiste à porter l'affichage vers WinForms, WPF ou MonoGame. La logique métier (dégâts, capture, sauvegarde) ne doit pas être réécrite dans les gestionnaires des boutons.

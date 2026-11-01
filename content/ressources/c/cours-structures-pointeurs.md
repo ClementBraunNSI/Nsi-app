@@ -17,7 +17,7 @@ C'est l'ancêtre direct de la notion d'objet.
 >
 > - <Icone nom="circle-check" /> **Organisation** : Regrouper des variables qui ont un sens ensemble (ex: x et y pour un Point).
 > - <Icone nom="circle-check" /> **Clarté** : Manipuler une seule variable (`personne`) au lieu de plusieurs (`nom`, `age`, `taille`).
-> - <Icone nom="circle-check" /> **Modularité** : Passer des paquets de données complexes à les fonctions.
+> - <Icone nom="circle-check" /> **Modularité** : Passer des paquets de données complexes aux fonctions.
 
 ---
 

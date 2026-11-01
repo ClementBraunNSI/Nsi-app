@@ -49,7 +49,7 @@ void incrementer(int *px) {
 
 ## Chaînes et tableaux
 
-Souvent un `char *` ou un `char tab[]` pointe vers du texte ; attention aux **tailles** et au `'\0'` en fin de chaîne.
+Souvent un `char *` ou un `char tab[]` pointe vers du texte. Il faut alors faire attention aux **tailles** et au `'\0'` en fin de chaîne.
 
 ## Mini-checklist
 

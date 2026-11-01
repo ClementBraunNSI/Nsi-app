@@ -43,14 +43,14 @@ audience: public
     bool estMajeur = true;
     ```
 
-    `Console.WriteLine` écrit une ligne dans la console, puis passe à la ligne. On lui passe un texte ou une variable. Il appelle la conversion en texte tout seul pour afficher.
+    `Console.WriteLine` écrit une ligne dans la console, puis passe à la ligne. On lui passe un texte ou une variable. Il convertit lui-même la valeur en texte pour l'afficher.
 
     ```csharp
     Console.WriteLine("Bonjour le monde !");
     Console.WriteLine(age); // Affiche la valeur de la variable
     ```
 
-    Une méthode se lit en trois endroits. Le type de retour se place avant le nom : `void` si elle ne renvoie rien, `int` ou `double` si elle calcule. Les paramètres se placent entre parenthèses, chacun avec son type. Le corps se place entre accolades. `return` sort de la méthode en rendant la valeur. Après un `return`, le reste du corps ne s'exécute pas.
+    Une méthode comporte trois parties. Le type de retour se place avant le nom : `void` si elle ne renvoie rien, `int` ou `double` si elle calcule. Les paramètres se placent entre parenthèses, chacun avec son type. Le corps se place entre accolades. `return` sort de la méthode en renvoyant la valeur. Après un `return`, le reste du corps ne s'exécute pas.
 
     ### Exercice 1.1 : Message de bienvenue
     **Écrire une méthode `static void AfficherBienvenue()` qui affiche "Bienvenue en C# !" dans la console.**
@@ -116,7 +116,7 @@ audience: public
   <ExerciseSection id="csharp-conditions-2" label="2. Conditions" type="autre">
     ## Décider avec `if`
 
-    `if` n'exécute le bloc entre accolades que si la condition est vraie. `else` prend le cas contraire. Les parenthèses autour de la condition sont obligatoires. Les accolades le sont aussi dès que le bloc dépasse une ligne, et on les met même pour une ligne : on voit où le bloc s'arrête.
+    `if` n'exécute le bloc entre accolades que si la condition est vraie. `else` traite le cas contraire. Les parenthèses autour de la condition sont obligatoires. Les accolades le sont aussi dès que le bloc dépasse une ligne, et on les écrit même pour une seule ligne, pour bien voir où le bloc s'arrête.
 
     ```csharp
     if (age >= 18) 
@@ -129,9 +129,9 @@ audience: public
     }
     ```
 
-    `>` et `<` comparent. `>=` et `<=` incluent l'égalité. `==` teste l'égalité et `!=` teste la différence. Comme en Python, `=` affecte et `==` compare. Une condition qui affecte par erreur ne dit pas ce qu'on croit.
+    `>` et `<` comparent. `>=` et `<=` incluent l'égalité. `==` teste l'égalité et `!=` teste la différence. Comme en Python, `=` affecte et `==` compare. Une condition qui affecte une valeur par erreur ne teste pas ce que l'on croit.
 
-    Plusieurs issues s'écrivent avec `else if`. Les tests se lisent dans l'ordre, et le premier qui est vrai gagne. Un âge de 10 satisfait aussi `<= 17`. S'il est testé en second, la branche « Enfant » ne s'exécute jamais.
+    Plusieurs issues s'écrivent avec `else if`. Les tests se lisent dans l'ordre, et seule la branche du premier test vrai est exécutée. Un âge de 10 satisfait aussi `<= 17`. S'il est testé en second, la branche « Enfant » ne s'exécute jamais.
 
     ```csharp
     if (age <= 12) 
@@ -148,7 +148,7 @@ audience: public
     }
     ```
 
-    Une méthode qui doit rendre une catégorie fait `return` dans chaque branche. Le compilateur vérifie qu'aucune branche n'oublie de rendre une valeur, quand le type de retour n'est pas `void`.
+    Une méthode qui doit renvoyer une catégorie contient un `return` dans chaque branche. Le compilateur vérifie qu'aucune branche n'oublie de rendre une valeur, quand le type de retour n'est pas `void`.
 
     ### Exercice 2.1 : Le plus grand
     **Écrire une méthode `static int Max(int a, int b)` qui retourne le plus grand des deux nombres.**
@@ -242,7 +242,7 @@ audience: public
   <ExerciseSection id="csharp-boucles-3" label="3. Boucles" type="autre">
     ## Répéter avec `for` et `while`
 
-    `for` sert quand on sait combien de tours on veut. Trois zones entre les parenthèses : l'initialisation (`int i = 0`), la condition d'arrêt (`i < 10`), et ce qui se passe à la fin de chaque tour (`i++`, qui ajoute 1). Le corps s'exécute tant que la condition est vraie. Ici, `i` prend les valeurs 0 à 9. Le 10 n'est pas affiché, parce que la condition est testée avant le tour.
+    `for` sert quand on sait combien de tours on veut. Les parenthèses contiennent trois parties : l'initialisation (`int i = 0`), la condition d'arrêt (`i < 10`), et ce qui se passe à la fin de chaque tour (`i++`, qui ajoute 1). Le corps s'exécute tant que la condition est vraie. Ici, `i` prend les valeurs 0 à 9. Le 10 n'est pas affiché, parce que la condition est testée avant le tour.
 
     ```csharp
     for (int i = 0; i < 10; i++) 
@@ -251,7 +251,7 @@ audience: public
     }
     ```
 
-    `while` ne compte pas tout seul. Il répète tant que la condition reste vraie. L'incrémentation est dans le corps. Si on l'oublie, `i` reste à 0, la condition reste vraie, et la boucle ne sort pas.
+    `while` ne gère pas de compteur. Il répète tant que la condition reste vraie. L'incrémentation est dans le corps. Si on l'oublie, `i` reste à 0, la condition reste vraie et la boucle ne s'arrête jamais.
 
     ```csharp
     int i = 0;
@@ -272,7 +272,7 @@ audience: public
     }
     ```
 
-    On choisit `for` quand la borne est un nombre ou une longueur. On choisit `while` quand l'arrêt dépend d'une condition qu'on ne sait pas écrire comme un compteur, une saisie, une valeur qui diminue jusqu'à un seuil.
+    On choisit `for` quand la borne est un nombre ou une longueur. On choisit `while` quand l'arrêt dépend d'une condition qui ne s'écrit pas comme un compteur, par exemple une saisie ou une valeur qui diminue jusqu'à un seuil.
 
     ### Exercice 3.1 : Compter jusqu'à N
     **Écrire une méthode `static void CompterJusqua(int n)` qui affiche les nombres de 1 à n.**
@@ -308,7 +308,7 @@ audience: public
   <ExerciseSection id="csharp-listes-4" label="4. Listes" type="autre">
     ## Une liste qui grandit
 
-    Un tableau a une taille fixée à la création. Une `List<T>` grandit quand on ajoute. Le `T` entre chevrons est le type des éléments : `List<int>` ne contient que des entiers, `List<string>` que des textes. Si l'on essaie de mélanger les deux, le compilateur refuse.
+    Un tableau a une taille fixée à la création. Une `List<T>`, elle, s'agrandit quand on ajoute des éléments. Le `T` entre chevrons est le type des éléments : `List<int>` ne contient que des entiers, `List<string>` que des textes. Si l'on essaie de mélanger les deux, le compilateur refuse.
 
     `new List<int>()` crée une liste vide. `Add` ajoute un élément à la fin. On peut aussi remplir dès la création, avec des accolades. `AddRange` ajoute tous les éléments d'une autre liste. L'accès se fait par l'indice, à partir de 0 : `maListe[0]` est le premier. `Count` donne le nombre d'éléments. Ce n'est pas `Length`, qui est la propriété des tableaux et des chaînes.
 
@@ -332,7 +332,7 @@ audience: public
     int taille = maListe.Count;
     ```
 
-    `for` parcourt par l'indice, utile quand on a besoin de la position. `foreach` parcourt par la valeur : plus court, et l'on ne peut pas se tromper de borne. On ne modifie pas la liste pendant un `foreach`. On la modifie dans un `for`, ou l'on construit une nouvelle liste.
+    `for` parcourt par l'indice, utile quand on a besoin de la position. `foreach` parcourt directement les valeurs : il est plus court, et l'on ne peut pas se tromper de borne. On ne modifie pas la liste pendant un `foreach`. On la modifie dans un `for`, ou l'on construit une nouvelle liste.
 
     ```csharp
     // Parcours avec for

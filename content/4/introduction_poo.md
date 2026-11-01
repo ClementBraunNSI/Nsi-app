@@ -11,19 +11,19 @@ audience: public
 
 # Introduction à la POO en C#
 
-Jusqu'ici, un programme est une suite de fonctions qui se passent des variables. Cela tient pour un calcul. Cela se défait dès que le même « client » possède un nom, un solde, et trois opérations qui doivent rester cohérentes entre elles. La **programmation orientée objet** range ces données et ces opérations dans un **objet**. On pense alors comme on décrit une chose : ce qu'elle est, ce qu'elle sait faire.
+Jusqu'ici, un programme était une suite de fonctions qui se transmettent des variables. Cette organisation suffit pour un calcul, mais elle devient difficile à maintenir dès qu'un même « client » possède un nom, un solde et plusieurs opérations qui doivent rester cohérentes entre elles. La **programmation orientée objet** regroupe ces données et ces opérations dans un **objet**. On décrit alors chaque élément du programme par ce qu'il est et par ce qu'il sait faire.
 
-On y gagne en réutilisation, parce qu'une classe écrite pour un écran sert au suivant. En maintenance, parce qu'un changement de règle se fait dans la classe, pas dans dix fonctions éparpillées. En modularité, parce que chaque classe a un sujet. Et en abstraction : celui qui utilise un compte appelle `Deposer`, il n'a pas à savoir comment le solde est rangé.
+Cette approche facilite la réutilisation, car une classe écrite pour un écran peut servir au suivant, et la maintenance, car un changement de règle se fait dans la classe et non dans dix fonctions éparpillées. Elle rend aussi le programme plus modulaire, puisque chaque classe a un rôle précis, et elle permet l'abstraction : celui qui utilise un compte appelle `Deposer` sans avoir à savoir comment le solde est stocké.
 
 ## L'objet et la classe
 
-Un **objet** réunit des **données**, ce qu'il est, et des **comportements**, ce qu'il fait. Les données s'appellent attributs ou propriétés. Les comportements s'appellent méthodes. Un chien a un nom, une race, un âge, une couleur, un poids. Il aboie, mange, court, dort. Les deux vont ensemble : `Manger` peut modifier le poids, parce que les deux appartiennent au même objet.
+Un **objet** réunit des **données**, qui décrivent ce qu'il est, et des **comportements**, qui décrivent ce qu'il fait. Les données s'appellent des attributs ou des propriétés, et les comportements des méthodes. Un chien a par exemple un nom, une race, un âge, une couleur et un poids, et il peut aboyer, manger, courir ou dormir. Données et comportements sont liés : `Manger` peut modifier le poids, parce que les deux appartiennent au même objet.
 
-Une **classe** est le modèle. Le plan d'architecte n'est pas une maison. La classe `Chien` n'est pas un chien. On construit autant d'objets qu'on veut à partir du même plan. Rex et Bella sont deux objets. Ils ont les mêmes propriétés, pas les mêmes valeurs.
+Une **classe** est le modèle des objets. De même qu'un plan d'architecte n'est pas une maison, la classe `Chien` n'est pas un chien. On peut construire autant d'objets que nécessaire à partir du même plan : Rex et Bella sont deux objets qui ont les mêmes propriétés, mais pas les mêmes valeurs.
 
 ## Écrire la classe
 
-Une classe se lit en trois bandes : les propriétés, le constructeur qui les remplit à la naissance, les méthodes.
+Une classe comporte trois parties : les propriétés, le constructeur, qui leur donne une valeur à la création de l'objet, et les méthodes.
 
 ```csharp
 public class NomDeLaClasse
@@ -36,7 +36,7 @@ public class NomDeLaClasse
 }
 ```
 
-Voici un chien complet. Les propriétés sont en syntaxe automatique : `{ get; set; }` crée, derrière, une variable qu'on n'écrit pas. Le **constructeur** porte le même nom que la classe. Il n'a pas de type de retour. Il s'exécute au `new`, et c'est le moment de donner un nom, une race, un âge, un poids. Les méthodes utilisent ces valeurs. `Manger` augmente un peu le poids : l'action modifie l'état, et l'état reste dans l'objet.
+Voici un chien complet. Les propriétés sont en syntaxe automatique : `{ get; set; }` crée automatiquement une variable cachée, qu'il n'est pas nécessaire d'écrire. Le **constructeur** porte le même nom que la classe et n'a pas de type de retour. Il s'exécute au moment du `new` : c'est là qu'on donne un nom, une race, un âge et un poids au chien. Les méthodes utilisent ensuite ces valeurs : `Manger` augmente un peu le poids, car l'action modifie l'état de l'objet, qui reste enregistré dans l'objet.
 
 ```csharp
 using System;
@@ -90,7 +90,7 @@ public class Chien
 }
 ```
 
-## Deux chiens, deux mémoires
+## Plusieurs instances d'une classe
 
 `new` fabrique une **instance**. `monChien` et `autreChien` sont deux objets distincts, même s'ils sont du type `Chien`. Faire vieillir Rex ne change pas l'âge de Bella.
 
@@ -122,11 +122,11 @@ public class Program
 }
 ```
 
-## Décider qui a le droit de modifier
+## Contrôler l'accès aux propriétés
 
-`public string Nom { get; set; }` est la forme la plus courte. `get` lit, `set` écrit, et n'importe quel code qui voit l'objet peut changer le nom.
+`public string Nom { get; set; }` est la forme la plus courte. `get` permet de lire la valeur et `set` de la modifier : n'importe quel code qui a accès à l'objet peut donc changer le nom.
 
-On serre cela quand la donnée ne doit pas être libre. `Solde` se lit de l'extérieur, mais seul le compte le modifie : `{ get; private set; }`. `NumeroCompte` n'a pas de `set`. On peut encore l'affecter dans le constructeur, ensuite il est figé. `Deposer` est le seul chemin pour augmenter le solde, et il refuse un montant négatif.
+On restreint cet accès quand la donnée ne doit pas être modifiée librement. `Solde` peut être lu depuis l'extérieur, mais seul le compte peut le modifier, grâce à `{ get; private set; }`. `NumeroCompte` n'a pas de `set` : on peut l'affecter dans le constructeur, mais il ne peut plus changer ensuite. `Deposer` est le seul moyen d'augmenter le solde, et cette méthode refuse un montant négatif.
 
 ```csharp
 public class CompteBancaire
@@ -154,7 +154,7 @@ public class CompteBancaire
 }
 ```
 
-Quand la règle est plus précise qu'un simple `private set`, on écrit la propriété en entier, avec un champ privé derrière, le *backing field*. Ici, un âge hors de 0 à 150 est refusé. `value` est le nom que C# donne à ce qu'on essaie d'affecter.
+Quand la règle est plus précise qu'un simple `private set`, on écrit la propriété en entier, avec un champ privé associé, appelé *backing field*. Ici, un âge qui n'est pas compris entre 0 et 150 est refusé. `value` désigne la valeur que l'on essaie d'affecter.
 
 ```csharp
 public class Personne
@@ -175,9 +175,9 @@ public class Personne
 }
 ```
 
-## Plusieurs façons de construire
+## Plusieurs constructeurs
 
-Sans constructeur écrit, C# en fournit un, vide, sans paramètre. Dès qu'un constructeur est écrit, celui-là disparaît. Il faut le remettre à la main s'il sert encore.
+Si aucun constructeur n'est écrit, C# en fournit un, vide et sans paramètre. Dès qu'un constructeur est écrit, ce constructeur par défaut disparaît, et il faut le réécrire s'il est encore utile.
 
 ```csharp
 public class Point
@@ -188,7 +188,7 @@ public class Point
 }
 ```
 
-Deux constructeurs du même nom, avec des paramètres différents, c'est une **surcharge**. Un rectangle se construit avec une largeur et une hauteur, ou avec un seul côté quand c'est un carré.
+Écrire deux constructeurs avec des paramètres différents s'appelle une **surcharge**. Un rectangle se construit avec une largeur et une hauteur, ou avec un seul côté quand c'est un carré.
 
 ```csharp
 public class Rectangle
@@ -212,7 +212,7 @@ public class Rectangle
 }
 ```
 
-Le second répète l'affectation. `: this(cote, cote)` le fait appeler le premier. La règle « largeur et hauteur sont posées ensemble » n'est écrite qu'une fois.
+Pour éviter que le second constructeur répète les affectations, `: this(cote, cote)` lui fait appeler le premier. La règle « largeur et hauteur sont fixées ensemble » n'est ainsi écrite qu'une seule fois.
 
 ```csharp
 public class Rectangle
@@ -235,9 +235,9 @@ public class Rectangle
 }
 ```
 
-## Ce qu'une méthode rend
+Pour éviter que le second constructeur répète les affectations, `: this(cote, cote)` lui fait appeler le premier. La règle « largeur et hauteur sont fixées ensemble » ## La valeur de retour d'une méthode
 
-Une méthode `void` agit et ne renvoie rien. Une méthode typée `int`, `string`, ou autre, calcule une valeur et la rend avec `return`. L'appelant décide ensuite de l'afficher, de la stocker, de la passer plus loin.
+Une méthode `void` agit sans rien renvoyer. Une méthode typée `int`, `string` ou autre calcule une valeur et la renvoie avec `return`. Le code appelant peut ensuite l'afficher, la stocker ou la transmettre à une autre méthode.
 
 ```csharp
 public class Calculatrice
@@ -278,9 +278,9 @@ public class Afficheur
 }
 ```
 
-## Trois piliers
+## Les trois piliers de la POO
 
-L'**encapsulation** cache le détail et n'expose que ce qui est utile. Trois niveaux reviennent sans cesse. `public` est visible partout. `private` ne l'est que dans la classe. `protected` l'est dans la classe et dans ses filles. Le solde privé ne se touche que par `Deposer`, qui vérifie le montant. Personne de l'extérieur ne peut écrire `_solde = -1000`.
+L'**encapsulation** cache les détails internes et n'expose que ce qui est utile. Trois niveaux d'accès sont très courants : `public` rend un élément visible partout, `private` seulement dans la classe, et `protected` dans la classe et dans ses classes filles. Le solde privé ne peut être modifié que par `Deposer`, qui vérifie le montant. Personne de l'extérieur ne peut écrire `_solde = -1000`.
 
 ```csharp
 public class CompteBancaire
@@ -301,7 +301,7 @@ public class CompteBancaire
 }
 ```
 
-L'**héritage** fait qu'une classe reçoit les propriétés et les méthodes d'une autre. `:` se lit « hérite de ». `base(nom)` appelle le constructeur de la mère avant le corps de la fille. `Chien` sait `Manger` sans l'avoir écrit, et `Aboyer` lui appartient en propre. Le cours suivant reprend ce mécanisme en détail.
+L'**héritage** permet à une classe de recevoir les propriétés et les méthodes d'une autre classe. Le symbole `:` se lit « hérite de », et `base(nom)` appelle le constructeur de la classe mère avant le corps de la classe fille. `Chien` sait ainsi `Manger` sans avoir écrit cette méthode, alors que `Aboyer` lui est propre. Le cours suivant reprend ce mécanisme en détail.
 
 ```csharp
 // CLASSE MÈRE
@@ -344,7 +344,7 @@ monChien.Manger();  // Méthode héritée de Animal
 monChien.Aboyer();  // Méthode propre à Chien
 ```
 
-Le **polymorphisme** veut que des objets de classes différentes répondent à la même méthode, chacun à sa façon. En C#, il faut l'autoriser. Dans la mère, `virtual` dit que les filles ont le droit de remplacer la méthode. Dans la fille, `override` dit qu'elles le font. Contrairement à Java, une méthode C# n'est pas virtuelle toute seule. Sans `virtual`, la fille ne redéfinit pas : elle cache, et l'appel via une variable `Animal` garderait le comportement de la mère.
+Le **polymorphisme** permet à des objets de classes différentes de répondre à la même méthode, chacun à sa façon. En C#, il faut l'autoriser explicitement : dans la classe mère, `virtual` indique que les filles peuvent remplacer la méthode, et dans la fille, `override` indique qu'elle la remplace. Contrairement à Java, une méthode C# n'est pas virtuelle par défaut. Sans `virtual`, la méthode de la fille ne redéfinit pas celle de la mère, elle la masque, et un appel à travers une variable de type `Animal` garderait le comportement de la mère.
 
 ```csharp
 public class Animal
@@ -372,7 +372,7 @@ public class Chat : Animal
 }
 ```
 
-On range alors un chien et un chat dans une `List<Animal>`. La boucle ne connaît que `Animal`. À l'exécution, c'est la méthode de l'objet réel qui part.
+On range alors un chien et un chat dans une `List<Animal>`. La boucle ne manipule que des `Animal`, mais à l'exécution, c'est la méthode de l'objet réel qui est appelée.
 
 ```csharp
 List<Animal> animaux = new List<Animal>();
@@ -388,4 +388,4 @@ foreach (Animal animal in animaux)
 // Miaou !
 ```
 
-La programmation objet repose sur trois principes : l'encapsulation, l'héritage et le polymorphisme. Le premier protège l'état. Le deuxième partage ce qui est commun. Le troisième laisse chaque fille décider du geste, sans que le code qui appelle ait à connaître la fille.
+La programmation objet repose sur trois principes : l'encapsulation, l'héritage et le polymorphisme. L'encapsulation protège l'état des objets, l'héritage permet de partager ce qui est commun, et le polymorphisme laisse chaque classe fille définir son propre comportement, sans que le code appelant ait besoin de la connaître.

@@ -12,9 +12,9 @@ audience: public
 # Mission AP2 : Gestion de flotte AutoRent
 
 Le but de cette mission est de moderniser la gestion du parc d'AutoRent, une agence de location.
-Durée : 16 h (4 h par semaine, 4 semaines), atelier de professionnalisation, semestre 2.
+Cette mission dure 16 h (4 h par semaine pendant 4 semaines) et se déroule en atelier de professionnalisation, au semestre 2.
 
-Le siège envoie chaque jour un CSV brut. Deux outils sont à construire, qui se parlent par un fichier :
+Le siège envoie chaque jour un fichier CSV brut. Il faut construire deux outils, qui échangent leurs données par un fichier :
 
 1. une application console C#, qui lit, contrôle et structure les véhicules ;
 2. une page web (HTML, CSS, PHP), qui montre aux clients uniquement les véhicules disponibles.
@@ -24,11 +24,11 @@ Le siège envoie chaque jour un CSV brut. Deux outils sont à construire, qui se
 **Ressources :**
 - [Fichier flotte.csv](/assets/ap2/flotte.csv)
 
-## 1. La veille, avant le code <Icone nom="paperclip" />
+## 1. La veille, avant de coder <Icone nom="paperclip" />
 
 La note tient sur une page au maximum et se rend avec le projet.
 
-1. Héritage en C# : à quoi sert `:`, quelle est la différence entre la classe de base et la classe dérivée, peut-on hériter de plusieurs classes.
+1. L'héritage en C# : à quoi sert `:`, quelle différence y a-t-il entre la classe de base et la classe dérivée, et peut-on hériter de plusieurs classes ?
 2. Polymorphisme : à quoi servent `virtual` et `override`, et comment une `List<Vehicule>` contient à la fois des voitures et des motos.
 3. Un schéma, même crayonné, où `Voiture` et `Moto` héritent de `Vehicule`. Le camping-car s'y ajoute dans la section suivante.
 
@@ -43,9 +43,9 @@ Moto;EF-456-GH;Yamaha;MT-07;45;5000;En maintenance;689;A
 CampingCar;IJ-789-KL;Fiat;Ducato;120;45000;Loué;7.2;4
 ```
 
-Lecture de la première ligne de données : une `Voiture`, immatriculation `AB-123-CD`, marque Peugeot, modèle 208, prix 35, 12 000 km, état Disponible, 5 places, climatisation Oui.
+La première ligne de données décrit une `Voiture` : immatriculation `AB-123-CD`, marque Peugeot, modèle 208, prix 35, 12 000 km, état Disponible, 5 places, climatisation Oui.
 
-La moto : cylindrée 689, permis A. Le camping-car : longueur 7,2 m, 4 couchages.
+La moto a une cylindrée de 689 cm³ et demande le permis A. Le camping-car mesure 7,2 m et offre 4 couchages.
 
 <ExerciseTabs courseId="sio_ap2_modele" courseTitle="Modèle AutoRent">
   <ExerciseSection id="ap2-modele-1" label="Les classes" type="autre">
@@ -58,9 +58,9 @@ La moto : cylindrée 689, permis A. Le camping-car : longueur 7,2 m, 4 couchages
 
       La colonne `Type` choisit la classe à construire. Une ligne `Voiture` ne devient pas une `Moto`.
 
-      *Attention : un prix négatif est refusé, la ligne n'entre pas dans la liste. Une immatriculation qui n'a pas la forme deux lettres, trois chiffres, deux lettres (comme `AB-123-CD`) est refusée aussi. Afficher la ligne rejetée, et continuer le fichier.*
+      *Attention : une ligne avec un prix négatif est refusée et n'entre pas dans la liste. Une immatriculation qui n'a pas la forme deux lettres, trois chiffres, deux lettres (comme `AB-123-CD`) est refusée aussi. Afficher la ligne rejetée, puis continuer la lecture du fichier.*
 
-      Après chargement de l'exemple : 3 véhicules, dont 1 disponible (la 208). La moto est en maintenance, le camping-car est loué.
+      Après le chargement de l'exemple, la liste contient 3 véhicules, dont un seul disponible (la 208). La moto est en maintenance, le camping-car est loué.
     </Enonce>
   </ExerciseSection>
 
@@ -68,7 +68,7 @@ La moto : cylindrée 689, permis A. Le camping-car : longueur 7,2 m, 4 couchages
     <Enonce>
       `AfficherDetails()` est `virtual` sur `Vehicule` et `override` dans chaque classe. Une voiture affiche les places et la climatisation. Une moto affiche la cylindrée et le permis. Un camping-car affiche la longueur et les couchages. Le reste (immatriculation, marque, modèle, prix, état) est commun : il est écrit une fois, dans la classe de base.
 
-      Contrôle sur la 208 : on lit `AB-123-CD`, `Peugeot`, `208`, `35`, `Disponible`, `5` places, climatisation `Oui`.
+      Pour la 208, on doit lire `AB-123-CD`, `Peugeot`, `208`, `35`, `Disponible`, `5` places, climatisation `Oui`.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -100,14 +100,14 @@ Au démarrage, l'application charge `flotte.csv`. Le menu ne plante pas sur un c
 
   <ExerciseSection id="ap2-console-2" label="Devis et statistiques" type="autre">
     <Enonce>
-      Le devis multiplie le prix par jour par le nombre de jours. Au-delà de 7 jours, une remise de 10 % s'applique sur le total. 7 jours tout juste : pas de remise.
+      Le devis multiplie le prix par jour par le nombre de jours. Au-delà de 7 jours, une remise de 10 % s'applique sur le total. Pour 7 jours exactement, il n'y a pas de remise.
 
       ```text
       AB-123-CD, 7 jours : 35 * 7 = 245
       AB-123-CD, 10 jours : 35 * 10 = 350, remise 35, à payer 315
       ```
 
-      Un nombre de jours inférieur à 1 est refusé, le menu revient.
+      Un nombre de jours inférieur à 1 est refusé, et le menu s'affiche de nouveau.
 
       Les statistiques affichent : le nombre de véhicules par type (1, 1 et 1 sur l'exemple), le revenu potentiel du parc si chaque véhicule était loué un jour (35 + 45 + 120 = 200), le plus cher (Ducato, 120) et le moins cher (208, 35).
     </Enonce>
@@ -115,16 +115,16 @@ Au démarrage, l'application charge `flotte.csv`. Le menu ne plante pas sur un c
 
   <ExerciseSection id="ap2-console-3" label="Export" type="autre">
     <Enonce>
-      Le choix 6 écrit `disponibles.csv`, uniquement les véhicules à l'état Disponible. Sur l'exemple, une seule ligne de données : la 208. Les colonnes spécifiques suivent : places et climatisation pour une voiture, cylindrée et permis pour une moto, longueur et couchages pour un camping-car. L'en-tête nomme ces colonnes. Le site web lira ce fichier, pas `flotte.csv`.
+      Le choix 6 écrit dans `disponibles.csv` les seuls véhicules à l'état Disponible. Sur l'exemple, le fichier ne contient qu'une ligne de données, celle de la 208. Les colonnes spécifiques suivent les colonnes communes : places et climatisation pour une voiture, cylindrée et permis pour une moto, longueur et couchages pour un camping-car. L'en-tête nomme ces colonnes. C'est ce fichier, et non `flotte.csv`, que lira le site web.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
 ## 4. La vitrine web <Icone nom="globe" />
 
-`index.php` lit `disponibles.csv`. Chaque type a une icône (<Icone nom="car" />, <Icone nom="bike" /> ou <Icone nom="bus" />). Les caractéristiques spécifiques sont des badges : par exemple `Permis A` pour une moto, `5 places` pour la 208. Les cartes sont en grille, le CSS est dans un fichier à part.
+`index.php` lit `disponibles.csv`. Chaque type a une icône (<Icone nom="car" />, <Icone nom="bike" /> ou <Icone nom="bus" />). Les caractéristiques spécifiques sont des badges : par exemple `Permis A` pour une moto, `5 places` pour la 208. Les cartes sont disposées en grille, et le CSS est placé dans un fichier séparé.
 
-Des boutons filtrent l'affichage : Tout, Voitures, Motos, Camping-cars. Sur l'export d'exemple, Tout et Voitures montrent la 208. Motos ne montre rien.
+Des boutons filtrent l'affichage : Tout, Voitures, Motos, Camping-cars. Sur l'export d'exemple, les boutons Tout et Voitures montrent la 208, alors que Motos n'affiche rien.
 
 <ExerciseTabs courseId="sio_ap2_web" courseTitle="Vitrine">
   <ExerciseSection id="ap2-web-1" label="La grille" type="autre">
@@ -136,11 +136,11 @@ Des boutons filtrent l'affichage : Tout, Voitures, Motos, Camping-cars. Sur l'ex
   </ExerciseSection>
 </ExerciseTabs>
 
-## 5. Ce qu'on rend <Icone nom="package" />
+## 5. Le travail à rendre <Icone nom="package" />
 
 - Le projet C# (solution complète, code commenté), qui charge l'exemple et dont le devis 10 jours de la 208 affiche 315.
 - Le diagramme de classes, avec les trois héritages et `AfficherDetails`.
 - Les fichiers PHP et CSS, et le `disponibles.csv` produit par l'export.
 - Un guide utilisateur PDF : comment lancer la console, exporter, puis ouvrir la page.
 
-Le back-office prépare les données, le front-office les montre. Le format de `disponibles.csv` est décrit dans le guide : une personne qui n'a pas écrit le C# doit pouvoir le relire.
+Le back-office prépare les données et le front-office les affiche. Le format de `disponibles.csv` est décrit dans le guide : une personne qui n'a pas écrit le C# doit pouvoir le relire.

@@ -46,7 +46,7 @@ void tri_bulles(int tab[], int n) {
 }
 ```
 
-*   **Complexité** : en général **O(n²)** ; si le tableau est **déjà trié**, une variante avec drapeau peut s'arrêter tôt (**O(n)** meilleur cas avec la version ci-dessus une fois qu'aucun échange n'a lieu).
+*   **Complexité** : en général **O(n²)**. Si le tableau est **déjà trié**, une variante avec drapeau peut s'arrêter tôt (**O(n)** meilleur cas avec la version ci-dessus une fois qu'aucun échange n'a lieu).
 
 ---
 

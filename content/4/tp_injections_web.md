@@ -47,7 +47,7 @@ audience: public
     ### Analyse du Code (Login)
     Ouvrir `lab_securite.php` et regarder la **ligne 31**.
 
-    Comment sont inserées les données dans la base de données ? Est-ce sécurisé?
+    Comment les données sont-elles insérées dans la base ? Est-ce sécurisé ?
 
     ### Défi 2.1 : Contournement d'authentification
     On va tenter de se connecter en tant qu'**admin** sans connaître le mot de passe.
@@ -156,7 +156,7 @@ audience: public
     La règle d'or : **"Échapper les données à l'affichage"**.
     Utiliser la fonction `htmlspecialchars()` qui transforme `<script>` en `&lt;script&gt;`.
 
-    3. Cette modification a un interêt. Préciser lequel.
+    3. Préciser l'intérêt de cette modification.
 
     **Modifications à faire :**
     4.  **Ligne 122 (Recherche) :**
@@ -172,7 +172,7 @@ audience: public
     La règle d'or : **"Utiliser des requêtes préparées"**.
     Au lieu de coller les variables, utiliser des marqueurs (`:user`) et demander à la base de données de les traiter comme du texte pur, pas du code.
 
-    5. Comment se prémunir de ces attaques? Expliquer comment fonctionne une requête préparée.
+    5. Comment se prémunir de ces attaques ? Expliquer comment fonctionne une requête préparée.
     6. Modifier le formulaire pour que la récupération des notes ne se fasse plus par une requête SQL à remplir mais par une requête préparée.
 
     **Question :** Réessayer l'injection `' OR 1=1 --`. Le contournement fonctionne-t-il toujours ? Pourquoi ?
@@ -228,7 +228,7 @@ audience: public
         }
         ```
 
-    **Question :** Réessayer l'attaque avec `piege.html`. Quel message d'erreur s'affiche ? Expliquer pourquoi le piège ne fonctionne plus (indice : le fichier `piege.html` connait-il le token ?).
+    **Question :** Réessayer l'attaque avec `piege.html`. Quel message d'erreur s'affiche ? Expliquer pourquoi le piège ne fonctionne plus (indice : le fichier `piege.html` connaît-il le token ?).
     </Enonce>
   </ExerciseSection>
 

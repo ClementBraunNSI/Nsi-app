@@ -13,7 +13,7 @@ Cette fiche reprend les tout premiers outils de Python avec une exploitation lai
 
 ## 1. Afficher avec `print`
 
-`print` affiche à l'écran ce qui est écrit entre ses parenthèses. Un texte s'écrit entre guillemets ; un nombre s'écrit sans guillemets.
+`print` affiche à l'écran ce qui est écrit entre ses parenthèses. Un texte s'écrit entre guillemets, mais un nombre s'écrit sans guillemets.
 
 ```python
 print("La traite commence à 6 heures.")
@@ -25,7 +25,7 @@ Avec une virgule, `print` affiche plusieurs éléments à la suite, séparés pa
 
 ## 2. Ranger une valeur dans une variable
 
-Une variable est une boîte qui porte un nom. Le signe `=` range la valeur de droite dans la boîte de gauche ; ensuite, le nom de la variable suffit pour retrouver la valeur.
+Une variable est une boîte qui porte un nom. Le signe `=` range la valeur de droite dans la boîte de gauche. Ensuite, le nom de la variable suffit pour retrouver la valeur.
 
 ```python
 vaches = 45                 # un nombre entier (int)

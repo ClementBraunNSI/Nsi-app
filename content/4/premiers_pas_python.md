@@ -24,7 +24,7 @@ prenom = "Maya"
 print("Bonjour", prenom)
 ```
 
-L'interpréteur ci-dessous exécute ce qui est tapé, sans quitter la page. Changer le message, relancer, et regarder ce qui sort.
+L'interpréteur ci-dessous exécute le code saisi, sans quitter la page. Il suffit de changer le message, de relancer et d'observer le résultat.
 
 <Admonition type="experiment" title="Tester son code en direct !">
 Utiliser l'interpréteur ci-dessous pour tester les commandes Python sans quitter la page. Essayer de modifier le message !
@@ -34,7 +34,7 @@ Utiliser l'interpréteur ci-dessous pour tester les commandes Python sans quitte
 prenom = 'Maya'
 print('Bonjour', prenom)" />
 
-`input` pose une question et renvoie toujours une chaîne, un `str`, même quand la personne a tapé des chiffres. On range cette chaîne dans une variable pour s'en resservir. Pour calculer avec, on la convertit : `int` vers un entier, `float` vers un décimal. `str` fait le chemin inverse, d'un nombre vers une chaîne.
+`input` pose une question et renvoie toujours une chaîne de caractères (`str`), même quand l'utilisateur a tapé des chiffres. On range cette chaîne dans une variable pour pouvoir la réutiliser. Pour faire des calculs, il faut la convertir avec `int` (en entier) ou `float` (en nombre décimal). `str` fait l'inverse, en convertissant un nombre en chaîne.
 
 ```python
 # Demande de l'âge à l'utilisateur
@@ -48,7 +48,7 @@ type(age)   # str
 age = int(age)
 ```
 
-Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une autre chaîne. On ne peut pas lui ajouter 1. Après `int(age)`, c'est l'entier 19, et le calcul devient possible. Oublier la conversion est la première erreur de ce chapitre : le programme ne se plaint pas à l'`input`, il se plaint à l'opération suivante.
+Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une autre chaîne, mais pas lui ajouter 1. Après `int(age)`, on obtient l'entier 19, et le calcul devient possible. Oublier la conversion est l'erreur la plus fréquente de ce chapitre : l'erreur ne se produit pas lors de l'`input`, mais lors de l'opération suivante.
 
 </Enonce>
 </ExerciseSection>
@@ -186,7 +186,7 @@ Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une aut
 
 ## Choisir selon une condition
 
-Un programme qui fait toujours la même chose ne décide rien. `if` n'exécute le bloc indenté que lorsque la condition est vraie. Les deux-points annoncent le bloc. L'indentation le délimite : en Python, le décalage n'est pas décoratif, c'est la syntaxe.
+Pour qu'un programme puisse faire des choix, on utilise des conditions. `if` n'exécute le bloc indenté que lorsque la condition est vraie. Les deux-points annoncent le bloc, et l'indentation le délimite : en Python, le décalage des lignes fait partie de la syntaxe.
 
 ```python
 age = 18
@@ -194,7 +194,7 @@ if age >= 18:
     print("Vous êtes majeur")
 ```
 
-`else` prend le cas restant, quand la condition est fausse. Un seul des deux blocs s'exécute.
+`else` traite le cas restant, quand la condition est fausse. Un seul des deux blocs est exécuté.
 
 ```python
 age = 15
@@ -205,7 +205,7 @@ else:
     print("Vous êtes mineur")
 ```
 
-Dès qu'il y a plus de deux issues, `elif` teste une condition suivante, seulement si les précédentes ont échoué. L'ordre compte. Une note de 17 satisfait aussi `>= 14` et `>= 12`. Si le test le plus exigeant n'est pas écrit en premier, il ne sera jamais atteint.
+Quand il y a plus de deux cas, `elif` teste une nouvelle condition, seulement si les précédentes sont fausses. L'ordre des tests compte : une note de 17 vérifie aussi `>= 14` et `>= 12`, donc si le test le plus exigeant n'est pas écrit en premier, il ne sera jamais atteint.
 
 ```python
 note = 14
@@ -231,9 +231,9 @@ else:
 | `==` | égal à | `3 == 1` |
 | `!=` | différent de | `3 != 1` |
 
-`=` affecte, `==` compare. `if age = 18` n'est pas une condition. C'est une erreur.
+`=` affecte une valeur et `==` compare deux valeurs : `if age = 18` n'est donc pas une condition, mais une erreur.
 
-`and` exige que les deux côtés soient vrais. `or` se contente d'un seul. `not` inverse.
+`and` exige que les deux conditions soient vraies, `or` qu'au moins l'une le soit, et `not` inverse une condition.
 
 ```python
 age = 20
@@ -257,7 +257,7 @@ if not pluie:
     print("On peut sortir sans parapluie")
 ```
 
-`permis == True` se simplifie souvent en `if permis`, puisque la variable est déjà un booléen. Les deux formes disent la même chose. Autant lire la plus courte une fois qu'elle ne surprend plus.
+`permis == True` se simplifie souvent en `if permis`, puisque la variable est déjà un booléen. Les deux formes sont équivalentes, et la plus courte devient vite la plus lisible.
 
 </Enonce>
 </ExerciseSection>
@@ -426,9 +426,9 @@ if not pluie:
 <ExerciseSection id="python-fonctions-3" label="3.0 [Moyen] - Fonctions : le cours" type="lecture">
 <Enonce>
 
-## Ranger un geste dans une fonction
+## Les fonctions
 
-Une **fonction** est un bloc qu'on nomme pour le rappeler. Elle évite de recopier le même code, et elle donne un nom au geste : `dire_bonjour` se lit mieux que trois `print` perdus au milieu du script. On la définit avec `def`, on l'appelle par son nom suivi de parenthèses.
+Une **fonction** est un bloc de code auquel on donne un nom pour pouvoir l'appeler. Elle évite de recopier le même code et rend le programme plus lisible : `dire_bonjour` se comprend mieux que trois `print` perdus au milieu du script. On la définit avec `def`, et on l'appelle par son nom suivi de parenthèses.
 
 ```python
 def dire_bonjour():
@@ -438,9 +438,9 @@ def dire_bonjour():
 dire_bonjour()
 ```
 
-Sans l'appel, la fonction existe et ne s'exécute pas. Définir n'est pas lancer.
+Sans appel, la fonction existe mais ne s'exécute pas : définir une fonction ne la lance pas.
 
-Un **paramètre** est une valeur que l'appel fournit. Le même `saluer` sert pour Alice et pour Bob. Plusieurs paramètres se séparent par des virgules, et l'ordre de l'appel est l'ordre de la définition.
+Un **paramètre** est une valeur fournie lors de l'appel : la même fonction `saluer` sert ainsi pour Alice et pour Bob. Plusieurs paramètres se séparent par des virgules, et les valeurs de l'appel sont données dans le même ordre que dans la définition.
 
 ```python
 def dire_bonjour(prenom):
@@ -458,7 +458,7 @@ def additionner(a, b):
 additionner(5, 3)
 ```
 
-`print` montre une valeur. Il ne la rend pas au reste du programme. `return` la renvoie : l'appel peut la stocker, la passer à une autre fonction, s'en servir dans un calcul. Une fonction qui affiche et une fonction qui calcule ne jouent pas le même rôle. On préfère calculer dans la fonction, et afficher là où l'on décide de montrer le résultat.
+`print` affiche une valeur, mais ne la transmet pas au reste du programme. `return`, au contraire, renvoie la valeur : le programme peut alors la stocker, la passer à une autre fonction ou l'utiliser dans un calcul. Une fonction qui affiche et une fonction qui calcule n'ont donc pas le même rôle. On préfère faire le calcul dans la fonction, et afficher le résultat à l'endroit du programme où l'on veut le montrer.
 
 ```python
 def additionner(a, b):
@@ -679,9 +679,9 @@ print("Le double est :", resultat)
 <ExerciseSection id="python-boucles-4" label="4.0 [Avancé] - Boucles : le cours" type="lecture">
 <Enonce>
 
-## Répéter
+## Les boucles
 
-`for` parcourt une suite. `range(debut, fin)` produit les entiers de `debut` inclus à `fin` exclu : `range(1, 6)` donne 1, 2, 3, 4, 5. Un troisième argument est le pas. On parcourt aussi une liste directement : la variable de boucle prend chaque valeur, l'une après l'autre.
+`for` parcourt une suite de valeurs. `range(debut, fin)` produit les entiers de `debut` inclus à `fin` exclu : `range(1, 6)` donne 1, 2, 3, 4, 5. Un troisième argument permet de fixer le pas. On peut aussi parcourir directement une liste : la variable de boucle prend alors chaque valeur, l'une après l'autre.
 
 ```python
 # Parcourir une séquence de nombres de 1 à 5
@@ -694,7 +694,7 @@ for a in animaux:
     print(a)
 ```
 
-`while` répète tant que la condition reste vraie. Il faut que quelque chose, dans le corps, la rende fausse un jour. Ici, `compteur` augmente. S'il n'augmentait pas, la condition `compteur < 3` resterait vraie, et la boucle ne s'arrêterait pas.
+`while` répète tant que la condition reste vraie. Il faut qu'une instruction du corps finisse par rendre la condition fausse : ici, c'est l'augmentation de `compteur`. Sans elle, la condition `compteur < 3` resterait vraie, et la boucle ne s'arrêterait jamais.
 
 ```python
 # Répéter tant qu'une condition est vraie
@@ -704,7 +704,7 @@ while compteur < 3:
     compteur += 1
 ```
 
-`break` sort de la boucle tout de suite. `continue` saute le reste du tour et passe à l'itération suivante. Dans l'exemple, les pairs sont sautés, et l'arrivée à 5 arrête tout. On affiche donc 1 et 3.
+`break` fait sortir immédiatement de la boucle, alors que `continue` saute la fin du tour en cours et passe au suivant. Dans l'exemple, les nombres pairs sont sautés, et la boucle s'arrête en arrivant à 5 : le programme affiche donc 1 et 3.
 
 ```python
 for i in range(1, 10):
@@ -715,7 +715,7 @@ for i in range(1, 10):
     print(i)
 ```
 
-On prend `for` quand on sait quoi parcourir. On prend `while` quand l'arrêt dépend d'une condition qu'on ne sait pas compter à l'avance, une saisie, une valeur qui décroît.
+On utilise `for` quand on sait ce qu'il faut parcourir, et `while` quand l'arrêt dépend d'une condition dont on ne connaît pas le nombre de tours à l'avance, comme une saisie ou une valeur qui diminue.
 
 </Enonce>
 </ExerciseSection>
@@ -1149,7 +1149,7 @@ On prend `for` quand on sait quoi parcourir. On prend `while` quand l'arrêt dé
 
 ## Listes et tuples
 
-Une **liste** garde plusieurs valeurs dans l'ordre, sous un seul nom. L'indice commence à 0. L'indice `-1` désigne le dernier élément, sans qu'on ait à calculer `len` soi-même. `len` donne le nombre d'éléments.
+Une **liste** garde plusieurs valeurs dans l'ordre, sous un seul nom. Les indices commencent à 0, et l'indice `-1` désigne le dernier élément, sans avoir à utiliser `len`. `len` donne le nombre d'éléments.
 
 ```python
 # Création
@@ -1174,9 +1174,9 @@ for i in range(len(notes)):
 carres = [x*x for x in range(5)]  # [0,1,4,9,16]
 ```
 
-On parcourt par valeur quand seule la note compte. On parcourt par indice quand on a aussi besoin de la position. La compréhension de liste construit une nouvelle liste en une expression : ici, les carrés de 0 à 4.
+On parcourt la liste par valeur quand seule la note compte, et par indice quand on a aussi besoin de la position. La compréhension de liste construit une nouvelle liste en une expression : ici, les carrés de 0 à 4.
 
-Les méthodes modifient souvent la liste sur place. `append` ajoute un élément à la fin. `extend` ajoute ceux d'une autre liste. `insert` place un élément à un indice, et décale le reste. `remove` retire la première occurrence d'une valeur. `pop` retire et renvoie, par défaut le dernier, ou celui de l'indice donné. `count` et `index` interrogent sans modifier. `sort` et `reverse` réordonnent. Le découpage `liste[2:5]` fabrique une nouvelle liste, de l'indice 2 inclus à l'indice 5 exclu. `liste[::-1]` la renverse.
+Les méthodes modifient souvent la liste sur place. `append` ajoute un élément à la fin et `extend` ajoute les éléments d'une autre liste. `insert` place un élément à un indice donné en décalant les suivants. `remove` retire la première occurrence d'une valeur, et `pop` retire et renvoie un élément, le dernier par défaut, ou celui de l'indice donné. `count` et `index` donnent des informations sans modifier la liste, alors que `sort` et `reverse` changent l'ordre de ses éléments. Le découpage `liste[2:5]` fabrique une nouvelle liste, de l'indice 2 inclus à l'indice 5 exclu. `liste[::-1]` la renverse.
 
 ```python
 liste = [3, 1, 4]
@@ -1209,9 +1209,9 @@ copie1 = liste[:]           # copie par slicing
 copie2 = liste.copy()       # copie
 ```
 
-Une liste est **mutable**. `autre = liste` ne copie pas : les deux noms désignent le même objet, et modifier l'un modifie l'autre. `liste[:]` ou `liste.copy()` fabrique une liste distincte. On copie quand on veut trier ou filtrer sans perdre l'original.
+Une liste est **mutable**. `autre = liste` ne copie pas la liste : les deux noms désignent le même objet, et modifier l'un modifie l'autre. Pour obtenir une copie distincte, on utilise `liste[:]` ou `liste.copy()`, par exemple pour trier ou filtrer une liste sans perdre l'original.
 
-Un **tuple** se parcourt et s'indexe comme une liste. Il est **immuable** : on ne peut pas remplacer un élément, ni l'`append`. On s'en sert pour une valeur qui ne doit pas bouger, des coordonnées, une paire qu'on rend depuis une fonction.
+Un **tuple** se parcourt et s'indexe comme une liste. En revanche, il est **immuable** : on ne peut ni remplacer un de ses éléments, ni lui en ajouter avec `append`. On l'utilise pour des valeurs qui ne doivent pas changer, comme des coordonnées ou un couple de valeurs renvoyé par une fonction.
 
 ```python
 coord = (10, 20)

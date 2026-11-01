@@ -12,7 +12,7 @@ audience: public
 
 # Persistance des données en C#
 
-Une liste de clients créée dans `Main` disparaît quand la console se ferme. **Persister**, c'est écrire ces données quelque part où elles survivent au programme, puis les relire au démarrage suivant. Deux endroits suffisent pour commencer. Le **fichier CSV** est un texte, simple, ouvrable dans Excel, adapté à un seul utilisateur et à un petit volume. La **base MariaDB ou MySQL** tient plusieurs utilisateurs, des requêtes, et des règles d'intégrité. On commence par le fichier, parce qu'on y voit chaque ligne. On passe à la base quand le fichier ne suffit plus.
+Une liste de clients créée dans `Main` disparaît quand la console se ferme. **Persister** des données consiste à les enregistrer à un endroit où elles sont conservées après l'arrêt du programme, pour pouvoir les relire au démarrage suivant. Deux solutions suffisent pour commencer. Le **fichier CSV** est un simple fichier texte, que l'on peut ouvrir dans Excel, adapté à un seul utilisateur et à un petit volume de données. La **base MariaDB ou MySQL**, elle, gère plusieurs utilisateurs, des requêtes et des règles d'intégrité. On commence par le fichier, où chaque ligne est visible, puis on passe à la base quand le fichier ne suffit plus.
 
 ## Lire et écrire un CSV
 
@@ -24,7 +24,7 @@ Id;Nom;Email
 2;Martin;bob@email.com
 ```
 
-Pour lire, on ouvre un `StreamReader` (`System.IO`). On vérifie que le fichier existe, on saute l'en-tête, puis on découpe chaque ligne avec `Split(';')`. Trois colonnes donnent un `Client`. Moins de trois, on ignore la ligne : un fichier abîmé ne doit pas faire planter toute la lecture.
+Pour lire, on ouvre un `StreamReader` (`System.IO`). On vérifie que le fichier existe, on saute l'en-tête, puis on découpe chaque ligne avec `Split(';')`. Une ligne de trois colonnes donne un `Client`. Une ligne qui en a moins est ignorée, car un fichier abîmé ne doit pas faire échouer toute la lecture.
 
 ```csharp
 using System;
@@ -87,9 +87,9 @@ public class CsvManager
 }
 ```
 
-`using` ferme le fichier à la sortie du bloc, même si une exception survient. `int.Parse` échoue si la première colonne n'est pas un entier : le `catch` affiche le message au lieu de laisser le programme mourir en silence.
+`using` ferme le fichier à la sortie du bloc, même si une exception survient. `int.Parse` échoue si la première colonne n'est pas un entier : le `catch` affiche alors le message d'erreur au lieu de laisser le programme s'arrêter brutalement.
 
-Pour ajouter un client, `StreamWriter` ouvre le même fichier. Le deuxième argument `true` veut dire **ajouter** à la fin. `false` efface tout le fichier avant d'écrire. C'est l'erreur classique : on croit ajouter une ligne, on ne garde que la dernière.
+Pour ajouter un client, `StreamWriter` ouvre le même fichier. Le deuxième argument, `true`, signifie que l'on **ajoute** à la fin du fichier, alors que `false` efface tout le fichier avant d'écrire. C'est une erreur classique : on croit ajouter une ligne, mais on ne garde que la dernière.
 
 ```csharp
 public void EcrireClient(string cheminFichier, Client nouveauClient)
@@ -113,21 +113,21 @@ public void EcrireClient(string cheminFichier, Client nouveauClient)
 }
 ```
 
-Le CSV a une limite simple. Deux programmes qui écrivent en même temps se marchent dessus. Une recherche « tous les clients dont le nom commence par D » relit le fichier entier. Dès que plusieurs personnes doivent travailler sur les mêmes données, on passe à une base.
+Le CSV a des limites. Si deux programmes écrivent en même temps, leurs modifications entrent en conflit, et une recherche comme « tous les clients dont le nom commence par D » oblige à relire tout le fichier. Dès que plusieurs personnes doivent travailler sur les mêmes données, il vaut mieux passer à une base.
 
 ## Se connecter à MariaDB ou MySQL
 
 Le pont entre C# et la base s'appelle **ADO.NET**. Pour MariaDB ou MySQL, on ajoute le paquet NuGet `MySql.Data` ou `MySqlConnector`. Le serveur doit déjà tourner : WAMP, XAMPP, ou un conteneur Docker.
 
-La **chaîne de connexion** dit où est le serveur, quelle base ouvrir, avec quel compte.
+La **chaîne de connexion** indique où se trouve le serveur, quelle base ouvrir et avec quel compte.
 
 ```csharp
 string connectionString = "Server=localhost;Database=ma_boutique;User=root;Password=;";
 ```
 
-`root` sans mot de passe convient à un poste de cours. Ce n'est pas un compte à laisser sur une machine exposée.
+Le compte `root` sans mot de passe convient à un poste de cours, mais il ne faut jamais le laisser sur une machine accessible depuis le réseau.
 
-Une lecture suit toujours le même geste. On ouvre la connexion, on prépare une commande `SELECT`, on obtient un `MySqlDataReader`, on avance ligne par ligne. `GetInt32("id")` lit la colonne par son nom. L'indice `0` lirait la première colonne. Le nom résiste mieux à un changement d'ordre dans le `SELECT`.
+Une lecture suit toujours les mêmes étapes : on ouvre la connexion, on prépare une commande `SELECT`, on obtient un `MySqlDataReader`, puis on lit les résultats ligne par ligne. `GetInt32("id")` lit la colonne par son nom. L'indice `0` lirait la première colonne, mais le nom reste correct même si l'ordre des colonnes du `SELECT` change.
 
 ```csharp
 using MySql.Data.MySqlClient; // Nécessite le package NuGet
@@ -172,7 +172,7 @@ public void LireClientsDeLaBase()
 }
 ```
 
-Pour un `INSERT`, on ne colle jamais le nom dans la requête avec des guillemets. `"VALUES ('" + nom + "')"` est une injection SQL : une apostrophe dans le nom casse la requête, ou pire, la transforme. On écrit des **paramètres**, `@nom` et `@email`, et l'on donne les valeurs à part. Le pilote les transmet comme des données, pas comme du SQL.
+Pour un `INSERT`, on ne colle jamais le nom dans la requête avec des guillemets. `"VALUES ('" + nom + "')"` est une injection SQL : une apostrophe dans le nom casse la requête, ou pire, la transforme. On écrit des **paramètres**, `@nom` et `@email`, et l'on donne les valeurs à part. Le pilote les transmet alors comme des données, et non comme du SQL.
 
 ```csharp
 public void AjouterClient(string nom, string email)
@@ -208,18 +208,18 @@ public void AjouterClient(string nom, string email)
 }
 ```
 
-`ExecuteNonQuery` ne renvoie pas de lignes. Il renvoie combien de lignes ont été touchées. Un ajout réussi vaut `1`.
+`ExecuteNonQuery` ne renvoie pas de lignes, mais le nombre de lignes modifiées. Un ajout réussi vaut `1`.
 
 | Objet | Rôle |
 | :--- | :--- |
-| `MySqlConnection` | Établit le tuyau vers la base de données. |
+| `MySqlConnection` | Établit la connexion avec la base de données. |
 | `MySqlCommand` | Transporte la requête SQL (SELECT, INSERT...). |
 | `MySqlDataReader` | Permet de lire les résultats ligne par ligne (lecture seule, rapide). |
 | `ExecuteReader()` | Pour les `SELECT`. |
 | `ExecuteNonQuery()` | Pour les `INSERT`, `UPDATE`, `DELETE` (retourne le nombre de lignes modifiées). |
 | `ExecuteScalar()` | Pour récupérer une seule valeur (ex: `SELECT COUNT(*)`). |
 
-`ExecuteScalar` sert quand la réponse est une seule cellule, un compte ou un maximum. Ouvrir un reader pour ça marche, mais on transporte une table là où un nombre suffit.
+`ExecuteScalar` sert quand la réponse est une seule cellule, un compte ou un maximum. Ouvrir un reader fonctionnerait aussi, mais il transporterait une table entière alors qu'un nombre suffit.
 
 ## Exercice
 

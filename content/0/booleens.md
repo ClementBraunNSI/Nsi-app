@@ -131,10 +131,10 @@ assert True
 
 Déterminer le résultat des expressions logiques suivantes et les assigner aux variables `r1`, `r2`, `r3` et `r4`.
 
-1. `(True and False) or True` -> `r1`
-2. `not (True or False)` -> `r2`
-3. `(10 > 5) and (3 < 2)` -> `r3`
-4. `(5 == 5) or (2 == 3)` -> `r4`
+1. `(True and False) or True` (à ranger dans `r1`)
+2. `not (True or False)` (à ranger dans `r2`)
+3. `(10 > 5) and (3 < 2)` (à ranger dans `r3`)
+4. `(5 == 5) or (2 == 3)` (à ranger dans `r4`)
 
 **Exemple :**
 ```python

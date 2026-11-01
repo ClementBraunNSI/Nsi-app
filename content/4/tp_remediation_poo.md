@@ -74,7 +74,7 @@ Ce TP est spécialement conçu pour reprendre les bases de la Programmation Orie
     Lorsqu'un objet A interagit avec un objet B, l'objet A est représenté par le mot-clé `this` (moi-même), et l'objet B est passé en paramètre.
 
     <Admonition type="warning" title="La règle du 'this'">
-    Ne confonder jamais la classe (`Joueur`) et l'instance (`this`).
+    Il ne faut jamais confondre la classe (`Joueur`) et l'instance (`this`).
     Pour lire le pseudo du joueur actuel, on écrit `this.Pseudo` (ou juste `Pseudo`), mais **JAMAIS** `Joueur.Pseudo`.
     </Admonition>
 

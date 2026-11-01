@@ -11,35 +11,35 @@ audience: public
 
 # Gestion de projet informatique
 
-Ce cours relève du bloc 1 du BTS SIO. Un service informatique ne s'installe pas tout seul. Derrière un site, une application, un réseau mis en place, il y a un **projet** : un ensemble d'activités temporaires, uniques et coordonnées, menées pour atteindre un objectif précis, dans un délai fixé, avec des ressources limitées. Le projet a un début et une fin. Passé cette fin, on n'est plus en train de le construire. On l'exploite.
+Ce cours relève du bloc 1 du BTS SIO. La mise en place d'un site, d'une application ou d'un réseau passe par un **projet**, c'est-à-dire un ensemble d'activités temporaires, uniques et coordonnées, menées pour atteindre un objectif précis, dans un délai fixé et avec des ressources limitées. Un projet a un début et une fin : une fois le projet terminé, son résultat n'est plus en construction, il est exploité.
 
-Quatre traits le séparent du travail courant. L'**objectif** est un résultat attendu, écrit, mesurable, et tenable dans le temps imparti. La **temporalité** pose une date de début et une date de fin. L'**unicité** veut dire que le livrable n'existait pas tel quel : refaire le même site pour un autre client, c'est un autre projet. Les **ressources** (budget, personnes, moyens techniques) sont comptées. On ne peut pas en ajouter sans le décider.
+Quatre caractéristiques distinguent un projet du travail courant. L'**objectif** est un résultat attendu, écrit, mesurable et atteignable dans le temps imparti. La **temporalité** fixe une date de début et une date de fin. L'**unicité** signifie que le livrable n'existait pas sous cette forme : refaire le même site pour un autre client constitue un autre projet. Enfin, les **ressources** (budget, personnes, moyens techniques) sont limitées, et on ne peut pas en ajouter sans le décider explicitement.
 
-Ces trois contraintes se tiennent dans ce qu'on appelle le **triangle** qualité, délai, coût. En bouger un déplace les deux autres. Raccourcir le délai sans retirer de fonctionnalités augmente le coût, ou abîme la qualité. Promettre les trois en même temps sans le dire, c'est laisser le projet choisir à la place de l'équipe, plus tard, en général au moment de la recette.
+Trois contraintes sont liées dans ce qu'on appelle le **triangle** qualité, délai, coût : en modifier une a des conséquences sur les deux autres. Raccourcir le délai sans retirer de fonctionnalités augmente le coût ou dégrade la qualité. Si l'on promet les trois à la fois sans faire de choix, ce choix finit par s'imposer plus tard, en général au moment de la recette.
 
-## Qui fait quoi
+## Les rôles dans un projet
 
-Une équipe tient quand les compétences se complètent et quand chacun sait ce qu'on attend de lui. Les rôles qui suivent ne sont pas tous présents en même temps. Le chef de projet structure un projet mené de façon classique. Le product owner et le scrum master apparaissent quand on travaille en Scrum. On les nomme ici parce qu'on les croise selon la méthode retenue.
+Une équipe fonctionne bien quand les compétences se complètent et que chacun sait ce que l'on attend de lui. Les rôles suivants ne sont pas tous présents en même temps : le chef de projet structure un projet mené de façon classique, alors que le product owner et le scrum master apparaissent quand on travaille en Scrum. Ils sont présentés ici car on les rencontre selon la méthode retenue.
 
 Le **chef de projet** planifie et coordonne. Il suit les risques, les délais et le budget, et il rend compte aux parties prenantes.
 
-Le **product owner** porte le besoin. Il décrit les fonctionnalités, les ordonne, valide ce qui est livré, et sert d'interface avec les utilisateurs. Il ne distribue pas les tâches techniques une par une.
+Le **product owner** représente le besoin. Il décrit les fonctionnalités, fixe leur ordre de priorité, valide ce qui est livré et fait le lien avec les utilisateurs. Il ne distribue pas les tâches techniques une par une.
 
-Le **scrum master** tient le cadre agile. Il anime les cérémonies, enlève les obstacles, et aide l'équipe à rester dans la méthode. Il ne décide ni du contenu ni des estimations.
+Le **scrum master** veille au respect du cadre agile. Il anime les cérémonies, lève les obstacles et aide l'équipe à appliquer la méthode. Il ne décide ni du contenu ni des estimations.
 
-Les **développeurs** conçoivent, écrivent, font les tests unitaires, documentent, et estiment la charge de ce qu'on leur demande.
+Les **développeurs** conçoivent et écrivent le code, réalisent les tests unitaires, rédigent la documentation et estiment la charge de travail des tâches demandées.
 
-Les **testeurs** préparent les plans de tests, les exécutent, signalent les anomalies, et disent si la qualité obtenue est celle qui était promise.
+Les **testeurs** préparent les plans de tests, les exécutent, signalent les anomalies, et vérifient que la qualité obtenue correspond à celle qui était prévue.
 
-Le **designer** UX/UI conçoit le parcours de la personne qui s'en sert, produit les maquettes, les fait essayer, et veille à l'accessibilité.
+Le **designer** UX/UI conçoit le parcours des utilisateurs, réalise les maquettes, les fait tester et veille à l'accessibilité.
 
-Rien de cela ne tient si l'information ne circule pas. Un retard qu'on tait, un besoin mal reformulé, des tests qui n'arrivent qu'à la toute fin : le triangle se déforme sans que personne l'ait décidé ouvertement.
+Cette organisation ne fonctionne que si l'information circule. Un retard passé sous silence, un besoin mal compris ou des tests repoussés à la toute fin déséquilibrent le triangle sans que personne l'ait décidé.
 
 ## Le diagramme de Gantt
 
-Le **diagramme de Gantt** place chaque tâche sur une échelle de temps. On y lit la date de début et de fin, les liens entre tâches (ce qui doit finir avant qu'autre chose commence, ce qui peut avancer en parallèle) et l'écart entre le prévu et le réalisé. La plus longue chaîne de tâches qui dépendent les unes des autres est le **chemin critique**. Elle fixe la durée minimale du projet. Raccourcir une tâche qui n'est pas sur cette chaîne ne raccourcit pas le projet.
+Le **diagramme de Gantt** place chaque tâche sur une échelle de temps. On y lit les dates de début et de fin, les liens entre les tâches (ce qui doit finir avant qu'autre chose commence, ce qui peut avancer en parallèle) et l'écart entre le prévu et le réalisé. La plus longue chaîne de tâches dépendantes est le **chemin critique** : elle fixe la durée minimale du projet, et raccourcir une tâche qui n'en fait pas partie ne raccourcit pas le projet.
 
-Voici un développement d'application web sur douze semaines. Les cases marquées sont les semaines où la tâche est ouverte.
+Voici le planning du développement d'une application web sur douze semaines. Les cases marquées sont les semaines où la tâche est ouverte.
 
 | Tâches | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10 | S11 | S12 |
 | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
@@ -50,19 +50,19 @@ Voici un développement d'application web sur douze semaines. Les cases marquée
 | **Tests & Intégration** | | | | | | | | ██ | ██ | | | |
 | **Déploiement** | | | | | | | | | | ██ | | |
 
-L'analyse occupe les deux premières semaines. La conception la chevauche dès la semaine 2, puis court jusqu'à la semaine 4. Le backend démarre alors, le frontend une semaine plus tard : les deux avancent ensemble. Les tests n'arrivent qu'en semaines 8 et 9, le déploiement en semaine 10. Le dessin montre aussi le risque. Si la conception glisse, le backend qui en dépend glisse avec elle, et la date de déploiement recule.
+L'analyse occupe les deux premières semaines. La conception commence dès la semaine 2 et se poursuit jusqu'à la semaine 4. Le backend démarre alors, suivi du frontend une semaine plus tard, et les deux avancent en parallèle. Les tests n'ont lieu qu'aux semaines 8 et 9, et le déploiement à la semaine 10. Le diagramme montre aussi les risques : si la conception prend du retard, le backend, qui en dépend, est retardé lui aussi, et la date de déploiement recule.
 
-## Deux façons d'enchaîner le travail
+## Cycle en V et méthodes agiles
 
-La **méthode en V** est séquentielle. On ne passe à la phase suivante que lorsque la précédente est validée. On descend du besoin vers la conception, puis le code. On remonte ensuite par les tests, chaque niveau de test répondant au niveau de conception qui lui correspond. Le cadre est strict, la documentation est lourde. Cela convient quand le périmètre est connu tôt, par un contrat ou une réglementation. Le défaut est l'effet tunnel : le logiciel ne se voit fonctionner qu'à la fin, et un changement de besoin coûte cher parce qu'il remonte toute la descente.
+La **méthode en V** est séquentielle : on ne passe à la phase suivante qu'une fois la précédente validée. On descend du besoin vers la conception, puis vers le code, avant de remonter par les tests, chaque niveau de test correspondant à un niveau de conception. Le cadre est strict et la documentation importante. Cette méthode convient quand le périmètre est connu tôt, par exemple grâce à un contrat ou à une réglementation. Son défaut est l'effet tunnel : on ne voit le logiciel fonctionner qu'à la fin, et un changement de besoin coûte cher, car il oblige à reprendre toutes les étapes.
 
-Les **méthodes agiles**, Scrum ou Kanban, travaillent par itérations. On livre souvent, on montre le résultat, on ajuste le contenu du cycle suivant. On voit plus tôt si l'on construit la mauvaise chose. Cela suppose un client qui reste disponible pour regarder ce qui est livré. La documentation y est plus légère : elle accompagne le logiciel, elle ne le précède pas entièrement. Le cours sur les méthodes agiles détaille les rôles et les cérémonies. Ici, le choix tient en une phrase. Périmètre stable et preuves à produire : le cycle en V. Besoin qui se précise en voyant tourner le logiciel : l'agile.
+Les **méthodes agiles**, comme Scrum ou Kanban, fonctionnent par itérations. On livre souvent, on montre le résultat et on ajuste le contenu du cycle suivant, ce qui permet de voir plus tôt si l'on fait fausse route. Cela suppose que le client reste disponible pour examiner ce qui est livré. La documentation y est plus légère : elle accompagne le logiciel au lieu d'être entièrement écrite avant lui. Le cours sur les méthodes agiles détaille les rôles et les cérémonies. Pour choisir, on retiendra que le cycle en V convient à un périmètre stable qui exige des preuves formelles, et l'agilité à un besoin qui se précise en voyant le logiciel fonctionner.
 
-## Les outils, et le geste Git
+## Les outils et Git
 
-Quatre familles d'outils suffisent à piloter. Le suivi des tâches passe par Trello, Jira ou Asana : tickets, colonnes, sprints. Les échanges rapides passent par Slack, Teams ou Discord. Les spécifications et les comptes-rendus vivent dans Confluence, Notion ou un wiki. Le code est versionné avec **Git**, hébergé sur GitLab ou GitHub.
+Quatre familles d'outils suffisent pour piloter un projet. Le suivi des tâches se fait avec Trello, Jira ou Asana, qui gèrent des tickets, des colonnes et des sprints. Les échanges rapides passent par Slack, Teams ou Discord. Les spécifications et les comptes rendus sont rédigés dans Confluence, Notion ou un wiki. Enfin, le code est versionné avec **Git** et hébergé sur GitLab ou GitHub.
 
-Git mérite qu'on en fasse le geste, parce que c'est lui qui permet à plusieurs personnes d'écrire sans s'écraser le travail. On récupère d'abord le dépôt.
+Git mérite d'être pratiqué, car c'est lui qui permet à plusieurs personnes de travailler sur le même code sans écraser le travail des autres. On commence par récupérer le dépôt.
 
 ```bash
 git clone https://github.com/projet/repo.git
@@ -76,7 +76,7 @@ git checkout -b feature/ma-fonctionnalite
 # Crée une branche dédiée pour travailler isolément
 ```
 
-Quand le morceau est prêt, on l'enregistre localement. Le message de commit dit ce qui a été ajouté, pas « modifs ».
+Quand le morceau est prêt, on l'enregistre localement. Le message de commit doit décrire ce qui a été ajouté, plutôt qu'un vague « modifs ».
 
 ```bash
 git add .
@@ -91,4 +91,4 @@ git push origin feature/ma-fonctionnalite
 # Envoie la branche sur le serveur distant
 ```
 
-Au quotidien, Git se résume à cloner, créer une branche, commiter et pousser. Le reste du projet (qui décide du contenu, dans quel ordre, avec quelle méthode) se joue en dehors de ces quatre commandes. Git garde l'historique. Il ne remplace ni le Gantt, ni le product owner, ni la conversation qui dit si la fonctionnalité est la bonne.
+Au quotidien, l'utilisation de Git se résume à cloner, créer une branche, commiter et pousser. Le reste du pilotage (qui décide du contenu, dans quel ordre, avec quelle méthode) se fait en dehors de ces commandes. Git conserve l'historique, mais il ne remplace ni le diagramme de Gantt, ni le product owner, ni les échanges qui permettent de vérifier que la fonctionnalité répond au besoin.

@@ -23,7 +23,7 @@ const TOOLS = [
     folder: 'tools/generateur-eval',
     color: 'bg-indigo-600',
     icon: GraduationCap,
-    summary: 'Générer des sujets DS et bac blanc à partir de banques YAML, export PDF sujet + corrigé.',
+    summary: 'Générer des sujets DS et bac blanc à partir de banques YAML, et les exporter en PDF avec leur corrigé.',
     run: 'npm run dev:sujetlab',
   },
   {
@@ -41,7 +41,7 @@ const TOOLS = [
     folder: 'tools/conseil-classe',
     color: 'bg-amber-600',
     icon: ClipboardCheck,
-    summary: 'Importer un CSV Pronote, générer des brouillons d\'appréciations, export local (RGPD).',
+    summary: 'Importer un CSV Pronote, générer des brouillons d\'appréciations et les exporter en local (RGPD).',
     run: 'npm run dev:conseilnote',
   },
   {
@@ -59,7 +59,7 @@ const TOOLS = [
     folder: 'tools/banque-qcm',
     color: 'bg-orange-500',
     icon: FileQuestion,
-    summary: 'Créer, tirer et imprimer des QCM ; banques YAML partageables.',
+    summary: 'Créer, tirer au sort et imprimer des QCM à partir de banques YAML partageables.',
     run: 'npm run dev:qcmforge',
   },
   {
@@ -68,7 +68,7 @@ const TOOLS = [
     folder: 'tools/suivi-projets',
     color: 'bg-slate-600',
     icon: KanbanSquare,
-    summary: 'Suivre les rendus de projets / TP (matrice élèves × étapes).',
+    summary: 'Suivre les rendus de projets et de TP dans un tableau élèves × étapes.',
     run: 'npm run dev:projetsuivi',
   },
 ] as const;
@@ -85,9 +85,9 @@ export default function OutilsEnseignantsPage() {
         </h1>
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">
           Six applications web séparées, utilisables hors de ce site, sans compte et sans cloud.
-          Chaque outil a sa propre interface ; elles ne font pas partie de La tanière du code.
-          Idéales pour gagner du temps sur les évaluations, les conseils de classe et le suivi de projets —
-          et pour les partager avec des collègues (Windows, macOS, Linux, Chromebook).
+          Chaque outil a sa propre interface et ne fait pas partie de La tanière du code.
+          Ils permettent de gagner du temps sur les évaluations, les conseils de classe et le suivi de projets,
+          et peuvent être partagés avec des collègues (Windows, macOS, Linux, Chromebook).
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">

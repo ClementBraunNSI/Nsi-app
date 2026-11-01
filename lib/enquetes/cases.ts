@@ -163,7 +163,7 @@ const MIEL: Enquete = {
     "Regarde les alibis du 19 octobre de ces animaux : qui n'a aucun alibi entre 14 h et 16 h ?",
   ],
   explanation:
-    "Une empreinte de 9 cm, c'est un blaireau. Trois blaireaux vivent dans la forêt : Grisou, Moka et Bourru. Grisou jouait aux cartes et Moka faisait le marché pendant le vol. Bourru, lui, n'a d'alibi que le matin : c'est lui, le voleur de miel.",
+    "Une empreinte de 9 cm correspond à un blaireau. Trois blaireaux vivent dans la forêt : Grisou, Moka et Bourru. Grisou jouait aux cartes et Moka faisait le marché pendant le vol. Bourru, lui, n'a d'alibi que le matin : c'est lui, le voleur de miel.",
   solutionSql: [
     "SELECT * FROM empreintes WHERE longueur_cm = 9",
     "SELECT animaux.nom, alibis.debut, alibis.fin FROM animaux LEFT JOIN alibis ON alibis.animal_id = animaux.id AND alibis.date = '2026-10-19' WHERE animaux.espece = 'blaireau'",
@@ -635,7 +635,7 @@ const DETOURS: Enquete = {
   title: "Le Bois des Détours",
   difficulty: "Difficile",
   skills: ["Des sentiers qui tournent en rond", "Comparer deux colonnes", "Se méfier des horloges", "Sous-requête avec NOT IN", "Relier une table à elle-même"],
-  pitch: "Chaque promeneur qui entre dans le Bois des Détours ressort… par où il est entré. Les panneaux mentent, la carte aussi, et les registres s'amusent avec les enquêteurs.",
+  pitch: "Chaque promeneur qui entre dans le Bois des Détours ressort… par où il est entré. Les panneaux indiquent de mauvais chemins, la carte aussi, et les registres réservent quelques pièges aux enquêteurs.",
   stageTitle: "Les panneaux qui mentent",
   story: [
     "Depuis le 28 octobre 2026, le Bois des Détours porte bien son nom : chaque promeneur qui part de la Clairière vers le Vieux Moulin finit par revenir… à la Clairière. Biscotte, Tamia et Pépin le lièvre en ont fait l'expérience, Pépin trois matins de suite.",
@@ -742,7 +742,7 @@ const DETOURS: Enquete = {
   explanation:
     "Quatre panneaux mentent, échangés deux par deux : à la Clairière, le panneau « Carrefour du Hêtre » envoie vers la Mare aux Iris, et à la Mare, le panneau « Pont de Pierre » renvoie à la Clairière. Le promeneur tourne en rond. Roux n'a laissé de trace que sur un panneau, Piquet sur trois (il les a repeints le 26). Seule Ambre la renarde, aussi rousse que Roux, a touché les quatre, le 28 avant l'aube.",
   twist:
-    "Ambre avoue avoir tourné les quatre panneaux, mais pour bien faire : le 28 avant l'aube, elle les a comparés à la grande carte affichée à la Clairière, et ils ne correspondaient pas. Elle les a donc « corrigés ». Or Piquet les avait repeints le 26, et ils étaient justes. Ce n'étaient pas les panneaux qui mentaient, c'était la carte. Qui l'a affichée ?",
+    "Ambre avoue avoir tourné les quatre panneaux, mais pour bien faire : le 28 avant l'aube, elle les a comparés à la grande carte affichée à la Clairière, et ils ne correspondaient pas. Elle les a donc « corrigés ». Or Piquet les avait repeints le 26, et ils étaient justes. En réalité, c'est la carte qui était fausse. Qui l'a affichée ?",
   solutionSql: [
     "SELECT panneaux.id, panneaux.carrefour, panneaux.indique, sentiers.arrivee FROM panneaux JOIN sentiers ON sentiers.id = panneaux.sentier_id WHERE panneaux.indique <> sentiers.arrivee",
     "SELECT animaux.nom FROM traces JOIN panneaux ON panneaux.id = traces.panneau_id JOIN sentiers ON sentiers.id = panneaux.sentier_id JOIN animaux ON animaux.id = traces.animal_id WHERE panneaux.indique <> sentiers.arrivee GROUP BY animaux.nom HAVING COUNT(DISTINCT panneaux.id) = 4",
@@ -788,7 +788,7 @@ const DETOURS: Enquete = {
       explanation:
         "La carte affichée donne une fausse arrivée à quatre sentiers, ceux qu'Ambre a « corrigés ». Le piège de la Clairière est resté à l'heure d'été : ses photos ont une heure d'avance, et la ronde de 7 h à 8 h correspond à 08:00 à 09:00 sur le piège. Un seul animal d'au moins 100 cm y apparaît : Sanglou le sanglier, à 08:25, donc 7 h 25. Cerise, photographiée à 07:20, était en réalité passée à 6 h 20, avant la première ronde.",
       twist:
-        "Sanglou reconnaît avoir punaisé la carte, mais il ne l'a pas dessinée : il l'a trouvée roulée devant son terrier le 26 au soir, avec un mot : « Nouvelle carte du Bois, à afficher demain matin à la Clairière. La garde. » La garde n'a jamais écrit ce mot. Une fausse carte sert toujours à quelque chose : en la comparant à la vraie, il doit être possible de voir à qui profite le détour.",
+        "Sanglou reconnaît avoir punaisé la carte, mais il ne l'a pas dessinée : il l'a trouvée roulée devant son terrier le 26 au soir, avec un mot : « Nouvelle carte du Bois, à afficher demain matin à la Clairière. La garde. » La garde n'a jamais écrit ce mot. En comparant la fausse carte à la vraie, il doit être possible de découvrir à qui profite le détour.",
       solutionSql: [
         "SELECT carte.sentier_id, carte.arrivee, sentiers.arrivee FROM carte JOIN sentiers ON sentiers.id = carte.sentier_id WHERE carte.arrivee <> sentiers.arrivee",
         "SELECT * FROM pieges WHERE lieu = 'Clairière'",
@@ -822,7 +822,7 @@ const DETOURS: Enquete = {
       title: "Retour au point de départ",
       story: [
         "Le cahier de comptage de Musc est versé au dossier. Depuis le 28 octobre, plusieurs animaux sont venus déclarer au poste de garde qu'ils s'étaient perdus dans le Bois des Détours, avec l'heure de leur départ et celle de leur retour.",
-        "Un promeneur perdu n'est attendu nulle part, et personne ne s'étonne de ne pas le voir. Les photos du piège du Vieux Moulin ont été ajoutées aux passages.",
+        "Se dire perdu est un bon alibi : personne ne s'étonne de ne pas voir un promeneur égaré. Les photos du piège du Vieux Moulin ont été ajoutées aux passages.",
       ],
       objective: "Trouver le nom de l'animal qui ramasse les cèpes en cachette.",
       tables: [

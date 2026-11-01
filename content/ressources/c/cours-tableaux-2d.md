@@ -25,7 +25,7 @@ Il existe deux façons de créer ces tableaux en C :
 
 ---
 
-## 1️⃣ Allocation Statique (Sur la pile)
+## 1. Allocation Statique (Sur la pile)
 
 C'est la méthode la plus simple, à utiliser quand on connaît la taille à l'avance.
 
@@ -64,7 +64,7 @@ for (int i = 0; i < 3; i++) {
 
 ---
 
-## 2️⃣ Allocation Dynamique (Sur le tas)
+## 2. Allocation Dynamique (Sur le tas)
 
 Utilisée quand la taille du tableau dépend d'une variable (ex: taille demandée à l'utilisateur) ou pour de très grands tableaux.
 
@@ -114,7 +114,7 @@ free(matrice);
 
 ---
 
-## 3️⃣ Passage en paramètre de fonction
+## 3. Passage en paramètre de fonction
 
 ### Cas Statique
 Il faut préciser la taille de la deuxième dimension (colonnes).

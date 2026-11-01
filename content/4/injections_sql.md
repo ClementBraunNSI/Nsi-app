@@ -101,7 +101,7 @@ Les injections SQL restent l'une des vulnérabilités les plus critiques du web 
     * Ou vidéo YouTube : "ModSecurity Tutorial" (5-10 min)
 
     **À noter dans le compte rendu :**
-    1. **Qu'est ce que ModSecurity? Comment fonctionne-t-il?**
+    1. **Qu'est-ce que ModSecurity ? Comment fonctionne-t-il ?**
     2. **Que signifie OWASP CRS ?**
     3. **Donner 3 types d'attaques que ModSecurity peut bloquer :**
 

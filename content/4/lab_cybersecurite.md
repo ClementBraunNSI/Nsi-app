@@ -1,5 +1,5 @@
 ---
-title: 'Ressouces : Lab vulnérable'
+title: 'Ressources : Lab vulnérable'
 chapter: Ressources nécessaires
 badgeId: bts_sql_audit_rgpd
 meta: 'Durée : 2 heures. Objectif : Comprendre pour mieux protéger'
