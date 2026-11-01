@@ -13,40 +13,44 @@ audience: public
 
 # Modèle de Von Neumann
 
-Il y a plusieurs manières de définir ce qu'est un ordinateur. A l'origine, un ordinateur est une machine permettant de réaliser des calculs. Le terme ordinateur vient à l'origine du mot "ordonnateur" (celui qui ordonne) qui a été changé par François Girard (responsable chez IBM France) sous conseil de son ancien professeur de lettres Jacques Perret, en 1955.
+Il y a plusieurs manières de définir un ordinateur. À l'origine, c'est une machine qui sert à réaliser des calculs. Le mot « ordinateur » a été choisi en 1955 par François Girard, responsable chez IBM France, sur le conseil de son ancien professeur de lettres Jacques Perret. Il vient du mot « ordonnateur », qui désigne celui qui met de l'ordre.
 
-Plusieurs manières de définir ce qu'est un ordinateur existent, cependant une demeure plus concrète que les autres : le modèle de **Von Neumann**.
+Parmi toutes les définitions possibles, la plus concrète reste celle du modèle de **von Neumann**.
 
-Le modèle de von Neumann est la façon de nommer des blocs constituant un ordinateur, et surtout de dire dans quel ordre ils travaillent. Un ordinateur moderne exécute un programme **stocké en mémoire** (données et instructions au même endroit) **une instruction après l'autre**. C'est l'unité de contrôle qui joue le rôle de chef d'orchestre.
+Ce modèle décrit les blocs qui composent un ordinateur et, surtout, l'ordre dans lequel ils travaillent. Un ordinateur moderne exécute un programme **stocké en mémoire**, au même endroit que les données, et il en traite les instructions **une par une, dans l'ordre**. L'unité de contrôle coordonne l'ensemble, un peu comme un chef d'orchestre.
 
-John von Neumann formalise cette architecture pour l'EDVAC, à la fin des années 1940. Deux idées tiennent tout : on calcule en binaire, et le programme n'est plus câblé dans la machine, il est écrit dans la mémoire, comme les données. On peut donc changer de programme sans ressouder.
+John von Neumann décrit cette architecture en 1945, dans un rapport consacré à l'EDVAC. Elle repose sur deux idées. D'abord, les calculs se font en binaire. Ensuite, le programme n'est plus câblé dans la machine : il est écrit dans la mémoire, comme les données. Pour changer de programme, il suffit donc de modifier la mémoire, sans rien ressouder.
 
 <VonNeumann />
 
+![L'EDVAC installé au laboratoire de recherche balistique de l'armée américaine](/content/2/edvac.jpg)
+
+*L'EDVAC dans les années 1950. La machine occupe à elle seule une pièce entière. Photo de l'armée américaine, domaine public (Wikimedia Commons).*
+
 ## Dans le processeur
 
-Le processeur réunit deux unités. L'**unité arithmétique et logique** (UAL) qui fait les opérations : additions, comparaisons, décalages, opérations logiques. Elle s'appuie sur des **registres**, une toute petite mémoire interne beaucoup plus rapide que la RAM, où elle pose les valeurs en cours de calcul.
+Le processeur réunit deux unités. La première, l'**unité arithmétique et logique** (UAL), effectue les opérations, comme les additions, les comparaisons, les décalages ou les opérations logiques. Elle s'appuie sur des **registres**, de toutes petites mémoires internes beaucoup plus rapides que la RAM, dans lesquelles elle range les valeurs en cours de calcul.
 
-L'**unité de contrôle**, l'UC, ne calcule pas le résultat. Elle décide quoi faire maintenant. Son cycle tient en quatre temps. Elle **lit** l'instruction en mémoire (*fetch*), elle la **décode** pour savoir quel opcode et quels opérandes elle contient (*decode*), elle **fait calculer** l'UAL (*execute*), puis elle **range** le résultat dans un registre ou en mémoire (*store*). L'horloge cadence ce cycle. Dire qu'un processeur tourne à plusieurs gigahertz, c'est dire combien de ces battements il enchaîne par seconde.
+La seconde, l'**unité de contrôle** (UC), ne calcule rien elle-même. Elle décide de ce qui doit être fait à chaque instant, en répétant un cycle en quatre étapes. Elle **lit** d'abord l'instruction en mémoire (*fetch*), puis elle la **décode** pour connaître son code d'opération (*opcode*) et ses opérandes (*decode*). Elle **fait** ensuite **calculer** l'UAL (*execute*) et **range** enfin le résultat dans un registre ou en mémoire (*store*). Ce cycle est cadencé par une horloge. La fréquence d'un processeur, exprimée en gigahertz, indique le nombre de battements d'horloge qu'il enchaîne chaque seconde.
 
-## Plusieurs mémoires, pas une
+## Les différentes mémoires
 
 | Type | Rôle |
 |---|---|
-| **Cache** | Tout près du processeur, il accélère les accès répétés |
-| **RAM** | Volatile : programmes et données en cours, perdus hors tension |
-| **ROM** | Non volatile : ce qu'il faut pour démarrer (firmware, BIOS) |
-| **Stockage** | Disque, SSD, clé USB : le long terme |
+| **Cache** | Mémoire très rapide placée tout près du processeur, qui accélère les accès répétés |
+| **RAM** | Mémoire volatile qui contient les programmes et les données en cours d'utilisation, perdus quand la machine est éteinte |
+| **ROM** | Mémoire non volatile qui contient ce qu'il faut pour démarrer la machine (firmware, BIOS) |
+| **Stockage** | Disque dur, SSD ou clé USB, qui conservent les données sur le long terme |
 
-Dans le modèle, instructions et données cohabitent en RAM. C'est le **programme enregistré**. On peut donc, en théorie, traiter une instruction comme une donnée. C'est aussi ce qui permet à un programme d'en écrire un autre.
+Dans le modèle de von Neumann, les instructions et les données sont rangées ensemble dans la RAM. C'est le principe du **programme enregistré**. Une instruction peut donc, en théorie, être traitée comme une donnée, ce qui permet par exemple à un programme d'en écrire un autre.
 
-Le processeur ne va pas chercher une valeur « quelque part ». Il passe par des **bus**. Le bus de données transporte les valeurs. Le bus d'adresses dit où lire ou écrire. Le bus de contrôle porte les signaux : lecture, écriture, et le reste. Autour, les périphériques entrent des informations (clavier, souris), en sortent (écran, imprimante), ou font les deux (écran tactile, disque).
+Pour échanger des valeurs avec la mémoire, le processeur passe par des **bus**. Le bus de données transporte les valeurs elles-mêmes, le bus d'adresses indique l'endroit où lire ou écrire, et le bus de contrôle transmet les signaux de commande, comme l'ordre de lecture ou d'écriture. Les périphériques sont reliés à cet ensemble. Certains servent à entrer des informations (clavier, souris), d'autres à en sortir (écran, imprimante), et quelques-uns font les deux (écran tactile, disque).
 
-## Le tuyau le plus étroit
+## Le goulot d'étranglement
 
-Le processeur, la mémoire et les bus n'avancent pas au même rythme. Le plus lent bride tous les autres. On appelle cela le **goulot d'étranglement**, le *bottleneck* : comme un tuyau trop fin au milieu d'une canalisation, il impose son débit à l'ensemble. Un processeur très rapide devant une mémoire lente passe son temps à attendre la prochaine instruction. Ajouter des gigahertz ne sert alors à rien.
+Le processeur, la mémoire et les bus ne fonctionnent pas à la même vitesse, et l'élément le plus lent ralentit tous les autres. Ce phénomène s'appelle le **goulot d'étranglement** (*bottleneck* en anglais). Il ressemble à un tuyau trop fin au milieu d'une canalisation, qui impose son débit à toute l'installation. Un processeur très rapide relié à une mémoire lente passe ainsi une grande partie de son temps à attendre la prochaine instruction, et augmenter sa fréquence n'y change rien.
 
-Les quatre blocs à retenir sont le processeur (UC et UAL), la mémoire, les bus, et les entrées-sorties. Le cycle de l'UC est fetch, decode, execute, store. La RAM s'efface quand le courant est coupé, alors que la ROM et le stockage conservent leur contenu.
+En résumé, le modèle de von Neumann comporte quatre blocs : le processeur (avec l'UC et l'UAL), la mémoire, les bus et les entrées-sorties. L'UC répète le cycle *fetch*, *decode*, *execute*, *store*. La RAM s'efface quand le courant est coupé, alors que la ROM et le stockage conservent leur contenu.
 
 ## Pour s'entraîner
 

@@ -101,7 +101,7 @@ const MIEL: Enquete = {
   title: "Le miel envolé",
   difficulty: "Moyen",
   skills: ["Croiser deux tables", "Comparer des dates et des heures"],
-  pitch: "Les ruches de la clairière ont été pillées en plein après-midi. Une empreinte, trois suspects, des alibis à vérifier.",
+  pitch: "Les ruches de la clairière ont été pillées en plein après-midi. Le voleur a laissé une empreinte, et chaque suspect a un alibi qu'il faudra vérifier.",
   story: [
     "Le 19 octobre 2026, les abeilles de la clairière sont furieuses : trois rayons de miel ont disparu de leurs ruches.",
     "Le voleur a laissé une empreinte bien nette dans la boue. Il ne reste plus qu'à savoir à qui elle appartient, et qui n'était pas ailleurs à ce moment-là.",

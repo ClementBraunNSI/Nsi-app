@@ -24,7 +24,7 @@ Demander un âge, puis ranger dans `statut` le texte `"majeur"` à partir de 18 
 <Indices>
 <Indice>
 
-`if condition:` puis `else:` ; les deux points et le décalage des lignes en dessous sont obligatoires.
+La structure s'écrit `if condition:` puis `else:`. Les deux points et le décalage des lignes en dessous sont obligatoires.
 
 </Indice>
 <Indice>
@@ -82,7 +82,7 @@ Demander un nombre (à virgule possible) et ranger dans `signe` le texte `"posit
 <Indices>
 <Indice>
 
-Trois cas possibles : `if`, puis `elif` pour le deuxième cas, puis `else` pour le dernier.
+Il y a trois cas possibles. Le premier se teste avec `if`, le deuxième avec `elif`, et le dernier se traite avec `else`.
 
 </Indice>
 <Indice>
@@ -332,7 +332,7 @@ Demander l'âge et ranger le prix dans `prix`.
 <Indices>
 <Indice>
 
-Trois tarifs, donc trois cas : `if`, `elif`, `else`.
+Il y a trois tarifs, donc trois cas à traiter avec `if`, `elif` et `else`.
 
 </Indice>
 <Indice>
@@ -1335,14 +1335,14 @@ for t, c in cas:
 **Ce que le programme doit produire**
 - `pointe` : `True` si le départ tombe en heure de pointe. La borne l'affiche pour inciter à voyager à un autre moment.
 - `prix` : le prix final, arrondi au centime, affiché au voyageur.
-- `message` : ce qu'affiche la borne sous le prix : `"gratuit"` pour un enfant de moins de 4 ans, `"carte refusée"` si une carte a été présentée mais n'est pas valable pour l'âge (le voyageur paie alors sans réduction), `"ok"` sinon.
+- `message` : le texte affiché sous le prix. Il vaut `"gratuit"` pour un enfant de moins de 4 ans, `"carte refusée"` si une carte a été présentée mais n'est pas valable pour l'âge (le voyageur paie alors sans réduction), et `"ok"` sinon.
 
-Avec l'exemple : départ en heure de pointe, carte jeune valable, aller-retour : 54,43 €.
+Dans l'exemple, le départ tombe en heure de pointe, la carte jeune est valable et le billet est un aller-retour. Le prix final est de 54,43 €.
 
 <Indices>
 <Indice>
 
-Suivre l'ordre des règles : une variable `prix` qui évolue étape par étape, chaque étape étant un `if` séparé.
+Suivre l'ordre des règles avec une seule variable `prix`, modifiée étape par étape. Chaque étape correspond à un `if` séparé.
 
 </Indice>
 <Indice>
@@ -1447,7 +1447,7 @@ for entrees, p, pt, m in cas:
 **Données saisies** : un jour, un mois et une année (trois entiers). Exemple : `28`, `2`, `2024`.
 
 **Ce que le programme doit produire**
-- `valide` : `True` si la date existe : mois de 1 à 12, jour possible dans ce mois, en tenant compte des années bissextiles (février a 29 jours en 2024, 28 en 2026). Une date qui n'existe pas fait afficher `date invalide`, et rien d'autre n'est calculé.
+- `valide` : `True` si la date existe, c'est-à-dire si le mois va de 1 à 12 et si le jour est possible dans ce mois, en tenant compte des années bissextiles (février a 29 jours en 2024, 28 en 2026). Une date qui n'existe pas fait afficher `date invalide`, et rien d'autre n'est calculé.
 - `numero` : le rang du jour dans l'année, de 1 pour le 1er janvier à 365 (ou 366) pour le 31 décembre.
 - `saison` : `"hiver"` du 21 décembre au 19 mars, `"printemps"` du 20 mars au 20 juin, `"été"` du 21 juin au 21 septembre, `"automne"` du 22 septembre au 20 décembre.
 - `lendemain` : la date du jour suivant, sous forme de texte `"JJ/MM/AAAA"` (sur 2, 2 et 4 chiffres), en passant au mois suivant ou à l'année suivante si besoin.
@@ -1463,7 +1463,7 @@ Commencer par le nombre de jours du mois (`jours_mois`) : il sert à la validit�
 </Indice>
 <Indice>
 
-Pour le numéro du jour, ajouter au jour les longueurs des mois précédents : une suite de `if` sur le mois, ou l'astuce `cumul = [0, 31, 59, 90, …]` si les listes sont connues. Ne pas oublier le jour en plus après février dans une année bissextile.
+Pour le numéro du jour, ajouter au jour la longueur de tous les mois précédents. Cela peut se faire avec une suite de `if` sur le mois, ou avec l'astuce `cumul = [0, 31, 59, 90, …]` si les listes sont connues. Ne pas oublier le jour en plus après février dans une année bissextile.
 
 </Indice>
 <Indice>

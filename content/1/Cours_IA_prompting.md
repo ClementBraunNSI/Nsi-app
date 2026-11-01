@@ -22,9 +22,9 @@ Un assistant comme ChatGPT, Le Chat ou Gemini repose sur un **grand modèle de l
 
 Quand une question lui est posée, il calcule le mot le plus probable pour commencer sa réponse, puis le suivant, puis encore le suivant. Une réponse entière est une longue suite de paris. La plupart du temps, ces paris tombent juste, parce que le modèle a vu beaucoup de textes corrects. Parfois non, et il continue avec la même assurance.
 
-Les générateurs d'images fonctionnent autrement, mais l'idée est voisine. Ils partent d'un brouillard de pixels au hasard et le corrigent par petites touches, guidés par la phrase du prompt, jusqu'à obtenir une image qui lui correspond.
+Les générateurs d'images fonctionnent autrement Ils partent d'un brouillard de pixels au hasard et le corrigent par petites touches, guidés par la phrase du prompt, jusqu'à obtenir une image qui lui correspond.
 
-Deux conséquences sont utiles à retenir. La même question posée deux fois peut donner deux réponses différentes, car une part de hasard est volontairement laissée dans le choix des mots. Et deux IA différentes, entraînées sur des textes différents, ne répondent pas pareil.
+La même question posée deux fois peut donner deux réponses différentes, car une part de hasard est volontairement laissée dans le choix des mots. Et deux IA différentes, entraînées sur des textes différents, ne répondent pas pareil.
 
 ## Le prompt, c'est la consigne
 
@@ -39,8 +39,6 @@ Comparer ces deux demandes.
 |--------|-----------------------------|
 | « Écris un poème sur les renards. » | Un poème long, assez plat, avec des rimes attendues. |
 | « Écris un poème de 4 vers en rimes croisées, pour des élèves de seconde, sur un renard qui découvre le Wi-Fi. Ton humoristique. Pas de mot plus long que 10 lettres. » | Un texte court, ciblé, qui respecte une forme précise. |
-
-La seconde demande est plus longue, mais elle laisse beaucoup moins de place au hasard.
 
 ## Les six ingrédients d'un bon prompt
 
@@ -61,7 +59,7 @@ On n'a pas besoin de tous les ingrédients à chaque fois. Plus la tâche est pr
 
 > Tu es un guide touristique. Présente la ville de Lille à une classe de seconde qui la visite pour la première fois. Fais une liste de 5 lieux, avec une phrase pour chacun.
 
-## Une conversation, pas une commande
+## Ce n'est pas une commande mais une conversation
 
 On obtient rarement le bon résultat du premier coup. Ce n'est pas un échec : c'est le fonctionnement normal. On lit la réponse, on repère ce qui ne va pas, et on précise.
 
@@ -93,7 +91,7 @@ Certains outils acceptent aussi ce qu'on ne veut pas voir : « sans texte, sans 
 > **Définition**
 > On parle d'**hallucination** quand une IA générative affirme quelque chose de faux, en l'inventant, avec le même ton assuré que pour une information exacte.
 
-Le modèle produit ce qui est plausible, pas ce qui est vrai. Une date, une citation, un titre de livre, une adresse de site : tout cela peut être inventé, et présenté proprement. Les sources qu'il cite peuvent ne pas exister.
+Le modèle produit ce qui est plausible et non pas ce qui est vrai. Une date, une citation, un titre de livre, une adresse de site : tout cela peut être inventé et présenté proprement. Les sources qu'il cite peuvent ne pas exister.
 
 Quelques réflexes évitent la plupart des pièges. On vérifie tout fait important dans une source fiable : un manuel, un site officiel, une encyclopédie reconnue. On ouvre les liens proposés pour voir s'ils existent vraiment. On se méfie des chiffres très précis donnés sans source. Enfin, on garde en tête que le modèle a appris jusqu'à une certaine date : il peut ignorer ce qui s'est passé depuis.
 
@@ -114,9 +112,3 @@ Ce qui est tapé dans un assistant part sur les serveurs de l'entreprise qui le 
 > Un **hypertrucage** (en anglais *deepfake*) est une image, une vidéo ou un son fabriqué par une IA pour faire croire qu'une personne réelle a dit ou fait quelque chose.
 
 Générer un texte ou une image a aussi un coût matériel. Chaque requête fait travailler des serveurs dans des centres de données, qui consomment de l'électricité et de l'eau pour se refroidir. Une recherche simple dans un moteur de recherche coûte bien moins. On réserve donc l'IA aux tâches où elle aide vraiment, et on évite de lancer vingt générations au hasard en espérant que l'une soit bonne.
-
-## À retenir
-
-Une IA générative prolonge ce qu'on lui donne en choisissant, à chaque étape, ce qui est le plus probable. Elle ne sait pas si c'est vrai. Un bon prompt réduit la part de hasard : il précise le rôle, le contexte, la tâche, le format, les contraintes, et donne des exemples si besoin. On avance par essais successifs, on relit, on vérifie les faits dans une source fiable, et on ne confie jamais de données personnelles.
-
-Les exercices comparent plusieurs IA sur les mêmes demandes. Le TP final est un concours : par binômes, il faudra obtenir le résultat le plus proche possible d'une cible imposée.
