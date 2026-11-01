@@ -13,43 +13,21 @@ audience: public
 
 # Modèle de Von Neumann
 
-Ouvrir un ordinateur, même en pensée : il y a un processeur, de la mémoire, des câbles, un clavier, un écran. Le modèle de von Neumann est la façon de nommer ces blocs, et surtout de dire dans quel ordre ils travaillent. Un ordinateur moderne exécute un programme **stocké en mémoire**, données et instructions au même endroit, **une instruction après l'autre**. C'est l'unité de contrôle qui mène ce défilé.
+Il y a plusieurs manières de définir ce qu'est un ordinateur. A l'origine, un ordinateur est une machine permettant de réaliser des calculs. Le terme ordinateur vient à l'origine du mot "ordonnateur" (celui qui ordonne) qui a été changé par François Girard (responsable chez IBM France) sous conseil de son ancien professeur de lettres Jacques Perret, en 1955.
+
+Plusieurs manières de définir ce qu'est un ordinateur existent, cependant une demeure plus concrète que les autres : le modèle de **Von Neumann**.
+
+Le modèle de von Neumann est la façon de nommer des blocs constituant un ordinateur, et surtout de dire dans quel ordre ils travaillent. Un ordinateur moderne exécute un programme **stocké en mémoire** (données et instructions au même endroit) **une instruction après l'autre**. C'est l'unité de contrôle qui joue le rôle de chef d'orchestre.
 
 John von Neumann formalise cette architecture pour l'EDVAC, à la fin des années 1940. Deux idées tiennent tout : on calcule en binaire, et le programme n'est plus câblé dans la machine, il est écrit dans la mémoire, comme les données. On peut donc changer de programme sans ressouder.
 
-```mermaid
-graph TD
-    subgraph CPU [Processeur CPU]
-        UC[Unité de Contrôle]
-        UAL[Unité Arithmétique et Logique]
-        Reg[Registres]
-        UC <--> UAL
-        UC <--> Reg
-        UAL <--> Reg
-    end
-
-    subgraph Memory [Mémoire]
-        RAM[RAM instructions et données]
-    end
-
-    subgraph IO [Entrées / Sorties]
-        Input[Clavier, souris...]
-        Output[Écran, imprimante...]
-    end
-
-    CPU <==>|Bus données / adresse / contrôle| Memory
-    CPU <==>|Bus| IO
-```
-
-![edvac](edvac.jpeg)
+<VonNeumann />
 
 ## Dans le processeur
 
-Le processeur réunit deux unités qu'il ne faut pas échanger. L'**unité arithmétique et logique**, l'UAL, fait les opérations : additions, comparaisons, décalages, opérations logiques. Elle s'appuie sur des **registres**, une toute petite mémoire interne, beaucoup plus rapide que la RAM, où elle pose les valeurs en cours de calcul.
+Le processeur réunit deux unités. L'**unité arithmétique et logique** (UAL) qui fait les opérations : additions, comparaisons, décalages, opérations logiques. Elle s'appuie sur des **registres**, une toute petite mémoire interne beaucoup plus rapide que la RAM, où elle pose les valeurs en cours de calcul.
 
-L'**unité de contrôle**, l'UC, ne calcule pas le résultat. Elle décide quoi faire maintenant. Son cycle tient en quatre temps. Elle **lit** l'instruction en mémoire (*fetch*), elle la **décode** pour savoir quel opcode et quels opérandes elle contient (*decode*), elle **fait calculer** l'UAL (*execute*), puis elle **range** le résultat dans un registre ou en mémoire (*store*). L'horloge cadence ce cycle. Dire qu'un processeur tourne à plusieurs gigahertz, c'est dire combien de ces battements il enchaîne par seconde, pas combien de travail utile il abat.
-
-![proco](intelamd.jpeg)
+L'**unité de contrôle**, l'UC, ne calcule pas le résultat. Elle décide quoi faire maintenant. Son cycle tient en quatre temps. Elle **lit** l'instruction en mémoire (*fetch*), elle la **décode** pour savoir quel opcode et quels opérandes elle contient (*decode*), elle **fait calculer** l'UAL (*execute*), puis elle **range** le résultat dans un registre ou en mémoire (*store*). L'horloge cadence ce cycle. Dire qu'un processeur tourne à plusieurs gigahertz, c'est dire combien de ces battements il enchaîne par seconde.
 
 ## Plusieurs mémoires, pas une
 
@@ -63,8 +41,6 @@ L'**unité de contrôle**, l'UC, ne calcule pas le résultat. Elle décide quoi 
 Dans le modèle, instructions et données cohabitent en RAM. C'est le **programme enregistré**. On peut donc, en théorie, traiter une instruction comme une donnée. C'est aussi ce qui permet à un programme d'en écrire un autre.
 
 Le processeur ne va pas chercher une valeur « quelque part ». Il passe par des **bus**. Le bus de données transporte les valeurs. Le bus d'adresses dit où lire ou écrire. Le bus de contrôle porte les signaux : lecture, écriture, et le reste. Autour, les périphériques entrent des informations (clavier, souris), en sortent (écran, imprimante), ou font les deux (écran tactile, disque).
-
-![bus](bus.png)
 
 ## Le tuyau le plus étroit
 

@@ -94,6 +94,7 @@ export async function generateMetadata({ params }: { params: Promise<{ niveaux: 
 import { ExerciseTabs, ExerciseSection, Enonce } from '@/components/ExerciseTabs';
 import { Correction, Verification } from '@/components/SolutionBlocks';
 import { RevealCorrection } from '@/components/projection/RevealCorrection';
+import { VonNeumann } from '@/components/mdx/VonNeumannDiagram';
 import ProjectionShell from '@/components/projection/ProjectionShell';
 import { Admonition } from '@/components/Admonition';
 import { Icone, Renard, Renards } from '@/components/mdx/CourseMarks';
@@ -264,6 +265,7 @@ export default async function CoursePage({
     Renards,
     Indices,
     Indice,
+    VonNeumann,
     SqlEditor,
     SqlTable,
     WebPreview,
