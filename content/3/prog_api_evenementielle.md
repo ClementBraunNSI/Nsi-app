@@ -13,13 +13,13 @@ audience: public
 
 # API et programmation événementielle
 
-Un programme de Première exécute ses lignes de haut en bas, puis s'arrête. Une application graphique attend. Elle ne sait pas quand la personne va cliquer, taper, ou quand la réponse du réseau va arriver. La **programmation événementielle** organise le code autour de ces moments. Une **API** est le contrat par lequel ce code va chercher, ou fournir, des données à un autre programme.
+Les programmes écrits en Première exécutent leurs instructions de haut en bas, puis s'arrêtent. Une application graphique, elle, reste en attente : elle ne sait pas quand l'utilisateur va cliquer ou taper au clavier, ni quand la réponse du réseau va arriver. La **programmation événementielle** organise le code autour de ces événements. Une **API**, quant à elle, définit comment ce code peut obtenir des données d'un autre programme, ou lui en fournir.
 
-## Une API est un contrat, pas une page
+## Qu'est-ce qu'une API ?
 
-**API** veut dire *Application Programming Interface*. C'est l'ensemble des requêtes qu'un service accepte, avec la forme des réponses. Une API météo prend une ville et renvoie des températures. Une API cartographique prend des coordonnées. Une application web a souvent sa propre API, sous des URL comme `/api/...`, que sa page appelle au lieu de recharger tout le HTML.
+**API** signifie *Application Programming Interface*. C'est l'ensemble des requêtes qu'un service accepte, avec la forme des réponses qu'il renvoie. Une API météo prend une ville et renvoie des températures. Une API cartographique prend des coordonnées. Une application web a souvent sa propre API, sous des URL comme `/api/...`, que sa page appelle au lieu de recharger tout le HTML.
 
-Le client envoie une requête HTTP. Le serveur renvoie un code de statut et, en cas de succès, un corps. Ici le corps est du **JSON** : un texte qui se lit comme un dictionnaire. `requests` fait l'appel. `timeout=3` abandonne si rien n'est revenu au bout de trois secondes, au lieu de bloquer l'interface.
+Le client envoie une requête HTTP, et le serveur renvoie un code de statut et, en cas de succès, un corps. Ici, le corps est écrit en **JSON**, un format texte qui se lit comme un dictionnaire. La bibliothèque `requests` effectue l'appel, et `timeout=3` abandonne la requête si aucune réponse n'est arrivée au bout de trois secondes, pour ne pas bloquer l'interface.
 
 ```python
 import requests
@@ -34,11 +34,11 @@ else:
     print("Erreur HTTP :", reponse.status_code)
 ```
 
-`200` veut dire que le serveur a répondu et que la ressource est là. `404` veut dire que ce renard n'existe pas. `500` veut dire que le serveur a échoué. On teste le code avant de lire le JSON : un corps d'erreur n'a souvent pas la clé `"nom"`. Et `requests.get` peut lever une exception **avant** tout code HTTP, si le réseau est coupé ou si le délai est dépassé. Il n'y a alors pas de `reponse` du tout. C'est un cas pour `try` / `except`, pas pour un `if` sur le statut.
+Le code `200` signifie que le serveur a répondu et que la ressource existe, `404` que ce renard n'existe pas, et `500` que le serveur a rencontré une erreur. Il faut tester le code avant de lire le JSON, car un corps d'erreur ne contient souvent pas la clé `"nom"`. De plus, `requests.get` peut lever une exception **avant** de recevoir un code HTTP, si le réseau est coupé ou si le délai est dépassé. Dans ce cas, la variable `reponse` n'existe pas du tout, et il faut utiliser `try` / `except` plutôt qu'un `if` sur le statut.
 
-## L'interface réagit, elle ne boucle pas
+## Réagir aux événements de l'interface
 
-Côté page, on n'écrit pas une boucle qui surveille le bouton. On abonne une fonction à un événement. Quand le clic arrive, la fonction part. `async` marque une fonction qui peut attendre la réponse du réseau sans figer le dessin de la page.
+Côté page, on n'écrit pas de boucle qui surveille le bouton : on associe une fonction à un événement, et cette fonction s'exécute quand le clic se produit. Le mot-clé `async` indique une fonction qui peut attendre la réponse du réseau sans bloquer l'affichage de la page.
 
 ```javascript
 const bouton = document.getElementById("charger");
@@ -51,12 +51,12 @@ bouton.addEventListener("click", async () => {
 });
 ```
 
-Le texte « Chargement... » s'affiche **avant** l'appel. Sans lui, la page semble morte pendant que le réseau travaille, et la personne clique une deuxième fois. Le deuxième clic relance une requête dont la réponse peut arriver dans le désordre. On désactive le bouton le temps de l'attente, ou l'on ignore les clics tant que la première requête n'est pas revenue.
+Le texte « Chargement... » s'affiche **avant** l'appel. Sans ce message, la page semble bloquée pendant l'attente, et l'utilisateur risque de cliquer une deuxième fois. Ce deuxième clic relance alors une requête, dont la réponse peut arriver dans le désordre. Pour l'éviter, on désactive le bouton pendant l'attente, ou on ignore les clics tant que la première requête n'a pas reçu de réponse.
 
-La chaîne est toujours la même. Un événement déclenche le traitement. L'application envoie la requête. Elle lit la réponse, code puis JSON. Elle met à jour l'affichage, ou elle écrit un message d'erreur compréhensible : « le catalogue ne répond pas », pas la trace brute de l'exception. La fonction qui dessine ne devrait pas construire l'URL, et la fonction qui appelle le réseau ne devrait pas connaître les identifiants des balises. On les sépare pour pouvoir changer l'API sans réécrire la page, et la page sans réécrire l'appel.
+Le déroulement est toujours le même. Un événement déclenche le traitement, puis l'application envoie la requête et lit la réponse, d'abord le code puis le JSON. Elle met enfin à jour l'affichage, ou affiche un message d'erreur compréhensible, comme « le catalogue ne répond pas », plutôt que le détail brut de l'exception. La fonction qui met à jour l'affichage ne devrait pas construire l'URL, et la fonction qui appelle le réseau ne devrait pas connaître les identifiants des balises. Les séparer permet de changer l'API sans réécrire la page, et la page sans réécrire l'appel.
 
 ## Exercices
 
-1. Écrire un pseudo-code "clic -> requête -> affichage".
+1. Écrire un pseudo-code qui enchaîne le clic, la requête et l'affichage.
 2. Ajouter un `try/except` autour de `requests.get`.
 3. Proposer un format JSON minimal pour un catalogue de véhicules.

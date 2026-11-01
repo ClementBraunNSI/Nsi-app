@@ -13,13 +13,13 @@ audience: public
 
 **BTS SIO, Bloc 1 : gestion des risques en projet informatique**
 
-Un **risque de projet** est un événement incertain. S'il se produit, il écarte le projet de ses objectifs : délai, coût, qualité, périmètre. L'écart peut être négatif, un développeur absent la semaine de la livraison. Il peut être positif, une bibliothèque qui fait gagner dix jours : on parle alors d'opportunité, et on la traite aussi, pour ne pas la laisser passer. Gérer les risques, c'est les identifier, les analyser, les traiter, puis les surveiller. Un registre qu'on ne rouvre plus n'est pas une gestion.
+Un **risque de projet** est un événement incertain qui, s'il se produit, écarte le projet de ses objectifs de délai, de coût, de qualité ou de périmètre. L'écart peut être négatif, comme l'absence d'un développeur la semaine de la livraison. Il peut aussi être positif, comme une bibliothèque qui fait gagner dix jours : on parle alors d'opportunité, et on la traite aussi pour ne pas la laisser passer. Gérer les risques consiste à les identifier, à les analyser, à les traiter, puis à les surveiller dans la durée, car un registre que personne ne rouvre ne sert à rien.
 
-Le déroulement tient en quatre temps. On **identifie** ce qui pourrait arriver, avec l'équipe, pas seulement dans le bureau du chef de projet. On **analyse** : quelle vraisemblance, quel impact. On **traite** : quelle stratégie, qui en est responsable, pour quelle date. On **surveille** : le risque a-t-il changé, la parade a-t-elle été faite. Un risque nouveau en cours de sprint entre dans le même circuit. Il n'attend pas le bilan de fin.
+La démarche se déroule en quatre étapes. On **identifie** d'abord ce qui pourrait arriver, avec toute l'équipe et pas seulement le chef de projet. On **analyse** ensuite la probabilité et l'impact de chaque risque. On **traite** le risque en choisissant une stratégie, un responsable et une échéance. Enfin, on **surveille** l'évolution du risque et la mise en place des actions prévues. Un nouveau risque apparu en cours de sprint suit le même circuit, sans attendre le bilan final.
 
-## La criticité, pour savoir par quoi commencer
+## La criticité
 
-On croise une probabilité et un impact, chacun noté de 1 à 5. La **criticité** est le produit. Elle ne mesure pas une probabilité au sens des mathématiques. Elle classe les risques pour décider où passer le temps.
+On croise une probabilité et un impact, notés chacun de 1 à 5. La **criticité** est leur produit. Ce n'est pas une probabilité au sens mathématique : elle sert seulement à classer les risques pour savoir lesquels traiter en priorité.
 
 | Probabilité \ Impact | 1 - Très Faible | 2 - Faible | 3 - Moyen | 4 - Fort | 5 - Très Fort |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -38,9 +38,9 @@ Les produits utiles vont de 1 à 25. Les seuils du cours :
 - risque **élevé** : 10 à 16, des actions préventives obligatoires
 - risque **critique** : 20 à 25, un traitement immédiat
 
-7 n'apparaît pas : ce n'est pas un produit de deux entiers entre 1 et 5. On ne « arrondit » pas un 6 vers le moyen pour le faire entrer dans une case.
+La valeur 7 n'apparaît pas, car ce n'est pas le produit de deux entiers compris entre 1 et 5. Il ne faut donc pas « arrondir » un 6 vers le niveau moyen.
 
-L'échelle de probabilité va de 1 à 5 : 1 signifie très improbable, 2 peu probable, 3 possible, 4 probable et 5 très probable. L'impact suit la même graduation, du très faible au très fort, selon ce que l'événement ferait au délai, au coût, à la qualité ou au périmètre. Deux personnes qui notent seules ne trouvent pas toujours le même chiffre. On note ensemble, et l'on écrit pourquoi.
+L'échelle de probabilité va de 1 à 5 : 1 signifie très improbable, 2 peu probable, 3 possible, 4 probable et 5 très probable. L'impact suit la même graduation, du très faible au très fort, selon ce que l'événement ferait au délai, au coût, à la qualité ou au périmètre. Deux personnes qui notent seules ne trouvent pas toujours la même valeur : il vaut donc mieux noter ensemble, en justifiant chaque note par écrit.
 
 ## Travaux dirigés : calcul de risques
 

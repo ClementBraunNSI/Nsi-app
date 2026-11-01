@@ -203,7 +203,7 @@ Parcourir la table jusqu'à trouver la ligne dont la clé `"nom"` vaut `nom`.
 </Indice>
 <Indice>
 
-`return` dès qu'elle est trouvée ; `return None` après la boucle.
+`return` dès qu'elle est trouvée. `return None` après la boucle.
 
 </Indice>
 <Indice>
@@ -263,7 +263,7 @@ Lire les en-têtes sur la première ligne, puis parcourir les lignes suivantes.
 </Indice>
 <Indice>
 
-Pour une ligne, `valeurs = ligne.split(";")` ; la valeur de la colonne `i` va dans la clé `entetes[i]`.
+Pour une ligne, `valeurs = ligne.split(";")`. La valeur de la colonne `i` va dans la clé `entetes[i]`.
 
 </Indice>
 <Indice>
@@ -564,7 +564,7 @@ assert "sort" not in PROGRAMME, "Sans tri."
 <Indices>
 <Indice>
 
-`sorted(table, key=...)` renvoie une nouvelle liste triée ; `key` est une fonction qui donne, pour une ligne, la valeur à comparer.
+`sorted(table, key=...)` renvoie une nouvelle liste triée. `key` est une fonction qui donne, pour une ligne, la valeur à comparer.
 
 </Indice>
 <Indice>
@@ -739,7 +739,7 @@ assert par_departement([]) == {}, "Table vide."
 <Indices>
 <Indice>
 
-`";".join(liste_de_textes)` assemble une ligne ; les nombres doivent d'abord passer par `str`.
+`";".join(liste_de_textes)` assemble une ligne. Les nombres doivent d'abord passer par `str`.
 
 </Indice>
 <Indice>
@@ -857,7 +857,7 @@ Une seconde table donne le nom des départements : `[{"code": "68", "nom_dep": "
 <Indices>
 <Indice>
 
-Préparer d'abord un dictionnaire code → nom à partir de `departements` : la recherche devient immédiate.
+Préparer d'abord, à partir de `departements`, un dictionnaire qui associe à chaque code le nom du département. La recherche devient alors immédiate.
 
 </Indice>
 <Indice>
@@ -1143,7 +1143,7 @@ assert top_par_groupe([], "departement", "altitude", 2) == {}, "Table vide."
 <Indices>
 <Indice>
 
-Un dictionnaire valeur de clé → position dans le résultat permet de retrouver immédiatement la ligne à remplacer.
+Un dictionnaire qui associe à chaque valeur de clé sa position dans le résultat permet de retrouver immédiatement la ligne à remplacer.
 
 </Indice>
 <Indice>
@@ -1280,9 +1280,9 @@ Tom;T1;Maths;16;abs
 - `charger(texte)` : transforme le fichier en table utilisable. Renvoie la liste de dictionnaires (un par ligne), avec `coef` en entier et `note` en flottant, ou `None` pour `abs`.
 - `moyenne_eleve(table, eleve)` : la moyenne qui figurera sur le relevé. Renvoie la moyenne **pondérée** par les coefficients (copies absentes exclues), arrondie au centième, ou `None` si l'élève n'a aucune note.
 - `mention(moyenne)` : l'appréciation du jury. Renvoie `"refusé"` sous 8, `"rattrapage"` sous 10, `"admis"` sous 12, `"assez bien"` sous 14, `"bien"` sous 16, `"très bien"` sous 18, `"félicitations"` au-delà.
-- `classement(table)` : le palmarès. Renvoie la liste des tuples `(eleve, moyenne, rang)` des élèves qui ont une moyenne, par moyenne décroissante puis par nom ; deux élèves de même moyenne partagent le même rang, et le rang suivant est sauté (« 1, 2, 2, 4 »).
+- `classement(table)` : le palmarès. Renvoie la liste des tuples `(eleve, moyenne, rang)` des élèves qui ont une moyenne, par moyenne décroissante puis par nom. Deux élèves de même moyenne partagent le même rang, et le rang suivant est sauté (« 1, 2, 2, 4 »).
 - `stats_matiere(table, matiere)` : pour le conseil pédagogique de chaque matière. Renvoie le tuple `(minimum, maximum, moyenne, absents)` des notes de la matière (moyenne simple, arrondie au centième).
-- `stats_classes(table)` : pour comparer les classes. Renvoie un dictionnaire classe → tuple `(effectif, moyenne, reussite)` : nombre d'élèves de la classe, moyenne de leurs moyennes (arrondie au centième, élèves sans note exclus) et pourcentage d'élèves ayant au moins 10 sur l'effectif total (arrondi au dixième).
+- `stats_classes(table)` : pour comparer les classes. Renvoie un dictionnaire qui associe à chaque classe le tuple `(effectif, moyenne, reussite)`, c'est-à-dire le nombre d'élèves de la classe, moyenne de leurs moyennes (arrondie au centième, élèves sans note exclus) et pourcentage d'élèves ayant au moins 10 sur l'effectif total (arrondi au dixième).
 - `rapport(table)` : le fichier envoyé aux professeurs principaux. Renvoie le texte CSV `eleve;classe;moyenne;mention;rang` (en-têtes compris, chaque ligne terminée par `"\n"`), dans l'ordre du classement.
 
 <Indices>
@@ -1470,10 +1470,10 @@ id;depart;arrivee;debut;duree
 
 **Les fonctions du tableau de bord**
 - `charger(texte)` : transforme l'export en table. Renvoie la liste de dictionnaires, avec `id` et `duree` en entiers.
-- `cout(duree)` : la grille tarifaire, appliquée à chaque trajet. Les 30 premières minutes sont gratuites, puis 1 € par demi-heure **commencée**, avec un plafond de 12 €. Reçoit une durée ; renvoie le prix.
+- `cout(duree)` : la grille tarifaire, appliquée à chaque trajet. Les 30 premières minutes sont gratuites, puis 1 € par demi-heure **commencée**, avec un plafond de 12 €. Reçoit une durée et renvoie le prix.
 - `recette(table, jour)` : ce que le service a encaissé un jour donné (`"AAAA-MM-JJ"`). Renvoie la somme des coûts des trajets partis ce jour-là.
-- `par_heure(table)` et `heure_de_pointe(table)` : pour prévoir le personnel. La première renvoie une liste de 24 entiers, le nombre de départs pour chaque heure de la journée ; la seconde renvoie l'heure qui compte le plus de départs (la plus tôt en cas d'égalité).
-- `soldes(table)` et `a_reequilibrer(table, seuil)` : pour organiser le camion. La première renvoie un dictionnaire station → arrivées moins départs (une station au solde négatif se vide) ; la seconde renvoie la liste triée des stations dont le solde vaut au moins `seuil` en valeur absolue.
+- `par_heure(table)` et `heure_de_pointe(table)` : pour prévoir le personnel. La première renvoie une liste de 24 entiers, le nombre de départs pour chaque heure de la journée. La seconde renvoie l'heure qui compte le plus de départs (la plus tôt en cas d'égalité).
+- `soldes(table)` et `a_reequilibrer(table, seuil)` : pour organiser le camion. La première renvoie un dictionnaire qui associe à chaque station son solde, c'est-à-dire ses arrivées moins ses départs (une station au solde négatif se vide). La seconde renvoie la liste triée des stations dont le solde vaut au moins `seuil` en valeur absolue.
 - `trajets_populaires(table, k)` : pour décider où ajouter des pistes cyclables. Renvoie les `k` couples `(depart, arrivee)` les plus fréquents, sous forme de liste de tuples `((depart, arrivee), nombre)`, par nombre décroissant puis par ordre alphabétique des couples.
 - `duree_moyenne(table, station)` : pour l'affichage d'une station. Renvoie la durée moyenne des trajets partis de la station, arrondie à la minute (`None` s'il n'y en a pas).
 

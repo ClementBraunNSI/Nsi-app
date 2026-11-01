@@ -6,6 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
+import { pathToFileURL } from 'url';
 
 const ROOT = process.cwd();
 const BADGES = path.join(ROOT, 'public', 'images', 'badges');
@@ -24,7 +25,7 @@ const INK = '#302020';
 const svg = (body) => Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">${body}</svg>`);
 
 // Accessoires dessinés en facettes : chaque forme a une moitié claire et une moitié ombrée.
-const PROPS = {
+export const PROPS = {
   // Œuf croqué : coquille crème fendue, jaune qui coule.
   egg: `
     <ellipse cx="410" cy="470" rx="62" ry="10" fill="#000" opacity=".08"/>
@@ -125,7 +126,10 @@ const ITEMS = [
   { out: path.join(SUCCES, 'enquete_toutes.png'), fox: 'cheer', prop: 'star' },
 ];
 
-for (const item of ITEMS) {
+// Les accessoires servent aussi aux renards des enquêtes (scripts/enquete-foxes.mjs) : on ne régénère que si le script est lancé.
+const main = import.meta.url === pathToFileURL(process.argv[1]).href;
+
+for (const item of main ? ITEMS : []) {
   const fox = await sharp(path.join(BADGES, FOX[item.fox])).resize(400, 400).png().toBuffer();
   await sharp({ create: { width: 512, height: 512, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
     .composite([

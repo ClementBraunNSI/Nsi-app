@@ -53,7 +53,7 @@ export default function HubView({ enquetes }: { enquetes: Summary[] }) {
           return (
             <li key={enquete.slug}>
               <Link href={`/enquetes/${enquete.slug}`} className={`enq-case ${done ? "is-done" : ""}`}>
-                <span className={`enq-case-fox ${MOOD[index % MOOD.length]}`} aria-hidden />
+                <span className={`enq-case-fox enq-fox-${enquete.slug} ${MOOD[index % MOOD.length]}`} aria-hidden />
                 <span className="enq-case-body">
                   <span className="enq-case-meta">
                     Enquête {enquete.numero} <span className={`enq-level is-${enquete.difficulty.toLowerCase()}`}>{enquete.difficulty}</span>

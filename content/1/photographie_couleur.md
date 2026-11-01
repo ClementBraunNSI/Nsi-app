@@ -11,17 +11,17 @@ audience: public
 
 # Photographie couleur
 
-Un écran ne peint pas. Il allume de toutes petites lumières, et c'est l'œil qui en fait une couleur. Pour comprendre le codage, il faut donc commencer par la rétine, pas par le fichier.
+Un écran ne mélange pas de la peinture : il allume de toutes petites lumières, et c'est l'œil qui les perçoit comme une couleur. Pour comprendre comment une couleur est codée, il faut donc d'abord comprendre comment fonctionne l'œil.
 
-## Ce que l'œil fait déjà
+## La vision des couleurs
 
-Deux familles de cellules, sur la rétine, reçoivent la lumière.
+Sur la rétine, deux types de cellules reçoivent la lumière.
 
 ![Schéma de l'oeil](/content/1/oeil.png)
 
-Les **bâtonnets** sont très sensibles. Ils permettent de voir quand il fait sombre, mais ils ne distinguent pas les couleurs : la nuit, le monde passe en gris. Les **cônes** demandent plus de lumière. Il en existe trois sortes, sensibles surtout au rouge, au vert et au bleu. Toute la couleur perçue est une combinaison de ces trois réponses.
+Les **bâtonnets** sont très sensibles. Ils permettent de voir quand il fait sombre, mais ils ne distinguent pas les couleurs : la nuit, le monde passe en gris. Les **cônes** demandent plus de lumière. Il en existe trois sortes, sensibles surtout au rouge, au vert et au bleu. Toutes les couleurs perçues sont des combinaisons de ces trois réponses.
 
-L'appareil photo numérique reprend la même idée : une optique qui concentre la lumière, un diaphragme qui en dose la quantité, une mise au point, puis une surface qui enregistre. Le capteur joue le rôle de la rétine.
+L'appareil photo numérique reprend le même principe. Une optique concentre la lumière, un diaphragme en dose la quantité, un système de mise au point rend l'image nette, puis une surface enregistre l'image. Le capteur joue le rôle de la rétine.
 
 ![Comparaison Oeil - Appareil Photo](/content/1/apphoto.png)
 
@@ -32,15 +32,15 @@ L'appareil photo numérique reprend la même idée : une optique qui concentre l
 | **Cristallin** | Fait la mise au point | Système de focus |
 | **Rétine** | Reçoit l'image | Capteur CCD ou CMOS |
 
-## Additionner des lumières
+## La synthèse additive
 
-Un écran, qu'il soit d'ordinateur, de téléphone ou de télévision, fabrique les couleurs par **synthèse additive**. Il superpose trois lumières, rouge, vert et bleu. On parle de RVB, ou de RGB en anglais.
+Un écran, qu'il soit d'ordinateur, de téléphone ou de télévision, fabrique les couleurs par **synthèse additive**. Il superpose trois lumières : une rouge, une verte et une bleue. On parle de RVB, ou de RGB en anglais.
 
 Rouge et vert donnent du jaune. Rouge et bleu donnent du magenta. Vert et bleu donnent du cyan. Les trois ensemble donnent du blanc, parce qu'on additionne toute la lumière. S'il n'y a aucune lumière, il reste le noir : l'écran n'émet rien.
 
-Ce n'est pas la logique de la peinture. En peinture, mélanger des pigments retire de la lumière, on parle de synthèse soustractive. Ici, on en ajoute. C'est pour cela qu'un écran éteint est noir, et qu'un projecteur sans filtre est blanc.
+La peinture fonctionne autrement : mélanger des pigments retire de la lumière, et l'on parle alors de synthèse soustractive. Un écran, au contraire, ajoute de la lumière. C'est pour cela qu'un écran éteint est noir, et qu'un projecteur sans filtre est blanc.
 
-## Comment on code un pixel
+## Le codage d'un pixel
 
 Chaque pixel couleur est fait de trois composantes. L'intensité de chacune est en général codée sur un octet, donc 8 bits, ce qui donne un entier entre 0 et 255. Une composante qui vaut 0 est éteinte, et une composante qui vaut 255 est au maximum.
 
@@ -48,7 +48,7 @@ Chaque pixel couleur est fait de trois composantes. L'intensité de chacune est 
 
 Avec trois octets, chaque pixel occupe donc 24 bits. On note la couleur `(R, V, B)`. Le vert s'écrit parfois G, pour *green*, dans les logiciels en anglais : c'est la même composante.
 
-Quelques couleurs tombent juste, parce qu'elles allument une composante à fond et éteignent les autres. Le gris moyen allume les trois à mi-chemin. L'écriture hexadécimale compacte chaque octet sur deux caractères : 255 s'écrit `FF`, 0 s'écrit `00`.
+Certaines couleurs s'obtiennent simplement, en allumant une ou deux composantes au maximum et en éteignant les autres. Le gris moyen allume les trois composantes à moitié. L'écriture hexadécimale permet de noter chaque octet avec seulement deux caractères : 255 s'écrit `FF` et 0 s'écrit `00`.
 
 | Couleur | Code RVB (décimal) | Code hexadécimal |
 |---------|-------------------|------------------|
@@ -62,39 +62,39 @@ Quelques couleurs tombent juste, parce qu'elles allument une composante à fond 
 | **Cyan** | (0, 255, 255) | #00FFFF |
 | **Gris moyen** | (128, 128, 128) | #808080 |
 
-## Combien pèse l'image
+## Le poids d'une image
 
-Le poids dépend de deux choses : le nombre de pixels, et le nombre de bits par pixel.
+Le poids d'une image dépend du nombre de pixels et du nombre de bits utilisés pour chaque pixel.
 
 $$ \text{Poids (bits)} = \text{Nombre de pixels} \times \text{Taille d'un pixel (bits)} $$
 
-En couleur « classique », 24 bits, chaque pixel occupe 3 octets :
+En couleur « classique », sur 24 bits, chaque pixel occupe 3 octets :
 
 $$ \text{Poids (octets)} = \text{Nombre de pixels} \times 3 $$
 
-Une image de 800 par 600 fait 480 000 pixels. En couleur, sans compression, cela donne $480\,000 \times 3 = 1\,440\,000$ octets, environ 1,44 Mo. Dès que le fichier est plus léger, c'est qu'un format a comprimé, et parfois jeté, une partie de l'information.
+Une image de 800 par 600 fait 480 000 pixels. En couleur, sans compression, cela donne $480\,000 \times 3 = 1\,440\,000$ octets, environ 1,44 Mo. Si le fichier est plus léger, c'est que son format a compressé une partie de l'information, et en a parfois supprimé.
 
-## Changer les couleurs, pixel par pixel
+## Appliquer un filtre
 
-Un filtre ne « voit » pas la photo. Il applique un calcul à chaque triplet `(R, V, B)`. Pour passer en niveaux de gris, on remplace les trois composantes par leur moyenne :
+Un filtre ne « voit » pas la photo : il applique simplement un calcul à chaque triplet `(R, V, B)`. Pour passer en niveaux de gris, on remplace les trois composantes par leur moyenne :
 
 $$ Gris = \frac{R + V + B}{3} $$
 
-Le pixel devient alors `(Gris, Gris, Gris)`. L'œil le lit comme une nuance, parce que les trois lumières sont égales. Les filtres des applications photo sont des variantes de cette idée : une formule, répétée sur toute la grille.
+Le pixel devient alors `(Gris, Gris, Gris)`. L'œil le lit comme une nuance, parce que les trois lumières sont égales. Les filtres des applications photo reposent sur la même idée : une formule appliquée à chaque pixel de l'image.
 
 <FilterPlayground />
 
-## Compresser
+## La compression
 
-Envoyer 1,44 Mo pour une petite photo serait pénible. On comprime.
+Envoyer 1,44 Mo pour une petite photo serait peu pratique, c'est pourquoi les images sont compressées.
 
-Un fichier **RAW** ou **BMP** ne jette rien. La qualité est maximale, le fichier aussi. Le **PNG** comprime sans perte : on retrouve exactement les mêmes pixels, ce qui convient aux logos, aux schémas, aux aplats. Le **JPEG** comprime en acceptant de perdre des nuances que l'œil distingue mal. C'est le format des photos, pas celui d'un texte en toutes lettres sur un fond uni : là, les défauts se voient.
+Un fichier **RAW** ou **BMP** ne supprime rien : la qualité est maximale, mais le fichier est très lourd. Le **PNG** compresse sans perte et redonne exactement les mêmes pixels, ce qui convient aux logos, aux schémas et aux aplats de couleur. Le **JPEG** compresse en acceptant de perdre des nuances que l'œil distingue mal. Il convient aux photos, mais pas à un texte sur un fond uni, où ses défauts se voient.
 
 <ImageCompression />
 
-## Les métadonnées voyagent avec l'image
+## Les métadonnées
 
-Le fichier ne contient pas que les pixels comprimés. Un en-tête, et souvent un bloc **EXIF**, décrivent l'appareil, la date, les réglages, et parfois l'endroit.
+Le fichier ne contient pas que les pixels compressés. Un en-tête, souvent accompagné d'un bloc **EXIF**, décrit l'appareil, la date, les réglages et parfois le lieu de la prise de vue.
 
 ```mermaid
 classDiagram
@@ -113,11 +113,11 @@ classDiagram
     FichierJPEG *-- EXIF : Contient
 ```
 
-La marque, l'heure et le flash sont déjà des informations. La position GPS en est une autre : elle peut dire où se trouvait le photographe au moment de la photo. Publier l'image sans retirer ces champs, c'est parfois publier une adresse. Le chapitre [Localisation](./Cours_Localisation.md) revient sur ce point.
+La marque de l'appareil, l'heure et l'usage du flash sont déjà des informations sur la photo. La position GPS va plus loin, car elle indique où se trouvait le photographe au moment de la prise de vue. Publier une image sans retirer ces champs peut donc revenir à publier une adresse. Le chapitre [Localisation](./Cours_Localisation.md) revient sur ce point.
 
 ## Le droit à l'image
 
-En France, chacun décide de l'usage de sa propre image. Avant de publier la photo de quelqu'un, la question n'est pas seulement technique.
+En France, chacun décide de l'usage de sa propre image. Avant de publier la photo de quelqu'un, il faut donc aussi se poser une question juridique.
 
 <ImageRights />
 

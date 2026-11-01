@@ -1073,9 +1073,9 @@ assert not re.search(r"\.(find|index|count)\s*\(|\[[^\]]*:[^\]]*\]", PROGRAMME),
 <Enonce>
 ### Algorithme de Dijkstra
 
-Dans un graphe **pondéré**, `graphe[s]` est un dictionnaire voisin → poids de l'arête (positif).
+Dans un graphe **pondéré**, `graphe[s]` est un dictionnaire qui associe à chaque voisin le poids (positif) de l'arête.
 
-Écrire une fonction `dijkstra(graphe, depart)` qui renvoie le dictionnaire sommet → distance minimale depuis `depart`, pour tous les sommets atteignables.
+Écrire une fonction `dijkstra(graphe, depart)` qui renvoie le dictionnaire qui associe à chaque sommet sa distance minimale depuis `depart`, pour tous les sommets atteignables.
 
 Principe : on fixe à chaque étape la distance du sommet non encore fixé le plus proche, puis on met à jour ses voisins.
 
@@ -1156,7 +1156,7 @@ Un tableau `L` de `(len(a) + 1) × (len(b) + 1)` cases : `L[i][j]` est la répon
 </Indice>
 <Indice>
 
-Si `a[i - 1] == b[j - 1]`, `L[i][j] = L[i - 1][j - 1] + 1` ; sinon, c'est le plus grand de `L[i - 1][j]` et `L[i][j - 1]`.
+Si `a[i - 1] == b[j - 1]`, `L[i][j] = L[i - 1][j - 1] + 1`. Sinon, c'est le plus grand de `L[i - 1][j]` et `L[i][j - 1]`.
 
 </Indice>
 <Indice>
@@ -1205,7 +1205,7 @@ assert plsc("a" * 500 + "b", "b" + "a" * 500) == 500, "Mots de 500 lettres, rapi
 <Enonce>
 ### Sac à dos
 
-Un randonneur porte un sac de capacité `capacite` (en kg). Chaque objet a un poids (entier) et une valeur ; il ne peut prendre chaque objet qu'**une fois**.
+Un randonneur porte un sac de capacité `capacite` (en kg). Chaque objet a un poids (entier) et une valeur. Il ne peut prendre chaque objet qu'**une fois**.
 
 Écrire une fonction `sac_a_dos(objets, capacite)` (`objets` est une liste de tuples `(poids, valeur)`) qui renvoie la plus grande valeur totale transportable, par programmation dynamique.
 
@@ -1336,7 +1336,7 @@ assert _recursive("placer"), "placer est récursive : elle s'appelle elle-même.
 
 **Contexte.** Un jeu d'aventure en vue de dessus fait se déplacer un renard dans des labyrinthes. Le moteur du jeu doit répondre à trois questions : quel est le chemin le plus court en nombre de pas (pour l'animation « aller ici »), quel est le trajet le moins fatigant quand certaines cases sont boueuses, et peut-on sortir en ramassant des clés pour ouvrir des portes. Le projet écrit ce solveur.
 
-**Les données** : un labyrinthe est une liste de textes de même longueur. Symboles : `#` mur, `.` passage, `~` boue, `S` départ, `E` sortie, une lettre minuscule (`a`, `b`…) est une **clé**, la majuscule correspondante (`A`, `B`…) une **porte** qui ne s'ouvre qu'avec cette clé. On se déplace en haut, en bas, à gauche ou à droite ; entrer dans une case coûte 1, sauf la boue qui coûte 3. Exemple :
+**Les données** : un labyrinthe est une liste de textes de même longueur. Symboles : `#` mur, `.` passage, `~` boue, `S` départ, `E` sortie, une lettre minuscule (`a`, `b`…) est une **clé**, la majuscule correspondante (`A`, `B`…) une **porte** qui ne s'ouvre qu'avec cette clé. On se déplace en haut, en bas, à gauche ou à droite. Entrer dans une case coûte 1, sauf la boue qui coûte 3. Exemple :
 
 ```
 S~~~E
@@ -1347,19 +1347,19 @@ S~~~E
 **Les fonctions du solveur**
 - `trouver(lab, symbole)` : localise le départ, la sortie ou une clé. Renvoie la position `(ligne, colonne)` du symbole (`None` s'il n'y est pas).
 - `voisines(lab, pos)` : les déplacements possibles depuis une case. Renvoie la liste des positions voisines dans la grille qui ne sont pas des murs, dans l'ordre bas, haut, droite, gauche.
-- `plus_court(lab)` et `chemin(lab)` : pour l'animation, les portes étant traitées comme des murs. La première renvoie le nombre minimal de **pas** de `S` à `E` (`-1` si impossible) ; la seconde renvoie la liste des positions d'un tel chemin, de `S` à `E` compris (`None` si impossible).
+- `plus_court(lab)` et `chemin(lab)` : pour l'animation, les portes étant traitées comme des murs. La première renvoie le nombre minimal de **pas** de `S` à `E` (`-1` si impossible). La seconde renvoie la liste des positions d'un tel chemin, de `S` à `E` compris (`None` si impossible).
 - `moins_cher(lab)` : le trajet le moins fatigant. Renvoie le **coût** minimal de `S` à `E` en tenant compte de la boue, portes fermées (`-1` si impossible). Dans l'exemple, le chemin le plus court traverse la boue (4 pas, coût 10) alors que le détour par le bas coûte 8.
 - `avec_cles(lab)` : le niveau à énigmes. Renvoie le nombre minimal de pas de `S` à `E` quand on ramasse les clés en passant dessus et qu'on peut alors franchir les portes correspondantes (`-1` si impossible).
 
 <Indices>
 <Indice>
 
-`plus_court` est un parcours en largeur ; `moins_cher` en est la version pondérée (algorithme de Dijkstra) : prendre à chaque étape la case non traitée de plus petit coût.
+`plus_court` est un parcours en largeur. `moins_cher` en est la version pondérée (algorithme de Dijkstra) : prendre à chaque étape la case non traitée de plus petit coût.
 
 </Indice>
 <Indice>
 
-Pour les clés, un état n'est plus seulement une position : c'est le couple `(position, clés possédées)`, avec un `frozenset` pour les clés. Le parcours en largeur se fait sur ces états ; deux passages au même endroit avec des clés différentes sont deux états différents.
+Pour les clés, un état n'est plus seulement une position : c'est le couple `(position, clés possédées)`, avec un `frozenset` pour les clés. Le parcours en largeur se fait sur ces états. Deux passages au même endroit avec des clés différentes sont deux états différents.
 
 </Indice>
 <Indice>
@@ -1517,9 +1517,9 @@ assert avec_cles(["S#E"]) == -1 and avec_cles(["SE"]) == 1, "Impossible, puis im
 **Construction de l'arbre** : chaque caractère est d'abord une feuille, de poids son nombre d'apparitions. Tant qu'il reste plusieurs arbres, on retire les **deux de plus petit poids** et on les réunit sous un nœud dont le poids est la somme : le premier retiré à gauche, le second à droite. Pour que tout le monde obtienne le même arbre, les égalités de poids se départagent par **ordre de création** : les feuilles sont créées dans l'ordre alphabétique des caractères, puis chaque nouveau nœud reçoit le numéro suivant. Exemple : pour `"abracadabra"`, l'arbre est `("a", (("c", "d"), ("b", "r")))` et le code de `a` est `"0"`.
 
 **Les fonctions de l'outil**
-- `frequences(texte)` : la première étape. Renvoie un dictionnaire caractère → nombre d'apparitions.
+- `frequences(texte)` : la première étape. Renvoie un dictionnaire qui associe à chaque caractère son nombre d'apparitions.
 - `arbre(freq)` : construit l'arbre de Huffman à partir des fréquences. Une feuille est un caractère, un nœud un tuple `(gauche, droit)`.
-- `codes(a)` : la table de codage, lue dans l'arbre. Renvoie un dictionnaire caractère → code (texte de `0` et de `1`), `0` pour aller à gauche et `1` à droite ; si l'arbre est une seule feuille, son code est `"0"`.
+- `codes(a)` : la table de codage, lue dans l'arbre. Renvoie un dictionnaire qui associe à chaque caractère son code (un texte fait de `0` et de `1`), `0` pour aller à gauche et `1` à droite. Si l'arbre est une seule feuille, son code est `"0"`.
 - `encoder(texte, c)` : la compression. Renvoie le texte de bits obtenu en remplaçant chaque caractère par son code.
 - `decoder(bits, a)` : la décompression, qui retrouve le texte d'origine à partir des bits et de l'arbre : `decoder(encoder(t, codes(a)), a)` redonne `t`.
 - `sans_prefixe(c)` : vérifie la propriété qui rend le décodage possible. Renvoie `True` si aucun code n'est le début d'un autre.
@@ -1533,12 +1533,12 @@ Pour l'arbre, une liste de triplets `(poids, numero, arbre)` : la trier (ou cher
 </Indice>
 <Indice>
 
-`codes` est récursive : un nœud transmet à son sous-arbre gauche le préfixe + `"0"` et au droit le préfixe + `"1"` ; une feuille enregistre son préfixe.
+`codes` est récursive : un nœud transmet à son sous-arbre gauche le préfixe + `"0"` et au droit le préfixe + `"1"`. Une feuille enregistre son préfixe.
 
 </Indice>
 <Indice>
 
-Pour décoder, partir de la racine et descendre bit par bit ; arrivé à une feuille, noter le caractère et repartir de la racine.
+Pour décoder, partir de la racine et descendre bit par bit. Arrivé à une feuille, noter le caractère et repartir de la racine.
 
 </Indice>
 <Indice>

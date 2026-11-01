@@ -29,7 +29,7 @@ Exemple : `prix_ttc(10)` renvoie `12.0`.
 <Indices>
 <Indice>
 
-Ajouter 20 %, c'est multiplier par `1.2` ; le résultat est un `float`.
+Ajouter 20 %, c'est multiplier par `1.2`. Le résultat est un `float`.
 
 </Indice>
 <Indice>
@@ -123,7 +123,7 @@ assert type(presentation("A", 1)) == str, "La fonction renvoie un texte (et n'af
 <Enonce>
 ### Partage de bonbons
 
-Des bonbons sont partagés équitablement entre des enfants ; ceux qui restent vont au renard.
+Des bonbons sont partagés équitablement entre des enfants. Ceux qui restent vont au renard.
 
 Écrire deux fonctions :
 - `par_enfant(bonbons, enfants)` : le nombre (entier) de bonbons reçus par chaque enfant ;
@@ -137,7 +137,7 @@ Des bonbons sont partagés équitablement entre des enfants ; ceux qui restent v
 </Indice>
 <Indice>
 
-`//` donne le quotient entier, `%` le reste.
+`//` donne le quotient entier et `%` donne le reste.
 
 </Indice>
 <Indice>
@@ -188,7 +188,7 @@ Exemple : `nom_du_type(3.0)` renvoie `"flottant"`.
 <Indices>
 <Indice>
 
-`type(valeur)` donne le type ; il se compare avec `==` à `int`, `float`, `str` ou `bool` (sans guillemets).
+`type(valeur)` donne le type. Il se compare avec `==` à `int`, `float`, `str` ou `bool` (sans guillemets).
 
 </Indice>
 <Indice>
@@ -822,7 +822,7 @@ assert evolution(3, 4) == "+33.3 %", "3 vers 4 : +33.3 %."
 
 Écrire une fonction `est_entier(texte)` qui renvoie `True` si le texte représente un entier écrit en chiffres, éventuellement précédé d'un signe `-`.
 
-Exemples : `"42"` et `"-7"` donnent `True` ; `""`, `"-"`, `"4.2"`, `"12a"` et `"--3"` donnent `False`.
+Exemples : `"42"` et `"-7"` donnent `True`, et `""`, `"-"`, `"4.2"`, `"12a"` et `"--3"` donnent `False`.
 
 Contrainte : sans `try` ni boucle.
 
@@ -891,7 +891,7 @@ Convertir l'heure de départ en minutes depuis minuit simplifie tout : une seule
 </Indice>
 <Indice>
 
-Une journée compte 1440 minutes ; le reste de la division par 1440 fait revenir à 0 après minuit.
+Une journée compte 1440 minutes. Le reste de la division par 1440 fait revenir à 0 après minuit.
 
 </Indice>
 <Indice>
@@ -942,7 +942,7 @@ assert arrivee("09:05", 54) == "09:59", "09:05 + 54 min : 09:59."
 
 Écrire une fonction `angle(h, m)` qui renvoie le plus petit angle, en degrés, entre l'aiguille des heures et celle des minutes d'une horloge à `h` heures et `m` minutes (`h` de 0 à 23).
 
-Exemples : à 3 h 00 l'angle vaut `90.0` ; à 12 h 30, `165.0` (l'aiguille des heures a avancé de 15°).
+Exemples : à 3 h 00, l'angle vaut `90.0`, et à 12 h 30, il vaut `165.0` (l'aiguille des heures a avancé de 15°).
 
 <Indices>
 <Indice>
@@ -1132,11 +1132,11 @@ assert montant(0.5) == "0,50 €", "0.5 : 0,50 €."
 Une adresse IPv4 s'écrit avec quatre nombres de 0 à 255 (`"192.168.1.37"`) mais représente un seul entier sur 32 bits : `192 × 256³ + 168 × 256² + 1 × 256 + 37`. Un réseau se note avec un **préfixe** : `192.168.1.37/24` signifie que les 24 premiers bits de l'adresse désignent le réseau et les 8 derniers la machine. Le **masque** est l'entier dont les `préfixe` premiers bits valent 1 et les autres 0.
 
 **Les fonctions du calculateur**
-- `ip_valide(ip)` : filtre les fautes de frappe avant tout calcul. Reçoit un texte ; renvoie `True` s'il est formé de 4 nombres de 0 à 255 séparés par des points (que des chiffres).
-- `ip_vers_entier(ip)` et `entier_vers_ip(n)` : passent d'une notation à l'autre ; tous les calculs se font sur l'entier. Reçoivent une adresse texte (ou un entier) ; renvoient l'entier (ou le texte).
-- `masque(prefixe)` : affiche le masque à recopier dans la configuration d'un ordinateur. Reçoit un préfixe de 0 à 32 ; renvoie le masque en notation pointée (`masque(24)` vaut `"255.255.255.0"`, `masque(0)` vaut `"0.0.0.0"`).
-- `reseau(ip, prefixe)` et `diffusion(ip, prefixe)` : donnent les deux bornes du réseau qui contient une adresse. Reçoivent une adresse et un préfixe ; renvoient la première adresse (l'adresse du réseau) et la dernière (l'adresse de diffusion). Exemple : `reseau("192.168.1.37", 24)` vaut `"192.168.1.0"`, `diffusion("192.168.1.37", 24)` vaut `"192.168.1.255"`.
-- `nb_hotes(prefixe)` : dit combien de machines le réseau peut accueillir. Reçoit un préfixe ; renvoie le nombre d'adresses utilisables, c'est-à-dire toutes sauf l'adresse du réseau et celle de diffusion (cas particuliers : 2 pour `/31`, 1 pour `/32`).
+- `ip_valide(ip)` : filtre les fautes de frappe avant tout calcul. Reçoit un texte et renvoie `True` s'il est formé de 4 nombres de 0 à 255 séparés par des points (que des chiffres).
+- `ip_vers_entier(ip)` et `entier_vers_ip(n)` : passent d'une notation à l'autre. Tous les calculs se font sur l'entier. Reçoivent une adresse texte (ou un entier) et renvoient l'entier (ou le texte).
+- `masque(prefixe)` : affiche le masque à recopier dans la configuration d'un ordinateur. Reçoit un préfixe de 0 à 32 et renvoie le masque en notation pointée (`masque(24)` vaut `"255.255.255.0"`, `masque(0)` vaut `"0.0.0.0"`).
+- `reseau(ip, prefixe)` et `diffusion(ip, prefixe)` : donnent les deux bornes du réseau qui contient une adresse. Reçoivent une adresse et un préfixe. Renvoient la première adresse (l'adresse du réseau) et la dernière (l'adresse de diffusion). Exemple : `reseau("192.168.1.37", 24)` vaut `"192.168.1.0"`, `diffusion("192.168.1.37", 24)` vaut `"192.168.1.255"`.
+- `nb_hotes(prefixe)` : dit combien de machines le réseau peut accueillir. Reçoit un préfixe et renvoie le nombre d'adresses utilisables, c'est-à-dire toutes sauf l'adresse du réseau et celle de diffusion (cas particuliers : 2 pour `/31`, 1 pour `/32`).
 - `meme_reseau(ip1, ip2, prefixe)` : vérifie que deux machines peuvent se parler directement. Renvoie `True` si les deux adresses sont dans le même réseau.
 - `est_privee(ip)` : repère les adresses internes, qui ne sortent pas sur Internet. Renvoie `True` pour les plages privées `10.0.0.0/8`, `172.16.0.0/12` et `192.168.0.0/16`.
 
@@ -1253,17 +1253,17 @@ assert "ipaddress" not in PROGRAMME, "Sans le module ipaddress."
 **Contexte.** Le CDI du lycée et le secrétariat saisissent beaucoup de numéros à la main : ISBN des livres commandés, numéros de sécurité sociale des élèves pour les sorties. Une seule faute de frappe rend la fiche inutilisable. Ces numéros contiennent une **clé de contrôle**, calculée à partir des autres chiffres, qui permet de détecter les erreurs. Le programme est un module de vérification utilisé par les deux services (les boucles sont permises).
 
 **Les deux types de numéros**
-- **ISBN-13** (livres) : 13 chiffres, souvent écrits avec des tirets ou des espaces (`978-0-306-40615-7`) ; le dernier chiffre est la clé. On multiplie les 12 premiers chiffres alternativement par 1 et par 3 (en commençant par 1) et on fait la somme ; la clé vaut `(10 - somme % 10) % 10`. Les anciens livres portent un ISBN-10 (`0-306-40615-2`).
+- **ISBN-13** (livres) : 13 chiffres, souvent écrits avec des tirets ou des espaces (`978-0-306-40615-7`). Le dernier chiffre est la clé. On multiplie les 12 premiers chiffres alternativement par 1 et par 3 (en commençant par 1) et on fait la somme. La clé vaut `(10 - somme % 10) % 10`. Les anciens livres portent un ISBN-10 (`0-306-40615-2`).
 - **Sécurité sociale** : 13 caractères suivis d'une clé de 2 chiffres valant `97 - (numéro % 97)`. Le premier chiffre donne le sexe (1 homme, 2 femme), les deux suivants l'année de naissance, puis deux pour le mois, puis deux pour le département. Pour les départements corses `2A` et `2B`, le calcul de la clé remplace `2A` par `19` et `2B` par `18`. Exemple : `2 69 05 49 588 157 80`.
 
 **Les fonctions du module**
-- `nettoyer(code)` : prépare un numéro tel qu'il a été tapé. Reçoit un texte ; renvoie le même texte sans ses espaces ni ses tirets.
-- `cle_isbn(debut)` : calcule la clé d'un livre. Reçoit les 12 premiers chiffres d'un ISBN-13 ; renvoie la clé (un entier).
-- `isbn_valide(code)` : accepte ou refuse un ISBN saisi au CDI. Reçoit un texte (qu'elle nettoie) ; renvoie `True` s'il compte 13 chiffres et que sa clé est correcte.
-- `isbn10_vers_13(isbn10)` : met à jour les fiches des anciens livres. Reçoit un ISBN-10 ; renvoie l'ISBN-13 correspondant : `978`, puis les 9 premiers chiffres de l'ancien numéro, puis la nouvelle clé.
-- `cle_secu(numero13)` : calcule la clé d'un numéro de sécurité sociale. Reçoit ses 13 premiers caractères ; renvoie la clé (un entier).
-- `secu_valide(numero)` : accepte ou refuse un numéro saisi au secrétariat. Reçoit un texte (qu'elle nettoie) ; renvoie `True` s'il fait 15 caractères et que sa clé est correcte.
-- `infos_secu(numero)` : remplit automatiquement la fiche de l'élève. Reçoit un numéro ; renvoie le tuple `(sexe, mois, departement)`, avec `sexe` valant `"homme"` ou `"femme"`, `mois` un entier et `departement` un texte (`"2A"` compris).
+- `nettoyer(code)` : prépare un numéro tel qu'il a été tapé. Reçoit un texte et renvoie le même texte sans ses espaces ni ses tirets.
+- `cle_isbn(debut)` : calcule la clé d'un livre. Reçoit les 12 premiers chiffres d'un ISBN-13 et renvoie la clé (un entier).
+- `isbn_valide(code)` : accepte ou refuse un ISBN saisi au CDI. Reçoit un texte (qu'elle nettoie) et renvoie `True` s'il compte 13 chiffres et que sa clé est correcte.
+- `isbn10_vers_13(isbn10)` : met à jour les fiches des anciens livres. Reçoit un ISBN-10 et renvoie l'ISBN-13 correspondant : `978`, puis les 9 premiers chiffres de l'ancien numéro, puis la nouvelle clé.
+- `cle_secu(numero13)` : calcule la clé d'un numéro de sécurité sociale. Reçoit ses 13 premiers caractères et renvoie la clé (un entier).
+- `secu_valide(numero)` : accepte ou refuse un numéro saisi au secrétariat. Reçoit un texte (qu'elle nettoie) et renvoie `True` s'il fait 15 caractères et que sa clé est correcte.
+- `infos_secu(numero)` : remplit automatiquement la fiche de l'élève. Reçoit un numéro et renvoie le tuple `(sexe, mois, departement)`, avec `sexe` valant `"homme"` ou `"femme"`, `mois` un entier et `departement` un texte (`"2A"` compris).
 
 <Indices>
 <Indice>

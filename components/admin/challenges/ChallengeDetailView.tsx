@@ -22,6 +22,7 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
   const { challenge, rows } = detail;
   const [tab, setTab] = useState<"resultats" | "modifier">(challengeState(challenge).key === "programme" ? "modifier" : "resultats");
   const [openCode, setOpenCode] = useState<string | null>(null);
+  const opened = openCode ? rows.find((row) => row.studentId === openCode) : null;
   const state = challengeState(challenge);
   const byClass = [...new Set(rows.map((row) => row.classe ?? ""))].map((classe) => {
     const members = rows.filter((row) => (row.classe ?? "") === classe);
@@ -34,7 +35,7 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
       <PageHeader
         eyebrow={<span className="inline-flex items-center gap-2">Défi du lundi <span className={`adm-eval-status is-${state.key === "ouvert" ? "ouverte" : state.key === "ferme" ? "fermee" : "brouillon"}`}>{state.label}</span></span>}
         title={challenge.title}
-        description={`${challenge.classes.join(", ")} · du ${dayFormat.format(new Date(challenge.opensAt))} au ${dayFormat.format(new Date(challenge.closesAt))}`}
+        description={`${challenge.classes.join(", ")} · du ${dayFormat.format(new Date(challenge.opensAt))} au ${dayFormat.format(new Date(challenge.closesAt))}${challenge.timeLimitMinutes ? ` · ${challenge.timeLimitMinutes} min par élève` : ""}`}
         actions={
           <button
             type="button"
@@ -69,7 +70,15 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
               <div className="adm-eval-table-wrap">
                 <table className="adm-eval-table">
                   <thead>
-                    <tr><th>Élève</th><th>Résultat</th><th>Essais</th><th>Réussi le</th><th><span className="sr-only">Code</span></th></tr>
+                    <tr>
+                      <th>Élève</th>
+                      <th>Résultat</th>
+                      {challenge.exercises.map((exercise, index) => <th key={exercise.id} title={exercise.label}>Ex. {index + 1}</th>)}
+                      <th>Essais</th>
+                      <th>Ouvert à</th>
+                      <th>Réussi en</th>
+                      <th><span className="sr-only">Code</span></th>
+                    </tr>
                   </thead>
                   <tbody>
                     {rows.map((row) => (
@@ -82,10 +91,19 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
                             <span className="adm-eval-fail"><X size={13} aria-hidden /> Pas encore</span>
                           ) : "—"}
                         </td>
+                        {challenge.exercises.map((exercise) => {
+                          const answer = row.answers[exercise.id];
+                          return (
+                            <td key={exercise.id}>
+                              {answer?.passed ? <Check size={15} className="text-green-600" aria-label="Réussi" /> : answer ? <X size={15} className="text-amber-600" aria-label="Pas réussi" /> : "—"}
+                            </td>
+                          );
+                        })}
                         <td>{row.attempts || "—"}</td>
-                        <td>{row.firstPassedAt ? timeFormat.format(new Date(row.firstPassedAt)) : "—"}</td>
+                        <td>{row.startedAt ? timeFormat.format(new Date(row.startedAt)) : "—"}</td>
+                        <td>{row.firstPassedAt && row.startedAt ? `${Math.max(1, Math.round((Date.parse(row.firstPassedAt) - Date.parse(row.startedAt)) / 60_000))} min` : "—"}</td>
                         <td>
-                          {row.code ? (
+                          {Object.keys(row.answers).length > 0 ? (
                             <button type="button" className="adm-eval-link" onClick={() => setOpenCode(openCode === row.studentId ? null : row.studentId)}>
                               {openCode === row.studentId ? "Masquer" : "Code"}
                             </button>
@@ -97,8 +115,18 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
                 </table>
               </div>
             )}
-            {openCode ? (
-              <pre className="adm-eval-code-block">{rows.find((row) => row.studentId === openCode)?.code}</pre>
+            {opened ? (
+              <div className="space-y-3">
+                <p className="text-sm font-semibold text-slate-700">{opened.name}</p>
+                {challenge.exercises.map((exercise, index) => (
+                  <div key={exercise.id} className="space-y-1">
+                    <p className="text-xs font-semibold text-slate-500">
+                      Ex. {index + 1} · {exercise.label} · {opened.answers[exercise.id]?.passed ? "réussi" : opened.answers[exercise.id] ? "pas réussi" : "pas tenté"}
+                    </p>
+                    {opened.answers[exercise.id]?.code ? <pre className="adm-eval-code-block">{opened.answers[exercise.id].code}</pre> : null}
+                  </div>
+                ))}
+              </div>
             ) : null}
           </section>
         ) : (
@@ -111,6 +139,7 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
               source: challenge.source,
               openDay: parisDay(challenge.opensAt),
               durationDays: Math.round((Date.parse(challenge.closesAt) - Date.parse(challenge.opensAt)) / 86_400_000),
+              timeLimitMinutes: challenge.timeLimitMinutes,
             }}
           />
         )}

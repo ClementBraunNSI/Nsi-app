@@ -23,7 +23,7 @@ version: "TP"
 
 ## Idée clé
 
-Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre (croissant ou décroissant). Sélection et insertion procèdent par **comparaisons** ; le dénombrement **compte** les occurrences.
+Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre (croissant ou décroissant). Les tris par sélection et par insertion procèdent par **comparaisons**. Le tri par dénombrement, lui, **compte** les occurrences.
 
 <ExerciseTabs courseId="premiere_tris" courseTitle="TP Algorithmes de Tri">
 
@@ -265,7 +265,7 @@ Trier, c'est réorganiser une liste pour que les éléments soient dans un ordre
     <SortingVisualizer algorithm="bubble" />
 
     ### 2. Comparateur de Performance (La Course !)
-    Lançons les différents algorithmes en parallèle pour voir lequel est le plus rapide.
+    Les différents algorithmes sont lancés en parallèle pour voir lequel est le plus rapide.
     
     <SortingComparator />
     </Enonce>
@@ -282,7 +282,7 @@ Confondre **valeur** et **indice** (surtout dans `indice_min`), ou oublier que l
 - **Sélection** : à chaque tour, placer le minimum de la zone non triée
 - **Insertion** : prendre une « carte » et la glisser à sa place dans la zone déjà triée
 - Les deux tris comparent des éléments deux à deux
-- Le **dénombrement** compte les occurrences : rapide, mais limité aux entiers bornés
+- Le **dénombrement** compte les occurrences : il est rapide, mais limité aux entiers bornés
 - Observer les visualiseurs aide à vérifier qu'on a bien compris l'invariant (zone triée / non triée)
 - Pour aller plus loin : [exercices sur le tri fusion](/cours/2/algo_tris_exercices_fusion)
 

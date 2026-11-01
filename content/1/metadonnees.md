@@ -13,9 +13,9 @@ audience: public
 
 # Métadonnées et formats
 
-Une image « brute », au format RAW, garde à peu près tout ce que le capteur a vu. Elle est fidèle, et elle est énorme. Pour la stocker ou l'envoyer, on choisit un format de fichier, et ce choix décide de ce qu'on accepte de perdre.
+Une image « brute », au format RAW, garde à peu près tout ce que le capteur a vu. Elle est très fidèle, mais son fichier est énorme. Pour la stocker ou l'envoyer, on choisit un format de fichier, et ce choix détermine ce qu'on accepte de perdre.
 
-Il y a deux familles de compression. **Sans perte**, l'image qu'on rouvre est identique à celle qu'on a comprimée : on a seulement rangé les mêmes informations plus serré. **Avec perte**, on retire des détails que l'œil remarque peu, et le fichier maigrit beaucoup. La photo reste convaincante. Elle n'est plus exactement la même.
+Il existe deux familles de compression. Avec une compression **sans perte**, l'image rouverte est identique à l'image d'origine, car les mêmes informations ont seulement été rangées de façon plus compacte. Avec une compression **avec perte**, on retire des détails que l'œil remarque peu, et le fichier devient beaucoup plus léger. La photo reste convaincante, mais elle n'est plus exactement la même.
 
 | Format | Extension | Compression | Transparence | Usage principal |
 |--------|-----------|-------------|--------------|------------------|
@@ -25,19 +25,19 @@ Il y a deux familles de compression. **Sans perte**, l'image qu'on rouvre est id
 | **TIFF** | .tiff | Sans perte | Oui | Impression, archivage |
 | **WEBP** | .webp | Avec ou sans perte | Oui | Web actuel |
 
-Le JPEG convient aux photos parce que l'œil pardonne un ciel un peu simplifié. Il convient mal à un logo : les aplats et le texte se dégradent, et il ne sait pas faire de transparence. Le PNG garde chaque pixel et peut avoir un fond transparent, au prix d'un fichier plus lourd. Le GIF est ancien : 256 couleurs, ce qui suffit à un petit dessin animé, pas à un portrait. Le TIFF sert quand on archive ou qu'on imprime, et qu'on ne veut rien jeter. Le WebP, poussé par Google, reprend les deux logiques, avec ou sans perte, y compris la transparence.
+Le JPEG convient aux photos, parce que l'œil remarque peu qu'un ciel a été légèrement simplifié. Il convient mal à un logo, car les aplats de couleur et le texte se dégradent, et il ne gère pas la transparence. Le PNG garde chaque pixel et accepte un fond transparent, mais ses fichiers sont plus lourds. Le GIF est un format ancien, limité à 256 couleurs : c'est suffisant pour un petit dessin animé, mais pas pour un portrait. Le TIFF sert à l'archivage et à l'impression, quand on ne veut rien perdre. Enfin, le WebP, développé par Google, permet une compression avec ou sans perte et gère la transparence.
 
-## Ce que le fichier sait en plus des pixels
+## Les métadonnées
 
-Un fichier image ne contient pas seulement la grille de couleurs. Il contient aussi des informations sur la photo elle-même. On les appelle des **métadonnées** : des données sur les données.
+Un fichier image ne contient pas seulement la grille de couleurs. Il contient aussi des informations sur la photo elle-même. Ces informations s'appellent des **métadonnées**, c'est-à-dire des données sur les données.
 
-Pour la photographie, la norme courante est l'**EXIF** (*Exchangeable Image File Format*). L'appareil les écrit au moment de la prise de vue. On y trouve la date et l'heure, la marque et le modèle, et les réglages : temps de pose, ouverture, sensibilité ISO, focale, usage du flash. On y trouve souvent aussi l'auteur, et, si le téléphone ou l'appareil avait le GPS allumé, la latitude, la longitude et l'altitude.
+Pour la photographie, la norme courante est l'**EXIF** (*Exchangeable Image File Format*). L'appareil écrit ces informations au moment de la prise de vue. On y trouve la date et l'heure, la marque et le modèle de l'appareil, ainsi que les réglages utilisés, comme le temps de pose, l'ouverture, la sensibilité ISO, la focale ou l'usage du flash. On y trouve souvent aussi l'auteur, et, si le téléphone ou l'appareil avait le GPS allumé, la latitude, la longitude et l'altitude.
 
 ![Exemple de données EXIF](/content/1/exif.png)
 
-Partager la photo, c'est potentiellement partager tout cela, y compris l'endroit précis de la prise de vue. Beaucoup de réseaux sociaux effacent ces champs avant de republier l'image. Tous les services de transfert ne le font pas. Si la photo ne doit pas révéler un domicile, il faut vérifier, ou retirer ces données avant l'envoi.
+Partager une photo peut donc revenir à partager toutes ces informations, y compris l'endroit précis de la prise de vue. Beaucoup de réseaux sociaux effacent ces champs avant de publier l'image, mais tous les services de transfert ne le font pas. Si la photo ne doit pas révéler un domicile, il faut vérifier ces données, ou les retirer avant l'envoi.
 
-## Les lire
+## Lire les métadonnées
 
 Sur un ordinateur, le système les affiche souvent dans les propriétés du fichier. Sous Windows : clic droit, Propriétés, puis Détails. Sous macOS : clic droit, Lire les informations, ou Cmd+I. Sous Linux : clic droit, Propriétés, puis Image.
 

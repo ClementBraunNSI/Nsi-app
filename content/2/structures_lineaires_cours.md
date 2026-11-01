@@ -12,7 +12,7 @@ audience: public
 
 # Structures de données linéaires
 
-Une structure **linéaire** range des éléments les uns après les autres. Chaque case a un **indice**, et l'ordre fait partie de l'information. En Python, deux structures partagent cette idée et ne partagent pas les mêmes droits. Le **tuple** fige son contenu. La **liste** le laisse changer. On choisit l'une ou l'autre selon qu'on a le droit de modifier.
+Une structure **linéaire** range des éléments les uns après les autres. Chaque case a un **indice**, et l'ordre fait partie de l'information. En Python, deux structures reposent sur cette idée, mais elles ne se manipulent pas de la même façon. Le contenu d'un **tuple** ne peut pas être modifié, alors que celui d'une **liste** peut changer. On choisit donc l'une ou l'autre selon que les données doivent pouvoir être modifiées ou non.
 
 | | Tuple | Liste |
 | --- | --- | --- |
@@ -27,9 +27,9 @@ notes[1] = 16           # OK
 # point[0] = 4          # TypeError : tuple non modifiable
 ```
 
-Un point du plan n'a pas vocation à devenir autre chose case par case : un tuple convient. Une série de notes reçoit de nouvelles valeurs : une liste convient. Tenter d'écrire dans un tuple lève une `TypeError`. Ce n'est pas une limite agaçante, c'est le contrat.
+Les coordonnées d'un point du plan n'ont pas à être modifiées une par une : un tuple convient. Une série de notes, en revanche, reçoit de nouvelles valeurs : une liste convient mieux. Toute tentative de modifier un tuple lève une `TypeError`, ce qui garantit que son contenu ne change pas.
 
-## L'indice commence à zéro
+## Les indices
 
 La première case porte l'indice **0**, la suivante 1, et ainsi de suite. La dernière a l'indice `len(t) - 1`. On peut aussi l'écrire `-1` : les indices négatifs comptent depuis la fin.
 
@@ -55,13 +55,13 @@ for i in range(len(animaux)):
     print(i, animaux[i])
 ```
 
-La première boucle donne les valeurs, quand l'indice ne sert pas. La seconde donne l'indice et la valeur, quand on doit savoir « à quelle place ». Les deux parcourent toute la séquence, dans l'ordre.
+La première boucle donne les valeurs, ce qui suffit quand l'indice ne sert pas. La seconde donne l'indice et la valeur, quand il faut aussi connaître la position de chaque élément. Les deux parcourent toute la séquence, dans l'ordre.
 
-`+` concatène, et produit une **nouvelle** séquence. `(1, 2) + (3, 4)` vaut `(1, 2, 3, 4)`. Les deux tuples de départ ne changent pas. C'est cohérent : un tuple est immuable, on ne peut que fabriquer un autre tuple.
+`+` concatène deux séquences et produit une **nouvelle** séquence : `(1, 2) + (3, 4)` vaut `(1, 2, 3, 4)`, et les deux tuples de départ ne changent pas. C'est logique, puisqu'un tuple est immuable : on ne peut que fabriquer un autre tuple.
 
 ## Modifier une liste
 
-`append` ajoute à la fin. `pop` retire un élément et le renvoie : sans argument, c'est le dernier ; avec un indice, c'est la case demandée. `remove` cherche une **valeur** et retire sa première occurrence. `pop` et `remove` ne répondent donc pas à la même question. L'un demande « la case numéro... », l'autre « la valeur... ».
+`append` ajoute un élément à la fin. `pop` retire un élément et le renvoie : sans argument, il s'agit du dernier, et avec un indice, de l'élément placé à cet indice. `remove` cherche une **valeur** et retire sa première occurrence. `pop` travaille donc à partir d'une position, alors que `remove` travaille à partir d'une valeur.
 
 ```python
 nombres = []
@@ -79,7 +79,7 @@ nombres.remove(4)    # retire la première occurrence de 4
 | `pop()` / `pop(i)` | retire et renvoie le dernier / l'indice `i` |
 | `remove(e)` | retire la première occurrence de `e` |
 
-Dans une boucle, `nombres.append(e)` est le bon geste. `nombres = nombres + [e]` fabrique une nouvelle liste à chaque tour, et recopie tout ce qui précède. Le résultat est le même, mais le coût est bien plus élevé.
+Dans une boucle, il vaut mieux utiliser `nombres.append(e)`. `nombres = nombres + [e]` fabrique une nouvelle liste à chaque tour, et recopie tout ce qui précède. Le résultat est le même, mais le coût est bien plus élevé.
 
 ## Construire une liste en une expression
 
@@ -93,7 +93,7 @@ cubes = [n ** 3 for n in range(1, 5)]
 # [1, 8, 27, 64]
 ```
 
-On lit la première ainsi : les `i` de `range(10)` pour lesquels `i` est pair. La seconde : le cube de chaque `n` de 1 à 4, puisque `range` exclut la borne de droite. Quand la logique devient longue, ou quand les boucles s'imbriquent, un `for` classique se relit mieux. La compréhension n'est pas une obligation de style.
+La première se lit ainsi : « les `i` de `range(10)` pour lesquels `i` est pair ». La seconde donne le cube de chaque `n` de 1 à 4, puisque `range` exclut la borne de droite. Quand la logique devient longue, ou quand les boucles s'imbriquent, un `for` classique se relit mieux. La compréhension n'est donc jamais obligatoire.
 
 En résumé, une structure linéaire est ordonnée, et l'on y accède par un indice qui part de 0. Le tuple, entre parenthèses, est immuable. La liste, entre crochets, est mutable. `len`, l'indexation et `for` servent aux deux. `append`, `pop` et `remove` ne servent qu'à la liste. `+` crée une nouvelle séquence. Une compréhension s'écrit `[expr for x in iterable if cond]`.
 

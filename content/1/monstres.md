@@ -1,6 +1,6 @@
 ---
 title: Galerie des Monstres
-description: Découvrez les créations des élèves du projet bestiaire Web (année 2024-2025).
+description: Les créations des élèves pour le projet bestiaire Web (année 2024-2025).
 level: seconde
 chapter: Web
 icon: "gamepad-2"
@@ -11,7 +11,7 @@ audience: public
 
 # Galerie des Monstres
 
-Découvrir les créations des élèves de **Seconde** pour le [projet bestiaire](Projet_creation_site.md) : chaque monstre a été intégré dans une page HTML personnelle.
+Cette galerie présente les créations des élèves de **Seconde** pour le [projet bestiaire](Projet_creation_site.md). Chaque monstre a été intégré dans une page HTML personnelle.
 
 Sélectionner une **année**, puis une **classe**, pour parcourir les illustrations.
 

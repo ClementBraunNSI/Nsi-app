@@ -70,10 +70,11 @@ L'opérateur **OU** renvoie VRAI si **au moins une** des conditions est vraie.
 | VRAI  | VRAI  | VRAI   |
 
 **Exemple :**
-- "Je vais au cinéma OU je reste à la maison" : Une des deux actions sera vraie
-- Si je vais au cinéma : VRAI
-- Si je reste à la maison : VRAI
-- Si je fais les deux ou aucun des deux, c'est selon le contexte
+- "J'ai un ticket de bus OU j'ai un vélo" : je peux aller au lycée
+- Si j'ai seulement un ticket de bus : VRAI
+- Si j'ai seulement un vélo : VRAI
+- Si j'ai les deux : VRAI
+- Si je n'ai ni l'un ni l'autre : FAUX
 
 **En Python :**
 ```python

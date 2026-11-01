@@ -13,25 +13,25 @@ audience: public
 
 # Arbres binaires de recherche
 
-Un arbre binaire range des nœuds avec un gauche et un droit. Un **arbre binaire de recherche** ajoute une règle sur les valeurs. Pour tout nœud, les valeurs du sous-arbre gauche sont **strictement inférieures** à la sienne, et les valeurs du sous-arbre droit sont **supérieures ou égales**. Les doublons, dans cette convention, partent à droite. La règle vaut pour chaque nœud, pas seulement pour la racine : un petit-enfant à gauche reste inférieur à tous ses ancêtres sur le chemin.
+Dans un arbre binaire, chaque nœud a un sous-arbre gauche et un sous-arbre droit. Un **arbre binaire de recherche** ajoute une règle sur les valeurs. Pour tout nœud, les valeurs du sous-arbre gauche sont **strictement inférieures** à la sienne, et les valeurs du sous-arbre droit sont **supérieures ou égales**. Les doublons, dans cette convention, partent à droite. Cette règle s'applique à chaque nœud, et pas seulement à la racine.
 
-Le vocabulaire est celui des arbres. Un **nœud** porte une clé. La **racine** est le nœud sans parent. Une **feuille** n'a pas d'enfant. La **taille** compte les nœuds. La **hauteur**, ici, est le nombre d'**arêtes** du plus long chemin de la racine à une feuille : une racine seule a donc une hauteur 0. Ce n'est pas le décompte de la page précédente, où l'exercice comptait 1 pour une racine seule. On le fixe maintenant, et on s'y tient pour les complexités.
+On utilise le vocabulaire des arbres. Un **nœud** porte une clé, la **racine** est le nœud sans parent et une **feuille** est un nœud sans enfant. La **taille** est le nombre de nœuds. La **hauteur** est ici le nombre d'**arêtes** du plus long chemin entre la racine et une feuille : une racine seule a donc une hauteur de 0. Attention, ce n'est pas la convention de la page précédente, dont l'exercice comptait 1 pour une racine seule. Cette convention est conservée dans la suite pour les calculs de complexité.
 
-Cette règle rend le parcours infixe trié. Gauche, puis nœud, puis droit : tout ce qui est plus petit sort avant, tout ce qui est plus grand ou égal sort après. Si l'on affiche un arbre dans cet ordre et que les valeurs ne croissent pas, ce n'est pas un ABR, même si « ça ressemble » à un arbre bien dessiné.
+Grâce à cette règle, le parcours infixe d'un ABR donne les valeurs triées : en visitant le sous-arbre gauche, puis le nœud, puis le sous-arbre droit, les valeurs plus petites sortent avant et les valeurs plus grandes ou égales après. Si les valeurs affichées dans cet ordre ne sont pas croissantes, l'arbre n'est pas un ABR, même s'il semble bien construit.
 
 <TreeVisualizer />
 
-## Chercher, insérer, et ce que ça coûte
+## Recherche, insertion et complexité
 
-Pour chercher une clé, on la compare à la racine. Plus petite : on descend à gauche. Plus grande ou égale : on descend à droite. On s'arrête quand on trouve la clé, ou quand le lien vaut `None`. On n'explore pas l'autre côté. Chaque comparaison élimine un sous-arbre entier.
+Pour chercher une clé, on la compare à la racine. Si elle est plus petite, on descend à gauche, et si elle est plus grande ou égale, on descend à droite. On s'arrête quand on trouve la clé, ou quand le lien vaut `None`. L'autre côté n'est jamais exploré : chaque comparaison élimine donc un sous-arbre entier.
 
-L'insertion suit le même chemin. On descend jusqu'à un lien vide, et l'on y accroche un nouveau nœud. On ne réorganise rien. C'est pour cela que l'ordre d'arrivée des clés change la forme de l'arbre. Insérer 5, puis 3, puis 8 donne une racine 5 avec 3 à gauche et 8 à droite. Insérer déjà trié, 1 puis 2 puis 3 puis 4, descend toujours à droite : l'arbre dégénère en liste chaînée.
+L'insertion suit le même chemin : on descend jusqu'à un lien vide, et on y accroche un nouveau nœud, sans rien réorganiser. C'est pourquoi l'ordre d'arrivée des clés change la forme de l'arbre. Insérer 5, puis 3, puis 8 donne une racine 5 avec 3 à gauche et 8 à droite. En revanche, insérer des valeurs déjà triées, comme 1, 2, 3 puis 4, fait toujours descendre à droite : l'arbre dégénère alors en liste chaînée.
 
-Dans un ABR **équilibré**, la hauteur est de l'ordre de $\log_2 n$. Recherche, insertion et suppression coûtent alors $O(\log_2 n)$ : un nombre de comparaisons proportionnel à la hauteur. Dans le pire des cas, l'arbre-liste, la hauteur vaut $n - 1$ et le coût redevient $O(n)$, comme un parcours de liste. L'équilibrage (arbres AVL, arbres rouge-noir) réorganise après les insertions pour que la hauteur reste logarithmique. On n'en écrit pas le code ici. On retient pourquoi il existe : sans lui, le coût annoncé n'est qu'un espoir sur l'ordre des données.
+Dans un ABR **équilibré**, la hauteur est de l'ordre de $\log_2 n$. Recherche, insertion et suppression coûtent alors $O(\log_2 n)$ , car le nombre de comparaisons est proportionnel à la hauteur. Dans le pire des cas, quand l'arbre a la forme d'une liste, la hauteur vaut $n - 1$ et le coût redevient $O(n)$, comme pour un parcours de liste. Les techniques d'équilibrage (arbres AVL, arbres rouge-noir) réorganisent l'arbre après les insertions pour que sa hauteur reste logarithmique. Leur code n'est pas au programme, mais il faut comprendre leur utilité : sans équilibrage, le coût logarithmique dépend de l'ordre d'arrivée des données.
 
-Le minimum est le nœud qu'on atteint en descendant toujours à gauche. Le maximum s'obtient de la même façon, en descendant toujours à droite. Leur recherche coûte aussi la hauteur, pas la taille : on suit un seul chemin.
+Le minimum est le nœud que l'on atteint en descendant toujours à gauche, et le maximum s'obtient de la même façon, en descendant toujours à droite. Leur recherche dépend aussi de la hauteur, et non de la taille, puisqu'on suit un seul chemin.
 
-Supprimer dépend du nœud visé. Une feuille se décroche. Un nœud avec un seul enfant se fait remplacer par cet enfant. Un nœud avec deux enfants se fait remplacer par son **prédécesseur infixe**, le plus grand nœud de son sous-arbre gauche, qui a au plus un enfant, et que l'on sait donc retirer. La règle gauche-inférieur, droit-supérieur doit rester vraie après coup. Le parcours infixe croissant est le test : s'il décroît quelque part, la suppression a cassé l'ABR.
+La suppression dépend du nœud visé. Une feuille est simplement retirée, et un nœud qui n'a qu'un enfant est remplacé par cet enfant. Un nœud qui a deux enfants est remplacé par son **prédécesseur infixe**, c'est-à-dire le plus grand nœud de son sous-arbre gauche, qui a au plus un enfant et que l'on sait donc retirer. Après la suppression, la règle de l'ABR doit toujours être respectée. Pour le vérifier, il suffit de faire un parcours infixe : si les valeurs ne sont pas croissantes, la suppression a rompu la propriété de l'ABR.
 
 ## Exercice 1 : Construction et propriétés
 

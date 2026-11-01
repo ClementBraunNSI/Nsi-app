@@ -10,15 +10,15 @@ audience: public
 
 # Introduction à ITIL
 
-Un projet se termine le jour de la mise en service. Le serveur, lui, continue de tourner. Il faut surveiller, corriger, mettre à jour, répondre aux personnes qui s'en servent. Cette phase n'est plus de la gestion de projet : c'est de la **gestion des services informatiques**. **ITIL** (*Information Technology Infrastructure Library*) est le référentiel de bonnes pratiques le plus utilisé pour l'organiser. La version du cours est **ITIL 4**.
+Un projet se termine le jour de la mise en service, mais le serveur, lui, continue de fonctionner. Il faut alors le surveiller, le corriger, le mettre à jour et répondre aux personnes qui l'utilisent. Cette phase ne relève plus de la gestion de projet, mais de la **gestion des services informatiques**. **ITIL** (*Information Technology Infrastructure Library*) est le référentiel de bonnes pratiques le plus utilisé pour l'organiser. La version du cours est **ITIL 4**.
 
-ITIL ne dit pas quelle commande taper, ni quel logiciel choisir. Il dit quoi mettre en place pour qu'un service reste fiable : qui est prévenu en cas de panne, comment on enregistre un incident, comment on améliore le service d'une année sur l'autre. La norme **ISO/CEI 20000** certifie un système de gestion des services. Elle s'est appuyée sur ces pratiques, après le standard britannique BS 15000. ITIL est le référentiel. La norme est le cadre qu'on peut faire auditer.
+ITIL n'indique ni les commandes à taper ni le logiciel à choisir. Il décrit ce qu'il faut mettre en place pour qu'un service reste fiable : qui prévenir en cas de panne, comment enregistrer un incident, comment améliorer le service d'une année sur l'autre. La norme **ISO/CEI 20000**, qui a succédé au standard britannique BS 15000, s'appuie sur ces pratiques et permet de certifier un système de gestion des services. ITIL est donc un référentiel de bonnes pratiques, alors que la norme fournit un cadre qui peut être audité.
 
-Trois intentions reviennent. La **continuité** : le service fonctionne, de façon prévisible. La **réaction** : un incident est pris en charge vite, pour que l'impact sur les utilisateurs reste court. L'**amélioration continue** : on ne se contente pas de réparer la même panne, on change le processus qui l'a laissée revenir.
+ITIL poursuit trois objectifs. La **continuité** garantit que le service fonctionne de façon prévisible. La **réaction** consiste à prendre rapidement en charge chaque incident, pour limiter la gêne des utilisateurs. L'**amélioration continue**, enfin, ne se contente pas de réparer une panne : elle modifie le processus qui a permis à cette panne de se reproduire.
 
-## Livrer, puis faire vivre
+## Gestion de projet et gestion de service
 
-La gestion de projet et la gestion de service ne se remplacent pas. L'une **conçoit et livre**. L'autre **fait durer**. Une équipe qui développe une application mobile pendant six mois est dans un projet : il y a un début, une fin, un chef de projet, des développeurs. Le jour où l'application est sur le store, le projet est livré. Corriger les bugs, répondre aux avis, déployer les mises à jour de sécurité : c'est le service. Même partage pour un site. Le développer, c'est le projet. Surveiller le serveur et appliquer les correctifs, c'est le service.
+La gestion de projet et la gestion de service sont complémentaires : la première **conçoit et livre** un produit, la seconde le **fait durer**. Une équipe qui développe une application mobile pendant six mois mène un projet, avec un début, une fin, un chef de projet et des développeurs. Le jour où l'application est publiée, le projet est terminé. Corriger les bugs, répondre aux avis et déployer les mises à jour de sécurité relèvent ensuite du service. Il en va de même pour un site web : son développement est un projet, alors que la surveillance du serveur et l'application des correctifs relèvent du service.
 
 | Critère | Gestion de projet | Gestion de service (ITIL) |
 | :--- | :--- | :--- |
@@ -30,18 +30,18 @@ La gestion de projet et la gestion de service ne se remplacent pas. L'une **con�
 | Exemple | Développer un site e-commerce | Corriger ses pannes, le mettre à jour |
 | Méthodes | Gantt, PERT, Agile, Scrum | ITIL, supervision, gestion d'incidents |
 
-Le projet crée le service. ITIL le fait vivre. Un beau livrable sans procédure d'incident redevient une panne dès la première semaine.
+Le projet crée donc le service, et ITIL permet de le maintenir. Sans procédure de gestion des incidents, même un livrable de qualité se retrouve vite en panne sans que personne ne sache comment réagir.
 
-## Quatre dimensions
+## Les quatre dimensions d'un service
 
-ITIL 4 considère qu'un service tient sur **quatre dimensions**. En négliger une suffit à l'arrêter, même si les trois autres sont solides.
+ITIL 4 considère qu'un service repose sur **quatre dimensions**. Il suffit d'en négliger une pour que le service s'arrête, même si les trois autres sont solides.
 
-Les **organisations et les personnes** : les rôles, les compétences, la façon de se parler. Le support, le helpdesk et l'administrateur réseau en font partie. Un serveur peut être parfait. S'il tombe et que personne ne sait qui a le droit de le redémarrer, le service est déjà arrêté.
+La première dimension concerne les **organisations et les personnes** : les rôles, les compétences et la communication entre les équipes. Le support, le helpdesk et l'administrateur réseau en font partie. Même avec un serveur parfait, si personne ne sait qui a le droit de le redémarrer quand il tombe en panne, le service est arrêté.
 
-L'**information et la technologie** : les serveurs, les bases, les outils. Un logiciel de tickets comme GLPI fait partie de cette dimension. Il ne répare rien tout seul. Il rend visible ce qui est en cours.
+La deuxième dimension regroupe l'**information et la technologie** : les serveurs, les bases de données et les outils. Un logiciel de tickets comme GLPI en fait partie : il ne répare rien lui-même, mais il permet de suivre les demandes en cours.
 
-Les **partenaires et les fournisseurs** : l'hébergeur, l'éditeur, le sous-traitant, et les contrats qui disent jusqu'où ils s'engagent. Un contrat d'hébergement expiré n'est pas une panne technique. C'est une dimension oubliée, et le site est tout aussi inaccessible.
+La troisième dimension concerne les **partenaires et les fournisseurs**, comme l'hébergeur, l'éditeur ou le sous-traitant, ainsi que les contrats qui fixent leurs engagements. Un contrat d'hébergement expiré n'est pas une panne technique, mais le site devient tout aussi inaccessible.
 
-Les **flux de valeur et les processus** : l'enchaînement du travail. Comment un incident est qualifié, qui le prend, comment les sauvegardes sont planifiées. Sans ce flux, les trois autres dimensions travaillent chacune dans leur coin.
+La quatrième dimension correspond aux **flux de valeur et aux processus**, c'est-à-dire à l'enchaînement du travail : comment un incident est qualifié, qui le prend en charge, comment les sauvegardes sont planifiées. Sans ces processus, les trois autres dimensions fonctionnent chacune de leur côté.
 
-Le serveur du lycée qui tombe illustre le croisement. La technologie a failli. Si personne n'est désigné pour intervenir, l'organisation a failli aussi. Si le contrat d'hébergement est périmé, le fournisseur n'est plus là. Les quatre dimensions se compensent. Elles ne se remplacent pas.
+La panne du serveur du lycée montre comment ces dimensions se croisent. La technologie a fait défaut, mais si personne n'est désigné pour intervenir, l'organisation est aussi en cause, et si le contrat d'hébergement a expiré, le fournisseur n'est plus là pour aider. Les quatre dimensions sont donc toutes nécessaires, et aucune ne peut remplacer les autres.

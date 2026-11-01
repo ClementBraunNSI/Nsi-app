@@ -16,8 +16,8 @@ groupeTitre: "Prompter une IA"
 **Matériel :** au moins deux IA génératives différentes parmi celles indiquées en classe (par exemple Le Chat de Mistral AI, ChatGPT, Gemini ou Copilot), et un générateur d'images pour l'exercice 4.
 
 **Les règles :**
-- Aucune donnée personnelle dans les prompts : ni nom, ni adresse, ni photo, ni les vôtres ni celles des autres.
-- Pour chaque réponse, noter **quelle IA** l'a produite. Sans ce nom, une comparaison ne vaut rien.
+- Aucune donnée personnelle dans les prompts : ni nom, ni adresse, ni photo, qu'il s'agisse des siennes ou de celles des autres.
+- Pour chaque réponse, noter **quelle IA** l'a produite. Sans ce nom, il est impossible de comparer les réponses.
 - Copier les prompts dans le cahier ou dans un document : ce sont eux qui sont évalués, plus que les réponses.
 
 # Exercice 1 : La même question, deux IA

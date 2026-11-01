@@ -12,35 +12,35 @@ audience: public
 
 # Histoire de l'informatique
 
-L'informatique ne commence pas avec l'ordinateur de bureau. C'est la science du traitement automatique de l'information : représenter des données, écrire une procédure, la faire exécuter par une machine. Le boulier calcule déjà. Ce qui change, au fil des siècles, c'est ce que la machine sait enchaîner toute seule.
+L'informatique est la science du traitement automatique de l'information : elle consiste à représenter des données, à écrire une procédure et à la faire exécuter par une machine. Son histoire commence donc bien avant l'ordinateur de bureau, puisque le boulier permettait déjà de calculer. Au fil des siècles, c'est surtout ce que la machine est capable d'enchaîner seule qui change.
 
 ## Avant l'électricité
 
-L'abaque, le boulier, sert depuis l'Antiquité à poser des nombres et à calculer en déplaçant des jetons. La procédure est dans les doigts de la personne, pas dans l'appareil.
+L'abaque, ou boulier, sert depuis l'Antiquité à poser des nombres et à calculer en déplaçant des jetons. La procédure de calcul est connue de la personne qui l'utilise, et non de l'appareil.
 
-En 1642, Blaise Pascal fait construire la **Pascaline**, une machine mécanique qui additionne et soustrait en entraînant des roues. On tourne des cadrans, les retenues se propagent. C'est encore un calculateur, pas un ordinateur : elle ne change pas de programme.
+En 1642, Blaise Pascal fait construire la **Pascaline**, une machine mécanique qui additionne et soustrait en entraînant des roues. Il suffit de tourner des cadrans, et les retenues se propagent. C'est encore un calculateur, et non un ordinateur, car on ne peut pas changer son programme.
 
-En 1801, le métier à tisser de **Joseph Marie Jacquard** lit des **cartes perforées**. Un trou ou une absence de trou décide quels fils se lèvent. Le motif n'est plus dans la mémoire du tisserand, il est sur le support. Changer de cartes, c'est changer de motif sans reconstruire la machine. C'est l'ancêtre matériel du programme.
+En 1801, le métier à tisser de **Joseph Marie Jacquard** lit des **cartes perforées**. La présence ou l'absence d'un trou détermine quels fils se lèvent. Le motif n'est plus dans la mémoire du tisserand, mais sur les cartes : pour changer de motif, il suffit de changer de cartes, sans reconstruire la machine. Ces cartes sont les ancêtres du programme.
 
-En 1834, Charles Babbage conçoit la **machine analytique** : une mémoire, un moulin qui calcule, et des cartes pour la séquence d'opérations. La machine ne sera pas construite de son vivant. **Ada Lovelace** rédige, sur un problème de calcul des nombres de Bernoulli, une suite d'opérations destinée à cette machine. On la considère pour cela comme la première personne à avoir écrit un programme.
+En 1834, Charles Babbage conçoit la **machine analytique**, qui comprend une mémoire, un « moulin » chargé des calculs et des cartes qui décrivent la suite des opérations. La machine ne sera pas construite de son vivant. **Ada Lovelace** rédige, sur un problème de calcul des nombres de Bernoulli, une suite d'opérations destinée à cette machine. On la considère pour cela comme la première personne à avoir écrit un programme.
 
-## Une machine qui enchaîne les instructions
+## Les fondements de l'ordinateur
 
-En 1936, Alan Turing décrit une machine abstraite : un ruban, une tête de lecture, une table de transitions. Il ne construit pas un ordinateur. Il fixe ce que « calculer mécaniquement » veut dire, et il montre qu'il existe des questions auxquelles aucune procédure ne répond. Pendant la guerre, il travaille aussi au déchiffrement d'**Enigma**, à Bletchley Park. Les deux récits se croisent souvent. Ils ne sont pas le même travail : l'un est une preuve, l'autre est une machine de cryptanalyse.
+En 1936, Alan Turing décrit une machine abstraite, formée d'un ruban, d'une tête de lecture et d'une table de transitions. Il ne construit pas d'ordinateur, mais définit précisément ce que signifie « calculer mécaniquement », et montre qu'il existe des questions auxquelles aucune procédure ne peut répondre. Pendant la guerre, il participe aussi au déchiffrement d'**Enigma**, à Bletchley Park. Ces deux travaux sont souvent confondus, alors qu'ils sont très différents : le premier est une démonstration théorique, le second a abouti à une machine de cryptanalyse.
 
-En 1945, le rapport sur l'EDVAC décrit l'architecture qu'on appelle depuis **von Neumann** : une unité de calcul, une mémoire qui contient à la fois les données et le programme, et des bus pour les faire circuler. Les machines précédentes cablaient souvent le programme. Ici, changer de programme, c'est changer le contenu de la mémoire.
+En 1945, le rapport sur l'EDVAC décrit l'architecture qu'on appelle depuis **von Neumann** : une unité de calcul, une mémoire qui contient à la fois les données et le programme, et des bus pour les faire circuler. Dans les machines précédentes, le programme était souvent câblé. Désormais, pour changer de programme, il suffit de changer le contenu de la mémoire.
 
-En 1947, aux laboratoires Bell, le **transistor** remplace progressivement les tubes à vide. Un tube chauffe, casse, et prend de la place. Le transistor commute un courant avec beaucoup moins d'énergie. La miniaturisation des circuits commence là.
+En 1947, aux laboratoires Bell, le **transistor** est inventé, et il remplace progressivement les tubes à vide. Ces tubes chauffaient, tombaient souvent en panne et prenaient beaucoup de place. Le transistor commute un courant avec beaucoup moins d'énergie : c'est le début de la miniaturisation des circuits.
 
-En 1969, **ARPANET** relie quatre ordinateurs universitaires américains. Ce n'est pas encore le Web. C'est un réseau qui achemine des paquets entre machines, l'ancêtre d'Internet.
+En 1969, **ARPANET** relie quatre ordinateurs universitaires américains. Ce n'est pas encore le Web, mais un réseau qui achemine des paquets entre machines : c'est l'ancêtre d'Internet.
 
-## La puce, le Web, les données
+## Du microprocesseur à l'intelligence artificielle
 
-En 1971, l'**Intel 4004** met une unité centrale entière sur une puce. Le microprocesseur rend l'ordinateur fabricable en série. Les années 1980 voient les machines personnelles, Apple II, IBM PC, sortir des salles machines.
+En 1971, l'**Intel 4004** réunit une unité centrale entière sur une seule puce. Le microprocesseur permet de fabriquer des ordinateurs en série. Dans les années 1980, les ordinateurs personnels, comme l'Apple II ou l'IBM PC, sortent des salles informatiques et entrent dans les foyers.
 
-En 1991, au CERN, Tim Berners-Lee met en service le **Web** : le protocole HTTP, le langage HTML, des documents reliés par des liens. Internet, le réseau, existait déjà. Le Web est l'application qui le rend utilisable sans savoir sur quelle machine le fichier est rangé.
+En 1991, au CERN, Tim Berners-Lee met en service le **Web**, qui repose sur le protocole HTTP, le langage HTML et des documents reliés par des liens. Internet, le réseau, existait déjà : le Web est l'application qui permet de l'utiliser sans savoir sur quelle machine chaque fichier est rangé.
 
-Les années 2000 généralisent le téléphone connecté, les réseaux sociaux, et des volumes de données qu'on ne consulte plus à la main. Les années 2010 et 2020 mettent l'apprentissage profond, le *deep learning*, dans des outils grand public. À chaque fois, le geste de Jacquard est encore là : une procédure inscrite sur un support, exécutée par une machine, sur des données qui ne sont pas la procédure.
+Les années 2000 voient se généraliser les téléphones connectés et les réseaux sociaux, ainsi que des volumes de données trop grands pour être consultés à la main. Dans les années 2010 et 2020, l'apprentissage profond (*deep learning*) arrive dans des outils grand public. On retrouve pourtant toujours l'idée de Jacquard : une procédure inscrite sur un support et exécutée par une machine, sur des données distinctes de cette procédure.
 
 <ExerciseTabs courseId="terminale_histoire" courseTitle="Quiz Histoire">
 

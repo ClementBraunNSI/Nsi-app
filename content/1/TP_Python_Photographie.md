@@ -52,7 +52,7 @@ assert True, "Consignes lues."
 
       **Mission :** Créer une image RGB de **1×1 pixel** entièrement **rouge** avec Pillow. Stocker l'image dans `image`, sa largeur dans `largeur` et sa hauteur dans `hauteur`.
 
-      *Indice :* `Image.new("RGB", (largeur, hauteur), color=(r, v, b))`, le rouge pur correspond à `(255, 0, 0)`.
+      *Indice :* `Image.new("RGB", (largeur, hauteur), color=(r, v, b))`. Le rouge pur correspond à `(255, 0, 0)`.
 
     <Correction>
     ```python
@@ -234,7 +234,7 @@ assert image_negatif.getpixel((0, 0)) == attendu, "L'image doit contenir le pixe
     <Enonce>
       ### Facile <Renards n="1" /> - Mégapixels
 
-      Un **mégapixel** (Mpx) = 1 million de pixels.
+      Un **mégapixel** (Mpx) correspond à 1 million de pixels.
 
       **Mission :** Créer une image de **4000×3000 pixels**. Calculer sa définition dans `definition` et le nombre de mégapixels (entier) dans `megapixels`.
 

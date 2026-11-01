@@ -83,7 +83,7 @@ Reprendre la classe `Renard` et lui ajouter une méthode `fiche()` qui renvoie l
 <Indices>
 <Indice>
 
-Une méthode est une fonction définie dans la classe ; son premier paramètre est `self`.
+Une méthode est une fonction définie dans la classe. Son premier paramètre est `self`.
 
 </Indice>
 <Indice>
@@ -212,7 +212,7 @@ Ranger les deux dimensions dans des attributs.
 </Indice>
 <Indice>
 
-Les méthodes calculent à partir des attributs ; elles n'ont pas d'autre paramètre que `self`.
+Les méthodes calculent à partir des attributs. Elles n'ont pas d'autre paramètre que `self`.
 
 </Indice>
 <Indice>
@@ -315,9 +315,9 @@ assert a.distance(a) == 0, "Un point et lui-même."
 <Enonce>
 ### Compte bancaire
 
-Écrire une classe `Compte` construite avec le nom du `titulaire` ; son `solde` part de 0.
+Écrire une classe `Compte` construite avec le nom du `titulaire`. Son `solde` part de 0.
 - `deposer(montant)` ajoute le montant ;
-- `retirer(montant)` retire le montant et renvoie `True` si le solde suffit ; sinon, elle ne change rien et renvoie `False`.
+- `retirer(montant)` retire le montant et renvoie `True` si le solde suffit. Sinon, elle ne change rien et renvoie `False`.
 
 <Indices>
 <Indice>
@@ -604,7 +604,7 @@ assert (a.num, a.den) == (1, 2), "plus ne modifie pas la fraction de départ."
 <Enonce>
 ### Panier d'achats
 
-Écrire une classe `Panier` dont l'attribut `articles` est un dictionnaire nom → `(prix, quantite)`.
+Écrire une classe `Panier` dont l'attribut `articles` est un dictionnaire qui associe à chaque nom d'article le tuple `(prix, quantite)`.
 - `ajouter(nom, prix, quantite)` ajoute l'article, ou augmente sa quantité s'il est déjà là ;
 - `retirer(nom)` enlève complètement l'article (sans erreur s'il est absent) ;
 - `total()` renvoie le prix total, arrondi au centime ;
@@ -929,7 +929,7 @@ assert "Dune" in m.disponibles() and m.livres[0].emprunte is False, "Dune est re
 
 Écrire une classe `Morpion` :
 - à la création, `grille` est une liste de 3 listes de 3 cases `" "`, et `joueur` vaut `"X"` ;
-- `jouer(l, c)` place le symbole du joueur courant si la case est libre, passe la main à l'autre joueur et renvoie `True` ; sinon, elle renvoie `False` sans rien changer ;
+- `jouer(l, c)` place le symbole du joueur courant si la case est libre, passe la main à l'autre joueur et renvoie `True`. Sinon, elle renvoie `False` sans rien changer ;
 - `gagnant()` renvoie `"X"`, `"O"` ou `None`.
 
 <Indices>
@@ -1368,18 +1368,18 @@ assert isinstance(l.tete, Maillon) and l.tete.valeur == 1 and l.tete.suivant.val
 <Enonce>
 ### Sac d'aventurier
 
-Dans un jeu, le sac d'un aventurier a un **poids maximal**. Un objet est décrit par un nom et un poids ; plusieurs objets de même nom s'empilent.
+Dans un jeu, le sac d'un aventurier a un **poids maximal**. Un objet est décrit par un nom et un poids. Plusieurs objets de même nom s'empilent.
 
 Écrire une classe `Sac` construite avec `poids_max`, avec :
 - `ajouter(nom, poids_unitaire, quantite)` : ajoute les objets si le poids total le permet et renvoie `True`, sinon ne change rien et renvoie `False` ;
-- `retirer(nom, quantite)` : retire au plus la quantité possédée et renvoie le nombre réellement retiré ; un objet dont la quantité tombe à 0 disparaît du sac ;
+- `retirer(nom, quantite)` : retire au plus la quantité possédée et renvoie le nombre réellement retiré. Un objet dont la quantité tombe à 0 disparaît du sac ;
 - `poids()` : le poids total ;
 - `contenu()` : la liste triée des tuples `(nom, quantite)`.
 
 <Indices>
 <Indice>
 
-Un dictionnaire nom → `[poids_unitaire, quantite]` (une liste, modifiable) est pratique.
+Un dictionnaire qui associe à chaque nom la liste `[poids_unitaire, quantite]` (une liste, donc modifiable) est pratique.
 
 </Indice>
 <Indice>
@@ -1461,7 +1461,7 @@ Un ascenseur dessert les étages 0 à `n`. Il répond aux appels **dans l'ordre 
 
 Écrire une classe `Ascenseur` construite avec `n` (l'étage courant vaut 0), avec :
 - `appeler(etage)` : ajoute un appel (ignoré s'il est hors limites ou identique au dernier appel en attente) ;
-- `etape()` : déplace l'ascenseur d'**un** étage vers le premier appel en attente ; arrivé à cet étage, l'appel est retiré. Sans appel, rien ne se passe ;
+- `etape()` : déplace l'ascenseur d'**un** étage vers le premier appel en attente. Arrivé à cet étage, l'appel est retiré. Sans appel, rien ne se passe ;
 - `trajet()` : effectue des étapes jusqu'à ce qu'il n'y ait plus d'appel et renvoie la liste des étages traversés, étage de départ compris.
 
 <Indices>
@@ -1472,7 +1472,7 @@ Les appels en attente forment une file : une liste où l'on ajoute à la fin et 
 </Indice>
 <Indice>
 
-Dans `etape`, comparer l'étage courant au premier appel pour savoir s'il faut monter ou descendre ; puis, si l'étage atteint est celui de l'appel, le retirer.
+Dans `etape`, comparer l'étage courant au premier appel pour savoir s'il faut monter ou descendre. Puis, si l'étage atteint est celui de l'appel, le retirer.
 
 </Indice>
 <Indice>
@@ -1561,16 +1561,16 @@ assert b.etage == 0, "Sans appel, rien ne se passe."
 <Enonce>
 ### Gestion d'un parking
 
-**Contexte.** Le parking souterrain du centre-ville remplace ses tickets papier par un logiciel. À l'entrée, la barrière s'ouvre s'il reste une place pour la catégorie du véhicule ; à la sortie, le logiciel calcule le prix. Le gérant veut aussi suivre le taux d'occupation, la recette et l'historique des visites. Les heures sont des nombres de **minutes** depuis l'ouverture (des entiers).
+**Contexte.** Le parking souterrain du centre-ville remplace ses tickets papier par un logiciel. À l'entrée, la barrière s'ouvre s'il reste une place pour la catégorie du véhicule. À la sortie, le logiciel calcule le prix. Le gérant veut aussi suivre le taux d'occupation, la recette et l'historique des visites. Les heures sont des nombres de **minutes** depuis l'ouverture (des entiers).
 
-**Les données** : le parking accueille des voitures et des motos ; ses capacités sont données par un dictionnaire, par exemple `{"voiture": 3, "moto": 2}`. Chaque passage est représenté par un ticket.
+**Les données** : le parking accueille des voitures et des motos. Ses capacités sont données par un dictionnaire, par exemple `{"voiture": 3, "moto": 2}`. Chaque passage est représenté par un ticket.
 
 **Les classes et leurs méthodes**
-- `Ticket(immat, categorie, entree)` : la trace d'un passage. Elle garde l'immatriculation, la catégorie (`"voiture"` ou `"moto"`) et l'heure d'entrée ; ses attributs `sortie` et `prix` valent `None` tant que le véhicule n'est pas sorti.
+- `Ticket(immat, categorie, entree)` : la trace d'un passage. Elle garde l'immatriculation, la catégorie (`"voiture"` ou `"moto"`) et l'heure d'entrée. Ses attributs `sortie` et `prix` valent `None` tant que le véhicule n'est pas sorti.
 - `Parking(capacites)` : le logiciel lui-même, qui garde la liste de tous ses tickets. Ses méthodes :
   - `libres(categorie)` : affiché sur le panneau à l'entrée. Renvoie le nombre de places libres de la catégorie.
   - `entrer(immat, categorie, heure)` : appelée par la barrière d'entrée. Crée un ticket et renvoie `True`, ou renvoie `False` (la barrière reste fermée) si la catégorie est inconnue, s'il n'y a plus de place, ou si le véhicule est déjà dans le parking.
-  - `tarif(categorie, duree)` : la grille de prix. Les 30 premières minutes sont gratuites ; ensuite, chaque heure **commencée** coûte 2 € (1 € pour une moto), avec un maximum de 15 € (8 € pour une moto). Renvoie le prix d'une durée.
+  - `tarif(categorie, duree)` : la grille de prix. Les 30 premières minutes sont gratuites. Ensuite, chaque heure **commencée** coûte 2 € (1 € pour une moto), avec un maximum de 15 € (8 € pour une moto). Renvoie le prix d'une durée.
   - `sortir(immat, heure)` : appelée par la borne de sortie. Complète le ticket du véhicule et renvoie le prix à payer, ou `-1` si le véhicule n'est pas dans le parking.
   - `taux_occupation()` : pour le tableau de bord du gérant. Renvoie le pourcentage de places occupées, toutes catégories confondues, arrondi au dixième.
   - `recette()` : renvoie la somme de tous les prix payés.
@@ -1704,14 +1704,14 @@ assert p.plus_longue_visite() == ("MO-1", 360) and Parking({"voiture": 1}).plus_
 
 **Contexte.** Pour tester une intelligence artificielle de jeu de cartes, une équipe a besoin d'une simulation fidèle du jeu de la bataille, où l'on peut rejouer exactement la même partie. Le mélange dépend donc d'une **graine** : avec la même graine, la même distribution et la même partie. Le projet modélise le jeu avec des classes.
 
-**Règles du jeu** : chaque joueur retourne la première carte de son tas ; la plus forte remporte les deux cartes, qui passent **sous** le tas du gagnant (d'abord la carte du joueur 1, puis celle du joueur 2). En cas d'égalité, c'est la bataille : chacun pose une carte face cachée puis une nouvelle carte face visible, et la plus forte des nouvelles cartes remporte **toutes** les cartes posées (celles du joueur 1, dans l'ordre où il les a posées, puis celles du joueur 2) ; s'il y a de nouveau égalité, la bataille continue de la même façon. Un joueur qui n'a plus assez de cartes pour jouer perd la partie.
+**Règles du jeu** : chaque joueur retourne la première carte de son tas. La plus forte remporte les deux cartes, qui passent **sous** le tas du gagnant (d'abord la carte du joueur 1, puis celle du joueur 2). En cas d'égalité, c'est la bataille : chacun pose une carte face cachée puis une nouvelle carte face visible, et la plus forte des nouvelles cartes remporte **toutes** les cartes posées (celles du joueur 1, dans l'ordre où il les a posées, puis celles du joueur 2). S'il y a de nouveau égalité, la bataille continue de la même façon. Un joueur qui n'a plus assez de cartes pour jouer perd la partie.
 
 **Les classes et leurs rôles**
 - `Carte(valeur, couleur)` : une carte, de valeur 2 à 14 (valet 11, dame 12, roi 13, as 14). Sa méthode `__str__` donne le nom affiché, comme `"dame de pique"` ou `"7 de coeur"`.
-- `Paquet()` : le paquet neuf, avec les 52 cartes dans l'ordre (couleurs `pique`, `coeur`, `carreau`, `trefle`, valeurs croissantes). `melanger(graine)` le mélange de façon reproductible (`random.Random(graine).shuffle`) ; `distribuer()` partage le paquet et renvoie deux listes : les cartes d'indice pair et celles d'indice impair.
+- `Paquet()` : le paquet neuf, avec les 52 cartes dans l'ordre (couleurs `pique`, `coeur`, `carreau`, `trefle`, valeurs croissantes). `melanger(graine)` le mélange de façon reproductible (`random.Random(graine).shuffle`). `distribuer()` partage le paquet et renvoie deux listes : les cartes d'indice pair et celles d'indice impair.
 - `Joueur(nom, cartes)` : un joueur et son tas. `nb_cartes()` renvoie la taille du tas, `poser()` retire et renvoie la première carte, `ramasser(cartes)` ajoute les cartes gagnées sous le tas, dans l'ordre.
 - `Bataille(j1, j2)` : la partie entre deux joueurs.
-  - `tour()` : joue un tour complet, bataille comprise. Renvoie le nom du gagnant du tour ; si un joueur ne peut plus jouer pendant une bataille, toutes les cartes posées vont à son adversaire et la méthode renvoie le nom de ce dernier.
+  - `tour()` : joue un tour complet, bataille comprise. Renvoie le nom du gagnant du tour. Si un joueur ne peut plus jouer pendant une bataille, toutes les cartes posées vont à son adversaire et la méthode renvoie le nom de ce dernier.
   - `finie()` : renvoie `True` si un joueur n'a plus de carte.
   - `partie(max_tours)` : joue jusqu'à la fin, ou jusqu'à `max_tours` tours pour éviter une partie sans fin. Renvoie le tuple `(nom du gagnant ou None, nombre de tours joués)`.
 - `nouvelle_partie(graine)` : prépare une partie de test. Renvoie une `Bataille` entre `"Alice"` et `"Bob"` avec un paquet neuf mélangé selon la graine puis distribué.
@@ -1724,7 +1724,7 @@ Les cartes ne disparaissent jamais : à tout moment, les deux tas plus les carte
 </Indice>
 <Indice>
 
-Dans `tour`, garder deux listes « posées par le joueur 1 » et « posées par le joueur 2 », et boucler tant qu'il y a égalité ; avant chaque pose, vérifier que le joueur a encore assez de cartes.
+Dans `tour`, garder deux listes « posées par le joueur 1 » et « posées par le joueur 2 », et boucler tant qu'il y a égalité. Avant chaque pose, vérifier que le joueur a encore assez de cartes.
 
 </Indice>
 <Indice>

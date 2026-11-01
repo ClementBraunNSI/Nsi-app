@@ -44,7 +44,7 @@ Un binôme qui ne respecte pas une règle perd les points de la manche. Le but e
 | **2. L'image** | Une image générée à l'avance | 15 minutes | 50 mots | 5 |
 | **3. La contrainte** | Un texte ou une image, avec une contrainte surprise annoncée au départ | 12 minutes | 40 mots | 4 |
 
-Avant chaque manche, prendre 2 minutes pour observer la cible **sans toucher à l'ordinateur**. Lister ce qui la caractérise : forme, longueur, ton, couleurs, cadrage, détails. C'est cette liste qui fera la différence.
+Avant chaque manche, prendre 2 minutes pour observer la cible **sans toucher à l'ordinateur**. Lister ce qui la caractérise, comme la forme, la longueur, le ton, les couleurs, le cadrage ou les détails. C'est souvent cette liste qui permet de gagner la manche.
 
 **Pour la manche 1**, penser à la forme autant qu'au sens : nombre de lignes, rimes, ponctuation, niveau de langue.
 
@@ -78,7 +78,7 @@ On ne vote pas pour son propre binôme. En cas d'égalité, le binôme qui a uti
 | 4 | | | | | |
 | 5 | | | | | |
 
-## Ce qu'on rend
+## Travail à rendre
 
 À la fin de la séance, chaque binôme rend ses trois fiches de manche et répond, en quelques lignes, aux questions suivantes.
 

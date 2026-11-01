@@ -290,7 +290,7 @@ assert str(Duree(0, 0) + Duree(0, 0)) == "0 min 0 s", "Durées nulles."
 <Indices>
 <Indice>
 
-`@property` au-dessus d'une méthode `largeur(self)` permet de l'utiliser comme un attribut ; la valeur est rangée dans `self._largeur`.
+`@property` au-dessus d'une méthode `largeur(self)` permet de l'utiliser comme un attribut. La valeur est rangée dans `self._largeur`.
 
 </Indice>
 <Indice>
@@ -1023,7 +1023,7 @@ except ZeroDivisionError:
 <Enonce>
 ### Arbre binaire
 
-Un arbre binaire est fait de nœuds ; chaque nœud a une `valeur`, un sous-arbre `gauche` et un sous-arbre `droit` (`None` si absent).
+Un arbre binaire est fait de nœuds. Chaque nœud a une `valeur`, un sous-arbre `gauche` et un sous-arbre `droit` (`None` si absent).
 
 Écrire une classe `Noeud` avec les méthodes **récursives** :
 - `taille()` : le nombre de nœuds de l'arbre ;
@@ -1223,7 +1223,7 @@ assert "[]" not in PROGRAMME.split("def __repr__")[0], "Pas de liste Python pour
 <Indices>
 <Indice>
 
-Une méthode de classe se déclare avec `@classmethod` ; son premier paramètre est la classe (`cls`), ce qui permet d'écrire `return cls([...])`.
+Une méthode de classe se déclare avec `@classmethod`. Son premier paramètre est la classe (`cls`), ce qui permet d'écrire `return cls([...])`.
 
 </Indice>
 <Indice>
@@ -1299,7 +1299,7 @@ assert "classmethod" in PROGRAMME, "identite est une méthode de classe."
 <Enonce>
 ### Graphe et parcours
 
-Écrire une classe `Graphe` (non orienté) dont l'attribut `adj` est un dictionnaire sommet → liste des voisins, avec :
+Écrire une classe `Graphe` (non orienté) dont l'attribut `adj` est un dictionnaire qui associe à chaque sommet la liste de ses voisins, avec :
 - `ajouter_arete(a, b)` (crée les sommets si besoin, sans arête en double) ;
 - `voisins(s)` : la liste triée des voisins ;
 - `largeur(depart)` : la liste des sommets dans l'ordre d'un **parcours en largeur**, les voisins étant visités par ordre croissant ;
@@ -1748,13 +1748,13 @@ assert "heapq" not in PROGRAMME and not re.search(r"\b(sorted|min)\s*\(|\.sort\s
 **Les données** : une salle a un nom, une capacité et un **ensemble** d'équipements, par exemple `Salle("Info1", 18, {"projecteur", "ordinateurs"})`. Une réservation associe une salle, un créneau, un groupe (`"1NSI"`) et un effectif.
 
 **Les classes et leurs rôles**
-- `Creneau(debut, fin)` : une plage horaire. Le constructeur lève une `ValueError` si `fin <= debut`. `duree()` renvoie sa longueur en heures ; `chevauche(autre)` dit si deux créneaux se recouvrent (deux créneaux qui se touchent seulement, comme 8-10 et 10-12, ne se chevauchent pas) ; `__repr__` renvoie `"[8-10]"` pour l'affichage.
+- `Creneau(debut, fin)` : une plage horaire. Le constructeur lève une `ValueError` si `fin <= debut`. `duree()` renvoie sa longueur en heures. `chevauche(autre)` dit si deux créneaux se recouvrent (deux créneaux qui se touchent seulement, comme 8-10 et 10-12, ne se chevauchent pas). `__repr__` renvoie `"[8-10]"` pour l'affichage.
 - `Salle(nom, capacite, equipements)` : une salle du lycée.
 - `Reservation(salle, creneau, groupe, effectif)` : une réservation enregistrée.
 - `Planning` : le système lui-même, qui connaît les salles et toutes les réservations.
   - `ajouter_salle(salle)` : enregistre une salle.
   - `reserver(nom_salle, debut, fin, groupe, effectif)` : appelée quand un professeur réserve. Crée et renvoie la réservation, ou lève une `ValueError` dont le message, affiché au professeur, vaut `"salle inconnue"`, `"capacité"` ou `"conflit"` (dans cet ordre de vérification).
-  - `annuler(groupe, debut)` : supprime la réservation de ce groupe qui commence à cette heure ; renvoie `True`, ou `False` si elle n'existe pas.
+  - `annuler(groupe, debut)` : supprime la réservation de ce groupe qui commence à cette heure. Renvoie `True`, ou `False` si elle n'existe pas.
   - `disponibles(debut, fin, effectif, equipements)` : la recherche d'une salle libre. Renvoie la liste triée des noms des salles libres sur tout le créneau, assez grandes, et qui ont **au moins** tous les équipements demandés.
   - `occupation(nom_salle, ouverture, fermeture)` : pour savoir quelles salles sont sous-utilisées. Renvoie le pourcentage de la journée (de `ouverture` à `fermeture`) pendant lequel la salle est réservée, arrondi au dixième.
   - `agenda(groupe)` : l'emploi du temps d'un groupe. Renvoie la liste des tuples `(debut, fin, nom_salle)` de ses réservations, par heure de début.
@@ -1917,16 +1917,16 @@ assert p.disponibles(9, 10, 10, {"projecteur"}) == ["B12"], "La salle annulée r
 
 **Contexte.** Une équipe du club jeu vidéo développe un jeu de rôle tactique : deux équipes de personnages s'affrontent au tour par tour. Avant de dessiner les graphismes, elle a besoin du **moteur de combat**, entièrement déterministe pour pouvoir équilibrer les personnages en rejouant les mêmes combats. Chaque type de personnage a une façon d'agir différente : c'est le terrain idéal de l'héritage et du polymorphisme.
 
-**Les données** : un personnage a un nom, des points de vie, une attaque et une vitesse, par exemple `Guerrier("Gus", 30, 5, 3)` ; une équipe a un nom et une liste de membres.
+**Les données** : un personnage a un nom, des points de vie, une attaque et une vitesse, par exemple `Guerrier("Gus", 30, 5, 3)`. Une équipe a un nom et une liste de membres.
 
 **Les classes et leurs rôles**
-- `Personnage(nom, pv, attaque, vitesse)` : le personnage de base. `est_vivant()` dit s'il lui reste des points de vie ; `subir(degats)` lui retire des points de vie (sans descendre sous 0) ; `agir(allies, ennemis)` est son action pendant un tour : par défaut, il attaque l'ennemi **vivant** qui a le moins de points de vie (le premier de la liste en cas d'égalité) en lui infligeant `attaque` dégâts.
+- `Personnage(nom, pv, attaque, vitesse)` : le personnage de base. `est_vivant()` dit s'il lui reste des points de vie. `subir(degats)` lui retire des points de vie (sans descendre sous 0). `agir(allies, ennemis)` est son action pendant un tour : par défaut, il attaque l'ennemi **vivant** qui a le moins de points de vie (le premier de la liste en cas d'égalité) en lui infligeant `attaque` dégâts.
 - Trois spécialités, qui redéfinissent `agir` :
   - `Guerrier` : frappe comme un personnage ordinaire, mais une action sur trois (la 3ᵉ, la 6ᵉ…) inflige le double de dégâts ;
   - `Mage` : frappe **tous** les ennemis vivants à la fois, avec `attaque // 2` dégâts (au moins 1) ;
-  - `Soigneur` : si un allié vivant (lui compris) a au plus la moitié de ses points de vie de départ, il soigne le plus blessé d'entre eux (le moins de points de vie, le premier en cas d'égalité) de `2 × attaque`, sans dépasser ses points de vie de départ ; sinon, il attaque comme un personnage ordinaire.
-- `Equipe(nom, membres)` : `vivants()` renvoie la liste des membres encore debout ; `vaincue()` dit si plus aucun ne l'est.
-- `combat(e1, e2, max_tours)` : le déroulement d'un combat. À chaque tour, tous les personnages vivants agissent, par **vitesse décroissante** (à vitesse égale : ceux de `e1` avant ceux de `e2`, puis dans l'ordre des listes) ; un personnage mis à terre avant son tour n'agit pas. Le combat s'arrête dès qu'une équipe est vaincue (même au milieu d'un tour) ou après `max_tours` tours. Renvoie `(nom de l'équipe gagnante ou None, nombre de tours commencés)`.
+  - `Soigneur` : si un allié vivant (lui compris) a au plus la moitié de ses points de vie de départ, il soigne le plus blessé d'entre eux (le moins de points de vie, le premier en cas d'égalité) de `2 × attaque`, sans dépasser ses points de vie de départ. Sinon, il attaque comme un personnage ordinaire.
+- `Equipe(nom, membres)` : `vivants()` renvoie la liste des membres encore debout. `vaincue()` dit si plus aucun ne l'est.
+- `combat(e1, e2, max_tours)` : le déroulement d'un combat. À chaque tour, tous les personnages vivants agissent, par **vitesse décroissante** (à vitesse égale : ceux de `e1` avant ceux de `e2`, puis dans l'ordre des listes). Un personnage mis à terre avant son tour n'agit pas. Le combat s'arrête dès qu'une équipe est vaincue (même au milieu d'un tour) ou après `max_tours` tours. Renvoie `(nom de l'équipe gagnante ou None, nombre de tours commencés)`.
 
 <Indices>
 <Indice>

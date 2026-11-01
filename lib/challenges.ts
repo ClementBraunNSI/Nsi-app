@@ -1,18 +1,44 @@
 import type { EvaluationExercise } from "./evaluation-subject";
 
-/** Défi tel que l'élève le reçoit : énoncé sans tests, correction seulement une fois le défi fermé. */
+/** Réponse de l'élève à un exercice du défi. */
+export type ChallengeAnswer = { code: string; passed: boolean; attempts: number };
+
+/** Défi tel que l'élève le reçoit : énoncés sans tests, corrections seulement une fois le défi fermé. */
 export type MyChallenge = {
   id: string;
   title: string;
   opensAt: string;
   closesAt: string;
   open: boolean;
-  exercise: EvaluationExercise;
-  correction: string | null;
-  mine: { code: string; attempts: number; passed: boolean; firstPassedAt: string | null } | null;
+  /** Temps pour faire le défi, compté depuis l'ouverture de la page ; null : pas de limite. */
+  timeLimitMinutes: number | null;
+  exercises: EvaluationExercise[];
+  corrections: { id: string; correction: string }[] | null;
+  mine: {
+    code: string;
+    attempts: number;
+    passed: boolean;
+    firstPassedAt: string | null;
+    startedAt?: string | null;
+    answers?: Record<string, ChallengeAnswer>;
+  } | null;
   classPassed: number;
   classSize: number;
 };
+
+/** Marge accordée après la fin du chrono, pour une vérification lancée à la dernière seconde. */
+export const CHALLENGE_GRACE_MS = 30_000;
+
+/** Fin du temps de l'élève (en millisecondes), ou null sans limite ou chrono pas encore parti. */
+export function challengeDeadline(startedAt: string | null | undefined, timeLimitMinutes: number | null | undefined) {
+  if (!startedAt || !timeLimitMinutes) return null;
+  return Date.parse(startedAt) + timeLimitMinutes * 60_000;
+}
+
+/** Le défi est réussi quand chaque exercice l'est. */
+export function allExercisesPassed(exerciseIds: string[], answers: Record<string, ChallengeAnswer> | undefined) {
+  return exerciseIds.length > 0 && exerciseIds.every((id) => answers?.[id]?.passed);
+}
 
 /**
  * Série de défis réussis à la suite, du plus récent au plus ancien.
@@ -85,7 +111,7 @@ export function nextMonday(from = new Date(), openingHour = 7, openingMinute = 3
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(from);
 }
 
-/** Modèle proposé pour écrire un nouveau défi. */
+/** Modèle proposé pour écrire un nouveau défi : un ou plusieurs blocs <ExerciseSection>, chacun avec ses tests. */
 export const CHALLENGE_TEMPLATE = `<ExerciseSection id="defi" label="Défi : nombres pairs" type="python">
 <Enonce>
 Écrire une fonction \`pairs(liste)\` qui renvoie la liste des nombres pairs de \`liste\`, dans le même ordre.

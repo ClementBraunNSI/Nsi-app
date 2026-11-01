@@ -13,41 +13,41 @@ audience: public
 
 # Calculabilité et décidabilité
 
-On a parfois l'impression qu'un ordinateur assez puissant finira par répondre à n'importe quelle question, pourvu qu'on lui laisse du temps. Alan Turing, en 1936, montre que non. Il existe des problèmes pour lesquels aucun algorithme ne donnera la réponse. Ce n'est pas une question de mémoire ou de vitesse. C'est une limite du calcul lui-même.
+On a parfois l'impression qu'un ordinateur assez puissant finira par répondre à n'importe quelle question, pourvu qu'on lui laisse du temps. En 1936, Alan Turing montre que ce n'est pas le cas : il existe des problèmes pour lesquels aucun algorithme ne peut donner la réponse. Cette limite ne vient ni de la mémoire ni de la vitesse des machines, mais du calcul lui-même.
 
-## Une machine très pauvre, et pourtant suffisante
+## La machine de Turing
 
-La **machine de Turing** est un modèle théorique, volontairement simple. Elle a un **ruban** infini, découpé en cases, qui lui sert de mémoire. Une **tête** lit et écrit une case, puis se déplace d'un cran. Un **état** interne retient où elle en est dans son raisonnement. Une **table de transition** dit, pour chaque état et chaque symbole lu, quoi écrire, de quel côté bouger, et dans quel état passer. Cette table est le programme.
+La **machine de Turing** est un modèle théorique, volontairement simple. Elle a un **ruban** infini, découpé en cases, qui lui sert de mémoire. Une **tête** lit et écrit une case, puis se déplace d'un cran. Un **état** interne indique où elle en est de son calcul. Enfin, une **table de transition** précise, pour chaque état et chaque symbole lu, ce qu'il faut écrire, de quel côté se déplacer et dans quel état passer. Cette table est le programme.
 
-La thèse de Church-Turing affirme que tout ce qu'un algorithme peut calculer, une machine de Turing peut le calculer. Un ordinateur n'est pas « plus puissant » qu'elle au sens de ce qu'il peut finir par obtenir. Il est seulement plus commode, et plus rapide. S'il existe un problème qu'aucune machine de Turing ne résout, aucun langage de programmation ne le résoudra non plus.
+La thèse de Church-Turing affirme que tout ce qu'un algorithme peut calculer, une machine de Turing peut le calculer. Un ordinateur n'est donc pas « plus puissant » qu'elle, au sens où il ne peut pas calculer davantage de choses : il est seulement plus pratique et plus rapide. S'il existe un problème qu'aucune machine de Turing ne résout, aucun langage de programmation ne le résoudra non plus.
 
-## Calculable, décidable
+## Calculabilité et décidabilité
 
-Un problème est **calculable** s'il existe un algorithme, donc une machine de Turing, qui produit la réponse en un temps fini. Trier une liste, trouver un plus court chemin : on connaît des algorithmes qui s'arrêtent. Le problème est calculable, même si, pour de très grandes données, on n'a pas envie d'attendre.
+Un problème est **calculable** s'il existe un algorithme, donc une machine de Turing, qui produit la réponse en un temps fini. Trier une liste ou trouver un plus court chemin sont des problèmes calculables, car on connaît des algorithmes qui s'arrêtent, même si le calcul peut être long pour de très grandes données.
 
-Un problème de **décision** ne demande qu'un oui ou un non. Il est **décidable** s'il existe un algorithme qui, pour n'importe quelle entrée, répond correctement et s'arrête. Décidable est donc plus précis que « on saurait peut-être » : il faut une méthode qui termine toujours.
+Un problème de **décision** ne demande qu'un oui ou un non. Il est **décidable** s'il existe un algorithme qui, pour n'importe quelle entrée, répond correctement et s'arrête. Pour qu'un problème soit décidable, il faut donc une méthode qui se termine toujours.
 
 ## Le problème de l'arrêt
 
-La question est la suivante. Peut-on écrire un programme `TestArret(P, E)` qui reçoit un programme `P` et une entrée `E`, et qui dit si `P`, lancé sur `E`, va s'arrêter, ou s'il va boucler indéfiniment ?
+La question est la suivante : peut-on écrire un programme `TestArret(P, E)` qui reçoit un programme `P` et une entrée `E`, et qui dit si `P`, lancé sur `E`, va s'arrêter, ou s'il va boucler indéfiniment ?
 
 La réponse est non. Ce problème est **indécidable**.
 
-On le montre par l'absurde. Supposons que `TestArret` existe, et qu'il se trompe jamais. On construit alors un programme `Paradoxe(P)` qui s'en sert contre lui-même :
+On le montre par l'absurde. Supposons que `TestArret` existe et ne se trompe jamais. On construit alors un programme `Paradoxe(P)` qui l'utilise de la façon suivante :
 
 1. Il appelle `TestArret(P, P)`.
 2. Si `TestArret` annonce que `P` s'arrête, `Paradoxe` entre dans une boucle infinie, `while True: pass`.
 3. Si `TestArret` annonce que `P` boucle, `Paradoxe` s'arrête tout de suite.
 
-Lançons `Paradoxe(Paradoxe)`. `TestArret(Paradoxe, Paradoxe)` doit dire soit « il s'arrête », soit « il boucle ».
+On lance alors `Paradoxe(Paradoxe)`. `TestArret(Paradoxe, Paradoxe)` doit dire soit « il s'arrête », soit « il boucle ».
 
 Si elle dit « il s'arrête », la règle 2 fait entrer `Paradoxe` dans une boucle. Il ne s'arrête donc pas. La réponse était fausse.
 
 Si elle dit « il boucle », la règle 3 fait s'arrêter `Paradoxe` immédiatement. Il ne boucle donc pas. La réponse était fausse aussi.
 
-Les deux branches se contredisent. L'hypothèse de départ tombe : `TestArret` ne peut pas exister. Aucun programme ne peut, pour tous les programmes et toutes les entrées, prédire l'arrêt.
+Les deux branches se contredisent. L'hypothèse de départ est donc fausse : `TestArret` ne peut pas exister. Aucun programme ne peut, pour tous les programmes et toutes les entrées, prédire l'arrêt.
 
-Un ordinateur plus rapide, ou quantique, ne contourne pas cela. Il exécuterait le même genre d'algorithmes. Le problème n'est pas la durée du calcul. C'est qu'aucune procédure générale ne termine en donnant toujours la bonne réponse.
+Un ordinateur plus rapide, ou même quantique, ne permet pas de contourner ce résultat, car il exécuterait le même type d'algorithmes. Le problème ne vient pas de la durée du calcul, mais du fait qu'aucune méthode générale ne peut se terminer en donnant toujours la bonne réponse.
 
 ---
 

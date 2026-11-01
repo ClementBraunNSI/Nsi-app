@@ -22,9 +22,9 @@ Une **base** est un ensemble de caractères uniques qui permettent de représent
 Il existe un certain nombre de bases très connues :
 
 - Base 10 : La base 10 est la base utilisée au quotidien pour compter. $B_{10}=\lbrace 0,1,2,3,4,5,6,7,8,9 \rbrace $.
-- Base 12 : La base 12 est la base utilisée pour remplir des boites d'oeufs, pour représenter les parties d'une journée.
+- Base 12 : La base 12 est utilisée pour remplir des boîtes d'œufs ou pour découper une journée en heures.
 
-La base 2 est la base utilisée par les ordinateurs pour fonctionner. Un ordinateur fonctionne grâce au courant électrique et analyse en permanence si du courant passe pour permettre de réaliser des calculs différents.
+La base 2 est la base utilisée par les ordinateurs. Un ordinateur fonctionne grâce au courant électrique : il vérifie en permanence si du courant passe ou non, et c'est ce qui lui permet de réaliser ses calculs.
 
 ## Représentation d'un nombre
 
@@ -34,7 +34,7 @@ Par exemple :
 
 Le nombre $154 = 1*100 + 5*10 + 4*1$.
 
-On remarque une chose : les colonnes sont en 100 / 10 / 1 qui sont des multiples de 10.
+Les colonnes valent 100, 10 et 1, qui sont toutes des puissances de 10.
 
 |1000|100|10|1|
 |----|---|--|-|
@@ -42,19 +42,19 @@ On remarque une chose : les colonnes sont en 100 / 10 / 1 qui sont des multiples
 
 On peut même aller plus loin. Ces nombres sous la forme de $10*10*...*10$ sont appelés **puissances de 10**.
 
-On peut écrire $1000 = 10^3 = 10*10*10$ ou $1000000 = 10^6 = 10*10*10*10*10*10$ où la puissance correspond au nombre de fois où l'on a multiplié ou divisé par le même nombre.
+On peut écrire $1000 = 10^3 = 10*10*10$ ou $1000000 = 10^6 = 10*10*10*10*10*10$. La puissance correspond au nombre de fois où l'on a multiplié par le même nombre.
 
 **Remarque :** Si l'on compte le nombre de fois où l'on a divisé, la puissance sera négative.  
 
-Cependant, les nombres s'écrivent d'habitude en base 10 et chaque colonne est une puissance de 10. Il y a donc un lien entre les colonnes et la base utilisée et cela permettra de représenter des nombres dans n'importe quelle base.
+Les nombres s'écrivent d'habitude en base 10, et chaque colonne correspond alors à une puissance de 10. Les colonnes dépendent donc de la base utilisée, et ce lien permet de représenter des nombres dans n'importe quelle base.
 
 ## Base 2
 
-Au lieu d'utiliser 10 chiffres allant de 0 à 9, on va se limiter à 2 chiffres disponibles pour chacunes des colonnes.
+Au lieu d'utiliser 10 chiffres allant de 0 à 9, on se limite à 2 chiffres pour chacune des colonnes.
 
-Ces chiffres seront $B_{10} = \lbrace 0, 1 \rbrace$. Ces chiffres en base 2 sont appelés **bits**.
+Ces chiffres sont $B_{2} = \lbrace 0, 1 \rbrace$. Les chiffres de la base 2 sont appelés **bits**.
 
-Pour chacune des colonnes, on ne pourra choisir que 0 ou 1 et chaque colonne correspondra à une puissance 2.
+Chaque colonne ne peut donc contenir que 0 ou 1, et elle correspond à une puissance de 2.
 
 Exemple :
 
@@ -64,7 +64,7 @@ Exemple :
 
 ### Obtenir la représentation en base 10 d'un nombre en base 2
 
-Pour ce nombre dans le tableau de puissances de 2, il serait écrit 1101. Pour obtenir sa valeur en base 10 pour le rendre plus lisible par un humain, on peut utilser la technique vue pour la base 10 :
+Dans ce tableau de puissances de 2, le nombre s'écrit 1101. Pour obtenir sa valeur en base 10, plus lisible pour un humain, il suffit de reprendre la technique vue pour la base 10 :
 
 $1101_{2} = 1*8 + 1*4+ 0*2 + 1*1 = 13_{10}$.
     </Enonce>
@@ -126,7 +126,7 @@ assert n5 == 23, "n5 incorrect. 10111_2 = 16+4+2+1"
     <Enonce>
 ### Obtenir la représentation en base 2 d'un nombre en base 10
 
-La représentation en base 2 d'un nombre est utile pour savoir comment l'ordinateur fonctionne et ce qu'il peut comprendre. On pourra anticiper des résultats, créer des programmes et plus encore en maîtrisant la représentation en base 2.
+La représentation en base 2 aide à comprendre comment l'ordinateur fonctionne et ce qu'il peut manipuler. La maîtriser permet aussi d'anticiper certains résultats quand on écrit des programmes.
 
 Pour obtenir la représentation en base 2 d'un nombre en base 10, il existe 2 méthodes :
 
@@ -134,18 +134,18 @@ Pour obtenir la représentation en base 2 d'un nombre en base 10, il existe 2 m�
 
 Pour obtenir la représentation en base 2 d'un nombre en base 10, on peut utiliser la technique du tableau de puissance de 2.
 
-**Étapes:**
+**Étapes :**
 
-1. On cherche la puissance de 2 qui se rapproche du nombre sans le dépasser
-2. On écrit le tableau de puissances de 2 allant de la puissance trouvée à 1
-3. On regarde si on peut retirer la puissance de 2 du tableau au nombre, si oui, on écrit 1 sinon 0.
-4. On regarde si on peut retirer la puissance de 2 suivante au résultat de la soustraction de nombre à la puissance de 2 vue avant.
+1. Chercher la plus grande puissance de 2 qui ne dépasse pas le nombre.
+2. Écrire le tableau des puissances de 2, de cette puissance jusqu'à 1.
+3. Si la puissance de 2 peut être retirée du nombre, écrire 1 dans sa colonne et faire la soustraction. Sinon, écrire 0.
+4. Recommencer avec la puissance de 2 suivante, en partant du résultat de la soustraction.
 
-**Exemple:**
+**Exemple :**
 
 On cherche à obtenir la représentation en base 2 du nombre 154.
 
-1. On cherche la puissance de 2 qui se rapproche : 1 -> 2 -> 4 -> 8 -> 16 -> 32 -> 64 -> **128** -> 256. Ici, ce sera 128.
+1. On cherche la plus grande puissance de 2 qui ne dépasse pas 154. Les puissances de 2 sont 1, 2, 4, 8, 16, 32, 64, **128**, 256… Ici, c'est 128.
 2. On écrit le tableau de puissances de 2
 3. Peut-on retirer 128 à 154 ? Oui. On met 1 dans la colonne correspondante et on réalise la soustraction. On ne traitera plus 154 mais 154-128 = 36.
 

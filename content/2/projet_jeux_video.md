@@ -40,7 +40,7 @@ ludotheque = {
 
 Les quatre clés internes sont `plateforme` (`str`), `annee` (`int`), `genre` (`str`) et `statut` (`str`). Le statut vaut exactement `"possédé"` ou `"souhaité"`.
 
-Fiche attendue pour Zelda :
+Voici la fiche attendue pour Zelda :
 
 ```text
 Titre : The Legend of Zelda : Breath of the Wild
@@ -55,7 +55,7 @@ Statut : possédé
     <Enonce>
       Initialiser `ludotheque` avec Zelda et Elden Ring, exactement comme ci-dessus. `annee` est un `int`, pas un texte.
 
-      Écrire `afficher_jeu(ludotheque, titre)`. Jeu trouvé : les cinq lignes de la fiche, puis `True`. Jeu absent : `Jeu introuvable.` et `False`.
+      Écrire `afficher_jeu(ludotheque, titre)`. Si le jeu est trouvé, elle affiche les cinq lignes de la fiche puis renvoie `True`. Sinon, elle affiche `Jeu introuvable.` et renvoie `False`.
 
       *Tester avec `"The Legend of Zelda : Breath of the Wild"` (la fiche) et avec `"Minecraft"` (`Jeu introuvable.`).*
 
@@ -138,12 +138,12 @@ Statut : possédé
     <Enonce>
       Écrire `ajouter_jeu_donnees(ludotheque, titre, plateforme, annee, genre, statut)`. C'est cette fonction que le scénario automatique appelle, sans `input`.
 
-      - Titre déjà présent : `Ce jeu est déjà dans la collection.`, `False`, dictionnaire inchangé.
-      - `annee` hors de 1950 à 2100 inclus : `Année invalide.`, `False`.
-      - `statut` autre que `possédé` ou `souhaité` : `Statut invalide.`, `False`.
+      - Si le titre est déjà présent, afficher `Ce jeu est déjà dans la collection.` et renvoyer `False`, sans modifier le dictionnaire.
+      - Si `annee` n'est pas comprise entre 1950 et 2100 inclus, afficher `Année invalide.` et renvoyer `False`.
+      - Si `statut` est différent de `possédé` et de `souhaité`, afficher `Statut invalide.` et renvoyer `False`.
       - Sinon, ajouter le dictionnaire interne et renvoyer `True`.
 
-      Écrire `ajouter_jeu(ludotheque)`, qui pose les questions (titre, plateforme, année, genre, statut), convertit l'année en `int`, puis appelle `ajouter_jeu_donnees`. Si l'année ou le statut est refusé, on redemande ce champ, pas tout le formulaire.
+      Écrire `ajouter_jeu(ludotheque)`, qui pose les questions (titre, plateforme, année, genre, statut), convertit l'année en `int`, puis appelle `ajouter_jeu_donnees`. Si l'année ou le statut est refusé, on redemande seulement ce champ, et non tout le formulaire.
 
       *Test :* `ajouter_jeu_donnees(ludotheque, "Celeste", "PC", 2018, "Plateforme", "possédé")` renvoie `True`. Le même titre une seconde fois renvoie `False`. Celeste n'est pas remplacé.
 
@@ -298,7 +298,7 @@ Statut : possédé
     <Enonce>
       Écrire `rechercher_jeu(ludotheque)`. Elle demande `Titre : `, appelle `afficher_jeu`, et renvoie le même booléen.
 
-      `"Celeste"` affiche la fiche. `"celeste"` affiche `Jeu introuvable.`
+      `"Celeste"` affiche la fiche, alors que `"celeste"` affiche `Jeu introuvable.`
 
     <Correction>
     ```python
@@ -369,12 +369,12 @@ Statut : possédé
     <Enonce>
       Écrire `modifier_jeu(ludotheque)`.
 
-      1. Demander le titre. S'il est absent : `Jeu introuvable.`, `False`.
+      1. Demander le titre. S'il est absent, afficher `Jeu introuvable.` et renvoyer `False`.
       2. Demander le champ : `plateforme`, `annee`, `genre` ou `statut`. Un autre mot affiche `Champ inconnu.` et redemande.
       3. Demander la nouvelle valeur. L'année et le statut suivent les mêmes contrôles que l'ajout.
       4. Mettre à jour uniquement ce champ, et renvoyer `True`.
 
-      Passer le statut de Celeste à `souhaité`. Relancer l'affichage : la ligne Statut a changé, plateforme, année et genre non.
+      Passer le statut de Celeste à `souhaité`. Relancer l'affichage : la ligne Statut a changé, mais pas la plateforme, l'année ni le genre.
 
     <Correction>
     ```python
@@ -451,7 +451,7 @@ Statut : possédé
     ```
     </CodeDepart>
     <Enonce>
-      Écrire `supprimer_jeu(ludotheque)`. Elle demande le titre. Jeu présent : retirer la clé (`del` ou `pop`) et renvoyer `True`. Jeu absent : `Jeu introuvable.` et `False`.
+      Écrire `supprimer_jeu(ludotheque)`. Elle demande le titre. Si le jeu est présent, elle retire la clé (avec `del` ou `pop`) et renvoie `True`. Sinon, elle affiche `Jeu introuvable.` et renvoie `False`.
 
       La première suppression d'`Elden Ring` renvoie `True`. La seconde renvoie `False`. Zelda est toujours là.
 
@@ -588,7 +588,7 @@ Statut : possédé
     ```
     </CodeDepart>
     <Enonce>
-      Écrire `afficher_collection(ludotheque)`. Elle appelle `afficher_jeu` pour chaque titre, avec une ligne vide entre deux fiches. Collection vide : `La collection est vide.`
+      Écrire `afficher_collection(ludotheque)`. Elle appelle `afficher_jeu` pour chaque titre, avec une ligne vide entre deux fiches. Si la collection est vide, elle affiche `La collection est vide.`
 
       Écrire `menu_principal(ludotheque)`, qui boucle jusqu'au choix `6`.
 
@@ -605,7 +605,7 @@ Statut : possédé
       6. Quitter
       ```
 
-      Un choix hors de 1 à 6 affiche `Choix invalide.` Remplacer `Votre Nom` par le vôtre.
+      Un choix hors de 1 à 6 affiche `Choix invalide.` Remplacer `Votre Nom` par son propre nom.
 
       Le scénario à laisser dans le fichier, avant le menu ou derrière un commentaire à enlever le jour du rendu :
 
@@ -613,9 +613,9 @@ Statut : possédé
       2. Afficher Celeste.
       3. Passer son statut à `souhaité`, puis réafficher.
       4. Supprimer Elden Ring.
-      5. Afficher toute la collection : Zelda puis Celeste. Elden Ring n'apparaît plus.
-      6. Supprimer Elden Ring une seconde fois : `Jeu introuvable.`
-      7. Chercher `celeste` en minuscules : `Jeu introuvable.`
+      5. Afficher toute la collection : Zelda, puis Celeste. Elden Ring n'apparaît plus.
+      6. Supprimer Elden Ring une seconde fois, ce qui affiche `Jeu introuvable.`
+      7. Chercher `celeste` en minuscules, ce qui affiche aussi `Jeu introuvable.`
 
     <Correction>
     ```python
@@ -691,7 +691,7 @@ Statut : possédé
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `ludotheque.py` : commentaire d'en-tête avec le nom et la classe, la collection de départ, les fonctions, le menu, et le scénario Celeste / Elden Ring qu'on peut relire dans le fichier.
+**Travail à rendre.** Il faut rendre un fichier `ludotheque.py` qui contient un commentaire d'en-tête avec le nom et la classe, la collection de départ, les fonctions, le menu et le scénario Celeste / Elden Ring.
 
 ## 5. Pour aller plus loin
 

@@ -493,7 +493,7 @@ On ne sait pas d'avance combien de tours faire : c'est le travail de `while`, qu
 </Indice>
 <Indice>
 
-Garder le capital de départ dans une variable et faire évoluer une autre variable `capital` ; la boucle continue tant que `capital` est sous le double du départ.
+Garder le capital de départ dans une variable et faire évoluer une autre variable `capital`. La boucle continue tant que `capital` est sous le double du départ.
 
 </Indice>
 <Indice>
@@ -867,7 +867,7 @@ assert lignes == [" " * (5 - i) + "*" * (2 * i - 1) for i in range(1, 6)], "Pour
 <Enonce>
 ### Suite de Syracuse
 
-Partant d'un entier `n` supérieur à 0, la suite de Syracuse applique la règle : si `n` est pair, le diviser par 2 ; sinon, le remplacer par `3n + 1`. On s'arrête en atteignant 1.
+Partant d'un entier `n` supérieur à 0, la suite de Syracuse applique la règle : si `n` est pair, on le divise par 2, sinon on le remplace par `3n + 1`. On s'arrête en atteignant 1.
 
 Demander `n` et calculer :
 - `etapes` : le nombre de transformations pour arriver à 1 ;
@@ -876,7 +876,7 @@ Demander `n` et calculer :
 <Indices>
 <Indice>
 
-Une boucle `while n != 1` applique la règle ; un `if` choisit entre les deux transformations.
+Une boucle `while n != 1` applique la règle, et un `if` choisit entre les deux transformations.
 
 </Indice>
 <Indice>
@@ -1159,7 +1159,7 @@ assert autre["proposition"] == 1 and autre["essais"] == 6, "Pour 1 : 6 essais."
 
 Demander un entier positif ou nul et ranger dans `binaire` son écriture en base 2, sous forme de texte (par exemple `"1101"` pour 13).
 
-Méthode : diviser le nombre par 2 tant qu'il n'est pas nul ; les restes successifs, lus **du dernier au premier**, forment l'écriture binaire.
+Méthode : diviser le nombre par 2 tant qu'il n'est pas nul. Les restes successifs, lus **du dernier au premier**, forment l'écriture binaire.
 
 Contrainte : sans la fonction `bin`.
 
@@ -1237,7 +1237,7 @@ Contrainte : parcourir la phrase caractère par caractère, sans `split`.
 <Indices>
 <Indice>
 
-Construire le mot en cours lettre par lettre ; une espace marque la fin d'un mot.
+Construire le mot en cours lettre par lettre. Une espace marque la fin d'un mot.
 
 </Indice>
 <Indice>
@@ -1307,7 +1307,7 @@ assert "split" not in PROGRAMME, "Sans split."
 <Enonce>
 ### Mastermind
 
-**Contexte.** Le club de jeux du lycée veut une version du Mastermind à jouer seul sur ordinateur, avec des chiffres à la place des pions de couleur. L'ordinateur choisit un code secret ; le joueur propose des codes et, à chaque essai, l'ordinateur lui indique combien de chiffres sont à la bonne place et combien sont présents mais mal placés. Le joueur a 10 essais pour trouver.
+**Contexte.** Le club de jeux du lycée veut une version du Mastermind à jouer seul sur ordinateur, avec des chiffres à la place des pions de couleur. L'ordinateur choisit un code secret. Le joueur propose ensuite des codes et, à chaque essai, l'ordinateur lui indique combien de chiffres sont à la bonne place et combien sont présents mais mal placés. Le joueur a 10 essais pour trouver.
 
 **Règles du jeu**
 - Le code secret est formé de **4 chiffres de 1 à 6** (un même chiffre peut revenir). Il est tiré avec quatre appels à `random.randint(1, 6)`, après `import random`, et rangé sous forme de texte, par exemple `"1523"`.
@@ -1324,7 +1324,7 @@ assert "split" not in PROGRAMME, "Sans split."
 <Indices>
 <Indice>
 
-Découper : tirage du secret, puis une boucle de jeu ; dans la boucle, lecture et validation de la saisie, puis calcul des bien placés, puis des mal placés.
+Découper le programme en deux parties : le tirage du secret, puis une boucle de jeu. Dans la boucle, lire et valider la saisie, puis calculer les chiffres bien placés et enfin les mal placés.
 
 </Indice>
 <Indice>
@@ -1439,10 +1439,10 @@ Exemple de saisie : `12:30`, `11:45`, `13:02`, `10:59`, `10:50`, `fin`.
 - `meilleur` : le temps du vainqueur, au format `"mm:ss"`.
 - `moyenne` : le temps moyen des coureurs, arrondi à la seconde, au format `"mm:ss"`, pour comparer d'une année sur l'autre.
 - `podium` : les trois meilleurs temps, du meilleur au moins bon, séparés par ` / ` (moins de trois s'il y a moins de coureurs), affiché sur le panneau des résultats.
-- `progression` : la plus longue suite de temps **consécutifs** (dans l'ordre de saisie) qui s'améliorent à chaque fois ; un seul temps forme une suite de longueur 1. Le professeur s'en sert pour commenter la course.
+- `progression` : la plus longue suite de temps **consécutifs** (dans l'ordre de saisie) qui s'améliorent à chaque fois. Un seul temps forme une suite de longueur 1. Cette valeur sert à commenter la course.
 - Si aucun temps n'est valide, le programme affiche `aucun temps` (et `nb` vaut 0).
 
-Avec l'exemple : `nb = 5`, `meilleur = "10:50"`, `moyenne = "11:49"`, `podium = "10:50 / 10:59 / 11:45"` et `progression = 3`.
+Dans l'exemple, on obtient `nb = 5`, `meilleur = "10:50"`, `moyenne = "11:49"`, `podium = "10:50 / 10:59 / 11:45"` et `progression = 3`.
 
 <Indices>
 <Indice>

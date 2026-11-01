@@ -13,13 +13,13 @@ audience: public
 
 # La récursivité
 
-Une fonction est **récursive** lorsqu'elle s'appelle elle-même. On s'en sert quand un problème se décompose en un problème de la même forme, plus petit. La factorielle, le parcours d'un arbre, les tours de Hanoï : à chaque fois, la question sur $n$ se ramène à la même question sur $n - 1$, ou sur une partie de la structure. Sans une condition qui arrête les appels, la fonction ne revient jamais.
+Une fonction est **récursive** lorsqu'elle s'appelle elle-même. On s'en sert quand un problème se décompose en un problème de la même forme, plus petit. C'est le cas de la factorielle, du parcours d'un arbre ou des tours de Hanoï : à chaque fois, la question posée pour $n$ se ramène à la même question pour $n - 1$, ou pour une partie de la structure. Sans une condition qui arrête les appels, la fonction ne s'arrêterait jamais.
 
-## Deux morceaux, pas un
+## Cas de base et appel récursif
 
-Il faut un **cas de base** et un **appel récursif**. Le cas de base est la situation assez simple pour répondre sans se rappeler. L'appel récursif doit rapprocher les arguments de ce cas. Si les arguments ne diminuent pas, ou si le cas de base est inatteignable, les appels s'empilent jusqu'à l'erreur.
+Une fonction récursive comporte un **cas de base** et un **appel récursif**. Le cas de base est une situation assez simple pour donner la réponse sans nouvel appel. L'appel récursif doit rapprocher les arguments de ce cas. Si les arguments ne diminuent pas, ou si le cas de base ne peut jamais être atteint, les appels s'accumulent jusqu'à provoquer une erreur.
 
-La factorielle de $n$, notée $n!$, est le produit des entiers de 1 à $n$. On convient que $0! = 1$, et que $n! = n \times (n-1)!$ dès que $n > 0$. La première ligne est le cas de base. La seconde est l'appel.
+La factorielle de $n$, notée $n!$, est le produit des entiers de 1 à $n$. On convient que $0! = 1$, et que $n! = n \times (n-1)!$ dès que $n > 0$. La première égalité est le cas de base, et la seconde donne l'appel récursif.
 
 ```python
 def factorielle(n):
@@ -31,11 +31,11 @@ def factorielle(n):
         return n * factorielle(n - 1)
 ```
 
-`factorielle(3)` ne sait pas encore multiplier. Elle demande `factorielle(2)`, qui demande `factorielle(1)`, qui demande `factorielle(0)`. C'est seulement là qu'une fonction répond `1`, sans appel supplémentaire. Les autres reprennent alors leur multiplication, de l'intérieur vers l'extérieur.
+`factorielle(3)` ne peut pas encore faire sa multiplication : elle a besoin de `factorielle(2)`, qui a besoin de `factorielle(1)`, qui a elle-même besoin de `factorielle(0)`. C'est seulement à ce moment qu'un appel renvoie `1` sans faire de nouvel appel. Les autres appels terminent alors leur multiplication, du plus récent au plus ancien.
 
 ## La pile d'appels
 
-L'interpréteur range les appels en cours dans une **pile**. Chaque appel est une assiette : les paramètres, l'endroit où il faudra reprendre. On empile à l'appel, on dépile au `return`.
+L'interpréteur range les appels en cours dans une **pile**. Chaque élément de la pile contient les paramètres d'un appel et l'endroit où il faudra reprendre. Un élément est empilé à chaque appel, puis dépilé au `return`.
 
 Pour `factorielle(3)` :
 
@@ -47,7 +47,7 @@ Pour `factorielle(3)` :
 6. Reprise de `factorielle(2)` : calcule `2 * 1 = 2`, donc on dépile
 7. Reprise de `factorielle(3)` : calcule `3 * 2 = 6`, donc on dépile
 
-Le résultat est 6. Au plus fort de l'exécution, quatre appels étaient en attente les uns sur les autres. Ce n'est pas « la fonction qui tourne en même temps qu'elle-même » : ce sont quatre contextes distincts, chacun avec son propre `n`.
+Le résultat est 6. Au maximum, quatre appels sont en attente en même temps. Il ne s'agit pas d'une fonction qui s'exécuterait plusieurs fois en parallèle, mais de quatre contextes distincts, qui ont chacun leur propre valeur de `n`.
 
 <CallStackVisualizer />
 
@@ -55,11 +55,11 @@ Si le cas de base manque, ou si la profondeur dépasse la limite de l'interprét
 
 ## Récursif et itératif
 
-Une récursion peut se réécrire avec une boucle. Quand les appels ne sont pas de simples appels en dernière ligne, la boucle doit gérer elle-même une pile : c'est ce que l'interpréteur faisait tout seul. Dans l'autre sens, une boucle peut se reformuler par un appel récursif. Les deux écrivent le même calcul. Ils ne coûtent pas la même mémoire.
+Une récursion peut se réécrire avec une boucle. Quand l'appel récursif n'est pas la dernière instruction de la fonction, la boucle doit alors gérer elle-même une pile, comme le faisait l'interpréteur. Inversement, une boucle peut toujours s'écrire sous forme récursive. Les deux versions effectuent le même calcul, mais elles n'utilisent pas la même quantité de mémoire.
 
-La version itérative de la factorielle garde un accumulateur et n'empile rien. Elle est souvent plus économe. La version récursive est souvent plus courte à écrire quand la structure est déjà un arbre, un graphe, ou un découpage comme les tours de Hanoï : le cas de base et l'appel collent à la définition du problème.
+La version itérative de la factorielle garde un accumulateur et n'empile rien. Elle est souvent plus économe. La version récursive est souvent plus courte à écrire quand la structure est déjà un arbre, un graphe, ou un découpage comme les tours de Hanoï , car le cas de base et l'appel récursif suivent directement la définition du problème.
 
-En résumé, une fonction récursive s'appelle elle-même, avec un cas de base qui arrête, et des arguments qui s'en rapprochent. Chaque appel attend sur la pile jusqu'au `return`. Oublier le cas de base, ou descendre trop profond, lève `RecursionError`. On choisit la récursion quand elle rend le problème lisible, et la boucle quand l'empilement n'apporte rien.
+En résumé, une fonction récursive s'appelle elle-même. Elle a besoin d'un cas de base qui arrête les appels, et ses arguments doivent se rapprocher de ce cas. Chaque appel reste sur la pile jusqu'à son `return`. Oublier le cas de base, ou faire trop d'appels imbriqués, lève une `RecursionError`. On choisit la récursion quand elle rend le problème plus lisible, et une boucle quand l'empilement des appels n'apporte rien.
 
 <ExerciseTabs courseId="terminale_recursivite" courseTitle="Exercices Récursivité">
 
@@ -130,9 +130,9 @@ En résumé, une fonction récursive s'appelle elle-même, avec un cas de base q
     Écrire une fonction récursive `est_palindrome(mot)` qui renvoie `True` ou `False`.
     
     **Principe :**
-    *   Si le mot a 0 ou 1 lettre -> C'est un palindrome (Base).
-    *   Si la première et la dernière lettre sont différentes -> Faux.
-    *   Sinon -> On teste le sous-mot sans la première ni la dernière lettre.
+    *   Si le mot a 0 ou 1 lettre, c'est un palindrome (cas de base).
+    *   Si la première et la dernière lettre sont différentes, ce n'est pas un palindrome.
+    *   Sinon, on teste le sous-mot obtenu en retirant la première et la dernière lettre.
 
     <Correction>
     ```python

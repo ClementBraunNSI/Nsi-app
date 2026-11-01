@@ -20,14 +20,14 @@ Le but de ce projet est de créer la page web de son tableau pour la chasse aux 
 Ce projet consiste à remplir la maquette HTML, retirer les bordures de repérage, puis choisir le fond, la couleur du texte et la police.
 
 **Ressources :**
-- [Notice sur HTML](Cours_html.md) : titres, paragraphes, listes, images.
-- [Code fourni](ressources_chasse_renarts.md) : `index.html` à remplir, et `style.css` pour tout le style.
+- [Notice sur HTML](Cours_html.md) : les titres, les paragraphes, les listes et les images.
+- [Code fourni](ressources_chasse_renarts.md) : le fichier `index.html` à remplir et la feuille `style.css`, qui contient tout le style.
 
 Les images du site vont dans un dossier `images`. Le nom dans `src` doit être exactement celui du fichier.
 
 ## 1. Remplir la maquette <Icone nom="image" />
 
-Voilà la maquette ouverte dans le navigateur. Chaque bloc de couleur est une `div` : une division de la page. La feuille de style ne se modifie pas pendant cette étape.
+Voici la maquette ouverte dans le navigateur. Chaque bloc de couleur est une `div`, c'est-à-dire une division de la page. La feuille de style ne se modifie pas pendant cette étape.
 
 ![base](/content/1/maquette_base.png)
 
@@ -57,7 +57,7 @@ Voilà la maquette ouverte dans le navigateur. Chaque bloc de couleur est une `d
 
       ![base](/content/1/etape_1.png)
 
-      Avant la suite : le titre est un `h1`, les deux images s'affichent, les `src` correspondent aux fichiers du dossier `images`, les descriptions sont des `p`, les caractéristiques sont une liste.
+      Avant de passer à la suite, vérifier que le titre est un `h1`, que les deux images s'affichent et que les `src` correspondent aux fichiers du dossier `images`. Les descriptions doivent être des `p`, et les caractéristiques une liste.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -85,14 +85,14 @@ Voici un exemple de liste, à réécrire à partir de son propre tableau. On ne 
 }
 ```
 
-Les bordures colorées servaient à voir les zones. Le contenu est placé : on les retire pour un rendu plus propre.
+Les bordures colorées servaient à repérer les zones. Maintenant que le contenu est en place, on les retire pour obtenir un rendu plus propre.
 
 ```css
 border: solid;
 border-color: red;
 ```
 
-Variantes à reconnaître aussi : `border: 2px solid black;`, `border-width`, `border-style`, `border-color`.
+Il faut aussi reconnaître les variantes suivantes : `border: 2px solid black;`, `border-width`, `border-style`, `border-color`.
 
 <ExerciseTabs courseId="snt_chasse_renarts_css" courseTitle="Bordures">
   <ExerciseSection id="chasse-fr-2" label="border" type="lecture">
@@ -142,7 +142,7 @@ Variantes à reconnaître aussi : `border: 2px solid black;`, `border-width`, `b
   </ExerciseSection>
 </ExerciseTabs>
 
-## 3. Fond, texte, police <Icone nom="palette" />
+## 3. Fond, couleur du texte et police <Icone nom="palette" />
 
 La classe `container` contient toute la page. La modifier change presque tout le site. Si elle apparaît deux fois, compléter celle qui contient déjà `display: flex;`.
 
@@ -182,18 +182,18 @@ La classe `container` contient toute la page. La modifier change presque tout le
       }
       ```
 
-      *Attention : le texte reste lisible, le fond ne cache pas les images du tableau, les couleurs vont ensemble, les images sont toujours dans `images`.*
+      *Attention : le texte doit rester lisible, le fond ne doit pas cacher les images du tableau, et les couleurs doivent aller ensemble. Les images restent dans le dossier `images`.*
 
-      Le rendu peut se rapprocher de celui-ci. La palette est la vôtre.
+      Le rendu peut se rapprocher de celui-ci, avec une palette choisie librement.
 
       ![base](/content/1/etape_3.png)
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-## 4. Ce qu'on rend <Icone nom="package" />
+## 4. Le travail à rendre <Icone nom="package" />
 
-On rend une archive du dossier entier `projet_site_eleve`, et pas seulement `index.html` : sans le dossier, les images et le CSS manquent à l'ouverture.
+Il faut rendre une archive du dossier entier `projet_site_eleve`, et pas seulement `index.html`. Sans le dossier, les images et le CSS manquent à l'ouverture de la page.
 
 Le dossier contient :
 

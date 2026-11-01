@@ -18,7 +18,7 @@ audience: public
 - 30 à 40 minutes par sujet.
 - Deux parties :
   1. lecture / compréhension de code ;
-  2. fonction à compléter + tests.
+  2. une fonction à compléter, avec des tests.
 
 ## 2. Sujet type A - Récursivité
 
@@ -30,7 +30,7 @@ audience: public
 
 - Expliquer une insertion.
 - Compléter `recherche_abr`.
-- Tester cas normal + cas limite.
+- Tester un cas normal et un cas limite.
 
 ## 4. Sujet type C - Graphes
 

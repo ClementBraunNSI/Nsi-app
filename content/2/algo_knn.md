@@ -67,7 +67,7 @@ Des données décrivent des fruits, caractérisés par leur **douceur** (1 à 10
 ### Contexte
 
 KNN s'applique ici à un ensemble simplifié de fleurs Iris, caractérisées par la longueur de leurs sépales et pétales.
-Types : **Setosa** et **Versicolor**.
+Ces fleurs sont de deux types : **Setosa** et **Versicolor**.
 
 **Données d'entraînement :**
 
@@ -92,8 +92,7 @@ Types : **Setosa** et **Versicolor**.
 
 ### Contexte
 
-Système simplifié de détection de spam.
-Mesures : **Nombre de mots clés suspects** et **Longueur de l'email** (échelle 1-10).
+Il s'agit d'un système simplifié de détection de spam, qui utilise deux mesures : le **nombre de mots clés suspects** et la **longueur de l'email** (sur une échelle de 1 à 10).
 
 **Données :**
 

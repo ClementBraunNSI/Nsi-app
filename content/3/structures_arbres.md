@@ -13,13 +13,13 @@ audience: public
 
 # Structures d'arbres
 
-Une liste range des éléments à la suite. Un **arbre** les range en niveaux : chaque élément a un parent, sauf un, et peut avoir des enfants. Les systèmes de fichiers, le DOM d'une page HTML, l'analyse d'une expression : ce sont des arbres. On ne parle plus d'indice « le troisième », on parle de qui descend de qui.
+Une liste range des éléments les uns à la suite des autres. Un **arbre**, lui, les organise en niveaux : chaque élément a un parent, sauf un seul, et peut avoir des enfants. Les systèmes de fichiers, le DOM d'une page HTML ou l'analyse d'une expression sont des exemples d'arbres. On ne repère plus un élément par son indice, mais par sa position dans la hiérarchie.
 
 ## Le vocabulaire
 
 Un arbre est un ensemble de **nœuds** reliés par des arêtes, sans cycle, avec un nœud distingué. La **racine** est ce nœud du haut, le seul qui n'a pas de parent. Une **feuille** n'a pas d'enfant. Un **nœud interne** en a au moins un. La **taille** est le nombre de nœuds.
 
-La **hauteur** demande qu'on fixe une convention, parce que les énoncés ne s'accordent pas. Compter les **arêtes** du plus long chemin de la racine à une feuille donne une hauteur 0 à une racine seule. C'est la convention la plus fréquente en NSI. Les exercices de cette page comptent autrement : 0 pour l'arbre vide, 1 pour une racine seule, c'est-à-dire le nombre de nœuds sur le plus long chemin. On le précise ici pour que la fonction écrite réponde à l'énoncé, et pour savoir traduire si un autre cours annonce 0.
+Pour la **hauteur**, il faut choisir une convention, car les énoncés ne s'accordent pas tous. Si l'on compte les **arêtes** du plus long chemin entre la racine et une feuille, une racine seule a une hauteur de 0 : c'est la convention la plus fréquente en NSI. Les exercices de cette page comptent cependant autrement, en donnant une hauteur de 0 à l'arbre vide et de 1 à une racine seule, c'est-à-dire en comptant le nombre de nœuds sur le plus long chemin. Il faut donc toujours vérifier la convention de l'énoncé.
 
 ```
 / (Racine)
@@ -31,11 +31,11 @@ La **hauteur** demande qu'on fixe une convention, parce que les énoncés ne s'a
     └── log (Feuille)
 ```
 
-`images` et `log` sont des feuilles. `user` est interne : il a des enfants. `/` est la racine. La taille compte tout le monde, pas seulement les fichiers.
+`images` et `log` sont des feuilles. `user` est interne : il a des enfants. `/` est la racine. La taille compte tous les nœuds, et pas seulement les fichiers.
 
-## Au plus deux enfants
+## Les arbres binaires
 
-Un **arbre binaire** est un arbre dont chaque nœud a **au plus deux** enfants, distingués : un sous-arbre **gauche** et un sous-arbre **droit**. Un enfant unique n'est pas « un enfant » : il est à gauche ou à droite, et l'autre côté vaut `None`. L'ordre des côtés fait partie de la structure. L'échange des deux enfants produit un autre arbre.
+Un **arbre binaire** est un arbre dont chaque nœud a **au plus deux** enfants, distingués : un sous-arbre **gauche** et un sous-arbre **droit**. Un enfant unique est donc soit à gauche, soit à droite, et l'autre côté vaut `None`. L'ordre des côtés fait partie de la structure : échanger les deux enfants donne un autre arbre.
 
 ```python
 class Noeud:
@@ -54,21 +54,21 @@ racine.gauche = Noeud("B")
 racine.droit = Noeud("C")
 ```
 
-`gauche` et `droit` sont eux-mêmes des nœuds, ou `None` si le côté est vide. Un arbre, dans ce codage, c'est simplement une référence vers sa racine. L'arbre vide, c'est `None`.
+`gauche` et `droit` sont eux-mêmes des nœuds, ou `None` si le côté est vide. Dans ce codage, un arbre est simplement une référence vers sa racine, et l'arbre vide est représenté par `None`.
 
 <TreeVisualizer />
 
-## Visiter tous les nœuds
+## Les parcours d'arbres
 
-Un **parcours en profondeur** suit une branche jusqu'à la feuille, puis remonte pour prendre la branche voisine. On le programme naturellement par récursivité : traiter un nœud, c'est s'occuper de ses sous-arbres. Selon le moment où l'on traite la racine du sous-arbre, on obtient trois ordres.
+Un **parcours en profondeur** suit une branche jusqu'à la feuille, puis remonte pour prendre la branche voisine. On le programme naturellement de façon récursive, puisque traiter un nœud revient à traiter ses sous-arbres. Selon le moment où l'on traite la racine du sous-arbre, on obtient trois ordres.
 
-Le parcours **préfixe** traite la racine, puis le gauche, puis le droit. Il sert à recopier un arbre : on connaît le parent avant les enfants.
+Le parcours **préfixe** traite la racine, puis le gauche, puis le droit. Il sert par exemple à recopier un arbre, puisque le parent est traité avant ses enfants.
 
-Le parcours **infixe** traite le gauche, puis la racine, puis le droit. Sur un arbre binaire de recherche, cet ordre donne les valeurs triées. C'est le parcours que l'on ressortira au chapitre suivant.
+Le parcours **infixe** traite le gauche, puis la racine, puis le droit. Sur un arbre binaire de recherche, cet ordre donne les valeurs triées. Ce parcours sera utilisé dans le chapitre suivant.
 
-Le parcours **postfixe** traite le gauche, le droit, puis la racine. On supprime un arbre dans cet ordre, enfants avant le parent, sinon on perdrait les liens. On évalue aussi ainsi une expression écrite en notation postfixée, comme `3 4 +` : les opérandes d'abord, l'opérateur quand ses deux résultats sont prêts.
+Le parcours **postfixe** traite le gauche, le droit, puis la racine. On supprime un arbre dans cet ordre, en traitant les enfants avant le parent pour ne pas perdre les liens. C'est aussi l'ordre utilisé pour évaluer une expression en notation postfixée, comme `3 4 +` : les opérandes sont traités d'abord, puis l'opérateur, une fois ses deux opérandes connus.
 
-Un **parcours en largeur** visite niveau par niveau : la racine, puis ses enfants, puis les petits-enfants. La récursion ne donne pas cet ordre toute seule. On utilise une **file**. On enfile la racine. Tant que la file n'est pas vide, on défile un nœud, on le traite, et l'on enfile ses enfants. La file garantit qu'un niveau entier est vu avant le niveau d'en dessous.
+Un **parcours en largeur** visite l'arbre niveau par niveau : la racine, puis ses enfants, puis ses petits-enfants. La récursivité ne permet pas d'obtenir directement cet ordre : on utilise donc une **file**. On enfile d'abord la racine, puis, tant que la file n'est pas vide, on défile un nœud, on le traite et on enfile ses enfants. La file garantit qu'un niveau entier est visité avant le niveau suivant.
 
 <ExerciseTabs courseId="terminale_arbres" courseTitle="Exercices Arbres">
 

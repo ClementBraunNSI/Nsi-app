@@ -141,7 +141,7 @@ assert not reseau.has_edge("Alice", "Charlie"), "Alice et Charlie ne sont pas am
     <Enonce>
       ### Introduction <Renards n="1" /> - Nombre d'amis
 
-      Le **degré** d'un sommet = son nombre d'amis dans le réseau.
+      Le **degré** d'un sommet est son nombre d'amis dans le réseau.
 
       **Mission :** À partir du graphe fourni, stocker le nombre d'amis de **Bob** dans `amis_bob`.
 

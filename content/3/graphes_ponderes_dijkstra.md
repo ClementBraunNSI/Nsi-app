@@ -13,24 +13,24 @@ audience: public
 
 # Graphes pondérés et plus court chemin
 
-Dans un graphe non pondéré, le plus court chemin est celui qui traverse le moins d'arêtes. Dès qu'une arête porte un **poids** (une distance, un coût, une durée), ce n'est plus le nombre d'arêtes qui compte, c'est la **somme des poids**. Un détour par trois arêtes légères peut être meilleur qu'une arête directe très chère. On cherche alors un chemin de coût minimal.
+Dans un graphe non pondéré, le plus court chemin est celui qui traverse le moins d'arêtes. Dès qu'une arête porte un **poids** (une distance, un coût, une durée), ce n'est plus le nombre d'arêtes qui compte, mais la **somme des poids**. Un détour par trois arêtes légères peut être meilleur qu'une arête directe très chère. On cherche alors un chemin de coût minimal.
 
-On se fixe un sommet de départ. L'objectif de Dijkstra est la distance minimale de ce départ vers chacun des autres sommets, pas vers une seule cible. Les cibles se déduisent du tableau, une fois qu'il est rempli.
+On part d'un sommet donné. L'algorithme de Dijkstra calcule la distance minimale entre ce sommet et chacun des autres sommets, et non vers une seule cible. Une fois le tableau rempli, il suffit d'y lire la distance vers la cible voulue.
 
-## Valider le plus proche, puis relâcher
+## Le principe de l'algorithme
 
 L'algorithme de **Dijkstra** maintient, pour chaque sommet, une distance provisoire depuis la source. Au départ, la source est à 0 et tous les autres sont à $+\infty$ : on ne sait pas encore les atteindre. Un sommet est soit encore en attente, soit déjà **validé**.
 
-À chaque tour, on valide le sommet encore en attente dont la distance provisoire est la plus petite. Cette distance-là est définitive. On **relâche** ensuite ses arêtes : pour chaque voisin, on compare la distance déjà notée avec « distance du sommet validé + poids de l'arête ». Si le passage par le sommet qu'on vient de valider est meilleur, on met à jour la distance du voisin, et l'on retient le prédécesseur qui a permis cette mise à jour. On recommence jusqu'à ce que tous les sommets soient validés.
+À chaque tour, on valide le sommet encore en attente dont la distance provisoire est la plus petite. Sa distance est alors définitive. On **relâche** ensuite ses arêtes : pour chaque voisin, on compare la distance déjà notée avec « distance du sommet validé + poids de l'arête ». Si le passage par le sommet qu'on vient de valider est meilleur, on met à jour la distance du voisin, et l'on retient le prédécesseur qui a permis cette mise à jour. On recommence jusqu'à ce que tous les sommets soient validés.
 
-L'idée tient parce qu'on valide toujours le plus proche restant. Tout chemin qui ferait un détour par un sommet encore plus loin ne pourrait pas améliorer cette distance, **à condition que les poids soient positifs ou nuls**. Un poids négatif casserait le raisonnement : un sommet déjà validé pourrait être amélioré plus tard par une arête négative, et l'on aurait figé trop tôt. Dijkstra ne s'applique pas aux poids négatifs. D'autres algorithmes, comme Bellman-Ford, existent pour ce cas. Ils ne sont pas au programme de cette page.
+Cette méthode fonctionne parce qu'on valide toujours le sommet restant le plus proche. Tout chemin qui ferait un détour par un sommet encore plus loin ne pourrait pas améliorer cette distance, **à condition que les poids soient positifs ou nuls**. Un poids négatif rendrait ce raisonnement faux : un sommet déjà validé pourrait être amélioré plus tard grâce à une arête négative, alors que sa distance aurait été fixée trop tôt. Dijkstra ne s'applique donc pas aux graphes qui ont des poids négatifs. D'autres algorithmes, comme celui de Bellman-Ford, traitent ce cas, mais ils ne sont pas au programme.
 
 !!! warning "Condition de validité"
     Dijkstra fonctionne uniquement si les poids sont **positifs ou nuls**.
 
 ## Le graphe en dictionnaire
 
-Chaque sommet est une clé. La valeur est la liste des couples `(voisin, poids)`. Une liste vide veut dire : aucune arête sortante.
+Chaque sommet est une clé. La valeur est la liste des couples `(voisin, poids)`. Une liste vide signifie que le sommet n'a aucune arête sortante.
 
 ```python
 graphe = {
@@ -63,11 +63,11 @@ def dijkstra(graphe, source):
     return dist, pred
 ```
 
-`dist` porte les distances provisoires, puis définitives. `visites` contient les sommets déjà validés. Le `min` cherche le sommet non visité de plus petite distance : c'est l'implantation simple, en $O(n^2)$ comparaisons sur un graphe à $n$ sommets. Une file de priorité ferait mieux sur un graphe creux. Le résultat, lui, est le même. `pred[voisin] = courant` mémorise par quelle arête la meilleure distance connue a été obtenue.
+`dist` contient les distances provisoires, qui deviennent ensuite définitives. `visites` contient les sommets déjà validés. Le `min` cherche le sommet non visité de plus petite distance : c'est l'implémentation la plus simple, qui demande $O(n^2)$ comparaisons sur un graphe à $n$ sommets. Une file de priorité serait plus efficace sur un graphe qui a peu d'arêtes, mais le résultat serait le même. `pred[voisin] = courant` mémorise par quelle arête la meilleure distance connue a été obtenue.
 
-## Remonter le chemin
+## Reconstruire le chemin
 
-`dist` dit combien. `pred` dit par où. Pour reconstruire le chemin vers une cible, on part de la cible et l'on suit les prédécesseurs jusqu'à la source, dont le prédécesseur vaut `None`. On obtient le chemin à l'envers. On l'inverse. Si une distance reste infinie, le sommet n'est pas atteignable depuis la source, et la remontée n'a pas de sens.
+`dist` donne la longueur du plus court chemin, et `pred` indique par où il passe. Pour reconstruire le chemin vers une cible, on part de la cible et on suit les prédécesseurs jusqu'à la source, dont le prédécesseur vaut `None`. On obtient ainsi le chemin à l'envers, qu'il suffit d'inverser. Si une distance reste infinie, le sommet n'est pas accessible depuis la source, et il n'y a pas de chemin à reconstruire.
 
 ## Exercices
 

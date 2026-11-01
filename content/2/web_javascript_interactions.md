@@ -13,9 +13,9 @@ audience: public
 
 # Interactions Web : JavaScript
 
-Le HTML a décrit la page, le CSS l'a habillée. Rien ne se passe encore quand on clique. Le **JavaScript** est le troisième langage : il s'exécute dans le navigateur et change la page pendant qu'on la regarde. Brendan Eich l'a créé en 1995. Il est aujourd'hui le langage du comportement, côté client.
+Le HTML décrit la page et le CSS la met en forme, mais rien ne se passe encore quand on clique. Le **JavaScript**, créé par Brendan Eich en 1995, est le troisième langage du Web : il s'exécute dans le navigateur et modifie la page pendant qu'on la consulte. C'est aujourd'hui le langage qui gère le comportement des pages côté client.
 
-Le navigateur ne garde pas le HTML comme un simple texte. Il le transforme en arbre, le **DOM** (*Document Object Model*). Chaque balise devient un nœud. Un script **sélectionne** un nœud, le **modifie**, et s'**abonne** aux gestes de la personne : clic, frappe, envoi d'un formulaire.
+Le navigateur ne garde pas le HTML sous forme de texte : il le transforme en un arbre, le **DOM** (*Document Object Model*), dans lequel chaque balise devient un nœud. Un script peut **sélectionner** un nœud, le **modifier**, et **réagir** aux actions de l'utilisateur, comme un clic, une frappe au clavier ou l'envoi d'un formulaire.
 
 | Langage | Rôle |
 | --- | --- |
@@ -23,7 +23,7 @@ Le navigateur ne garde pas le HTML comme un simple texte. Il le transforme en ar
 | CSS | Apparence |
 | JavaScript | Comportement dynamique |
 
-## Une syntaxe courte
+## Les bases de la syntaxe
 
 Les blocs s'écrivent entre accolades. `let` déclare une variable qu'on pourra réaffecter. `const` déclare un nom qu'on ne réaffecte pas. Une fonction se déclare avec `function`, et `return` renvoie une valeur, comme en Python. `console.log` écrit dans la console du navigateur, pas sur la page.
 
@@ -38,18 +38,18 @@ function direBonjour(prenom) {
 console.log(direBonjour("Thomas"));
 ```
 
-`+` entre chaînes concatène. `score` pourra passer à 1. `viesMax` reste 3 : si le code tente de le réaffecter, le navigateur refuse.
+Entre deux chaînes, `+` concatène. `score` pourra ensuite passer à 1, alors que `viesMax` restera égal à 3 : si le code tente de le réaffecter, le navigateur signale une erreur.
 
-## Trouver un nœud, puis le changer
+## Sélectionner et modifier un élément
 
-`document` est la page. `getElementById` cherche l'élément dont l'`id` est celui qu'on donne. `querySelector` cherche avec un sélecteur CSS : `.btn-rouge` est une classe, `#mon-titre` serait un id.
+`document` représente la page. `getElementById` cherche l'élément qui a l'`id` indiqué, et `querySelector` cherche à partir d'un sélecteur CSS : `.btn-rouge` désigne une classe, et `#mon-titre` désignerait un id.
 
 ```javascript
 let titre = document.getElementById("mon-titre");
 let bouton = document.querySelector(".btn-rouge");
 ```
 
-Une fois le nœud en main, `textContent` remplace le texte. `style` change une propriété CSS. En JavaScript, les noms de propriétés passent en *camelCase* : `font-size` devient `fontSize`, `background-color` devient `backgroundColor`.
+Une fois l'élément sélectionné, `textContent` permet de remplacer son texte et `style` de changer une propriété CSS. En JavaScript, les noms de propriétés passent en *camelCase* : `font-size` devient `fontSize`, `background-color` devient `backgroundColor`.
 
 ```javascript
 titre.textContent = "Nouveau titre";
@@ -57,13 +57,13 @@ titre.style.color = "orange";
 titre.style.fontSize = "24px"; // camelCase : backgroundColor, etc.
 ```
 
-`innerHTML` interprète du HTML. C'est utile pour insérer une balise, et dangereux avec du texte tapé par quelqu'un : une balise `<script>` glissée dans le texte s'exécuterait. C'est une faille XSS. Quand on affiche du texte, on prend `textContent`.
+`innerHTML` interprète du HTML. C'est utile pour insérer une balise, mais dangereux avec un texte saisi par un utilisateur, car une balise `<script>` glissée dans ce texte serait exécutée : c'est une faille XSS. Pour afficher du texte, il faut donc utiliser `textContent`.
 
-Si `getElementById` ne trouve rien, il renvoie `null`. Appeler `.textContent` sur `null` plante. Cela arrive quand le script est dans le `<head>` et s'exécute avant que le `<body>` existe. On place le script en fin de `<body>`, ou l'on attend l'événement `DOMContentLoaded`. Autre confusion : le texte d'un champ de saisie se lit avec `.value`, pas avec `.textContent`.
+Si `getElementById` ne trouve rien, il renvoie `null`, et utiliser `.textContent` sur `null` provoque une erreur. Cela arrive quand le script, placé dans le `<head>`, s'exécute avant que le `<body>` existe. Il faut alors placer le script à la fin du `<body>`, ou attendre l'événement `DOMContentLoaded`. Attention aussi : le texte d'un champ de saisie se lit avec `.value`, et non avec `.textContent`.
 
-## Réagir à un geste
+## Réagir aux événements
 
-`addEventListener` abonne une fonction à un type d'événement. La fonction ne s'exécute pas tout de suite. Elle s'exécute quand l'événement arrive.
+`addEventListener` associe une fonction à un type d'événement. Cette fonction ne s'exécute pas tout de suite, mais seulement quand l'événement se produit.
 
 ```javascript
 let monBouton = document.getElementById("btn-action");
@@ -81,9 +81,9 @@ monBouton.addEventListener("click", function() {
 | `input` | Champ qui change |
 | `submit` | Envoi de formulaire |
 
-Le geste tient en trois temps : **sélectionner**, **écouter**, **réagir**. On vérifie que l'élément existe avant de lui poser un écouteur. `input` sert à suivre une saisie lettre par lettre. `submit` sert au moment où le formulaire part.
+La démarche se déroule en trois temps : **sélectionner** l'élément, **écouter** un événement, puis **réagir**. Avant d'ajouter un écouteur, il faut vérifier que l'élément existe. L'événement `input` permet de suivre une saisie lettre par lettre, et `submit` de réagir à l'envoi d'un formulaire.
 
-En résumé, JavaScript s'occupe du comportement, le DOM est l'arbre de la page. `getElementById` et `querySelector` ciblent. `textContent` et `.style` mettent à jour. `addEventListener` réagit. `.value` lit un champ. On n'utilise un nœud qu'une fois certain qu'il est là.
+En résumé, JavaScript gère le comportement de la page, et le DOM est l'arbre qui la représente. `getElementById` et `querySelector` permettent de sélectionner un élément, `textContent` et `.style` de le modifier, et `addEventListener` de réagir à un événement. `.value` lit le contenu d'un champ. Enfin, on n'utilise un élément qu'après avoir vérifié qu'il existe.
 
 ## Pour s'entraîner / Suite
 

@@ -14,7 +14,7 @@ audience: public
 Le but de ce projet est de tenir la caisse du foyer du lycée pendant la récréation.
 Ce projet consiste à servir les clients un par un, encaisser, rendre la monnaie, puis afficher le bilan. Le foyer vend trois articles.
 
-Ce projet se fait tôt dans l'année. Le programme tient dans des variables simples. Chaque information (un prix, un total, un nombre de jus) a sa propre variable.
+Ce projet se fait tôt dans l'année : le programme n'utilise que des variables simples, et chaque information (un prix, un total, un nombre de jus) a sa propre variable.
 
 ## Contraintes de programmation
 
@@ -24,7 +24,7 @@ Le correcteur ouvre le fichier et vérifie ces règles avant de lire le reste.
 
 **Instructions autorisées :** `if` / `elif` / `else`, `while`, `for`, `range`, `def`, `return`, `global`, `input`, `print`, les opérateurs arithmétiques et les comparaisons.
 
-Une chaîne est un seul texte : un choix (`"1"`), une réponse (`"oui"`), un message affiché. On peut coller deux textes avec `+`. On peut comparer deux textes avec `==`.
+Une chaîne contient un seul texte, comme un choix (`"1"`), une réponse (`"oui"`) ou un message affiché. On peut coller deux textes avec `+`. On peut comparer deux textes avec `==`.
 
 `range(n)` sert uniquement à répéter une action `n` fois. On ne le transforme pas en collection, et on ne le stocke pas.
 
@@ -225,7 +225,7 @@ Montant donné : > 10
 Monnaie : 3.00 €
 ```
 
-`servir_client()` renvoie alors `7.0` : l'argent encaissé, pas la monnaie.
+`servir_client()` renvoie alors `7.0`, c'est-à-dire l'argent encaissé, et non la monnaie rendue.
 
 Si le choix puis la quantité sont invalides, on redemande avant de parler d'argent :
 
@@ -282,8 +282,8 @@ Montant insuffisant. Vente annulée.
     <Enonce>
       Écrire `servir_client()`. Elle ne reçoit aucun paramètre. Elle parle au client avec `input` et renvoie un `float`.
 
-      - Redemander l'article tant que `est_choix_valide` est faux. Message : `Choix invalide.`
-      - Redemander la quantité tant qu'elle n'est pas un entier supérieur ou égal à 1. Message : `Quantité invalide.`
+      - Redemander l'article tant que `est_choix_valide` est faux, en affichant `Choix invalide.`
+      - Redemander la quantité tant qu'elle n'est pas un entier supérieur ou égal à 1, en affichant `Quantité invalide.`
       - Afficher `À payer : X.XX €` à partir de `montant_ligne`.
       - Lire le montant donné. S'il est insuffisant, afficher `Montant insuffisant. Vente annulée.` et renvoyer `0.0`.
       - Sinon afficher `Monnaie : X.XX €` et renvoyer le montant à payer.
@@ -363,7 +363,7 @@ Ensuite une boucle `for` va de 1 jusqu'à ce nombre. À chaque tour :
 2. si le montant renvoyé est supérieur à 0, l'ajouter à `total`, ajouter 1 à `nb_ventes`, et ajouter la quantité au compteur du bon article ;
 3. demander `Un autre client ? (oui/non) : `. Seule la réponse exacte `oui` continue. Toute autre réponse termine la journée, même s'il reste des tours possibles.
 
-On ne conserve pas le détail de chaque ticket. Seuls les cinq compteurs survivent d'un client à l'autre.
+Le détail de chaque ticket n'est pas conservé : seuls les cinq compteurs sont gardés d'un client à l'autre.
 
 <ExerciseTabs courseId="proj_caisse_journee" courseTitle="La récréation">
   <ExerciseSection id="caisse-journee-1" label="Plusieurs clients" type="python">
@@ -436,7 +436,7 @@ On ne conserve pas le détail de chaque ticket. Seuls les cinq compteurs survive
       5. Après chaque client réellement appelé, lire `Un autre client ? (oui/non) : `. Si la réponse n'est pas exactement `oui`, sortir de la journée.
 
       Les fonctions des étapes précédentes sont déjà dans l'éditeur.
-      Rejouer l'exemple du bilan : 2 sandwiches payés 10 €, puis 1 jus payé 1,20 €, puis arrêt. Une troisième vente annulée ne compte pas. Le total vaut `8.2`, `nb_ventes` vaut 2, `nb_sandwiches` vaut 2, `nb_jus` vaut 1.
+      Rejouer l'exemple du bilan : 2 sandwiches payés avec 10 €, puis 1 jus payé avec 1,20 €, puis arrêt de la journée. Une troisième vente annulée ne compte pas. Le total vaut `8.2`, `nb_ventes` vaut 2, `nb_sandwiches` vaut 2, `nb_jus` vaut 1.
 
     <Correction>
     ```python
@@ -482,7 +482,7 @@ On ne conserve pas le détail de chaque ticket. Seuls les cinq compteurs survive
 
 ## 5. Le bilan <Icone nom="chart-column" />
 
-Deux ventes encaissées : 2 sandwiches (7,00 €) puis 1 jus (1,20 €).
+Dans cet exemple, deux ventes ont été encaissées : 2 sandwiches (7,00 €) puis 1 jus (1,20 €).
 
 ```text
 --- Bilan de la récré ---
@@ -497,7 +497,7 @@ Le plus vendu : sandwich (2)
 
 Le ticket moyen est `total / nb_ventes`. S'il n'y a eu aucune vente, on affiche `Aucune vente.` et on ne fait pas la division.
 
-Messages du plus vendu :
+Le message sur l'article le plus vendu dépend des compteurs :
 
 - un article strictement devant : `Le plus vendu : sandwich (2)`
 - deux articles à égalité devant le troisième : `Égalité : jus et cookie (3 chacun)`
@@ -514,7 +514,7 @@ Les trois nombres se comparent avec des `if`. On n'assemble pas les noms dans un
       - Sinon afficher le bloc `--- Bilan de la récré ---`, le total et le ticket moyen avec deux décimales, puis les trois compteurs.
       - Comparer `nb_jus`, `nb_cookies` et `nb_sandwiches` pour produire l'un des trois messages.
 
-      Test d'égalité : 3 jus, 3 cookies, 1 sandwich affiche `Égalité : jus et cookie (3 chacun)`.
+      Pour tester l'égalité, 3 jus, 3 cookies et 1 sandwich doivent afficher `Égalité : jus et cookie (3 chacun)`.
 
     <Correction>
     ```python
@@ -572,7 +572,7 @@ Les trois nombres se comparent avec des `if`. On n'assemble pas les noms dans un
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un seul fichier `caisse_foyer.py` :
+**Travail à rendre.** Il faut rendre un seul fichier `caisse_foyer.py`, qui contient :
 
 - en tête, un commentaire avec son nom et la classe ;
 - les sept fonctions, avec ces noms-là ;

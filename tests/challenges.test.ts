@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 import fs from "fs";
 import path from "path";
 import {
+  allExercisesPassed,
   CHALLENGE_ACHIEVEMENTS,
   CHALLENGE_TEMPLATE,
+  challengeDeadline,
   challengeStreak,
   earnedChallengeAchievements,
   nextMonday,
@@ -41,6 +43,24 @@ describe("challenge streak", () => {
     for (const achievement of CHALLENGE_ACHIEVEMENTS) {
       expect(fs.existsSync(path.join(process.cwd(), "public", achievement.image)), achievement.image).toBe(true);
     }
+  });
+});
+
+describe("challenge timer and exercises", () => {
+  it("counts the time limit from the moment the page was opened", () => {
+    expect(challengeDeadline("2026-11-02T08:00:00.000Z", 15)).toBe(Date.parse("2026-11-02T08:15:00.000Z"));
+  });
+
+  it("has no deadline without a limit or before the timer starts", () => {
+    expect(challengeDeadline("2026-11-02T08:00:00.000Z", null)).toBeNull();
+    expect(challengeDeadline(null, 15)).toBeNull();
+  });
+
+  it("is passed only when every exercise is passed", () => {
+    const ids = ["moyenne", "mention"];
+    expect(allExercisesPassed(ids, { moyenne: { code: "", passed: true, attempts: 1 } })).toBe(false);
+    expect(allExercisesPassed(ids, { moyenne: { code: "", passed: true, attempts: 1 }, mention: { code: "", passed: true, attempts: 3 } })).toBe(true);
+    expect(allExercisesPassed([], {})).toBe(false);
   });
 });
 

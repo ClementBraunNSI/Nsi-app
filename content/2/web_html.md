@@ -11,13 +11,13 @@ audience: public
 
 # Le langage HTML
 
-Une page web n'est pas un dessin. C'est un texte balisé, que le navigateur interprète. Le **HTML** (*HyperText Markup Language*) décrit la **structure** et le **sens** du contenu : ceci est un titre, ceci un paragraphe, ceci un lien. Il ne dit pas la couleur, et il ne réagit pas au clic. C'est le CSS qui donnera la couleur, et le JavaScript qui réagira au clic. Mélanger les trois rôles, c'est ce qui rend une page impossible à maintenir.
+Une page web est un texte balisé, que le navigateur interprète. Le **HTML** (*HyperText Markup Language*) décrit la **structure** et le **sens** du contenu, en indiquant par exemple ce qui est un titre, un paragraphe ou un lien. Il ne fixe pas les couleurs et ne réagit pas aux clics : ce sont les rôles du CSS et du JavaScript. Mélanger ces trois rôles rend une page très difficile à maintenir.
 
 ## Le squelette d'un document
 
 <HtmlStructureExplorer />
 
-Un document HTML5 commence par `<!DOCTYPE html>`, qui dit au navigateur quelle grammaire lire. Puis `<html>` enveloppe deux parties. `<head>` porte les métadonnées : le titre de l'onglet, l'encodage, le lien vers la feuille de style. Rien de ce qui est dans `<head>` n'est le contenu de la page. `<body>` est ce que la personne voit.
+Un document HTML5 commence par `<!DOCTYPE html>`, qui indique au navigateur quelle version du langage lire. La balise `<html>` contient ensuite deux parties. `<head>` regroupe les métadonnées, comme le titre de l'onglet, l'encodage ou le lien vers la feuille de style, mais rien de ce qui s'affiche dans la page. `<body>` contient ce que voit la personne devant l'écran.
 
 ```html
 <!DOCTYPE html>
@@ -53,11 +53,11 @@ Un document HTML5 commence par `<!DOCTYPE html>`, qui dit au navigateur quelle g
 </html>
 ```
 
-`charset="UTF-8"` évite les accents cassés. `viewport` dit au téléphone de ne pas afficher la page comme un bureau miniature. `lang="fr"` indique la langue, utile aux lecteurs d'écran.
+`charset="UTF-8"` évite les accents cassés. `viewport` demande au téléphone de ne pas afficher la page comme un écran d'ordinateur en miniature. `lang="fr"` indique la langue, utile aux lecteurs d'écran.
 
-## Des balises qui veulent dire quelque chose
+## Les balises sémantiques
 
-On pourrait tout mettre dans des `<div>`. Le navigateur afficherait quand même. Mais une balise **sémantique** dit le rôle de la zone. `<header>`, `<main>` et `<footer>` découpent la page. `<nav>` est la navigation. `<section>` et `<article>` sont des blocs de contenu. Un lecteur d'écran, et un moteur de recherche, s'appuient sur ces noms. Une `<div>` ne dit rien.
+On pourrait tout mettre dans des `<div>`, et le navigateur afficherait quand même la page. Mais une balise **sémantique** indique le rôle de la zone qu'elle contient. `<header>`, `<main>` et `<footer>` découpent la page, `<nav>` contient la navigation, et `<section>` et `<article>` délimitent des blocs de contenu. Les lecteurs d'écran et les moteurs de recherche s'appuient sur ces balises, alors qu'une `<div>` n'indique aucun rôle.
 
 | Balise | Rôle |
 | --- | --- |
@@ -65,9 +65,9 @@ On pourrait tout mettre dans des `<div>`. Le navigateur afficherait quand même.
 | `<nav>` | Navigation |
 | `<section>`, `<article>` | Blocs de contenu |
 
-Les titres vont de `<h1>` à `<h6>`. On n'en saute pas les niveaux pour « faire plus petit » : la taille, c'est le CSS. En général, une page a un seul `<h1>`. `<p>` est un paragraphe. `<strong>` marque une importance, que le navigateur rend souvent en gras. `<em>` marque une emphase, souvent en italique. Gras et italique sont l'apparence. L'importance et l'emphase sont le sens.
+Les titres vont de `<h1>` à `<h6>`. Il ne faut pas sauter de niveau pour obtenir un titre plus petit, car la taille dépend du CSS. En général, une page a un seul `<h1>`. `<p>` est un paragraphe. `<strong>` marque une importance, que le navigateur rend souvent en gras. `<em>` marque une emphase, souvent en italique. Le gras et l'italique relèvent de l'apparence, alors que l'importance et l'emphase relèvent du sens.
 
-Un lien s'écrit `<a href="...">`. L'adresse est dans l'attribut `href`. Une image s'écrit `<img src="photo.jpg" alt="Description courte">`. `alt` décrit l'image pour qui ne la voit pas, et pour qui le fichier n'a pas chargé. Une liste non ordonnée est un `<ul>` de `<li>`. Une liste d'étapes est un `<ol>`.
+Un lien s'écrit `<a href="...">`. L'adresse est dans l'attribut `href`. Une image s'écrit `<img src="photo.jpg" alt="Description courte">`. `alt` décrit l'image pour les personnes qui ne la voient pas, ou quand le fichier ne se charge pas. Une liste non ordonnée est un `<ul>` de `<li>`. Une liste d'étapes est un `<ol>`.
 
 ```html
 <a href="https://exemple.fr">Un lien</a>
@@ -80,11 +80,11 @@ Un tableau se lit en lignes. `<table>` contient des `<tr>`. Chaque ligne contien
 
 <WebPreview />
 
-Oublier de fermer une balise, ou glisser du texte visible dans `<head>`, casse la lecture que fait le navigateur. L'autre réflexe à perdre : styler avec des balises comme `<font>`. Elles sont obsolètes. La structure reste dans le HTML.
+Oublier de fermer une balise, ou placer du texte visible dans `<head>`, perturbe la lecture de la page par le navigateur. Il faut aussi éviter de mettre en forme le texte avec des balises comme `<font>`, qui sont obsolètes : le HTML se limite à la structure.
 
-## Un formulaire envoie des données
+## Les formulaires
 
-`<form>` rassemble des champs et les envoie à une URL. `action` est cette URL. `method` dit comment les données voyagent.
+`<form>` rassemble des champs et les envoie à une URL. L'attribut `action` indique cette URL, et `method` précise comment les données sont transmises.
 
 ```html
 <form action="/traitement" method="post">
@@ -103,9 +103,9 @@ Oublier de fermer une balise, ou glisser du texte visible dans `<head>`, casse l
 
 `method="get"` place les données dans l'URL. Elles sont visibles, elles restent dans l'historique, et leur longueur est limitée. Cela convient à une recherche. `method="post"` place les données dans le corps de la requête. C'est le bon choix pour un formulaire qui crée ou modifie quelque chose.
 
-`name` est le nom du champ côté serveur : c'est la clé que le programme lira. `id` sert au document. `for` sur le `<label>` reprend cet `id`, pour que cliquer sur le texte « Nom » place le curseur dans le champ. `required` empêche l'envoi si le champ est vide. Le navigateur fait ce contrôle avant même d'appeler le serveur.
+`name` est le nom du champ côté serveur : c'est la clé que le programme lira. `id` sert à identifier le champ dans la page. `for` sur le `<label>` reprend cet `id`, pour que cliquer sur le texte « Nom » place le curseur dans le champ. `required` empêche l'envoi si le champ est vide. Le navigateur fait ce contrôle avant même d'appeler le serveur.
 
-En résumé, le HTML dit la structure et le sens, le navigateur construit la page à partir des balises. Un document, c'est un type, puis `<head>` pour les métadonnées et `<body>` pour le contenu. On préfère les balises qui nomment les zones. Liens, images avec `alt`, listes, tableaux et formulaires sont le vocabulaire de base. Le HTML ne remplace ni le CSS ni le JavaScript.
+En résumé, le HTML décrit la structure et le sens du contenu, et le navigateur construit la page à partir des balises. Un document commence par la déclaration du type, suivie de `<head>` pour les métadonnées et de `<body>` pour le contenu. On préfère les balises qui indiquent le rôle des zones. Les liens, les images avec `alt`, les listes, les tableaux et les formulaires forment le vocabulaire de base. Le HTML ne remplace ni le CSS ni le JavaScript.
 
 ## Pour s'entraîner / Suite
 

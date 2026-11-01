@@ -1,6 +1,6 @@
 ---
 title: 'Exercices : Circuits Logiques'
-description: 'Cours sur Exercices : Circuits Logiques'
+description: 'Exercices sur les portes logiques, les tables de vérité et les circuits.'
 level: premiere
 chapter: Architecture matérielle
 icon: "zap"

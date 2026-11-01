@@ -858,7 +858,7 @@ Le code de César décale chaque lettre de l'alphabet : avec un décalage de 3, 
 <Indices>
 <Indice>
 
-`ord(c) - ord("a")` donne le rang de la lettre (0 pour `a`, 25 pour `z`) ; `chr` fait le chemin inverse.
+`ord(c) - ord("a")` donne le rang de la lettre (0 pour `a`, 25 pour `z`). `chr` fait le chemin inverse.
 
 </Indice>
 <Indice>
@@ -1200,7 +1200,7 @@ Méthode gloutonne : prendre la plus grande valeur qui tient dans `n`, écrire s
 </Indice>
 <Indice>
 
-Une boucle `for` parcourt les indices des tuples ; à l'intérieur, une boucle `while` répète un symbole tant que sa valeur tient.
+Une boucle `for` parcourt les indices des tuples. À l'intérieur, une boucle `while` répète un symbole tant que sa valeur tient.
 
 </Indice>
 <Indice>
@@ -1267,10 +1267,10 @@ assert romain(1) == "I" and romain(40) == "XL", "1 et 40."
 **Contexte.** La vie scolaire prépare l'agenda papier distribué aux élèves. Elle a besoin d'un **calendrier perpétuel** : un programme qui sait quel jour de la semaine tombe n'importe quelle date et qui imprime la grille d'un mois, comme en haut des pages de l'agenda. Pour la page « dates à retenir », elle veut aussi compter les vendredis 13. Le programme part d'un seul fait connu : **le 1er janvier 1900 était un lundi**. Il n'utilise ni le module `datetime` ni le module `calendar`.
 
 **Les fonctions du calendrier**
-- `bissextile(a)` et `jours_mois(m, a)` : les règles du calendrier. Reçoivent une année (et un mois) ; renvoient si l'année est bissextile et le nombre de jours du mois.
-- `jours_depuis_1900(j, m, a)` : le point de départ de tous les calculs. Reçoit une date à partir de 1900 ; renvoie le nombre de jours écoulés depuis le 01/01/1900 (0 pour cette date).
+- `bissextile(a)` et `jours_mois(m, a)` : les règles du calendrier. Reçoivent une année (et un mois) et renvoient si l'année est bissextile et le nombre de jours du mois.
+- `jours_depuis_1900(j, m, a)` : le point de départ de tous les calculs. Reçoit une date à partir de 1900 et renvoie le nombre de jours écoulés depuis le 01/01/1900 (0 pour cette date).
 - `jour_semaine(j, m, a)` et `nom_jour(j, m, a)` : donnent le jour de la semaine d'une date. Renvoient 0 pour lundi… 6 pour dimanche, et le nom (`"lundi"`, `"mardi"`…).
-- `calendrier(m, a)` : la grille imprimée dans l'agenda. Reçoit un mois et une année ; renvoie un texte dont la première ligne est `Lu Ma Me Je Ve Sa Di`, puis une ligne par semaine. Chaque jour est écrit sur 2 caractères (aligné à droite), les cases sont séparées par une espace, les cases vides avant le 1er sont des espaces, et aucune ligne ne finit par une espace. Les lignes sont séparées par `"\n"`. Exemple : le 1er novembre 2026 est un dimanche, donc la deuxième ligne de `calendrier(11, 2026)` compte 19 espaces suivies de `1`.
+- `calendrier(m, a)` : la grille imprimée dans l'agenda. Reçoit un mois et une année. Renvoie un texte dont la première ligne est `Lu Ma Me Je Ve Sa Di`, puis une ligne par semaine. Chaque jour est écrit sur 2 caractères (aligné à droite), les cases sont séparées par une espace, les cases vides avant le 1er sont des espaces, et aucune ligne ne finit par une espace. Les lignes sont séparées par `"\n"`. Exemple : le 1er novembre 2026 est un dimanche, donc la deuxième ligne de `calendrier(11, 2026)` compte 19 espaces suivies de `1`.
 - `vendredis_13(a)` : pour la page « dates à retenir ». Renvoie le nombre de vendredis 13 de l'année.
 - `prochain_vendredi_13(j, m, a)` : pour annoncer le prochain. Renvoie le tuple `(jour, mois, annee)` du premier vendredi 13 **strictement après** la date donnée.
 
@@ -1282,7 +1282,7 @@ Tout repose sur `jours_depuis_1900` : additionner la longueur des années compl�
 </Indice>
 <Indice>
 
-Pour le calendrier, construire chaque ligne case par case : avant le 1er, autant de cases vides que `jour_semaine(1, m, a)` ; après chaque dimanche, passer à la ligne. `.rstrip()` retire les espaces de fin d'une ligne.
+Pour le calendrier, construire chaque ligne case par case : avant le 1er, autant de cases vides que `jour_semaine(1, m, a)`. Après chaque dimanche, passer à la ligne. `.rstrip()` retire les espaces de fin d'une ligne.
 
 </Indice>
 <Indice>
@@ -1411,16 +1411,16 @@ assert "datetime" not in PROGRAMME and "calendar" not in PROGRAMME, "Sans dateti
 **Les données** : le **dictionnaire** est un texte de mots en minuscules séparés par des espaces (`"renard loup lapin blaireau"`). Un **motif** est le mot tel que le voit le joueur, les lettres non trouvées étant remplacées par `_` (`"r_n_r_"`). Les lettres déjà proposées sont rangées dans un texte, par exemple `"rnz"`.
 
 **Les fonctions du jeu**
-- `masque(mot, proposees)` : ce qu'affiche l'écran pendant la partie. Reçoit le mot caché et les lettres proposées ; renvoie le motif.
-- `partie(mot, propositions, vies)` : l'arbitre d'une partie humaine. Reçoit le mot, les lettres proposées par le joueur dans l'ordre et le nombre de vies. Une lettre déjà proposée est ignorée ; une lettre absente du mot coûte une vie ; la partie s'arrête dès que le mot est trouvé ou que les vies sont épuisées (les lettres restantes sont ignorées). Renvoie le tuple `(gagne, erreurs, motif_final)`.
+- `masque(mot, proposees)` : ce qu'affiche l'écran pendant la partie. Reçoit le mot caché et les lettres proposées. Renvoie le motif.
+- `partie(mot, propositions, vies)` : l'arbitre d'une partie humaine. Reçoit le mot, les lettres proposées par le joueur dans l'ordre et le nombre de vies. Une lettre déjà proposée est ignorée. Une lettre absente du mot coûte une vie. La partie s'arrête dès que le mot est trouvé ou que les vies sont épuisées (les lettres restantes sont ignorées). Renvoie le tuple `(gagne, erreurs, motif_final)`.
 - `compatible(mot, motif, proposees)` : sert à l'ordinateur pour savoir quels mots du dictionnaire peuvent encore être le mot caché. Renvoie `True` si `mot` a la même longueur que le motif, les mêmes lettres aux positions découvertes, et aucune lettre déjà proposée aux positions encore cachées (elle aurait été découverte).
 - `meilleure_lettre(dictionnaire, motif, proposees)` : le choix de l'ordinateur. Renvoie, parmi les lettres pas encore proposées, celle qui apparaît dans le plus grand nombre de mots **compatibles** (la première dans l'alphabet en cas d'égalité) : c'est la lettre qui a le plus de chances d'être dans le mot.
-- `ordinateur(mot, dictionnaire, vies)` : le mode démonstration. L'ordinateur joue seul en proposant à chaque fois la meilleure lettre ; renvoie le tuple `(gagne, propositions)` où `propositions` est le texte des lettres proposées, dans l'ordre.
+- `ordinateur(mot, dictionnaire, vies)` : le mode démonstration. L'ordinateur joue seul en proposant à chaque fois la meilleure lettre. Renvoie le tuple `(gagne, propositions)` où `propositions` est le texte des lettres proposées, dans l'ordre.
 
 <Indices>
 <Indice>
 
-`partie` et `ordinateur` partagent le même déroulement : une boucle, une lettre, une mise à jour des vies et du motif. Écrire `masque` d'abord : un mot est trouvé quand son motif ne contient plus de `_`.
+`partie` et `ordinateur` partagent le même déroulement : à chaque tour de boucle, une lettre est proposée, puis les vies et le motif sont mis à jour. Écrire `masque` d'abord : un mot est trouvé quand son motif ne contient plus de `_`.
 
 </Indice>
 <Indice>

@@ -573,7 +573,7 @@ assert equivalentes(lambda a, b: a, lambda a, b: a or (a and b)) is True, "Loi d
 
 Écrire une fonction `impair(a, b, c)` qui renvoie `True` si un nombre **impair** des trois booléens est vrai (un seul, ou les trois).
 
-Contrainte : sans `if` et sans compter (pas de `+`, `sum` ni `count`) ; un « ou exclusif » de deux booléens s'écrit `a != b`.
+Contrainte : sans `if` et sans compter (pas de `+`, `sum` ni `count`). Un « ou exclusif » de deux booléens s'écrit `a != b`.
 
 <Indices>
 <Indice>
@@ -746,7 +746,7 @@ assert not re.search(r"\bif\b", PROGRAMME), "Sans if : une expression booléenne
 
 Écrire une fonction `addition(x, y)` qui additionne deux nombres binaires écrits sous forme de textes de **même longueur** et renvoie le résultat, éventuellement plus long d'un chiffre.
 
-Exemple : `addition("0110", "0111")` renvoie `"1101"` ; `addition("11", "01")` renvoie `"100"`.
+Exemple : `addition("0110", "0111")` renvoie `"1101"`. `addition("11", "01")` renvoie `"100"`.
 
 Contrainte : en enchaînant des additionneurs complets, de droite à gauche, sans convertir en entier.
 
@@ -1009,7 +1009,7 @@ assert len(table_n(lambda *x: True, 5)) == 32, "5 entrées : 32 lignes."
 <Enonce>
 ### Tautologie
 
-Une **tautologie** est une expression vraie pour toutes les valeurs de ses variables ; une expression **satisfiable** est vraie pour au moins une.
+Une **tautologie** est une expression vraie pour toutes les valeurs de ses variables. Une expression **satisfiable** est vraie pour au moins une.
 
 Écrire deux fonctions :
 - `tautologie(f, n)` : `True` si la fonction `f` à `n` entrées est toujours vraie ;
@@ -1023,7 +1023,7 @@ Parcourir les `2ⁿ` combinaisons (comme pour la table de vérité à n entrées
 </Indice>
 <Indice>
 
-`tautologie` renvoie `False` au premier cas faux ; `satisfiable` renvoie `True` au premier cas vrai.
+`tautologie` renvoie `False` au premier cas faux. `satisfiable` renvoie `True` au premier cas vrai.
 
 </Indice>
 <Indice>
@@ -1160,7 +1160,7 @@ Le mot envoyé est `p1 p2 d1 p3 d2 d3 d4`.
 - `coder(d)` : reçoit un texte de 4 bits et renvoie le mot de 7 bits ;
 - `corriger(m)` : reçoit un mot de 7 bits dont **au plus un** bit a été inversé pendant la transmission, et renvoie les 4 bits de données corrigés.
 
-Pour corriger : recalculer `c1 = m1 ⊕ m3 ⊕ m5 ⊕ m7`, `c2 = m2 ⊕ m3 ⊕ m6 ⊕ m7`, `c3 = m4 ⊕ m5 ⊕ m6 ⊕ m7` (positions numérotées de 1 à 7) ; le nombre binaire `c3 c2 c1` donne la position du bit faux (0 si aucun).
+Pour corriger : recalculer `c1 = m1 ⊕ m3 ⊕ m5 ⊕ m7`, `c2 = m2 ⊕ m3 ⊕ m6 ⊕ m7`, `c3 = m4 ⊕ m5 ⊕ m6 ⊕ m7` (positions numérotées de 1 à 7). Le nombre binaire `c3 c2 c1` donne la position du bit faux (0 si aucun).
 
 <Indices>
 <Indice>
@@ -1241,7 +1241,7 @@ for d in ["0000", "1011", "1111", "0110", "1001"]:
 **Les composants à construire** (toutes ces fonctions, sauf `ual`, n'utilisent que `nand` et les fonctions déjà écrites : aucun `and`, `or`, `not`, `if`, `==` ni `!=`)
 - `non(a)`, `et(a, b)`, `ou(a, b)`, `oux(a, b)` : les portes de base, construites à partir de `nand`. Chacune reçoit des booléens et renvoie la sortie de la porte.
 - `additionneur(a, b, r)` : additionne deux bits et une retenue venue du bit précédent. Renvoie le tuple `(somme, retenue)`.
-- `additionner(x, y)` : l'additionneur 4 bits du processeur. Reçoit deux nombres de 4 bits ; renvoie le tuple `(resultat, retenue_finale)`, le résultat sur 4 bits et la retenue indiquant un dépassement (par exemple 9 + 7).
+- `additionner(x, y)` : l'additionneur 4 bits du processeur. Reçoit deux nombres de 4 bits et renvoie le tuple `(resultat, retenue_finale)`, le résultat sur 4 bits et la retenue indiquant un dépassement (par exemple 9 + 7).
 - `oppose(x)` : prépare la soustraction. Renvoie le complément à deux de `x` (tous les bits inversés, puis 1 ajouté), qui représente `-x` sur 4 bits.
 - `soustraire(x, y)` : renvoie `x - y` sur 4 bits, calculé comme `x + oppose(y)`.
 - `est_nul(x)` : alimente le drapeau « zéro » du processeur. Renvoie `True` si les 4 bits valent `False`.
@@ -1407,13 +1407,13 @@ for f in arbre.body:
 **Les données** : une expression utilise des variables (une lettre minuscule), les opérateurs `non`, `et`, `ou` et des parenthèses, par exemple `"(a et non b) ou c"`. Comme en Python, `non` est prioritaire sur `et`, lui-même prioritaire sur `ou` : `a ou b et c` se lit `a ou (b et c)`. Les valeurs des variables sont données par un dictionnaire, par exemple `{"a": True, "b": False, "c": False}`.
 
 **Les fonctions du calculateur**
-- `jetons(expr)` : découpe l'expression en éléments, première étape de la lecture. Renvoie la liste des éléments (`"(a et non b)"` donne `["(", "a", "et", "non", "b", ")"]`) ; les parenthèses peuvent être collées aux variables dans le texte.
+- `jetons(expr)` : découpe l'expression en éléments, première étape de la lecture. Renvoie la liste des éléments (`"(a et non b)"` donne `["(", "a", "et", "non", "b", ")"]`). Les parenthèses peuvent être collées aux variables dans le texte.
 - `variables(expr)` : les variables de l'expression, qui donnent les colonnes de la table. Renvoie leur liste triée, sans doublon.
 - `evaluer(expr, valeurs)` : calcule la valeur de l'expression pour des valeurs données des variables. Renvoie un booléen. **Sans `eval`.**
 - `table(expr)` : la table de vérité. Renvoie la liste des tuples `(valeur de chaque variable…, resultat)`, dans l'ordre binaire (variables dans l'ordre alphabétique, la dernière variant le plus vite).
 - `equivalentes(e1, e2)` : vérifie une égalité logique, comme une loi de De Morgan. Renvoie `True` si les deux expressions ont toujours la même valeur (sur l'ensemble de leurs variables).
 - `tautologie(expr)` : renvoie `True` si l'expression est toujours vraie.
-- `forme_normale(expr)` : réécrit l'expression sous une forme standard, la forme normale disjonctive : un `ou` de parenthèses, une par ligne vraie de la table, chacune un `et` de toutes les variables (précédées de `non` si elles sont fausses), par exemple `"(non a et b) ou (a et non b)"` ; `"faux"` si l'expression n'est jamais vraie.
+- `forme_normale(expr)` : réécrit l'expression sous une forme standard, la forme normale disjonctive : un `ou` de parenthèses, une par ligne vraie de la table, chacune un `et` de toutes les variables (précédées de `non` si elles sont fausses), par exemple `"(non a et b) ou (a et non b)"`. Si l'expression n'est jamais vraie, la fonction renvoie `"faux"`.
 
 <Indices>
 <Indice>

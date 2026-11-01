@@ -13,11 +13,11 @@ audience: public
 
 # Classes et objets
 
-La programmation orientée objet organise un programme autour d'**objets** qui se parlent, plutôt qu'autour d'une longue suite de fonctions auxquelles on repasse les mêmes données. C'est le style dominant en Java, en C++, en C# et, pour une grande partie du code, en Python. L'idée n'est pas nouvelle après le cours de Première. On la reprend ici avec le vocabulaire de Terminale, et avec une question de plus : qu'est-ce qu'on a le droit de toucher depuis l'extérieur de l'objet.
+La programmation orientée objet organise un programme autour d'**objets** qui se parlent, plutôt qu'autour d'une longue suite de fonctions auxquelles on transmet sans cesse les mêmes données. C'est le style dominant en Java, en C++, en C# et, pour une grande partie du code, en Python. Cette idée a déjà été vue en Première. Ce cours la reprend avec le vocabulaire de Terminale, en ajoutant une question : à quelles données a-t-on le droit d'accéder depuis l'extérieur de l'objet ?
 
-Une **classe** est le moule. Elle décrit ce que tous les objets de cette famille ont en commun. Le plan d'une voiture ne roule pas. Une **instance**, l'objet, est une réalisation de ce plan : la voiture rouge de M. Dupont n'est pas la voiture bleue de Mme Martin, même si les deux sortent du même moule.
+Une **classe** sert de moule : elle décrit ce que tous les objets de cette famille ont en commun. C'est un peu comme le plan d'une voiture, qui ne roule pas lui-même. Une **instance**, ou objet, est une réalisation de ce plan : la voiture rouge de M. Dupont et la voiture bleue de Mme Martin sont deux objets différents, même s'ils viennent du même moule.
 
-Les **attributs** sont les données attachées à l'objet, son état : une couleur, une vitesse, une marque. Les **méthodes** sont les fonctions attachées à l'objet, ce qu'il sait faire : démarrer, freiner, klaxonner. On les appelle sur l'objet, pas à côté.
+Les **attributs** sont les données attachées à l'objet, qui forment son état, comme une couleur, une vitesse ou une marque. Les **méthodes** sont les fonctions attachées à l'objet, c'est-à-dire ce qu'il sait faire, comme démarrer, freiner ou klaxonner. Une méthode s'appelle toujours sur un objet.
 
 ## Écrire la classe
 
@@ -37,9 +37,9 @@ class Voiture:
         print(f"La {self.marque} accélère à {self.vitesse} km/h.")
 ```
 
-`__init__` s'exécute à la naissance de l'objet. C'est là qu'on donne une valeur initiale aux attributs. `vitesse` n'est pas un paramètre : toute voiture neuve part de zéro, donc la classe le décide elle-même.
+`__init__` s'exécute à la création de l'objet. C'est là qu'on donne une valeur initiale aux attributs. `vitesse` n'est pas un paramètre : toute voiture neuve commence à l'arrêt, donc la classe fixe elle-même sa valeur à zéro.
 
-Créer l'objet, c'est appeler la classe. Python fabrique l'instance et appelle `__init__` automatiquement.
+Pour créer un objet, on appelle la classe. Python fabrique l'instance et appelle `__init__` automatiquement.
 
 ```python
 # Instanciation (Création de l'objet)
@@ -52,13 +52,13 @@ print(ma_voiture.marque)  # Affiche "Peugeot"
 ma_voiture.accelerer(50)  # Affiche "La Peugeot accélère à 50 km/h."
 ```
 
-`self` est l'objet en train d'exécuter la méthode. Il est obligatoire en premier paramètre, même si, à l'appel, il n'est pas passé : `ma_voiture.accelerer(50)` fournit `ma_voiture` comme `self`, et `50` comme `gain`. C'est grâce à `self` qu'on distingue `self.vitesse`, qui survit entre deux appels, d'une variable locale qui meurt à la fin de la fonction.
+`self` est l'objet en train d'exécuter la méthode. Il est obligatoire en premier paramètre, même si, à l'appel, il n'est pas passé : `ma_voiture.accelerer(50)` fournit `ma_voiture` comme `self`, et `50` comme `gain`. C'est grâce à `self` qu'on distingue `self.vitesse`, qui est conservé entre deux appels, d'une variable locale, qui disparaît à la fin de la fonction.
 
-## Cacher le mécanisme
+## L'encapsulation
 
-L'**encapsulation** consiste à ne pas laisser le reste du programme tripoter les détails internes. On lui offre une **interface** : quelques méthodes, dont le sens est clair. Comment le solde est stocké peut changer. `deposer` doit continuer à vouloir dire la même chose.
+L'**encapsulation** consiste à empêcher le reste du programme de manipuler directement les détails internes d'un objet. On lui propose à la place une **interface**, formée de quelques méthodes au rôle clair. La façon dont le solde est stocké peut alors changer, tant que `deposer` garde le même sens.
 
-Python n'a pas de privé au sens strict de Java. La convention est un underscore : `_solde` signifie « n'y touchez pas directement, passez par les méthodes ». Rien ne l'empêche techniquement. Le underscore est un avertissement, pas un verrou.
+Python n'a pas d'attributs privés au sens strict, comme en Java. Par convention, un nom qui commence par un tiret bas, comme `_solde`, signale qu'il ne faut pas y accéder directement, mais passer par les méthodes. Rien ne l'interdit techniquement : le tiret bas est un simple avertissement.
 
 On parle d'**accesseur** pour une méthode qui donne la valeur, et de **mutateur** pour une méthode qui la modifie en vérifiant que la modification a un sens.
 
@@ -75,7 +75,7 @@ class CompteBancaire:
             self._solde += montant
 ```
 
-`deposer` refuse un montant négatif. Si le reste du programme faisait `compte._solde += montant` directement, cette vérification disparaîtrait. L'encapsulation n'est pas une coquetterie de syntaxe. C'est l'endroit où l'objet protège ses invariants.
+`deposer` refuse un montant négatif. Si le reste du programme faisait `compte._solde += montant` directement, cette vérification disparaîtrait. L'encapsulation permet ainsi à l'objet de garantir que ses données restent cohérentes.
 
 ---
 

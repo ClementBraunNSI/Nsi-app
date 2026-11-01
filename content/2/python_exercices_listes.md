@@ -676,7 +676,7 @@ assert "sort" not in PROGRAMME, "Sans tri."
 
 Écrire une fonction `deuxieme(liste)` qui renvoie la deuxième plus grande valeur **distincte** de `liste`, ou `None` s'il n'y en a pas.
 
-Exemples : `[4, 9, 7, 9]` donne `7` ; `[5, 5]` donne `None`.
+Exemples : `[4, 9, 7, 9]` donne `7`, et `[5, 5]` donne `None`.
 
 Contrainte : un seul parcours de la liste, sans tri.
 
@@ -753,7 +753,7 @@ Garder la longueur de la hausse en cours, et la plus grande longueur vue.
 </Indice>
 <Indice>
 
-Quand un élément est plus grand que le précédent, la hausse en cours s'allonge ; sinon, elle repart à 1.
+Quand un élément est plus grand que le précédent, la hausse en cours s'allonge. Sinon, elle repart à 1.
 
 </Indice>
 <Indice>
@@ -819,7 +819,7 @@ Retirer un élément pendant un `for` sur la même liste fait sauter des éléme
 </Indice>
 <Indice>
 
-Si `liste[i] == x`, `liste.pop(i)` le retire et l'indice ne doit **pas** avancer ; sinon, avancer.
+Si `liste[i] == x`, `liste.pop(i)` le retire et l'indice ne doit **pas** avancer. Sinon, avancer.
 
 </Indice>
 <Indice>
@@ -1196,13 +1196,13 @@ assert ligne_pascal(20)[10] == 184756 and len(ligne_pascal(20)) == 21, "Ligne 20
 <Enonce>
 ### Mastermind : l'ordinateur cherche
 
-**Contexte.** Au Mastermind, un joueur cache un code de 4 pions de couleur ; l'autre doit le retrouver. Après chaque essai, il apprend combien de pions sont de la bonne couleur à la bonne place (**bien placés**) et combien sont de la bonne couleur mais ailleurs (**mal placés**). Le but du projet est un ordinateur qui joue le rôle du chercheur et trouve **toujours** le code en 9 essais au plus, avec 6 couleurs possibles.
+**Contexte.** Au Mastermind, un joueur cache un code de 4 pions de couleur. L'autre doit le retrouver. Après chaque essai, il apprend combien de pions sont de la bonne couleur à la bonne place (**bien placés**) et combien sont de la bonne couleur mais ailleurs (**mal placés**). Le but du projet est un ordinateur qui joue le rôle du chercheur et trouve **toujours** le code en 9 essais au plus, avec 6 couleurs possibles.
 
-**Les données** : un code est une liste de couleurs, par exemple `["R", "V", "R", "B"]`, les couleurs étant choisies parmi `"RVBJOM"`. La réponse à un essai est le tuple `(bien_places, mal_places)` ; chaque pion du secret ne compte qu'une fois. L'**historique** d'une partie est la liste des couples `(essai, reponse)` déjà joués.
+**Les données** : un code est une liste de couleurs, par exemple `["R", "V", "R", "B"]`, les couleurs étant choisies parmi `"RVBJOM"`. La réponse à un essai est le tuple `(bien_places, mal_places)`. Chaque pion du secret ne compte qu'une fois. L'**historique** d'une partie est la liste des couples `(essai, reponse)` déjà joués.
 
 **Les fonctions du programme**
-- `evaluer(secret, essai)` : l'arbitre, qui répond à un essai. Reçoit le code secret et l'essai ; renvoie la réponse. Exemple : `evaluer(["R","R","V","B"], ["V","R","R","R"])` vaut `(1, 2)`.
-- `tous_les_codes(couleurs, n)` : la liste de départ des codes possibles. Reçoit les couleurs et le nombre de pions ; renvoie tous les codes, dans l'ordre « du dictionnaire » des couleurs données (pour `"AB"` et `n = 2` : `AA`, `AB`, `BA`, `BB`), sans `itertools`.
+- `evaluer(secret, essai)` : l'arbitre, qui répond à un essai. Reçoit le code secret et l'essai. Renvoie la réponse. Exemple : `evaluer(["R","R","V","B"], ["V","R","R","R"])` vaut `(1, 2)`.
+- `tous_les_codes(couleurs, n)` : la liste de départ des codes possibles. Reçoit les couleurs et le nombre de pions. Renvoie tous les codes, dans l'ordre « du dictionnaire » des couleurs données (pour `"AB"` et `n = 2` : `AA`, `AB`, `BA`, `BB`), sans `itertools`.
 - `coherent(code, historique)` : permet d'éliminer les codes impossibles. Renvoie `True` si `code` aurait donné les mêmes réponses à tous les essais de l'historique s'il était le secret.
 - `ordinateur(historique, couleurs, n)` : le coup suivant de l'ordinateur. Renvoie le premier code de `tous_les_codes(couleurs, n)` cohérent avec l'historique.
 - `resoudre(secret, couleurs)` : une partie complète, pour mesurer l'efficacité de l'ordinateur. Renvoie la liste de ses essais, jusqu'au bon code compris. Avec 6 couleurs et 4 pions, il doit trouver en 9 essais au plus, et rapidement.

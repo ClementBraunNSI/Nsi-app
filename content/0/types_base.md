@@ -14,7 +14,7 @@ audience: public
 
 En informatique, les données manipulées ont différentes natures : des nombres, du texte, des réponses vrai/faux, etc. Chaque donnée possède un **type** qui détermine ce que l'on peut faire avec elle.
 
-## Qu'est-ce un type de données ?
+## Qu'est-ce qu'un type de données ?
 
 Le **type** d'une donnée correspond à :
 1. L'ensemble des **valeurs possibles** pour cette donnée

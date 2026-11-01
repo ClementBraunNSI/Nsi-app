@@ -26,9 +26,9 @@ Les facteurs ci-dessous sont des ordres de grandeur pour l'exercice, pas un bila
 | `"3"` | Avion | 250 g de CO2 / km |
 | `"4"` | Vélo | 0 g de CO2 / km |
 
-Émissions en grammes = distance × facteur. Pour passer en kilogrammes, on divise par 1000.
+Les émissions en grammes s'obtiennent en multipliant la distance par le facteur. Pour passer en kilogrammes, on divise par 1000.
 
-Messages, selon les kilogrammes :
+Le message affiché dépend des émissions en kilogrammes :
 
 *   0 kg : `Bravo, pas d'émission directe sur ce trajet.`
 *   plus de 0 et strictement moins de 10 kg : `Trajet raisonnable.`
@@ -153,7 +153,7 @@ Messages, selon les kilogrammes :
       3. Calculer les grammes, puis les kilogrammes.
       4. Afficher `Émissions : X.XX kg de CO2.` puis la phrase renvoyée par `message`.
 
-      Le trajet 100 km / choix `1` produit :
+      Pour un trajet de 100 km avec le choix `1`, le programme affiche :
 
       ```text
       Distance (km) : 100
@@ -166,7 +166,7 @@ Messages, selon les kilogrammes :
       Trajet émetteur.
       ```
 
-      Le trajet 100 km / choix `4` affiche `0.00` kg et la phrase du vélo.
+      Pour un trajet de 100 km avec le choix `4`, le programme affiche `0.00` kg et la phrase du vélo.
 
     <Correction>
     ```python
@@ -237,10 +237,10 @@ Messages, selon les kilogrammes :
     ```
     </CodeDepart>
     <Enonce>
-      Trois ajouts, chacun dans une fonction, une fois le dialogue juste.
+      Une fois le dialogue correct, ajouter les trois fonctions suivantes.
 
       - `distance_effective(distance, aller_retour)` : si `aller_retour` vaut `True`, renvoyer le double. Question : `Aller-retour ? (oui/non)`. Seul `oui` met le booléen à `True`. 100 km en voiture aller-retour donnent 24 kg.
-      - `economie_train(distance, choix)` : renvoie les kilogrammes que l'on éviterait en prenant le train à la place. Pour 250 km en avion, le train émet 2,5 kg, l'avion 62,5 kg, l'économie vaut `60.0`. Pour le train et le vélo, afficher `Déjà le mode le plus sobre du comparateur.` et renvoyer `0.0`, jamais une économie négative.
+      - `economie_train(distance, choix)` : renvoie les kilogrammes que l'on éviterait en prenant le train à la place. Pour 250 km en avion, le train émet 2,5 kg et l'avion 62,5 kg, donc l'économie vaut `60.0`. Pour le train et le vélo, afficher `Déjà le mode le plus sobre du comparateur.` et renvoyer `0.0`, jamais une économie négative.
       - `part_voiture(kg, passagers)` : renvoie les kilogrammes par personne, uniquement si le choix est la voiture. `passagers` compte le conducteur et vaut au moins 1, sinon on redemande. 100 km en voiture à 4 donnent `3.0` kg par personne.
 
     <Correction>
@@ -287,4 +287,4 @@ Messages, selon les kilogrammes :
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `carbone.py` : commentaire d'en-tête avec le nom et la classe, les quatre fonctions, et le programme principal qui reproduit le dialogue. Les bonus viennent après, dans le même fichier.
+**Travail à rendre.** Il faut rendre un fichier `carbone.py` qui contient un commentaire d'en-tête avec le nom et la classe, les quatre fonctions et le programme principal qui reproduit le dialogue. Les bonus sont ajoutés ensuite, dans le même fichier.

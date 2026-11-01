@@ -505,7 +505,7 @@ Contrainte : sans `sorted`, `sort`, `min` ni `max`.
 </Indice>
 <Indice>
 
-Si `a` n'est pas au milieu, tester `b` de la même façon ; sinon c'est `c`.
+Si `a` n'est pas au milieu, tester `b` de la même façon, sinon c'est `c`.
 
 </Indice>
 <Indice>
@@ -565,7 +565,7 @@ Plutôt que de chercher le plus grand côté, tester les trois possibilités pou
 </Indice>
 <Indice>
 
-`a ** 2 == b ** 2 + c ** 2` est un premier cas ; il en reste deux.
+`a ** 2 == b ** 2 + c ** 2` est un premier cas. Il en reste deux.
 
 </Indice>
 <Indice>
@@ -744,7 +744,7 @@ Comparer les textes directement est faux (`"1.10" < "1.9"`) : il faut comparer d
 </Indice>
 <Indice>
 
-`v1.split(".")` sépare la majeure et la mineure ; `int(...)` les convertit.
+`v1.split(".")` sépare la majeure et la mineure. `int(...)` les convertit.
 
 </Indice>
 <Indice>
@@ -808,7 +808,7 @@ Au blackjack, les cartes de 2 à 10 valent leur nombre, le valet, la dame et le 
 
 Écrire une fonction `valeur_main(c1, c2)` qui renvoie la meilleure valeur d'une main de deux cartes données sous forme de texte (`"7"`, `"R"`, `"A"`…), sans dépasser 21 si c'est possible.
 
-Exemples : `"A"` et `"R"` valent 21 ; `"A"` et `"A"` valent 12.
+Exemples : `"A"` et `"R"` valent 21, et `"A"` et `"A"` valent 12.
 
 <Indices>
 <Indice>
@@ -1060,7 +1060,7 @@ assert impot(100000) == 25229, "100 000 € : 25 229 €."
 
 Écrire une fonction `lendemain(j, m, a)` qui renvoie le tuple `(jour, mois, annee)` du jour qui suit la date valide `j/m/a`, en tenant compte de la longueur des mois et des années bissextiles.
 
-Exemples : `lendemain(28, 2, 2026)` renvoie `(1, 3, 2026)` ; `lendemain(31, 12, 2026)` renvoie `(1, 1, 2027)`.
+Exemples : `lendemain(28, 2, 2026)` renvoie `(1, 3, 2026)`, et `lendemain(31, 12, 2026)` renvoie `(1, 1, 2027)`.
 
 <Indices>
 <Indice>
@@ -1070,7 +1070,7 @@ Exemples : `lendemain(28, 2, 2026)` renvoie `(1, 3, 2026)` ; `lendemain(31, 12, 
 </Indice>
 <Indice>
 
-Ajouter 1 au jour ; s'il dépasse la longueur du mois, passer au mois suivant ; si le mois dépasse 12, passer à l'année suivante.
+Ajouter 1 au jour. S'il dépasse la longueur du mois, passer au mois suivant. Si le mois dépasse 12, passer à l'année suivante.
 
 </Indice>
 <Indice>
@@ -1272,16 +1272,16 @@ assert devant(30, 20, 10, 30, 20, 10) == 0, "Rien ne les départage."
 
 **Contexte.** Le club de jeux du lycée organise un tournoi de Uno en ligne. Il faut un **arbitre** informatique : à chaque coup, il vérifie qu'une carte peut être jouée, calcule qui joue ensuite (avec les cartes qui inversent le sens ou font passer un tour), combien de cartes piocher, et compte les points en fin de manche. Il propose aussi un coup aux joueurs débutants.
 
-**Les cartes** sont des textes : une couleur (`R` rouge, `V` vert, `B` bleu, `J` jaune) suivie d'une valeur : un chiffre (`"R7"`), `+2` (`"B+2"`), `I` pour inversion (`"VI"`) ou `P` pour passe (`"JP"`). Les cartes noires n'ont pas de couleur : `"N"` (joker) et `"N+4"`. Après une carte noire, le joueur qui l'a posée choisit la **couleur active**.
+**Les cartes** sont des textes formés d'une couleur (`R` rouge, `V` vert, `B` bleu, `J` jaune) suivie d'une valeur, qui peut être un chiffre (`"R7"`), `+2` (`"B+2"`), `I` pour inversion (`"VI"`) ou `P` pour passe (`"JP"`). Les cartes noires n'ont pas de couleur : `"N"` (joker) et `"N+4"`. Après une carte noire, le joueur qui l'a posée choisit la **couleur active**.
 
 **Les fonctions de l'arbitre**
 - `couleur(carte)` et `valeur(carte)` : découpent une carte, pour que les autres fonctions n'aient pas à manipuler le texte. Renvoient la lettre de couleur (ou `None` pour une carte noire) et le reste du texte (`""` pour le joker).
-- `peut_jouer(carte, dessus, couleur_active)` : refuse les coups interdits. Reçoit la carte proposée, la carte du dessus de la pile et la couleur active ; renvoie `True` si la carte est noire, ou si elle a la couleur active, ou si elle a la même valeur que la carte du dessus.
+- `peut_jouer(carte, dessus, couleur_active)` : refuse les coups interdits. Reçoit la carte proposée, la carte du dessus de la pile et la couleur active. Renvoie `True` si la carte est noire, ou si elle a la couleur active, ou si elle a la même valeur que la carte du dessus.
 - `points(carte)` : sert au décompte de fin de manche (les cartes restées en main pénalisent). Renvoie la valeur du chiffre pour une carte numérotée, 20 pour `+2`, `I` et `P`, 50 pour une carte noire.
 - `a_piocher(carte)` : indique au joueur suivant combien de cartes il doit prendre. Renvoie 2 pour un `+2`, 4 pour un `+4`, 0 sinon.
-- `nouveau_sens(carte, sens)` : tient à jour le sens de la partie. Reçoit la carte posée et le sens (`1` ou `-1`) ; renvoie le sens après la carte (une inversion le change).
-- `suivant(joueur, carte, sens, nb)` : désigne le prochain joueur. Reçoit le numéro du joueur qui vient de poser `carte` (de 0 à `nb - 1`), le sens **après** la carte et le nombre de joueurs ; renvoie le numéro du joueur suivant. Une carte passe, un `+2` ou un `+4` font sauter le joueur suivant ; à deux joueurs, une inversion aussi.
-- `meilleur_coup(c1, c2, c3, dessus, couleur_active)` : le conseil donné aux débutants, qui ont trois cartes en main. Renvoie la carte **de couleur** jouable qui rapporte le plus de points (la première en cas d'égalité), pour s'en débarrasser ; s'il n'y en a pas, une carte noire jouable ; sinon `None` (il faut piocher).
+- `nouveau_sens(carte, sens)` : tient à jour le sens de la partie. Reçoit la carte posée et le sens (`1` ou `-1`). Renvoie le sens après la carte (une inversion le change).
+- `suivant(joueur, carte, sens, nb)` : désigne le prochain joueur. Reçoit le numéro du joueur qui vient de poser `carte` (de 0 à `nb - 1`), le sens **après** la carte et le nombre de joueurs. Renvoie le numéro du joueur suivant. Une carte passe, un `+2` ou un `+4` font sauter le joueur suivant. À deux joueurs, une inversion aussi.
+- `meilleur_coup(c1, c2, c3, dessus, couleur_active)` : le conseil donné aux débutants, qui ont trois cartes en main. Renvoie la carte **de couleur** jouable qui rapporte le plus de points (la première en cas d'égalité), pour s'en débarrasser. S'il n'y en a pas, elle renvoie une carte noire jouable, et sinon `None` (il faut alors piocher).
 
 <Indices>
 <Indice>
@@ -1410,21 +1410,21 @@ assert meilleur_coup("R4", "B4", "V8", "J4", "J") == "R4", "Égalité : la premi
 <Enonce>
 ### Fiche de paie
 
-**Contexte.** L'association des parents d'élèves emploie quelques surveillants à temps partiel et souhaite éditer elle-même leurs fiches de paie, avec le prélèvement de l'impôt à la source. Le trésorier saisit le taux horaire, les heures du mois et la situation familiale ; le programme calcule toute la fiche. Les règles ci-dessous sont simplifiées mais suivent la logique réelle.
+**Contexte.** L'association des parents d'élèves emploie quelques surveillants à temps partiel et souhaite éditer elle-même leurs fiches de paie, avec le prélèvement de l'impôt à la source. Le trésorier saisit le taux horaire, les heures du mois et la situation familiale. Le programme calcule toute la fiche. Les règles ci-dessous sont simplifiées mais suivent la logique réelle.
 
 **Règles**
-- Salaire brut mensuel : les 151,67 premières heures sont payées au taux horaire ; les heures suivantes, jusqu'à 186,67 h, sont majorées de 25 % ; au-delà, de 50 %.
+- Salaire brut mensuel : les 151,67 premières heures sont payées au taux horaire. Les heures suivantes, jusqu'à 186,67 h, sont majorées de 25 %. Au-delà, elles sont majorées de 50 %.
 - Cotisations sociales : 22 % du brut. Net = brut - cotisations.
 - Parts fiscales : 1 pour une personne seule, 2 pour un couple (`"marie"` ou `"pacse"`), plus 0,5 part pour chacun des deux premiers enfants et 1 part par enfant à partir du troisième. Une personne seule avec au moins un enfant reçoit 0,5 part de plus.
-- Impôt annuel : le revenu imposable est divisé par le nombre de parts ; l'impôt progressif est calculé sur ce quotient (0 % jusqu'à 11 294 €, 11 % jusqu'à 28 797 €, 30 % jusqu'à 82 341 €, 41 % jusqu'à 177 106 €, 45 % au-delà), puis multiplié par le nombre de parts.
+- Impôt annuel : le revenu imposable est divisé par le nombre de parts. L'impôt progressif est calculé sur ce quotient (0 % jusqu'à 11 294 €, 11 % jusqu'à 28 797 €, 30 % jusqu'à 82 341 €, 41 % jusqu'à 177 106 €, 45 % au-delà), puis multiplié par le nombre de parts.
 - Revenu imposable annuel : 90 % du net annuel.
 
 Exemple : un surveillant célibataire sans enfant, payé 25 € de l'heure, qui a travaillé 160 heures dans le mois.
 
 **Les fonctions du logiciel de paie**
-- `brut(taux, heures)` : la première ligne de la fiche. Reçoit le taux horaire et les heures du mois ; renvoie le salaire brut, arrondi au centime.
-- `cotisations(brut_mensuel)` et `net(brut_mensuel)` : les lignes suivantes. Reçoivent le brut ; renvoient les cotisations et le salaire net, arrondis au centime.
-- `parts(situation, enfants)` : traduit la situation familiale pour le calcul de l'impôt. Reçoit `"celibataire"`, `"marie"` ou `"pacse"` et le nombre d'enfants ; renvoie le nombre de parts.
+- `brut(taux, heures)` : la première ligne de la fiche. Reçoit le taux horaire et les heures du mois. Renvoie le salaire brut, arrondi au centime.
+- `cotisations(brut_mensuel)` et `net(brut_mensuel)` : les lignes suivantes. Reçoivent le brut et renvoient les cotisations et le salaire net, arrondis au centime.
+- `parts(situation, enfants)` : traduit la situation familiale pour le calcul de l'impôt. Reçoit `"celibataire"`, `"marie"` ou `"pacse"` et le nombre d'enfants. Renvoie le nombre de parts.
 - `impot_annuel(revenu_imposable, nb_parts)` : l'impôt d'une année entière. Renvoie un montant arrondi à l'euro.
 - `taux_prelevement(net_mensuel, situation, enfants)` : le taux personnalisé imprimé sur la fiche. Renvoie l'impôt annuel divisé par le net annuel, en pourcentage arrondi au dixième.
 - `fiche(taux, heures, situation, enfants)` : assemble la fiche du mois. Renvoie le tuple `(brut, net, prelevement, net_a_payer)`, le prélèvement étant le net multiplié par le taux, arrondi au centime.
@@ -1432,7 +1432,7 @@ Exemple : un surveillant célibataire sans enfant, payé 25 € de l'heure, qui 
 <Indices>
 <Indice>
 
-Chaque règle devient une fonction ; `fiche` ne fait qu'assembler les autres. Tester chaque fonction séparément avant d'écrire la suivante.
+Chaque règle devient une fonction. `fiche` ne fait qu'assembler les autres. Tester chaque fonction séparément avant d'écrire la suivante.
 
 </Indice>
 <Indice>

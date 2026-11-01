@@ -1,6 +1,6 @@
 ---
 title: 'Atelier Web : Éditeur HTML'
-description: Expérimente avec le code HTML et CSS en temps réel.
+description: Expérimenter avec le code HTML et CSS en temps réel.
 level: '2'
 chapter: Web
 icon: "globe"

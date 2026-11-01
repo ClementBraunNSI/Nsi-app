@@ -13,17 +13,17 @@ audience: public
 
 # Graphes
 
-Un arbre a une racine, et un seul chemin entre deux nœuds. Beaucoup de situations refusent cette discipline. Deux villes sont reliées par plusieurs routes, deux comptes se suivent sans qu'il y ait de « sommet du réseau », une page web pointe vers une autre qui finit par revenir vers elle. On modélise cela par un **graphe**.
+Un arbre a une racine, et il n'existe qu'un seul chemin entre deux nœuds. Beaucoup de situations ne respectent pas ces règles : deux villes peuvent être reliées par plusieurs routes, deux comptes peuvent se suivre mutuellement sans qu'aucun ne soit au « sommet » du réseau, et une page web peut renvoyer vers une autre page qui revient vers elle. On modélise ces situations par un **graphe**.
 
 > Un graphe $G = (S, A)$ est un ensemble $S$ de **sommets** et un ensemble $A$ de liaisons entre ces sommets.
 
-Les sommets sont les entités : des villes, des comptes, des machines. Les liaisons sont de plusieurs natures, et le vocabulaire change avec elles.
+Les sommets représentent les entités, comme des villes, des comptes ou des machines. Les liaisons peuvent être de plusieurs natures, et le vocabulaire change selon les cas.
 
-Si la relation va dans les deux sens, « est ami avec », « est relié par une route sans sens unique », le graphe est **non orienté** et les liaisons s'appellent des **arêtes**. Si la relation a un sens, « suit tel compte », « lien hypertexte vers », le graphe est **orienté** et l'on parle d'**arcs**. Si la liaison a un coût, des kilomètres, un temps, un prix, le graphe est **pondéré**. On peut être orienté et pondéré à la fois : une rue en sens unique, avec une longueur.
+Si la relation va dans les deux sens, comme « est ami avec » ou « est relié par une route à double sens », le graphe est **non orienté** et les liaisons s'appellent des **arêtes**. Si la relation a un sens, comme « suit tel compte » ou « contient un lien vers », le graphe est **orienté** et l'on parle d'**arcs**. Si chaque liaison a un coût (une distance, une durée, un prix), le graphe est **pondéré**. Un graphe peut être à la fois orienté et pondéré, par exemple pour représenter des rues à sens unique avec leur longueur.
 
-## Ranger un graphe en mémoire
+## Représenter un graphe en mémoire
 
-Il faut choisir une structure, et le bon choix dépend du nombre de liaisons.
+Plusieurs structures sont possibles, et le bon choix dépend du nombre de liaisons.
 
 La **matrice d'adjacence** est un tableau à deux dimensions. `M[i][j]` vaut 1 s'il existe une arête entre i et j, et 0 sinon. Sur un graphe non orienté, la matrice est symétrique.
 
@@ -33,7 +33,7 @@ La **matrice d'adjacence** est un tableau à deux dimensions. `M[i][j]` vaut 1 s
 | **B** | 1 | 0 | 1 |
 | **C** | 0 | 1 | 0 |
 
-Savoir si A et B sont reliés est immédiat : on lit une case. En revanche, un graphe de mille sommets et de quelques arêtes remplit presque entièrement la matrice de zéros. On paie un carré en mémoire pour peu d'information. On dit alors que le graphe est creux, et la matrice est un mauvais réflexe.
+Pour savoir si A et B sont reliés, il suffit de lire une case. En revanche, pour un graphe de mille sommets qui n'a que quelques arêtes, la matrice est presque entièrement remplie de zéros : elle occupe une place proportionnelle au carré du nombre de sommets pour très peu d'information. On dit alors que le graphe est **creux**, et la matrice n'est pas une bonne représentation.
 
 La **liste d'adjacence** ne stocke que les voisins. En Python, un dictionnaire dont les clés sont les sommets convient très bien.
 
@@ -45,19 +45,19 @@ graphe = {
 }
 ```
 
-La mémoire suit le nombre réel d'arêtes. Parcourir les amis de B, c'est parcourir une liste courte. Vérifier une liaison précise demande de chercher dans cette liste, ce qui est un peu moins direct que lire `M[i][j]`. Pour les graphes manipulés ici, presque toujours creux, on préfère cette forme.
+La mémoire utilisée dépend alors du nombre réel d'arêtes, et parcourir les amis de B revient à parcourir une liste courte. Vérifier si une liaison existe demande en revanche de chercher dans cette liste, ce qui est un peu moins direct que lire `M[i][j]`. Comme les graphes étudiés ici sont presque toujours creux, on préfère cette représentation.
 
 <GraphVisualizer />
 
-## Parcourir sans tourner en rond
+## Parcourir un graphe
 
-On parcourt un graphe un peu comme un arbre, avec une différence qui casse les algorithmes naïfs : il peut y avoir un **cycle**. Si l'on ne note pas les sommets déjà vus, on revient indéfiniment sur ses pas.
+On parcourt un graphe un peu comme un arbre, avec une différence importante : un graphe peut contenir un **cycle**. Si l'on ne note pas les sommets déjà visités, le parcours risque de tourner indéfiniment.
 
-Le parcours en **largeur** (*breadth-first search*, BFS) explore par vagues. Il visite d'abord les voisins du départ, puis les voisins de ces voisins, et ainsi de suite. Dans un graphe non pondéré, la première fois qu'on atteint un sommet, on y est arrivé par un plus court chemin, en nombre d'arêtes. C'est le GPS le plus simple, celui qui compte les carrefours et pas les kilomètres.
+Le parcours en **largeur** (*breadth-first search*, BFS) explore par vagues. Il visite d'abord les voisins du départ, puis les voisins de ces voisins, et ainsi de suite. Dans un graphe non pondéré, la première fois qu'on atteint un sommet, on y est arrivé par un plus court chemin, en nombre d'arêtes. C'est un peu comme un GPS très simple, qui compterait les carrefours et non les kilomètres.
 
-Le parcours en **profondeur** (*depth-first search*, DFS) s'enfonce le plus loin possible, puis revient en arrière quand il est bloqué. Il convient aux labyrinthes, et c'est avec lui qu'on détecte souvent un cycle : on retombe sur un sommet encore « en cours de visite », pas seulement déjà terminé.
+Le parcours en **profondeur** (*depth-first search*, DFS) s'enfonce le plus loin possible, puis revient en arrière quand il est bloqué. Il convient aux labyrinthes, et c'est souvent avec lui qu'on détecte un cycle : on en repère un quand on retombe sur un sommet encore « en cours de visite », et pas seulement sur un sommet déjà terminé.
 
-Les deux ont besoin d'un ensemble de sommets marqués. Sans cette marque, la structure du graphe, pas celle de l'algorithme, les fait boucler.
+Les deux parcours ont besoin d'un ensemble de sommets marqués : sans ce marquage, les cycles du graphe les feraient boucler sans fin.
 
 ---
 

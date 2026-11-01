@@ -42,12 +42,13 @@ export default function ChallengesAdmin({ challenges, classes }: { challenges: C
                   <span className="min-w-0">
                     <b>{challenge.title}</b>
                     <small>
-                      {challenge.classes.join(", ")} · ouvert le {dayFormat.format(new Date(challenge.opensAt))}
+                      {challenge.classes.join(", ")} · ouvert le {dayFormat.format(new Date(challenge.opensAt))} · {challenge.exerciseCount} exercice{challenge.exerciseCount > 1 ? "s" : ""}
+                      {challenge.timeLimitMinutes ? ` · ${challenge.timeLimitMinutes} min par élève` : ""}
                     </small>
                   </span>
                   <span className="adm-eval-counts">
                     <span>{challenge.passed} réussi{challenge.passed > 1 ? "s" : ""}</span>
-                    <span>{challenge.submitted} élève{challenge.submitted > 1 ? "s" : ""} ont essayé</span>
+                    <span>{challenge.submitted} élève{challenge.submitted > 1 ? "s ont" : " a"} ouvert le défi</span>
                   </span>
                 </Link>
               </li>

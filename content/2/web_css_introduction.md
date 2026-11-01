@@ -13,7 +13,7 @@ audience: public
 
 # Introduction au CSS
 
-Le HTML a posé les titres, les paragraphes et les zones. Il ne décide pas de la couleur, de la police, ni de l'alignement. C'est le rôle du **CSS** (*Cascading Style Sheets*) : la présentation. On sépare les deux pour pouvoir changer l'apparence sans réécrire le contenu, et pour que la même feuille habille plusieurs pages.
+Le HTML définit les titres, les paragraphes et les différentes zones de la page, mais il ne décide ni de la couleur, ni de la police, ni de l'alignement. La présentation est le rôle du **CSS** (*Cascading Style Sheets*). Séparer les deux permet de changer l'apparence sans réécrire le contenu, et d'utiliser la même feuille de style pour plusieurs pages.
 
 ## Relier la feuille à la page
 
@@ -25,7 +25,7 @@ La forme recommandée est une feuille externe. Le HTML ne contient qu'un lien, d
 </head>
 ```
 
-Pour un essai rapide, un bloc `<style>` dans la page suffit. On ne le garde pas dans un vrai site : le style se retrouve copié dans chaque document, et une correction demande de tout rouvrir.
+Pour un essai rapide, un bloc `<style>` dans la page suffit. On ne le garde pas dans un vrai site, car le style serait alors copié dans chaque document, et la moindre correction obligerait à tous les rouvrir.
 
 ```html
 <style>
@@ -33,11 +33,11 @@ Pour un essai rapide, un bloc `<style>` dans la page suffit. On ne le garde pas 
 </style>
 ```
 
-Une règle se lit ainsi : un **sélecteur** dit à qui elle s'applique, puis des déclarations `propriété: valeur` entre accolades.
+Une règle se compose d'un **sélecteur**, qui indique à quels éléments elle s'applique, puis de déclarations `propriété: valeur` entre accolades.
 
-## Qui est visé
+## Les sélecteurs
 
-Trois sélecteurs suffisent pour commencer. Le nom d'un élément vise toutes les balises de ce type : `p { }` concerne tous les paragraphes. Une **classe**, préfixée par un point, vise les éléments qui portent `class="carte"`. On la réutilise autant qu'on veut. Un **identifiant**, préfixé par `#`, vise l'unique élément dont `id` a cette valeur. Un `id` n'est pas fait pour être recopié.
+Trois sélecteurs suffisent pour commencer. Le nom d'un élément vise toutes les balises de ce type : `p { }` concerne tous les paragraphes. Une **classe**, préfixée par un point, vise les éléments qui portent `class="carte"`. On la réutilise autant qu'on veut. Un **identifiant**, préfixé par `#`, vise l'unique élément dont `id` a cette valeur. Un même `id` ne doit donc pas être utilisé deux fois.
 
 | Sélecteur | Exemple | Cible |
 | --- | --- | --- |
@@ -54,11 +54,11 @@ Trois sélecteurs suffisent pour commencer. Le nom d'un élément vise toutes le
 .bandeau { text-align: center; }
 ```
 
-Le même en-tête reçoit les deux règles. Le fond vient de l'identifiant, le centrage de la classe. Quand deux règles se disputent la même propriété, le navigateur **cascade** : il combine ce qui ne se contredit pas, et, en cas de conflit, la règle la plus spécifique l'emporte. À spécificité égale, c'est la dernière écrite. Un `id` est plus spécifique qu'une classe, une classe plus spécifique qu'un élément.
+Le même en-tête reçoit les deux règles. Le fond vient de l'identifiant, et le centrage de la classe. Quand deux règles se disputent la même propriété, le navigateur **cascade** : il combine ce qui ne se contredit pas, et, en cas de conflit, la règle la plus spécifique l'emporte. À spécificité égale, c'est la dernière écrite. Un `id` est plus spécifique qu'une classe, et une classe plus spécifique qu'un nom d'élément.
 
-Mettre le style dans l'attribut `style="..."` fonctionne, mais le style n'est plus réutilisable. Et prendre un `id` là où une classe suffirait empêche d'appliquer la même apparence à une deuxième carte.
+Mettre le style dans l'attribut `style="..."` fonctionne, mais le style n'est plus réutilisable. De même, utiliser un `id` là où une classe suffirait empêche d'appliquer la même apparence à une deuxième carte.
 
-## Ce qu'on règle le plus souvent
+## Les propriétés les plus courantes
 
 ```css
 body {
@@ -80,7 +80,7 @@ body {
 
 `font-family` liste des polices de repli : si la première manque, le navigateur prend la suivante. `margin: 2rem auto` sur une carte de largeur bornée la centre horizontalement. `auto` répartit l'espace qui reste à gauche et à droite.
 
-Chaque élément est une **boîte**. De l'intérieur vers l'extérieur : le **contenu**, puis le `padding` (le remplissage entre le texte et le bord), puis la `border`, puis la `margin` (l'espace qui sépare cette boîte des autres). `width` et `height` mesurent le contenu, sauf si `box-sizing: border-box` : dans ce cas, padding et bordure sont compris dans la largeur annoncée. C'est plus prévisible dès qu'on aligne des colonnes. Confondre `margin` et `padding` est le geste qui décale toute une page : l'une pousse à l'extérieur, l'autre gonfle l'intérieur.
+Chaque élément est une **boîte**, composée, de l'intérieur vers l'extérieur, du **contenu**, du `padding` (le remplissage entre le texte et le bord), de la bordure (`border`) et de la `margin` (l'espace qui sépare cette boîte des autres). `width` et `height` mesurent le contenu, sauf avec `box-sizing: border-box`. Dans ce cas, le padding et la bordure sont compris dans la largeur indiquée, ce qui est plus pratique pour aligner des colonnes. Il ne faut pas confondre `margin` et `padding`, sous peine de décaler toute la page : la marge éloigne la boîte des autres éléments, alors que le padding agrandit l'intérieur de la boîte.
 
 ## Aligner avec Flexbox
 
@@ -93,9 +93,9 @@ Chaque élément est une **boîte**. De l'intérieur vers l'extérieur : le **co
 }
 ```
 
-`display: flex` range les enfants sur une ligne. `gap` pose un espace entre eux, sans bricoler des marges. `justify-content: center` centre la rangée. `flex-wrap: wrap` autorise le retour à la ligne quand la fenêtre se rétrécit. Pour une colonne, on ajoute `flex-direction: column`.
+`display: flex` range les enfants sur une ligne. `gap` ajoute un espace entre eux, sans avoir à régler des marges. `justify-content: center` centre la rangée. `flex-wrap: wrap` autorise le retour à la ligne quand la fenêtre se rétrécit. Pour une colonne, on ajoute `flex-direction: column`.
 
-En résumé, le CSS habille, le HTML structure. On lie la feuille avec `<link rel="stylesheet">`. On cible par l'élément, la classe ou l'identifiant. La cascade tranche les conflits par la spécificité, puis par l'ordre. Une boîte, c'est contenu, padding, bordure, marge. Flexbox aligne une rangée sans calculer les positions à la main.
+En résumé, le HTML structure la page et le CSS la met en forme. La feuille de style se relie avec `<link rel="stylesheet">`. Les règles ciblent un élément, une classe ou un identifiant, et la cascade règle les conflits selon la spécificité, puis selon l'ordre d'écriture. Chaque boîte comprend un contenu, un padding, une bordure et une marge. Enfin, Flexbox permet d'aligner des éléments sans calculer leurs positions à la main.
 
 ## Pour s'entraîner / Suite
 

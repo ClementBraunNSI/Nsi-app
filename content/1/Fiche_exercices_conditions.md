@@ -451,7 +451,7 @@ for t, c in [(0, "Manteau"), (14.9, "Manteau"), (15, "Pull"), (24, "Pull"), (25,
 <Enonce>
 ### Frais de livraison
 
-Une boutique en ligne offre la livraison à partir de 50 € d'achat ; en dessous, elle coûte 4,90 €.
+Une boutique en ligne offre la livraison à partir de 50 € d'achat. En dessous de ce montant, elle coûte 4,90 €.
 
 Demander le montant du panier, puis calculer `frais` et `total` (panier + frais).
 
@@ -1111,7 +1111,7 @@ for t, n, s in cas:
 
 Demander un jour, un mois et une année (trois entiers) et ranger dans `valide` le booléen `True` si la date existe, `False` sinon.
 
-À savoir : avril, juin, septembre et novembre ont 30 jours ; février en a 29 les années bissextiles et 28 sinon ; les autres mois en ont 31.
+À savoir : avril, juin, septembre et novembre ont 30 jours, février en a 29 les années bissextiles et 28 sinon, et les autres mois en ont 31.
 
 <Indices>
 <Indice>
@@ -1329,7 +1329,7 @@ for t, c in cas:
 3. Réduction (une seule s'applique) :
    - moins de 4 ans : voyage **gratuit**, quelles que soient les autres règles ;
    - de 4 à 11 ans : -50 % ;
-   - sinon, carte `jeune` (valable de 12 à 27 ans) : -30 % ; carte `senior` (valable à partir de 60 ans) : -25 %. Une carte non valable pour l'âge est ignorée.
+   - sinon, la carte `jeune` (valable de 12 à 27 ans) donne -30 % et la carte `senior` (valable à partir de 60 ans) donne -25 %. Une carte non valable pour l'âge est ignorée.
 4. Aller-retour : le prix est doublé, puis diminué de 10 %.
 
 **Ce que le programme doit produire**
@@ -1442,7 +1442,7 @@ for entrees, p, pt, m in cas:
 <Enonce>
 ### Date du lendemain
 
-**Contexte.** L'agenda en ligne du lycée a besoin d'un petit outil de calendrier : quand un professeur tape une date, l'agenda doit savoir si elle existe, quel jour de l'année c'est (pour les statistiques d'absences), dans quelle saison elle tombe (pour le menu de la cantine) et quelle est la date du lendemain (pour programmer un rappel). Le programme le fait sans boucle.
+**Contexte.** L'agenda en ligne du lycée a besoin d'un petit outil de calendrier : quand une date est saisie, l'agenda doit savoir si elle existe, quel jour de l'année c'est (pour les statistiques d'absences), dans quelle saison elle tombe (pour le menu de la cantine) et quelle est la date du lendemain (pour programmer un rappel). Le programme le fait sans boucle.
 
 **Données saisies** : un jour, un mois et une année (trois entiers). Exemple : `28`, `2`, `2024`.
 
@@ -1453,7 +1453,7 @@ for entrees, p, pt, m in cas:
 - `lendemain` : la date du jour suivant, sous forme de texte `"JJ/MM/AAAA"` (sur 2, 2 et 4 chiffres), en passant au mois suivant ou à l'année suivante si besoin.
 - Les résultats sont affichés.
 
-Avec l'exemple : le 28/02/2024 est le jour 59, en hiver, et son lendemain est `"29/02/2024"`.
+Dans l'exemple, le 28/02/2024 est le jour 59, en hiver, et son lendemain est `"29/02/2024"`.
 
 <Indices>
 <Indice>

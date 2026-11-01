@@ -15,7 +15,7 @@ groupeTitre: "SQL et bases de données"
 
 # SQL
 
-Le modèle relationnel a posé les tables, les clés, les contraintes. **SQL** est le langage qui les crée, les remplit et les interroge. On ne parcourt pas la table avec une boucle dans le programme : on décrit le résultat voulu, et le SGBD décide comment le calculer.
+Le modèle relationnel définit les tables, les clés et les contraintes. **SQL** est le langage qui permet de créer ces tables, de les remplir et de les interroger. On ne parcourt pas la table avec une boucle dans le programme : on décrit le résultat voulu, et le SGBD choisit comment le calculer.
 
 Une table a des **colonnes**, les attributs, et des **lignes**, les enregistrements. La **clé primaire** identifie chaque ligne. Voici une table d'élèves sur laquelle toutes les requêtes de la page vont s'appuyer.
 
@@ -39,7 +39,7 @@ CREATE TABLE etudiants (
 );
 ```
 
-`INSERT` ajoute une ligne. On nomme les colonnes, puis les valeurs dans le même ordre. Nommer les colonnes évite qu'une valeur atterrisse dans le mauvais champ le jour où l'ordre de la table change. Ici `id` n'est pas dans la liste : selon le SGBD, il peut être attribué automatiquement, ou devoir être fourni. Dans les exemples qui suivent, Alice a l'id 1 et Bob l'id 2, comme dans la table ci-dessus.
+`INSERT` ajoute une ligne. On nomme les colonnes, puis les valeurs dans le même ordre. Nommer les colonnes évite qu'une valeur se retrouve dans le mauvais champ si l'ordre des colonnes de la table change. Ici `id` n'est pas dans la liste : selon le SGBD, il peut être attribué automatiquement, ou devoir être fourni. Dans les exemples qui suivent, Alice a l'id 1 et Bob l'id 2, comme dans la table ci-dessus.
 
 ```sql
 INSERT INTO etudiants (nom, prenom, age, classe)
@@ -49,7 +49,7 @@ INSERT INTO etudiants (nom, prenom, age, classe)
 VALUES ('Dupont', 'Bob', 18, '1ère');
 ```
 
-`SELECT` lit. L'étoile demande toutes les colonnes. Une liste de noms n'en garde que quelques-unes : c'est une projection. `WHERE` filtre les lignes : c'est une sélection. `ORDER BY` trie le résultat, sans modifier la table.
+`SELECT` permet de lire les données. L'étoile demande toutes les colonnes, alors qu'une liste de noms n'en garde que quelques-unes : c'est une projection. `WHERE` filtre les lignes : c'est une sélection. `ORDER BY` trie le résultat, sans modifier la table.
 
 ```sql
 -- Tous les étudiants
@@ -65,9 +65,9 @@ SELECT * FROM etudiants WHERE age > 17;
 SELECT * FROM etudiants ORDER BY nom;
 ```
 
-Les chaînes se comparent entre quotes simples. `age > 17` ne garde que Bob dans la table d'exemple. Alice et Claire ont 17 ans, la condition est stricte.
+Les chaînes se comparent entre quotes simples. `age > 17` ne garde que Bob dans la table d'exemple, car la condition est stricte et Alice et Claire ont 17 ans.
 
-`UPDATE` modifie les lignes qui passent le `WHERE`. Sans `WHERE`, toutes les lignes sont modifiées. On relit la clause avant d'exécuter.
+`UPDATE` modifie les lignes qui vérifient la condition du `WHERE`. Sans `WHERE`, toutes les lignes sont modifiées : il faut donc bien relire la clause avant d'exécuter la requête.
 
 ```sql
 UPDATE etudiants 
@@ -75,7 +75,7 @@ SET age = 18
 WHERE nom = 'Martin' AND prenom = 'Alice';
 ```
 
-`DELETE` retire des lignes. Ici, seulement celle dont l'id vaut 3. Sans `WHERE`, la table se vide, et la structure, elle, reste.
+`DELETE` supprime des lignes. Ici, seule la ligne dont l'id vaut 3 est supprimée. Sans `WHERE`, la table est entièrement vidée, mais sa structure est conservée.
 
 ```sql
 DELETE FROM etudiants 
@@ -93,7 +93,7 @@ WHERE id = 3;
 | `>=` | Supérieur ou égal | `WHERE age >= 18` |
 | `<=` | Inférieur ou égal | `WHERE age <= 17` |
 
-`AND` exige les deux conditions. `OR` en exige une. `NOT` inverse. Les parenthèses lèvent le doute quand `AND` et `OR` se mélangent : `AND` est prioritaire, comme le ET logique devant le OU.
+`AND` exige que les deux conditions soient vraies, `OR` qu'au moins l'une le soit, et `NOT` inverse une condition. Quand `AND` et `OR` sont mélangés, les parenthèses évitent toute ambiguïté, sachant que `AND` est prioritaire, comme le ET logique sur le OU.
 
 ```sql
 -- ET logique (AND)
@@ -109,7 +109,7 @@ SELECT * FROM etudiants
 WHERE NOT age = 17;
 ```
 
-Les fonctions d'agrégation résument une colonne au lieu de renvoyer les lignes. `COUNT(*)` compte les lignes. `AVG` moyenne, `MIN` et `MAX` cherchent les extrêmes, `SUM` additionne. Le résultat est une seule ligne, sauf si un `GROUP BY` redécoupe la table en groupes. On n'en a pas besoin pour les requêtes ci-dessous.
+Les fonctions d'agrégation résument une colonne au lieu de renvoyer les lignes. `COUNT(*)` compte les lignes, `AVG` calcule la moyenne, `MIN` et `MAX` donnent les valeurs extrêmes et `SUM` fait la somme. Le résultat est une seule ligne, sauf si un `GROUP BY` redécoupe la table en groupes. On n'en a pas besoin pour les requêtes ci-dessous.
 
 ```sql
 -- Nombre total d'étudiants
@@ -127,7 +127,7 @@ SELECT SUM(age) FROM etudiants;
 
 ## Relier deux tables
 
-Une note ne recopie pas le nom de l'élève. Elle porte `etudiant_id`, clé étrangère vers `etudiants(id)`. `DECIMAL(4,2)` est un décimal : quatre chiffres au plus, dont deux après la virgule. 15,50 tient. 100,00 ne tient pas.
+Une note ne recopie pas le nom de l'élève. Elle porte `etudiant_id`, clé étrangère vers `etudiants(id)`. `DECIMAL(4,2)` est un nombre décimal d'au plus quatre chiffres, dont deux après la virgule : 15,50 convient, mais pas 100,00.
 
 ```sql
 -- Créer une table de notes
@@ -163,12 +163,12 @@ FROM etudiants e
 LEFT JOIN notes n ON e.id = n.etudiant_id;
 ```
 
-`INNER JOIN` ne garde que les appariements. Un élève sans note disparaît. `LEFT JOIN` garde **toutes** les lignes de la table de gauche, ici les élèves. S'il n'y a pas de note, les colonnes de `notes` valent `NULL`. `RIGHT JOIN` fait le symétrique : toutes les lignes de la table de droite, et `NULL` à gauche quand rien ne correspond.
+`INNER JOIN` ne garde que les lignes qui ont une correspondance dans les deux tables : un élève sans note disparaît du résultat. `LEFT JOIN` garde **toutes** les lignes de la table de gauche, ici les élèves. S'il n'y a pas de note, les colonnes de `notes` valent `NULL`. `RIGHT JOIN` fait le symétrique : toutes les lignes de la table de droite, et `NULL` à gauche quand rien ne correspond.
 
 | Type | Résultat |
 | --- | --- |
 | `INNER JOIN` | Intersection : lignes appariées |
-| `LEFT JOIN` | Toutes les lignes de la table de gauche + correspondances à droite |
+| `LEFT JOIN` | Toutes les lignes de la table de gauche, avec leurs correspondances à droite |
 | `RIGHT JOIN` | Symétrique de `LEFT JOIN` |
 
 L'alias `e` pour `etudiants` et `n` pour `notes` évite de réécrire le nom de la table devant chaque colonne. Il devient indispensable quand les deux tables ont une colonne `id`.

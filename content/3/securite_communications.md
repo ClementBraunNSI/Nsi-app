@@ -13,21 +13,21 @@ audience: public
 
 # Sécuriser les communications
 
-Un paquet IP traverse des routeurs qui appartiennent à d'autres. Quelqu'un placé sur le chemin peut le copier. On appelle cela une attaque de l'homme du milieu. Le chiffrement ne cache pas qu'une conversation a lieu, ni toujours vers qui. Il empêche de lire le contenu.
+Un paquet IP traverse des routeurs qui appartiennent à d'autres organisations, et une personne placée sur le chemin peut le copier : on parle d'attaque de l'homme du milieu. Le chiffrement ne cache pas qu'une conversation a lieu, ni toujours avec qui, mais il empêche de lire son contenu.
 
-## Une seule clé
+## Le chiffrement symétrique
 
-Le chiffrement **symétrique** est le plus ancien. Le chiffre de César, la machine Enigma, et aujourd'hui AES (*Advanced Encryption Standard*) en font partie. La même clé sert à chiffrer et à déchiffrer. C'est rapide, et c'est pour cela qu'AES protège l'essentiel du trafic une fois la conversation lancée.
+Le chiffrement **symétrique** est le plus ancien. Le chiffre de César, la machine Enigma et, aujourd'hui, AES (*Advanced Encryption Standard*) en sont des exemples. La même clé sert à chiffrer et à déchiffrer. Ce chiffrement est rapide, c'est pourquoi AES protège l'essentiel du trafic une fois la conversation établie.
 
-Le problème est en amont. Pour utiliser la clé, les deux correspondants doivent déjà la posséder, et l'échanger sans qu'un tiers la lise. Si la clé passe par le même canal que le message, celui qui écoute prend les deux. C'est le problème de l'échange de clés.
+Le problème se pose avant : pour utiliser la clé, les deux correspondants doivent déjà la posséder, et donc l'avoir échangée sans qu'un tiers puisse la lire. Si la clé passe par le même canal que le message, celui qui écoute récupère les deux. C'est le problème de l'échange de clés.
 
-## Une paire de clés
+## Le chiffrement asymétrique
 
-Le chiffrement **asymétrique**, dont RSA dans les années 1970, sépare les rôles. Chaque personne possède une **clé publique**, que tout le monde peut connaître, et une **clé privée**, qu'elle garde. Un message chiffré avec l'une des deux clés ne peut être déchiffré qu'avec l'autre.
+Le chiffrement **asymétrique**, apparu dans les années 1970 avec notamment RSA, sépare les rôles. Chaque personne possède une **clé publique**, que tout le monde peut connaître, et une **clé privée**, qu'elle garde. Un message chiffré avec l'une des deux clés ne peut être déchiffré qu'avec l'autre.
 
-Pour écrire un secret à quelqu'un, on chiffre avec *sa* clé publique. Seule sa clé privée peut déchiffrer. Il n'y a rien de secret à lui envoyer au préalable : sa clé publique peut être affichée. L'image utile est le cadenas ouvert. N'importe qui peut le fermer sur une boîte. Une seule personne a la clé qui le rouvre.
+Pour envoyer un secret à quelqu'un, on chiffre le message avec *sa* clé publique, et seule sa clé privée permet de le déchiffrer. Il n'y a donc rien de secret à échanger au préalable, puisque la clé publique peut être affichée à tous. C'est un peu comme un cadenas ouvert : n'importe qui peut le fermer sur une boîte, mais une seule personne a la clé qui permet de le rouvrir.
 
-C'est beaucoup plus lent que le symétrique. On ne chiffre donc pas une vidéo entière avec RSA. On s'en sert pour les petits secrets, en particulier pour se mettre d'accord sur une clé de session.
+Ce chiffrement est en revanche beaucoup plus lent que le chiffrement symétrique. On ne chiffre donc pas une vidéo entière avec RSA : on s'en sert pour de petits secrets, en particulier pour se mettre d'accord sur une clé de session.
 
 ## Ce que fait HTTPS
 
@@ -37,9 +37,9 @@ D'abord, le serveur prouve qui il est. Il envoie un **certificat**, qui contient
 
 Ensuite, le navigateur invente une clé de session, temporaire, et la chiffre avec la clé publique du serveur. Seul le serveur peut la lire, grâce à sa clé privée. Les deux possèdent alors le même secret, sans l'avoir écrit en clair sur le réseau.
 
-Enfin, toute la suite de la conversation est chiffrée avec cette clé de session, en symétrique, souvent AES. On a utilisé le lent pour transmettre un secret court, et le rapide pour le reste.
+Enfin, toute la suite de la conversation est chiffrée avec cette clé de session, en symétrique, souvent AES. Le chiffrement lent a donc servi à transmettre un secret court, et le chiffrement rapide sert pour tout le reste.
 
-Le cadenas dit que ce mécanisme est en place. Il ne dit pas que le site est honnête. Il dit que l'échange se fait bien avec celui qui a obtenu le certificat, et que le trajet est illisible.
+Le cadenas indique que ce mécanisme est en place, mais il ne garantit pas que le site est honnête. Il garantit seulement que l'échange se fait avec celui qui a obtenu le certificat, et que personne ne peut lire les données en chemin.
 
 ---
 

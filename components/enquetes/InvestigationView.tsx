@@ -322,7 +322,7 @@ export default function InvestigationView({ enquete: firstStage, next }: Props) 
           <form className={`enq-accuse ${verdict === "right" ? "is-solved" : ""} ${twist ? "is-twist" : ""}`} onSubmit={accuse}>
             {twist && stage ? (
               <div className="enq-solved" role="status">
-                <div className="enq-solved-fox is-twist" aria-hidden />
+                <div className={`enq-solved-fox enq-fox-${enquete.slug} is-twist`} aria-hidden />
                 <div>
                   <p className="enq-eyebrow">
                     Coupable désigné : {twist.culprit}. Vraiment ?
@@ -337,7 +337,7 @@ export default function InvestigationView({ enquete: firstStage, next }: Props) 
               </div>
             ) : verdict === "right" && solution ? (
               <div className="enq-solved">
-                <div className="enq-solved-fox" aria-hidden />
+                <div className={`enq-solved-fox enq-fox-${enquete.slug}`} aria-hidden />
                 <div>
                   <p className="enq-eyebrow">{stage ? "Affaire enfin résolue !" : "Affaire résolue !"}</p>
                   <h2>Le coupable est {solution.culprit}.</h2>

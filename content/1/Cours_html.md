@@ -10,13 +10,13 @@ audience: public
 
 # Notice sur HTML
 
-Une page web affichée a d'abord été un fichier texte. Ce fichier ne contient pas seulement les phrases visibles. Il contient aussi des indications qui disent au navigateur : ceci est un titre, ceci est un paragraphe, ceci est une image. Ces indications forment le HTML.
+Une page web affichée a d'abord été un fichier texte. Ce fichier ne contient pas seulement les phrases visibles. Il contient aussi des indications qui précisent au navigateur ce qui est un titre, un paragraphe ou une image. Ces indications forment le HTML.
 
-> **HTML** (*HyperText Markup Language*) est le langage de balisage qui structure le contenu d'une page. Titres, paragraphes, images et liens sont des éléments délimités par des balises.
+> **HTML** (*HyperText Markup Language*) est le langage de balisage qui structure le contenu d'une page. Les titres, les paragraphes, les images et les liens sont des éléments délimités par des balises.
 
-## À quoi ressemble un fichier
+## La structure d'un fichier HTML
 
-Tout document HTML5 commence à peu près de la même façon. Le navigateur a besoin de savoir dans quelle langue est la page, comment lire les caractères, et quel titre afficher dans l'onglet. Le reste, ce qui s'affiche vraiment, se trouve dans le corps du document.
+Tout document HTML5 commence à peu près de la même façon. Le navigateur a besoin de savoir dans quelle langue est la page, comment lire les caractères, et quel titre afficher dans l'onglet. Ce qui s'affiche vraiment se trouve ensuite dans le corps du document.
 
 ```html
 <!DOCTYPE html>
@@ -34,13 +34,13 @@ Tout document HTML5 commence à peu près de la même façon. Le navigateur a be
 </html>
 ```
 
-`<!DOCTYPE html>` prévient le navigateur qu'il s'agit d'HTML5. La balise `<html>` englobe tout le document. Dans `<head>`, on range ce qui décrit la page sans s'afficher : le titre de l'onglet, l'encodage des caractères. `UTF-8` est cet encodage. Il sait représenter les accents, ce qui évite les « Ã© » à la place des « é ». `<body>` contient enfin ce que la personne devant l'écran voit : titres, paragraphes, images.
+`<!DOCTYPE html>` prévient le navigateur qu'il s'agit d'HTML5. La balise `<html>` englobe tout le document. La balise `<head>` contient les informations qui décrivent la page sans s'afficher, comme le titre de l'onglet ou l'encodage des caractères. L'encodage `UTF-8` sait représenter les accents, ce qui évite d'obtenir « Ã© » à la place de « é ». Enfin, `<body>` contient ce que la personne devant l'écran voit, c'est-à-dire les titres, les paragraphes et les images.
 
 <HtmlStructureExplorer />
 
-## Les balises à écrire tout de suite
+## Les balises principales
 
-Les titres vont de `<h1>` à `<h6>`. Le `h1` est le titre principal de la page, pas « le plus gros texte » : c'est le navigateur, ou la feuille de style, qui décide de la taille. On n'en met en général qu'un seul.
+Les titres vont de `<h1>` à `<h6>`. Le `h1` est le titre principal de la page. Ce n'est pas forcément le texte le plus gros, car la taille est choisie par le navigateur ou par la feuille de style. On n'en met en général qu'un seul.
 
 ```html
 <h1>Mon titre principal</h1>
@@ -59,13 +59,13 @@ Un lien utilise `<a>`, et l'adresse se place dans l'attribut `href`. Le texte en
 <a href="https://www.example.com">Visiter Example.com</a>
 ```
 
-Une image utilise `<img>`. Elle n'a pas de balise fermante : tout tient dans les attributs. `src` indique où trouver le fichier. `alt` décrit l'image pour quelqu'un qui ne la voit pas, et pour l'auteur de la page le jour où le fichier manque.
+Une image utilise `<img>`. Elle n'a pas de balise fermante, et toutes ses informations sont données par ses attributs. `src` indique où trouver le fichier. `alt` décrit l'image pour quelqu'un qui ne la voit pas, et pour l'auteur de la page le jour où le fichier manque.
 
 ```html
 <img src="source de l'image" alt="Mon image">
 ```
 
-Les listes ont deux formes, et on les mélange souvent. `<ul>` donne une liste à puces, sans ordre. `<ol>` numérote les éléments. Dans les deux cas, chaque ligne est un `<li>`.
+Il existe deux formes de listes, que l'on confond souvent. `<ul>` donne une liste à puces, sans ordre. `<ol>` numérote les éléments. Dans les deux cas, chaque ligne est un `<li>`.
 
 ```html
 <ul>

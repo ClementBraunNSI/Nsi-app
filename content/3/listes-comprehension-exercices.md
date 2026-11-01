@@ -280,7 +280,7 @@ Exemple : `sigle("numérique et sciences informatiques")` renvoie `"NSI"`.
 </Indice>
 <Indice>
 
-Une compréhension avec un filtre sur `len(mot) > 2` construit la liste des initiales ; `"".join(...)` les colle.
+Une compréhension avec un filtre sur `len(mot) > 2` construit la liste des initiales. `"".join(...)` les colle.
 
 </Indice>
 <Indice>
@@ -383,7 +383,7 @@ Une compréhension d'**ensemble** s'écrit avec des accolades : `{c for c in mot
 </Indice>
 <Indice>
 
-`mot.count(c)` compte les apparitions de `c` ; `sorted(...)` renvoie une liste triée.
+`mot.count(c)` compte les apparitions de `c`. `sorted(...)` renvoie une liste triée.
 
 </Indice>
 <Indice>
@@ -574,7 +574,7 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 <Enonce>
 ### Dictionnaire par compréhension
 
-Écrire une fonction `index_longueurs(mots)` qui renvoie, par compréhension de dictionnaire, le dictionnaire mot → longueur.
+Écrire une fonction `index_longueurs(mots)` qui renvoie, par compréhension de dictionnaire, le dictionnaire qui associe à chaque mot sa longueur.
 
 Exemple : `["le", "renard"]` donne `{"le": 2, "renard": 6}`.
 
@@ -738,7 +738,7 @@ Contrainte : sans `min` ni `max`.
 <Indices>
 <Indice>
 
-Une expression conditionnelle s'écrit `a if condition else b` ; elle peut se placer **avant** le `for` de la compréhension.
+Une expression conditionnelle s'écrit `a if condition else b`. Elle peut se placer **avant** le `for` de la compréhension.
 
 </Indice>
 <Indice>
@@ -958,7 +958,7 @@ Rappel : la case `(i, j)` du produit vaut la somme des `a[i][k] × b[k][j]`.
 <Indices>
 <Indice>
 
-La matrice résultat est une liste de lignes ; chaque case est une `sum(...)` sur `k`.
+La matrice résultat est une liste de lignes. Chaque case est une `sum(...)` sur `k`.
 
 </Indice>
 <Indice>
@@ -1081,11 +1081,11 @@ assert lignes_for == [], "Pas de boucle for en dehors des compréhensions."
 
 **Les fonctions d'analyse**
 - `titres_du_genre(films, genre)` : pour composer une soirée à thème. Renvoie la liste triée des titres du genre.
-- `par_decennie(films)` : pour équilibrer les époques. Renvoie un dictionnaire décennie → nombre de films, la décennie étant écrite `"1980s"`.
+- `par_decennie(films)` : pour équilibrer les époques. Renvoie un dictionnaire qui associe à chaque décennie, écrite `"1980s"`, son nombre de films.
 - `prolifique(films)` : pour la rétrospective de l'année. Renvoie le réalisateur qui a le plus de films dans la base (le premier dans l'ordre alphabétique en cas d'égalité).
-- `moyenne_par_genre(films)` : pour savoir quels genres plaisent le plus. Renvoie un dictionnaire genre → note moyenne des films du genre, arrondie au dixième.
+- `moyenne_par_genre(films)` : pour savoir quels genres plaisent le plus. Renvoie un dictionnaire qui associe à chaque genre la note moyenne de ses films, arrondie au dixième.
 - `duos(films)` : repère les acteurs qui tournent souvent ensemble. Renvoie un dictionnaire dont les clés sont les couples `(a, b)` avec `a < b` ayant joué ensemble dans **au moins deux** films, et les valeurs le nombre de ces films.
-- `similaires(films, titre, n)` : la suggestion « dans le même esprit » du programme papier. Renvoie les titres des `n` autres films qui partagent le plus de genres avec `titre` (puis meilleure note, puis ordre alphabétique) ; les films sans genre commun sont exclus.
+- `similaires(films, titre, n)` : la suggestion « dans le même esprit » du programme papier. Renvoie les titres des `n` autres films qui partagent le plus de genres avec `titre` (puis meilleure note, puis ordre alphabétique). Les films sans genre commun sont exclus.
 - `matrice_genres(films)` : montre quels genres vont souvent ensemble. Renvoie le tuple `(genres, m)` : la liste triée des genres et la matrice carrée `m` où `m[i][j]` compte les films qui ont à la fois le genre `i` et le genre `j` (sur la diagonale : le nombre de films du genre).
 
 <Indices>
@@ -1218,9 +1218,9 @@ assert "append" not in PROGRAMME, "Sans append."
 <Enonce>
 ### Casser le chiffre de Vigenère
 
-**Contexte.** Le club de cryptographie a intercepté des messages chiffrés avec le chiffre de Vigenère, mais sans la clé. Pendant trois siècles, ce chiffre a été jugé incassable ; il cède pourtant à une analyse statistique. Le projet construit l'outil qui retrouve la longueur de la clé, puis la clé elle-même, puis le texte en clair. **Chaque fonction n'utilise que des compréhensions** (aucune boucle `for` ou `while` hors compréhension).
+**Contexte.** Le club de cryptographie a intercepté des messages chiffrés avec le chiffre de Vigenère, mais sans la clé. Pendant trois siècles, ce chiffre a été jugé incassable. Il cède pourtant à une analyse statistique. Le projet construit l'outil qui retrouve la longueur de la clé, puis la clé elle-même, puis le texte en clair. **Chaque fonction n'utilise que des compréhensions** (aucune boucle `for` ou `while` hors compréhension).
 
-**Le chiffre** : chaque lettre (`a` à `z`) est décalée d'un rang donné par la lettre correspondante d'une clé répétée (`a` décale de 0, `b` de 1…) ; les autres caractères ne bougent pas et ne consomment pas de lettre de clé. Exemple : `chiffrer("attaque au renard", "nsi")` donne `"nlbnicr sc ewvnjl"`.
+**Le chiffre** : chaque lettre (`a` à `z`) est décalée d'un rang donné par la lettre correspondante d'une clé répétée (`a` décale de 0, `b` de 1…). Les autres caractères ne bougent pas et ne consomment pas de lettre de clé. Exemple : `chiffrer("attaque au renard", "nsi")` donne `"nlbnicr sc ewvnjl"`.
 
 **L'idée de l'attaque** : l'**indice de coïncidence** d'un texte est la probabilité que deux lettres tirées au hasard dans ce texte soient identiques. Il vaut environ 0,08 pour un texte français sans accents et 0,038 pour des lettres au hasard. Si l'on découpe un message chiffré en colonnes (une lettre sur `L`) avec la bonne longueur de clé `L`, chaque colonne n'a subi qu'un seul décalage et retrouve l'indice du français.
 

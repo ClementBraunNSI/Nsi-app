@@ -14,15 +14,15 @@ audience: public
 # Mini-projets de synthèse
 
 Le but de ces quatre mini-projets est de réinvestir plusieurs chapitres du programme sur un travail de 2 à 6 heures.
-Chaque sujet ci-dessous se suit comme un projet : données de départ, fonctions à écrire, exemple chiffré, puis fichier à rendre.
+Chaque sujet se présente comme un projet, avec des données de départ, des fonctions à écrire, un exemple chiffré et un fichier à rendre.
 
-On en choisit un. Le programme principal affiche l'exemple du sujet, pour qu'on puisse contrôler le résultat sans tout retaper.
+Il faut en choisir un. Le programme principal affiche l'exemple du sujet, pour qu'on puisse contrôler le résultat sans tout retaper.
 
 ## 1. Réseau de villes <Icone nom="route" />
 
 Un graphe pondéré relie des villes. Le poids d'une arête est une distance en kilomètres. On calcule un plus court chemin avec l'algorithme de Dijkstra, puis on affiche le trajet et son coût.
 
-Graphe de départ. Les arêtes ne sont pas orientées : Lyon-Paris vaut aussi Paris-Lyon.
+Voici le graphe de départ. Les arêtes ne sont pas orientées : la route Lyon-Paris est aussi la route Paris-Lyon.
 
 | Arête | Distance (km) |
 | --- | --- |
@@ -32,7 +32,7 @@ Graphe de départ. Les arêtes ne sont pas orientées : Lyon-Paris vaut aussi Pa
 | Paris-Marseille | 770 |
 | Marseille-Lille | 1000 |
 
-Le plus court chemin de Lyon à Lille passe par Paris : 460 + 220 = 680 km. Lyon-Marseille-Lille vaut 1310 km. Paris-Marseille-Lille n'est pas un chemin de Lyon vers Lille au départ.
+Le plus court chemin de Lyon à Lille passe par Paris : 460 + 220 = 680 km, alors que le trajet Lyon-Marseille-Lille fait 1310 km. Le trajet Paris-Marseille-Lille, lui, ne part pas de Lyon.
 
 ```python
 graphe = {
@@ -46,7 +46,7 @@ graphe = {
 <ExerciseTabs courseId="term_mini_villes" courseTitle="Réseau de villes">
   <ExerciseSection id="mini-villes-1" label="Le graphe" type="lecture">
     <Enonce>
-      Écrire `voisins(graphe, ville)` qui renvoie le dictionnaire des villes atteignables et de leurs distances. `voisins(graphe, "Lyon")` vaut `{"Paris": 460, "Marseille": 310}`. Ville absente : renvoyer `{}`.
+      Écrire `voisins(graphe, ville)` qui renvoie le dictionnaire des villes atteignables et de leurs distances. `voisins(graphe, "Lyon")` vaut `{"Paris": 460, "Marseille": 310}`. Si la ville est absente, la fonction renvoie `{}`.
 
       Écrire `ajouter_route(graphe, a, b, km)`. Elle ajoute l'arête dans les deux sens. Une distance inférieure ou égale à 0 est refusée : la fonction renvoie `False` et le graphe ne change pas.
     </Enonce>
@@ -75,13 +75,13 @@ graphe = {
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `villes.py` : le graphe de l'exemple, `voisins`, `ajouter_route`, `plus_court_chemin`, et un affichage du trajet Lyon-Lille. Commentaire d'en-tête avec le nom et la classe. En quelques lignes sous le résultat, dire pourquoi 680 est meilleur que 1310 : on compare des sommes de poids, pas le nombre de villes.
+**Travail à rendre.** Il faut rendre un fichier `villes.py` qui contient le graphe de l'exemple, `voisins`, `ajouter_route`, `plus_court_chemin` et un affichage du trajet Lyon-Lille, avec un commentaire d'en-tête indiquant le nom et la classe. Sous le résultat, expliquer en quelques lignes pourquoi 680 est meilleur que 1310 : on compare des sommes de poids, et non des nombres de villes.
 
 ## 2. Catalogue de véhicules <Icone nom="car" />
 
-Une petite base SQL décrit des véhicules. Une route d'API renvoie du JSON. Une page, ou un script, consulte ce catalogue.
+Une petite base SQL décrit des véhicules, une route d'API renvoie des données au format JSON, et une page ou un script consulte ce catalogue.
 
-Trois lignes de départ :
+Voici les trois lignes de départ :
 
 | immat | marque | modele | prix_jour | places | etat |
 | --- | --- | --- | --- | --- | --- |
@@ -138,7 +138,7 @@ Trois lignes de départ :
     <Enonce>
       Exposer `GET /vehicules`. Sans paramètre, la réponse est la liste JSON des véhicules disponibles, dans l'ordre de la requête. Avec `?places=4`, seul le Ducato reste : on filtre `places >= 4`.
 
-      Exemple de corps, prix en nombre, pas en texte :
+      Voici un exemple de corps de réponse, dans lequel le prix est un nombre et non un texte :
 
       ```json
       [
@@ -148,12 +148,12 @@ Trois lignes de départ :
 
       Une immatriculation inconnue sur `GET /vehicules/ZZ-000-ZZ` répond 404, avec `{"erreur": "Vehicule introuvable"}`. Le catalogue en mémoire ou en base ne change pas.
 
-      L'interface affiche au minimum l'immatriculation, la marque, le modèle et le prix. Un champ de recherche redemande la liste filtrée. On ne reconstruit pas le HTML dans la requête SQL : la requête lit, la page affiche.
+      L'interface affiche au minimum l'immatriculation, la marque, le modèle et le prix. Un champ de recherche redemande la liste filtrée. Le HTML n'est pas construit dans la requête SQL : la requête se contente de lire les données, et c'est la page qui les affiche.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Le script SQL (`schema.sql` avec la création, les trois insertions et la requête), le code de la route `GET /vehicules`, et la page ou le script qui affiche la Peugeot et le Ducato. Commentaire d'en-tête avec le nom et la classe.
+**Travail à rendre.** Il faut rendre le script SQL (`schema.sql`, avec la création, les trois insertions et la requête), le code de la route `GET /vehicules`, et la page ou le script qui affiche la Peugeot et le Ducato, avec un commentaire d'en-tête indiquant le nom et la classe.
 
 ## 3. Analyse de logs <Icone nom="scroll-text" />
 
@@ -170,7 +170,7 @@ Les lignes ont cette forme, une par événement :
 2026-03-12 08:04:00 INFO arret
 ```
 
-Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. Le mot `disque` apparaît 2 fois. La première erreur est à `08:02:10`.
+Sur ce fichier, on attend 6 lignes, dont 3 `INFO`, 1 `WARN` et 2 `ERROR`. Le mot `disque` apparaît 2 fois, et la première erreur est à `08:02:10`.
 
 <ExerciseTabs courseId="term_mini_logs" courseTitle="Analyse de logs">
   <ExerciseSection id="mini-logs-1" label="Une passe" type="python">
@@ -196,7 +196,7 @@ Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. L
 
       Une ligne vide est ignorée. Une ligne sans niveau parmi `INFO`, `WARN`, `ERROR` compte dans `lignes` et dans une clé `AUTRE`, sans faire planter la fonction.
 
-      Écrire `compter_mot(chemin, mot)` qui renvoie le nombre de lignes contenant `mot`. `compter_mot(chemin, "disque")` vaut `2`. La comparaison est exacte sur le mot isolé, pas sur un morceau : `dis` ne compte pas `disque`.
+      Écrire `compter_mot(chemin, mot)` qui renvoie le nombre de lignes contenant `mot`. `compter_mot(chemin, "disque")` vaut `2`. La comparaison porte sur le mot entier, et non sur un morceau de mot : `dis` ne compte pas `disque`.
 
     <Correction>
     ```python
@@ -249,23 +249,23 @@ Indicateurs attendus sur ce fichier : 6 lignes, 3 `INFO`, 1 `WARN`, 2 `ERROR`. L
     <Enonce>
       Voici deux façons d'obtenir les lignes `ERROR` dans l'ordre du fichier.
 
-      - Stratégie A : une passe, on ajoute la ligne dès qu'on voit `ERROR`. On lit n lignes une fois.
-      - Stratégie B : on charge toutes les lignes, on les trie par l'heure, puis on filtre `ERROR`. Le tri domine.
+      - Stratégie A : on parcourt le fichier une seule fois, en ajoutant chaque ligne dès qu'elle contient `ERROR`. Chacune des n lignes est donc lue une fois.
+      - Stratégie B : on charge toutes les lignes, on les trie par heure, puis on garde les lignes `ERROR`. C'est le tri qui coûte le plus cher.
 
-      Sur le fichier d'exemple, les deux stratégies renvoient les deux lignes d'erreur, d'abord `08:02:10`, puis `08:03:40`. Le fichier est déjà trié : les résultats coïncident. Ils peuvent diverger si une ligne plus tardive est écrite avant une ligne plus ancienne : le dire dans un commentaire.
+      Sur le fichier d'exemple, les deux stratégies renvoient les deux lignes d'erreur, d'abord `08:02:10`, puis `08:03:40`. Comme le fichier est déjà trié, les résultats sont identiques. Ils pourraient être différents si une ligne plus tardive était écrite avant une ligne plus ancienne : l'expliquer dans un commentaire.
 
-      Sous le programme, justifier les coûts. A est linéaire en le nombre de lignes. B coûte le tri, de l'ordre de n log n, plus la lecture. Pour ce fichier de 6 lignes l'écart ne se voit pas. Dire à partir de quel besoin B devient utile : quand l'ordre du fichier n'est pas l'ordre des heures.
+      Sous le programme, justifier les coûts : A est linéaire en fonction du nombre de lignes, alors que B coûte la lecture plus le tri, de l'ordre de n log n. Pour ce fichier de 6 lignes, l'écart ne se voit pas. Expliquer enfin dans quel cas B devient utile, c'est-à-dire quand l'ordre du fichier n'est pas celui des heures.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** `logs.py`, le fichier `systeme.log` de l'exemple, les fonctions, l'affichage des indicateurs (6, 3, 1, 2 et le mot `disque`), et le commentaire qui compare les deux stratégies. Commentaire d'en-tête avec le nom et la classe.
+**Travail à rendre.** Il faut rendre `logs.py`, le fichier `systeme.log` de l'exemple, les fonctions, l'affichage des indicateurs (6, 3, 1, 2 et le mot `disque`) et le commentaire qui compare les deux stratégies, avec un commentaire d'en-tête indiquant le nom et la classe.
 
 ## 4. Simulateur d'épreuve pratique <Icone nom="dices" />
 
-Une banque de questions est tirée au sort. Un test simple dit si la réponse proposée est celle attendue. Le sujet ne corrige pas une copie entière : il vérifie une réponse contre le jeu d'essai de la question.
+Une question est tirée au sort dans une banque, et un test simple indique si la réponse proposée est celle attendue. Le programme ne corrige pas une copie entière : il compare seulement une réponse à celle prévue pour la question.
 
-Banque minimale, à écrire dans le fichier :
+Voici la banque minimale à écrire dans le fichier :
 
 ```python
 banque = [
@@ -301,9 +301,9 @@ banque = [
     ```
     </CodeDepart>
     <Enonce>
-      Écrire `ajouter_question(banque, identifiant, enonce, reponse)`. Identifiant déjà présent : renvoyer `False`, la banque ne change pas. Sinon ajouter le dictionnaire et renvoyer `True`.
+      Écrire `ajouter_question(banque, identifiant, enonce, reponse)`. Si l'identifiant est déjà présent, la fonction renvoie `False` sans modifier la banque. Sinon, elle ajoute le dictionnaire et renvoie `True`.
 
-      Écrire `tirer(banque, rng)` qui choisit une question. `rng` est un générateur dont la graine est fixée (`random.Random(0)`), pour que deux lancements avec la même graine donnent la même question. Banque vide : renvoyer `None`.
+      Écrire `tirer(banque, rng)` qui choisit une question. `rng` est un générateur dont la graine est fixée (`random.Random(0)`), pour que deux lancements avec la même graine donnent la même question. Si la banque est vide, elle renvoie `None`.
 
       Avec la graine 0 et la banque ci-dessus, afficher l'`id` tiré et vérifier qu'un second appel à `tirer` avec un nouveau `Random(0)` redonne le même `id`.
 
@@ -408,11 +408,11 @@ banque = [
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** `epreuve.py` : la banque d'au moins trois questions, `ajouter_question`, `tirer`, `valider`, le bloc de tests, et le dialogue. Commentaire d'en-tête avec le nom et la classe.
+**Travail à rendre.** Il faut rendre `epreuve.py`, qui contient la banque d'au moins trois questions, `ajouter_question`, `tirer`, `valider`, le bloc de tests et le dialogue, avec un commentaire d'en-tête indiquant le nom et la classe.
 
-## 5. Ce qui est regardé sur les quatre sujets
+## 5. Critères d'évaluation communs aux quatre sujets
 
 1. Le résultat de l'exemple est celui annoncé (680 km, les deux véhicules disponibles, les compteurs du log, ou les trois `valider`).
-2. Les fonctions se relisent : noms stables, cas refusé qui ne modifie pas les données.
-3. Le choix d'algorithme est justifié sur l'exemple, pas seulement nommé.
+2. Les fonctions sont lisibles, leurs noms correspondent au sujet, et un cas refusé ne modifie pas les données.
+3. Le choix de l'algorithme est justifié sur l'exemple, et pas seulement nommé.
 4. Le déroulement peut s'expliquer à l'oral, sur son jeu d'essai.

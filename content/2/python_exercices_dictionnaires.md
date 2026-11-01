@@ -183,7 +183,7 @@ Contrainte : avec une boucle.
 <Indices>
 <Indice>
 
-`for produit in stock:` parcourt les clés ; `stock[produit]` donne la quantité.
+`for produit in stock:` parcourt les clés. `stock[produit]` donne la quantité.
 
 </Indice>
 <Indice>
@@ -243,7 +243,7 @@ Partir d'un dictionnaire vide et parcourir le mot.
 </Indice>
 <Indice>
 
-Si le caractère est déjà une clé, augmenter sa valeur ; sinon, créer la clé avec la valeur 1.
+Si le caractère est déjà une clé, augmenter sa valeur. Sinon, créer la clé avec la valeur 1.
 
 </Indice>
 <Indice>
@@ -583,7 +583,7 @@ Exemple : avec `{"le": "the", "renard": "fox"}`, `"le renard roux"` donne `"the 
 <Indices>
 <Indice>
 
-`phrase.split(" ")` découpe la phrase en liste de mots ; `" ".join(liste)` recolle une liste de mots.
+`phrase.split(" ")` découpe la phrase en liste de mots. `" ".join(liste)` recolle une liste de mots.
 
 </Indice>
 <Indice>
@@ -639,7 +639,7 @@ assert traduire("bonjour", {}) == "bonjour", "Dictionnaire vide."
 <Indices>
 <Indice>
 
-Parcourir le panier ; pour chaque article, chercher son prix dans l'autre dictionnaire.
+Parcourir le panier. Pour chaque article, chercher son prix dans l'autre dictionnaire.
 
 </Indice>
 <Indice>
@@ -1056,10 +1056,10 @@ assert top("a b", 10) == ["a", "b"] and top("", 3) == [], "Moins de k mots."
 <Enonce>
 ### Index d'un moteur de recherche
 
-Un moteur de recherche prépare un **index inversé** : pour chaque mot, la liste des documents qui le contiennent.
+Un moteur de recherche prépare un **index inversé**, qui donne pour chaque mot la liste des documents qui le contiennent.
 
 `documents` associe un nom de document à son texte (en minuscules, mots séparés par des espaces). Écrire :
-- `indexer(documents)` : renvoie un dictionnaire mot → liste **triée** et sans doublon des noms de documents qui contiennent ce mot ;
+- `indexer(documents)` : renvoie un dictionnaire qui associe à chaque mot la liste **triée** et sans doublon des noms de documents qui le contiennent ;
 - `rechercher(index, requete)` : renvoie la liste triée des documents qui contiennent **tous** les mots de la requête.
 
 <Indices>
@@ -1379,7 +1379,7 @@ Pour `separation`, avancer « par vagues » : la vague 0 contient `a`, la vague 
 </Indice>
 <Indice>
 
-`texte.split()` découpe en mots ; `mot.rstrip(".,!?")` retire la ponctuation finale.
+`texte.split()` découpe en mots. `mot.rstrip(".,!?")` retire la ponctuation finale.
 
 </Indice>
 <Indice>

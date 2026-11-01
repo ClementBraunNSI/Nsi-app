@@ -93,7 +93,7 @@ C'est comme une file d'attente à la cantine. On ajoute à la fin (queue), on re
     1.  Parcourir la chaîne caractère par caractère.
     2.  Si on voit `(`, on l'empile.
     3.  Si on voit `)`, on dépile.
-        *   Si la pile est vide avant de dépiler -> Erreur (trop de fermantes).
+        *   Si la pile est vide avant de dépiler, c'est une erreur (il y a trop de parenthèses fermantes).
     4.  À la fin, la pile doit être vide.
     
     Écrire la fonction `verifier_parentheses(expression)`.

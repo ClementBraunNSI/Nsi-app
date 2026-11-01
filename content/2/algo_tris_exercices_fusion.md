@@ -312,7 +312,7 @@ assert not re.search(r"\bsorted\s*\(|\.sort\s*\(", PROGRAMME), "Sans sort ni sor
 
 Écrire une fonction `inserer(t, x)` qui insère `x` à sa place dans la liste **déjà triée** `t`, sur place, pour qu'elle reste triée.
 
-Contrainte : sans `insert`, `sort` ni `sorted` ; ajouter `x` à la fin puis le faire reculer.
+Contrainte : sans `insert`, `sort` ni `sorted`. Ajouter `x` à la fin puis le faire reculer.
 
 <Indices>
 <Indice>
@@ -725,7 +725,7 @@ Le coût d'un tri se mesure en nombre de **comparaisons** entre éléments.
 
 Écrire une fonction `comparaisons_insertion(t)` qui trie une **copie** de `t` par insertion et renvoie le nombre de comparaisons `t[j - 1] > t[j]` effectuées.
 
-Pour une liste de `n` éléments déjà triée, le tri par insertion n'en fait que `n - 1` ; dans l'ordre inverse, il en fait `n(n - 1) / 2`.
+Pour une liste de `n` éléments déjà triée, le tri par insertion n'en fait que `n - 1`. Dans l'ordre inverse, il en fait `n(n - 1) / 2`.
 
 <Indices>
 <Indice>
@@ -1249,7 +1249,7 @@ Maintenir trois zones : les 0 au début, les 2 à la fin, les 1 au milieu, et un
 </Indice>
 <Indice>
 
-Trois indices : `bas` (fin des 0), `i` (case examinée) et `haut` (début des 2). Un 0 est échangé vers `bas`, un 2 vers `haut` ; attention, après un échange avec `haut`, la nouvelle case `i` n'a pas encore été examinée.
+Trois indices : `bas` (fin des 0), `i` (case examinée) et `haut` (début des 2). Un 0 est échangé vers `bas`, un 2 vers `haut`. Attention, après un échange avec `haut`, la nouvelle case `i` n'a pas encore été examinée.
 
 </Indice>
 <Indice>
@@ -1323,7 +1323,7 @@ Trier d'abord les intervalles par début (ici, `sorted` est permis) : deux inter
 </Indice>
 <Indice>
 
-Parcourir la liste triée en gardant l'intervalle en cours : si le suivant commence avant (ou pile à) sa fin, on l'absorbe en prolongeant la fin ; sinon, on clôt l'intervalle en cours.
+Parcourir la liste triée en gardant l'intervalle en cours : si le suivant commence avant (ou pile à) sa fin, on l'absorbe en prolongeant la fin. Sinon, on clôt l'intervalle en cours.
 
 </Indice>
 <Indice>
@@ -1379,10 +1379,10 @@ assert fusionner_intervalles([(1, 2), (3, 4)]) == [(1, 2), (3, 4)], "Séparés :
 **Règles communes** : chaque fonction de tri renvoie le tuple `(liste_triee, comparaisons)`, sans modifier la liste reçue ni utiliser `sort` ou `sorted`. Le comptage suit des règles fixées, pour que tous les groupes trouvent les mêmes nombres.
 
 **Les fonctions du banc d'essai**
-- `selection(t)` : tri par sélection ; chaque comparaison faite pendant la recherche du minimum compte.
-- `insertion(t)` : tri par insertion ; chaque test `t[j - 1] > t[j]` compte, y compris celui qui arrête le recul d'un élément.
-- `bulles(t)` : tri à bulles ; le passage numéro `p` (à partir de 0) compare les paires d'indices `0` à `n - 2 - p`, et l'on s'arrête après un passage sans échange (ou quand il ne reste plus de paire).
-- `fusion(t)` : tri fusion récursif ; la liste est coupée en `t[:m]` et `t[m:]` avec `m = len(t) // 2`, et chaque comparaison faite pendant la fusion compte.
+- `selection(t)` : tri par sélection. Chaque comparaison faite pendant la recherche du minimum compte.
+- `insertion(t)` : tri par insertion. Chaque test `t[j - 1] > t[j]` compte, y compris celui qui arrête le recul d'un élément.
+- `bulles(t)` : tri à bulles. Le passage numéro `p` (à partir de 0) compare les paires d'indices `0` à `n - 2 - p`, et l'on s'arrête après un passage sans échange (ou quand il ne reste plus de paire).
+- `fusion(t)` : tri fusion récursif. La liste est coupée en `t[:m]` et `t[m:]` avec `m = len(t) // 2`, et chaque comparaison faite pendant la fusion compte.
 - `profil(t)` : le tableau présenté dans l'exposé. Renvoie le dictionnaire `{"bulles": …, "fusion": …, "insertion": …, "sélection": …}` des comparaisons de chaque tri sur `t`.
 - `plus_econome(t)` : la conclusion de l'expérience. Renvoie le nom de l'algorithme qui fait le moins de comparaisons sur `t` (le premier dans l'ordre alphabétique en cas d'égalité).
 - `liste_test(n, sorte)` : fabrique les listes de l'expérience, toujours les mêmes pour pouvoir comparer. Renvoie une liste de `n` entiers de 0 à `n - 1`, `sorte` valant `"triee"`, `"inverse"` ou `"melangee"` (pour cette dernière, `random.Random(n).shuffle` sur la liste triée).
@@ -1395,12 +1395,12 @@ Partir des tris de la fiche, travailler sur une copie et ajouter un compteur. Le
 </Indice>
 <Indice>
 
-Vérifier les compteurs sur des cas connus : sélection sur 10 éléments, toujours 45 comparaisons ; insertion sur une liste triée, `n - 1`.
+Vérifier les compteurs sur des cas connus : sélection sur 10 éléments, toujours 45 comparaisons. Insertion sur une liste triée, `n - 1`.
 
 </Indice>
 <Indice>
 
-`profil` appelle les quatre tris ; `plus_econome` cherche le minimum dans le dictionnaire.
+`profil` appelle les quatre tris. `plus_econome` cherche le minimum dans le dictionnaire.
 
 </Indice>
 <Indice>
@@ -1552,7 +1552,7 @@ assert not re.search(r"\bsorted\s*\(|\.sort\s*\(", PROGRAMME), "Sans sort ni sor
 **Les fonctions du catalogue**
 - `cle(titre)` : la clé de rangement d'un titre, utilisée par toutes les autres fonctions pour comparer. Renvoie le titre en minuscules, accents retirés (`àâäéèêëîïôöùûüç` deviennent `aaaeeeeiioouuuc`), article de tête retiré (`le `, `la `, `les `, `l'`).
 - `trier(titres)` : range un lot de nouveaux titres. Renvoie une nouvelle liste triée par clé, **stable** (deux titres de même clé gardent leur ordre).
-- `fusionner(a, b)` : réunit les deux catalogues triés. Renvoie le catalogue fusionné, trié ; un titre de `b` dont la clé existe déjà dans `a` n'est pas ajouté.
+- `fusionner(a, b)` : réunit les deux catalogues triés. Renvoie le catalogue fusionné, trié. Un titre de `b` dont la clé existe déjà dans `a` n'est pas ajouté.
 - `chercher(catalogue, titre)` : la recherche d'un élève qui connaît le titre exact. Renvoie l'indice du titre de même clé dans le catalogue trié, ou `-1`, par **recherche dichotomique**.
 - `commencant_par(catalogue, debut)` : la recherche pendant la frappe, quand seul le début du titre est tapé. Renvoie la liste des titres dont la clé commence par `cle(debut)`, en trouvant le premier par dichotomie puis en avançant.
 - `doublons(titres)` : signale les livres présents en double après la fusion. Renvoie la liste triée des clés partagées par plusieurs titres.

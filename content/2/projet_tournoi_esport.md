@@ -85,7 +85,7 @@ Deux listes parallèles mémorisent les données : `scores[i]` est le score de `
       scores = [12, 18, 15]
       ```
 
-      `moyenne(scores)` vaut `15.0`. La somme vaut 45, il y a 3 équipes.
+      `moyenne(scores)` vaut `15.0`, car la somme vaut 45 et il y a 3 équipes.
 
     <Correction>
     ```python
@@ -222,7 +222,7 @@ Deux listes parallèles mémorisent les données : `scores[i]` est le score de `
 
 ## 2. Simulation <Icone nom="tv" />
 
-Le programme principal enchaîne inscription, scores, moyenne arrondie, vainqueurs et classement.
+Le programme principal enchaîne l'inscription des équipes, la saisie des scores, le calcul de la moyenne arrondie, l'affichage des vainqueurs et le classement.
 
 Saisies de référence : `Lynx`, `Hiboux`, `Renards`, `fin`, puis les scores 12, 18 et 15.
 
@@ -250,10 +250,10 @@ Classement :
 
 `round(moyenne([10, 14, 14]), 2)` vaut `12.67`.
 
-**Ce qu'on rend.** Un fichier `tournoi.py` : commentaire d'en-tête avec le nom et la classe, les cinq fonctions, et un programme principal qui reproduit le récapitulatif.
+**Travail à rendre.** Il faut rendre un fichier `tournoi.py` qui contient un commentaire d'en-tête avec le nom et la classe, les cinq fonctions et un programme principal qui reproduit le récapitulatif.
 
 ## 3. Pour aller plus loin
 
 *   **Une seule liste.** Remplacer les deux listes par une liste de tuples `(nom, score)` dès la saisie. Les fonctions de moyenne et de vainqueurs lisent cette liste-là.
-*   **Seuil.** `qualifies(couples, seuil)` renvoie une nouvelle liste avec les équipes dont le score est supérieur ou égal au seuil, sans effacer la liste d'origine. Seuil 15 sur l'exemple principal : Hiboux et Renards.
+*   **Seuil.** `qualifies(couples, seuil)` renvoie une nouvelle liste avec les équipes dont le score est supérieur ou égal au seuil, sans effacer la liste d'origine. Avec un seuil de 15 sur l'exemple principal, on obtient Hiboux et Renards.
 *   **Deuxième manche.** Demander un second score par équipe, l'additionner au premier, puis recalculer le classement.

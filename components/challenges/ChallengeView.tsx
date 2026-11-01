@@ -1,12 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { Check, ChevronDown, Flame, Trophy, Users } from "lucide-react";
+import { Check, ChevronDown, Flame, Timer, Trophy, Users } from "lucide-react";
 import type { LabExercise } from "@/app/actions/getExercises";
-import { checkChallenge } from "@/app/actions/challenges";
+import { checkChallenge, startChallenge } from "@/app/actions/challenges";
 import type { Achievement } from "@/lib/achievements";
-import { challengeAchievement, type MyChallenge } from "@/lib/challenges";
+import type { EvaluationExercise } from "@/lib/evaluation-subject";
+import { challengeAchievement, challengeDeadline, type MyChallenge } from "@/lib/challenges";
 import { ExerciseStatement } from "@/components/lab/ExerciseStatement";
 import { ExerciseWorkspace } from "@/components/lab/ExerciseWorkspace";
 
@@ -20,10 +22,9 @@ function asAchievement(id: string): Achievement | null {
   return { id: item.id, title: item.title, description: item.description, icon: Trophy, color: "", condition: () => false };
 }
 
-function labExercise(challenge: MyChallenge): LabExercise {
-  const { exercise } = challenge;
+function labExercise(challenge: MyChallenge, exercise: EvaluationExercise): LabExercise {
   return {
-    id: `defi-${challenge.id}`,
+    id: `defi-${challenge.id}-${exercise.id}`,
     label: exercise.label,
     courseId: "defi",
     courseTitle: challenge.title,
@@ -39,13 +40,14 @@ function labExercise(challenge: MyChallenge): LabExercise {
   };
 }
 
+function clock(ms: number) {
+  const seconds = Math.max(0, Math.ceil(ms / 1000));
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+}
+
 export default function ChallengeView({ challenges, streak }: { challenges: MyChallenge[]; streak: number }) {
-  const router = useRouter();
   const current = challenges[0]?.open ? challenges[0] : null;
   const past = current ? challenges.slice(1) : challenges;
-  const [passedNow, setPassedNow] = useState(false);
-  const exercise = useMemo(() => (current ? labExercise(current) : null), [current]);
-  const passed = Boolean(current?.mine?.passed) || passedNow;
 
   return (
     <div className="space-y-8">
@@ -62,43 +64,10 @@ export default function ChallengeView({ challenges, streak }: { challenges: MyCh
         ) : null}
       </div>
 
-      {current && exercise ? (
-        <section className="challenge-current">
-          <header className="challenge-current-head">
-            <div className="min-w-0">
-              <p className="challenge-eyebrow">Défi de la semaine</p>
-              <h2>{current.title}</h2>
-              <p className="challenge-meta">Ouvert jusqu&apos;au {dayFormat.format(new Date(current.closesAt))}</p>
-            </div>
-            {passed ? (
-              <span className="challenge-done"><Check size={16} aria-hidden /> Réussi</span>
-            ) : null}
-          </header>
-          <div className="challenge-statement">
-            <ExerciseStatement label={current.exercise.label} content={current.exercise.statement} />
-          </div>
-          <ExerciseWorkspace
-            exercise={exercise}
-            nav={null}
-            embedded
-            initialCode={current.mine?.code || undefined}
-            onCompleted={() => {
-              setPassedNow(true);
-              router.refresh();
-            }}
-            checker={async (code) => {
-              const result = await checkChallenge(current.id, code);
-              return {
-                report: result.report,
-                newBadge: false,
-                recorded: result.recorded,
-                newAchievements: result.newAchievements.map(asAchievement).filter((item): item is Achievement => item !== null),
-              };
-            }}
-          />
-        </section>
+      {current ? (
+        <CurrentChallenge key={current.id} challenge={current} />
       ) : (
-        <p className="challenge-none">Pas de défi ouvert cette semaine : le prochain arrive lundi.</p>
+        <p className="challenge-none">Pas de défi ouvert cette semaine. Le prochain arrive lundi.</p>
       )}
 
       {past.length > 0 ? (
@@ -115,9 +84,123 @@ export default function ChallengeView({ challenges, streak }: { challenges: MyCh
   );
 }
 
+function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
+  const router = useRouter();
+  const answers = challenge.mine?.answers ?? {};
+  const [startedAt, setStartedAt] = useState<string | null>(challenge.mine?.startedAt ?? null);
+  const [now, setNow] = useState(() => Date.now());
+  const [serverExpired, setServerExpired] = useState(false);
+  const [passedNow, setPassedNow] = useState<string[]>([]);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const exercises = useMemo(() => challenge.exercises.map((exercise) => ({ exercise, lab: labExercise(challenge, exercise) })), [challenge]);
+
+  // Le chrono part à l'ouverture de la page (le serveur garde la première heure de départ).
+  useEffect(() => {
+    if (!challenge.timeLimitMinutes) return;
+    let cancelled = false;
+    void startChallenge(challenge.id).then((value) => {
+      if (!cancelled && value) setStartedAt(value);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [challenge.id, challenge.timeLimitMinutes]);
+
+  const deadline = challengeDeadline(startedAt, challenge.timeLimitMinutes);
+  useEffect(() => {
+    if (deadline === null) return;
+    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, [deadline]);
+
+  const remaining = deadline === null ? null : deadline - now;
+  const expired = serverExpired || (remaining !== null && remaining <= 0);
+  const isPassed = (id: string) => Boolean(answers[id]?.passed) || passedNow.includes(id);
+  const passedCount = challenge.exercises.filter((exercise) => isPassed(exercise.id)).length;
+  const allPassed = challenge.exercises.length > 0 && passedCount === challenge.exercises.length;
+
+  return (
+    <section className="challenge-current">
+      <header className="challenge-current-head">
+        <div className="min-w-0">
+          <p className="challenge-eyebrow">Défi de la semaine</p>
+          <h2>{challenge.title}</h2>
+          <p className="challenge-meta">
+            {challenge.exercises.length} exercice{challenge.exercises.length > 1 ? "s" : ""}
+            {challenge.timeLimitMinutes ? ` · ${challenge.timeLimitMinutes} minutes à partir de l'ouverture de la page` : ` · ouvert jusqu'au ${dayFormat.format(new Date(challenge.closesAt))}`}
+          </p>
+        </div>
+        {allPassed ? (
+          <span className="challenge-done"><Check size={16} aria-hidden /> Réussi</span>
+        ) : null}
+        {/* Le chrono est posé sur la page entière : il reste visible pendant qu'on fait défiler les exercices. */}
+        {challenge.timeLimitMinutes && !expired && mounted
+          ? createPortal(
+              <span className={`challenge-timer ${remaining !== null && remaining < 120_000 ? "is-low" : ""}`} role="timer" aria-live="off">
+                <Timer size={17} aria-hidden />
+                {remaining === null ? "Démarrage…" : `${clock(remaining)} restantes`}
+              </span>,
+              document.body,
+            )
+          : null}
+      </header>
+
+      {expired ? (
+        <div className="challenge-expired">
+          <p>
+            <b>Temps écoulé.</b> {passedCount} exercice{passedCount > 1 ? "s" : ""} réussi{passedCount > 1 ? "s" : ""} sur {challenge.exercises.length}.
+            La correction apparaîtra le {dayFormat.format(new Date(challenge.closesAt))}.
+          </p>
+          {challenge.exercises.map((exercise) => (
+            <div key={exercise.id} className="challenge-past-body">
+              <ExerciseStatement label={exercise.label} content={exercise.statement} />
+              <h3>{isPassed(exercise.id) ? "Code réussi" : "Dernier code vérifié"}</h3>
+              <pre>{answers[exercise.id]?.code || "Aucun code vérifié."}</pre>
+            </div>
+          ))}
+        </div>
+      ) : (
+        exercises.map(({ exercise, lab }, index) => (
+          <div key={exercise.id} className="challenge-exercise">
+            <div className="challenge-statement">
+              <div className="challenge-exercise-head">
+                <span>Exercice {index + 1}</span>
+                {isPassed(exercise.id) ? <span className="challenge-done is-small"><Check size={14} aria-hidden /> Réussi</span> : null}
+              </div>
+              <ExerciseStatement label={exercise.label} content={exercise.statement} />
+            </div>
+            <ExerciseWorkspace
+              exercise={lab}
+              nav={null}
+              embedded
+              initialCode={answers[exercise.id]?.code || undefined}
+              onCompleted={() => {
+                setPassedNow((ids) => (ids.includes(exercise.id) ? ids : [...ids, exercise.id]));
+                router.refresh();
+              }}
+              checker={async (code) => {
+                const result = await checkChallenge(challenge.id, exercise.id, code);
+                if (result.expired) setServerExpired(true);
+                return {
+                  report: result.report,
+                  newBadge: false,
+                  recorded: result.recorded,
+                  newAchievements: result.newAchievements.map(asAchievement).filter((item): item is Achievement => item !== null),
+                };
+              }}
+            />
+          </div>
+        ))
+      )}
+    </section>
+  );
+}
+
 function PastChallenge({ challenge }: { challenge: MyChallenge }) {
   const [open, setOpen] = useState(false);
   const status = challenge.mine?.passed ? "Réussi" : challenge.mine?.attempts ? "Tenté" : "Pas fait";
+  const answers = challenge.mine?.answers ?? {};
   return (
     <li className={`challenge-past ${open ? "is-open" : ""}`}>
       <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open}>
@@ -130,21 +213,27 @@ function PastChallenge({ challenge }: { challenge: MyChallenge }) {
       </button>
       {open ? (
         <div className="challenge-past-body">
-          <ExerciseStatement label={challenge.exercise.label} content={challenge.exercise.statement} />
-          {challenge.mine?.code ? (
-            <>
-              <h3>Mon code</h3>
-              <pre>{challenge.mine.code}</pre>
-            </>
-          ) : null}
-          {challenge.correction ? (
-            <>
-              <h3>Correction</h3>
-              <pre className="is-correction">{challenge.correction}</pre>
-            </>
-          ) : (
-            <p className="challenge-meta">La correction apparaîtra à la fermeture du défi.</p>
-          )}
+          {challenge.exercises.map((exercise) => {
+            const correction = challenge.corrections?.find((item) => item.id === exercise.id)?.correction;
+            return (
+              <div key={exercise.id} className="challenge-past-exercise">
+                <ExerciseStatement label={exercise.label} content={exercise.statement} />
+                {answers[exercise.id]?.code ? (
+                  <>
+                    <h3>Mon code {answers[exercise.id].passed ? "(réussi)" : ""}</h3>
+                    <pre>{answers[exercise.id].code}</pre>
+                  </>
+                ) : null}
+                {correction ? (
+                  <>
+                    <h3>Correction</h3>
+                    <pre className="is-correction">{correction}</pre>
+                  </>
+                ) : null}
+              </div>
+            );
+          })}
+          {challenge.corrections ? null : <p className="challenge-meta">La correction apparaîtra à la fermeture du défi.</p>}
         </div>
       ) : null}
     </li>

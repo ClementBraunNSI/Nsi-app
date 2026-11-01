@@ -73,7 +73,7 @@ Un renard s'appelle **Roux**, a **4** ans et vit à **Strasbourg**.
 <Indices>
 <Indice>
 
-Une variable se crée avec `=` : à gauche le nom, à droite la valeur. Un texte prend des guillemets, un nombre non.
+Une variable se crée avec `=`, avec le nom à gauche et la valeur à droite. Un texte s'écrit entre guillemets, mais pas un nombre.
 
 </Indice>
 <Indice>
@@ -303,7 +303,7 @@ assert autre["message"] == "Bonjour Malik !", "Avec Malik : message vaut « Bonj
 
 Demander l'année de naissance, puis calculer dans `age` l'âge atteint en 2026 et l'afficher.
 
-Exemple : née en 2010, une personne a `16` ans en 2026.
+Par exemple, une personne née en 2010 a `16` ans en 2026.
 
 <Indices>
 <Indice>
@@ -414,7 +414,7 @@ Demander trois notes (elles peuvent être à virgule), calculer leur moyenne dan
 <Indices>
 <Indice>
 
-Attention aux priorités : `a + b + c / 3` ne divise que `c`. Des parenthèses s'imposent.
+Attention aux priorités : `a + b + c / 3` ne divise que `c`. Il faut donc des parenthèses.
 
 </Indice>
 <Indice>
@@ -539,7 +539,7 @@ Ajouter 7 élèves « fictifs » avant la division entière arrondit au-dessus :
 </Indice>
 <Indice>
 
-Les parts restantes : toutes les parts commandées moins celles mangées.
+Les parts restantes s'obtiennent en retirant les parts mangées de toutes les parts commandées.
 
 </Indice>
 <Indice>
@@ -763,7 +763,7 @@ Rappel : la distance vaut la racine carrée de `(xB - xA)² + (yB - yA)²`.
 </Indice>
 <Indice>
 
-Calculer d'abord les deux écarts `dx` et `dy`, puis la distance : le code reste lisible.
+Calculer d'abord les deux écarts `dx` et `dy`, puis la distance : le code reste ainsi lisible.
 
 </Indice>
 <Indice>
@@ -880,7 +880,7 @@ Calculer `pourcentage`, le taux de réussite en pourcentage **arrondi à une dé
 <Indices>
 <Indice>
 
-Le pourcentage est réussis divisé par total, multiplié par 100.
+Le pourcentage s'obtient en divisant le nombre de tests réussis par le total, puis en multipliant par 100.
 
 </Indice>
 <Indice>
@@ -1167,9 +1167,9 @@ for m, attendu in [("ou", "ou"), ("nsi", "n*i"), ("anticonstitutionnellement", "
 <Enonce>
 ### Caisse enregistreuse
 
-**Contexte.** La librairie du quartier, « Le Terrier des livres », change de caisse. À chaque passage, le libraire tape les articles du client ; la caisse imprime un ticket, applique la remise du jour (par exemple 10 % pendant la rentrée), indique la TVA comprise dans le prix, puis lui dit exactement quels billets et quelles pièces rendre, pour qu'il ne se trompe jamais dans la monnaie. Le programme se limite à 3 articles par client et n'utilise ni condition ni boucle : tout se fait par des calculs.
+**Contexte.** La librairie du quartier, « Le Terrier des livres », change de caisse. À chaque passage, le libraire tape les articles du client. La caisse imprime alors un ticket, applique la remise du jour (par exemple 10 % pendant la rentrée), indique la TVA comprise dans le prix, puis lui dit exactement quels billets et quelles pièces rendre, pour qu'il ne se trompe jamais dans la monnaie. Le programme se limite à 3 articles par client et n'utilise ni condition ni boucle : tout se fait par des calculs.
 
-**Données saisies, dans cet ordre** : pour chacun des 3 articles, son nom, son prix unitaire (à virgule) et la quantité ; puis le pourcentage de remise (un entier) ; enfin la somme donnée par le client (à virgule).
+**Données saisies, dans cet ordre** : pour chacun des 3 articles, son nom, son prix unitaire (à virgule) et la quantité. Puis le pourcentage de remise (un entier). Enfin la somme donnée par le client (à virgule).
 
 Exemple de passage en caisse : un cahier à 2,50 € pris 4 fois, un stylo à 1,20 € pris 10 fois, un sac à 24,90 € pris une fois, remise de 10 %, le client donne 60 €.
 
@@ -1183,7 +1183,7 @@ Exemple de passage en caisse : un cahier à 2,50 € pris 4 fois, un stylo à 1,
 - `rendu` : la monnaie à rendre, **en centimes** (un entier), pour éviter les erreurs d'arrondi des nombres à virgule.
 - `billets_10`, `billets_5`, `pieces_2`, `pieces_1`, `pieces_50c`, `pieces_20c`, `pieces_10c`, `pieces_5c`, `pieces_2c` et `pieces_1c` : combien rendre de chaque billet et de chaque pièce, en utilisant le moins de billets et de pièces possible.
 
-Avec l'exemple : total 42,21 €, rendu 1779 centimes, soit 1 billet de 10 €, 1 de 5 €, 1 pièce de 2 €, 1 de 50 c, 1 de 20 c, 1 de 5 c et 2 de 2 c.
+Dans l'exemple, le total est de 42,21 € et le rendu de 1779 centimes, soit 1 billet de 10 €, 1 de 5 €, 1 pièce de 2 €, 1 de 50 c, 1 de 20 c, 1 de 5 c et 2 de 2 c.
 
 <Indices>
 <Indice>
@@ -1295,11 +1295,11 @@ assert m == (3, 1, 1, 1, 0, 0, 0, 0, 1, 0), "Décomposition de 38,02 €."
 **Ce que le programme doit produire**
 - `jour`, `mois`, `annee` : les trois parties de la date de naissance, en entiers, qui servent aux calculs suivants.
 - `age` : l'âge de l'élève au 1er novembre 2026, date des statistiques de rentrée. Attention : une élève née un 15 décembre n'a pas encore eu son anniversaire en novembre.
-- `identifiant` : le nom de connexion aux ordinateurs du lycée : la première lettre du prénom, puis les **7 premières lettres** du nom (tout le nom s'il est plus court), sans espace et en minuscules, suivies des deux derniers chiffres de l'année de naissance. Pour Léa Martin, née en 2010 : `lmartin10`.
+- `identifiant` : le nom de connexion aux ordinateurs du lycée. Il est formé de la première lettre du prénom, puis les **7 premières lettres** du nom (tout le nom s'il est plus court), sans espace et en minuscules, suivies des deux derniers chiffres de l'année de naissance. Pour Léa Martin, née en 2010 : `lmartin10`.
 - `email` : l'adresse de messagerie de l'élève, `prenom.nom@lycee-renard.fr`, en minuscules (accents gardés), les espaces des prénoms et noms composés remplacées par des `-`.
 - `departement` : les deux premiers caractères du code postal, pour savoir d'où viennent les élèves.
 - `initiales` : par exemple `L.M.`, imprimées sur les copies d'examen.
-- `cadre` : l'étiquette du casier, un texte de trois lignes qui encadre le prénom et le nom en majuscules avec des `*` et une espace de marge de chaque côté ; elle est affichée à la fin :
+- `cadre` : l'étiquette du casier, un texte de trois lignes qui encadre le prénom et le nom en majuscules avec des `*` et une espace de marge de chaque côté. Elle est affichée à la fin :
 
 ```
 **************

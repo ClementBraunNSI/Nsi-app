@@ -14,11 +14,11 @@ groupeTitre: "Le Web et HTTP"
 
 # Le Web et HTTP
 
-Des pages ont déjà été écrites. Il reste à voir comment elles voyagent. Le Web est une application : un **navigateur**, le client, demande une ressource à un **serveur**, qui répond. Le protocole de cet échange s'appelle **HTTP**, ou **HTTPS** quand l'échange est chiffré. Une **URL** nomme la ressource. Le **DNS** traduit le nom de domaine en adresse IP, parce que les routeurs acheminent des paquets, pas des noms.
+Après avoir écrit des pages, il reste à comprendre comment elles circulent. Le Web est une application dans laquelle un **navigateur**, le client, demande une ressource à un **serveur**, qui lui répond. Cet échange suit le protocole **HTTP**, ou **HTTPS** quand il est chiffré. Une **URL** désigne la ressource demandée, et le **DNS** traduit le nom de domaine en adresse IP, car les routeurs acheminent les paquets à partir d'adresses et non de noms.
 
 Le Web date de 1989, au CERN. Tim Berners-Lee et Robert Cailliau ont proposé d'accéder à des documents par des **hyperliens**, plutôt que de savoir sur quelle machine le fichier était rangé. La première page est toujours en ligne : [http://info.cern.ch/hypertext/WWW/TheProject.html](http://info.cern.ch/hypertext/WWW/TheProject.html).
 
-Le geste n'a pas changé. La personne saisit une URL ou clique un lien. Le client envoie une **requête**. Le serveur renvoie une **réponse** : une page, une image, ou une erreur. Le navigateur affiche ce qu'il a reçu.
+Le principe n'a pas changé depuis. La personne saisit une URL ou clique sur un lien, et le client envoie une **requête**. Le serveur renvoie alors une **réponse**, qui peut être une page, une image ou une erreur, et le navigateur affiche ce qu'il a reçu.
 
 !!! tip "Première page web"
     Toujours accessible : [http://info.cern.ch/hypertext/WWW/TheProject.html](http://info.cern.ch/hypertext/WWW/TheProject.html)
@@ -37,7 +37,7 @@ https://www.example.com/dossier/page.html
 | Domaine | `www.example.com` | Quel serveur (nom lisible) |
 | Chemin | `/dossier/page.html` | Quelle ressource sur le serveur |
 
-Le protocole dit quelles règles suivre. Le domaine est un nom. Le chemin est l'emplacement de la ressource sur ce serveur, comme un chemin de fichier. Le **DNS** convertit `www.example.com` en adresse IP. Sans lui, il faudrait retenir des adresses numériques, et les changer à la main chaque fois qu'un serveur déménage.
+Le protocole indique les règles à suivre, le domaine est le nom du serveur, et le chemin donne l'emplacement de la ressource sur ce serveur, comme un chemin de fichier. Le **DNS** convertit `www.example.com` en adresse IP. Sans lui, il faudrait retenir des adresses numériques, et les changer à la main chaque fois qu'un serveur déménage.
 
 <DnsResolver />
 
@@ -62,9 +62,9 @@ Content-Type: application/x-www-form-urlencoded
 nom=Dupont&prenom=Jean
 ```
 
-GET ne « cache » pas les données. Elles sont dans l'URL, donc dans l'historique et dans les journaux du serveur. Un mot de passe ou un formulaire sensible part en POST, et sur HTTPS.
+GET ne cache donc pas les données : elles apparaissent dans l'URL, et donc dans l'historique et dans les journaux du serveur. Un mot de passe ou un formulaire sensible doit être envoyé avec POST, et sur HTTPS.
 
-La réponse commence par un **code** à trois chiffres. La centaine dit la famille.
+La réponse commence par un **code** à trois chiffres, dont le premier indique la famille.
 
 | Famille | Sens | Exemples à connaître |
 | --- | --- | --- |
@@ -73,24 +73,24 @@ La réponse commence par un **code** à trois chiffres. La centaine dit la famil
 | **4xx** | Erreur **client** | `404 Not Found`, `403 Forbidden` |
 | **5xx** | Erreur **serveur** | `500 Internal Server Error` |
 
-Un **404** veut dire que la ressource demandée n'existe pas à cette URL. C'est une erreur du côté de la requête, pas une panne de la machine. Un **500** veut dire que le serveur a échoué en traitant une requête pourtant recevable. Un **301** dit que la ressource a déménagé, et indique la nouvelle adresse. Un **304** dit que la copie déjà en cache est encore bonne.
+Un **404** signifie que la ressource demandée n'existe pas à cette URL : l'erreur vient de la requête, et non d'une panne de la machine. Un **500** signifie que le serveur a échoué en traitant une requête pourtant correcte. Un **301** indique que la ressource a changé d'adresse et donne la nouvelle, et un **304** que la copie déjà en cache est toujours valable.
 
-## HTTPS, pages, cookies
+## HTTPS, pages dynamiques et cookies
 
-**HTTPS** est HTTP transporté dans **TLS**. Le chiffrement protège la confidentialité : un intermédiaire voit du trafic, pas le contenu. Il protège aussi l'intégrité, et le certificat authentifie le serveur. Le cadenas du navigateur parle de ce canal, pas de la qualité du site.
+**HTTPS** est HTTP transporté dans **TLS**. Le chiffrement protège la confidentialité, car un intermédiaire voit passer du trafic sans pouvoir lire son contenu. Il garantit aussi l'intégrité des données, et le certificat permet d'authentifier le serveur. Le cadenas du navigateur indique seulement que la connexion est sécurisée : il ne dit rien de la fiabilité du site.
 
 <HttpsSimulator />
 
-Une page **statique** est un fichier servi tel quel, identique pour tout le monde. Une page **dynamique** est produite au moment de la requête : une base, une session, un calcul. Le protocole reste HTTP dans les deux cas. Ce qui change, c'est le travail du serveur avant d'écrire la réponse.
+Une page **statique** est un fichier servi tel quel, identique pour tout le monde. Une page **dynamique** est produite au moment de la requête, par exemple à partir d'une base de données, d'une session ou d'un calcul. Le protocole reste HTTP dans les deux cas : seul change le travail fait par le serveur avant d'écrire la réponse.
 
-Un **cookie** est un petit texte que le serveur demande au navigateur de garder, et que le navigateur renvoie ensuite avec les requêtes vers ce site. Il sert une session, ou une préférence. Un cookie de session disparaît à la fermeture du navigateur. Un cookie persistant a une date d'expiration. Les cookies tiers, déposés par un domaine qui n'a pas été visité directement, servent souvent au suivi. On ne les pose pas « parce que c'est pratique » sans se demander qui les relit.
+Un **cookie** est un petit texte que le serveur demande au navigateur de garder, et que le navigateur renvoie ensuite avec les requêtes vers ce site. Il sert à garder une session ouverte ou à mémoriser une préférence. Un cookie de session disparaît à la fermeture du navigateur. Un cookie persistant a une date d'expiration. Les cookies tiers, déposés par un domaine qui n'a pas été visité directement, servent souvent au suivi. Avant d'en déposer, un site doit donc se demander qui pourra les lire.
 
 <CookieManager />
 
-HTTP est un protocole de la **couche application**. En dessous, TCP assure le transport des données et IP leur acheminement. Le cours sur les réseaux a posé ces couches. Ici, on reste au message que le navigateur et le serveur s'échangent.
+HTTP est un protocole de la **couche application**. En dessous, TCP assure le transport des données et IP leur acheminement. Ces couches ont été présentées dans le cours sur les réseaux, et ce cours se limite aux messages échangés entre le navigateur et le serveur.
 
-En résumé, le client demande, le serveur répond. Une URL assemble un protocole, un domaine et un chemin. Le DNS traduit le nom en IP. GET obtient, POST envoie dans le corps. Les codes 2xx disent le succès, 4xx une erreur côté client, 5xx une erreur côté serveur. HTTPS chiffre l'échange avec TLS. Un cookie est une petite mémoire dans le navigateur.
+En résumé, le client envoie une requête et le serveur répond. Une URL est formée d'un protocole, d'un domaine et d'un chemin, et le DNS traduit le nom de domaine en adresse IP. GET permet d'obtenir une ressource, alors que POST envoie des données dans le corps de la requête. Les codes 2xx indiquent un succès, les codes 4xx une erreur côté client et les codes 5xx une erreur côté serveur. HTTPS chiffre l'échange avec TLS, et un cookie permet au navigateur de mémoriser une information.
 
 ## Pour s'entraîner / Suite
 
-Manipuler les interactifs (URL, DNS, méthodes, HTTPS, cookies). Relier ce cours au modèle TCP/IP : HTTP est un protocole de la **couche application**.
+Manipuler les animations interactives sur les URL, le DNS, les méthodes, HTTPS et les cookies. Relier ce cours au modèle TCP/IP : HTTP est un protocole de la **couche application**.

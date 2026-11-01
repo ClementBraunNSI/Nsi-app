@@ -300,7 +300,7 @@ assert distances([], (1, 1)) == [], "Aucune donnée."
 </Indice>
 <Indice>
 
-Une tranche `[:k]` garde les `k` premiers ; il reste à extraire leurs classes.
+Une tranche `[:k]` garde les `k` premiers. Il reste à extraire leurs classes.
 
 </Indice>
 <Indice>
@@ -630,7 +630,7 @@ Dans un vote **pondéré**, un voisin proche pèse plus lourd qu'un voisin éloi
 <Indices>
 <Indice>
 
-Un dictionnaire classe → somme des poids.
+Un dictionnaire peut associer à chaque classe la somme des poids de ses voisins.
 
 </Indice>
 <Indice>
@@ -1247,12 +1247,12 @@ assert c == ["CCCCB", "CCCBB", "AAABB", "AAABB", "AAABB"], "La carte complète."
 
 **Les fonctions du classifieur**
 - `bornes(donnees)` : nécessaire pour normaliser. Renvoie le tuple `((min_x, max_x), (min_y, max_y))` des deux caractéristiques.
-- `normaliser(point, b)` et `normaliser_tout(donnees)` : ramènent les mesures entre 0 et 1, pour que longueur et largeur pèsent autant dans les distances. La première reçoit un point `(x, y)` (une classe éventuelle en troisième position est conservée) et des bornes ; la seconde normalise toutes les données avec leurs propres bornes.
-- `knn(donnees, cible, k, pondere)` : la prédiction. Renvoie la classe la plus représentée parmi les `k` plus proches voisins de `cible` ; avec `pondere` à `True`, chaque voisin vote avec le poids `1 / distance` (un voisin à distance nulle impose sa classe). En cas d'égalité des votes, l'ordre alphabétique départage.
+- `normaliser(point, b)` et `normaliser_tout(donnees)` : ramènent les mesures entre 0 et 1, pour que longueur et largeur pèsent autant dans les distances. La première reçoit un point `(x, y)` (une classe éventuelle en troisième position est conservée) et des bornes. La seconde normalise toutes les données avec leurs propres bornes.
+- `knn(donnees, cible, k, pondere)` : la prédiction. Renvoie la classe la plus représentée parmi les `k` plus proches voisins de `cible`. Avec `pondere` à `True`, chaque voisin vote avec le poids `1 / distance` (un voisin à distance nulle impose sa classe). En cas d'égalité des votes, l'ordre alphabétique départage.
 - `fiabilite(donnees, k, pondere)` : mesure la qualité d'un réglage. Classe chaque fleur à l'aide de toutes les **autres** (validation croisée « un contre tous ») et renvoie le taux de réussite, arrondi au centième.
-- `meilleur_reglage(donnees, ks)` : choisit le réglage. Renvoie le couple `(k, pondere)` le plus fiable parmi les `k` de la liste `ks` et les deux valeurs de `pondere` ; en cas d'égalité, le plus petit `k`, puis le vote non pondéré.
+- `meilleur_reglage(donnees, ks)` : choisit le réglage. Renvoie le couple `(k, pondere)` le plus fiable parmi les `k` de la liste `ks` et les deux valeurs de `pondere`. En cas d'égalité, le plus petit `k`, puis le vote non pondéré.
 - `confusion(donnees, k, pondere)` : montre quelles espèces sont confondues. Renvoie la matrice de confusion de la validation croisée, sous forme de dictionnaire `m[vraie][predite]` avec toutes les classes.
-- `predire(longueur, largeur)` : la fonction appelée par l'application. Renvoie l'espèce d'une nouvelle fleur, avec les données **normalisées** et le meilleur réglage parmi `k` = 1, 3, 5, 7 ; la fleur est normalisée avec les mêmes bornes que les données.
+- `predire(longueur, largeur)` : la fonction appelée par l'application. Renvoie l'espèce d'une nouvelle fleur, avec les données **normalisées** et le meilleur réglage parmi `k` = 1, 3, 5, 7. La fleur est normalisée avec les mêmes bornes que les données.
 
 <Indices>
 <Indice>
@@ -1414,9 +1414,9 @@ assert predire(1.5, 0.3) == "setosa" and predire(4.3, 1.3) == "versicolor" and p
 **Les fonctions du moteur de recommandation**
 - `ecart(notes, a, b)` : mesure à quel point deux membres ont des goûts différents. Renvoie la moyenne des écarts absolus de leurs notes sur les films vus par les deux, ou `None` s'ils n'ont aucun film en commun.
 - `voisins(notes, a, film, k)` : les membres dont l'avis compte pour prédire la note de `a` sur `film`. Renvoie les `k` membres les plus proches de `a` (écart croissant, puis ordre alphabétique) **parmi ceux qui ont noté `film`**, en excluant `a` et ceux sans film commun avec lui.
-- `predire(notes, a, film, k)` : la note probable. Renvoie la moyenne des notes données au film par ces voisins, pondérée par `1 / (1 + ecart)` (un voisin aux goûts proches compte plus), arrondie au dixième ; `None` sans voisin.
-- `recommander(notes, a, n, k)` : la liste envoyée au membre. Renvoie les `n` films non vus par `a` dont la note prédite est la plus haute (puis ordre alphabétique), sous forme de liste de tuples `(film, note_predite)` ; les films sans prédiction sont ignorés.
-- `erreur(notes, k)` : contrôle la qualité du système. Pour chaque note connue, la **cacher**, la prédire avec les autres notes et mesurer l'écart absolu ; renvoie la moyenne de ces écarts, arrondie au centième (les notes impossibles à prédire sont ignorées). Les données reçues ne doivent pas être modifiées.
+- `predire(notes, a, film, k)` : la note probable. Renvoie la moyenne des notes données au film par ces voisins, pondérée par `1 / (1 + ecart)` (un voisin aux goûts proches compte plus), arrondie au dixième. `None` sans voisin.
+- `recommander(notes, a, n, k)` : la liste envoyée au membre. Renvoie les `n` films non vus par `a` dont la note prédite est la plus haute (puis ordre alphabétique), sous forme de liste de tuples `(film, note_predite)`. Les films sans prédiction sont ignorés.
+- `erreur(notes, k)` : contrôle la qualité du système. Pour chaque note connue, la **cacher**, la prédire avec les autres notes et mesurer l'écart absolu. Renvoie la moyenne de ces écarts, arrondie au centième (les notes impossibles à prédire sont ignorées). Les données reçues ne doivent pas être modifiées.
 - `meilleur_k(notes, ks)` : règle le système. Renvoie le `k` de la liste qui donne la plus petite erreur (le plus petit en cas d'égalité).
 
 <Indices>

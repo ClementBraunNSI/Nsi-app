@@ -25,7 +25,7 @@ audience: public
 
       **Dans le Lab NSI**, les modules sont chargés automatiquement avant l'exécution.
 
-      **Rappel SNT :** une position GPS = **latitude** (Nord/Sud) + **longitude** (Est/Ouest), en degrés.
+      **Rappel SNT :** une position GPS est donnée par une **latitude** (Nord/Sud) et une **longitude** (Est/Ouest), en degrés.
 
       **Exemple folium :**
 

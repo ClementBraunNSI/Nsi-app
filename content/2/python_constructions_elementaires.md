@@ -11,11 +11,11 @@ audience: public
 
 # Constructions élémentaires en Python
 
-Un programme Python est une suite d'**instructions** exécutées dans l'ordre, de haut en bas, sauf quand un test ou une boucle décide de sauter ou de recommencer. Les briques de cette suite sont peu nombreuses : affecter une valeur, calculer, lire, afficher, choisir, répéter. Tout le reste de l'année s'appuie dessus.
+Un programme Python est une suite d'**instructions** exécutées dans l'ordre, de haut en bas, sauf quand un test ou une boucle décide de sauter ou de recommencer. Ces instructions sont de quelques types seulement : affecter une valeur, calculer, lire une saisie, afficher, choisir entre plusieurs chemins et répéter. Tout le reste de l'année s'appuie sur ces bases.
 
 ## L'affectation
 
-L'**affectation** associe une valeur à un nom, avec `=`. Ce n'est pas une égalité mathématique. En maths, `score = score + 10` serait absurde. En Python, on lit à droite d'abord, puis on range le résultat dans le nom de gauche. Ce n'est pas non plus une instanciation : ce mot est réservé à la programmation orientée objet, plus tard.
+L'**affectation** associe une valeur à un nom, avec `=`. Ce n'est pas une égalité mathématique : en maths, `score = score + 10` serait absurde. En Python, on calcule d'abord la partie droite, puis on range le résultat dans la variable de gauche. Il ne faut pas non plus parler d'instanciation, car ce mot est réservé à la programmation orientée objet, vue plus tard.
 
 ```python
 score = 0
@@ -25,9 +25,9 @@ message = "Bonjour"
 
 Au départ `score` vaut 0. La ligne suivante calcule `0 + 10` et range 10 sous le même nom. L'ancienne valeur est perdue.
 
-## Calculer
+## Les calculs
 
-Les opérateurs arithmétiques s'écrivent presque comme en cours de maths. Deux détails changent le résultat. `/` fait une division réelle et renvoie un flottant : `7 / 2` vaut `3.5`. `//` ne garde que le quotient entier : `7 // 2` vaut `3`. `%` donne le reste : `7 % 2` vaut `1`. `**` élève à une puissance : `2 ** 3` vaut `8`.
+Les opérateurs arithmétiques s'écrivent presque comme en cours de maths, mais quelques-uns méritent attention. `/` fait une division réelle et renvoie un flottant : `7 / 2` vaut `3.5`. `//` ne garde que le quotient entier : `7 // 2` vaut `3`. `%` donne le reste : `7 % 2` vaut `1`. `**` élève à une puissance : `2 ** 3` vaut `8`.
 
 | Opérateur | Opération | Exemple |
 | --- | --- | --- |
@@ -44,9 +44,9 @@ a = 3 + 2
 b = 10 % 3   # 1
 ```
 
-## Choisir un chemin
+## Les conditions
 
-Une comparaison renvoie un booléen, `True` ou `False`. `>` et `<` comparent, `>=` et `<=` aussi, `==` teste l'égalité, `!=` la différence. Le piège d'écriture est `=`, qui affecte, contre `==`, qui compare. Dans un `if`, on veut presque toujours `==`.
+Une comparaison renvoie un booléen, `True` ou `False`. Les opérateurs `>`, `<`, `>=` et `<=` comparent deux valeurs, `==` teste l'égalité et `!=` la différence. Il ne faut pas confondre `=`, qui affecte une valeur, et `==`, qui compare. Dans un `if`, on veut presque toujours `==`.
 
 | Opérateur | Signification |
 | --- | --- |
@@ -66,9 +66,9 @@ else:
     print("Enfant")
 ```
 
-Python exécute la première branche dont la condition est vraie, et ignore les autres. `elif` veut dire « sinon, si ». `else` ramasse tout ce qui reste. L'**indentation**, quatre espaces, dit quelles lignes appartiennent à la branche. Sans elle, Python ne sait pas où le bloc s'arrête.
+Python exécute la première branche dont la condition est vraie, et ignore les autres. `elif` signifie « sinon, si », et `else` traite tous les cas restants. L'**indentation**, de quatre espaces, indique quelles lignes appartiennent à chaque branche. Sans elle, Python ne sait pas où le bloc s'arrête.
 
-## Lire et afficher
+## Les entrées et sorties
 
 `print(...)` écrit à l'écran. `input(...)` lit ce que l'utilisateur tape, et renvoie **toujours une chaîne**, même si la personne a tapé des chiffres. Pour calculer un âge, il faut convertir : `int(input(...))`.
 
@@ -80,9 +80,9 @@ age = int(input("Âge : "))  # conversion obligatoire pour calculer
 
 Oublier `int` est l'erreur classique. `"18" >= 18` mélange une chaîne et un entier, et Python lève une erreur de types.
 
-## Répéter
+## Les boucles
 
-`for` répète un nombre de fois connu à l'avance. On le couple souvent à `range`. `while` répète **tant qu'une condition** reste vraie. Il faut alors faire évoluer la variable de contrôle, sinon la condition ne devient jamais fausse et la boucle ne s'arrête pas.
+`for` répète un nombre de fois connu à l'avance. On l'utilise souvent avec `range`. `while` répète **tant qu'une condition** reste vraie. Il faut alors faire évoluer la variable de contrôle, sinon la condition ne devient jamais fausse et la boucle ne s'arrête pas.
 
 ```python
 for i in range(1, 6):
@@ -97,9 +97,9 @@ while n <= 5:
 !!! tip "`range`"
     `range(5)` produit `0, 1, 2, 3, 4`. `range(1, 6)` produit `1` à `5` (la borne de droite est exclue).
 
-Les deux boucles affichent les mêmes nombres. Dans le `for`, `range` fournit les valeurs. Dans le `while`, c'est au programme d'avancer `n`. Sans `n = n + 1`, `n` reste à 1, la condition reste vraie, et le programme ne sort plus.
+Les deux boucles affichent les mêmes nombres. Dans le `for`, `range` fournit les valeurs. Dans le `while`, c'est au programme de faire avancer `n`. Sans `n = n + 1`, `n` resterait égal à 1, la condition resterait vraie et le programme ne sortirait jamais de la boucle.
 
-En résumé, `=` affecte, `==` compare. `input` renvoie une chaîne, à convertir avant un calcul. `if`, `elif` et `else` choisissent un chemin. `for` répète un nombre de fois connu, `while` répète tant qu'une condition tient. L'indentation dessine les blocs. Le reste du programme se lit de haut en bas, sauf quand un test ou une boucle dévie.
+En résumé, `=` affecte une valeur et `==` compare. `input` renvoie une chaîne, qu'il faut convertir avant de calculer. `if`, `elif` et `else` permettent de choisir un chemin. `for` répète un nombre de fois connu à l'avance, alors que `while` répète tant qu'une condition reste vraie. L'indentation délimite les blocs, et le programme s'exécute de haut en bas, sauf quand un test ou une boucle modifie cet ordre.
 
 ## Pour s'entraîner
 

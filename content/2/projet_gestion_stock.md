@@ -137,7 +137,7 @@ Une fiche produit contient :
     <Enonce>
       Écrire `modifier_produit(catalogue, id_produit, nouveau_prix)`.
 
-      Identifiant absent : `Produit introuvable.`, `False`. `nouveau_prix` inférieur ou égal à 0 : `Valeur invalide.`, `False`. Sinon remplacer `prix` et renvoyer `True`.
+      Si l'identifiant est absent, afficher `Produit introuvable.` et renvoyer `False`. Si `nouveau_prix` est inférieur ou égal à 0, afficher `Valeur invalide.` et renvoyer `False`. Sinon, remplacer `prix` et renvoyer `True`.
 
       `modifier_produit(catalogue, "LIV001", 10.0)` passe le roman à `10.0`. Remettre `12.5` avant de calculer le ticket de l'exemple : le second appel renvoie `True`.
 
@@ -195,9 +195,9 @@ Une fiche produit contient :
     <Enonce>
       Écrire `maj_stock(catalogue, id_produit, quantite)`.
 
-      `quantite` positive réapprovisionne, `quantite` négative sort de la réserve, `quantite` nulle renvoie `False` avec `Valeur invalide.`
+      Une `quantite` positive réapprovisionne le stock, et une `quantite` négative retire des articles de la réserve. Une `quantite` nulle affiche `Valeur invalide.` et renvoie `False`.
 
-      Produit absent : `Produit introuvable.`, `False`. Si `stock + quantite` est négatif : `Stock insuffisant.`, `False`, et le stock affiché reste l'ancien.
+      Si le produit est absent, afficher `Produit introuvable.` et renvoyer `False`. Si `stock + quantite` est négatif, afficher `Stock insuffisant.` et renvoyer `False`, sans modifier le stock.
 
       *Attention : une sortie impossible est annulée. On ne descend jamais sous 0.*
 
@@ -259,7 +259,7 @@ Une fiche produit contient :
     <Enonce>
       Écrire `verifier_alertes(catalogue)`.
 
-      Un produit est en alerte quand `stock` est inférieur ou égal à `seuil`. Afficher une ligne par produit concerné, par exemple `STY002 Stylo : stock 1 (seuil 2)`, et renvoyer la liste de ces dictionnaires. Aucune alerte : afficher `Aucune alerte.` et renvoyer `[]`.
+      Un produit est en alerte quand `stock` est inférieur ou égal à `seuil`. Afficher une ligne par produit concerné, par exemple `STY002 Stylo : stock 1 (seuil 2)`, et renvoyer la liste de ces dictionnaires. S'il n'y a aucune alerte, afficher `Aucune alerte.` et renvoyer `[]`.
 
       Au départ, avant toute vente, le stylo est déjà en alerte (stock 2, seuil 2) et le roman ne l'est pas (stock 5, seuil 2). Après la vente réussie de l'exemple (roman 3, stylo 1), seule la ligne du stylo apparaît.
 
@@ -396,11 +396,11 @@ panier = [("LIV001", 2), ("STY002", 1)]
     <Enonce>
       Écrire `valider_vente(catalogue, panier)`.
 
-      Premier passage, sans rien modifier : chaque ligne doit avoir un produit connu et un stock suffisant (`quantite` supérieure ou égale à 1, et inférieure ou égale au stock). À la première ligne fausse, afficher `Produit introuvable : ...` ou `Stock insuffisant : ...`, renvoyer `False`, et laisser tous les stocks comme avant l'appel. Un identifiant inconnu annule la vente de la même façon.
+      Lors d'un premier passage, sans rien modifier, vérifier que chaque ligne correspond à un produit connu et à un stock suffisant (`quantite` supérieure ou égale à 1, et inférieure ou égale au stock). À la première ligne fausse, afficher `Produit introuvable : ...` ou `Stock insuffisant : ...`, renvoyer `False`, et laisser tous les stocks comme avant l'appel. Un identifiant inconnu annule la vente de la même façon.
 
       *Attention : on contrôle toutes les lignes avant de toucher au stock. À la première ligne impossible, rien n'est déduit, même pour les lignes précédentes qui auraient été possibles.*
 
-      Deuxième passage, seulement si tout est bon : appeler `maj_stock` avec une quantité négative pour chaque ligne, afficher le ticket et renvoyer `True`.
+      Lors d'un deuxième passage, seulement si tout est correct, appeler `maj_stock` avec une quantité négative pour chaque ligne, afficher le ticket et renvoyer `True`.
 
       ```text
       Roman x2 : 25.00 €
@@ -408,7 +408,7 @@ panier = [("LIV001", 2), ("STY002", 1)]
       Total : 26.50 €
       ```
 
-      Stocks ensuite : roman `3`, stylo `1`.
+      Les stocks sont ensuite de `3` pour le roman et de `1` pour le stylo.
 
       Le panier `[("STY002", 5)]` qui suit affiche `Stock insuffisant : STY002`, renvoie `False`, et laisse le stylo à 1.
 
@@ -559,7 +559,7 @@ panier = [("LIV001", 2), ("STY002", 1)]
       5. Quitter
       ```
 
-      Le choix `3` construit le panier ligne par ligne : identifiant, quantité, et le mot `fin` comme identifiant pour lancer `valider_vente`. Dans l'éditeur, les fonctions des étapes précédentes et le catalogue de départ sont déjà écrits : appeler `menu()` à la fin du programme. Le choix `4` affiche id, nom, prix et stock de chaque produit. Le choix `5` termine.
+      Le choix `3` construit le panier ligne par ligne, en demandant l'identifiant puis la quantité. Le mot `fin`, saisi à la place d'un identifiant, lance `valider_vente`. Dans l'éditeur, les fonctions des étapes précédentes et le catalogue de départ sont déjà écrits : appeler `menu()` à la fin du programme. Le choix `4` affiche l'identifiant, le nom, le prix et le stock de chaque produit. Le choix `5` termine.
 
       Avant le menu, exécuter le scénario chiffré et afficher les booléens et les stocks, pour qu'on puisse contrôler 26,5, le roman à 3 et le stylo à 1 sans retaper les saisies. Le menu peut ensuite repartir d'un catalogue propre, ou continuer sur le catalogue déjà entamé : indiquer en commentaire le choix fait.
 
@@ -627,4 +627,4 @@ panier = [("LIV001", 2), ("STY002", 1)]
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `stock.py` : commentaire d'en-tête avec le nom et la classe, les fonctions `trouver`, `ajouter_produit`, `modifier_produit`, `maj_stock`, `verifier_alertes`, `calculer_total`, `valider_vente` et `menu`, le scénario (création, refus de doublon, sortie impossible, panier à 26,50 €, alerte stylo, panier refusé), puis le menu.
+**Travail à rendre.** Il faut rendre un fichier `stock.py` qui contient un commentaire d'en-tête avec le nom et la classe, les fonctions `trouver`, `ajouter_produit`, `modifier_produit`, `maj_stock`, `verifier_alertes`, `calculer_total`, `valider_vente` et `menu`, le scénario (création, refus de doublon, sortie impossible, panier à 26,50 €, alerte stylo, panier refusé), puis le menu.

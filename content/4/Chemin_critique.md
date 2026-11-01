@@ -11,15 +11,15 @@ audience: public
 
 # Le chemin critique
 
-Un projet est un réseau de tâches qui s'attendent. Certaines peuvent prendre du retard sans décaler la livraison, d'autres ne le peuvent pas. Le **chemin critique** est la plus longue chaîne de tâches dépendantes, en durée. Sa longueur est la **durée minimale** du projet : on ne peut pas finir plus tôt que le plus long chemin. Tout retard sur une tâche de ce chemin retarde la date de fin, d'autant. Le chef de projet les suit en priorité, parce que c'est là que le temps ne se rattrape pas.
+Un projet est un ensemble de tâches qui dépendent les unes des autres. Certaines peuvent prendre du retard sans décaler la livraison, d'autres non. Le **chemin critique** est la plus longue chaîne de tâches dépendantes, en durée. Sa longueur correspond à la **durée minimale** du projet, puisqu'on ne peut pas finir avant la fin de ce chemin. Tout retard sur l'une de ses tâches retarde d'autant la date de fin. Le chef de projet surveille donc ces tâches en priorité, car un retard pris sur elles ne peut pas être rattrapé.
 
-Une **tâche critique** a une **marge totale** nulle. La marge totale est le retard qu'une tâche peut prendre sans décaler la fin du projet. La **marge libre** est plus étroite : c'est le retard possible sans décaler le début au plus tôt de la tâche suivante. Une tâche peut avoir de la marge totale et plus de marge libre, si le successeur avait lui-même un peu de jeu. Une **dépendance** dit qu'une tâche n'a pas le droit de commencer avant la fin d'une autre.
+Une **tâche critique** a une **marge totale** nulle. La marge totale est le retard qu'une tâche peut prendre sans décaler la fin du projet. La **marge libre** est plus réduite : c'est le retard possible sans décaler le début au plus tôt de la tâche suivante. Une tâche peut donc avoir une marge totale sans avoir de marge libre, quand c'est la tâche suivante qui dispose d'une marge. Enfin, une **dépendance** indique qu'une tâche ne peut pas commencer avant la fin d'une autre.
 
-## Calculer
+## Déterminer le chemin critique
 
-On liste les tâches, leur durée, leurs prédécesseurs. On dessine le réseau : dans le diagramme utilisé ici, un nœud est une tâche, un lien est une dépendance. On énumère tous les chemins qui vont des tâches sans prédécesseur jusqu'aux tâches sans successeur. On additionne les durées de chaque chemin. Le plus long est le chemin critique. S'il y en a deux de même longueur, les deux sont critiques.
+On commence par lister les tâches, avec leur durée et leurs prédécesseurs, puis on dessine le réseau : dans le diagramme utilisé ici, chaque nœud est une tâche et chaque lien une dépendance. On énumère ensuite tous les chemins qui vont des tâches sans prédécesseur jusqu'aux tâches sans successeur, et on additionne les durées de chaque chemin. Le plus long est le chemin critique. Si deux chemins ont la même longueur maximale, ils sont tous les deux critiques.
 
-Prenons une application mobile.
+Prenons l'exemple du développement d'une application mobile.
 
 | Tâche | Description | Durée (jours) | Prédécesseurs |
 | :--- | :--- | :--- | :--- |
@@ -31,11 +31,11 @@ Prenons une application mobile.
 | **F** | Tests et débogage | 7 | E |
 | **G** | Déploiement | 3 | F |
 
-A dure 5 jours et ne dépend de rien. B et C partent ensuite, en parallèle. D attend B. E attend que C **et** D soient finies : elle commence à la date la plus tardive des deux.
+A dure 5 jours et ne dépend d'aucune autre tâche. B et C commencent ensuite en parallèle, et D attend la fin de B. E attend que C **et** D soient terminées : elle commence donc à la date de fin la plus tardive des deux.
 
-Le chemin A, B, D, E, F, G dure $5 + 8 + 12 + 6 + 7 + 3 = 41$ jours. Le chemin A, C, E, F, G dure $5 + 15 + 6 + 7 + 3 = 36$ jours. Le plus long est le premier. Le chemin critique est A, B, D, E, F, G, et le projet ne peut pas durer moins de 41 jours. C se termine au jour 20, alors que D se termine au jour 25. E attend D. C a donc cinq jours de marge totale : un retard de C inférieur à cinq jours ne touche pas la fin. Un retard d'un jour sur B, sur D, sur E, sur F ou sur G décale la livraison d'un jour.
+Le chemin A, B, D, E, F, G dure $5 + 8 + 12 + 6 + 7 + 3 = 41$ jours. Le chemin A, C, E, F, G dure $5 + 15 + 6 + 7 + 3 = 36$ jours. Le premier est le plus long : le chemin critique est donc A, B, D, E, F, G, et le projet ne peut pas durer moins de 41 jours. C se termine au jour 20, alors que D se termine au jour 25, et E doit attendre D. C a donc cinq jours de marge totale : un retard d'au plus cinq jours sur C ne change pas la date de fin. En revanche, un retard d'un jour sur B, D, E, F ou G décale la livraison d'un jour.
 
-Le même outil sert dès qu'un livrable dépend d'un enchaînement : un déploiement, un chantier, un lancement. On l'utilise pour savoir où mettre les gens, où un glissement est encore absorbable, et quoi dire aux parties prenantes quand elles demandent pourquoi telle tâche ne peut pas attendre.
+Cette méthode s'applique dès qu'un livrable dépend d'un enchaînement de tâches, comme un déploiement, un chantier ou le lancement d'un produit. Elle permet de savoir où affecter les personnes et quelles tâches peuvent prendre un peu de retard. Elle aide aussi à expliquer aux parties prenantes pourquoi certaines tâches ne peuvent pas attendre.
 
 ## Exercices pratiques
 

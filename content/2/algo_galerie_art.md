@@ -42,12 +42,12 @@ Exemple minimal :
 </figure>
 ```
 
-## Chemins : relative vs absolue
+## Chemins relatifs et absolus
 
 - **Relatif** : `oeuvres/cri_renard.png` (par rapport au fichier HTML)
 - **Absolu** (sur ce site) : `/content/2/10_Web_et_HTTP/cri_renard.png`
 
-Préférez les chemins relatifs dans un projet élève (`index.html` + dossier `images/`).
+Préférer les chemins relatifs dans un projet élève (`index.html` + dossier `images/`).
 
 ## Galerie minimale
 
@@ -104,10 +104,10 @@ Oublier `alt`, ou se tromper de chemin (`src`) : l'image apparaît alors « cass
 ## À retenir
 
 - `<img>` a besoin de `src` (où est le fichier) et `alt` (ce que ça représente)
-- Une galerie = plusieurs `<figure>` / `<img>` dans une `<section>`
+- Une galerie est formée de plusieurs `<figure>` contenant des `<img>`, regroupées dans une `<section>`
 - Les chemins relatifs facilitent le partage d'un projet hors ligne
 - `width` / CSS permettent de contrôler la taille d'affichage
-- Accessibilité : un `alt` vide `alt=""` seulement pour les images purement décoratives
+- Pour l'accessibilité, un `alt` vide (`alt=""`) est réservé aux images purement décoratives
 - Suite logique : [CSS](/cours/2/web_css_introduction) pour disposer la galerie en grille
 
 ## Pour s'entraîner

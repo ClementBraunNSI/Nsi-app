@@ -66,7 +66,7 @@ Une fiche contient :
       # False, l'ISBN 978123 est déjà pris
       ```
 
-      Après le troisième appel, la liste contient deux livres, pas trois.
+      Après le troisième appel, la liste contient deux livres, et non trois.
 
     <Correction>
     ```python
@@ -161,13 +161,13 @@ Une fiche contient :
     ```
     </CodeDepart>
     <Enonce>
-      Écrire `afficher_livre(livre)` : une seule ligne, avec le séparateur ` | `, dans l'ordre Titre, Auteur, Année, Genre, ISBN.
+      Écrire `afficher_livre(livre)`, qui affiche le livre sur une seule ligne, avec le séparateur ` | `, dans l'ordre Titre, Auteur, Année, Genre, ISBN.
 
       ```text
       Titre : Les Misérables | Auteur : Victor Hugo | Année : 1862 | Genre : Roman | ISBN : 978123
       ```
 
-      Écrire `afficher_tout(bibliotheque)`. Liste vide : `La bibliothèque est vide.` Sinon, une ligne par livre via `afficher_livre`.
+      Écrire `afficher_tout(bibliotheque)`. Si la liste est vide, la fonction affiche `La bibliothèque est vide.`, et sinon une ligne par livre grâce à `afficher_livre`.
 
     <Correction>
     ```python
@@ -210,7 +210,7 @@ Une fiche contient :
 
 ## 2. Le fichier CSV <Icone nom="save" />
 
-Fichier `bibliotheque.csv` attendu quand les deux livres sont encore là, virgule comme séparateur, UTF-8 :
+Voici le fichier `bibliotheque.csv` attendu quand les deux livres sont encore présents, avec la virgule comme séparateur et l'encodage UTF-8 :
 
 ```text
 titre,auteur,annee_publication,genre,isbn
@@ -218,7 +218,7 @@ Les Misérables,Victor Hugo,1862,Roman,978123
 Notre-Dame de Paris,Victor Hugo,1831,Roman,978456
 ```
 
-L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictReader` ne se parlent pas. Dans un CSV, tout est texte au départ : au chargement, `annee_publication` redevient un `int`.
+L'en-tête est obligatoire : sans ces noms de colonnes, `DictReader` ne peut pas relire ce qu'a écrit `DictWriter`. Dans un CSV, tout est enregistré sous forme de texte : au chargement, il faut donc reconvertir `annee_publication` en `int`.
 
 <ExerciseTabs courseId="proj_lib_data" courseTitle="Persistance des Données">
   <ExerciseSection id="lib-data-1" label="Sauvegarde" type="python">
@@ -304,7 +304,7 @@ L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictRea
 
       Si le fichier n'existe pas, renvoyer `[]` sans message d'erreur bloquant. Le programme démarre quand même. S'il existe, le lire avec `DictReader` et reconstruire la liste. Convertir `annee_publication` en `int` à ce moment-là.
 
-      Test : sauvegarder, repartir de `bibliotheque = []`, recharger. `rechercher_livres(..., "auteur", "Victor Hugo")` retrouve les deux livres, et `annee_publication` supporte une comparaison avec l'entier `1862`.
+      Pour tester, sauvegarder, repartir de `bibliotheque = []`, puis recharger le fichier. `rechercher_livres(..., "auteur", "Victor Hugo")` retrouve les deux livres, et `annee_publication` supporte une comparaison avec l'entier `1862`.
 
     <Correction>
     ```python
@@ -540,7 +540,7 @@ L'en-tête est obligatoire : sans ces noms de colonnes, `DictWriter` et `DictRea
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.**
+**Travail à rendre.**
 
 *   `bibliotheque.py`, avec un commentaire d'en-tête (nom et classe), les fonctions, et le menu qui charge le CSV au démarrage et le réécrit au choix Quitter ;
 *   un `bibliotheque.csv` produit par `sauvegarder`, contenant au moins les deux livres de l'exemple.

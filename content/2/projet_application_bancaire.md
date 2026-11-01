@@ -130,8 +130,8 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
     <Enonce>
       Écrire `deposer(comptes, numero, montant)`.
 
-      1. Compte absent : afficher `Compte introuvable.` et renvoyer `False`.
-      2. `montant` inférieur ou égal à 0 : afficher `Montant invalide.` et renvoyer `False`. Le solde ne change pas, rien n'est écrit dans l'historique.
+      1. Si le compte n'existe pas, afficher `Compte introuvable.` et renvoyer `False`.
+      2. Si `montant` est inférieur ou égal à 0, afficher `Montant invalide.` et renvoyer `False`. Le solde ne change pas, rien n'est écrit dans l'historique.
       3. Sinon ajouter `montant` au solde, ajouter le texte `"+ "` suivi du montant à `transactions`, et renvoyer `True`.
 
       Après `deposer(comptes, "12345", 200.0)`, Alice est à `1200.0` et l'historique contient une seule ligne : `"+ 200.0"`.
@@ -182,7 +182,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
     <Enonce>
       Écrire `retirer(comptes, numero, montant)`.
 
-      Mêmes contrôles que le dépôt pour le compte inconnu et le montant interdit. Contrôle en plus : si `montant` est strictement supérieur au solde, afficher `Solde insuffisant.` et renvoyer `False`. Rien n'est enregistré.
+      La fonction fait les mêmes contrôles que le dépôt pour un compte inconnu ou un montant interdit. Elle vérifie aussi que le montant ne dépasse pas le solde : s'il est strictement supérieur, afficher `Solde insuffisant.` et renvoyer `False`, sans rien enregistrer.
 
       *Attention : le solde ne devient jamais négatif.*
 
@@ -242,9 +242,9 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
     ```
     </CodeDepart>
     <Enonce>
-      Écrire `verifier_solde(comptes, numero)`. Elle affiche le solde et le renvoie. Compte inconnu : afficher `Compte introuvable.` et renvoyer `-1.0`.
+      Écrire `verifier_solde(comptes, numero)`. Elle affiche le solde et le renvoie. Si le compte est inconnu, elle affiche `Compte introuvable.` et renvoie `-1.0`.
 
-      Écrire `voir_transactions(comptes, numero)`. Elle affiche chaque ligne puis renvoie la liste. Compte inconnu : le même message, et une liste vide. Compte sans opération : afficher `Aucune opération.` et renvoyer `[]`.
+      Écrire `voir_transactions(comptes, numero)`. Elle affiche chaque ligne puis renvoie la liste. Pour un compte inconnu, elle affiche le même message et renvoie une liste vide. Pour un compte sans opération, elle affiche `Aucune opération.` et renvoie `[]`.
 
       Sur le scénario complet, `verifier_solde(comptes, "12345")` affiche `1150.0`. Bob, jamais mouvementé, a le solde `500.0` et le message `Aucune opération.`
 
@@ -376,7 +376,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
       Chaque option demande le numéro, puis le nom et le solde initial pour une création, ou le montant pour un dépôt ou un retrait. Les montants sont convertis en `float`. Elle appelle ensuite la fonction correspondante. Un choix autre que 1 à 6 affiche `Choix invalide.` et revient au menu. Le choix `6` termine la fonction.
       Les fonctions des étapes précédentes sont déjà dans l'éditeur. Appeler `main()` à la fin du programme.
 
-      Rejouer ensuite au clavier : Alice 1000, Bob 500, dépôt 200 sur Alice, retrait 50 sur Alice, solde 1150, retrait 2000 refusé.
+      Rejouer ensuite le scénario au clavier : créer Alice avec 1000 et Bob avec 500, déposer 200 puis retirer 50 sur le compte d'Alice, vérifier que le solde vaut 1150, puis constater qu'un retrait de 2000 est refusé.
 
     <Correction>
     ```python
@@ -527,7 +527,7 @@ Toutes les fonctions de mouvement renvoient `True` quand l'opération a eu lieu,
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `banque.py` : commentaire d'en-tête avec le nom et la classe, les fonctions `creer_compte`, `deposer`, `retirer`, `verifier_solde`, `voir_transactions` et `main`, le scénario Alice / Bob, et le menu.
+**Travail à rendre.** Il faut rendre un fichier `banque.py` qui contient un commentaire d'en-tête avec le nom et la classe, les fonctions `creer_compte`, `deposer`, `retirer`, `verifier_solde`, `voir_transactions` et `main`, le scénario Alice / Bob, et le menu.
 
 ## 5. Pour aller plus loin
 

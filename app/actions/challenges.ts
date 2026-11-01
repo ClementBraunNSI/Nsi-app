@@ -4,20 +4,31 @@ import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
 import { createAdminClient } from '@/utils/supabase/admin';
 import { getAuthContext } from '@/lib/auth';
-import { parseEvaluationSubject, type EvaluationExercise } from '@/lib/evaluation-subject';
-import { challengeStreak, earnedChallengeAchievements, parisTime, type MyChallenge } from '@/lib/challenges';
+import { parseEvaluationSubject, type EvaluationExercise, type EvaluationGrading } from '@/lib/evaluation-subject';
+import {
+  allExercisesPassed,
+  CHALLENGE_GRACE_MS,
+  challengeDeadline,
+  challengeStreak,
+  earnedChallengeAchievements,
+  parisTime,
+  type ChallengeAnswer,
+  type MyChallenge,
+} from '@/lib/challenges';
 import { CHECK_UNAVAILABLE, everyTestPassed, unexpectedRunReport, type RunReport } from '@/lib/python-check';
 import { runPythonCheck, runSqlCheck } from '@/lib/run-exercise-check';
 
 /*
- * Défi du lundi. L'élève lit ses défis par challenge_list_mine (sans les tests) ; la vérification lit les tests
- * avec la clé de service, côté serveur seulement. L'enseignant gère les défis par RLS (compte admin ou enseignant).
+ * Défi du lundi. L'élève lit ses défis par challenge_list_mine (sans les tests) et démarre son chrono par
+ * challenge_start ; la vérification lit les tests avec la clé de service, côté serveur seulement.
+ * L'enseignant gère les défis par RLS (compte admin ou enseignant).
  */
 
 type Result<T = object> = ({ ok: true } & T) | { ok: false; error: string };
 const fail = (error: string) => ({ ok: false as const, error });
 const NOT_ALLOWED = 'Réservé aux comptes enseignant et admin.';
 const CODE_LIMIT = 60_000;
+const MAX_EXERCISES = 5;
 
 function messageOf(error: { message?: string } | null | undefined, fallback: string) {
   const text = error?.message?.trim();
@@ -43,18 +54,32 @@ export async function listMyChallenges(): Promise<{ challenges: MyChallenge[]; s
   return { challenges, streak: challengeStreak(challenges) };
 }
 
+/** Ouverture de la page : démarre le chrono de l'élève (une seule fois) et renvoie l'heure de départ. */
+export async function startChallenge(challengeId: string): Promise<string | null> {
+  if (!challengeId) return null;
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc('challenge_start', { p_challenge: challengeId });
+  return error || !data ? null : String(data);
+}
+
 export type ChallengeCheckResult = {
   report: RunReport;
-  /** Essai enregistré (défi ouvert, compte élève de la classe). */
+  /** Essai enregistré (défi ouvert, compte élève de la classe, dans le temps). */
   recorded: boolean;
+  /** Le temps de l'élève est écoulé : rien n'est plus enregistré. */
+  expired: boolean;
+  /** Tous les exercices du défi sont réussis. */
+  challengePassed: boolean;
   /** Succès débloqués par cette réussite (identifiants de CHALLENGE_ACHIEVEMENTS). */
   newAchievements: string[];
 };
 
-export async function checkChallenge(challengeId: string, code: string): Promise<ChallengeCheckResult> {
-  const unavailable = { report: unexpectedRunReport(CHECK_UNAVAILABLE), recorded: false, newAchievements: [] };
+const EXPIRED_REPORT = unexpectedRunReport("Temps écoulé : ce code n'est plus enregistré pour le défi.");
+
+export async function checkChallenge(challengeId: string, exerciseId: string, code: string): Promise<ChallengeCheckResult> {
+  const unavailable = { report: unexpectedRunReport(CHECK_UNAVAILABLE), recorded: false, expired: false, challengePassed: false, newAchievements: [] };
   const source = String(code ?? '');
-  if (!challengeId || source.length > CODE_LIMIT) return unavailable;
+  if (!challengeId || !exerciseId || source.length > CODE_LIMIT) return unavailable;
 
   const auth = await getAuthContext();
   if (!auth.user) return unavailable;
@@ -63,7 +88,7 @@ export async function checkChallenge(challengeId: string, code: string): Promise
 
   const { data: challenge } = await admin
     .from('challenges')
-    .select('id, classes, exercise, grading, opens_at, closes_at')
+    .select('id, classes, exercises, grading, opens_at, closes_at, time_limit_minutes')
     .eq('id', challengeId)
     .maybeSingle();
   if (!challenge) return unavailable;
@@ -71,43 +96,63 @@ export async function checkChallenge(challengeId: string, code: string): Promise
   const inClass = Boolean(auth.classe && (challenge.classes as string[]).includes(auth.classe));
   if (!auth.isElevated && (!inClass || Date.parse(challenge.opens_at) > now)) return unavailable;
 
-  const verification = String((challenge.grading as { verification?: string })?.verification ?? '').trim();
-  if (!verification) return unavailable;
-  const report = await runCheck(challenge.exercise as EvaluationExercise, source, verification);
-  const passed = everyTestPassed(report);
+  const exercises = (challenge.exercises ?? []) as EvaluationExercise[];
+  const exercise = exercises.find((item) => item.id === exerciseId);
+  const verification = String(((challenge.grading ?? []) as EvaluationGrading[]).find((item) => item.id === exerciseId)?.verification ?? '').trim();
+  if (!exercise || !verification) return unavailable;
 
   // L'enseignant essaie sans rien enregistrer ; un défi fermé reste faisable pour s'entraîner.
   const open = now < Date.parse(challenge.closes_at);
-  if (auth.isElevated || !open) return { report, recorded: false, newAchievements: [] };
+  if (auth.isElevated || !open) {
+    const report = await runCheck(exercise, source, verification);
+    return { report, recorded: false, expired: false, challengePassed: false, newAchievements: [] };
+  }
 
   const userId = auth.user.id;
   const { data: previous } = await admin
     .from('challenge_submissions')
-    .select('attempts, passed, first_passed_at')
+    .select('attempts, passed, first_passed_at, started_at, answers')
     .eq('challenge_id', challengeId)
     .eq('user_id', userId)
     .maybeSingle();
-  const firstSuccess = passed && !previous?.passed;
+
+  // Chrono : compté depuis l'ouverture de la page ; à défaut (page ouverte sans démarrage), depuis ce premier essai.
+  const startedAt = previous?.started_at ?? new Date(now).toISOString();
+  const deadline = challengeDeadline(startedAt, challenge.time_limit_minutes);
+  if (deadline !== null && now > deadline + CHALLENGE_GRACE_MS) {
+    return { report: EXPIRED_REPORT, recorded: false, expired: true, challengePassed: Boolean(previous?.passed), newAchievements: [] };
+  }
+
+  const report = await runCheck(exercise, source, verification);
+  const passed = everyTestPassed(report);
+  const answers = { ...((previous?.answers ?? {}) as Record<string, ChallengeAnswer>) };
+  const before = answers[exerciseId];
+  answers[exerciseId] = { code: source, passed: Boolean(before?.passed) || passed, attempts: (before?.attempts ?? 0) + 1 };
+  const challengePassed = allExercisesPassed(exercises.map((item) => item.id), answers);
+  const firstSuccess = challengePassed && !previous?.passed;
+
   const { error } = await admin.from('challenge_submissions').upsert(
     {
       challenge_id: challengeId,
       user_id: userId,
       code: source,
+      answers,
+      started_at: startedAt,
       attempts: (previous?.attempts ?? 0) + 1,
-      passed: Boolean(previous?.passed) || passed,
+      passed: challengePassed,
       tests_passed: report.tests.filter((test) => test.ok).length,
       tests_total: report.tests.length,
-      first_passed_at: previous?.first_passed_at ?? (passed ? new Date().toISOString() : null),
+      first_passed_at: previous?.first_passed_at ?? (challengePassed ? new Date().toISOString() : null),
       updated_at: new Date().toISOString(),
     },
     { onConflict: 'challenge_id,user_id' },
   );
-  if (error) return { report, recorded: false, newAchievements: [] };
+  if (error) return { report, recorded: false, expired: false, challengePassed: false, newAchievements: [] };
 
   let newAchievements: string[] = [];
   if (firstSuccess) newAchievements = await awardChallengeAchievements(admin, userId, auth.classe!);
   revalidatePath('/defi');
-  return { report, recorded: true, newAchievements };
+  return { report, recorded: true, expired: false, challengePassed, newAchievements };
 }
 
 /** Série de la classe recalculée après une réussite ; enregistre les succès qui manquent. */
@@ -158,6 +203,8 @@ export type ChallengeSummary = {
   classes: string[];
   opensAt: string;
   closesAt: string;
+  timeLimitMinutes: number | null;
+  exerciseCount: number;
   submitted: number;
   passed: number;
 };
@@ -167,7 +214,7 @@ export async function listChallenges(): Promise<ChallengeSummary[]> {
   if (!ctx) return [];
   const { data } = await ctx.supabase
     .from('challenges')
-    .select('id, title, classes, opens_at, closes_at, challenge_submissions(passed)')
+    .select('id, title, classes, opens_at, closes_at, time_limit_minutes, exercises, challenge_submissions(passed)')
     .order('opens_at', { ascending: false });
   return (data ?? []).map((row: any) => ({
     id: row.id,
@@ -175,6 +222,8 @@ export async function listChallenges(): Promise<ChallengeSummary[]> {
     classes: row.classes ?? [],
     opensAt: row.opens_at,
     closesAt: row.closes_at,
+    timeLimitMinutes: row.time_limit_minutes ?? null,
+    exerciseCount: Array.isArray(row.exercises) ? row.exercises.length : 0,
     submitted: row.challenge_submissions?.length ?? 0,
     passed: (row.challenge_submissions ?? []).filter((sub: any) => sub.passed).length,
   }));
@@ -188,14 +237,19 @@ export type ChallengeInput = {
   /** Jour d'ouverture « AAAA-MM-JJ », à 7 h 30 (heure de Paris). */
   openDay: string;
   durationDays: number;
+  /** Temps par élève, en minutes, compté depuis l'ouverture de la page ; 0 ou vide : pas de limite. */
+  timeLimitMinutes: number | null;
 };
 
-/** Lecture du défi : un seul exercice, avec ses tests. */
+/** Lecture du défi : un à cinq exercices, chacun avec ses tests. */
 function readChallenge(source: string) {
   const parsed = parseEvaluationSubject(source);
   const errors = [...parsed.errors];
-  if (parsed.exercises.length !== 1) errors.push('Un défi contient exactement un bloc <ExerciseSection>.');
-  if (parsed.exercises[0] && !parsed.grading[0]?.verification) errors.push('Le défi a besoin de tests dans <Verification>.');
+  if (parsed.exercises.length === 0) errors.push('Un défi contient au moins un bloc <ExerciseSection>.');
+  if (parsed.exercises.length > MAX_EXERCISES) errors.push(`Un défi contient au plus ${MAX_EXERCISES} exercices.`);
+  parsed.exercises.forEach((exercise, index) => {
+    if (!parsed.grading[index]?.verification) errors.push(`« ${exercise.label} » a besoin de tests dans <Verification>.`);
+  });
   return { parsed, errors };
 }
 
@@ -212,12 +266,14 @@ export async function saveChallenge(input: ChallengeInput): Promise<Result<{ id:
 
   const opens = parisTime(input.openDay, 7, 30);
   const days = Math.min(Math.max(Math.round(Number(input.durationDays) || 7), 1), 30);
+  const minutes = Math.round(Number(input.timeLimitMinutes) || 0);
   const values = {
     title,
     classes: [...new Set((input.classes || []).map((value) => String(value).trim()).filter(Boolean))],
     source,
-    exercise: { ...parsed.exercises[0], id: 'defi' },
-    grading: { verification: parsed.grading[0].verification, correction: parsed.grading[0].correction },
+    exercises: parsed.exercises,
+    grading: parsed.grading.map((item) => ({ id: item.id, verification: item.verification, correction: item.correction })),
+    time_limit_minutes: minutes > 0 ? Math.min(minutes, 240) : null,
     opens_at: opens.toISOString(),
     closes_at: new Date(opens.getTime() + days * 86_400_000).toISOString(),
   };
@@ -241,21 +297,46 @@ export async function deleteChallenge(id: string): Promise<Result> {
   return { ok: true };
 }
 
-/** La correction passe-t-elle ses propres tests ? À lancer avant de publier un défi. */
-export async function testChallengeCorrection(source: string): Promise<Result<{ passed: boolean; report: RunReport }> | { ok: false; error: string; errors: string[] }> {
+export type CorrectionTest = { id: string; label: string; passed: boolean; report: RunReport | null; missing: boolean };
+
+/** Chaque correction passe-t-elle ses propres tests ? À lancer avant de publier un défi. */
+export async function testChallengeCorrection(source: string): Promise<Result<{ passed: boolean; results: CorrectionTest[] }> | { ok: false; error: string; errors: string[] }> {
   const ctx = await teacher();
   if (!ctx) return fail(NOT_ALLOWED);
   const { parsed, errors } = readChallenge(String(source || ''));
   if (errors.length > 0) return { ok: false, error: 'Le défi contient des erreurs.', errors };
-  const correction = parsed.grading[0].correction?.trim();
-  if (!correction) return fail('Ajouter une <Correction> pour la tester.');
-  const report = await runCheck(parsed.exercises[0], correction, parsed.grading[0].verification);
-  return { ok: true, passed: everyTestPassed(report), report };
+  const results = await Promise.all(
+    parsed.exercises.map(async (exercise, index): Promise<CorrectionTest> => {
+      const correction = parsed.grading[index]?.correction?.trim();
+      if (!correction) return { id: exercise.id, label: exercise.label, passed: false, report: null, missing: true };
+      const report = await runCheck(exercise, correction, parsed.grading[index].verification);
+      return { id: exercise.id, label: exercise.label, passed: everyTestPassed(report), report, missing: false };
+    }),
+  );
+  return { ok: true, passed: results.every((item) => item.passed), results };
 }
 
 export type ChallengeDetail = {
-  challenge: { id: string; title: string; classes: string[]; source: string; opensAt: string; closesAt: string };
-  rows: { studentId: string; name: string; classe: string | null; attempts: number; passed: boolean; firstPassedAt: string | null; code: string }[];
+  challenge: {
+    id: string;
+    title: string;
+    classes: string[];
+    source: string;
+    opensAt: string;
+    closesAt: string;
+    timeLimitMinutes: number | null;
+    exercises: { id: string; label: string }[];
+  };
+  rows: {
+    studentId: string;
+    name: string;
+    classe: string | null;
+    attempts: number;
+    passed: boolean;
+    startedAt: string | null;
+    firstPassedAt: string | null;
+    answers: Record<string, ChallengeAnswer>;
+  }[];
 };
 
 export async function getChallengeDetail(id: string): Promise<ChallengeDetail | null> {
@@ -263,7 +344,7 @@ export async function getChallengeDetail(id: string): Promise<ChallengeDetail | 
   if (!ctx) return null;
   const { data: challenge } = await ctx.supabase
     .from('challenges')
-    .select('id, title, classes, source, opens_at, closes_at, challenge_submissions(user_id, attempts, passed, first_passed_at, code)')
+    .select('id, title, classes, source, opens_at, closes_at, time_limit_minutes, exercises, challenge_submissions(user_id, attempts, passed, started_at, first_passed_at, answers)')
     .eq('id', id)
     .maybeSingle();
   if (!challenge) return null;
@@ -279,8 +360,9 @@ export async function getChallengeDetail(id: string): Promise<ChallengeDetail | 
       classe: student.classe,
       attempts: sub?.attempts ?? 0,
       passed: Boolean(sub?.passed),
+      startedAt: sub?.started_at ?? null,
       firstPassedAt: sub?.first_passed_at ?? null,
-      code: sub?.code ?? '',
+      answers: (sub?.answers ?? {}) as Record<string, ChallengeAnswer>,
     };
   });
   rows.sort((a, b) => (a.classe ?? '').localeCompare(b.classe ?? '') || a.name.localeCompare(b.name, 'fr'));
@@ -292,6 +374,8 @@ export async function getChallengeDetail(id: string): Promise<ChallengeDetail | 
       source: challenge.source,
       opensAt: challenge.opens_at,
       closesAt: challenge.closes_at,
+      timeLimitMinutes: challenge.time_limit_minutes ?? null,
+      exercises: ((challenge.exercises ?? []) as EvaluationExercise[]).map((item) => ({ id: item.id, label: item.label })),
     },
     rows,
   };

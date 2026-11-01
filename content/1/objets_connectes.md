@@ -11,13 +11,13 @@ audience: public
 # Objets connectés
 
 > **Définition**
-> Un **objet connecté**, ou objet de l'Internet des objets (*Internet of Things*, IoT), est un appareil physique équipé de capteurs, d'actionneurs et d'une connexion réseau. Il collecte des données, les échange, et parfois agit, en passant par Internet.
+> Un **objet connecté**, ou objet de l'Internet des objets (*Internet of Things*, IoT), est un appareil physique équipé de capteurs, d'actionneurs et d'une connexion réseau. Il collecte des données et les échange par Internet, et il peut parfois agir sur son environnement.
 
-On date souvent le mot de 1999, même si des machines reliées à un réseau existent dès les années 1980. Aujourd'hui, les montres, les enceintes, certaines voitures et une foule de capteurs industriels en font partie. L'objet n'est plus seulement un outil qu'on allume. Il mesure quelque chose, et il en parle à une autre machine.
+On date souvent le mot de 1999, même si des machines reliées à un réseau existent dès les années 1980. Aujourd'hui, les montres, les enceintes, certaines voitures et une foule de capteurs industriels sont des objets connectés. Ils ne se contentent plus d'être allumés : ils mesurent quelque chose et transmettent ces mesures à d'autres machines.
 
-## Ce qu'il y a dedans
+## Les composants d'un objet connecté
 
-Un objet connecté n'est pas « une puce magique ». Il assemble quelques rôles, qu'on retrouve presque toujours.
+Un objet connecté assemble quelques composants que l'on retrouve presque toujours.
 
 | Composant | Rôle | Exemple |
 |-----------|------|----------|
@@ -27,18 +27,18 @@ Un objet connecté n'est pas « une puce magique ». Il assemble quelques rôles
 | **Interface réseau** | Permet la communication | Wi-Fi, Bluetooth, LoRa |
 | **Alimentation** | Fournit l'énergie | Batterie, secteur |
 
-Le capteur observe. L'actionneur agit. Le microcontrôleur, la carte Micro:bit par exemple, décide entre les deux. Sans liaison, Wi-Fi, Bluetooth ou autre, l'objet reste un petit automate local. Sans énergie, rien de tout cela ne tourne.
+Le capteur mesure, l'actionneur agit, et le microcontrôleur (la carte Micro:bit par exemple) décide de l'action à partir des mesures. Sans liaison réseau, comme le Wi-Fi ou le Bluetooth, l'objet reste un simple automate qui fonctionne seul. Et sans alimentation, bien sûr, rien ne fonctionne.
 
 ![Carte Micro:bit - Face](/content/1/microbit.png)
 ![Carte Micro:bit - Dos](/content/1/microbit-back.png)
 
-Les mêmes capteurs reviennent souvent. Une station météo mesure la température et l'humidité. Un accéléromètre et un gyroscope sentent le mouvement et la rotation, c'est ce qui retourne l'écran du téléphone. Un capteur de lumière allume les phares, un microphone écoute pour un assistant vocal.
+Les mêmes capteurs reviennent souvent. Une station météo mesure la température et l'humidité. Un accéléromètre et un gyroscope détectent le mouvement et la rotation : c'est grâce à eux que l'écran du téléphone pivote. Un capteur de lumière peut allumer les phares d'une voiture, et un microphone capte la voix pour un assistant vocal.
 
-En face, les actionneurs sont ce que l'objet fait voir ou faire : une LED, un écran, un haut-parleur, un moteur, un relais qui ouvre un circuit, une vanne qui laisse passer l'eau.
+Les actionneurs, eux, permettent à l'objet d'afficher quelque chose ou d'agir. Il peut s'agir d'une LED, d'un écran, d'un haut-parleur, d'un moteur, d'un relais qui ouvre un circuit ou d'une vanne qui laisse passer l'eau.
 
-## Comment ils se parlent
+## Les protocoles de communication
 
-Tous les objets n'utilisent pas le même réseau. On choisit selon la distance, la quantité de données, et surtout la batterie.
+Tous les objets n'utilisent pas le même réseau. Le choix dépend de la distance, de la quantité de données à transmettre et surtout de l'autonomie de la batterie.
 
 | Protocole | Portée | Consommation | Débit | Usage typique |
 |-----------|--------|--------------|-------|---------------|
@@ -48,27 +48,27 @@ Tous les objets n'utilisent pas le même réseau. On choisit selon la distance, 
 | **4G/5G** | Nationale | Élevée | Très haut | Voitures, téléphones |
 | **NFC** | Moins de 10 cm | Très faible | Moyen | Paiement, badges |
 
-Le Wi-Fi envoie beaucoup, mais il vide une pile. Le Bluetooth convient aux objets portés sur soi, parce qu'ils restent près du téléphone. Le NFC ne porte que sur quelques centimètres : c'est voulu, pour un paiement ou un badge. LoRaWAN fait l'inverse du Wi-Fi. Un compteur d'eau qui envoie une mesure par jour, sur plusieurs kilomètres, n'a pas besoin d'un gros débit. Il a besoin de tenir des années sur une batterie. C'est pour ce genre de cas qu'on le choisit.
+Le Wi-Fi transmet beaucoup de données, mais il vide vite une pile. Le Bluetooth convient aux objets portés sur soi, parce qu'ils restent près du téléphone. Le NFC ne porte qu'à quelques centimètres, ce qui est voulu pour un paiement ou un badge. LoRaWAN est à l'opposé du Wi-Fi : il transmet peu de données mais consomme très peu. Il convient par exemple à un compteur d'eau qui envoie une mesure par jour sur plusieurs kilomètres, et qui doit tenir des années sur une batterie.
 
 ## Le trajet d'une mesure
 
-Prenons un chauffage. Le capteur lit 18 °C. Cette valeur part sur le réseau, souvent en Wi-Fi, vers un serveur qui la stocke. Un programme la compare à la consigne, disons 20 °C. Comme il fait trop froid, une commande revient vers l'actionneur, et le chauffage s'allume.
+Prenons l'exemple d'un chauffage. Le capteur lit 18 °C. Cette valeur part sur le réseau, souvent en Wi-Fi, vers un serveur qui la stocke. Un programme la compare à la consigne, disons 20 °C. Comme il fait trop froid, une commande revient vers l'actionneur, et le chauffage s'allume.
 
-On peut donc suivre la donnée en cinq temps : elle est collectée, transmise, stockée, analysée, puis elle déclenche une action. Si l'une de ces étapes manque, l'objet mesure peut-être, mais il ne sert plus à rien.
+La donnée passe donc par cinq étapes : elle est collectée, transmise, stockée et analysée, puis elle déclenche une action. Si l'une de ces étapes manque, l'objet ne remplit plus son rôle.
 
-## Où on les trouve
+## Les domaines d'utilisation
 
-À la maison, la domotique règle le confort, la sécurité et parfois la consommation. En santé, une montre suit des constantes, une alerte peut signaler une chute. En ville, l'éclairage public et les feux s'adaptent au trafic, les bennes préviennent quand elles sont pleines. Dans une usine, des capteurs annoncent une panne avant qu'elle n'arrête la chaîne : c'est une partie de ce qu'on appelle l'industrie 4.0. Dans un champ, l'arrosage se déclenche selon l'humidité du sol plutôt que selon une heure fixe.
+À la maison, la domotique règle le confort, la sécurité et parfois la consommation. En santé, une montre suit certaines constantes et peut signaler une chute. En ville, l'éclairage public et les feux s'adaptent au trafic, et les bennes préviennent quand elles sont pleines. Dans une usine, des capteurs annoncent une panne avant qu'elle n'arrête la chaîne : c'est une partie de ce qu'on appelle l'industrie 4.0. Dans un champ, l'arrosage se déclenche selon l'humidité du sol plutôt que selon une heure fixe.
 
-## L'interface, la partie visible
+## L'interface
 
-L'objet a beau mesurer tout seul, quelqu'un doit pouvoir regarder les données ou donner un ordre. Cette **interface** peut être une application, un site qui sert de tableau de bord, des boutons sur le boîtier, ou la voix. Ce n'est pas un détail de confort. Sans interface, impossible de savoir ce que l'objet a décidé à la place de son utilisateur.
+L'objet a beau mesurer tout seul, quelqu'un doit pouvoir consulter les données ou lui donner un ordre. Cette **interface** peut être une application, un site qui sert de tableau de bord, des boutons sur le boîtier ou une commande vocale. Elle est indispensable, car sans elle l'utilisateur ne peut pas savoir ce que l'objet a décidé à sa place.
 
 <IotInterface />
 
-## Il attend des événements
+## La programmation événementielle
 
-Un programme de cours s'exécute souvent du début à la fin, puis s'arrête. Un objet connecté, lui, reste allumé. Il tourne dans une boucle et réagit à ce qui arrive : un bouton, une température, un message. On parle de programmation **événementielle**. La forme tient en une phrase : si tel événement se produit, alors fais cette action.
+Les programmes écrits en cours s'exécutent souvent du début à la fin, puis s'arrêtent. Un objet connecté, lui, reste allumé. Son programme tourne dans une boucle et réagit à ce qui se passe, comme l'appui sur un bouton, un changement de température ou l'arrivée d'un message. On parle de programmation **événementielle**, dont le principe est le suivant : si tel événement se produit, alors telle action est exécutée.
 
 ```python
 from microbit import *
@@ -82,12 +82,12 @@ while True:  # Boucle infinie
         display.clear()        # Sinon, rien
 ```
 
-Dans cet exemple, la carte ne « finit » jamais. Tant qu'elle est alimentée, elle regarde le bouton A et la température. Le sourire et le message d'alerte ne sont pas au milieu d'une liste d'instructions : ils attendent leur condition.
+Dans cet exemple, le programme ne s'arrête jamais. Tant que la carte est alimentée, elle surveille le bouton A et la température. Le sourire et le message d'alerte ne s'affichent que lorsque leur condition est remplie.
 
-## Le maillon faible
+## Sécurité et vie privée
 
-Ces objets sont souvent mal protégés, parce qu'on les installe et qu'on les oublie. En 2016, le logiciel **Mirai** a pris le contrôle de centaines de milliers de caméras et de routeurs. Les pirates s'en sont servis comme d'une armée, un **botnet**, pour noyer des sites sous les requêtes, dont Twitter et Netflix. La faille n'était pas sophistiquée : beaucoup d'appareils avaient gardé le mot de passe d'usine, souvent `admin` / `admin`.
+Ces objets sont souvent mal protégés, parce qu'on les installe et qu'on les oublie. En 2016, le logiciel **Mirai** a pris le contrôle de centaines de milliers de caméras et de routeurs. Les pirates s'en sont servis comme d'une armée, un **botnet**, pour noyer des sites sous les requêtes, dont Twitter et Netflix. La faille était pourtant très simple : beaucoup d'appareils avaient gardé le mot de passe d'usine, souvent `admin` / `admin`.
 
-La vie privée est l'autre enjeu. Une montre sait où se trouve son porteur et à peu près comment il dort. Une enceinte entend ce qui se dit dans la pièce. Une caméra filme l'intérieur du logement. Ce ne sont pas des effets secondaires rares : ce sont les données dont ces objets ont besoin pour fonctionner.
+La vie privée est un autre enjeu important. Une montre sait où se trouve son porteur et à peu près comment il dort. Une enceinte entend ce qui se dit dans la pièce. Une caméra filme l'intérieur du logement. Ces données ne sont pas collectées par accident : ces objets en ont besoin pour fonctionner.
 
-Trois réflexes limitent les dégâts. Changer le mot de passe par défaut dès l'installation. Faire les mises à jour, même quand l'objet « marche très bien ». Si la box le permet, placer ces appareils sur un réseau Wi-Fi invité, séparé de l'ordinateur de travail.
+Quelques réflexes limitent les risques. Il faut changer le mot de passe par défaut dès l'installation, et faire les mises à jour même quand l'objet fonctionne très bien. Si la box le permet, il est aussi conseillé de placer ces appareils sur un réseau Wi-Fi invité, séparé de l'ordinateur de travail.

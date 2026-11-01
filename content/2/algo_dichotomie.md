@@ -12,14 +12,14 @@ audience: public
 
 # Recherche dichotomique
 
-Chercher un mot dans un dictionnaire en lisant chaque page depuis le début marche, et c'est lent. On ouvre au milieu, on regarde si le mot est avant ou après, et on jette une moitié. La **recherche dichotomique** fait exactement cela sur une **liste triée**. À chaque comparaison, la zone qui reste est environ deux fois plus petite.
+Pour chercher un mot dans un dictionnaire, on peut lire chaque page depuis le début, mais c'est très lent. Il est plus efficace d'ouvrir le dictionnaire au milieu, de regarder si le mot se trouve avant ou après, puis d'écarter la moitié inutile. La **recherche dichotomique** fait exactement cela sur une **liste triée**. À chaque comparaison, la zone qui reste est environ deux fois plus petite.
 
 !!! warning "Condition indispensable"
     La liste **doit être triée** (ordre croissant ou décroissant). Sur une liste non triée, la dichotomie donne un résultat **faux** : elle peut conclure « introuvable » alors que la valeur est présente.
 
-Le tri est la condition, pas un détail. L'algorithme décide de jeter la moitié gauche parce qu'il croit que tout ce qui est à gauche du milieu est plus petit. Si la liste est en désordre, cette croyance est fausse, et il peut renvoyer « absent » pour une valeur qui est là.
+Le tri est une condition indispensable. L'algorithme écarte la moitié gauche parce qu'il suppose que toutes les valeurs situées à gauche du milieu sont plus petites. Si la liste est en désordre, cette supposition est fausse, et il peut répondre « absent » pour une valeur qui est pourtant là.
 
-## Deux bornes qui se resserrent
+## Le principe de l'algorithme
 
 On garde deux indices, `debut` et `fin`, qui encadrent la zone encore possible. Tant que la zone n'est pas vide, c'est-à-dire tant que `debut <= fin` :
 
@@ -28,7 +28,7 @@ On garde deux indices, `debut` et `fin`, qui encadrent la zone encore possible. 
 3. Si elle est trop petite, la valeur cherchée, si elle existe, est à droite : `debut` devient `milieu + 1`.
 4. Si elle est trop grande, on ne garde que la gauche : `fin` devient `milieu - 1`.
 
-On ne reprend pas `milieu` dans la zone suivante. On l'a déjà comparé. Quand `debut` dépasse `fin`, la zone est vide : la valeur n'y est pas, et l'on renvoie `-1`.
+L'indice `milieu` n'est pas repris dans la zone suivante, puisqu'il a déjà été comparé. Quand `debut` dépasse `fin`, la zone est vide : la valeur n'y est pas, et l'on renvoie `-1`.
 
 <BinarySearchVisualizer />
 
@@ -91,9 +91,9 @@ desordre = [7, 1, 9, 3, 5]
 print(recherche_dichotomique(desordre, 1))  # -1 : résultat faux
 ```
 
-## Pourquoi c'est rapide
+## L'efficacité de la dichotomie
 
-La recherche séquentielle compare éventuellement chaque case : dans le pire des cas, $n$ comparaisons, une complexité $O(n)$. La dichotomie divise la zone par deux à chaque tour. Pour un million d'éléments, $2^{20}$ vaut environ un million, donc il faut au plus une vingtaine de comparaisons. La complexité est $O(\log_2 n)$.
+La recherche séquentielle peut devoir comparer chaque case : dans le pire des cas, elle fait $n$ comparaisons, ce qui donne une complexité en $O(n)$. La dichotomie divise la zone par deux à chaque tour. Pour un million d'éléments, $2^{20}$ vaut environ un million, donc il faut au plus une vingtaine de comparaisons. La complexité est $O(\log_2 n)$.
 
 | Méthode | Complexité | Pour 1 000 000 d'éléments |
 | :--- | :--- | :--- |
@@ -102,9 +102,9 @@ La recherche séquentielle compare éventuellement chaque case : dans le pire de
 
 <LinearVsBinarySearch />
 
-Trier puis chercher n'est pas toujours rentable. Trier coûte plus cher qu'une seule recherche séquentielle. Si l'on ne cherche qu'une fois, le tri peut être du gaspillage. Si l'on cherche souvent dans la même liste, on paie le tri une fois et chaque recherche ensuite est logarithmique.
+Trier la liste avant de chercher n'est pas toujours rentable, car un tri coûte plus cher qu'une seule recherche séquentielle. Si l'on ne cherche qu'une fois, trier fait donc perdre du temps. En revanche, si l'on cherche souvent dans la même liste, le tri n'est fait qu'une fois, et chaque recherche est ensuite logarithmique.
 
-En résumé, la dichotomie ne vaut que sur une liste triée. Chaque étape élimine environ la moitié des candidats, en resserrant `debut` et `fin`. `milieu` est un indice, `liste[milieu]` est la valeur. La complexité est logarithmique. L'absence se signale par `-1`. Sans le tri, le résultat ne mérite pas confiance.
+En résumé, la dichotomie ne fonctionne que sur une liste triée. Chaque étape élimine environ la moitié des candidats, en resserrant `debut` et `fin`. `milieu` est un indice, et `liste[milieu]` la valeur correspondante. La complexité est logarithmique, et une valeur absente est signalée par `-1`.
 
 ## Pour s'entraîner
 

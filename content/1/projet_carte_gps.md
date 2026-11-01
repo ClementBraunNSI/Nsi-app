@@ -76,7 +76,7 @@ Après exécution, les trois villes sont cliquables. Si un marqueur manque, reli
 
 ## 4. Une boucle sur les lieux <Icone nom="repeat" />
 
-Plutôt que répéter le même code, on parcourt une liste de dictionnaires. `lieu['lat']` donne la latitude, `lieu['lon']` la longitude, `lieu['nom']` le nom.
+Plutôt que de répéter le même code, on parcourt une liste de dictionnaires. `lieu['lat']` donne la latitude, `lieu['lon']` la longitude, `lieu['nom']` le nom.
 
 <CarteGpsPlayground initialCode="import folium
 
@@ -124,11 +124,11 @@ for nom, lat, lon in villes:
 
 print('Ajouter le marqueur vert')" />
 
-Décommenter la ligne du marqueur vert et remplacer `NOM`, `LAT` et `LON`. Le marqueur vert est le vôtre : il se distingue de Paris et de Lyon. `folium.Icon(color='green')` fixe la couleur.
+Décommenter la ligne du marqueur vert et remplacer `NOM`, `LAT` et `LON`. Ce marqueur vert, qui représente le lieu choisi, se distingue ainsi de Paris et de Lyon. `folium.Icon(color='green')` fixe la couleur.
 
 ## 6. Le trajet (bonus) <Icone nom="workflow" />
 
-Un trajet se dessine avec `folium.PolyLine` : une ligne entre plusieurs coordonnées, dans l'ordre de la liste.
+Un trajet se dessine avec `folium.PolyLine`, qui trace une ligne reliant plusieurs coordonnées dans l'ordre de la liste.
 
 <CarteGpsPlayground initialCode="import folium
 
@@ -149,6 +149,6 @@ print('Tracez le trajet Paris-Lyon')" />
 
 Décommenter la ligne `PolyLine`. Une ligne bleue relie Paris à Lyon. `weight=4` règle l'épaisseur du trait et `opacity=0.8` sa transparence.
 
-**Ce qu'on rend.** Le programme de l'étape 5, avec Paris, Lyon, et le marqueur vert aux coordonnées cherchées. Le nom dans `popup` est celui du lieu choisi. Si le bonus est fait, le trajet Paris-Lyon est dans le même fichier.
+**Travail à rendre.** Il faut rendre le programme de l'étape 5, avec Paris, Lyon et le marqueur vert placé aux coordonnées trouvées. Le nom dans `popup` est celui du lieu choisi. Si le bonus est fait, le trajet Paris-Lyon est dans le même fichier.
 
 Sur un ordinateur, en dehors de cette page, `carte.save('ma_carte.html')` écrit la carte dans un fichier qu'on ouvre dans le navigateur.

@@ -13,11 +13,11 @@ audience: public
 
 # Analyse de complexité
 
-Un algorithme peut être juste et néanmoins inutilisable. S'il examine chaque paire d'éléments d'une liste de dix millions d'entrées, la réponse correcte arrive trop tard. L'analyse de complexité prévoit comment le coût grandit quand la taille des données grandit. On s'en sert pour comparer des algorithmes sans dépendre de la machine : un ordinateur plus rapide multiplie tout par une constante, il ne change pas la forme de la croissance.
+Un algorithme peut être juste et néanmoins inutilisable. S'il examine chaque paire d'éléments d'une liste de dix millions d'entrées, la réponse correcte arrive trop tard. L'analyse de complexité prévoit comment le coût grandit quand la taille des données grandit. On s'en sert pour comparer des algorithmes indépendamment de la machine : un ordinateur plus rapide divise tous les temps par une constante, mais ne change pas la façon dont ils augmentent.
 
-## Le temps, compté en opérations
+## La complexité en temps
 
-La complexité temporelle compte des opérations élémentaires en fonction de la taille de l'entrée, notée `n`. On ne mesure pas des secondes. On regarde si le nombre d'opérations reste stable, suit `n`, ou explose.
+La complexité temporelle compte des opérations élémentaires en fonction de la taille de l'entrée, notée `n`. On ne mesure pas des secondes : on regarde si le nombre d'opérations reste stable, augmente comme `n`, ou augmente beaucoup plus vite.
 
 | Notation | Croissance | Exemple |
 | :--- | :--- | :--- |
@@ -27,9 +27,9 @@ La complexité temporelle compte des opérations élémentaires en fonction de l
 | `O(n log n)` | Un peu plus que linéaire | Tri fusion |
 | `O(n^2)` | Quadratique | Deux boucles imbriquées |
 
-Le `O` décrit un ordre de grandeur. On garde le terme qui domine quand `n` devient grand, et on jette les constantes. `3n + 20` est en `O(n)`. Pour de petites listes, la constante peut gagner. Pour de grandes, c'est le terme en `n`, ou en `n^2`, qui décide.
+Le `O` décrit un ordre de grandeur. On garde le terme qui domine quand `n` devient grand, et on supprime les constantes : `3n + 20` est ainsi en `O(n)`. Pour de petites listes, la constante peut compter davantage, mais pour de grandes listes, c'est le terme en `n`, ou en `n^2`, qui l'emporte.
 
-Voici un parcours qui cherche le maximum. Chaque élément est regardé une fois, les comparaisons sont proportionnelles à la longueur : c'est `O(n)`.
+Voici un parcours qui cherche le maximum. Chaque élément est examiné une seule fois, donc le nombre de comparaisons est proportionnel à la longueur de la liste : la complexité est en `O(n)`.
 
 ```python
 def maximum(tab):
@@ -51,19 +51,19 @@ def couples(tab):
     return res
 ```
 
-Deux boucles imbriquées qui dépendent toutes les deux de `n` donnent en général `O(n^2)`. Pas toujours : si la boucle interne va jusqu'à une constante, on reste linéaire. Il faut lire les bornes, pas seulement compter les mots `for`.
+Deux boucles imbriquées qui dépendent toutes les deux de `n` donnent en général `O(n^2)`. Ce n'est pas toujours le cas : si la boucle interne s'arrête à une constante, la complexité reste linéaire. Il faut donc lire les bornes des boucles, et pas seulement compter les `for`.
 
-## La mémoire
+## La complexité en mémoire
 
 La complexité mémoire mesure l'espace supplémentaire utilisé pendant le calcul, en plus de l'entrée elle-même. Un algorithme **en place** se contente de quelques variables. Un tri qui recopie la liste dans une structure auxiliaire occupe souvent `O(n)` en plus.
 
-Gagner du temps coûte parfois de la mémoire, et l'inverse est vrai aussi. Un tableau de résultats déjà calculés évite de recommencer les mêmes appels, au prix de les stocker. Le choix dépend de ce qui manque : les secondes, ou les cases.
+Gagner du temps demande parfois plus de mémoire, et inversement. Un tableau de résultats déjà calculés évite par exemple de refaire les mêmes appels, mais il faut stocker ces résultats. Le choix dépend de la ressource la plus limitée : le temps ou la mémoire.
 
-## Comment conclure
+## La méthode
 
-On commence par nommer `n`, la taille qui compte : longueur de la liste, nombre de sommets, taille du texte. On repère les boucles et les appels récursifs qui dépendent de `n`. On ne garde que le terme dominant. On écrit `O(...)`.
+On commence par identifier `n`, la taille des données qui compte, comme la longueur de la liste, le nombre de sommets ou la taille du texte. On repère ensuite les boucles et les appels récursifs qui dépendent de `n`, puis on ne garde que le terme dominant pour écrire la complexité sous la forme `O(...)`.
 
-Deux repères de Terminale suffisent à sentir l'écart. Une recherche séquentielle est en `O(n)` : dans le pire cas, on lit toute la liste. Une recherche dichotomique, sur une liste triée, est en `O(log n)` : chaque étape jette la moitié de ce qui reste. Quand `n` est énorme, « la moitié à chaque fois » et « tout, une fois » ne jouent plus dans la même catégorie. C'est aussi pour cela qu'un tri en `O(n log n)` remplace, sur de grandes données, un tri en `O(n^2)`.
+Deux exemples suffisent pour mesurer l'écart. Une recherche séquentielle est en `O(n)` : dans le pire cas, on lit toute la liste. Une recherche dichotomique, sur une liste triée, est en `O(log n)` : chaque étape jette la moitié de ce qui reste. Quand `n` est très grand, éliminer la moitié des éléments à chaque étape est incomparablement plus rapide que de les lire tous. C'est aussi pour cela qu'un tri en `O(n log n)` remplace, sur de grandes données, un tri en `O(n^2)`.
 
 ## Exercices
 

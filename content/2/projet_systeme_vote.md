@@ -12,7 +12,7 @@ audience: public
 # <Icone nom="vote" /> Projet - Simulateur de Système de Vote
 
 Le but de ce projet est de programmer un système de dépouillement.
-Ce projet consiste à appliquer quatre règles au même jeu de bulletins, et constater que la règle peut changer le vainqueur.
+Ce projet consiste à appliquer quatre règles différentes au même jeu de bulletins, puis à constater que le vainqueur peut changer selon la règle.
 
 On utilise des listes et des dictionnaires : une liste de noms pour un scrutin à un tour, une liste de classements pour les autres méthodes, un dictionnaire pour les scores. Le programme ne demande pas les votes au clavier : les bulletins sont écrits dans le fichier `votes.py`, ce qui permet de vérifier les résultats.
 
@@ -106,7 +106,7 @@ L'ordre d'affichage est celui de la première apparition dans la liste.
   </ExerciseSection>
 </ExerciseTabs>
 
-## 2. Scrutin à deux tours 2️⃣
+## 2. Scrutin à deux tours
 
 Chaque électeur classe tous les candidats. Au premier tour, on ne regarde que le premier nom du bulletin. Si un candidat a strictement plus de la moitié des bulletins, il est élu tout de suite. Sinon, les deux meilleurs s'affrontent : sur chaque bulletin, on donne la voix à celui des deux qui est classé devant l'autre.
 
@@ -288,7 +288,7 @@ candidats = ["Alice", "Bob", "Charlie"]
 
 Un vainqueur de Condorcet bat chaque autre candidat en duel. Il n'en existe pas toujours.
 
-Sur le jeu B : Charlie bat Alice (5-4) et Charlie bat Bob (6-3). Charlie gagne ses deux duels.
+Sur le jeu B, Charlie bat Alice (5-4) et Bob (6-3) : il gagne donc ses deux duels.
 
 Jeu C (paradoxe de Condorcet) :
 
@@ -340,11 +340,11 @@ Alice bat Bob (2 voix contre 1), Bob bat Charlie (2 contre 1), Charlie bat Alice
     ```
     </CodeDepart>
     <Enonce>
-      Écrire `duels(bulletins, candidats)` qui organise chaque paire une seule fois (Alice contre Bob, pas aussi Bob contre Alice).
+      Écrire `duels(bulletins, candidats)` qui organise chaque paire une seule fois (Alice contre Bob, mais pas en plus Bob contre Alice).
 
       Pour chaque paire, appeler `duel` et afficher une ligne du type `Alice vs Bob : Bob (5-4)`. La fonction peut renvoyer un dictionnaire des résultats, à condition que l'affichage soit présent.
 
-      Jeu B : Bob bat Alice, Charlie bat Alice, Charlie bat Bob.
+      Sur le jeu B, Bob bat Alice, et Charlie bat Alice et Bob.
 
     <Correction>
     ```python
@@ -469,7 +469,7 @@ Avec N candidats, le premier d'un bulletin reçoit N − 1 points, le deuxième 
 
 Sur un bulletin `["Alice", "Charlie", "Bob"]`, Alice reçoit 2 points, Charlie 1 point, Bob 0 point.
 
-Jeu B complet : Alice 8, Bob 8, Charlie 11. Vainqueur : Charlie.
+Sur l'ensemble du jeu B, Alice obtient 8 points, Bob 8 et Charlie 11 : Charlie est donc le vainqueur.
 
 Le même paquet de bulletins donne donc trois vainqueurs différents : Alice au premier tour, Bob au second tour, Charlie chez Condorcet et Borda.
 
@@ -503,9 +503,9 @@ Le même paquet de bulletins donne donc trois vainqueurs différents : Alice au 
       2. Pour chaque bulletin, le candidat à la position `i` (en partant de 0) reçoit `N - 1 - i` points.
       3. Renvoyer le dictionnaire des scores.
 
-      Contrôle sur un seul bulletin `["Alice", "Charlie", "Bob"]` : Alice 2, Charlie 1, Bob 0.
+      Sur un seul bulletin `["Alice", "Charlie", "Bob"]`, on doit obtenir 2 points pour Alice, 1 pour Charlie et 0 pour Bob.
 
-      Jeu B complet : Alice 8, Bob 8, Charlie 11.
+      Sur l'ensemble du jeu B, on doit obtenir 8 points pour Alice, 8 pour Bob et 11 pour Charlie.
 
     <Correction>
     ```python
@@ -655,7 +655,7 @@ Le même paquet de bulletins donne donc trois vainqueurs différents : Alice au 
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `votes.py` : commentaire d'en-tête avec le nom et la classe, les fonctions demandées, les trois jeux d'essai (A, B et C), et les affichages correspondants.
+**Travail à rendre.** Il faut rendre un fichier `votes.py` qui contient un commentaire d'en-tête avec le nom et la classe, les fonctions demandées, les trois jeux d'essai (A, B et C) et les affichages correspondants.
 
 ## 5. Pour aller plus loin
 

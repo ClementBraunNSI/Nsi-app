@@ -15,9 +15,9 @@ Le but de ce projet est de créer la page d'un monstre dans le bestiaire de la c
 Ce projet consiste à remplir la maquette HTML, retirer les bordures de repérage, puis poser le fond d'écran et la couleur du texte.
 
 **Ressources :**
-- [Maquette vide](projet_site_eleve.zip) : un fichier `index.html`, un dossier `image` pour l'image du monstre, un dossier `style` pour la feuille CSS.
+- [Maquette vide](projet_site_eleve.zip) : elle contient un fichier `index.html`, un dossier `image` pour l'image du monstre et un dossier `style` pour la feuille CSS.
 
-Avant de commencer, relire la [notice sur HTML](Cours_html.md) : titres, paragraphes, listes, images.
+Avant de commencer, relire la [notice sur HTML](Cours_html.md), qui présente les titres, les paragraphes, les listes et les images.
 
 ## 1. Remplir la maquette <Icone nom="flame" />
 
@@ -25,7 +25,7 @@ Voici ce que la première séance doit reproduire :
 
 ![a_reproduire](/content/1/a_reproduire.png)
 
-Chaque bloc de couleur est une `div` : une division de la page. La feuille de style ne se modifie pas pendant cette étape. Elle sert seulement à voir les zones.
+Chaque bloc de couleur est une `div`, c'est-à-dire une division de la page. La feuille de style ne se modifie pas pendant cette étape. Elle sert seulement à voir les zones.
 
 ![base](/content/1/base.png)
 
@@ -58,7 +58,7 @@ Chaque bloc de couleur est une `div` : une division de la page. La feuille de st
 
       *Attention : `src` et le nom du fichier doivent être identiques, y compris les majuscules. `alt` décrit l'image : ce n'est pas le chemin du fichier.*
 
-      Contrôle : le `h1` est le nom du monstre, les deux images s'affichent, l'histoire est sous un `h3`, et on comprend qui est le rival.
+      Avant de continuer, vérifier que le `h1` contient le nom du monstre, que les deux images s'affichent, que l'histoire est placée sous un `h3` et que l'on comprend qui est le rival.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
@@ -74,7 +74,7 @@ Le fichier `style.css` rassemble le style de la page. Une classe s'écrit ainsi 
 }
 ```
 
-Les bordures colorées servaient à voir les `div`. Le contenu est en place : on les retire.
+Les bordures colorées servaient à repérer les `div`. Maintenant que le contenu est en place, on peut les retirer.
 
 En CSS, une bordure s'écrit souvent :
 
@@ -133,15 +133,15 @@ La classe `container` englobe la page. C'est là qu'on pose le fond et la couleu
 
       *Attention : le texte blanc doit rester lisible sur le fond. Si le fond est clair, changer `color`, pas la structure HTML.*
 
-      Contrôle : le fond s'affiche, le texte est blanc, les images du monstre et du rival sont toujours là, les bordures de repérage ont disparu.
+      Pour finir, vérifier que le fond s'affiche, que le texte est blanc, que les images du monstre et du rival sont toujours là et que les bordures de repérage ont disparu.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Le dossier de la maquette, complet :
+**Travail à rendre.** Il faut rendre le dossier complet de la maquette :
 
 - `index.html`, avec le `h1`, les textes, et les deux images ;
 - `style/style.css`, sans les bordures de repérage, avec le fond et le texte blanc dans `.container` ;
 - le dossier `image`, avec l'image du monstre, celle du rival, et le fond.
 
-On ouvre `index.html` depuis ce dossier : les images suivent, sans qu'on les remette à la main.
+Quand `index.html` est ouvert depuis ce dossier, les images s'affichent sans qu'il faille les remettre à la main.

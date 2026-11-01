@@ -5302,3 +5302,47 @@ input, textarea {
 .vn-bus-label.vn-bus-data { fill: var(--vn-data); }
 .vn-bus-label.vn-bus-control { fill: var(--vn-control); }
 .vn-bus-note { fill: var(--muted); font-weight: 500; }
+
+/* ---------- Défi du lundi : plusieurs exercices et chrono ---------- */
+.challenge-current-head { flex-wrap: wrap; }
+/* Toujours visible pendant le défi, même en faisant défiler jusqu'au deuxième exercice. */
+.challenge-timer {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 60;
+  box-shadow: var(--shadow);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 99px;
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+.challenge-timer.is-low { background: #dc2626; color: #fff; }
+.challenge-exercise + .challenge-exercise { border-top: 6px solid var(--surface-2); }
+.challenge-exercise-head { display: flex; align-items: center; gap: 0.6rem; padding-top: 0.75rem; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); }
+.challenge-done.is-small { padding: 0.15rem 0.55rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0; }
+.challenge-expired { display: grid; gap: 1rem; padding: 0 1.25rem 1.25rem; }
+.challenge-expired > p { margin: 0; padding: 0.8rem 1rem; border-radius: var(--radius-sm); background: var(--surface-2); color: var(--fg); }
+.challenge-expired .challenge-past-body { padding: 0; }
+.challenge-past-exercise { display: grid; gap: 0.6rem; }
+.challenge-past-exercise + .challenge-past-exercise { padding-top: 0.8rem; border-top: 1px solid var(--border); }
+.dark .challenge-done { background: color-mix(in srgb, #16a34a 25%, var(--surface)); color: #86efac; }
+
+/* ---------- Renards des enquêtes : une tenue par enquête (scripts/enquete-foxes.mjs) ---------- */
+/* Mêmes quatre poses que academy-fox-emotes.png, donc les positions de fond restent valables. */
+.enq-fox-oeufs-croques { background-image: url("/images/enquetes/renard-oeufs-croques.png"); }
+.enq-fox-miel-envole { background-image: url("/images/enquetes/renard-miel-envole.png"); }
+.enq-fox-barrage-perce { background-image: url("/images/enquetes/renard-barrage-perce.png"); }
+.enq-fox-gland-d-or { background-image: url("/images/enquetes/renard-gland-d-or.png"); }
+.enq-fox-bois-des-detours { background-image: url("/images/enquetes/renard-bois-des-detours.png"); }
+.dark .enq-fox-oeufs-croques { background-image: url("/images/enquetes/renard-oeufs-croques-sombre.png"); }
+.dark .enq-fox-miel-envole { background-image: url("/images/enquetes/renard-miel-envole-sombre.png"); }
+.dark .enq-fox-barrage-perce { background-image: url("/images/enquetes/renard-barrage-perce-sombre.png"); }
+.dark .enq-fox-gland-d-or { background-image: url("/images/enquetes/renard-gland-d-or-sombre.png"); }
+.dark .enq-fox-bois-des-detours { background-image: url("/images/enquetes/renard-bois-des-detours-sombre.png"); }

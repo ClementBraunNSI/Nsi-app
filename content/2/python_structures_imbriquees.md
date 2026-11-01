@@ -75,10 +75,10 @@ spotify_db (Liste)
    │    ...
 ```
 
-**Exemple :** Je veux le premier album d'Angèle.
-1.  Angèle est le 2ème élément de la liste principale -> `spotify_db[1]`
-2.  Je veux ses albums -> `spotify_db[1]["albums"]` (C'est une liste : `["Brol", "Nonante-Cinq"]`)
-3.  Je veux le premier -> `spotify_db[1]["albums"][0]`
+**Exemple :** obtenir le premier album d'Angèle.
+1.  Angèle est le 2e élément de la liste principale : `spotify_db[1]`.
+2.  Ses albums s'obtiennent avec `spotify_db[1]["albums"]`, qui est une liste : `["Brol", "Nonante-Cinq"]`.
+3.  Le premier album est donc `spotify_db[1]["albums"][0]`.
 4.  **Résultat :** `"Brol"`
 
 ---

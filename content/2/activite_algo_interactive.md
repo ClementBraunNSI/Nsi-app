@@ -25,4 +25,4 @@ Cliquer sur **"Lancer le Tri"** et observer les échanges en temps réel.
 <AlgorithmRace />
 
 ## <Icone nom="brain" /> Analyse
-Est-ce que cette méthode te semble rapide ? Imagine s'il y avait 1 million de barres à trier...
+Cette méthode semble-t-elle rapide ? Et s'il y avait 1 million de barres à trier ?

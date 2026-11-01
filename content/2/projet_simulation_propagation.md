@@ -90,7 +90,7 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
 
       Vérifier les trois exemples par des appels directs, avant d'ajouter `input`.
 
-      Population 30, taux 2. Le jour 4 : 27 × 2 = 54 nouveaux cas, 27 + 54 = 81, ramené à 30. `simuler(30, 2)` renvoie `4`.
+      Avec une population de 30 et un taux de 2, le jour 4 donne 27 × 2 = 54 nouveaux cas, soit 27 + 54 = 81 personnes, ramenées à 30. `simuler(30, 2)` renvoie `4`.
 
       ```text
       Jour 0 : 1 / 30
@@ -101,9 +101,9 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
       Toute la population est touchée en 4 jour(s).
       ```
 
-      Population 8, taux 1 : la population double à chaque jour (1, 2, 4, 8). `simuler(8, 1)` renvoie `3`.
+      Avec une population de 8 et un taux de 1, le nombre de personnes au courant double chaque jour (1, 2, 4, 8). `simuler(8, 1)` renvoie `3`.
 
-      Population 1, taux 2 : `simuler(1, 2)` renvoie `0`.
+      Avec une population de 1 et un taux de 2, `simuler(1, 2)` renvoie `0`.
 
       ```text
       Jour 0 : 1 / 1
@@ -201,9 +201,9 @@ Chaque personne qui connaît la rumeur la transmet à un nombre fixe de nouvelle
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Un fichier `rumeur.py` : commentaire d'en-tête avec le nom et la classe, les trois fonctions, la saisie protégée par des `while`, et un appel qui lance la simulation avec les valeurs tapées.
+**Travail à rendre.** Il faut rendre un fichier `rumeur.py` qui contient un commentaire d'en-tête avec le nom et la classe, les trois fonctions, la saisie protégée par des `while`, et un appel qui lance la simulation avec les valeurs saisies.
 
 ## 2. Pour aller plus loin
 
-*   **Oubli.** Chaque jour, après les nouveaux cas, une personne informée oublie la rumeur et ne la transmet plus, tant qu'il reste au moins deux transmetteurs. Elle compte encore dans un total `deja_au_courant` (elle l'a entendue). La boucle s'arrête quand `deja_au_courant` atteint la population. Deux variables suffisent : on ne stocke pas les noms.
+*   **Oubli.** Chaque jour, après les nouveaux cas, une personne informée oublie la rumeur et ne la transmet plus, tant qu'il reste au moins deux transmetteurs. Elle compte encore dans un total `deja_au_courant` (elle l'a entendue). La boucle s'arrête quand `deja_au_courant` atteint la population. Deux variables suffisent, car il n'est pas nécessaire de stocker les noms.
 *   **Barre.** Sur 20 caractères, afficher la part déjà touchée, par exemple `Jour 3 : [##################..] 27/30`. Le nombre de `#` vaut `int(20 * infectes / population)`.

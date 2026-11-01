@@ -34,7 +34,7 @@ public class Voiture : Vehicule
 }
 ```
 
-`Voiture` a déjà `Marque` et `Demarrer()`, plus son propre `NombrePortes`. On ne les a pas réécrits. On les a reçus.
+`Voiture` possède déjà `Marque` et `Demarrer()`, sans les avoir réécrits, ainsi que sa propre propriété `NombrePortes`.
 
 ## Le constructeur ne s'hérite pas
 
@@ -63,7 +63,7 @@ public class Etudiant : Personne
 }
 ```
 
-`: base(nom)` s'exécute avant le corps du constructeur de `Etudiant`. Le nom est rangé par la mère. La classe est rangée par la fille. Sans `: base(...)`, le compilateur cherche un constructeur `Personne()` sans argument. Ici, il n'existe pas. La compilation échoue. Ce n'est pas un oubli anodin : la fille n'a pas le droit de naître sans que la mère ait initialisé ce qu'elle possède.
+`: base(nom)` s'exécute avant le corps du constructeur d'`Etudiant` : le nom est enregistré par la classe mère, et la classe de l'étudiant par la classe fille. Sans `: base(...)`, le compilateur cherche un constructeur `Personne()` sans argument, qui n'existe pas ici, et la compilation échoue. Un objet de la classe fille ne peut en effet pas être créé sans que la classe mère ait initialisé ses propres données.
 
 ## Une méthode, plusieurs comportements
 
@@ -110,9 +110,9 @@ foreach (Animal a in mesAnimaux)
 }
 ```
 
-Sans `virtual` et `override`, la boucle appellerait `Animal.Crier` pour les deux, et l'on n'entendrait que « L'animal fait un bruit. ». Le type de la variable dirait le comportement. Avec `override`, c'est le type de l'objet qui le dit.
+Sans `virtual` et `override`, la boucle appellerait `Animal.Crier` pour les deux objets et afficherait seulement « L'animal fait un bruit. » : le comportement dépendrait du type de la variable. Avec `override`, il dépend du type réel de l'objet.
 
-## Une classe qu'on ne construit pas
+## Les classes abstraites
 
 Une classe **abstraite** sert de modèle. On ne peut pas écrire `new Forme()` : une forme sans précision n'existe pas dans le programme. Elle peut porter des champs et des méthodes ordinaires, et aussi des **méthodes abstraites**, déclarées sans corps. Chaque fille concrète doit les écrire.
 
@@ -143,11 +143,11 @@ public class Carre : Forme
 }
 ```
 
-`AfficherCouleur` est héritée telle quelle. `CalculerAire` n'a pas de version dans `Forme` : un carré et un disque ne calculent pas la même chose, et la mère refuse d'inventer une formule. Oublier `override` dans `Carre`, et le compilateur refuse la classe. C'est le contrat. Une classe abstraite peut aussi contenir du code partagé. Une interface, vue dans le cours suivant, ne contient que des signatures.
+`AfficherCouleur` est héritée telle quelle. `CalculerAire` n'a pas de version dans `Forme` : un carré et un disque ne calculent pas la même chose, et la mère refuse d'inventer une formule. Si l'on oublie `override` dans `Carre`, le compilateur refuse la classe. Une classe abstraite peut aussi contenir du code partagé. Une interface, vue dans le cours suivant, ne contient que des signatures.
 
-## Fermer la descendance
+## Interdire l'héritage
 
-`sealed` interdit d'hériter d'une classe. On s'en sert quand le type ne doit plus être étendu, par exemple un compte dont le comportement de sécurité ne doit pas être redéfini par une classe surprise.
+`sealed` interdit d'hériter d'une classe. On s'en sert quand le type ne doit plus être étendu, par exemple pour un compte dont le comportement de sécurité ne doit pas pouvoir être redéfini par une autre classe.
 
 ```csharp
 public sealed class CompteSecurise

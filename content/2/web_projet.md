@@ -15,17 +15,17 @@ audience: public
 Le but de ce projet est de créer une page web qui présente un tableau connu, puis une version de ce tableau où des renards ont pris la place des personnages.
 Dans ce projet, la page raconte une courte histoire à partir de cette scène, et le visiteur bascule entre les deux images.
 
-Le sujet est bien un tableau, sa version renard, et une histoire.
+Le sujet comprend donc trois éléments : le tableau, sa version avec des renards et une histoire.
 
 ## 1. Le tableau et les fichiers <Icone nom="image" />
 
 Le point de départ est un vrai tableau, à décrire, dont une reproduction utilisable en classe peut être montrée (fichier fourni, ou image dessinée). La page indique l'auteur, la date et le lieu de conservation.
 
-L'exemple fixe la quantité de texte. Il peut être suivi avec *La Nuit étoilée*, ou remplacé par un autre tableau. Dans ce cas, garder les mêmes blocs, avec les propres phrases.
+L'exemple ci-dessous donne la quantité de texte attendue. Il est possible de le suivre avec *La Nuit étoilée*, ou de choisir un autre tableau, en gardant alors les mêmes blocs et en écrivant ses propres phrases.
 
-*   **Original.** Vincent van Gogh, 1889, huile sur toile, Museum of Modern Art, New York. Quatre à six lignes : le ciel tourbillonne au-dessus d'un village, un cyprès occupe le premier plan, la peinture est visible en touches épaisses.
-*   **Version renard.** Le cyprès devient un renard dressé, ou un renard est assis sur le clocher. Quatre à six lignes sur ce qui a changé et ce qui reste (le ciel, le village, les couleurs).
-*   **Histoire.** Huit à douze lignes. Un renard sort du tableau la nuit où le musée ferme, suit le tourbillon du ciel, et doit y rentrer avant l'ouverture. Le récit doit avoir un début, un événement et une fin.
+*   **Original.** Vincent van Gogh, 1889, huile sur toile, Museum of Modern Art, New York. Le texte fait quatre à six lignes. Il décrit par exemple le ciel qui tourbillonne au-dessus d'un village, le cyprès qui occupe le premier plan et les épaisses touches de peinture.
+*   **Version renard.** Le cyprès devient un renard dressé, ou un renard est assis sur le clocher. Le texte fait quatre à six lignes et explique ce qui a changé et ce qui est resté (le ciel, le village, les couleurs).
+*   **Histoire.** Le texte fait huit à douze lignes. Par exemple, un renard sort du tableau la nuit où le musée ferme, suit le tourbillon du ciel, et doit y rentrer avant l'ouverture. Le récit doit avoir un début, un événement et une fin.
 
 ```text
 projet-tableau-renard/
@@ -43,7 +43,7 @@ Les extensions peuvent être `.png` si les fichiers le sont, à condition que le
 
 `index.html` relie la feuille de style et le script. Les règles d'apparence sont dans `style.css`, pas dans un gros attribut `style` répété sur chaque balise. Le JavaScript est dans `script.js`.
 
-Blocs HTML, dans cet ordre : un titre de page, une section « Le tableau original », une section « La version renard », une section « L'histoire ».
+La page contient, dans cet ordre, un titre et trois sections : « Le tableau original », « La version renard » et « L'histoire ».
 
 <ExerciseTabs courseId="premiere_projet" courseTitle="Tableau et renards">
   <ExerciseSection id="web-projet-1" label="La page" type="autre">
@@ -60,7 +60,7 @@ Blocs HTML, dans cet ordre : un titre de page, une section « Le tableau origina
     <Enonce>
       Dans `style.css`, limiter la largeur du contenu, espacer les sections, et faire tenir l'image dans la page (`max-width: 100%`).
 
-      La page reste lisible sur une fenêtre étroite : le texte ne dépasse pas de l'écran, l'image ne dépasse pas la largeur de la page.
+      La page doit rester lisible dans une fenêtre étroite, sans que le texte ni l'image ne dépassent de l'écran.
 
       Le bouton a un style distinct du texte. La classe `mode-nuit`, si elle est faite, change le fond et la couleur du texte. La classe `cachee`, si elle est utilisée, masque l'histoire au chargement.
     </Enonce>
@@ -98,7 +98,7 @@ bouton.addEventListener("click", function () {
 
 *Attention : l'attribut `alt` change avec l'image. Ce n'est pas le même texte pour les deux versions.*
 
-Un second geste, au choix, fait apparaître l'histoire (cachée au départ) ou passe la page en mode nuit. Les deux peuvent coexister. Un seul des deux est obligatoire en plus du bouton d'image.
+En plus du bouton d'image, un second bouton est obligatoire. Au choix, il fait apparaître l'histoire, cachée au départ, ou passe la page en mode nuit. Il est aussi possible de faire les deux.
 
 ### Mode jour / nuit
 
@@ -124,7 +124,7 @@ boutonMode.addEventListener("click", function () {
 
 ### Afficher l'histoire
 
-L'histoire est dans la page dès le chargement, avec la classe CSS `cachee`. Le clic retire ou remet cette classe. On n'écrit pas l'histoire dans le JavaScript.
+L'histoire est dans la page dès le chargement, avec la classe CSS `cachee`. Le clic retire ou remet cette classe. L'histoire ne doit pas être écrite dans le JavaScript.
 
 ```html
 <button id="bouton-histoire">Lire l'histoire</button>
@@ -147,12 +147,12 @@ boutonHistoire.addEventListener("click", function () {
 
       Ajouter en plus soit le mode nuit, soit l'affichage de l'histoire. Les identifiants HTML et ceux lus par `getElementById` sont les mêmes.
 
-      Contrôle : au premier clic on voit les renards, au second on revient au tableau, et l'image ne se casse pas (pas d'icône de fichier manquant). Ouvrir la page en double-cliquant sur `index.html`.
+      Pour vérifier, ouvrir la page en double-cliquant sur `index.html`. Au premier clic, les renards doivent apparaître, et au second, le tableau original doit revenir, sans icône de fichier manquant.
     </Enonce>
   </ExerciseSection>
 </ExerciseTabs>
 
-**Ce qu'on rend.** Une archive zip du dossier entier `projet-tableau-renard` :
+**Travail à rendre.** Il faut rendre une archive zip du dossier entier `projet-tableau-renard` :
 
 *   `index.html`
 *   `styles/style.css`

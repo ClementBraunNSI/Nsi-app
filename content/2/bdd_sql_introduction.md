@@ -10,18 +10,18 @@ audience: public
 
 # Bases de données et SQL
 
-Un tableur ou un fichier CSV finit par suffire tant qu'une seule personne le modifie, et tant que la question reste simple. Dès que plusieurs programmes doivent lire les mêmes informations, les mettre à jour sans les casser, et n'en extraire qu'une partie, on passe à une **base de données**. En 1970, Edgar F. Codd propose le **modèle relationnel** : des tables, reliées par des relations logiques, interrogées par un langage. Ce langage est le SQL.
+Un tableur ou un fichier CSV suffit tant qu'une seule personne le modifie et que les questions restent simples. Dès que plusieurs programmes doivent lire les mêmes informations, les mettre à jour sans les casser, et n'en extraire qu'une partie, on passe à une **base de données**. En 1970, Edgar F. Codd propose le **modèle relationnel**. Les données y sont rangées dans des tables reliées entre elles, que l'on interroge avec un langage, le SQL.
 
-Une table ressemble à un tableau. Une **ligne**, ou enregistrement, est un objet : un étudiant, par exemple. Une **colonne**, ou attribut, est une caractéristique : son nom, son âge, sa classe. Le moteur, lui, ne se contente pas d'afficher la grille. Il vérifie des contraintes, et il répond à des questions.
+Une table ressemble à un tableau. Une **ligne**, ou enregistrement, décrit un objet, par exemple un étudiant. Une **colonne**, ou attribut, correspond à une caractéristique, comme son nom, son âge ou sa classe. Le système qui gère la base ne se contente pas d'afficher ce tableau : il vérifie des contraintes et répond à des requêtes.
 
 <SqlTable 
   tableName="Etudiants" 
   initialSql="CREATE TABLE Etudiants (id INTEGER PRIMARY KEY, nom TEXT, age INTEGER, classe TEXT); INSERT INTO Etudiants VALUES (1, 'Alice', 17, 'Terminale'); INSERT INTO Etudiants VALUES (2, 'Bob', 16, 'Première'); INSERT INTO Etudiants VALUES (3, 'Charlie', 18, 'Terminale');"
 />
 
-## Demander, pas parcourir
+## Interroger une table
 
-Le **SQL** (*Structured Query Language*) interroge ces tables. Une requête renvoie en général une table, parfois plus petite que celle de départ. Deux opérations portent des noms qu'il faut tenir, parce que le mot `SELECT` embrouille tout le monde.
+Le **SQL** (*Structured Query Language*) permet d'interroger ces tables. Une requête renvoie en général une table, souvent plus petite que celle de départ. Deux opérations ont des noms précis qu'il faut bien distinguer, car le mot `SELECT` prête à confusion.
 
 La **projection** choisit des **colonnes**. `SELECT * FROM Etudiants` garde tout : l'étoile veut dire « toutes les colonnes ». Pour ne voir que le nom et l'âge :
 
@@ -35,13 +35,13 @@ La **sélection**, au sens du modèle relationnel, choisit des **lignes**. En SQ
 SELECT nom FROM Etudiants WHERE age > 17;
 ```
 
-Cette requête projette sur `nom` et ne garde que les lignes dont l'âge dépasse 17. On combine les deux sans cérémonie :
+Cette requête projette sur `nom` et ne garde que les lignes dont l'âge dépasse 17. Les deux opérations se combinent facilement :
 
 ```sql
 SELECT nom, classe FROM Etudiants WHERE classe = 'Terminale';
 ```
 
-Le piège de vocabulaire vaut le coup d'être dit à voix haute. En français courant, « sélectionner des colonnes » semble naturel. En NSI, sélectionner, c'est filtrer les lignes. `SELECT` lance la requête et annonce les colonnes. Le filtre, c'est `WHERE`.
+Ce piège de vocabulaire mérite d'être souligné. En français courant, on parle volontiers de « sélectionner des colonnes ». En NSI, en revanche, la sélection consiste à filtrer des lignes. `SELECT` commence la requête et indique les colonnes voulues, tandis que le filtre est fait par `WHERE`.
 
 ## Pratiquer
 
@@ -52,8 +52,8 @@ Le piège de vocabulaire vaut le coup d'être dit à voix haute. En français co
   defaultQuery="SELECT * FROM Etudiants WHERE age >= 17;"
 />
 
-L'éditeur ci-dessus exécute les requêtes sur une petite table déjà remplie. Changer la condition, enlever une colonne, regarder ce qui disparaît.
+L'éditeur ci-dessus exécute les requêtes sur une petite table déjà remplie. Essayer de changer la condition ou d'enlever une colonne, et observer ce qui disparaît.
 
-Pour aller plus loin, l'enquête [SQL Murder Mystery](https://mystery.knightlab.com) (en anglais) ne se résout qu'en écrivant des requêtes : la base contient le crime, pas le récit.
+Pour aller plus loin, l'enquête [SQL Murder Mystery](https://mystery.knightlab.com) (en anglais) ne se résout qu'en écrivant des requêtes sur la base qui contient les informations du crime.
 
-Plus tard, viendront les jointures, qui recollent deux tables, et les agrégats, qui comptent ou font une moyenne. Le lien avec les dictionnaires Python est le même geste : une clé qui retrouve une fiche, plutôt qu'une lecture de tout le fichier.
+Viendront plus tard les jointures, qui relient deux tables, et les agrégats, qui comptent des lignes ou calculent une moyenne. On retrouve la même idée qu'avec les dictionnaires Python : une clé permet de retrouver directement une fiche, sans relire tout le fichier.
