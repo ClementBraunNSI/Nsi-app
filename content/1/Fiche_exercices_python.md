@@ -1167,20 +1167,23 @@ for m, attendu in [("ou", "ou"), ("nsi", "n*i"), ("anticonstitutionnellement", "
 <Enonce>
 ### Caisse enregistreuse
 
-Réaliser le programme d'une caisse de librairie, du ticket jusqu'au rendu de la monnaie. Ni condition ni boucle ne sont nécessaires : tout se fait par des calculs.
+**Contexte.** La librairie du quartier, « Le Terrier des livres », change de caisse. À chaque passage, le libraire tape les articles du client ; la caisse imprime un ticket, applique la remise du jour (par exemple 10 % pendant la rentrée), indique la TVA comprise dans le prix, puis lui dit exactement quels billets et quelles pièces rendre, pour qu'il ne se trompe jamais dans la monnaie. Le programme se limite à 3 articles par client et n'utilise ni condition ni boucle : tout se fait par des calculs.
 
-**Le programme demande, dans cet ordre**
-- pour chacun des 3 articles : son nom, son prix unitaire (à virgule) et la quantité ;
-- le pourcentage de remise accordé (un entier, par exemple `10`) ;
-- la somme donnée par le client (à virgule).
+**Données saisies, dans cet ordre** : pour chacun des 3 articles, son nom, son prix unitaire (à virgule) et la quantité ; puis le pourcentage de remise (un entier) ; enfin la somme donnée par le client (à virgule).
 
-**Objectifs**
-- `ligne1`, `ligne2`, `ligne3` : une ligne de ticket par article, au format exact `f"{nom:<12}{quantite:>3} x {prix:>6.2f} = {montant:>7.2f}"` (le nom sur 12 caractères, la quantité sur 3…), affichées l'une sous l'autre.
-- `sous_total`, `remise` (le pourcentage du sous-total), `total` (sous-total moins remise) et `tva` (la part de TVA à 20 % **comprise** dans le total, c'est-à-dire `total - total / 1.2`), tous arrondis au centime et affichés.
-- `rendu` : la monnaie à rendre, **en centimes** (un entier).
-- La décomposition du rendu avec le moins de billets et de pièces possible, dans les variables `billets_10`, `billets_5`, `pieces_2`, `pieces_1`, `pieces_50c`, `pieces_20c`, `pieces_10c`, `pieces_5c`, `pieces_2c` et `pieces_1c`.
+Exemple de passage en caisse : un cahier à 2,50 € pris 4 fois, un stylo à 1,20 € pris 10 fois, un sac à 24,90 € pris une fois, remise de 10 %, le client donne 60 €.
 
-Exemple de test : un cahier à 2,50 € (×4), un stylo à 1,20 € (×10) et un sac à 24,90 € (×1), remise de 10 %, client qui donne 60 € : total 42,21 €, rendu 1779 centimes, soit 1 billet de 10, 1 de 5, 1 pièce de 2, 1 de 50 c, 1 de 20 c, 1 de 5 c et 2 de 2 c.
+**Ce que le programme doit produire**
+- `ligne1`, `ligne2`, `ligne3` : les lignes du ticket, une par article, pour que le client vérifie ses achats. Chacune montre le nom, la quantité, le prix unitaire et le montant de la ligne, au format exact `f"{nom:<12}{quantite:>3} x {prix:>6.2f} = {montant:>7.2f}"` (le nom occupe 12 caractères, la quantité 3…). Elles sont affichées l'une sous l'autre.
+- `sous_total` : ce que coûtent les articles avant remise.
+- `remise` : le montant retiré, c'est-à-dire le pourcentage saisi appliqué au sous-total.
+- `total` : ce que paie le client (sous-total moins remise).
+- `tva` : la part de TVA à 20 % **comprise** dans le total, imprimée en bas du ticket pour la comptabilité (`total - total / 1.2`).
+- Ces quatre montants sont arrondis au centime et affichés.
+- `rendu` : la monnaie à rendre, **en centimes** (un entier), pour éviter les erreurs d'arrondi des nombres à virgule.
+- `billets_10`, `billets_5`, `pieces_2`, `pieces_1`, `pieces_50c`, `pieces_20c`, `pieces_10c`, `pieces_5c`, `pieces_2c` et `pieces_1c` : combien rendre de chaque billet et de chaque pièce, en utilisant le moins de billets et de pièces possible.
+
+Avec l'exemple : total 42,21 €, rendu 1779 centimes, soit 1 billet de 10 €, 1 de 5 €, 1 pièce de 2 €, 1 de 50 c, 1 de 20 c, 1 de 5 c et 2 de 2 c.
 
 <Indices>
 <Indice>
@@ -1285,18 +1288,18 @@ assert m == (3, 1, 1, 1, 0, 0, 0, 0, 1, 0), "Décomposition de 38,02 €."
 <Enonce>
 ### Fiche d'inscription
 
-Réaliser le programme qui prépare la fiche d'un nouvel élève à partir de quelques saisies. Ni condition ni boucle ne sont nécessaires.
+**Contexte.** Chaque rentrée, le secrétariat du lycée inscrit les nouveaux élèves. Pour chacun, il faut créer un compte informatique (identifiant et adresse électronique), noter son âge et son département pour les statistiques, et imprimer une étiquette encadrée à coller sur son casier. Le programme prépare tout cela à partir de quatre informations tapées par la secrétaire, sans condition ni boucle.
 
-**Le programme demande, dans cet ordre** : le prénom, le nom, la date de naissance au format `JJ/MM/AAAA` et le code postal.
+**Données saisies, dans cet ordre** : le prénom, le nom, la date de naissance au format `JJ/MM/AAAA` et le code postal. Exemple : `Léa`, `Martin`, `15/12/2010`, `67000`.
 
-**Objectifs**
-- `jour`, `mois`, `annee` : les trois parties de la date, en entiers.
-- `age` : l'âge au 1er novembre 2026 (attention : un élève né un 15 décembre n'a pas encore eu son anniversaire en novembre).
-- `identifiant` : la première lettre du prénom, puis les **7 premières lettres** du nom (ou tout le nom s'il est plus court), sans espace, en minuscules, suivies des deux derniers chiffres de l'année. Exemple : Léa Martin, née en 2010 → `lmartin10`.
-- `email` : `prenom.nom@lycee-renard.fr` en minuscules (accents gardés), les espaces des prénoms et noms composés remplacées par des `-`.
-- `departement` : les deux premiers caractères du code postal.
-- `initiales` : par exemple `L.M.`.
-- `cadre` : un texte sur trois lignes qui encadre le nom complet avec des `*`, une espace de marge de chaque côté, affiché à la fin :
+**Ce que le programme doit produire**
+- `jour`, `mois`, `annee` : les trois parties de la date de naissance, en entiers, qui servent aux calculs suivants.
+- `age` : l'âge de l'élève au 1er novembre 2026, date des statistiques de rentrée. Attention : une élève née un 15 décembre n'a pas encore eu son anniversaire en novembre.
+- `identifiant` : le nom de connexion aux ordinateurs du lycée : la première lettre du prénom, puis les **7 premières lettres** du nom (tout le nom s'il est plus court), sans espace et en minuscules, suivies des deux derniers chiffres de l'année de naissance. Pour Léa Martin, née en 2010 : `lmartin10`.
+- `email` : l'adresse de messagerie de l'élève, `prenom.nom@lycee-renard.fr`, en minuscules (accents gardés), les espaces des prénoms et noms composés remplacées par des `-`.
+- `departement` : les deux premiers caractères du code postal, pour savoir d'où viennent les élèves.
+- `initiales` : par exemple `L.M.`, imprimées sur les copies d'examen.
+- `cadre` : l'étiquette du casier, un texte de trois lignes qui encadre le prénom et le nom en majuscules avec des `*` et une espace de marge de chaque côté ; elle est affichée à la fin :
 
 ```
 **************

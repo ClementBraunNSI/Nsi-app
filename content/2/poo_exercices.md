@@ -1561,19 +1561,21 @@ assert b.etage == 0, "Sans appel, rien ne se passe."
 <Enonce>
 ### Gestion d'un parking
 
-Réaliser le logiciel d'un parking qui accueille des voitures et des motos. Les heures sont des nombres de **minutes** depuis l'ouverture (des entiers).
+**Contexte.** Le parking souterrain du centre-ville remplace ses tickets papier par un logiciel. À l'entrée, la barrière s'ouvre s'il reste une place pour la catégorie du véhicule ; à la sortie, le logiciel calcule le prix. Le gérant veut aussi suivre le taux d'occupation, la recette et l'historique des visites. Les heures sont des nombres de **minutes** depuis l'ouverture (des entiers).
 
-**Objectifs**
-- Une classe `Ticket` construite avec l'immatriculation, la catégorie (`"voiture"` ou `"moto"`) et l'heure d'entrée ; elle a aussi des attributs `sortie` et `prix`, à `None` tant que le véhicule n'est pas sorti.
-- Une classe `Parking` construite avec un dictionnaire de capacités, par exemple `{"voiture": 3, "moto": 2}`, qui garde la liste de tous ses tickets. Ses méthodes :
-  - `libres(categorie)` : le nombre de places libres de la catégorie ;
-  - `entrer(immat, categorie, heure)` : crée un ticket et renvoie `True`, ou renvoie `False` si la catégorie est inconnue, s'il n'y a plus de place, ou si le véhicule est déjà dans le parking ;
-  - `tarif(categorie, duree)` : les 30 premières minutes sont gratuites ; ensuite, chaque heure **commencée** coûte 2 € (1 € pour une moto), avec un maximum de 15 € (8 € pour une moto) ;
-  - `sortir(immat, heure)` : complète le ticket du véhicule et renvoie le prix, ou `-1` si le véhicule n'est pas dans le parking ;
-  - `taux_occupation()` : le pourcentage de places occupées, toutes catégories confondues, arrondi au dixième ;
-  - `recette()` : la somme de tous les prix payés ;
-  - `historique(immat)` : la liste des tuples `(entree, sortie, prix)` des visites terminées du véhicule ;
-  - `plus_longue_visite()` : le tuple `(immat, duree)` de la plus longue visite terminée (la première en cas d'égalité), ou `None`.
+**Les données** : le parking accueille des voitures et des motos ; ses capacités sont données par un dictionnaire, par exemple `{"voiture": 3, "moto": 2}`. Chaque passage est représenté par un ticket.
+
+**Les classes et leurs méthodes**
+- `Ticket(immat, categorie, entree)` : la trace d'un passage. Elle garde l'immatriculation, la catégorie (`"voiture"` ou `"moto"`) et l'heure d'entrée ; ses attributs `sortie` et `prix` valent `None` tant que le véhicule n'est pas sorti.
+- `Parking(capacites)` : le logiciel lui-même, qui garde la liste de tous ses tickets. Ses méthodes :
+  - `libres(categorie)` : affiché sur le panneau à l'entrée. Renvoie le nombre de places libres de la catégorie.
+  - `entrer(immat, categorie, heure)` : appelée par la barrière d'entrée. Crée un ticket et renvoie `True`, ou renvoie `False` (la barrière reste fermée) si la catégorie est inconnue, s'il n'y a plus de place, ou si le véhicule est déjà dans le parking.
+  - `tarif(categorie, duree)` : la grille de prix. Les 30 premières minutes sont gratuites ; ensuite, chaque heure **commencée** coûte 2 € (1 € pour une moto), avec un maximum de 15 € (8 € pour une moto). Renvoie le prix d'une durée.
+  - `sortir(immat, heure)` : appelée par la borne de sortie. Complète le ticket du véhicule et renvoie le prix à payer, ou `-1` si le véhicule n'est pas dans le parking.
+  - `taux_occupation()` : pour le tableau de bord du gérant. Renvoie le pourcentage de places occupées, toutes catégories confondues, arrondi au dixième.
+  - `recette()` : renvoie la somme de tous les prix payés.
+  - `historique(immat)` : en cas de réclamation d'un client. Renvoie la liste des tuples `(entree, sortie, prix)` des visites terminées du véhicule.
+  - `plus_longue_visite()` : une statistique pour le gérant. Renvoie le tuple `(immat, duree)` de la plus longue visite terminée (la première en cas d'égalité), ou `None`.
 
 <Indices>
 <Indice>
@@ -1700,18 +1702,19 @@ assert p.plus_longue_visite() == ("MO-1", 360) and Parking({"voiture": 1}).plus_
 <Enonce>
 ### Jeu de la bataille
 
-Réaliser une partie complète du jeu de la bataille, entre deux joueurs, sans hasard caché : le mélange dépend d'une **graine**.
+**Contexte.** Pour tester une intelligence artificielle de jeu de cartes, une équipe a besoin d'une simulation fidèle du jeu de la bataille, où l'on peut rejouer exactement la même partie. Le mélange dépend donc d'une **graine** : avec la même graine, la même distribution et la même partie. Le projet modélise le jeu avec des classes.
 
-**Règles** : chaque joueur retourne la première carte de son tas ; la plus forte remporte les deux cartes, qui passent **sous** le tas du gagnant (d'abord la carte du joueur 1, puis celle du joueur 2). En cas d'égalité, c'est la bataille : chacun pose une carte face cachée puis une nouvelle carte face visible, et la plus forte des nouvelles cartes remporte **toutes** les cartes posées (celles du joueur 1, dans l'ordre où il les a posées, puis celles du joueur 2) ; s'il y a de nouveau égalité, la bataille continue de la même façon. Un joueur qui n'a plus assez de cartes pour jouer perd la partie.
+**Règles du jeu** : chaque joueur retourne la première carte de son tas ; la plus forte remporte les deux cartes, qui passent **sous** le tas du gagnant (d'abord la carte du joueur 1, puis celle du joueur 2). En cas d'égalité, c'est la bataille : chacun pose une carte face cachée puis une nouvelle carte face visible, et la plus forte des nouvelles cartes remporte **toutes** les cartes posées (celles du joueur 1, dans l'ordre où il les a posées, puis celles du joueur 2) ; s'il y a de nouveau égalité, la bataille continue de la même façon. Un joueur qui n'a plus assez de cartes pour jouer perd la partie.
 
-**Objectifs**
-- `Carte(valeur, couleur)` (valeurs de 2 à 14), avec `__str__` (`"dame de pique"`, `"7 de coeur"`…) ; `Paquet()` qui contient les 52 cartes dans l'ordre (couleurs `pique`, `coeur`, `carreau`, `trefle`, valeurs croissantes), avec `melanger(graine)` (`random.Random(graine).shuffle`) et `distribuer()` qui renvoie deux listes : les cartes d'indice pair et celles d'indice impair.
-- `Joueur(nom, cartes)` avec `nb_cartes()`, `poser()` (retire et renvoie la première carte) et `ramasser(cartes)` (ajoute les cartes sous le tas, dans l'ordre).
-- `Bataille(j1, j2)` avec :
-  - `tour()` : joue un tour complet (bataille comprise) et renvoie le nom du gagnant du tour, ou le nom du gagnant de la partie si un joueur ne peut plus jouer pendant une bataille (toutes les cartes posées vont alors à son adversaire) ;
-  - `finie()` : `True` si un joueur n'a plus de carte ;
-  - `partie(max_tours)` : joue jusqu'à la fin ou jusqu'à `max_tours` tours, et renvoie le tuple `(nom du gagnant ou None, nombre de tours joués)`.
-- `nouvelle_partie(graine)` : une `Bataille` entre `"Alice"` et `"Bob"` avec un paquet mélangé selon la graine puis distribué.
+**Les classes et leurs rôles**
+- `Carte(valeur, couleur)` : une carte, de valeur 2 à 14 (valet 11, dame 12, roi 13, as 14). Sa méthode `__str__` donne le nom affiché, comme `"dame de pique"` ou `"7 de coeur"`.
+- `Paquet()` : le paquet neuf, avec les 52 cartes dans l'ordre (couleurs `pique`, `coeur`, `carreau`, `trefle`, valeurs croissantes). `melanger(graine)` le mélange de façon reproductible (`random.Random(graine).shuffle`) ; `distribuer()` partage le paquet et renvoie deux listes : les cartes d'indice pair et celles d'indice impair.
+- `Joueur(nom, cartes)` : un joueur et son tas. `nb_cartes()` renvoie la taille du tas, `poser()` retire et renvoie la première carte, `ramasser(cartes)` ajoute les cartes gagnées sous le tas, dans l'ordre.
+- `Bataille(j1, j2)` : la partie entre deux joueurs.
+  - `tour()` : joue un tour complet, bataille comprise. Renvoie le nom du gagnant du tour ; si un joueur ne peut plus jouer pendant une bataille, toutes les cartes posées vont à son adversaire et la méthode renvoie le nom de ce dernier.
+  - `finie()` : renvoie `True` si un joueur n'a plus de carte.
+  - `partie(max_tours)` : joue jusqu'à la fin, ou jusqu'à `max_tours` tours pour éviter une partie sans fin. Renvoie le tuple `(nom du gagnant ou None, nombre de tours joués)`.
+- `nouvelle_partie(graine)` : prépare une partie de test. Renvoie une `Bataille` entre `"Alice"` et `"Bob"` avec un paquet neuf mélangé selon la graine puis distribué.
 
 <Indices>
 <Indice>

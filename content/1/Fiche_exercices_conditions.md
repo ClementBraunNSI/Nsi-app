@@ -1319,9 +1319,9 @@ for t, c in cas:
 <Enonce>
 ### Billet de train
 
-Réaliser le calcul du prix d'un billet de train, avec toutes les règles de la compagnie.
+**Contexte.** Une petite compagnie ferroviaire régionale veut une borne qui calcule le prix d'un billet sans erreur. Les guichetiers se trompent souvent, car les règles se combinent : prix au kilomètre, majoration aux heures de pointe, réductions selon l'âge ou la carte, aller-retour. Le programme pose les questions au voyageur, applique les règles dans l'ordre et affiche le prix avec un message.
 
-**Le programme demande, dans cet ordre** : l'âge du voyageur, la distance en km (entier), le jour du départ (`lundi`… `dimanche`), l'heure du départ (entier de 0 à 23), la carte de réduction (`aucune`, `jeune` ou `senior`) et s'il s'agit d'un aller-retour (`oui` ou `non`).
+**Données saisies, dans cet ordre** : l'âge du voyageur, la distance en km (entier), le jour du départ (`lundi`… `dimanche`), l'heure du départ (entier de 0 à 23), la carte de réduction (`aucune`, `jeune` ou `senior`) et s'il s'agit d'un aller-retour (`oui` ou `non`). Exemple : `20`, `300`, `mardi`, `8`, `jeune`, `oui`.
 
 **Règles de la compagnie, appliquées dans cet ordre**
 1. Prix de base : 0,12 € par km, avec un minimum de 8 €.
@@ -1332,12 +1332,12 @@ Réaliser le calcul du prix d'un billet de train, avec toutes les règles de la 
    - sinon, carte `jeune` (valable de 12 à 27 ans) : -30 % ; carte `senior` (valable à partir de 60 ans) : -25 %. Une carte non valable pour l'âge est ignorée.
 4. Aller-retour : le prix est doublé, puis diminué de 10 %.
 
-**Objectifs**
-- `prix` : le prix final, arrondi au centime, affiché.
-- `pointe` : `True` si le départ est en heure de pointe.
-- `message` : `"gratuit"` pour un enfant de moins de 4 ans, `"carte refusée"` si une carte a été présentée mais n'est pas valable, `"ok"` sinon.
+**Ce que le programme doit produire**
+- `pointe` : `True` si le départ tombe en heure de pointe. La borne l'affiche pour inciter à voyager à un autre moment.
+- `prix` : le prix final, arrondi au centime, affiché au voyageur.
+- `message` : ce qu'affiche la borne sous le prix : `"gratuit"` pour un enfant de moins de 4 ans, `"carte refusée"` si une carte a été présentée mais n'est pas valable pour l'âge (le voyageur paie alors sans réduction), `"ok"` sinon.
 
-Exemple de test : 20 ans, 300 km, mardi à 8 h, carte jeune, aller-retour → 54,43 €.
+Avec l'exemple : départ en heure de pointe, carte jeune valable, aller-retour : 54,43 €.
 
 <Indices>
 <Indice>
@@ -1442,18 +1442,18 @@ for entrees, p, pt, m in cas:
 <Enonce>
 ### Date du lendemain
 
-Réaliser un petit outil de calendrier, sans boucle.
+**Contexte.** L'agenda en ligne du lycée a besoin d'un petit outil de calendrier : quand un professeur tape une date, l'agenda doit savoir si elle existe, quel jour de l'année c'est (pour les statistiques d'absences), dans quelle saison elle tombe (pour le menu de la cantine) et quelle est la date du lendemain (pour programmer un rappel). Le programme le fait sans boucle.
 
-**Le programme demande** un jour, un mois et une année (trois entiers).
+**Données saisies** : un jour, un mois et une année (trois entiers). Exemple : `28`, `2`, `2024`.
 
-**Objectifs**
-- `valide` : `True` si la date existe (mois de 1 à 12, jour possible dans ce mois, années bissextiles comprises). Si la date n'existe pas, le programme affiche `date invalide` et ne calcule rien d'autre.
-- `numero` : le numéro du jour dans l'année (1 pour le 1er janvier, 365 ou 366 pour le 31 décembre).
+**Ce que le programme doit produire**
+- `valide` : `True` si la date existe : mois de 1 à 12, jour possible dans ce mois, en tenant compte des années bissextiles (février a 29 jours en 2024, 28 en 2026). Une date qui n'existe pas fait afficher `date invalide`, et rien d'autre n'est calculé.
+- `numero` : le rang du jour dans l'année, de 1 pour le 1er janvier à 365 (ou 366) pour le 31 décembre.
 - `saison` : `"hiver"` du 21 décembre au 19 mars, `"printemps"` du 20 mars au 20 juin, `"été"` du 21 juin au 21 septembre, `"automne"` du 22 septembre au 20 décembre.
-- `lendemain` : la date du lendemain sous forme de texte `"JJ/MM/AAAA"` (sur 2, 2 et 4 chiffres), en passant au mois suivant ou à l'année suivante si besoin.
+- `lendemain` : la date du jour suivant, sous forme de texte `"JJ/MM/AAAA"` (sur 2, 2 et 4 chiffres), en passant au mois suivant ou à l'année suivante si besoin.
 - Les résultats sont affichés.
 
-Exemple : le 28/02/2024 est le jour 59, en hiver, et son lendemain est `"29/02/2024"`.
+Avec l'exemple : le 28/02/2024 est le jour 59, en hiver, et son lendemain est `"29/02/2024"`.
 
 <Indices>
 <Indice>

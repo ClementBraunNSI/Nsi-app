@@ -1241,18 +1241,18 @@ assert c == ["CCCCB", "CCCBB", "AAABB", "AAABB", "AAABB"], "La carte complète."
 <Enonce>
 ### Reconnaissance des iris
 
-Le code de départ contient un extrait du jeu de données des iris : 15 fleurs `(longueur, largeur, espece)` des pétales, en cm.
+**Contexte.** Un club de botanique veut une application qui reconnaît l'espèce d'un iris d'après la longueur et la largeur de ses pétales, mesurées sur le terrain. Le projet construit le classifieur des k plus proches voisins, l'évalue honnêtement sur les fleurs déjà connues, puis choisit automatiquement le meilleur réglage avant de faire des prédictions.
 
-Réaliser un classifieur complet, réglé automatiquement.
+**Les données** : le code de départ contient un extrait du jeu de données des iris, `IRIS` : 15 fleurs sous forme de tuples `(longueur, largeur, espece)`, en cm, par exemple `(1.4, 0.2, "setosa")`. Les espèces sont `setosa`, `versicolor` et `virginica`.
 
-**Objectifs**
-- `bornes(donnees)` : le tuple `((min_x, max_x), (min_y, max_y))` des deux caractéristiques.
-- `normaliser(point, b)` : le point `(x, y)` ramené entre 0 et 1 avec les bornes `b` (une classe éventuelle en troisième position est conservée) ; `normaliser_tout(donnees)` : toutes les données normalisées avec leurs propres bornes.
-- `knn(donnees, cible, k, pondere)` : la classe prédite par les `k` plus proches voisins ; avec `pondere` à `True`, chaque voisin vote avec le poids `1 / distance` (un voisin à distance nulle impose sa classe). En cas d'égalité des votes, l'ordre alphabétique départage.
-- `fiabilite(donnees, k, pondere)` : le taux de réussite en validation croisée « un contre tous », arrondi au centième.
-- `meilleur_reglage(donnees, ks)` : le couple `(k, pondere)` le plus fiable parmi les `k` de la liste `ks` et les deux valeurs de `pondere` ; en cas d'égalité, le plus petit `k`, puis le vote non pondéré.
-- `confusion(donnees, k, pondere)` : la matrice de confusion de la validation croisée, sous forme de dictionnaire `m[vraie][predite]` avec toutes les classes.
-- `predire(longueur, largeur)` : l'espèce d'une nouvelle fleur, avec les données **normalisées** et le meilleur réglage parmi `k` = 1, 3, 5, 7 (la fleur est normalisée avec les mêmes bornes que les données).
+**Les fonctions du classifieur**
+- `bornes(donnees)` : nécessaire pour normaliser. Renvoie le tuple `((min_x, max_x), (min_y, max_y))` des deux caractéristiques.
+- `normaliser(point, b)` et `normaliser_tout(donnees)` : ramènent les mesures entre 0 et 1, pour que longueur et largeur pèsent autant dans les distances. La première reçoit un point `(x, y)` (une classe éventuelle en troisième position est conservée) et des bornes ; la seconde normalise toutes les données avec leurs propres bornes.
+- `knn(donnees, cible, k, pondere)` : la prédiction. Renvoie la classe la plus représentée parmi les `k` plus proches voisins de `cible` ; avec `pondere` à `True`, chaque voisin vote avec le poids `1 / distance` (un voisin à distance nulle impose sa classe). En cas d'égalité des votes, l'ordre alphabétique départage.
+- `fiabilite(donnees, k, pondere)` : mesure la qualité d'un réglage. Classe chaque fleur à l'aide de toutes les **autres** (validation croisée « un contre tous ») et renvoie le taux de réussite, arrondi au centième.
+- `meilleur_reglage(donnees, ks)` : choisit le réglage. Renvoie le couple `(k, pondere)` le plus fiable parmi les `k` de la liste `ks` et les deux valeurs de `pondere` ; en cas d'égalité, le plus petit `k`, puis le vote non pondéré.
+- `confusion(donnees, k, pondere)` : montre quelles espèces sont confondues. Renvoie la matrice de confusion de la validation croisée, sous forme de dictionnaire `m[vraie][predite]` avec toutes les classes.
+- `predire(longueur, largeur)` : la fonction appelée par l'application. Renvoie l'espèce d'une nouvelle fleur, avec les données **normalisées** et le meilleur réglage parmi `k` = 1, 3, 5, 7 ; la fleur est normalisée avec les mêmes bornes que les données.
 
 <Indices>
 <Indice>
@@ -1407,17 +1407,17 @@ assert predire(1.5, 0.3) == "setosa" and predire(4.3, 1.3) == "versicolor" and p
 <Enonce>
 ### Prédire les notes de films
 
-Une plateforme veut **prédire la note** qu'un spectateur donnerait à un film qu'il n'a pas vu, d'après les spectateurs qui lui ressemblent. Le code de départ contient les notes : `NOTES[spectateur][film]`, de 1 à 5.
+**Contexte.** Le ciné-club du lycée tient un registre des films vus par ses membres, avec la note que chacun leur a donnée. Il veut proposer à chaque membre les films qu'il aimerait sans doute, en **prédisant la note** qu'il leur donnerait d'après les membres qui ont les mêmes goûts que lui. Avant de l'utiliser, le club veut aussi mesurer si ces prédictions sont fiables.
 
-Réaliser le moteur de prédiction et mesurer sa qualité.
+**Les données** : le code de départ contient les notes, `NOTES`, un dictionnaire de dictionnaires : `NOTES[membre][film]` est une note de 1 à 5, et un film non vu n'apparaît pas. Exemple : `NOTES["Léa"]` vaut `{"Alien": 5, "Up": 2, "Coco": 3, "Dune": 4}`.
 
-**Objectifs**
-- `ecart(notes, a, b)` : la moyenne des écarts absolus de notes sur les films vus par les deux, ou `None` sans film commun.
-- `voisins(notes, a, film, k)` : les `k` spectateurs les plus proches de `a` (écart croissant, puis ordre alphabétique) **parmi ceux qui ont noté `film`**, en excluant `a` et ceux sans film commun avec lui.
-- `predire(notes, a, film, k)` : la moyenne des notes données au film par ces voisins, pondérée par `1 / (1 + ecart)`, arrondie au dixième (`None` sans voisin).
-- `recommander(notes, a, n, k)` : les `n` films non vus par `a` dont la note prédite est la plus haute (puis ordre alphabétique), sous forme de liste de tuples `(film, note_predite)` ; les films sans prédiction sont ignorés.
-- `erreur(notes, k)` : l'erreur moyenne du système : pour chaque note connue, la **cacher**, la prédire avec les autres notes, et mesurer l'écart absolu ; renvoie la moyenne de ces écarts, arrondie au centième (les notes impossibles à prédire sont ignorées).
-- `meilleur_k(notes, ks)` : le `k` de la liste qui donne la plus petite erreur (le plus petit en cas d'égalité).
+**Les fonctions du moteur de recommandation**
+- `ecart(notes, a, b)` : mesure à quel point deux membres ont des goûts différents. Renvoie la moyenne des écarts absolus de leurs notes sur les films vus par les deux, ou `None` s'ils n'ont aucun film en commun.
+- `voisins(notes, a, film, k)` : les membres dont l'avis compte pour prédire la note de `a` sur `film`. Renvoie les `k` membres les plus proches de `a` (écart croissant, puis ordre alphabétique) **parmi ceux qui ont noté `film`**, en excluant `a` et ceux sans film commun avec lui.
+- `predire(notes, a, film, k)` : la note probable. Renvoie la moyenne des notes données au film par ces voisins, pondérée par `1 / (1 + ecart)` (un voisin aux goûts proches compte plus), arrondie au dixième ; `None` sans voisin.
+- `recommander(notes, a, n, k)` : la liste envoyée au membre. Renvoie les `n` films non vus par `a` dont la note prédite est la plus haute (puis ordre alphabétique), sous forme de liste de tuples `(film, note_predite)` ; les films sans prédiction sont ignorés.
+- `erreur(notes, k)` : contrôle la qualité du système. Pour chaque note connue, la **cacher**, la prédire avec les autres notes et mesurer l'écart absolu ; renvoie la moyenne de ces écarts, arrondie au centième (les notes impossibles à prédire sont ignorées). Les données reçues ne doivent pas être modifiées.
+- `meilleur_k(notes, ks)` : règle le système. Renvoie le `k` de la liste qui donne la plus petite erreur (le plus petit en cas d'égalité).
 
 <Indices>
 <Indice>

@@ -1196,16 +1196,16 @@ assert ligne_pascal(20)[10] == 184756 and len(ligne_pascal(20)) == 21, "Ligne 20
 <Enonce>
 ### Mastermind : l'ordinateur cherche
 
-Au Mastermind, un code est une liste de couleurs (par exemple `["R", "V", "R", "B"]`, avec des couleurs choisies parmi `"RVBJOM"`). La réponse à un essai est le tuple `(bien_places, mal_places)` ; chaque pion du secret ne compte qu'une fois.
+**Contexte.** Au Mastermind, un joueur cache un code de 4 pions de couleur ; l'autre doit le retrouver. Après chaque essai, il apprend combien de pions sont de la bonne couleur à la bonne place (**bien placés**) et combien sont de la bonne couleur mais ailleurs (**mal placés**). Le but du projet est un ordinateur qui joue le rôle du chercheur et trouve **toujours** le code en 9 essais au plus, avec 6 couleurs possibles.
 
-Réaliser un ordinateur qui trouve n'importe quel code secret de 4 pions parmi 6 couleurs.
+**Les données** : un code est une liste de couleurs, par exemple `["R", "V", "R", "B"]`, les couleurs étant choisies parmi `"RVBJOM"`. La réponse à un essai est le tuple `(bien_places, mal_places)` ; chaque pion du secret ne compte qu'une fois. L'**historique** d'une partie est la liste des couples `(essai, reponse)` déjà joués.
 
-**Objectifs**
-- `evaluer(secret, essai)` : la réponse à un essai (`evaluer(["R","R","V","B"], ["V","R","R","R"])` vaut `(1, 2)`).
-- `tous_les_codes(couleurs, n)` : la liste de tous les codes de `n` pions, dans l'ordre « du dictionnaire » des couleurs données (pour `"AB"` et `n = 2` : `AA`, `AB`, `BA`, `BB`), sans `itertools`.
-- `coherent(code, historique)` : `historique` est une liste de couples `(essai, reponse)` ; le code est cohérent s'il aurait donné les mêmes réponses à tous ces essais s'il était le secret.
-- `ordinateur(historique, couleurs, n)` : le premier code de `tous_les_codes(couleurs, n)` cohérent avec l'historique.
-- `resoudre(secret, couleurs)` : l'ordinateur joue contre `secret` et renvoie la liste de ses essais, jusqu'au bon code compris. Avec 6 couleurs et 4 pions, il trouve **toujours en 9 essais au plus**, et rapidement.
+**Les fonctions du programme**
+- `evaluer(secret, essai)` : l'arbitre, qui répond à un essai. Reçoit le code secret et l'essai ; renvoie la réponse. Exemple : `evaluer(["R","R","V","B"], ["V","R","R","R"])` vaut `(1, 2)`.
+- `tous_les_codes(couleurs, n)` : la liste de départ des codes possibles. Reçoit les couleurs et le nombre de pions ; renvoie tous les codes, dans l'ordre « du dictionnaire » des couleurs données (pour `"AB"` et `n = 2` : `AA`, `AB`, `BA`, `BB`), sans `itertools`.
+- `coherent(code, historique)` : permet d'éliminer les codes impossibles. Renvoie `True` si `code` aurait donné les mêmes réponses à tous les essais de l'historique s'il était le secret.
+- `ordinateur(historique, couleurs, n)` : le coup suivant de l'ordinateur. Renvoie le premier code de `tous_les_codes(couleurs, n)` cohérent avec l'historique.
+- `resoudre(secret, couleurs)` : une partie complète, pour mesurer l'efficacité de l'ordinateur. Renvoie la liste de ses essais, jusqu'au bon code compris. Avec 6 couleurs et 4 pions, il doit trouver en 9 essais au plus, et rapidement.
 
 <Indices>
 <Indice>
@@ -1318,17 +1318,17 @@ assert "itertools" not in PROGRAMME, "Sans itertools."
 <Enonce>
 ### Classement du championnat
 
-Les matchs d'un championnat sont rangés dans une liste ; chaque match est une liste `[domicile, exterieur, buts_domicile, buts_exterieur]`. Une victoire rapporte 3 points, un nul 1, une défaite 0.
+**Contexte.** L'association sportive du lycée organise un championnat de football entre établissements. Le responsable saisit les scores au fur et à mesure et veut que le site de l'association affiche automatiquement le classement, la fiche de chaque équipe, sa forme du moment et le bilan des confrontations directes.
 
-Réaliser le logiciel de la ligue.
+**Les données** : les matchs sont rangés dans une liste, chaque match étant une liste `[domicile, exterieur, buts_domicile, buts_exterieur]`, par exemple `["Lyon", "Metz", 2, 0]`. Une victoire rapporte 3 points, un nul 1, une défaite 0.
 
-**Objectifs**
-- `equipes(matchs)` : la liste triée des équipes, sans doublon.
-- `bilan(matchs, equipe)` : la liste `[joues, gagnes, nuls, perdus, buts_pour, buts_contre, difference, points]`.
-- `classement(matchs)` : la liste des équipes, de la première à la dernière : par points, puis différence de buts, puis buts marqués (décroissants), puis par ordre alphabétique. **Ce classement est trié à la main**, sans `sort` ni `sorted`.
-- `forme(matchs, equipe, k)` : le texte des `k` derniers résultats de l'équipe, du plus ancien au plus récent (`"V"`, `"N"` ou `"D"`), par exemple `"VVNDV"` (moins de `k` lettres si l'équipe a moins joué).
-- `invincibilite(matchs, equipe)` : la plus longue suite de matchs consécutifs de l'équipe sans défaite.
-- `face_a_face(matchs, a, b)` : la liste `[victoires de a, nuls, victoires de b]` sur leurs confrontations.
+**Les fonctions du site**
+- `equipes(matchs)` : la liste des engagés. Renvoie la liste triée des équipes, sans doublon.
+- `bilan(matchs, equipe)` : la fiche d'une équipe, base de toutes les autres fonctions. Renvoie la liste `[joues, gagnes, nuls, perdus, buts_pour, buts_contre, difference, points]`.
+- `classement(matchs)` : le tableau affiché en page d'accueil. Renvoie la liste des équipes, de la première à la dernière : par points, puis différence de buts, puis buts marqués (décroissants), puis par ordre alphabétique. Ce classement est **trié à la main**, sans `sort` ni `sorted`.
+- `forme(matchs, equipe, k)` : les petites pastilles de forme affichées à côté de chaque équipe. Renvoie le texte des `k` derniers résultats de l'équipe, du plus ancien au plus récent (`"V"`, `"N"` ou `"D"`), par exemple `"VVNDV"` (moins de `k` lettres si l'équipe a moins joué).
+- `invincibilite(matchs, equipe)` : une statistique mise en avant. Renvoie la plus longue suite de matchs consécutifs de l'équipe sans défaite.
+- `face_a_face(matchs, a, b)` : l'avant-match entre deux équipes. Renvoie la liste `[victoires de a, nuls, victoires de b]` sur leurs confrontations.
 
 <Indices>
 <Indice>

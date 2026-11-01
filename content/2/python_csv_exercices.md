@@ -1265,18 +1265,25 @@ assert croiser([], "a", "b") == {}, "Table vide."
 <Enonce>
 ### Résultats du bac blanc
 
-Le fichier des résultats d'un bac blanc a pour colonnes `eleve;classe;matiere;coef;note`. Une copie non rendue est notée `abs` : elle ne compte pas dans les moyennes. Le code de départ contient un exemple de fichier, `FICHIER`.
+**Contexte.** Après le bac blanc, chaque professeur a saisi ses notes dans un tableur partagé, exporté en un fichier CSV. Le proviseur adjoint veut, en un clic, les moyennes pondérées des élèves, leur mention, le classement, des statistiques par matière et par classe, et un fichier récapitulatif à transmettre aux professeurs principaux.
 
-Réaliser le traitement complet des résultats.
+**Les données** : le fichier a pour colonnes `eleve;classe;matiere;coef;note`, une ligne par copie. Une copie non rendue est notée `abs` : elle ne compte pas dans les moyennes. Le code de départ contient un exemple, `FICHIER`, dont voici le début :
 
-**Objectifs**
-- `charger(texte)` : la table (liste de dictionnaires), avec `coef` en entier et `note` en flottant, ou `None` pour `abs`.
-- `moyenne_eleve(table, eleve)` : la moyenne **pondérée** par les coefficients (copies absentes exclues), arrondie au centième, ou `None` si l'élève n'a aucune note.
-- `mention(moyenne)` : `"refusé"` sous 8, `"rattrapage"` sous 10, `"admis"` sous 12, `"assez bien"` sous 14, `"bien"` sous 16, `"très bien"` sous 18, `"félicitations"` au-delà.
-- `classement(table)` : la liste des tuples `(eleve, moyenne, rang)` des élèves qui ont une moyenne, par moyenne décroissante puis par nom ; deux élèves de même moyenne ont le même rang, et le rang suivant est sauté (« 1, 2, 2, 4 »).
-- `stats_matiere(table, matiere)` : le tuple `(minimum, maximum, moyenne, absents)` des notes de la matière (moyenne simple, arrondie au centième).
-- `stats_classes(table)` : un dictionnaire classe → tuple `(effectif, moyenne, reussite)` : nombre d'élèves de la classe, moyenne de leurs moyennes (arrondie au centième, élèves sans note exclus) et pourcentage d'élèves ayant au moins 10 sur l'effectif total (arrondi au dixième).
-- `rapport(table)` : le texte CSV `eleve;classe;moyenne;mention;rang` (en-têtes compris, chaque ligne terminée par `"\n"`), dans l'ordre du classement.
+```
+eleve;classe;matiere;coef;note
+Léa;T1;NSI;16;17
+Léa;T1;Maths;16;12.5
+Tom;T1;Maths;16;abs
+```
+
+**Les fonctions du traitement**
+- `charger(texte)` : transforme le fichier en table utilisable. Renvoie la liste de dictionnaires (un par ligne), avec `coef` en entier et `note` en flottant, ou `None` pour `abs`.
+- `moyenne_eleve(table, eleve)` : la moyenne qui figurera sur le relevé. Renvoie la moyenne **pondérée** par les coefficients (copies absentes exclues), arrondie au centième, ou `None` si l'élève n'a aucune note.
+- `mention(moyenne)` : l'appréciation du jury. Renvoie `"refusé"` sous 8, `"rattrapage"` sous 10, `"admis"` sous 12, `"assez bien"` sous 14, `"bien"` sous 16, `"très bien"` sous 18, `"félicitations"` au-delà.
+- `classement(table)` : le palmarès. Renvoie la liste des tuples `(eleve, moyenne, rang)` des élèves qui ont une moyenne, par moyenne décroissante puis par nom ; deux élèves de même moyenne partagent le même rang, et le rang suivant est sauté (« 1, 2, 2, 4 »).
+- `stats_matiere(table, matiere)` : pour le conseil pédagogique de chaque matière. Renvoie le tuple `(minimum, maximum, moyenne, absents)` des notes de la matière (moyenne simple, arrondie au centième).
+- `stats_classes(table)` : pour comparer les classes. Renvoie un dictionnaire classe → tuple `(effectif, moyenne, reussite)` : nombre d'élèves de la classe, moyenne de leurs moyennes (arrondie au centième, élèves sans note exclus) et pourcentage d'élèves ayant au moins 10 sur l'effectif total (arrondi au dixième).
+- `rapport(table)` : le fichier envoyé aux professeurs principaux. Renvoie le texte CSV `eleve;classe;moyenne;mention;rang` (en-têtes compris, chaque ligne terminée par `"\n"`), dans l'ordre du classement.
 
 <Indices>
 <Indice>
@@ -1451,18 +1458,24 @@ assert lignes[0] == "eleve;classe;moyenne;mention;rang" and lignes[1] == "Inès;
 <Enonce>
 ### Vélos en libre-service
 
-Le service de vélos de la ville exporte ses trajets dans un fichier `id;depart;arrivee;debut;duree` : les stations de départ et d'arrivée, l'instant du départ (`AAAA-MM-JJ HH:MM`) et la durée en minutes. Le code de départ contient un extrait, `FICHIER`.
+**Contexte.** La ville met en place des vélos en libre-service. Chaque trajet est enregistré par les bornes et exporté chaque soir dans un fichier CSV. Le service des mobilités veut un tableau de bord : combien rapportent les trajets, à quelles heures les vélos sont le plus utilisés, quelles stations se vident ou se remplissent (pour y envoyer le camion de rééquilibrage) et quels trajets sont les plus fréquents.
 
-Réaliser le tableau de bord du service.
+**Les données** : le fichier a pour colonnes `id;depart;arrivee;debut;duree` : le numéro du trajet, les stations de départ et d'arrivée, l'instant du départ (`AAAA-MM-JJ HH:MM`) et la durée en minutes. Le code de départ contient un extrait, `FICHIER` :
 
-**Objectifs**
-- `charger(texte)` : la table, avec `id` et `duree` en entiers.
-- `cout(duree)` : le prix d'un trajet : les 30 premières minutes sont gratuites, puis 1 € par demi-heure **commencée**, avec un plafond de 12 €.
-- `recette(table, jour)` : la somme des coûts des trajets partis ce jour-là (`"AAAA-MM-JJ"`).
-- `par_heure(table)` : une liste de 24 entiers, le nombre de départs pour chaque heure de la journée ; `heure_de_pointe(table)` : l'heure qui compte le plus de départs (la plus tôt en cas d'égalité).
-- `soldes(table)` : un dictionnaire station → arrivées moins départs ; `a_reequilibrer(table, seuil)` : la liste triée des stations dont le solde vaut au moins `seuil` en valeur absolue.
-- `trajets_populaires(table, k)` : les `k` couples `(depart, arrivee)` les plus fréquents, sous forme de liste de tuples `((depart, arrivee), nombre)`, par nombre décroissant puis par ordre alphabétique des couples.
-- `duree_moyenne(table, station)` : la durée moyenne des trajets partis de la station, arrondie à la minute (`None` s'il n'y en a pas).
+```
+id;depart;arrivee;debut;duree
+1;Gare;Mairie;2026-10-05 08:12;14
+3;Campus;Gare;2026-10-05 17:05;65
+```
+
+**Les fonctions du tableau de bord**
+- `charger(texte)` : transforme l'export en table. Renvoie la liste de dictionnaires, avec `id` et `duree` en entiers.
+- `cout(duree)` : la grille tarifaire, appliquée à chaque trajet. Les 30 premières minutes sont gratuites, puis 1 € par demi-heure **commencée**, avec un plafond de 12 €. Reçoit une durée ; renvoie le prix.
+- `recette(table, jour)` : ce que le service a encaissé un jour donné (`"AAAA-MM-JJ"`). Renvoie la somme des coûts des trajets partis ce jour-là.
+- `par_heure(table)` et `heure_de_pointe(table)` : pour prévoir le personnel. La première renvoie une liste de 24 entiers, le nombre de départs pour chaque heure de la journée ; la seconde renvoie l'heure qui compte le plus de départs (la plus tôt en cas d'égalité).
+- `soldes(table)` et `a_reequilibrer(table, seuil)` : pour organiser le camion. La première renvoie un dictionnaire station → arrivées moins départs (une station au solde négatif se vide) ; la seconde renvoie la liste triée des stations dont le solde vaut au moins `seuil` en valeur absolue.
+- `trajets_populaires(table, k)` : pour décider où ajouter des pistes cyclables. Renvoie les `k` couples `(depart, arrivee)` les plus fréquents, sous forme de liste de tuples `((depart, arrivee), nombre)`, par nombre décroissant puis par ordre alphabétique des couples.
+- `duree_moyenne(table, station)` : pour l'affichage d'une station. Renvoie la durée moyenne des trajets partis de la station, arrondie à la minute (`None` s'il n'y en a pas).
 
 <Indices>
 <Indice>

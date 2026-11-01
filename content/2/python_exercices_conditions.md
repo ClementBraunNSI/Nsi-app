@@ -1270,18 +1270,18 @@ assert devant(30, 20, 10, 30, 20, 10) == 0, "Rien ne les départage."
 <Enonce>
 ### Arbitre de Uno
 
-Réaliser l'arbitre d'une partie de Uno, qui applique les règles sans jamais se tromper.
+**Contexte.** Le club de jeux du lycée organise un tournoi de Uno en ligne. Il faut un **arbitre** informatique : à chaque coup, il vérifie qu'une carte peut être jouée, calcule qui joue ensuite (avec les cartes qui inversent le sens ou font passer un tour), combien de cartes piocher, et compte les points en fin de manche. Il propose aussi un coup aux joueurs débutants.
 
-**Les cartes** sont des textes : une couleur (`R` rouge, `V` vert, `B` bleu, `J` jaune) suivie d'une valeur : un chiffre (`"R7"`), `+2` (`"B+2"`), `I` pour inversion (`"VI"`) ou `P` pour passe (`"JP"`). Les cartes noires n'ont pas de couleur : `"N"` (joker) et `"N+4"`.
+**Les cartes** sont des textes : une couleur (`R` rouge, `V` vert, `B` bleu, `J` jaune) suivie d'une valeur : un chiffre (`"R7"`), `+2` (`"B+2"`), `I` pour inversion (`"VI"`) ou `P` pour passe (`"JP"`). Les cartes noires n'ont pas de couleur : `"N"` (joker) et `"N+4"`. Après une carte noire, le joueur qui l'a posée choisit la **couleur active**.
 
-**Objectifs**
-- `couleur(carte)` : la lettre de couleur, ou `None` pour une carte noire ; `valeur(carte)` : le reste du texte (`""` pour le joker).
-- `peut_jouer(carte, dessus, couleur_active)` : une carte noire se joue toujours ; une autre carte se joue si sa couleur est la couleur active, ou si sa valeur est celle de la carte du dessus.
-- `points(carte)` : la valeur du chiffre pour une carte numérotée, 20 pour `+2`, `I` et `P`, 50 pour une carte noire.
-- `a_piocher(carte)` : 2 pour un `+2`, 4 pour un `+4`, 0 sinon.
-- `nouveau_sens(carte, sens)` : le sens du jeu (`1` ou `-1`) après la carte ; une inversion le change.
-- `suivant(joueur, carte, sens, nb)` : le numéro (de 0 à `nb - 1`) du joueur qui joue après `joueur`, qui vient de poser `carte`. `sens` est le sens **après** la carte. Une carte passe (ainsi qu'un `+2` ou un `+4`) saute le joueur suivant ; à deux joueurs, une inversion saute aussi le joueur suivant.
-- `meilleur_coup(c1, c2, c3, dessus, couleur_active)` : parmi les trois cartes de la main, celle à jouer : la carte **de couleur** jouable qui rapporte le plus de points (la première en cas d'égalité) ; s'il n'y en a pas, une carte noire jouable ; sinon `None`.
+**Les fonctions de l'arbitre**
+- `couleur(carte)` et `valeur(carte)` : découpent une carte, pour que les autres fonctions n'aient pas à manipuler le texte. Renvoient la lettre de couleur (ou `None` pour une carte noire) et le reste du texte (`""` pour le joker).
+- `peut_jouer(carte, dessus, couleur_active)` : refuse les coups interdits. Reçoit la carte proposée, la carte du dessus de la pile et la couleur active ; renvoie `True` si la carte est noire, ou si elle a la couleur active, ou si elle a la même valeur que la carte du dessus.
+- `points(carte)` : sert au décompte de fin de manche (les cartes restées en main pénalisent). Renvoie la valeur du chiffre pour une carte numérotée, 20 pour `+2`, `I` et `P`, 50 pour une carte noire.
+- `a_piocher(carte)` : indique au joueur suivant combien de cartes il doit prendre. Renvoie 2 pour un `+2`, 4 pour un `+4`, 0 sinon.
+- `nouveau_sens(carte, sens)` : tient à jour le sens de la partie. Reçoit la carte posée et le sens (`1` ou `-1`) ; renvoie le sens après la carte (une inversion le change).
+- `suivant(joueur, carte, sens, nb)` : désigne le prochain joueur. Reçoit le numéro du joueur qui vient de poser `carte` (de 0 à `nb - 1`), le sens **après** la carte et le nombre de joueurs ; renvoie le numéro du joueur suivant. Une carte passe, un `+2` ou un `+4` font sauter le joueur suivant ; à deux joueurs, une inversion aussi.
+- `meilleur_coup(c1, c2, c3, dessus, couleur_active)` : le conseil donné aux débutants, qui ont trois cartes en main. Renvoie la carte **de couleur** jouable qui rapporte le plus de points (la première en cas d'égalité), pour s'en débarrasser ; s'il n'y en a pas, une carte noire jouable ; sinon `None` (il faut piocher).
 
 <Indices>
 <Indice>
@@ -1410,7 +1410,7 @@ assert meilleur_coup("R4", "B4", "V8", "J4", "J") == "R4", "Égalité : la premi
 <Enonce>
 ### Fiche de paie
 
-Réaliser le module de calcul d'une fiche de paie simplifiée, avec le prélèvement de l'impôt à la source.
+**Contexte.** L'association des parents d'élèves emploie quelques surveillants à temps partiel et souhaite éditer elle-même leurs fiches de paie, avec le prélèvement de l'impôt à la source. Le trésorier saisit le taux horaire, les heures du mois et la situation familiale ; le programme calcule toute la fiche. Les règles ci-dessous sont simplifiées mais suivent la logique réelle.
 
 **Règles**
 - Salaire brut mensuel : les 151,67 premières heures sont payées au taux horaire ; les heures suivantes, jusqu'à 186,67 h, sont majorées de 25 % ; au-delà, de 50 %.
@@ -1419,12 +1419,15 @@ Réaliser le module de calcul d'une fiche de paie simplifiée, avec le prélève
 - Impôt annuel : le revenu imposable est divisé par le nombre de parts ; l'impôt progressif est calculé sur ce quotient (0 % jusqu'à 11 294 €, 11 % jusqu'à 28 797 €, 30 % jusqu'à 82 341 €, 41 % jusqu'à 177 106 €, 45 % au-delà), puis multiplié par le nombre de parts.
 - Revenu imposable annuel : 90 % du net annuel.
 
-**Objectifs**
-- `brut(taux, heures)`, `cotisations(brut_mensuel)` et `net(brut_mensuel)`, arrondis au centime.
-- `parts(situation, enfants)` : `situation` vaut `"celibataire"`, `"marie"` ou `"pacse"`.
-- `impot_annuel(revenu_imposable, nb_parts)`, arrondi à l'euro.
-- `taux_prelevement(net_mensuel, situation, enfants)` : l'impôt annuel divisé par le net annuel, en pourcentage arrondi au dixième.
-- `fiche(taux, heures, situation, enfants)` : le tuple `(brut, net, prelevement, net_a_payer)` du mois, le prélèvement étant le net multiplié par le taux, arrondi au centime.
+Exemple : un surveillant célibataire sans enfant, payé 25 € de l'heure, qui a travaillé 160 heures dans le mois.
+
+**Les fonctions du logiciel de paie**
+- `brut(taux, heures)` : la première ligne de la fiche. Reçoit le taux horaire et les heures du mois ; renvoie le salaire brut, arrondi au centime.
+- `cotisations(brut_mensuel)` et `net(brut_mensuel)` : les lignes suivantes. Reçoivent le brut ; renvoient les cotisations et le salaire net, arrondis au centime.
+- `parts(situation, enfants)` : traduit la situation familiale pour le calcul de l'impôt. Reçoit `"celibataire"`, `"marie"` ou `"pacse"` et le nombre d'enfants ; renvoie le nombre de parts.
+- `impot_annuel(revenu_imposable, nb_parts)` : l'impôt d'une année entière. Renvoie un montant arrondi à l'euro.
+- `taux_prelevement(net_mensuel, situation, enfants)` : le taux personnalisé imprimé sur la fiche. Renvoie l'impôt annuel divisé par le net annuel, en pourcentage arrondi au dixième.
+- `fiche(taux, heures, situation, enfants)` : assemble la fiche du mois. Renvoie le tuple `(brut, net, prelevement, net_a_payer)`, le prélèvement étant le net multiplié par le taux, arrondi au centime.
 
 <Indices>
 <Indice>

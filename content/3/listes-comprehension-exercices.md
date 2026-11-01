@@ -1070,18 +1070,23 @@ assert lignes_for == [], "Pas de boucle for en dehors des compréhensions."
 <Enonce>
 ### Base de données de films
 
-Le code de départ contient une petite base de films : une liste de dictionnaires avec les clés `titre`, `annee`, `genres` (liste), `realisateur`, `note` et `acteurs` (liste).
+**Contexte.** Le ciné-club prépare sa programmation annuelle et dispose d'une petite base de films. Il veut des statistiques (genres, décennies, réalisateurs les plus présents), repérer les acteurs qui tournent souvent ensemble, et proposer des films « dans le même esprit » qu'un film donné. Le projet écrit ces analyses dans un style compact : **aucune boucle `for` ou `while`**, uniquement des compréhensions (de liste, d'ensemble, de dictionnaire) et des fonctions comme `sum`, `max`, `sorted`, `len`.
 
-Réaliser les fonctions d'analyse de la base. **Chaque fonction ne contient aucune boucle `for` ou `while`** : uniquement des compréhensions (de liste, d'ensemble, de dictionnaire) et des fonctions comme `sum`, `max`, `sorted`, `len`.
+**Les données** : le code de départ contient la base, `FILMS`, une liste de dictionnaires. Exemple d'élément :
 
-**Objectifs**
-- `titres_du_genre(films, genre)` : la liste triée des titres du genre.
-- `par_decennie(films)` : un dictionnaire décennie → nombre de films, la décennie étant écrite `"1980s"`.
-- `prolifique(films)` : le réalisateur qui a le plus de films (le premier dans l'ordre alphabétique en cas d'égalité).
-- `moyenne_par_genre(films)` : un dictionnaire genre → note moyenne des films du genre, arrondie au dixième.
-- `duos(films)` : un dictionnaire dont les clés sont les couples d'acteurs `(a, b)` avec `a < b` qui ont joué ensemble dans **au moins deux** films, et les valeurs le nombre de ces films.
-- `similaires(films, titre, n)` : les `n` autres films qui partagent le plus de genres avec `titre` (puis meilleure note, puis ordre alphabétique), sous forme de liste de titres ; les films sans genre commun sont exclus.
-- `matrice_genres(films)` : la liste des genres triée, puis la matrice carrée `m` où `m[i][j]` compte les films qui ont à la fois le genre `i` et le genre `j` (sur la diagonale : le nombre de films du genre). Renvoie le tuple `(genres, m)`.
+```
+{"titre": "Alien", "annee": 1979, "genres": ["horreur", "sf"],
+ "realisateur": "Scott", "note": 8.5, "acteurs": ["Weaver", "Hurt", "Holm"]}
+```
+
+**Les fonctions d'analyse**
+- `titres_du_genre(films, genre)` : pour composer une soirée à thème. Renvoie la liste triée des titres du genre.
+- `par_decennie(films)` : pour équilibrer les époques. Renvoie un dictionnaire décennie → nombre de films, la décennie étant écrite `"1980s"`.
+- `prolifique(films)` : pour la rétrospective de l'année. Renvoie le réalisateur qui a le plus de films dans la base (le premier dans l'ordre alphabétique en cas d'égalité).
+- `moyenne_par_genre(films)` : pour savoir quels genres plaisent le plus. Renvoie un dictionnaire genre → note moyenne des films du genre, arrondie au dixième.
+- `duos(films)` : repère les acteurs qui tournent souvent ensemble. Renvoie un dictionnaire dont les clés sont les couples `(a, b)` avec `a < b` ayant joué ensemble dans **au moins deux** films, et les valeurs le nombre de ces films.
+- `similaires(films, titre, n)` : la suggestion « dans le même esprit » du programme papier. Renvoie les titres des `n` autres films qui partagent le plus de genres avec `titre` (puis meilleure note, puis ordre alphabétique) ; les films sans genre commun sont exclus.
+- `matrice_genres(films)` : montre quels genres vont souvent ensemble. Renvoie le tuple `(genres, m)` : la liste triée des genres et la matrice carrée `m` où `m[i][j]` compte les films qui ont à la fois le genre `i` et le genre `j` (sur la diagonale : le nombre de films du genre).
 
 <Indices>
 <Indice>
@@ -1213,18 +1218,20 @@ assert "append" not in PROGRAMME, "Sans append."
 <Enonce>
 ### Casser le chiffre de Vigenère
 
-Le chiffre de Vigenère décale chaque lettre (`a` à `z`) d'un rang donné par la lettre correspondante d'une clé répétée ; les autres caractères ne bougent pas et ne consomment pas de lettre de clé. Pendant trois siècles, on l'a cru incassable. Ce mini-projet le casse, sans connaître la clé.
+**Contexte.** Le club de cryptographie a intercepté des messages chiffrés avec le chiffre de Vigenère, mais sans la clé. Pendant trois siècles, ce chiffre a été jugé incassable ; il cède pourtant à une analyse statistique. Le projet construit l'outil qui retrouve la longueur de la clé, puis la clé elle-même, puis le texte en clair. **Chaque fonction n'utilise que des compréhensions** (aucune boucle `for` ou `while` hors compréhension).
 
-**Chaque fonction n'utilise que des compréhensions** (aucune boucle `for` ou `while` hors compréhension).
+**Le chiffre** : chaque lettre (`a` à `z`) est décalée d'un rang donné par la lettre correspondante d'une clé répétée (`a` décale de 0, `b` de 1…) ; les autres caractères ne bougent pas et ne consomment pas de lettre de clé. Exemple : `chiffrer("attaque au renard", "nsi")` donne `"nlbnicr sc ewvnjl"`.
 
-**Objectifs**
-- `chiffrer(texte, cle)` et `dechiffrer(texte, cle)`.
-- `lettres(texte)` : le texte réduit à ses lettres de `a` à `z`.
-- `indice_coincidence(t)` : la probabilité que deux lettres tirées au hasard dans `t` soient identiques : `somme des n × (n - 1) / (N × (N - 1))`, où `n` parcourt les nombres d'apparitions de chaque lettre et `N` le nombre total de lettres, arrondie au millième. Il vaut environ 0,08 pour un texte français sans accents et 0,038 pour des lettres au hasard.
-- `colonnes(texte, longueur)` : la liste des `longueur` textes formés en prenant une lettre sur `longueur` dans `lettres(texte)`, en partant de la position 0, 1, 2…
-- `longueur_cle(texte, maxi)` : la plus petite longueur de 1 à `maxi` dont l'indice de coïncidence **moyen** des colonnes atteint 0,075.
-- `decalage(colonne)` : le décalage le plus probable d'une colonne, en supposant que sa lettre la plus fréquente est un `e`.
-- `casser(texte, maxi)` : le tuple `(cle, texte_dechiffre)`.
+**L'idée de l'attaque** : l'**indice de coïncidence** d'un texte est la probabilité que deux lettres tirées au hasard dans ce texte soient identiques. Il vaut environ 0,08 pour un texte français sans accents et 0,038 pour des lettres au hasard. Si l'on découpe un message chiffré en colonnes (une lettre sur `L`) avec la bonne longueur de clé `L`, chaque colonne n'a subi qu'un seul décalage et retrouve l'indice du français.
+
+**Les fonctions de l'outil**
+- `chiffrer(texte, cle)` et `dechiffrer(texte, cle)` : pour fabriquer des messages de test et pour lire le message une fois la clé trouvée.
+- `lettres(texte)` : renvoie le texte réduit à ses lettres de `a` à `z`, la matière première de l'analyse.
+- `indice_coincidence(t)` : renvoie l'indice de coïncidence des lettres de `t` : `somme des n × (n - 1) / (N × (N - 1))`, où `n` parcourt les nombres d'apparitions de chaque lettre et `N` le nombre total de lettres, arrondi au millième.
+- `colonnes(texte, longueur)` : découpe le message pour l'analyse. Renvoie la liste des `longueur` textes formés en prenant une lettre sur `longueur` dans `lettres(texte)`, en partant de la position 0, 1, 2…
+- `longueur_cle(texte, maxi)` : première étape de l'attaque. Renvoie la plus petite longueur de 1 à `maxi` dont l'indice de coïncidence **moyen** des colonnes atteint 0,075.
+- `decalage(colonne)` : deuxième étape. Renvoie le décalage le plus probable d'une colonne, en supposant que sa lettre la plus fréquente est un `e`.
+- `casser(texte, maxi)` : l'attaque complète. Renvoie le tuple `(cle, texte_dechiffre)`.
 
 <Indices>
 <Indice>

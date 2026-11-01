@@ -1127,18 +1127,18 @@ assert montant(0.5) == "0,50 €", "0.5 : 0,50 €."
 <Enonce>
 ### Calculateur d'adresses IP
 
-Une adresse IPv4 s'écrit avec quatre nombres de 0 à 255 (`"192.168.1.37"`) mais représente un seul entier sur 32 bits : `192 × 256³ + 168 × 256² + 1 × 256 + 37`. Un réseau se note avec un **préfixe** (`/24`) : le nombre de bits à 1 au début du masque.
+**Contexte.** L'administrateur du réseau du lycée doit sans cesse répondre à des questions du type : « cette adresse est-elle bien écrite ? », « ces deux ordinateurs sont-ils dans le même réseau ? », « combien de machines peut-on brancher dans ce réseau ? ». Le programme est sa calculatrice réseau, sans le module `ipaddress`.
 
-Réaliser le calculateur réseau d'un administrateur, sans le module `ipaddress`.
+Une adresse IPv4 s'écrit avec quatre nombres de 0 à 255 (`"192.168.1.37"`) mais représente un seul entier sur 32 bits : `192 × 256³ + 168 × 256² + 1 × 256 + 37`. Un réseau se note avec un **préfixe** : `192.168.1.37/24` signifie que les 24 premiers bits de l'adresse désignent le réseau et les 8 derniers la machine. Le **masque** est l'entier dont les `préfixe` premiers bits valent 1 et les autres 0.
 
-**Objectifs**
-- `ip_valide(ip)` : `True` si le texte est formé de 4 nombres de 0 à 255 séparés par des points (que des chiffres).
-- `ip_vers_entier(ip)` et `entier_vers_ip(n)` : les conversions dans les deux sens.
-- `masque(prefixe)` : le masque en notation pointée (`masque(24)` vaut `"255.255.255.0"`, `masque(0)` vaut `"0.0.0.0"`).
-- `reseau(ip, prefixe)` et `diffusion(ip, prefixe)` : la première et la dernière adresse du réseau qui contient `ip` (`reseau("192.168.1.37", 24)` vaut `"192.168.1.0"`, la diffusion `"192.168.1.255"`).
-- `nb_hotes(prefixe)` : le nombre d'adresses utilisables pour des machines, c'est-à-dire toutes sauf la première et la dernière (cas particuliers : 2 pour `/31`, 1 pour `/32`).
-- `meme_reseau(ip1, ip2, prefixe)` : `True` si les deux adresses sont dans le même réseau.
-- `est_privee(ip)` : `True` pour les plages privées `10.0.0.0/8`, `172.16.0.0/12` et `192.168.0.0/16`.
+**Les fonctions du calculateur**
+- `ip_valide(ip)` : filtre les fautes de frappe avant tout calcul. Reçoit un texte ; renvoie `True` s'il est formé de 4 nombres de 0 à 255 séparés par des points (que des chiffres).
+- `ip_vers_entier(ip)` et `entier_vers_ip(n)` : passent d'une notation à l'autre ; tous les calculs se font sur l'entier. Reçoivent une adresse texte (ou un entier) ; renvoient l'entier (ou le texte).
+- `masque(prefixe)` : affiche le masque à recopier dans la configuration d'un ordinateur. Reçoit un préfixe de 0 à 32 ; renvoie le masque en notation pointée (`masque(24)` vaut `"255.255.255.0"`, `masque(0)` vaut `"0.0.0.0"`).
+- `reseau(ip, prefixe)` et `diffusion(ip, prefixe)` : donnent les deux bornes du réseau qui contient une adresse. Reçoivent une adresse et un préfixe ; renvoient la première adresse (l'adresse du réseau) et la dernière (l'adresse de diffusion). Exemple : `reseau("192.168.1.37", 24)` vaut `"192.168.1.0"`, `diffusion("192.168.1.37", 24)` vaut `"192.168.1.255"`.
+- `nb_hotes(prefixe)` : dit combien de machines le réseau peut accueillir. Reçoit un préfixe ; renvoie le nombre d'adresses utilisables, c'est-à-dire toutes sauf l'adresse du réseau et celle de diffusion (cas particuliers : 2 pour `/31`, 1 pour `/32`).
+- `meme_reseau(ip1, ip2, prefixe)` : vérifie que deux machines peuvent se parler directement. Renvoie `True` si les deux adresses sont dans le même réseau.
+- `est_privee(ip)` : repère les adresses internes, qui ne sortent pas sur Internet. Renvoie `True` pour les plages privées `10.0.0.0/8`, `172.16.0.0/12` et `192.168.0.0/16`.
 
 <Indices>
 <Indice>
@@ -1250,18 +1250,20 @@ assert "ipaddress" not in PROGRAMME, "Sans le module ipaddress."
 <Enonce>
 ### Vérificateur de numéros
 
-Beaucoup de numéros officiels contiennent une **clé de contrôle** qui détecte les fautes de frappe. Réaliser un module qui les vérifie (les boucles sont permises).
+**Contexte.** Le CDI du lycée et le secrétariat saisissent beaucoup de numéros à la main : ISBN des livres commandés, numéros de sécurité sociale des élèves pour les sorties. Une seule faute de frappe rend la fiche inutilisable. Ces numéros contiennent une **clé de contrôle**, calculée à partir des autres chiffres, qui permet de détecter les erreurs. Le programme est un module de vérification utilisé par les deux services (les boucles sont permises).
 
-**Livres (ISBN-13)** : 13 chiffres ; la clé est le dernier chiffre. On multiplie les 12 premiers chiffres alternativement par 1 et par 3 (en commençant par 1) et on fait la somme ; la clé vaut `(10 - somme % 10) % 10`.
+**Les deux types de numéros**
+- **ISBN-13** (livres) : 13 chiffres, souvent écrits avec des tirets ou des espaces (`978-0-306-40615-7`) ; le dernier chiffre est la clé. On multiplie les 12 premiers chiffres alternativement par 1 et par 3 (en commençant par 1) et on fait la somme ; la clé vaut `(10 - somme % 10) % 10`. Les anciens livres portent un ISBN-10 (`0-306-40615-2`).
+- **Sécurité sociale** : 13 caractères suivis d'une clé de 2 chiffres valant `97 - (numéro % 97)`. Le premier chiffre donne le sexe (1 homme, 2 femme), les deux suivants l'année de naissance, puis deux pour le mois, puis deux pour le département. Pour les départements corses `2A` et `2B`, le calcul de la clé remplace `2A` par `19` et `2B` par `18`. Exemple : `2 69 05 49 588 157 80`.
 
-**Sécurité sociale** : 13 caractères suivis d'une clé de 2 chiffres valant `97 - (numéro % 97)`. Le premier chiffre donne le sexe (1 homme, 2 femme), les deux suivants l'année de naissance, puis deux pour le mois, puis deux pour le département. Pour les départements corses `2A` et `2B`, le calcul de la clé remplace `2A` par `19` et `2B` par `18`.
-
-**Objectifs**
-- `nettoyer(code)` : le code sans ses espaces ni ses tirets.
-- `cle_isbn(debut)` : la clé d'un début d'ISBN de 12 chiffres ; `isbn_valide(code)` : vérifie un ISBN-13 (après nettoyage).
-- `isbn10_vers_13(isbn10)` : convertit un ancien ISBN à 10 caractères en ISBN-13 : `978`, puis ses 9 premiers chiffres, puis la nouvelle clé.
-- `cle_secu(numero13)` et `secu_valide(numero)` (après nettoyage, 15 caractères).
-- `infos_secu(numero)` : le tuple `(sexe, mois, departement)`, avec `sexe` valant `"homme"` ou `"femme"`, `mois` un entier et `departement` un texte (`"2A"` compris).
+**Les fonctions du module**
+- `nettoyer(code)` : prépare un numéro tel qu'il a été tapé. Reçoit un texte ; renvoie le même texte sans ses espaces ni ses tirets.
+- `cle_isbn(debut)` : calcule la clé d'un livre. Reçoit les 12 premiers chiffres d'un ISBN-13 ; renvoie la clé (un entier).
+- `isbn_valide(code)` : accepte ou refuse un ISBN saisi au CDI. Reçoit un texte (qu'elle nettoie) ; renvoie `True` s'il compte 13 chiffres et que sa clé est correcte.
+- `isbn10_vers_13(isbn10)` : met à jour les fiches des anciens livres. Reçoit un ISBN-10 ; renvoie l'ISBN-13 correspondant : `978`, puis les 9 premiers chiffres de l'ancien numéro, puis la nouvelle clé.
+- `cle_secu(numero13)` : calcule la clé d'un numéro de sécurité sociale. Reçoit ses 13 premiers caractères ; renvoie la clé (un entier).
+- `secu_valide(numero)` : accepte ou refuse un numéro saisi au secrétariat. Reçoit un texte (qu'elle nettoie) ; renvoie `True` s'il fait 15 caractères et que sa clé est correcte.
+- `infos_secu(numero)` : remplit automatiquement la fiche de l'élève. Reçoit un numéro ; renvoie le tuple `(sexe, mois, departement)`, avec `sexe` valant `"homme"` ou `"femme"`, `mois` un entier et `departement` un texte (`"2A"` compris).
 
 <Indices>
 <Indice>

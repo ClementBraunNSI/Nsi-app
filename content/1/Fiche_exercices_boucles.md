@@ -1307,17 +1307,19 @@ assert "split" not in PROGRAMME, "Sans split."
 <Enonce>
 ### Mastermind
 
-Réaliser le jeu du Mastermind avec des chiffres.
+**Contexte.** Le club de jeux du lycée veut une version du Mastermind à jouer seul sur ordinateur, avec des chiffres à la place des pions de couleur. L'ordinateur choisit un code secret ; le joueur propose des codes et, à chaque essai, l'ordinateur lui indique combien de chiffres sont à la bonne place et combien sont présents mais mal placés. Le joueur a 10 essais pour trouver.
 
-**Règles**
-- Le programme tire un code secret de **4 chiffres de 1 à 6** (un même chiffre peut revenir) : quatre appels à `random.randint(1, 6)`, après `import random`. Le code est rangé dans `secret`, sous forme de texte (par exemple `"1523"`).
-- Le joueur propose des codes. Une saisie qui n'est pas formée d'exactement 4 chiffres de 1 à 6 provoque le message `saisie invalide` et ne compte pas comme un essai.
+**Règles du jeu**
+- Le code secret est formé de **4 chiffres de 1 à 6** (un même chiffre peut revenir). Il est tiré avec quatre appels à `random.randint(1, 6)`, après `import random`, et rangé sous forme de texte, par exemple `"1523"`.
+- Une saisie qui n'est pas formée d'exactement 4 chiffres de 1 à 6 fait afficher `saisie invalide` et ne compte pas comme un essai : le joueur ne perd pas d'essai pour une faute de frappe.
 - Après chaque essai valide, le programme affiche le nombre de chiffres **bien placés** et de chiffres **mal placés** (présents dans le secret mais ailleurs), sous la forme `2 bien placé(s), 1 mal placé(s)`. Chaque chiffre du secret ne peut servir qu'une fois : avec le secret `1123`, l'essai `3111` donne 1 bien placé et 2 mal placés.
 - La partie s'arrête quand le code est trouvé ou après **10 essais valides**.
 
-**Objectifs**
-- `secret`, `essais` (nombre d'essais valides), `gagne` (booléen).
-- Un message final qui annonce la victoire avec le nombre d'essais, ou la défaite en révélant le code.
+**Ce que le programme doit produire**
+- `secret` : le code tiré, que le joueur doit deviner.
+- `essais` : le nombre d'essais valides, qui sert de score (moins il y en a, meilleure est la partie).
+- `gagne` : `True` si le code a été trouvé.
+- Un message de fin : la victoire avec le nombre d'essais, ou la défaite en révélant le code secret.
 
 <Indices>
 <Indice>
@@ -1426,20 +1428,21 @@ finally:
 <Enonce>
 ### Chronos d'une course
 
-Réaliser l'outil de saisie des temps d'une course à pied, sans utiliser de liste.
+**Contexte.** Lors du cross du lycée, un professeur d'EPS note sur des fiches le temps de chaque coureur à l'arrivée. Il veut un programme où il tape les temps les uns après les autres, et qui lui donne aussitôt les résultats à afficher dans le gymnase : nombre d'arrivants, meilleur temps, temps moyen, podium, et la plus belle série de progression. Le programme se passe de liste.
 
-**Règles**
-- Le programme demande les temps des coureurs, dans l'ordre d'arrivée des fiches, au format `mm:ss` (par exemple `12:05`). La saisie de `fin` arrête la série.
-- Un temps mal écrit (pas de la forme deux chiffres, `:`, deux chiffres, ou des secondes au-delà de 59) provoque le message `temps invalide` et est ignoré.
+**Données saisies** : les temps des coureurs, dans l'ordre des fiches, au format `mm:ss` (par exemple `12:05`). La saisie de `fin` arrête la série. Un temps mal écrit (pas de la forme deux chiffres, `:`, deux chiffres, ou des secondes au-delà de 59) fait afficher `temps invalide` et est ignoré, pour que le professeur puisse le retaper.
 
-**Objectifs**
-- `nb` : le nombre de temps valides.
-- `meilleur` et `moyenne` : le meilleur temps et le temps moyen (arrondi à la seconde), au format `"mm:ss"`.
-- `podium` : les trois meilleurs temps, du meilleur au moins bon, séparés par ` / ` (moins de trois s'il y a moins de coureurs).
-- `progression` : la plus longue suite de temps **consécutifs** (dans l'ordre de saisie) qui s'améliorent à chaque fois. Un seul temps forme une suite de longueur 1.
+Exemple de saisie : `12:30`, `11:45`, `13:02`, `10:59`, `10:50`, `fin`.
+
+**Ce que le programme doit produire**
+- `nb` : le nombre de temps valides, c'est-à-dire de coureurs classés.
+- `meilleur` : le temps du vainqueur, au format `"mm:ss"`.
+- `moyenne` : le temps moyen des coureurs, arrondi à la seconde, au format `"mm:ss"`, pour comparer d'une année sur l'autre.
+- `podium` : les trois meilleurs temps, du meilleur au moins bon, séparés par ` / ` (moins de trois s'il y a moins de coureurs), affiché sur le panneau des résultats.
+- `progression` : la plus longue suite de temps **consécutifs** (dans l'ordre de saisie) qui s'améliorent à chaque fois ; un seul temps forme une suite de longueur 1. Le professeur s'en sert pour commenter la course.
 - Si aucun temps n'est valide, le programme affiche `aucun temps` (et `nb` vaut 0).
 
-Exemple : `12:30`, `11:45`, `13:02`, `10:59`, `10:50`, `fin` donnent `nb = 5`, `meilleur = "10:50"`, `moyenne = "11:49"`, `podium = "10:50 / 10:59 / 11:45"` et `progression = 3`.
+Avec l'exemple : `nb = 5`, `meilleur = "10:50"`, `moyenne = "11:49"`, `podium = "10:50 / 10:59 / 11:45"` et `progression = 3`.
 
 <Indices>
 <Indice>

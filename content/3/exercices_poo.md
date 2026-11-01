@@ -1743,20 +1743,22 @@ assert "heapq" not in PROGRAMME and not re.search(r"\b(sorted|min)\s*\(|\.sort\s
 <Enonce>
 ### Réservation de salles
 
-Réaliser le système de réservation des salles d'un lycée. Les heures sont des entiers (8 pour 8 h), un créneau va de `debut` (inclus) à `fin` (exclu).
+**Contexte.** Au lycée, les salles sont réservées sur un tableau papier et les conflits sont fréquents : deux classes dans la même salle, un cours d'informatique dans une salle sans ordinateurs, un amphi trop petit. Le projet est le système de réservation qui remplace ce tableau. Les heures sont des entiers (8 pour 8 h) et un créneau va de `debut` (inclus) à `fin` (exclu) : un cours de 8 h à 10 h libère la salle pour un cours qui commence à 10 h.
 
-**Objectifs**
-- Une classe `Creneau(debut, fin)` (une `ValueError` si `fin <= debut`), avec `duree()`, `chevauche(autre)` (deux créneaux qui se touchent seulement, comme 8-10 et 10-12, ne se chevauchent pas) et `__repr__` qui renvoie `"[8-10]"`.
-- Une classe `Salle(nom, capacite, equipements)`, `equipements` étant un **ensemble** (`{"projecteur", "ordinateurs"}`).
-- Une classe `Reservation(salle, creneau, groupe, effectif)`.
-- Une classe `Planning` avec :
-  - `ajouter_salle(salle)` ;
-  - `reserver(nom_salle, debut, fin, groupe, effectif)` : crée et renvoie la réservation, ou lève une `ValueError` dont le message vaut `"salle inconnue"`, `"capacité"` ou `"conflit"` (dans cet ordre de vérification) ;
-  - `annuler(groupe, debut)` : supprime la réservation de ce groupe qui commence à cette heure, et renvoie `True`, ou `False` si elle n'existe pas ;
-  - `disponibles(debut, fin, effectif, equipements)` : la liste triée des noms des salles libres sur tout le créneau, assez grandes, et qui ont **au moins** tous les équipements demandés ;
-  - `occupation(nom_salle, ouverture, fermeture)` : le pourcentage de la journée (de `ouverture` à `fermeture`) pendant lequel la salle est réservée, arrondi au dixième ;
-  - `agenda(groupe)` : la liste des tuples `(debut, fin, nom_salle)` du groupe, par heure de début ;
-  - `__len__` : le nombre de réservations.
+**Les données** : une salle a un nom, une capacité et un **ensemble** d'équipements, par exemple `Salle("Info1", 18, {"projecteur", "ordinateurs"})`. Une réservation associe une salle, un créneau, un groupe (`"1NSI"`) et un effectif.
+
+**Les classes et leurs rôles**
+- `Creneau(debut, fin)` : une plage horaire. Le constructeur lève une `ValueError` si `fin <= debut`. `duree()` renvoie sa longueur en heures ; `chevauche(autre)` dit si deux créneaux se recouvrent (deux créneaux qui se touchent seulement, comme 8-10 et 10-12, ne se chevauchent pas) ; `__repr__` renvoie `"[8-10]"` pour l'affichage.
+- `Salle(nom, capacite, equipements)` : une salle du lycée.
+- `Reservation(salle, creneau, groupe, effectif)` : une réservation enregistrée.
+- `Planning` : le système lui-même, qui connaît les salles et toutes les réservations.
+  - `ajouter_salle(salle)` : enregistre une salle.
+  - `reserver(nom_salle, debut, fin, groupe, effectif)` : appelée quand un professeur réserve. Crée et renvoie la réservation, ou lève une `ValueError` dont le message, affiché au professeur, vaut `"salle inconnue"`, `"capacité"` ou `"conflit"` (dans cet ordre de vérification).
+  - `annuler(groupe, debut)` : supprime la réservation de ce groupe qui commence à cette heure ; renvoie `True`, ou `False` si elle n'existe pas.
+  - `disponibles(debut, fin, effectif, equipements)` : la recherche d'une salle libre. Renvoie la liste triée des noms des salles libres sur tout le créneau, assez grandes, et qui ont **au moins** tous les équipements demandés.
+  - `occupation(nom_salle, ouverture, fermeture)` : pour savoir quelles salles sont sous-utilisées. Renvoie le pourcentage de la journée (de `ouverture` à `fermeture`) pendant lequel la salle est réservée, arrondi au dixième.
+  - `agenda(groupe)` : l'emploi du temps d'un groupe. Renvoie la liste des tuples `(debut, fin, nom_salle)` de ses réservations, par heure de début.
+  - `__len__` : renvoie le nombre de réservations.
 
 <Indices>
 <Indice>
@@ -1913,16 +1915,18 @@ assert p.disponibles(9, 10, 10, {"projecteur"}) == ["B12"], "La salle annulée r
 <Enonce>
 ### Combat d'équipes
 
-Réaliser le moteur d'un jeu de combat au tour par tour **entre deux équipes**, entièrement déterministe.
+**Contexte.** Une équipe du club jeu vidéo développe un jeu de rôle tactique : deux équipes de personnages s'affrontent au tour par tour. Avant de dessiner les graphismes, elle a besoin du **moteur de combat**, entièrement déterministe pour pouvoir équilibrer les personnages en rejouant les mêmes combats. Chaque type de personnage a une façon d'agir différente : c'est le terrain idéal de l'héritage et du polymorphisme.
 
-**Objectifs**
-- Une classe `Personnage(nom, pv, attaque, vitesse)` : `est_vivant()`, `subir(degats)` (les points de vie ne descendent pas sous 0), et `agir(allies, ennemis)` qui, par défaut, attaque l'ennemi **vivant** qui a le moins de points de vie (le premier de la liste en cas d'égalité) en lui infligeant `attaque` dégâts.
-- Trois classes filles qui redéfinissent `agir` :
-  - `Guerrier` : une action sur trois (la 3ᵉ, la 6ᵉ…) inflige le double de dégâts ;
-  - `Mage` : frappe **tous** les ennemis vivants avec `attaque // 2` dégâts (au moins 1) ;
+**Les données** : un personnage a un nom, des points de vie, une attaque et une vitesse, par exemple `Guerrier("Gus", 30, 5, 3)` ; une équipe a un nom et une liste de membres.
+
+**Les classes et leurs rôles**
+- `Personnage(nom, pv, attaque, vitesse)` : le personnage de base. `est_vivant()` dit s'il lui reste des points de vie ; `subir(degats)` lui retire des points de vie (sans descendre sous 0) ; `agir(allies, ennemis)` est son action pendant un tour : par défaut, il attaque l'ennemi **vivant** qui a le moins de points de vie (le premier de la liste en cas d'égalité) en lui infligeant `attaque` dégâts.
+- Trois spécialités, qui redéfinissent `agir` :
+  - `Guerrier` : frappe comme un personnage ordinaire, mais une action sur trois (la 3ᵉ, la 6ᵉ…) inflige le double de dégâts ;
+  - `Mage` : frappe **tous** les ennemis vivants à la fois, avec `attaque // 2` dégâts (au moins 1) ;
   - `Soigneur` : si un allié vivant (lui compris) a au plus la moitié de ses points de vie de départ, il soigne le plus blessé d'entre eux (le moins de points de vie, le premier en cas d'égalité) de `2 × attaque`, sans dépasser ses points de vie de départ ; sinon, il attaque comme un personnage ordinaire.
-- Une classe `Equipe(nom, membres)` avec `vivants()` et `vaincue()`.
-- Une fonction `combat(e1, e2, max_tours)` : à chaque tour, tous les personnages vivants agissent, par **vitesse décroissante** (à vitesse égale : ceux de `e1` avant ceux de `e2`, puis dans l'ordre des listes) ; un personnage mis à terre avant son tour n'agit pas. Le combat s'arrête dès qu'une équipe est vaincue (même au milieu d'un tour) ou après `max_tours` tours. Elle renvoie `(nom de l'équipe gagnante ou None, nombre de tours commencés)`.
+- `Equipe(nom, membres)` : `vivants()` renvoie la liste des membres encore debout ; `vaincue()` dit si plus aucun ne l'est.
+- `combat(e1, e2, max_tours)` : le déroulement d'un combat. À chaque tour, tous les personnages vivants agissent, par **vitesse décroissante** (à vitesse égale : ceux de `e1` avant ceux de `e2`, puis dans l'ordre des listes) ; un personnage mis à terre avant son tour n'agit pas. Le combat s'arrête dès qu'une équipe est vaincue (même au milieu d'un tour) ou après `max_tours` tours. Renvoie `(nom de l'équipe gagnante ou None, nombre de tours commencés)`.
 
 <Indices>
 <Indice>

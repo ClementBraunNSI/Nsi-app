@@ -1334,17 +1334,22 @@ assert _recursive("placer"), "placer est récursive : elle s'appelle elle-même.
 <Enonce>
 ### Labyrinthe : boue, portes et clés
 
-Un labyrinthe est une liste de textes de même longueur : `#` mur, `.` passage, `~` boue, `S` départ, `E` sortie, une lettre minuscule (`a`, `b`…) est une **clé** et la majuscule correspondante (`A`, `B`…) une **porte** qui ne s'ouvre qu'avec cette clé. On se déplace en haut, en bas, à gauche ou à droite ; entrer dans une case coûte 1, sauf la boue qui coûte 3.
+**Contexte.** Un jeu d'aventure en vue de dessus fait se déplacer un renard dans des labyrinthes. Le moteur du jeu doit répondre à trois questions : quel est le chemin le plus court en nombre de pas (pour l'animation « aller ici »), quel est le trajet le moins fatigant quand certaines cases sont boueuses, et peut-on sortir en ramassant des clés pour ouvrir des portes. Le projet écrit ce solveur.
 
-Réaliser un solveur qui répond à trois questions différentes.
+**Les données** : un labyrinthe est une liste de textes de même longueur. Symboles : `#` mur, `.` passage, `~` boue, `S` départ, `E` sortie, une lettre minuscule (`a`, `b`…) est une **clé**, la majuscule correspondante (`A`, `B`…) une **porte** qui ne s'ouvre qu'avec cette clé. On se déplace en haut, en bas, à gauche ou à droite ; entrer dans une case coûte 1, sauf la boue qui coûte 3. Exemple :
 
-**Objectifs**
-- `trouver(lab, symbole)` : la position `(ligne, colonne)` du symbole.
-- `voisines(lab, pos)` : la liste des positions voisines dans la grille qui ne sont pas des murs, dans l'ordre bas, haut, droite, gauche.
-- `plus_court(lab)` : le nombre minimal de **pas** de `S` à `E`, les portes étant traitées comme des murs (`-1` si impossible).
-- `chemin(lab)` : la liste des positions d'un tel plus court chemin, de `S` à `E` compris (`None` si impossible).
-- `moins_cher(lab)` : le **coût** minimal de `S` à `E` en tenant compte de la boue, portes fermées (`-1` si impossible).
-- `avec_cles(lab)` : le nombre minimal de pas de `S` à `E` quand on ramasse les clés en passant dessus et qu'on peut alors franchir les portes correspondantes (`-1` si impossible).
+```
+S~~~E
+.###.
+.....
+```
+
+**Les fonctions du solveur**
+- `trouver(lab, symbole)` : localise le départ, la sortie ou une clé. Renvoie la position `(ligne, colonne)` du symbole (`None` s'il n'y est pas).
+- `voisines(lab, pos)` : les déplacements possibles depuis une case. Renvoie la liste des positions voisines dans la grille qui ne sont pas des murs, dans l'ordre bas, haut, droite, gauche.
+- `plus_court(lab)` et `chemin(lab)` : pour l'animation, les portes étant traitées comme des murs. La première renvoie le nombre minimal de **pas** de `S` à `E` (`-1` si impossible) ; la seconde renvoie la liste des positions d'un tel chemin, de `S` à `E` compris (`None` si impossible).
+- `moins_cher(lab)` : le trajet le moins fatigant. Renvoie le **coût** minimal de `S` à `E` en tenant compte de la boue, portes fermées (`-1` si impossible). Dans l'exemple, le chemin le plus court traverse la boue (4 pas, coût 10) alors que le détour par le bas coûte 8.
+- `avec_cles(lab)` : le niveau à énigmes. Renvoie le nombre minimal de pas de `S` à `E` quand on ramasse les clés en passant dessus et qu'on peut alors franchir les portes correspondantes (`-1` si impossible).
 
 <Indices>
 <Indice>
@@ -1507,17 +1512,18 @@ assert avec_cles(["S#E"]) == -1 and avec_cles(["SE"]) == 1, "Impossible, puis im
 <Enonce>
 ### Compression de Huffman
 
-Le codage de Huffman compresse un texte en donnant des codes binaires courts aux caractères fréquents et longs aux caractères rares. Il est utilisé dans les formats ZIP, JPEG ou MP3.
+**Contexte.** Pour comprendre comment fonctionnent les fichiers ZIP, une équipe programme le codage de Huffman, l'un des algorithmes de compression qu'ils utilisent (comme les formats JPEG et MP3). L'idée : au lieu de coder chaque caractère sur 8 bits, donner des codes binaires courts aux caractères fréquents et longs aux caractères rares. L'outil compresse un texte, le décompresse sans perte et mesure le gain.
 
-**Construction de l'arbre** : chaque caractère est d'abord une feuille, de poids son nombre d'apparitions. Tant qu'il reste plusieurs arbres, on retire les **deux de plus petit poids** et on les réunit sous un nœud dont le poids est la somme : le premier retiré à gauche, le second à droite. Pour que tout le monde obtienne le même arbre, les égalités de poids se départagent par **ordre de création** : les feuilles sont créées dans l'ordre alphabétique des caractères, puis chaque nouveau nœud reçoit le numéro suivant.
+**Construction de l'arbre** : chaque caractère est d'abord une feuille, de poids son nombre d'apparitions. Tant qu'il reste plusieurs arbres, on retire les **deux de plus petit poids** et on les réunit sous un nœud dont le poids est la somme : le premier retiré à gauche, le second à droite. Pour que tout le monde obtienne le même arbre, les égalités de poids se départagent par **ordre de création** : les feuilles sont créées dans l'ordre alphabétique des caractères, puis chaque nouveau nœud reçoit le numéro suivant. Exemple : pour `"abracadabra"`, l'arbre est `("a", (("c", "d"), ("b", "r")))` et le code de `a` est `"0"`.
 
-**Objectifs**
-- `frequences(texte)` : un dictionnaire caractère → nombre d'apparitions.
-- `arbre(freq)` : l'arbre de Huffman, une feuille étant un caractère et un nœud un tuple `(gauche, droit)`.
-- `codes(a)` : un dictionnaire caractère → code (texte de `0` et de `1`), `0` pour aller à gauche et `1` à droite ; si l'arbre est une seule feuille, son code est `"0"`.
-- `encoder(texte, c)` et `decoder(bits, a)` : `decoder(encoder(t, codes(a)), a)` redonne `t`.
-- `sans_prefixe(c)` : `True` si aucun code n'est le début d'un autre (c'est ce qui rend le décodage possible).
-- `taux(texte)` : la longueur du texte codé divisée par celle du texte en ASCII (8 bits par caractère), arrondie au millième.
+**Les fonctions de l'outil**
+- `frequences(texte)` : la première étape. Renvoie un dictionnaire caractère → nombre d'apparitions.
+- `arbre(freq)` : construit l'arbre de Huffman à partir des fréquences. Une feuille est un caractère, un nœud un tuple `(gauche, droit)`.
+- `codes(a)` : la table de codage, lue dans l'arbre. Renvoie un dictionnaire caractère → code (texte de `0` et de `1`), `0` pour aller à gauche et `1` à droite ; si l'arbre est une seule feuille, son code est `"0"`.
+- `encoder(texte, c)` : la compression. Renvoie le texte de bits obtenu en remplaçant chaque caractère par son code.
+- `decoder(bits, a)` : la décompression, qui retrouve le texte d'origine à partir des bits et de l'arbre : `decoder(encoder(t, codes(a)), a)` redonne `t`.
+- `sans_prefixe(c)` : vérifie la propriété qui rend le décodage possible. Renvoie `True` si aucun code n'est le début d'un autre.
+- `taux(texte)` : mesure le gain. Renvoie la longueur du texte codé divisée par celle du texte en ASCII (8 bits par caractère), arrondie au millième.
 
 <Indices>
 <Indice>

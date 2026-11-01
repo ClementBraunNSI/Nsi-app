@@ -1234,18 +1234,18 @@ for d in ["0000", "1011", "1111", "0110", "1001"]:
 <Enonce>
 ### Unité de calcul 4 bits
 
-Un processeur calcule avec des portes logiques. Réaliser l'unité de calcul (UAL) d'un processeur 4 bits en n'utilisant **que la porte `nand`**.
+**Contexte.** Au cœur d'un processeur se trouve l'unité arithmétique et logique (UAL), qui additionne, soustrait et combine des nombres binaires. Elle est faite de portes logiques, et une seule sorte de porte suffit : la porte NON-ET. Le projet reconstruit l'UAL d'un petit processeur 4 bits en n'utilisant **que la porte `nand`**, comme le ferait un fabricant de puces.
 
-Un nombre de 4 bits est une liste de 4 booléens, **bit de poids fort en premier** : `[False, True, True, False]` représente 6. Le code de départ fournit `nand`, ainsi que `vers_bits` et `vers_entier` pour les tests.
+**Les données** : un nombre de 4 bits est une liste de 4 booléens, **bit de poids fort en premier** : `[False, True, True, False]` représente 6. Le code de départ fournit `nand`, ainsi que `vers_bits` et `vers_entier` pour passer des entiers aux listes de bits pendant les tests.
 
-**Objectifs** (toutes les fonctions sauf `ual` n'utilisent que `nand` et les fonctions déjà écrites : aucun `and`, `or`, `not`, `if`, `==` ni `!=`)
-- Les portes `non(a)`, `et(a, b)`, `ou(a, b)`, `oux(a, b)`.
-- `additionneur(a, b, r)` : le tuple `(somme, retenue)` de deux bits et d'une retenue.
-- `additionner(x, y)` : le tuple `(resultat, retenue_finale)` de deux nombres de 4 bits (le résultat sur 4 bits, la retenue indique un dépassement).
-- `oppose(x)` : le complément à deux de `x` (inverser tous les bits, puis ajouter 1), qui représente `-x` sur 4 bits.
-- `soustraire(x, y)` : `x - y` sur 4 bits, calculé comme `x + oppose(y)`.
-- `est_nul(x)` : `True` si les 4 bits valent `False`.
-- `ual(op, x, y)` : selon `op` (`"ADD"`, `"SUB"`, `"AND"`, `"OR"`, `"XOR"`), renvoie le tuple `(resultat, zero, retenue)` où `zero` dit si le résultat est nul et `retenue` est la retenue finale (`False` pour les opérations logiques, bit à bit). Seule cette fonction a le droit d'utiliser `if` et `==` pour choisir l'opération.
+**Les composants à construire** (toutes ces fonctions, sauf `ual`, n'utilisent que `nand` et les fonctions déjà écrites : aucun `and`, `or`, `not`, `if`, `==` ni `!=`)
+- `non(a)`, `et(a, b)`, `ou(a, b)`, `oux(a, b)` : les portes de base, construites à partir de `nand`. Chacune reçoit des booléens et renvoie la sortie de la porte.
+- `additionneur(a, b, r)` : additionne deux bits et une retenue venue du bit précédent. Renvoie le tuple `(somme, retenue)`.
+- `additionner(x, y)` : l'additionneur 4 bits du processeur. Reçoit deux nombres de 4 bits ; renvoie le tuple `(resultat, retenue_finale)`, le résultat sur 4 bits et la retenue indiquant un dépassement (par exemple 9 + 7).
+- `oppose(x)` : prépare la soustraction. Renvoie le complément à deux de `x` (tous les bits inversés, puis 1 ajouté), qui représente `-x` sur 4 bits.
+- `soustraire(x, y)` : renvoie `x - y` sur 4 bits, calculé comme `x + oppose(y)`.
+- `est_nul(x)` : alimente le drapeau « zéro » du processeur. Renvoie `True` si les 4 bits valent `False`.
+- `ual(op, x, y)` : l'unité complète, appelée par le processeur à chaque instruction. Selon `op` (`"ADD"`, `"SUB"`, `"AND"`, `"OR"`, `"XOR"`), renvoie le tuple `(resultat, zero, retenue)` : le résultat sur 4 bits, `zero` qui dit s'il est nul, et `retenue` la retenue finale (`False` pour les opérations logiques, qui travaillent bit à bit). Seule cette fonction a le droit d'utiliser `if` et `==` pour choisir l'opération.
 
 <Indices>
 <Indice>
@@ -1402,18 +1402,18 @@ for f in arbre.body:
 <Enonce>
 ### Évaluateur logique
 
-Réaliser un outil qui lit des expressions logiques écrites en français et les analyse, comme un petit calculateur de logique.
+**Contexte.** En cours de logique, les élèves passent du temps à remplir des tables de vérité et à vérifier des égalités comme les lois de De Morgan. Le projet est un petit calculateur de logique : il lit des expressions écrites en français, les évalue, dresse leur table de vérité, compare deux expressions et produit leur forme normale. Les élèves pourront ainsi vérifier leurs exercices.
 
-Une expression utilise des variables (une lettre minuscule), les opérateurs `non`, `et`, `ou` et des parenthèses, par exemple `"(a et non b) ou c"`. Comme en Python, `non` est prioritaire sur `et`, lui-même prioritaire sur `ou` : `a ou b et c` se lit `a ou (b et c)`.
+**Les données** : une expression utilise des variables (une lettre minuscule), les opérateurs `non`, `et`, `ou` et des parenthèses, par exemple `"(a et non b) ou c"`. Comme en Python, `non` est prioritaire sur `et`, lui-même prioritaire sur `ou` : `a ou b et c` se lit `a ou (b et c)`. Les valeurs des variables sont données par un dictionnaire, par exemple `{"a": True, "b": False, "c": False}`.
 
-**Objectifs**
-- `jetons(expr)` : la liste des éléments de l'expression (`"(a et non b)"` donne `["(", "a", "et", "non", "b", ")"]`) ; les parenthèses peuvent être collées aux variables.
-- `variables(expr)` : la liste triée des variables, sans doublon.
-- `evaluer(expr, valeurs)` : la valeur de l'expression, `valeurs` étant un dictionnaire variable → booléen. **Sans `eval`.**
-- `table(expr)` : la table de vérité, liste de tuples `(valeur de chaque variable…, resultat)`, dans l'ordre binaire (variables dans l'ordre alphabétique, la dernière variant le plus vite).
-- `equivalentes(e1, e2)` : `True` si les deux expressions ont toujours la même valeur (sur l'ensemble de leurs variables).
-- `tautologie(expr)` : `True` si l'expression est toujours vraie.
-- `forme_normale(expr)` : la forme normale disjonctive : un `ou` de parenthèses, une par ligne vraie de la table, chacune un `et` de toutes les variables (précédées de `non` si elles sont fausses), par exemple `"(non a et b) ou (a et non b)"` ; `"faux"` si l'expression n'est jamais vraie.
+**Les fonctions du calculateur**
+- `jetons(expr)` : découpe l'expression en éléments, première étape de la lecture. Renvoie la liste des éléments (`"(a et non b)"` donne `["(", "a", "et", "non", "b", ")"]`) ; les parenthèses peuvent être collées aux variables dans le texte.
+- `variables(expr)` : les variables de l'expression, qui donnent les colonnes de la table. Renvoie leur liste triée, sans doublon.
+- `evaluer(expr, valeurs)` : calcule la valeur de l'expression pour des valeurs données des variables. Renvoie un booléen. **Sans `eval`.**
+- `table(expr)` : la table de vérité. Renvoie la liste des tuples `(valeur de chaque variable…, resultat)`, dans l'ordre binaire (variables dans l'ordre alphabétique, la dernière variant le plus vite).
+- `equivalentes(e1, e2)` : vérifie une égalité logique, comme une loi de De Morgan. Renvoie `True` si les deux expressions ont toujours la même valeur (sur l'ensemble de leurs variables).
+- `tautologie(expr)` : renvoie `True` si l'expression est toujours vraie.
+- `forme_normale(expr)` : réécrit l'expression sous une forme standard, la forme normale disjonctive : un `ou` de parenthèses, une par ligne vraie de la table, chacune un `et` de toutes les variables (précédées de `non` si elles sont fausses), par exemple `"(non a et b) ou (a et non b)"` ; `"faux"` si l'expression n'est jamais vraie.
 
 <Indices>
 <Indice>

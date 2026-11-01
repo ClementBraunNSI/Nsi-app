@@ -1217,17 +1217,20 @@ assert all(x == 7 for ligne in grand for x in ligne), "Une grande image se rempl
 <Enonce>
 ### Démineur
 
-Réaliser le moteur du jeu du démineur.
+**Contexte.** Pour le concours de programmation du lycée, une équipe reprogramme le démineur. Le **moteur** du jeu (ce projet) gère deux grilles : le plateau caché, connu du programme seul, et la grille visible par le joueur. L'interface graphique, réalisée par une autre équipe, n'appellera que les fonctions décrites ci-dessous.
 
-Le plateau caché est une grille `n × p` d'entiers : `-1` pour une mine, sinon le nombre de mines parmi les 8 cases voisines. Ce que voit le joueur est une autre grille, `etat`, de caractères : `"#"` pour une case cachée, `"F"` pour un drapeau, `"*"` pour une mine révélée, ou le chiffre de la case (`"0"`, `"1"`…).
+**Les données**
+- Le plateau caché est une grille `n × p` d'entiers : `-1` pour une mine, sinon le nombre de mines parmi les 8 cases voisines.
+- La grille du joueur, `etat`, contient des caractères : `"#"` pour une case cachée, `"F"` pour un drapeau, `"*"` pour une mine révélée, ou le chiffre de la case (`"0"`, `"1"`…).
+- Une position est un tuple `(ligne, colonne)` ; les mines d'une partie sont données par la liste de leurs positions, par exemple `[(0, 0), (2, 3)]`.
 
-**Objectifs**
-- `voisines(n, p, l, c)` : la liste des positions `(l, c)` voisines dans la grille (8 au plus), dans l'ordre des lignes puis des colonnes.
-- `creer(n, p, mines)` : le plateau caché, à partir de la liste des positions des mines.
-- `etat_initial(n, p)` : la grille du joueur, entièrement cachée.
-- `drapeau(etat, l, c)` : pose ou retire un drapeau sur une case cachée (sans effet sur une case révélée).
-- `reveler(plateau, etat, l, c)` : révèle une case et renvoie `"perdu"` (c'est une mine, qui s'affiche `"*"`), `"gagne"` (toutes les cases sans mine sont révélées) ou `"continue"`. Une case à `0` révèle automatiquement ses voisines, et ainsi de suite tant qu'on rencontre des `0` (comme dans le vrai jeu). Une case déjà révélée ou portant un drapeau n'est pas touchée.
-- `affichage(etat)` : le texte de la grille du joueur, une ligne par rangée.
+**Les fonctions du moteur**
+- `voisines(n, p, l, c)` : utile partout (compter les mines, propager les zéros). Renvoie la liste des positions voisines de `(l, c)` qui existent dans la grille (8 au plus), dans l'ordre des lignes puis des colonnes.
+- `creer(n, p, mines)` : prépare une partie. Reçoit les dimensions et la liste des mines ; renvoie le plateau caché.
+- `etat_initial(n, p)` : la grille affichée au début, entièrement cachée.
+- `drapeau(etat, l, c)` : appelée quand le joueur fait un clic droit. Pose ou retire un drapeau sur une case cachée ; sans effet sur une case révélée.
+- `reveler(plateau, etat, l, c)` : appelée quand le joueur clique sur une case. Met à jour `etat` et renvoie `"perdu"` (c'est une mine, qui s'affiche `"*"`), `"gagne"` (toutes les cases sans mine sont révélées) ou `"continue"`. Comme dans le vrai jeu, une case à `0` révèle automatiquement ses voisines, et ainsi de suite tant qu'on rencontre des `0`. Une case déjà révélée ou sous drapeau n'est pas touchée.
+- `affichage(etat)` : la version texte de la grille, pour tester le moteur sans interface. Renvoie une ligne de texte par rangée.
 
 <Indices>
 <Indice>
@@ -1354,19 +1357,19 @@ assert E2[2][3] == "*", "Pas de drapeau sur une case révélée."
 <Enonce>
 ### Puissance 4
 
-Réaliser le moteur d'un Puissance 4 et un adversaire informatique.
+**Contexte.** Le foyer du lycée installe une borne de jeux. Le premier jeu est un Puissance 4 qu'on peut jouer à deux ou contre l'ordinateur. Le projet en écrit le moteur : la grille, la chute des pions, la détection des alignements, et un adversaire informatique simple mais qui ne rate jamais un coup gagnant.
 
-La grille a 6 lignes et 7 colonnes : la ligne 0 est en haut, la ligne 5 en bas. Une case contient `"."` (vide), `"X"` ou `"O"`. Un pion joué dans une colonne tombe dans la case vide la plus basse.
+**Les données** : la grille a 6 lignes et 7 colonnes ; la ligne 0 est en haut, la ligne 5 en bas. Une case contient `"."` (vide), `"X"` ou `"O"`. Un pion joué dans une colonne tombe dans la case vide la plus basse. Une partie enregistrée est la liste des colonnes jouées, `"X"` commençant : `[3, 3, 4, 4, 5, 5, 6]`.
 
-**Objectifs**
-- `grille_vide()`.
-- `jouer(grille, col, pion)` : fait tomber le pion et renvoie la ligne où il s'arrête, ou `-1` (sans rien modifier) si la colonne est pleine ou n'existe pas.
-- `aligne(grille, l, c)` : `True` si le pion de la case `(l, c)` fait partie d'un alignement d'au moins 4 pions identiques (horizontal, vertical ou diagonal).
-- `gagnant(grille)` : `"X"`, `"O"` ou `None`.
-- `colonnes_jouables(grille)` : la liste des colonnes non pleines.
-- `coup_gagnant(grille, pion)` : la première colonne (de gauche à droite) où `pion` gagne immédiatement, ou `-1`, **sans modifier** la grille.
-- `coup_ordinateur(grille, pion)` : gagner si possible ; sinon bloquer un coup gagnant de l'adversaire ; sinon jouer la colonne jouable la plus proche du centre (ordre de préférence 3, 2, 4, 1, 5, 0, 6).
-- `partie(coups)` : rejoue une partie à partir de la liste des colonnes jouées, `"X"` commençant ; s'arrête au premier alignement et renvoie le tuple `(gagnant, nombre_de_coups_joues)` (`None` comme gagnant si personne n'a gagné).
+**Les fonctions du moteur**
+- `grille_vide()` : la grille d'une nouvelle partie.
+- `jouer(grille, col, pion)` : fait tomber un pion. Renvoie la ligne où il s'arrête, ou `-1` (sans rien modifier) si la colonne est pleine ou n'existe pas.
+- `aligne(grille, l, c)` : vérifie, après un coup, si le pion posé fait gagner. Renvoie `True` si le pion de la case `(l, c)` fait partie d'un alignement d'au moins 4 pions identiques (horizontal, vertical ou diagonal).
+- `gagnant(grille)` : utilisée pour vérifier une grille quelconque. Renvoie `"X"`, `"O"` ou `None`.
+- `colonnes_jouables(grille)` : les coups permis. Renvoie la liste des colonnes non pleines.
+- `coup_gagnant(grille, pion)` : repère une victoire immédiate. Renvoie la première colonne (de gauche à droite) où `pion` gagne en un coup, ou `-1`, **sans modifier** la grille.
+- `coup_ordinateur(grille, pion)` : le choix de l'ordinateur. Il gagne si c'est possible ; sinon il bloque un coup gagnant de l'adversaire ; sinon il joue la colonne jouable la plus proche du centre (ordre de préférence 3, 2, 4, 1, 5, 0, 6). Renvoie la colonne choisie.
+- `partie(coups)` : rejoue une partie enregistrée, pour les tests et le mode « revoir la partie ». S'arrête au premier alignement et renvoie le tuple `(gagnant, nombre_de_coups_joues)` (`None` comme gagnant si personne n'a gagné).
 
 <Indices>
 <Indice>

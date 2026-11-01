@@ -1374,18 +1374,18 @@ assert fusionner_intervalles([(1, 2), (3, 4)]) == [(1, 2), (3, 4)], "Séparés :
 <Enonce>
 ### Banc d'essai des tris
 
-Réaliser un banc d'essai qui mesure le travail de quatre algorithmes de tri, en comptant les **comparaisons entre deux éléments** de la liste.
+**Contexte.** Pour un exposé sur les algorithmes de tri, un groupe d'élèves veut montrer **chiffres à l'appui** qu'ils ne se valent pas : certains brillent sur une liste presque triée, d'autres sur une grande liste mélangée. Le projet est un banc d'essai qui trie une même liste avec quatre algorithmes et compte, pour chacun, le nombre de **comparaisons entre deux éléments** de la liste.
 
-Chaque fonction de tri renvoie le tuple `(liste_triee, comparaisons)`, sans modifier la liste reçue ni utiliser `sort` ou `sorted`. Les règles de comptage sont fixées pour que tout le monde trouve les mêmes nombres :
-- `selection(t)` : chaque comparaison faite pendant la recherche du minimum compte.
-- `insertion(t)` : chaque test `t[j - 1] > t[j]` compte, y compris celui qui arrête le recul d'un élément.
-- `bulles(t)` : le passage numéro `p` (à partir de 0) compare les paires d'indices `0` à `n - 2 - p` ; on s'arrête après un passage sans échange (ou quand il ne reste plus de paire).
-- `fusion(t)` : tri fusion récursif (couper en `t[:m]` et `t[m:]` avec `m = len(t) // 2`) ; chaque comparaison de la fusion compte.
+**Règles communes** : chaque fonction de tri renvoie le tuple `(liste_triee, comparaisons)`, sans modifier la liste reçue ni utiliser `sort` ou `sorted`. Le comptage suit des règles fixées, pour que tous les groupes trouvent les mêmes nombres.
 
-**Autres objectifs**
-- `profil(t)` : le dictionnaire `{"bulles": …, "fusion": …, "insertion": …, "sélection": …}` des comparaisons de chaque tri sur `t`.
-- `plus_econome(t)` : le nom de l'algorithme qui fait le moins de comparaisons (le premier dans l'ordre alphabétique en cas d'égalité).
-- `liste_test(n, sorte)` : une liste de `n` entiers de 0 à `n - 1`, `sorte` valant `"triee"`, `"inverse"` ou `"melangee"` (pour cette dernière, `random.Random(n).shuffle` sur la liste triée).
+**Les fonctions du banc d'essai**
+- `selection(t)` : tri par sélection ; chaque comparaison faite pendant la recherche du minimum compte.
+- `insertion(t)` : tri par insertion ; chaque test `t[j - 1] > t[j]` compte, y compris celui qui arrête le recul d'un élément.
+- `bulles(t)` : tri à bulles ; le passage numéro `p` (à partir de 0) compare les paires d'indices `0` à `n - 2 - p`, et l'on s'arrête après un passage sans échange (ou quand il ne reste plus de paire).
+- `fusion(t)` : tri fusion récursif ; la liste est coupée en `t[:m]` et `t[m:]` avec `m = len(t) // 2`, et chaque comparaison faite pendant la fusion compte.
+- `profil(t)` : le tableau présenté dans l'exposé. Renvoie le dictionnaire `{"bulles": …, "fusion": …, "insertion": …, "sélection": …}` des comparaisons de chaque tri sur `t`.
+- `plus_econome(t)` : la conclusion de l'expérience. Renvoie le nom de l'algorithme qui fait le moins de comparaisons sur `t` (le premier dans l'ordre alphabétique en cas d'égalité).
+- `liste_test(n, sorte)` : fabrique les listes de l'expérience, toujours les mêmes pour pouvoir comparer. Renvoie une liste de `n` entiers de 0 à `n - 1`, `sorte` valant `"triee"`, `"inverse"` ou `"melangee"` (pour cette dernière, `random.Random(n).shuffle` sur la liste triée).
 
 <Indices>
 <Indice>
@@ -1545,17 +1545,17 @@ assert not re.search(r"\bsorted\s*\(|\.sort\s*\(", PROGRAMME), "Sans sort ni sor
 <Enonce>
 ### Catalogue de la bibliothèque
 
-Le catalogue d'une bibliothèque range ses titres par ordre alphabétique « bibliothécaire » : sans tenir compte des majuscules, des accents ni de l'article du début (`Le`, `La`, `Les`, `L'`). Ainsi « L'Étranger » se range comme `etranger`.
+**Contexte.** Le CDI fusionne son catalogue avec celui d'un collège voisin et veut un outil de recherche rapide. Les documentalistes rangent les titres par ordre alphabétique « bibliothécaire » : sans tenir compte des majuscules, des accents ni de l'article du début (`Le`, `La`, `Les`, `L'`). Ainsi « L'Étranger » se range à la lettre E, comme `etranger`. Le projet écrit les outils du catalogue, **sans `sort` ni `sorted`**.
 
-Réaliser les outils du catalogue, **sans `sort` ni `sorted`**.
+**Les données** : un catalogue est une liste de titres (des textes), par exemple `["Bel-Ami", "Candide", "L'Étranger", "Germinal"]`.
 
-**Objectifs**
-- `cle(titre)` : la clé de rangement : en minuscules, accents retirés (`àâäéèêëîïôöùûüç` deviennent `aaaeeeeiioouuuc`), article de tête retiré (`le `, `la `, `les `, `l'`).
-- `trier(titres)` : une nouvelle liste triée par clé, **stable** (deux titres de même clé gardent leur ordre).
-- `fusionner(a, b)` : fusionne deux catalogues triés en un catalogue trié ; un titre de `b` dont la clé existe déjà dans `a` n'est pas ajouté.
-- `chercher(catalogue, titre)` : l'indice du titre de même clé dans un catalogue trié, ou `-1`, par **recherche dichotomique**.
-- `commencant_par(catalogue, debut)` : la liste des titres dont la clé commence par `cle(debut)`, en trouvant le premier par dichotomie puis en avançant.
-- `doublons(titres)` : la liste triée des clés partagées par plusieurs titres.
+**Les fonctions du catalogue**
+- `cle(titre)` : la clé de rangement d'un titre, utilisée par toutes les autres fonctions pour comparer. Renvoie le titre en minuscules, accents retirés (`àâäéèêëîïôöùûüç` deviennent `aaaeeeeiioouuuc`), article de tête retiré (`le `, `la `, `les `, `l'`).
+- `trier(titres)` : range un lot de nouveaux titres. Renvoie une nouvelle liste triée par clé, **stable** (deux titres de même clé gardent leur ordre).
+- `fusionner(a, b)` : réunit les deux catalogues triés. Renvoie le catalogue fusionné, trié ; un titre de `b` dont la clé existe déjà dans `a` n'est pas ajouté.
+- `chercher(catalogue, titre)` : la recherche d'un élève qui connaît le titre exact. Renvoie l'indice du titre de même clé dans le catalogue trié, ou `-1`, par **recherche dichotomique**.
+- `commencant_par(catalogue, debut)` : la recherche pendant la frappe, quand seul le début du titre est tapé. Renvoie la liste des titres dont la clé commence par `cle(debut)`, en trouvant le premier par dichotomie puis en avançant.
+- `doublons(titres)` : signale les livres présents en double après la fusion. Renvoie la liste triée des clés partagées par plusieurs titres.
 
 <Indices>
 <Indice>

@@ -1200,20 +1200,22 @@ assert premier_tour(["Z"]) == ("élu", "Z"), "Un seul bulletin."
 <Enonce>
 ### Logiciel de médiathèque
 
-Réaliser le logiciel de prêt d'une médiathèque. Toutes les données tiennent dans un dictionnaire `bib` :
+**Contexte.** La médiathèque de la commune abandonne ses fiches cartonnées pour un logiciel de prêt. Les bibliothécaires y enregistrent les livres et les adhérents, puis les prêts et les retours. Le logiciel applique le règlement (3 livres au plus, amende en cas de retard) et produit les listes affichées à l'accueil.
+
+**Les données** : toute la médiathèque tient dans un dictionnaire `bib` :
 - `bib["livres"]` associe un ISBN à un dictionnaire `{"titre": …, "auteur": …, "exemplaires": …, "disponibles": …}` ;
-- `bib["adherents"]` associe un nom à un dictionnaire `{"emprunts": …, "amende": …}`, où `emprunts` associe l'ISBN de chaque livre emprunté au jour de l'emprunt (un entier) ;
+- `bib["adherents"]` associe un nom à un dictionnaire `{"emprunts": …, "amende": …}`, où `emprunts` associe l'ISBN de chaque livre emprunté au jour de l'emprunt (un entier : le numéro du jour) ;
 - `bib["historique"]` est la liste des ISBN de tous les prêts effectués, dans l'ordre.
 
-**Objectifs**
-- `creer()` : une médiathèque vide.
-- `ajouter_livre(bib, isbn, titre, auteur, n)` : ajoute `n` exemplaires (à un livre existant, ou à un nouveau livre).
+**Les fonctions du logiciel**
+- `creer()` : une médiathèque vide, au premier lancement.
+- `ajouter_livre(bib, isbn, titre, auteur, n)` : enregistre un achat de `n` exemplaires, pour un livre nouveau ou déjà présent.
 - `inscrire(bib, nom)` : inscrit un adhérent (sans effet s'il l'est déjà).
-- `emprunter(bib, nom, isbn, jour)` : renvoie `"ok"` si le prêt a lieu, sinon le motif du refus, testé dans cet ordre : `"inconnu"` (adhérent ou livre inconnu), `"amende"` (une amende reste à payer), `"limite"` (déjà 3 livres en cours), `"deja"` (ce livre est déjà emprunté par l'adhérent), `"indisponible"` (aucun exemplaire libre).
-- `rendre(bib, nom, isbn, jour)` : rend le livre et renvoie l'amende ajoutée : 0,20 € par jour au-delà de 21 jours de prêt (arrondie au centime).
-- `payer(bib, nom)` : remet l'amende à 0 et renvoie la somme payée.
-- `disponibles(bib)` : la liste triée des titres dont au moins un exemplaire est libre.
-- `top(bib, k)` : les `k` titres les plus empruntés (nombre décroissant, puis ordre alphabétique).
+- `emprunter(bib, nom, isbn, jour)` : appelée au comptoir lors d'un prêt. Renvoie `"ok"` si le prêt a lieu (et met à jour `bib`), sinon le motif du refus à annoncer à l'adhérent, testé dans cet ordre : `"inconnu"` (adhérent ou livre inconnu), `"amende"` (une amende reste à payer), `"limite"` (déjà 3 livres en cours), `"deja"` (il a déjà ce livre), `"indisponible"` (aucun exemplaire libre).
+- `rendre(bib, nom, isbn, jour)` : appelée au retour d'un livre. Remet l'exemplaire en rayon et renvoie l'amende ajoutée au compte de l'adhérent : 0,20 € par jour au-delà de 21 jours de prêt (arrondie au centime).
+- `payer(bib, nom)` : l'adhérent règle son amende. Remet l'amende à 0 et renvoie la somme payée.
+- `disponibles(bib)` : la liste affichée à l'accueil. Renvoie la liste triée des titres dont au moins un exemplaire est libre.
+- `top(bib, k)` : la vitrine « les plus empruntés ». Renvoie les `k` titres les plus empruntés (nombre décroissant, puis ordre alphabétique).
 
 <Indices>
 <Indice>
@@ -1350,17 +1352,19 @@ assert top(b, 2) == ["Candide", "Dune"] and top(b, 10) == ["Candide", "Dune", "U
 <Enonce>
 ### Réseau social
 
-Réaliser le cœur d'un réseau social. Le réseau est un dictionnaire `{"amis": …, "messages": …}` : `amis` associe chaque membre à la **liste** de ses amis (l'amitié est réciproque), `messages` est la liste des tuples `(instant, auteur, texte)` publiés.
+**Contexte.** La classe de NSI crée « Terrier », un petit réseau social interne au lycée. Le projet en écrit le cœur, sans interface : les liens d'amitié, les messages, les suggestions d'amis, le fil d'actualité de chaque membre et les sujets à la mode.
 
-**Objectifs**
-- `creer()` : un réseau vide.
-- `ajouter_amitie(r, a, b)` et `retirer_amitie(r, a, b)` : dans les deux sens, sans doublon, en créant les membres absents.
-- `suggestions(r, a)` : les amis d'amis de `a` qui ne sont ni `a` ni ses amis, triés par nombre d'amis communs décroissant puis par ordre alphabétique.
-- `publier(r, auteur, texte, instant)` : ajoute un message.
-- `hashtags(texte)` : la liste triée, sans doublon, des mots qui commencent par `#`, en minuscules et sans la ponctuation finale (`.`, `,`, `!`, `?`) : `"Vive la #NSI ! #nsi, #Python."` donne `["#nsi", "#python"]`.
-- `fil(r, membre, k)` : les `k` messages les plus récents écrits par le membre ou par ses amis, du plus récent au plus ancien, sous la forme `"auteur : texte"`.
-- `tendances(r, k)` : les `k` hashtags les plus utilisés dans tous les messages (un hashtag compte une fois par message), du plus fréquent au moins fréquent puis par ordre alphabétique.
-- `separation(r, a, b)` : le nombre minimal de liens d'amitié pour aller de `a` à `b` (0 si `a == b`, -1 s'il n'existe aucun chemin).
+**Les données** : le réseau est un dictionnaire `{"amis": …, "messages": …}` : `amis` associe chaque membre à la **liste** de ses amis (l'amitié est réciproque), `messages` est la liste des tuples `(instant, auteur, texte)` publiés, l'instant étant un entier qui grandit avec le temps. Exemple de message : `(5, "Léa", "Projet terminé ! #nsi")`.
+
+**Les fonctions du réseau**
+- `creer()` : un réseau vide, au lancement.
+- `ajouter_amitie(r, a, b)` et `retirer_amitie(r, a, b)` : appelées quand deux membres deviennent amis ou se retirent de leurs listes. Mettent à jour les deux listes, sans doublon, en créant les membres absents.
+- `suggestions(r, a)` : la rubrique « personnes à connaître ». Renvoie les amis d'amis de `a` qui ne sont ni `a` ni déjà ses amis, triés par nombre d'amis communs décroissant puis par ordre alphabétique.
+- `publier(r, auteur, texte, instant)` : enregistre un nouveau message.
+- `hashtags(texte)` : extrait les sujets d'un message. Renvoie la liste triée, sans doublon, des mots qui commencent par `#`, en minuscules et sans la ponctuation finale (`.`, `,`, `!`, `?`) : `"Vive la #NSI ! #nsi, #Python."` donne `["#nsi", "#python"]`.
+- `fil(r, membre, k)` : la page d'accueil d'un membre. Renvoie les `k` messages les plus récents écrits par lui ou par ses amis, du plus récent au plus ancien, sous la forme `"auteur : texte"`.
+- `tendances(r, k)` : l'encadré « tendances ». Renvoie les `k` hashtags les plus utilisés dans tous les messages (un hashtag compte une fois par message), du plus fréquent au moins fréquent puis par ordre alphabétique.
+- `separation(r, a, b)` : la curiosité « degrés de séparation ». Renvoie le nombre minimal de liens d'amitié pour aller de `a` à `b` (0 si `a == b`, -1 s'il n'existe aucun chemin).
 
 <Indices>
 <Indice>
