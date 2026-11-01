@@ -179,6 +179,9 @@ export const SHEET_FOX_ASSIGNMENTS: Record<string, SheetFoxArt> = {
 
 /** Fiches dont le badge est généré par scripts/badge-illustrations.mjs (renard + accessoire). */
 export const GENERATED_SHEET_BADGES = new Set([
+  "premiere_exercices",
+  "premiere_exercices_poo",
+  "terminale_exercices_fondamentaux",
   "paul-bases-python",
   "paul-bases-python-input",
   "premiere_projet",

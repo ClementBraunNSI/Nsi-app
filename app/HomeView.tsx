@@ -290,7 +290,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
 
           <div className="home-stage">
             <SplashText compact className="home-splash" />
-            <AnimatedFox className="home-stage-fox" />
+            <AnimatedFox className="home-stage-fox" seasonal />
             {dashboard ? (
               <>
                 {dashboard.badges[0] ? (

@@ -1,24 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FOX as C } from "@/components/home/fox-palette";
+import type { SeasonArt } from "@/components/home/seasons";
+import { seasonAt, seasonOverride, SEASONS, type Season, type SeasonId } from "@/lib/seasons";
 
 /**
  * Le renard assis de l'accueil (tracé d'après fox_2.png), animé au hasard : il remue la queue, regarde autour de lui,
  * penche la tête, bouge une oreille, cligne des yeux, et de temps en temps se redresse pour s'ébouriffer.
  * Un clic le fait s'ébrouer. Rien ne bouge si l'appareil demande moins d'animations ; tout s'arrête hors de l'écran.
+ * Avec `seasonal`, il s'habille selon le moment de l'année (lib/seasons.ts) : le décor est choisi et chargé dans le
+ * navigateur après l'affichage, et `?saison=noel` dans l'adresse force une période (`?saison=aucune` l'enlève).
  */
-
-const C = {
-  o: "#E4742B",
-  ol: "#EE973B",
-  od: "#D5612D",
-  r: "#B4432B",
-  rc: "#C24F2E",
-  k: "#281E1E",
-  cr: "#F9F6E3",
-  g: "#DAD6CA",
-  y: "#FEE8B6",
-};
 
 /** Touffes de poils qui s'envolent quand il s'ébroue : position de départ et direction. */
 const TUFTS = [
@@ -33,7 +26,16 @@ const TUFTS = [
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
 const pickSide = () => (Math.random() < 0.5 ? -1 : 1);
 
-export function AnimatedFox({ className, label = "Le renard de la tanière" }: { className?: string; label?: string }) {
+export function AnimatedFox({
+  className,
+  label = "Le renard de la tanière",
+  seasonal = false,
+}: {
+  className?: string;
+  label?: string;
+  /** `true` : la période du jour ; un identifiant : cette période-là. */
+  seasonal?: boolean | SeasonId;
+}) {
   const svgRef = useRef<SVGSVGElement>(null);
   const foxRef = useRef<SVGGElement>(null);
   const tailRef = useRef<SVGGElement>(null);
@@ -44,6 +46,24 @@ export function AnimatedFox({ className, label = "Le renard de la tanière" }: {
   const shadowRef = useRef<SVGEllipseElement>(null);
   const tuftsRef = useRef<(SVGPolygonElement | null)[]>([]);
   const shakeNow = useRef<() => void>(() => undefined);
+  const [season, setSeason] = useState<{ period: Season; art: SeasonArt } | null>(null);
+
+  useEffect(() => {
+    if (!seasonal) return;
+    const forced = seasonal === true ? seasonOverride(window.location.search) : seasonal;
+    if (forced === "aucune") return;
+    const period = forced ? SEASONS.find((candidate) => candidate.id === forced)! : seasonAt(new Date());
+    let cancelled = false;
+    import("@/components/home/seasons")
+      .then(({ loadSeasonArt }) => loadSeasonArt(period.id))
+      .then((art) => {
+        if (!cancelled) setSeason({ period, art });
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [seasonal]);
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -66,6 +86,8 @@ export function AnimatedFox({ className, label = "Le renard de la tanière" }: {
 
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
+      // Le décor de saison se met en pause hors de l'écran.
+      svg.toggleAttribute("data-calm", !visible);
     });
     observer.observe(svg);
 
@@ -237,6 +259,9 @@ export function AnimatedFox({ className, label = "Le renard de la tanière" }: {
   }, []);
 
   const pivot = (origin: string) => ({ transformBox: "fill-box" as const, transformOrigin: origin });
+  // Pivots en coordonnées de la scène : un accessoire ajouté au groupe ne les déplace pas.
+  const at = (x: number, y: number) => ({ transformBox: "view-box" as const, transformOrigin: `${x}px ${y}px` });
+  const art = season?.art;
 
   return (
     <svg
@@ -245,7 +270,7 @@ export function AnimatedFox({ className, label = "Le renard de la tanière" }: {
       width={360}
       height={360}
       role="img"
-      aria-label={label}
+      aria-label={season ? `${label} (${season.period.label})` : label}
       className={className}
       onClick={() => shakeNow.current()}
     >
@@ -254,9 +279,10 @@ export function AnimatedFox({ className, label = "Le renard de la tanière" }: {
         fill={C.y}
       />
       <ellipse ref={shadowRef} cx={888} cy={1560} rx={532} ry={38} fill={C.g} style={pivot("50% 50%")} />
+      {art?.back}
 
-      <g ref={foxRef} style={pivot("69% 100%")}>
-        <g ref={tailRef} style={pivot("75% 82%")}>
+      <g ref={foxRef} style={at(1048, 1556)}>
+        <g ref={tailRef} style={at(670, 1481)}>
           <path d="M400 1140C420 1180 450 1210 485 1232L557 1266L523 1266L523 1316L435 1328L465 1410C400 1395 355 1350 339 1305C345 1250 365 1195 400 1140Z" fill={C.cr} />
           <polygon points="523,1266 557,1266 670,1316 523,1316" fill={C.o} />
           <path d="M435 1328L523 1316L670 1316L670 1497C600 1460 520 1420 465 1410Z" fill={C.od} />
@@ -275,13 +301,15 @@ export function AnimatedFox({ className, label = "Le renard de la tanière" }: {
         <polygon points="1215,740 1160,768 1272,958" fill={C.o} />
         <polygon points="944,770 1023,810 1080,810 1160,768 1175,792 1098,832 1003,832 930,797" fill={C.g} />
         <polygon points="930,797 1003,832 1098,832 1175,792 1272,958 1270,965 1051,1188 830,965 838,942" fill={C.cr} />
+        {art?.body}
 
-        <g ref={headRef} style={pivot("50% 97%")}>
-          <g ref={earLRef} style={pivot("65% 85%")}>
+        <g ref={headRef} style={at(1050, 799)}>
+          {art?.headBack}
+          <g ref={earLRef} style={at(925, 520)}>
             <path d="M818 292L983 437L848 560Q818 430 818 292Z" fill={C.o} />
             <path d="M835 337Q900 425 947 468L880 530Q852 450 835 337Z" fill={C.k} />
           </g>
-          <g ref={earRRef} style={pivot("37% 85%")}>
+          <g ref={earRRef} style={at(1180, 520)}>
             <path d="M1283 292L1119 437L1254 560Q1283 430 1283 292Z" fill={C.o} />
             <path d="M1266 337Q1201 425 1155 468L1222 530Q1249 450 1266 337Z" fill={C.k} />
           </g>
@@ -298,6 +326,7 @@ export function AnimatedFox({ className, label = "Le renard de la tanière" }: {
           <polygon points="1366,662 1240,634 1122,700 1102,745 1080,772 1051,797 1080,812" fill={C.cr} />
           <path d="M1030 762L1051 758L1072 762L1080 772Q1066 790 1051 797Q1036 790 1023 772Z" fill={C.k} />
           <polygon points="1023,810 1051,797 1080,810 1072,815 1030,815" fill={C.k} />
+          {art?.head}
         </g>
       </g>
 
@@ -313,6 +342,7 @@ export function AnimatedFox({ className, label = "Le renard de la tanière" }: {
           style={pivot("50% 50%")}
         />
       ))}
+      {art?.front}
     </svg>
   );
 }

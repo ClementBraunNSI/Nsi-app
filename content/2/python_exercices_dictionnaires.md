@@ -13,925 +13,1495 @@ groupe: dictionnaires
 groupeTitre: "Dictionnaires"
 ---
 
+Les exercices vont de **Introduction** à **Expert**, puis viennent les **mini-projets**, pour qui avance vite.
+Chaque exercice propose des indices à ouvrir un par un : le dernier donne le pseudo-code, qui reste à traduire en Python.
+Les noms de variables et de fonctions demandés servent aux tests du bouton **Vérifier** : les garder tels quels.
+
 <ExerciseTabs courseId="les-dictionnaires-python" courseTitle="Les dictionnaires">
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 1 : INTRODUCTION (1.1 à 1.6)      */}
-  {/* ========================================== */}
+<ExerciseSection id="1nsi-dicos-1-1" label="1.1 [Introduction] - Prix d'un article" type="python">
+<Enonce>
+### Prix d'un article
 
-  <ExerciseSection id="dict-1-1" label="1.1 [Introduction] - Création d'un dictionnaire" type="python">
-    <Enonce>
-    ### Exercice 1.1 [Introduction] : Création d'un dictionnaire
-    **Écrire une fonction `creer_notes` qui renvoie le dictionnaire `{'Alice': 15, 'Bob': 12}`.**
+`catalogue` est un dictionnaire qui associe à chaque article son prix, par exemple `{"pomme": 0.5, "pain": 1.2}`.
 
-    <Correction>
-    ```python
-    def creer_notes() -> dict:
-        return {'Alice': 15, 'Bob': 12}
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'creer_notes' in locals(), "La fonction 'creer_notes' n'est pas définie."
-assert creer_notes() == {'Alice': 15, 'Bob': 12}
-    ```
-    </Verification>
-  </ExerciseSection>
+Écrire une fonction `prix_de(catalogue, article)` qui renvoie le prix de l'article, ou `None` s'il n'est pas au catalogue.
 
-  <ExerciseSection id="dict-1-2" label="1.2 [Introduction] - Lire une valeur" type="python">
-    <Enonce>
-    ### Exercice 1.2 [Introduction] : Lire une valeur
-    **Écrire une fonction `lire_valeur` qui prend un dictionnaire `d` et une clé `cle`, et renvoie la valeur associée.**
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def lire_valeur(d: dict, cle):
-        return d[cle]
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'lire_valeur' in locals(), "La fonction 'lire_valeur' n'est pas définie."
-notes = {'Alice': 15, 'Bob': 12}
-assert lire_valeur(notes, 'Alice') == 15
-assert lire_valeur(notes, 'Bob') == 12
-    ```
-    </Verification>
-  </ExerciseSection>
+`catalogue[article]` provoque une erreur si l'article est absent : tester d'abord `article in catalogue`.
 
-  <ExerciseSection id="dict-1-3" label="1.3 [Introduction] - Ajouter une paire" type="python">
-    <Enonce>
-    ### Exercice 1.3 [Introduction] : Ajouter une paire
-    **Écrire une fonction `ajouter_paire` qui prend un dictionnaire `d`, une clé et une valeur, ajoute la paire clé-valeur dans `d`, et renvoie `d`.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def ajouter_paire(d: dict, cle, valeur) -> dict:
-        d[cle] = valeur
-        return d
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'ajouter_paire' in locals(), "La fonction 'ajouter_paire' n'est pas définie."
-d = {'a': 1}
-assert ajouter_paire(d, 'b', 2) == {'a': 1, 'b': 2}
-assert d == {'a': 1, 'b': 2}
-    ```
-    </Verification>
-  </ExerciseSection>
+La méthode `catalogue.get(article)` renvoie déjà `None` pour une clé absente.
 
-  <ExerciseSection id="dict-1-4" label="1.4 [Introduction] - Présence d'une clé" type="python">
-    <Enonce>
-    ### Exercice 1.4 [Introduction] : Présence d'une clé
-    **Écrire une fonction `contient_cle` qui prend un dictionnaire `d` et une clé, et renvoie `True` si la clé est présente, `False` sinon (avec l'opérateur `in`).**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def contient_cle(d: dict, cle) -> bool:
-        return cle in d
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'contient_cle' in locals(), "La fonction 'contient_cle' n'est pas définie."
-d = {'x': 1, 'y': 2}
-assert contient_cle(d, 'x') is True
-assert contient_cle(d, 'z') is False
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION prix_de(catalogue, article)
+    SI article est une clé de catalogue ALORS RENVOYER catalogue[article]
+    RENVOYER None
+```
 
-  <ExerciseSection id="dict-1-5" label="1.5 [Introduction] - Nombre de clés" type="python">
-    <Enonce>
-    ### Exercice 1.5 [Introduction] : Nombre de clés
-    **Écrire une fonction `nb_cles` qui prend un dictionnaire et renvoie son nombre de clés (avec `len()`).**
+</Indice>
+</Indices>
 
-    <Correction>
-    ```python
-    def nb_cles(d: dict) -> int:
-        return len(d)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'nb_cles' in locals(), "La fonction 'nb_cles' n'est pas définie."
-assert nb_cles({'a': 1, 'b': 2, 'c': 3}) == 3
-assert nb_cles({}) == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+<Correction>
 
-  <ExerciseSection id="dict-1-6" label="1.6 [Introduction] - Liste des clés" type="python">
-    <Enonce>
-    ### Exercice 1.6 [Introduction] : Liste des clés
-    **Écrire une fonction `liste_cles` qui prend un dictionnaire et renvoie la liste de ses clés (avec une boucle `for` sur `d`, sans utiliser `list(d.keys())`).**
+```python
+def prix_de(catalogue: dict, article: str):
+    if article in catalogue:
+        return catalogue[article]
+    return None
+```
 
-    <Correction>
-    ```python
-    def liste_cles(d: dict) -> list:
-        cles = []
-        for cle in d:
-            cles.append(cle)
-        return cles
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'liste_cles' in locals(), "La fonction 'liste_cles' n'est pas définie."
-assert sorted(liste_cles({'b': 2, 'a': 1})) == ['a', 'b']
-    ```
-    </Verification>
-  </ExerciseSection>
+</Correction>
+</Enonce>
+<Verification>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 2 : FACILE (2.1 à 2.6)            */}
-  {/* ========================================== */}
+```python
+cat = {"pomme": 0.5, "pain": 1.2}
+assert prix_de(cat, "pain") == 1.2 and prix_de(cat, "pomme") == 0.5, "Articles présents."
+assert prix_de(cat, "lait") is None and prix_de({}, "pain") is None, "Article absent : None."
+```
 
-  <ExerciseSection id="dict-2-1" label="2.1 [Facile] - Ajouter un élève" type="python">
-    <Enonce>
-    ### Exercice 2.1 [Facile] : Ajouter un élève
-    **Écrire une fonction `ajouter_eleve` qui prend un dictionnaire `notes` (nom : moyenne), un `nom` et une `moyenne`. Si le nom n'existe pas encore, l'ajoute et renvoie `True` ; sinon renvoie `False` sans modifier la moyenne existante.**
+</Verification>
+</ExerciseSection>
 
-    <Correction>
-    ```python
-    def ajouter_eleve(notes: dict, nom: str, moyenne: int) -> bool:
-        if nom in notes:
-            return False
-        notes[nom] = moyenne
-        return True
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'ajouter_eleve' in locals(), "La fonction 'ajouter_eleve' n'est pas définie."
-notes = {'Alice': 15}
-assert ajouter_eleve(notes, 'Eve', 16) is True
-assert notes['Eve'] == 16
-assert ajouter_eleve(notes, 'Alice', 0) is False
-assert notes['Alice'] == 15
-    ```
-    </Verification>
-  </ExerciseSection>
+<ExerciseSection id="1nsi-dicos-1-2" label="1.2 [Introduction] - Fiche d'identité" type="python">
+<Enonce>
+### Fiche d'identité
 
-  <ExerciseSection id="dict-2-2" label="2.2 [Facile] - Modifier une moyenne" type="python">
-    <Enonce>
-    ### Exercice 2.2 [Facile] : Modifier une moyenne
-    **Écrire une fonction `modifier_moyenne` qui prend un dictionnaire `notes`, un `nom` et une `nouvelle_moyenne`. Met à jour la moyenne si l'élève existe (`True`), sinon renvoie `False`.**
+Écrire une fonction `fiche(nom, age, ville)` qui renvoie un dictionnaire avec les clés `"nom"`, `"age"` et `"ville"`.
 
-    <Correction>
-    ```python
-    def modifier_moyenne(notes: dict, nom: str, nouvelle_moyenne: int) -> bool:
-        if nom not in notes:
-            return False
-        notes[nom] = nouvelle_moyenne
-        return True
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'modifier_moyenne' in locals(), "La fonction 'modifier_moyenne' n'est pas définie."
-notes = {'Alice': 15, 'Bob': 10}
-assert modifier_moyenne(notes, 'Alice', 18) is True
-assert notes['Alice'] == 18
-assert modifier_moyenne(notes, 'Inconnu', 20) is False
-    ```
-    </Verification>
-  </ExerciseSection>
+Exemple : `fiche("Roux", 4, "Lyon")` renvoie `{"nom": "Roux", "age": 4, "ville": "Lyon"}`.
 
-  <ExerciseSection id="dict-2-3" label="2.3 [Facile] - Élèves au-dessus d'un seuil" type="python">
-    <Enonce>
-    ### Exercice 2.3 [Facile] : Élèves au-dessus d'un seuil
-    **Écrire une fonction `eleves_mention` qui prend un dictionnaire `notes` et un `seuil`, et renvoie la liste des noms d'élèves dont la moyenne est ≥ `seuil`.**
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def eleves_mention(notes: dict, seuil: int) -> list:
-        resultat = []
-        for eleve in notes:
-            if notes[eleve] >= seuil:
-                resultat.append(eleve)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'eleves_mention' in locals(), "La fonction 'eleves_mention' n'est pas définie."
-notes = {'Alice': 15, 'Bob': 10}
-assert 'Alice' in eleves_mention(notes, 12)
-assert 'Bob' not in eleves_mention(notes, 12)
-    ```
-    </Verification>
-  </ExerciseSection>
+Un dictionnaire s'écrit entre accolades, avec des paires `clé: valeur` séparées par des virgules.
 
-  <ExerciseSection id="dict-2-4" label="2.4 [Facile] - Voitures par couleur" type="python">
-    <Enonce>
-    ### Exercice 2.4 [Facile] : Voitures par couleur
-    Un dictionnaire `voitures` associe chaque modèle à un sous-dictionnaire `{'prix': ..., 'couleur': ...}`.
-    **Écrire une fonction `voitures_par_couleur` qui renvoie la liste des modèles de la couleur demandée.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def voitures_par_couleur(voitures: dict, couleur: str) -> list:
-        resultat = []
-        for modele, infos in voitures.items():
-            if infos['couleur'] == couleur:
-                resultat.append(modele)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'voitures_par_couleur' in locals(), "La fonction 'voitures_par_couleur' n'est pas définie."
-voitures = {
-    'A': {'prix': 10000, 'couleur': 'rouge'},
-    'B': {'prix': 20000, 'couleur': 'bleu'},
-    'C': {'prix': 15000, 'couleur': 'rouge'}
-}
-assert set(voitures_par_couleur(voitures, 'rouge')) == {'A', 'C'}
-    ```
-    </Verification>
-  </ExerciseSection>
+Les clés sont des textes : elles prennent des guillemets.
 
-  <ExerciseSection id="dict-2-5" label="2.5 [Facile] - Voitures dans un budget" type="python">
-    <Enonce>
-    ### Exercice 2.5 [Facile] : Voitures dans un budget
-    **Écrire une fonction `voitures_budget` qui prend un dictionnaire `voitures` (modèle : `{'prix': ...}`) et un `budget`, et renvoie la liste des modèles dont le prix est ≤ `budget`.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def voitures_budget(voitures: dict, budget: int) -> list:
-        resultat = []
-        for modele, infos in voitures.items():
-            if infos['prix'] <= budget:
-                resultat.append(modele)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'voitures_budget' in locals(), "La fonction 'voitures_budget' n'est pas définie."
-voitures = {
-    'A': {'prix': 10000, 'couleur': 'rouge'},
-    'B': {'prix': 20000, 'couleur': 'bleu'},
-    'C': {'prix': 15000, 'couleur': 'rouge'}
-}
-assert set(voitures_budget(voitures, 16000)) == {'A', 'C'}
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION fiche(nom, age, ville)
+    RENVOYER le dictionnaire "nom" → nom, "age" → age, "ville" → ville
+```
 
-  <ExerciseSection id="dict-2-6" label="2.6 [Facile] - Produits en rupture" type="python">
-    <Enonce>
-    ### Exercice 2.6 [Facile] : Produits en rupture
-    **Écrire une fonction `produits_en_rupture` qui prend un dictionnaire `inventaire` (produit : `{'prix': ..., 'stock': ...}`) et renvoie la liste des produits dont le stock est ≤ 10.**
+</Indice>
+</Indices>
 
-    <Correction>
-    ```python
-    def produits_en_rupture(inventaire: dict) -> list:
-        rupture = []
-        for produit, infos in inventaire.items():
-            if infos['stock'] <= 10:
-                rupture.append(produit)
-        return rupture
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'produits_en_rupture' in locals(), "La fonction 'produits_en_rupture' n'est pas définie."
-inventaire = {
-    'pommes': {'prix': 2.5, 'stock': 50},
-    'oranges': {'prix': 3.0, 'stock': 5}
-}
-assert 'oranges' in produits_en_rupture(inventaire)
-assert 'pommes' not in produits_en_rupture(inventaire)
-    ```
-    </Verification>
-  </ExerciseSection>
+<Correction>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 3 : MOYEN (3.1 à 3.6)             */}
-  {/* ========================================== */}
+```python
+def fiche(nom: str, age: int, ville: str) -> dict:
+    return {"nom": nom, "age": age, "ville": ville}
+```
 
-  <ExerciseSection id="dict-3-1" label="3.1 [Moyen] - Livres disponibles" type="python">
-    <Enonce>
-    ### Exercice 3.1 [Moyen] : Livres disponibles
-    **Écrire une fonction `livres_disponibles` qui prend un dictionnaire `bibliotheque` (titre : `{'disponible': bool}`) et renvoie la liste des titres disponibles.**
+</Correction>
+</Enonce>
+<Verification>
 
-    <Correction>
-    ```python
-    def livres_disponibles(bibliotheque: dict) -> list:
-        resultat = []
-        for titre, infos in bibliotheque.items():
-            if infos['disponible']:
-                resultat.append(titre)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'livres_disponibles' in locals(), "La fonction 'livres_disponibles' n'est pas définie."
-bib = {'A': {'disponible': True}, 'B': {'disponible': False}}
-assert livres_disponibles(bib) == ['A']
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+assert fiche("Roux", 4, "Lyon") == {"nom": "Roux", "age": 4, "ville": "Lyon"}, "Fiche de Roux."
+assert fiche("Goupil", 7, "Metz")["age"] == 7, "La clé age contient l'âge."
+```
 
-  <ExerciseSection id="dict-3-2" label="3.2 [Moyen] - Emprunter un livre" type="python">
-    <Enonce>
-    ### Exercice 3.2 [Moyen] : Emprunter un livre
-    **Écrire une fonction `emprunter_livre` qui prend `bibliotheque` et un `titre`.**
-    - Livre trouvé et disponible : passe `disponible` à `False`, renvoie `"emprunte"`.
-    - Livre trouvé mais indisponible : renvoie `"deja_emprunte"`.
-    - Livre absent : renvoie `"introuvable"`.
+</Verification>
+</ExerciseSection>
 
-    <Correction>
-    ```python
-    def emprunter_livre(bibliotheque: dict, titre: str) -> str:
-        if titre not in bibliotheque:
-            return "introuvable"
-        if bibliotheque[titre]['disponible']:
-            bibliotheque[titre]['disponible'] = False
-            return "emprunte"
-        return "deja_emprunte"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'emprunter_livre' in locals(), "La fonction 'emprunter_livre' n'est pas définie."
-bib = {'A': {'disponible': True}, 'B': {'disponible': False}}
-assert emprunter_livre(bib, 'A') == "emprunte"
-assert bib['A']['disponible'] is False
-assert emprunter_livre(bib, 'B') == "deja_emprunte"
-assert emprunter_livre(bib, 'Z') == "introuvable"
-    ```
-    </Verification>
-  </ExerciseSection>
+<ExerciseSection id="1nsi-dicos-1-3" label="1.3 [Introduction] - Enregistrer une note" type="python">
+<Enonce>
+### Enregistrer une note
 
-  <ExerciseSection id="dict-3-3" label="3.3 [Moyen] - Contacts par ville" type="python">
-    <Enonce>
-    ### Exercice 3.3 [Moyen] : Contacts par ville
-    **Écrire une fonction `contacts_par_ville` qui prend un dictionnaire `contacts` (nom : `{'ville': ...}`) et une `ville`, et renvoie la liste des noms dans cette ville.**
+`notes` est un dictionnaire qui associe un élève à sa note.
 
-    <Correction>
-    ```python
-    def contacts_par_ville(contacts: dict, ville: str) -> list:
-        resultat = []
-        for nom, infos in contacts.items():
-            if infos['ville'] == ville:
-                resultat.append(nom)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'contacts_par_ville' in locals(), "La fonction 'contacts_par_ville' n'est pas définie."
-contacts = {
-    'Alice': {'telephone': '01', 'ville': 'Paris'},
-    'Bob': {'telephone': '02', 'ville': 'Lyon'}
-}
-assert contacts_par_ville(contacts, 'Paris') == ['Alice']
-    ```
-    </Verification>
-  </ExerciseSection>
+Écrire une fonction `enregistrer(notes, eleve, note)` qui ajoute la note de l'élève, ou la remplace s'il en avait déjà une. Elle modifie `notes` et ne renvoie rien.
 
-  <ExerciseSection id="dict-3-4" label="3.4 [Moyen] - Moyenne par matière" type="python">
-    <Enonce>
-    ### Exercice 3.4 [Moyen] : Moyenne par matière
-    Un dictionnaire `classe` associe chaque élève à un sous-dictionnaire `{matière: liste de notes}`.
-    **Écrire une fonction `moyenne_matiere` qui renvoie la moyenne arrondie à 2 décimales de l'élève dans la matière, ou `0` si l'élève ou la matière est absente.**
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def moyenne_matiere(classe: dict, eleve: str, matiere: str) -> float:
-        if eleve not in classe or matiere not in classe[eleve]:
-            return 0
-        notes = classe[eleve][matiere]
-        if not notes:
-            return 0
-        return round(sum(notes) / len(notes), 2)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'moyenne_matiere' in locals(), "La fonction 'moyenne_matiere' n'est pas définie."
-classe = {'Test': {'M1': [10, 20]}}
-assert moyenne_matiere(classe, 'Test', 'M1') == 15
-assert moyenne_matiere(classe, 'Test', 'M2') == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+`d[cle] = valeur` ajoute la clé si elle n'existe pas, et remplace la valeur sinon.
 
-  <ExerciseSection id="dict-3-5" label="3.5 [Moyen] - Ventes totales par mois" type="python">
-    <Enonce>
-    ### Exercice 3.5 [Moyen] : Ventes totales par mois
-    Un dictionnaire `ventes` associe chaque mois à un sous-dictionnaire `{produit: quantité vendue}`.
-    **Écrire une fonction `ventes_totales_mois` qui renvoie la somme des ventes du mois demandé, ou `0` si le mois est absent.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def ventes_totales_mois(ventes: dict, mois: str) -> int:
-        if mois not in ventes:
-            return 0
-        total = 0
-        for quantite in ventes[mois].values():
-            total += quantite
-        return total
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'ventes_totales_mois' in locals(), "La fonction 'ventes_totales_mois' n'est pas définie."
-ventes = {'J': {'A': 10, 'B': 5}, 'F': {'A': 5, 'B': 5}}
-assert ventes_totales_mois(ventes, 'J') == 15
-assert ventes_totales_mois(ventes, 'M') == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+Un dictionnaire passé à une fonction n'est pas copié : le modifier dans la fonction le modifie partout.
 
-  <ExerciseSection id="dict-3-6" label="3.6 [Moyen] - Valeur totale du stock" type="python">
-    <Enonce>
-    ### Exercice 3.6 [Moyen] : Valeur totale du stock
-    **Écrire une fonction `valeur_totale_stock` qui prend un dictionnaire `inventaire` (produit : `{'prix': ..., 'stock': ...}`) et renvoie la valeur totale du stock (somme de `prix × stock`).**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def valeur_totale_stock(inventaire: dict) -> float:
-        total = 0
-        for infos in inventaire.values():
-            total += infos['prix'] * infos['stock']
-        return total
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'valeur_totale_stock' in locals(), "La fonction 'valeur_totale_stock' n'est pas définie."
-inventaire = {
-    'pommes': {'prix': 2.5, 'stock': 50},
-    'oranges': {'prix': 3.0, 'stock': 5}
-}
-assert valeur_totale_stock(inventaire) == (2.5 * 50 + 3.0 * 5)
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION enregistrer(notes, eleve, note)
+    notes[eleve] ← note
+```
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 4 : AVANCÉ (4.1 à 4.6)            */}
-  {/* ========================================== */}
+</Indice>
+</Indices>
 
-  <ExerciseSection id="dict-4-1" label="4.1 [Avancé] - Ventes totales par produit" type="python">
-    <Enonce>
-    ### Exercice 4.1 [Avancé] : Ventes totales par produit
-    **Écrire une fonction `ventes_totales_produit` qui prend un dictionnaire `ventes` (mois : `{produit: quantité}`) et un `produit`, et renvoie le total vendu sur tous les mois.**
+<Correction>
 
-    <Correction>
-    ```python
-    def ventes_totales_produit(ventes: dict, produit: str) -> int:
-        total = 0
-        for mois in ventes:
-            if produit in ventes[mois]:
-                total += ventes[mois][produit]
-        return total
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'ventes_totales_produit' in locals(), "La fonction 'ventes_totales_produit' n'est pas définie."
-ventes = {'J': {'A': 10, 'B': 5}, 'F': {'A': 5, 'B': 5}}
-assert ventes_totales_produit(ventes, 'A') == 15
-    ```
-    </Verification>
-  </ExerciseSection>
+```python
+def enregistrer(notes: dict, eleve: str, note: float) -> None:
+    notes[eleve] = note
+```
 
-  <ExerciseSection id="dict-4-2" label="4.2 [Avancé] - Produit le plus vendu" type="python">
-    <Enonce>
-    ### Exercice 4.2 [Avancé] : Produit le plus vendu
-    **Écrire une fonction `produit_le_plus_vendu` qui prend un dictionnaire `ventes` et renvoie un tuple `(produit, total)` du produit ayant le plus de ventes cumulées.**
+</Correction>
+</Enonce>
+<Verification>
 
-    <Correction>
-    ```python
-    def produit_le_plus_vendu(ventes: dict) -> tuple:
-        cumul = {}
-        for mois in ventes:
-            for produit, quantite in ventes[mois].items():
-                cumul[produit] = cumul.get(produit, 0) + quantite
+```python
+n = {"Léa": 12}
+assert enregistrer(n, "Tom", 15) is None, "La fonction ne renvoie rien."
+assert n == {"Léa": 12, "Tom": 15}, "Tom est ajouté."
+enregistrer(n, "Léa", 18)
+assert n == {"Léa": 18, "Tom": 15}, "La note de Léa est remplacée."
+```
 
-        meilleur = None
-        max_ventes = -1
-        for produit, total in cumul.items():
-            if total > max_ventes:
-                max_ventes = total
-                meilleur = produit
-        return meilleur, max_ventes
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'produit_le_plus_vendu' in locals(), "La fonction 'produit_le_plus_vendu' n'est pas définie."
-ventes = {'J': {'A': 10, 'B': 5}, 'F': {'A': 5, 'B': 5}}
-assert produit_le_plus_vendu(ventes) == ('A', 15)
-    ```
-    </Verification>
-  </ExerciseSection>
+</Verification>
+</ExerciseSection>
 
-  <ExerciseSection id="dict-4-3" label="4.3 [Avancé] - Valeur totale de l'inventaire" type="python">
-    <Enonce>
-    ### Exercice 4.3 [Avancé] : Valeur totale de l'inventaire
-    **Écrire une fonction `valeur_totale_inventaire` qui prend un dictionnaire `inventaire` (produit : `{'quantite': ..., 'prix': ...}`) et renvoie la valeur totale (`quantite × prix` pour chaque produit).**
+<ExerciseSection id="1nsi-dicos-1-4" label="1.4 [Introduction] - Total du stock" type="python">
+<Enonce>
+### Total du stock
 
-    <Correction>
-    ```python
-    def valeur_totale_inventaire(inventaire: dict) -> float:
-        total = 0
-        for infos in inventaire.values():
-            total += infos['quantite'] * infos['prix']
-        return total
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'valeur_totale_inventaire' in locals(), "La fonction 'valeur_totale_inventaire' n'est pas définie."
-inv = {
-    'A': {'quantite': 10, 'prix': 100, 'categorie': 'X'},
-    'B': {'quantite': 5, 'prix': 200, 'categorie': 'Y'}
-}
-assert valeur_totale_inventaire(inv) == 2000
-    ```
-    </Verification>
-  </ExerciseSection>
+`stock` associe chaque produit à la quantité en réserve.
 
-  <ExerciseSection id="dict-4-4" label="4.4 [Avancé] - Produits par catégorie" type="python">
-    <Enonce>
-    ### Exercice 4.4 [Avancé] : Produits par catégorie
-    **Écrire une fonction `produits_par_categorie` qui prend un dictionnaire `inventaire` (produit : `{'categorie': ...}`) et une `categorie`, et renvoie la liste des produits de cette catégorie.**
+Écrire une fonction `total(stock)` qui renvoie le nombre total d'objets en réserve.
 
-    <Correction>
-    ```python
-    def produits_par_categorie(inventaire: dict, categorie: str) -> list:
-        resultat = []
-        for nom, infos in inventaire.items():
-            if infos['categorie'] == categorie:
-                resultat.append(nom)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'produits_par_categorie' in locals(), "La fonction 'produits_par_categorie' n'est pas définie."
-inv = {
-    'A': {'quantite': 10, 'prix': 100, 'categorie': 'X'},
-    'B': {'quantite': 5, 'prix': 200, 'categorie': 'Y'}
-}
-assert produits_par_categorie(inv, 'X') == ['A']
-    ```
-    </Verification>
-  </ExerciseSection>
+Contrainte : avec une boucle.
 
-  <ExerciseSection id="dict-4-5" label="4.5 [Avancé] - Mention d'un élève" type="python">
-    <Enonce>
-    ### Exercice 4.5 [Avancé] : Mention d'un élève
-    **Écrire une fonction `mention` qui prend une moyenne sur 20 et renvoie :**
-    - `"Excellent"` si moyenne ≥ 16
-    - `"Bien"` si 12 ≤ moyenne ≤ 15
-    - `"À améliorer"` sinon
+<Indices>
+<Indice>
 
-    <Correction>
-    ```python
-    def mention(moyenne: int) -> str:
-        if moyenne >= 16:
-            return "Excellent"
-        if moyenne >= 12:
-            return "Bien"
-        return "À améliorer"
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'mention' in locals(), "La fonction 'mention' n'est pas définie."
-assert mention(17) == "Excellent"
-assert mention(14) == "Bien"
-assert mention(9) == "À améliorer"
-    ```
-    </Verification>
-  </ExerciseSection>
+`for produit in stock:` parcourt les clés ; `stock[produit]` donne la quantité.
 
-  <ExerciseSection id="dict-4-6" label="4.6 [Avancé] - Fusionner deux dictionnaires" type="python">
-    <Enonce>
-    ### Exercice 4.6 [Avancé] : Fusionner deux dictionnaires
-    **Écrire une fonction `fusionner` qui prend deux dictionnaires `d1` et `d2` et renvoie un **nouveau** dictionnaire contenant toutes les paires des deux. En cas de clé commune, la valeur de `d2` prévaut.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def fusionner(d1: dict, d2: dict) -> dict:
-        resultat = {}
-        for cle, valeur in d1.items():
-            resultat[cle] = valeur
-        for cle, valeur in d2.items():
-            resultat[cle] = valeur
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'fusionner' in locals(), "La fonction 'fusionner' n'est pas définie."
-assert fusionner({'a': 1, 'b': 2}, {'b': 9, 'c': 3}) == {'a': 1, 'b': 9, 'c': 3}
-    ```
-    </Verification>
-  </ExerciseSection>
+`for quantite in stock.values():` parcourt directement les valeurs.
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 5 : DIFFICILE (5.1 à 5.6)         */}
-  {/* ========================================== */}
+</Indice>
+<Indice>
 
-  <ExerciseSection id="dict-5-1" label="5.1 [Difficile] - Compter les mots" type="python">
-    <Enonce>
-    ### Exercice 5.1 [Difficile] : Compter les mots
-    **Écrire une fonction `compter_mots` qui prend un texte et renvoie un dictionnaire `{mot: fréquence}`.**
-    Ignorer la casse (tout en minuscules) et la ponctuation.
-    *Exemple : `"Salut salut!"` donne `{'salut': 2}`.*
+```text
+FONCTION total(stock)
+    t ← 0
+    POUR CHAQUE quantite DES valeurs de stock : t ← t + quantite
+    RENVOYER t
+```
 
-    <Correction>
-    ```python
-    import string
+</Indice>
+</Indices>
 
-    def compter_mots(texte: str) -> dict:
-        texte = texte.lower()
-        for ponctuation in string.punctuation:
-            texte = texte.replace(ponctuation, '')
-        freq = {}
+<Correction>
+
+```python
+def total(stock: dict) -> int:
+    t = 0
+    for quantite in stock.values():
+        t = t + quantite
+    return t
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert total({"vis": 120, "écrous": 80, "clous": 0}) == 200, "120 + 80 + 0."
+assert total({}) == 0, "Stock vide."
+import re
+assert re.search(r"\b(for|while)\b", PROGRAMME), "Avec une boucle."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-2-1" label="2.1 [Facile] - Compter les lettres" type="python">
+<Enonce>
+### Compter les lettres
+
+Écrire une fonction `occurrences(mot)` qui renvoie un dictionnaire associant à chaque caractère de `mot` son nombre d'apparitions.
+
+Exemple : `occurrences("renard")` renvoie `{"r": 2, "e": 1, "n": 1, "a": 1, "d": 1}`.
+
+<Indices>
+<Indice>
+
+Partir d'un dictionnaire vide et parcourir le mot.
+
+</Indice>
+<Indice>
+
+Si le caractère est déjà une clé, augmenter sa valeur ; sinon, créer la clé avec la valeur 1.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION occurrences(mot)
+    compte ← dictionnaire vide
+    POUR CHAQUE c DE mot
+        SI c est une clé de compte ALORS compte[c] ← compte[c] + 1
+        SINON compte[c] ← 1
+    RENVOYER compte
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def occurrences(mot: str) -> dict:
+    compte = {}
+    for c in mot:
+        if c in compte:
+            compte[c] = compte[c] + 1
+        else:
+            compte[c] = 1
+    return compte
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert occurrences("renard") == {"r": 2, "e": 1, "n": 1, "a": 1, "d": 1}, "renard."
+assert occurrences("") == {} and occurrences("aaa") == {"a": 3}, "Vide, puis une seule lettre."
+assert "Counter" not in PROGRAMME and "count(" not in PROGRAMME, "Sans Counter ni count."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-2-2" label="2.2 [Facile] - Meilleur score" type="python">
+<Enonce>
+### Meilleur score
+
+`scores` associe chaque joueur à son score. Écrire une fonction `champion(scores)` qui renvoie le nom du joueur au plus haut score (le premier rencontré en cas d'égalité), ou `None` si le dictionnaire est vide.
+
+<Indices>
+<Indice>
+
+Comme pour un maximum dans une liste, mais en gardant la **clé** du meilleur.
+
+</Indice>
+<Indice>
+
+`for joueur, score in scores.items():` donne la clé et la valeur à chaque tour.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION champion(scores)
+    meilleur ← None
+    POUR CHAQUE (joueur, score) DE scores
+        SI meilleur = None OU score > scores[meilleur] ALORS meilleur ← joueur
+    RENVOYER meilleur
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def champion(scores: dict):
+    meilleur = None
+    for joueur, score in scores.items():
+        if meilleur is None or score > scores[meilleur]:
+            meilleur = joueur
+    return meilleur
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert champion({"Léa": 120, "Tom": 340, "Inès": 210}) == "Tom", "Tom a le meilleur score."
+assert champion({"A": 5, "B": 5}) == "A", "Égalité : le premier."
+assert champion({}) is None, "Aucun joueur : None."
+assert champion({"Solo": -3}) == "Solo", "Un seul joueur, même avec un score négatif."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-2-3" label="2.3 [Facile] - À recommander" type="python">
+<Enonce>
+### À recommander
+
+Écrire une fonction `a_commander(stock, seuil)` qui renvoie un **nouveau** dictionnaire contenant seulement les produits dont la quantité est strictement inférieure à `seuil`.
+
+<Indices>
+<Indice>
+
+Parcourir les paires `(produit, quantite)` et recopier celles qui passent le test.
+
+</Indice>
+<Indice>
+
+Le dictionnaire `stock` reçu ne doit pas changer.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION a_commander(stock, seuil)
+    resultat ← dictionnaire vide
+    POUR CHAQUE (produit, quantite) DE stock
+        SI quantite < seuil ALORS resultat[produit] ← quantite
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def a_commander(stock: dict, seuil: int) -> dict:
+    resultat = {}
+    for produit, quantite in stock.items():
+        if quantite < seuil:
+            resultat[produit] = quantite
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+s = {"vis": 120, "écrous": 8, "clous": 0, "colle": 10}
+assert a_commander(s, 10) == {"écrous": 8, "clous": 0}, "Sous 10 : écrous et clous."
+assert len(s) == 4, "Le stock d'origine n'est pas modifié."
+assert a_commander(s, 0) == {}, "Seuil 0 : rien."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-2-4" label="2.4 [Facile] - Fusionner deux paniers" type="python">
+<Enonce>
+### Fusionner deux paniers
+
+Un panier associe un article à une quantité. Écrire une fonction `fusionner(p1, p2)` qui renvoie un nouveau panier contenant les articles des deux, en **additionnant** les quantités des articles communs.
+
+Exemple : `{"pomme": 3, "pain": 1}` et `{"pomme": 2, "lait": 1}` donnent `{"pomme": 5, "pain": 1, "lait": 1}`.
+
+<Indices>
+<Indice>
+
+Commencer par une copie de `p1` : `dict(p1)`.
+
+</Indice>
+<Indice>
+
+Puis ajouter chaque article de `p2`, en additionnant si l'article existe déjà.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION fusionner(p1, p2)
+    resultat ← copie de p1
+    POUR CHAQUE (article, q) DE p2
+        SI article ∈ resultat ALORS resultat[article] ← resultat[article] + q
+        SINON resultat[article] ← q
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def fusionner(p1: dict, p2: dict) -> dict:
+    resultat = dict(p1)
+    for article, q in p2.items():
+        if article in resultat:
+            resultat[article] = resultat[article] + q
+        else:
+            resultat[article] = q
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+a = {"pomme": 3, "pain": 1}
+b = {"pomme": 2, "lait": 1}
+assert fusionner(a, b) == {"pomme": 5, "pain": 1, "lait": 1}, "Fusion de l'exemple."
+assert a == {"pomme": 3, "pain": 1} and b == {"pomme": 2, "lait": 1}, "Les paniers d'origine ne changent pas."
+assert fusionner({}, b) == b and fusionner(a, {}) == a, "Avec un panier vide."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-3-1" label="3.1 [Moyen] - Dictionnaire inversé" type="python">
+<Enonce>
+### Dictionnaire inversé
+
+Écrire une fonction `inverser(d)` qui renvoie un nouveau dictionnaire où les clés et les valeurs de `d` sont échangées. Les valeurs de `d` sont toutes différentes.
+
+Exemple : `{"a": 1, "b": 2}` donne `{1: "a", 2: "b"}`.
+
+<Indices>
+<Indice>
+
+Parcourir les paires `(cle, valeur)` de `d`.
+
+</Indice>
+<Indice>
+
+Dans le nouveau dictionnaire, la valeur devient la clé : `resultat[valeur] = cle`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION inverser(d)
+    resultat ← dictionnaire vide
+    POUR CHAQUE (cle, valeur) DE d : resultat[valeur] ← cle
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def inverser(d: dict) -> dict:
+    resultat = {}
+    for cle, valeur in d.items():
+        resultat[valeur] = cle
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert inverser({"a": 1, "b": 2}) == {1: "a", 2: "b"}, "Inversion de l'exemple."
+code = {"A": ".-", "B": "-...", "C": "-.-."}
+assert inverser(inverser(code)) == code, "Inverser deux fois redonne le dictionnaire."
+assert inverser({}) == {}, "Dictionnaire vide."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-3-2" label="3.2 [Moyen] - Ranger par initiale" type="python">
+<Enonce>
+### Ranger par initiale
+
+Écrire une fonction `par_initiale(mots)` qui reçoit une liste de mots (non vides) et renvoie un dictionnaire associant à chaque première lettre la liste des mots qui commencent par elle, dans l'ordre d'origine.
+
+Exemple : `["renard", "loup", "raton"]` donne `{"r": ["renard", "raton"], "l": ["loup"]}`.
+
+<Indices>
+<Indice>
+
+Les valeurs du dictionnaire sont des listes : la première fois qu'une lettre apparaît, créer la liste vide.
+
+</Indice>
+<Indice>
+
+Ensuite, `groupes[lettre].append(mot)` ajoute le mot à la bonne liste.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION par_initiale(mots)
+    groupes ← dictionnaire vide
+    POUR CHAQUE mot DE mots
+        lettre ← mot[0]
+        SI lettre ∉ groupes ALORS groupes[lettre] ← liste vide
+        ajouter mot à groupes[lettre]
+    RENVOYER groupes
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def par_initiale(mots: list) -> dict:
+    groupes = {}
+    for mot in mots:
+        lettre = mot[0]
+        if lettre not in groupes:
+            groupes[lettre] = []
+        groupes[lettre].append(mot)
+    return groupes
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert par_initiale(["renard", "loup", "raton"]) == {"r": ["renard", "raton"], "l": ["loup"]}, "Exemple."
+assert par_initiale([]) == {}, "Aucun mot."
+assert par_initiale(["a", "b", "a"]) == {"a": ["a", "a"], "b": ["b"]}, "Doublons gardés."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-3-3" label="3.3 [Moyen] - Traducteur mot à mot" type="python">
+<Enonce>
+### Traducteur mot à mot
+
+Écrire une fonction `traduire(phrase, dico)` qui traduit une phrase (mots séparés par une espace) avec le dictionnaire `dico`. Un mot absent du dictionnaire est gardé tel quel.
+
+Exemple : avec `{"le": "the", "renard": "fox"}`, `"le renard roux"` donne `"the fox roux"`.
+
+<Indices>
+<Indice>
+
+`phrase.split(" ")` découpe la phrase en liste de mots ; `" ".join(liste)` recolle une liste de mots.
+
+</Indice>
+<Indice>
+
+`dico.get(mot, mot)` renvoie la traduction, ou le mot lui-même s'il est absent.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION traduire(phrase, dico)
+    traduits ← liste vide
+    POUR CHAQUE mot DE phrase découpée aux espaces
+        SI mot ∈ dico ALORS ajouter dico[mot] SINON ajouter mot
+    RENVOYER traduits recollés avec des espaces
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def traduire(phrase: str, dico: dict) -> str:
+    traduits = []
+    for mot in phrase.split(" "):
+        traduits.append(dico.get(mot, mot))
+    return " ".join(traduits)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+d = {"le": "the", "renard": "fox", "dort": "sleeps"}
+assert traduire("le renard roux", d) == "the fox roux", "Mot inconnu gardé."
+assert traduire("le renard dort", d) == "the fox sleeps", "Tout est traduit."
+assert traduire("bonjour", {}) == "bonjour", "Dictionnaire vide."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-3-4" label="3.4 [Moyen] - Montant d'un panier" type="python">
+<Enonce>
+### Montant d'un panier
+
+`panier` associe un article à une quantité, `prix` associe un article à son prix unitaire.
+
+Écrire une fonction `montant(panier, prix)` qui renvoie le prix total du panier, arrondi au centime. Un article du panier absent de `prix` est ignoré.
+
+<Indices>
+<Indice>
+
+Parcourir le panier ; pour chaque article, chercher son prix dans l'autre dictionnaire.
+
+</Indice>
+<Indice>
+
+Ignorer un article revient à ne rien ajouter si `article not in prix`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION montant(panier, prix)
+    total ← 0
+    POUR CHAQUE (article, quantite) DE panier
+        SI article ∈ prix ALORS total ← total + quantite × prix[article]
+    RENVOYER arrondi(total, 2 chiffres)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def montant(panier: dict, prix: dict) -> float:
+    total = 0
+    for article, quantite in panier.items():
+        if article in prix:
+            total = total + quantite * prix[article]
+    return round(total, 2)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+prix = {"pomme": 0.35, "pain": 1.2, "lait": 0.99}
+assert montant({"pomme": 6, "pain": 2}, prix) == 4.5, "6 pommes et 2 pains : 4,50 €."
+assert montant({"lait": 3, "caviar": 1}, prix) == 2.97, "L'article inconnu est ignoré."
+assert montant({}, prix) == 0, "Panier vide."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-4-1" label="4.1 [Difficile] - Anagrammes" type="python">
+<Enonce>
+### Anagrammes
+
+Deux mots sont des anagrammes s'ils utilisent exactement les mêmes lettres, autant de fois chacune (`"chien"` et `"niche"`).
+
+Écrire une fonction `anagrammes(m1, m2)`.
+
+Contrainte : sans trier, en comparant des dictionnaires d'occurrences.
+
+<Indices>
+<Indice>
+
+Écrire (ou réutiliser) une fonction qui compte les lettres d'un mot dans un dictionnaire.
+
+</Indice>
+<Indice>
+
+Deux dictionnaires se comparent avec `==` : l'ordre des clés n'a pas d'importance.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION compter(mot) : dictionnaire lettre → nombre d'apparitions
+FONCTION anagrammes(m1, m2)
+    RENVOYER compter(m1) = compter(m2)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def compter(mot: str) -> dict:
+    d = {}
+    for c in mot:
+        d[c] = d.get(c, 0) + 1
+    return d
+
+
+def anagrammes(m1: str, m2: str) -> bool:
+    return compter(m1) == compter(m2)
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert anagrammes("chien", "niche") is True and anagrammes("marie", "aimer") is True, "Deux paires d'anagrammes."
+assert anagrammes("aab", "abb") is False, "Même lettres, pas le même nombre."
+assert anagrammes("renard", "renards") is False and anagrammes("", "") is True, "Longueurs différentes ; mots vides."
+assert "sort" not in PROGRAMME, "Sans tri."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-4-2" label="4.2 [Difficile] - Mot le plus fréquent" type="python">
+<Enonce>
+### Mot le plus fréquent
+
+Écrire une fonction `plus_frequent(texte)` qui renvoie le mot le plus fréquent d'un texte en minuscules (mots séparés par des espaces). En cas d'égalité, renvoyer le premier dans l'ordre alphabétique.
+
+<Indices>
+<Indice>
+
+Compter les mots dans un dictionnaire, puis chercher le maximum.
+
+</Indice>
+<Indice>
+
+Pour l'égalité : un mot remplace le meilleur s'il est plus fréquent, **ou** aussi fréquent et plus petit alphabétiquement (`mot < meilleur`).
+
+</Indice>
+<Indice>
+
+```text
+FONCTION plus_frequent(texte)
+    compte ← occurrences de chaque mot de texte.split()
+    meilleur ← None
+    POUR CHAQUE (mot, n) DE compte
+        SI meilleur = None OU n > compte[meilleur] OU (n = compte[meilleur] ET mot < meilleur) ALORS meilleur ← mot
+    RENVOYER meilleur
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def plus_frequent(texte: str) -> str:
+    compte = {}
+    for mot in texte.split():
+        compte[mot] = compte.get(mot, 0) + 1
+    meilleur = None
+    for mot, n in compte.items():
+        if meilleur is None or n > compte[meilleur] or (n == compte[meilleur] and mot < meilleur):
+            meilleur = mot
+    return meilleur
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert plus_frequent("le renard et le loup et le chat") == "le", "le apparaît 3 fois."
+assert plus_frequent("b a b a c") == "a", "Égalité entre a et b : a."
+assert plus_frequent("seul") == "seul", "Un seul mot."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-4-3" label="4.3 [Difficile] - Inverser sans perdre" type="python">
+<Enonce>
+### Inverser sans perdre
+
+Quand plusieurs clés ont la même valeur, une inversion simple en perd. Écrire une fonction `regrouper(d)` qui renvoie un dictionnaire associant à chaque valeur de `d` la **liste triée** des clés qui l'ont.
+
+Exemple : `{"Léa": "A", "Tom": "B", "Inès": "A"}` donne `{"A": ["Inès", "Léa"], "B": ["Tom"]}`.
+
+<Indices>
+<Indice>
+
+Même structure que le rangement par initiale : chaque valeur de `d` devient une clé dont la valeur est une liste.
+
+</Indice>
+<Indice>
+
+Trier chaque liste à la fin, avec `.sort()`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION regrouper(d)
+    resultat ← dictionnaire vide
+    POUR CHAQUE (cle, valeur) DE d
+        SI valeur ∉ resultat ALORS resultat[valeur] ← liste vide
+        ajouter cle à resultat[valeur]
+    trier chaque liste de resultat
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def regrouper(d: dict) -> dict:
+    resultat = {}
+    for cle, valeur in d.items():
+        if valeur not in resultat:
+            resultat[valeur] = []
+        resultat[valeur].append(cle)
+    for liste in resultat.values():
+        liste.sort()
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert regrouper({"Léa": "A", "Tom": "B", "Inès": "A"}) == {"A": ["Inès", "Léa"], "B": ["Tom"]}, "Exemple."
+assert regrouper({}) == {} and regrouper({1: 1}) == {1: [1]}, "Cas simples."
+assert regrouper({"x": 0, "y": 0, "z": 0}) == {0: ["x", "y", "z"]}, "Toutes les clés ensemble."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-4-4" label="4.4 [Difficile] - Moyenne par classe" type="python">
+<Enonce>
+### Moyenne par classe
+
+`eleves` est une liste de dictionnaires, chacun avec les clés `"nom"`, `"classe"` et `"note"`.
+
+Écrire une fonction `moyennes_par_classe(eleves)` qui renvoie un dictionnaire associant à chaque classe la moyenne de ses élèves, arrondie au centième.
+
+<Indices>
+<Indice>
+
+Deux dictionnaires de travail : un pour la somme des notes de chaque classe, un pour le nombre d'élèves.
+
+</Indice>
+<Indice>
+
+Les moyennes se calculent seulement à la fin, quand toutes les notes ont été parcourues.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION moyennes_par_classe(eleves)
+    sommes ← dictionnaire vide ; effectifs ← dictionnaire vide
+    POUR CHAQUE e DE eleves
+        c ← e["classe"]
+        sommes[c] ← sommes[c] (ou 0) + e["note"]
+        effectifs[c] ← effectifs[c] (ou 0) + 1
+    RENVOYER classe → arrondi(sommes[classe] / effectifs[classe], 2 chiffres)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def moyennes_par_classe(eleves: list) -> dict:
+    sommes = {}
+    effectifs = {}
+    for e in eleves:
+        c = e["classe"]
+        sommes[c] = sommes.get(c, 0) + e["note"]
+        effectifs[c] = effectifs.get(c, 0) + 1
+    resultat = {}
+    for c in sommes:
+        resultat[c] = round(sommes[c] / effectifs[c], 2)
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+eleves = [{"nom": "Léa", "classe": "1A", "note": 14}, {"nom": "Tom", "classe": "1B", "note": 9},
+          {"nom": "Inès", "classe": "1A", "note": 17}, {"nom": "Noé", "classe": "1A", "note": 10}]
+assert moyennes_par_classe(eleves) == {"1A": 13.67, "1B": 9.0}, "1A : 13,67 ; 1B : 9."
+assert moyennes_par_classe([]) == {}, "Aucun élève."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-5-1" label="5.1 [Expert] - Chiffres romains vers entier" type="python">
+<Enonce>
+### Chiffres romains vers entier
+
+Écrire une fonction `entier_romain(texte)` qui convertit un nombre écrit en chiffres romains (valide, en majuscules) en entier.
+
+Règle : on additionne la valeur des symboles (`I` 1, `V` 5, `X` 10, `L` 50, `C` 100, `D` 500, `M` 1000), sauf quand un symbole est suivi d'un symbole **plus grand** : il est alors soustrait (`IV` = 4, `CM` = 900).
+
+<Indices>
+<Indice>
+
+Un dictionnaire associe chaque symbole à sa valeur.
+
+</Indice>
+<Indice>
+
+Parcourir les indices : comparer la valeur du symbole `i` à celle du symbole `i + 1` (s'il existe) pour décider s'il faut ajouter ou retirer.
+
+</Indice>
+<Indice>
+
+```text
+VALEUR ← I → 1, V → 5, X → 10, L → 50, C → 100, D → 500, M → 1000
+FONCTION entier_romain(texte)
+    total ← 0
+    POUR i ALLANT DE 0 À longueur(texte) - 1
+        v ← VALEUR[texte[i]]
+        SI i + 1 < longueur(texte) ET VALEUR[texte[i + 1]] > v ALORS total ← total - v
+        SINON total ← total + v
+    RENVOYER total
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+VALEUR = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+
+
+def entier_romain(texte: str) -> int:
+    total = 0
+    for i in range(len(texte)):
+        v = VALEUR[texte[i]]
+        if i + 1 < len(texte) and VALEUR[texte[i + 1]] > v:
+            total = total - v
+        else:
+            total = total + v
+    return total
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert entier_romain("MCMXCIV") == 1994 and entier_romain("MMXXVI") == 2026, "1994 et 2026."
+assert entier_romain("IV") == 4 and entier_romain("IX") == 9 and entier_romain("XL") == 40, "Soustractions."
+assert entier_romain("III") == 3 and entier_romain("MMMCMXCIX") == 3999, "3 et 3999."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-5-2" label="5.2 [Expert] - Les k mots les plus fréquents" type="python">
+<Enonce>
+### Les k mots les plus fréquents
+
+Écrire une fonction `top(texte, k)` qui renvoie la liste des `k` mots les plus fréquents d'un texte en minuscules, du plus fréquent au moins fréquent, les mots de même fréquence étant rangés par ordre alphabétique. S'il y a moins de `k` mots différents, les renvoyer tous.
+
+<Indices>
+<Indice>
+
+Compter d'abord les mots dans un dictionnaire.
+
+</Indice>
+<Indice>
+
+`sorted(compte, key=lambda mot: (-compte[mot], mot))` trie les mots par fréquence décroissante (le signe moins), puis par ordre alphabétique.
+
+</Indice>
+<Indice>
+
+Une tranche `[:k]` garde les `k` premiers.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION top(texte, k)
+    compte ← occurrences de chaque mot
+    tries ← mots de compte triés par (fréquence décroissante, puis ordre alphabétique)
+    RENVOYER les k premiers de tries
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def top(texte: str, k: int) -> list:
+    compte = {}
+    for mot in texte.split():
+        compte[mot] = compte.get(mot, 0) + 1
+    tries = sorted(compte, key=lambda mot: (-compte[mot], mot))
+    return tries[:k]
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+t = "le chat et le chien et le renard dort"
+assert top(t, 2) == ["le", "et"], "le (3), puis et (2)."
+assert top(t, 4) == ["le", "et", "chat", "chien"], "Égalité à 1 : ordre alphabétique."
+assert top("a b", 10) == ["a", "b"] and top("", 3) == [], "Moins de k mots."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-5-3" label="5.3 [Expert] - Index d'un moteur de recherche" type="python">
+<Enonce>
+### Index d'un moteur de recherche
+
+Un moteur de recherche prépare un **index inversé** : pour chaque mot, la liste des documents qui le contiennent.
+
+`documents` associe un nom de document à son texte (en minuscules, mots séparés par des espaces). Écrire :
+- `indexer(documents)` : renvoie un dictionnaire mot → liste **triée** et sans doublon des noms de documents qui contiennent ce mot ;
+- `rechercher(index, requete)` : renvoie la liste triée des documents qui contiennent **tous** les mots de la requête.
+
+<Indices>
+<Indice>
+
+Dans `indexer`, deux boucles : sur les documents, puis sur leurs mots. N'ajouter un nom que s'il n'est pas déjà dans la liste du mot.
+
+</Indice>
+<Indice>
+
+Dans `rechercher`, partir des documents du premier mot, puis ne garder, mot après mot, que ceux qui apparaissent aussi dans la liste du mot suivant.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION indexer(documents)
+    index ← dictionnaire vide
+    POUR CHAQUE (nom, texte) DE documents
+        POUR CHAQUE mot DE texte.split()
+            ajouter nom à index[mot] s'il n'y est pas
+    trier chaque liste ; RENVOYER index
+FONCTION rechercher(index, requete)
+    mots ← requete.split()
+    resultat ← index[mots[0]] (ou liste vide)
+    POUR CHAQUE autre mot : garder dans resultat les documents présents dans index[mot]
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def indexer(documents: dict) -> dict:
+    index = {}
+    for nom, texte in documents.items():
         for mot in texte.split():
-            freq[mot] = freq.get(mot, 0) + 1
-        return freq
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_mots' in locals(), "La fonction 'compter_mots' n'est pas définie."
-res = compter_mots("Bonjour, le monde! Bonjour le monde.")
-assert res['bonjour'] == 2
-assert res['monde'] == 2
-assert res['le'] == 2
-    ```
-    </Verification>
-  </ExerciseSection>
+            if mot not in index:
+                index[mot] = []
+            if nom not in index[mot]:
+                index[mot].append(nom)
+    for liste in index.values():
+        liste.sort()
+    return index
 
-  <ExerciseSection id="dict-5-2" label="5.2 [Difficile] - Mot le plus fréquent" type="python">
-    <Enonce>
-    ### Exercice 5.2 [Difficile] : Mot le plus fréquent
-    **Écrire une fonction `mot_plus_frequent` qui prend un texte et renvoie le mot le plus fréquent (en minuscules, sans ponctuation). En cas d'égalité, renvoyer le premier rencontré.**
 
-    <Correction>
-    ```python
-    import string
+def rechercher(index: dict, requete: str) -> list:
+    mots = requete.split()
+    if not mots:
+        return []
+    resultat = list(index.get(mots[0], []))
+    for mot in mots[1:]:
+        resultat = [doc for doc in resultat if doc in index.get(mot, [])]
+    return sorted(resultat)
+```
 
-    def mot_plus_frequent(texte: str) -> str:
-        texte = texte.lower()
-        for ponctuation in string.punctuation:
-            texte = texte.replace(ponctuation, '')
-        freq = {}
-        for mot in texte.split():
-            freq[mot] = freq.get(mot, 0) + 1
-        meilleur_mot = None
-        meilleur_score = -1
-        for mot, score in freq.items():
-            if score > meilleur_score:
-                meilleur_score = score
-                meilleur_mot = mot
-        return meilleur_mot
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'mot_plus_frequent' in locals(), "La fonction 'mot_plus_frequent' n'est pas définie."
-assert mot_plus_frequent("chat chien chat") == "chat"
-assert mot_plus_frequent("a b c") == "a"
-    ```
-    </Verification>
-  </ExerciseSection>
+</Correction>
+</Enonce>
+<Verification>
 
-  <ExerciseSection id="dict-5-3" label="5.3 [Difficile] - Inverser un dictionnaire" type="python">
-    <Enonce>
-    ### Exercice 5.3 [Difficile] : Inverser un dictionnaire
-    **Écrire une fonction `inverser_dictionnaire` qui prend un dictionnaire dont les valeurs sont uniques et renvoie un nouveau dictionnaire où clés et valeurs sont échangées.**
+```python
+docs = {"b.txt": "le renard roux dort", "a.txt": "le loup et le renard", "c.txt": "le chat dort dort"}
+idx = indexer(docs)
+assert idx["le"] == ["a.txt", "b.txt", "c.txt"] and idx["dort"] == ["b.txt", "c.txt"], "Listes triées, sans doublon."
+assert idx["loup"] == ["a.txt"], "Un seul document."
+assert rechercher(idx, "renard") == ["a.txt", "b.txt"], "Un mot."
+assert rechercher(idx, "renard dort") == ["b.txt"], "Deux mots : seul b.txt contient les deux."
+assert rechercher(idx, "renard tigre") == [] and rechercher(idx, "tigre") == [], "Mot absent : aucun résultat."
+```
 
-    <Correction>
-    ```python
-    def inverser_dictionnaire(d: dict) -> dict:
-        inverse = {}
-        for cle, valeur in d.items():
-            inverse[valeur] = cle
-        return inverse
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'inverser_dictionnaire' in locals(), "La fonction 'inverser_dictionnaire' n'est pas définie."
-assert inverser_dictionnaire({'a': 1, 'b': 2}) == {1: 'a', 2: 'b'}
-    ```
-    </Verification>
-  </ExerciseSection>
+</Verification>
+</ExerciseSection>
 
-  <ExerciseSection id="dict-5-4" label="5.4 [Difficile] - Filtrer par valeur" type="python">
-    <Enonce>
-    ### Exercice 5.4 [Difficile] : Filtrer par valeur
-    **Écrire une fonction `filtrer_cles_par_valeur` qui prend un dictionnaire `d` et un `seuil`, et renvoie la liste des clés dont la valeur est ≥ `seuil`.**
+<ExerciseSection id="1nsi-dicos-5-4" label="5.4 [Expert] - Élection à deux tours" type="python">
+<Enonce>
+### Élection à deux tours
 
-    <Correction>
-    ```python
-    def filtrer_cles_par_valeur(d: dict, seuil: int) -> list:
-        resultat = []
-        for cle, valeur in d.items():
-            if valeur >= seuil:
-                resultat.append(cle)
-        return resultat
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'filtrer_cles_par_valeur' in locals(), "La fonction 'filtrer_cles_par_valeur' n'est pas définie."
-notes = {'Alice': 15, 'Bob': 10, 'Charlie': 18}
-assert sorted(filtrer_cles_par_valeur(notes, 12)) == ['Alice', 'Charlie']
-    ```
-    </Verification>
-  </ExerciseSection>
+Au premier tour d'une élection, chaque bulletin porte un nom (une liste de textes). Un candidat qui obtient **strictement plus de la moitié** des voix est élu. Sinon, les deux candidats arrivés en tête vont au second tour.
 
-  <ExerciseSection id="dict-5-5" label="5.5 [Difficile] - Moyenne des notes" type="python">
-    <Enonce>
-    ### Exercice 5.5 [Difficile] : Moyenne des notes
-    **Écrire une fonction `moyenne_notes` qui prend un dictionnaire `notes` (nom : moyenne) et renvoie la moyenne de toutes les moyennes, arrondie à 2 décimales. Renvoie `0` si le dictionnaire est vide.**
+Écrire une fonction `premier_tour(bulletins)` qui renvoie :
+- `("élu", nom)` si un candidat a la majorité absolue ;
+- `("second tour", [nom1, nom2])` sinon, `nom1` ayant le plus de voix (en cas d'égalité de voix, l'ordre alphabétique départage).
 
-    <Correction>
-    ```python
-    def moyenne_notes(notes: dict) -> float:
-        if not notes:
-            return 0
-        total = 0
-        for moyenne in notes.values():
-            total += moyenne
-        return round(total / len(notes), 2)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'moyenne_notes' in locals(), "La fonction 'moyenne_notes' n'est pas définie."
-assert moyenne_notes({'Alice': 15, 'Bob': 12}) == 13.5
-assert moyenne_notes({}) == 0
-    ```
-    </Verification>
-  </ExerciseSection>
+<Indices>
+<Indice>
 
-  <ExerciseSection id="dict-5-6" label="5.6 [Difficile] - Compter par catégorie" type="python">
-    <Enonce>
-    ### Exercice 5.6 [Difficile] : Compter par catégorie
-    **Écrire une fonction `compter_categories` qui prend un dictionnaire `inventaire` (produit : `{'categorie': ...}`) et renvoie un dictionnaire `{catégorie: nombre de produits}`.**
+Compter les voix dans un dictionnaire, puis classer les candidats avec `sorted` et une clé `(-voix, nom)`.
 
-    <Correction>
-    ```python
-    def compter_categories(inventaire: dict) -> dict:
-        compteur = {}
-        for infos in inventaire.values():
-            categorie = infos['categorie']
-            compteur[categorie] = compteur.get(categorie, 0) + 1
-        return compteur
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'compter_categories' in locals(), "La fonction 'compter_categories' n'est pas définie."
-inv = {
-    'pommes': {'categorie': 'fruits'},
-    'bananes': {'categorie': 'fruits'},
-    'carottes': {'categorie': 'legumes'}
-}
-assert compter_categories(inv) == {'fruits': 2, 'legumes': 1}
-    ```
-    </Verification>
-  </ExerciseSection>
+</Indice>
+<Indice>
 
-  {/* ========================================== */}
-  {/* CATÉGORIE 6 : EXPERT (6.1 à 6.3)            */}
-  {/* ========================================== */}
+La majorité absolue se teste sur le premier du classement : `voix * 2 > len(bulletins)`.
 
-  <ExerciseSection id="dict-6-1" label="6.1 [Expert] - Index par auteur" type="python">
-    <Enonce>
-    ### Exercice 6.1 [Expert] : Index par auteur
-    **Écrire une fonction `index_par_auteur` qui prend un dictionnaire `bibliotheque` (titre : `{'auteur': ...}`) et renvoie un dictionnaire `{auteur: [liste des titres]}`.**
+</Indice>
+<Indice>
 
-    <Correction>
-    ```python
-    def index_par_auteur(bibliotheque: dict) -> dict:
-        index = {}
-        for titre, infos in bibliotheque.items():
-            auteur = infos['auteur']
-            if auteur not in index:
-                index[auteur] = []
-            index[auteur].append(titre)
-        return index
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'index_par_auteur' in locals(), "La fonction 'index_par_auteur' n'est pas définie."
-bib = {
-    'Le Petit Prince': {'auteur': 'Saint-Exupery'},
-    '1984': {'auteur': 'Orwell'},
-    'Animal Farm': {'auteur': 'Orwell'}
-}
-index = index_par_auteur(bib)
-assert sorted(index['Orwell']) == ['1984', 'Animal Farm']
-    ```
-    </Verification>
-  </ExerciseSection>
+```text
+FONCTION premier_tour(bulletins)
+    voix ← compte de chaque nom
+    classement ← noms triés par (voix décroissantes, puis nom)
+    SI 2 × voix[classement[0]] > nombre de bulletins ALORS RENVOYER ("élu", classement[0])
+    RENVOYER ("second tour", les 2 premiers du classement)
+```
 
-  <ExerciseSection id="dict-6-2" label="6.2 [Expert] - Ventes cumulées par produit" type="python">
-    <Enonce>
-    ### Exercice 6.2 [Expert] : Ventes cumulées par produit
-    **Écrire une fonction `ventes_cumulees` qui prend un dictionnaire `ventes` (mois : `{produit: quantité}`) et renvoie un dictionnaire `{produit: total sur tous les mois}`.**
+</Indice>
+</Indices>
 
-    <Correction>
-    ```python
-    def ventes_cumulees(ventes: dict) -> dict:
-        cumul = {}
-        for mois in ventes:
-            for produit, quantite in ventes[mois].items():
-                cumul[produit] = cumul.get(produit, 0) + quantite
-        return cumul
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'ventes_cumulees' in locals(), "La fonction 'ventes_cumulees' n'est pas définie."
-ventes = {'J': {'A': 10, 'B': 5}, 'F': {'A': 5, 'B': 8}}
-assert ventes_cumulees(ventes) == {'A': 15, 'B': 13}
-    ```
-    </Verification>
-  </ExerciseSection>
+<Correction>
 
-  <ExerciseSection id="dict-6-3" label="6.3 [Expert] - Moyenne générale d'un élève" type="python">
-    <Enonce>
-    ### Exercice 6.3 [Expert] : Moyenne générale d'un élève
-    Un dictionnaire `classe` associe chaque élève à un sous-dictionnaire `{matière: liste de notes}`.
-    **Écrire une fonction `moyenne_generale` qui renvoie la moyenne des moyennes par matière de l'élève, arrondie à 2 décimales, ou `0` si l'élève est absent ou n'a aucune note.**
+```python
+def premier_tour(bulletins: list) -> tuple:
+    voix = {}
+    for nom in bulletins:
+        voix[nom] = voix.get(nom, 0) + 1
+    classement = sorted(voix, key=lambda nom: (-voix[nom], nom))
+    if voix[classement[0]] * 2 > len(bulletins):
+        return ("élu", classement[0])
+    return ("second tour", classement[:2])
+```
 
-    <Correction>
-    ```python
-    def moyenne_generale(classe: dict, eleve: str) -> float:
-        if eleve not in classe:
-            return 0
-        moyennes = []
-        for matiere in classe[eleve]:
-            notes = classe[eleve][matiere]
-            if notes:
-                moyennes.append(sum(notes) / len(notes))
-        if not moyennes:
-            return 0
-        return round(sum(moyennes) / len(moyennes), 2)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'moyenne_generale' in locals(), "La fonction 'moyenne_generale' n'est pas définie."
-classe = {
-    'Alice': {'Maths': [15, 12], 'Francais': [14]},
-    'Bob': {'Maths': [10], 'Francais': [13, 11]}
-}
-assert moyenne_generale(classe, 'Alice') == 13.75
-assert moyenne_generale(classe, 'Bob') == 11.0
-    ```
-    </Verification>
-  </ExerciseSection>
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert premier_tour(["A", "B", "A", "A", "C"]) == ("élu", "A"), "A a 3 voix sur 5 : élu."
+assert premier_tour(["A", "B", "A", "B"]) == ("second tour", ["A", "B"]), "2 voix sur 4 : pas de majorité absolue."
+assert premier_tour(["C", "B", "C", "A", "B", "D"]) == ("second tour", ["B", "C"]), "B et C à égalité : ordre alphabétique."
+assert premier_tour(["Z"]) == ("élu", "Z"), "Un seul bulletin."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-6-1" label="6.1 [Mini-projet] - Logiciel de médiathèque" type="python">
+<Enonce>
+### Logiciel de médiathèque
+
+**Contexte.** La médiathèque de la commune abandonne ses fiches cartonnées pour un logiciel de prêt. Les bibliothécaires y enregistrent les livres et les adhérents, puis les prêts et les retours. Le logiciel applique le règlement (3 livres au plus, amende en cas de retard) et produit les listes affichées à l'accueil.
+
+**Les données** : toute la médiathèque tient dans un dictionnaire `bib` :
+- `bib["livres"]` associe un ISBN à un dictionnaire `{"titre": …, "auteur": …, "exemplaires": …, "disponibles": …}` ;
+- `bib["adherents"]` associe un nom à un dictionnaire `{"emprunts": …, "amende": …}`, où `emprunts` associe l'ISBN de chaque livre emprunté au jour de l'emprunt (un entier : le numéro du jour) ;
+- `bib["historique"]` est la liste des ISBN de tous les prêts effectués, dans l'ordre.
+
+**Les fonctions du logiciel**
+- `creer()` : une médiathèque vide, au premier lancement.
+- `ajouter_livre(bib, isbn, titre, auteur, n)` : enregistre un achat de `n` exemplaires, pour un livre nouveau ou déjà présent.
+- `inscrire(bib, nom)` : inscrit un adhérent (sans effet s'il l'est déjà).
+- `emprunter(bib, nom, isbn, jour)` : appelée au comptoir lors d'un prêt. Renvoie `"ok"` si le prêt a lieu (et met à jour `bib`), sinon le motif du refus à annoncer à l'adhérent, testé dans cet ordre : `"inconnu"` (adhérent ou livre inconnu), `"amende"` (une amende reste à payer), `"limite"` (déjà 3 livres en cours), `"deja"` (il a déjà ce livre), `"indisponible"` (aucun exemplaire libre).
+- `rendre(bib, nom, isbn, jour)` : appelée au retour d'un livre. Remet l'exemplaire en rayon et renvoie l'amende ajoutée au compte de l'adhérent : 0,20 € par jour au-delà de 21 jours de prêt (arrondie au centime).
+- `payer(bib, nom)` : l'adhérent règle son amende. Remet l'amende à 0 et renvoie la somme payée.
+- `disponibles(bib)` : la liste affichée à l'accueil. Renvoie la liste triée des titres dont au moins un exemplaire est libre.
+- `top(bib, k)` : la vitrine « les plus empruntés ». Renvoie les `k` titres les plus empruntés (nombre décroissant, puis ordre alphabétique).
+
+<Indices>
+<Indice>
+
+Écrire `creer`, `ajouter_livre` et `inscrire` d'abord, et les tester en affichant `bib` : toutes les autres fonctions lisent et modifient cette structure.
+
+</Indice>
+<Indice>
+
+Dans `emprunter`, tester les refus un par un avec des `return` : le premier motif rencontré est le bon. Ne modifier `bib` qu'une fois tous les tests passés.
+
+</Indice>
+<Indice>
+
+Pour `top`, compter les prêts par titre dans un dictionnaire, puis trier avec `sorted(…, key=lambda t: (-compte[t], t))`.
+
+</Indice>
+<Indice>
+
+```text
+(cœur du programme : un prêt)
+FONCTION emprunter(bib, nom, isbn, jour)
+    SI nom ∉ adherents OU isbn ∉ livres ALORS RENVOYER "inconnu"
+    a ← adherents[nom] ; l ← livres[isbn]
+    SI a["amende"] > 0 ALORS RENVOYER "amende"
+    SI longueur(a["emprunts"]) ≥ 3 ALORS RENVOYER "limite"
+    SI isbn ∈ a["emprunts"] ALORS RENVOYER "deja"
+    SI l["disponibles"] = 0 ALORS RENVOYER "indisponible"
+    a["emprunts"][isbn] ← jour ; l["disponibles"] ← l["disponibles"] - 1
+    ajouter isbn à historique ; RENVOYER "ok"
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def creer() -> dict:
+    return {"livres": {}, "adherents": {}, "historique": []}
+
+
+def ajouter_livre(bib: dict, isbn: str, titre: str, auteur: str, n: int) -> None:
+    if isbn in bib["livres"]:
+        bib["livres"][isbn]["exemplaires"] += n
+        bib["livres"][isbn]["disponibles"] += n
+    else:
+        bib["livres"][isbn] = {"titre": titre, "auteur": auteur, "exemplaires": n, "disponibles": n}
+
+
+def inscrire(bib: dict, nom: str) -> None:
+    if nom not in bib["adherents"]:
+        bib["adherents"][nom] = {"emprunts": {}, "amende": 0}
+
+
+def emprunter(bib: dict, nom: str, isbn: str, jour: int) -> str:
+    if nom not in bib["adherents"] or isbn not in bib["livres"]:
+        return "inconnu"
+    a = bib["adherents"][nom]
+    livre = bib["livres"][isbn]
+    if a["amende"] > 0:
+        return "amende"
+    if len(a["emprunts"]) >= 3:
+        return "limite"
+    if isbn in a["emprunts"]:
+        return "deja"
+    if livre["disponibles"] == 0:
+        return "indisponible"
+    a["emprunts"][isbn] = jour
+    livre["disponibles"] -= 1
+    bib["historique"].append(isbn)
+    return "ok"
+
+
+def rendre(bib: dict, nom: str, isbn: str, jour: int) -> float:
+    a = bib["adherents"][nom]
+    debut = a["emprunts"].pop(isbn)
+    bib["livres"][isbn]["disponibles"] += 1
+    amende = round(max(0, jour - debut - 21) * 0.20, 2)
+    a["amende"] = round(a["amende"] + amende, 2)
+    return amende
+
+
+def payer(bib: dict, nom: str) -> float:
+    somme = bib["adherents"][nom]["amende"]
+    bib["adherents"][nom]["amende"] = 0
+    return somme
+
+
+def disponibles(bib: dict) -> list:
+    return sorted(l["titre"] for l in bib["livres"].values() if l["disponibles"] > 0)
+
+
+def top(bib: dict, k: int) -> list:
+    compte = {}
+    for isbn in bib["historique"]:
+        titre = bib["livres"][isbn]["titre"]
+        compte[titre] = compte.get(titre, 0) + 1
+    return sorted(compte, key=lambda t: (-compte[t], t))[:k]
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+b = creer()
+assert b == {"livres": {}, "adherents": {}, "historique": []}, "Médiathèque vide."
+ajouter_livre(b, "111", "Dune", "Herbert", 1)
+ajouter_livre(b, "222", "Ubik", "Dick", 2)
+ajouter_livre(b, "333", "Candide", "Voltaire", 1)
+ajouter_livre(b, "444", "Zadig", "Voltaire", 1)
+ajouter_livre(b, "111", "Dune", "Herbert", 1)
+assert b["livres"]["111"] == {"titre": "Dune", "auteur": "Herbert", "exemplaires": 2, "disponibles": 2}, "Exemplaires ajoutés."
+for nom in ["Léa", "Tom", "Léa"]:
+    inscrire(b, nom)
+assert b["adherents"]["Léa"] == {"emprunts": {}, "amende": 0} and len(b["adherents"]) == 2, "Deux adhérents."
+assert emprunter(b, "Zoé", "111", 1) == "inconnu" and emprunter(b, "Léa", "999", 1) == "inconnu", "Inconnus."
+assert emprunter(b, "Léa", "111", 1) == "ok" and emprunter(b, "Léa", "111", 2) == "deja", "Pas deux fois le même livre."
+assert emprunter(b, "Léa", "222", 1) == "ok" and emprunter(b, "Léa", "333", 1) == "ok" and emprunter(b, "Léa", "444", 1) == "limite", "Trois livres au plus."
+assert emprunter(b, "Tom", "333", 2) == "indisponible" and emprunter(b, "Tom", "111", 2) == "ok", "Plus d'exemplaire libre de Candide."
+assert disponibles(b) == ["Ubik", "Zadig"], "Livres disponibles."
+assert rendre(b, "Léa", "111", 20) == 0 and rendre(b, "Léa", "333", 30) == 1.6, "Rendu à temps, puis 8 jours de retard."
+assert emprunter(b, "Léa", "444", 31) == "amende" and payer(b, "Léa") == 1.6 and emprunter(b, "Léa", "444", 31) == "ok", "Amende à payer avant d'emprunter."
+assert b["livres"]["333"]["disponibles"] == 1 and "333" not in b["adherents"]["Léa"]["emprunts"], "Le livre rendu est de nouveau libre."
+emprunter(b, "Tom", "333", 32)
+assert top(b, 2) == ["Candide", "Dune"] and top(b, 10) == ["Candide", "Dune", "Ubik", "Zadig"], "Livres les plus empruntés."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-dicos-6-2" label="6.2 [Mini-projet] - Réseau social" type="python">
+<Enonce>
+### Réseau social
+
+**Contexte.** La classe de NSI crée « Terrier », un petit réseau social interne au lycée. Le projet en écrit le cœur, sans interface : les liens d'amitié, les messages, les suggestions d'amis, le fil d'actualité de chaque membre et les sujets à la mode.
+
+**Les données** : le réseau est un dictionnaire `{"amis": …, "messages": …}` : `amis` associe chaque membre à la **liste** de ses amis (l'amitié est réciproque), `messages` est la liste des tuples `(instant, auteur, texte)` publiés, l'instant étant un entier qui grandit avec le temps. Exemple de message : `(5, "Léa", "Projet terminé ! #nsi")`.
+
+**Les fonctions du réseau**
+- `creer()` : un réseau vide, au lancement.
+- `ajouter_amitie(r, a, b)` et `retirer_amitie(r, a, b)` : appelées quand deux membres deviennent amis ou se retirent de leurs listes. Mettent à jour les deux listes, sans doublon, en créant les membres absents.
+- `suggestions(r, a)` : la rubrique « personnes à connaître ». Renvoie les amis d'amis de `a` qui ne sont ni `a` ni déjà ses amis, triés par nombre d'amis communs décroissant puis par ordre alphabétique.
+- `publier(r, auteur, texte, instant)` : enregistre un nouveau message.
+- `hashtags(texte)` : extrait les sujets d'un message. Renvoie la liste triée, sans doublon, des mots qui commencent par `#`, en minuscules et sans la ponctuation finale (`.`, `,`, `!`, `?`) : `"Vive la #NSI ! #nsi, #Python."` donne `["#nsi", "#python"]`.
+- `fil(r, membre, k)` : la page d'accueil d'un membre. Renvoie les `k` messages les plus récents écrits par lui ou par ses amis, du plus récent au plus ancien, sous la forme `"auteur : texte"`.
+- `tendances(r, k)` : l'encadré « tendances ». Renvoie les `k` hashtags les plus utilisés dans tous les messages (un hashtag compte une fois par message), du plus fréquent au moins fréquent puis par ordre alphabétique.
+- `separation(r, a, b)` : la curiosité « degrés de séparation ». Renvoie le nombre minimal de liens d'amitié pour aller de `a` à `b` (0 si `a == b`, -1 s'il n'existe aucun chemin).
+
+<Indices>
+<Indice>
+
+Plusieurs fonctions se ressemblent : réutiliser `hashtags` dans `tendances`, et les listes d'amis dans `fil` et `suggestions`.
+
+</Indice>
+<Indice>
+
+Pour `separation`, avancer « par vagues » : la vague 0 contient `a`, la vague suivante contient les amis des membres de la vague, pas encore vus. Si `b` apparaît dans la vague `d`, la réponse est `d`.
+
+</Indice>
+<Indice>
+
+`texte.split()` découpe en mots ; `mot.rstrip(".,!?")` retire la ponctuation finale.
+
+</Indice>
+<Indice>
+
+```text
+(cœur du programme : les degrés de séparation)
+FONCTION separation(r, a, b)
+    SI a = b ALORS RENVOYER 0
+    vus ← {a} ; vague ← [a] ; d ← 0
+    TANT QUE vague non vide
+        d ← d + 1 ; suivante ← []
+        POUR CHAQUE m DE vague
+            POUR CHAQUE x DES amis de m
+                SI x = b ALORS RENVOYER d
+                SI x ∉ vus ALORS ajouter x à vus et à suivante
+        vague ← suivante
+    RENVOYER -1
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def creer() -> dict:
+    return {"amis": {}, "messages": []}
+
+
+def ajouter_amitie(r: dict, a: str, b: str) -> None:
+    for x, y in ((a, b), (b, a)):
+        r["amis"].setdefault(x, [])
+        if y not in r["amis"][x]:
+            r["amis"][x].append(y)
+
+
+def retirer_amitie(r: dict, a: str, b: str) -> None:
+    for x, y in ((a, b), (b, a)):
+        if y in r["amis"].get(x, []):
+            r["amis"][x].remove(y)
+
+
+def suggestions(r: dict, a: str) -> list:
+    amis = r["amis"].get(a, [])
+    compte = {}
+    for ami in amis:
+        for x in r["amis"][ami]:
+            if x != a and x not in amis:
+                compte[x] = compte.get(x, 0) + 1
+    return sorted(compte, key=lambda x: (-compte[x], x))
+
+
+def publier(r: dict, auteur: str, texte: str, instant: int) -> None:
+    r["messages"].append((instant, auteur, texte))
+
+
+def hashtags(texte: str) -> list:
+    return sorted({mot.rstrip(".,!?").lower() for mot in texte.split() if mot.startswith("#")})
+
+
+def fil(r: dict, membre: str, k: int) -> list:
+    auteurs = [membre] + r["amis"].get(membre, [])
+    choisis = [m for m in r["messages"] if m[1] in auteurs]
+    choisis.sort(key=lambda m: m[0], reverse=True)
+    return [f"{auteur} : {texte}" for instant, auteur, texte in choisis[:k]]
+
+
+def tendances(r: dict, k: int) -> list:
+    compte = {}
+    for instant, auteur, texte in r["messages"]:
+        for h in hashtags(texte):
+            compte[h] = compte.get(h, 0) + 1
+    return sorted(compte, key=lambda h: (-compte[h], h))[:k]
+
+
+def separation(r: dict, a: str, b: str) -> int:
+    if a == b:
+        return 0
+    vus = {a}
+    vague = [a]
+    d = 0
+    while vague:
+        d = d + 1
+        suivante = []
+        for m in vague:
+            for x in r["amis"].get(m, []):
+                if x == b:
+                    return d
+                if x not in vus:
+                    vus.add(x)
+                    suivante.append(x)
+        vague = suivante
+    return -1
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+r = creer()
+for a, b in [("Léa", "Tom"), ("Léa", "Inès"), ("Tom", "Noé"), ("Inès", "Noé"), ("Inès", "Zoé"), ("Noé", "Max"), ("Léa", "Tom")]:
+    ajouter_amitie(r, a, b)
+assert sorted(r["amis"]["Léa"]) == ["Inès", "Tom"] and "Léa" in r["amis"]["Tom"], "Amitiés réciproques, sans doublon."
+assert suggestions(r, "Léa") == ["Noé", "Zoé"], "Noé (2 amis communs) puis Zoé."
+assert separation(r, "Léa", "Max") == 3 and separation(r, "Léa", "Léa") == 0 and separation(r, "Zoé", "Tom") == 3, "Degrés de séparation."
+ajouter_amitie(r, "Ugo", "Eva")
+assert separation(r, "Léa", "Eva") == -1, "Pas de chemin."
+retirer_amitie(r, "Léa", "Inès")
+assert "Inès" not in r["amis"]["Léa"] and "Léa" not in r["amis"]["Inès"] and separation(r, "Léa", "Zoé") == 4, "Amitié retirée."
+assert hashtags("Vive la #NSI ! #nsi, #Python.") == ["#nsi", "#python"] and hashtags("rien") == [], "Hashtags."
+publier(r, "Tom", "Révisions #NSI #bac", 3)
+publier(r, "Max", "Match ce soir #foot", 4)
+publier(r, "Léa", "Projet terminé ! #nsi", 5)
+publier(r, "Noé", "Qui vient ? #foot #nsi", 2)
+publier(r, "Zoé", "#bac blanc demain", 6)
+assert fil(r, "Léa", 5) == ["Léa : Projet terminé ! #nsi", "Tom : Révisions #NSI #bac"], "Fil de Léa (elle et son ami Tom)."
+assert fil(r, "Noé", 2) == ["Max : Match ce soir #foot", "Tom : Révisions #NSI #bac"], "Les 2 plus récents du fil de Noé."
+assert tendances(r, 2) == ["#nsi", "#bac"] and tendances(r, 10) == ["#nsi", "#bac", "#foot"], "Tendances."
+```
+
+</Verification>
+</ExerciseSection>
 
 </ExerciseTabs>

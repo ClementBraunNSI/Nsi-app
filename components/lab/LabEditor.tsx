@@ -5,6 +5,7 @@ import Editor from "@monaco-editor/react";
 import { RotateCcw } from "lucide-react";
 import type { LabExercise } from "@/app/actions/getExercises";
 import { CodeArea } from "@/components/lab/CodeArea";
+import { useProjectionScale } from "@/components/projection/ProjectionShell";
 
 type Props = {
   exercise: LabExercise;
@@ -34,6 +35,8 @@ function useTouchEditor() {
 
 export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeMount, barActions, lockdown = false }: Props) {
   const touch = useTouchEditor();
+  // En projection, le code suit la taille du texte choisie par l'enseignant.
+  const scale = useProjectionScale();
   const language = exercise.type === "sql" ? "sql" : "python";
 
   return (
@@ -67,7 +70,7 @@ export function LabEditor({ exercise, code, busy, onCodeChange, onReset, beforeM
             loading={<span className="exercise-editor-loading">Chargement de l'éditeur</span>}
             options={{
               minimap: { enabled: false },
-              fontSize: 14,
+              fontSize: Math.round(14 * scale),
               scrollBeyondLastLine: false,
               wordWrap: "on",
               automaticLayout: true,

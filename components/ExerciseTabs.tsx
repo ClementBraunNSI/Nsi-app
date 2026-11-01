@@ -17,7 +17,7 @@ interface TabProps {
   children: React.ReactNode;
 }
 
-const DIFFICULTY_LEVELS = ['Introduction', 'Facile', 'Moyen', 'Avancé', 'Difficile', 'Expert'] as const;
+const DIFFICULTY_LEVELS = ['Introduction', 'Facile', 'Moyen', 'Avancé', 'Difficile', 'Expert', 'Mini-projet'] as const;
 
 type ExerciseDifficulty = (typeof DIFFICULTY_LEVELS)[number];
 
@@ -28,6 +28,7 @@ const DIFFICULTY_COLORS: Record<ExerciseDifficulty, string> = {
   Avancé: '#ea580c',
   Difficile: '#e11d48',
   Expert: '#7c3aed',
+  'Mini-projet': '#0f766e',
 };
 
 function normalizeDifficultyText(value: string): string {
@@ -57,8 +58,15 @@ function difficultyFromSection(section: number): ExerciseDifficulty {
 }
 
 function getExerciseDifficulty(label: string, id?: string): ExerciseDifficulty {
+  // « 2.4 [Facile] - Moyenne de trois notes » : le niveau entre crochets prime sur les mots du titre.
+  const bracket = label.match(/\[([^\]]+)\]/)?.[1];
+  const tagged = bracket ? DIFFICULTY_LEVELS.find((level) => normalizeDifficultyText(level) === normalizeDifficultyText(bracket.trim())) : undefined;
+  if (tagged) return tagged;
+
   const raw = normalizeDifficultyText(label);
 
+  // Mini-projet : des objectifs à atteindre plutôt que des consignes pas à pas.
+  if (/mini[\s-]?projet/.test(raw)) return 'Mini-projet';
   if (raw.includes('introduction') || /\bintro\b/.test(raw)) return 'Introduction';
   if (raw.includes('expert')) return 'Expert';
   if (raw.includes('difficile') || raw.includes('hard')) return 'Difficile';
@@ -81,9 +89,9 @@ function getExerciseDifficulty(label: string, id?: string): ExerciseDifficulty {
 
 function cleanExerciseLabel(label: string): string {
   return label
-    .replace(/\[(Introduction|Facile|Moyen|Avancé|Difficile|Expert)\]/gi, '')
+    .replace(/\[(Introduction|Facile|Moyen|Avancé|Difficile|Expert|Mini-projet)\]/gi, '')
     .replace(/\((Introduction|Facile|Moyen|Avancé|Difficile|Expert|Intermédiaire|Intermediaire)\)/gi, '')
-    .replace(/^(Introduction|Facile|Moyen|Avancé|Difficile|Expert|Easy|Medium|Med|Hard)\s*[-–]?\s*/i, '')
+    .replace(/^(Mini-projet|Introduction|Facile|Moyen|Avancé|Difficile|Expert|Easy|Medium|Med|Hard)\s*[-–]?\s*/i, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -331,7 +339,8 @@ export function ExerciseTabs({
                       </span>
                     ) : null}
                   </div>
-                  <div className="sheet-brief-body prose prose-slate max-w-none">{current.content}</div>
+                  {/* La clé remet les indices à zéro d'un exercice à l'autre. */}
+                  <div key={current.id} className="sheet-brief-body prose prose-slate max-w-none">{current.content}</div>
                 </div>
 
                 {editable ? <SheetIde exerciseId={current.id} onCompleted={markCompleted} /> : null}

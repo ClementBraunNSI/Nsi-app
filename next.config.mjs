@@ -21,6 +21,28 @@ const nextConfig = {
       './node_modules/pyodide/**/*',
       './node_modules/sql.js/dist/sql-asm.js',
     ],
+    // Défi du lundi : vérification de l'élève, et test de la correction par l'enseignant.
+    '/defi': [
+      './lib/pyodide-check-child.cjs',
+      './lib/pyodide-extra-packages.cjs',
+      './lib/pyodide-wheels/*.whl',
+      './node_modules/pyodide/**/*',
+      './node_modules/sql.js/dist/sql-asm.js',
+    ],
+    '/admin/defis': [
+      './lib/pyodide-check-child.cjs',
+      './lib/pyodide-extra-packages.cjs',
+      './lib/pyodide-wheels/*.whl',
+      './node_modules/pyodide/**/*',
+      './node_modules/sql.js/dist/sql-asm.js',
+    ],
+    '/admin/defis/[id]': [
+      './lib/pyodide-check-child.cjs',
+      './lib/pyodide-extra-packages.cjs',
+      './lib/pyodide-wheels/*.whl',
+      './node_modules/pyodide/**/*',
+      './node_modules/sql.js/dist/sql-asm.js',
+    ],
   },
   async redirects() {
     return [

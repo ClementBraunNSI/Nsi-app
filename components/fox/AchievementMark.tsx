@@ -3,6 +3,7 @@ import { ACHIEVEMENTS, achievementImage } from "@/lib/achievements";
 import { sheetCourseIdFromAchievement } from "@/lib/sheet-badge-art";
 import { SheetBadgeFox } from "@/components/fox/SheetBadgeFox";
 import { enqueteAchievement } from "@/lib/enquetes/rewards";
+import { challengeAchievement } from "@/lib/challenges";
 
 export function AchievementMark({
   id,
@@ -20,7 +21,7 @@ export function AchievementMark({
     return <SheetBadgeFox courseId={courseId} title={title} earned={earned} size={size} />;
   }
 
-  const image = enqueteAchievement(id)?.image ?? achievementImage(id);
+  const image = enqueteAchievement(id)?.image ?? challengeAchievement(id)?.image ?? achievementImage(id);
   if (image) {
     return (
       <img

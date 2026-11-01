@@ -3,12 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ClipboardCheck, Eye, House, Info, LayoutDashboard, LogIn, LogOut, Menu, X } from "lucide-react";
+import { CalendarDays, ClipboardCheck, Eye, House, Info, LayoutDashboard, LogIn, LogOut, Menu, X } from "lucide-react";
 import AccessibilityMenu from "./AccessibilityMenu";
 import MobileMenu, { type MenuLink } from "./MobileMenu";
 import { useFoxEasterEgg } from "./FoxEasterEggProvider";
 import { firstNameOf } from "@/lib/first-name";
-import { usePendingEvaluations } from "./usePendingEvaluations";
+import { usePendingChallenge, usePendingEvaluations } from "./usePendingEvaluations";
 
 type Props = {
   pathname: string;
@@ -59,6 +59,9 @@ export default function SiteHeader({
   // Élève de classe : évaluations à faire ; enseignant : copies verrouillées qui attendent un déblocage.
   const showEvaluations = Boolean(user) && (elevated || Boolean(classe));
   const pendingEvaluations = usePendingEvaluations(showEvaluations, pathname);
+  // Défi du lundi : élève de classe, pastille tant que le défi ouvert n'est pas réussi.
+  const showChallenge = Boolean(user) && !elevated && Boolean(classe);
+  const pendingChallenge = usePendingChallenge(showChallenge, pathname);
   const links: MenuLink[] = showEvaluations
     ? [
         ...NAV,
@@ -72,6 +75,16 @@ export default function SiteHeader({
             ? `${pendingEvaluations} copie${pendingEvaluations > 1 ? "s" : ""} verrouillée${pendingEvaluations > 1 ? "s" : ""}`
             : `${pendingEvaluations} évaluation${pendingEvaluations > 1 ? "s" : ""} à faire`,
         },
+        ...(showChallenge
+          ? [{
+              href: "/defi",
+              label: "Défi",
+              icon: CalendarDays,
+              match: (path: string) => path.startsWith("/defi"),
+              badge: pendingChallenge,
+              badgeLabel: "Défi de la semaine à réussir",
+            }]
+          : []),
       ]
     : NAV;
   const accessibility = {
