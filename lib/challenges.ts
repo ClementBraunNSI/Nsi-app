@@ -1,4 +1,5 @@
 import type { EvaluationExercise } from "./evaluation-subject";
+import type { IncidentKind } from "./evaluation-guard";
 
 /** Réponse de l'élève à un exercice du défi. */
 export type ChallengeAnswer = { code: string; passed: boolean; attempts: number };
@@ -12,6 +13,8 @@ export type MyChallenge = {
   open: boolean;
   /** Temps pour faire le défi, compté depuis l'ouverture de la page ; null : pas de limite. */
   timeLimitMinutes: number | null;
+  /** Surveillance des évaluations pratiques : partage d'écran, verrouillage, code du professeur. */
+  proctored?: boolean;
   exercises: EvaluationExercise[];
   corrections: { id: string; correction: string }[] | null;
   mine: {
@@ -21,6 +24,10 @@ export type MyChallenge = {
     firstPassedAt: string | null;
     startedAt?: string | null;
     answers?: Record<string, ChallengeAnswer>;
+    /** Défi arrêté par l'élève avant la fin du temps. */
+    finishedAt?: string | null;
+    locked?: boolean;
+    lockReason?: IncidentKind | null;
   } | null;
   classPassed: number;
   classSize: number;

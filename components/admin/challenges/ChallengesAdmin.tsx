@@ -44,11 +44,13 @@ export default function ChallengesAdmin({ challenges, classes }: { challenges: C
                     <small>
                       {challenge.classes.join(", ")} · ouvert le {dayFormat.format(new Date(challenge.opensAt))} · {challenge.exerciseCount} exercice{challenge.exerciseCount > 1 ? "s" : ""}
                       {challenge.timeLimitMinutes ? ` · ${challenge.timeLimitMinutes} min par élève` : ""}
+                      {challenge.proctored ? " · surveillé" : ""}
                     </small>
                   </span>
                   <span className="adm-eval-counts">
                     <span>{challenge.passed} réussi{challenge.passed > 1 ? "s" : ""}</span>
                     <span>{challenge.submitted} élève{challenge.submitted > 1 ? "s ont" : " a"} ouvert le défi</span>
+                    {challenge.locked ? <span className="adm-eval-alert">{challenge.locked} verrouillé{challenge.locked > 1 ? "s" : ""}</span> : null}
                   </span>
                 </Link>
               </li>
