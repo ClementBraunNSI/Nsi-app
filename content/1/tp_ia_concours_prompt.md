@@ -40,9 +40,9 @@ Un binôme qui ne respecte pas une règle perd les points de la manche. Le but e
 
 | Manche | Type de cible | Durée | Limite du prompt | Essais |
 |--------|---------------|-------|------------------|--------|
-| **1. Le texte** | Un texte court (poème, slogan, petite annonce) | 12 minutes | 60 mots | 5 |
-| **2. L'image** | Une image générée à l'avance | 15 minutes | 50 mots | 5 |
-| **3. La contrainte** | Un texte ou une image, avec une contrainte surprise annoncée au départ | 12 minutes | 40 mots | 4 |
+| **1. Le texte** | Une fable en vers | 12 minutes | 60 mots | 5 |
+| **2. L'image** | Une photo de paysage | 15 minutes | 50 mots | 5 |
+| **3. La contrainte** | Une image avec un texte imposé dans l'image | 12 minutes | 40 mots | 4 |
 
 Avant chaque manche, prendre 2 minutes pour observer la cible **sans toucher à l'ordinateur**. Lister ce qui la caractérise, comme la forme, la longueur, le ton, les couleurs, le cadrage ou les détails. C'est souvent cette liste qui permet de gagner la manche.
 
@@ -50,7 +50,57 @@ Avant chaque manche, prendre 2 minutes pour observer la cible **sans toucher à 
 
 **Pour la manche 2**, reprendre le tableau du cours : sujet, attitude, décor, style, cadrage, lumière. Un détail bien décrit vaut mieux que trois adjectifs vagues.
 
-**Pour la manche 3**, la contrainte surprise peut être, par exemple, d'écrire le prompt sans utiliser un mot précis, ou d'obtenir le résultat avec une IA pas encore utilisée.
+**Pour la manche 3**, la contrainte est le texte écrit dans l'image : « La tanière du code ». Les IA d'image écrivent souvent mal, avec des lettres en trop, manquantes ou déformées. Le texte doit être lisible et sans faute, sinon le résultat reçoit 0 au critère « Les détails ».
+
+## Les trois cibles
+
+Chaque cible n'est ouverte qu'au début de sa manche.
+
+<details className="concours-cible">
+<summary>Manche 1 : le poème</summary>
+
+> **Le Renard, la Mouche et le Phacochère**
+>
+> Dans les bois endormis, sous les grands chênes verts,\
+> Un renard méditait, rusé comme un vieux sage,\
+> Quand survint un phacochère au fort mauvais caractère,\
+> Qui troublait le silence en ravageant les feuillages.
+>
+> Une mouche, en ces lieux, bourdonnait sans repos,\
+> Autour du grand sanglier qui fouillait les racines,\
+> « Cesse donc ton vacarme, ou tu perdras ta peau ! »\
+> Dit la bête irritée, en secouant ses narines.
+>
+> Soudain, un ornithorynque apparut dans les bois,\
+> Son pelage était roux, comme un soleil d'automne,\
+> Et l'ambre de son bec éclairait chaque endroit,\
+> Tandis que l'or des feuilles au vent doux tourbillonne.
+>
+> Le renard, d'un sourire, observa la querelle,\
+> Puis souffla : « Mon ami, tu grondes sans raison ;\
+> La mouche est bien petite, et pourtant bien cruelle,\
+> Car l'esprit fait souvent la force du plus profond. »
+>
+> Le phacochère apprit qu'on ne gagne à crier,\
+> La mouche, elle, comprit qu'il faut parfois se taire ;\
+> Le renard s'en alla, fier de les conseiller,\
+> Car le sage sait rire avant de vouloir plaire.
+
+</details>
+
+<details className="concours-cible">
+<summary>Manche 2 : le paysage</summary>
+
+![Cible de la manche 2 : une forêt de séquoias géants au crépuscule, avec de la brume dans la vallée, des montagnes enneigées et une cascade](/content/1/tp_concours_cible_paysage.webp)
+
+</details>
+
+<details className="concours-cible">
+<summary>Manche 3 : le fennec</summary>
+
+![Cible de la manche 3 : un fennec en origami blanc qui court, avec un bandana orange portant l'inscription « La tanière du code »](/content/1/tp_concours_cible_fennec.png)
+
+</details>
 
 ## Comment on départage
 
@@ -90,18 +140,19 @@ On ne vote pas pour son propre binôme. En cas d'égalité, le binôme qui a uti
 La note du TP ne dépend pas du classement. Elle porte sur la qualité des fiches : des prompts complets, des modifications expliquées, et une réflexion honnête sur ce qui a marché ou non.
 
 <Correction>
-**Idées de cibles**, invisibles sur le site.
+**Prompts de référence**, invisibles sur le site, pour tester les cibles avant la séance. Chacun respecte la limite de mots de sa manche.
 
-Manche 1, texte cible (à projeter) :
+Manche 1 (60 mots) :
 
-> Petite annonce. Renard calme cherche terrier lumineux, proche forêt, wifi indispensable. Accepte poules en colocation, sous conditions. Répondre avant la pleine lune.
+> Écris une fable en vers à la manière de La Fontaine, titrée « Le Renard, la Mouche et le Phacochère » : 5 quatrains en rimes croisées, vers longs. Dans un bois de chênes, un renard sage observe un phacochère grincheux agacé par une mouche. Un ornithorynque roux au bec ambré apparaît. Deux répliques entre guillemets. Morale finale : crier ne sert à rien.
 
-Manche 2, image cible : la générer à l'avance avec ce prompt, puis ne projeter que l'image.
+Manche 2 (44 mots) :
 
-> Un renard roux en écharpe jaune, assis sur un banc dans une gare sous la pluie, vu de trois quarts. Illustration à plat, couleurs orange et bleu nuit, lumière des lampadaires.
+> Photo réaliste au crépuscule, format panoramique : forêt de séquoias géants et de sapins vue d'une pente rocheuse et moussue. Soleil couchant orangé à gauche sous un ciel nuageux gris. Brume dans la vallée, montagnes enneigées au fond, cascade à droite. Ambiance sombre, couleurs désaturées.
 
-Manche 3, contraintes surprises possibles :
-- obtenir l'image de la manche 2 sans écrire les mots « renard », « gare » ni « pluie » ;
-- reproduire la petite annonce de la manche 1 sous forme de poème de 4 vers ;
-- utiliser une IA qu'aucun membre du binôme n'a encore utilisée pendant la séance.
+Manche 3 (37 mots) :
+
+> Photo d'un fennec en origami de papier blanc qui court, queue en papier orange. Il porte un bandana orange qui flotte derrière lui, avec l'inscription « La tanière du code ». Fond crème uni, sol couleur sable, lumière douce.
+
+Variante plus difficile pour la manche 3 : interdire le mot « origami » dans le prompt.
 </Correction>
