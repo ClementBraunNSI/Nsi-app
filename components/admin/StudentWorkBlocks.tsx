@@ -1,4 +1,5 @@
 import type { StudentWorkDetail } from "@/app/actions/activity";
+import { ExerciseCode } from "@/components/admin/ExerciseCode";
 
 function formatWhen(iso: string) {
   if (!iso) return "Date inconnue";
@@ -8,6 +9,7 @@ function formatWhen(iso: string) {
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "Europe/Paris",
   });
 }
 
@@ -34,7 +36,8 @@ export function StudentWorkBlocks({ detail }: { detail: StudentWorkDetail }) {
       </section>
 
       <section>
-        <h3 className="text-lg font-bold text-slate-800 mb-3">Exercices réalisés</h3>
+        <h3 className="text-lg font-bold text-slate-800 mb-1">Exercices réalisés</h3>
+        <p className="mb-3 text-sm text-slate-400">Cliquer sur un exercice pour voir le code réussi.</p>
         {detail.groups.length === 0 ? (
           <p className="text-sm text-slate-400">Aucun exercice validé.</p>
         ) : (
@@ -44,9 +47,13 @@ export function StudentWorkBlocks({ detail }: { detail: StudentWorkDetail }) {
                 <p className="font-bold text-slate-800">{group.title}</p>
                 <ul className="mt-2 space-y-1">
                   {group.exercises.map((exercise) => (
-                    <li key={`${group.courseId}-${exercise.id}`} className="flex flex-wrap items-baseline justify-between gap-2 text-sm text-slate-600">
-                      <span>{exercise.label}</span>
-                      <span className="text-slate-400">{formatWhen(exercise.at)}</span>
+                    <li key={`${group.courseId}-${exercise.id}`} className="text-sm text-slate-600">
+                      <ExerciseCode studentId={detail.studentId} exerciseId={exercise.id}>
+                        <span className="flex flex-wrap items-baseline justify-between gap-2">
+                          <span>{exercise.label}</span>
+                          <span className="text-slate-400">{formatWhen(exercise.at)}</span>
+                        </span>
+                      </ExerciseCode>
                     </li>
                   ))}
                 </ul>

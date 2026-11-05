@@ -186,6 +186,7 @@ export const GENERATED_SHEET_BADGES = new Set([
   "paul-bases-python-input",
   "premiere_projet",
   "programmation-fonctionnelle",
+  "anatole-revision-poo",
   "proj_caisse_bilan",
   "proj_caisse_client",
   "proj_caisse_journee",

@@ -14,6 +14,8 @@ import { SheetBadgeFox } from '@/components/fox/SheetBadgeFox';
 import { AchievementMark } from '@/components/fox/AchievementMark';
 import { DeleteStudentDialog, StudentAccountDialog } from '@/components/admin/StudentAccounts';
 import { isAbortError } from '@/lib/is-abort-error';
+import { SolvedCodePanel } from '@/components/admin/SolvedCodePanel';
+import { classGroups, NO_CLASS } from '@/lib/class-groups';
 
 // Mapping des niveaux pour l'affichage et le filtrage
 const LEVELS = [
@@ -35,6 +37,7 @@ export default function AdminDashboard() {
   const [selectedLevel, setSelectedLevel] = useState('ALL');
   const [audience, setAudience] = useState<'particuliers' | 'classe'>('particuliers');
   const [searchQuery, setSearchQuery] = useState('');
+  const [classFilter, setClassFilter] = useState('');
   const [selectedStudent, setSelectedStudent] = useState<any>(null);
   const [progressStudent, setProgressStudent] = useState<AdminStudent | null>(null);
   const [accountMode, setAccountMode] = useState<'create' | 'edit' | null>(null);
@@ -67,9 +70,23 @@ export default function AdminDashboard() {
       const matchesAudience = audience === 'particuliers' ? isPrivate : !isPrivate;
       const matchesSearch = (s.full_name || s.email || '').toLowerCase().includes(searchQuery.toLowerCase());
       const matchesLevel = selectedLevel === 'ALL' || s.level === selectedLevel;
-      return matchesAudience && matchesSearch && matchesLevel;
+      const matchesClass = audience !== 'classe' || !classFilter
+        || (classFilter === NO_CLASS ? !s.classe?.trim() : s.classe?.trim() === classFilter);
+      return matchesAudience && matchesSearch && matchesLevel && matchesClass;
     });
-  }, [students, selectedLevel, searchQuery, audience]);
+  }, [students, selectedLevel, searchQuery, audience, classFilter]);
+
+  // Élèves de classe : une section par classe, dans l'ordre des classes.
+  const classOptions = useMemo(
+    () => classGroups(students.filter((s) => !s.has_private_lessons && (selectedLevel === 'ALL' || s.level === selectedLevel)), (s) => s.classe),
+    [students, selectedLevel],
+  );
+  const studentSections = useMemo(
+    () => audience === 'classe'
+      ? classGroups(filteredStudents, (s) => s.classe)
+      : [{ key: 'all', label: '', items: filteredStudents }],
+    [filteredStudents, audience],
+  );
 
   // Calcul des stats pour la vue actuelle
   const stats = useMemo(() => {
@@ -155,7 +172,10 @@ export default function AdminDashboard() {
               <button
                 key={id}
                 type="button"
-                onClick={() => setAudience(id)}
+                onClick={() => {
+                  setAudience(id);
+                  setClassFilter('');
+                }}
                 className={`px-5 py-3 rounded-2xl font-bold text-sm ${
                   audience === id ? 'bg-orange-500 text-white' : 'bg-white text-slate-500 border border-slate-200'
                 }`}
@@ -175,6 +195,16 @@ export default function AdminDashboard() {
           </summary>
           <div className="mt-4">
             <SubmissionsReview />
+          </div>
+        </details>
+
+        <details className="rounded-3xl border border-emerald-200 bg-white p-5 shadow-sm">
+          <summary className="cursor-pointer text-lg font-bold text-slate-800">
+            Codes réussis
+            <span className="ml-2 text-sm font-medium text-slate-400">dernière version réussie de chaque exercice, par classe, fiche ou élève, avec export</span>
+          </summary>
+          <div className="mt-4">
+            <SolvedCodePanel />
           </div>
         </details>
 
@@ -242,6 +272,19 @@ export default function AdminDashboard() {
                 className="w-full pl-10 pr-4 py-3 bg-white border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all outline-none text-slate-600 font-medium"
               />
             </div>
+            {audience === 'classe' && (
+              <select
+                value={classFilter}
+                onChange={(e) => setClassFilter(e.target.value)}
+                aria-label="Filtrer par classe"
+                className="w-full md:w-auto px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-600 font-semibold"
+              >
+                <option value="">Toutes les classes</option>
+                {classOptions.map((group) => (
+                  <option key={group.key} value={group.key}>{group.label} ({group.items.length})</option>
+                ))}
+              </select>
+            )}
             <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
               <button
                 onClick={() => {
@@ -280,92 +323,104 @@ export default function AdminDashboard() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {filteredStudents.length > 0 ? (
-                  filteredStudents.map((s) => {
-                    const lastActive = s.updated_at ? new Date(s.updated_at) : null;
-                    const isInactive = !lastActive || (new Date().getTime() - lastActive.getTime()) > (7 * 24 * 60 * 60 * 1000);
-                    
-                    return (
-                      <tr key={s.id} className="hover:bg-slate-50 transition-colors group">
-                        <td className="px-6 py-5">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-sm">
-                              {(s.full_name || s.email || '?')[0]}
+                  studentSections.map((section) => (
+                    <React.Fragment key={section.key}>
+                      {section.label && (
+                        <tr className="bg-slate-50">
+                          <th colSpan={6} scope="colgroup" className="px-6 py-3 text-left text-sm font-bold text-slate-700">
+                            {section.label}
+                            <span className="ml-2 text-xs font-medium text-slate-400">{section.items.length} élève{section.items.length > 1 ? 's' : ''}</span>
+                          </th>
+                        </tr>
+                      )}
+                      {section.items.map((s: any) => {
+                      const lastActive = s.updated_at ? new Date(s.updated_at) : null;
+                      const isInactive = !lastActive || (new Date().getTime() - lastActive.getTime()) > (7 * 24 * 60 * 60 * 1000);
+                      
+                      return (
+                        <tr key={s.id} className="hover:bg-slate-50 transition-colors group">
+                          <td className="px-6 py-5">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-sm">
+                                {(s.full_name || s.email || '?')[0]}
+                              </div>
+                              <div>
+                                <button
+                                  type="button"
+                                  onClick={() => setProgressStudent(s)}
+                                  className="cursor-pointer text-left font-bold text-slate-800 hover:text-orange-600 hover:underline decoration-orange-300 underline-offset-2"
+                                  aria-label={`Voir la progression de ${s.full_name || 'cet élève'}`}
+                                >
+                                  {s.full_name || 'Sans nom'}
+                                </button>
+                                <p className="text-xs text-slate-400 font-medium">{s.email}</p>
+                                <span className={`mt-1 inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                  s.has_private_lessons
+                                    ? 'bg-orange-50 text-orange-700 border border-orange-100'
+                                    : 'bg-slate-100 text-slate-600'
+                                }`}>
+                                  {s.has_private_lessons ? 'Cours particuliers' : 'Élève de classe'}
+                                </span>
+                              </div>
                             </div>
-                            <div>
-                              <button
-                                type="button"
-                                onClick={() => setProgressStudent(s)}
-                                className="cursor-pointer text-left font-bold text-slate-800 hover:text-orange-600 hover:underline decoration-orange-300 underline-offset-2"
-                                aria-label={`Voir la progression de ${s.full_name || 'cet élève'}`}
-                              >
-                                {s.full_name || 'Sans nom'}
-                              </button>
-                              <p className="text-xs text-slate-400 font-medium">{s.email}</p>
-                              <span className={`mt-1 inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                                s.has_private_lessons
-                                  ? 'bg-orange-50 text-orange-700 border border-orange-100'
-                                  : 'bg-slate-100 text-slate-600'
-                              }`}>
-                                {s.has_private_lessons ? 'Cours particuliers' : 'Élève de classe'}
+                          </td>
+                          <td className="px-6 py-5">
+                            <span className="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold">
+                              {LEVELS.find(l => l.id === s.level)?.label || s.level || 'N/A'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-5 text-sm font-medium text-slate-600">
+                            {s.classe || (s.has_private_lessons ? 'Particulier' : 'Sans classe')}
+                          </td>
+                          <td className="px-6 py-5">
+                            <div className="flex items-center gap-2 text-slate-500 text-sm font-medium">
+                              <Clock size={14} />
+                              {lastActive ? lastActive.toLocaleDateString() : 'Jamais'}
+                            </div>
+                          </td>
+                          <td className="px-6 py-5">
+                            {isInactive ? (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold border border-red-100">
+                                <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                                Inactif
                               </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold border border-emerald-100">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                                Actif
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-6 py-5 text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              <button
+                                onClick={() => {
+                                  setAccountStudent(s);
+                                  setAccountMode('edit');
+                                }}
+                                className="text-sm font-bold text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg"
+                              >
+                                Modifier
+                              </button>
+                              <button
+                                onClick={() => setStudentToDelete(s)}
+                                className="text-sm font-bold text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-lg"
+                              >
+                                Supprimer
+                              </button>
+                              <button 
+                                onClick={() => setSelectedStudent(s)}
+                                className="flex items-center gap-1 text-sm font-bold text-orange-500 hover:text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-all"
+                              >
+                                Suivi <ChevronRight size={16} />
+                              </button>
                             </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-5">
-                          <span className="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold">
-                            {LEVELS.find(l => l.id === s.level)?.label || s.level || 'N/A'}
-                          </span>
-                        </td>
-                        <td className="px-6 py-5 text-sm font-medium text-slate-600">
-                          {s.classe || (s.has_private_lessons ? 'Particulier' : 'Sans classe')}
-                        </td>
-                        <td className="px-6 py-5">
-                          <div className="flex items-center gap-2 text-slate-500 text-sm font-medium">
-                            <Clock size={14} />
-                            {lastActive ? lastActive.toLocaleDateString() : 'Jamais'}
-                          </div>
-                        </td>
-                        <td className="px-6 py-5">
-                          {isInactive ? (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold border border-red-100">
-                              <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                              Inactif
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold border border-emerald-100">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                              Actif
-                            </span>
-                          )}
-                        </td>
-                        <td className="px-6 py-5 text-right">
-                          <div className="flex items-center justify-end gap-1">
-                            <button
-                              onClick={() => {
-                                setAccountStudent(s);
-                                setAccountMode('edit');
-                              }}
-                              className="text-sm font-bold text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg"
-                            >
-                              Modifier
-                            </button>
-                            <button
-                              onClick={() => setStudentToDelete(s)}
-                              className="text-sm font-bold text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-lg"
-                            >
-                              Supprimer
-                            </button>
-                            <button 
-                              onClick={() => setSelectedStudent(s)}
-                              className="flex items-center gap-1 text-sm font-bold text-orange-500 hover:text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-all"
-                            >
-                              Suivi <ChevronRight size={16} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })
+                          </td>
+                        </tr>
+                      );
+                      })}
+                    </React.Fragment>
+                  ))
                 ) : (
                   <tr>
                     <td colSpan={6} className="px-6 py-12 text-center text-slate-400 italic">

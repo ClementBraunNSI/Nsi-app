@@ -493,13 +493,16 @@ export async function findWrittenExercise(exerciseId: string): Promise<Omit<Writ
 }
 
 /** Libellés de tous les exercices, éditeur et réponse écrite : pour l'écran de correction. */
-export async function listExerciseLabels(): Promise<Record<string, { label: string; courseTitle: string; pagePath?: string }>> {
+export async function listExerciseLabels(): Promise<Record<string, { label: string; courseTitle: string; pagePath?: string; type?: 'python' | 'sql' }>> {
   const auth = await getAuthContext();
   if (!auth.user || !auth.isElevated) return {};
   const { exercises, written } = buildExerciseCatalog();
-  const labels: Record<string, { label: string; courseTitle: string; pagePath?: string }> = {};
-  for (const item of [...exercises, ...written]) {
+  const labels: Record<string, { label: string; courseTitle: string; pagePath?: string; type?: 'python' | 'sql' }> = {};
+  for (const item of written) {
     labels[item.id] = { label: item.label, courseTitle: item.courseTitle, pagePath: item.pagePath };
+  }
+  for (const item of exercises) {
+    labels[item.id] = { label: item.label, courseTitle: item.courseTitle, pagePath: item.pagePath, type: item.type };
   }
   return labels;
 }

@@ -8,6 +8,8 @@ export type ActivityEvent = {
   at: string | null;
   label: string;
   work: boolean;
+  /** Exercice validé : son code réussi s'ouvre depuis l'activité. */
+  exerciseId?: string;
 };
 
 export type StudentActivity = {
@@ -40,6 +42,7 @@ export type ExerciseSheetGroup = {
 };
 
 export type StudentWorkDetail = {
+  studentId: string;
   fullName: string;
   sheets: DoneSheet[];
   groups: ExerciseSheetGroup[];
@@ -135,6 +138,7 @@ export async function getStudentWorkDetail(studentId: string): Promise<StudentWo
     });
 
   return {
+    studentId: id,
     fullName: profileRes.data.full_name || "Élève",
     sheets,
     groups,
@@ -208,6 +212,7 @@ export async function getStudentActivity(): Promise<{
       at: row.completed_at,
       label: `Exercice validé : ${name}${sheet ? ` (${sheet})` : ""}`,
       work: true,
+      exerciseId: row.exercise_id,
     });
   }
 

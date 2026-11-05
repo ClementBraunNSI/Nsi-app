@@ -84,6 +84,7 @@ const CHAPTERS = {
   particuliers: {
     'bases de python': 'terminal',
     'programmation fonctionnelle': 'lambda',
+    'programmation orientee objet': 'cube',
   },
 };
 

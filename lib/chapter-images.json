@@ -55,6 +55,7 @@
   },
   "particuliers": {
     "bases de python": "/images/chapitres/particuliers/chap_bases-de-python.png",
-    "programmation fonctionnelle": "/images/chapitres/particuliers/chap_programmation-fonctionnelle.png"
+    "programmation fonctionnelle": "/images/chapitres/particuliers/chap_programmation-fonctionnelle.png",
+    "programmation orientee objet": "/images/chapitres/particuliers/chap_programmation-orientee-objet.png"
   }
 }

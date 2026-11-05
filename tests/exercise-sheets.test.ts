@@ -25,6 +25,7 @@ const SHEETS = [
   "3/listes-comprehension-exercices.md",
   "3/exercices_poo.md",
   "3/exercices_terminale_fondamentaux.md",
+  "particuliers/anatole/exercices-revision-poo.md",
 ];
 
 const LEVELS = ["Introduction", "Facile", "Moyen", "Difficile", "Expert"];

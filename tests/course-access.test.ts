@@ -74,6 +74,18 @@ describe("course audience", () => {
     expect(canAccessCourse(privateSheet, { ...classAnatole, userEmail: "anatole@clementbraun.info" })).toBe(false);
   });
 
+  it("shows every sheet of the Anatole folder to private Anatole only", () => {
+    const folder = path.join(process.cwd(), "content/particuliers/anatole");
+    const sheets = fs.readdirSync(folder).filter((name) => /\.mdx?$/.test(name));
+    expect(sheets).toContain("exercices-revision-poo.md");
+    for (const name of sheets) {
+      const data = matter(fs.readFileSync(path.join(folder, name), "utf8")).data;
+      expect(canAccessCourse(data, privateAnatole), name).toBe(true);
+      expect(canAccessCourse(data, classAnatole), name).toBe(false);
+      expect(canAccessCourse(data, loggedOut), name).toBe(false);
+    }
+  });
+
   it("opens the C extra resources to everyone, logged in or not", () => {
     expect(parseAudience(cSheet)).toEqual({ kind: "public" });
     expect(canAccessCourse(cSheet, loggedOut)).toBe(true);

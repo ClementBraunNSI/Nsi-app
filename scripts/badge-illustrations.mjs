@@ -31,6 +31,7 @@ const SHEETS = {
   'paul-bases-python-input': ['think', 'keyboard'],
   'premiere_projet': ['cheer', 'rocket'],
   'programmation-fonctionnelle': ['think', 'lambda'],
+  'anatole-revision-poo': ['sit', 'stack'],
   'proj_caisse_bilan': ['book', 'receipt'],
   'proj_caisse_client': ['wink', 'basket'],
   'proj_caisse_journee': ['sit', 'register'],
