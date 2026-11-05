@@ -21,10 +21,26 @@ export type ClassAssessment = {
   chapters: string;
 };
 
+export type ClassVisio = {
+  id: string;
+  title: string;
+  note: string;
+  /** Ouverte par l'enseignant, ou séance qui commence dans moins de 15 minutes. */
+  joinable: boolean;
+  /** Adresse et code : présents seulement quand la visio est rejoignable. */
+  url: string | null;
+  code: string | null;
+  nextSession: { day: string; start: string; end: string } | null;
+};
+
+export type ClassVisioSession = { id: string; title: string; day: string; start: string; end: string };
+
 export type ClassInfo = {
   classe: string | null;
   homework: ClassHomework[];
   assessments: ClassAssessment[];
+  visios: ClassVisio[];
+  visioSessions: ClassVisioSession[];
   unread: number;
   lastAnnouncement: { id: string; body: string; createdAt: string } | null;
 };
@@ -38,6 +54,8 @@ export function parseClassInfo(value: unknown): ClassInfo | null {
     classe: data.classe ?? null,
     homework: Array.isArray(data.homework) ? data.homework : [],
     assessments: Array.isArray(data.assessments) ? data.assessments : [],
+    visios: Array.isArray(data.visios) ? data.visios : [],
+    visioSessions: Array.isArray(data.visioSessions) ? data.visioSessions : [],
     unread: Number(data.unread) || 0,
     lastAnnouncement: data.lastAnnouncement ?? null,
   };

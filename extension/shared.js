@@ -45,6 +45,14 @@ export function formatAssessmentDate(day, time) {
   return `${label} à ${Number(hours)} h${minutes && minutes !== "00" ? ` ${minutes}` : ""}`;
 }
 
+export function formatTimeRange(start, end) {
+  const one = (time) => {
+    const [hours, minutes] = time.split(":");
+    return `${Number(hours)} h${minutes && minutes !== "00" ? ` ${minutes}` : ""}`;
+  };
+  return `${one(start)} – ${one(end)}`;
+}
+
 export function formatDue(iso) {
   return iso ? `Pour ${dueFormat.format(new Date(iso))}` : "Sans date limite";
 }

@@ -4,7 +4,9 @@ import type { MyAnnouncements } from "@/app/actions/announcements";
 import { EmptyState, PageHeader } from "@/components/ui";
 import { AnnouncementFeed } from "@/components/announcements/AnnouncementFeed";
 import { ExtensionTokenCard } from "@/components/class-info/ExtensionTokenCard";
+import { VisioBlock } from "@/components/class-info/VisioBlock";
 import { ASSESSMENT_LABELS, formatAssessmentDate, type ClassInfo } from "@/lib/class-info";
+import { formatTimeRange } from "@/lib/visio";
 
 const dueFormat = new Intl.DateTimeFormat("fr-FR", {
   weekday: "long",
@@ -15,7 +17,7 @@ const dueFormat = new Intl.DateTimeFormat("fr-FR", {
   timeZone: "Europe/Paris",
 });
 
-/** Page « Ma classe » : devoirs, interros et DS, annonces, jeton de l'extension. */
+/** Page « Ma classe » : visio, devoirs, interros et DS, annonces, jeton de l'extension. */
 export function MyClassView({
   info,
   announcements,
@@ -27,7 +29,27 @@ export function MyClassView({
 }) {
   const classe = info?.classe ?? null;
   const homework = info?.homework ?? [];
-  const assessments = info?.assessments ?? [];
+  // Interros, DS et séances de visio, dans l'ordre chronologique.
+  const dates = [
+    ...(info?.assessments ?? []).map((item) => ({
+      id: item.id,
+      sort: `${item.day} ${item.time ?? ""}`,
+      kind: item.kind as "interro" | "ds" | "visio",
+      label: ASSESSMENT_LABELS[item.kind],
+      title: item.title,
+      when: formatAssessmentDate(item.day, item.time),
+      detail: item.chapters,
+    })),
+    ...(info?.visioSessions ?? []).map((item) => ({
+      id: item.id,
+      sort: `${item.day} ${item.start}`,
+      kind: "visio" as const,
+      label: "Visio",
+      title: item.title,
+      when: `${formatAssessmentDate(item.day, null)}, ${formatTimeRange(item.start, item.end)}`,
+      detail: "",
+    })),
+  ].sort((a, b) => a.sort.localeCompare(b.sort));
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 space-y-8">
@@ -37,7 +59,7 @@ export function MyClassView({
       <PageHeader
         eyebrow="Espace élève"
         title={classe ? `Ma classe : ${classe}` : "Ma classe"}
-        description="Devoirs à faire, prochaines interros et DS, et annonces de l'enseignant. Pour poser une question, passer par la messagerie de l'espace élève."
+        description="Visio, devoirs à faire, prochaines interros et DS, et annonces de l'enseignant. Pour poser une question, passer par la messagerie de l'espace élève."
       />
 
       {!classe ? (
@@ -48,6 +70,8 @@ export function MyClassView({
         />
       ) : (
         <>
+          <VisioBlock initial={info?.visios ?? []} />
+
           <div className="grid gap-4 md:grid-cols-2">
             <section className="classe-block" aria-labelledby="classe-devoirs">
               <h2 id="classe-devoirs">
@@ -76,20 +100,20 @@ export function MyClassView({
 
             <section className="classe-block" aria-labelledby="classe-dates">
               <h2 id="classe-dates">
-                <CalendarClock size={18} aria-hidden /> Interros et DS
+                <CalendarClock size={18} aria-hidden /> Prochaines dates
               </h2>
-              {assessments.length === 0 ? (
+              {dates.length === 0 ? (
                 <p className="classe-empty">Aucune date annoncée.</p>
               ) : (
                 <ul>
-                  {assessments.map((item) => (
+                  {dates.map((item) => (
                     <li key={item.id}>
                       <b>
-                        <span className={`classe-kind is-${item.kind}`}>{ASSESSMENT_LABELS[item.kind]}</span>
+                        <span className={`classe-kind is-${item.kind}`}>{item.label}</span>
                         {item.title}
                       </b>
-                      <small>{formatAssessmentDate(item.day, item.time)}</small>
-                      {item.chapters ? <p>{item.chapters}</p> : null}
+                      <small>{item.when}</small>
+                      {item.detail ? <p>{item.detail}</p> : null}
                     </li>
                   ))}
                 </ul>

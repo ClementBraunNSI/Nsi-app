@@ -35,5 +35,6 @@ li.empty { color: var(--muted); }
 #announcement h2 { color: var(--accent); }
 #announcement p { margin: 0 0 6px; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 120px; overflow: hidden; }
 a { color: var(--accent); font-weight: 600; }
+a.join { justify-self: start; margin: 2px 0; padding: 6px 12px; border-radius: 8px; background: var(--accent); color: #fff; text-decoration: none; }
 .status { margin: 12px 14px 0; padding: 8px 10px; border-radius: 8px; background: var(--accent-soft); }
 footer { display: flex; justify-content: space-between; padding: 10px 14px; border-top: 1px solid var(--border); }

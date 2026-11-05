@@ -3,7 +3,7 @@
   "name": "La tanière du code",
   "short_name": "Tanière du code",
   "version": "1.0.0",
-  "description": "Devoirs à faire, dates d'interros et de DS, et annonces de la classe, depuis le site La tanière du code.",
+  "description": "Devoirs à faire, dates d'interros et de DS, visio et annonces de la classe, depuis le site La tanière du code.",
   "homepage_url": "https://www.clementbraun.info/espace/classe",
   "icons": {
     "16": "icons/icon-16.png",

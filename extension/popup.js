@@ -1,4 +1,4 @@
-import { formatAssessmentDate, formatDue, getSettings } from "./shared.js";
+import { formatAssessmentDate, formatDue, formatTimeRange, getSettings } from "./shared.js";
 
 const $ = (id) => document.getElementById(id);
 const LABELS = { interro: "Interro", ds: "DS" };
@@ -20,6 +20,31 @@ function item(title, detail, extra) {
 
 function fill(list, rows, empty) {
   list.replaceChildren(...(rows.length ? rows : [Object.assign(document.createElement("li"), { className: "empty", textContent: empty })]));
+}
+
+function visioItem(visio) {
+  const li = document.createElement("li");
+  if (visio.title) li.append(Object.assign(document.createElement("b"), { textContent: visio.title }));
+  if (visio.joinable && visio.url?.startsWith("https://")) {
+    li.append(
+      Object.assign(document.createElement("a"), {
+        href: visio.url,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "join",
+        textContent: "Rejoindre la visio",
+      }),
+    );
+    if (visio.code) li.append(Object.assign(document.createElement("small"), { textContent: `Code d'accès : ${visio.code}` }));
+  } else {
+    const next = visio.nextSession;
+    const text = next
+      ? `Prochaine séance : ${formatAssessmentDate(next.day, null)}, ${formatTimeRange(next.start, next.end)}`
+      : "Visio fermée pour le moment.";
+    li.append(Object.assign(document.createElement("small"), { textContent: text }));
+  }
+  if (visio.note) li.append(Object.assign(document.createElement("p"), { textContent: visio.note }));
+  return li;
 }
 
 async function render() {
@@ -50,6 +75,10 @@ async function render() {
     $("announcement").querySelector("h2").textContent =
       info.unread > 1 ? `${info.unread} annonces non lues` : "Annonce non lue";
   }
+
+  const visios = info.visios ?? [];
+  $("visio").hidden = visios.length === 0;
+  $("visios").replaceChildren(...visios.map(visioItem));
 
   fill(
     $("assessments"),

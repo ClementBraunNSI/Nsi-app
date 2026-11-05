@@ -37,6 +37,8 @@ describe("class info payload", () => {
       classe: "1NSI1",
       homework: [],
       assessments: [],
+      visios: [],
+      visioSessions: [],
       unread: 0,
       lastAnnouncement: null,
     });

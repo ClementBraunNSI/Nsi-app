@@ -5429,3 +5429,10 @@ input, textarea {
 .classe-button { padding: 0.5rem 0.9rem; border-radius: 0.7rem; background: var(--accent); color: var(--accent-fg); font-weight: 650; cursor: pointer; }
 .classe-button.is-quiet { border: 1px solid var(--border); background: transparent; color: var(--fg); }
 .classe-button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------- Ma classe : visio ---------- */
+.classe-kind.is-visio { border: 1px solid var(--accent); color: var(--accent); }
+.classe-visio-join { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin: 0.25rem 0; }
+.classe-block .classe-visio-join a.classe-button { color: var(--accent-fg); font-size: 0.9rem; text-decoration: none; }
+.classe-visio-join code { padding: 0.1rem 0.45rem; border-radius: 0.4rem; background: var(--surface-2); font-weight: 700; letter-spacing: 0.03em; }
+.classe-block li.classe-visio small::first-letter { text-transform: none; }
