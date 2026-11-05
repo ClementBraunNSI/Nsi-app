@@ -4972,6 +4972,8 @@ input, textarea {
 .adm-eval-chips label { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 99px; cursor: pointer; }
 .adm-eval-chips label.is-on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 .adm-eval-chips input { accent-color: var(--accent); }
+.adm-eval-form label.adm-eval-check { display: flex; align-items: flex-start; gap: 0.6rem; font-weight: 500; }
+.adm-eval-check input { margin-top: 0.2rem; accent-color: var(--accent); }
 
 .adm-eval-list { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
 .adm-eval-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; padding: 0.9rem 1.1rem; border: 1px solid #e2e8f0; border-radius: 0.9rem; background: #fff; color: #0f172a; }
@@ -5338,6 +5340,9 @@ input, textarea {
 .challenge-expired .challenge-past-body { padding: 0; }
 .challenge-past-exercise { display: grid; gap: 0.6rem; }
 .challenge-past-exercise + .challenge-past-exercise { padding-top: 0.8rem; border-top: 1px solid var(--border); }
+/* Défi surveillé : règles et partage d'écran avant le départ du chrono (mêmes règles que l'évaluation). */
+.challenge-start { padding: 0.5rem 1.25rem 1.25rem; }
+.challenge-start h3 { margin: 1rem 0 0.5rem; font-size: 1.05rem; }
 .dark .challenge-done { background: color-mix(in srgb, #16a34a 25%, var(--surface)); color: #86efac; }
 
 /* ---------- Renards des enquêtes : une tenue par enquête (scripts/enquete-foxes.mjs) ---------- */

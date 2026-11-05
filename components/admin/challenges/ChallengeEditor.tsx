@@ -18,6 +18,8 @@ export type ChallengeDraft = {
   durationDays: number;
   /** Temps par élève depuis l'ouverture de la page, en minutes ; null : pas de limite. */
   timeLimitMinutes: number | null;
+  /** Surveillance des évaluations pratiques : partage d'écran, verrouillage, code du professeur. */
+  proctored: boolean;
 };
 
 /** Classes de Première proposées par défaut : celles qui commencent par « 1 ». */
@@ -30,6 +32,7 @@ export function defaultChallenge(classes: string[]): ChallengeDraft {
     openDay: nextMonday(),
     durationDays: 7,
     timeLimitMinutes: null,
+    proctored: true,
   };
 }
 
@@ -112,6 +115,13 @@ export default function ChallengeEditor({ initial, classes, onDone }: { initial:
             />
           </label>
         </div>
+        <label className="adm-eval-check">
+          <input type="checkbox" checked={draft.proctored} onChange={(event) => set({ proctored: event.target.checked })} />
+          <span>
+            Surveillance comme une évaluation pratique : partage d&apos;écran, page verrouillée au moindre changement d&apos;onglet ou collage
+            venu d&apos;ailleurs, déverrouillage avec le code du professeur. À réserver aux défis faits en classe.
+          </span>
+        </label>
         <label>
           <span>Exercices (format des fiches : un bloc &lt;ExerciseSection&gt; par exercice, avec tests et correction ; 5 au plus)</span>
           <textarea className="adm-eval-source" value={draft.source} onChange={(event) => set({ source: event.target.value })} rows={20} spellCheck={false} />

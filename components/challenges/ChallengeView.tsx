@@ -11,6 +11,7 @@ import type { EvaluationExercise } from "@/lib/evaluation-subject";
 import { challengeAchievement, challengeDeadline, type MyChallenge } from "@/lib/challenges";
 import { ExerciseStatement } from "@/components/lab/ExerciseStatement";
 import { ExerciseWorkspace } from "@/components/lab/ExerciseWorkspace";
+import { ChallengeStart, ProctoredRunner } from "./ProctoredChallenge";
 
 const dayFormat = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Paris" });
 const shortFormat = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", timeZone: "Europe/Paris" });
@@ -91,13 +92,17 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
   const [now, setNow] = useState(() => Date.now());
   const [serverExpired, setServerExpired] = useState(false);
   const [passedNow, setPassedNow] = useState<string[]>([]);
+  const [finished, setFinished] = useState(Boolean(challenge.mine?.finishedAt));
+  // Défi surveillé déjà réussi au chargement : la page surveillée ne se rouvre pas.
+  const [leftRunner, setLeftRunner] = useState(Boolean(challenge.mine?.passed));
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const exercises = useMemo(() => challenge.exercises.map((exercise) => ({ exercise, lab: labExercise(challenge, exercise) })), [challenge]);
 
   // Le chrono part à l'ouverture de la page (le serveur garde la première heure de départ).
+  // Défi surveillé : il part au clic sur « commencer », une fois l'écran partagé.
   useEffect(() => {
-    if (!challenge.timeLimitMinutes) return;
+    if (!challenge.timeLimitMinutes || challenge.proctored) return;
     let cancelled = false;
     void startChallenge(challenge.id).then((value) => {
       if (!cancelled && value) setStartedAt(value);
@@ -105,7 +110,7 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
     return () => {
       cancelled = true;
     };
-  }, [challenge.id, challenge.timeLimitMinutes]);
+  }, [challenge.id, challenge.proctored, challenge.timeLimitMinutes]);
 
   const deadline = challengeDeadline(startedAt, challenge.timeLimitMinutes);
   useEffect(() => {
@@ -115,10 +120,46 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
   }, [deadline]);
 
   const remaining = deadline === null ? null : deadline - now;
-  const expired = serverExpired || (remaining !== null && remaining <= 0);
+  const expired = serverExpired || finished || (remaining !== null && remaining <= 0);
   const isPassed = (id: string) => Boolean(answers[id]?.passed) || passedNow.includes(id);
   const passedCount = challenge.exercises.filter((exercise) => isPassed(exercise.id)).length;
   const allPassed = challenge.exercises.length > 0 && passedCount === challenge.exercises.length;
+  const watched = Boolean(challenge.proctored) && !expired && !(allPassed && leftRunner);
+
+  const onPassed = (id: string) => {
+    setPassedNow((ids) => (ids.includes(id) ? ids : [...ids, id]));
+    router.refresh();
+  };
+  const checker = async (id: string, code: string) => {
+    const result = await checkChallenge(challenge.id, id, code);
+    if (result.expired) setServerExpired(true);
+    return {
+      report: result.report,
+      newBadge: false,
+      recorded: result.recorded,
+      newAchievements: result.newAchievements.map(asAchievement).filter((item): item is Achievement => item !== null),
+    };
+  };
+
+  if (watched && startedAt) {
+    return (
+      <ProctoredRunner
+        challenge={challenge}
+        deadline={deadline}
+        remaining={remaining}
+        labs={exercises}
+        isPassed={isPassed}
+        allPassed={allPassed}
+        checker={checker}
+        onPassed={onPassed}
+        onLeave={(reason) => {
+          if (reason === "arret") setFinished(true);
+          setLeftRunner(true);
+          router.refresh();
+        }}
+      />
+    );
+  }
 
   return (
     <section className="challenge-current">
@@ -128,14 +169,17 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
           <h2>{challenge.title}</h2>
           <p className="challenge-meta">
             {challenge.exercises.length} exercice{challenge.exercises.length > 1 ? "s" : ""}
-            {challenge.timeLimitMinutes ? ` · ${challenge.timeLimitMinutes} minutes à partir de l'ouverture de la page` : ` · ouvert jusqu'au ${dayFormat.format(new Date(challenge.closesAt))}`}
+            {challenge.timeLimitMinutes
+              ? ` · ${challenge.timeLimitMinutes} minutes à partir ${challenge.proctored ? "du début" : "de l'ouverture de la page"}`
+              : ` · ouvert jusqu'au ${dayFormat.format(new Date(challenge.closesAt))}`}
+            {challenge.proctored ? " · surveillé comme une évaluation" : ""}
           </p>
         </div>
         {allPassed ? (
           <span className="challenge-done"><Check size={16} aria-hidden /> Réussi</span>
         ) : null}
         {/* Le chrono est posé sur la page entière : il reste visible pendant qu'on fait défiler les exercices. */}
-        {challenge.timeLimitMinutes && !expired && mounted
+        {challenge.timeLimitMinutes && !expired && !watched && mounted
           ? createPortal(
               <span className={`challenge-timer ${remaining !== null && remaining < 120_000 ? "is-low" : ""}`} role="timer" aria-live="off">
                 <Timer size={17} aria-hidden />
@@ -146,10 +190,12 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
           : null}
       </header>
 
-      {expired ? (
+      {watched ? (
+        <ChallengeStart challenge={challenge} onStarted={setStartedAt} />
+      ) : expired ? (
         <div className="challenge-expired">
           <p>
-            <b>Temps écoulé.</b> {passedCount} exercice{passedCount > 1 ? "s" : ""} réussi{passedCount > 1 ? "s" : ""} sur {challenge.exercises.length}.
+            <b>{finished ? "Défi arrêté." : "Temps écoulé."}</b> {passedCount} exercice{passedCount > 1 ? "s" : ""} réussi{passedCount > 1 ? "s" : ""} sur {challenge.exercises.length}.
             La correction apparaîtra le {dayFormat.format(new Date(challenge.closesAt))}.
           </p>
           {challenge.exercises.map((exercise) => (
@@ -175,20 +221,8 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
               nav={null}
               embedded
               initialCode={answers[exercise.id]?.code || undefined}
-              onCompleted={() => {
-                setPassedNow((ids) => (ids.includes(exercise.id) ? ids : [...ids, exercise.id]));
-                router.refresh();
-              }}
-              checker={async (code) => {
-                const result = await checkChallenge(challenge.id, exercise.id, code);
-                if (result.expired) setServerExpired(true);
-                return {
-                  report: result.report,
-                  newBadge: false,
-                  recorded: result.recorded,
-                  newAchievements: result.newAchievements.map(asAchievement).filter((item): item is Achievement => item !== null),
-                };
-              }}
+              onCompleted={() => onPassed(exercise.id)}
+              checker={(code) => checker(exercise.id, code)}
             />
           </div>
         ))
