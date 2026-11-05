@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 import ClientLayoutShell from "@/components/layout/ClientLayoutShell";
@@ -22,7 +21,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}>
         <a href="#contenu" className="skip-link">Aller au contenu</a>
         <ClientLayoutShell>{children}</ClientLayoutShell>
-        <SpeedInsights />
       </body>
     </html>
   );

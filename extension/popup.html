@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>La tanière du code</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <img src="icons/icon-32.png" alt="" width="24" height="24" />
+      <h1 id="title">Ma classe</h1>
+      <button type="button" id="refresh" title="Actualiser">Actualiser</button>
+    </header>
+    <p id="status" class="status" hidden></p>
+    <main id="content" hidden>
+      <section id="announcement" hidden>
+        <h2>Annonce</h2>
+        <p id="announcement-body"></p>
+        <a id="announcement-link" target="_blank" rel="noopener">Lire sur le site</a>
+      </section>
+      <section>
+        <h2>Interros et DS</h2>
+        <ul id="assessments"></ul>
+      </section>
+      <section>
+        <h2>Devoirs à faire</h2>
+        <ul id="homework"></ul>
+      </section>
+    </main>
+    <footer>
+      <a id="site-link" target="_blank" rel="noopener">Ouvrir Ma classe</a>
+      <a href="options.html" target="_blank">Réglages</a>
+    </footer>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

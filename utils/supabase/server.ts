@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { isAbortError } from '@/lib/is-abort-error';
+import { authCookieOptions } from '@/lib/auth-cookies';
 
 export async function createClient() {
   const cookieStore = await cookies();
@@ -33,7 +34,7 @@ export async function createClient() {
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
+              cookieStore.set(name, value, authCookieOptions(options, process.env.NODE_ENV === 'production'))
             )
           } catch {
             // Cette erreur peut être ignorée si vous êtes dans un Server Component

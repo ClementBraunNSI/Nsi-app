@@ -44,6 +44,15 @@ const nextConfig = {
       './node_modules/sql.js/dist/sql-asm.js',
     ],
   },
+  // Monaco et Pyodide servis par le site : des dizaines de fichiers, inutile de les revalider à chaque page.
+  async headers() {
+    return [
+      {
+        source: '/vendor/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }],
+      },
+    ];
+  },
   async redirects() {
     return [
       {

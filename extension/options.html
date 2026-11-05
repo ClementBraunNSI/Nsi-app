@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Réglages · La tanière du code</title>
+    <link rel="stylesheet" href="popup.css" />
+    <style>
+      body { width: auto; max-width: 560px; margin: 32px auto; padding: 0 16px; font-size: 14px; }
+      label { display: grid; gap: 6px; margin: 16px 0; font-weight: 600; }
+      input, select { padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: transparent; color: var(--fg); font: inherit; font-weight: 400; }
+      .primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; padding: 8px 14px; }
+      #result { min-height: 1.5em; }
+    </style>
+  </head>
+  <body>
+    <h1>Réglages</h1>
+    <p>
+      Le jeton se crée sur le site, page <b>Ma classe</b> de l'espace élève, rubrique « Extension de navigateur ». Il ne donne accès
+      qu'aux devoirs, aux dates d'interros et de DS et aux annonces de la classe, en lecture seule.
+    </p>
+    <label>
+      Jeton personnel
+      <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="tdc_…" />
+    </label>
+    <label>
+      Site
+      <select id="site"></select>
+    </label>
+    <p>
+      <button type="button" id="save" class="primary">Enregistrer et vérifier</button>
+      <button type="button" id="clear">Effacer le jeton</button>
+    </p>
+    <p id="result" role="status"></p>
+    <p><small>L'extension interroge le site toutes les 15 minutes. Elle n'envoie rien d'autre que le jeton et ne garde aucun historique.</small></p>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

@@ -3,6 +3,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Editor from '@monaco-editor/react';
+import '@/lib/monaco-loader';
+import { PYODIDE_SCRIPT_URL, pyodideIndexURL } from '@/lib/vendor-assets';
 import { Play, RotateCcw, ChevronRight, ChevronLeft, HelpCircle, CheckCircle, Mountain, Star } from 'lucide-react';
 import { FoxHead } from '@/components/ui/FoxHead';
 import confetti from 'canvas-confetti';
@@ -29,15 +31,6 @@ const SPRITES = {
   ),
   OBSTACLE: <Mountain size={30} className="text-stone-500" aria-label="Rocher" />,
 };
-
-import { loader } from '@monaco-editor/react';
-
-// Configure Monaco to use local files instead of CDN to prevent loading errors
-loader.config({
-  paths: {
-    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs'
-  }
-});
 
 export default function FoxGame() {
   // Game State
@@ -89,7 +82,7 @@ export default function FoxGame() {
         // Explicitly provide indexURL to avoid auto-detection issues
         // @ts-ignore
         const pyodide = await window.loadPyodide({
-            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
+            indexURL: pyodideIndexURL()
         });
         
         pyodideRef.current = pyodide;
@@ -122,7 +115,7 @@ export default function FoxGame() {
       }
 
       const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js';
+      script.src = PYODIDE_SCRIPT_URL;
       script.async = true;
       script.onload = () => initPyodide();
       script.onerror = (e) => {

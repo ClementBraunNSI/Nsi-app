@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
+import '@/lib/monaco-loader';
 import { Play, RotateCcw, Database } from 'lucide-react';
 
 interface SqlEditorProps {

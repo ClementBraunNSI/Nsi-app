@@ -210,11 +210,69 @@ export default function MentionsLegales() {
             </p>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">Cookies</h2>
+          <section id="cookies">
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">Cookies et données stockées</h2>
+            <p className="mb-3">
+              Ce site ne fait aucun suivi : pas de mesure d'audience, pas de publicité, pas de bouton de réseau social.
+              Les seuls cookies servent à la connexion. Ils sont strictement nécessaires au service et dispensés de
+              consentement (article 82 de la loi Informatique et Libertés) : c'est pourquoi aucun bandeau cookies n'est affiché.
+            </p>
+
+            <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">Cookies</h3>
+            <p className="mb-3">Sans connexion à un compte, aucun cookie n'est déposé.</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border border-slate-200">
+                <thead className="bg-slate-50 text-slate-900">
+                  <tr>
+                    <th className="p-3 font-semibold">Nom</th>
+                    <th className="p-3 font-semibold">Rôle</th>
+                    <th className="p-3 font-semibold">Durée</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  <tr>
+                    <td className="p-3 font-mono text-xs">sb-…-auth-token</td>
+                    <td className="p-3">Garder la session ouverte après la connexion. Il contient le jeton de connexion délivré par Supabase.</td>
+                    <td className="p-3">30 jours après la dernière visite ; effacé à la déconnexion</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-mono text-xs">nsi-mdp-ok</td>
+                    <td className="p-3">Retenir que le mot de passe provisoire a déjà été changé, pour ne pas le revérifier à chaque page. Signé par le serveur et illisible par les scripts de la page.</td>
+                    <td className="p-3">10 minutes</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">Stockage local du navigateur</h3>
+            <p className="mb-3">
+              Certaines données restent dans le navigateur, sur l'appareil utilisé. Elles ne sont pas envoyées au serveur :
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li><strong>Préférences d'affichage</strong> : mode sombre, contraste élevé, police adaptée à la dyslexie, taille du texte en projection.</li>
+              <li><strong>Brouillons</strong> : code et réponses écrites des exercices, code et notes des enquêtes, pour ne rien perdre en rechargeant la page.</li>
+              <li><strong>Avancée des jeux</strong> : enquêtes résolues, partie du jeu du renard, secrets du renard trouvés.</li>
+              <li><strong>Évaluations et défi du lundi</strong> : un repère de début d'épreuve, effacé à la fermeture de l'onglet.</li>
+            </ul>
+            <p className="mb-3">
+              Ces données s'effacent depuis les réglages du navigateur (« Effacer les données du site »). Sur un ordinateur
+              partagé, les brouillons restent visibles pour la personne suivante tant qu'ils ne sont pas effacés ; il faut
+              aussi penser à se déconnecter en fin de séance.
+            </p>
+
+            <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">Services tiers</h3>
+            <p className="mb-3">Aucun service tiers ne reçoit de cookie. Certains reçoivent l'adresse IP, comme pour toute page web :</p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li><strong>Vercel</strong> : hébergement du site, journaux techniques de l'hébergeur.</li>
+              <li><strong>Supabase</strong> : comptes et travaux des élèves, hébergés en Irlande.</li>
+              <li><strong>OpenStreetMap</strong> : fonds de carte des activités de localisation.</li>
+              <li>
+                <strong>jsDelivr, cdnjs, jQuery et Bootstrap</strong> : seulement dans le mini-projet « Carte GPS du Renard »,
+                quand une carte folium est affichée. La bibliothèque folium va chercher ses fichiers sur ces serveurs.
+              </li>
+            </ul>
             <p>
-              Ce site n'utilise pas de cookies de suivi, de profilage ou de publicité. Aucun cookie n'est déposé 
-              sur votre navigateur lors de votre visite.
+              Les polices de caractères, l'éditeur de code, Python et ses modules sont servis par le site lui-même.
             </p>
           </section>
 

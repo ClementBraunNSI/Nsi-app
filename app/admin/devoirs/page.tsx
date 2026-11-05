@@ -1,8 +1,14 @@
 import { PageHeader } from "@/components/ui";
 import { ClassHomeworkPanel } from "@/components/admin/ClassHomeworkPanel";
 import { PrivateHomeworkPanel } from "@/components/admin/PrivateHomeworkPanel";
+import { AssessmentsPanel } from "@/components/admin/AssessmentsPanel";
+import { listAssessments } from "@/app/actions/classInfo";
+import { listClasses } from "@/app/actions/evaluations";
 
-export default function AdminClassHomeworkPage() {
+export const dynamic = "force-dynamic";
+
+export default async function AdminClassHomeworkPage() {
+  const [assessments, classes] = await Promise.all([listAssessments(), listClasses()]);
   return (
     <div className="px-4 md:px-8 pb-10">
       <div className="max-w-7xl mx-auto space-y-10">
@@ -18,6 +24,11 @@ export default function AdminClassHomeworkPage() {
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold text-slate-800">Devoirs de classe</h2>
           <ClassHomeworkPanel />
+        </section>
+        <section className="space-y-4">
+          <h2 className="text-2xl font-semibold text-slate-800">Interros et DS</h2>
+          <p className="text-sm text-slate-500">Les élèves des classes choisies voient la date sur la page Ma classe et dans l&apos;extension.</p>
+          <AssessmentsPanel assessments={assessments} classes={classes} />
         </section>
       </div>
     </div>

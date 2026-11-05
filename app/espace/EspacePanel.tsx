@@ -9,6 +9,7 @@ import {
   CalendarDays,
   CheckCircle2,
   ClipboardList,
+  Megaphone,
   MessageSquare,
   Send,
   Target,
@@ -156,6 +157,17 @@ export function EspacePanel({ data }: { data: EspaceData }) {
               <small>Un exercice inédit chaque semaine, à réussir avant lundi prochain.</small>
             </span>
             <span className="challenge-banner-cta">Y aller</span>
+          </Link>
+        ) : null}
+
+        {data.profile.classe ? (
+          <Link href="/espace/classe" className="challenge-banner">
+            <Megaphone size={20} aria-hidden />
+            <span className="min-w-0 flex-1">
+              <b>Ma classe : {data.profile.classe}</b>
+              <small>Devoirs, dates d&apos;interros et de DS, annonces de l&apos;enseignant.</small>
+            </span>
+            <span className="challenge-banner-cta">Ouvrir</span>
           </Link>
         ) : null}
 

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, RotateCcw, MapPin, Terminal, AlertTriangle, Loader2 } from 'lucide-react';
 import { loadPythonPackages } from '@/lib/pyodide-packages';
+import { PYODIDE_SCRIPT_URL, pyodideIndexURL } from '@/lib/vendor-assets';
 import SimpleCodeEditor from './SimpleCodeEditor';
 
 interface CarteGpsPlaygroundProps {
@@ -57,7 +58,7 @@ export default function CarteGpsPlayground({
 
       try {
         const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js';
+        script.src = PYODIDE_SCRIPT_URL;
         script.async = true;
         document.body.appendChild(script);
 
@@ -67,7 +68,7 @@ export default function CarteGpsPlayground({
             if (!load) return;
 
             const pyodide = await load({
-              indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/',
+              indexURL: pyodideIndexURL(),
             });
 
             pyodideRef.current = pyodide;
@@ -124,12 +125,10 @@ export default function CarteGpsPlayground({
 
       await pyodideRef.current.runPythonAsync(code);
 
+      // Une expression en dernière ligne : un bloc if ne renvoie rien à JavaScript.
       const html = await pyodideRef.current.runPythonAsync(`
 import json
-if "carte" in globals() and hasattr(carte, "_repr_html_"):
-    json.dumps(carte._repr_html_())
-else:
-    json.dumps("")
+json.dumps(carte._repr_html_() if "carte" in globals() and hasattr(carte, "_repr_html_") else "")
 `);
 
       const parsedHtml = JSON.parse(html);

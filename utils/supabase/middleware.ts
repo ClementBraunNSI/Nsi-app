@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import { isAbortError } from '@/lib/is-abort-error'
+import { authCookieOptions } from '@/lib/auth-cookies'
 
 // Compte sans mot de passe à changer : la réponse est gardée 10 minutes dans un cookie signé par le serveur,
 // pour ne pas relire le profil à chaque page. Un compte qui doit changer son mot de passe est revérifié à chaque fois.
@@ -70,14 +71,14 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           response = NextResponse.next({
             request: {
               headers: request.headers,
             },
           })
           cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
+            response.cookies.set(name, value, authCookieOptions(options, request.nextUrl.protocol === 'https:'))
           )
         },
       },

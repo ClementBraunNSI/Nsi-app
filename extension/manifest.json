@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "La tanière du code",
+  "short_name": "Tanière du code",
+  "version": "1.0.0",
+  "description": "Devoirs à faire, dates d'interros et de DS, et annonces de la classe, depuis le site La tanière du code.",
+  "homepage_url": "https://www.clementbraun.info/espace/classe",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "La tanière du code",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"],
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["storage", "alarms", "notifications"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "taniere-du-code@clementbraun.info",
+      "strict_min_version": "121.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}

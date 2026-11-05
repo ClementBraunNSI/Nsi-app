@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { ANNOUNCEMENTS_READ_EVENT } from "@/lib/announcements";
 
 const REFRESH = 30_000;
 
@@ -18,7 +19,17 @@ export function usePendingChallenge(enabled: boolean, pathname: string) {
   return usePendingCount("challenge_pending_count", enabled, pathname);
 }
 
-function usePendingCount(rpc: "eval_pending_count" | "challenge_pending_count", enabled: boolean, pathname: string) {
+/** Pastille du lien « Annonces » : annonces de la classe publiées depuis la dernière lecture. */
+export function useUnreadAnnouncements(enabled: boolean, pathname: string) {
+  return usePendingCount("announcement_unread_count", enabled, pathname, ANNOUNCEMENTS_READ_EVENT);
+}
+
+function usePendingCount(
+  rpc: "eval_pending_count" | "challenge_pending_count" | "announcement_unread_count",
+  enabled: boolean,
+  pathname: string,
+  refreshEvent?: string,
+) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -33,11 +44,13 @@ function usePendingCount(rpc: "eval_pending_count" | "challenge_pending_count", 
     };
     void load();
     const timer = window.setInterval(load, REFRESH);
+    if (refreshEvent) window.addEventListener(refreshEvent, load);
     return () => {
       cancelled = true;
       window.clearInterval(timer);
+      if (refreshEvent) window.removeEventListener(refreshEvent, load);
     };
-  }, [enabled, pathname, rpc]);
+  }, [enabled, pathname, rpc, refreshEvent]);
 
   return count;
 }

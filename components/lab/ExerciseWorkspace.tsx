@@ -6,6 +6,7 @@ import { ArrowLeft, BookOpen, Check, CheckCircle, ChevronLeft, ChevronRight, Pla
 import { checkExerciseSolution, type ExerciseCheckResult, type ExerciseSheetNav, type LabExercise } from '@/app/actions/getExercises';
 import { supabase } from '@/lib/supabase';
 import { loadPythonPackages } from '@/lib/pyodide-packages';
+import { PYODIDE_SCRIPT_URL, pyodideIndexURL } from '@/lib/vendor-assets';
 import {
   buildPythonCheckSource,
   everyTestPassed,
@@ -122,7 +123,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
         if (!window.loadPyodide) return;
         // @ts-ignore
         pyodideRef.current = await window.loadPyodide({
-          indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/',
+          indexURL: pyodideIndexURL(),
         });
       } catch (error) {
         console.error('Failed to load Pyodide', error);
@@ -133,7 +134,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
       bootPyodide();
     } else {
       const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js';
+      script.src = PYODIDE_SCRIPT_URL;
       script.async = true;
       script.onload = () => { bootPyodide(); };
       document.body.appendChild(script);

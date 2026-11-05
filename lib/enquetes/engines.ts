@@ -2,6 +2,7 @@
 
 import type { PublicEnquete as Enquete } from "./types";
 import { buildSqlScript, tableToCsv } from "./build";
+import { PYODIDE_SCRIPT_URL, pyodideIndexURL } from "../vendor-assets";
 
 /** total : nombre réel de lignes quand rows a été raccourci pour la sauvegarde. */
 export type QueryResult = { columns: string[]; rows: unknown[][]; total?: number };
@@ -235,7 +236,6 @@ export function friendlySqlError(message: string, rest = "") {
 // ---------- Python (Pyodide dans le navigateur, avec les tables en CSV) ----------
 
 // window.loadPyodide et window.pyodide sont typés dans app/foxtest/global.d.ts.
-const PYODIDE_URL = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/";
 let pyodidePromise: Promise<any> | null = null;
 
 export function loadPython(): Promise<any> {
@@ -244,7 +244,7 @@ export function loadPython(): Promise<any> {
     const boot = () => {
       if (window.pyodide) return resolve(window.pyodide);
       window
-        .loadPyodide!({ indexURL: PYODIDE_URL })
+        .loadPyodide!({ indexURL: pyodideIndexURL() })
         .then((pyodide) => {
           window.pyodide = pyodide;
           resolve(pyodide);
@@ -253,7 +253,7 @@ export function loadPython(): Promise<any> {
     };
     if (window.loadPyodide) return boot();
     const script = document.createElement("script");
-    script.src = `${PYODIDE_URL}pyodide.js`;
+    script.src = PYODIDE_SCRIPT_URL;
     script.async = true;
     script.onload = boot;
     script.onerror = () => reject(new Error("Impossible de charger Python. Vérifie ta connexion."));

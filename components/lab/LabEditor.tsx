@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import Editor from "@monaco-editor/react";
+import "@/lib/monaco-loader";
 import { RotateCcw } from "lucide-react";
 import type { LabExercise } from "@/app/actions/getExercises";
 import { CodeArea } from "@/components/lab/CodeArea";

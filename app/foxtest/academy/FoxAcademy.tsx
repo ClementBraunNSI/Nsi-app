@@ -31,6 +31,7 @@ import type { Action, ChapterId, Direction, GameStatus, Position, SavedProgress 
 import { ahead, buildWorld, countCodeLines, isBlocked, samePos, turn } from "./world";
 import styles from "./academy.module.css";
 import { CodeArea, type CodeAreaHandle } from "@/components/lab/CodeArea";
+import { PYODIDE_SCRIPT_URL, pyodideIndexURL } from "@/lib/vendor-assets";
 
 // La vue 3D (three.js) n'est téléchargée que si on l'affiche.
 const Board3D = dynamic(() => import("./Board3D"), { ssr: false, loading: () => <div className={styles.meadow3d} /> });
@@ -189,7 +190,7 @@ export default function FoxAcademy() {
           setIsPyodideReady(true);
           return;
         }
-        const pyodide = await window.loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/" });
+        const pyodide = await window.loadPyodide({ indexURL: pyodideIndexURL() });
         pyodideRef.current = pyodide;
         window.pyodide = pyodide;
         setIsPyodideReady(true);
@@ -209,7 +210,7 @@ export default function FoxAcademy() {
       return;
     }
     const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js";
+    script.src = PYODIDE_SCRIPT_URL;
     script.async = true;
     script.onload = () => void init();
     script.onerror = () => {

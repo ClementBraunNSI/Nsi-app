@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, RotateCcw, Terminal, AlertTriangle, Loader2 } from 'lucide-react';
 import SimpleCodeEditor from './SimpleCodeEditor';
+import { PYODIDE_SCRIPT_URL, pyodideIndexURL } from '@/lib/vendor-assets';
 
 interface PythonPlaygroundProps {
   initialCode?: string;
@@ -38,7 +39,7 @@ export default function PythonPlayground({ initialCode = "print('Hello NSI !')",
       try {
         // Create script tag
         const script = document.createElement('script');
-        script.src = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js";
+        script.src = PYODIDE_SCRIPT_URL;
         script.async = true;
         document.body.appendChild(script);
 
@@ -48,7 +49,7 @@ export default function PythonPlayground({ initialCode = "print('Hello NSI !')",
             const load = window.loadPyodide;
             if (load) {
               const pyodide = await load({
-                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
+                indexURL: pyodideIndexURL()
               });
               
               // Set up stdout capture

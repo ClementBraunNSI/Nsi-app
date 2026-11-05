@@ -3,12 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, ClipboardCheck, Eye, House, Info, LayoutDashboard, LogIn, LogOut, Menu, X } from "lucide-react";
+import { CalendarDays, ClipboardCheck, Eye, House, Info, LayoutDashboard, LogIn, LogOut, Megaphone, Menu, X } from "lucide-react";
 import AccessibilityMenu from "./AccessibilityMenu";
 import MobileMenu, { type MenuLink } from "./MobileMenu";
 import { useFoxEasterEgg } from "./FoxEasterEggProvider";
 import { firstNameOf } from "@/lib/first-name";
-import { usePendingChallenge, usePendingEvaluations } from "./usePendingEvaluations";
+import { usePendingChallenge, usePendingEvaluations, useUnreadAnnouncements } from "./usePendingEvaluations";
 
 type Props = {
   pathname: string;
@@ -62,6 +62,8 @@ export default function SiteHeader({
   // Défi du lundi : élève de classe, pastille tant que le défi ouvert n'est pas réussi.
   const showChallenge = Boolean(user) && !elevated && Boolean(classe);
   const pendingChallenge = usePendingChallenge(showChallenge, pathname);
+  // Ma classe : même public que le défi, pastille tant qu'une annonce de la classe n'a pas été lue.
+  const unreadAnnouncements = useUnreadAnnouncements(showChallenge, pathname);
   const links: MenuLink[] = showEvaluations
     ? [
         ...NAV,
@@ -83,6 +85,14 @@ export default function SiteHeader({
               match: (path: string) => path.startsWith("/defi"),
               badge: pendingChallenge,
               badgeLabel: "Défi de la semaine à réussir",
+            },
+            {
+              href: "/espace/classe",
+              label: "Ma classe",
+              icon: Megaphone,
+              match: (path: string) => path.startsWith("/espace/classe"),
+              badge: unreadAnnouncements,
+              badgeLabel: `${unreadAnnouncements} annonce${unreadAnnouncements > 1 ? "s" : ""} non lue${unreadAnnouncements > 1 ? "s" : ""}`,
             }]
           : []),
       ]

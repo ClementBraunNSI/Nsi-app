@@ -9,6 +9,7 @@ import { TOOLBOX, defineEnqueteBlocks, setBlocklySchema, starterState, workspace
 import { runSql, type RunOutcome } from "@/lib/enquetes/engines";
 import { readOutcome, saveOutcome } from "@/lib/enquetes/progress";
 import type { PublicEnquete as Enquete } from "@/lib/enquetes/types";
+import { BLOCKLY_MEDIA_URL } from "@/lib/vendor-assets";
 
 function theme(dark: boolean) {
   return Blockly.Theme.defineTheme(dark ? "enquete-sombre" : "enquete-clair", {
@@ -64,6 +65,7 @@ export default function BlocklyMode({ enquete }: { enquete: Enquete }) {
       theme: theme(dark),
       trashcan: true,
       sounds: false,
+      media: BLOCKLY_MEDIA_URL,
       grid: { spacing: 24, length: 3, colour: dark ? "#263041" : "#efe7da", snap: true },
       zoom: { controls: true, wheel: false, startScale: 0.85, maxScale: 1.6, minScale: 0.5, scaleSpeed: 1.15 },
       move: { scrollbars: true, drag: true, wheel: true },

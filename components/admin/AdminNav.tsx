@@ -7,6 +7,7 @@ const LINKS = [
   { href: "/admin", label: "Élèves" },
   { href: "/admin/activite", label: "Activité" },
   { href: "/admin/messages", label: "Messagerie" },
+  { href: "/admin/annonces", label: "Annonces" },
   { href: "/admin/devoirs", label: "Devoirs" },
   { href: "/admin/evaluations", label: "Évaluations" },
   { href: "/admin/defis", label: "Défis" },

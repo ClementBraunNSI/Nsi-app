@@ -20,7 +20,8 @@ function toLocalInput(iso: string) {
 
 export function ClassHomeworkPanel() {
   const [board, setBoard] = useState<Board | null>(null);
-  const [classe, setClasse] = useState("");
+  const [classes, setClasses] = useState<string[]>([]);
+  const [otherClass, setOtherClass] = useState("");
   const [title, setTitle] = useState("");
   const [dueAt, setDueAt] = useState("");
   const [description, setDescription] = useState("");
@@ -53,22 +54,35 @@ export function ClassHomeworkPanel() {
         onSubmit={(event) => {
           event.preventDefault();
           setNotice(null);
+          // Un devoir par classe cochée : chacun se modifie ou se retire ensuite séparément.
+          const targets = [...new Set([...classes, otherClass.trim()].filter(Boolean))];
+          if (targets.length === 0) {
+            setNotice("Choisir au moins une classe.");
+            return;
+          }
           startTransition(async () => {
-            const result = await createClassHomework({
-              classe,
-              title,
-              description,
-              dueAt: dueAt || undefined,
-              pagePath: pageText.trim() && pagePath ? pagePath : undefined,
-            });
-            if (result.error) {
-              setNotice(
-                result.error === "private_class"
-                  ? "Les cours particuliers s'assignent élève par élève."
-                  : "Le devoir de classe n'a pas été enregistré.",
-              );
+            const failed: string[] = [];
+            for (const classe of targets) {
+              const result = await createClassHomework({
+                classe,
+                title,
+                description,
+                dueAt: dueAt || undefined,
+                pagePath: pageText.trim() && pagePath ? pagePath : undefined,
+              });
+              if (result.error === "private_class") {
+                setNotice("Les cours particuliers s'assignent élève par élève.");
+                return;
+              }
+              if (result.error) failed.push(classe);
+            }
+            if (failed.length) {
+              setNotice(`Le devoir n'a pas été enregistré pour ${failed.join(", ")}.`);
+              reload();
               return;
             }
+            setClasses([]);
+            setOtherClass("");
             setTitle("");
             setDescription("");
             setDueAt("");
@@ -79,20 +93,29 @@ export function ClassHomeworkPanel() {
         }}
       >
         <h2 className="text-lg font-bold text-slate-800">Nouveau devoir de classe</h2>
+        {board.classes.length > 0 && (
+          <div className="adm-eval-chips text-sm font-semibold text-slate-600" role="group" aria-label="Classes">
+            {board.classes.map((name) => (
+              <label key={name} className={classes.includes(name) ? "is-on" : ""}>
+                <input
+                  type="checkbox"
+                  checked={classes.includes(name)}
+                  onChange={(event) =>
+                    setClasses(event.target.checked ? [...classes, name] : classes.filter((value) => value !== name))
+                  }
+                />
+                {name}
+              </label>
+            ))}
+          </div>
+        )}
         <div className="grid md:grid-cols-2 gap-3">
           <input
-            list="classes-connues"
-            required
-            value={classe}
-            onChange={(event) => setClasse(event.target.value)}
-            placeholder="Classe, par exemple 2nde 3"
+            value={otherClass}
+            onChange={(event) => setOtherClass(event.target.value)}
+            placeholder={board.classes.length ? "Autre classe (facultatif)" : "Classe, par exemple 2nde 3"}
             className="rounded-xl border border-slate-200 px-3 py-2 text-sm"
           />
-          <datalist id="classes-connues">
-            {board.classes.map((name) => (
-              <option key={name} value={name} />
-            ))}
-          </datalist>
           <input
             type="datetime-local"
             value={dueAt}
@@ -125,7 +148,7 @@ export function ClassHomeworkPanel() {
             placeholder="Titre du devoir"
             className="rounded-xl border border-slate-200 px-3 py-2 text-sm flex-1 min-w-[12rem]"
           />
-          <Button disabled={pending}>Donner à la classe</Button>
+          <Button disabled={pending}>{classes.length + (otherClass.trim() ? 1 : 0) > 1 ? "Donner aux classes" : "Donner à la classe"}</Button>
         </div>
         {notice && <p className="text-sm text-red-600">{notice}</p>}
         {board.classes.length === 0 && (

@@ -1,35 +1,10 @@
-const PYODIDE_BUILTIN_PACKAGES = new Set([
-  'pandas',
-  'numpy',
-  'matplotlib',
-  'Pillow',
-  'micropip',
-  'scipy',
-]);
-
+/**
+ * Charge les modules demandés par un exercice. Tous figurent dans le lock servi par le site
+ * (public/vendor/pyodide, préparé par scripts/copy-vendor-assets.mjs), y compris folium et geopy :
+ * pas de micropip, donc pas d'appel à PyPI depuis le navigateur de l'élève.
+ */
 export async function loadPythonPackages(pyodide: any, packages: string[] = []) {
-  const normalized = [...new Set(packages.map((pkg) => pkg.trim()).filter(Boolean))];
+  const normalized = [...new Set(packages.map((pkg) => pkg.trim()).filter(Boolean).map((pkg) => (pkg === 'PIL' ? 'Pillow' : pkg)))];
   if (normalized.length === 0) return;
-
-  const builtIn = normalized
-    .map((pkg) => (pkg === 'PIL' ? 'Pillow' : pkg))
-    .filter((pkg) => PYODIDE_BUILTIN_PACKAGES.has(pkg));
-  const viaMicropip = normalized.filter(
-    (pkg) => !PYODIDE_BUILTIN_PACKAGES.has(pkg) && pkg !== 'PIL'
-  );
-
-  if (builtIn.length > 0) {
-    await pyodide.loadPackage(builtIn);
-  }
-
-  if (viaMicropip.length > 0) {
-    if (!builtIn.includes('micropip')) {
-      await pyodide.loadPackage('micropip');
-    }
-    await pyodide.runPythonAsync(`
-import micropip
-for pkg in ${JSON.stringify(viaMicropip)}:
-    await micropip.install(pkg)
-`);
-  }
+  await pyodide.loadPackage(normalized);
 }
