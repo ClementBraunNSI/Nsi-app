@@ -3,6 +3,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { getAuthContext } from '@/lib/auth';
 import { getReservedCourses, type ReservedCourse } from '@/app/actions/getReservedCourses';
+import { fetchLastWork } from '@/lib/last-work-server';
 
 export type AdminStudent = {
   id: string;
@@ -12,6 +13,8 @@ export type AdminStudent = {
   classe: string | null;
   updated_at: string | null;
   has_private_lessons: boolean | null;
+  /** Dernière activité de travail (lib/last-work.ts), la même que sur la page Activité ; null si aucune. */
+  last_work_at: string | null;
 };
 
 export async function getAdminDashboardData() {
@@ -31,9 +34,12 @@ export async function getAdminDashboardData() {
     supabase.from('badges').select('*', { count: 'exact', head: true }),
   ]);
 
+  const profiles = (studentsData || []) as Omit<AdminStudent, 'last_work_at'>[];
+  const lastWork = await fetchLastWork(supabase, profiles.map((student) => student.id));
+
   return {
     error: null as null,
-    students: (studentsData || []) as AdminStudent[],
+    students: profiles.map((student) => ({ ...student, last_work_at: lastWork.get(student.id) ?? null })),
     totalExercises: countEx || 0,
     totalBadges: countBadges || 0,
   };

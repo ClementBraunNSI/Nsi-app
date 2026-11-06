@@ -73,6 +73,24 @@ describe("typing trace", () => {
     expect(summary.flags).toEqual([]);
   });
 
+  it("keeps a paste from outside the editor and shows it to the teacher", () => {
+    const trace = newTrace("", 0);
+    const pasted = "def somme(liste):\n    return sum(x for x in liste if x % 2 == 0)";
+    recordEdit(trace, "", pasted, { now: 1000, pasted, external: true });
+    expect(trace.events[0]).toMatchObject({ k: "p", ext: 1, ins: pasted });
+    const summary = summarizeTrace(trace, pasted);
+    expect(summary.externalPastes).toBe(1);
+    expect(summary.largestExternal).toBe(pasted.length);
+    expect(summary.severity).toBe("suspect");
+    expect(sanitizeTrace(JSON.parse(JSON.stringify(trace)))?.events[0].ext).toBe(1);
+  });
+
+  it("does not flag a short paste or code copied inside the editor", () => {
+    const trace = newTrace("total = 0\n", 0);
+    recordEdit(trace, "total = 0\n", "total = 0\ntotal = 0\n", { now: 1000, pasted: "total = 0\n", external: false });
+    expect(summarizeTrace(trace, "total = 0\ntotal = 0\n").externalPastes).toBe(0);
+  });
+
   it("flags blocked pastes, blocks of text and code that does not match the trace", () => {
     const trace = newTrace("", 0);
     recordMark(trace, "b", { now: 500, ins: "def somme(liste):\n    return sum(liste)" });

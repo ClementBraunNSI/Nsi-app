@@ -3,25 +3,9 @@
 import { createClient } from "@/utils/supabase/server";
 import { getAuthContext } from "@/lib/auth";
 import { getAllExercises } from "@/app/actions/getExercises";
-
-export type ActivityEvent = {
-  at: string | null;
-  label: string;
-  work: boolean;
-  /** Exercice validé : son code réussi s'ouvre depuis l'activité. */
-  exerciseId?: string;
-};
-
-export type StudentActivity = {
-  id: string;
-  fullName: string;
-  classe: string | null;
-  privateLesson: boolean;
-  lastWorkAt: string | null;
-  events: ActivityEvent[];
-};
-
-const PER_STUDENT = 4;
+import { lastWorkByStudent } from "@/lib/last-work";
+import { fetchSubmissionDates } from "@/lib/last-work-server";
+import { WINDOW_DAYS, type BoardEvent, type BoardStudent, type TypingSeverity } from "@/lib/activity-board";
 
 export type DoneSheet = {
   courseId: string;
@@ -145,10 +129,11 @@ export async function getStudentWorkDetail(studentId: string): Promise<StudentWo
   };
 }
 
-export async function getStudentActivity(): Promise<{
-  particuliers: StudentActivity[];
-  classe: StudentActivity[];
-} | null> {
+/**
+ * Page Activité : les 30 derniers jours de chaque élève (exercices, fiches, devoirs, messages envoyés),
+ * avec le résumé du suivi de frappe des exercices réussis quand il existe. Réservé à l'enseignant.
+ */
+export async function getActivityBoard(): Promise<BoardStudent[] | null> {
   const auth = await getAuthContext();
   if (!auth.user || !auth.isElevated) return null;
 
@@ -161,21 +146,24 @@ export async function getStudentActivity(): Promise<{
 
   const rows = students || [];
   const ids = rows.map((student) => student.id);
-  if (ids.length === 0) return { particuliers: [], classe: [] };
+  if (ids.length === 0) return [];
 
-  const [progressRes, badgesRes, completionsRes, individualRes, messagesRes, exercises] = await Promise.all([
-    supabase
-      .from("user_progress")
-      .select("user_id, exercise_id, course_id, completed_at")
-      .in("user_id", ids),
-    supabase
-      .from("badges")
-      .select("user_id, badge_name, unlocked_at")
-      .in("user_id", ids),
-    supabase
-      .from("homework_completions")
-      .select("user_id, completed_at, homework_id")
-      .in("user_id", ids),
+  const since = new Date(Date.now() - WINDOW_DAYS * 86_400_000).toISOString();
+  // Résumé de frappe : seulement la gravité, pas l'historique. La colonne peut manquer tant que sa migration n'est pas appliquée.
+  const typingQuery = supabase
+    .from("exercise_submissions")
+    .select("user_id, exercise_id, created_at, severity:typing->summary->>severity")
+    .in("user_id", ids)
+    .in("status", ["auto", "validee"])
+    .not("typing", "is", null)
+    .gte("created_at", since)
+    .order("created_at", { ascending: false })
+    .limit(5000);
+
+  const [progressRes, badgesRes, completionsRes, individualRes, messagesRes, typingRes, exercises, submissionDates] = await Promise.all([
+    supabase.from("user_progress").select("user_id, exercise_id, course_id, completed_at").in("user_id", ids),
+    supabase.from("badges").select("user_id, badge_name, unlocked_at").in("user_id", ids),
+    supabase.from("homework_completions").select("user_id, completed_at, homework_id").in("user_id", ids),
     supabase
       .from("homework")
       .select("student_id, title")
@@ -186,12 +174,15 @@ export async function getStudentActivity(): Promise<{
       .from("messages")
       .select("sender_id, created_at")
       .in("sender_id", ids)
+      .gte("created_at", since)
       .order("created_at", { ascending: false })
-      .limit(300),
+      .limit(1000),
+    typingQuery,
     getAllExercises(),
+    fetchSubmissionDates(supabase, ids),
   ]);
 
-  const exerciseLabel = new Map(exercises.map((exercise) => [exercise.id, exercise]));
+  const exerciseInfo = new Map(exercises.map((exercise) => [exercise.id, exercise]));
   const homeworkIds = [...new Set((completionsRes.data || []).map((row) => row.homework_id))];
   const titles = new Map<string, string>();
   if (homeworkIds.length) {
@@ -199,95 +190,80 @@ export async function getStudentActivity(): Promise<{
     for (const row of homework || []) titles.set(row.id, row.title);
   }
 
-  const byStudent = new Map<string, { dated: ActivityEvent[]; undated: ActivityEvent[]; message: ActivityEvent | null }>();
-  for (const id of ids) byStudent.set(id, { dated: [], undated: [], message: null });
+  // Dernier essai réussi suivi, par élève et par exercice.
+  const severity = new Map<string, TypingSeverity>();
+  if (!typingRes.error) {
+    for (const row of (typingRes.data || []) as unknown as { user_id: string; exercise_id: string; severity: string | null }[]) {
+      const key = `${row.user_id}|${row.exercise_id}`;
+      if (severity.has(key)) continue;
+      if (row.severity === "ok" || row.severity === "attention" || row.severity === "suspect") severity.set(key, row.severity);
+    }
+  }
+
+  // Dernière activité : le même calcul que la liste des élèves et la page Aujourd'hui (lib/last-work.ts).
+  const lastWork = lastWorkByStudent({
+    progress: progressRes.data || [],
+    badges: badgesRes.data || [],
+    homework: completionsRes.data || [],
+    submissions: submissionDates,
+  });
+
+  type Bucket = { events: BoardEvent[]; lastExercise: { at: string; sheet: string | null } | null; undated: string[] };
+  const byStudent = new Map<string, Bucket>();
+  for (const id of ids) byStudent.set(id, { events: [], lastExercise: null, undated: [] });
 
   for (const row of progressRes.data || []) {
     const bucket = byStudent.get(row.user_id);
     if (!bucket || !row.completed_at) continue;
-    const exercise = exerciseLabel.get(row.exercise_id);
-    const name = exercise?.label || row.exercise_id;
-    const sheet = exercise?.courseTitle || row.course_id;
-    bucket.dated.push({
+    const exercise = exerciseInfo.get(row.exercise_id);
+    const sheet = exercise?.courseTitle || row.course_id || null;
+    if (!bucket.lastExercise || row.completed_at > bucket.lastExercise.at) bucket.lastExercise = { at: row.completed_at, sheet };
+    if (row.completed_at < since) continue;
+    bucket.events.push({
       at: row.completed_at,
-      label: `Exercice validé : ${name}${sheet ? ` (${sheet})` : ""}`,
-      work: true,
+      kind: "exercise",
+      label: exercise?.label || row.exercise_id,
       exerciseId: row.exercise_id,
+      sheet: sheet || undefined,
+      severity: severity.get(`${row.user_id}|${row.exercise_id}`) ?? null,
     });
   }
 
   for (const row of badgesRes.data || []) {
     const bucket = byStudent.get(row.user_id);
     if (!bucket || !row.unlocked_at) continue;
-    bucket.dated.push({
-      at: row.unlocked_at,
-      label: `Fiche terminée : ${row.badge_name}`,
-      work: true,
-    });
+    if (row.unlocked_at >= since) bucket.events.push({ at: row.unlocked_at, kind: "sheet", label: `Fiche terminée : ${row.badge_name}` });
   }
 
   for (const row of completionsRes.data || []) {
     const bucket = byStudent.get(row.user_id);
     if (!bucket || !row.completed_at) continue;
-    bucket.dated.push({
-      at: row.completed_at,
-      label: `Devoir de classe rendu : ${titles.get(row.homework_id) || "Devoir"}`,
-      work: true,
-    });
+    if (row.completed_at >= since) {
+      bucket.events.push({ at: row.completed_at, kind: "homework", label: `Devoir de classe rendu : ${titles.get(row.homework_id) || "Devoir"}` });
+    }
   }
 
   for (const row of individualRes.data || []) {
-    if (!row.student_id) continue;
-    const bucket = byStudent.get(row.student_id);
-    if (!bucket) continue;
-    bucket.undated.push({
-      at: null,
-      label: `Devoir particulier rendu : ${row.title} (date de rendu non enregistrée)`,
-      work: true,
-    });
+    const bucket = row.student_id ? byStudent.get(row.student_id) : undefined;
+    if (bucket) bucket.undated.push(row.title);
   }
 
   for (const row of messagesRes.data || []) {
     const bucket = byStudent.get(row.sender_id);
-    if (!bucket || !row.created_at || bucket.message) continue;
-    bucket.message = {
-      at: row.created_at,
-      label: "Message envoyé",
-      work: false,
-    };
+    if (bucket && row.created_at) bucket.events.push({ at: row.created_at, kind: "message", label: "Message envoyé" });
   }
 
-  const built: StudentActivity[] = rows.map((student) => {
+  return rows.map((student) => {
     const bucket = byStudent.get(student.id)!;
-    const dated = bucket.dated
-      .filter((event) => event.at)
-      .sort((a, b) => String(b.at).localeCompare(String(a.at)));
-    const events = dated.slice(0, PER_STUDENT);
-    if (bucket.message && !events.some((event) => event.label === "Message envoyé")) {
-      events.push(bucket.message);
-      events.sort((a, b) => String(b.at || "").localeCompare(String(a.at || "")));
-    }
-    for (const extra of bucket.undated.slice(0, 2)) events.push(extra);
     return {
       id: student.id,
       fullName: student.full_name || "Élève",
       classe: student.classe,
       privateLesson: Boolean(student.has_private_lessons),
-      lastWorkAt: dated[0]?.at || null,
-      events: events.slice(0, PER_STUDENT + 2),
+      lastWorkAt: lastWork.get(student.id) ?? null,
+      currentSheet: bucket.lastExercise?.sheet ?? null,
+      events: bucket.events.sort((a, b) => b.at.localeCompare(a.at)),
+      undated: bucket.undated,
     };
   });
-
-  const sortGroup = (list: StudentActivity[]) =>
-    list.sort((a, b) => {
-      if (a.lastWorkAt && b.lastWorkAt) return b.lastWorkAt.localeCompare(a.lastWorkAt);
-      if (a.lastWorkAt) return -1;
-      if (b.lastWorkAt) return 1;
-      return a.fullName.localeCompare(b.fullName, "fr");
-    });
-
-  return {
-    particuliers: sortGroup(built.filter((student) => student.privateLesson)),
-    classe: sortGroup(built.filter((student) => !student.privateLesson)),
-  };
 }

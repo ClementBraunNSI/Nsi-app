@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, type RefObject } from "react";
 import {
   newTrace,
   pasteAllowed,
-  PASTE_LIMIT,
   recordEdit,
   recordMark,
   replayTrace,
@@ -32,35 +31,28 @@ function writeTrace(exerciseId: string, trace: TypingTrace) {
 }
 
 /**
- * Suivi de frappe de l'éditeur d'un exercice. Chaque modification du code est notée ; un collage de plus de
- * PASTE_LIMIT caractères venu d'ailleurs que l'éditeur est bloqué (`guard`). L'historique survit au rechargement
- * tant que le code du navigateur est celui qu'il redonne.
+ * Suivi de frappe de l'éditeur d'un exercice. Chaque modification du code est notée, collages compris : rien n'est
+ * bloqué, mais un collage venu d'ailleurs que l'éditeur est marqué pour l'enseignant. L'historique survit au
+ * rechargement tant que le code du navigateur est celui qu'il redonne.
  */
 export function useTypingTrace({
   exerciseId,
   starter,
   enabled,
-  guard,
   containerRef,
   getCode,
-  onBlocked,
 }: {
   exerciseId: string;
   starter: string;
   enabled: boolean;
-  /** Bloquer les longs collages (désactivé en évaluation, qui a sa propre surveillance). */
-  guard: boolean;
   containerRef: RefObject<HTMLElement | null>;
   getCode: () => string;
-  onBlocked: (length: number) => void;
 }) {
   const traceRef = useRef<TypingTrace | null>(null);
-  const pastedRef = useRef<string | null>(null);
+  const pastedRef = useRef<{ text: string; external: boolean } | null>(null);
   const knownRef = useRef<string[]>([]);
   const copiedRef = useRef<string[]>([]);
   const saveTimer = useRef<number | null>(null);
-  const onBlockedRef = useRef(onBlocked);
-  onBlockedRef.current = onBlocked;
   const getCodeRef = useRef(getCode);
   getCodeRef.current = getCode;
 
@@ -92,7 +84,11 @@ export function useTypingTrace({
     (prev: string, next: string) => {
       const trace = traceRef.current;
       if (!trace || prev === next) return;
-      recordEdit(trace, prev, next, { pasted: pastedRef.current, known: [...knownRef.current, prev] });
+      recordEdit(trace, prev, next, {
+        pasted: pastedRef.current?.text,
+        external: pastedRef.current?.external,
+        known: [...knownRef.current, prev],
+      });
       pastedRef.current = null;
       // Ce qui est effacé peut revenir (annuler, couper puis coller) sans compter comme un texte venu d'ailleurs.
       const removed = (() => {
@@ -125,33 +121,14 @@ export function useTypingTrace({
     if (!enabled || !container) return;
     const allowed = (text: string) => pasteAllowed(text, getCodeRef.current(), [...copiedRef.current, ...knownRef.current]);
 
+    // Le collage passe toujours ; on retient seulement d'où il vient, pour l'enseignant.
     const onPaste = (event: ClipboardEvent) => {
       const text = event.clipboardData?.getData("text/plain") ?? "";
-      if (!guard || allowed(text)) {
-        pastedRef.current = text;
-        return;
-      }
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      if (traceRef.current) {
-        recordMark(traceRef.current, "b", { ins: text });
-        save();
-      }
-      onBlockedRef.current(text.length);
+      pastedRef.current = { text, external: !allowed(text) };
     };
     const onDrop = (event: DragEvent) => {
       const text = event.dataTransfer?.getData("text/plain") ?? "";
-      if (!guard || (!event.dataTransfer?.files?.length && allowed(text))) {
-        pastedRef.current = text;
-        return;
-      }
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      if (traceRef.current) {
-        recordMark(traceRef.current, "b", { ins: text || "(fichier déposé)" });
-        save();
-      }
-      onBlockedRef.current(text.length);
+      pastedRef.current = { text, external: !allowed(text) };
     };
     const onCopy = (event: ClipboardEvent) => {
       const target = event.target as HTMLElement | null;
@@ -172,7 +149,7 @@ export function useTypingTrace({
       container.removeEventListener("copy", onCopy);
       container.removeEventListener("cut", onCopy);
     };
-  }, [containerRef, enabled, guard, save]);
+  }, [containerRef, enabled]);
 
   // Sortir de la page (autre onglet, autre fenêtre) puis y revenir : noté dans l'historique.
   useEffect(() => {
@@ -197,4 +174,3 @@ export function useTypingTrace({
   return { begin, onEdit, mark, snapshot };
 }
 
-export { PASTE_LIMIT };

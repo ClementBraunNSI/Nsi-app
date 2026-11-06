@@ -14,7 +14,8 @@ export type TodayStudent = {
   full_name: string | null;
   level: string | null;
   classe: string | null;
-  updated_at: string | null;
+  /** Dernière activité de travail (lib/last-work.ts), pas la date de modification du profil. */
+  last_work_at: string | null;
   has_private_lessons: boolean | null;
 };
 
@@ -124,7 +125,7 @@ export function buildClassTiles(students: TodayStudent[], now: Date): TodayClass
       levelLabel: meta?.label ?? (group.key === NO_CLASS ? "À ranger" : "Niveau non renseigné"),
       image: meta?.image ?? "/images/fox_2.png",
       total: group.items.length,
-      inactive: group.items.filter((student) => isInactive(student.updated_at, now)).length,
+      inactive: group.items.filter((student) => isInactive(student.last_work_at, now)).length,
     };
   });
   // De la seconde au BTS, puis les classes sans niveau ; « Sans classe » reste en dernier.

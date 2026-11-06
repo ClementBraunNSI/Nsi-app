@@ -1,22 +1,25 @@
-import { PageHeader } from "@/components/ui";
-import { getStudentActivity } from "@/app/actions/activity";
-import { ActivityGroup } from "@/components/admin/ActivityList";
+import { getActivityBoard } from "@/app/actions/activity";
+import { ActivityBoard } from "@/components/admin/ActivityBoard";
+
+export const dynamic = "force-dynamic";
 
 export default async function AdminActivityPage() {
-  const activity = await getStudentActivity();
+  const students = await getActivityBoard();
 
   return (
-    <div className="admin-page">
-      <PageHeader
-        eyebrow="Élèves"
-        title="Activité"
-        description="Exercices validés, fiches terminées et devoirs rendus. Un message envoyé n'est pas compté comme du travail. Cliquer sur un exercice validé affiche le code de l'élève."
-      />
-      {activity ? (
-        <>
-          <ActivityGroup title="Cours particuliers" students={activity.particuliers} />
-          <ActivityGroup title="Élèves de classe" students={activity.classe} byClass />
-        </>
+    <div className="admin-page act-page">
+      <header className="admin-page-head">
+        <div>
+          <p className="admin-eyebrow">Élèves</p>
+          <h1>Activité</h1>
+          <p>
+            Exercices validés, fiches terminées, devoirs rendus. Un clic sur un élève déplie son activité jour par jour ; un clic sur un exercice
+            affiche son code et son suivi de frappe.
+          </p>
+        </div>
+      </header>
+      {students ? (
+        <ActivityBoard students={students} now={new Date().toISOString()} />
       ) : (
         <p className="admin-muted">Cette page est réservée à l&apos;enseignant.</p>
       )}

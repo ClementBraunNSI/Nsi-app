@@ -14,6 +14,7 @@ import { DeleteStudentDialog, StudentAccountDialog } from '@/components/admin/St
 import { isAbortError } from '@/lib/is-abort-error';
 import { classGroups, NO_CLASS } from '@/lib/class-groups';
 import { isInactive } from '@/lib/admin-today';
+import { lastActivityLabel } from '@/lib/activity-board';
 
 // Niveaux pour l'affichage et le filtrage
 const LEVELS = [
@@ -28,7 +29,8 @@ const LEVELS = [
 type Audience = 'particuliers' | 'classe';
 type DashboardData = { students: AdminStudent[]; totalExercises: number; totalBadges: number };
 
-const lastActiveLabel = (iso: string | null) => (iso ? new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : 'Jamais');
+// Même libellé que la page Activité, à partir de la même date (lib/last-work.ts).
+const lastActiveLabel = (iso: string | null, now: Date) => lastActivityLabel(iso, now);
 
 /**
  * Liste des élèves (ancienne page /admin). `initial` sert aux données fictives de la page de développement ;
@@ -97,7 +99,7 @@ export function StudentsDashboard({
       const matchesLevel = selectedLevel === 'ALL' || s.level === selectedLevel;
       const matchesClass = audience !== 'classe' || !classFilter
         || (classFilter === NO_CLASS ? !s.classe?.trim() : s.classe?.trim() === classFilter);
-      const matchesActivity = !onlyInactive || isInactive(s.updated_at, now);
+      const matchesActivity = !onlyInactive || isInactive(s.last_work_at, now);
       return matchesSearch && matchesLevel && matchesClass && matchesActivity;
     });
   }, [audienceStudents, selectedLevel, searchQuery, audience, classFilter, onlyInactive, now]);
@@ -116,7 +118,7 @@ export function StudentsDashboard({
 
   const stats = useMemo(() => {
     const total = filteredStudents.length;
-    const inactive = filteredStudents.filter((s) => isInactive(s.updated_at, now)).length;
+    const inactive = filteredStudents.filter((s) => isInactive(s.last_work_at, now)).length;
     return { total, active: total - inactive, inactive, activityRate: total ? Math.round(((total - inactive) / total) * 100) : 0 };
   }, [filteredStudents, now]);
 
@@ -125,14 +127,14 @@ export function StudentsDashboard({
     const csvContent = [
       headers.join(','),
       ...filteredStudents.map(s => {
-        const lastActive = s.updated_at ? new Date(s.updated_at).toLocaleDateString() : 'Jamais';
+        const lastActive = s.last_work_at ? new Date(s.last_work_at).toLocaleDateString() : 'Jamais';
         return [
           `"${s.full_name || 'Sans nom'}"`,
           s.email,
           s.level || 'N/A',
           s.classe || '',
           lastActive,
-          isInactive(s.updated_at, now) ? 'Inactif' : 'Actif'
+          isInactive(s.last_work_at, now) ? 'Inactif' : 'Actif'
         ].join(',');
       })
     ].join('\n');
@@ -263,7 +265,7 @@ export function StudentsDashboard({
                       </tr>
                     )}
                     {section.items.map((s) => {
-                      const inactive = isInactive(s.updated_at, now);
+                      const inactive = isInactive(s.last_work_at, now);
                       const name = s.full_name || 'Sans nom';
                       const classLabel = s.classe || (s.has_private_lessons ? 'Particulier' : 'Sans classe');
                       return (
@@ -283,7 +285,7 @@ export function StudentsDashboard({
                                 <small>{s.email}</small>
                                 <small className="admin-row-sub">
                                   {levelLabel(s.level)} · {classLabel} ·{' '}
-                                  <span className={inactive ? 'admin-text-warn' : ''}>{lastActiveLabel(s.updated_at)}</span>
+                                  <span className={inactive ? 'admin-text-warn' : ''}>{lastActiveLabel(s.last_work_at, now)}</span>
                                 </small>
                               </span>
                             </div>
@@ -292,7 +294,7 @@ export function StudentsDashboard({
                           <td className="admin-col-opt">{classLabel}</td>
                           <td className="admin-col-opt">
                             <span className={`admin-pill ${inactive ? 'is-warn' : 'is-ok'}`}>
-                              <Clock size={12} aria-hidden /> {lastActiveLabel(s.updated_at)}
+                              <Clock size={12} aria-hidden /> {lastActiveLabel(s.last_work_at, now)}
                             </span>
                           </td>
                           <td>

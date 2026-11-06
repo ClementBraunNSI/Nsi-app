@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquette activité admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: light; --bg:#f7f4ef; --surface:#fffcf8; --surface-2:#f1ece4; --fg:#14110e; --muted:#5c564e; --subtle:#8a8278; --border:color-mix(in srgb,#14110e 10%,transparent); --accent:#ea580c; --accent-fg:#fff; --accent-soft:#fff1e6; --radius:1.15rem; --radius-sm:.7rem; --shadow:inset 0 1px 0 rgba(255,255,255,.72),0 22px 50px -32px rgba(20,17,14,.28); --ok:#15803d; --ok-soft:#dcfce7; --warn:#b91c1c; --warn-soft:#fee2e2; --att:#92400e; --att-soft:#fef3c7; }
+  .dark { color-scheme: dark; --bg:#0c1017; --surface:#161c27; --surface-2:#1e2633; --fg:#f6f1ea; --muted:#c4bdb3; --subtle:#8b847b; --border:color-mix(in srgb,#f6f1ea 12%,transparent); --accent:#fb923c; --accent-fg:#1a1204; --accent-soft:#2a2013; --shadow:0 18px 44px -30px rgba(0,0,0,.7); --ok:#4ade80; --ok-soft:#14301f; --warn:#fca5a5; --warn-soft:#3a1818; --att:#fcd34d; --att-soft:#33270f; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--fg); font-family:Geist,system-ui,sans-serif; font-size:14px; }
+  button { font:inherit; color:inherit; border:0; background:none; cursor:pointer; }
+  .mock-bar { position:sticky; top:0; z-index:90; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding:8px; background:#1d1712; color:#e9e4dc; font-size:13px; }
+  .seg { display:inline-flex; background:#3a312a; border-radius:999px; padding:3px; }
+  .seg button { color:#e9e4dc; padding:6px 14px; border-radius:999px; font-weight:600; }
+  .seg button.on { background:#ea580c; color:#fff; }
+  .frame { margin:0 auto; max-width:1500px; } .frame.tablet { max-width:820px; border-inline:1px dashed var(--subtle); }
+  .shell { display:grid; grid-template-columns:200px minmax(0,1fr); gap:28px; padding:20px; }
+  .side { color:var(--muted); font-size:13px; display:flex; flex-direction:column; gap:6px; } .side b { color:var(--accent); background:var(--accent-soft); padding:7px 10px; border-radius:10px; }
+  .tablet .shell { grid-template-columns:1fr; } .tablet .side { display:none; }
+  h1 { font-size:28px; letter-spacing:-.03em; font-weight:600; } .eyebrow { color:var(--accent); font-weight:600; font-size:13px; }
+  .sub { color:var(--muted); margin-top:4px; }
+  /* barre de filtres collante */
+  .filters { position:sticky; top:42px; z-index:20; margin:16px 0; padding:10px 12px; border-radius:var(--radius); border:1px solid var(--border); background:color-mix(in srgb,var(--surface) 94%,transparent); backdrop-filter:blur(6px); box-shadow:var(--shadow); display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; }
+  .seg2 { display:inline-flex; background:var(--surface-2); border-radius:999px; padding:3px; }
+  .seg2 button { padding:5px 12px; border-radius:999px; font-weight:600; color:var(--muted); font-size:13px; }
+  .seg2 button.on { background:var(--surface); color:var(--fg); box-shadow:var(--shadow); }
+  .lab { font-size:11px; font-weight:600; color:var(--subtle); margin-right:-6px; }
+  select, input { font:inherit; font-size:13px; padding:6px 10px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--fg); }
+  input { flex:1; min-width:160px; }
+  .chk { display:inline-flex; gap:4px; } .chk span { padding:4px 10px; border-radius:999px; border:1px solid var(--border); font-size:12px; font-weight:600; color:var(--muted); } .chk span.on { border-color:var(--accent); background:var(--accent-soft); color:var(--accent); }
+  .grow { flex:1; }
+  /* tableau par classe */
+  .cls { margin-top:18px; border-radius:var(--radius); border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow); overflow:hidden; }
+  .cls h2 { display:flex; gap:10px; align-items:baseline; padding:10px 14px; background:var(--surface-2); font-size:15px; }
+  .cls h2 small { color:var(--subtle); font-weight:500; font-size:12px; }
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:left; font-size:11px; color:var(--subtle); font-weight:600; padding:8px 14px; border-bottom:1px solid var(--border); white-space:nowrap; }
+  td { padding:9px 14px; border-top:1px solid var(--border); color:var(--muted); vertical-align:middle; }
+  tr.row { cursor:pointer; } tr.row:hover td { background:color-mix(in srgb,var(--surface-2) 55%,transparent); }
+  td b { color:var(--fg); font-weight:600; }
+  .num { font-variant-numeric:tabular-nums; color:var(--fg); font-weight:600; }
+  .pill { display:inline-flex; gap:4px; align-items:center; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:600; background:var(--surface-2); color:var(--muted); white-space:nowrap; }
+  .pill.ok { background:var(--ok-soft); color:var(--ok); } .pill.warn { background:var(--warn-soft); color:var(--warn); } .pill.att { background:var(--att-soft); color:var(--att); }
+  .sheet { max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .chev { color:var(--subtle); text-align:right; }
+  tr.detail td { background:color-mix(in srgb,var(--surface-2) 40%,var(--surface)); padding:12px 14px 16px 48px; }
+  .day { font-size:11px; font-weight:700; color:var(--subtle); margin:8px 0 4px; } .day:first-child { margin-top:0; }
+  .ev { display:flex; gap:10px; padding:3px 0; color:var(--fg); } .ev time { color:var(--subtle); width:40px; flex-shrink:0; font-variant-numeric:tabular-nums; }
+  .ev a { color:var(--accent); text-decoration:underline; text-underline-offset:2px; }
+  .more { margin-top:8px; font-size:12px; font-weight:600; color:var(--accent); }
+  tr.idle td { color:var(--subtle); font-size:13px; } tr.idle b { color:var(--muted); }
+  .tablet .c-sheet, .tablet .c-dev { display:none; }
+  /* fil */
+  .feed { margin-top:18px; display:grid; gap:14px; }
+  .feed-day { border-radius:var(--radius); border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow); overflow:hidden; }
+  .feed-day h2 { padding:10px 14px; background:var(--surface-2); font-size:14px; display:flex; justify-content:space-between; } .feed-day h2 small { color:var(--subtle); font-weight:500; }
+  .fl { display:grid; grid-template-columns:48px 170px minmax(0,1fr) auto; gap:10px; padding:8px 14px; border-top:1px solid var(--border); align-items:center; }
+  .fl time { color:var(--subtle); font-variant-numeric:tabular-nums; } .fl b { font-weight:600; } .fl .what { color:var(--muted); }
+  .tablet .fl { grid-template-columns:44px minmax(0,1fr) auto; } .tablet .fl .who { grid-column:2; } .tablet .fl .what { grid-column:2 / 4; }
+  .note { margin-top:24px; padding:14px; border:1px dashed var(--subtle); border-radius:var(--radius); color:var(--muted); line-height:1.6; } .note b { color:var(--fg); }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<div class="mock-bar">
+  <span>Maquette : page Activité</span>
+  <div class="seg" data-g="view"><button class="on" data-v="table">Par élève</button><button data-v="feed">Fil d'activité</button></div>
+  <div class="seg" data-g="theme"><button class="on" data-v="light">Clair</button><button data-v="dark">Sombre</button></div>
+  <div class="seg" data-g="width"><button class="on" data-v="desk">Ordinateur</button><button data-v="tablet">Tablette</button></div>
+</div>
+<div class="frame" id="frame">
+<div class="shell">
+  <nav class="side"><span>Aujourd'hui</span><span>Liste des élèves</span><b>Activité</b><span>Messagerie</span><span>…</span></nav>
+  <main>
+    <p class="eyebrow">Élèves</p>
+    <h1>Activité</h1>
+    <p class="sub">Exercices validés, fiches terminées, devoirs rendus. Un clic sur un élève déplie son détail ; un clic sur un exercice affiche son code.</p>
+
+    <div class="filters">
+      <div class="seg2"><button class="on">Classes (45)</button><button>Cours particuliers (6)</button></div>
+      <select><option>Toutes les classes</option><option>1NSI1 (22)</option><option>TNSI (23)</option></select>
+      <span class="lab">Période</span>
+      <div class="seg2"><button>Aujourd'hui</button><button class="on">7 jours</button><button>30 jours</button></div>
+      <span class="chk"><span class="on">Exercices</span><span class="on">Fiches</span><span class="on">Devoirs</span><span>Messages</span></span>
+      <input placeholder="Rechercher un élève">
+      <div class="seg2 view-switch"><button class="on" data-v="table">Par élève</button><button data-v="feed">Fil</button></div>
+    </div>
+
+    <section id="v-table">
+      <div class="cls">
+        <h2>1NSI1 <small>22 élèves · 17 actifs sur 7 jours · 64 exercices validés</small></h2>
+        <table>
+          <thead><tr><th>Élève</th><th>Dernière activité</th><th>Exercices</th><th class="c-dev">Fiches · devoirs</th><th class="c-sheet">Fiche en cours</th><th>Frappe</th><th></th></tr></thead>
+          <tbody>
+            <tr class="row"><td><b>Gwen</b></td><td>aujourd'hui 19 h 49</td><td class="num">7</td><td class="c-dev">1 · 1</td><td class="c-sheet sheet">Les Conditions</td><td><span class="pill ok">RAS</span></td><td class="chev">▾</td></tr>
+            <tr class="detail"><td colspan="7">
+              <div class="day">Jeudi 5 novembre</div>
+              <div class="ev"><time>19:49</time><span>Exercice validé : <a>5.1 [Expert] Impôt progressif</a> (Les Conditions)</span></div>
+              <div class="day">Mercredi 4 novembre</div>
+              <div class="ev"><time>22:41</time><span>Fiche terminée : Les Fonctions</span></div>
+              <div class="ev"><time>22:41</time><span>Devoir de classe rendu : Faire 3 exercices des niveaux facile / moyen / avancé</span></div>
+              <div class="ev"><time>22:41</time><span>Exercices validés (Les Fonctions) : <a>2.3 Année bissextile</a>, <a>2.2 Valeur absolue</a>, <a>2.1 Maximum</a></span></div>
+              <a class="more">Toutes ses fiches et ses exercices →</a>
+            </td></tr>
+            <tr class="row"><td><b>Kendra</b></td><td>aujourd'hui 16 h 44</td><td class="num">4</td><td class="c-dev">0 · 0</td><td class="c-sheet sheet">Types en Python</td><td><span class="pill att">1 à regarder</span></td><td class="chev">▸</td></tr>
+            <tr class="row"><td><b>Charles</b></td><td>hier 22 h 18</td><td class="num">3</td><td class="c-dev">0 · 1</td><td class="c-sheet sheet">Les Fonctions</td><td><span class="pill warn">2 suspects</span></td><td class="chev">▸</td></tr>
+            <tr class="row"><td><b>Inès</b></td><td>lun. 2 nov.</td><td class="num">1</td><td class="c-dev">0 · 0</td><td class="c-sheet sheet">Les dictionnaires</td><td><span class="pill">—</span></td><td class="chev">▸</td></tr>
+            <tr class="idle"><td colspan="7">▸ <b>5 élèves sans activité sur 7 jours</b> : Adam, Lina, Noah, Rayan, Zoé</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cls">
+        <h2>TNSI <small>23 élèves · 12 actifs sur 7 jours · 31 exercices validés</small></h2>
+        <table><tbody>
+          <tr class="row"><td><b>Paul</b></td><td>mar. 3 nov.</td><td class="num">4</td><td class="c-dev">0 · 0</td><td class="c-sheet sheet">Les dictionnaires</td><td><span class="pill ok">RAS</span></td><td class="chev">▸</td></tr>
+          <tr class="idle"><td colspan="7">▸ <b>11 élèves sans activité sur 7 jours</b></td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <section id="v-feed" hidden>
+      <div class="feed">
+        <div class="feed-day"><h2>Aujourd'hui, vendredi 6 novembre <small>9 élèves · 23 exercices</small></h2>
+          <div class="fl"><time>19:49</time><span class="who"><b>Gwen</b> <span class="pill">1NSI1</span></span><span class="what">Exercice validé : 5.1 [Expert] Impôt progressif (Les Conditions)</span><span class="pill ok">RAS</span></div>
+          <div class="fl"><time>16:44</time><span class="who"><b>Kendra</b> <span class="pill">1NSI1</span></span><span class="what">2 exercices validés (Types en Python, Les Fonctions)</span><span class="pill att">à regarder</span></div>
+          <div class="fl"><time>11:33</time><span class="who"><b>Paul</b> <span class="pill">Particulier</span></span><span class="what">Fiche terminée : Bases de Python à la ferme laitière</span><span></span></div>
+        </div>
+        <div class="feed-day"><h2>Hier, jeudi 5 novembre <small>14 élèves · 41 exercices</small></h2>
+          <div class="fl"><time>22:18</time><span class="who"><b>Charles</b> <span class="pill">1NSI1</span></span><span class="what">3 exercices validés (Les Fonctions)</span><span class="pill warn">suspect</span></div>
+          <div class="fl"><time>18:25</time><span class="who"><b>Yanis</b> <span class="pill">TNSI</span></span><span class="what">4 exercices validés (Les dictionnaires)</span><span class="pill ok">RAS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note">
+      <b>Ce qui change</b><br>
+      · Barre de filtres en haut, qui reste visible : classes ou cours particuliers, classe, période, types d'activité, recherche, choix de la vue.<br>
+      · <b>Par élève</b> : un tableau par classe sur toute la largeur, une ligne par élève, chiffres de la période. Un clic déplie l'activité groupée par jour ; les exercices d'une même fiche tiennent sur une ligne et chacun ouvre son code.<br>
+      · Colonne <b>Frappe</b> : résumé du suivi de frappe des exercices de la période (RAS, à regarder, suspect).<br>
+      · Les élèves sans activité tiennent sur une ligne repliée en bas de chaque classe.<br>
+      · <b>Fil d'activité</b> : tout ce qui s'est passé, jour par jour, tous élèves confondus.
+    </div>
+  </main>
+</div>
+</div>
+<script>
+  function setView(v){ document.getElementById('v-table').hidden = v!=='table'; document.getElementById('v-feed').hidden = v!=='feed'; document.querySelectorAll('[data-v="table"],[data-v="feed"]').forEach(function(b){ b.classList.toggle('on', b.dataset.v===v); }); }
+  document.querySelectorAll('.seg, .view-switch').forEach(function(seg){ seg.addEventListener('click', function(e){ var b=e.target.closest('button'); if(!b) return; var v=b.dataset.v;
+    if(v==='table'||v==='feed') return setView(v);
+    seg.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x===b); });
+    if(v==='light'||v==='dark') document.documentElement.classList.toggle('dark', v==='dark');
+    if(v==='desk'||v==='tablet') document.getElementById('frame').classList.toggle('tablet', v==='tablet'); }); });
+</script>
+</body>
+</html>

@@ -13,7 +13,7 @@ const VERDICT: Record<TraceSeverity, { label: string; className: string; Icon: t
 
 const EVENT_LABELS: Record<TraceEvent['k'], string> = {
   s: 'saisie au clavier',
-  p: 'collage accepté',
+  p: 'collage',
   x: 'bloc apparu sans frappe',
   r: 'texte remis (annuler, déjà présent)',
   b: 'collage refusé',
@@ -45,7 +45,8 @@ function verdict(summary: TraceSummary | null, levelFlags: LevelFlag[]): TraceSe
 export function TypingReport({ summary, trace, levelFlags }: { summary: TraceSummary | null; trace?: TypingTrace; levelFlags: LevelFlag[] }) {
   const severity = verdict(summary, levelFlags);
   const { label, className, Icon } = VERDICT[severity];
-  const blocked = trace?.events.filter((event) => event.k === 'b' && event.ins) ?? [];
+  // Collages venus d'ailleurs que l'éditeur (et, pour les anciens historiques, collages qui avaient été refusés).
+  const outside = trace?.events.filter((event) => event.ins && ((event.k === 'p' && event.ext) || event.k === 'b')) ?? [];
 
   return (
     <section className="space-y-3 rounded-xl border border-slate-200 bg-white p-3 text-sm">
@@ -82,19 +83,28 @@ export function TypingReport({ summary, trace, levelFlags }: { summary: TraceSum
           <Metric label="Tapé au clavier" value={`${summary.typedChars} car.`} hint={`${summary.cpm || '–'} car./min`} />
           <Metric label="Corrections" value={`${summary.corrections} %`} hint={`${summary.revisits} retour${summary.revisits > 1 ? 's' : ''} en arrière`} />
           <Metric label="Essais" value={`${summary.runs} exéc.`} hint={`${summary.checks} vérif.`} />
-          <Metric label="Collages acceptés" value={`${summary.pastes}`} hint={`${summary.pastedChars} car.`} />
-          <Metric label="Collages refusés" value={`${summary.blockedPastes}`} hint={summary.largestBlocked ? `jusqu'à ${summary.largestBlocked} car.` : ''} />
+          <Metric label="Collages" value={`${summary.pastes}`} hint={`${summary.pastedChars} car.`} />
+          <Metric
+            label="Venus d'ailleurs"
+            value={`${summary.externalPastes ?? 0}`}
+            hint={summary.largestExternal ? `jusqu'à ${summary.largestExternal} car.` : ''}
+          />
           <Metric label="Sorties de la page" value={`${summary.awayCount}`} hint={summary.awaySeconds ? duration(summary.awaySeconds) : ''} />
           <Metric label="Blocs sans frappe" value={`${summary.blockChars} car.`} hint={summary.consistent ? 'saisie cohérente' : 'saisie incohérente'} />
         </dl>
       ) : null}
 
-      {blocked.length > 0 ? (
-        <details className="rounded-lg bg-red-50/60 p-2">
-          <summary className="cursor-pointer text-xs font-semibold text-red-800">Textes dont le collage a été refusé ({blocked.length})</summary>
+      {outside.length > 0 ? (
+        <details className="rounded-lg bg-red-50/60 p-2" open>
+          <summary className="cursor-pointer text-xs font-semibold text-red-800">Textes collés depuis l'extérieur de l'éditeur ({outside.length})</summary>
           <div className="mt-2 space-y-2">
-            {blocked.map((event, index) => (
-              <pre key={index} className="max-h-48 overflow-auto rounded-lg bg-slate-900 p-2 text-xs text-slate-100">{event.ins}</pre>
+            {outside.map((event, index) => (
+              <div key={index} className="space-y-1">
+                <p className="text-xs text-slate-500">
+                  {duration(Math.round(event.t / 1000))} après le début, {event.ins!.length} caractères{event.k === 'b' ? " (collage refusé à l'époque)" : ''}
+                </p>
+                <pre className="max-h-48 overflow-auto rounded-lg bg-slate-900 p-2 text-xs text-slate-100">{event.ins}</pre>
+              </div>
             ))}
           </div>
         </details>

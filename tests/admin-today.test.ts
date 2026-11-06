@@ -9,11 +9,11 @@ function input(overrides: Partial<TodayInput> = {}): TodayInput {
   return {
     now,
     students: [
-      { id: "a", full_name: "Alice", level: "1NSI", classe: "1NSI-A", updated_at: daysAgo(1), has_private_lessons: false },
-      { id: "b", full_name: "Bob", level: "1NSI", classe: "1NSI-A", updated_at: daysAgo(10), has_private_lessons: false },
-      { id: "c", full_name: "Chloé", level: "TNSI", classe: "TNSI", updated_at: null, has_private_lessons: false },
-      { id: "d", full_name: "Dan", level: "SNT", classe: " 2nde 3 ", updated_at: daysAgo(0), has_private_lessons: false },
-      { id: "p", full_name: "Paul", level: "TNSI", classe: null, updated_at: daysAgo(0), has_private_lessons: true },
+      { id: "a", full_name: "Alice", level: "1NSI", classe: "1NSI-A", last_work_at: daysAgo(1), has_private_lessons: false },
+      { id: "b", full_name: "Bob", level: "1NSI", classe: "1NSI-A", last_work_at: daysAgo(10), has_private_lessons: false },
+      { id: "c", full_name: "Chloé", level: "TNSI", classe: "TNSI", last_work_at: null, has_private_lessons: false },
+      { id: "d", full_name: "Dan", level: "SNT", classe: " 2nde 3 ", last_work_at: daysAgo(0), has_private_lessons: false },
+      { id: "p", full_name: "Paul", level: "TNSI", classe: null, last_work_at: daysAgo(0), has_private_lessons: true },
     ],
     pending: [],
     inbox: [],

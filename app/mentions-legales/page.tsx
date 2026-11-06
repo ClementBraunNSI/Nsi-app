@@ -266,7 +266,8 @@ export default function MentionsLegales() {
               tapé, les collages, les moments où la page est quittée, les clics sur Exécuter et Vérifier. Rien n'est noté en
               dehors de l'éditeur de code, et aucune frappe ailleurs sur l'ordinateur n'est enregistrée. Cet historique est
               envoyé avec le code au bouton Vérifier. Il sert seulement à l'enseignant pour s'assurer que le travail est
-              personnel. Les collages de plus de 40 caractères venus d'ailleurs que l'éditeur sont refusés.
+              personnel. Les collages ne sont pas bloqués, mais ceux qui viennent d'ailleurs que l'éditeur sont signalés à
+              l'enseignant avec le texte collé.
             </p>
 
             <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">Services tiers</h3>

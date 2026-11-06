@@ -4,7 +4,7 @@
  * Module partagé navigateur et serveur, sans dépendance.
  */
 
-/** Collage permis depuis l'extérieur de l'éditeur : un nom, une petite expression. Au-delà, il est bloqué. */
+/** Collage venu d'ailleurs jugé anodin : un nom, une petite expression. Au-delà, il est signalé à l'enseignant. */
 export const PASTE_LIMIT = 40;
 /** Au-delà, l'historique est tronqué (le résumé le signale). */
 export const MAX_EVENTS = 4000;
@@ -17,13 +17,13 @@ const IDLE_GAP = 30_000;
 /**
  * Événement de l'historique. `t` : millisecondes depuis le début du suivi.
  * - `s` : saisie au clavier (une ou plusieurs frappes fusionnées, `n` frappes, sur `d` ms)
- * - `p` : collage permis ; `x` : bloc apparu d'un coup, sans frappe ni collage (autre outil, extension…)
- * - `r` : texte remis (annuler, réinitialiser, code de départ) ; `b` : collage bloqué (`ins` : le texte refusé)
+ * - `p` : collage (`ext` : venu d'ailleurs que l'éditeur) ; `x` : bloc apparu d'un coup, sans frappe ni collage
+ * - `r` : texte remis (annuler, réinitialiser, code de départ) ; `b` : collage refusé (anciens historiques seulement)
  * - `h` / `v` : la page est cachée (autre onglet, autre fenêtre) / redevient visible
  * - `e` / `c` : bouton Exécuter / Vérifier
  */
 export type TraceKind = "s" | "p" | "x" | "r" | "b" | "h" | "v" | "e" | "c";
-export type TraceEvent = { t: number; k: TraceKind; at?: number; del?: number; ins?: string; n?: number; d?: number };
+export type TraceEvent = { t: number; k: TraceKind; at?: number; del?: number; ins?: string; n?: number; d?: number; ext?: 1 };
 export type TypingTrace = { v: 1; base: string; started: number; events: TraceEvent[]; truncated?: boolean };
 
 export function newTrace(base: string, now = Date.now()): TypingTrace {
@@ -49,7 +49,7 @@ function squash(text: string) {
   return text.replace(/\s+/g, " ").trim();
 }
 
-/** Collage accepté : court, ou recopiant du code déjà présent dans l'éditeur ou copié depuis l'éditeur. */
+/** Collage anodin : court, ou recopiant du code déjà présent dans l'éditeur ou copié depuis l'éditeur. */
 export function pasteAllowed(text: string, currentCode: string, copiedInside: Iterable<string>) {
   const pasted = squash(text);
   if (pasted.length <= PASTE_LIMIT) return true;
@@ -59,10 +59,15 @@ export function pasteAllowed(text: string, currentCode: string, copiedInside: It
 }
 
 /**
- * Ajoute une modification à l'historique. `pasted` : texte d'un collage permis qui vient d'avoir lieu.
- * `known` : textes déjà vus (code de départ, morceaux effacés) dont la réapparition est un retour en arrière.
+ * Ajoute une modification à l'historique. `pasted` : texte d'un collage qui vient d'avoir lieu, `external` s'il ne
+ * vient pas de l'éditeur. `known` : textes déjà vus (code de départ, morceaux effacés) dont la réapparition est un retour en arrière.
  */
-export function recordEdit(trace: TypingTrace, prev: string, next: string, options: { now?: number; pasted?: string | null; known?: string[] } = {}) {
+export function recordEdit(
+  trace: TypingTrace,
+  prev: string,
+  next: string,
+  options: { now?: number; pasted?: string | null; external?: boolean; known?: string[] } = {},
+) {
   if (prev === next) return;
   const t = (options.now ?? Date.now()) - trace.started;
   const { at, del, ins } = diffEdit(prev, next);
@@ -83,7 +88,15 @@ export function recordEdit(trace: TypingTrace, prev: string, next: string, optio
     last.d = t - last.t;
     return;
   }
-  pushEvent(trace, { t, k, at, ...(del ? { del } : {}), ...(ins ? { ins } : {}), ...(k === "s" ? { n: 1 } : {}) });
+  pushEvent(trace, {
+    t,
+    k,
+    at,
+    ...(del ? { del } : {}),
+    ...(ins ? { ins } : {}),
+    ...(k === "s" ? { n: 1 } : {}),
+    ...(k === "p" && options.external ? { ext: 1 as const } : {}),
+  });
 }
 
 export function recordMark(trace: TypingTrace, k: "b" | "h" | "v" | "e" | "c", extra: { ins?: string; now?: number } = {}) {
@@ -131,6 +144,7 @@ export function sanitizeTrace(input: unknown): TypingTrace | null {
     if (typeof event.ins === "string") clean.ins = event.ins;
     if (typeof event.n === "number") clean.n = Math.max(0, Math.round(event.n));
     if (typeof event.d === "number") clean.d = Math.max(0, Math.round(event.d));
+    if (event.ext === 1) clean.ext = 1;
     size += clean.ins?.length ?? 0;
     if (size > MAX_TEXT) return null;
     events.push(clean);
@@ -150,6 +164,10 @@ export type TraceSummary = {
   deletedChars: number;
   pastedChars: number;
   pastes: number;
+  /** Collages venus d'ailleurs que l'éditeur et plus longs que PASTE_LIMIT. */
+  externalPastes: number;
+  externalChars: number;
+  largestExternal: number;
   blockedPastes: number;
   largestBlocked: number;
   blockChars: number;
@@ -180,6 +198,9 @@ export function summarizeTrace(trace: TypingTrace, finalCode: string, starter = 
   let deletedChars = 0;
   let pastedChars = 0;
   let pastes = 0;
+  let externalPastes = 0;
+  let externalChars = 0;
+  let largestExternal = 0;
   let blockedPastes = 0;
   let largestBlocked = 0;
   let blockChars = 0;
@@ -240,6 +261,11 @@ export function summarizeTrace(trace: TypingTrace, finalCode: string, starter = 
     } else if (event.k === "p") {
       pastedChars += ins.length;
       pastes += 1;
+      if (event.ext && ins.replace(/\s+/g, " ").trim().length > PASTE_LIMIT) {
+        externalPastes += 1;
+        externalChars += ins.length;
+        largestExternal = Math.max(largestExternal, ins.length);
+      }
     } else if (event.k === "x") {
       blockChars += ins.length;
     }
@@ -263,7 +289,14 @@ export function summarizeTrace(trace: TypingTrace, finalCode: string, starter = 
     flags.push({ severity: "suspect", label: `${blockedPastes} collage${blockedPastes > 1 ? "s" : ""} bloqué${blockedPastes > 1 ? "s" : ""} (jusqu'à ${largestBlocked} caractères).` });
   }
   if (blockChars > 0) flags.push({ severity: "suspect", label: `${blockChars} caractères apparus d'un bloc, sans frappe ni collage.` });
-  if (pastedChars > 120) flags.push({ severity: "attention", label: `${pastedChars} caractères collés au total.` });
+  if (externalPastes > 0) {
+    flags.push({
+      severity: "suspect",
+      label: `${externalPastes} collage${externalPastes > 1 ? "s" : ""} venu${externalPastes > 1 ? "s" : ""} d'ailleurs que l'éditeur (${externalChars} caractères, jusqu'à ${largestExternal} d'un coup).`,
+    });
+  } else if (pastedChars > 120) {
+    flags.push({ severity: "attention", label: `${pastedChars} caractères collés au total, recopiés depuis l'éditeur.` });
+  }
   if (baseChars > 30) flags.push({ severity: "attention", label: `${baseChars} caractères déjà présents au début du suivi (autre appareil ou code plus ancien).` });
   if (written >= 150 && activeSeconds > 0 && activeSeconds < 60) {
     flags.push({ severity: "suspect", label: `${written} caractères écrits en ${activeSeconds} s de saisie.` });
@@ -298,6 +331,9 @@ export function summarizeTrace(trace: TypingTrace, finalCode: string, starter = 
     deletedChars,
     pastedChars,
     pastes,
+    externalPastes,
+    externalChars,
+    largestExternal,
     blockedPastes,
     largestBlocked,
     blockChars,
