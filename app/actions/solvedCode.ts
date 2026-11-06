@@ -2,7 +2,9 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getAuthContext } from "@/lib/auth";
-import { listExerciseLabels } from "@/app/actions/getExercises";
+import { getExerciseReference, listExerciseLabels } from "@/app/actions/getExercises";
+import { codeAboveLevel, type LevelFlag } from "@/lib/code-level";
+import type { TraceSummary, TypingTrace } from "@/lib/typing-trace";
 import { latestSolved, compareSolved, NO_CLASS, type SolvedEntry } from "@/lib/solved-code";
 
 export type SolvedCodeFilters = { classe?: string; courseId?: string; studentId?: string };
@@ -104,7 +106,18 @@ export async function getSolvedCode(submissionId: string): Promise<string | null
   return data ? String(data.content ?? "") : null;
 }
 
-export type StudentExerciseCode = { content: string; solvedAt: string; status: "auto" | "validee"; kind: "code" | "reponse" };
+export type StudentTyping = { summary: TraceSummary; trace?: TypingTrace } | null;
+
+export type StudentExerciseCode = {
+  content: string;
+  solvedAt: string;
+  status: "auto" | "validee";
+  kind: "code" | "reponse";
+  /** Suivi de frappe de l'essai ; null pour un essai envoyé avant le suivi. */
+  typing: StudentTyping;
+  /** Constructions au-dessus du niveau de l'élève, absentes de la correction. */
+  levelFlags: LevelFlag[];
+};
 
 /**
  * Dernière version réussie d'un exercice pour un élève, ouverte depuis l'activité.
@@ -117,20 +130,30 @@ export async function getStudentExerciseCode(studentId: string, exerciseId: stri
   const exercise = String(exerciseId || "").trim();
   if (!student || student.length > 80 || !exercise || exercise.length > 200) return null;
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("exercise_submissions")
-    .select("content, created_at, status, kind")
-    .eq("user_id", student)
-    .eq("exercise_id", exercise)
-    .in("status", ["auto", "validee"])
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  const latest = (columns: string) =>
+    supabase
+      .from("exercise_submissions")
+      .select(columns)
+      .eq("user_id", student)
+      .eq("exercise_id", exercise)
+      .in("status", ["auto", "validee"])
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+  // La colonne du suivi peut manquer tant que sa migration n'est pas appliquée : on relit alors sans elle.
+  let { data, error } = await latest("content, created_at, status, kind, typing");
+  if (error) ({ data, error } = await latest("content, created_at, status, kind"));
   if (!data) return null;
+  const row = data as unknown as { content?: string; created_at: string; status: string; kind: string; typing?: StudentTyping };
+  const content = String(row.content ?? "");
+  const kind = row.kind === "reponse" ? "reponse" : "code";
+  const reference = kind === "code" ? await getExerciseReference(exercise) : null;
   return {
-    content: String(data.content ?? ""),
-    solvedAt: String(data.created_at),
-    status: data.status === "validee" ? "validee" : "auto",
-    kind: data.kind === "reponse" ? "reponse" : "code",
+    content,
+    solvedAt: String(row.created_at),
+    status: row.status === "validee" ? "validee" : "auto",
+    kind,
+    typing: row.typing && typeof row.typing === "object" && "summary" in row.typing ? row.typing : null,
+    levelFlags: reference?.type === "python" ? codeAboveLevel(content, reference.level, reference.correction) : [],
   };
 }

@@ -15,9 +15,9 @@ export const STATUS_LABELS: Record<EvaluationSummary["status"], string> = {
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", { dateStyle: "short", timeZone: "Europe/Paris" });
 
-export default function EvaluationsAdmin({ evaluations, classes }: { evaluations: EvaluationSummary[]; classes: string[] }) {
+export default function EvaluationsAdmin({ evaluations, classes, startCreating = false }: { evaluations: EvaluationSummary[]; classes: string[]; startCreating?: boolean }) {
   const router = useRouter();
-  const [creating, setCreating] = useState(false);
+  const [creating, setCreating] = useState(startCreating);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

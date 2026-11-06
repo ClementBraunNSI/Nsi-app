@@ -4,6 +4,7 @@ import { useState, type ReactNode } from 'react';
 import { ChevronDown, Code2 } from 'lucide-react';
 import { getStudentExerciseCode, type StudentExerciseCode } from '@/app/actions/solvedCode';
 import { isAbortError } from '@/lib/is-abort-error';
+import { TypingReport } from '@/components/admin/TypingReport';
 
 const dateFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Europe/Paris' });
 
@@ -64,6 +65,9 @@ export function ExerciseCode({ studentId, exerciseId, children }: { studentId: s
                 {solved.status === 'validee' ? 'validé par l\'enseignant' : 'qui passe les tests'}, enregistré le {dateFormat.format(new Date(solved.solvedAt))}
               </p>
               <CodeBlock code={solved.content} />
+              {solved.kind === 'code' ? (
+                <TypingReport summary={solved.typing?.summary ?? null} trace={solved.typing?.trace} levelFlags={solved.levelFlags ?? []} />
+              ) : null}
             </>
           )}
         </div>

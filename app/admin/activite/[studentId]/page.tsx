@@ -14,20 +14,18 @@ export default async function StudentActivityDetailPage({
   if (!detail) notFound();
 
   return (
-    <div className="px-4 md:px-8 pb-10">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <PageHeader
-          eyebrow="Activité"
-          title={detail.fullName}
-          description="Fiches terminées et exercices validés par cet élève."
-          actions={
-            <Link href="/admin/activite" className="text-sm font-semibold text-orange-600">
-              Retour à l'activité
-            </Link>
-          }
-        />
-        <StudentWorkBlocks detail={detail} />
-      </div>
+    <div className="admin-page">
+      <PageHeader
+        eyebrow="Activité"
+        title={detail.fullName}
+        description="Fiches terminées et exercices validés par cet élève."
+        actions={
+          <Link href="/admin/activite" className="text-sm font-semibold text-[var(--accent)]">
+            Retour à l&apos;activité
+          </Link>
+        }
+      />
+      <StudentWorkBlocks detail={detail} />
     </div>
   );
 }

@@ -21,10 +21,8 @@ export default async function AdminEvaluationPage({
   }
   const tab = onglet === "sujets" || onglet === "reglages" ? onglet : "suivi";
   return (
-    <div className="px-4 md:px-8 pb-10">
-      <div className="max-w-7xl mx-auto">
-        <EvaluationManager initialBoard={board} classes={classes} initialTab={tab} />
-      </div>
+    <div className="admin-page">
+      <EvaluationManager initialBoard={board} classes={classes} initialTab={tab} />
     </div>
   );
 }

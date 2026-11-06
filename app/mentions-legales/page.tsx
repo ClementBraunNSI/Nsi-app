@@ -260,6 +260,15 @@ export default function MentionsLegales() {
               aussi penser à se déconnecter en fin de séance.
             </p>
 
+            <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">Suivi de frappe des exercices</h3>
+            <p className="mb-3">
+              Pendant qu'un élève connecté écrit le code d'un exercice, l'éditeur note l'historique de la saisie : le texte
+              tapé, les collages, les moments où la page est quittée, les clics sur Exécuter et Vérifier. Rien n'est noté en
+              dehors de l'éditeur de code, et aucune frappe ailleurs sur l'ordinateur n'est enregistrée. Cet historique est
+              envoyé avec le code au bouton Vérifier. Il sert seulement à l'enseignant pour s'assurer que le travail est
+              personnel. Les collages de plus de 40 caractères venus d'ailleurs que l'éditeur sont refusés.
+            </p>
+
             <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">Services tiers</h3>
             <p className="mb-3">Aucun service tiers ne reçoit de cookie. Certains reçoivent l'adresse IP, comme pour toute page web :</p>
             <ul className="list-disc pl-6 space-y-2 mb-4">

@@ -13,10 +13,8 @@ export default async function AdminChallengePage({ params }: { params: Promise<{
     return <ResourceNotFound title="Défi introuvable" description="Il a peut-être été supprimé." actionHref="/admin/defis" actionLabel="Tous les défis" />;
   }
   return (
-    <div className="px-4 md:px-8 pb-10">
-      <div className="max-w-7xl mx-auto">
-        <ChallengeDetailView detail={detail} classes={classes} />
-      </div>
+    <div className="admin-page">
+      <ChallengeDetailView detail={detail} classes={classes} />
     </div>
   );
 }

@@ -18,6 +18,8 @@ export async function recordSubmission(row: {
   content: string;
   passed: boolean | null;
   status: SubmissionStatus;
+  /** Suivi de frappe : résumé calculé par le serveur, et l'historique complet pour un essai réussi. */
+  typing?: unknown;
 }): Promise<{ id: string } | null> {
   const admin = createAdminClient();
   if (!admin) return null;
@@ -31,6 +33,7 @@ export async function recordSubmission(row: {
       content: row.content.slice(0, SUBMISSION_LIMIT),
       passed: row.passed,
       status: row.status,
+      ...(row.typing ? { typing: row.typing } : {}),
     })
     .select("id")
     .maybeSingle();

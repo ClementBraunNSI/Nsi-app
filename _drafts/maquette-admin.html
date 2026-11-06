@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquette panel admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens repris de app/globals.css (:root et .dark) */
+  :root {
+    color-scheme: light;
+    --bg: #f7f4ef; --surface: #fffcf8; --surface-2: #f1ece4;
+    --fg: #14110e; --muted: #5c564e; --subtle: #8a8278;
+    --border: color-mix(in srgb, #14110e 10%, transparent);
+    --accent: #ea580c; --accent-fg: #fff; --accent-soft: #fff1e6; --ring: #fb923c;
+    --radius: 1.15rem; --radius-sm: .7rem;
+    --inset: inset 0 1px 0 rgba(255,255,255,.72);
+    --shadow: var(--inset), 0 1px 1px rgba(20,17,14,.03), 0 22px 50px -32px rgba(20,17,14,.28);
+    --ease: cubic-bezier(.22,1,.36,1);
+    --ok: #15803d; --ok-soft: #dcfce7; --warn: #b91c1c; --warn-soft: #fee2e2;
+    --l1: #fdba74; --l1-on: #431407; --l2: #fb923c; --l2-on: #431407; --l3: #ea580c; --l3-on: #1a0a03; --l4: #c2410c; --l4-on: #fff; --l5: #7c2d12; --l5-on: #fff;
+  }
+  .dark {
+    color-scheme: dark;
+    --bg: #0c1017; --surface: #161c27; --surface-2: #1e2633;
+    --fg: #f6f1ea; --muted: #c4bdb3; --subtle: #8b847b;
+    --border: color-mix(in srgb, #f6f1ea 12%, transparent);
+    --accent: #fb923c; --accent-fg: #1a1204; --accent-soft: #2a2013; --ring: #fdba74;
+    --inset: inset 0 1px 0 rgba(255,255,255,.06);
+    --shadow: var(--inset), 0 18px 44px -30px rgba(0,0,0,.7);
+    --ok: #4ade80; --ok-soft: #14301f; --warn: #fca5a5; --warn-soft: #3a1818;
+    --l1: #fed7aa; --l2: #fdba74; --l3: #fb923c; --l3-on: #431407; --l4: #ea580c; --l4-on: #1a0a03; --l5: #c2410c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: Geist, system-ui, sans-serif; letter-spacing: -.011em; transition: background-color .25s, color .25s; }
+  a { color: inherit; text-decoration: none; cursor: pointer; }
+  button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+  img { display: block; max-width: 100%; }
+
+  .mock-bar { position: sticky; top: 0; z-index: 90; display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; padding: 8px 12px; background: #1d1712; color: #e9e4dc; font-size: 13px; font-weight: 500; }
+  .seg { display: inline-flex; background: #3a312a; border-radius: 999px; padding: 3px; }
+  .seg button { color: #e9e4dc; padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: 13px; }
+  .seg button.on { background: #ea580c; color: #fff; }
+  .frame { margin: 0 auto; transition: max-width .3s var(--ease); }
+  .frame.tablet { max-width: 820px; border-inline: 1px dashed var(--subtle); }
+
+  .site-header { height: 4rem; border-bottom: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; font-weight: 600; }
+  .site-header small { color: var(--subtle); font-weight: 500; }
+
+  /* ---------- Coque admin : menu groupé à gauche ---------- */
+  .adm { display: grid; grid-template-columns: 232px 1fr; gap: 1.75rem; max-width: 80rem; margin: 0 auto; padding: 1.5rem; }
+  .adm-nav { position: sticky; top: 4.5rem; align-self: start; display: flex; flex-direction: column; gap: 1.1rem; }
+  .adm-nav-group span { display: block; font-size: .72rem; font-weight: 600; color: var(--subtle); padding: 0 .75rem .35rem; }
+  .adm-nav a { display: flex; align-items: center; gap: .6rem; padding: .55rem .75rem; border-radius: var(--radius-sm); font-size: .9rem; font-weight: 500; color: var(--muted); }
+  .adm-nav a:hover { background: var(--surface-2); color: var(--fg); }
+  .adm-nav a.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .adm-nav a i { margin-left: auto; font-style: normal; font-size: .72rem; font-weight: 700; background: var(--accent); color: var(--accent-fg); border-radius: 999px; padding: .05rem .45rem; }
+  .ico { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Tablette : le menu passe en haut, sur une ligne qui défile */
+  .tablet .adm { grid-template-columns: 1fr; padding: 1rem; }
+  .tablet .adm-nav { position: static; flex-direction: row; overflow-x: auto; gap: .35rem; padding-bottom: .25rem; }
+  .tablet .adm-nav-group { display: flex; gap: .25rem; align-items: center; padding-right: .5rem; border-right: 1px solid var(--border); }
+  .tablet .adm-nav-group:last-child { border: 0; }
+  .tablet .adm-nav-group span { display: none; }
+  .tablet .adm-nav a { white-space: nowrap; padding: .5rem .7rem; }
+
+  /* ---------- Aujourd'hui ---------- */
+  .hero { display: grid; grid-template-columns: 1fr 210px; align-items: center; gap: 1rem; padding: 1.4rem 1.6rem; border-radius: 1.6rem; border: 1px solid var(--border); background: radial-gradient(circle at 92% 90%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 55%), var(--surface); box-shadow: var(--shadow); overflow: hidden; position: relative; min-height: 190px; }
+  .hero h1 { font-size: 2rem; font-weight: 600; letter-spacing: -.03em; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { color: var(--muted); margin-top: .4rem; max-width: 34rem; }
+  .hero img { position: absolute; right: 8px; bottom: -18px; width: 200px; }
+  .quick { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.1rem; }
+  .quick a { display: inline-flex; align-items: center; gap: .35rem; font-size: .82rem; font-weight: 600; padding: .45rem .8rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--fg); }
+  .quick a:hover { border-color: var(--accent); color: var(--accent); }
+  .quick a b { color: var(--accent); font-weight: 700; }
+
+  h2.sec { font-size: 1.2rem; font-weight: 600; letter-spacing: -.02em; margin: 1.8rem 0 .8rem; display: flex; align-items: baseline; gap: .6rem; }
+  h2.sec small { font-size: .82rem; font-weight: 500; color: var(--subtle); }
+
+  .todo { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: .9rem; }
+  .card { border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .5rem; transition: border-color .18s var(--ease), transform .18s var(--ease); }
+  a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card.hot { border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); background: linear-gradient(120deg, var(--accent-soft), transparent 60%), var(--surface); }
+  .k { display: flex; justify-content: space-between; align-items: center; font-size: .75rem; font-weight: 600; color: var(--subtle); }
+  .k .lab { display: inline-flex; gap: .35rem; align-items: center; }
+  .big { font-size: 2.2rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; }
+  .big small { font-size: .9rem; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: .3rem; }
+  .lines { list-style: none; display: flex; flex-direction: column; gap: .35rem; font-size: .85rem; }
+  .lines li { display: flex; justify-content: space-between; gap: .6rem; padding: .4rem .55rem; border-radius: .55rem; background: var(--surface-2); }
+  .lines li span:last-child { color: var(--subtle); white-space: nowrap; }
+  .btn { align-self: flex-start; margin-top: auto; display: inline-flex; align-items: center; gap: .4rem; background: var(--accent); color: var(--accent-fg); padding: .55rem .95rem; border-radius: var(--radius-sm); font-weight: 600; font-size: .85rem; }
+  .link { margin-top: auto; font-size: .82rem; font-weight: 600; color: var(--accent); }
+  .pill { font-size: .72rem; font-weight: 600; padding: .15rem .55rem; border-radius: 999px; background: var(--surface-2); color: var(--muted); }
+  .pill.warn { background: var(--warn-soft); color: var(--warn); }
+  .pill.ok { background: var(--ok-soft); color: var(--ok); }
+  .pill.acc { background: var(--accent-soft); color: var(--accent); }
+  .bar { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; display: flex; }
+  .bar i { display: block; height: 100%; background: var(--accent); }
+  .bar i + i { background: color-mix(in srgb, var(--accent) 35%, transparent); }
+
+  .week { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .9rem; }
+
+  /* Mes classes : tuiles dans la gamme orange des niveaux, comme le bento de l'accueil */
+  .classes { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; }
+  .cl { position: relative; overflow: hidden; border-radius: var(--radius); padding: 1rem 1.1rem; min-height: 132px; background: var(--lc); color: var(--lon); display: flex; flex-direction: column; gap: .2rem; box-shadow: var(--shadow); transition: transform .18s var(--ease); }
+  .cl:hover { transform: translateY(-3px); }
+  .cl small { font-size: .74rem; font-weight: 600; opacity: .85; }
+  .cl b { font-size: 1.35rem; letter-spacing: -.02em; }
+  .cl .meta { margin-top: auto; font-size: .78rem; font-weight: 600; }
+  .cl .plate { position: absolute; right: -16px; bottom: -18px; width: 96px; height: 96px; border-radius: 50%; background: color-mix(in srgb, var(--surface) 88%, transparent); display: grid; place-items: center; }
+  .cl .plate img { width: 70px; transform: translate(-6px, -6px); }
+
+  .tablet .todo, .tablet .week { grid-template-columns: 1fr 1fr; }
+  .tablet .todo .card:first-child { grid-column: 1 / -1; }
+  .tablet .week .card:first-child { grid-column: 1 / -1; }
+  .tablet .classes { grid-template-columns: 1fr 1fr; }
+  .tablet .hero { grid-template-columns: 1fr 150px; }
+  .tablet .hero img { width: 150px; }
+
+  /* ---------- Élèves ---------- */
+  .toolbar { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 1rem 0; }
+  .seg2 { display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 3px; }
+  .seg2 button { padding: .45rem .95rem; border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--muted); }
+  .seg2 button.on { background: var(--surface); color: var(--fg); box-shadow: var(--shadow); }
+  .search { flex: 1; min-width: 200px; padding: .6rem .9rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); color: var(--fg); font: inherit; }
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .chips button { font-size: .8rem; font-weight: 600; padding: .35rem .75rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); }
+  .chips button.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .ghost { padding: .55rem .9rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); font-weight: 600; font-size: .85rem; }
+  .table { border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+  .table h3 { font-size: .85rem; font-weight: 600; padding: .6rem 1rem; background: var(--surface-2); color: var(--muted); display: flex; gap: .5rem; }
+  .row { display: grid; grid-template-columns: 2fr 1fr 1.2fr auto; gap: .8rem; align-items: center; padding: .7rem 1rem; border-top: 1px solid var(--border); font-size: .88rem; }
+  .row:hover { background: color-mix(in srgb, var(--surface-2) 55%, transparent); }
+  .who { display: flex; gap: .7rem; align-items: center; min-width: 0; }
+  .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .who b { display: block; }
+  .who small { color: var(--subtle); font-size: .78rem; }
+  .acts { display: flex; gap: .3rem; }
+  .acts button { padding: .4rem .65rem; border-radius: .55rem; font-size: .8rem; font-weight: 600; color: var(--muted); }
+  .acts button:hover { background: var(--surface-2); color: var(--fg); }
+  .acts button.main { color: var(--accent); }
+  .tablet .row { grid-template-columns: 1fr auto; }
+  .tablet .row .c2, .tablet .row .c3 { display: none; }
+
+  .note { margin-top: 2rem; padding: 1rem 1.2rem; border-radius: var(--radius); border: 1px dashed var(--subtle); color: var(--muted); font-size: .88rem; line-height: 1.55; }
+  .note b { color: var(--fg); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="mock-bar">
+  <span>Maquette du panel admin</span>
+  <div class="seg" data-g="view"><button class="on" data-v="today">Aujourd'hui</button><button data-v="students">Élèves</button></div>
+  <div class="seg" data-g="theme"><button class="on" data-v="light">Clair</button><button data-v="dark">Sombre</button></div>
+  <div class="seg" data-g="width"><button class="on" data-v="desk">Ordinateur</button><button data-v="tablet">Tablette</button></div>
+</div>
+
+<div class="frame" id="frame">
+  <div class="site-header"><span>La tanière du code</span><small>Accueil · À propos · Espace enseignant</small></div>
+
+  <div class="adm">
+    <nav class="adm-nav" aria-label="Administration">
+      <div class="adm-nav-group">
+        <a class="on" href="#"><svg class="ico" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg>Aujourd'hui</a>
+      </div>
+      <div class="adm-nav-group"><span>Élèves</span>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M17 11a3 3 0 1 0 0-6M22 20c0-3-2-5-5-5"/></svg>Liste des élèves</a>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>Activité</a>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messagerie<i>2</i></a>
+      </div>
+      <div class="adm-nav-group"><span>Classe</span>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><path d="m3 11 18-8v18L3 13zM7 12v6a2 2 0 0 0 4 0v-4"/></svg>Annonces</a>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Devoirs et dates</a>
+      </div>
+      <div class="adm-nav-group"><span>Évaluer</span>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Corrections<i>3</i></a>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>Codes réussis</a>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Évaluations</a>
+        <a href="#"><svg class="ico" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1 1.2C7.8 18.8 7 20.2 7 22M14 14.7V17c0 .6.5 1 1 1.2 1.2.6 2 2 2 3.8M18 2H6v7a6 6 0 0 0 12 0z"/></svg>Défis</a>
+      </div>
+    </nav>
+
+    <main>
+      <!-- ================= AUJOURD'HUI ================= -->
+      <section id="v-today">
+        <div class="hero">
+          <div>
+            <h1>Bonjour, <em>jeudi 6 novembre</em></h1>
+            <p>3 réponses à corriger, 2 messages non lus. Interro « Listes » en 1NSI-A demain à 10 h.</p>
+            <div class="quick">
+              <a href="#"><b>+</b> Annonce</a>
+              <a href="#"><b>+</b> Devoir</a>
+              <a href="#"><b>+</b> Interro ou DS</a>
+              <a href="#"><b>+</b> Défi</a>
+              <a href="#"><b>+</b> Évaluation</a>
+              <a href="#"><b>+</b> Élève</a>
+            </div>
+          </div>
+          <img src="../public/images/fox_2.png" alt="">
+        </div>
+
+        <h2 class="sec">À traiter <small>s'efface quand c'est fait</small></h2>
+        <div class="todo">
+          <a class="card hot" href="#">
+            <div class="k"><span class="lab">Réponses écrites à corriger</span><span class="pill acc">la plus ancienne : il y a 2 j</span></div>
+            <div class="big">3<small>réponses</small></div>
+            <ul class="lines">
+              <li><span>Léa M. · Spécifications, ex. 2</span><span>1NSI-A</span></li>
+              <li><span>Hugo P. · Exercices papier, ex. 4</span><span>2nde 3</span></li>
+              <li><span>Inès R. · Spécifications, ex. 2</span><span>1NSI-A</span></li>
+            </ul>
+            <span class="btn">Corriger</span>
+          </a>
+          <a class="card" href="#">
+            <div class="k"><span class="lab">Messages non lus</span><span class="pill acc">2</span></div>
+            <ul class="lines">
+              <li><span>Nathan B.</span><span>9 h 12</span></li>
+              <li><span>Chloé D.</span><span>hier</span></li>
+            </ul>
+            <span class="link">Ouvrir la messagerie</span>
+          </a>
+          <a class="card" href="#">
+            <div class="k"><span class="lab">Évaluation ouverte</span><span class="pill warn">1 verrouillé</span></div>
+            <b>Interro pratique : boucles</b>
+            <span class="pill" style="align-self:flex-start">TNSI · 18 / 24 rendus</span>
+            <div class="bar"><i style="width:75%"></i></div>
+            <span class="link">Suivre en direct</span>
+          </a>
+        </div>
+
+        <h2 class="sec">Cette semaine</h2>
+        <div class="week">
+          <a class="card" href="#">
+            <div class="k"><span class="lab">Défi du lundi</span><span class="pill ok">ouvert jusqu'à lundi</span></div>
+            <b>Le compte est bon</b>
+            <span style="font-size:.82rem;color:var(--muted)">1NSI-A, 1NSI-B · 31 élèves</span>
+            <div class="bar"><i style="width:39%"></i><i style="width:19%"></i></div>
+            <div class="k"><span>12 réussis · 6 en cours</span><span>13 pas commencé</span></div>
+          </a>
+          <a class="card" href="#">
+            <div class="k"><span class="lab">Prochaines dates</span></div>
+            <ul class="lines">
+              <li><span><span class="pill acc">Interro</span> Listes · 1NSI-A</span><span>ven. 10 h</span></li>
+              <li><span><span class="pill">Cours</span> Anatole C.</span><span>sam. 14 h</span></li>
+              <li><span><span class="pill warn">DS</span> SQL · TNSI</span><span>mar. 11</span></li>
+              <li><span><span class="pill">Visio</span> 2nde 3</span><span>mer. 12</span></li>
+            </ul>
+            <span class="link">Devoirs et dates</span>
+          </a>
+          <a class="card" href="#">
+            <div class="k"><span class="lab">Devoirs en cours</span></div>
+            <ul class="lines">
+              <li><span>Fiche dictionnaires · 1NSI-B</span><span>14 / 16</span></li>
+              <li><span>TP CSV · TNSI</span><span>9 / 24</span></li>
+              <li><span>Projet site · 2nde 3</span><span>2 / 30</span></li>
+            </ul>
+            <span class="link">Tous les devoirs</span>
+          </a>
+        </div>
+
+        <h2 class="sec">Mes classes <small>clic : élèves de la classe, activité sur 7 jours</small></h2>
+        <div class="classes">
+          <a class="cl" href="#" style="--lc:var(--l2);--lon:var(--l2-on)"><small>2nde SNT</small><b>2nde 3</b><span class="meta">30 élèves · 4 inactifs</span><span class="plate"><img src="../public/images/fox_1.png" alt=""></span></a>
+          <a class="cl" href="#" style="--lc:var(--l3);--lon:var(--l3-on)"><small>Première NSI</small><b>1NSI-A</b><span class="meta">16 élèves · tous actifs</span><span class="plate"><img src="../public/images/fox_2.png" alt=""></span></a>
+          <a class="cl" href="#" style="--lc:var(--l3);--lon:var(--l3-on)"><small>Première NSI</small><b>1NSI-B</b><span class="meta">15 élèves · 1 inactif</span><span class="plate"><img src="../public/images/fox_2.png" alt=""></span></a>
+          <a class="cl" href="#" style="--lc:var(--l4);--lon:var(--l4-on)"><small>Terminale NSI</small><b>TNSI</b><span class="meta">24 élèves · 2 inactifs</span><span class="plate"><img src="../public/images/fox_3.png" alt=""></span></a>
+        </div>
+      </section>
+
+      <!-- ================= ÉLÈVES ================= -->
+      <section id="v-students" hidden>
+        <h1 style="font-size:1.8rem;font-weight:600;letter-spacing:-.03em">Élèves</h1>
+        <div class="toolbar">
+          <div class="seg2"><button>Cours particuliers (4)</button><button class="on">Élèves de classe (85)</button></div>
+          <input class="search" placeholder="Rechercher un élève">
+          <button class="ghost">Exporter CSV</button>
+          <a class="btn" style="margin:0" href="#">+ Élève</a>
+        </div>
+        <div class="chips" style="margin-bottom:1rem">
+          <button class="on">Toutes</button><button>2nde 3 (30)</button><button>1NSI-A (16)</button><button>1NSI-B (15)</button><button>TNSI (24)</button><button>Inactifs (7)</button>
+        </div>
+        <div class="table">
+          <h3>1NSI-A <span style="font-weight:500;color:var(--subtle)">16 élèves</span></h3>
+          <div class="row"><div class="who"><span class="av">L</span><span><b>Léa Martin</b><small>lea.martin@…</small></span></div><span class="c2">12 ex. · 2 badges</span><span class="c3"><span class="pill ok">aujourd'hui</span></span><div class="acts"><button class="main">Suivi</button><button>Progression</button><button>⋯</button></div></div>
+          <div class="row"><div class="who"><span class="av">I</span><span><b>Inès Roux</b><small>ines.roux@…</small></span></div><span class="c2">9 ex. · 1 badge</span><span class="c3"><span class="pill">il y a 3 j</span></span><div class="acts"><button class="main">Suivi</button><button>Progression</button><button>⋯</button></div></div>
+          <div class="row"><div class="who"><span class="av">T</span><span><b>Tom Petit</b><small>tom.petit@…</small></span></div><span class="c2">2 ex. · 0 badge</span><span class="c3"><span class="pill warn">inactif 12 j</span></span><div class="acts"><button class="main">Suivi</button><button>Progression</button><button>⋯</button></div></div>
+          <h3>TNSI <span style="font-weight:500;color:var(--subtle)">24 élèves</span></h3>
+          <div class="row"><div class="who"><span class="av">N</span><span><b>Nathan Blanc</b><small>nathan.blanc@…</small></span></div><span class="c2">31 ex. · 5 badges</span><span class="c3"><span class="pill ok">hier</span></span><div class="acts"><button class="main">Suivi</button><button>Progression</button><button>⋯</button></div></div>
+        </div>
+        <p style="font-size:.8rem;color:var(--subtle);margin-top:.6rem">« ⋯ » : modifier le compte, supprimer. Sur tablette, niveau et dernière activité passent sous le nom.</p>
+      </section>
+
+      <div class="note">
+        <b>Ce qui change</b><br>
+        · <b>/admin devient « Aujourd'hui »</b> : ce qui attend une action (corrections, messages, évaluation en cours), la semaine (défi, dates, devoirs), puis les classes. La liste des élèves passe sur <b>/admin/eleves</b>.<br>
+        · <b>Menu groupé</b> par usage (Élèves / Classe / Évaluer), avec des pastilles de compteur. Sur tablette, il passe en haut sur une ligne qui défile.<br>
+        · <b>Corrections</b> et <b>Codes réussis</b> sortent des volets repliés de l'ancienne page et ont chacun leur page.<br>
+        · <b>Actions rapides</b> : chaque « + » ouvre directement le formulaire concerné.<br>
+        · <b>Couleurs du thème</b> (clair et sombre) partout dans l'admin, à la place des gris et blancs fixes. Toutes les fonctions actuelles restent.
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.seg').forEach(function (seg) {
+    seg.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      seg.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+      var g = seg.dataset.g, v = b.dataset.v;
+      if (g === 'theme') document.documentElement.classList.toggle('dark', v === 'dark');
+      if (g === 'width') document.getElementById('frame').classList.toggle('tablet', v === 'tablet');
+      if (g === 'view') { document.getElementById('v-today').hidden = v !== 'today'; document.getElementById('v-students').hidden = v !== 'students'; }
+    });
+  });
+</script>
+</body>
+</html>

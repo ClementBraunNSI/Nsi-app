@@ -13,6 +13,7 @@ import { coursePath } from '@/lib/nsi-levels';
 import { CHECK_UNAVAILABLE, SAVE_WARNING, everyTestPassed, testsUnavailableReport, unexpectedRunReport, type RunReport } from '@/lib/python-check';
 import { runPythonCheck, runSqlCheck } from '@/lib/run-exercise-check';
 import { recordSubmission } from '@/lib/submissions';
+import { sanitizeTrace, summarizeTrace } from '@/lib/typing-trace';
 import type { Achievement } from '@/lib/achievements';
 
 export interface LabExercise {
@@ -36,6 +37,8 @@ export interface LabExercise {
 
 type CatalogExercise = LabExercise & {
   verificationCode?: string;
+  /** <Correction> : sert de référence pour repérer un code au-dessus du niveau de l'élève (jamais envoyé au navigateur). */
+  correctionCode?: string;
   audience?: unknown;
 };
 
@@ -226,6 +229,11 @@ function scanExerciseCatalog(): ExerciseCatalog {
           const verificationMatch = rawContent.match(verificationRegex);
           let verificationCode = verificationMatch ? dedent(verificationMatch[1]) : undefined;
 
+          const correctionMatch = rawContent.match(/<Correction>([\s\S]*?)<\/Correction>/);
+          const correctionCode = correctionMatch
+            ? dedent(correctionMatch[1]).replace(/^```(python|sql)?\s*\n?/, '').replace(/\n?```\s*$/, '').trim()
+            : '';
+
           if (verificationCode) {
             // Remove markdown code fences if present (start and end)
             verificationCode = verificationCode
@@ -294,6 +302,7 @@ function scanExerciseCatalog(): ExerciseCatalog {
             starterCode: starterCode || undefined,
             sqlSetup: writtenType === 'sql' && sqlSetup ? sqlSetup : undefined,
             verificationCode: verificationCode,
+            correctionCode: correctionCode || undefined,
             pythonPackages: pythonPackages.length > 0 ? pythonPackages : undefined,
             chapter: data.chapter || 'Divers',
             level: normalizedLevel,
@@ -492,6 +501,15 @@ export async function findWrittenExercise(exerciseId: string): Promise<Omit<Writ
   return rest;
 }
 
+/** Niveau, code de départ et correction d'un exercice : référence du suivi de frappe, pour l'enseignant seulement. */
+export async function getExerciseReference(exerciseId: string): Promise<{ type: 'python' | 'sql'; level: string; starter: string; correction: string } | null> {
+  const auth = await getAuthContext();
+  if (!auth.user || !auth.isElevated) return null;
+  const exercise = buildExerciseCatalog().exercises.find((item) => item.id === exerciseId);
+  if (!exercise) return null;
+  return { type: exercise.type, level: exercise.level, starter: exercise.starterCode ?? '', correction: exercise.correctionCode ?? '' };
+}
+
 /** Libellés de tous les exercices, éditeur et réponse écrite : pour l'écran de correction. */
 export async function listExerciseLabels(): Promise<Record<string, { label: string; courseTitle: string; pagePath?: string; type?: 'python' | 'sql' }>> {
   const auth = await getAuthContext();
@@ -543,7 +561,7 @@ function previewNote(report: RunReport) {
 }
 
 /** Grade on the server. The verification source stays here; the browser receives the report only. */
-export async function checkExerciseSolution(exerciseId: string, code: string): Promise<ExerciseCheckResult> {
+export async function checkExerciseSolution(exerciseId: string, code: string, typingTrace?: unknown): Promise<ExerciseCheckResult> {
   const id = String(exerciseId || '').trim();
   const source = String(code ?? '');
   if (!id || id.length > 200 || source.length > CHECK_CODE_LIMIT) return unavailableCheck();
@@ -574,8 +592,15 @@ export async function checkExerciseSolution(exerciseId: string, code: string): P
   }
 
   const passed = everyTestPassed(report);
+  // Suivi de frappe : indicateurs recalculés ici sur l'historique reçu, comparé au code réellement envoyé.
+  // L'historique complet n'est gardé qu'avec un essai réussi (celui que l'enseignant relit), le résumé avec chaque essai.
+  const trace = sanitizeTrace(typingTrace);
+  const typing = trace
+    ? { summary: summarizeTrace(trace, source, exercise.starterCode ?? ''), ...(passed ? { trace } : {}) }
+    : null;
   // Chaque essai vérifié est gardé : l'enseignant relit le code, et peut valider un essai que les tests refusent.
   await recordSubmission({
+    typing,
     userId: auth.user.id,
     exerciseId: exercise.id,
     courseId: exercise.courseId,

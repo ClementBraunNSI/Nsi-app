@@ -22,6 +22,7 @@ import { ExerciseStatement } from '@/components/lab/ExerciseStatement';
 import { LabEditor } from '@/components/lab/LabEditor';
 import { LabOutput, type ConsoleState } from '@/components/lab/LabOutput';
 import { IdeRotatePrompt, usePortraitPhone } from '@/components/lab/IdeRotatePrompt';
+import { PASTE_LIMIT, useTypingTrace } from '@/components/lab/useTypingTrace';
 
 const IDLE_CONSOLE: ConsoleState = { tone: 'idle', text: 'En attente d\'exécution' };
 
@@ -92,7 +93,24 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
   const [code, setCodeState] = useState(starter);
   // Le raccourci clavier peut partir avant le rendu qui suit la frappe : on lit toujours le dernier texte saisi.
   const codeRef = useRef(starter);
+  const workRef = useRef<HTMLDivElement>(null);
+  // Compte enseignant ou admin : ni suivi de frappe ni blocage des collages.
+  const [elevated, setElevated] = useState<boolean | null>(null);
+  const [pasteNotice, setPasteNotice] = useState<string | null>(null);
+  const typing = useTypingTrace({
+    exerciseId: exercise.id,
+    starter,
+    enabled: elevated === false,
+    guard: !lockdown,
+    containerRef: workRef,
+    getCode: () => codeRef.current,
+    onBlocked: (length) => {
+      setPasteNotice(`Collage refusé (${length} caractères) : au-delà de ${PASTE_LIMIT} caractères venus d'ailleurs, le code s'écrit au clavier.`);
+      window.setTimeout(() => setPasteNotice(null), 6000);
+    },
+  });
   const setCode = (value: string) => {
+    typing.onEdit(codeRef.current, value);
     codeRef.current = value;
     setCodeState(value);
     writeDraft(exercise.id, value, starter);
@@ -154,7 +172,12 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
 
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.user) return;
+      if (!session?.user) {
+        setElevated(true);
+        return;
+      }
+      const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).maybeSingle();
+      setElevated(profile?.role === 'admin' || profile?.role === 'enseignant');
       const { data } = await supabase
         .from('user_progress')
         .select('exercise_id')
@@ -170,12 +193,18 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
     const draft = initialCode ?? readDraft(exercise.id) ?? starter;
     codeRef.current = draft;
     setCodeState(draft);
+    typing.begin(draft);
     setSqlResults(null);
     setReport(null);
     setStatusLine(null);
     setConsoleState(IDLE_CONSOLE);
     setTab('console');
   }, [exercise.id, starter]);
+
+  useEffect(() => {
+    if (elevated !== null) typing.begin(codeRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [elevated]);
 
   /** Chaque exécution part d'une copie neuve de la base de départ, comme la vérification. */
   const runSql = () => {
@@ -238,6 +267,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
   };
 
   const handleExecute = async () => {
+    typing.mark('e');
     setRunning('execute');
     setTab('console');
     setStatusLine(exercise.type === 'sql' ? 'Exécution de la requête SQL' : 'Exécution du programme');
@@ -272,6 +302,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
   };
 
   const handleTest = async () => {
+    typing.mark('c');
     setRunning('test');
     setTab('tests');
     setReport(null);
@@ -289,7 +320,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
           setSqlResults(null);
         }
       }
-      presentCheck(await (checker ? checker(codeRef.current) : checkExerciseSolution(exercise.id, codeRef.current)));
+      presentCheck(await (checker ? checker(codeRef.current) : checkExerciseSolution(exercise.id, codeRef.current, typing.snapshot())));
     } catch (error: any) {
       const next = unexpectedRunReport(error?.message || 'Erreur inattendue.');
       setConsoleState(consoleFromReport(next, emptyLine));
@@ -379,7 +410,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
   );
 
   const work = (
-    <div className="exercise-work">
+    <div className="exercise-work" ref={workRef}>
       <LabEditor
         exercise={exercise}
         code={code}
@@ -415,6 +446,11 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
         statusLine={statusLine}
         code={code}
       />
+      {elevated === false ? (
+        <p className={`exercise-trace-note ${pasteNotice ? 'is-alert' : ''}`} role={pasteNotice ? 'alert' : undefined}>
+          {pasteNotice ?? `Saisie suivie : les collages de plus de ${PASTE_LIMIT} caractères venus d'ailleurs sont refusés.`}
+        </p>
+      ) : null}
       <div className="exercise-actions">
         <span className="exercise-shortcut" aria-hidden>
           <kbd>Ctrl</kbd>+<kbd>Entrée</kbd> exécute

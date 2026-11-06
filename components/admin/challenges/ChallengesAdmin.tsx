@@ -14,8 +14,8 @@ export function challengeState(challenge: { opensAt: string; closesAt: string },
   return { key: "ferme", label: "Terminé" };
 }
 
-export default function ChallengesAdmin({ challenges, classes }: { challenges: ChallengeSummary[]; classes: string[] }) {
-  const [creating, setCreating] = useState(false);
+export default function ChallengesAdmin({ challenges, classes, startCreating = false }: { challenges: ChallengeSummary[]; classes: string[]; startCreating?: boolean }) {
+  const [creating, setCreating] = useState(startCreating);
   return (
     <div className="space-y-6">
       {creating ? (
