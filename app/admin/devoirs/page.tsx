@@ -6,6 +6,7 @@ import { VisioPanel } from "@/components/admin/VisioPanel";
 import { listAssessments } from "@/app/actions/classInfo";
 import { listVisios } from "@/app/actions/visio";
 import { listClasses } from "@/app/actions/evaluations";
+import { listExerciseSheets } from "@/app/actions/getExercises";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,7 @@ const SECTIONS = [
 ];
 
 export default async function AdminClassHomeworkPage() {
-  const [assessments, visios, classes] = await Promise.all([listAssessments(), listVisios(), listClasses()]);
+  const [assessments, visios, classes, sheets] = await Promise.all([listAssessments(), listVisios(), listClasses(), listExerciseSheets()]);
   return (
     <div className="admin-page">
       <PageHeader
@@ -38,8 +39,11 @@ export default async function AdminClassHomeworkPage() {
       </section>
       <section id="interros" className="admin-section">
         <h2>Interros et DS</h2>
-        <p>Les élèves des classes choisies voient la date sur la page Ma classe et dans l&apos;extension.</p>
-        <AssessmentsPanel assessments={assessments} classes={classes} />
+        <p>
+          Les élèves des classes choisies voient la date sur la page Ma classe et dans l&apos;extension. Dans les 14 jours qui précèdent, leur espace
+          propose des exercices à refaire, pris dans les fiches des chapitres annoncés.
+        </p>
+        <AssessmentsPanel assessments={assessments} classes={classes} sheets={sheets} />
       </section>
       <section id="visio" className="admin-section">
         <h2>Visio</h2>

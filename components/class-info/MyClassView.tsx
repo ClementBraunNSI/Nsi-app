@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { ArrowLeft, CalendarClock, ClipboardList, Megaphone, Puzzle, Users } from "lucide-react";
+import { ArrowLeft, BookOpenCheck, CalendarClock, ClipboardList, Megaphone, Puzzle, Users } from "lucide-react";
+import type { RevisionPlan } from "@/app/actions/revisions";
+import { RevisionBlocks } from "@/components/revisions/RevisionBlocks";
 import type { MyAnnouncements } from "@/app/actions/announcements";
 import { EmptyState, PageHeader } from "@/components/ui";
 import { AnnouncementFeed } from "@/components/announcements/AnnouncementFeed";
@@ -22,10 +24,15 @@ export function MyClassView({
   info,
   announcements,
   tokenDate,
+  revisions = [],
+  now,
 }: {
   info: ClassInfo | null;
   announcements: MyAnnouncements;
   tokenDate: string | null;
+  /** Interros et DS des 14 prochains jours, avec les exercices à refaire. */
+  revisions?: RevisionPlan[];
+  now?: string;
 }) {
   const classe = info?.classe ?? null;
   const homework = info?.homework ?? [];
@@ -71,6 +78,15 @@ export function MyClassView({
       ) : (
         <>
           <VisioBlock initial={info?.visios ?? []} />
+
+          {revisions.length > 0 && now ? (
+            <section className="space-y-3" aria-labelledby="classe-reviser">
+              <h2 id="classe-reviser" className="classe-heading">
+                <BookOpenCheck size={18} aria-hidden /> Réviser
+              </h2>
+              <RevisionBlocks plans={revisions} now={now} />
+            </section>
+          ) : null}
 
           <div className="grid gap-4 md:grid-cols-2">
             <section className="classe-block" aria-labelledby="classe-devoirs">

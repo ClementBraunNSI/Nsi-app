@@ -51,7 +51,7 @@ async function teacher() {
   return { auth, supabase: await createClient() };
 }
 
-export type AdminAssessment = ClassAssessment & { classes: string[] };
+export type AdminAssessment = ClassAssessment & { classes: string[]; courseIds: string[] };
 
 export type AssessmentInput = {
   id?: string;
@@ -61,6 +61,8 @@ export type AssessmentInput = {
   day: string;
   time: string;
   chapters: string;
+  /** Fiches à réviser choisies par l'enseignant (facultatif : sinon le texte des chapitres est rapproché des fiches). */
+  courseIds?: string[];
 };
 
 export async function listAssessments(): Promise<AdminAssessment[]> {
@@ -68,14 +70,18 @@ export async function listAssessments(): Promise<AdminAssessment[]> {
   if (!ctx) return [];
   // Les épreuves passées depuis plus d'un mois ne sont plus utiles à l'écran.
   const since = new Date(Date.now() - 31 * 86_400_000).toISOString().slice(0, 10);
-  const { data } = await ctx.supabase
-    .from('class_assessments')
-    .select('id, classes, kind, title, day, at_time, chapters')
-    .gte('day', since)
-    .order('day', { ascending: true })
-    .order('at_time', { ascending: true, nullsFirst: true })
-    .limit(200);
-  return (data ?? []).map((row) => ({
+  const select = (columns: string) =>
+    ctx.supabase
+      .from('class_assessments')
+      .select(columns)
+      .gte('day', since)
+      .order('day', { ascending: true })
+      .order('at_time', { ascending: true, nullsFirst: true })
+      .limit(200);
+  let { data, error } = await select('id, classes, kind, title, day, at_time, chapters, course_ids');
+  // Base pas encore migrée (pas de colonne course_ids).
+  if (error) ({ data, error } = await select('id, classes, kind, title, day, at_time, chapters'));
+  return ((data ?? []) as unknown as Record<string, unknown>[]).map((row) => ({
     id: row.id as string,
     classes: (row.classes as string[]) ?? [],
     kind: row.kind as ClassAssessment['kind'],
@@ -83,12 +89,14 @@ export async function listAssessments(): Promise<AdminAssessment[]> {
     day: row.day as string,
     time: row.at_time ? String(row.at_time).slice(0, 5) : null,
     chapters: (row.chapters as string) ?? '',
+    courseIds: Array.isArray(row.course_ids) ? (row.course_ids as string[]) : [],
   }));
 }
 
 function revalidateClassInfo() {
   revalidatePath('/admin/devoirs');
   revalidatePath('/espace/classe');
+  revalidatePath('/espace');
 }
 
 export async function saveAssessment(input: AssessmentInput): Promise<Result> {
@@ -105,11 +113,17 @@ export async function saveAssessment(input: AssessmentInput): Promise<Result> {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || Number.isNaN(Date.parse(day))) return fail('Date invalide.');
   if (time && !/^\d{2}:\d{2}$/.test(time)) return fail('Heure invalide.');
   if (title.length > 200 || chapters.length > 1000) return fail('Texte trop long.');
+  const courseIds = [...new Set((Array.isArray(input.courseIds) ? input.courseIds : []).map((id) => String(id).trim()).filter((id) => id && id.length <= 200))];
+  if (courseIds.length > 30) return fail('30 fiches au plus.');
 
-  const row = { classes, kind, title, day, at_time: time || null, chapters, updated_at: new Date().toISOString() };
-  const { error } = input.id
-    ? await ctx.supabase.from('class_assessments').update(row).eq('id', input.id)
-    : await ctx.supabase.from('class_assessments').insert({ ...row, created_by: ctx.auth.user!.id });
+  const base = { classes, kind, title, day, at_time: time || null, chapters, updated_at: new Date().toISOString() };
+  const write = (row: Record<string, unknown>) =>
+    input.id
+      ? ctx.supabase.from('class_assessments').update(row).eq('id', input.id)
+      : ctx.supabase.from('class_assessments').insert({ ...row, created_by: ctx.auth.user!.id });
+  let { error } = await write({ ...base, course_ids: courseIds });
+  // Base pas encore migrée : sans fiche choisie, la date s'enregistre quand même.
+  if (error && courseIds.length === 0) ({ error } = await write(base));
   if (error) return fail("La date n'a pas pu être enregistrée.");
   revalidateClassInfo();
   return { ok: true };

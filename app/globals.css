@@ -692,7 +692,7 @@ a.home-ex:hover { border-color: var(--accent); transform: translateY(-2px); }
   width: 13rem;
   height: 13rem;
   margin-bottom: -0.5rem;
-  background-image: url("/images/foxtest/academy/academy-fox-emotes.png?v=2");
+  background-image: url("/images/foxtest/academy/academy-fox-emotes.png?v=4");
   background-repeat: no-repeat;
   background-size: 400% 100%;
   background-position: 0% center;
@@ -1017,7 +1017,7 @@ a.home-ex:hover { border-color: var(--accent); transform: translateY(-2px); }
 /* ---------- Enquêtes de la forêt ---------- */
 .enq-case-fox,
 .enq-solved-fox {
-  background-image: url("/images/foxtest/academy/academy-fox-emotes.png?v=2");
+  background-image: url("/images/foxtest/academy/academy-fox-emotes.png?v=4");
   background-repeat: no-repeat;
   background-size: 400% 100%;
 }
@@ -5761,3 +5761,181 @@ a.admin-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .act-row td.admin-text-warn { color: var(--admin-warn); }
 @media (max-width: 1023px) { .admin-shell { --admin-bar-h: 4.3rem; } }
 @media (max-width: 900px) { .act-feed-line > time { grid-area: 1 / 1; } .act-feed-who { grid-area: 1 / 2; } .act-feed-flag { grid-area: 1 / 3; } .act-feed-what { grid-area: 2 / 2 / 3 / 4; } }
+
+/* ---------- Révisions de l'espace élève : interro à venir, carnet d'erreurs, entraînement chronométré ---------- */
+.revise-stack { display: grid; gap: 1rem; }
+.revise-banners { display: grid; gap: 0.75rem; }
+@media (min-width: 768px) { .revise-banners { grid-template-columns: 1fr 1fr; } }
+.revise-block {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.revise-head { display: flex; align-items: flex-start; gap: 0.75rem; }
+.revise-head > svg { flex-shrink: 0; margin-top: 0.15rem; color: var(--accent); }
+.revise-head h3 { margin: 0; font-size: 1.1rem; font-weight: 650; letter-spacing: -0.01em; }
+.revise-head p { margin: 0.15rem 0 0; font-size: 0.88rem; color: var(--muted); }
+.revise-list { display: grid; gap: 0.4rem; margin: 0; padding: 0; list-style: none; counter-reset: revise; }
+.revise-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  counter-increment: revise;
+}
+.revise-list li::before { content: counter(revise); flex-shrink: 0; width: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--subtle); }
+.revise-list a { display: grid; flex: 1; min-width: 0; color: var(--fg); text-decoration: none; }
+.revise-list a:hover .revise-label { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.revise-label { font-weight: 600; overflow-wrap: anywhere; }
+.revise-list small { color: var(--muted); font-size: 0.8rem; }
+.revise-reason { flex-shrink: 0; padding: 0.15rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; background: var(--surface); color: var(--muted); }
+.revise-reason.is-rate { background: #fee2e2; color: #b91c1c; }
+.revise-reason.is-non-fait { background: var(--accent-soft); color: var(--accent); }
+.revise-reason.is-ancien { background: #dcfce7; color: #15803d; }
+.dark .revise-reason.is-rate { background: color-mix(in srgb, #dc2626 25%, var(--surface)); color: #fca5a5; }
+.dark .revise-reason.is-ancien { background: color-mix(in srgb, #16a34a 25%, var(--surface)); color: #86efac; }
+.revise-note { margin: 0; font-size: 0.88rem; color: var(--muted); }
+.revise-practice { justify-self: start; display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; font-weight: 650; color: var(--accent); text-decoration: none; }
+.revise-practice:hover { text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 640px) {
+  .revise-list li { flex-wrap: wrap; row-gap: 0.3rem; }
+  .revise-reason { margin-left: 2.25rem; }
+}
+
+/* Formulaire de l'interro (admin) : fiches reconnues et fiches choisies. */
+.adm-revise-preview { margin: 0; padding: 0.55rem 0.75rem; border-radius: var(--radius-sm); background: var(--surface-2); font-size: 0.85rem; color: var(--muted); }
+.adm-revise-preview.is-none { background: color-mix(in srgb, #f59e0b 15%, var(--surface)); color: var(--fg); }
+.adm-revise-sheets { display: grid; gap: 0.45rem; font-size: 0.9rem; }
+.adm-revise-sheets > span { font-weight: 600; }
+.adm-revise-sheets ul { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.adm-revise-sheets li { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.3rem 0.2rem 0.65rem; border-radius: 99px; background: var(--accent-soft); color: var(--accent); font-size: 0.82rem; font-weight: 650; }
+.adm-revise-sheets li button { display: inline-flex; padding: 0.15rem; border-radius: 99px; color: inherit; }
+.adm-revise-sheets li button:hover { background: var(--surface); }
+.adm-revise-sheets select { max-width: 32rem; padding: 0.45rem 0.6rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--surface); color: var(--fg); }
+.adm-revise-sheets small { color: var(--muted); }
+.adm-practice-list { display: grid; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.adm-practice-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.75rem; padding: 0.55rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); font-size: 0.9rem; }
+.adm-practice-classe { padding: 0.05rem 0.5rem; border-radius: 99px; background: var(--surface-2); font-size: 0.75rem; font-weight: 700; color: var(--muted); }
+.adm-practice-label { color: var(--fg); }
+.adm-practice-list small { margin-left: auto; color: var(--muted); font-size: 0.8rem; }
+
+/* Carnet d'erreurs */
+.carnet { display: grid; gap: 1.25rem; }
+.carnet-empty { padding: 1.25rem; border: 1px dashed var(--border); border-radius: var(--radius); color: var(--muted); text-align: center; }
+.carnet-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin: 0; }
+@media (min-width: 640px) { .carnet-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.carnet-stats > div { padding: 0.75rem 0.9rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
+.carnet-stats dt { font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+.carnet-stats dd { margin: 0.1rem 0 0; font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.carnet-pending { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; padding: 0.85rem 1rem; border-radius: var(--radius-sm); background: var(--surface-2); font-size: 0.9rem; }
+.carnet-pending p { flex: 1 1 22rem; margin: 0; color: var(--muted); }
+.carnet-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 0.9rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.carnet-button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.carnet-button:disabled { opacity: 0.6; cursor: default; }
+.carnet-button.is-primary { border-color: var(--accent); background: var(--accent); color: var(--accent-fg); }
+.carnet-button.is-primary:hover:not(:disabled) { color: var(--accent-fg); filter: brightness(1.05); }
+.carnet-groups { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+.carnet-group { overflow: hidden; border: 1px solid var(--border); border-left: 4px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
+.carnet-group.is-frequente { border-left-color: #dc2626; }
+.carnet-group.is-occasionnelle { border-left-color: #f59e0b; }
+.carnet-group.is-disparue { border-left-color: #16a34a; }
+.carnet-group-head, .carnet-entry-head { display: flex; width: 100%; align-items: center; gap: 0.75rem; padding: 0.8rem 1rem; text-align: left; color: var(--fg); }
+.carnet-group-head b, .carnet-entry-head b { display: block; overflow-wrap: anywhere; }
+.carnet-group-head small, .carnet-entry-head small { display: block; color: var(--muted); font-size: 0.82rem; }
+.carnet-hint { font-weight: 500; color: var(--muted); }
+.carnet-trend { flex-shrink: 0; padding: 0.2rem 0.65rem; border-radius: 99px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+.carnet-trend.is-frequente { background: #fee2e2; color: #b91c1c; }
+.carnet-trend.is-occasionnelle { background: #fef3c7; color: #92400e; }
+.carnet-trend.is-disparue { background: #dcfce7; color: #15803d; }
+.dark .carnet-trend.is-frequente { background: color-mix(in srgb, #dc2626 25%, var(--surface)); color: #fca5a5; }
+.dark .carnet-trend.is-occasionnelle { background: color-mix(in srgb, #f59e0b 22%, var(--surface)); color: #fde68a; }
+.dark .carnet-trend.is-disparue { background: color-mix(in srgb, #16a34a 25%, var(--surface)); color: #86efac; }
+.carnet-chevron { flex-shrink: 0; color: var(--subtle); transition: transform 150ms; }
+.carnet-group.is-open > .carnet-group-head .carnet-chevron, .carnet-entry.is-open > .carnet-entry-head .carnet-chevron { transform: rotate(180deg); }
+.carnet-entries { display: grid; gap: 0; margin: 0; padding: 0 0.6rem 0.6rem; list-style: none; }
+.carnet-older .carnet-entries { padding: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
+.carnet-older h2 { margin: 0 0 0.6rem; font-size: 1.05rem; font-weight: 650; }
+.carnet-entry { border-top: 1px solid var(--border); }
+.carnet-entry:first-child { border-top: 0; }
+.carnet-entry-head { padding: 0.65rem 0.6rem; }
+.carnet-ok { flex-shrink: 0; color: #16a34a; }
+.carnet-ko { flex-shrink: 0; color: var(--subtle); }
+.carnet-entry-body { display: grid; gap: 0.7rem; padding: 0 0.6rem 0.9rem 2.2rem; min-width: 0; }
+.carnet-entry-body h3 { margin: 0.2rem 0 0.35rem; font-size: 0.88rem; font-weight: 650; }
+.carnet-muted { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0; font-size: 0.88rem; color: var(--muted); }
+.carnet-raw { margin: 0; padding: 0.5rem 0.7rem; border-radius: 0.6rem; background: var(--surface-2); font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.82rem; overflow-wrap: anywhere; }
+.carnet-code, .carnet-diff { margin: 0; overflow-x: auto; padding: 0.75rem; border-radius: 0.6rem; background: #1b1d22; color: #f4f4f5; font-size: 0.82rem; line-height: 1.5; }
+.carnet-code { border-left: 3px solid #dc2626; }
+.carnet-code.is-fixed { border-left-color: #16a34a; }
+.carnet-diff span { display: block; padding-right: 0.5rem; }
+.carnet-diff i { display: inline-block; width: 1.3rem; font-style: normal; color: #a1a1aa; user-select: none; }
+.carnet-diff .is-removed { background: rgba(239, 68, 68, 0.22); color: #fecaca; }
+.carnet-diff .is-added { background: rgba(34, 197, 94, 0.2); color: #bbf7d0; }
+.carnet-diff .is-removed i, .carnet-diff .is-added i { color: inherit; font-weight: 700; }
+.carnet-codes { display: grid; gap: 0.7rem; min-width: 0; }
+.carnet-codes > div { min-width: 0; }
+@media (min-width: 900px) { .carnet-codes { grid-template-columns: 1fr 1fr; } }
+.carnet-link { justify-self: start; font-size: 0.88rem; font-weight: 650; color: var(--accent); white-space: nowrap; }
+.carnet-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 640px) {
+  .carnet-group-head { flex-wrap: wrap; }
+  .carnet-trend { order: 3; white-space: normal; }
+  .carnet-entry-body { padding-left: 0.6rem; }
+}
+
+/* Entraînement chronométré */
+.practice-start { display: grid; gap: 1rem; padding: 1.2rem 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.practice-start h2 { margin: 0; font-size: 1.15rem; font-weight: 650; }
+.practice-field { display: grid; gap: 0.4rem; margin: 0; padding: 0; border: 0; min-width: 0; }
+.practice-field > span, .practice-field > legend { margin-bottom: 0.4rem; font-size: 0.9rem; font-weight: 600; }
+.practice-field select { width: 100%; max-width: 36rem; padding: 0.55rem 0.7rem; border: 1px solid var(--border); border-radius: 0.7rem; background: var(--surface); color: var(--fg); font-size: 0.95rem; }
+.practice-durations { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.practice-durations label {
+  position: relative;
+  display: grid;
+  min-width: 7.5rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-weight: 700;
+  cursor: pointer;
+}
+.practice-durations label small { font-weight: 500; font-size: 0.8rem; color: var(--muted); }
+.practice-durations label.is-on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.practice-durations label:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.practice-durations input { position: absolute; opacity: 0; pointer-events: none; }
+.practice-rules { display: grid; gap: 0.3rem; margin: 0; padding-left: 1.1rem; list-style: disc; font-size: 0.88rem; color: var(--muted); }
+.practice-error { margin: 0; font-size: 0.9rem; color: #dc2626; }
+.practice-start .carnet-button { justify-self: start; }
+.practice-run-head { align-items: center; }
+.practice-ending { padding: 1rem 1.25rem; }
+.practice-result { display: grid; gap: 0.6rem; padding: 1.2rem 1.25rem; border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.practice-result h2 { margin: 0; font-size: 1.2rem; font-weight: 650; }
+.practice-result ul, .practice-history { display: grid; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.practice-result li, .practice-history li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.75rem; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); background: var(--surface-2); }
+.practice-history li { border: 1px solid var(--border); background: var(--surface); }
+.practice-result li b, .practice-history li b { display: block; overflow-wrap: anywhere; }
+.practice-result li small, .practice-history li small { display: block; color: var(--muted); font-size: 0.8rem; }
+.practice-history li small::first-letter { text-transform: uppercase; }
+.practice-score { flex-shrink: 0; padding: 0.15rem 0.6rem; border-radius: 99px; background: var(--surface-2); font-size: 0.8rem; font-weight: 700; color: var(--muted); }
+.practice-score.is-full { background: #dcfce7; color: #15803d; }
+.dark .practice-score.is-full { background: color-mix(in srgb, #16a34a 25%, var(--surface)); color: #86efac; }

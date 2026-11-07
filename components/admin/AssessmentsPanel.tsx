@@ -2,14 +2,16 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, X } from "lucide-react";
 import { deleteAssessment, saveAssessment, type AdminAssessment, type AssessmentInput } from "@/app/actions/classInfo";
+import type { ExerciseSheet } from "@/app/actions/getExercises";
 import { ASSESSMENT_LABELS, formatAssessmentDate } from "@/lib/class-info";
+import { matchAssessmentSheets } from "@/lib/revisions";
 
-const empty = (): AssessmentInput => ({ classes: [], kind: "interro", title: "", day: "", time: "", chapters: "" });
+const empty = (): AssessmentInput => ({ classes: [], kind: "interro", title: "", day: "", time: "", chapters: "", courseIds: [] });
 
 /** Dates d'interrogations et de DS par classe. Une saisie peut viser plusieurs classes. */
-export function AssessmentsPanel({ assessments, classes }: { assessments: AdminAssessment[]; classes: string[] }) {
+export function AssessmentsPanel({ assessments, classes, sheets = [] }: { assessments: AdminAssessment[]; classes: string[]; sheets?: ExerciseSheet[] }) {
   const router = useRouter();
   const [draft, setDraft] = useState<AssessmentInput>(empty);
   const [busy, setBusy] = useState(false);
@@ -18,6 +20,14 @@ export function AssessmentsPanel({ assessments, classes }: { assessments: AdminA
   const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Paris" });
   const set = (patch: Partial<AssessmentInput>) => setDraft((current) => ({ ...current, ...patch }));
   const options = [...new Set([...classes, ...draft.classes])].sort();
+  const sheetTitle = (id: string) => {
+    const sheet = sheets.find((item) => item.courseId === id);
+    return sheet ? `${sheet.courseTitle} (${sheet.level})` : id;
+  };
+  const chosen = draft.courseIds ?? [];
+  // Aperçu du rapprochement fait pour les élèves (sans tenir compte de leur niveau).
+  const preview = draft.chapters.trim() && chosen.length === 0 ? matchAssessmentSheets(draft.chapters, sheets) : null;
+  const levels = [...new Set(sheets.map((sheet) => sheet.level))];
 
   const submit = async () => {
     setBusy(true);
@@ -83,6 +93,52 @@ export function AssessmentsPanel({ assessments, classes }: { assessments: AdminA
             <span>Chapitres concernés</span>
             <textarea value={draft.chapters} maxLength={1000} rows={2} onChange={(event) => set({ chapters: event.target.value })} />
           </label>
+          {preview ? (
+            <p className={`adm-revise-preview${preview.sheets.length === 0 ? " is-none" : ""}`}>
+              {preview.sheets.length === 0
+                ? "Aucune fiche d'exercices reconnue dans ce texte : les élèves n'auront pas d'exercices à refaire. Choisir les fiches ci-dessous."
+                : `Fiches reconnues pour les révisions (chaque élève voit celles de son niveau) : ${preview.sheets.map((sheet) => `${sheet.courseTitle} (${sheet.level})`).join(", ")}.`}
+              {preview.sheets.length > 0 && preview.unmatched.length > 0
+                ? ` Sans fiche : ${preview.unmatched.map((part) => `« ${part} »`).join(", ")}.`
+                : ""}
+            </p>
+          ) : null}
+          <div className="adm-revise-sheets">
+            <span>Fiches à réviser (facultatif)</span>
+            {chosen.length > 0 ? (
+              <ul>
+                {chosen.map((id) => (
+                  <li key={id}>
+                    {sheetTitle(id)}
+                    <button type="button" aria-label={`Retirer ${sheetTitle(id)}`} onClick={() => set({ courseIds: chosen.filter((value) => value !== id) })}>
+                      <X size={14} />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            <select
+              value=""
+              onChange={(event) => {
+                const id = event.target.value;
+                if (id && !chosen.includes(id)) set({ courseIds: [...chosen, id] });
+              }}
+            >
+              <option value="">Ajouter une fiche…</option>
+              {levels.map((level) => (
+                <optgroup key={level} label={level}>
+                  {sheets
+                    .filter((sheet) => sheet.level === level && !chosen.includes(sheet.courseId))
+                    .map((sheet) => (
+                      <option key={sheet.courseId} value={sheet.courseId}>
+                        {sheet.chapter} · {sheet.courseTitle}
+                      </option>
+                    ))}
+                </optgroup>
+              ))}
+            </select>
+            {chosen.length > 0 ? <small>Les fiches choisies remplacent le rapprochement automatique du texte.</small> : null}
+          </div>
         </div>
         {error ? <p className="adm-eval-error mt-3">{error}</p> : null}
         <div className="adm-eval-actions is-start mt-4">
@@ -116,6 +172,9 @@ export function AssessmentsPanel({ assessments, classes }: { assessments: AdminA
                       {past ? " (passée)" : ""}
                     </p>
                     {item.chapters ? <p className="mt-1 text-slate-600 whitespace-pre-wrap">{item.chapters}</p> : null}
+                    {item.courseIds.length > 0 ? (
+                      <p className="mt-1 text-slate-500">Fiches à réviser : {item.courseIds.map(sheetTitle).join(", ")}</p>
+                    ) : null}
                   </div>
                   <div className="flex gap-1">
                     <button
@@ -124,7 +183,7 @@ export function AssessmentsPanel({ assessments, classes }: { assessments: AdminA
                       title="Modifier"
                       aria-label="Modifier"
                       onClick={() => {
-                        setDraft({ id: item.id, classes: item.classes, kind: item.kind, title: item.title, day: item.day, time: item.time ?? "", chapters: item.chapters });
+                        setDraft({ id: item.id, classes: item.classes, kind: item.kind, title: item.title, day: item.day, time: item.time ?? "", chapters: item.chapters, courseIds: item.courseIds });
                         formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
                       }}
                     >

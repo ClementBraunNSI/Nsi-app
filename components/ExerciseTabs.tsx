@@ -220,6 +220,13 @@ export function ExerciseTabs({
     fetchProgress();
   }, [courseId]);
 
+  // Lien direct vers un exercice (?exercice=<id>), par exemple depuis le bilan d'un entraînement.
+  useEffect(() => {
+    const wanted = new URLSearchParams(window.location.search).get('exercice');
+    if (wanted && items.some((item) => item.id === wanted)) setSelectedId(wanted);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // L'élève arrive directement sur le premier exercice qui lui reste à faire.
   useEffect(() => {
     if (authReady && hasIde && selectedId === null) setSelectedId(firstPractice(items, done));

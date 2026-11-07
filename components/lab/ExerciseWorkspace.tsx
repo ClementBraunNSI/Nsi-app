@@ -84,8 +84,8 @@ type WorkspaceProps = {
   onCodeChange?: (code: string) => void;
   /** Évaluation : pas de menu contextuel ni de dépôt de texte venu d'ailleurs dans l'éditeur. */
   lockdown?: boolean;
-  /** Vérification propre à la page (défi du lundi) ; par défaut, celle des exercices des fiches. */
-  checker?: (code: string) => Promise<ExerciseCheckResult>;
+  /** Vérification propre à la page (défi du lundi, entraînement chronométré) ; par défaut, celle des exercices des fiches. */
+  checker?: (code: string, typingTrace: unknown) => Promise<ExerciseCheckResult>;
 };
 
 export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted, initialCode, onCodeChange, lockdown = false, checker }: WorkspaceProps) {
@@ -314,7 +314,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
           setSqlResults(null);
         }
       }
-      presentCheck(await (checker ? checker(codeRef.current) : checkExerciseSolution(exercise.id, codeRef.current, typing.snapshot())));
+      presentCheck(await (checker ? checker(codeRef.current, typing.snapshot()) : checkExerciseSolution(exercise.id, codeRef.current, typing.snapshot())));
     } catch (error: any) {
       const next = unexpectedRunReport(error?.message || 'Erreur inattendue.');
       setConsoleState(consoleFromReport(next, emptyLine));

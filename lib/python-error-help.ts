@@ -466,7 +466,7 @@ const RULES: Rule[] = [
 ];
 
 /** Type et message d'une erreur, depuis la trace Python si elle existe, sinon depuis le message traduit. */
-function readError(message: string, detail?: string): { type: string; message: string; line?: number } | null {
+export function readError(message: string, detail?: string): { type: string; message: string; line?: number } | null {
   const lineFromFrench = message.match(/\(ligne (\d+)\)/)?.[1];
   const traceLines = (detail ?? "").trim().split("\n");
   const last = traceLines[traceLines.length - 1] ?? "";

@@ -20,23 +20,25 @@ export async function recordSubmission(row: {
   status: SubmissionStatus;
   /** Suivi de frappe : résumé calculé par le serveur, et l'historique complet pour un essai réussi. */
   typing?: unknown;
+  /** Carnet d'erreurs : résumé de l'erreur d'un essai refusé. */
+  error?: unknown;
 }): Promise<{ id: string } | null> {
   const admin = createAdminClient();
   if (!admin) return null;
-  const { data, error } = await admin
-    .from("exercise_submissions")
-    .insert({
-      user_id: row.userId,
-      exercise_id: row.exerciseId,
-      course_id: row.courseId,
-      kind: row.kind,
-      content: row.content.slice(0, SUBMISSION_LIMIT),
-      passed: row.passed,
-      status: row.status,
-      ...(row.typing ? { typing: row.typing } : {}),
-    })
-    .select("id")
-    .maybeSingle();
+  const base = {
+    user_id: row.userId,
+    exercise_id: row.exerciseId,
+    course_id: row.courseId,
+    kind: row.kind,
+    content: row.content.slice(0, SUBMISSION_LIMIT),
+    passed: row.passed,
+    status: row.status,
+    ...(row.typing ? { typing: row.typing } : {}),
+  };
+  const insert = (values: Record<string, unknown>) => admin.from("exercise_submissions").insert(values).select("id").maybeSingle();
+  let { data, error } = await insert(row.error ? { ...base, error: row.error } : base);
+  // Base pas encore migrée (colonne error absente) : l'essai est gardé sans le résumé.
+  if (error && row.error) ({ data, error } = await insert(base));
   if (error || !data) return null;
   return { id: String(data.id) };
 }

@@ -14,6 +14,10 @@ import { CHECK_UNAVAILABLE, SAVE_WARNING, everyTestPassed, testsUnavailableRepor
 import { runPythonCheck, runSqlCheck } from '@/lib/run-exercise-check';
 import { recordSubmission } from '@/lib/submissions';
 import { sanitizeTrace, summarizeTrace } from '@/lib/typing-trace';
+import { parseErrorSummary, summarizeReport, type ErrorSummary } from '@/lib/error-notebook';
+import { loadPracticeSession, markPracticeSolved } from '@/lib/practice-server';
+import { createClient } from '@/utils/supabase/server';
+import { createAdminClient } from '@/utils/supabase/admin';
 import type { Achievement } from '@/lib/achievements';
 
 export interface LabExercise {
@@ -570,19 +574,33 @@ export async function checkExerciseSolution(exerciseId: string, code: string, ty
   if (!auth.user || !canOpenExerciseIde(auth.role)) return unavailableCheck();
 
   const exercise = buildExerciseCatalog().exercises.find((item) => item.id === id);
-  const verification = exercise?.verificationCode?.trim() || '';
-  if (!exercise || !verification || !canAccessCourse(exercise, viewerFromAuth(auth))) return unavailableCheck();
+  if (!exercise?.verificationCode?.trim() || !canAccessCourse(exercise, viewerFromAuth(auth))) return unavailableCheck();
+  return gradeExercise(exercise, auth, source, typingTrace);
+}
 
-  let report: RunReport;
+async function runCatalogCheck(exercise: CatalogExercise, source: string): Promise<RunReport> {
+  const verification = exercise.verificationCode?.trim() || '';
   try {
-    report = exercise.type === 'sql'
+    return exercise.type === 'sql'
       ? await runSqlCheck(source, verification, exercise.sqlSetup ?? '')
       : await runPythonCheck(source, verification, exercise.pythonPackages ?? []);
   } catch {
-    report = unexpectedRunReport(CHECK_UNAVAILABLE);
+    return unexpectedRunReport(CHECK_UNAVAILABLE);
   }
+}
 
-  if (auth.isElevated) {
+type Auth = Awaited<ReturnType<typeof getAuthContext>>;
+
+async function gradeExercise(
+  exercise: CatalogExercise,
+  auth: Auth,
+  source: string,
+  typingTrace: unknown,
+  options: { quiet?: boolean } = {},
+): Promise<ExerciseCheckResult> {
+  const report = await runCatalogCheck(exercise, source);
+
+  if (auth.isElevated || !auth.user) {
     return {
       report: { ...report, validationNote: previewNote(report) },
       newBadge: false,
@@ -599,8 +617,10 @@ export async function checkExerciseSolution(exerciseId: string, code: string, ty
     ? { summary: summarizeTrace(trace, source, exercise.starterCode ?? ''), ...(passed ? { trace } : {}) }
     : null;
   // Chaque essai vérifié est gardé : l'enseignant relit le code, et peut valider un essai que les tests refusent.
+  // Un essai Python refusé garde aussi le résumé de son erreur, pour le carnet d'erreurs de l'élève.
   await recordSubmission({
     typing,
+    error: !passed && exercise.type === 'python' ? summarizeReport(report) : null,
     userId: auth.user.id,
     exerciseId: exercise.id,
     courseId: exercise.courseId,
@@ -629,10 +649,87 @@ export async function checkExerciseSolution(exerciseId: string, code: string, ty
     };
   }
 
+  // Entraînement chronométré : pas de fenêtre de badge ou de succès au milieu du sujet (ils restent gagnés).
+  if (options.quiet) return { report, newBadge: false, newAchievements: [], recorded: true };
   return {
     report,
     newBadge: saved.newBadge,
     newAchievements: saved.newAchievements ?? [],
     recorded: true,
   };
+}
+
+// ---------- Entraînement chronométré ----------
+
+export type PracticeCheckResult = ExerciseCheckResult & { expired?: boolean };
+
+/**
+ * Vérification d'un exercice du sujet blanc : mêmes tests et même enregistrement qu'un exercice de fiche
+ * (l'essai compte pour la progression et le carnet d'erreurs), à condition que l'entraînement soit en cours.
+ */
+export async function checkPracticeSolution(sessionId: string, exerciseId: string, code: string, typingTrace?: unknown): Promise<PracticeCheckResult> {
+  const id = String(exerciseId || '').trim();
+  const source = String(code ?? '');
+  if (!id || id.length > 200 || source.length > CHECK_CODE_LIMIT || !UUID.test(String(sessionId))) return unavailableCheck();
+
+  const auth = await getAuthContext();
+  if (!auth.user || !canOpenExerciseIde(auth.role)) return unavailableCheck();
+
+  const session = await loadPracticeSession(String(sessionId));
+  if (!session || !session.exerciseIds.includes(id)) return unavailableCheck();
+  if (!session.running) return { report: practiceOverReport(), newBadge: false, newAchievements: [], recorded: false, expired: true };
+
+  const exercise = buildExerciseCatalog().exercises.find((item) => item.id === id);
+  if (!exercise?.verificationCode?.trim() || !canAccessCourse(exercise, viewerFromAuth(auth))) return unavailableCheck();
+  const result = await gradeExercise(exercise, auth, source, typingTrace, { quiet: true });
+  if (everyTestPassed(result.report)) await markPracticeSolved(auth.user.id, session.id, exercise.id);
+  return result;
+}
+
+function practiceOverReport(): RunReport {
+  return {
+    status: 'failure',
+    validated: false,
+    tests: [{ ok: false, label: "L'entraînement est terminé.", detail: "Le temps est écoulé : le code n'est plus vérifié." }],
+    prints: '',
+    testPrints: '',
+    stderr: '',
+    testsSkipped: true,
+  };
+}
+
+// ---------- Carnet d'erreurs ----------
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Essai refusé enregistré avant le carnet d'erreurs (colonne error vide) : le code est relancé une fois
+ * avec la vérification actuelle de l'exercice, et le résumé est gardé dans l'essai pour les fois suivantes.
+ * Lecture par la session de l'élève (RLS : ses propres essais seulement), écriture avec la clé de service.
+ */
+export async function analyzeMySubmission(submissionId: string): Promise<ErrorSummary | null> {
+  const id = String(submissionId || '').trim();
+  if (!UUID.test(id)) return null;
+  const auth = await getAuthContext();
+  if (!auth.user || auth.isElevated) return null;
+
+  const supabase = await createClient();
+  const { data: row } = await supabase
+    .from('exercise_submissions')
+    .select('id, exercise_id, content, passed, kind, error')
+    .eq('id', id)
+    .eq('user_id', auth.user.id)
+    .maybeSingle();
+  if (!row || row.kind !== 'code' || row.passed !== false) return null;
+  const stored = parseErrorSummary(row.error);
+  if (stored) return stored;
+
+  const exercise = buildExerciseCatalog().exercises.find((item) => item.id === row.exercise_id);
+  if (!exercise || exercise.type !== 'python' || !exercise.verificationCode?.trim()) return null;
+  const report = await runCatalogCheck(exercise, String(row.content ?? ''));
+  // Le serveur n'a pas pu lancer la vérification : rien n'est gardé, un nouvel essai sera fait plus tard.
+  if (report.error === CHECK_UNAVAILABLE) return null;
+  const summary: ErrorSummary = summarizeReport(report) ?? { kind: 'autre', message: "Ce code passe les tests actuels de l'exercice : ils ont changé depuis l'essai." };
+  await createAdminClient()?.from('exercise_submissions').update({ error: summary }).eq('id', id).eq('user_id', auth.user.id);
+  return summary;
 }

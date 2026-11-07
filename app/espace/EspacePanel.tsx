@@ -11,8 +11,10 @@ import {
   ClipboardList,
   Megaphone,
   MessageSquare,
+  NotebookPen,
   Send,
   Target,
+  Timer,
   Trophy,
 } from "lucide-react";
 import { Badge, Button, Card, EmptyState, PageHeader, SectionTitle } from "@/components/ui";
@@ -25,6 +27,8 @@ import {
   type EspaceHomework,
   type EspaceSheet,
 } from "@/app/actions/espace";
+import type { RevisionPlan } from "@/app/actions/revisions";
+import { RevisionBlocks } from "@/components/revisions/RevisionBlocks";
 
 const LEVEL_LABELS: Record<string, string> = {
   SNI: "SNI",
@@ -68,7 +72,7 @@ function groupWork(work: EspaceSheet[]) {
   return [...groups.entries()];
 }
 
-export function EspacePanel({ data }: { data: EspaceData }) {
+export function EspacePanel({ data, revisions = [], now }: { data: EspaceData; revisions?: RevisionPlan[]; now?: string }) {
   const [homework, setHomework] = useState(data.homework);
   const [messages, setMessages] = useState(data.messages);
   const [draft, setDraft] = useState("");
@@ -170,6 +174,27 @@ export function EspacePanel({ data }: { data: EspaceData }) {
             <span className="challenge-banner-cta">Ouvrir</span>
           </Link>
         ) : null}
+
+        {now ? <RevisionBlocks plans={revisions} now={now} /> : null}
+
+        <div className="revise-banners">
+          <Link href="/espace/entrainement" className="challenge-banner">
+            <Timer size={20} aria-hidden />
+            <span className="min-w-0 flex-1">
+              <b>Entraînement chronométré</b>
+              <small>Un sujet blanc tiré des fiches d&apos;un chapitre, en temps limité, sans note.</small>
+            </span>
+            <span className="challenge-banner-cta">Commencer</span>
+          </Link>
+          <Link href="/espace/carnet" className="challenge-banner">
+            <NotebookPen size={20} aria-hidden />
+            <span className="min-w-0 flex-1">
+              <b>Carnet d&apos;erreurs</b>
+              <small>Les erreurs Python passées, expliquées, avec le code corrigé ensuite.</small>
+            </span>
+            <span className="challenge-banner-cta">Ouvrir</span>
+          </Link>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <Card className="lg:col-span-1">
