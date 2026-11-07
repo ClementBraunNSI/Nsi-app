@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useMemo } from 'react';
-import { Award, CheckCircle, Search, Clock, X, Download, ChevronRight, Lock, Pencil, Trash2, UserPlus } from 'lucide-react';
+import { Award, CheckCircle, Search, Clock, X, Download, ChevronRight, Lock, Pencil, Trash2, UserPlus, Users } from 'lucide-react';
 import React from 'react';
 import { getAdminDashboardData, getStudentAdminDetails, type AdminStudent } from '@/app/actions/admin';
 import { getStudentWorkDetail, type StudentWorkDetail } from '@/app/actions/activity';
@@ -11,6 +11,7 @@ import { StudentProgressModal } from '@/components/admin/StudentProgressModal';
 import { SheetBadgeFox } from '@/components/fox/SheetBadgeFox';
 import { AchievementMark } from '@/components/fox/AchievementMark';
 import { DeleteStudentDialog, StudentAccountDialog } from '@/components/admin/StudentAccounts';
+import { BulkStudentsDialog } from '@/components/admin/BulkStudents';
 import { isAbortError } from '@/lib/is-abort-error';
 import { classGroups, NO_CLASS } from '@/lib/class-groups';
 import { isInactive } from '@/lib/admin-today';
@@ -41,11 +42,13 @@ export function StudentsDashboard({
   initialClass = '',
   initialAudience,
   openCreate = false,
+  openBulk = false,
 }: {
   initial?: DashboardData;
   initialClass?: string;
   initialAudience?: Audience;
   openCreate?: boolean;
+  openBulk?: boolean;
 }) {
   const [students, setStudents] = useState<AdminStudent[]>(initial?.students ?? []);
   const [totalExercises, setTotalExercises] = useState(initial?.totalExercises ?? 0);
@@ -63,6 +66,7 @@ export function StudentsDashboard({
   const [accountMode, setAccountMode] = useState<'create' | 'edit' | null>(openCreate ? 'create' : null);
   const [accountStudent, setAccountStudent] = useState<AdminStudent | null>(null);
   const [studentToDelete, setStudentToDelete] = useState<AdminStudent | null>(null);
+  const [bulkOpen, setBulkOpen] = useState(openBulk);
   const now = useMemo(() => new Date(), [students]);
 
   const fetchData = async () => {
@@ -116,6 +120,21 @@ export function StudentsDashboard({
     [filteredStudents, audience],
   );
 
+  // Classes existantes (élèves de classe), avec le niveau le plus fréquent : proposées dans l'ajout en lot.
+  const knownClasses = useMemo(() => {
+    const byClass = new Map<string, Map<string, number>>();
+    for (const s of students) {
+      const name = s.classe?.trim();
+      if (!name || s.has_private_lessons) continue;
+      const levels = byClass.get(name) ?? new Map<string, number>();
+      if (s.level) levels.set(s.level, (levels.get(s.level) ?? 0) + 1);
+      byClass.set(name, levels);
+    }
+    return [...byClass.entries()]
+      .sort(([a], [b]) => a.localeCompare(b, 'fr', { numeric: true }))
+      .map(([classe, levels]) => ({ classe, level: [...levels.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null }));
+  }, [students]);
+
   const stats = useMemo(() => {
     const total = filteredStudents.length;
     const inactive = filteredStudents.filter((s) => isInactive(s.last_work_at, now)).length;
@@ -159,6 +178,9 @@ export function StudentsDashboard({
         <div className="admin-head-actions">
           <button type="button" className="admin-btn" onClick={() => { setAccountStudent(null); setAccountMode('create'); }}>
             <UserPlus size={16} aria-hidden /> Ajouter un élève
+          </button>
+          <button type="button" className="admin-btn is-quiet" onClick={() => setBulkOpen(true)}>
+            <Users size={16} aria-hidden /> Ajouter en lot
           </button>
           <button type="button" className="admin-btn is-quiet" onClick={exportData}>
             <Download size={16} aria-hidden /> Exporter CSV
@@ -351,6 +373,13 @@ export function StudentsDashboard({
           student={accountStudent}
           onClose={() => setAccountMode(null)}
           onSaved={() => { fetchData(); }}
+        />
+      )}
+      {bulkOpen && (
+        <BulkStudentsDialog
+          classes={knownClasses}
+          onClose={() => setBulkOpen(false)}
+          onCreated={() => { fetchData(); }}
         />
       )}
       {studentToDelete && (
