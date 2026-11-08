@@ -3,14 +3,20 @@ import fs from "fs";
 import path from "path";
 import {
   allExercisesPassed,
+  bonusLevelsPassed,
   CHALLENGE_ACHIEVEMENTS,
   CHALLENGE_TEMPLATE,
   challengeDeadline,
+  challengeGroups,
   challengeStreak,
+  earnedBonusAchievements,
   earnedChallengeAchievements,
   nextMonday,
   parisTime,
+  previousLevel,
+  requiredExerciseIds,
 } from "../lib/challenges";
+import { forbiddenWordsUsed } from "../lib/code-level";
 import { parseEvaluationSubject } from "../lib/evaluation-subject";
 import { everyTestPassed } from "../lib/python-check";
 import { runPythonCheck } from "../lib/run-exercise-check";
@@ -78,13 +84,18 @@ describe("challenge dates (Paris time)", () => {
 });
 
 describe("challenge source", () => {
-  it("reads the template as one exercise with tests and a correction that passes them", async () => {
+  it("reads the template as one exercise and its bonus level, each with tests and a correction that passes them", async () => {
     const parsed = parseEvaluationSubject(CHALLENGE_TEMPLATE);
     expect(parsed.errors).toEqual([]);
-    expect(parsed.exercises).toHaveLength(1);
-    expect(JSON.stringify(parsed.exercises[0])).not.toContain("assert");
-    const report = await runPythonCheck(parsed.grading[0].correction, parsed.grading[0].verification);
-    expect(everyTestPassed(report)).toBe(true);
+    expect(parsed.exercises).toHaveLength(2);
+    expect(requiredExerciseIds(parsed.exercises)).toEqual(["pairs"]);
+    expect(parsed.exercises[1]).toMatchObject({ id: "pairs-2", parent: "pairs", level: 2, forbidden: ["for"] });
+    expect(JSON.stringify(parsed.exercises)).not.toContain("assert");
+    for (const [index, exercise] of parsed.exercises.entries()) {
+      const report = await runPythonCheck(parsed.grading[index].correction, parsed.grading[index].verification);
+      expect(everyTestPassed(report), exercise.id).toBe(true);
+      expect(forbiddenWordsUsed(parsed.grading[index].correction, exercise.forbidden ?? []), exercise.id).toEqual([]);
+    }
   });
 
   it("catches a wrong correction before the challenge goes out", async () => {
@@ -92,6 +103,47 @@ describe("challenge source", () => {
     const wrong = "def pairs(liste):\n    return liste";
     const report = await runPythonCheck(wrong, parsed.grading[0].verification);
     expect(everyTestPassed(report)).toBe(false);
+  });
+});
+
+describe("challenge levels and forbidden keywords", () => {
+  const source = [
+    '<ExerciseSection id="a" label="A" type="python"><Enonce>A</Enonce><Verification>assert True</Verification></ExerciseSection>',
+    '<ExerciseSection id="a-2" label="A2" type="python" niveau="2" suite="a" interdits="for, while"><Enonce>A2</Enonce><Verification>assert True</Verification></ExerciseSection>',
+    '<ExerciseSection id="b" label="B" type="python"><Enonce>B</Enonce><Verification>assert True</Verification></ExerciseSection>',
+  ].join("\n");
+
+  it("groups each exercise with its levels; only level 1 validates the challenge", () => {
+    const { exercises, errors } = parseEvaluationSubject(source);
+    expect(errors).toEqual([]);
+    expect(challengeGroups(exercises).map((group) => group.levels.map((level) => level.id))).toEqual([["a", "a-2"], ["b"]]);
+    expect(requiredExerciseIds(exercises)).toEqual(["a", "b"]);
+    expect(previousLevel(exercises, exercises[1])?.id).toBe("a");
+    expect(previousLevel(exercises, exercises[0])).toBeNull();
+    const answers = { a: { code: "", passed: true, attempts: 1 }, b: { code: "", passed: true, attempts: 2 } };
+    expect(allExercisesPassed(requiredExerciseIds(exercises), answers)).toBe(true);
+    expect(bonusLevelsPassed(exercises, answers)).toBe(0);
+    expect(bonusLevelsPassed(exercises, { ...answers, "a-2": { code: "", passed: true, attempts: 1 } })).toBe(1);
+  });
+
+  it("refuses a level that points to nothing or to another level", () => {
+    expect(parseEvaluationSubject('<ExerciseSection id="x" niveau="2" suite="nulle-part"><Enonce>X</Enonce></ExerciseSection>').errors.join(" ")).toMatch(/ne correspond/);
+    const chained = source + '<ExerciseSection id="a-3" niveau="3" suite="a-2"><Enonce>A3</Enonce></ExerciseSection>';
+    expect(parseEvaluationSubject(chained).errors.join(" ")).toMatch(/niveau 1/);
+  });
+
+  it("finds forbidden keywords in code, not in strings or comments", () => {
+    expect(forbiddenWordsUsed("i = 0\nwhile i < 3:\n    i += 1", ["for"])).toEqual([]);
+    expect(forbiddenWordsUsed("for i in range(3):\n    print(i)", ["for"])).toEqual([{ word: "for", line: 1 }]);
+    expect(forbiddenWordsUsed("total = sum([x for x in liste])", ["for"])).toEqual([{ word: "for", line: 1 }]);
+    expect(forbiddenWordsUsed('print("for")  # pas de for ici\nformat = 1', ["for"])).toEqual([]);
+  });
+
+  it("rewards bonus levels with their own achievements", () => {
+    expect(earnedBonusAchievements(0)).toEqual([]);
+    expect(earnedBonusAchievements(1)).toEqual(["defi_bonus"]);
+    expect(earnedBonusAchievements(6)).toEqual(["defi_bonus", "defi_bonus_5"]);
+    expect(earnedChallengeAchievements(10)).not.toContain("defi_bonus");
   });
 });
 

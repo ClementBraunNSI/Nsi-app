@@ -5939,3 +5939,65 @@ a.admin-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .practice-score { flex-shrink: 0; padding: 0.15rem 0.6rem; border-radius: 99px; background: var(--surface-2); font-size: 0.8rem; font-weight: 700; color: var(--muted); }
 .practice-score.is-full { background: #dcfce7; color: #15803d; }
 .dark .practice-score.is-full { background: color-mix(in srgb, #16a34a 25%, var(--surface)); color: #86efac; }
+
+/* ---------- Défi du lundi : exercices à niveaux et mots-clés interdits ---------- */
+.challenge-levels { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.6rem 0 0.4rem; }
+.challenge-level-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+.challenge-level-tab.is-current { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.challenge-level-tab.is-done svg { color: #16a34a; }
+.challenge-level-tab:disabled { opacity: 0.55; cursor: not-allowed; }
+.challenge-level-bonus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 99px;
+  background: color-mix(in srgb, #a855f7 16%, var(--surface));
+  color: #7e22ce;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.dark .challenge-level-bonus { color: #d8b4fe; }
+.challenge-level-info,
+.challenge-level-notice { margin: 0.4rem 0; padding: 0.55rem 0.8rem; border-radius: var(--radius-sm); font-size: 0.88rem; }
+.challenge-level-info { background: var(--surface-2); color: var(--muted); }
+.challenge-level-notice { background: color-mix(in srgb, #16a34a 12%, var(--surface)); color: #166534; font-weight: 600; }
+.dark .challenge-level-notice { color: #86efac; }
+.challenge-forbidden {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0.3rem 0 0.5rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, #dc2626 10%, var(--surface));
+  color: #b91c1c;
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+.dark .challenge-forbidden { color: #fca5a5; }
+.challenge-forbidden code { padding: 0 0.3rem; border-radius: 0.3rem; background: var(--surface); }
+.challenge-bonus-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 99px;
+  background: color-mix(in srgb, #a855f7 16%, var(--surface));
+  color: #7e22ce;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.dark .challenge-bonus-chip { color: #d8b4fe; }

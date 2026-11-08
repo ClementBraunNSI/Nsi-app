@@ -14,6 +14,7 @@ import {
 import type { EvaluationExercise } from "@/lib/evaluation-subject";
 import { formatRemaining, INCIDENT_LABELS, isAllowedPaste, LOCK_FALLBACK, LOCK_MESSAGES, type IncidentKind } from "@/lib/evaluation-guard";
 import type { MyChallenge } from "@/lib/challenges";
+import { latestLevelCode, LeveledExercise } from "./LeveledExercise";
 import { ExerciseStatement } from "@/components/lab/ExerciseStatement";
 import { ExerciseWorkspace } from "@/components/lab/ExerciseWorkspace";
 import {
@@ -124,7 +125,8 @@ type RunnerProps = {
   /** Fin du temps de l'élève (ms), ou null sans limite. */
   deadline: number | null;
   remaining: number | null;
-  labs: { exercise: EvaluationExercise; lab: LabExercise }[];
+  /** Un élément par exercice : son niveau 1 (`exercise`), l'éditeur et tous ses niveaux. */
+  labs: { exercise: EvaluationExercise; lab: LabExercise; levels: EvaluationExercise[] }[];
   isPassed: (exerciseId: string) => boolean;
   allPassed: boolean;
   checker: (exerciseId: string, code: string) => Promise<ExerciseCheckResult>;
@@ -137,7 +139,7 @@ type RunnerProps = {
 export function ProctoredRunner({ challenge, deadline, remaining, labs, isPassed, allPassed, checker, onPassed, onLeave }: RunnerProps) {
   const answers = challenge.mine?.answers ?? {};
   const [codes, setCodes] = useState<Record<string, string | undefined>>(() =>
-    Object.fromEntries(labs.map(({ exercise }) => [exercise.id, answers[exercise.id]?.code || undefined])),
+    Object.fromEntries(labs.map(({ exercise, levels }) => [exercise.id, latestLevelCode(levels, answers)])),
   );
   const [selectedId, setSelectedId] = useState(labs[0]?.exercise.id ?? "");
   const [locked, setLocked] = useState(Boolean(challenge.mine?.locked));
@@ -442,19 +444,19 @@ export function ProctoredRunner({ challenge, deadline, remaining, labs, isPassed
         <main className="eval-main">
           {current ? (
             <>
-              <div className="eval-statement">
-                <ExerciseStatement label={current.exercise.label} content={current.exercise.statement} />
-              </div>
-              <ExerciseWorkspace
+              <LeveledExercise
                 key={current.exercise.id}
-                exercise={current.lab}
-                nav={null}
-                embedded
+                challengeId={challenge.id}
+                challengeTitle={challenge.title}
+                levels={current.levels}
+                answers={answers}
+                isPassed={isPassed}
+                checker={checker}
+                onPassed={onPassed}
+                statementClassName="eval-statement"
                 lockdown
-                initialCode={codes[current.exercise.id]}
+                initialCode={codes[current.exercise.id] ?? latestLevelCode(current.levels, answers)}
                 onCodeChange={(code) => onCodeChange(current.exercise.id, code)}
-                onCompleted={() => onPassed(current.exercise.id)}
-                checker={(code) => checker(current.exercise.id, code)}
               />
             </>
           ) : null}

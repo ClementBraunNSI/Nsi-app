@@ -3,15 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { Check, ChevronDown, Flame, Timer, Trophy, Users } from "lucide-react";
-import type { LabExercise } from "@/app/actions/getExercises";
+import { Check, ChevronDown, Flame, Sparkles, Timer, Trophy, Users } from "lucide-react";
 import { checkChallenge, startChallenge } from "@/app/actions/challenges";
 import type { Achievement } from "@/lib/achievements";
-import type { EvaluationExercise } from "@/lib/evaluation-subject";
-import { challengeAchievement, challengeDeadline, type MyChallenge } from "@/lib/challenges";
+import { bonusLevelsPassed, challengeAchievement, challengeDeadline, challengeGroups, type MyChallenge } from "@/lib/challenges";
 import { ExerciseStatement } from "@/components/lab/ExerciseStatement";
-import { ExerciseWorkspace } from "@/components/lab/ExerciseWorkspace";
 import { ChallengeStart, ProctoredRunner } from "./ProctoredChallenge";
+import { challengeLab, LeveledExercise } from "./LeveledExercise";
 
 const dayFormat = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Paris" });
 const shortFormat = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", timeZone: "Europe/Paris" });
@@ -21,24 +19,6 @@ function asAchievement(id: string): Achievement | null {
   const item = challengeAchievement(id);
   if (!item) return null;
   return { id: item.id, title: item.title, description: item.description, icon: Trophy, color: "", condition: () => false };
-}
-
-function labExercise(challenge: MyChallenge, exercise: EvaluationExercise): LabExercise {
-  return {
-    id: `defi-${challenge.id}-${exercise.id}`,
-    label: exercise.label,
-    courseId: "defi",
-    courseTitle: challenge.title,
-    content: exercise.statement,
-    starterCode: exercise.starter || undefined,
-    sqlSetup: exercise.sqlSetup || undefined,
-    pythonPackages: exercise.packages?.length ? exercise.packages : undefined,
-    chapter: "",
-    level: "",
-    fileName: "defi",
-    type: exercise.type,
-    hasVerification: true,
-  };
 }
 
 function clock(ms: number) {
@@ -97,7 +77,12 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
   const [leftRunner, setLeftRunner] = useState(Boolean(challenge.mine?.passed));
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
-  const exercises = useMemo(() => challenge.exercises.map((exercise) => ({ exercise, lab: labExercise(challenge, exercise) })), [challenge]);
+  // Un exercice et ses niveaux bonus : seul le niveau 1 compte pour valider le défi.
+  const groups = useMemo(() => challengeGroups(challenge.exercises), [challenge.exercises]);
+  const exercises = useMemo(
+    () => groups.map((group) => ({ exercise: group.levels[0], lab: challengeLab(challenge.id, challenge.title, group.levels[0]), levels: group.levels })),
+    [challenge.id, challenge.title, groups],
+  );
 
   // Le chrono part à l'ouverture de la page (le serveur garde la première heure de départ).
   // Défi surveillé : il part au clic sur « commencer », une fois l'écran partagé.
@@ -122,8 +107,12 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
   const remaining = deadline === null ? null : deadline - now;
   const expired = serverExpired || finished || (remaining !== null && remaining <= 0);
   const isPassed = (id: string) => Boolean(answers[id]?.passed) || passedNow.includes(id);
-  const passedCount = challenge.exercises.filter((exercise) => isPassed(exercise.id)).length;
-  const allPassed = challenge.exercises.length > 0 && passedCount === challenge.exercises.length;
+  const passedCount = groups.filter((group) => isPassed(group.id)).length;
+  const allPassed = groups.length > 0 && passedCount === groups.length;
+  const hasBonus = groups.some((group) => group.levels.length > 1);
+  const bonusPassed =
+    bonusLevelsPassed(challenge.exercises, answers) +
+    challenge.exercises.filter((exercise) => exercise.parent && passedNow.includes(exercise.id) && !answers[exercise.id]?.passed).length;
   const watched = Boolean(challenge.proctored) && !expired && !(allPassed && leftRunner);
 
   const onPassed = (id: string) => {
@@ -168,7 +157,8 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
           <p className="challenge-eyebrow">Défi de la semaine</p>
           <h2>{challenge.title}</h2>
           <p className="challenge-meta">
-            {challenge.exercises.length} exercice{challenge.exercises.length > 1 ? "s" : ""}
+            {groups.length} exercice{groups.length > 1 ? "s" : ""}
+            {hasBonus ? " avec niveau bonus" : ""}
             {challenge.timeLimitMinutes
               ? ` · ${challenge.timeLimitMinutes} minutes à partir ${challenge.proctored ? "du début" : "de l'ouverture de la page"}`
               : ` · ouvert jusqu'au ${dayFormat.format(new Date(challenge.closesAt))}`}
@@ -177,6 +167,9 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
         </div>
         {allPassed ? (
           <span className="challenge-done"><Check size={16} aria-hidden /> Réussi</span>
+        ) : null}
+        {bonusPassed > 0 ? (
+          <span className="challenge-bonus-chip"><Sparkles size={15} aria-hidden /> {bonusPassed} niveau{bonusPassed > 1 ? "x" : ""} bonus</span>
         ) : null}
         {/* Le chrono est posé sur la page entière : il reste visible pendant qu'on fait défiler les exercices. */}
         {challenge.timeLimitMinutes && !expired && !watched && mounted
@@ -195,34 +188,36 @@ function CurrentChallenge({ challenge }: { challenge: MyChallenge }) {
       ) : expired ? (
         <div className="challenge-expired">
           <p>
-            <b>{finished ? "Défi arrêté." : "Temps écoulé."}</b> {passedCount} exercice{passedCount > 1 ? "s" : ""} réussi{passedCount > 1 ? "s" : ""} sur {challenge.exercises.length}.
+            <b>{finished ? "Défi arrêté." : "Temps écoulé."}</b> {passedCount} exercice{passedCount > 1 ? "s" : ""} réussi{passedCount > 1 ? "s" : ""} sur {groups.length}
+            {bonusPassed > 0 ? `, et ${bonusPassed} niveau${bonusPassed > 1 ? "x" : ""} bonus` : ""}.
             La correction apparaîtra le {dayFormat.format(new Date(challenge.closesAt))}.
           </p>
           {challenge.exercises.map((exercise) => (
             <div key={exercise.id} className="challenge-past-body">
-              <ExerciseStatement label={exercise.label} content={exercise.statement} />
+              <ExerciseStatement label={exercise.parent ? `${exercise.label} (niveau ${exercise.level ?? 2}, bonus)` : exercise.label} content={exercise.statement} />
               <h3>{isPassed(exercise.id) ? "Code réussi" : "Dernier code vérifié"}</h3>
               <pre>{answers[exercise.id]?.code || "Aucun code vérifié."}</pre>
             </div>
           ))}
         </div>
       ) : (
-        exercises.map(({ exercise, lab }, index) => (
+        exercises.map(({ exercise, levels }, index) => (
           <div key={exercise.id} className="challenge-exercise">
-            <div className="challenge-statement">
-              <div className="challenge-exercise-head">
-                <span>Exercice {index + 1}</span>
-                {isPassed(exercise.id) ? <span className="challenge-done is-small"><Check size={14} aria-hidden /> Réussi</span> : null}
-              </div>
-              <ExerciseStatement label={exercise.label} content={exercise.statement} />
-            </div>
-            <ExerciseWorkspace
-              exercise={lab}
-              nav={null}
-              embedded
-              initialCode={answers[exercise.id]?.code || undefined}
-              onCompleted={() => onPassed(exercise.id)}
-              checker={(code) => checker(exercise.id, code)}
+            <LeveledExercise
+              challengeId={challenge.id}
+              challengeTitle={challenge.title}
+              levels={levels}
+              answers={answers}
+              isPassed={isPassed}
+              checker={checker}
+              onPassed={onPassed}
+              statementClassName="challenge-statement"
+              heading={
+                <div className="challenge-exercise-head">
+                  <span>Exercice {index + 1}</span>
+                  {isPassed(exercise.id) ? <span className="challenge-done is-small"><Check size={14} aria-hidden /> Réussi</span> : null}
+                </div>
+              }
             />
           </div>
         ))
@@ -251,7 +246,7 @@ function PastChallenge({ challenge }: { challenge: MyChallenge }) {
             const correction = challenge.corrections?.find((item) => item.id === exercise.id)?.correction;
             return (
               <div key={exercise.id} className="challenge-past-exercise">
-                <ExerciseStatement label={exercise.label} content={exercise.statement} />
+                <ExerciseStatement label={exercise.parent ? `${exercise.label} (niveau ${exercise.level ?? 2}, bonus)` : exercise.label} content={exercise.statement} />
                 {answers[exercise.id]?.code ? (
                   <>
                     <h3>Mon code {answers[exercise.id].passed ? "(réussi)" : ""}</h3>

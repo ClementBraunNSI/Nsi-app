@@ -44,7 +44,8 @@ export default function ChallengeEditor({ initial, classes, onDone }: { initial:
   const [preview, setPreview] = useState(false);
   const [testResults, setTestResults] = useState<CorrectionTest[] | null>(null);
   const parsed = parseEvaluationSubject(draft.source);
-  const exerciseCount = parsed.exercises.length;
+  // Les niveaux bonus (niveau="2" suite="...") ne comptent pas dans les 5 exercices.
+  const exerciseCount = parsed.exercises.filter((item) => !item.parent).length;
   const options = [...new Set([...classes, ...draft.classes])].sort();
   const set = (patch: Partial<ChallengeDraft>) => setDraft((prev) => ({ ...prev, ...patch }));
 
@@ -123,7 +124,7 @@ export default function ChallengeEditor({ initial, classes, onDone }: { initial:
           </span>
         </label>
         <label>
-          <span>Exercices (format des fiches : un bloc &lt;ExerciseSection&gt; par exercice, avec tests et correction ; 5 au plus)</span>
+          <span>Exercices (format des fiches : un bloc &lt;ExerciseSection&gt; par exercice, avec tests et correction ; 5 au plus). Niveau bonus : un bloc de plus avec niveau=&quot;2&quot; suite=&quot;id du niveau 1&quot;. Mots-clés interdits : interdits=&quot;for, while&quot;.</span>
           <textarea className="adm-eval-source" value={draft.source} onChange={(event) => set({ source: event.target.value })} rows={20} spellCheck={false} />
         </label>
       </div>
@@ -132,11 +133,12 @@ export default function ChallengeEditor({ initial, classes, onDone }: { initial:
         {exerciseCount === 0 ? <p>Aucun exercice trouvé.</p> : null}
         {parsed.exercises.map((item, index) => (
           <p key={item.id}>
-            {index + 1}. {item.label} ({item.type}) · {parsed.grading[index]?.verification ? "tests présents" : "sans tests"} · {parsed.grading[index]?.correction ? "correction présente" : "sans correction"}
+            {item.parent ? `↳ niveau ${item.level ?? 2} (bonus) de « ${item.parent} »` : `${index + 1}.`} {item.label} ({item.type})
+            {item.forbidden?.length ? ` · interdits : ${item.forbidden.join(", ")}` : ""} · {parsed.grading[index]?.verification ? "tests présents" : "sans tests"} · {parsed.grading[index]?.correction ? "correction présente" : "sans correction"}
           </p>
         ))}
         {parsed.errors.map((error) => <p key={error} className="adm-eval-error">{error}</p>)}
-        {exerciseCount > 5 ? <p className="adm-eval-error">Un défi contient au plus 5 exercices.</p> : null}
+        {exerciseCount > 5 ? <p className="adm-eval-error">Un défi contient au plus 5 exercices, sans compter les niveaux bonus.</p> : null}
       </div>
 
       <div className="adm-eval-actions is-start">

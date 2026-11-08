@@ -128,3 +128,21 @@ export function codeAboveLevel(code: string, level: string, reference = ""): Lev
   }
   return flags;
 }
+
+export type ForbiddenUse = { word: string; line: number };
+
+/**
+ * Mots-clés interdits présents dans le code (hors chaînes et commentaires), avec la première ligne où chacun apparaît.
+ * Sert aux exercices de défi qui imposent d'écrire sans for, sans while…
+ */
+export function forbiddenWordsUsed(code: string, words: string[]): ForbiddenUse[] {
+  if (!words.length || !code.trim()) return [];
+  const { lines } = split(code);
+  const uses: ForbiddenUse[] = [];
+  for (const word of words) {
+    const pattern = new RegExp(String.raw`(^|[^\w.])${word.replace(/[^\w]/g, "")}(?!\w)`);
+    const index = lines.findIndex((line) => pattern.test(line));
+    if (index !== -1) uses.push({ word, line: index + 1 });
+  }
+  return uses;
+}

@@ -38,9 +38,19 @@ function parisDay(iso: string) {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(new Date(iso));
 }
 
+/** « Ex. 1 » pour un exercice, « Ex. 1 · niv. 2 » pour son niveau bonus. */
+function exerciseNumbers(exercises: ChallengeDetail["challenge"]["exercises"]) {
+  const bases = exercises.filter((exercise) => !exercise.parent).map((exercise) => exercise.id);
+  return (exercise: ChallengeDetail["challenge"]["exercises"][number]) => {
+    const number = bases.indexOf(exercise.parent ?? exercise.id) + 1;
+    return exercise.parent ? `Ex. ${number} · niv. ${exercise.level ?? 2}` : `Ex. ${number}`;
+  };
+}
+
 export default function ChallengeDetailView({ detail, classes }: { detail: ChallengeDetail; classes: string[] }) {
   const router = useRouter();
   const { challenge, rows } = detail;
+  const columnLabel = exerciseNumbers(challenge.exercises);
   const [tab, setTab] = useState<"resultats" | "modifier">(challengeState(challenge).key === "programme" ? "modifier" : "resultats");
   const [openCode, setOpenCode] = useState<string | null>(null);
   const opened = openCode ? rows.find((row) => row.studentId === openCode) : null;
@@ -106,7 +116,11 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
                       <th>Résultat</th>
                       {challenge.proctored ? <th>Surveillance</th> : null}
                       {challenge.proctored ? <th>Code de déverrouillage</th> : null}
-                      {challenge.exercises.map((exercise, index) => <th key={exercise.id} title={exercise.label}>Ex. {index + 1}</th>)}
+                      {challenge.exercises.map((exercise) => (
+                        <th key={exercise.id} title={exercise.parent ? `${exercise.label} (niveau bonus)` : exercise.label}>
+                          {columnLabel(exercise)}
+                        </th>
+                      ))}
                       <th>Essais</th>
                       <th>Ouvert à</th>
                       <th>Réussi en</th>
@@ -165,10 +179,10 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
               <div className="space-y-3">
                 <p className="text-sm font-semibold text-slate-700">{opened.name}</p>
                 {challenge.proctored ? <StudentIncidents challengeId={challenge.id} row={opened} onChange={() => router.refresh()} /> : null}
-                {challenge.exercises.map((exercise, index) => (
+                {challenge.exercises.map((exercise) => (
                   <div key={exercise.id} className="space-y-1">
                     <p className="text-xs font-semibold text-slate-500">
-                      Ex. {index + 1} · {exercise.label} · {opened.answers[exercise.id]?.passed ? "réussi" : opened.answers[exercise.id] ? "pas réussi" : "pas tenté"}
+                      {columnLabel(exercise)} · {exercise.label} · {opened.answers[exercise.id]?.passed ? "réussi" : opened.answers[exercise.id] ? "pas réussi" : "pas tenté"}
                     </p>
                     {opened.answers[exercise.id]?.code ? <pre className="adm-eval-code-block">{opened.answers[exercise.id].code}</pre> : null}
                   </div>

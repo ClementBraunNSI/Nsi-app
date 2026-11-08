@@ -42,9 +42,40 @@ export function challengeDeadline(startedAt: string | null | undefined, timeLimi
   return Date.parse(startedAt) + timeLimitMinutes * 60_000;
 }
 
-/** Le défi est réussi quand chaque exercice l'est. */
+/** Le défi est réussi quand chaque exercice demandé l'est (les niveaux bonus ne comptent pas). */
 export function allExercisesPassed(exerciseIds: string[], answers: Record<string, ChallengeAnswer> | undefined) {
   return exerciseIds.length > 0 && exerciseIds.every((id) => answers?.[id]?.passed);
+}
+
+/** Un exercice du défi et ses niveaux : le niveau 1 d'abord, puis les niveaux bonus dans l'ordre. */
+export type ChallengeGroup = { id: string; levels: EvaluationExercise[] };
+
+export function challengeGroups(exercises: EvaluationExercise[]): ChallengeGroup[] {
+  const groups: ChallengeGroup[] = exercises.filter((exercise) => !exercise.parent).map((exercise) => ({ id: exercise.id, levels: [exercise] }));
+  for (const exercise of exercises) {
+    if (!exercise.parent) continue;
+    groups.find((group) => group.id === exercise.parent)?.levels.push(exercise);
+  }
+  for (const group of groups) group.levels.sort((a, b) => (a.level ?? 1) - (b.level ?? 1));
+  return groups;
+}
+
+/** Exercices qui valident le défi : les niveaux 1. */
+export function requiredExerciseIds(exercises: EvaluationExercise[]) {
+  return exercises.filter((exercise) => !exercise.parent).map((exercise) => exercise.id);
+}
+
+/** Niveaux bonus réussis dans un défi. */
+export function bonusLevelsPassed(exercises: EvaluationExercise[], answers: Record<string, ChallengeAnswer> | undefined) {
+  return exercises.filter((exercise) => exercise.parent && answers?.[exercise.id]?.passed).length;
+}
+
+/** Un niveau bonus s'ouvre quand le niveau juste en dessous est réussi. */
+export function previousLevel(exercises: EvaluationExercise[], exercise: EvaluationExercise) {
+  if (!exercise.parent) return null;
+  const levels = challengeGroups(exercises).find((group) => group.id === exercise.parent)?.levels ?? [];
+  const index = levels.findIndex((item) => item.id === exercise.id);
+  return index > 0 ? levels[index - 1] : null;
 }
 
 /**
@@ -65,14 +96,17 @@ export function challengeStreak(challenges: Pick<MyChallenge, "open" | "opensAt"
   return streak;
 }
 
-export type ChallengeAchievement = { id: string; title: string; description: string; image: string; streak: number };
+/** Succès de série (`streak` semaines de suite) ou de niveaux bonus (`bonus` niveaux 2 réussis en tout). */
+export type ChallengeAchievement = { id: string; title: string; description: string; image: string; streak?: number; bonus?: number };
 
-/** Succès du défi du lundi : le premier réussi, puis des séries de semaines consécutives. */
+/** Succès du défi du lundi : le premier réussi, des séries de semaines consécutives, puis les niveaux bonus. */
 export const CHALLENGE_ACHIEVEMENTS: ChallengeAchievement[] = [
   { id: "defi_premier", title: "Premier défi", description: "Un premier défi du lundi réussi.", image: "/images/succes/defi_premier.png", streak: 1 },
   { id: "defi_serie_3", title: "Trois lundis de suite", description: "Trois défis réussis, trois semaines de suite.", image: "/images/succes/defi_serie_3.png", streak: 3 },
   { id: "defi_serie_5", title: "Cinq lundis de suite", description: "Cinq défis réussis, cinq semaines de suite.", image: "/images/succes/defi_serie_5.png", streak: 5 },
   { id: "defi_serie_10", title: "Le renard du lundi", description: "Dix défis réussis, dix semaines de suite.", image: "/images/succes/defi_serie_10.png", streak: 10 },
+  { id: "defi_bonus", title: "Niveau supérieur", description: "Un premier niveau bonus réussi dans un défi du lundi.", image: "/images/succes/defi_bonus.png", bonus: 1 },
+  { id: "defi_bonus_5", title: "Toujours plus loin", description: "Cinq niveaux bonus réussis dans les défis du lundi.", image: "/images/succes/defi_bonus_5.png", bonus: 5 },
 ];
 
 export function challengeAchievement(id: string) {
@@ -81,7 +115,12 @@ export function challengeAchievement(id: string) {
 
 /** Succès mérités avec cette série (le serveur n'enregistre que ceux qui manquent). */
 export function earnedChallengeAchievements(streak: number) {
-  return CHALLENGE_ACHIEVEMENTS.filter((item) => streak >= item.streak).map((item) => item.id);
+  return CHALLENGE_ACHIEVEMENTS.filter((item) => item.streak !== undefined && streak >= item.streak).map((item) => item.id);
+}
+
+/** Succès mérités avec ce nombre de niveaux bonus réussis, tous défis confondus. */
+export function earnedBonusAchievements(bonusLevels: number) {
+  return CHALLENGE_ACHIEVEMENTS.filter((item) => item.bonus !== undefined && bonusLevels >= item.bonus).map((item) => item.id);
 }
 
 /** Décalage de Paris (heure d'été ou d'hiver) à une date donnée, en minutes. */
@@ -118,8 +157,11 @@ export function nextMonday(from = new Date(), openingHour = 7, openingMinute = 3
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(from);
 }
 
-/** Modèle proposé pour écrire un nouveau défi : un ou plusieurs blocs <ExerciseSection>, chacun avec ses tests. */
-export const CHALLENGE_TEMPLATE = `<ExerciseSection id="defi" label="Défi : nombres pairs" type="python">
+/**
+ * Modèle proposé pour écrire un nouveau défi : un ou plusieurs blocs <ExerciseSection>, chacun avec ses tests.
+ * Il montre aussi un niveau bonus (niveau="2" suite="...") et un mot-clé interdit (interdits="for").
+ */
+export const CHALLENGE_TEMPLATE = `<ExerciseSection id="pairs" label="Nombres pairs" type="python">
 <Enonce>
 Écrire une fonction \`pairs(liste)\` qui renvoie la liste des nombres pairs de \`liste\`, dans le même ordre.
 
@@ -140,6 +182,26 @@ def pairs(liste):
     for n in liste:
         if n % 2 == 0:
             resultat.append(n)
+    return resultat
+</Correction>
+</ExerciseSection>
+
+<ExerciseSection id="pairs-2" label="Nombres pairs, sans for" type="python" niveau="2" suite="pairs" interdits="for">
+<Enonce>
+Niveau 2 : réécrire \`pairs(liste)\` sans utiliser \`for\`.
+</Enonce>
+<Verification>
+assert pairs([1, 2, 3, 4]) == [2, 4], "pairs([1, 2, 3, 4]) doit renvoyer [2, 4]."
+assert pairs([5, 6, 8]) == [6, 8], "pairs([5, 6, 8]) doit renvoyer [6, 8]."
+</Verification>
+<Correction>
+def pairs(liste):
+    resultat = []
+    i = 0
+    while i < len(liste):
+        if liste[i] % 2 == 0:
+            resultat.append(liste[i])
+        i = i + 1
     return resultat
 </Correction>
 </ExerciseSection>

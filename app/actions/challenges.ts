@@ -7,14 +7,19 @@ import { getAuthContext } from '@/lib/auth';
 import { parseEvaluationSubject, type EvaluationExercise, type EvaluationGrading } from '@/lib/evaluation-subject';
 import {
   allExercisesPassed,
+  bonusLevelsPassed,
   CHALLENGE_GRACE_MS,
   challengeDeadline,
   challengeStreak,
+  earnedBonusAchievements,
   earnedChallengeAchievements,
   parisTime,
+  previousLevel,
+  requiredExerciseIds,
   type ChallengeAnswer,
   type MyChallenge,
 } from '@/lib/challenges';
+import { forbiddenWordsUsed } from '@/lib/code-level';
 import type { IncidentKind } from '@/lib/evaluation-guard';
 import { CHECK_UNAVAILABLE, everyTestPassed, unexpectedRunReport, type RunReport } from '@/lib/python-check';
 import { runPythonCheck, runSqlCheck } from '@/lib/run-exercise-check';
@@ -31,6 +36,8 @@ const fail = (error: string) => ({ ok: false as const, error });
 const NOT_ALLOWED = 'Réservé aux comptes enseignant et admin.';
 const CODE_LIMIT = 60_000;
 const MAX_EXERCISES = 5;
+/** Niveaux bonus compris : au plus trois niveaux par exercice. */
+const MAX_SECTIONS = 15;
 
 function messageOf(error: { message?: string } | null | undefined, fallback: string) {
   const text = error?.message?.trim();
@@ -38,14 +45,33 @@ function messageOf(error: { message?: string } | null | undefined, fallback: str
 }
 
 async function runCheck(exercise: EvaluationExercise, code: string, verification: string): Promise<RunReport> {
+  let report: RunReport;
   try {
-    return exercise.type === 'sql'
+    report = exercise.type === 'sql'
       ? await runSqlCheck(code, verification, exercise.sqlSetup ?? '')
       : await runPythonCheck(code, verification, exercise.packages ?? []);
   } catch {
     return unexpectedRunReport(CHECK_UNAVAILABLE);
   }
+  // Mot-clé interdit : un test raté de plus, en tête, même si les autres passent.
+  const uses = exercise.type === 'python' ? forbiddenWordsUsed(code, exercise.forbidden ?? []) : [];
+  if (uses.length === 0) return report;
+  return {
+    ...report,
+    status: report.status === 'error' ? 'error' : 'failure',
+    validated: false,
+    tests: [
+      ...uses.map((use) => ({
+        ok: false,
+        label: `Mot-clé interdit : ${use.word} (ligne ${use.line})`,
+        detail: `Ce niveau se fait sans ${(exercise.forbidden ?? []).join(', ')}.`,
+      })),
+      ...report.tests,
+    ],
+  };
 }
+
+const LOCKED_LEVEL = unexpectedRunReport("Ce niveau s'ouvre une fois le niveau précédent réussi.");
 
 // ---------- Élève ----------
 
@@ -107,6 +133,7 @@ export async function checkChallenge(challengeId: string, exerciseId: string, co
 
   // L'enseignant essaie sans rien enregistrer ; un défi fermé reste faisable pour s'entraîner.
   const open = now < Date.parse(challenge.closes_at);
+  const below = previousLevel(exercises, exercise);
   if (auth.isElevated || !open) {
     const report = await runCheck(exercise, source, verification);
     return { report, recorded: false, expired: false, challengePassed: false, newAchievements: [] };
@@ -128,6 +155,9 @@ export async function checkChallenge(challengeId: string, exerciseId: string, co
   if (previous?.finished_at) {
     return { report: FINISHED_REPORT, recorded: false, expired: true, challengePassed: Boolean(previous.passed), newAchievements: [] };
   }
+  if (below && !(previous?.answers as Record<string, ChallengeAnswer> | null)?.[below.id]?.passed) {
+    return { report: LOCKED_LEVEL, recorded: false, expired: false, challengePassed: Boolean(previous?.passed), newAchievements: [] };
+  }
 
   // Chrono : compté depuis l'ouverture de la page ; à défaut (page ouverte sans démarrage), depuis ce premier essai.
   const startedAt = previous?.started_at ?? new Date(now).toISOString();
@@ -141,8 +171,10 @@ export async function checkChallenge(challengeId: string, exerciseId: string, co
   const answers = { ...((previous?.answers ?? {}) as Record<string, ChallengeAnswer>) };
   const before = answers[exerciseId];
   answers[exerciseId] = { code: source, passed: Boolean(before?.passed) || passed, attempts: (before?.attempts ?? 0) + 1 };
-  const challengePassed = allExercisesPassed(exercises.map((item) => item.id), answers);
+  // Seuls les niveaux 1 valident le défi ; un niveau bonus réussi rapporte un succès à part.
+  const challengePassed = allExercisesPassed(requiredExerciseIds(exercises), answers);
   const firstSuccess = challengePassed && !previous?.passed;
+  const firstBonus = Boolean(exercise.parent) && passed && !before?.passed;
 
   const { error } = await admin.from('challenge_submissions').upsert(
     {
@@ -164,6 +196,7 @@ export async function checkChallenge(challengeId: string, exerciseId: string, co
 
   let newAchievements: string[] = [];
   if (firstSuccess) newAchievements = await awardChallengeAchievements(admin, userId, auth.classe!);
+  if (firstBonus) newAchievements = [...newAchievements, ...(await awardBonusAchievements(admin, userId))];
   revalidatePath('/defi');
   return { report, recorded: true, expired: false, challengePassed, newAchievements };
 }
@@ -207,6 +240,34 @@ export async function finishChallenge(challengeId: string): Promise<Result> {
   return { ok: true };
 }
 
+/** Niveaux bonus réussis par l'élève, tous défis confondus ; enregistre les succès qui manquent. */
+async function awardBonusAchievements(admin: NonNullable<ReturnType<typeof createAdminClient>>, userId: string) {
+  const { data: rows } = await admin.from('challenge_submissions').select('answers, challenges(exercises)').eq('user_id', userId);
+  const total = (rows ?? []).reduce(
+    (sum, row: any) => sum + bonusLevelsPassed((row.challenges?.exercises ?? []) as EvaluationExercise[], row.answers ?? {}),
+    0,
+  );
+  return storeAchievements(admin, userId, earnedBonusAchievements(total));
+}
+
+/** Enregistre les succès du défi qui manquent encore à l'élève ; renvoie ceux qui sont nouveaux. */
+async function storeAchievements(admin: NonNullable<ReturnType<typeof createAdminClient>>, userId: string, earned: string[]) {
+  if (earned.length === 0) return [];
+  const { data: stored } = await admin.from('user_achievements').select('achievement_id').eq('user_id', userId).in('achievement_id', earned);
+  const owned = new Set((stored ?? []).map((row) => row.achievement_id));
+  const missing = earned.filter((id) => !owned.has(id));
+  if (missing.length === 0) return [];
+  const { CHALLENGE_ACHIEVEMENTS } = await import('@/lib/challenges');
+  await admin.from('user_achievements').upsert(
+    missing.map((id) => {
+      const item = CHALLENGE_ACHIEVEMENTS.find((achievement) => achievement.id === id)!;
+      return { user_id: userId, achievement_id: id, title: item.title, description: item.description, unlocked_at: new Date().toISOString() };
+    }),
+    { onConflict: 'user_id,achievement_id', ignoreDuplicates: true },
+  );
+  return missing;
+}
+
 /** Série de la classe recalculée après une réussite ; enregistre les succès qui manquent. */
 async function awardChallengeAchievements(admin: NonNullable<ReturnType<typeof createAdminClient>>, userId: string, classe: string) {
   const { data: rows } = await admin
@@ -224,21 +285,7 @@ async function awardChallengeAchievements(admin: NonNullable<ReturnType<typeof c
       mine: { passed: (row.challenge_submissions ?? []).some((sub: any) => sub.user_id === userId && sub.passed) } as MyChallenge['mine'],
     })),
   );
-  const earned = earnedChallengeAchievements(streak);
-  if (earned.length === 0) return [];
-  const { data: stored } = await admin.from('user_achievements').select('achievement_id').eq('user_id', userId).in('achievement_id', earned);
-  const owned = new Set((stored ?? []).map((row) => row.achievement_id));
-  const missing = earned.filter((id) => !owned.has(id));
-  if (missing.length === 0) return [];
-  const { CHALLENGE_ACHIEVEMENTS } = await import('@/lib/challenges');
-  await admin.from('user_achievements').upsert(
-    missing.map((id) => {
-      const item = CHALLENGE_ACHIEVEMENTS.find((achievement) => achievement.id === id)!;
-      return { user_id: userId, achievement_id: id, title: item.title, description: item.description, unlocked_at: new Date().toISOString() };
-    }),
-    { onConflict: 'user_id,achievement_id', ignoreDuplicates: true },
-  );
-  return missing;
+  return storeAchievements(admin, userId, earnedChallengeAchievements(streak));
 }
 
 // ---------- Enseignant ----------
@@ -278,7 +325,7 @@ export async function listChallenges(): Promise<ChallengeSummary[]> {
     closesAt: row.closes_at,
     timeLimitMinutes: row.time_limit_minutes ?? null,
     proctored: Boolean(row.proctored),
-    exerciseCount: Array.isArray(row.exercises) ? row.exercises.length : 0,
+    exerciseCount: Array.isArray(row.exercises) ? requiredExerciseIds(row.exercises).length : 0,
     submitted: row.challenge_submissions?.length ?? 0,
     passed: (row.challenge_submissions ?? []).filter((sub: any) => sub.passed).length,
     locked: (row.challenge_submissions ?? []).filter((sub: any) => sub.locked).length,
@@ -299,12 +346,14 @@ export type ChallengeInput = {
   proctored: boolean;
 };
 
-/** Lecture du défi : un à cinq exercices, chacun avec ses tests. */
+/** Lecture du défi : un à cinq exercices (niveaux bonus en plus), chacun avec ses tests. */
 function readChallenge(source: string) {
   const parsed = parseEvaluationSubject(source);
   const errors = [...parsed.errors];
+  const required = requiredExerciseIds(parsed.exercises).length;
   if (parsed.exercises.length === 0) errors.push('Un défi contient au moins un bloc <ExerciseSection>.');
-  if (parsed.exercises.length > MAX_EXERCISES) errors.push(`Un défi contient au plus ${MAX_EXERCISES} exercices.`);
+  if (required > MAX_EXERCISES) errors.push(`Un défi contient au plus ${MAX_EXERCISES} exercices, sans compter les niveaux bonus.`);
+  if (parsed.exercises.length > MAX_SECTIONS) errors.push(`Un défi contient au plus ${MAX_SECTIONS} blocs, niveaux compris.`);
   parsed.exercises.forEach((exercise, index) => {
     if (!parsed.grading[index]?.verification) errors.push(`« ${exercise.label} » a besoin de tests dans <Verification>.`);
   });
@@ -385,7 +434,7 @@ export type ChallengeDetail = {
     closesAt: string;
     timeLimitMinutes: number | null;
     proctored: boolean;
-    exercises: { id: string; label: string }[];
+    exercises: { id: string; label: string; parent?: string; level?: number }[];
   };
   rows: {
     studentId: string;
@@ -459,7 +508,11 @@ export async function getChallengeDetail(id: string): Promise<ChallengeDetail | 
       closesAt: challenge.closes_at,
       timeLimitMinutes: challenge.time_limit_minutes ?? null,
       proctored: Boolean(challenge.proctored),
-      exercises: ((challenge.exercises ?? []) as EvaluationExercise[]).map((item) => ({ id: item.id, label: item.label })),
+      exercises: ((challenge.exercises ?? []) as EvaluationExercise[]).map((item) => ({
+        id: item.id,
+        label: item.label,
+        ...(item.parent ? { parent: item.parent, level: item.level } : {}),
+      })),
     },
     rows,
   };

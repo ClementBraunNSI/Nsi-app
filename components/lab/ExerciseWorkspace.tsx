@@ -86,9 +86,11 @@ type WorkspaceProps = {
   lockdown?: boolean;
   /** Vérification propre à la page (défi du lundi, entraînement chronométré) ; par défaut, celle des exercices des fiches. */
   checker?: (code: string, typingTrace: unknown) => Promise<ExerciseCheckResult>;
+  /** Défi à niveaux : changer de niveau efface les résultats affichés, le code reste dans l'éditeur. */
+  resultsKey?: string;
 };
 
-export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted, initialCode, onCodeChange, lockdown = false, checker }: WorkspaceProps) {
+export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted, initialCode, onCodeChange, lockdown = false, checker, resultsKey }: WorkspaceProps) {
   const starter = exercise.starterCode ?? '';
   const [code, setCodeState] = useState(starter);
   // Le raccourci clavier peut partir avant le rendu qui suit la frappe : on lit toujours le dernier texte saisi.
@@ -332,6 +334,12 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
     setStatusLine(null);
     setTab('console');
   };
+
+  useEffect(() => {
+    if (resultsKey === undefined) return;
+    handleClear();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultsKey]);
 
   // Ctrl+Entrée exécute, Ctrl+Maj+Entrée vérifie, depuis Monaco comme depuis l'éditeur tactile.
   const shortcuts = useRef({ execute: handleExecute, test: handleTest, busy: running !== null });

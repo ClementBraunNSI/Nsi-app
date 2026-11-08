@@ -106,6 +106,8 @@ const ACHIEVEMENTS = {
   defi_serie_3: ['wink', 'flame'],
   defi_serie_5: ['think', 'stairs'],
   defi_serie_10: ['cheer', 'crown'],
+  defi_bonus: ['wink', 'levelup'],
+  defi_bonus_5: ['cheer', 'medals'],
 };
 
 const foxCache = new Map();

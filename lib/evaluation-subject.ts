@@ -2,6 +2,8 @@
  * Sujet d'évaluation écrit par l'enseignant, au même format que les fiches :
  * des blocs <ExerciseSection id="..." label="..." type="python|sql"> avec <Enonce>, <CodeDepart>,
  * <BaseSQL>, <Verification> (tests) et <Correction>.
+ * Attributs facultatifs : interdits="for, while" (mots-clés refusés à la vérification) ;
+ * niveau="2" suite="id" (niveau supérieur de l'exercice « id » : même éditeur, autre consigne, autres tests).
  * La partie « exercises » part chez l'élève ; « grading » (tests, correction) reste côté enseignant.
  */
 
@@ -13,6 +15,11 @@ export type EvaluationExercise = {
   starter: string;
   sqlSetup: string;
   packages: string[];
+  /** Mots-clés Python refusés par la vérification (for, while…). */
+  forbidden?: string[];
+  /** Niveau supérieur d'un exercice : identifiant du niveau 1 et rang du niveau (2, 3…). */
+  parent?: string;
+  level?: number;
 };
 
 export type EvaluationGrading = {
@@ -98,6 +105,29 @@ export function parseEvaluationSubject(source: string): ParsedSubject {
     const sqlSetup = type === "sql" ? block(raw, "BaseSQL") || sharedSql : "";
     if (type === "sql" && !sqlSetup) warnings.push(`« ${label} » : exercice SQL sans <BaseSQL>.`);
 
+    const forbidden = attr(attrs, "interdits")
+      .split(/[,\s]+/)
+      .map((word) => word.trim())
+      .filter(Boolean);
+    const badWord = forbidden.find((word) => !/^[A-Za-z_]\w*$/.test(word));
+    if (badWord) errors.push(`« ${label} » : « ${badWord} » n'est pas un mot-clé valide dans interdits.`);
+
+    // Niveau supérieur : il prolonge un exercice déjà écrit plus haut, dans le même éditeur.
+    const parent = attr(attrs, "suite");
+    let level: number | undefined;
+    if (parent) {
+      const base = exercises.find((item) => item.id === parent);
+      if (!base) errors.push(`« ${label} » : suite="${parent}" ne correspond à aucun exercice écrit plus haut.`);
+      else if (base.parent) errors.push(`« ${label} » : suite="${parent}" doit désigner le niveau 1, pas un autre niveau.`);
+      const levels = exercises.filter((item) => item.parent === parent).map((item) => item.level ?? 2);
+      level = Number(attr(attrs, "niveau")) || Math.max(1, ...levels) + 1;
+      if (level < 2) errors.push(`« ${label} » : un niveau supérieur commence à niveau="2".`);
+      if (levels.includes(level)) errors.push(`« ${label} » : le niveau ${level} de « ${parent} » existe déjà.`);
+      if (base && base.type !== type) errors.push(`« ${label} » : un niveau doit garder le type de son exercice (${base.type}).`);
+    } else if (attr(attrs, "niveau") && attr(attrs, "niveau") !== "1") {
+      errors.push(`« ${label} » : niveau="${attr(attrs, "niveau")}" demande aussi suite="identifiant du niveau 1".`);
+    }
+
     exercises.push({
       id,
       label,
@@ -106,6 +136,8 @@ export function parseEvaluationSubject(source: string): ParsedSubject {
       starter: block(raw, "CodeDepart"),
       sqlSetup,
       packages: attr(attrs, "packages").split(",").map((name) => name.trim()).filter(Boolean),
+      ...(forbidden.length ? { forbidden } : {}),
+      ...(parent ? { parent, level } : {}),
     });
     grading.push({ id, verification, correction: block(raw, "Correction") });
   });
