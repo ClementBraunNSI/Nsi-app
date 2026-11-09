@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, CalendarClock, Download, FileDown, Loader2, Lock, Play, Square, Wand2 } from "lucide-react";
+import { ArrowLeft, CalendarClock, Download, FileDown, Loader2, Lock, Play, ShieldCheck, Square, Wand2 } from "lucide-react";
 import {
   answersToGrade,
   deleteEvaluation,
@@ -103,6 +103,10 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
     submitted: board.rows.filter((row) => row.status === "rendue").length,
   };
   const serverNow = Date.parse(board.now);
+  // Copies rendues dans l'ordre du tableau : la relecture passe de l'une à l'autre.
+  const handedIn = board.rows.filter((row) => row.status === "rendue" && row.attemptId);
+  const reviewOrder = handedIn.map((row) => row.attemptId!);
+  const toValidate = handedIn.filter((row) => row.grade && !row.grade.final);
   const ready = board.subjects.length > 0 && evaluation.classes.length > 0;
   const notReadyReason = board.subjects.length === 0 ? "Ajouter d'abord un sujet" : evaluation.classes.length === 0 ? "Choisir d'abord une classe" : undefined;
   const plannedLater = Boolean(evaluation.scheduledAt && Date.parse(evaluation.scheduledAt) > serverNow);
@@ -153,6 +157,11 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
                 <Download size={15} aria-hidden /> Toutes les copies (.zip)
               </a>
             ) : null}
+            {board.rows.some((row) => row.status === "rendue") ? (
+              <a className="adm-eval-secondary" href={`/admin/evaluations/${evaluation.id}/export?format=notes`}>
+                <FileDown size={15} aria-hidden /> Notes (.csv)
+              </a>
+            ) : null}
           </div>
         }
       />
@@ -189,6 +198,16 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
             <span><b>{counts.started}</b> / {counts.total} commencées</span>
             <span className={counts.locked ? "is-alert" : ""}><Lock size={14} aria-hidden /> <b>{counts.locked}</b> verrouillée{counts.locked > 1 ? "s" : ""}</span>
             <span><b>{counts.submitted}</b> rendue{counts.submitted > 1 ? "s" : ""}</span>
+            {handedIn.length > 0 ? (
+              <span className={toValidate.length ? "is-alert" : ""}>
+                <ShieldCheck size={14} aria-hidden /> <b>{toValidate.length}</b> note{toValidate.length > 1 ? "s" : ""} à valider
+              </span>
+            ) : null}
+            {toValidate.length > 0 ? (
+              <button type="button" className="adm-eval-link" onClick={() => setOpenAttempt(toValidate[0].attemptId)}>
+                <ShieldCheck size={14} aria-hidden /> Relire les copies une à une
+              </button>
+            ) : null}
             {grading ? (
               <span><Loader2 size={14} className="animate-spin" aria-hidden /> Correction automatique {grading.done} / {grading.total}</span>
             ) : (
@@ -208,6 +227,7 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
                     <th>Sujet</th>
                     <th>Exercices écrits</th>
                     <th>Réussis</th>
+                    <th>Note</th>
                     <th>Incidents</th>
                     <th>Vu</th>
                     <th><span className="sr-only">Actions</span></th>
@@ -233,6 +253,19 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
                         <td>{row.subjectLabel ?? "—"}</td>
                         <td>{row.attemptId ? `${row.exercisesWritten} / ${row.exercisesTotal}` : "—"}</td>
                         <td>{row.graded ? `${row.passed} / ${row.exercisesTotal}` : row.toGrade ? "à corriger" : "—"}</td>
+                        <td>
+                          {row.grade && row.status === "rendue" ? (
+                            <span className={`adm-grade-cell ${row.grade.final ? "is-final" : ""}`}>
+                              <b>{String(row.grade.total).replace(".", ",")}</b>
+                              {row.grade.pendingReview ? <small className="is-review">{row.grade.pendingReview} à vérifier</small> : null}
+                              {!row.grade.pendingReview && row.grade.ungraded ? <small>en correction</small> : null}
+                              {!row.grade.pendingReview && !row.grade.ungraded && !row.grade.final ? <small>à valider</small> : null}
+                              {row.grade.final ? <small className="is-final">validée</small> : null}
+                            </span>
+                          ) : (
+                            "—"
+                          )}
+                        </td>
                         <td>
                           {row.incidents ? (
                             <span className={row.openIncidents ? "adm-eval-alert" : ""}>{row.incidents}{row.openIncidents ? ` (${row.openIncidents} en attente)` : ""}</span>
@@ -312,6 +345,8 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
           evaluationId={evaluation.id}
           onClose={() => setOpenAttempt(null)}
           onChange={refresh}
+          order={reviewOrder}
+          onNavigate={setOpenAttempt}
         />
       ) : null}
     </div>

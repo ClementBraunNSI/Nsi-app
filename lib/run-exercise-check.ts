@@ -24,11 +24,16 @@ const CHILD_SCRIPT = path.join(process.cwd(), 'lib', 'pyodide-check-child.cjs');
 
 const UNAVAILABLE = CHECK_UNAVAILABLE;
 
-function reportFromStdout(stdout: string): RunReport | null {
+/**
+ * `keepSources` : garde la ligne assert de chaque test. Réservé à la correction des évaluations, côté enseignant :
+ * un rapport qui part chez l'élève ne doit pas révéler les tests.
+ */
+function reportFromStdout(stdout: string, keepSources = false): RunReport | null {
   const text = stdout.trim();
   if (!text.startsWith('{')) return null;
   try {
-    return reportForClient(parsePythonCheckResult(text));
+    const report = parsePythonCheckResult(text);
+    return keepSources ? report : reportForClient(report);
   } catch {
     return null;
   }
@@ -166,16 +171,21 @@ function runPythonProcess(userCode: string, verification: string, packages: stri
   });
 }
 
-export async function runPythonCheck(userCode: string, verification: string, packages: string[] = []): Promise<RunReport> {
+export async function runPythonCheck(
+  userCode: string,
+  verification: string,
+  packages: string[] = [],
+  options: { keepSources?: boolean } = {},
+): Promise<RunReport> {
   const runner = await takeRunner();
   try {
     const stdout = await runPythonProcess(userCode, verification, packages, runner);
-    return reportFromStdout(stdout) ?? unexpectedRunReport(UNAVAILABLE);
+    return reportFromStdout(stdout, options.keepSources) ?? unexpectedRunReport(UNAVAILABLE);
   } catch (error) {
     const stdout = error && typeof error === 'object' && 'stdout' in error && typeof error.stdout === 'string'
       ? error.stdout
       : '';
-    return reportFromStdout(stdout) ?? unexpectedRunReport(UNAVAILABLE);
+    return reportFromStdout(stdout, options.keepSources) ?? unexpectedRunReport(UNAVAILABLE);
   } finally {
     // Le dossier temporaire part avec le processus (voir spawnRunner).
     if (runner.child.exitCode === null) runner.child.kill('SIGKILL');

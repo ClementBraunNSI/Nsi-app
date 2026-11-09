@@ -3,7 +3,8 @@
  * des blocs <ExerciseSection id="..." label="..." type="python|sql"> avec <Enonce>, <CodeDepart>,
  * <BaseSQL>, <Verification> (tests) et <Correction>.
  * Attributs facultatifs : interdits="for, while" (mots-clés refusés à la vérification) ;
- * niveau="2" suite="id" (niveau supérieur de l'exercice « id » : même éditeur, autre consigne, autres tests).
+ * niveau="2" suite="id" (niveau supérieur de l'exercice « id » : même éditeur, autre consigne, autres tests) ;
+ * points="4" (barème de l'exercice en évaluation ; à défaut, « (4 points) » dans le libellé).
  * La partie « exercises » part chez l'élève ; « grading » (tests, correction) reste côté enseignant.
  */
 
@@ -20,6 +21,8 @@ export type EvaluationExercise = {
   /** Niveau supérieur d'un exercice : identifiant du niveau 1 et rang du niveau (2, 3…). */
   parent?: string;
   level?: number;
+  /** Barème de l'exercice dans une évaluation. */
+  points?: number;
 };
 
 export type EvaluationGrading = {
@@ -128,6 +131,10 @@ export function parseEvaluationSubject(source: string): ParsedSubject {
       errors.push(`« ${label} » : niveau="${attr(attrs, "niveau")}" demande aussi suite="identifiant du niveau 1".`);
     }
 
+    const pointsText = attr(attrs, "points").replace(",", ".");
+    const points = pointsText ? Number(pointsText) : null;
+    if (points !== null && !(points > 0 && points <= 100)) errors.push(`« ${label} » : points="${attr(attrs, "points")}" doit être un nombre positif.`);
+
     exercises.push({
       id,
       label,
@@ -138,6 +145,7 @@ export function parseEvaluationSubject(source: string): ParsedSubject {
       packages: attr(attrs, "packages").split(",").map((name) => name.trim()).filter(Boolean),
       ...(forbidden.length ? { forbidden } : {}),
       ...(parent ? { parent, level } : {}),
+      ...(points !== null ? { points } : {}),
     });
     grading.push({ id, verification, correction: block(raw, "Correction") });
   });

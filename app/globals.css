@@ -6105,3 +6105,31 @@ button.home-ex.bug-card:hover { border-color: var(--accent); transform: translat
 .adm-eval-status.is-programmee { background: color-mix(in srgb, #7c3aed 14%, var(--surface)); color: #6d28d9; }
 .dark .adm-eval-status.is-programmee { color: #c4b5fd; }
 .adm-eval-info { display: flex; align-items: center; gap: 0.45rem; margin: 0; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); background: color-mix(in srgb, #7c3aed 10%, var(--surface)); color: var(--fg); font-size: 0.9rem; }
+
+/* ---------- Évaluations : note presque automatique ---------- */
+.adm-grade-total { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem; padding: 0.8rem 1rem; border-radius: var(--radius-sm); background: color-mix(in srgb, #f59e0b 14%, var(--surface)); }
+.adm-grade-total.is-final { background: color-mix(in srgb, #16a34a 14%, var(--surface)); }
+.adm-grade-total b { font-size: 1.5rem; color: var(--fg); }
+.adm-grade-total span { font-size: 0.88rem; color: var(--muted); }
+.adm-grade-box { display: grid; gap: 0.45rem; margin: 0.5rem 0; padding: 0.65rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
+.adm-grade-box.is-review { border-color: #f59e0b; background: color-mix(in srgb, #f59e0b 9%, var(--surface)); }
+.adm-grade-box.is-reviewed { border-color: color-mix(in srgb, #16a34a 50%, var(--border)); }
+.adm-grade-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; font-size: 0.88rem; color: var(--muted); }
+.adm-grade-line b { font-size: 1.05rem; color: var(--fg); }
+.adm-grade-tag { padding: 0.05rem 0.5rem; border-radius: 99px; background: var(--surface-2); font-size: 0.75rem; font-weight: 600; }
+.adm-grade-reasons { display: flex; align-items: center; gap: 0.35rem; margin: 0; font-size: 0.85rem; font-weight: 600; color: #b45309; }
+.dark .adm-grade-reasons { color: #fcd34d; }
+.adm-grade-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; }
+.adm-grade-actions input { width: 6.5rem; padding: 0.4rem 0.55rem; border: 1px solid var(--border); border-radius: 0.55rem; background: var(--bg); color: var(--fg); font: inherit; font-size: 0.88rem; }
+.adm-grade-cell { display: inline-grid; gap: 0.1rem; }
+.adm-grade-cell b { font-variant-numeric: tabular-nums; }
+.adm-grade-cell small { font-size: 0.72rem; color: var(--muted); }
+.adm-grade-cell small.is-review { color: #b45309; font-weight: 700; }
+.dark .adm-grade-cell small.is-review { color: #fcd34d; }
+.adm-copy-nav { display: inline-flex; align-items: center; gap: 0.25rem; margin-left: auto; font-size: 0.85rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.adm-grade-copy-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; width: 100%; }
+.adm-grade-box.is-pending { border-color: color-mix(in srgb, #3b82f6 40%, var(--border)); }
+.adm-grade-tag.is-todo { background: color-mix(in srgb, #3b82f6 14%, var(--surface)); color: #1d4ed8; }
+.dark .adm-grade-tag.is-todo { color: #93c5fd; }
+.adm-grade-cell small.is-final { color: #15803d; font-weight: 600; }
+.dark .adm-grade-cell small.is-final { color: #86efac; }
