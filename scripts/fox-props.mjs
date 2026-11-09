@@ -249,6 +249,20 @@ export const PROPS = {
     ${poly('474,320 462,312 358,428 370,438', GR)}${poly('468,316 462,312 358,428 364,432', '#94a3b8')}
     ${poly('436,414 470,446 462,454 428,422', Y)}${poly('384,414 350,446 358,454 392,422', Y)}
     ${poly('454,446 470,462 462,470 446,454', BRD)}${poly('366,446 350,462 358,470 374,454', BRD)}`,
+  // Coccinelle (le « bug » à signaler) : élytres en facettes, points noirs, tête, pattes et antennes.
+  ladybug: () => `${shadow(70)}
+    ${line('M366 392 L340 380 M364 418 L336 422 M372 442 L350 462 M454 392 L480 380 M456 418 L484 422 M448 442 L470 462', INK, 6)}
+    ${line('M396 338 Q386 308 368 300 M424 338 Q434 308 452 300', INK, 5)}
+    <circle cx="368" cy="300" r="7" fill="${INK}"/><circle cx="452" cy="300" r="7" fill="${INK}"/>
+    <circle cx="410" cy="356" r="26" fill="${INK}"/>
+    <circle cx="400" cy="350" r="6" fill="${CR}"/><circle cx="422" cy="350" r="6" fill="${CR}"/>
+    ${poly('410,364 362,382 352,420 366,456 410,470', R)}
+    ${poly('410,364 458,382 468,420 454,456 410,470', RD)}
+    ${poly('410,364 362,382 380,400', '#ef4444')}
+    ${line('M410 366 V468', INK, 4)}
+    <circle cx="384" cy="402" r="10" fill="${INK}"/><circle cx="436" cy="402" r="10" fill="${INK}"/>
+    <circle cx="378" cy="438" r="8" fill="${INK}"/><circle cx="442" cy="438" r="8" fill="${INK}"/>
+    <circle cx="410" cy="420" r="7" fill="${INK}"/>`,
   virus: () => {
     let spikes = '';
     for (let i = 0; i < 10; i += 1) {

@@ -43,17 +43,19 @@ export async function getAdminToday(): Promise<AdminTodayData | null> {
 }
 
 /** Pastilles du menu : réponses en attente et messages non lus. Deux comptes seulement, sans contenu. */
-export async function getAdminNavCounts(): Promise<{ corrections: number; messages: number }> {
+export async function getAdminNavCounts(): Promise<{ corrections: number; messages: number; bugs: number }> {
   const auth = await getAuthContext();
-  if (!auth.user || !auth.isElevated) return { corrections: 0, messages: 0 };
+  if (!auth.user || !auth.isElevated) return { corrections: 0, messages: 0, bugs: 0 };
   const supabase = await createClient();
-  const [pending, unread] = await Promise.all([
+  const [pending, unread, bugs] = await Promise.all([
     listPendingSubmissions(),
     supabase
       .from('messages')
       .select('id', { count: 'exact', head: true })
       .eq('recipient_id', auth.user.id)
       .is('read_at', null),
+    // Nouveaux signalements de bugs ; 0 tant que la table n'existe pas.
+    supabase.from('bug_reports').select('id', { count: 'exact', head: true }).eq('status', 'nouveau'),
   ]);
-  return { corrections: pending.length, messages: unread.count ?? 0 };
+  return { corrections: pending.length, messages: unread.count ?? 0, bugs: bugs.error ? 0 : bugs.count ?? 0 };
 }

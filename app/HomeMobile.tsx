@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { BugReportButton } from "@/components/bugs/BugReportButton";
 import Link from "next/link";
 import { ArrowRight, ChevronRight, Medal, NotebookPen, Search } from "lucide-react";
 import type { LandingPrivateCard } from "@/app/actions/coursePages";
@@ -293,6 +294,7 @@ export default function HomeMobile({ levels, dashboard, privateCard, search }: P
               </span>
             </Link>
           ))}
+          {dashboard ? <BugReportButton variant="mobile" /> : null}
         </div>
       </section>
 

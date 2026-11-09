@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Activity,
+  Bug,
   CalendarDays,
   ClipboardCheck,
   Code2,
@@ -18,7 +19,7 @@ import {
 import { getAdminNavCounts } from "@/app/actions/adminToday";
 import { isAbortError } from "@/lib/is-abort-error";
 
-export type AdminNavCounts = { corrections: number; messages: number };
+export type AdminNavCounts = { corrections: number; messages: number; bugs: number };
 
 type NavLink = { path: string; label: string; icon: ComponentType<{ size?: number; "aria-hidden"?: boolean }>; count?: keyof AdminNavCounts };
 
@@ -48,6 +49,10 @@ const GROUPS: { title: string | null; links: NavLink[] }[] = [
       { path: "/defis", label: "Défis", icon: Trophy },
     ],
   },
+  {
+    title: "Site",
+    links: [{ path: "/bugs", label: "Bugs signalés", icon: Bug, count: "bugs" }],
+  },
 ];
 
 /**
@@ -56,7 +61,7 @@ const GROUPS: { title: string | null; links: NavLink[] }[] = [
  */
 export function AdminNav({ base = "/admin", counts: fixedCounts }: { base?: string; counts?: AdminNavCounts }) {
   const path = usePathname();
-  const [counts, setCounts] = useState<AdminNavCounts>(fixedCounts ?? { corrections: 0, messages: 0 });
+  const [counts, setCounts] = useState<AdminNavCounts>(fixedCounts ?? { corrections: 0, messages: 0, bugs: 0 });
 
   // Relu à chaque changement de page : une correction faite ou un fil ouvert fait baisser la pastille.
   useEffect(() => {

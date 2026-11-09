@@ -13,6 +13,7 @@ import { AnimatedFox } from "@/components/home/AnimatedFox";
 import ColleagueTeaser from "@/components/ColleagueTeaser";
 import { GAME_NAME } from "@/app/foxtest/academy/meta";
 import HomeMobile from "./HomeMobile";
+import { BugReportButton } from "@/components/bugs/BugReportButton";
 
 export type HomeLevel = {
   folder: string;
@@ -415,6 +416,8 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                   <span className="home-ex-p">Cours et exercices en plus, triés par langage : le C pour commencer.</span>
                 </span>
               </Link>
+              {/* Élève connecté : signaler un bug, avec une capture d'écran. */}
+              {dashboard ? <BugReportButton variant="desktop" /> : null}
               {privateCard.show ? (
                 <div className="home-ex is-private">
                   <span className="home-ex-pic">

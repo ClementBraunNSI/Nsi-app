@@ -110,6 +110,11 @@ const ACHIEVEMENTS = {
   defi_bonus_5: ['cheer', 'medals'],
 };
 
+// Illustrations de pages et de boutons, écrites dans public/images.
+const PAGES = {
+  fox_bug: ['think', 'ladybug'],
+};
+
 const foxCache = new Map();
 async function foxLayer(name) {
   if (!foxCache.has(name)) {
@@ -143,3 +148,11 @@ const only = process.argv.slice(2);
 const wanted = (id) => only.length === 0 || only.includes(id);
 for (const [id, spec] of Object.entries(SHEETS)) if (wanted(id)) await render(path.join(BADGES, `${id}.png`), spec);
 for (const [id, spec] of Object.entries(ACHIEVEMENTS)) if (wanted(id)) await render(path.join(SUCCES, `${id}.png`), spec);
+// Illustrations de boutons : rognées au plus près, pour remplir la vignette comme les autres renards.
+for (const [id, spec] of Object.entries(PAGES)) {
+  if (!wanted(id)) continue;
+  const out = path.join(ROOT, 'public', 'images', `${id}.png`);
+  await render(out, spec);
+  const trimmed = await sharp(out).trim().extend({ top: 8, bottom: 8, left: 8, right: 8, background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+  fs.writeFileSync(out, trimmed);
+}
