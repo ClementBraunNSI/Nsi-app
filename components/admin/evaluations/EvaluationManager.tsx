@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Download, FileDown, Loader2, Lock, Play, Square, Wand2 } from "lucide-react";
+import { ArrowLeft, CalendarClock, Download, FileDown, Loader2, Lock, Play, Square, Wand2 } from "lucide-react";
 import {
   answersToGrade,
   deleteEvaluation,
@@ -13,13 +13,14 @@ import {
   updateEvaluation,
   type BoardRow,
   type EvaluationBoard,
+  type EvaluationStatus,
 } from "@/app/actions/evaluations";
 import { INCIDENT_LABELS } from "@/lib/evaluation-guard";
 import { PageHeader } from "@/components/ui";
 import EvaluationForm from "./EvaluationForm";
 import SubjectsEditor from "./SubjectsEditor";
 import AttemptPanel from "./AttemptPanel";
-import { STATUS_LABELS } from "./EvaluationsAdmin";
+import { scheduleLabel, STATUS_LABELS } from "./EvaluationsAdmin";
 
 type Tab = "suivi" | "sujets" | "reglages";
 
@@ -55,11 +56,12 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
   // Suivi en direct pendant l'évaluation.
   useEffect(() => {
     if (tab !== "suivi") return;
-    const timer = window.setInterval(refresh, evaluation.status === "ouverte" ? 5000 : 20000);
+    // Programmée : rafraîchir souvent, le tableau ouvre aussi l'évaluation à l'heure prévue.
+    const timer = window.setInterval(refresh, evaluation.status === "ouverte" ? 5000 : evaluation.status === "programmee" ? 15000 : 20000);
     return () => window.clearInterval(timer);
   }, [evaluation.status, refresh, tab]);
 
-  const changeStatus = async (status: "brouillon" | "ouverte" | "fermee") => {
+  const changeStatus = async (status: EvaluationStatus) => {
     if (status === "fermee" && !window.confirm("Fermer l'évaluation ? Les copies encore ouvertes seront rendues telles quelles.")) return;
     setBusy(true);
     setMessage(null);
@@ -101,6 +103,9 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
     submitted: board.rows.filter((row) => row.status === "rendue").length,
   };
   const serverNow = Date.parse(board.now);
+  const ready = board.subjects.length > 0 && evaluation.classes.length > 0;
+  const notReadyReason = board.subjects.length === 0 ? "Ajouter d'abord un sujet" : evaluation.classes.length === 0 ? "Choisir d'abord une classe" : undefined;
+  const plannedLater = Boolean(evaluation.scheduledAt && Date.parse(evaluation.scheduledAt) > serverNow);
 
   return (
     <div className="space-y-6">
@@ -115,18 +120,28 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
         title={evaluation.title}
         description={`${evaluation.classes.join(", ") || "Aucune classe"} · ${board.subjects.length} sujet${board.subjects.length > 1 ? "s" : ""} · ${
           evaluation.durationMinutes ? `${evaluation.durationMinutes} min par élève` : "sans limite de temps"
-        }`}
+        }${evaluation.scheduledAt ? ` · passage le ${scheduleLabel(evaluation.scheduledAt)}` : ""}`}
         actions={
           <div className="adm-eval-actions">
+            {evaluation.status === "brouillon" && plannedLater ? (
+              <button type="button" className="adm-eval-primary" disabled={busy || !ready} title={notReadyReason} onClick={() => changeStatus("programmee")}>
+                <CalendarClock size={15} aria-hidden /> Programmer : {scheduleLabel(evaluation.scheduledAt!)}
+              </button>
+            ) : null}
+            {evaluation.status === "programmee" ? (
+              <button type="button" className="adm-eval-secondary" disabled={busy} onClick={() => changeStatus("brouillon")}>
+                Annuler la programmation
+              </button>
+            ) : null}
             {evaluation.status !== "ouverte" ? (
               <button
                 type="button"
-                className="adm-eval-primary"
-                disabled={busy || board.subjects.length === 0 || evaluation.classes.length === 0}
-                title={board.subjects.length === 0 ? "Ajouter d'abord un sujet" : evaluation.classes.length === 0 ? "Choisir d'abord une classe" : undefined}
+                className={evaluation.status === "brouillon" && plannedLater ? "adm-eval-secondary" : "adm-eval-primary"}
+                disabled={busy || !ready}
+                title={notReadyReason}
                 onClick={() => changeStatus("ouverte")}
               >
-                <Play size={15} aria-hidden /> {evaluation.status === "fermee" ? "Rouvrir" : "Ouvrir aux élèves"}
+                <Play size={15} aria-hidden /> {evaluation.status === "fermee" ? "Rouvrir" : plannedLater || evaluation.status === "programmee" ? "Ouvrir maintenant" : "Ouvrir aux élèves"}
               </button>
             ) : (
               <button type="button" className="adm-eval-danger" disabled={busy} onClick={() => changeStatus("fermee")}>
@@ -142,7 +157,20 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
         }
       />
       {board.subjects.length === 0 && evaluation.status === "brouillon" ? (
-        <p className="adm-eval-warning">Prochaine étape : ajouter au moins un sujet dans l&apos;onglet « Sujets », puis ouvrir l&apos;évaluation aux élèves.</p>
+        <p className="adm-eval-warning">
+          Prochaine étape : ajouter au moins un sujet dans l&apos;onglet « Sujets », puis {plannedLater ? "programmer" : "ouvrir"} l&apos;évaluation.
+        </p>
+      ) : null}
+      {board.subjects.length > 0 && evaluation.status === "brouillon" && plannedLater ? (
+        <p className="adm-eval-warning">
+          Encore en brouillon : cliquer sur « Programmer » pour que l&apos;évaluation s&apos;ouvre toute seule le {scheduleLabel(evaluation.scheduledAt!)}.
+        </p>
+      ) : null}
+      {evaluation.status === "programmee" && evaluation.scheduledAt ? (
+        <p className="adm-eval-info">
+          <CalendarClock size={15} aria-hidden /> Programmée : invisible des élèves jusqu&apos;au {scheduleLabel(evaluation.scheduledAt)}, puis ouverte automatiquement aux classes{" "}
+          {evaluation.classes.join(", ")}.
+        </p>
       ) : null}
       {message ? <p className="adm-eval-error">{message}</p> : null}
 
@@ -237,7 +265,14 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
         <section className="adm-eval-panel space-y-6">
           <EvaluationForm
             classes={classes}
-            initial={{ title: evaluation.title, description: evaluation.description, classes: evaluation.classes, durationMinutes: evaluation.durationMinutes }}
+            initial={{
+              title: evaluation.title,
+              description: evaluation.description,
+              classes: evaluation.classes,
+              durationMinutes: evaluation.durationMinutes,
+              scheduledAt: evaluation.scheduledAt,
+            }}
+            requireSchedule={evaluation.status === "programmee"}
             busy={busy}
             submitLabel="Enregistrer"
             onSubmit={async (values) => {

@@ -42,8 +42,14 @@ export type MyEvaluation = {
   submittedAt: string | null;
 };
 
+/** Évaluations programmées dont l'heure est arrivée : elles passent « ouvertes » (sans effet si rien n'est dû). */
+async function openDueEvaluations(supabase: Awaited<ReturnType<typeof createClient>>) {
+  await supabase.rpc('eval_open_due');
+}
+
 export async function listMyEvaluations(): Promise<MyEvaluation[]> {
   const supabase = await createClient();
+  await openDueEvaluations(supabase);
   const { data } = await supabase.rpc('eval_list_mine');
   return (data ?? []).map((row: any) => ({
     id: row.id,
@@ -60,6 +66,7 @@ export async function listMyEvaluations(): Promise<MyEvaluation[]> {
 
 export async function startEvaluation(evaluationId: string): Promise<Result<{ attemptId: string }>> {
   const supabase = await createClient();
+  await openDueEvaluations(supabase);
   const { data, error } = await supabase.rpc('eval_start', { p_evaluation: evaluationId });
   if (error || !data) return fail(messageOf(error, "L'évaluation n'a pas pu commencer."));
   revalidatePath(`/evaluations/${evaluationId}`);
@@ -136,7 +143,11 @@ export type EvaluationInput = {
   description: string;
   classes: string[];
   durationMinutes: number | null;
+  /** Date et heure de passage (ISO), choisies par l'enseignant à l'heure de Paris. */
+  scheduledAt: string | null;
 };
+
+export type EvaluationStatus = 'brouillon' | 'programmee' | 'ouverte' | 'fermee';
 
 function cleanInput(input: EvaluationInput) {
   const duration = input.durationMinutes ? Math.round(Number(input.durationMinutes)) : null;
@@ -145,6 +156,7 @@ function cleanInput(input: EvaluationInput) {
     description: String(input.description || '').trim().slice(0, 4000),
     classes: [...new Set((input.classes || []).map((value) => String(value).trim()).filter(Boolean))],
     duration_minutes: duration && duration >= 5 && duration <= 600 ? duration : null,
+    scheduled_at: input.scheduledAt && !Number.isNaN(Date.parse(input.scheduledAt)) ? new Date(input.scheduledAt).toISOString() : null,
   };
 }
 
@@ -158,9 +170,10 @@ export async function listClasses(): Promise<string[]> {
 export type EvaluationSummary = {
   id: string;
   title: string;
-  status: 'brouillon' | 'ouverte' | 'fermee';
+  status: EvaluationStatus;
   classes: string[];
   durationMinutes: number | null;
+  scheduledAt: string | null;
   createdAt: string;
   subjects: number;
   attempts: number;
@@ -171,9 +184,10 @@ export type EvaluationSummary = {
 export async function listEvaluations(): Promise<EvaluationSummary[]> {
   const ctx = await teacher();
   if (!ctx) return [];
+  await openDueEvaluations(ctx.supabase);
   const { data } = await ctx.supabase
     .from('evaluations')
-    .select('id, title, status, classes, duration_minutes, created_at, evaluation_subjects(id), evaluation_attempts(status, locked)')
+    .select('id, title, status, classes, duration_minutes, scheduled_at, created_at, evaluation_subjects(id), evaluation_attempts(status, locked)')
     .order('created_at', { ascending: false });
   return (data ?? []).map((row: any) => ({
     id: row.id,
@@ -181,6 +195,7 @@ export async function listEvaluations(): Promise<EvaluationSummary[]> {
     status: row.status,
     classes: row.classes ?? [],
     durationMinutes: row.duration_minutes,
+    scheduledAt: row.scheduled_at ?? null,
     createdAt: row.created_at,
     subjects: row.evaluation_subjects?.length ?? 0,
     attempts: row.evaluation_attempts?.length ?? 0,
@@ -194,6 +209,7 @@ export async function createEvaluation(input: EvaluationInput): Promise<Result<{
   if (!ctx) return fail(NOT_ALLOWED);
   const values = cleanInput(input);
   if (!values.title) return fail('Le titre est obligatoire.');
+  if (!values.scheduled_at) return fail("Choisir la date et l'heure de passage.");
   const { data, error } = await ctx.supabase
     .from('evaluations')
     .insert({ ...values, created_by: ctx.auth.user!.id })
@@ -215,16 +231,22 @@ export async function updateEvaluation(id: string, input: EvaluationInput): Prom
   return { ok: true };
 }
 
-export async function setEvaluationStatus(id: string, status: 'brouillon' | 'ouverte' | 'fermee'): Promise<Result> {
+export async function setEvaluationStatus(id: string, status: EvaluationStatus): Promise<Result> {
   const ctx = await teacher();
   if (!ctx) return fail(NOT_ALLOWED);
-  if (status === 'ouverte') {
+  if (status === 'programmee') {
+    const { data: planned } = await ctx.supabase.from('evaluations').select('scheduled_at').eq('id', id).single();
+    if (!planned?.scheduled_at) return fail("Choisir la date et l'heure de passage dans les réglages.");
+    // Heure déjà passée : l'évaluation s'ouvre tout de suite.
+    if (Date.parse(planned.scheduled_at) <= Date.now()) status = 'ouverte';
+  }
+  if (status === 'ouverte' || status === 'programmee') {
     const { data: subjects } = await ctx.supabase.from('evaluation_subjects').select('id, exercises').eq('evaluation_id', id);
     if (!(subjects ?? []).some((subject: any) => Array.isArray(subject.exercises) && subject.exercises.length > 0)) {
-      return fail("Ajouter au moins un sujet avant d'ouvrir l'évaluation.");
+      return fail("Ajouter au moins un sujet avant d'ouvrir ou de programmer l'évaluation.");
     }
     const { data: evaluation } = await ctx.supabase.from('evaluations').select('classes').eq('id', id).single();
-    if (!evaluation?.classes?.length) return fail("Choisir au moins une classe avant d'ouvrir l'évaluation.");
+    if (!evaluation?.classes?.length) return fail("Choisir au moins une classe avant d'ouvrir ou de programmer l'évaluation.");
   }
   const now = new Date().toISOString();
   const patch = status === 'ouverte' ? { status, opened_at: now, closed_at: null } : status === 'fermee' ? { status, closed_at: now } : { status };
@@ -326,9 +348,10 @@ export type EvaluationBoard = {
     id: string;
     title: string;
     description: string;
-    status: 'brouillon' | 'ouverte' | 'fermee';
+    status: EvaluationStatus;
     classes: string[];
     durationMinutes: number | null;
+    scheduledAt: string | null;
   };
   subjects: { id: string; label: string; source: string; exercises: EvaluationExercise[]; grading: EvaluationGrading[]; attempts: number }[];
   rows: BoardRow[];
@@ -339,9 +362,11 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
   const ctx = await teacher();
   if (!ctx) return null;
   const { supabase } = ctx;
+  // Le tableau de suivi se recharge tout seul : il suffit à ouvrir l'évaluation à l'heure prévue.
+  await openDueEvaluations(supabase);
   const { data: evaluation } = await supabase
     .from('evaluations')
-    .select('id, title, description, status, classes, duration_minutes')
+    .select('id, title, description, status, classes, duration_minutes, scheduled_at')
     .eq('id', id)
     .maybeSingle();
   if (!evaluation) return null;
@@ -418,6 +443,7 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
       status: evaluation.status,
       classes: evaluation.classes ?? [],
       durationMinutes: evaluation.duration_minutes,
+      scheduledAt: evaluation.scheduled_at ?? null,
     },
     subjects: (subjects ?? []).map((subject: any) => ({
       id: subject.id,

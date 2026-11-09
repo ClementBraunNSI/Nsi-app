@@ -6100,3 +6100,8 @@ button.home-ex.bug-card:hover { border-color: var(--accent); transform: translat
 .bug-note span { font-size: 0.78rem; font-weight: 600; color: var(--muted); }
 .bug-note textarea { width: 100%; padding: 0.5rem 0.65rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--fg); font: inherit; font-size: 0.88rem; resize: vertical; }
 .bug-item-actions { display: flex; justify-content: flex-end; }
+
+/* ---------- Évaluations programmées ---------- */
+.adm-eval-status.is-programmee { background: color-mix(in srgb, #7c3aed 14%, var(--surface)); color: #6d28d9; }
+.dark .adm-eval-status.is-programmee { color: #c4b5fd; }
+.adm-eval-info { display: flex; align-items: center; gap: 0.45rem; margin: 0; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); background: color-mix(in srgb, #7c3aed 10%, var(--surface)); color: var(--fg); font-size: 0.9rem; }

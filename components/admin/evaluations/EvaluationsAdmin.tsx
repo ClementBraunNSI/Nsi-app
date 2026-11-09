@@ -9,11 +9,19 @@ import EvaluationForm, { type EvaluationFormValues } from "./EvaluationForm";
 
 export const STATUS_LABELS: Record<EvaluationSummary["status"], string> = {
   brouillon: "Brouillon",
+  programmee: "Programmée",
   ouverte: "Ouverte",
   fermee: "Fermée",
 };
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", { dateStyle: "short", timeZone: "Europe/Paris" });
+/** « mar. 10 nov. à 09:00 », à l'heure de Paris. */
+export function scheduleLabel(iso: string) {
+  const date = new Date(iso);
+  const day = new Intl.DateTimeFormat("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "Europe/Paris" }).format(date);
+  const clock = new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "Europe/Paris" }).format(date);
+  return `${day} à ${clock}`;
+}
 
 export default function EvaluationsAdmin({ evaluations, classes, startCreating = false }: { evaluations: EvaluationSummary[]; classes: string[]; startCreating?: boolean }) {
   const router = useRouter();
@@ -38,7 +46,7 @@ export default function EvaluationsAdmin({ evaluations, classes, startCreating =
       {creating ? (
         <section className="adm-eval-panel">
           <h2>Nouvelle évaluation</h2>
-          <EvaluationForm classes={classes} busy={busy} submitLabel="Créer et ajouter les sujets" onSubmit={create} onCancel={() => setCreating(false)} />
+          <EvaluationForm classes={classes} busy={busy} submitLabel="Créer et ajouter les sujets" onSubmit={create} onCancel={() => setCreating(false)} requireSchedule />
           {error ? <p className="adm-eval-error">{error}</p> : null}
         </section>
       ) : (
@@ -59,7 +67,8 @@ export default function EvaluationsAdmin({ evaluations, classes, startCreating =
                   <b>{evaluation.title}</b>
                   <small>
                     {evaluation.classes.join(", ") || "Aucune classe"} · {evaluation.subjects} sujet{evaluation.subjects > 1 ? "s" : ""} ·{" "}
-                    {evaluation.durationMinutes ? `${evaluation.durationMinutes} min` : "sans limite"} · créée le {dateFormat.format(new Date(evaluation.createdAt))}
+                    {evaluation.durationMinutes ? `${evaluation.durationMinutes} min` : "sans limite"} ·{" "}
+                    {evaluation.scheduledAt ? `passage le ${scheduleLabel(evaluation.scheduledAt)}` : `créée le ${dateFormat.format(new Date(evaluation.createdAt))}`}
                   </small>
                 </span>
                 <span className="adm-eval-counts">
