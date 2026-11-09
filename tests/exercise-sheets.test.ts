@@ -28,6 +28,9 @@ const SHEETS = [
   "particuliers/anatole/exercices-revision-poo.md",
 ];
 
+/** Fiches de révision : trois exercices par niveau, sans mini-projet ; mêmes règles pour les indices et les tests. */
+const REVISION_SHEETS = ["2/python_exercices_revision_types_fonctions.md"];
+
 const LEVELS = ["Introduction", "Facile", "Moyen", "Difficile", "Expert"];
 
 type Section = {
@@ -123,7 +126,8 @@ describe("reworked exercise sheets", () => {
   // SHEET=boucles npx vitest run tests/exercise-sheets.test.ts : une seule fiche, le temps de l'écrire.
   const only = process.env.SHEET;
   const sheets = only ? SHEETS.filter((sheet) => sheet.includes(only)) : SHEETS;
-  const all = sheets.flatMap(sectionsOf);
+  const revisions = only ? REVISION_SHEETS.filter((sheet) => sheet.includes(only)) : REVISION_SHEETS;
+  const all = [...sheets, ...revisions].flatMap(sectionsOf);
 
   it.each(sheets)("%s has 4 exercises or more on each of the 5 levels, and mini-projects", (sheet) => {
     const sections = all.filter((section) => section.sheet === sheet);
@@ -132,6 +136,14 @@ describe("reworked exercise sheets", () => {
     }
     expect(sections.filter((section) => section.level === "Mini-projet").length, `${sheet} Mini-projet`).toBeGreaterThanOrEqual(1);
     expect(sections.every((section) => [...LEVELS, "Mini-projet"].includes(section.level)), `${sheet} niveau inconnu`).toBe(true);
+  });
+
+  it.each(revisions)("%s has exactly 3 exercises on each of the 5 levels", (sheet) => {
+    const sections = all.filter((section) => section.sheet === sheet);
+    for (const level of LEVELS) {
+      expect(sections.filter((section) => section.level === level).length, `${sheet} ${level}`).toBe(3);
+    }
+    expect(sections).toHaveLength(15);
   });
 
   it("gives every exercise hints that end with pseudo-code, and no correction in the énoncé", () => {
