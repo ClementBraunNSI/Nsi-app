@@ -6,6 +6,8 @@ export type StatementParts = {
   exemples?: string;
   /** <Indices> : indices révélés un par un, le dernier est le pseudo-code. */
   hints?: string[];
+  /** <PostIt> : pense-bête de syntaxe affiché à côté de l'énoncé. */
+  postIts?: string[];
 };
 
 type SectionKind = 'consignes' | 'indice' | 'exemples' | 'correction';
@@ -97,9 +99,21 @@ export function extractHints(markdown: string): { rest: string; hints: string[] 
   return { rest, hints };
 }
 
+/** Sort les blocs <PostIt> de l'énoncé (pense-bête de syntaxe), chacun en Markdown. */
+export function extractPostIts(markdown: string): { rest: string; postIts: string[] } {
+  const postIts: string[] = [];
+  const rest = (markdown || '').replace(/<PostIt\b[^>]*>([\s\S]*?)<\/PostIt>/g, (_, block: string) => {
+    const text = stripSiteComponents(dedentBlock(block));
+    if (text) postIts.push(text);
+    return '';
+  });
+  return { rest, postIts };
+}
+
 /** Split an énoncé into the blocks the sheet actually wrote. Correction and hidden solutions are dropped. */
 export function splitStatement(content: string, label = ''): StatementParts {
-  const { rest, hints } = extractHints(stripHiddenExerciseBlocks(content));
+  const { rest: withoutPostIts, postIts } = extractPostIts(stripHiddenExerciseBlocks(content));
+  const { rest, hints } = extractHints(withoutPostIts);
   const source = stripSiteComponents(rest);
   const buckets: Record<'enonce' | 'consignes' | 'indice' | 'exemples', string[]> = {
     enonce: [],
@@ -141,5 +155,6 @@ export function splitStatement(content: string, label = ''): StatementParts {
     indiceTitle: indice ? indiceTitle || 'Indice' : undefined,
     exemples: pack(buckets.exemples),
     hints: hints.length ? hints : undefined,
+    postIts: postIts.length ? postIts : undefined,
   };
 }

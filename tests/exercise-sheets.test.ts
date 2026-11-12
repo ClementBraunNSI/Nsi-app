@@ -4,7 +4,7 @@ import path from "path";
 import matter from "gray-matter";
 import { everyTestPassed } from "../lib/python-check";
 import { runPythonCheck } from "../lib/run-exercise-check";
-import { extractHints, splitStatement, stripHiddenExerciseBlocks } from "../lib/exercise-statement";
+import { extractHints, extractPostIts, splitStatement, stripHiddenExerciseBlocks } from "../lib/exercise-statement";
 
 /** Fiches d'exercices refondues : niveaux, indices progressifs et corrections vérifiées. */
 const SHEETS = [
@@ -32,6 +32,14 @@ const SHEETS = [
 const REVISION_SHEETS = ["2/python_exercices_revision_types_fonctions.md"];
 
 const LEVELS = ["Introduction", "Facile", "Moyen", "Difficile", "Expert"];
+/** Niveau facultatif, avant Introduction : gestes de base guidés, avec un pense-bête <PostIt>. */
+const FIRST_STEPS = "Premiers pas";
+const FIRST_STEPS_SHEETS = ["2/python_exercices_listes.md"];
+
+/** Fiche de révision par thème (« 2.3 [Conditions] - … ») : cinq exercices par thème, un post-it de cours chacun. */
+const THEME_SHEETS: Record<string, string[]> = {
+  "2/python_exercices_revision_bases.md": ["Variables", "Conditions", "Boucles", "Fonctions"],
+};
 
 type Section = {
   sheet: string;
@@ -120,6 +128,12 @@ describe("hints in an exercise statement", () => {
     expect(parts.hints).toEqual(["Penser à `range`.", "```text\nPOUR i ALLANT DE 1 À n\n```"]);
     expect(parts.enonce).toBe("Écrire le programme.");
   });
+
+  it("takes the <PostIt> reminder out of the énoncé for the editor", () => {
+    const parts = splitStatement(["Afficher la liste.", "", "<PostIt>", "", "- `print(liste)` : toute la liste", "", "</PostIt>", ""].join("\n"), "Exercice");
+    expect(parts.postIts).toEqual(["- `print(liste)` : toute la liste"]);
+    expect(parts.enonce).toBe("Afficher la liste.");
+  });
 });
 
 describe("reworked exercise sheets", () => {
@@ -127,7 +141,18 @@ describe("reworked exercise sheets", () => {
   const only = process.env.SHEET;
   const sheets = only ? SHEETS.filter((sheet) => sheet.includes(only)) : SHEETS;
   const revisions = only ? REVISION_SHEETS.filter((sheet) => sheet.includes(only)) : REVISION_SHEETS;
-  const all = [...sheets, ...revisions].flatMap(sectionsOf);
+  const themed = Object.keys(THEME_SHEETS).filter((sheet) => !only || sheet.includes(only));
+  const all = [...sheets, ...revisions, ...themed].flatMap(sectionsOf);
+
+  it.each(themed)("%s goes through its themes in order, 5 exercises each, each with a course post-it", (sheet) => {
+    const sections = all.filter((section) => section.sheet === sheet);
+    const themes = THEME_SHEETS[sheet];
+    expect(sections.map((section) => section.level)).toEqual(themes.flatMap((theme) => Array(5).fill(theme)));
+    sections.forEach((section, index) => {
+      expect(section.label, section.id).toMatch(new RegExp(`^${Math.floor(index / 5) + 1}\\.${(index % 5) + 1} \\[`));
+      expect(extractPostIts(section.enonce).postIts, section.id).toHaveLength(1);
+    });
+  });
 
   it.each(sheets)("%s has 4 exercises or more on each of the 5 levels, and mini-projects", (sheet) => {
     const sections = all.filter((section) => section.sheet === sheet);
@@ -135,7 +160,18 @@ describe("reworked exercise sheets", () => {
       expect(sections.filter((section) => section.level === level).length, `${sheet} ${level}`).toBeGreaterThanOrEqual(4);
     }
     expect(sections.filter((section) => section.level === "Mini-projet").length, `${sheet} Mini-projet`).toBeGreaterThanOrEqual(1);
-    expect(sections.every((section) => [...LEVELS, "Mini-projet"].includes(section.level)), `${sheet} niveau inconnu`).toBe(true);
+    expect(sections.every((section) => [FIRST_STEPS, ...LEVELS, "Mini-projet"].includes(section.level)), `${sheet} niveau inconnu`).toBe(true);
+    const order = sections.map((section) => [FIRST_STEPS, ...LEVELS, "Mini-projet"].indexOf(section.level));
+    expect(order, `${sheet} : niveaux dans l'ordre`).toEqual([...order].sort((a, b) => a - b));
+  });
+
+  it.each(FIRST_STEPS_SHEETS.filter((sheet) => sheets.includes(sheet)))("%s starts with guided first steps, each with a syntax post-it", (sheet) => {
+    const firstSteps = all.filter((section) => section.sheet === sheet && section.level === FIRST_STEPS);
+    expect(firstSteps.length).toBeGreaterThanOrEqual(5);
+    for (const section of firstSteps) {
+      expect(extractPostIts(section.enonce).postIts, section.id).toHaveLength(1);
+      expect(section.id, section.id).toMatch(/-0-\d+$/);
+    }
   });
 
   it.each(revisions)("%s has exactly 3 exercises on each of the 5 levels", (sheet) => {

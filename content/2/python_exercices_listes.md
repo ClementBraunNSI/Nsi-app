@@ -11,11 +11,616 @@ prerequisites:
 audience: public
 ---
 
-Les exercices vont de **Introduction** à **Expert**, puis viennent les **mini-projets**, pour qui avance vite.
+Les **premiers pas** reprennent les gestes de base sur une liste (afficher, parcourir, ajouter, modifier, retirer), avec un pense-bête de syntaxe à côté de chaque énoncé. Les exercices vont ensuite de **Introduction** à **Expert**, puis viennent les **mini-projets**, pour qui avance vite.
 Chaque exercice propose des indices à ouvrir un par un : le dernier donne le pseudo-code, qui reste à traduire en Python.
 Les noms de variables et de fonctions demandés servent aux tests du bouton **Vérifier** : les garder tels quels.
 
 <ExerciseTabs courseId="les-listes-python" courseTitle="Les listes">
+
+<ExerciseSection id="1nsi-listes-0-1" label="0.1 [Premiers pas] - Lire des valeurs" type="python">
+<Enonce>
+### Lire des valeurs
+
+La liste `fruits` est déjà écrite dans l'éditeur :
+
+```python
+fruits = ["pomme", "kiwi", "poire", "mangue"]
+```
+
+Afficher, une par ligne : la liste entière, sa première valeur, sa dernière valeur, puis le nombre de valeurs qu'elle contient.
+
+Affichage attendu :
+
+```
+['pomme', 'kiwi', 'poire', 'mangue']
+pomme
+mangue
+4
+```
+
+<PostIt>
+
+- `print(liste)` : affiche toute la liste
+- `liste[0]` : la première valeur (les indices commencent à 0)
+- `liste[1]` : la deuxième valeur
+- `liste[-1]` : la dernière valeur
+- `len(liste)` : le nombre de valeurs
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Chaque ligne affichée correspond à un `print(...)` : il en faut quatre.
+
+</Indice>
+<Indice>
+
+La dernière valeur s'obtient avec `fruits[-1]`, sans compter les éléments à la main.
+
+</Indice>
+<Indice>
+
+```text
+AFFICHER fruits
+AFFICHER fruits[0]
+AFFICHER fruits[-1]
+AFFICHER longueur(fruits)
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+fruits = ["pomme", "kiwi", "poire", "mangue"]
+print(fruits)
+print(fruits[0])
+print(fruits[-1])
+print(len(fruits))
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+fruits = ["pomme", "kiwi", "poire", "mangue"]
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+lignes = SORTIE.strip().splitlines()
+assert len(lignes) == 4, "Quatre lignes affichées : la liste, la première valeur, la dernière, le nombre de valeurs."
+lignes = lignes + [""] * 4
+assert lignes[0] == "['pomme', 'kiwi', 'poire', 'mangue']", "Ligne 1 : la liste entière, avec print(fruits)."
+assert lignes[1] == "pomme", "Ligne 2 : la première valeur, d'indice 0."
+assert lignes[2] == "mangue", "Ligne 3 : la dernière valeur, d'indice -1."
+assert lignes[3] == "4", "Ligne 4 : le nombre de valeurs."
+assert "len(" in PROGRAMME, "Compter les valeurs avec len plutôt qu'écrire 4."
+assert PROGRAMME.count("fruits[") >= 2, "Lire les valeurs dans la liste avec fruits[...] plutôt que les recopier."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-0-2" label="0.2 [Premiers pas] - Parcourir les valeurs" type="python">
+<Enonce>
+### Parcourir les valeurs
+
+La liste `notes` est déjà écrite dans l'éditeur :
+
+```python
+notes = [12, 8, 15, 10, 17]
+```
+
+Afficher chaque note sur sa ligne, suivie de `/ 20`. Le programme ne contient qu'un seul `print`, placé dans une boucle `for`.
+
+Affichage attendu :
+
+```
+12 / 20
+8 / 20
+15 / 20
+10 / 20
+17 / 20
+```
+
+<PostIt>
+
+Parcourir les valeurs d'une liste :
+
+```python
+for valeur in liste:
+    print(valeur)
+```
+
+- à chaque tour, `valeur` prend la valeur suivante de la liste
+- le nom `valeur` est libre : `note` convient ici
+- ne pas oublier les deux-points et le décalage de la ligne suivante
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+`for note in notes:` fait un tour par note, dans l'ordre de la liste.
+
+</Indice>
+<Indice>
+
+`print(note, "/ 20")` affiche la note, un espace, puis `/ 20`.
+
+</Indice>
+<Indice>
+
+```text
+POUR CHAQUE note DE notes
+    AFFICHER note, "/ 20"
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+notes = [12, 8, 15, 10, 17]
+for note in notes:
+    print(note, "/ 20")
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+notes = [12, 8, 15, 10, 17]
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+lignes = SORTIE.strip().splitlines()
+assert lignes == ["12 / 20", "8 / 20", "15 / 20", "10 / 20", "17 / 20"], "Une ligne par note, dans l'ordre, sous la forme « 12 / 20 »."
+assert "for " in PROGRAMME, "Parcourir la liste avec une boucle for."
+assert PROGRAMME.count("print") == 1, "Un seul print, dans la boucle."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-0-3" label="0.3 [Premiers pas] - Parcourir avec les indices" type="python">
+<Enonce>
+### Parcourir avec les indices
+
+La liste `planetes` est déjà écrite dans l'éditeur :
+
+```python
+planetes = ["Mercure", "Vénus", "Terre", "Mars"]
+```
+
+Afficher chaque planète précédée de son rang, en comptant à partir de 1. Parcourir la liste par ses indices, avec `range(len(planetes))`.
+
+Affichage attendu :
+
+```
+1 : Mercure
+2 : Vénus
+3 : Terre
+4 : Mars
+```
+
+<PostIt>
+
+Parcourir les indices d'une liste :
+
+```python
+for i in range(len(liste)):
+    print(i, liste[i])
+```
+
+- `range(len(liste))` donne 0, 1, 2… jusqu'au dernier indice
+- `liste[i]` : la valeur d'indice `i`
+- les indices commencent à 0 : le rang est `i + 1`
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Avec 4 planètes, `range(len(planetes))` donne 0, 1, 2 et 3.
+
+</Indice>
+<Indice>
+
+`print(i + 1, ":", planetes[i])` affiche le rang, les deux-points, puis le nom.
+
+</Indice>
+<Indice>
+
+```text
+POUR i ALLANT DE 0 À longueur(planetes) - 1
+    AFFICHER i + 1, ":", planetes[i]
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+planetes = ["Mercure", "Vénus", "Terre", "Mars"]
+for i in range(len(planetes)):
+    print(i + 1, ":", planetes[i])
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+planetes = ["Mercure", "Vénus", "Terre", "Mars"]
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+lignes = SORTIE.strip().splitlines()
+assert lignes == ["1 : Mercure", "2 : Vénus", "3 : Terre", "4 : Mars"], "Une ligne par planète : « 1 : Mercure », puis « 2 : Vénus »…"
+assert "range(len(" in PROGRAMME.replace(" ", ""), "Parcourir les indices avec range(len(planetes))."
+assert PROGRAMME.count("print") == 1, "Un seul print, dans la boucle."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-0-4" label="0.4 [Premiers pas] - Ajouter des valeurs" type="python">
+<Enonce>
+### Ajouter des valeurs
+
+La liste de courses est déjà écrite dans l'éditeur :
+
+```python
+courses = ["pain", "lait"]
+```
+
+Sans réécrire cette première ligne, ajouter `"riz"` puis `"pommes"` à la fin de la liste, puis afficher la liste.
+
+Affichage attendu :
+
+```
+['pain', 'lait', 'riz', 'pommes']
+```
+
+<PostIt>
+
+- `liste.append(valeur)` : ajoute `valeur` à la fin de la liste
+- la liste est modifiée directement : pas de `liste = ...` devant
+- un `append` par valeur ajoutée
+- `liste = []` : une liste vide, à remplir ensuite avec `append`
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+`courses.append("riz")` ajoute `"riz"` après `"lait"`.
+
+</Indice>
+<Indice>
+
+L'ordre des `append` donne l'ordre dans la liste : `"riz"` d'abord, `"pommes"` ensuite.
+
+</Indice>
+<Indice>
+
+```text
+AJOUTER "riz" À LA FIN DE courses
+AJOUTER "pommes" À LA FIN DE courses
+AFFICHER courses
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+courses = ["pain", "lait"]
+courses.append("riz")
+courses.append("pommes")
+print(courses)
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+courses = ["pain", "lait"]
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+code = PROGRAMME.replace(" ", "")
+assert courses == ["pain", "lait", "riz", "pommes"], "La liste finale : ['pain', 'lait', 'riz', 'pommes']."
+assert code.count(".append(") >= 2, "Ajouter chaque valeur avec append."
+assert code.count("courses=") == 1, "Ne pas réécrire la liste : la modifier avec append."
+assert SORTIE.strip().endswith("['pain', 'lait', 'riz', 'pommes']"), "Afficher la liste à la fin."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-0-5" label="0.5 [Premiers pas] - Modifier des valeurs" type="python">
+<Enonce>
+### Modifier des valeurs
+
+Les températures relevées dans la semaine sont déjà écrites dans l'éditeur :
+
+```python
+temperatures = [18, 21, 19, 25, 22]
+```
+
+Deux relevés sont faux : la deuxième valeur doit être 20 et la dernière 23. Corriger ces deux valeurs dans la liste, par leur indice, sans réécrire la première ligne, puis afficher la liste.
+
+Affichage attendu :
+
+```
+[18, 20, 19, 25, 23]
+```
+
+<PostIt>
+
+- `liste[i] = nouvelle_valeur` : remplace la valeur d'indice `i`
+- la deuxième valeur a l'indice 1
+- `liste[-1] = v` : remplace la dernière valeur
+- la longueur de la liste ne change pas
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+`temperatures[1] = 20` remplace 21 par 20.
+
+</Indice>
+<Indice>
+
+La dernière valeur a l'indice `-1` (ou 4, puisque la liste a 5 valeurs).
+
+</Indice>
+<Indice>
+
+```text
+temperatures[1] ← 20
+temperatures[dernier indice] ← 23
+AFFICHER temperatures
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+temperatures = [18, 21, 19, 25, 22]
+temperatures[1] = 20
+temperatures[-1] = 23
+print(temperatures)
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+temperatures = [18, 21, 19, 25, 22]
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+code = PROGRAMME.replace(" ", "")
+assert temperatures == [18, 20, 19, 25, 23], "La liste corrigée : [18, 20, 19, 25, 23]."
+assert "temperatures[1]=" in code, "Modifier la deuxième valeur avec temperatures[1] = ..."
+assert code.count("temperatures=") == 1, "Ne pas réécrire la liste : modifier les valeurs par leur indice."
+assert SORTIE.strip().endswith("[18, 20, 19, 25, 23]"), "Afficher la liste à la fin."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-0-6" label="0.6 [Premiers pas] - Retirer des valeurs" type="python">
+<Enonce>
+### Retirer des valeurs
+
+Le contenu d'un sac à dos est déjà écrit dans l'éditeur :
+
+```python
+sac = ["gourde", "caillou", "carte", "lampe", "boussole"]
+```
+
+Sans réécrire cette première ligne :
+
+1. retirer `"caillou"` avec `remove` ;
+2. retirer la dernière valeur avec `pop` et la ranger dans la variable `dernier` ;
+3. retirer la première valeur avec `del` ;
+4. afficher `sac`, puis `dernier`.
+
+Affichage attendu :
+
+```
+['carte', 'lampe']
+boussole
+```
+
+<PostIt>
+
+- `liste.remove(valeur)` : retire la première apparition de `valeur` (erreur si elle n'y est pas)
+- `x = liste.pop()` : retire la dernière valeur et la range dans `x`
+- `liste.pop(i)` : retire la valeur d'indice `i`
+- `del liste[i]` : retire la valeur d'indice `i`
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+`remove` reçoit la valeur à retirer, `del` reçoit un indice : `sac.remove("caillou")`, `del sac[0]`.
+
+</Indice>
+<Indice>
+
+Après le `remove` et le `pop`, la liste vaut `["gourde", "carte", "lampe"]` : la première valeur est alors `"gourde"`.
+
+</Indice>
+<Indice>
+
+```text
+RETIRER "caillou" DE sac
+dernier ← RETIRER la dernière valeur de sac
+SUPPRIMER sac[0]
+AFFICHER sac
+AFFICHER dernier
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+sac = ["gourde", "caillou", "carte", "lampe", "boussole"]
+sac.remove("caillou")
+dernier = sac.pop()
+del sac[0]
+print(sac)
+print(dernier)
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+sac = ["gourde", "caillou", "carte", "lampe", "boussole"]
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+code = PROGRAMME.replace(" ", "")
+assert sac == ["carte", "lampe"], "Le sac final : ['carte', 'lampe']."
+assert dernier == "boussole", "dernier contient la valeur retirée par pop : 'boussole'."
+assert ".remove(" in code, "Retirer 'caillou' avec remove."
+assert ".pop(" in code, "Retirer la dernière valeur avec pop."
+assert "del " in PROGRAMME, "Retirer la première valeur avec del."
+assert code.count("sac=") == 1, "Ne pas réécrire la liste."
+assert SORTIE.strip().splitlines() == ["['carte', 'lampe']", "boussole"], "Afficher sac, puis dernier."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-0-7" label="0.7 [Premiers pas] - Remplir une liste dans une boucle" type="python">
+<Enonce>
+### Remplir une liste dans une boucle
+
+La liste `nombres` est déjà écrite dans l'éditeur :
+
+```python
+nombres = [3, 7, 1, 10]
+```
+
+Construire la liste `doubles`, qui contient le double de chaque nombre, dans le même ordre. Partir d'une liste vide et la remplir avec `append` dans une boucle `for`, puis afficher `doubles`.
+
+Affichage attendu :
+
+```
+[6, 14, 2, 20]
+```
+
+<PostIt>
+
+Construire une liste valeur par valeur :
+
+```python
+resultat = []
+for valeur in liste:
+    resultat.append(valeur + 1)
+```
+
+- la liste vide est créée avant la boucle, une seule fois
+- l'`append` est dans la boucle : une valeur ajoutée par tour
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+`doubles = []` se place avant la boucle : à l'intérieur, la liste serait vidée à chaque tour.
+
+</Indice>
+<Indice>
+
+Dans la boucle, `doubles.append(n * 2)` ajoute le double du nombre `n` en cours.
+
+</Indice>
+<Indice>
+
+```text
+doubles ← liste vide
+POUR CHAQUE n DE nombres
+    AJOUTER n * 2 À LA FIN DE doubles
+AFFICHER doubles
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+nombres = [3, 7, 1, 10]
+doubles = []
+for n in nombres:
+    doubles.append(n * 2)
+print(doubles)
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+nombres = [3, 7, 1, 10]
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+code = PROGRAMME.replace(" ", "")
+assert doubles == [6, 14, 2, 20], "doubles vaut [6, 14, 2, 20]."
+assert "doubles=[]" in code, "Partir d'une liste vide : doubles = []."
+assert "for" in PROGRAMME and ".append(" in code, "Remplir doubles avec append, dans une boucle for."
+assert "[6,14" not in code, "Calculer les doubles plutôt que les écrire."
+assert SORTIE.strip().endswith("[6, 14, 2, 20]"), "Afficher doubles à la fin."
+```
+
+</Verification>
+</ExerciseSection>
 
 <ExerciseSection id="1nsi-listes-1-1" label="1.1 [Introduction] - Premier et dernier" type="python">
 <Enonce>

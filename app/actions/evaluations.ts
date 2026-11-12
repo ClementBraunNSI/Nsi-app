@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
 import { getAuthContext } from '@/lib/auth';
 import { gradeCopy, type CopyGrade, type GradedAnswer } from '@/lib/evaluation-grade';
+import { buildResult, sameResult, type EvaluationResult } from '@/lib/evaluation-result';
 import { parseEvaluationSubject, type EvaluationExercise, type EvaluationGrading } from '@/lib/evaluation-subject';
 import type { IncidentKind } from '@/lib/evaluation-guard';
 import { everyTestPassed, unexpectedRunReport, CHECK_UNAVAILABLE, type RunReport } from '@/lib/python-check';
@@ -41,6 +42,8 @@ export type MyEvaluation = {
   locked: boolean;
   startedAt: string | null;
   submittedAt: string | null;
+  /** Note sur 20, une fois l'évaluation fermée et la copie validée. */
+  grade: number | null;
 };
 
 /** Évaluations programmées dont l'heure est arrivée : elles passent « ouvertes » (sans effet si rien n'est dû). */
@@ -62,6 +65,7 @@ export async function listMyEvaluations(): Promise<MyEvaluation[]> {
     locked: Boolean(row.locked),
     startedAt: row.started_at,
     submittedAt: row.submitted_at,
+    grade: row.grade != null ? Number(row.grade) : null,
   }));
 }
 
@@ -368,6 +372,36 @@ function gradedAnswers(rows: any[]): Record<string, GradedAnswer> {
   );
 }
 
+/** Note d'une copie du tableau ; repère au passage un résumé élève qui ne correspond plus à la note. */
+function copyGrade(attempt: any, subject: any, answers: any[], stale: { id: string; result: EvaluationResult | null }[] | null) {
+  const exercises = gradableExercises(subject);
+  const graded = gradedAnswers(answers);
+  const grade = gradeCopy(exercises, graded);
+  if (stale) {
+    const result = buildResult(exercises, graded, grade);
+    if (!sameResult(attempt.result, result)) stale.push({ id: attempt.id, result });
+  }
+  return grade;
+}
+
+/**
+ * Résumé de la copie lu par l'élève une fois l'évaluation fermée : réécrit après chaque changement de la note
+ * (null tant que la note n'est pas validée). Sans effet si la colonne n'existe pas encore.
+ */
+async function syncAttemptResult(supabase: Awaited<ReturnType<typeof createClient>>, attemptId: string) {
+  const { data: attempt, error } = await supabase
+    .from('evaluation_attempts')
+    .select('id, result, evaluation_subjects(exercises, grading), evaluation_answers(exercise_id, code, tests_passed, tests_total, report, graded_at, manual_points, reviewed_at)')
+    .eq('id', attemptId)
+    .maybeSingle();
+  if (error || !attempt) return;
+  const exercises = gradableExercises((attempt as any).evaluation_subjects);
+  const answers = gradedAnswers((attempt as any).evaluation_answers ?? []);
+  const result = buildResult(exercises, answers, gradeCopy(exercises, answers));
+  if (sameResult((attempt as any).result, result)) return;
+  await supabase.from('evaluation_attempts').update({ result }).eq('id', attemptId);
+}
+
 /** Exercices d'un sujet avec leur correction, pour le calcul de la note. */
 function gradableExercises(subject: any) {
   const grading = new Map<string, EvaluationGrading>((subject?.grading ?? []).map((item: EvaluationGrading) => [item.id, item]));
@@ -394,7 +428,7 @@ export type EvaluationBoard = {
 };
 
 const BOARD_ATTEMPT_COLUMNS =
-  'id, user_id, subject_id, status, locked, unlock_code, failed_unlocks, started_at, submitted_at, last_seen_at, evaluation_answers(exercise_id, code, passed, graded_at, updated_at, tests_passed, tests_total, report, manual_points, reviewed_at), evaluation_incidents(id, kind, locks, resolved_at, created_at)';
+  'id, user_id, subject_id, status, locked, unlock_code, failed_unlocks, started_at, submitted_at, last_seen_at, result, evaluation_answers(exercise_id, code, passed, graded_at, updated_at, tests_passed, tests_total, report, manual_points, reviewed_at), evaluation_incidents(id, kind, locks, resolved_at, created_at)';
 
 export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | null> {
   const ctx = await teacher();
@@ -418,10 +452,16 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
       : Promise.resolve({ data: [] as any[] }),
   ]);
 
-  // Colonnes de la vérification absentes (migration des notes pas encore passée) : on relit sans elles.
-  const attempts: any[] | null = attemptsRead.error
-    ? ((await readAttempts(BOARD_ATTEMPT_COLUMNS.replace(', manual_points, reviewed_at', ''))).data as any[] | null)
-    : (attemptsRead.data as any[] | null);
+  // Colonnes de la vérification ou du résultat absentes (migrations pas encore passées) : on relit sans elles.
+  let attempts: any[] | null = attemptsRead.data as any[] | null;
+  if (attemptsRead.error) {
+    const withoutResult = await readAttempts(BOARD_ATTEMPT_COLUMNS.replace(', result,', ','));
+    attempts = (withoutResult.error
+      ? (await readAttempts(BOARD_ATTEMPT_COLUMNS.replace(', result,', ',').replace(', manual_points, reviewed_at', ''))).data
+      : withoutResult.data) as any[] | null;
+  }
+  // Résumés pour les élèves à réécrire : barème ou tests du sujet modifiés après la validation, copies validées avant.
+  const staleResults: { id: string; result: EvaluationResult | null }[] = [];
   const subjectById = new Map((subjects ?? []).map((subject: any) => [subject.id, subject]));
   const attemptByUser = new Map((attempts ?? []).map((attempt: any) => [attempt.user_id, attempt]));
   const people = new Map<string, { name: string; classe: string | null }>();
@@ -468,9 +508,12 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
       toGrade: attempt?.status === 'rendue'
         ? answers.filter((answer) => answer.code?.trim() && tested.has(answer.exercise_id) && !isGraded(answer)).length
         : 0,
-      grade: attempt ? summarize(gradeCopy(gradableExercises(subject), gradedAnswers(answers))) : null,
+      grade: attempt ? summarize(copyGrade(attempt, subject, answers, attemptsRead.error ? null : staleResults)) : null,
     };
   });
+  if (staleResults.length) {
+    await Promise.all(staleResults.map((item) => supabase.from('evaluation_attempts').update({ result: item.result }).eq('id', item.id)));
+  }
   rows.sort((a, b) => (a.classe ?? '').localeCompare(b.classe ?? '') || a.name.localeCompare(b.name, 'fr'));
 
   const attemptCount = new Map<string, number>();
@@ -596,6 +639,7 @@ export async function reviewEvaluationAnswer(attemptId: string, exerciseId: stri
     .select('exercise_id');
   if (error) return fail(messageOf(error, "La vérification n'a pas été enregistrée."));
   if (!data?.length) return fail("Aucun code écrit pour cet exercice : il compte 0.");
+  await syncAttemptResult(ctx.supabase, attemptId);
   return { ok: true };
 }
 
@@ -621,13 +665,15 @@ export async function validateAttemptGrade(attemptId: string): Promise<Result> {
     return fail("Un exercice sans tests attend des points donnés à la main avant de valider la copie.");
   }
   const ids = written.filter((answer: any) => !answer.reviewed_at).map((answer: any) => answer.exercise_id);
-  if (ids.length === 0) return { ok: true };
-  const { error } = await ctx.supabase
-    .from('evaluation_answers')
-    .update({ reviewed_at: new Date().toISOString() })
-    .eq('attempt_id', attemptId)
-    .in('exercise_id', ids);
-  if (error) return fail(messageOf(error, "La validation n'a pas été enregistrée."));
+  if (ids.length > 0) {
+    const { error } = await ctx.supabase
+      .from('evaluation_answers')
+      .update({ reviewed_at: new Date().toISOString() })
+      .eq('attempt_id', attemptId)
+      .in('exercise_id', ids);
+    if (error) return fail(messageOf(error, "La validation n'a pas été enregistrée."));
+  }
+  await syncAttemptResult(ctx.supabase, attemptId);
   return { ok: true };
 }
 
@@ -641,6 +687,7 @@ export async function reopenAttemptGrade(attemptId: string): Promise<Result> {
     .eq('attempt_id', attemptId)
     .is('manual_points', null);
   if (error) return fail(messageOf(error, "La vérification n'a pas pu être rouverte."));
+  await syncAttemptResult(ctx.supabase, attemptId);
   return { ok: true };
 }
 
@@ -650,6 +697,7 @@ export async function reopenAttempt(attemptId: string): Promise<Result> {
   if (!ctx) return fail(NOT_ALLOWED);
   const { error } = await ctx.supabase.from('evaluation_attempts').update({ status: 'en_cours', submitted_at: null }).eq('id', attemptId);
   if (error) return fail(messageOf(error, 'La copie n\'a pas pu être rouverte.'));
+  await syncAttemptResult(ctx.supabase, attemptId);
   return { ok: true };
 }
 
@@ -666,7 +714,9 @@ export async function resetAttempt(attemptId: string): Promise<Result> {
 export async function gradeEvaluationAnswer(attemptId: string, exerciseId: string): Promise<Result<{ passed: boolean }>> {
   const ctx = await teacher();
   if (!ctx) return fail(NOT_ALLOWED);
-  return gradeOne(ctx.supabase, attemptId, exerciseId);
+  const result = await gradeOne(ctx.supabase, attemptId, exerciseId);
+  if (result.ok) await syncAttemptResult(ctx.supabase, attemptId);
+  return result;
 }
 
 // Exercices corrigés en même temps dans un même appel : chacun lance son propre processus Python.
@@ -692,6 +742,8 @@ export async function gradeEvaluationAnswers(items: { attemptId: string; exercis
     }
   };
   await Promise.all(Array.from({ length: Math.min(GRADING_CONCURRENCY, batch.length) }, worker));
+  // Une seule réécriture du résumé par copie, une fois tous ses exercices corrigés (pas de courses entre corrections).
+  for (const attemptId of new Set(batch.map((item) => item.attemptId))) await syncAttemptResult(ctx.supabase, attemptId);
   return { ok: true, graded };
 }
 

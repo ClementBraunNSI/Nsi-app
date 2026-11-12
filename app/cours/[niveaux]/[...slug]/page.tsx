@@ -99,6 +99,7 @@ import ProjectionShell from '@/components/projection/ProjectionShell';
 import { Admonition } from '@/components/Admonition';
 import { Icone, Renard, Renards } from '@/components/mdx/CourseMarks';
 import { Indice, Indices } from '@/components/mdx/Indices';
+import { PostIt } from '@/components/mdx/PostIt';
 import { transformAdmonitions } from '@/lib/admonition-utils';
 import { stripHiddenExerciseBlocks } from '@/lib/exercise-statement';
 // Widgets interactifs MDX: lazy-load pour réduire le bundle "cours"
@@ -265,6 +266,7 @@ export default async function CoursePage({
     Renards,
     Indices,
     Indice,
+    PostIt,
     VonNeumann,
     SqlEditor,
     SqlTable,

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, CalendarClock, Download, FileDown, Loader2, Lock, Play, ShieldCheck, Square, Wand2 } from "lucide-react";
+import { ArrowLeft, CalendarClock, Download, Eye, FileDown, Loader2, Lock, Play, ShieldCheck, Square, Wand2 } from "lucide-react";
 import {
   answersToGrade,
   deleteEvaluation,
@@ -62,7 +62,7 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
   }, [evaluation.status, refresh, tab]);
 
   const changeStatus = async (status: EvaluationStatus) => {
-    if (status === "fermee" && !window.confirm("Fermer l'évaluation ? Les copies encore ouvertes seront rendues telles quelles.")) return;
+    if (status === "fermee" && !window.confirm("Fermer l'évaluation ? Les copies encore ouvertes seront rendues telles quelles, et chaque élève verra sa note dès qu'elle sera validée.")) return;
     setBusy(true);
     setMessage(null);
     const result = await setEvaluationStatus(evaluation.id, status);
@@ -214,6 +214,16 @@ export default function EvaluationManager({ initialBoard, classes, initialTab }:
               <button type="button" className="adm-eval-link" onClick={() => gradeAll(true)}><Wand2 size={14} aria-hidden /> Recorriger toutes les copies rendues</button>
             )}
           </div>
+          {handedIn.length > 0 ? (
+            <p className="adm-eval-info">
+              <Eye size={15} aria-hidden />
+              {evaluation.status === "fermee"
+                ? `Évaluation fermée : chaque élève dont la note est validée voit sa note, ses points par exercice, sa place par rapport à la moyenne, la médiane et les quartiles de sa classe (à partir de 5 copies validées), et des exercices pour s'entraîner.${
+                    toValidate.length ? ` ${toValidate.length} note${toValidate.length > 1 ? "s" : ""} pas encore validée${toValidate.length > 1 ? "s" : ""} : invisible${toValidate.length > 1 ? "s" : ""} pour l'instant.` : ""
+                  }`
+                : "Les notes validées seront visibles par les élèves à la fermeture de l'évaluation, avec la moyenne, la médiane et les quartiles de leur classe."}
+            </p>
+          ) : null}
           {board.rows.length === 0 ? (
             <p className="text-sm text-slate-500">Aucun élève dans {evaluation.classes.join(", ") || "les classes choisies"}.</p>
           ) : (

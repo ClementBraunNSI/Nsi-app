@@ -4,7 +4,8 @@
  * <BaseSQL>, <Verification> (tests) et <Correction>.
  * Attributs facultatifs : interdits="for, while" (mots-clés refusés à la vérification) ;
  * niveau="2" suite="id" (niveau supérieur de l'exercice « id » : même éditeur, autre consigne, autres tests) ;
- * points="4" (barème de l'exercice en évaluation ; à défaut, « (4 points) » dans le libellé).
+ * points="4" (barème de l'exercice en évaluation ; à défaut, « (4 points) » dans le libellé) ;
+ * revoir="boucles, listes" (notions proposées à l'élève quand il perd des points ; à défaut, lues dans la correction).
  * La partie « exercises » part chez l'élève ; « grading » (tests, correction) reste côté enseignant.
  */
 
@@ -23,6 +24,8 @@ export type EvaluationExercise = {
   level?: number;
   /** Barème de l'exercice dans une évaluation. */
   points?: number;
+  /** Notions à retravailler quand l'élève perd des points (attribut revoir). */
+  review?: string[];
 };
 
 export type EvaluationGrading = {
@@ -135,6 +138,12 @@ export function parseEvaluationSubject(source: string): ParsedSubject {
     const points = pointsText ? Number(pointsText) : null;
     if (points !== null && !(points > 0 && points <= 100)) errors.push(`« ${label} » : points="${attr(attrs, "points")}" doit être un nombre positif.`);
 
+    const review = attr(attrs, "revoir")
+      .split(/[,;]/)
+      .map((notion) => notion.trim())
+      .filter(Boolean)
+      .slice(0, 5);
+
     exercises.push({
       id,
       label,
@@ -146,6 +155,7 @@ export function parseEvaluationSubject(source: string): ParsedSubject {
       ...(forbidden.length ? { forbidden } : {}),
       ...(parent ? { parent, level } : {}),
       ...(points !== null ? { points } : {}),
+      ...(review.length ? { review } : {}),
     });
     grading.push({ id, verification, correction: block(raw, "Correction") });
   });

@@ -9,6 +9,7 @@ import { contentFolderFromParam } from '@/lib/nsi-levels';
 import { getExerciseById, type LabExercise } from '@/app/actions/getExercises';
 import { ExerciseWorkspace } from '@/components/lab/ExerciseWorkspace';
 import WrittenAnswer from './WrittenAnswer';
+import { PostItLayout } from '@/components/mdx/PostIt';
 
 interface TabProps {
   id: string;
@@ -17,11 +18,12 @@ interface TabProps {
   children: React.ReactNode;
 }
 
-const DIFFICULTY_LEVELS = ['Introduction', 'Facile', 'Moyen', 'Avancé', 'Difficile', 'Expert', 'Mini-projet'] as const;
+const DIFFICULTY_LEVELS = ['Premiers pas', 'Introduction', 'Facile', 'Moyen', 'Avancé', 'Difficile', 'Expert', 'Mini-projet'] as const;
 
 type ExerciseDifficulty = (typeof DIFFICULTY_LEVELS)[number];
 
 const DIFFICULTY_COLORS: Record<ExerciseDifficulty, string> = {
+  'Premiers pas': '#64748b',
   Introduction: '#0ea5e9',
   Facile: '#16a34a',
   Moyen: '#f59e0b',
@@ -87,9 +89,19 @@ function getExerciseDifficulty(label: string, id?: string): ExerciseDifficulty {
   return 'Introduction';
 }
 
+/** Fiche de révision par thème : « 1.2 [Variables] - … » range l'exercice dans le groupe « Variables ». */
+const THEME_COLORS = ['#0ea5e9', '#16a34a', '#f59e0b', '#7c3aed', '#e11d48', '#0f766e'];
+
+function getExerciseGroup(label: string, id?: string): string {
+  const bracket = label.match(/^\s*\d+(?:\.\d+)*\s*\[([^\]]+)\]/)?.[1]?.trim();
+  const known = bracket && DIFFICULTY_LEVELS.some((level) => normalizeDifficultyText(level) === normalizeDifficultyText(bracket));
+  return bracket && !known ? bracket : getExerciseDifficulty(label, id);
+}
+
 function cleanExerciseLabel(label: string): string {
   return label
-    .replace(/\[(Introduction|Facile|Moyen|Avancé|Difficile|Expert|Mini-projet)\]/gi, '')
+    .replace(/^(\s*\d+(?:\.\d+)*\s*)\[[^\]]+\]/, '$1')
+    .replace(/\[(Premiers pas|Introduction|Facile|Moyen|Avancé|Difficile|Expert|Mini-projet)\]/gi, '')
     .replace(/\((Introduction|Facile|Moyen|Avancé|Difficile|Expert|Intermédiaire|Intermediaire)\)/gi, '')
     .replace(/^(Mini-projet|Introduction|Facile|Moyen|Avancé|Difficile|Expert|Easy|Medium|Med|Hard)\s*[-–]?\s*/i, '')
     .replace(/\s+/g, ' ')
@@ -118,7 +130,8 @@ type SheetItem = {
   type?: string;
   number: string;
   title: string;
-  difficulty: ExerciseDifficulty;
+  /** Niveau de difficulté, ou thème d'une fiche de révision. */
+  difficulty: string;
   content: React.ReactNode;
 };
 
@@ -179,14 +192,21 @@ export function ExerciseTabs({
       label,
       type: child.props.type,
       ...splitExerciseLabel(label),
-      difficulty: getExerciseDifficulty(label, child.props.id),
+      difficulty: getExerciseGroup(label, child.props.id),
       content: child.props.children,
     };
   }), [childrenArray]);
 
-  const groups = useMemo(() => DIFFICULTY_LEVELS
-    .map((difficulty) => ({ difficulty, items: items.filter((item) => item.difficulty === difficulty) }))
-    .filter((group) => group.items.length > 0), [items]);
+  // Les niveaux dans leur ordre, puis les thèmes dans l'ordre de la fiche.
+  const groups = useMemo(() => {
+    const levels: string[] = [...DIFFICULTY_LEVELS];
+    const themes = [...new Set(items.map((item) => item.difficulty).filter((group) => !levels.includes(group)))];
+    return [...levels, ...themes]
+      .map((difficulty) => ({ difficulty, items: items.filter((item) => item.difficulty === difficulty) }))
+      .filter((group) => group.items.length > 0);
+  }, [items]);
+  const colorOf = (group: string) => DIFFICULTY_COLORS[group as ExerciseDifficulty]
+    ?? THEME_COLORS[Math.max(0, groups.findIndex((candidate) => candidate.difficulty === group)) % THEME_COLORS.length];
 
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [role, setRole] = useState<string | null>(null);
@@ -300,7 +320,7 @@ export function ExerciseTabs({
               const groupDone = group.items.filter((item) => done.has(item.id)).length;
               return (
                 <div key={group.difficulty} className="sheet-group">
-                  <p style={{ '--c': DIFFICULTY_COLORS[group.difficulty] } as React.CSSProperties}>
+                  <p style={{ '--c': colorOf(group.difficulty) } as React.CSSProperties}>
                     <span>{group.difficulty}</span>
                     <span>{hasIde ? `${groupDone}/${group.items.length}` : group.items.length}</span>
                   </p>
@@ -327,7 +347,7 @@ export function ExerciseTabs({
               <div className={`sheet-work ${fullScreen ? 'is-full' : ''} ${folded ? 'is-folded' : ''}`}>
                 <div className="sheet-brief">
                   <div className="sheet-brief-top">
-                    <span className="sheet-tag" style={{ '--c': DIFFICULTY_COLORS[current.difficulty] } as React.CSSProperties}>{current.difficulty}</span>
+                    <span className="sheet-tag" style={{ '--c': colorOf(current.difficulty) } as React.CSSProperties}>{current.difficulty}</span>
                     {current.number ? <span className="sheet-tag">Exercice {current.number}</span> : null}
                     {hasIde && done.has(current.id) ? <span className="sheet-tag is-done">Validé</span> : null}
                     {folded ? <b className="sheet-brief-title">{current.title}</b> : null}
@@ -396,9 +416,12 @@ export function Enonce({ children }: { children: React.ReactNode }) {
         <Code2 size={13} />
         Énoncé
       </div>
-      <div className="prose prose-slate max-w-none">
-        {children}
-      </div>
+      {/* Un <PostIt> de l'énoncé se range dans la colonne de droite (dessous en petite largeur). */}
+      <PostItLayout>
+        <div className="prose prose-slate max-w-none">
+          {children}
+        </div>
+      </PostItLayout>
     </div>
   );
 }

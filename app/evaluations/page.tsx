@@ -13,7 +13,10 @@ const STATUS: Record<string, { label: string; tone: string; action: string }> = 
   en_cours: { label: "En cours", tone: "is-progress", action: "Reprendre" },
   verrouillee: { label: "Verrouillée", tone: "is-locked", action: "Reprendre" },
   rendue: { label: "Rendue", tone: "is-done", action: "Voir" },
+  corrigee: { label: "Corrigée", tone: "is-done", action: "Voir la note" },
 };
+
+const grade = (value: number) => `${String(Math.round(value * 100) / 100).replace(".", ",")} / 20`;
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Paris" });
 
@@ -41,7 +44,9 @@ export default async function EvaluationsPage() {
             const key = !evaluation.attemptStatus
               ? "a_faire"
               : evaluation.attemptStatus === "rendue"
-                ? "rendue"
+                ? evaluation.grade !== null
+                  ? "corrigee"
+                  : "rendue"
                 : evaluation.locked
                   ? "verrouillee"
                   : "en_cours";
@@ -53,6 +58,7 @@ export default async function EvaluationsPage() {
                   <b>{evaluation.title}</b>
                   {evaluation.description ? <span className="eval-card-desc">{evaluation.description}</span> : null}
                   <span className="eval-card-meta">
+                    {evaluation.grade !== null ? <b className="eval-card-grade">Note : {grade(evaluation.grade)} · </b> : null}
                     {evaluation.submittedAt
                       ? `Rendue le ${dateFormat.format(new Date(evaluation.submittedAt))}`
                       : evaluation.durationMinutes

@@ -4811,6 +4811,88 @@ input, textarea {
 .eval-done svg { color: #16a34a; }
 .eval-done h1 { margin: 0; font-size: 1.4rem; }
 .eval-done p { margin: 0 0 0.6rem; color: var(--muted); }
+.eval-done p + p { margin-top: -0.4rem; font-size: 0.9rem; }
+.eval-card-meta .eval-card-grade { grid-column: auto; font-size: inherit; color: var(--fg); }
+
+/* Résultat d'une évaluation fermée, côté élève : note, place dans la classe, détail par exercice. */
+.eval-res { display: grid; gap: 1.25rem; }
+.eval-res-back { justify-self: start; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.88rem; font-weight: 600; color: var(--muted); text-decoration: none; }
+.eval-res-back:hover { color: var(--accent); }
+.eval-res-head { display: grid; justify-items: start; gap: 0.4rem; }
+.eval-res-head h1 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.02em; }
+.eval-res-head p { margin: 0; color: var(--muted); }
+.eval-res-card { display: grid; gap: 1.25rem; padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.eval-res-grade { display: grid; gap: 0.2rem; }
+.eval-res-grade > span { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--subtle); }
+.eval-res-grade b { font-size: clamp(3rem, 8vw, 4rem); line-height: 1; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--fg); }
+.eval-res-grade b small { font-size: 0.4em; font-weight: 650; letter-spacing: 0; color: var(--muted); }
+.eval-res-grade p { margin: 0.35rem 0 0; font-weight: 600; color: var(--fg); }
+.eval-res-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem; margin: 0; }
+.eval-res-kpis > div { padding: 0.7rem 0.85rem; border-radius: var(--radius-sm); background: var(--surface-2); }
+.eval-res-kpis dt { font-size: 0.78rem; color: var(--muted); }
+.eval-res-kpis dd { margin: 0.1rem 0 0; font-size: 1.35rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+.eval-res-note { margin: 0; font-size: 0.85rem; color: var(--muted); }
+
+.eval-res-strip { margin: 0.5rem 0 0; padding: 1.6rem 0.6rem 0; }
+.eval-res-track { position: relative; height: 1.25rem; }
+.eval-res-track::before { content: ""; position: absolute; inset: 50% 0 auto; height: 2px; transform: translateY(-50%); border-radius: 2px; background: var(--border); }
+.eval-res-box { position: absolute; top: 0; bottom: 0; min-width: 4px; border-radius: 4px; background: color-mix(in srgb, var(--fg) 16%, var(--surface)); box-shadow: 0 0 0 2px var(--surface); }
+.eval-res-median { position: absolute; top: -0.2rem; bottom: -0.2rem; width: 2px; transform: translateX(-50%); border-radius: 2px; background: var(--fg); }
+.eval-res-mean { position: absolute; top: 50%; width: 0.7rem; height: 0.7rem; transform: translate(-50%, -50%) rotate(45deg); border: 2px solid var(--fg); background: var(--surface); box-shadow: 0 0 0 2px var(--surface); }
+.eval-res-me { position: absolute; top: 50%; width: 1rem; height: 1rem; transform: translate(-50%, -50%); border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--surface); }
+.eval-res-me b { position: absolute; bottom: calc(100% + 0.3rem); left: 50%; transform: translateX(-50%); font-size: 0.82rem; font-weight: 750; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--fg); }
+.eval-res-axis { position: relative; height: 1.4rem; margin-top: 0.35rem; }
+.eval-res-axis span { position: absolute; transform: translateX(-50%); font-size: 0.75rem; font-variant-numeric: tabular-nums; color: var(--subtle); }
+.eval-res-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-top: 0.4rem; font-size: 0.8rem; color: var(--muted); }
+.eval-res-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.eval-res-legend i { display: inline-block; flex-shrink: 0; }
+.eval-res-legend .is-box { width: 1.1rem; height: 0.7rem; border-radius: 3px; background: color-mix(in srgb, var(--fg) 16%, var(--surface)); }
+.eval-res-legend .is-median { width: 2px; height: 0.9rem; border-radius: 2px; background: var(--fg); }
+.eval-res-legend .is-mean { width: 0.55rem; height: 0.55rem; margin: 0 0.1rem; transform: rotate(45deg); border: 2px solid var(--fg); }
+.eval-res-legend .is-me { width: 0.75rem; height: 0.75rem; border-radius: 50%; background: var(--accent); }
+
+.eval-res-title { margin: 0.5rem 0 0; font-size: 1.2rem; font-weight: 700; }
+.eval-res-intro { margin: -0.75rem 0 0; color: var(--muted); }
+.eval-res-list { display: grid; gap: 1rem; }
+.eval-res-ex { display: grid; gap: 0.6rem; padding: 1.15rem 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.eval-res-ex-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.eval-res-ex-head h3 { margin: 0; font-size: 1.02rem; font-weight: 650; }
+.eval-res-points { flex-shrink: 0; padding: 0.15rem 0.6rem; border-radius: 99px; font-size: 0.85rem; font-weight: 750; font-variant-numeric: tabular-nums; background: var(--surface-2); color: var(--fg); }
+.eval-res-points.is-full { background: #dcfce7; color: #15803d; }
+.eval-res-points.is-zero { background: #fee2e2; color: #b91c1c; }
+.eval-res-bar { height: 0.4rem; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.eval-res-bar span { display: block; height: 100%; border-radius: 99px; background: var(--accent); }
+.eval-res-status { display: flex; align-items: center; gap: 0.35rem; margin: 0; font-size: 0.88rem; color: var(--muted); }
+.eval-res-status svg { color: #16a34a; }
+.eval-res-error { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin: 0; font-size: 0.88rem; color: #b91c1c; }
+.eval-res-error code { overflow-wrap: anywhere; }
+.eval-res-failed { display: grid; gap: 0.35rem; margin: 0; padding: 0; list-style: none; font-size: 0.88rem; }
+.eval-res-failed li { display: flex; align-items: flex-start; gap: 0.45rem; }
+.eval-res-failed li > svg { flex-shrink: 0; margin-top: 0.2rem; color: #dc2626; }
+.eval-res-failed li span { display: grid; min-width: 0; overflow-wrap: anywhere; }
+.eval-res-failed small { color: var(--muted); }
+.eval-res-failed code, .eval-res-error code { padding: 0 0.25rem; border-radius: 0.3rem; background: var(--surface-2); font-size: 0.85em; }
+.eval-res-failed .is-more { padding-left: 1.4rem; color: var(--muted); }
+.eval-res-details { display: grid; gap: 0.4rem; }
+.eval-res-details summary { cursor: pointer; font-size: 0.88rem; font-weight: 650; color: var(--fg); }
+.eval-res-details details[open] summary { margin-bottom: 0.5rem; }
+.eval-res-details .eval-statement { border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.eval-res-code { max-height: 24rem; margin: 0; overflow: auto; padding: 0.85rem 1rem; border-radius: var(--radius-sm); background: var(--surface-2); font-size: 0.82rem; line-height: 1.5; }
+.eval-res-train { display: grid; gap: 0.5rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); }
+.eval-res-train h4 { display: flex; align-items: center; gap: 0.4rem; margin: 0; font-size: 0.92rem; font-weight: 700; }
+.eval-res-train h4 svg { color: var(--accent); }
+.dark .eval-res-error { color: #fca5a5; }
+.dark .eval-res-failed li > svg { color: #f87171; }
+.dark .eval-res-points.is-full { background: #14532d; color: #bbf7d0; }
+.dark .eval-res-points.is-zero { background: #450a0a; color: #fecaca; }
+@media (max-width: 640px) {
+  .eval-res-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .eval-res-train .revise-list li { flex-wrap: wrap; }
+  .eval-res-train .revise-list a { flex-basis: calc(100% - 2.5rem); }
+  .eval-res-train .revise-reason { margin-left: 2.25rem; }
+  .eval-res-card { padding: 1.15rem; }
+  .eval-res-ex { padding: 1rem; }
+}
 
 /* Pendant l'évaluation, la page recouvre tout le site : plus de liens vers les cours. */
 .eval-shell {

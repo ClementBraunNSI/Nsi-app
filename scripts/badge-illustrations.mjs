@@ -33,6 +33,7 @@ const SHEETS = {
   'programmation-fonctionnelle': ['think', 'lambda'],
   'anatole-revision-poo': ['sit', 'stack'],
   'revision-types-fonctions': ['reader', 'pybook'],
+  'revision-bases-python': ['cheer', 'loop'],
   'proj_caisse_bilan': ['book', 'receipt'],
   'proj_caisse_client': ['wink', 'basket'],
   'proj_caisse_journee': ['sit', 'register'],

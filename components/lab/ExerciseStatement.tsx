@@ -8,6 +8,7 @@ import rehypeKatex from "rehype-katex";
 import { BookOpen, ChevronDown, Lightbulb } from "lucide-react";
 import { splitStatement } from "@/lib/exercise-statement";
 import { HintSteps } from "@/components/mdx/Indices";
+import { PostItNote } from "@/components/mdx/PostIt";
 
 type Props = {
   label: string;
@@ -68,6 +69,11 @@ export function ExerciseStatement({ label, content }: Props) {
         </h2>
         {parts.enonce ? <Markdown>{parts.enonce}</Markdown> : null}
       </section>
+      {parts.postIts?.map((note, index) => (
+        <PostItNote key={`${label}-${index}`}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{note}</ReactMarkdown>
+        </PostItNote>
+      ))}
       {parts.consignes ? (
         <Fold title="Consignes" defaultOpen>
           {parts.consignes}
