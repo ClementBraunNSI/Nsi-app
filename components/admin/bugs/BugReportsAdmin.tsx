@@ -42,7 +42,7 @@ export default function BugReportsAdmin({ reports }: { reports: BugReport[] }) {
   );
 }
 
-function BugReportItem({ report }: { report: BugReport }) {
+export function BugReportItem({ report }: { report: BugReport }) {
   const router = useRouter();
   const [screenshot, setScreenshot] = useState<string | null | "loading">(null);
   const [zoomed, setZoomed] = useState(false);

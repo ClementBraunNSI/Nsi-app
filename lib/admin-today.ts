@@ -238,6 +238,87 @@ export function buildAdminToday(input: TodayInput): AdminTodayData {
   };
 }
 
+// ---------- Compléments de la page : notes à valider, bugs, élèves à surveiller, prochain passage ----------
+
+export type TodayExtraInput = {
+  now: Date;
+  students: TodayStudent[];
+  /** Copies rendues dont la note n'est pas validée. */
+  grades: { userId: string; title: string }[];
+  bugs: number;
+  /** Essais de la semaine dont le suivi de frappe est « suspect ». */
+  suspects: { userId: string }[];
+  evaluations: { id: string; title: string; status: string; classes: string[]; scheduledAt?: string | null }[];
+};
+
+export type TodayWatch = { id: string; name: string; reason: string; tone: "warn" | "muted" };
+
+export type AdminTodayExtra = {
+  grades: { total: number; title: string | null };
+  bugs: number;
+  watch: TodayWatch[];
+  /** Élèves à surveiller au-delà de ceux listés. */
+  watchMore: number;
+  /** Évaluation ouverte, sinon la prochaine programmée dans les 24 heures. */
+  next: { id: string; title: string; classes: string[]; open: boolean; at: string | null } | null;
+};
+
+export const WATCH_SHOWN = 5;
+
+export function buildTodayExtra(input: TodayExtraInput): AdminTodayExtra {
+  const { now } = input;
+  const nameOf = new Map(input.students.map((student) => [student.id, student.full_name || "Élève"]));
+
+  const grades = input.grades.filter((row) => nameOf.has(row.userId));
+  const gradeTitles = [...new Set(grades.map((row) => row.title))];
+
+  const suspectCount = new Map<string, number>();
+  for (const row of input.suspects) if (nameOf.has(row.userId)) suspectCount.set(row.userId, (suspectCount.get(row.userId) ?? 0) + 1);
+  const suspects: TodayWatch[] = [...suspectCount]
+    .sort((a, b) => b[1] - a[1])
+    .map(([id, count]) => ({
+      id,
+      name: nameOf.get(id)!,
+      reason: `${count} essai${count > 1 ? "s" : ""} à la saisie suspecte cette semaine`,
+      tone: "warn" as const,
+    }));
+  const inactive: TodayWatch[] = input.students
+    .filter((student) => isInactive(student.last_work_at, now) && !suspectCount.has(student.id))
+    .sort((a, b) => (a.last_work_at ?? "").localeCompare(b.last_work_at ?? ""))
+    .map((student) => {
+      const days = student.last_work_at ? Math.floor((now.getTime() - Date.parse(student.last_work_at)) / DAY_MS) : null;
+      return {
+        id: student.id,
+        name: student.full_name || "Élève",
+        reason: days === null ? "aucune activité enregistrée" : `aucune activité depuis ${days} jours`,
+        tone: "muted" as const,
+      };
+    });
+  const watch = [...suspects, ...inactive];
+
+  const open = input.evaluations.find((evaluation) => evaluation.status === "ouverte");
+  const soon = input.evaluations
+    .filter((evaluation) => evaluation.status === "programmee" && evaluation.scheduledAt && Date.parse(evaluation.scheduledAt) - now.getTime() < DAY_MS)
+    .sort((a, b) => (a.scheduledAt ?? "").localeCompare(b.scheduledAt ?? ""))[0];
+  const next = open ?? soon ?? null;
+
+  return {
+    grades: { total: grades.length, title: gradeTitles.length === 1 ? gradeTitles[0] : gradeTitles.length > 1 ? `${gradeTitles.length} évaluations` : null },
+    bugs: input.bugs,
+    watch: watch.slice(0, WATCH_SHOWN),
+    watchMore: Math.max(0, watch.length - WATCH_SHOWN),
+    next: next ? { id: next.id, title: next.title, classes: next.classes, open: next === open, at: next.scheduledAt ?? null } : null,
+  };
+}
+
+/** « dans 25 min », « dans 3 h », « maintenant » : délai avant une heure programmée. */
+export function untilLabel(iso: string, now: Date) {
+  const minutes = Math.round((Date.parse(iso) - now.getTime()) / 60_000);
+  if (minutes <= 0) return "maintenant";
+  if (minutes < 60) return `dans ${minutes} min`;
+  return `dans ${Math.round(minutes / 60)} h`;
+}
+
 const plural = (count: number, one: string, many: string) => `${count} ${count > 1 ? many : one}`;
 
 /** Jour lisible par rapport à aujourd'hui : « aujourd'hui », « demain », sinon « ven. 14 nov. ». */

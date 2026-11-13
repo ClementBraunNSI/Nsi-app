@@ -1,5 +1,7 @@
 "use client";
 
+import { useAdminClass } from "@/components/admin/AdminClassContext";
+import { ADMIN_PRIVATE } from "@/lib/admin-class";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronRight, Search } from "lucide-react";
@@ -53,6 +55,15 @@ export function ActivityBoard({ students, now: nowIso, detailBase = "/admin/acti
   const privateCount = students.filter((student) => student.privateLesson).length;
   const [audience, setAudience] = useState<Audience>(students.length > privateCount ? "classe" : "particuliers");
   const [classe, setClasse] = useState("");
+  // La classe choisie dans la barre du haut règle les filtres de la page ; ils restent modifiables ici.
+  const { selection } = useAdminClass();
+  useEffect(() => {
+    if (selection === ADMIN_PRIVATE) setAudience("particuliers");
+    else if (selection) {
+      setAudience("classe");
+      setClasse(selection);
+    } else setClasse("");
+  }, [selection]);
   const [period, setPeriod] = useState<ActivityPeriod>("7");
   const [kinds, setKinds] = useState<ActivityKind[]>(DEFAULT_KINDS);
   const [query, setQuery] = useState("");

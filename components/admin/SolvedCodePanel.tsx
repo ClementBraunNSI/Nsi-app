@@ -1,5 +1,7 @@
 'use client';
 
+import { useAdminClass } from '@/components/admin/AdminClassContext';
+import { ADMIN_PRIVATE } from '@/lib/admin-class';
 import { useEffect, useMemo, useState } from 'react';
 import { Check, ChevronDown, Download } from 'lucide-react';
 import { getSolvedCode, listSolvedCode } from '@/app/actions/solvedCode';
@@ -60,12 +62,20 @@ function SolvedRow({ entry }: { entry: SolvedEntry }) {
 }
 
 /** Codes réussis par les élèves : dernière version de chaque exercice, filtrée par classe, fiche ou élève. */
-export function SolvedCodePanel() {
+export function SolvedCodePanel({ studentId: fixedStudent }: { studentId?: string } = {}) {
+  const { selection } = useAdminClass();
   const [entries, setEntries] = useState<SolvedEntry[] | null>(null);
   const [failed, setFailed] = useState(false);
-  const [classe, setClasse] = useState('');
+  // La classe vient de la barre du haut ; dans une fiche élève, seul cet élève est affiché.
+  const classe = fixedStudent || selection === ADMIN_PRIVATE ? '' : selection;
   const [courseId, setCourseId] = useState('');
-  const [studentId, setStudentId] = useState('');
+  const [studentId, setStudentId] = useState(fixedStudent ?? '');
+
+  useEffect(() => {
+    if (fixedStudent) return;
+    setCourseId('');
+    setStudentId('');
+  }, [selection, fixedStudent]);
 
   useEffect(() => {
     let cancelled = false;
@@ -91,7 +101,6 @@ export function SolvedCodePanel() {
     [inClass, courseId, studentId],
   );
 
-  const classes = useMemo(() => [...new Set(all.map((entry) => entry.classe ?? NO_CLASS))].sort(), [all]);
   const courses = useMemo(() => {
     const titles = new Map<string, string>();
     for (const entry of inClass) titles.set(entry.courseId, entry.courseTitle);
@@ -132,23 +141,6 @@ export function SolvedCodePanel() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end gap-3">
         <label className="flex flex-col gap-1 text-xs font-bold text-slate-500">
-          Classe
-          <select
-            className={select}
-            value={classe}
-            onChange={(event) => {
-              setClasse(event.target.value);
-              setCourseId('');
-              setStudentId('');
-            }}
-          >
-            <option value="">Toutes</option>
-            {classes.map((value) => (
-              <option key={value} value={value}>{value === NO_CLASS ? 'Sans classe' : value}</option>
-            ))}
-          </select>
-        </label>
-        <label className="flex flex-col gap-1 text-xs font-bold text-slate-500">
           Fiche
           <select className={select} value={courseId} onChange={(event) => setCourseId(event.target.value)}>
             <option value="">Toutes</option>
@@ -157,15 +149,17 @@ export function SolvedCodePanel() {
             ))}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-xs font-bold text-slate-500">
-          Élève
-          <select className={select} value={studentId} onChange={(event) => setStudentId(event.target.value)}>
-            <option value="">Tous</option>
-            {students.map(([id, name]) => (
-              <option key={id} value={id}>{name}</option>
-            ))}
-          </select>
-        </label>
+        {fixedStudent ? null : (
+          <label className="flex flex-col gap-1 text-xs font-bold text-slate-500">
+            Élève
+            <select className={select} value={studentId} onChange={(event) => setStudentId(event.target.value)}>
+              <option value="">Tous</option>
+              {students.map(([id, name]) => (
+                <option key={id} value={id}>{name}</option>
+              ))}
+            </select>
+          </label>
+        )}
         <a
           href={exportHref({ classe, courseId, studentId })}
           className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--accent-fg)]"

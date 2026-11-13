@@ -34,7 +34,7 @@ function StatusChip({ submission }: { submission: Submission }) {
 }
 
 /** Un rendu : le code ou la réponse de l'élève, et la décision de l'enseignant. */
-function SubmissionCard({
+export function SubmissionCard({
   submission,
   attempts,
   showStudent,

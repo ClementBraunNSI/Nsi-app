@@ -35,11 +35,11 @@ const timeFormat = new Intl.DateTimeFormat("fr-FR", { timeStyle: "short", timeZo
 // Sans signe de vie depuis plus longtemps : la page de l'élève est fermée ou l'ordinateur éteint.
 const OFFLINE_AFTER = 35_000;
 
-export default function EvaluationManager({ initialBoard, classes, initialTab }: { initialBoard: EvaluationBoard; classes: string[]; initialTab: Tab }) {
+export default function EvaluationManager({ initialBoard, classes, initialTab, initialAttempt = null }: { initialBoard: EvaluationBoard; classes: string[]; initialTab: Tab; initialAttempt?: string | null }) {
   const router = useRouter();
   const [board, setBoard] = useState(initialBoard);
   const [tab, setTab] = useState<Tab>(initialTab);
-  const [openAttempt, setOpenAttempt] = useState<string | null>(null);
+  const [openAttempt, setOpenAttempt] = useState<string | null>(initialAttempt);
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [grading, setGrading] = useState<{ done: number; total: number } | null>(null);

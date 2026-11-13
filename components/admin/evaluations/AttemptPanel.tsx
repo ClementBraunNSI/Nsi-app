@@ -25,6 +25,7 @@ export default function AttemptPanel({
   onChange,
   order = [],
   onNavigate,
+  inline = false,
 }: {
   attemptId: string;
   evaluationId: string;
@@ -33,6 +34,8 @@ export default function AttemptPanel({
   /** Copies rendues, dans l'ordre du tableau : pour passer d'une copie à l'autre pendant la vérification. */
   order?: string[];
   onNavigate?: (attemptId: string) => void;
+  /** Dans la page (file « À corriger ») : pas de volet, pas de fond, pas de fermeture. */
+  inline?: boolean;
 }) {
   const [detail, setDetail] = useState<AttemptDetail | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -58,7 +61,7 @@ export default function AttemptPanel({
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") (zoom ? setZoom(null) : onClose());
+      if (event.key === "Escape") (zoom ? setZoom(null) : inline ? undefined : onClose());
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -73,8 +76,8 @@ export default function AttemptPanel({
   };
 
   return (
-    <div className="adm-eval-drawer" role="dialog" aria-modal="true" aria-label="Copie de l'élève">
-      <button type="button" className="adm-eval-drawer-backdrop" aria-label="Fermer" onClick={onClose} />
+    <div className={inline ? "adm-eval-inline" : "adm-eval-drawer"} role={inline ? undefined : "dialog"} aria-modal={inline ? undefined : true} aria-label="Copie de l'élève">
+      {inline ? null : <button type="button" className="adm-eval-drawer-backdrop" aria-label="Fermer" onClick={onClose} />}
       <aside className="adm-eval-drawer-panel">
         <header>
           <div className="min-w-0">
@@ -97,7 +100,7 @@ export default function AttemptPanel({
               </button>
             </div>
           ) : null}
-          <button type="button" className="adm-eval-icon" onClick={onClose} aria-label="Fermer"><X size={18} /></button>
+          {inline ? null : <button type="button" className="adm-eval-icon" onClick={onClose} aria-label="Fermer"><X size={18} /></button>}
         </header>
 
         {!detail ? (

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquette admin v2</title>
+<style>
+  :root {
+    --bg: #f7f4ef; --surface: #fffcf8; --surface-2: #f1ece4; --fg: #14110e; --muted: #5c564e; --subtle: #8a8278;
+    --border: rgba(20, 17, 14, 0.1); --accent: #ea580c; --accent-soft: #fff1e6; --ok: #15803d; --ok-soft: #dcfce7;
+    --bad: #b91c1c; --bad-soft: #fee2e2; --info: #0369a1; --info-soft: #e0f2fe; --radius: 1rem;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.45 system-ui, "Segoe UI", sans-serif; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  h1, h2, h3, p { margin: 0; }
+  kbd { padding: 0.05rem 0.35rem; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 0.35rem; background: var(--surface); font: 600 0.72rem system-ui; color: var(--muted); }
+
+  /* Barre du haut : la classe choisie vaut pour toutes les pages */
+  .top { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .brand { font-weight: 800; letter-spacing: -0.01em; }
+  .brand span { color: var(--accent); }
+  .seg { display: inline-flex; padding: 0.2rem; border-radius: 99px; background: var(--surface-2); }
+  .seg button { padding: 0.3rem 0.8rem; border-radius: 99px; font-size: 0.85rem; font-weight: 650; color: var(--muted); }
+  .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+  .search { flex: 1; min-width: 12rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.8rem; border: 1px solid var(--border); border-radius: 99px; color: var(--subtle); font-size: 0.88rem; }
+  .search span { flex: 1; }
+  .create { padding: 0.45rem 0.95rem; border-radius: 99px; background: var(--accent); color: #fff; font-weight: 700; font-size: 0.88rem; }
+
+  .shell { display: grid; grid-template-columns: 13rem minmax(0, 1fr); min-height: calc(100vh - 3.2rem); }
+  .side { padding: 1rem 0.6rem; border-right: 1px solid var(--border); }
+  .side button { display: flex; width: 100%; align-items: center; gap: 0.6rem; padding: 0.6rem 0.75rem; border-radius: 0.7rem; font-weight: 600; text-align: left; }
+  .side button small { display: block; font-weight: 400; font-size: 0.75rem; color: var(--subtle); }
+  .side button:hover { background: var(--surface-2); }
+  .side button[aria-current="page"] { background: var(--surface); box-shadow: inset 3px 0 0 var(--accent), 0 1px 2px rgba(0,0,0,.05); }
+  .side b.n { margin-left: auto; min-width: 1.5rem; padding: 0.05rem 0.4rem; border-radius: 99px; background: var(--accent); color: #fff; font-size: 0.75rem; text-align: center; }
+  .side .live { margin-left: auto; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px var(--ok-soft); }
+  .side hr { margin: 0.7rem 0.5rem; border: 0; border-top: 1px solid var(--border); }
+  .note { margin: 0.5rem 0.75rem; font-size: 0.75rem; color: var(--subtle); }
+
+  main { padding: 1.5rem; max-width: 72rem; }
+  .screen { display: none; gap: 1.25rem; }
+  .screen.on { display: grid; }
+  .eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--subtle); }
+  h1 { font-size: 1.7rem; letter-spacing: -0.02em; }
+  h2 { font-size: 1.05rem; }
+  h2 small { font-weight: 400; color: var(--subtle); margin-left: 0.4rem; }
+  .card { padding: 1rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .grid { display: grid; gap: 0.75rem; }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g2 { grid-template-columns: 1.4fr 1fr; }
+  .big { font-size: 2rem; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .k { font-size: 0.82rem; color: var(--muted); }
+  .pill { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 99px; font-size: 0.75rem; font-weight: 700; background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+  .pill.a { background: var(--accent-soft); color: var(--accent); } .pill.ok { background: var(--ok-soft); color: var(--ok); }
+  .pill.bad { background: var(--bad-soft); color: var(--bad); } .pill.info { background: var(--info-soft); color: var(--info); }
+  .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 0.65rem; border: 1px solid var(--border); background: var(--surface); font-weight: 650; font-size: 0.88rem; }
+  .btn.p { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .btn.d { color: var(--bad); }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+  .sp { justify-content: space-between; }
+  .hot { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  ul.lines { margin: 0.5rem 0 0; padding: 0; list-style: none; font-size: 0.86rem; }
+  ul.lines li { display: flex; justify-content: space-between; gap: 0.75rem; padding: 0.4rem 0; border-top: 1px solid var(--border); }
+  ul.lines li span:last-child { color: var(--subtle); white-space: nowrap; }
+  .bar { height: 0.4rem; border-radius: 99px; background: var(--surface-2); overflow: hidden; margin-top: 0.5rem; }
+  .bar i { display: block; height: 100%; border-radius: 99px; background: var(--accent); }
+
+  /* En classe : une tuile par élève */
+  .seats { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.2rem, 1fr)); gap: 0.5rem; }
+  .seat { padding: 0.55rem 0.65rem; border: 1px solid var(--border); border-radius: 0.7rem; background: var(--surface); font-size: 0.82rem; }
+  .seat b { display: block; font-size: 0.88rem; }
+  .seat.lock { border-color: var(--bad); background: var(--bad-soft); }
+  .seat.done { background: var(--ok-soft); border-color: transparent; }
+  .seat.off { opacity: 0.55; border-style: dashed; }
+  .seat code { font-weight: 800; letter-spacing: 0.08em; }
+  .dots { display: flex; gap: 3px; margin-top: 0.35rem; }
+  .dots i { width: 0.9rem; height: 0.3rem; border-radius: 2px; background: var(--surface-2); }
+  .dots i.w { background: var(--accent); }
+
+  /* À corriger : liste à gauche, copie à droite */
+  .split { display: grid; grid-template-columns: 19rem minmax(0, 1fr); gap: 0.75rem; align-items: start; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .chips button { padding: 0.3rem 0.75rem; border-radius: 99px; border: 1px solid var(--border); font-size: 0.82rem; font-weight: 650; background: var(--surface); }
+  .chips button.on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .queue { padding: 0.35rem; }
+  .queue button { display: grid; width: 100%; gap: 0.1rem; padding: 0.55rem 0.7rem; border-radius: 0.6rem; text-align: left; font-size: 0.85rem; }
+  .queue button.on { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  .queue small { color: var(--subtle); }
+  pre { margin: 0; padding: 0.8rem 1rem; border-radius: 0.7rem; background: var(--surface-2); font: 0.82rem/1.5 ui-monospace, Consolas, monospace; overflow: auto; }
+  .tests { display: grid; gap: 0.3rem; font-size: 0.85rem; }
+  .tests span::before { content: "✓ "; color: var(--ok); font-weight: 800; }
+  .tests span.x::before { content: "✗ "; color: var(--bad); }
+  input.pts { width: 4.5rem; padding: 0.4rem 0.5rem; border: 1px solid var(--border); border-radius: 0.55rem; font: inherit; background: var(--surface); }
+
+  /* Fiche élève */
+  .tabs { display: flex; gap: 0.25rem; border-bottom: 1px solid var(--border); }
+  .tabs button { padding: 0.5rem 0.9rem; font-weight: 650; font-size: 0.9rem; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs button.on { color: var(--fg); border-color: var(--accent); }
+  .avatar { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 800; }
+  .heat { display: grid; grid-template-columns: repeat(21, 1fr); gap: 3px; }
+  .heat i { aspect-ratio: 1; border-radius: 3px; background: var(--surface-2); }
+  .heat i.l1 { background: #fed7aa; } .heat i.l2 { background: #fb923c; } .heat i.l3 { background: #c2410c; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th { text-align: left; font-size: 0.75rem; color: var(--subtle); font-weight: 650; padding: 0.4rem 0.5rem; }
+  td { padding: 0.55rem 0.5rem; border-top: 1px solid var(--border); }
+
+  /* Préparer : la semaine */
+  .week { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.5rem; }
+  .day { min-height: 9rem; padding: 0.6rem; border: 1px solid var(--border); border-radius: 0.8rem; background: var(--surface); display: grid; gap: 0.35rem; align-content: start; }
+  .day.today { border-color: var(--accent); }
+  .day h3 { font-size: 0.8rem; color: var(--muted); }
+  .ev { padding: 0.3rem 0.5rem; border-radius: 0.45rem; font-size: 0.78rem; font-weight: 600; background: var(--surface-2); }
+  .ev.e { background: var(--bad-soft); color: var(--bad); } .ev.d { background: var(--accent-soft); color: var(--accent); } .ev.h { background: var(--info-soft); color: var(--info); }
+  .add { font-size: 0.78rem; color: var(--subtle); text-align: left; padding: 0.2rem 0.3rem; }
+
+  .why { padding: 0.7rem 0.9rem; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 0.6rem 0.6rem 0; font-size: 0.85rem; color: #7c2d12; }
+  @media (max-width: 820px) {
+    .shell { grid-template-columns: 1fr; } .side { display: flex; overflow-x: auto; gap: 0.25rem; border-right: 0; border-bottom: 1px solid var(--border); padding: 0.4rem; }
+    .side button { width: auto; white-space: nowrap; } .side button small, .side hr, .note { display: none; }
+    .g4, .g3, .g2, .split { grid-template-columns: 1fr 1fr; } .split, .g2 { grid-template-columns: 1fr; } .week { grid-template-columns: 1fr 1fr; } main { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="brand">La tanière <span>· enseignant</span></span>
+  <div class="seg" id="classes" role="group" aria-label="Classe affichée">
+    <button aria-pressed="false">Toutes</button><button aria-pressed="true">1NSI1</button><button aria-pressed="false">1NSI2</button><button aria-pressed="false">TNSI</button><button aria-pressed="false">Particuliers</button>
+  </div>
+  <div class="search">🔎 <span>Chercher un élève, un exercice, une évaluation…</span> <kbd>Ctrl</kbd> <kbd>K</kbd></div>
+  <button class="create">+ Créer</button>
+</header>
+
+<div class="shell">
+  <nav class="side" id="nav" aria-label="Administration">
+    <button data-s="today" aria-current="page">🏠 <span>Aujourd'hui<small>ce qui attend</small></span></button>
+    <button data-s="live">📡 <span>En classe<small>suivi en direct</small></span><i class="live"></i></button>
+    <button data-s="todo">✍️ <span>À corriger<small>une seule file</small></span><b class="n">23</b></button>
+    <button data-s="student">👥 <span>Élèves<small>une fiche par élève</small></span></button>
+    <button data-s="plan">🗓️ <span>Préparer<small>annonces, devoirs, défis, évaluations</small></span></button>
+    <hr>
+    <p class="note">5 entrées au lieu de 11. Bugs signalés et réglages passent dans « À corriger » et dans le menu du compte.</p>
+  </nav>
+
+  <main>
+    <!-- AUJOURD'HUI -->
+    <section class="screen on" id="today">
+      <div><p class="eyebrow">Jeudi 12 novembre · <span class="cl">1NSI1</span></p><h1>Bonjour. Prochain cours à 10 h, salle info.</h1></div>
+      <div class="card hot row sp">
+        <div><span class="pill a">Dans 25 min</span> <b>Évaluation « Le food truck »</b> · 4 exercices · 1 h<p class="k">S'ouvrira toute seule à 10 h pour la 1NSI1 (23 élèves).</p></div>
+        <div class="row"><button class="btn">Voir le sujet</button><button class="btn p" data-go="live">Ouvrir le suivi en direct</button></div>
+      </div>
+      <h2>À traiter <small>chaque carte ouvre la file au bon endroit</small></h2>
+      <div class="grid g4">
+        <button class="card" data-go="todo" style="text-align:left"><p class="k">Notes à valider</p><p class="big">14</p><p class="k">Interro du 10/11</p></button>
+        <button class="card" data-go="todo" style="text-align:left"><p class="k">Réponses écrites</p><p class="big">6</p><p class="k">la plus ancienne : il y a 3 j</p></button>
+        <button class="card" data-go="todo" style="text-align:left"><p class="k">Messages</p><p class="big">2</p><p class="k">non lus</p></button>
+        <button class="card" data-go="todo" style="text-align:left"><p class="k">Bugs signalés</p><p class="big">1</p><p class="k">sur une fiche d'exercices</p></button>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h2>Élèves à surveiller <small>calculé tout seul</small></h2>
+          <ul class="lines">
+            <li><span><b>Élève 07</b> · aucune activité depuis 9 jours</span><span><button class="btn" data-go="student">Fiche</button></span></li>
+            <li><span><b>Élève 15</b> · 3 collages extérieurs cette semaine</span><span><button class="btn" data-go="student">Fiche</button></span></li>
+            <li><span><b>Élève 21</b> · devoir de lundi pas rendu</span><span><button class="btn" data-go="student">Fiche</button></span></li>
+          </ul></div>
+        <div class="card"><h2>Cette semaine</h2>
+          <ul class="lines">
+            <li><span>Défi du lundi · 19 / 23 réussis</span><span>terminé</span></li>
+            <li><span>Devoir : fiche boucles, ex. 2.1 à 2.4</span><span>pour vendredi</span></li>
+            <li><span>DS fonctions et listes</span><span>mardi 17</span></li>
+          </ul></div>
+      </div>
+    </section>
+
+    <!-- EN CLASSE -->
+    <section class="screen" id="live">
+      <div class="row sp"><div><p class="eyebrow">En classe · <span class="cl">1NSI1</span></p><h1>Le food truck <span class="pill ok">ouverte</span></h1></div>
+        <div class="row"><span class="big">37:12</span><button class="btn">Projeter le chrono</button><button class="btn d">Fermer et ramasser</button></div></div>
+      <div class="grid g4">
+        <div class="card"><p class="k">Au travail</p><p class="big">17</p></div>
+        <div class="card hot"><p class="k">Verrouillés</p><p class="big">2</p></div>
+        <div class="card"><p class="k">Copies rendues</p><p class="big">3</p></div>
+        <div class="card"><p class="k">Pas commencé</p><p class="big">1</p></div>
+      </div>
+      <div class="grid g2">
+        <div><h2 style="margin-bottom:.5rem">La classe <small>un clic sur une tuile ouvre le code en train d'être écrit</small></h2>
+          <div class="seats" id="seats"></div></div>
+        <div class="card"><h2>Alertes <small>les plus récentes en haut</small></h2>
+          <ul class="lines">
+            <li><span><b>Élève 09</b> a changé d'onglet · code <b>K7QM2P</b></span><span><button class="btn p">Déverrouiller</button></span></li>
+            <li><span><b>Élève 18</b> a collé 14 lignes venues d'ailleurs</span><span><button class="btn">Voir</button></span></li>
+            <li><span><b>Élève 04</b> n'a rien écrit depuis 12 min</span><span><button class="btn">Voir</button></span></li>
+          </ul>
+          <p class="why" style="margin-top:.8rem">Aujourd'hui ces informations sont dans un tableau de 9 colonnes. Ici, l'œil va d'abord aux tuiles rouges.</p></div>
+      </div>
+    </section>
+
+    <!-- À CORRIGER -->
+    <section class="screen" id="todo">
+      <div><p class="eyebrow">À corriger · <span class="cl">1NSI1</span></p><h1>23 choses à traiter</h1></div>
+      <div class="chips"><button class="on">Tout · 23</button><button>Notes à valider · 14</button><button>Réponses écrites · 6</button><button>Messages · 2</button><button>Bugs · 1</button></div>
+      <div class="split">
+        <div class="card queue">
+          <button class="on"><b>Élève 03 · Interro du 10/11</b><small>Note automatique 13,25 · 1 exercice signalé</small></button>
+          <button><b>Élève 05 · Interro du 10/11</b><small>Note automatique 17 · rien de signalé</small></button>
+          <button><b>Élève 08 · Interro du 10/11</b><small>Note automatique 6,5 · 2 exercices signalés</small></button>
+          <button><b>Élève 12 · Réponse écrite</b><small>Fiche Von Neumann, question 3 · il y a 3 j</small></button>
+          <button><b>Élève 02 · Message</b><small>« Je n'arrive pas à ouvrir l'exercice 2.3 »</small></button>
+          <button><b>Bug · fiche listes</b><small>« Le bouton Vérifier ne répond pas »</small></button>
+        </div>
+        <div class="card grid">
+          <div class="row sp"><div><b>Élève 03</b> · Interro du 10/11 · Sujet A<p class="k">Exercice 2 sur 4 · Le stock (6 points)</p></div><span class="pill a">à valider</span></div>
+          <pre>def en_rupture(stock):
+    for nom in stock:
+        if stock[nom] == 0:
+            print(nom)</pre>
+          <div class="tests"><span>total_stock compte toutes les pièces.</span><span>total_stock({}) vaut 0.</span><span class="x">en_rupture donne les produits à 0. Attendu ['pommes'], obtenu None</span></div>
+          <div class="row sp">
+            <div class="row"><b>4 / 6</b><span class="k">note automatique</span><input class="pts" value="4,5" aria-label="Points"></div>
+            <div class="row"><button class="btn">Garder 4 <kbd>G</kbd></button><button class="btn p">Valider et suivante <kbd>V</kbd></button></div>
+          </div>
+          <p class="k"><kbd>J</kbd> <kbd>K</kbd> copie suivante ou précédente · <kbd>←</kbd> <kbd>→</kbd> exercice · <kbd>V</kbd> valider</p>
+        </div>
+      </div>
+      <p class="why">Corrections, notes d'évaluation, messages et bugs sont aujourd'hui sur 4 pages. Une seule file, triée par ancienneté, et le clavier pour enchaîner les copies.</p>
+    </section>
+
+    <!-- FICHE ÉLÈVE -->
+    <section class="screen" id="student">
+      <div class="split">
+        <div class="card queue">
+          <div class="search" style="margin:.3rem .3rem .5rem">🔎 <span>Filtrer les 23 élèves</span></div>
+          <button><b>Élève 01</b><small>vu aujourd'hui · moyenne 14,2</small></button>
+          <button><b>Élève 02</b><small>vu hier · moyenne 11</small></button>
+          <button class="on"><b>Élève 03</b><small>vu aujourd'hui · moyenne 12,6</small></button>
+          <button><b>Élève 04</b><small>vu il y a 2 j · moyenne 9,5</small></button>
+          <button><b>Élève 05</b><small>vu aujourd'hui · moyenne 16,8</small></button>
+          <button><b>Élève 07</b><small>vu il y a 9 j · moyenne 8</small></button>
+        </div>
+        <div class="grid">
+          <div class="card row sp">
+            <div class="row"><span class="avatar">E3</span><div><h1 style="font-size:1.3rem">Élève 03</h1><p class="k">1NSI1 · dernière connexion aujourd'hui 8 h 12 · 46 exercices réussis</p></div></div>
+            <div class="row"><button class="btn">Écrire</button><button class="btn">Donner un devoir</button><button class="btn">⋯</button></div>
+          </div>
+          <div class="tabs"><button class="on">Vue d'ensemble</button><button>Activité</button><button>Code</button><button>Notes</button><button>Messages</button><button>Devoirs</button></div>
+          <div class="grid g3">
+            <div class="card"><p class="k">Moyenne des évaluations</p><p class="big">12,6</p><p class="k">médiane de la classe : 12</p></div>
+            <div class="card"><p class="k">Exercices cette semaine</p><p class="big">9</p><div class="bar"><i style="width:60%"></i></div></div>
+            <div class="card"><p class="k">Alertes</p><p class="big">1</p><p class="k">collage extérieur le 10/11</p></div>
+          </div>
+          <div class="card"><h2 style="margin-bottom:.6rem">Activité des 6 dernières semaines</h2><div class="heat" id="heat"></div></div>
+          <div class="card"><h2>Évaluations</h2>
+            <table><tr><th>Évaluation</th><th>Note</th><th>Classe (Q1 · médiane · Q3)</th><th></th></tr>
+              <tr><td>Interro du 10/11 · Food truck</td><td><b>13,25</b></td><td>8,5 · 12 · 15,25</td><td><span class="pill a">à valider</span></td></tr>
+              <tr><td>Interro du 14/10 · Concessionnaire</td><td><b>12</b></td><td>9 · 11,5 · 14</td><td><span class="pill ok">validée</span></td></tr></table></div>
+          <p class="why">Aujourd'hui, pour un même élève : Liste des élèves, Activité, Codes réussis et Corrections, plus une fenêtre de progression. Ici tout tient dans une fiche à onglets, ouverte depuis n'importe où (recherche, alerte, tuile de la classe).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRÉPARER -->
+    <section class="screen" id="plan">
+      <div class="row sp"><div><p class="eyebrow">Préparer · <span class="cl">1NSI1</span></p><h1>Semaine du 9 novembre</h1></div>
+        <div class="row"><button class="btn">◀</button><button class="btn">Semaine suivante ▶</button></div></div>
+      <div class="row"><span class="ev e">Évaluation, interro, DS</span><span class="ev d">Défi</span><span class="ev h">Devoir</span><span class="ev">Annonce</span></div>
+      <div class="week">
+        <div class="day"><h3>Lun. 9</h3><div class="ev d">Défi du lundi · 15 min</div><button class="add">+ ajouter</button></div>
+        <div class="day"><h3>Mar. 10</h3><div class="ev e">Interro · Food truck · 9 h</div><div class="ev">Annonce : apporter les écouteurs</div><button class="add">+ ajouter</button></div>
+        <div class="day"><h3>Mer. 11</h3><button class="add">+ ajouter</button></div>
+        <div class="day today"><h3>Jeu. 12 · aujourd'hui</h3><div class="ev e">Évaluation · 10 h</div><button class="add">+ ajouter</button></div>
+        <div class="day"><h3>Ven. 13</h3><div class="ev h">Devoir : boucles 2.1 à 2.4</div><button class="add">+ ajouter</button></div>
+      </div>
+      <p class="why">Annonces, Devoirs et dates, Défis et Évaluations sont 4 pages avec chacune sa liste. Un calendrier de la semaine montre tout ce que la classe a devant elle, et « + ajouter » crée l'élément au bon jour.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+  const show = (id) => {
+    document.querySelectorAll(".screen").forEach((s) => s.classList.toggle("on", s.id === id));
+    document.querySelectorAll("#nav button").forEach((b) => b.dataset.s === id ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current"));
+    window.scrollTo(0, 0);
+  };
+  document.querySelectorAll("#nav button").forEach((b) => b.addEventListener("click", () => show(b.dataset.s)));
+  document.querySelectorAll("[data-go]").forEach((b) => b.addEventListener("click", () => show(b.dataset.go)));
+  document.querySelectorAll("#classes button").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll("#classes button").forEach((o) => o.setAttribute("aria-pressed", o === b));
+    document.querySelectorAll(".cl").forEach((s) => (s.textContent = b.textContent));
+  }));
+  const seats = document.getElementById("seats");
+  for (let i = 1; i <= 23; i++) {
+    const kind = i === 9 || i === 14 ? "lock" : [3, 5, 11].includes(i) ? "done" : i === 22 ? "off" : "";
+    const written = kind === "done" ? 4 : kind === "off" ? 0 : (i * 7) % 4 + 1;
+    const state = kind === "lock" ? "Verrouillé · <code>" + (i === 9 ? "K7QM2P" : "R4TW9H") + "</code>" : kind === "done" ? "Copie rendue" : kind === "off" ? "Pas commencé" : "Exercice " + written + " en cours";
+    seats.insertAdjacentHTML("beforeend", `<div class="seat ${kind}"><b>Élève ${String(i).padStart(2, "0")}</b>${state}<div class="dots">${[1, 2, 3, 4].map((n) => `<i class="${n <= written ? "w" : ""}"></i>`).join("")}</div></div>`);
+  }
+  const heat = document.getElementById("heat");
+  for (let i = 0; i < 42; i++) heat.insertAdjacentHTML("beforeend", `<i class="${["", "l1", "", "l2", "l1", "l3", ""][(i * 5 + (i % 3)) % 7]}"></i>`);
+</script>
+</body>
+</html>
