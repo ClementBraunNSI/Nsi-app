@@ -5,6 +5,8 @@ import { createClient } from '@/utils/supabase/server';
 import { getAuthContext } from '@/lib/auth';
 import { gradeCopy, type CopyGrade, type GradedAnswer } from '@/lib/evaluation-grade';
 import { buildResult, sameResult, type EvaluationResult } from '@/lib/evaluation-result';
+// « EvaluationSummary » désigne déjà, plus bas, une ligne de la liste des évaluations : le bilan prend un autre nom ici.
+import { buildEvaluationSummary, type EvaluationSummary as InterrogationReport, type SummaryCopy } from '@/lib/evaluation-summary';
 import { parseEvaluationSubject, type EvaluationExercise, type EvaluationGrading } from '@/lib/evaluation-subject';
 import type { IncidentKind } from '@/lib/evaluation-guard';
 import { everyTestPassed, unexpectedRunReport, CHECK_UNAVAILABLE, type RunReport } from '@/lib/python-check';
@@ -540,6 +542,54 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
     rows,
     now: new Date().toISOString(),
   };
+}
+
+export type EvaluationSummaryPage = { title: string; status: EvaluationStatus; classes: string[]; summary: InterrogationReport };
+
+/**
+ * Bilan d'une interrogation : répartition des notes, exercices et tests les plus ratés, notions à retravailler.
+ * Calculé sur les copies rendues, avec la note du moment (validée ou non).
+ */
+export async function getEvaluationSummary(id: string): Promise<EvaluationSummaryPage | null> {
+  const ctx = await teacher();
+  if (!ctx) return null;
+  const { supabase } = ctx;
+  const { data: evaluation } = await supabase.from('evaluations').select('id, title, status, classes').eq('id', id).maybeSingle();
+  if (!evaluation) return null;
+
+  const columns = 'id, user_id, subject_id, status, evaluation_answers(exercise_id, code, tests_passed, tests_total, report, graded_at, manual_points, reviewed_at)';
+  const readAttempts = (list: string) => supabase.from('evaluation_attempts').select(list).eq('evaluation_id', id).eq('status', 'rendue');
+  const [{ data: subjects }, attemptsRead, { data: students }] = await Promise.all([
+    supabase.from('evaluation_subjects').select('id, label, exercises, grading').eq('evaluation_id', id),
+    readAttempts(columns),
+    evaluation.classes?.length
+      ? supabase.from('profiles').select('id, full_name').in('classe', evaluation.classes).eq('role', 'student')
+      : Promise.resolve({ data: [] as any[] }),
+  ]);
+  const attempts: any[] = (attemptsRead.error ? (await readAttempts(columns.replace(', manual_points, reviewed_at', ''))).data : attemptsRead.data) ?? [];
+
+  const names = new Map<string, string>((students ?? []).map((student: any) => [student.id, student.full_name || 'Élève']));
+  const unknown = attempts.map((attempt) => attempt.user_id).filter((userId: string) => !names.has(userId));
+  if (unknown.length) {
+    const { data: others } = await supabase.from('profiles').select('id, full_name').in('id', unknown);
+    for (const other of others ?? []) names.set(other.id, other.full_name || 'Élève');
+  }
+  const subjectById = new Map((subjects ?? []).map((subject: any) => [subject.id, subject]));
+
+  const copies: SummaryCopy[] = attempts.map((attempt) => {
+    const subject: any = subjectById.get(attempt.subject_id);
+    return {
+      studentId: attempt.user_id,
+      name: names.get(attempt.user_id) ?? 'Élève',
+      subjectId: attempt.subject_id,
+      subjectLabel: subject?.label ?? '',
+      exercises: gradableExercises(subject),
+      answers: gradedAnswers(attempt.evaluation_answers ?? []),
+    };
+  });
+  // Un élève qui a changé de classe garde sa copie : il compte dans l'effectif.
+  const roster = new Set([...(students ?? []).map((student: any) => student.id), ...attempts.map((attempt) => attempt.user_id)]);
+  return { title: evaluation.title, status: evaluation.status, classes: evaluation.classes ?? [], summary: buildEvaluationSummary(copies, roster.size) };
 }
 
 export type AttemptDetail = {

@@ -1,0 +1,232 @@
+/*
+ * Atelier d'une enquête : mise en page pour les écrans de salle de classe (21 à 24 pouces, 1600 à 1920 px de large).
+ * Sur ces écrans, tout tient dans la hauteur de la fenêtre, en trois colonnes : le dossier, l'atelier (blocs ou code),
+ * puis les résultats avec l'accusation dessous. Plus de défilement entre les blocs, le tableau et la réponse.
+ * Les règles sont préfixées par .enq-atelier : elles passent devant celles de globals.css quel que soit l'ordre de chargement.
+ */
+
+.enq-atelier .enq-stage,
+.enq-atelier .enq-results {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.enq-atelier .enq-accuse-goal {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.enq-atelier .enq-table td.is-short {
+  white-space: nowrap;
+}
+.enq-atelier .enq-accuse-goal svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--accent);
+}
+
+/* ---------- Ordinateur : en-tête sur une ligne, toute la largeur de l'écran ---------- */
+@media (min-width: 1024px) {
+  .enq-atelier {
+    max-width: none;
+    padding: 0.9rem 1.25rem 2rem;
+  }
+  .enq-atelier .enq-head {
+    gap: 0.5rem 1.25rem;
+    margin-bottom: 0.9rem;
+  }
+  .enq-atelier .enq-head-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.2rem 0.85rem;
+  }
+  .enq-atelier .enq-head-main h1 {
+    order: -1;
+    font-size: 1.4rem;
+  }
+  .enq-atelier .enq-eyebrow {
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+  }
+  .enq-atelier .enq-solved .enq-eyebrow {
+    padding: 0;
+    background: none;
+  }
+  .enq-atelier .enq-steps {
+    margin: 0;
+  }
+  .enq-atelier .enq-modes button {
+    padding: 0.4rem 0.8rem;
+  }
+  .enq-atelier .enq-modes button span {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .enq-atelier .enq-layout {
+    grid-template-columns: minmax(16rem, 19rem) minmax(0, 1fr);
+    gap: 1rem;
+  }
+  /* Entre 1024 et 1500 px : les résultats restent sous l'atelier, dont la hauteur suit celle de la fenêtre. */
+  .enq-atelier .enq-blockly-host {
+    height: clamp(20rem, calc(100dvh - 21rem), 34rem);
+  }
+  .enq-atelier .enq-editor-body {
+    height: clamp(14rem, calc(100dvh - 26rem), 26rem);
+  }
+}
+
+/* ---------- Écran de salle de classe : trois colonnes dans la hauteur de la fenêtre ---------- */
+@media (min-width: 1500px) and (min-height: 700px) {
+  .enq-atelier {
+    display: flex;
+    height: calc(100dvh - var(--sticky-top));
+    flex-direction: column;
+    padding: 0.75rem 1.25rem 1rem;
+  }
+  .enq-atelier .enq-head {
+    flex: none;
+    margin-bottom: 0.75rem;
+  }
+  .enq-atelier .enq-layout {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: clamp(19rem, 19vw, 23rem) minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .enq-atelier .enq-dossier {
+    position: static;
+    max-height: none;
+    min-height: 0;
+    padding-right: 0.25rem;
+  }
+  .enq-atelier .enq-work {
+    min-height: 0;
+  }
+  .enq-atelier .enq-mode {
+    display: grid;
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) clamp(30rem, 35vw, 44rem);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .enq-atelier .enq-stage,
+  .enq-atelier .enq-results {
+    min-height: 0;
+  }
+
+  /* Blocs : toute la largeur de la colonne, la requête SQL en bandeau dessous. */
+  .enq-atelier .enq-blockly {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  .enq-atelier .enq-blockly-host {
+    height: 100%;
+    min-height: 0;
+  }
+  .enq-atelier .enq-sql-preview {
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+  .enq-atelier .enq-sql-preview p {
+    padding: 0.4rem 0.9rem;
+  }
+  .enq-atelier .enq-sql-preview pre {
+    max-height: 8.5rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  /* Python et SQL : l'éditeur prend la hauteur disponible. */
+  .enq-atelier .enq-editor {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+  }
+  .enq-atelier .enq-editor-body {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+  .enq-atelier .enq-run {
+    flex: none;
+  }
+
+  /* Résultats : une seule zone qui défile, l'en-tête du tableau reste visible. */
+  .enq-atelier .enq-output {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 0 1rem 1rem;
+  }
+  .enq-atelier .enq-output > :first-child {
+    margin-top: 1rem;
+  }
+  .enq-atelier .enq-table-count {
+    position: sticky;
+    left: 0;
+  }
+  .enq-atelier .enq-table-scroll {
+    max-height: none;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+  }
+  .enq-atelier .enq-table th {
+    z-index: 1;
+    box-shadow: 0 1px 0 var(--border);
+  }
+  .enq-atelier .enq-console {
+    max-height: none;
+    flex: none;
+    font-size: 0.9rem;
+  }
+  .enq-atelier .enq-accuse {
+    flex: none;
+    padding: 0.9rem 1.1rem;
+  }
+  .enq-atelier .enq-accuse.is-solved,
+  .enq-atelier .enq-accuse.is-twist {
+    max-height: 60%;
+    overflow-y: auto;
+  }
+  .enq-atelier .enq-solved-fox {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+
+  /* Lu de plus loin qu'à la maison : textes un peu plus grands. */
+  .enq-atelier .enq-card {
+    font-size: 0.95rem;
+  }
+  .enq-atelier .enq-tables > li > button {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.92rem;
+  }
+  .enq-atelier .enq-columns {
+    font-size: 0.86rem;
+  }
+  .enq-atelier .enq-table table {
+    font-size: 0.9rem;
+  }
+  .enq-atelier .enq-table th {
+    font-size: 0.8rem;
+  }
+  .enq-atelier .enq-table th,
+  .enq-atelier .enq-table td {
+    padding: 0.45rem 0.55rem;
+  }
+  .enq-atelier .enq-notes {
+    font-size: 0.92rem;
+  }
+}

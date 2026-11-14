@@ -11,10 +11,10 @@ export default async function AdminEvaluationPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ onglet?: string; copie?: string }>;
+  searchParams: Promise<{ onglet?: string; copie?: string; bilan?: string }>;
 }) {
   const { id } = await params;
-  const { onglet, copie } = await searchParams;
+  const { onglet, copie, bilan } = await searchParams;
   const [board, classes] = await Promise.all([getEvaluationBoard(id), listClasses()]);
   if (!board) {
     return <ResourceNotFound title="Évaluation introuvable" description="Elle a peut-être été supprimée." actionHref="/admin/evaluations" actionLabel="Toutes les évaluations" />;
@@ -27,6 +27,7 @@ export default async function AdminEvaluationPage({
         classes={classes}
         initialTab={tab}
         initialAttempt={copie && board.rows.some((row) => row.attemptId === copie) ? copie : null}
+        initialSummary={bilan === "1" && board.evaluation.status === "fermee"}
       />
     </div>
   );

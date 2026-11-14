@@ -1,6 +1,8 @@
 import type { QueryResult } from "@/lib/enquetes/engines";
 
 const MAX_ROWS = 200;
+// Une valeur courte (date, nom, nombre) reste sur une ligne : « 2026-10-12 » ne se coupe pas au tiret.
+const SHORT_CELL = 12;
 
 export function ResultTable({ result }: { result: QueryResult }) {
   const shown = result.rows.slice(0, MAX_ROWS);
@@ -24,7 +26,9 @@ export function ResultTable({ result }: { result: QueryResult }) {
             {shown.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {row.map((cell, cellIndex) => (
-                  <td key={cellIndex}>{cell === null ? <em>vide</em> : String(cell)}</td>
+                  <td key={cellIndex} className={cell !== null && String(cell).length <= SHORT_CELL ? "is-short" : undefined}>
+                    {cell === null ? <em>vide</em> : String(cell)}
+                  </td>
                 ))}
               </tr>
             ))}

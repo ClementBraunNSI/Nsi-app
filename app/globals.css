@@ -157,7 +157,7 @@ body::before {
   view-transition-name: page-main;
 }
 
-/* Hauteur de l'en-tête, et décalage des éléments collants placés dessous.
+/* Hauteur de l'en-tête (marge du haut comprise), et décalage des éléments collants placés dessous.
    Téléphone : en-tête plus bas. Téléphone en paysage : il défile avec la page pour laisser la hauteur au contenu. */
 :root {
   --header-h: 5rem;
@@ -166,7 +166,7 @@ body::before {
 
 @media (max-width: 767px) {
   :root {
-    --header-h: 3.75rem;
+    --header-h: 4.25rem;
   }
 }
 
@@ -177,39 +177,67 @@ body::before {
   }
 }
 
+/* En-tête : une barre flottante, coiffée de la tête de renard dont les oreilles dépassent au-dessus.
+   La marge du haut fait partie de --header-h, pour que les éléments collants se placent toujours dessous. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
   view-transition-name: site-header;
   height: var(--header-h);
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  padding: 1.5rem 1.25rem 0;
+  background: linear-gradient(to bottom, var(--bg) 45%, transparent);
 }
 
 @media (orientation: landscape) and (max-height: 540px) {
   .site-header {
     position: relative;
+    padding-top: 0.5rem;
   }
 }
 
 .site-header-inner {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  position: relative;
+  max-width: 76rem;
   height: 100%;
+  margin: 0 auto;
+  padding: 0 0.625rem 0 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
 }
 
 .site-brand {
+  position: relative;
   display: flex;
   min-width: 0;
   flex-shrink: 0;
+  align-self: stretch;
   align-items: center;
-  gap: 0.75rem;
+  padding-left: 6.5rem;
+}
+
+/* La tête de l'onglet du navigateur (FoxHead), à cheval sur le haut de la barre. */
+.site-head {
+  position: absolute;
+  left: 0.5rem;
+  top: -0.95rem;
+  width: 5.5rem;
+  height: 4.6rem;
+  filter: drop-shadow(0 8px 8px rgba(20, 17, 14, 0.2));
+  transform-origin: 50% 90%;
+}
+
+.site-head svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .site-brand-name {
@@ -220,19 +248,52 @@ body::before {
   white-space: nowrap;
 }
 
+.site-nav-link {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: var(--muted);
+  transition: color 150ms, background-color 150ms;
+}
+
+.site-nav-link:hover {
+  color: var(--accent);
+}
+
+.site-nav-link.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
 .site-header-mobile {
   display: none;
 }
 
 @media (max-width: 767px) {
+  .site-header {
+    padding: 1rem 0.5rem 0;
+  }
+
   .site-header-inner {
-    padding: 0 0.75rem 0 1rem;
+    padding: 0 0.375rem 0 0;
     gap: 0.5rem;
+    border-radius: 16px;
   }
 
   .site-brand {
     flex-shrink: 1;
-    gap: 0.5rem;
+    padding-left: 4.75rem;
+  }
+
+  .site-head {
+    left: 0.3rem;
+    top: -0.7rem;
+    width: 4.125rem;
+    height: 3.45rem;
   }
 
   .site-brand-name {
@@ -247,7 +308,33 @@ body::before {
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    gap: 0.375rem;
+    gap: 0.25rem;
+  }
+}
+
+/* Petit téléphone : la tête rapetisse pour que le nom du site reste entier. */
+@media (max-width: 359px) {
+  .site-brand {
+    padding-left: 3.9rem;
+  }
+
+  .site-head {
+    width: 3.4rem;
+    height: 2.85rem;
+    top: -0.45rem;
+  }
+}
+
+/* Téléphone en paysage : barre et tête plus basses. */
+@media (orientation: landscape) and (max-height: 540px) {
+  .site-brand {
+    padding-left: 4.75rem;
+  }
+
+  .site-head {
+    width: 3.9rem;
+    height: 3.25rem;
+    top: -0.45rem;
   }
 }
 
@@ -257,8 +344,8 @@ body::before {
   min-height: 2.5rem;
   padding: 0 0.8rem;
   border-radius: 0.75rem;
-  background: var(--fg);
-  color: var(--bg);
+  background: var(--accent);
+  color: var(--accent-fg);
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -290,11 +377,10 @@ body::before {
 
 .site-menu-button {
   display: grid;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
   place-items: center;
-  border-radius: 0.85rem;
-  border: 1px solid var(--border);
+  border-radius: 0.75rem;
   color: var(--fg);
   transition: background-color 150ms;
 }
@@ -408,40 +494,6 @@ body::before {
 .mobile-menu-secondary {
   border: 1px solid var(--border);
   color: var(--muted);
-}
-
-.site-logo {
-  --site-fox-h: 2.75rem;
-  --site-fox-w: 2.75rem;
-  --site-fox-fit: cover;
-  --site-fox-pos: 100% 0%;
-  display: block;
-  flex-shrink: 0;
-  background: none;
-  border-radius: 0;
-  object-fit: var(--site-fox-fit);
-  object-position: var(--site-fox-pos);
-}
-
-@media (min-width: 768px) {
-  .site-logo {
-    --site-fox-h: 3.9rem;
-    --site-fox-w: auto;
-    --site-fox-fit: contain;
-    --site-fox-pos: center;
-  }
-}
-
-@media (min-width: 1024px) {
-  .site-logo {
-    --site-fox-h: 4.7rem;
-  }
-}
-
-@media (orientation: landscape) and (max-height: 540px) {
-  .site-logo {
-    --site-fox-h: 2.9rem;
-  }
 }
 
 .home-title {
@@ -2897,14 +2949,13 @@ html[data-nav-dir="back"]::view-transition-new(page-main) {
   }
 
   /* Renard des en-têtes de page : respiration lente */
-  /* Renard du logo : petit mouvement de tête au survol */
-  .site-logo {
+  /* Tête de renard du logo : elle penche au survol */
+  .site-head {
     transition: transform 280ms var(--ease-out);
-    transform-origin: 60% 80%;
   }
 
-  a:hover > .site-logo {
-    transform: rotate(-4deg) translateY(-1px);
+  a:hover > .site-head {
+    transform: rotate(-7deg);
   }
 
   /* Renard de l'accueil : flottement très lent en plus du survol */
@@ -5120,6 +5171,71 @@ input, textarea {
 .adm-eval-shot img { display: block; width: 100%; }
 .adm-eval-zoom { position: fixed; inset: 0; z-index: 180; display: grid; place-items: center; padding: 1.5rem; background: rgba(15, 23, 42, 0.85); cursor: zoom-out; }
 .adm-eval-zoom img { max-width: 100%; max-height: 100%; border-radius: 0.5rem; }
+
+/* Bilan d'une interrogation terminée : fenêtre centrée, en-tête et pied fixes, corps qui défile. */
+/* Rendue dans le body, hors de .admin-shell : elle porte elle-même les couleurs de l'admin et celles de ses boutons. */
+.adm-sum { position: fixed; inset: 0; z-index: 170; display: grid; place-items: center; padding: 1rem; --admin-ok: #15803d; --admin-ok-soft: #dcfce7; --admin-warn: #b91c1c; --admin-warn-soft: #fee2e2; }
+.dark .adm-sum { --admin-ok: #4ade80; --admin-ok-soft: #14301f; --admin-warn: #fca5a5; --admin-warn-soft: #3a1818; }
+.adm-sum .adm-eval-secondary { border-color: var(--border); background: var(--surface); color: var(--fg); }
+.adm-sum .adm-eval-primary { color: var(--accent-fg); }
+.adm-sum .adm-eval-icon { color: var(--muted); }
+.adm-sum .adm-eval-icon:hover { background: var(--surface-2); }
+.adm-sum-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.45); }
+.adm-sum-panel { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; width: min(52rem, 100%); max-height: min(92dvh, 58rem); border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--fg); box-shadow: 0 30px 70px -30px rgba(15, 23, 42, 0.55); overflow: hidden; }
+.adm-sum-panel > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.4rem 0.9rem; border-bottom: 1px solid var(--border); }
+.adm-sum-panel > header h2 { margin: 0; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+.adm-sum-panel > footer { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; padding: 0.8rem 1.4rem; border-top: 1px solid var(--border); background: var(--surface); }
+.adm-sum-body { display: grid; gap: 1.4rem; align-content: start; padding: 1.1rem 1.4rem 1.4rem; overflow-y: auto; }
+.adm-sum-empty { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin: 0; padding: 3rem 1.4rem; color: var(--muted); }
+.adm-sum-lead { margin: 0; font-size: 0.92rem; color: var(--muted); }
+.adm-sum-warn { display: flex; align-items: flex-start; gap: 0.45rem; margin: -0.6rem 0 0; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); background: var(--accent-soft); font-size: 0.88rem; color: var(--fg); }
+.adm-sum-warn svg { flex-shrink: 0; margin-top: 0.15rem; color: var(--accent); }
+.adm-sum-body section { display: grid; gap: 0.7rem; min-width: 0; }
+.adm-sum-body h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.5rem; margin: 0; font-size: 1.05rem; font-weight: 650; color: var(--fg); }
+.adm-sum-body h3 small { font-size: 0.8rem; font-weight: 400; color: var(--subtle); }
+.adm-sum-kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.5rem; margin: 0; }
+.adm-sum-kpis > div { padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); background: var(--surface-2); }
+.adm-sum-kpis dt { font-size: 0.75rem; color: var(--muted); }
+.adm-sum-kpis dd { margin: 0.1rem 0 0; font-size: 1.25rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+.adm-sum-kpis dd small { font-size: 0.75rem; font-weight: 500; color: var(--muted); }
+.adm-sum-kpis .is-alert dd { color: var(--admin-warn); }
+/* Répartition des notes : la hauteur de chaque barre vient de son style, le nombre est au-dessus, la tranche en dessous. */
+.adm-sum-hist { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.5rem; padding: 0 0.25rem; }
+.adm-sum-hist > div { position: relative; box-sizing: content-box; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 7.5rem; padding: 1.5rem 0 1.6rem; background: linear-gradient(var(--border), var(--border)) no-repeat 0 calc(100% - 1.6rem) / 100% 1px; }
+.adm-sum-hist b { flex-shrink: 0; font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--fg); }
+.adm-sum-hist i { flex-shrink: 0; width: min(60%, 3.5rem); min-height: 2px; border-radius: 4px 4px 0 0; background: var(--accent); }
+.adm-sum-hist span { position: absolute; right: 0; bottom: 0; left: 0; font-size: 0.75rem; text-align: center; color: var(--muted); }
+.adm-sum-exercises, .adm-sum-tests { display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+.adm-sum-exercises li { display: grid; gap: 0.3rem; padding: 0.7rem 0.85rem; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.adm-sum-ex-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.adm-sum-ex-head b { min-width: 0; font-size: 0.92rem; font-weight: 650; overflow-wrap: anywhere; }
+.adm-sum-ex-head b small { font-weight: 400; color: var(--subtle); }
+.adm-sum-ex-head span { flex-shrink: 0; font-size: 0.92rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+.adm-sum-bar { height: 0.45rem; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.adm-sum-bar i { display: block; height: 100%; border-radius: 99px; background: var(--accent); }
+.adm-sum-exercises li.is-low { border-color: color-mix(in srgb, var(--admin-warn) 45%, var(--border)); }
+.adm-sum-exercises li.is-low .adm-sum-ex-head span { color: var(--admin-warn); }
+.adm-sum-exercises li.is-low .adm-sum-bar i { background: var(--admin-warn); }
+.adm-sum-exercises p { margin: 0; font-size: 0.82rem; color: var(--muted); }
+.adm-sum-exercises p.adm-sum-functions { color: var(--admin-warn); }
+.adm-sum-body code { padding: 0 0.3rem; border-radius: 0.3rem; background: var(--surface-2); font-size: 0.85em; color: var(--fg); }
+.adm-sum-tests li { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 0.45rem 0.75rem; border-radius: var(--radius-sm); background: var(--surface-2); font-size: 0.88rem; }
+.adm-sum-tests li span { display: grid; min-width: 0; overflow-wrap: anywhere; }
+.adm-sum-tests small { font-size: 0.76rem; color: var(--muted); }
+.adm-sum-tests li > b { flex-shrink: 0; font-variant-numeric: tabular-nums; color: var(--admin-warn); }
+.adm-sum-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; }
+.adm-sum-chips > * { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.7rem; border: 1px solid var(--border); border-radius: 99px; background: var(--surface); font-size: 0.85rem; color: var(--fg); }
+.adm-sum-chips b { font-variant-numeric: tabular-nums; color: var(--accent); }
+.adm-sum-chips a:hover { border-color: var(--accent); }
+@media (max-width: 640px) {
+  .adm-sum { padding: 0.5rem; }
+  .adm-sum-panel > header, .adm-sum-panel > footer { padding-right: 1rem; padding-left: 1rem; }
+  .adm-sum-body { padding: 1rem; }
+  .adm-sum-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .adm-sum-hist > div { height: 6rem; }
+  .adm-sum-panel > footer { justify-content: stretch; }
+  .adm-sum-panel > footer > * { flex: 1 1 auto; justify-content: center; }
+}
 .adm-eval-answer { padding-top: 1rem; border-top: 1px solid #f1f5f9; }
 .adm-eval-answer-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
 .adm-eval-answer-head h3 { margin: 0 !important; }

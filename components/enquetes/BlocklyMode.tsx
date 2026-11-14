@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import * as Blockly from "blockly/core";
 import * as Fr from "blockly/msg/fr";
 import { Loader2, Play, RotateCcw } from "lucide-react";
@@ -44,8 +44,14 @@ function storageKey(enquete: Enquete) {
   return `enquete-${enquete.slug}-blockly`;
 }
 
-/** Mode Blockly : on assemble une recherche avec des blocs, la requête SQL correspondante s'affiche à côté. */
-export default function BlocklyMode({ enquete }: { enquete: Enquete }) {
+// Sur un écran de salle de classe (1500 px et plus), les blocs s'affichent en taille réelle : ils se lisent de plus loin.
+const WIDE_SCREEN = 1500;
+
+/**
+ * Mode Blockly : on assemble une recherche avec des blocs, la requête SQL correspondante s'affiche dessous.
+ * `aside` (le formulaire d'accusation) est placé sous les résultats, dans la même colonne.
+ */
+export default function BlocklyMode({ enquete, aside }: { enquete: Enquete; aside?: ReactNode }) {
   const host = useRef<HTMLDivElement>(null);
   const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null);
   const [sql, setSql] = useState<string | null>(null);
@@ -67,7 +73,7 @@ export default function BlocklyMode({ enquete }: { enquete: Enquete }) {
       sounds: false,
       media: BLOCKLY_MEDIA_URL,
       grid: { spacing: 24, length: 3, colour: dark ? "#263041" : "#efe7da", snap: true },
-      zoom: { controls: true, wheel: false, startScale: 0.85, maxScale: 1.6, minScale: 0.5, scaleSpeed: 1.15 },
+      zoom: { controls: true, wheel: false, startScale: window.innerWidth >= WIDE_SCREEN ? 1 : 0.85, maxScale: 1.6, minScale: 0.5, scaleSpeed: 1.15 },
       move: { scrollbars: true, drag: true, wheel: true },
     });
     workspaceRef.current = workspace;
@@ -141,6 +147,7 @@ export default function BlocklyMode({ enquete }: { enquete: Enquete }) {
 
   return (
     <div className="enq-mode">
+      <div className="enq-stage">
       <div className="enq-blockly">
         <div ref={host} className="enq-blockly-host" />
         <aside className="enq-sql-preview" aria-label="Requête SQL fabriquée par les blocs">
@@ -158,13 +165,17 @@ export default function BlocklyMode({ enquete }: { enquete: Enquete }) {
           Lancer la recherche
         </button>
       </div>
+      </div>
 
+      <div className="enq-results">
       <section className="enq-output" aria-live="polite">
         {!outcome ? <p className="enq-muted">Assemble les blocs, puis lance la recherche : le résultat s'affichera ici.</p> : null}
         {outcome?.error ? <p className="enq-error">{outcome.error}</p> : null}
         {outcome?.results.map((result, index) => <ResultTable key={index} result={result} />)}
         {outcome && !outcome.error && outcome.results.length === 0 ? <p className="enq-muted">Aucune ligne ne correspond.</p> : null}
       </section>
+      {aside}
+      </div>
     </div>
   );
 }

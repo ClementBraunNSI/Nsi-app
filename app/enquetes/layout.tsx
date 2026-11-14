@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+// Mise en page de l'atelier pour les écrans de salle de classe (règles préfixées par .enq-atelier).
+import "./atelier.css";
 
 export const metadata: Metadata = {
   title: "Enquêtes de la forêt",

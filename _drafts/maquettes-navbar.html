@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquettes de la barre de navigation</title>
+<style>
+  /* Variables reprises de app/globals.css. Aucune ressource externe : police du système si Geist n'est pas installée. */
+  :root {
+    --bg: #f7f4ef; --surface: #fffcf8; --surface-2: #f1ece4;
+    --fg: #14110e; --muted: #5c564e; --subtle: #8a8278;
+    --border: color-mix(in srgb, #14110e 10%, transparent);
+    --accent: #ea580c; --accent-fg: #ffffff; --accent-soft: #fff1e6;
+    --radius: 1.15rem; --radius-sm: .7rem;
+    --inset: inset 0 1px 0 rgba(255,255,255,.72);
+    --shadow: var(--inset), 0 1px 1px rgba(20,17,14,.03), 0 22px 50px -32px rgba(20,17,14,.28);
+    --ease: cubic-bezier(.22,1,.36,1);
+    --ink: #1a1510; --ink-fg: #f6f1ea; --ink-muted: #b9b1a6; --ink-line: rgba(255,255,255,.1);
+  }
+  :root.dark {
+    --bg: #0c1017; --surface: #161c27; --surface-2: #1e2633;
+    --fg: #f6f1ea; --muted: #c4bdb3; --subtle: #8b847b;
+    --border: color-mix(in srgb, #f6f1ea 12%, transparent);
+    --accent: #fb923c; --accent-fg: #1a1204; --accent-soft: #2a2013;
+    --inset: inset 0 1px 0 rgba(255,255,255,.06);
+    --shadow: var(--inset), 0 18px 44px -30px rgba(0,0,0,.7);
+    --ink: #05080d; --ink-fg: #f6f1ea; --ink-muted: #a9a297; --ink-line: rgba(255,255,255,.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: Geist, "Segoe UI", system-ui, sans-serif; letter-spacing: -.011em; }
+  img, svg { display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  .ic { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+  /* ----- habillage de la page de maquettes ----- */
+  .switcher { position: sticky; top: 0; z-index: 60; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 10px; background: #1d1712; }
+  .switcher button { font-weight: 600; font-size: 14px; border-radius: 999px; padding: 8px 16px; background: #3a312a; color: #e9e4dc; }
+  .switcher button.on { background: #ea580c; color: #fff; }
+  .switcher .theme { margin-left: 18px; background: #e9e4dc; color: #1d1712; }
+  .page { max-width: 1320px; margin: 0 auto; padding: 28px 20px 80px; }
+  .mock { display: none; } .mock.on { display: block; }
+  .mock h1 { font-size: 26px; font-weight: 600; letter-spacing: -.025em; }
+  .mock h1 span { color: var(--accent); }
+  .why { max-width: 760px; margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--muted); }
+  .why b { color: var(--fg); font-weight: 600; }
+  .label { margin: 26px 0 8px; font-size: 12px; font-weight: 600; color: var(--subtle); }
+  .frame { position: relative; border: 1px solid var(--border); border-radius: 14px; background: var(--bg); overflow: hidden; box-shadow: var(--shadow); }
+  .stage { width: 1280px; height: 250px; overflow: hidden; }
+  .phones { display: flex; flex-wrap: wrap; gap: 20px; }
+  .phone { width: 375px; }
+  .phone .stage { width: 375px; height: 230px; }
+
+  /* Un morceau de page sous la barre, pour juger l'ensemble. */
+  .under { max-width: 80rem; margin: 0 auto; padding: 44px 32px 0; }
+  .under i { display: inline-flex; font-style: normal; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); border-radius: 999px; padding: 6px 14px; }
+  .under b { display: block; margin-top: 16px; font-size: 64px; font-weight: 600; line-height: 1; letter-spacing: -.035em; }
+  .under b em { font-style: normal; color: var(--accent); }
+  .phone .under { padding: 24px 16px 0; }
+  .phone .under b { font-size: 40px; }
+
+  /* ----- structure commune des barres ----- */
+  .nb-in { max-width: 80rem; margin: 0 auto; height: 100%; display: flex; align-items: center; gap: 16px; padding: 0 24px; }
+  .nb-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; font-size: 16px; font-weight: 600; letter-spacing: -.025em; white-space: nowrap; }
+  .nb-brand b { font-weight: 600; color: var(--accent); }
+  .nb-brand small { font-size: inherit; font-weight: 600; color: var(--muted); }
+  .nb-links { display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+  .nb-links a { position: relative; display: inline-flex; align-items: center; gap: 6px; }
+  .nb-links a.on { color: var(--accent); }
+  .nb-links .ic { display: none; width: 16px; height: 16px; }
+  .badge { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--accent); color: var(--accent-fg); font-size: 11px; font-weight: 700; }
+  .nb-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 14px; font-weight: 600; }
+  .eye { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; color: var(--muted); }
+  .login { padding: 10px 20px; border-radius: 12px; background: var(--fg); color: var(--bg); }
+  .resume { padding: 8px 12px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); font-size: 12px; }
+  .avatar { display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 12px; border: 1px solid var(--border); }
+  .avatar span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); font-size: 12px; font-weight: 700; }
+  .logout { display: flex; align-items: center; gap: 8px; padding: 10px; border-radius: 12px; color: var(--muted); font-size: 12px; }
+  .burger { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--border); }
+  .fox-walk { height: 75px; width: auto; }
+  .fox-crop { width: 44px; height: 44px; object-fit: cover; object-position: 100% 0; }
+  .fox-head { width: 26px; height: 26px; }
+  .phone .nb-in { padding: 0 12px 0 16px; gap: 8px; }
+  .phone .nb-brand { font-size: 15px; gap: 8px; margin-right: auto; }
+  .phone .login { padding: 10px 13px; }
+  .phone .avatar { padding: 6px; }
+
+  /* ============ A : la barre actuelle (référence) ============ */
+  .nb-a { height: 80px; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .nb-a .nb-links { margin-left: auto; }
+  .nb-a .nb-actions { margin-left: 12px; }
+  .phone .nb-a { height: 60px; }
+
+  /* ============ B : barre flottante ============ */
+  .nb-b { padding: 12px 20px 0; }
+  .nb-b .nb-in { max-width: 76rem; height: 60px; padding: 0 10px 0 16px; border-radius: 20px; border: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 86%, transparent); backdrop-filter: blur(14px); box-shadow: var(--shadow); }
+  .nb-b .fox-walk { height: 46px; }
+  .nb-b .nb-links { margin-left: auto; gap: 4px; }
+  .nb-b .nb-links a { padding: 7px 12px; border-radius: 999px; }
+  .nb-b .nb-links a.on { background: var(--accent-soft); }
+  .nb-b .login { border-radius: 14px; background: var(--accent); color: var(--accent-fg); }
+  .nb-b .logout span { display: none; }
+  .phone .nb-b { padding: 8px 8px 0; }
+  .phone .nb-b .nb-in { height: 54px; padding: 0 6px 0 10px; border-radius: 18px; }
+  .phone .nb-b .burger { width: 40px; height: 40px; border: 0; }
+
+  /* ============ C : le renard marche sur la ligne ============ */
+  .nb-c { position: relative; z-index: 2; height: 64px; border-bottom: 2px solid color-mix(in srgb, var(--accent) 55%, transparent); background: var(--surface); }
+  .nb-c .nb-brand { align-self: flex-start; }
+  .nb-c .fox-walk { height: 82px; margin-top: 4px; }
+  .nb-c .nb-brand .txt { align-self: flex-start; margin-top: 21px; }
+  .nb-c .nb-in { gap: 12px; }
+  .nb-c .nb-links { margin-left: auto; gap: 20px; }
+  .nb-c .nb-links a.on::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: -9px; height: 7px; background: no-repeat center / 100% 100% url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5C20 2 80 2 99 5' stroke='%23ea580c' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); }
+  .nb-c .nb-actions { margin-left: 8px; }
+  .nb-c .login { border-radius: 999px; }
+  .phone .nb-c { height: 56px; }
+  /* Téléphone : seul l'avant du renard reste visible, pour laisser la place au nom du site. */
+  .phone .nb-c .fox-walk { width: 48px; height: 58px; margin-top: 6px; object-fit: cover; object-position: 100% 50%; }
+  .phone .nb-c .nb-brand .txt { margin-top: 18px; }
+
+  /* ============ D : sélecteur segmenté au centre ============ */
+  .nb-d { height: 72px; border-bottom: 1px solid var(--border); background: var(--bg); }
+  .nb-d .nb-brand { gap: 10px; }
+  .nb-d .mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+  .nb-d .nb-brand .txt { display: flex; flex-direction: column; line-height: 1.2; }
+  .nb-d .nb-brand small { font-size: 12px; font-weight: 500; color: var(--subtle); letter-spacing: 0; }
+  .nb-d .nb-links { margin: 0 auto; gap: 2px; padding: 4px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--border); }
+  .nb-d .nb-links a { padding: 7px 14px; border-radius: 10px; }
+  .nb-d .nb-links a.on { background: var(--surface); color: var(--fg); box-shadow: var(--shadow); }
+  .nb-d .eye { border: 1px solid var(--border); background: var(--surface); }
+  .nb-d .login { background: var(--accent); color: var(--accent-fg); }
+  .nb-d .logout span { display: none; }
+  .phone .nb-d { height: 60px; }
+  .phone .nb-d .mark { width: 38px; height: 38px; border-radius: 12px; }
+  .phone .nb-d .nb-brand small { display: none; }
+
+  /* ============ E : bandeau encre ============ */
+  .nb-e { height: 72px; background: var(--ink); color: var(--ink-fg); border-bottom: 1px solid var(--ink-line); }
+  .nb-e .fox-walk { height: 64px; }
+  .nb-e .nb-brand b { color: #fb923c; }
+  .nb-e .nb-brand small { color: var(--ink-muted); }
+  .nb-e.is-student .nb-brand small { display: none; }
+  .nb-e .nb-in { gap: 12px; }
+  .nb-e .nb-links { margin-left: auto; color: var(--ink-muted); gap: 16px; }
+  .nb-e .nb-links .ic { display: block; }
+  .nb-e .nb-links a.on { color: #fb923c; }
+  .nb-e .nb-actions { margin-left: 6px; gap: 6px; }
+  .nb-e .eye, .nb-e .logout { color: var(--ink-muted); }
+  .nb-e .login { background: #fb923c; color: #1a1204; }
+  .nb-e .resume { background: rgba(251,146,60,.16); color: #fdba74; }
+  .nb-e .avatar { border-color: var(--ink-line); }
+  .nb-e .avatar span, .nb-e .badge { background: #fb923c; color: #1a1204; }
+  .nb-e .burger { border-color: var(--ink-line); }
+  .phone .nb-e { height: 60px; }
+</style>
+</head>
+<body>
+
+<!-- Icônes (tracés Lucide, déjà utilisés par le site) et tête de renard (components/ui/FoxHead.tsx). -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></symbol>
+  <symbol id="i-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/><path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14"/><path d="M8 6v8"/></symbol>
+  <symbol id="fox-head" viewBox="730 285 641 535">
+    <path d="M818 292L983 437L848 560Q818 430 818 292Z" fill="#E4742B"/><path d="M835 337Q900 425 947 468L880 530Q852 450 835 337Z" fill="#281E1E"/>
+    <path d="M1283 292L1119 437L1254 560Q1283 430 1283 292Z" fill="#E4742B"/><path d="M1266 337Q1201 425 1155 468L1222 530Q1249 450 1266 337Z" fill="#281E1E"/>
+    <polygon points="735,662 1366,662 1080,815 1023,815" fill="#F9F6E3"/>
+    <polygon points="983,437 1051,437 1051,760 1028,766 995,660 968,613 912,598 862,634 735,662" fill="#EE973B"/>
+    <polygon points="1119,437 1051,437 1051,760 1074,766 1107,660 1133,613 1190,598 1240,634 1366,662" fill="#E4742B"/>
+    <polygon points="862,634 912,598 938,643 995,660 1028,766 980,700" fill="#C24F2E"/><polygon points="1240,634 1190,598 1164,643 1107,660 1074,766 1122,700" fill="#C24F2E"/>
+    <polygon points="912,598 968,613 984,630 995,660 938,643" fill="#281E1E"/><polygon points="1190,598 1133,613 1117,630 1107,660 1164,643" fill="#281E1E"/>
+    <polygon points="735,662 862,634 980,700 1000,745 1023,772 1051,797 1023,812" fill="#F9F6E3"/><polygon points="1366,662 1240,634 1122,700 1102,745 1080,772 1051,797 1080,812" fill="#F9F6E3"/>
+    <path d="M1030 762L1051 758L1072 762L1080 772Q1066 790 1051 797Q1036 790 1023 772Z" fill="#281E1E"/><polygon points="1023,810 1051,797 1080,810 1072,815 1030,815" fill="#281E1E"/>
+  </symbol>
+</svg>
+
+<div class="switcher" id="switcher"></div>
+<div class="page" id="page"></div>
+
+<script>
+  // Les mêmes entrées que components/layout/SiteHeader.tsx : rien n'est ajouté ni retiré.
+  const VISITOR = [["Accueil", "house"], ["À propos", "info", true]];
+  const STUDENT = [...VISITOR, ["Évaluations", "clip", false, 2], ["Défi", "cal", false, 1], ["Ma classe", "mega", false, 3]];
+  const FOX = "../public/images/fox_3_mark.png";
+  const icon = (id) => `<svg class="ic"><use href="#i-${id}"/></svg>`;
+
+  const VARIANTS = [
+    { id: "a", name: "Actuelle", title: "A. La barre <span>actuelle</span>",
+      why: "Pour comparer. Fond uni, renard qui marche à gauche, liens alignés à droite, bouton Connexion sombre." },
+    { id: "b", name: "Flottante", title: "B. Barre <span>flottante</span>",
+      why: "La barre se détache du haut de l'écran, avec les mêmes coins arrondis et la même ombre que les tuiles de l'accueil. La page active est une pastille orange clair, Connexion passe en orange. <b>À savoir :</b> la barre prend 12 px de plus en hauteur, et le mot « Déconnexion » disparaît au profit de l'icône seule." },
+    { id: "c", name: "Renard sur la ligne", title: "C. Le renard <span>marche sur la ligne</span>",
+      why: "La barre est plus basse (64 px au lieu de 80) et soulignée d'un trait orange. Le renard dépasse légèrement vers le bas, comme s'il marchait sur le trait. La page active reprend le soulignement à main levée du titre de l'accueil. <b>À savoir :</b> le renard recouvre une petite bande de la page, à gauche, sous la barre." },
+    { id: "d", name: "Segmentée", title: "D. Sélecteur <span>segmenté</span>",
+      why: "Les liens sont regroupés au centre dans un sélecteur, la page active ressort en clair. Le renard qui marche laisse la place à la tête de renard dans un carré, et « par Clément BRAUN » passe sous le nom du site. <b>À savoir :</b> c'est la variante la plus éloignée de la barre actuelle, et le logo du renard qui marche n'y figure plus." },
+    { id: "e", name: "Encre", title: "E. Bandeau <span>encre</span>",
+      why: "Un bandeau sombre en thème clair comme en thème sombre : la navigation se sépare nettement de la page crème, et l'orange ressort davantage. Chaque lien porte l'icône qu'il a déjà dans le menu du téléphone. <b>À savoir :</b> c'est un haut de page plus lourd, qui tranche avec le reste du site en thème clair. Avec les icônes, les cinq liens d'un élève connecté ne tiennent qu'en retirant « par Clément BRAUN »." },
+  ];
+
+  function brand(v, phone) {
+    if (v.id === "d") {
+      return `<a class="nb-brand" href="#"><span class="mark"><svg class="fox-head"><use href="#fox-head"/></svg></span><span class="txt"><b>La tanière du Code</b><small>par Clément BRAUN</small></span></a>`;
+    }
+    const crop = phone && v.id !== "c";
+    const by = phone ? "" : " <small>par Clément BRAUN</small>";
+    return `<a class="nb-brand" href="#"><img class="${crop ? "fox-crop" : "fox-walk"}" src="${FOX}" alt=""><span class="txt"><b>La tanière du Code</b>${by}</span></a>`;
+  }
+
+  function bar(v, student, phone) {
+    const links = (student ? STUDENT : VISITOR)
+      .map(([label, ic, on, n]) => `<a href="#" class="${on ? "on" : ""}">${icon(ic)}${label}${n ? `<span class="badge">${n}</span>` : ""}</a>`)
+      .join("");
+    const account = student
+      ? (phone
+          ? `<a class="avatar" href="#"><span>C</span></a>`
+          : `<a class="resume" href="#">Reprendre</a><a class="avatar" href="#"><span>C</span>Camille</a><button class="logout" title="Déconnexion">${icon("out")}<span>Déconnexion</span></button>`)
+      : `<a class="login" href="#">Connexion</a>`;
+    const inner = phone
+      ? `${brand(v, true)}<div class="nb-actions">${account}<button class="burger" aria-label="Ouvrir le menu">${icon("menu")}</button></div>`
+      : `${brand(v, false)}<nav class="nb-links">${links}</nav><div class="nb-actions"><button class="eye" title="Accessibilité">${icon("eye")}</button>${account}</div>`;
+    return `<header class="nb nb-${v.id}${student ? " is-student" : ""}"><div class="nb-in">${inner}</div></header>
+      <div class="under"><i>Certifié de NSI, TZR</i><b>Clément <em>Braun</em></b></div>`;
+  }
+
+  const page = document.getElementById("page");
+  const switcher = document.getElementById("switcher");
+  page.innerHTML = VARIANTS.map((v) => `
+    <section class="mock" id="m-${v.id}">
+      <h1>${v.title}</h1>
+      <p class="why">${v.why}</p>
+      <p class="label">Visiteur</p>
+      <div class="frame desk"><div class="stage">${bar(v, false, false)}</div></div>
+      <p class="label">Élève connecté (trois liens de plus, avec leurs pastilles)</p>
+      <div class="frame desk"><div class="stage">${bar(v, true, false)}</div></div>
+      <p class="label">Téléphone : visiteur, puis élève connecté. Le menu qui s'ouvre ne change pas.</p>
+      <div class="phones">
+        <div class="frame phone"><div class="stage">${bar(v, false, true)}</div></div>
+        <div class="frame phone"><div class="stage">${bar(v, true, true)}</div></div>
+      </div>
+    </section>`).join("");
+
+  function show(id) {
+    document.querySelectorAll(".mock").forEach((m) => m.classList.toggle("on", m.id === "m-" + id));
+    switcher.querySelectorAll("[data-v]").forEach((b) => b.classList.toggle("on", b.dataset.v === id));
+    fit();
+  }
+  // Les cadres « ordinateur » sont dessinés à 1280 px puis réduits à la largeur disponible.
+  function fit() {
+    document.querySelectorAll(".frame.desk").forEach((frame) => {
+      const stage = frame.firstElementChild;
+      stage.style.zoom = 1;
+      if (frame.clientWidth) stage.style.zoom = Math.min(1, frame.clientWidth / 1280);
+    });
+  }
+  switcher.innerHTML = VARIANTS.map((v) => `<button data-v="${v.id}">${v.id.toUpperCase()} · ${v.name}</button>`).join("")
+    + `<button class="theme" id="theme">Thème sombre</button>`;
+  switcher.addEventListener("click", (event) => {
+    const button = event.target.closest("button");
+    if (!button) return;
+    if (button.id === "theme") {
+      const dark = document.documentElement.classList.toggle("dark");
+      button.textContent = dark ? "Thème clair" : "Thème sombre";
+    } else {
+      show(button.dataset.v);
+      history.replaceState(null, "", "#" + button.dataset.v);
+    }
+  });
+  window.addEventListener("resize", fit);
+  show(VARIANTS.some((v) => v.id === location.hash.slice(1)) ? location.hash.slice(1) : "b");
+</script>
+</body>
+</html>

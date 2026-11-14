@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import { FoxHead } from "@/components/ui/FoxHead";
 import { CalendarDays, ClipboardCheck, Eye, House, Info, LayoutDashboard, LogIn, LogOut, Megaphone, Menu, X } from "lucide-react";
 import AccessibilityMenu from "./AccessibilityMenu";
 import MobileMenu, { type MenuLink } from "./MobileMenu";
@@ -152,30 +152,23 @@ export default function SiteHeader({
             }
           }}
         >
-          <Image
-            src="/images/fox_3_mark.png"
-            alt=""
-            width={720}
-            height={391}
-            priority
-            sizes="(max-width: 767px) 80px, 168px"
-            quality={90}
-            className="site-logo"
-            style={{ width: "var(--site-fox-w)", height: "var(--site-fox-h)" }}
-          />
+          <span className="site-head" aria-hidden="true">
+            <FoxHead size="100%" />
+          </span>
           <span className="site-brand-name">
             <span className="text-[var(--accent)]">La tanière du Code</span>{" "}
             <span className="text-[var(--muted)] hidden lg:inline">par Clément BRAUN</span>
           </span>
         </Link>
 
-        <div className="site-header-desktop flex min-w-0 flex-1 items-center justify-end gap-3 text-sm font-semibold lg:gap-7">
-          <div className="hide-scrollbar flex min-w-0 items-center gap-5 overflow-x-auto">
+        <div className="site-header-desktop flex min-w-0 flex-1 items-center justify-end gap-3 text-sm font-semibold lg:gap-5">
+          <div className="hide-scrollbar flex min-w-0 items-center gap-1 overflow-x-auto">
           {links.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap ${item.match(pathname) ? "text-[var(--accent)]" : "text-[var(--muted)] hover:text-[var(--accent)] transition-colors"}`}
+              aria-current={item.match(pathname) ? "page" : undefined}
+              className={`site-nav-link ${item.match(pathname) ? "is-active" : ""}`}
             >
               {item.label}
               {item.badge ? <span className="nav-badge" aria-label={item.badgeLabel}>{item.badge}</span> : null}
@@ -200,13 +193,13 @@ export default function SiteHeader({
                   Reprendre
                 </Link>
                 {avatar}
-                <button onClick={signOut} className="flex items-center gap-2 p-2.5 text-[var(--muted)] hover:text-red-600 hover:bg-[var(--surface-2)] rounded-xl transition-colors cursor-pointer relative z-[110]">
-                  <LogOut size={18} />
-                  <span className="hidden md:inline text-xs font-semibold">Déconnexion</span>
+                <button onClick={signOut} title="Déconnexion" className="flex items-center p-2.5 text-[var(--muted)] hover:text-red-600 hover:bg-[var(--surface-2)] rounded-xl transition-colors cursor-pointer relative z-[110]">
+                  <LogOut size={18} aria-hidden />
+                  <span className="sr-only">Déconnexion</span>
                 </button>
               </>
             ) : (
-              <Link href="/connexion" className="px-5 py-2.5 bg-[var(--fg)] text-[var(--bg)] rounded-xl font-semibold text-sm hover:bg-[var(--accent)] hover:text-[var(--accent-fg)] transition-colors">
+              <Link href="/connexion" className="px-5 py-2.5 bg-[var(--accent)] text-[var(--accent-fg)] rounded-[14px] font-semibold text-sm hover:brightness-105 transition-[filter]">
                 Connexion
               </Link>
             )}

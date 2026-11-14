@@ -162,8 +162,73 @@ export default function InvestigationView({ enquete: firstStage, next }: Props) 
 
   const stage = enquete.stage;
 
+  // Placé sous les résultats par l'atelier : l'objectif, la réponse et le verdict restent à l'écran pendant la recherche.
+  const accuseForm = (
+    <form className={`enq-accuse ${verdict === "right" ? "is-solved" : ""} ${twist ? "is-twist" : ""}`} onSubmit={accuse}>
+      {twist && stage ? (
+        <div className="enq-solved" role="status">
+          <div className={`enq-solved-fox enq-fox-${enquete.slug} is-twist`} aria-hidden />
+          <div>
+            <p className="enq-eyebrow">
+              Coupable désigné : {twist.culprit}. Vraiment ?
+            </p>
+            <h2>Pas si vite…</h2>
+            <p>{twist.explanation}</p>
+            <p className="enq-twist">{twist.twist}</p>
+            <button type="button" className="enq-run-button" onClick={openNextStage}>
+              Aller plus loin : étape {stage.index + 2} sur {stage.total} <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+      ) : verdict === "right" && solution ? (
+        <div className="enq-solved">
+          <div className={`enq-solved-fox enq-fox-${enquete.slug}`} aria-hidden />
+          <div>
+            <p className="enq-eyebrow">{stage ? "Affaire enfin résolue !" : "Affaire résolue !"}</p>
+            <h2>Le coupable est {solution.culprit}.</h2>
+            <p>{solution.explanation}</p>
+            <Link href={next ? `/enquetes/${next.slug}` : "/enquetes"} className="enq-run-button">
+              {next ? `Enquête suivante : ${next.title}` : "Retour aux enquêtes"}
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <>
+          <p className="enq-accuse-goal">
+            <Target size={15} aria-hidden /> {enquete.objective}
+          </p>
+          <label htmlFor="enq-answer">
+            <b>Tu as trouvé ?</b> Écris le nom du coupable.
+          </label>
+          <div className="enq-accuse-row">
+            <input
+              id="enq-answer"
+              value={answer}
+              onChange={(event) => {
+                setAnswer(event.target.value);
+                saveProgress(enquete.slug, { answer: event.target.value });
+                if (verdict === "wrong") setVerdict("none");
+              }}
+              placeholder="Nom du coupable"
+              autoComplete="off"
+            />
+            <button type="submit" className="enq-run-button" disabled={checking}>
+              {checking ? "Vérification en cours" : "Accuser"}
+            </button>
+          </div>
+          {verdict === "wrong" ? (
+            <p className="enq-error" role="alert">
+              Ce n'est pas le bon suspect.{" "}
+              {attempts >= 2 && hintCount < enquete.hints.length ? "Un indice pourrait t'aider." : "Relis les témoignages et vérifie chaque condition."}
+            </p>
+          ) : null}
+        </>
+      )}
+    </form>
+  );
+
   return (
-    <div className="enq-page">
+    <div className="enq-page enq-atelier">
       {rewards.length > 0 ? <RewardsDialog rewards={rewards} onClose={() => setRewards([])} /> : null}
       <header className="enq-head">
         <Link href="/enquetes" className="enq-back">
@@ -315,68 +380,9 @@ export default function InvestigationView({ enquete: firstStage, next }: Props) 
         </aside>
 
         <main className="enq-work">
-          {restored && mode === "blockly" ? <BlocklyMode key={`${enquete.slug}-blockly-${resetCount}`} enquete={enquete} /> : null}
-          {restored && mode === "python" ? <CodeMode key={`${enquete.slug}-python-${resetCount}`} enquete={enquete} language="python" /> : null}
-          {restored && mode === "sql" ? <CodeMode key={`${enquete.slug}-sql-${resetCount}`} enquete={enquete} language="sql" /> : null}
-
-          <form className={`enq-accuse ${verdict === "right" ? "is-solved" : ""} ${twist ? "is-twist" : ""}`} onSubmit={accuse}>
-            {twist && stage ? (
-              <div className="enq-solved" role="status">
-                <div className={`enq-solved-fox enq-fox-${enquete.slug} is-twist`} aria-hidden />
-                <div>
-                  <p className="enq-eyebrow">
-                    Coupable désigné : {twist.culprit}. Vraiment ?
-                  </p>
-                  <h2>Pas si vite…</h2>
-                  <p>{twist.explanation}</p>
-                  <p className="enq-twist">{twist.twist}</p>
-                  <button type="button" className="enq-run-button" onClick={openNextStage}>
-                    Aller plus loin : étape {stage.index + 2} sur {stage.total} <ArrowRight size={16} />
-                  </button>
-                </div>
-              </div>
-            ) : verdict === "right" && solution ? (
-              <div className="enq-solved">
-                <div className={`enq-solved-fox enq-fox-${enquete.slug}`} aria-hidden />
-                <div>
-                  <p className="enq-eyebrow">{stage ? "Affaire enfin résolue !" : "Affaire résolue !"}</p>
-                  <h2>Le coupable est {solution.culprit}.</h2>
-                  <p>{solution.explanation}</p>
-                  <Link href={next ? `/enquetes/${next.slug}` : "/enquetes"} className="enq-run-button">
-                    {next ? `Enquête suivante : ${next.title}` : "Retour aux enquêtes"}
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              <>
-                <label htmlFor="enq-answer">
-                  <b>Tu as trouvé ?</b> Écris le nom du coupable.
-                </label>
-                <div className="enq-accuse-row">
-                  <input
-                    id="enq-answer"
-                    value={answer}
-                    onChange={(event) => {
-                      setAnswer(event.target.value);
-                      saveProgress(enquete.slug, { answer: event.target.value });
-                      if (verdict === "wrong") setVerdict("none");
-                    }}
-                    placeholder="Nom du coupable"
-                    autoComplete="off"
-                  />
-                  <button type="submit" className="enq-run-button" disabled={checking}>
-                    {checking ? "Vérification en cours" : "Accuser"}
-                  </button>
-                </div>
-                {verdict === "wrong" ? (
-                  <p className="enq-error" role="alert">
-                    Ce n'est pas le bon suspect.{" "}
-                    {attempts >= 2 && hintCount < enquete.hints.length ? "Un indice pourrait t'aider." : "Relis les témoignages et vérifie chaque condition."}
-                  </p>
-                ) : null}
-              </>
-            )}
-          </form>
+          {restored && mode === "blockly" ? <BlocklyMode key={`${enquete.slug}-blockly-${resetCount}`} enquete={enquete} aside={accuseForm} /> : null}
+          {restored && mode === "python" ? <CodeMode key={`${enquete.slug}-python-${resetCount}`} enquete={enquete} language="python" aside={accuseForm} /> : null}
+          {restored && mode === "sql" ? <CodeMode key={`${enquete.slug}-sql-${resetCount}`} enquete={enquete} language="sql" aside={accuseForm} /> : null}
         </main>
       </div>
     </div>

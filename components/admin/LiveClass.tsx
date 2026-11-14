@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LockOpen, Square, Table2 } from "lucide-react";
 import { getEvaluationBoard, setEvaluationStatus, unlockAttemptRemotely, type BoardRow, type EvaluationBoard } from "@/app/actions/evaluations";
 import AttemptPanel from "@/components/admin/evaluations/AttemptPanel";
@@ -29,6 +30,7 @@ function tileState(row: BoardRow, offline: boolean) {
  */
 export function LiveClass({ initialBoard, others = [] }: { initialBoard: EvaluationBoard; others?: { id: string; title: string }[] }) {
   const { selection, label } = useAdminClass();
+  const router = useRouter();
   const [board, setBoard] = useState(initialBoard);
   const [openAttempt, setOpenAttempt] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -84,8 +86,13 @@ export function LiveClass({ initialBoard, others = [] }: { initialBoard: Evaluat
     setBusy("close");
     const result = await setEvaluationStatus(evaluation.id, "fermee");
     setBusy(null);
-    if (!result.ok) setMessage(result.error);
-    await refresh();
+    if (!result.ok) {
+      setMessage(result.error);
+      await refresh();
+      return;
+    }
+    // Interrogation terminée : le tableau de l'évaluation s'ouvre sur son bilan, et corrige les copies au passage.
+    router.push(`/admin/evaluations/${evaluation.id}?bilan=1`);
   };
 
   const closed = evaluation.status !== "ouverte";

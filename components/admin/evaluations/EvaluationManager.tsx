@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, CalendarClock, Download, Eye, FileDown, Loader2, Lock, Play, ShieldCheck, Square, Wand2 } from "lucide-react";
+import { ArrowLeft, BarChart3, CalendarClock, Download, Eye, FileDown, Loader2, Lock, Play, ShieldCheck, Square, Wand2 } from "lucide-react";
 import {
   answersToGrade,
   deleteEvaluation,
@@ -20,6 +20,7 @@ import { PageHeader } from "@/components/ui";
 import EvaluationForm from "./EvaluationForm";
 import SubjectsEditor from "./SubjectsEditor";
 import AttemptPanel from "./AttemptPanel";
+import EvaluationSummaryModal from "./EvaluationSummaryModal";
 import { scheduleLabel, STATUS_LABELS } from "./EvaluationsAdmin";
 
 type Tab = "suivi" | "sujets" | "reglages";
@@ -35,11 +36,26 @@ const timeFormat = new Intl.DateTimeFormat("fr-FR", { timeStyle: "short", timeZo
 // Sans signe de vie depuis plus longtemps : la page de l'élève est fermée ou l'ordinateur éteint.
 const OFFLINE_AFTER = 35_000;
 
-export default function EvaluationManager({ initialBoard, classes, initialTab, initialAttempt = null }: { initialBoard: EvaluationBoard; classes: string[]; initialTab: Tab; initialAttempt?: string | null }) {
+export default function EvaluationManager({
+  initialBoard,
+  classes,
+  initialTab,
+  initialAttempt = null,
+  initialSummary = false,
+}: {
+  initialBoard: EvaluationBoard;
+  classes: string[];
+  initialTab: Tab;
+  initialAttempt?: string | null;
+  /** Ouvre le bilan à l'arrivée sur la page (lien « ?bilan=1 », après la fermeture depuis « En classe »). */
+  initialSummary?: boolean;
+}) {
   const router = useRouter();
   const [board, setBoard] = useState(initialBoard);
   const [tab, setTab] = useState<Tab>(initialTab);
   const [openAttempt, setOpenAttempt] = useState<string | null>(initialAttempt);
+  // Bilan de l'interrogation : ouvert tout seul à la fermeture, puis depuis le bouton « Bilan ».
+  const [summaryOpen, setSummaryOpen] = useState(initialSummary && !initialAttempt);
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [grading, setGrading] = useState<{ done: number; total: number } | null>(null);
@@ -69,6 +85,8 @@ export default function EvaluationManager({ initialBoard, classes, initialTab, i
     setBusy(false);
     if (!result.ok) setMessage(result.error);
     await refresh();
+    // Interrogation terminée : le bilan s'affiche, et se complète pendant la correction automatique.
+    if (result.ok && status === "fermee") setSummaryOpen(true);
   };
 
   // Correction automatique par lots de 8 exercices, corrigés quatre à la fois sur le serveur.
@@ -152,6 +170,11 @@ export default function EvaluationManager({ initialBoard, classes, initialTab, i
                 <Square size={15} aria-hidden /> Fermer et ramasser les copies
               </button>
             )}
+            {evaluation.status === "fermee" && handedIn.length > 0 ? (
+              <button type="button" className="adm-eval-secondary" onClick={() => setSummaryOpen(true)}>
+                <BarChart3 size={15} aria-hidden /> Bilan
+              </button>
+            ) : null}
             {board.rows.some((row) => row.attemptId) ? (
               <a className="adm-eval-secondary" href={`/admin/evaluations/${evaluation.id}/export`}>
                 <Download size={15} aria-hidden /> Toutes les copies (.zip)
@@ -357,6 +380,25 @@ export default function EvaluationManager({ initialBoard, classes, initialTab, i
           onChange={refresh}
           order={reviewOrder}
           onNavigate={setOpenAttempt}
+        />
+      ) : null}
+
+      {summaryOpen && !openAttempt ? (
+        <EvaluationSummaryModal
+          evaluationId={evaluation.id}
+          title={evaluation.title}
+          // Le bilan se recharge quand la correction automatique avance ou qu'une note est validée.
+          refreshKey={`${grading?.done ?? "-"}:${pendingGrades}:${toValidate.length}:${handedIn.length}`}
+          onClose={() => setSummaryOpen(false)}
+          onReview={
+            toValidate.length
+              ? () => {
+                  setSummaryOpen(false);
+                  setTab("suivi");
+                  setOpenAttempt(toValidate[0].attemptId);
+                }
+              : undefined
+          }
         />
       ) : null}
     </div>

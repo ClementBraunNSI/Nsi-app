@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Loader2, Play, RotateCcw } from "lucide-react";
 import { CodeArea } from "@/components/lab/CodeArea";
 import { ResultTable } from "@/components/enquetes/ResultTable";
@@ -8,7 +8,7 @@ import { runPython, runSql, type RunOutcome } from "@/lib/enquetes/engines";
 import { readOutcome, saveOutcome } from "@/lib/enquetes/progress";
 import type { PublicEnquete as Enquete } from "@/lib/enquetes/types";
 
-type Props = { enquete: Enquete; language: "sql" | "python" };
+type Props = { enquete: Enquete; language: "sql" | "python"; aside?: ReactNode };
 
 const STARTERS = {
   sql: "-- Commence par lire les rapports de la forêt.\nSELECT * FROM rapports;\n",
@@ -28,7 +28,7 @@ function storageKey(enquete: Enquete, language: string) {
 }
 
 /** Mode SQL ou Python : un éditeur, un bouton, le résultat (tableau ou affichage). */
-export default function CodeMode({ enquete, language }: Props) {
+export default function CodeMode({ enquete, language, aside }: Props) {
   const [code, setCode] = useState(STARTERS[language]);
   const [outcome, setOutcome] = useState<RunOutcome | null>(null);
   const [running, setRunning] = useState(false);
@@ -91,6 +91,7 @@ export default function CodeMode({ enquete, language }: Props) {
 
   return (
     <div className="enq-mode">
+      <div className="enq-stage">
       <div className="enq-editor">
         <div className="enq-editor-bar">
           <span>{language === "sql" ? "requete.sql" : "enquete.py"}</span>
@@ -116,7 +117,9 @@ export default function CodeMode({ enquete, language }: Props) {
           {running ? "Recherche en cours" : language === "sql" ? "Lancer la requête" : "Lancer le programme"}
         </button>
       </div>
+      </div>
 
+      <div className="enq-results">
       <section className="enq-output" aria-live="polite">
         {status ? <p className="enq-muted">{status}</p> : null}
         {!outcome && !status ? (
@@ -143,6 +146,8 @@ export default function CodeMode({ enquete, language }: Props) {
           <p className="enq-muted">La requête n'a renvoyé aucune ligne.</p>
         ) : null}
       </section>
+      {aside}
+      </div>
     </div>
   );
 }
