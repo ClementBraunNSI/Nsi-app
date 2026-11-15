@@ -17,6 +17,7 @@ import ChasseEditionPicker from '@/components/chasse/ChasseEditionPicker';
 import { resolveCourseFile } from '@/lib/content-path';
 import { getAuthContext, viewerFromAuth } from '@/lib/auth';
 import { canAccessCourse } from '@/lib/course-access';
+import '../../fiche-large.css';
 
 const RESERVED_TITLE = 'Cours réservé';
 const RESERVED_DESCRIPTION = 'Ce contenu est réservé.';
@@ -251,6 +252,10 @@ export default async function CoursePage({
   // En projection, la correction reste, cachée derrière un bouton (RevealCorrection).
   const contentWithAdmonitions = transformAdmonitions(stripHiddenExerciseBlocks(content, { keepCorrection: projecting }));
 
+  // Fiche d'exercices (<ExerciseTabs>) : la page prend toute la largeur de l'écran (fiche-large.css).
+  // Un cours sans fiche garde sa largeur de lecture ; la projection a sa propre mise en page.
+  const wideSheet = !projecting && /<ExerciseTabs\b/.test(content);
+
   // Navigation entre les cours
   const { prev, next } = getAdjacentCourses(folder, slugStr);
 
@@ -335,20 +340,20 @@ export default async function CoursePage({
   );
 
   return (
-    <div className="min-h-screen course-shell">
+    <div className={`min-h-screen course-shell${wideSheet ? ' course-sheet-page' : ''}`}>
       <MobileBlocker />
       <ReadingProgressBar />
-      
+
       {/* Barre de navigation haute */}
       <nav className="course-topnav">
-        <div className="max-w-5xl mx-auto px-4 py-2.5 sm:px-6 sm:py-4">
+        <div className="course-topnav-inner max-w-5xl mx-auto px-4 py-2.5 sm:px-6 sm:py-4">
           <Link href={coursePath(niveaux)} className="flex items-center gap-2 text-[var(--muted)] hover:text-[var(--accent)] transition-colors duration-150 text-xs font-semibold">
             <ChevronLeft size={16} /> Retour à {nsiLevelLabel(niveaux)}
           </Link>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-3 py-5 sm:px-6 sm:py-8">
+      <div className="course-wrap max-w-7xl mx-auto px-3 py-5 sm:px-6 sm:py-8">
         <button
           type="button"
           data-fox-easter-id="cours"

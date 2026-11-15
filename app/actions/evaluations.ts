@@ -46,6 +46,8 @@ export type MyEvaluation = {
   submittedAt: string | null;
   /** Note sur 20, une fois l'évaluation fermée et la copie validée. */
   grade: number | null;
+  /** evaluation : interrogation de classe ; rattrapage et travail : fiche donnée à l'élève. */
+  kind: 'evaluation' | 'rattrapage' | 'travail';
 };
 
 /** Évaluations programmées dont l'heure est arrivée : elles passent « ouvertes » (sans effet si rien n'est dû). */
@@ -68,6 +70,7 @@ export async function listMyEvaluations(): Promise<MyEvaluation[]> {
     startedAt: row.started_at,
     submittedAt: row.submitted_at,
     grade: row.grade != null ? Number(row.grade) : null,
+    kind: row.kind === 'rattrapage' || row.kind === 'travail' ? row.kind : 'evaluation',
   }));
 }
 
@@ -186,6 +189,12 @@ export type EvaluationSummary = {
   attempts: number;
   submitted: number;
   locked: number;
+  /** evaluation : interrogation de classe ; rattrapage et travail : fiche donnée à des élèves précis. */
+  kind: 'evaluation' | 'rattrapage' | 'travail';
+  /** Élèves visés par une fiche. */
+  targeted: number;
+  /** Révision : classes de l'interrogation d'origine. */
+  sourceClasses: string[];
 };
 
 export async function listEvaluations(): Promise<EvaluationSummary[]> {
@@ -194,9 +203,14 @@ export async function listEvaluations(): Promise<EvaluationSummary[]> {
   await openDueEvaluations(ctx.supabase);
   const { data } = await ctx.supabase
     .from('evaluations')
-    .select('id, title, status, classes, duration_minutes, scheduled_at, created_at, evaluation_subjects(id), evaluation_attempts(status, locked)')
+    .select('id, title, status, classes, duration_minutes, scheduled_at, created_at, kind, students, from_evaluation, evaluation_subjects(id), evaluation_attempts(status, locked)')
     .order('created_at', { ascending: false });
+  const classesOf = new Map((data ?? []).map((row: any) => [row.id, (row.classes ?? []) as string[]]));
   return (data ?? []).map((row: any) => ({
+    // Révision : les classes de l'interrogation d'origine (pour le choix de classe de la barre du haut).
+    sourceClasses: row.from_evaluation ? classesOf.get(row.from_evaluation) ?? [] : [],
+    kind: (row.kind ?? 'evaluation') as 'evaluation' | 'rattrapage' | 'travail',
+    targeted: Array.isArray(row.students) ? row.students.length : 0,
     id: row.id,
     title: row.title,
     status: row.status,
@@ -295,7 +309,9 @@ export async function saveEvaluationSubject(input: {
   const label = String(input.label || '').trim().slice(0, 120) || 'Sujet';
   const source = String(input.source || '');
   if (source.length > 200000) return fail('Le sujet dépasse 200 000 caractères.');
-  const parsed = parseEvaluationSubject(source);
+  // Fiche de rattrapage : les indices ne partent pas chez l'élève, seul le post-it reste.
+  const { data: owner } = await ctx.supabase.from('evaluations').select('kind').eq('id', input.evaluationId).maybeSingle();
+  const parsed = parseEvaluationSubject(source, { hints: (owner as any)?.kind !== 'rattrapage' });
   if (parsed.errors.length > 0) return { ok: false, error: 'Le sujet contient des erreurs.', errors: parsed.errors };
 
   const values = { label, source, exercises: parsed.exercises, grading: parsed.grading };
@@ -423,6 +439,10 @@ export type EvaluationBoard = {
     classes: string[];
     durationMinutes: number | null;
     scheduledAt: string | null;
+    /** evaluation : interrogation de classe ; rattrapage : évaluation de révision ; travail : fiche particulière. */
+    kind: 'evaluation' | 'rattrapage' | 'travail';
+    /** Élèves visés (révision, fiche particulière) au lieu de classes. */
+    students: number;
   };
   subjects: { id: string; label: string; source: string; exercises: EvaluationExercise[]; grading: EvaluationGrading[]; attempts: number }[];
   rows: BoardRow[];
@@ -468,8 +488,12 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
   const attemptByUser = new Map((attempts ?? []).map((attempt: any) => [attempt.user_id, attempt]));
   const people = new Map<string, { name: string; classe: string | null }>();
   for (const student of students ?? []) people.set(student.id, { name: student.full_name || 'Élève', classe: student.classe });
+  // Fiche particulière ou de rattrapage : les élèves visés, même sans copie.
+  const { data: targeted } = await supabase.from('evaluations').select('students, kind').eq('id', id).maybeSingle();
   // Un élève qui a changé de classe garde sa copie dans le tableau.
-  const missing = (attempts ?? []).map((attempt: any) => attempt.user_id).filter((userId: string) => !people.has(userId));
+  const missing = [...new Set([...((targeted as any)?.students ?? []), ...(attempts ?? []).map((attempt: any) => attempt.user_id)])].filter(
+    (userId: string) => !people.has(userId),
+  );
   if (missing.length) {
     const { data: others } = await supabase.from('profiles').select('id, full_name, classe').in('id', missing);
     for (const other of others ?? []) people.set(other.id, { name: other.full_name || 'Élève', classe: other.classe });
@@ -530,6 +554,8 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
       classes: evaluation.classes ?? [],
       durationMinutes: evaluation.duration_minutes,
       scheduledAt: evaluation.scheduled_at ?? null,
+      kind: ((targeted as any)?.kind ?? 'evaluation') as 'evaluation' | 'rattrapage' | 'travail',
+      students: ((targeted as any)?.students ?? []).length,
     },
     subjects: (subjects ?? []).map((subject: any) => ({
       id: subject.id,

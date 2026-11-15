@@ -5073,6 +5073,18 @@ input, textarea {
   white-space: nowrap;
 }
 .adm-eval-primary { background: var(--accent); color: #fff; }
+/* Évaluation de révision : bouton vert, élèves de l'interrogation d'origine */
+.adm-rev-button { border-color: color-mix(in srgb, #16a34a 45%, #e2e8f0); color: #15803d; }
+.adm-rev-students { display: grid; gap: 0.4rem; }
+.adm-rev-students ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 0.35rem; margin: 0; padding: 0; list-style: none; }
+.adm-rev-students label { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.1rem 0.5rem; padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--surface); cursor: pointer; font-size: 0.86rem; }
+.adm-rev-students label.is-on { border-color: #16a34a; background: color-mix(in srgb, #16a34a 7%, var(--surface)); }
+.adm-rev-students label small { grid-column: 2 / -1; font-size: 0.75rem; color: var(--subtle); }
+.adm-rev-low { font-weight: 700; color: #b91c1c; font-variant-numeric: tabular-nums; }
+.adm-rev-ok { font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+.adm-rev-sep { margin: 0.4rem 0 0; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+.adm-rev-check { display: flex !important; flex-direction: row !important; align-items: flex-start; gap: 0.5rem; font-size: 0.88rem; }
+.adm-rev-check input { margin-top: 0.2rem; }
 .adm-eval-secondary { border: 1px solid #e2e8f0; background: #fff; color: #334155; }
 .adm-eval-danger { border: 1px solid #fecaca; background: #fff; color: #b91c1c; }
 .adm-eval-primary:disabled, .adm-eval-secondary:disabled, .adm-eval-danger:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -5336,6 +5348,10 @@ input, textarea {
 .challenge-banner b { display: block; }
 .challenge-banner small { color: var(--muted); font-size: 0.85rem; }
 .challenge-banner-cta { font-weight: 700; color: var(--accent); white-space: nowrap; }
+.challenge-banner.is-green { border-color: color-mix(in srgb, #16a34a 45%, var(--border)); background: color-mix(in srgb, #16a34a 9%, var(--surface)); }
+.challenge-banner.is-green > svg { color: #16a34a; }
+.challenge-banner.is-green .challenge-banner-cta { padding: 0.45rem 0.95rem; border-radius: 999px; background: #16a34a; color: #fff; }
+.dark .challenge-banner.is-green { background: color-mix(in srgb, #16a34a 14%, var(--surface)); }
 
 .challenge-stats { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .challenge-stat {
@@ -6008,6 +6024,11 @@ a.admin-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 
 .admin-shell .adm-eval-panel, .admin-shell .adm-eval-row, .admin-shell .adm-eval-table-wrap, .admin-shell .adm-eval-subjects li, .admin-shell .adm-eval-card, .admin-shell .adm-eval-drawer-panel { border-color: var(--border); background: var(--surface); color: var(--fg); }
 .admin-shell .adm-eval-row:hover { border-color: var(--accent); }
+/* Liste des évaluations : la corbeille à droite de chaque ligne. */
+.adm-eval-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; gap: 0.4rem; }
+.adm-eval-delete { display: grid; width: 2.6rem; place-items: center; border: 1px solid var(--border); border-radius: 0.9rem; background: var(--surface); color: var(--subtle); transition: color 150ms, border-color 150ms, background-color 150ms; }
+.adm-eval-delete:hover:not(:disabled) { border-color: var(--admin-warn); background: var(--admin-warn-soft); color: var(--admin-warn); }
+.adm-eval-delete:disabled { opacity: 0.5; cursor: not-allowed; }
 .admin-shell .adm-eval-secondary { border-color: var(--border); background: var(--surface); color: var(--fg); }
 .admin-shell .adm-eval-danger { border-color: color-mix(in srgb, var(--admin-warn) 40%, transparent); background: var(--surface); color: var(--admin-warn); }
 .admin-shell .adm-eval-primary { color: var(--accent-fg); }

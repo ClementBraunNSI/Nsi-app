@@ -64,10 +64,11 @@ function block(source: string, tag: string) {
     .trim();
 }
 
-function statementOf(raw: string) {
+function statementOf(raw: string, hints = true) {
   const enonce = raw.match(/<Enonce>([\s\S]*?)<\/Enonce>/)?.[1] ?? raw;
   return dedent(
     enonce
+      .replace(hints ? /$^/ : /<Indices>[\s\S]*?<\/Indices>/gi, "")
       .replace(/<Correction>[\s\S]*?<\/Correction>/gi, "")
       .replace(/<Verification>[\s\S]*?<\/Verification>/gi, "")
       .replace(/<CodeDepart>[\s\S]*?<\/CodeDepart>/gi, "")
@@ -77,7 +78,8 @@ function statementOf(raw: string) {
 
 const attr = (attrs: string, name: string) => attrs.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1]?.trim() ?? "";
 
-export function parseEvaluationSubject(source: string): ParsedSubject {
+/** `hints: false` (fiche de rattrapage) : les <Indices> ne partent pas chez l'élève, seul le post-it reste. */
+export function parseEvaluationSubject(source: string, options: { hints?: boolean } = {}): ParsedSubject {
   const exercises: EvaluationExercise[] = [];
   const grading: EvaluationGrading[] = [];
   const errors: string[] = [];
@@ -104,7 +106,7 @@ export function parseEvaluationSubject(source: string): ParsedSubject {
     }
     seen.add(id);
 
-    const statement = statementOf(raw);
+    const statement = statementOf(raw, options.hints !== false);
     const verification = block(raw, "Verification");
     if (!statement) errors.push(`« ${label} » : l'énoncé est vide.`);
     if (!verification) warnings.push(`« ${label} » : pas de <Verification>, le code sera récupéré mais pas corrigé automatiquement.`);

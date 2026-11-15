@@ -14,6 +14,7 @@ const CREATE = [
   { label: "Interro ou DS", path: "/devoirs#interros" },
   { label: "Défi", path: "/defis?nouveau=1" },
   { label: "Évaluation", path: "/evaluations?nouveau=1" },
+  { label: "Évaluation de révision", path: "/evaluations?revision=1" },
   { label: "Élève", path: "/eleves?nouveau=1" },
   { label: "Élèves en lot", path: "/eleves?lot=1" },
 ];

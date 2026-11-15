@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Évaluation", robots: { index: false } };
 
 type Payload = {
-  evaluation: { id: string; title: string; description: string; durationMinutes: number | null; status: string };
+  evaluation: { id: string; title: string; description: string; durationMinutes: number | null; status: string; kind?: string };
   attempt: null | {
     id: string;
     status: "en_cours" | "rendue";
@@ -60,6 +60,7 @@ export default async function EvaluationPage({ params }: { params: Promise<{ id:
           title={evaluation.title}
           description={evaluation.description}
           durationMinutes={evaluation.durationMinutes}
+          kind={evaluation.kind}
         />
       </div>
     );
@@ -106,6 +107,7 @@ export default async function EvaluationPage({ params }: { params: Promise<{ id:
   return (
     <EvaluationRunner
       evaluation={{ id: evaluation.id, title: evaluation.title, durationMinutes: evaluation.durationMinutes }}
+      guarded={evaluation.kind !== "travail"}
       attempt={{ id: attempt.id, locked: attempt.locked, lockReason: attempt.lockReason, deadline: attempt.deadline }}
       exercises={payload.exercises ?? []}
       answers={answers}

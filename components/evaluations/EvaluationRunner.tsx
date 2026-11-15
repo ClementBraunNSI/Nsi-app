@@ -30,6 +30,8 @@ type Props = {
   attempt: { id: string; locked: boolean; lockReason?: IncidentKind | null; deadline: string | null };
   exercises: EvaluationExercise[];
   answers: Record<string, string>;
+  /** false : fiche particulière, sans surveillance ni verrouillage (rattrapage et évaluation restent surveillés). */
+  guarded?: boolean;
 };
 
 const SAVE_DELAY = 1200;
@@ -47,7 +49,7 @@ const reopenReported = new Set<string>();
 /** Clé de session : posée au début de l'évaluation, pour ne pas noter ce premier affichage comme une réouverture. */
 export const freshStartKey = (evaluationId: string) => `evaluation-debut-${evaluationId}`;
 
-export default function EvaluationRunner({ evaluation, attempt, exercises, answers }: Props) {
+export default function EvaluationRunner({ evaluation, attempt, exercises, answers, guarded = true }: Props) {
   const router = useRouter();
   const [codes, setCodes] = useState<Record<string, string>>(() =>
     Object.fromEntries(exercises.map((exercise) => [exercise.id, answers[exercise.id] ?? exercise.starter ?? ""])),
@@ -169,11 +171,13 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
     } catch {
       fresh = false;
     }
+    // Fiche particulière : pas de surveillance, la page reste une page de travail ordinaire.
+    if (!guarded) return;
     if (!fresh && !reopenReported.has(attempt.id)) void reportEvaluationIncident(attempt.id, "reprise", "");
     reopenReported.add(attempt.id);
     setNeedsShare(captureSupported() && !captureActive());
     arm();
-  }, [arm, attempt.id, evaluation.id]);
+  }, [arm, attempt.id, evaluation.id, guarded]);
 
   // Surveillance : onglet, application, collage, dépôt, second onglet, partage arrêté, fermeture.
   useEffect(() => {
@@ -207,7 +211,7 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
       violation("depot", text || `${files} fichier(s) déposé(s)`);
     };
     const onCopy = (event: ClipboardEvent) => {
-      if (insideLock(event.target)) return;
+      if (insideLock(event.target) || !guarded) return;
       const target = event.target as HTMLElement | null;
       const inEditor = Boolean(target?.closest?.(".exercise-editor"));
       if (!inEditor) {
@@ -266,7 +270,7 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
       channel?.close();
       offCapture();
     };
-  }, [attempt.id, showToast, violation]);
+  }, [attempt.id, guarded, showToast, violation]);
 
   // Quitter la page par un lien du site compte comme une fermeture (les liens sont masqués pendant l'évaluation).
   useEffect(() => () => {

@@ -67,7 +67,7 @@ export async function getStudentCard(studentId: string): Promise<StudentCard | n
     supabase.from('badges').select('id', { count: 'exact', head: true }).eq('user_id', studentId),
     supabase
       .from('evaluation_attempts')
-      .select('id, status, submitted_at, result, evaluations(id, title, status, created_at)')
+      .select('id, status, submitted_at, result, evaluations(id, title, status, created_at, kind)')
       .eq('user_id', studentId),
   ]);
   if (!profile || profile.role !== 'student') return null;
@@ -81,7 +81,8 @@ export async function getStudentCard(studentId: string): Promise<StudentCard | n
   const lastWorkAt = [rows[0]?.created_at, ...done.map((row) => row.completed_at)].filter((value): value is string => Boolean(value)).sort().at(-1) ?? null;
 
   // Notes validées des autres copies des mêmes évaluations : la classe de l'élève si elle est connue.
-  const mine = attempts.error ? [] : ((attempts.data ?? []) as any[]).filter((row) => row.evaluations);
+  // Évaluations de classe seulement : les fiches de rattrapage et particulières n'entrent pas dans la moyenne.
+  const mine = attempts.error ? [] : ((attempts.data ?? []) as any[]).filter((row) => row.evaluations && (row.evaluations.kind ?? 'evaluation') === 'evaluation');
   const evaluationIds = mine.map((row) => row.evaluations.id);
   const classe = (profile.classe ?? '').trim();
   const [others, classmates] = await Promise.all([

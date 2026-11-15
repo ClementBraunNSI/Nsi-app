@@ -1,0 +1,82 @@
+/*
+ * Fiche d'exercices sur grand écran (salle de classe : 21 à 24 pouces, 1600 à 1920 px ; portable : 1366 px).
+ * La page d'un cours reçoit .course-sheet-page quand son MDX contient <ExerciseTabs> : elle prend alors toute
+ * la largeur de l'écran, avec une marge de chaque côté. Les cours sans fiche gardent leur largeur de lecture.
+ * Le texte autour de la fiche garde une longueur de ligne lisible ; l'éditeur prend la place gagnée.
+ * À partir de 1600 px, l'énoncé passe à gauche de l'éditeur et les deux tiennent dans la hauteur de la fenêtre.
+ * Les règles sont préfixées par .course-sheet-page : elles passent devant celles de globals.css et de Tailwind.
+ */
+
+/* ---------- Page : toute la largeur, marge confortable ---------- */
+@media (min-width: 768px) {
+  .course-sheet-page .course-wrap,
+  .course-sheet-page .course-topnav-inner {
+    max-width: 150rem;
+    padding-inline: clamp(1.5rem, 2.5vw, 3rem);
+  }
+}
+
+/* Texte, code et tableaux autour de la fiche (introduction, consignes d'un projet) : largeur de lecture. */
+.course-sheet-page .course-prose > :where(:not(.sheet)) {
+  max-width: 64rem;
+}
+.course-sheet-page .course-prose > :is(p, ul, ol, blockquote) {
+  max-width: 72ch;
+}
+
+/* Énoncé posé au-dessus de l'éditeur : il ne s'étire pas sur toute la largeur. */
+.course-sheet-page .sheet-brief-body {
+  max-width: 64rem;
+}
+
+/* ---------- Très grand écran : énoncé à gauche, éditeur à droite ---------- */
+@media (min-width: 100rem) {
+  .course-sheet-page {
+    /* Hauteur de l'atelier : la fenêtre moins l'en-tête du site, le lien de retour et une petite marge. */
+    --sheet-row-h: clamp(32rem, calc(100dvh - var(--sticky-top) - 6.5rem), 68rem);
+  }
+
+  .course-sheet-page .sheet-work:not(.is-folded):has(> .sheet-ide) {
+    display: grid;
+    grid-template-columns: minmax(24rem, 2fr) minmax(0, 3fr);
+    grid-template-rows: var(--sheet-row-h);
+  }
+  /* Ce qui suit l'atelier (réponse écrite, bas de fiche) reprend toute la largeur. */
+  .course-sheet-page .sheet-work:not(.is-folded):has(> .sheet-ide) > * {
+    grid-column: 1 / -1;
+  }
+
+  .course-sheet-page .sheet-work:not(.is-folded):has(> .sheet-ide) > .sheet-brief {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-right: 1px solid var(--border);
+    border-bottom: 0;
+  }
+  .course-sheet-page .sheet-work:not(.is-folded):has(> .sheet-ide) > .sheet-brief .sheet-brief-body {
+    max-width: none;
+  }
+
+  .course-sheet-page .sheet-work:not(.is-folded):has(> .sheet-ide) > .sheet-ide {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+  }
+  .course-sheet-page .sheet-work:not(.is-folded):has(> .sheet-ide) > .sheet-ide .exercise-work {
+    flex: 1;
+    min-width: 0;
+    height: auto;
+  }
+
+  /* Plein écran : les deux colonnes occupent toute la hauteur. */
+  .course-sheet-page .sheet-work.is-full:not(.is-folded):has(> .sheet-ide) {
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .course-sheet-page .sheet-work.is-full:not(.is-folded):has(> .sheet-ide) > .sheet-brief {
+    max-height: none;
+  }
+}

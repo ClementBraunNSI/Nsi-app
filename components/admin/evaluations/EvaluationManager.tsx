@@ -125,8 +125,13 @@ export default function EvaluationManager({
   const handedIn = board.rows.filter((row) => row.status === "rendue" && row.attemptId);
   const reviewOrder = handedIn.map((row) => row.attemptId!);
   const toValidate = handedIn.filter((row) => row.grade && !row.grade.final);
-  const ready = board.subjects.length > 0 && evaluation.classes.length > 0;
-  const notReadyReason = board.subjects.length === 0 ? "Ajouter d'abord un sujet" : evaluation.classes.length === 0 ? "Choisir d'abord une classe" : undefined;
+  // Révision et fiche particulière : des élèves visés au lieu de classes.
+  const targeted = evaluation.kind !== "evaluation";
+  const audience = targeted
+    ? `${evaluation.kind === "rattrapage" ? "Révision · " : "Fiche particulière · "}${evaluation.students} élève${evaluation.students > 1 ? "s" : ""}`
+    : evaluation.classes.join(", ") || "Aucune classe";
+  const ready = board.subjects.length > 0 && (evaluation.classes.length > 0 || (targeted && evaluation.students > 0));
+  const notReadyReason = board.subjects.length === 0 ? "Ajouter d'abord un sujet" : !ready ? "Choisir d'abord une classe" : undefined;
   const plannedLater = Boolean(evaluation.scheduledAt && Date.parse(evaluation.scheduledAt) > serverNow);
 
   return (
@@ -140,7 +145,7 @@ export default function EvaluationManager({
           </span>
         }
         title={evaluation.title}
-        description={`${evaluation.classes.join(", ") || "Aucune classe"} · ${board.subjects.length} sujet${board.subjects.length > 1 ? "s" : ""} · ${
+        description={`${audience} · ${board.subjects.length} sujet${board.subjects.length > 1 ? "s" : ""} · ${
           evaluation.durationMinutes ? `${evaluation.durationMinutes} min par élève` : "sans limite de temps"
         }${evaluation.scheduledAt ? ` · passage le ${scheduleLabel(evaluation.scheduledAt)}` : ""}`}
         actions={

@@ -9,6 +9,7 @@ import { BookOpen, ChevronDown, Lightbulb } from "lucide-react";
 import { splitStatement } from "@/lib/exercise-statement";
 import { HintSteps } from "@/components/mdx/Indices";
 import { PostItNote } from "@/components/mdx/PostIt";
+import postItStyles from "@/components/mdx/PostIt.module.css";
 
 type Props = {
   label: string;
@@ -62,18 +63,25 @@ export function ExerciseStatement({ label, content }: Props) {
   const parts = splitStatement(content, label);
   return (
     <div id="exercise-statement" className="exercise-statement">
-      <section>
-        <h2 className="exercise-enonce-title">
-          <BookOpen size={16} aria-hidden />
-          Énoncé
-        </h2>
-        {parts.enonce ? <Markdown>{parts.enonce}</Markdown> : null}
-      </section>
-      {parts.postIts?.map((note, index) => (
-        <PostItNote key={`${label}-${index}`}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{note}</ReactMarkdown>
-        </PostItNote>
-      ))}
+      {/* Comme dans les fiches : le pense-bête dans une colonne à droite de l'énoncé, dessous quand la place manque. */}
+      <div className={postItStyles.layout}>
+        <section className={postItStyles.main}>
+          <h2 className="exercise-enonce-title">
+            <BookOpen size={16} aria-hidden />
+            Énoncé
+          </h2>
+          {parts.enonce ? <Markdown>{parts.enonce}</Markdown> : null}
+        </section>
+        {parts.postIts?.length ? (
+          <div className={postItStyles.side}>
+            {parts.postIts.map((note, index) => (
+              <PostItNote key={`${label}-${index}`}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{note}</ReactMarkdown>
+              </PostItNote>
+            ))}
+          </div>
+        ) : null}
+      </div>
       {parts.consignes ? (
         <Fold title="Consignes" defaultOpen>
           {parts.consignes}

@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Loader2, Lock, Plus } from "lucide-react";
-import { createEvaluation, type EvaluationSummary } from "@/app/actions/evaluations";
+import { LifeBuoy, Loader2, Lock, Plus, Trash2 } from "lucide-react";
+import { createEvaluation, deleteEvaluation, type EvaluationSummary } from "@/app/actions/evaluations";
 import EvaluationForm, { type EvaluationFormValues } from "./EvaluationForm";
+import RevisionForm from "./RevisionForm";
+import { createRevisionEvaluation, type RevisionInput } from "@/app/actions/studentSheets";
 
 export const STATUS_LABELS: Record<EvaluationSummary["status"], string> = {
   brouillon: "Brouillon",
@@ -23,9 +25,20 @@ export function scheduleLabel(iso: string) {
   return `${day} à ${clock}`;
 }
 
-export default function EvaluationsAdmin({ evaluations, classes, startCreating = false }: { evaluations: EvaluationSummary[]; classes: string[]; startCreating?: boolean }) {
+export default function EvaluationsAdmin({
+  evaluations,
+  classes,
+  startCreating = false,
+  startRevision = false,
+}: {
+  evaluations: EvaluationSummary[];
+  classes: string[];
+  startCreating?: boolean;
+  startRevision?: boolean;
+}) {
   const router = useRouter();
-  const [creating, setCreating] = useState(startCreating);
+  // Une évaluation de classe, ou une évaluation de révision pour les élèves sous 12 d'une interrogation fermée.
+  const [creating, setCreating] = useState<"evaluation" | "revision" | null>(startRevision ? "revision" : startCreating ? "evaluation" : null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,32 +54,77 @@ export default function EvaluationsAdmin({ evaluations, classes, startCreating =
     router.push(`/admin/evaluations/${result.id}?onglet=sujets`);
   };
 
+  const [deleting, setDeleting] = useState<string | null>(null);
+  // Suppression définitive : l'évaluation, ses sujets et toutes ses copies.
+  const remove = async (evaluation: EvaluationSummary) => {
+    const copies = evaluation.attempts;
+    const detail = copies
+      ? `Ses sujets et ${copies === 1 ? "la copie rendue ou commencée" : `les ${copies} copies rendues ou commencées`} seront effacés définitivement.`
+      : "Ses sujets seront effacés définitivement.";
+    if (!window.confirm(`Supprimer « ${evaluation.title} » ? ${detail}`)) return;
+    setDeleting(evaluation.id);
+    setError(null);
+    const result = await deleteEvaluation(evaluation.id).catch(() => ({ ok: false as const, error: "L'évaluation n'a pas pu être supprimée." }));
+    setDeleting(null);
+    if (!result.ok) setError(result.error);
+    else router.refresh();
+  };
+
+  const createRevision = async (values: RevisionInput) => {
+    setBusy(true);
+    setError(null);
+    const result = await createRevisionEvaluation(values).catch(() => ({ ok: false as const, error: "L'évaluation de révision n'a pas pu être créée." }));
+    setBusy(false);
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    router.push(`/admin/evaluations/${result.id}?onglet=sujets`);
+  };
+
   return (
     <div className="space-y-6">
-      {creating ? (
+      {creating === "evaluation" ? (
         <section className="adm-eval-panel">
           <h2>Nouvelle évaluation</h2>
-          <EvaluationForm classes={classes} busy={busy} submitLabel="Créer et ajouter les sujets" onSubmit={create} onCancel={() => setCreating(false)} requireSchedule />
+          <EvaluationForm classes={classes} busy={busy} submitLabel="Créer et ajouter les sujets" onSubmit={create} onCancel={() => setCreating(null)} requireSchedule />
+          {error ? <p className="adm-eval-error">{error}</p> : null}
+        </section>
+      ) : creating === "revision" ? (
+        <section className="adm-eval-panel">
+          <h2>Nouvelle évaluation de révision</h2>
+          <p className="text-sm text-slate-500">Pour les élèves sous 12 à une interrogation : les mêmes notions, avec un pense-bête à côté de chaque exercice.</p>
+          <RevisionForm busy={busy} onSubmit={createRevision} onCancel={() => setCreating(null)} />
           {error ? <p className="adm-eval-error">{error}</p> : null}
         </section>
       ) : (
-        <button type="button" className="adm-eval-primary" onClick={() => setCreating(true)}>
-          <Plus size={16} aria-hidden /> Nouvelle évaluation
-        </button>
+        <div className="adm-eval-actions is-start">
+          <button type="button" className="adm-eval-primary" onClick={() => setCreating("evaluation")}>
+            <Plus size={16} aria-hidden /> Nouvelle évaluation
+          </button>
+          <button type="button" className="adm-eval-secondary adm-rev-button" onClick={() => setCreating("revision")}>
+            <LifeBuoy size={16} aria-hidden /> Nouvelle évaluation de révision
+          </button>
+        </div>
       )}
 
+      {error && !creating ? <p className="adm-eval-error">{error}</p> : null}
       {evaluations.length === 0 ? (
         <p className="text-sm text-slate-500">Aucune évaluation pour le moment.</p>
       ) : (
         <ul className="adm-eval-list">
           {evaluations.map((evaluation) => (
-            <li key={evaluation.id}>
+            <li key={evaluation.id} className="adm-eval-item">
               <Link href={`/admin/evaluations/${evaluation.id}`} className="adm-eval-row">
                 <span className={`adm-eval-status is-${evaluation.status}`}>{STATUS_LABELS[evaluation.status]}</span>
                 <span className="min-w-0">
                   <b>{evaluation.title}</b>
                   <small>
-                    {evaluation.classes.join(", ") || "Aucune classe"} · {evaluation.subjects} sujet{evaluation.subjects > 1 ? "s" : ""} ·{" "}
+                    {evaluation.kind === "rattrapage" ? "Révision · " : evaluation.kind === "travail" ? "Fiche particulière · " : ""}
+                    {evaluation.kind !== "evaluation"
+                      ? `${evaluation.targeted} élève${evaluation.targeted > 1 ? "s" : ""}`
+                      : evaluation.classes.join(", ") || "Aucune classe"}{" "}
+                    · {evaluation.subjects} sujet{evaluation.subjects > 1 ? "s" : ""} ·{" "}
                     {evaluation.durationMinutes ? `${evaluation.durationMinutes} min` : "sans limite"} ·{" "}
                     {evaluation.scheduledAt ? `passage le ${scheduleLabel(evaluation.scheduledAt)}` : `créée le ${dateFormat.format(new Date(evaluation.createdAt))}`}
                   </small>
@@ -78,6 +136,16 @@ export default function EvaluationsAdmin({ evaluations, classes, startCreating =
                   <span>{evaluation.submitted} / {evaluation.attempts} rendue{evaluation.submitted > 1 ? "s" : ""}</span>
                 </span>
               </Link>
+              <button
+                type="button"
+                className="adm-eval-delete"
+                disabled={deleting !== null}
+                onClick={() => void remove(evaluation)}
+                aria-label={`Supprimer l'évaluation ${evaluation.title}`}
+                title="Supprimer l'évaluation"
+              >
+                {deleting === evaluation.id ? <Loader2 size={16} className="animate-spin" aria-hidden /> : <Trash2 size={16} aria-hidden />}
+              </button>
             </li>
           ))}
         </ul>

@@ -15,7 +15,12 @@ const when = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric",
 /** « En classe » : le suivi en direct de l'évaluation ouverte pour la classe choisie, sinon ce qui est programmé. */
 export default async function AdminLivePage({ searchParams }: { searchParams: Promise<{ evaluation?: string }> }) {
   const [{ evaluation: wanted }, { selection }, evaluations, challenges] = await Promise.all([searchParams, readAdminClass(), listEvaluations(), listChallenges()]);
-  const mine = evaluations.filter((item) => touchesAdminClass(selection, item.classes));
+  // Interrogations de classe seulement : une fiche particulière reste ouverte des jours, elle n'est pas « en classe ».
+  const mine = evaluations.filter(
+    (item) =>
+      (item.kind === "evaluation" && touchesAdminClass(selection, item.classes)) ||
+      (item.kind === "rattrapage" && item.scheduledAt !== null && touchesAdminClass(selection, item.sourceClasses)),
+  );
   const open = mine.filter((item) => item.status === "ouverte");
   const chosen = open.find((item) => item.id === wanted) ?? open[0] ?? null;
   const board = chosen ? await getEvaluationBoard(chosen.id) : null;

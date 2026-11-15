@@ -16,6 +16,7 @@ import {
   Target,
   Timer,
   Trophy,
+  Sparkles,
 } from "lucide-react";
 import { Badge, Button, Card, EmptyState, PageHeader, SectionTitle } from "@/components/ui";
 import { SheetBadgeFox } from "@/components/fox/SheetBadgeFox";
@@ -72,7 +73,20 @@ function groupWork(work: EspaceSheet[]) {
   return [...groups.entries()];
 }
 
-export function EspacePanel({ data, revisions = [], now }: { data: EspaceData; revisions?: RevisionPlan[]; now?: string }) {
+/** Fiche donnée par l'enseignant : rattrapage (passé comme une évaluation) ou fiche particulière. */
+export type EspaceGivenSheet = { id: string; title: string; kind: "rattrapage" | "travail" | "evaluation"; started: boolean };
+
+export function EspacePanel({
+  data,
+  revisions = [],
+  sheets = [],
+  now,
+}: {
+  data: EspaceData;
+  revisions?: RevisionPlan[];
+  sheets?: EspaceGivenSheet[];
+  now?: string;
+}) {
   const [homework, setHomework] = useState(data.homework);
   const [messages, setMessages] = useState(data.messages);
   const [draft, setDraft] = useState("");
@@ -152,6 +166,21 @@ export function EspacePanel({ data, revisions = [], now }: { data: EspaceData; r
             </div>
           }
         />
+
+        {sheets.map((sheet) => (
+          <Link key={sheet.id} href={`/evaluations/${sheet.id}`} className="challenge-banner is-green">
+            <Sparkles size={20} aria-hidden />
+            <span className="min-w-0 flex-1">
+              <b>{sheet.title}</b>
+              <small>
+                {sheet.kind === "rattrapage"
+                  ? "Une fiche préparée pour reprendre les points de la dernière interrogation, avec un pense-bête à côté de chaque exercice. Elle se fait comme une interrogation, sans changer de fenêtre."
+                  : "Une fiche préparée par l'enseignant, à faire sur cette page."}
+              </small>
+            </span>
+            <span className="challenge-banner-cta">{sheet.started ? "Reprendre" : "Commencer"}</span>
+          </Link>
+        ))}
 
         {data.profile.classe ? (
           <Link href="/defi" className="challenge-banner">

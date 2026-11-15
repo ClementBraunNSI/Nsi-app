@@ -51,7 +51,7 @@ export async function getAdminToday(): Promise<AdminTodayPage | null> {
   const students = dashboard.students.filter((student) => inAdminClass(selection, student));
   const ids = new Set(students.map((student) => student.id));
   const now = new Date();
-  const shownEvaluations = evaluations.filter((item) => touchesAdminClass(selection, item.classes));
+  const shownEvaluations = evaluations.filter((item) => item.kind === 'evaluation' && touchesAdminClass(selection, item.classes));
 
   const data = buildAdminToday({
     now,
@@ -106,7 +106,7 @@ export async function getAdminNavCounts(): Promise<AdminNavCounts> {
     supabase.from('bug_reports').select('id', { count: 'exact', head: true }).eq('status', 'nouveau'),
     // Le résumé de la copie n'est écrit qu'à la validation de la note : sans résumé, la note reste à valider.
     supabase.from('evaluation_attempts').select('id', { count: 'exact', head: true }).eq('status', 'rendue').is('result', null),
-    supabase.from('evaluations').select('id', { count: 'exact', head: true }).eq('status', 'ouverte'),
+    supabase.from('evaluations').select('id', { count: 'exact', head: true }).eq('status', 'ouverte').eq('kind', 'evaluation'),
   ]);
   return {
     corrections: pending.length,

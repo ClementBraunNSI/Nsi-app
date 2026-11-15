@@ -30,7 +30,7 @@ export default async function AdminPlanPage({ searchParams }: { searchParams: Pr
   const thisMonday = mondayOf(undefined, now);
   const days = buildWeek(
     {
-      evaluations,
+      evaluations: evaluations.filter((item) => item.kind === "evaluation"),
       challenges,
       assessments: assessments.map((item) => ({ ...item, classes: item.classes ?? [] })),
       homework: homework?.homework ?? [],

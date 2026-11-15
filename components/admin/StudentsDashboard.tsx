@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState, useMemo } from 'react';
-import { Award, CheckCircle, Search, Clock, Download, ChevronRight, Pencil, Trash2, UserPlus, Users } from 'lucide-react';
+import { Award, CheckCircle, Search, Download, UserPlus, Users } from 'lucide-react';
 import React from 'react';
-import Link from 'next/link';
 import { getAdminDashboardData, type AdminStudent } from '@/app/actions/admin';
 import { PrivateLessonDates } from '@/components/admin/PrivateLessonDates';
 import { useAdminClass } from '@/components/admin/AdminClassContext';
@@ -12,7 +11,12 @@ import { BulkStudentsDialog } from '@/components/admin/BulkStudents';
 import { isAbortError } from '@/lib/is-abort-error';
 import { classGroups, NO_CLASS } from '@/lib/class-groups';
 import { isInactive } from '@/lib/admin-today';
-import { lastActivityLabel } from '@/lib/activity-board';
+import { getCatchUpCandidates, getStudentsOverview, draftCatchUpSheet, type CatchUpGroup, type StudentsOverview } from '@/app/actions/studentSheets';
+import { StudentTiles } from '@/components/admin/students/StudentTiles';
+import { StudentModal } from '@/components/admin/students/StudentModal';
+import { SheetComposer, type ComposerRequest } from '@/components/admin/students/SheetComposer';
+import { CatchUpPanel } from '@/components/admin/students/CatchUpPanel';
+import tileStyles from '@/components/admin/students/Students.module.css';
 
 // Niveaux pour l'affichage et le filtrage
 const LEVELS = [
@@ -26,9 +30,6 @@ const LEVELS = [
 
 type Audience = 'particuliers' | 'classe';
 type DashboardData = { students: AdminStudent[]; totalExercises: number; totalBadges: number };
-
-// Même libellé que la page Activité, à partir de la même date (lib/last-work.ts).
-const lastActiveLabel = (iso: string | null, now: Date) => lastActivityLabel(iso, now);
 
 /**
  * Liste des élèves (ancienne page /admin). `initial` sert aux données fictives de la page de développement ;
@@ -74,13 +75,24 @@ export function StudentsDashboard({
   const [accountStudent, setAccountStudent] = useState<AdminStudent | null>(null);
   const [studentToDelete, setStudentToDelete] = useState<AdminStudent | null>(null);
   const [bulkOpen, setBulkOpen] = useState(openBulk);
+  const [overview, setOverview] = useState<StudentsOverview | null>(null);
+  const [catchUp, setCatchUp] = useState<CatchUpGroup[]>([]);
+  const [openStudent, setOpenStudent] = useState<string | null>(null);
+  const [composer, setComposer] = useState<ComposerRequest | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const now = useMemo(() => new Date(), [students]);
 
   const fetchData = async () => {
     if (initial) return;
     setLoading(true);
     try {
-      const data = await getAdminDashboardData();
+      const [data, nextOverview, nextCatchUp] = await Promise.all([
+        getAdminDashboardData(),
+        getStudentsOverview().catch(() => null),
+        getCatchUpCandidates().catch(() => [] as CatchUpGroup[]),
+      ]);
+      setOverview(nextOverview);
+      setCatchUp(nextCatchUp);
       setStudents(data.students);
       setTotalExercises(data.totalExercises);
       setTotalBadges(data.totalBadges);
@@ -172,7 +184,6 @@ export function StudentsDashboard({
     link.click();
   };
 
-  const levelLabel = (level: string | null) => LEVELS.find((l) => l.id === level)?.label || level || 'Niveau ?';
 
   return (
     <div className="admin-page">
@@ -180,7 +191,7 @@ export function StudentsDashboard({
         <div>
           <p className="admin-eyebrow">Élèves</p>
           <h1>Liste des élèves</h1>
-          <p>Cliquer sur un élève ouvre sa fiche : notes, activité, code, devoirs et messages. La classe se choisit dans la barre du haut.</p>
+          <p>Un clic sur un élève ouvre son détail : place dans la classe, dernières évaluations, activité, message et fiches particulières. La classe se choisit dans la barre du haut.</p>
         </div>
         <div className="admin-head-actions">
           <button type="button" className="admin-btn" onClick={() => { setAccountStudent(null); setAccountMode('create'); }}>
@@ -250,94 +261,65 @@ export function StudentsDashboard({
 
       {audience === 'particuliers' && <PrivateLessonDates />}
 
+      {notice ? <p className="adm-eval-info">{notice}</p> : null}
+      {audience === 'classe' ? (
+        <CatchUpPanel
+          groups={catchUp.filter((group) => !classFilter || group.classe === classFilter)}
+          onPrepare={(group, chosenStudents) => {
+            const request: ComposerRequest = {
+              kind: 'rattrapage',
+              students: chosenStudents.map((student) => ({ id: student.id, name: student.name })),
+              title: `Rattrapage : ${group.title}`,
+              fromEvaluation: group.evaluationId,
+              loading: true,
+            };
+            setComposer(request);
+            const notions = [...new Set(chosenStudents.flatMap((student) => student.notions))];
+            const level = students.find((student) => student.id === chosenStudents[0]?.id)?.level ?? null;
+            void draftCatchUpSheet(notions, level)
+              .then((draft) => setComposer((current) => (current === request ? { ...request, source: draft.source, loading: false } : current)))
+              .catch(() => setComposer((current) => (current === request ? { ...request, source: '', loading: false } : current)));
+          }}
+        />
+      ) : null}
+
       {loading ? (
         <div className="admin-loading" role="status">Chargement des élèves</div>
       ) : (
-        <div className="admin-table-wrap">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th scope="col">Élève</th>
-                <th scope="col" className="admin-col-opt">Niveau</th>
-                <th scope="col" className="admin-col-opt">Classe</th>
-                <th scope="col" className="admin-col-opt">Dernière activité</th>
-                <th scope="col"><span className="sr-only">Actions</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredStudents.length > 0 ? (
-                studentSections.map((section) => (
-                  <React.Fragment key={section.key}>
-                    {section.label && (
-                      <tr className="admin-table-group">
-                        <th colSpan={5} scope="colgroup">
-                          {section.label}
-                          <span>{section.items.length} élève{section.items.length > 1 ? 's' : ''}</span>
-                        </th>
-                      </tr>
-                    )}
-                    {section.items.map((s) => {
-                      const inactive = isInactive(s.last_work_at, now);
-                      const name = s.full_name || 'Sans nom';
-                      const classLabel = s.classe || (s.has_private_lessons ? 'Particulier' : 'Sans classe');
-                      return (
-                        <tr key={s.id}>
-                          <td>
-                            <div className="admin-who">
-                              <span className="admin-avatar" aria-hidden>{(s.full_name || s.email || '?')[0]}</span>
-                              <span className="min-w-0">
-                                <Link href={`/admin/eleves/${s.id}`} className="admin-who-name" aria-label={`Ouvrir la fiche de ${s.full_name || 'cet élève'}`}>
-                                  {name}
-                                </Link>
-                                <small>{s.email}</small>
-                                <small className="admin-row-sub">
-                                  {levelLabel(s.level)} · {classLabel} ·{' '}
-                                  <span className={inactive ? 'admin-text-warn' : ''}>{lastActiveLabel(s.last_work_at, now)}</span>
-                                </small>
-                              </span>
-                            </div>
-                          </td>
-                          <td className="admin-col-opt"><span className="admin-pill">{levelLabel(s.level)}</span></td>
-                          <td className="admin-col-opt">{classLabel}</td>
-                          <td className="admin-col-opt">
-                            <span className={`admin-pill ${inactive ? 'is-warn' : 'is-ok'}`}>
-                              <Clock size={12} aria-hidden /> {lastActiveLabel(s.last_work_at, now)}
-                            </span>
-                          </td>
-                          <td>
-                            <div className="admin-row-actions">
-                              <Link href={`/admin/eleves/${s.id}`} className="is-main">
-                                Fiche <ChevronRight size={15} aria-hidden />
-                              </Link>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setAccountStudent(s);
-                                  setAccountMode('edit');
-                                }}
-                                aria-label={`Modifier le compte de ${name}`}
-                                title="Modifier le compte"
-                              >
-                                <Pencil size={15} aria-hidden />
-                              </button>
-                              <button type="button" className="is-danger" onClick={() => setStudentToDelete(s)} aria-label={`Supprimer ${name}`} title="Supprimer">
-                                <Trash2 size={15} aria-hidden />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </React.Fragment>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={5} className="admin-empty">Aucun élève pour ce filtre.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        filteredStudents.length ? (
+          <div className={tileStyles.sections}>
+            {studentSections.map((section) => {
+              const stats = section.label ? overview?.classes[section.label] : undefined;
+              return (
+                <section key={section.key} aria-label={section.label || 'Élèves'}>
+                  {section.label ? (
+                    <h2 className={tileStyles.sectionHead}>
+                      {section.label}
+                      <small>
+                        {section.items.length} élève{section.items.length > 1 ? 's' : ''}
+                        {stats?.mean != null ? ` · moyenne ${String(stats.mean).replace('.', ',')}` : ''}
+                        {stats?.median != null ? ` · médiane ${String(stats.median).replace('.', ',')}` : ''}
+                      </small>
+                    </h2>
+                  ) : null}
+                  <StudentTiles
+                    students={section.items}
+                    overview={overview}
+                    now={now}
+                    onOpen={(student) => setOpenStudent(student.id)}
+                    onEdit={(student) => {
+                      setAccountStudent(student);
+                      setAccountMode('edit');
+                    }}
+                    onDelete={setStudentToDelete}
+                  />
+                </section>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="admin-empty">Aucun élève pour ce filtre.</p>
+        )
       )}
 
       {accountMode && (
@@ -346,6 +328,32 @@ export function StudentsDashboard({
           student={accountStudent}
           onClose={() => setAccountMode(null)}
           onSaved={() => { fetchData(); }}
+        />
+      )}
+      {openStudent && (
+        <StudentModal
+          studentId={openStudent}
+          onClose={() => setOpenStudent(null)}
+          onGiveSheet={(student) => {
+            setOpenStudent(null);
+            setComposer({ kind: 'travail', students: [student] });
+          }}
+        />
+      )}
+      {composer && (
+        <SheetComposer
+          key={composer.students.map((student) => student.id).join('-') + composer.kind}
+          request={composer}
+          onClose={() => setComposer(null)}
+          onCreated={() => {
+            setNotice(
+              composer.kind === 'rattrapage'
+                ? 'Fiche de rattrapage envoyée : elle apparaît en vert en haut de l’espace des élèves choisis. Les copies se suivent dans Préparer, Évaluations.'
+                : 'Fiche particulière envoyée : elle apparaît en haut de l’espace de l’élève. La copie se suit dans Préparer, Évaluations.',
+            );
+            setComposer(null);
+            fetchData();
+          }}
         />
       )}
       {bulkOpen && (
