@@ -82,6 +82,15 @@ audience: public
       ```
 
 
+      <PostIt>
+
+      - `c in texte` : vrai si `c` apparaît dans `texte`
+      - `texte.index(c)` : position de `c` dans `texte` (erreur s'il est absent)
+      - `len(c) == 1` : `c` est un seul caractère
+      - `return -1` : valeur signalant « pas trouvé »
+
+      </PostIt>
+
       <Correction>
       ```python
       def indice_dans_alphabet(lettre):
@@ -120,6 +129,15 @@ audience: public
       print(chiffrer_caractere_cesar(' ', 3))  # ' '
       ```
 
+
+      <PostIt>
+
+      - `ALPHABET[i]` : la lettre d'indice `i`
+      - `% 26` : ramène un indice entre 0 et 25, ex. `28 % 26` → `2`
+      - une fonction déjà écrite peut être appelée : `indice_dans_alphabet(c)`
+      - un caractère hors alphabet est renvoyé tel quel
+
+      </PostIt>
 
       <Correction>
       ```python
@@ -167,6 +185,15 @@ audience: public
       print(chiffrer_cesar("ABC XYZ", 1))           # BCD YZA
       ```
 
+
+      <PostIt>
+
+      - `""` : texte vide de départ
+      - `for c in message:` : parcourt chaque caractère
+      - `t = t + x` : ajoute un caractère à la fin
+      - réutiliser la fonction de l'exercice précédent pour chaque caractère
+
+      </PostIt>
 
       <Correction>
       ```python
@@ -222,6 +249,15 @@ audience: public
       print(dechiffre)         # BONJOUR
       ```
 
+
+      <PostIt>
+
+      - `(i - cle) % 26` reste entre 0 et 25, même si `i - cle` est négatif
+      - ex. `(1 - 3) % 26` → `24`
+      - une fonction peut appeler une autre fonction déjà écrite
+      - `-cle` : l'opposé de la clé
+
+      </PostIt>
 
       <Correction>
       ```python
@@ -280,6 +316,15 @@ audience: public
       casser_cesar("ERQMRXU")
       # Identifier visuellement que la clé 3 donne BONJOUR
       ```
+
+      <PostIt>
+
+      - `range(26)` : de 0 à 25
+      - `print(a, b, c)` : valeurs séparées par un espace
+      - une fonction qui affiche n'a pas besoin de `return`
+      - réutiliser la fonction de déchiffrement déjà écrite
+
+      </PostIt>
 
       <Correction>
       ```python
@@ -347,6 +392,15 @@ audience: public
       ```
 
 
+      <PostIt>
+
+      - une fonction peut simplement renvoyer le résultat d'une autre
+      - `return f(x)` : renvoie ce que renvoie `f`
+      - l'indice de `'A'` est 0, celui de `'Z'` 25
+      - ce décalage sert ensuite pour Vigenère
+
+      </PostIt>
+
       <Correction>
       ```python
       def lettre_vers_decalage(lettre):
@@ -401,6 +455,15 @@ audience: public
                   indice_clef = (indice_clef + 1) % len(clef)
           renvoyer res
       ```
+
+      <PostIt>
+
+      - `cle[j]` : lettre d'indice `j` de la clé
+      - `(j + 1) % len(cle)` : avance d'un cran et revient à 0 en fin de clé
+      - l'indice dans la clé n'avance que sur une lettre du message
+      - `ALPHABET[(a + b) % 26]` : lettre décalée
+
+      </PostIt>
 
       <Correction>
       ```python

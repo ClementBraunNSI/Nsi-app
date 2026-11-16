@@ -297,7 +297,13 @@ export default function EvaluationRunner({ evaluation, attempt, exercises, answe
       const result = await evaluationHeartbeat(attempt.id);
       if (!result.ok) return;
       if (result.status === "rendue") {
-        finish(result.evaluationStatus === "fermee" ? "Le professeur a fermé l'évaluation : la copie est rendue." : "Le temps est écoulé : la copie est rendue.");
+        finish(
+          result.evaluationStatus === "fermee"
+            ? "Le professeur a fermé l'évaluation : la copie est rendue."
+            : result.locked
+              ? "La copie a été ramassée par le professeur : l'évaluation est terminée."
+              : "Le temps est écoulé : la copie est rendue.",
+        );
         return;
       }
       if (!result.locked && lockedRef.current) {

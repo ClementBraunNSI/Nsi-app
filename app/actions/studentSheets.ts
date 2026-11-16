@@ -345,7 +345,18 @@ export async function createStudentSheet(input: SheetInput): Promise<Result<{ id
 
 // ---------- Évaluation de révision ----------
 
-export type RevisionSourceStudent = { id: string; name: string; classe: string | null; level: string | null; total: number; notions: string[]; alreadyRevised: boolean };
+export type RevisionSourceStudent = {
+  id: string;
+  name: string;
+  classe: string | null;
+  level: string | null;
+  total: number;
+  notions: string[];
+  /** A rendu une copie d'une révision de cette interrogation. */
+  alreadyRevised: boolean;
+  /** Visé par une révision de cette interrogation, sans y avoir rendu de copie (absent) : proposé à nouveau. */
+  missedRevision: boolean;
+};
 export type RevisionSource = { id: string; title: string; classes: string[]; closedAt: string | null; validated: number; students: RevisionSourceStudent[] };
 
 /** Interrogations de classe fermées (les plus récentes d'abord), avec chaque copie validée : note et notions manquées. */
@@ -364,15 +375,24 @@ export async function listRevisionSources(): Promise<RevisionSource[]> {
   const ids = evaluations.map((row: any) => row.id);
   const [{ data: attempts }, { data: revisions }] = await Promise.all([
     supabase.from('evaluation_attempts').select('evaluation_id, user_id, result').in('evaluation_id', ids).eq('status', 'rendue').not('result', 'is', null),
-    supabase.from('evaluations').select('students, from_evaluation').eq('kind', 'rattrapage').in('from_evaluation', ids),
+    supabase
+      .from('evaluations')
+      .select('students, from_evaluation, evaluation_attempts(user_id, status)')
+      .eq('kind', 'rattrapage')
+      .in('from_evaluation', ids),
   ]);
   const userIds = [...new Set(((attempts ?? []) as any[]).map((row) => row.user_id))];
   const { data: profiles } = userIds.length
     ? await supabase.from('profiles').select('id, full_name, classe, level').in('id', userIds)
     : { data: [] as any[] };
   const people = new Map(((profiles ?? []) as any[]).map((row) => [row.id, row]));
+  // Plusieurs révisions d'une même interrogation sont possibles (élèves absents) : seule une copie rendue compte comme faite.
+  const targeted = new Set<string>();
   const revised = new Set<string>();
-  for (const row of (revisions ?? []) as any[]) for (const id of row.students ?? []) revised.add(`${row.from_evaluation}:${id}`);
+  for (const row of (revisions ?? []) as any[]) {
+    for (const id of row.students ?? []) targeted.add(`${row.from_evaluation}:${id}`);
+    for (const attempt of row.evaluation_attempts ?? []) if (attempt.status === 'rendue') revised.add(`${row.from_evaluation}:${attempt.user_id}`);
+  }
 
   return (evaluations as any[]).map((evaluation) => {
     const students = ((attempts ?? []) as any[])
@@ -387,6 +407,7 @@ export async function listRevisionSources(): Promise<RevisionSource[]> {
           total: Number(row.result?.total),
           notions: [...new Set(((row.result?.exercises ?? []) as any[]).flatMap((exercise) => exercise.review ?? []))] as string[],
           alreadyRevised: revised.has(`${evaluation.id}:${row.user_id}`),
+          missedRevision: targeted.has(`${evaluation.id}:${row.user_id}`) && !revised.has(`${evaluation.id}:${row.user_id}`),
         };
       })
       .filter((student) => Number.isFinite(student.total))

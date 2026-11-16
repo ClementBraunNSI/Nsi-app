@@ -27,6 +27,15 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 
 Écrire une fonction `prix_de(catalogue, article)` qui renvoie le prix de l'article, ou `None` s'il n'est pas au catalogue.
 
+<PostIt>
+
+- `d[cle]` : valeur associée à la clé ; erreur si la clé n'existe pas
+- `cle in d` : vrai si la clé existe
+- `return None` : « pas de valeur »
+- ex. `{"pain": 1.2}["pain"]` → `1.2`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -79,6 +88,15 @@ assert prix_de(cat, "lait") is None and prix_de({}, "pain") is None, "Article ab
 
 Exemple : `fiche("Roux", 4, "Lyon")` renvoie `{"nom": "Roux", "age": 4, "ville": "Lyon"}`.
 
+<PostIt>
+
+- `{"cle": valeur, "autre": valeur2}` : crée un dictionnaire
+- les clés textes s'écrivent entre guillemets
+- les valeurs peuvent être des variables
+- `return` renvoie le dictionnaire entier
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -126,6 +144,15 @@ assert fiche("Goupil", 7, "Metz")["age"] == 7, "La clé age contient l'âge."
 `notes` est un dictionnaire qui associe un élève à sa note.
 
 Écrire une fonction `enregistrer(notes, eleve, note)` qui ajoute la note de l'élève, ou la remplace s'il en avait déjà une. Elle modifie `notes` et ne renvoie rien.
+
+<PostIt>
+
+- `d[cle] = valeur` : ajoute la clé, ou remplace sa valeur si elle existe déjà
+- le dictionnaire reçu est modifié directement
+- une fonction sans `return` renvoie `None`
+- pas besoin de tester si la clé existe
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -179,6 +206,15 @@ assert n == {"Léa": 18, "Tom": 15}, "La note de Léa est remplacée."
 Écrire une fonction `total(stock)` qui renvoie le nombre total d'objets en réserve.
 
 Contrainte : avec une boucle.
+
+<PostIt>
+
+- `for cle in d:` : parcourt les clés
+- `d.values()` : les valeurs ; `for v in d.values():`
+- un total démarre à `0`
+- `sum` n'est pas demandé ici : une boucle
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -234,6 +270,15 @@ assert re.search(r"\b(for|while)\b", PROGRAMME), "Avec une boucle."
 Écrire une fonction `occurrences(mot)` qui renvoie un dictionnaire associant à chaque caractère de `mot` son nombre d'apparitions.
 
 Exemple : `occurrences("renard")` renvoie `{"r": 2, "e": 1, "n": 1, "a": 1, "d": 1}`.
+
+<PostIt>
+
+- `d = {}` : dictionnaire vide
+- `c in d` : la clé existe-t-elle déjà ?
+- `d[c] = d[c] + 1` : augmente une valeur existante
+- `d[c] = 1` : crée une nouvelle clé
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -292,6 +337,15 @@ assert "Counter" not in PROGRAMME and "count(" not in PROGRAMME, "Sans Counter n
 
 `scores` associe chaque joueur à son score. Écrire une fonction `champion(scores)` qui renvoie le nom du joueur au plus haut score (le premier rencontré en cas d'égalité), ou `None` si le dictionnaire est vide.
 
+<PostIt>
+
+- `for cle, valeur in d.items():` : parcourt les couples clé-valeur
+- `x is None` : teste l'absence de valeur
+- `>` strict garde le premier en cas d'égalité
+- un dictionnaire vide ne fait faire aucun tour de boucle
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -346,6 +400,15 @@ assert champion({"Solo": -3}) == "Solo", "Un seul joueur, même avec un score n�
 ### À recommander
 
 Écrire une fonction `a_commander(stock, seuil)` qui renvoie un **nouveau** dictionnaire contenant seulement les produits dont la quantité est strictement inférieure à `seuil`.
+
+<PostIt>
+
+- `for cle, valeur in d.items():` : parcourt les couples
+- `nouveau = {}` puis `nouveau[cle] = valeur` : remplit un nouveau dictionnaire
+- `<` : strictement inférieur
+- le dictionnaire reçu ne doit pas changer
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -403,6 +466,15 @@ assert a_commander(s, 0) == {}, "Seuil 0 : rien."
 Un panier associe un article à une quantité. Écrire une fonction `fusionner(p1, p2)` qui renvoie un nouveau panier contenant les articles des deux, en **additionnant** les quantités des articles communs.
 
 Exemple : `{"pomme": 3, "pain": 1}` et `{"pomme": 2, "lait": 1}` donnent `{"pomme": 5, "pain": 1, "lait": 1}`.
+
+<PostIt>
+
+- `dict(d)` : copie du dictionnaire `d`
+- `cle in d` : la clé existe-t-elle ?
+- `d[cle] = d[cle] + q` : ajoute à une valeur existante
+- `for cle, valeur in d.items():` : parcourt les couples
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -465,6 +537,15 @@ assert fusionner({}, b) == b and fusionner(a, {}) == a, "Avec un panier vide."
 
 Exemple : `{"a": 1, "b": 2}` donne `{1: "a", 2: "b"}`.
 
+<PostIt>
+
+- `for cle, valeur in d.items():` : parcourt les couples
+- `nouveau[k] = v` : ajoute une clé dans le nouveau dictionnaire
+- une clé peut être un nombre : `{1: "a"}`
+- le dictionnaire reçu ne change pas
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -519,6 +600,15 @@ assert inverser({}) == {}, "Dictionnaire vide."
 Écrire une fonction `par_initiale(mots)` qui reçoit une liste de mots (non vides) et renvoie un dictionnaire associant à chaque première lettre la liste des mots qui commencent par elle, dans l'ordre d'origine.
 
 Exemple : `["renard", "loup", "raton"]` donne `{"r": ["renard", "raton"], "l": ["loup"]}`.
+
+<PostIt>
+
+- `mot[0]` : première lettre
+- une valeur de dictionnaire peut être une liste : `{"r": []}`
+- `d[cle].append(x)` : ajoute à la liste rangée sous `cle`
+- `cle not in d` : la clé n'existe pas encore
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -580,6 +670,15 @@ assert par_initiale(["a", "b", "a"]) == {"a": ["a", "a"], "b": ["b"]}, "Doublons
 
 Exemple : avec `{"le": "the", "renard": "fox"}`, `"le renard roux"` donne `"the fox roux"`.
 
+<PostIt>
+
+- `phrase.split(" ")` : liste des mots
+- `" ".join(liste)` : recolle les mots avec une espace
+- `d.get(cle, defaut)` : valeur de `cle`, ou `defaut` si elle est absente
+- `liste.append(x)` : ajoute à la fin
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -635,6 +734,15 @@ assert traduire("bonjour", {}) == "bonjour", "Dictionnaire vide."
 `panier` associe un article à une quantité, `prix` associe un article à son prix unitaire.
 
 Écrire une fonction `montant(panier, prix)` qui renvoie le prix total du panier, arrondi au centime. Un article du panier absent de `prix` est ignoré.
+
+<PostIt>
+
+- `for cle, valeur in d.items():` : parcourt les couples
+- `cle in d` : évite une erreur sur une clé absente
+- `d[cle]` : valeur associée
+- `round(x, 2)` : arrondi au centime
+
+</PostIt>
 
 <Indices>
 <Indice>

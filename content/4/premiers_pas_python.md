@@ -59,6 +59,15 @@ Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une aut
   ### Exercice 1.1 : Mon premier message
   **Créer un programme qui affiche "Bienvenue en Python !" dans le terminal.**
 
+  <PostIt>
+
+  - `print("texte")` : affiche le texte dans le terminal
+  - un texte s'écrit entre guillemets
+  - les parenthèses sont obligatoires
+  - majuscules, espaces et ponctuation sont affichés tels quels
+
+  </PostIt>
+
   <Correction>
   ```python
   print("Bienvenue en Python !")
@@ -77,6 +86,15 @@ Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une aut
 
   ### Exercice 1.2 : Afficher mon prénom
   **Créer une variable `prenom` avec son prénom, puis l'afficher avec `print()`.**
+
+  <PostIt>
+
+  - `variable = valeur` : range une valeur dans une variable
+  - un texte s'écrit entre guillemets : `"Maya"`
+  - `print(variable)` : affiche son contenu, sans guillemets autour du nom
+  - `print("variable")` afficherait le mot lui-même
+
+  </PostIt>
 
   <Correction>
   ```python
@@ -98,6 +116,14 @@ Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une aut
 
   ### Exercice 1.3 : Dire bonjour
   **Demander le prénom de l'utilisateur avec `input()`, puis afficher "Bonjour" suivi de son prénom.**
+
+  <PostIt>
+
+  - `input("Question ? ")` : affiche la question, attend la réponse
+  - la réponse se range dans une variable : `x = input(...)`
+  - `print(a, b)` : affiche `a` puis `b`, séparés par un espace
+
+  </PostIt>
 
   <Correction>
   ```python
@@ -122,6 +148,15 @@ Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une aut
   ### Exercice 1.4 : Mon âge
   **Demander l'âge de l'utilisateur et afficher "Vous avez X ans" (où X est l'âge saisi).**
 
+  <PostIt>
+
+  - `input(...)` renvoie toujours un texte (`str`)
+  - `"a" + "b"` : colle deux textes, sans espace ajouté
+  - les espaces se placent dans les guillemets : `"Vous avez "`
+  - `print(a, b, c)` : autre façon, avec des espaces automatiques
+
+  </PostIt>
+
   <Correction>
   ```python
   age = input("Quel est votre âge ? ")
@@ -142,6 +177,15 @@ Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une aut
 
   ### Exercice 1.5 : Deux informations
   **Demander le prénom et la ville de l'utilisateur, puis afficher les deux informations dans une seule phrase.**
+
+  <PostIt>
+
+  - un `input` par information, chacun dans sa variable
+  - `"texte " + variable + " suite"` : construit une phrase
+  - `print(a, b, c)` sépare les valeurs par des espaces
+  - une apostrophe dans un texte : `"Je m'appelle"` entre guillemets doubles
+
+  </PostIt>
 
   <Correction>
   ```python
@@ -165,6 +209,15 @@ Tant que `age` est la chaîne `'19'`, on peut l'afficher et la coller à une aut
 
   ### Exercice 1.6 : Animal préféré
   **Demander l'animal préféré de l'utilisateur, le stocker dans une variable, puis afficher "Mon animal préféré est" suivi de l'animal.**
+
+  <PostIt>
+
+  - `x = input("Question ? ")` : stocke la réponse
+  - `"début " + x` : colle un texte et la réponse
+  - l'espace avant le guillemet fermant évite des mots collés
+  - `print(...)` affiche la phrase
+
+  </PostIt>
 
   <Correction>
   ```python
@@ -268,6 +321,15 @@ if not pluie:
   ### Exercice 2.1 : Comparaison de deux nombres
   **Demander deux nombres à l'utilisateur et afficher lequel est le plus grand. Si les deux nombres sont égaux, afficher "Les nombres sont égaux".**
 
+  <PostIt>
+
+  - `int(input(...))` : lit un nombre entier
+  - `if` / `elif` / `else` : un seul bloc exécuté
+  - `>` : strictement supérieur ; `==` : égal
+  - les deux-points et l'indentation sont obligatoires
+
+  </PostIt>
+
   <Correction>
   ```python
   a = int(input("Premier nombre ? "))
@@ -303,6 +365,15 @@ if not pluie:
   **Demander un mot à l'utilisateur. Si le mot contient plus de 5 lettres, afficher "Mot long", sinon afficher "Mot court".**
   *Indice : `len(s)` renvoie la longueur de la chaîne `s`.*
 
+  <PostIt>
+
+  - `len(texte)` : nombre de caractères
+  - `>` : strictement supérieur
+  - `if` / `else` : deux cas
+  - `input(...)` renvoie un texte, utilisable directement avec `len`
+
+  </PostIt>
+
   <Correction>
   ```python
   mot = input("Entrez un mot : ")
@@ -330,6 +401,15 @@ if not pluie:
 
   ### Exercice 2.3 : Catégorie d'âge
   **Demander l'âge de l'utilisateur et afficher sa catégorie : 0-12 : Enfant ; 13-17 : Adolescent ; 18-59 : Adulte ; 60+ : Senior.**
+
+  <PostIt>
+
+  - `if` / `elif` / `else` : le premier test vrai l'emporte
+  - `<=` : inférieur ou égal
+  - les tests vont dans l'ordre des tranches d'âge
+  - `int(input(...))` : lit un entier
+
+  </PostIt>
 
   <Correction>
   ```python
@@ -362,6 +442,15 @@ if not pluie:
   ### Exercice 2.4 : Calculatrice de moyenne
   **Demander deux notes à l'utilisateur et calculer leur moyenne. Si la moyenne ≥ 10 : afficher "Vous passez en classe supérieure" ; sinon : afficher "Vous devez redoubler".**
 
+  <PostIt>
+
+  - `float(input(...))` : lit un nombre à virgule
+  - les parenthèses fixent l'ordre : `(a + b) / 2`
+  - `>=` : supérieur ou égal
+  - `if` / `else` : deux messages possibles
+
+  </PostIt>
+
   <Correction>
   ```python
   a = float(input("Note 1 ? "))
@@ -391,6 +480,15 @@ if not pluie:
 
   ### Exercice 2.5 : Prix du billet de train
   **Demander l'âge de l'utilisateur et la distance du trajet (km). Calculer le prix avec : base = distance × 0.20€ ; enfant (< 12) : −50% ; senior (≥ 65) : −30% ; si distance > 200 : −10€ supplémentaires. Afficher le prix final.**
+
+  <PostIt>
+
+  - −50 % revient à multiplier par `0.5` ; −30 % par `0.7`
+  - plusieurs `if` à la suite sont indépendants : chaque réduction se teste
+  - `x = x - 10` : retire 10 à la valeur actuelle
+  - `float(input(...))` : lit un nombre à virgule
+
+  </PostIt>
 
   <Correction>
   ```python
@@ -486,6 +584,18 @@ print("Le double est :", resultat)
   ### Exercice 3.1 : Ma première fonction
   **Créer une fonction `afficher_message()` qui affiche "Bienvenue dans mon programme !". Appeler cette fonction 3 fois.**
 
+  <PostIt>
+
+  ```python
+  def nom_fonction():
+      instructions
+  ```
+  - définir une fonction ne l'exécute pas
+  - `nom_fonction()` : appelle la fonction, une fois par appel
+  - les instructions de la fonction sont indentées
+
+  </PostIt>
+
   <Correction>
   ```python
   def afficher_message():
@@ -510,6 +620,15 @@ print("Le double est :", resultat)
 
   ### Exercice 3.2 : Fonction avec paramètre
   **Créer une fonction `saluer(nom)` qui prend un nom et affiche "Bonjour" suivi du nom. Appeler avec différents noms.**
+
+  <PostIt>
+
+  - `def f(param):` : `param` reçoit la valeur donnée à l'appel
+  - `f("Alice")` : appelle `f` avec `"Alice"`
+  - `print(a, b)` : affiche deux valeurs séparées par un espace
+  - un appel par nom à saluer
+
+  </PostIt>
 
   <Correction>
   ```python
@@ -542,6 +661,15 @@ print("Le double est :", resultat)
   ### Exercice 3.3 : Calcul du carré
   **Créer une fonction `calculer_carre(nombre)` qui renvoie le carré de `nombre`. Demander un entier, utiliser la fonction et afficher le résultat.**
 
+  <PostIt>
+
+  - `return valeur` : renvoie la valeur au programme
+  - `print(f(x))` : affiche ce que renvoie la fonction
+  - `int(input(...))` : lit un entier
+  - la fonction se définit avant d'être appelée
+
+  </PostIt>
+
   <Correction>
   ```python
   def calculer_carre(nombre):
@@ -567,6 +695,15 @@ print("Le double est :", resultat)
   ### Exercice 3.4 : Vérification de parité
   **Créer une fonction `est_pair(nombre)` qui renvoie `True` si le nombre est pair et `False` sinon. Demander un nombre et afficher s'il est pair ou impair.**
   *Rappel : pair si `nombre % 2 == 0`.*
+
+  <PostIt>
+
+  - `%` : reste de la division
+  - une comparaison donne `True` ou `False`, qui peut être renvoyé directement
+  - `if f(n):` : teste directement le booléen renvoyé
+  - `if` / `else` : pair ou impair
+
+  </PostIt>
 
   <Correction>
   ```python
@@ -598,6 +735,15 @@ print("Le double est :", resultat)
   ### Exercice 3.5 : Calcul de prix TTC
   **Créer une fonction `calculer_ttc(prix_ht, taux_tva)` qui renvoie le prix TTC (HT × (1 + taux/100)). Demander les valeurs et afficher le prix TTC.**
 
+  <PostIt>
+
+  - `def f(a, b):` : deux paramètres, séparés par une virgule
+  - les parenthèses fixent l'ordre des calculs
+  - un taux de 20 % : `20 / 100`
+  - `float(input(...))` : lit un nombre à virgule
+
+  </PostIt>
+
   <Correction>
   ```python
   def calculer_ttc(prix_ht, taux_tva):
@@ -627,6 +773,16 @@ print("Le double est :", resultat)
 
   ### Exercice 3.6 : Calculatrice complète
   **Créer `addition`, `soustraction`, `multiplication`, `division` puis une fonction `calculatrice()` qui demande deux nombres et une opération, appelle la fonction appropriée et affiche le résultat.**
+
+  <PostIt>
+
+  - une fonction par opération, chacune avec `return`
+  - une fonction peut en appeler d'autres
+  - `if` / `elif` / `else` : choisit selon le texte de l'opération
+  - `==` compare deux textes : `op == "+"`
+  - `calculatrice()` doit être appelée à la fin pour démarrer
+
+  </PostIt>
 
   <Correction>
   ```python

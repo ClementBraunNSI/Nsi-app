@@ -23,6 +23,17 @@ Demander un entier `n`, puis afficher le compte à rebours de `n` jusqu'à `0`, 
 
 Exemple pour `3` : `3`, `2`, `1`, `0`.
 
+<PostIt>
+
+- `range(debut, fin, pas)` : de `debut` jusqu'à `fin` **exclu**
+- un pas négatif fait descendre : `range(5, 2, -1)` → 5, 4, 3
+```python
+for i in range(...):
+    print(i)
+```
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -84,6 +95,15 @@ Demander un entier `n` et afficher sa table de multiplication de 1 à 10, sous l
 7 x 10 = 70
 ```
 
+<PostIt>
+
+- `range(a, b)` : les entiers de `a` à `b - 1`
+- `for i in range(...):` : `i` prend chaque valeur à son tour
+- `print(a, "x", b)` : valeurs séparées par un espace
+- le bloc répété est décalé sous le `for`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -138,6 +158,15 @@ assert "12 x 10 = 120" in sortie, "Pour 12, la dernière ligne est « 12 x 10 = 
 Demander un entier `n` et calculer dans `somme` la somme `1 + 2 + … + n`, avec une boucle.
 
 Exemple : pour `4`, la somme vaut `10`.
+
+<PostIt>
+
+- `range(1, n + 1)` : de 1 à `n` inclus
+- une variable créée **avant** la boucle peut cumuler : `total = total + x`
+- `print` placé après la boucle (sans décalage) : affiché une seule fois
+- `int(input(...))` : lit un entier
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -199,6 +228,15 @@ Afficher tous les multiples de 5 de `5` à `100`, un par ligne, et compter dans 
 
 Contrainte : la boucle ne parcourt que les multiples de 5, sans tester les autres nombres.
 
+<PostIt>
+
+- `range(debut, fin, pas)` : avance de `pas` en `pas`, `fin` exclu
+- ex. `range(0, 10, 3)` → 0, 3, 6, 9
+- un compteur : `nombre = 0` avant la boucle, `nombre = nombre + 1` dedans
+- tout ce qui est décalé sous le `for` est répété
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -253,6 +291,15 @@ assert "%" not in PROGRAMME, "Pas besoin de tester les nombres un à un."
 La factorielle de `n`, notée `n!`, est le produit `1 × 2 × 3 × … × n` (et `0!` vaut 1).
 
 Demander `n` et calculer `fact`.
+
+<PostIt>
+
+- `x = x * y` : multiplie la valeur de `x` par `y`
+- un produit qui s'accumule démarre à `1`, pas à `0`
+- `range(1, n + 1)` : de 1 à `n` inclus
+- `range(1, 1)` est vide : la boucle ne tourne pas
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -309,6 +356,15 @@ for n, f in [(0, 1), (1, 1), (10, 3628800), (20, 2432902008176640000)]:
 
 Demander un mot (en minuscules) et ranger dans `voyelles` le nombre de voyelles qu'il contient (`a`, `e`, `i`, `o`, `u`, `y`).
 
+<PostIt>
+
+- `for lettre in mot:` : parcourt le mot caractère par caractère
+- `c in "abc"` : vrai si le caractère `c` est dans le texte `"abc"`
+- un compteur démarre à `0`
+- un `if` peut se placer dans une boucle (double décalage)
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -364,6 +420,15 @@ for m, v in [("python", 2), ("rythme", 2), ("bcd", 0), ("oiseau", 5), ("", 0)]:
 ### Moyenne de la classe
 
 Demander combien de notes seront saisies, puis demander chaque note (à virgule possible). Calculer dans `moyenne` leur moyenne, arrondie au centième.
+
+<PostIt>
+
+- `for i in range(n):` : répète `n` fois
+- un `input` placé dans la boucle est posé à chaque tour
+- `float(input(...))` : lit un nombre à virgule
+- `round(x, 2)` : arrondi au centième
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -427,6 +492,15 @@ Demander un mot et ranger dans `envers` le mot écrit à l'envers.
 
 Contrainte : avec une boucle, sans `[::-1]` ni `reversed`.
 
+<PostIt>
+
+- `for lettre in mot:` : parcourt les caractères dans l'ordre
+- `"" ` : texte vide, point de départ d'un texte construit pas à pas
+- `a + b` et `b + a` ne donnent pas le même texte : l'ordre compte
+- `[::-1]` et `reversed` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -484,6 +558,18 @@ assert "[::-1]" not in PROGRAMME and "reversed" not in PROGRAMME, "Le mot se ret
 Un livret rapporte 3 % par an : chaque année, le capital est multiplié par `1.03`.
 
 Demander le capital de départ et calculer dans `annees` le nombre d'années nécessaires pour qu'il **double** au moins.
+
+<PostIt>
+
+```python
+while condition:
+    ...
+```
+- répète tant que la condition est vraie ; le nombre de tours n'est pas connu d'avance
+- la condition doit finir par devenir fausse
+- `x = x * 1.03` : augmente `x` de 3 %
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -545,6 +631,15 @@ assert "while" in PROGRAMME, "Une boucle while s'impose : le nombre de tours est
 Demander une note sur 20. Tant que la note saisie n'est pas entre 0 et 20, afficher `Note invalide` et la redemander.
 
 À la fin, `note` contient la note valide et `essais` le nombre total de saisies.
+
+<PostIt>
+
+- `while condition:` : répète tant que la condition est vraie
+- `or` : vrai si au moins une des conditions est vraie
+- la variable testée doit exister avant le `while`
+- `x = x + 1` : ajoute 1 à un compteur
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -608,6 +703,15 @@ assert autre["note"] == 0 and autre["essais"] == 2, "20,5 est refusé, 0 est acc
 Demander combien de scores seront saisis (au moins un), puis chaque score (un entier, parfois négatif). Ranger dans `record` le plus grand et dans `position` son numéro de saisie (1 pour le premier). En cas d'égalité, garder la première position.
 
 Contrainte : sans `max`.
+
+<PostIt>
+
+- `range(a, b)` : de `a` à `b - 1`
+- `>` (strict) ou `>=` : choisir selon le cas d'égalité demandé
+- plusieurs variables peuvent être mises à jour dans le même `if`
+- `max` est interdit ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -682,6 +786,15 @@ assert not re.search(r"\bmax\s*\(", PROGRAMME), "Sans la fonction max."
 Demander un entier positif ou nul et ranger dans `chiffres` son nombre de chiffres.
 
 Contrainte : par des divisions, sans transformer le nombre en texte. (0 s'écrit avec un chiffre.)
+
+<PostIt>
+
+- `n // 10` : enlève le dernier chiffre, ex. `347 // 10` → `34`
+- `while condition:` : répète tant que la condition est vraie
+- un compteur : `c = c + 1`
+- transformer le nombre en texte est interdit ici
+
+</PostIt>
 
 <Indices>
 <Indice>

@@ -246,6 +246,9 @@ export async function updateEvaluation(id: string, input: EvaluationInput): Prom
   if (!ctx) return fail(NOT_ALLOWED);
   const values = cleanInput(input);
   if (!values.title) return fail('Le titre est obligatoire.');
+  // Révision et fiche particulière visent des élèves : une classe cochée l'ouvrirait à toute la classe.
+  const { data: current } = await ctx.supabase.from('evaluations').select('kind').eq('id', id).maybeSingle();
+  if ((current as any)?.kind && (current as any).kind !== 'evaluation') values.classes = [];
   const { error } = await ctx.supabase.from('evaluations').update(values).eq('id', id);
   if (error) return fail(messageOf(error, "L'évaluation n'a pas pu être enregistrée."));
   revalidatePath(`/admin/evaluations/${id}`);
@@ -695,6 +698,24 @@ export async function unlockAttemptRemotely(attemptId: string): Promise<Result> 
   const { error } = await ctx.supabase.from('evaluation_attempts').update({ locked: false, failed_unlocks: 0 }).eq('id', attemptId);
   if (error) return fail(messageOf(error, 'Le déverrouillage a échoué.'));
   await ctx.supabase.from('evaluation_incidents').update({ resolved_at: now }).eq('attempt_id', attemptId).is('resolved_at', null);
+  return { ok: true };
+}
+
+/**
+ * Verrouillage définitif d'une copie à distance : elle est ramassée telle quelle (rendue) et reste verrouillée.
+ * La page de l'élève le voit au battement suivant et s'arrête.
+ */
+export async function lockAttemptForGood(attemptId: string): Promise<Result> {
+  const ctx = await teacher();
+  if (!ctx) return fail(NOT_ALLOWED);
+  const { data, error } = await ctx.supabase
+    .from('evaluation_attempts')
+    .update({ status: 'rendue', locked: true, locked_at: new Date().toISOString(), submitted_at: new Date().toISOString() })
+    .eq('id', attemptId)
+    .eq('status', 'en_cours')
+    .select('id');
+  if (error) return fail(messageOf(error, "La copie n'a pas pu être verrouillée."));
+  if (!data?.length) return fail('Cette copie est déjà rendue.');
   return { ok: true };
 }
 

@@ -94,6 +94,15 @@ print(race.upper())   # NORMANDE
 
     Rappel : un texte s'écrit entre guillemets, et `print(message)` affiche le contenu de la variable.
 
+    <PostIt>
+
+    - `variable = valeur` : range la valeur dans la variable
+    - le nom de la variable à gauche du `=`, la valeur à droite
+    - `print(variable)` : affiche le contenu, sans guillemets autour du nom
+    - les accents s'écrivent normalement dans un texte
+
+    </PostIt>
+
     <Correction>
     ```python
     message = "Bienvenue à la ferme laitière"
@@ -115,6 +124,15 @@ assert message == "Bienvenue à la ferme laitière", "Le texte doit être exacte
     **Créer trois variables qui décrivent une vache : `nom` vaut `"Marguerite"`, `age` vaut `6` et `race` vaut `"Montbéliarde"`. Afficher ensuite les trois variables, chacune avec son propre `print`.**
 
     Attention : `age` est un nombre, il s'écrit donc sans guillemets.
+
+    <PostIt>
+
+    - texte entre guillemets : `"Marguerite"` ; nombre sans guillemets : `6`
+    - une variable par information
+    - un `print` par ligne affichée
+    - les noms de variables : sans accent ni espace
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -147,6 +165,15 @@ assert race == "Montbéliarde", "La variable 'race' doit valoir \"Montbéliarde\
 
     Pour ajouter 3 à une variable, on écrit `vaches = vaches + 3` : Python calcule d'abord la droite, puis range le résultat dans `vaches`.
 
+    <PostIt>
+
+    - `x = x + 3` : calcule `x + 3`, puis range le résultat dans `x`
+    - l'ancienne valeur de `x` est remplacée
+    - `print("texte :", x)` : texte et valeur séparés par un espace
+    - les instructions s'exécutent de haut en bas
+
+    </PostIt>
+
     <Correction>
     ```python
     vaches = 45
@@ -167,6 +194,15 @@ assert vaches == 48, "Après l'arrivée des 3 veaux, 'vaches' doit valoir 48."
     <Enonce>
     ### Exercice 2.1 [Facile] : La traite du jour
     **La traite du matin donne 420 litres et celle du soir 380 litres. Créer les variables `litres_matin` et `litres_soir`, calculer leur somme dans la variable `total`, puis afficher `total`.**
+
+    <PostIt>
+
+    - `+` : addition de deux nombres
+    - `total = a + b` : range le résultat du calcul
+    - une variable déjà créée peut servir dans un calcul
+    - `print(total)` : affiche la valeur
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -195,6 +231,15 @@ assert total == 800, "Le total de la journée doit faire 800 litres."
 
     La moyenne s'obtient en divisant le total par le nombre de vaches, avec `/`.
 
+    <PostIt>
+
+    - `/` : division, le résultat est un nombre à virgule (`20.0`)
+    - `moyenne = a / b` : range le résultat
+    - les variables utilisées doivent exister avant le calcul
+    - `print(moyenne)` : affiche le résultat
+
+    </PostIt>
+
     <Correction>
     ```python
     total_litres = 800
@@ -220,6 +265,15 @@ assert moyenne == 20, "Avec 800 litres pour 40 vaches, la moyenne doit faire 20 
     - **`reste` : le nombre de litres qui restent dans la cuve.**
 
     Utiliser la division entière `//` et le reste `%`, comme dans l'exemple de la partie 3.
+
+    <PostIt>
+
+    - `a // b` : nombre de fois que `b` tient entièrement dans `a`
+    - `a % b` : ce qui reste après ce partage
+    - ex. `17 // 5` → `3` et `17 % 5` → `2`
+    - une variable par résultat
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -247,6 +301,15 @@ assert reste == 10, "Après 31 bidons, il reste 10 litres."
 
     Un nombre à virgule s'écrit avec un point en Python : `0.45`.
 
+    <PostIt>
+
+    - `*` : multiplication
+    - un nombre à virgule s'écrit avec un point : `0.45`
+    - `recette = a * b` : range le résultat
+    - `print(recette)` : affiche la valeur
+
+    </PostIt>
+
     <Correction>
     ```python
     prix_litre = 0.45
@@ -271,6 +334,15 @@ assert abs(recette - 360) < 0.001, "800 litres à 0.45 euro font 360 euros."
 
     Penser aux espaces et à la virgule : ils font partie des textes entre guillemets.
 
+    <PostIt>
+
+    - `"a" + "b"` : colle deux textes → `"ab"`
+    - les espaces et la ponctuation font partie des textes entre guillemets
+    - les variables se placent entre les morceaux, sans guillemets
+    - `print(etiquette)` : affiche le texte construit
+
+    </PostIt>
+
     <Correction>
     ```python
     nom = "Marguerite"
@@ -294,6 +366,15 @@ assert etiquette == "Vache Marguerite, numéro FR4512", "Le texte attendu est : 
     **Créer `vaches` qui vaut `45`, puis construire dans `phrase` le texte `"La ferme compte 45 vaches."` à partir de la variable `vaches`. Afficher `phrase`.**
 
     Un nombre ne se colle pas directement à un texte : le transformer d'abord avec `str(vaches)`.
+
+    <PostIt>
+
+    - `str(45)` → `"45"` : un nombre transformé en texte
+    - `"texte" + 45` provoque une erreur
+    - `"a" + "b"` : colle deux textes
+    - le point final fait partie du texte : `" vaches."`
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -321,6 +402,15 @@ assert phrase == "La ferme compte 45 vaches.", "Le texte attendu est : La ferme 
     - **`lettres` : le nombre de lettres de la race, avec `len`.**
 
     **Afficher `panneau` puis `lettres`.**
+
+    <PostIt>
+
+    - `texte.upper()` : le texte en majuscules
+    - `len(texte)` : nombre de caractères
+    - `upper` s'écrit après un point ; `len` entoure le texte de parenthèses
+    - `print(a)` puis `print(b)` : deux lignes
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -375,6 +465,15 @@ Avec le bouton **Exécuter**, une fenêtre pose chaque question et il suffit d'y
     Bonjour Jean
     ```
 
+    <PostIt>
+
+    - `x = input("Question ? ")` : pose la question, range la réponse dans `x`
+    - l'espace après le `?` sépare la question de la réponse tapée
+    - `print(a, b)` : affiche `a` et `b` séparés par un espace
+    - la réponse est un texte
+
+    </PostIt>
+
     <Correction>
     ```python
     prenom = input("Prénom du fermier ? ")
@@ -398,6 +497,15 @@ Avec le bouton **Exécuter**, une fenêtre pose chaque question et il suffit d'y
     **Demander le nom d'une vache, puis sa race, et afficher une seule phrase de la forme `Marguerite est une vache de race Montbéliarde.`**
 
     Construire la phrase avec `+`, comme dans l'exercice 3.1.
+
+    <PostIt>
+
+    - un `input` par question, chacun dans sa variable
+    - `"a" + "b"` : colle des textes, sans espace ajouté
+    - les espaces et le point final se placent dans les guillemets
+    - un seul `print` pour toute la phrase
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -431,6 +539,15 @@ Avec le bouton **Exécuter**, une fenêtre pose chaque question et il suffit d'y
     Litres par vache : 20.0
     ```
 
+    <PostIt>
+
+    - `input(...)` renvoie un texte, même si des chiffres sont tapés
+    - `int(texte)` : transforme le texte en entier
+    - `int(input("Question ? "))` : lit directement un entier
+    - `/` : division, résultat à virgule
+
+    </PostIt>
+
     <Correction>
     ```python
     litres = int(input("Litres traits aujourd'hui ? "))
@@ -463,6 +580,15 @@ Avec le bouton **Exécuter**, une fenêtre pose chaque question et il suffit d'y
     Bidons pleins : 31
     Litres restants : 10
     ```
+
+    <PostIt>
+
+    - `int(input(...))` : lit un entier
+    - `//` : nombre de parts complètes ; `%` : ce qui reste
+    - `print("texte :", valeur)` : une ligne par résultat
+    - un calcul peut se faire directement dans le `print`
+
+    </PostIt>
 
     <Correction>
     ```python

@@ -630,6 +630,15 @@ assert SORTIE.strip().endswith("[6, 14, 2, 20]"), "Afficher doubles à la fin."
 
 Exemple : `extremites([4, 8, 15, 16])` renvoie `[4, 16]`.
 
+<PostIt>
+
+- `liste[0]` : premier élément
+- `liste[-1]` : dernier élément
+- `[a, b]` : crée une liste de deux éléments
+- `return` renvoie la nouvelle liste
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -678,6 +687,15 @@ assert extremites([1, 2]) == [1, 2], "Deux éléments."
 Écrire une fonction `somme(liste)` qui renvoie la somme des nombres de `liste` (0 pour une liste vide).
 
 Contrainte : sans la fonction `sum`.
+
+<PostIt>
+
+- `for x in liste:` : parcourt les valeurs
+- un total démarre à `0` avant la boucle
+- une liste vide ne fait faire aucun tour de boucle
+- `sum` est interdit ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -732,6 +750,15 @@ assert not re.search(r"\bsum\s*\(", PROGRAMME), "Sans sum."
 
 Écrire une fonction `carres(n)` qui renvoie la liste `[1, 4, 9, …, n²]` des carrés des entiers de 1 à `n`.
 
+<PostIt>
+
+- `resultat = []` : liste vide
+- `resultat.append(v)` : ajoute `v` à la fin
+- `range(1, n + 1)` : de 1 à `n` inclus
+- `x ** 2` : `x` au carré
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -783,6 +810,15 @@ assert len(carres(100)) == 100 and carres(100)[-1] == 10000, "carres(100) a 100 
 ### Combien de positifs ?
 
 Écrire une fonction `nb_positifs(liste)` qui renvoie le nombre d'éléments strictement positifs de `liste`.
+
+<PostIt>
+
+- `for x in liste:` : parcourt les valeurs
+- `>` : strictement supérieur (0 n'est pas positif strict)
+- un compteur : `n = 0`, puis `n = n + 1`
+- `return` après la boucle
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -839,6 +875,15 @@ assert nb_positifs([0.5, 1, 2]) == 3, "Trois positifs."
 
 Contrainte : sans `max` ni `sort`.
 
+<PostIt>
+
+- `liste[0]` : un premier candidat qui existe toujours (liste non vide)
+- `for x in liste:` : parcourt les valeurs
+- `m = x` : remplace la valeur gardée
+- `max` et `sort` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -894,6 +939,15 @@ assert not re.search(r"\b(max|sorted)\s*\(|\.sort\s*\(", PROGRAMME), "Sans max n
 
 Écrire une fonction `moyenne(liste)` qui renvoie la moyenne des nombres de `liste`, arrondie au centième, ou `None` si la liste est vide.
 
+<PostIt>
+
+- `len(liste)` : nombre d'éléments ; `len([])` → `0`
+- `return None` : renvoie « pas de valeur »
+- `round(x, 2)` : arrondi au centième
+- diviser par zéro provoque une erreur
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -947,6 +1001,15 @@ assert moyenne([]) is None, "Liste vide : None."
 ### Garder les pairs
 
 Écrire une fonction `pairs(liste)` qui renvoie une **nouvelle** liste contenant seulement les nombres pairs de `liste`, dans le même ordre. La liste d'origine ne doit pas être modifiée.
+
+<PostIt>
+
+- `resultat = []` puis `resultat.append(x)` : nouvelle liste
+- `x % 2 == 0` : `x` est pair
+- ne pas appeler `append` ni `remove` sur la liste reçue
+- `for x in liste:` : garde l'ordre d'origine
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -1004,6 +1067,15 @@ assert pairs([1, 3]) == [] and pairs([]) == [], "Aucun pair."
 
 Contrainte : sans `reverse`, `reversed` ni `[::-1]`.
 
+<PostIt>
+
+- `range(debut, fin, -1)` : compte à rebours, `fin` exclu
+- `range(5, -1, -1)` → 5, 4, 3, 2, 1, 0
+- dernier indice : `len(liste) - 1`
+- `reverse`, `reversed` et `[::-1]` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -1057,6 +1129,15 @@ assert "reverse" not in PROGRAMME and "[::-1]" not in PROGRAMME, "Sans reverse n
 ### Où est le minimum ?
 
 Écrire une fonction `indice_min(liste)` qui renvoie l'**indice** du plus petit élément d'une liste non vide (le premier en cas d'égalité).
+
+<PostIt>
+
+- `range(len(liste))` : tous les indices
+- `liste[i]` : élément d'indice `i`
+- garder l'indice permet de retrouver la valeur : `liste[i_min]`
+- `<` strict garde la première position en cas d'égalité
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -1114,6 +1195,15 @@ assert indice_min([7]) == 0 and indice_min([0, 4]) == 0, "Au début."
 
 Exemple : `[3, 1, 3, 2, 1]` donne `[3, 1, 2]`.
 
+<PostIt>
+
+- `x in liste` : vrai si `x` est dans la liste
+- `x not in liste` : vrai s'il n'y est pas
+- `resultat.append(x)` : ajoute à la fin
+- la nouvelle liste démarre vide
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -1169,6 +1259,15 @@ assert sans_doublons(["b", "a", "b"]) == ["b", "a"], "Avec des textes."
 Écrire une fonction `rotation(liste, k)` qui renvoie une nouvelle liste décalée de `k` positions vers la droite : les éléments qui sortent à droite reviennent à gauche.
 
 Exemple : `rotation([1, 2, 3, 4, 5], 2)` renvoie `[4, 5, 1, 2, 3]`. `k` peut dépasser la longueur.
+
+<PostIt>
+
+- `[None] * n` : liste de `n` cases vides, à remplir par indice
+- `liste[i] = v` : écrit dans la case `i`
+- `a % n` : ramène un indice entre `0` et `n - 1`, ex. `7 % 5` → `2`
+- `len(liste)` : nombre d'éléments
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -1227,6 +1326,15 @@ assert rotation([], 5) == [], "Liste vide."
 Écrire une fonction `est_triee(liste)` qui renvoie `True` si les éléments sont rangés dans l'ordre croissant (des valeurs égales qui se suivent sont permises).
 
 Contrainte : sans `sorted` ni `sort`.
+
+<PostIt>
+
+- `range(len(liste) - 1)` : indices de 0 à l'avant-dernier
+- `liste[i + 1]` : élément suivant
+- un `return False` dans la boucle l'arrête aussitôt
+- `sorted` et `sort` sont interdits ici
+
+</PostIt>
 
 <Indices>
 <Indice>

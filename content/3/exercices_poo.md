@@ -27,6 +27,15 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 - `fahrenheit()` renvoie la valeur en degrés Fahrenheit (`c × 9 / 5 + 32`) ;
 - `regler(c)` change la valeur, mais lève une `ValueError` si `c` est sous le zéro absolu (-273,15 °C). Le constructeur applique la même vérification.
 
+<PostIt>
+
+- `self._x` : attribut protégé (convention : ne pas y toucher de l'extérieur)
+- `raise ValueError("message")` : lève une erreur et arrête la méthode
+- une méthode peut en appeler une autre : `self.regler(c)`
+- `-273.15` : un nombre négatif à virgule
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -105,6 +114,15 @@ except ValueError:
 - `__eq__(self, autre)` : deux points sont égaux (`==`) si leurs coordonnées sont égales ;
 - `__repr__(self)` : renvoie `"Point(1, 2)"`, le texte qu'affiche la console pour l'objet.
 
+<PostIt>
+
+- `__eq__(self, autre)` : appelée par `a == b`, renvoie un booléen
+- `isinstance(obj, Classe)` : vrai si `obj` est un objet de cette classe
+- `__repr__(self)` : renvoie le texte affiché par la console
+- `f"Nom({a}, {b})"` : insère des valeurs dans un texte
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -162,6 +180,15 @@ assert Point(3, 4) in [Point(0, 0), Point(3, 4)], "in utilise __eq__."
 Un **attribut de classe** est partagé par tous les objets de la classe.
 
 Écrire une classe `Eleve` construite avec un `nom`, qui a un attribut de classe `effectif` (0 au départ) augmenté de 1 à chaque création d'élève, et un attribut d'instance `numero` qui vaut l'effectif au moment de la création (le premier élève a le numéro 1).
+
+<PostIt>
+
+- un attribut de classe s'écrit dans la classe, hors des méthodes : `compteur = 0`
+- `NomClasse.attribut` : lit ou modifie l'attribut de classe
+- `self.attribut` : attribut propre à chaque objet
+- `__init__` s'exécute à chaque création d'objet
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -222,6 +249,15 @@ assert "effectif" not in a.__dict__, "effectif reste un attribut de la classe."
 Écrire une classe `Duree` construite avec un nombre de `minutes` et de `secondes`, toujours **normalisée** (les secondes restent entre 0 et 59 : `Duree(1, 75)` vaut 2 min 15 s), avec :
 - `__add__(self, autre)` : `d1 + d2` renvoie une nouvelle `Duree` ;
 - `__str__` : `"2 min 15 s"`.
+
+<PostIt>
+
+- `__add__(self, autre)` : appelée par `a + b`
+- `//` : quotient entier ; `%` : reste
+- `NomClasse(...)` dans une méthode crée un nouvel objet
+- `__str__(self)` : texte utilisé par `str(obj)` et `print(obj)`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -286,6 +322,22 @@ assert str(Duree(0, 0) + Duree(0, 0)) == "0 min 0 s", "Durées nulles."
 Écrire une classe `Rectangle` construite avec `largeur` et `hauteur`, où :
 - `largeur` est une **propriété** : lire `r.largeur` renvoie la valeur, écrire `r.largeur = -2` lève une `ValueError` (une largeur négative est refusée) ;
 - `aire` est une propriété en **lecture seule**, calculée : `r.aire` (sans parenthèses) renvoie la surface.
+
+<PostIt>
+
+```python
+@property
+def x(self):
+    return self._x
+
+@x.setter
+def x(self, valeur):
+    self._x = valeur
+```
+- une propriété sans `setter` est en lecture seule
+- `raise ValueError(...)` : refuse une valeur
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -367,6 +419,15 @@ except AttributeError:
 
 Ajouter `__repr__` qui renvoie `"Léa (120)"`.
 
+<PostIt>
+
+- `__lt__(self, autre)` : appelée par `a < b`, utilisée par `sorted`
+- les tuples se comparent élément par élément : `(1, "b") < (1, "c")` → `True`
+- `__repr__(self)` : texte affiché pour l'objet, aussi dans une liste
+- `f"{a} ({b})"` : insère des valeurs dans un texte
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -427,6 +488,15 @@ assert max(j).nom == "Léa", "max utilise aussi la comparaison."
 - `__len__` : `len(p)` renvoie le nombre de titres ;
 - `__contains__` : `"Titre" in p` renvoie `True` si le titre y est ;
 - `__getitem__` : `p[0]` renvoie le premier titre.
+
+<PostIt>
+
+- `__len__(self)` : appelée par `len(obj)`
+- `__contains__(self, x)` : appelée par `x in obj`
+- `__getitem__(self, i)` : appelée par `obj[i]`
+- chaque méthode peut s'appuyer sur la liste rangée dans l'objet
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -498,6 +568,15 @@ assert p[0] == "Lofi" and p[-1] == "Pluie" and list(p) == ["Lofi", "Jazz", "Plui
 
 Écrire une classe `Voiture` qui hérite de `Vehicule`, construite avec `marque`, `vitesse_max` et `places`. Son constructeur et sa méthode `description()` **réutilisent** ceux de `Vehicule` grâce à `super()` : la description d'une voiture est `"Renault, 180 km/h, 5 places"`.
 
+<PostIt>
+
+- `class Fille(Mere):` : `Fille` hérite des méthodes de `Mere`
+- `super().__init__(a, b)` : appelle le constructeur de la classe mère
+- `super().methode()` : appelle la version de la classe mère
+- une méthode redéfinie dans la fille remplace celle de la mère
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -566,6 +645,16 @@ assert "super()" in PROGRAMME, "Les méthodes de la classe mère sont réutilis�
 Une **file** sert les éléments dans leur ordre d'arrivée (premier entré, premier sorti). On peut la réaliser avec deux piles : une pile d'**entrée** où l'on empile les arrivées, et une pile de **sortie** d'où l'on dépile.
 
 Écrire une classe `File` avec `enfiler(x)`, `defiler()` (lève une `IndexError` si la file est vide), `est_vide()` et `__len__`, en n'utilisant que deux listes manipulées comme des piles (`append` et `pop()` sans argument).
+
+<PostIt>
+
+- `liste.append(x)` : empile au sommet
+- `liste.pop()` : dépile et renvoie le sommet
+- `raise IndexError("message")` : lève une erreur
+- `__len__(self)` : appelée par `len(obj)`
+- deux listes dans l'objet : `self.a = []`, `self.b = []`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -651,6 +740,15 @@ assert "pop(0)" not in PROGRAMME and "insert" not in PROGRAMME, "Seulement des o
 Écrire une classe `Forme` dont la méthode `aire()` lève une `NotImplementedError` (elle doit être redéfinie), et une méthode `decrire()` qui renvoie par exemple `"Cercle d'aire 3.14"` (le nom de la classe et l'aire arrondie au centième).
 
 Écrire trois classes filles : `Cercle(rayon)`, `Carre(cote)` et `Triangle(base, hauteur)`, puis une fonction `aire_totale(formes)` qui additionne les aires d'une liste de formes, arrondie au centième.
+
+<PostIt>
+
+- `raise NotImplementedError` : méthode à redéfinir dans les classes filles
+- `class Fille(Mere):` puis redéfinir `aire` dans chaque fille
+- `type(self).__name__` : nom de la classe de l'objet, ex. `"Cercle"`
+- `from math import pi` : la constante π
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -750,6 +848,16 @@ assert all(isinstance(f, Forme) for f in [Cercle(1), Carre(1), Triangle(1, 1)]),
 
 Écrire une classe `CompteEpargne(Compte)` construite avec un `taux` (par exemple `0.03`), avec une méthode `appliquer_interets()` qui dépose les intérêts du solde actuel (arrondis au centime).
 
+<PostIt>
+
+- `self.__x` : attribut privé, inaccessible tel quel depuis une autre classe
+- une classe fille passe par les méthodes de la mère : `self.deposer(...)`
+- `super().__init__()` : appelle le constructeur de la mère
+- `raise ValueError(...)` : refuse une opération
+- `round(x, 2)` : arrondi au centime
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -846,6 +954,15 @@ assert isinstance(e, Compte) and CompteEpargne(0.05).solde() == 0, "Un compte é
 - `meilleur()` renvoie l'élève de meilleure moyenne (`None` si la classe est vide) ;
 - `__iter__` permet d'écrire `for e in classe:` ;
 - `moyenne_generale()` renvoie la moyenne des moyennes, arrondie au centième.
+
+<PostIt>
+
+- un objet peut contenir une liste d'autres objets : `self.eleves = []`
+- `__iter__(self)` : renvoie un itérateur, ex. `return iter(self.eleves)`
+- `e.moyenne()` : appelle la méthode d'un objet de la liste
+- `None` : valeur renvoyée quand il n'y a pas de résultat
+
+</PostIt>
 
 <Indices>
 <Indice>

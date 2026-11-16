@@ -39,6 +39,15 @@ reduce(lambda acc, x: acc + x, [1, 2, 3], 0)
     doubler([])
     ```
 
+    <PostIt>
+
+    - `map(f, liste)` : applique `f` à chaque élément
+    - `list(...)` : transforme le résultat de `map` en liste
+    - `lambda x: x + 1` : petite fonction écrite sur place
+    - `map` ne modifie pas la liste d'origine
+
+    </PostIt>
+
     <Correction>
     ```python
     def doubler(nombres):
@@ -71,6 +80,15 @@ assert doubler([-1, 4]) == [-2, 8]
     positifs(nombres)
     positifs([])
     ```
+
+    <PostIt>
+
+    - `filter(f, liste)` : garde les éléments pour lesquels `f` renvoie `True`
+    - `list(...)` : transforme le résultat en liste
+    - `lambda x: x < 10` : une condition écrite sur place
+    - `>` : strictement supérieur, 0 exclu
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -105,6 +123,15 @@ assert positifs([]) == []
     somme(nombres)
     somme([])
     ```
+
+    <PostIt>
+
+    - `reduce(f, liste, depart)` : combine les éléments deux à deux, en partant de `depart`
+    - `f` reçoit l'accumulateur puis l'élément : `lambda acc, x: ...`
+    - avec une liste vide, `reduce` renvoie `depart`
+    - `from functools import reduce` : en tête du programme
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -145,6 +172,15 @@ assert somme([-2, 5]) == 3
     longueurs([])
     ```
 
+    <PostIt>
+
+    - `map(f, liste)` accepte une fonction existante, sans `lambda`
+    - ex. `list(map(str, [1, 2]))` → `["1", "2"]`
+    - `len` est une fonction comme une autre
+    - `list(...)` : convertit en liste
+
+    </PostIt>
+
     <Correction>
     ```python
     def longueurs(mots):
@@ -177,6 +213,15 @@ assert longueurs([]) == []
     pairs([-4, -3, 0])
     pairs([])
     ```
+
+    <PostIt>
+
+    - `filter(lambda n: condition, liste)` : garde les éléments où la condition est vraie
+    - `n % 2` : reste de la division par 2
+    - le reste d'un négatif pair est aussi `0` en Python
+    - `list(...)` : convertit en liste
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -212,6 +257,15 @@ assert pairs([]) == []
     produit(nombres)
     produit([])
     ```
+
+    <PostIt>
+
+    - `reduce(lambda acc, x: ..., liste, depart)` : accumule les éléments
+    - la valeur de départ d'un produit est l'élément neutre de `*`
+    - avec une liste vide, `reduce` renvoie la valeur de départ
+    - `from functools import reduce`
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -252,6 +306,15 @@ assert produit([-2, 5]) == -10
     doubles_des_pairs([])
     ```
 
+    <PostIt>
+
+    - le résultat de `filter` peut être passé directement à `map`
+    - `map(f, filter(g, liste))` : filtre, puis transforme
+    - `list(...)` : convertit le résultat final en liste
+    - `n % 2 == 0` : `n` est pair
+
+    </PostIt>
+
     <Correction>
     ```python
     def doubles_des_pairs(nombres):
@@ -285,6 +348,15 @@ assert doubles_des_pairs([]) == []
     longueurs_au_dessus(mots, 3)
     longueurs_au_dessus([], 0)
     ```
+
+    <PostIt>
+
+    - `filter(lambda mot: condition, mots)` : garde certains mots
+    - `len(mot)` : longueur d'un mot
+    - `map(len, ...)` : longueurs de tous les éléments
+    - `>` : strictement supérieur
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -321,6 +393,15 @@ assert longueurs_au_dessus([], 0) == []
     somme_positifs(nombres)
     somme_positifs([])
     ```
+
+    <PostIt>
+
+    - `filter` puis `reduce` : garder, puis combiner
+    - `reduce(f, iterable, 0)` : la valeur de départ couvre le cas sans élément
+    - `lambda acc, x: ...` : accumulateur puis élément
+    - `from functools import reduce`
+
+    </PostIt>
 
     <Correction>
     ```python

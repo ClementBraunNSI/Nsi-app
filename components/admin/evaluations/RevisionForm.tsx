@@ -56,7 +56,7 @@ export default function RevisionForm({
   const choose = (id: string) => {
     setSourceId(id);
     const next = sources?.find((item) => item.id === id);
-    // Les élèves sous 12 d'office, sauf ceux qui ont déjà eu une révision de cette interrogation.
+    // Les élèves sous 12 d'office, sauf ceux qui ont déjà rendu une révision de cette interrogation (un absent reste coché).
     setPicked(new Set(next?.students.filter((student) => student.total < UNDER && !student.alreadyRevised).map((student) => student.id) ?? []));
     setShowAll(false);
     if (!titleTouched) setTitle(next ? `Révision : ${next.title}` : "");
@@ -80,7 +80,7 @@ export default function RevisionForm({
         <small>
           {student.classe ?? ""}
           {student.notions.length ? ` · ${student.notions.join(", ")}` : ""}
-          {student.alreadyRevised ? " · révision déjà donnée" : ""}
+          {student.alreadyRevised ? " · révision déjà faite" : student.missedRevision ? " · absent à la révision" : ""}
         </small>
       </label>
     </li>

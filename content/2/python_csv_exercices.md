@@ -33,6 +33,15 @@ Chamonix;74;8611;1035
 
 Exemple : pour le texte de l'introduction, `["nom", "departement", "population", "altitude"]`.
 
+<PostIt>
+
+- `texte.split("\n")` : découpe le texte en lignes
+- `ligne.split(";")` : découpe une ligne en valeurs
+- `liste[0]` : premier élément
+- un CSV : une ligne d'en-têtes, puis une ligne par enregistrement
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -81,6 +90,15 @@ assert entetes("a;b") == ["a", "b"] and entetes("seul") == ["seul"], "Autres tex
 ### Nombre d'enregistrements
 
 Écrire une fonction `nb_enregistrements(texte)` qui renvoie le nombre de lignes de **données** d'un texte CSV : sans la ligne d'en-têtes et sans les lignes vides (un fichier se termine souvent par un retour à la ligne).
+
+<PostIt>
+
+- `texte.split("\n")` : liste des lignes
+- `ligne.strip()` : la ligne sans espaces ni retour à la ligne aux bords
+- `""` : texte vide
+- la première ligne non vide contient les en-têtes
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -135,6 +153,15 @@ assert nb_enregistrements("x\n1\n\n2\n3") == 3, "Une ligne vide au milieu est ig
 Écrire une fonction `colonne(table, cle)` qui renvoie la liste des valeurs de la colonne `cle`, dans l'ordre des lignes.
 
 Exemple : `colonne(table, "nom")` renvoie la liste des noms de communes.
+
+<PostIt>
+
+- une table : une liste de dictionnaires, un par ligne
+- `ligne["nom"]` : valeur de la colonne `nom` pour cette ligne
+- `for ligne in table:` : parcourt les lignes
+- `liste.append(v)` : ajoute à la fin
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -195,6 +222,15 @@ assert colonne([], "nom") == [], "Table vide."
 
 Écrire une fonction `population_de(table, nom)` qui renvoie la population de la commune `nom`, ou `None` si elle n'est pas dans la table.
 
+<PostIt>
+
+- `for ligne in table:` : parcourt les lignes
+- `ligne["nom"] == nom` : compare la valeur d'une colonne
+- un `return` dans la boucle l'arrête aussitôt
+- `return None` après la boucle : rien trouvé
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -254,6 +290,16 @@ assert population_de(table, "Paris") is None, "Commune absente : None."
 Écrire une fonction `lire_table(texte)` qui transforme un texte CSV en table : une liste de dictionnaires dont les clés sont les en-têtes. Toutes les valeurs restent des **textes**. Les lignes vides sont ignorées.
 
 Contrainte : sans le module `csv`.
+
+<PostIt>
+
+- `texte.split("\n")` puis `ligne.split(";")` : lignes, puis valeurs
+- `liste[1:]` : tout sauf le premier élément
+- `d = {}` puis `d[cle] = valeur` : remplit un dictionnaire
+- `ligne.strip() != ""` : la ligne n'est pas vide
+- le module `csv` est interdit ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -322,6 +368,15 @@ Après lecture, toutes les valeurs sont des textes : `"67214" > "8611"` vaut `Fa
 
 Écrire une fonction `convertir(table, cles)` qui renvoie une **nouvelle** table où les colonnes dont le nom est dans la liste `cles` sont converties en entiers. Les autres colonnes restent inchangées, et la table d'origine n'est pas modifiée.
 
+<PostIt>
+
+- `int("67214")` → `67214` : texte vers entier
+- `dict(ligne)` : copie d'un dictionnaire
+- modifier la copie laisse l'original intact
+- `x in liste` : `x` fait-il partie de la liste ?
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -381,6 +436,15 @@ assert convertir(brute, []) == brute and convertir([], ["x"]) == [], "Rien à co
 
 Écrire une fonction `selection(table, departement)` qui renvoie la liste des lignes de la table dont le département vaut `departement` (un texte comme `"68"`), dans l'ordre.
 
+<PostIt>
+
+- `ligne["departement"]` : valeur de la colonne
+- les codes de département sont des textes : `"68"`, pas `68`
+- `resultat.append(ligne)` : garde la ligne entière
+- `for ligne in table:` garde l'ordre
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -437,6 +501,15 @@ assert len(selection(table, "74")) == 2 and selection(table, "75") == [], "Haute
 ### Population totale
 
 Écrire une fonction `population_totale(table, departement)` qui renvoie la population cumulée des communes du département donné (0 s'il n'y en a aucune).
+
+<PostIt>
+
+- `ligne["population"]` : un entier après conversion
+- un total démarre à `0`
+- `if` dans la boucle : ne garder que certaines lignes
+- `==` : comparaison de deux textes
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -500,6 +573,15 @@ assert population_totale(table, "67") == 11873 and population_totale(table, "01"
 
 Contrainte : sans trier la table.
 
+<PostIt>
+
+- `table[0]` : première ligne, un premier candidat
+- `ligne["altitude"]` : valeur à comparer
+- garder la ligne entière permet de renvoyer son `"nom"`
+- trier la table est interdit ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -561,6 +643,15 @@ assert "sort" not in PROGRAMME, "Sans tri."
 
 Écrire une fonction `trier(table, cle, decroissant)` qui renvoie une nouvelle table triée selon la colonne `cle`, dans l'ordre décroissant si `decroissant` vaut `True`.
 
+<PostIt>
+
+- `sorted(liste)` : nouvelle liste triée, l'originale ne change pas
+- `sorted(liste, key=f)` : trie selon la valeur `f(element)`
+- `lambda ligne: ligne["nom"]` : petite fonction écrite sur place
+- `reverse=True` : ordre décroissant
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -614,6 +705,15 @@ assert table[0]["nom"] == "Colmar", "La table d'origine n'est pas modifiée."
 ### Projection
 
 Une **projection** ne garde que certaines colonnes. Écrire une fonction `projection(table, cles)` qui renvoie une nouvelle table dont chaque ligne ne contient que les colonnes de la liste `cles`.
+
+<PostIt>
+
+- `nouvelle = {}` : un dictionnaire vide par ligne
+- `nouvelle[cle] = ligne[cle]` : recopie une colonne
+- `for cle in cles:` : parcourt les colonnes à garder
+- deux boucles imbriquées : lignes, puis colonnes
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -675,6 +775,15 @@ assert "population" in table[0], "La table d'origine garde toutes ses colonnes."
 ### Population par département
 
 Écrire une fonction `par_departement(table)` qui renvoie un dictionnaire associant à chaque département la population cumulée de ses communes.
+
+<PostIt>
+
+- `d.get(cle, 0)` : valeur de `cle`, ou `0` si la clé est absente
+- `d[cle] = ...` : crée ou remplace la valeur
+- `ligne["departement"]` : la clé du regroupement
+- `for ligne in table:` : parcourt les lignes
+
+</PostIt>
 
 <Indices>
 <Indice>

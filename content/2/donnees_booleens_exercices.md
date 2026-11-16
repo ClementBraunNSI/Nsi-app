@@ -30,6 +30,15 @@ Pour voter, il faut avoir au moins 18 ans **et** être inscrit sur les listes.
 
 Contrainte : sans `if`.
 
+<PostIt>
+
+- `and` : vrai si les deux opérandes sont vrais
+- une comparaison donne un booléen : `age >= 18`
+- un booléen s'utilise tel quel, sans `== True`
+- `return expression` renvoie directement `True` ou `False`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -83,6 +92,15 @@ La porte logique **NON-ET** (NAND) renvoie `False` seulement quand ses deux entr
 
 Contrainte : sans `if`.
 
+<PostIt>
+
+- `not x` : l'inverse de `x`
+- `and` : vrai seulement si les deux sont vrais
+- les parenthèses fixent l'ordre : `not (...)` porte sur tout le bloc
+- `if` est interdit ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -133,6 +151,15 @@ assert not re.search(r"\bif\b", PROGRAMME), "Sans if : une expression booléenne
 Écrire une fonction `est_voyelle(c)` qui renvoie `True` si le caractère `c` est une voyelle minuscule ou majuscule (`a e i o u y`, sans accent).
 
 Contrainte : sans `if` ni `or`.
+
+<PostIt>
+
+- `c in "abc"` : vrai si le caractère `c` est dans le texte
+- `c.lower()` : le caractère en minuscule
+- `in` renvoie directement un booléen
+- `if` et `or` sont interdits ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -186,6 +213,15 @@ assert not re.search(r"\b(if|or)\b", PROGRAMME), "Sans if ni or."
 
 Contrainte : sans `if` et sans multiplier `a` par `b`.
 
+<PostIt>
+
+- `and` : les deux vrais ; `or` : au moins un vrai
+- les parenthèses regroupent : `(A and B) or (C and D)`
+- `>` et `<` : strictement ; 0 n'est ni positif ni négatif
+- `if` et `a * b` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -237,6 +273,15 @@ assert not re.search(r"\bif\b", PROGRAMME), "Sans if : une expression booléenne
 Écrire une fonction `table_et()` qui renvoie la table de vérité du ET sous forme de liste de tuples `(a, b, a et b)`, dans l'ordre : `(False, False)`, `(False, True)`, `(True, False)`, `(True, True)`.
 
 Contrainte : construire la table avec des boucles, sans l'écrire à la main.
+
+<PostIt>
+
+- `for a in (False, True):` : `a` prend les deux valeurs booléennes
+- deux boucles imbriquées parcourent toutes les combinaisons
+- `liste.append((a, b, c))` : ajoute un tuple de trois valeurs
+- `a and b` se calcule comme n'importe quelle expression
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -297,6 +342,15 @@ En logique, « `a` implique `b` » est faux dans un seul cas : `a` vrai et `b` f
 
 Contrainte : sans `if`.
 
+<PostIt>
+
+- `not a` : l'inverse de `a`
+- `or` : vrai si au moins un est vrai
+- écrire la table des 4 cas aide à trouver l'expression
+- `if` est interdit ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -350,6 +404,15 @@ assert not re.search(r"\bif\b", PROGRAMME), "Sans if : une expression booléenne
 
 Contrainte : avec `and`, `or` et `not` seulement (pas de `==`, `!=` ni `if`).
 
+<PostIt>
+
+- `and`, `or`, `not` : les trois opérateurs autorisés
+- deux booléens ont la même valeur s'ils sont tous deux vrais ou tous deux faux
+- les parenthèses regroupent les sous-expressions
+- `==`, `!=` et `if` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -401,6 +464,15 @@ assert not re.search(r"\bif\b", PROGRAMME), "Sans if : une expression booléenne
 Un jury de trois personnes vote oui (`True`) ou non (`False`). Écrire une fonction `majorite(a, b, c)` qui renvoie `True` si au moins deux votes sont oui.
 
 Contrainte : avec `and` et `or` seulement (pas de `if`, pas de somme).
+
+<PostIt>
+
+- `and` : les deux vrais ; `or` : au moins un vrai
+- avec trois votants, il y a trois paires possibles
+- les parenthèses regroupent : `(A and B) or ...`
+- `if` et les sommes sont interdits ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -456,6 +528,15 @@ Une fonction peut être passée en paramètre à une autre fonction, comme n'imp
 Écrire une fonction `table(f)` qui reçoit une fonction booléenne `f` à deux entrées et renvoie la liste de ses 4 sorties pour les entrées `(False, False)`, `(False, True)`, `(True, False)`, `(True, True)`.
 
 Exemple : `table(non_et)` renvoie `[True, True, True, False]`.
+
+<PostIt>
+
+- une fonction passée en paramètre s'appelle normalement : `f(a, b)`
+- `for a in (False, True):` : parcourt les deux valeurs
+- deux boucles imbriquées : 4 combinaisons, dans l'ordre demandé
+- `liste.append(v)` : ajoute à la fin
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -518,6 +599,15 @@ Deux expressions booléennes sont **équivalentes** si elles donnent le même r�
 
 Elle permet de vérifier les lois de De Morgan : `not (a and b)` équivaut à `not a or not b`.
 
+<PostIt>
+
+- `f(a, b)` : appelle la fonction reçue en paramètre
+- `!=` : différent
+- `return False` dans une boucle l'arrête aussitôt
+- deux boucles imbriquées sur `(False, True)` : toutes les combinaisons
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -575,6 +665,15 @@ assert equivalentes(lambda a, b: a, lambda a, b: a or (a and b)) is True, "Loi d
 
 Contrainte : sans `if` et sans compter (pas de `+`, `sum` ni `count`). Un « ou exclusif » de deux booléens s'écrit `a != b`.
 
+<PostIt>
+
+- `a != b` : « ou exclusif », vrai si un seul des deux est vrai
+- le résultat d'une comparaison est lui-même un booléen, comparable à son tour
+- les parenthèses fixent l'ordre des comparaisons
+- `if`, `+`, `sum` et `count` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -627,6 +726,15 @@ assert not re.search(r"\bif\b", PROGRAMME), "Sans if : une expression booléenne
 Un octet peut s'écrire comme un texte de `0` et de `1`. Le « ET bit à bit » de deux textes de même longueur applique le ET à chaque position : `"1100"` et `"1010"` donnent `"1000"`.
 
 Écrire une fonction `et_bits(x, y)`.
+
+<PostIt>
+
+- `range(len(x))` : parcourt les deux textes avec le même indice
+- `x[i]` : caractère d'indice `i`, ici `"0"` ou `"1"` (un texte, pas un nombre)
+- `t = t + "1"` : ajoute un caractère à la fin
+- `""` : texte vide de départ
+
+</PostIt>
 
 <Indices>
 <Indice>

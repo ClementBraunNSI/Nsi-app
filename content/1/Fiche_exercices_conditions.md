@@ -21,6 +21,20 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 
 Demander un âge, puis ranger dans `statut` le texte `"majeur"` à partir de 18 ans et `"mineur"` sinon. Afficher `statut`.
 
+<PostIt>
+
+```python
+if condition:
+    ...
+else:
+    ...
+```
+- les `:` en fin de ligne et le décalage (indentation) sont obligatoires
+- `>=` : supérieur ou égal ; `<` : strictement inférieur
+- `int(input(...))` : lit un entier
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -78,6 +92,15 @@ for a, s in [(17, "mineur"), (45, "majeur"), (0, "mineur")]:
 ### Signe d'un nombre
 
 Demander un nombre (à virgule possible) et ranger dans `signe` le texte `"positif"`, `"négatif"` ou `"nul"`.
+
+<PostIt>
+
+- `if` … `elif` … `else` : trois cas ou plus, un seul est exécuté
+- `elif` se teste seulement si les conditions au-dessus sont fausses
+- `>` et `<` : comparaisons strictes
+- `float(input(...))` : lit un nombre à virgule
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -143,6 +166,15 @@ La porte du terrier s'ouvre avec le code `renard42`.
 
 Demander le code, puis ranger dans `message` le texte `"Entrée autorisée"` si le code est le bon, `"Code incorrect"` sinon. Afficher `message`.
 
+<PostIt>
+
+- `==` : teste l'égalité ; `=` : range une valeur
+- deux textes sont égaux s'ils ont exactement les mêmes caractères
+- `"Renard42"` et `"renard42"` sont différents
+- `input(...)` renvoie un texte
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -200,6 +232,15 @@ for c in ["Renard42", "renard 42", "42"]:
 ### Pair ou impair
 
 Demander un entier et ranger dans `parite` le texte `"pair"` ou `"impair"`.
+
+<PostIt>
+
+- `a % b` : reste de la division de `a` par `b`, ex. `7 % 3` → `1`
+- `n` est divisible par `d` quand `n % d == 0`
+- `==` compare, `=` affecte
+- `if` / `else` : deux cas
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -262,6 +303,15 @@ Demander une note sur 20 (à virgule possible) et ranger dans `mention` :
 - `"Assez bien"` de 12 à moins de 14 ;
 - `"Bien"` de 14 à moins de 16 ;
 - `"Très bien"` à partir de 16.
+
+<PostIt>
+
+- une chaîne `if` / `elif` / `else` s'arrête au premier test vrai
+- l'ordre des tests compte : commencer par un bout de l'échelle
+- `>=`, `<` : bornes incluses ou exclues
+- un seul `else` à la fin, pour le dernier cas
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -329,6 +379,15 @@ Au cinéma du quartier, la place coûte 5 € pour les moins de 14 ans, 7 € à
 
 Demander l'âge et ranger le prix dans `prix`.
 
+<PostIt>
+
+- `if` / `elif` / `else` : un seul bloc est exécuté
+- `<` : strictement inférieur ; `>=` : supérieur ou égal
+- un prix entier s'écrit sans guillemets : `5`
+- relire l'énoncé pour savoir si la borne est comprise
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -391,6 +450,15 @@ Demander la température du jour (à virgule possible) et ranger dans `conseil` 
 - `"Manteau"` de 0 à moins de 15 ;
 - `"Pull"` de 15 à moins de 25 ;
 - `"T-shirt"` à partir de 25.
+
+<PostIt>
+
+- `elif` ne se teste que si tout ce qui précède est faux
+- après `if x < 0`, la branche `elif` sait déjà que `x >= 0`
+- `<` : strictement inférieur
+- `float(input(...))` : lit un nombre à virgule
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -455,6 +523,15 @@ Une boutique en ligne offre la livraison à partir de 50 € d'achat. En dessous
 
 Demander le montant du panier, puis calculer `frais` et `total` (panier + frais).
 
+<PostIt>
+
+- un nombre à virgule s'écrit avec un point : `4.90`
+- une variable affectée dans les deux branches d'un `if` / `else` existe ensuite dans tous les cas
+- les instructions placées après le `if`, sans décalage, s'exécutent toujours
+- `>=` : supérieur ou égal
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -514,6 +591,15 @@ for p, f, t in [(50, 0, 50), (49.99, 4.9, 54.89), (120, 0, 120)]:
 Demander trois nombres et ranger le plus grand dans `maximum`.
 
 Contrainte : sans utiliser la fonction `max`.
+
+<PostIt>
+
+- plusieurs `if` à la suite : chacun est testé, indépendamment des autres
+- une variable peut être remplacée par une valeur plus intéressante : `x = y`
+- `>` : strictement supérieur
+- `max` est interdit ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -578,6 +664,15 @@ Le magasin du village ouvre du lundi au samedi, de 9 h à 19 h (il ferme à 19 h
 
 Demander le jour (en minuscules, par exemple `mardi`) puis l'heure (un entier de 0 à 23), et ranger dans `ouvert` le booléen `True` ou `False`.
 
+<PostIt>
+
+- `and` : vrai si les deux conditions sont vraies
+- `!=` : différent de
+- une comparaison donne un booléen : `5 > 3` → `True`
+- un booléen peut se ranger directement : `ok = x > 3`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -634,6 +729,15 @@ Demander un entier positif et ranger dans `reponse` :
 - `"Fizz"` s'il est divisible seulement par 3 ;
 - `"Buzz"` s'il est divisible seulement par 5 ;
 - le nombre lui-même, sous forme de texte, sinon.
+
+<PostIt>
+
+- `n % d == 0` : `n` est divisible par `d`
+- `and` : les deux conditions doivent être vraies
+- dans une chaîne `elif`, le cas le plus précis se teste en premier
+- `str(n)` : convertit le nombre en texte, ex. `str(7)` → `"7"`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -697,6 +801,15 @@ for n, r in [(9, "Fizz"), (10, "Buzz"), (7, "7"), (30, "FizzBuzz"), (1, "1")]:
 Une année est bissextile si elle est divisible par 4 mais pas par 100, **ou** si elle est divisible par 400.
 
 Demander une année et ranger dans `bissextile` le booléen `True` ou `False`.
+
+<PostIt>
+
+- `and` : les deux vraies ; `or` : au moins une vraie
+- `!=` : différent de ; `%` : reste de la division
+- les parenthèses regroupent : `(A and B) or C`
+- une condition donne directement `True` ou `False`
+
+</PostIt>
 
 <Indices>
 <Indice>

@@ -73,6 +73,15 @@ audience: public
       2.  Créer une fonction `test_hachage()` qui demande une saisie avec `input`, calcule son SHA-256, l'affiche et le renvoie.
       3.  Appeler `test_hachage()` à la fin du programme.
 
+      <PostIt>
+
+      - `import module` : en tête du programme, une ligne par module
+      - `texte.encode("utf-8")` : texte → octets
+      - `hashlib.sha256(octets).hexdigest()` : empreinte en hexadécimal (64 caractères)
+      - une fonction peut afficher **et** renvoyer : `print(x)` puis `return x`
+
+      </PostIt>
+
       <Correction>
       ```python
       import hashlib
@@ -111,6 +120,15 @@ audience: public
       3.  Afficher les deux empreintes, puis le nombre de positions où elles ont le même caractère, dans `communs`.
 
       Se ressemblent-elles ? *Réponse attendue : non, elles sont totalement différentes.*
+
+      <PostIt>
+
+      - `hashlib.sha256("mot".encode("utf-8")).hexdigest()` : empreinte d'un texte
+      - `len(h)` : nombre de caractères de l'empreinte
+      - `h[i]` : caractère d'indice `i`
+      - un compteur démarre à `0` et augmente dans la boucle
+
+      </PostIt>
 
       <Correction>
       ```python
@@ -163,6 +181,19 @@ audience: public
 
       Créer la classe `Block`. Son constructeur `__init__(self, index, timestamp, data, previous_hash)` range les quatre valeurs dans les attributs du même nom.
 
+      <PostIt>
+
+      ```python
+      class Nom:
+          def __init__(self, a, b):
+              self.a = a
+              self.b = b
+      ```
+      - `self.attribut = parametre` : range la valeur dans l'objet
+      - un attribut par paramètre, avec le même nom
+
+      </PostIt>
+
       <Correction>
       ```python
       import hashlib
@@ -210,6 +241,15 @@ audience: public
       À la fin du constructeur, ajouter `self.hash = self.calculate_hash()`.
 
       *Astuce : utiliser `str(self.index)` pour convertir les nombres en texte avant concaténation.*
+
+      <PostIt>
+
+      - `str(x)` : convertit un nombre en texte
+      - `"a" + "b"` : concatène deux textes
+      - une méthode peut en appeler une autre : `self.calculate_hash()`
+      - `hashlib.sha256(texte.encode("utf-8")).hexdigest()` : empreinte SHA-256
+
+      </PostIt>
 
       <Correction>
       ```python
@@ -273,6 +313,15 @@ audience: public
       ```
 
       Créer un bloc à la main et l'afficher avec `print(mon_bloc)`.
+
+      <PostIt>
+
+      - `def __str__(self):` : renvoie le texte affiché par `print(objet)`
+      - `f"... {self.x} ..."` : insère un attribut dans un texte
+      - `Block(1, time.time(), "données", "0")` : crée un objet
+      - `time.time()` : horodatage actuel, en secondes
+
+      </PostIt>
 
       <Correction>
       ```python
@@ -346,6 +395,15 @@ audience: public
 
       Créer la classe `Blockchain`. Son constructeur crée l'attribut `chain`, une liste qui contient un seul bloc : indice `0`, horodatage `time.time()`, données `"Genesis Block"`, `previous_hash` `"0"`.
 
+      <PostIt>
+
+      - un attribut peut contenir une liste : `self.chain = [...]`
+      - `[objet]` : liste d'un seul élément
+      - `NomClasse(a, b, c, d)` : appelle le constructeur
+      - `time.time()` : horodatage actuel
+
+      </PostIt>
+
       <Correction>
       ```python
       class Blockchain:
@@ -401,6 +459,15 @@ audience: public
       1.  Récupérer le dernier bloc de la liste `self.chain` (le « parent »).
       2.  Créer un nouvel objet `Block` avec : indice du parent + 1, `time.time()`, `new_data`, hash du parent.
       3.  Ajouter ce nouveau bloc à la liste `self.chain`.
+
+      <PostIt>
+
+      - `liste[-1]` : dernier élément
+      - `objet.attribut` : lit un attribut d'un autre objet
+      - `liste.append(x)` : ajoute à la fin
+      - `self.chain` : la liste rangée dans l'objet
+
+      </PostIt>
 
       <Correction>
       ```python
@@ -466,6 +533,15 @@ audience: public
       2.  Ajouter 3 blocs avec des transactions fictives (`"A envoie à B"`, `"B envoie à C"`…).
       3.  Parcourir la liste `chain` avec une boucle et afficher chaque bloc.
       4.  Vérifier visuellement que le `Prev` du bloc N correspond au `Hash` du bloc N-1.
+
+      <PostIt>
+
+      - `variable = NomClasse()` : crée un objet
+      - `objet.methode(arg)` : appelle une méthode
+      - `for bloc in liste:` : parcourt les éléments
+      - `print(bloc)` utilise la méthode `__str__`
+
+      </PostIt>
 
       <Correction>
       ```python

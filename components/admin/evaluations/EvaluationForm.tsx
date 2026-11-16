@@ -24,11 +24,14 @@ export default function EvaluationForm({
   onSubmit,
   onCancel,
   requireSchedule = false,
+  hideClasses = false,
 }: {
   classes: string[];
   initial?: EvaluationFormValues;
   /** Création : la date et l'heure de passage sont obligatoires. */
   requireSchedule?: boolean;
+  /** Révision ou fiche particulière : des élèves visés, pas de classe à choisir. */
+  hideClasses?: boolean;
   busy: boolean;
   submitLabel: string;
   onSubmit: (values: EvaluationFormValues) => void;
@@ -60,6 +63,7 @@ export default function EvaluationForm({
         <span>Consigne affichée aux élèves (facultatif)</span>
         <textarea value={description} onChange={(event) => setDescription(event.target.value)} rows={2} maxLength={4000} />
       </label>
+      {hideClasses ? null : (
       <fieldset>
         <legend>Classes</legend>
         <div className="adm-eval-chips">
@@ -76,6 +80,7 @@ export default function EvaluationForm({
           ))}
         </div>
       </fieldset>
+      )}
       <div className="flex flex-wrap gap-4">
         <label className="adm-eval-short">
           <span>Date de passage{requireSchedule ? "" : " (facultatif)"}</span>

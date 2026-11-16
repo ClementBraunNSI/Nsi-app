@@ -28,6 +28,15 @@ Les exercices vont de **Introduction** à **Expert**, puis viennent les **mini-p
 
 Écrire une fonction `distance(a, b)` qui renvoie la distance euclidienne entre deux points `a` et `b`. Les points sont des tuples dont les deux premiers éléments sont les coordonnées `x` et `y` (un troisième élément éventuel, la classe, est ignoré).
 
+<PostIt>
+
+- `a[0]`, `a[1]` : coordonnées `x` et `y` du tuple `a`
+- `x ** 2` : carré ; `x ** 0.5` : racine carrée
+- distance euclidienne : racine de `(xa - xb)² + (ya - yb)²`
+- le troisième élément éventuel n'intervient pas
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -77,6 +86,15 @@ Dans une ville quadrillée, on ne se déplace qu'horizontalement et verticalemen
 
 Écrire une fonction `manhattan(a, b)`.
 
+<PostIt>
+
+- `abs(x)` : valeur absolue, ex. `abs(-3)` → `3`
+- `a[0]` : coordonnée `x` ; `a[1]` : coordonnée `y`
+- un écart entre deux valeurs est toujours positif ou nul
+- `return` d'une seule expression suffit
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -122,6 +140,15 @@ assert manhattan((5, 1), (2, 3)) == 5 and manhattan((1, 1, "A"), (1, 1)) == 0, "
 ### Vote majoritaire
 
 Écrire une fonction `majoritaire(etiquettes)` qui renvoie l'étiquette la plus fréquente d'une liste non vide. En cas d'égalité, renvoyer la première dans l'ordre alphabétique.
+
+<PostIt>
+
+- `d.get(cle, 0) + 1` : compte une apparition de plus
+- `sorted(...)` trie aussi les textes, par ordre alphabétique
+- `key=lambda e: (a, b)` : trie d'abord selon `a`, puis selon `b`
+- un nombre négatif inverse l'ordre : `-n` place les plus grands `n` en tête
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -176,6 +203,15 @@ assert majoritaire(["Z"]) == "Z", "Une seule étiquette."
 ### Le plus proche voisin
 
 Écrire une fonction `plus_proche(donnees, cible)` qui renvoie la **classe** de l'élément de `donnees` le plus proche du point `cible` (le premier en cas d'égalité). C'est l'algorithme avec `k = 1`.
+
+<PostIt>
+
+- une fonction `distance` peut être écrite puis appelée dans une autre fonction
+- `donnees[0]` : un premier candidat
+- `p[2]` : la classe d'un point `(x, y, classe)`
+- `<` strict garde le premier en cas d'égalité
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -236,6 +272,15 @@ assert plus_proche([(0, 0, "X"), (2, 0, "Y")], (1, 0)) == "X", "Égalité : le p
 
 Écrire une fonction `distances(donnees, cible)` qui renvoie la liste des tuples `(distance, classe)` de chaque élément de `donnees` par rapport à `cible`, dans l'ordre des données.
 
+<PostIt>
+
+- `(a, b)` : crée un tuple
+- `resultat.append((d, c))` : ajoute un tuple (doubles parenthèses)
+- `p[2]` : la classe d'un élément
+- `for p in donnees:` garde l'ordre des données
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -291,6 +336,15 @@ assert distances([], (1, 1)) == [], "Aucune donnée."
 ### Les k plus proches
 
 Écrire une fonction `k_voisins(donnees, cible, k)` qui renvoie la liste des **classes** des `k` éléments les plus proches de `cible`, du plus proche au plus éloigné.
+
+<PostIt>
+
+- `sorted(liste, key=f)` : trie selon `f(element)`, sans modifier la liste
+- `lambda p: ...` : petite fonction écrite sur place
+- `liste[:k]` : les `k` premiers éléments
+- `[p[2] for p in liste]` : liste des classes
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -348,6 +402,15 @@ Quand une coordonnée varie de 0 à 1 et une autre de 0 à 1000, la seconde écr
 
 Écrire une fonction `normaliser(valeurs)` qui renvoie la liste normalisée, chaque valeur arrondie au millième. Si toutes les valeurs sont égales, renvoyer une liste de 0.
 
+<PostIt>
+
+- `min(liste)` et `max(liste)` : plus petite et plus grande valeur
+- `[0] * n` : liste de `n` zéros
+- `round(x, 3)` : arrondi au millième
+- diviser par zéro provoque une erreur
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -401,6 +464,15 @@ assert normaliser([7, 7]) == [0, 0], "Valeurs toutes égales."
 
 Un élément peut avoir plus de deux caractéristiques (taille, poids, âge…). Écrire une fonction `distance_n(a, b)` qui renvoie la distance euclidienne entre deux tuples de **même longueur**, tous les éléments étant des nombres.
 
+<PostIt>
+
+- `len(a)` : nombre de coordonnées
+- `a[i]` : coordonnée d'indice `i`
+- une somme se construit dans une boucle, à partir de `0`
+- `x ** 0.5` : racine carrée
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -452,6 +524,15 @@ assert distance_n((1,), (4,)) == 3 and distance_n((), ()) == 0, "Dimensions 1 et
 ### L'algorithme complet
 
 Écrire une fonction `knn(donnees, cible, k)` qui renvoie la classe attribuée à `cible` par l'algorithme des `k` plus proches voisins. En cas d'égalité des votes, la première classe dans l'ordre alphabétique l'emporte.
+
+<PostIt>
+
+- plusieurs fonctions peuvent s'écrire dans le même programme, puis s'appeler
+- `sorted(liste, key=lambda p: ...)` : trie selon une valeur calculée
+- `liste[:k]` : les `k` premiers
+- `d.get(cle, 0) + 1` : compter des votes
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -518,6 +599,15 @@ Ici, les éléments connus sont des tuples `(x, y, valeur)`. Écrire une fonctio
 
 Exemple d'usage : estimer le prix d'un appartement d'après ceux qui lui ressemblent.
 
+<PostIt>
+
+- `sorted(liste, key=lambda p: ...)[:k]` : les `k` premiers après tri
+- `p[2]` : la valeur numérique d'un élément `(x, y, valeur)`
+- `sum(liste)` : somme ; `len(liste)` : nombre d'éléments
+- `round(x, 2)` : arrondi au centième
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -574,6 +664,15 @@ Pour évaluer un classifieur, on compare ses prédictions aux vraies classes.
 
 Écrire une fonction `taux_reussite(predictions, verites)` qui renvoie la proportion de prédictions justes (entre 0 et 1), arrondie au centième. Les deux listes ont la même longueur, non nulle.
 
+<PostIt>
+
+- `range(len(liste))` : parcourt deux listes de même longueur avec le même indice
+- `a[i] == b[i]` : compare les éléments de même position
+- une proportion : nombre de cas favorables / nombre total
+- `round(x, 2)` : arrondi au centième
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -626,6 +725,15 @@ assert taux_reussite(["A"], ["A"]) == 1 and taux_reussite(["A", "A"], ["B", "B"]
 Dans un vote **pondéré**, un voisin proche pèse plus lourd qu'un voisin éloigné : chaque voisin vote avec un poids `1 / distance`.
 
 Écrire une fonction `vote_pondere(voisins)` qui reçoit une liste de tuples `(distance, classe)` et renvoie la classe de plus grand poids total. Si un voisin est à distance 0, sa classe l'emporte directement.
+
+<PostIt>
+
+- `for d, c in voisins:` : déplie chaque tuple
+- `d.get(cle, 0) + x` : ajoute `x` au total d'une clé
+- `1 / d` provoque une erreur si `d` vaut 0
+- `return` dans la boucle l'arrête aussitôt
+
+</PostIt>
 
 <Indices>
 <Indice>

@@ -26,6 +26,18 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 
 Exemple : `prix_ttc(10)` renvoie `12.0`.
 
+<PostIt>
+
+```python
+def nom(parametre):
+    return resultat
+```
+- `return` renvoie la valeur ; la fonction s'arrête là
+- `round(x, 2)` : arrondi à 2 chiffres après la virgule
+- 20 % de `x` : `x * 0.2`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -76,6 +88,15 @@ assert prix_ttc(3.33) == 4.0, "prix_ttc(3.33) vaut 4.0 (arrondi)."
 Écrire une fonction `presentation(prenom, age)` qui renvoie le texte `"Léa a 16 ans"` pour `presentation("Léa", 16)`.
 
 `age` est un entier.
+
+<PostIt>
+
+- `"a" + "b"` : colle deux textes → `"ab"`
+- `+` refuse de coller un texte et un entier : `"a" + 3` provoque une erreur
+- `str(16)` → `"16"` : un entier converti en texte
+- les espaces se placent à l'intérieur des guillemets
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -128,6 +149,15 @@ Des bonbons sont partagés équitablement entre des enfants. Ceux qui restent vo
 Écrire deux fonctions :
 - `par_enfant(bonbons, enfants)` : le nombre (entier) de bonbons reçus par chaque enfant ;
 - `pour_le_renard(bonbons, enfants)` : le nombre de bonbons restants.
+
+<PostIt>
+
+- `a // b` : quotient de la division entière, ex. `17 // 5` → `3`
+- `a % b` : reste de la division entière, ex. `17 % 5` → `2`
+- `a / b` donne toujours un flottant : `10 / 2` → `5.0`
+- deux fonctions s'écrivent l'une sous l'autre, chacune avec son `def`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -184,6 +214,15 @@ assert type(par_enfant(23, 5)) == int, "par_enfant renvoie un entier, pas un flo
 Écrire une fonction `nom_du_type(valeur)` qui renvoie `"entier"`, `"flottant"`, `"texte"` ou `"booléen"` selon le type de `valeur`.
 
 Exemple : `nom_du_type(3.0)` renvoie `"flottant"`.
+
+<PostIt>
+
+- `type(v)` : type de la valeur `v`
+- `type(3) == int`, `type(3.0) == float`, `type("a") == str`, `type(True) == bool`
+- `3` est un `int`, `3.0` un `float`
+- `if` / `elif` / `else` : un seul cas retenu
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -247,6 +286,15 @@ assert nom_du_type(7 / 7) == "flottant", "7 / 7 donne un flottant."
 
 Contrainte : sans `if`.
 
+<PostIt>
+
+- une comparaison donne un booléen : `4 > 1` → `True`
+- un booléen peut être renvoyé directement : `return x > 0`
+- `n % 2` : reste de la division par 2
+- `if` est interdit ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -297,6 +345,15 @@ assert not re.search(r"\bif\b", PROGRAMME), "Sans if."
 Écrire une fonction `capitaliser(mot)` qui renvoie le mot avec sa première lettre en majuscule et toutes les autres en minuscules.
 
 Exemple : `capitaliser("pYTHON")` renvoie `"Python"`. Le mot n'est jamais vide.
+
+<PostIt>
+
+- `mot[0]` : premier caractère
+- `mot[1:]` : tout le texte sauf le premier caractère
+- `texte.upper()` : en majuscules ; `texte.lower()` : en minuscules
+- `"a" + "b"` : concaténation
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -349,6 +406,15 @@ assert "capitalize" not in PROGRAMME and "title" not in PROGRAMME, "Sans capital
 
 Exemples : `dernier_chiffre(2026)` renvoie `6`, `dernier_chiffre(-47)` renvoie `7`.
 
+<PostIt>
+
+- `n % 10` : chiffre des unités d'un entier positif, ex. `2026 % 10` → `6`
+- `abs(x)` : valeur absolue, ex. `abs(-47)` → `47`
+- avec un nombre négatif, `%` donne un résultat inattendu : `-47 % 10` → `3`
+- le résultat attendu est un `int`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -398,6 +464,15 @@ assert dernier_chiffre(0) == 0 and dernier_chiffre(10) == 0, "0 et 10 se termine
 Écrire une fonction `moyenne_ponderee(n1, c1, n2, c2)` qui renvoie la moyenne de deux notes `n1` et `n2` affectées des coefficients `c1` et `c2`, arrondie au centième.
 
 Exemple : 12 coefficient 1 et 15 coefficient 2 donnent `14.0`.
+
+<PostIt>
+
+- une moyenne pondérée : chaque note est multipliée par son coefficient
+- le total se divise par la somme des coefficients
+- les parenthèses fixent l'ordre des calculs
+- `round(x, 2)` : arrondi au centième
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -449,6 +524,15 @@ En Python, `0.1 + 0.2 == 0.3` vaut `False` : les flottants sont des valeurs appr
 
 Écrire une fonction `presque_egaux(a, b)` qui renvoie `True` si les flottants `a` et `b` diffèrent de moins de `1e-9` (un milliardième).
 
+<PostIt>
+
+- `abs(x)` : valeur absolue, ex. `abs(-0.5)` → `0.5`
+- `1e-9` : notation scientifique pour `0.000000001`
+- `a - b` peut être négatif selon l'ordre de `a` et `b`
+- `return condition` renvoie `True` ou `False`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -499,6 +583,15 @@ assert presque_egaux(2.0, 2.0) is True, "Deux valeurs identiques."
 Écrire une fonction `chrono(secondes)` qui renvoie la durée sous la forme `"HH:MM:SS"`, chaque nombre sur deux chiffres.
 
 Exemple : `chrono(3725)` renvoie `"01:02:05"`. La durée reste sous 100 heures.
+
+<PostIt>
+
+- `//` : quotient entier ; `%` : reste
+- 1 h = 3 600 s ; 1 min = 60 s
+- `f"{x:02d}"` : écrit l'entier `x` sur deux chiffres, ex. `5` → `"05"`
+- `f"{a}:{b}"` : insère des valeurs dans un texte
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -557,6 +650,15 @@ assert chrono(359999) == "99:59:59", "359999 s : 99:59:59."
 
 Exemples : `dans_intervalle(5, 1, 10)` et `dans_intervalle(5, 10, 1)` renvoient `True`.
 
+<PostIt>
+
+- `a <= x <= b` : comparaison enchaînée, vraie si `x` est entre `a` et `b` inclus
+- `min(a, b)` et `max(a, b)` : le plus petit et le plus grand
+- `and` / `or` pour combiner des conditions
+- `return condition` renvoie un booléen
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -607,6 +709,15 @@ assert dans_intervalle(-2.5, -3, -2) is True, "Avec des négatifs."
 Écrire une fonction `coller(a, b)` qui renvoie l'**entier** obtenu en écrivant les chiffres de `b` à la suite de ceux de `a` (deux entiers positifs).
 
 Exemple : `coller(12, 345)` renvoie `12345`.
+
+<PostIt>
+
+- `str(12)` → `"12"` : entier vers texte
+- `int("345")` → `345` : texte vers entier
+- `"12" + "345"` → `"12345"` ; `12 + 345` → `357`
+- le résultat attendu est un `int`, pas un texte
+
+</PostIt>
 
 <Indices>
 <Indice>

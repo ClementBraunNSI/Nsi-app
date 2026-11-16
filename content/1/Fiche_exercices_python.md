@@ -26,6 +26,15 @@ Bienvenue dans la tanière du code
 Bonne séance !
 ```
 
+<PostIt>
+
+- `print("texte")` : affiche le texte puis passe à la ligne
+- un texte s'écrit entre guillemets
+- un `print` par ligne à afficher
+- les majuscules, accents et espaces comptent
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -69,6 +78,15 @@ Un renard s'appelle **Roux**, a **4** ans et vit à **Strasbourg**.
 
 1. Ranger ces informations dans trois variables `nom`, `age` (un entier) et `ville`.
 2. Afficher une phrase qui utilise les trois variables, par exemple : `Roux a 4 ans et vit à Strasbourg.`
+
+<PostIt>
+
+- `variable = valeur` : range une valeur dans une variable
+- texte entre guillemets : `"Roux"` ; entier sans guillemets : `4`
+- `print(a, b, c)` : affiche les valeurs séparées par un espace
+- `"texte" + "."` : colle deux textes sans espace
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -128,6 +146,15 @@ Calculer avec Python, sans faire le calcul de tête :
 
 Afficher ensuite les deux distances.
 
+<PostIt>
+
+- `+`, `-`, `*`, `/` : les quatre opérations
+- `x = 12 * 3` : Python calcule, puis range le résultat dans `x`
+- une variable déjà remplie peut servir dans un calcul
+- `print(x)` : affiche la valeur de `x`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -185,6 +212,15 @@ Le programme demande deux nombres entiers et les range dans `a` et `b`.
 Échanger le contenu des deux variables, puis afficher `a` et `b`.
 
 Exemple : avec `3` puis `8`, le programme affiche `8` puis `3`.
+
+<PostIt>
+
+- `x = y` : copie la valeur de `y` dans `x` ; l'ancienne valeur de `x` est perdue
+- une variable ne garde qu'une seule valeur à la fois
+- les instructions s'exécutent de haut en bas, dans l'ordre
+- une nouvelle variable peut servir de stockage provisoire
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -252,6 +288,15 @@ assert autre["a"] == 12 and autre["b"] == -5, "Avec -5 et 12 : a vaut 12 et b va
 
 Demander le prénom de l'utilisateur, puis ranger dans `message` une salutation de la forme `Bonjour Léa !` et l'afficher.
 
+<PostIt>
+
+- `input("Question : ")` : affiche la question et renvoie le texte tapé
+- `"a" + "b"` : colle deux textes (concaténation) → `"ab"`
+- les espaces à l'intérieur des guillemets font partie du texte
+- `print(message)` : affiche le contenu de la variable
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -304,6 +349,15 @@ assert autre["message"] == "Bonjour Malik !", "Avec Malik : message vaut « Bonj
 Demander l'année de naissance, puis calculer dans `age` l'âge atteint en 2026 et l'afficher.
 
 Par exemple, une personne née en 2010 a `16` ans en 2026.
+
+<PostIt>
+
+- `input(...)` renvoie toujours du texte, même si un nombre est tapé
+- `int(texte)` : convertit le texte en entier, ex. `int("2010")` → `2010`
+- un calcul se fait sur des nombres, pas sur des textes
+- `print("Âge :", age)` : texte et variable séparés par une virgule
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -358,6 +412,15 @@ Demander le prix d'un article (il peut avoir des centimes, par exemple `2.5`) pu
 
 Calculer dans `total` le prix à payer et l'afficher.
 
+<PostIt>
+
+- `float(texte)` : convertit en nombre à virgule, ex. `float("2.5")` → `2.5`
+- `int(texte)` : convertit en entier
+- en Python, la virgule décimale s'écrit avec un point : `2.5`
+- `*` : multiplication
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -410,6 +473,15 @@ assert type(quantite) == int, "La quantité est convertie en entier."
 ### Moyenne de trois notes
 
 Demander trois notes (elles peuvent être à virgule), calculer leur moyenne dans `moyenne`, **arrondie à 2 chiffres après la virgule**, et l'afficher.
+
+<PostIt>
+
+- `float(input(...))` : lit un nombre à virgule
+- les parenthèses fixent l'ordre des calculs : `(a + b) / 2`
+- `round(x, 2)` : arrondit `x` à 2 chiffres après la virgule
+- `round(3.14159, 2)` → `3.14`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -464,6 +536,15 @@ assert autre["moyenne"] == 12.17, "Moyenne de 10, 11 et 15,5 : 12,17 (arrondie).
 Demander la durée d'un film en minutes (un entier).
 
 Calculer `heures` et `minutes` pour l'écrire en heures et minutes, puis afficher par exemple `2 h 15 min` pour `135`.
+
+<PostIt>
+
+- `a // b` : quotient de la division entière, ex. `17 // 5` → `3`
+- `a % b` : reste de la division entière, ex. `17 % 5` → `2`
+- `int(input(...))` : lit un entier
+- `print(a, "h")` : les valeurs sont séparées par un espace
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -526,6 +607,15 @@ Demander le nombre d'élèves, puis calculer :
 
 Exemple : pour 19 élèves, il faut 3 pizzas et il restera 5 parts.
 
+<PostIt>
+
+- `a // b` : quotient entier, arrondi vers le bas, ex. `19 // 8` → `2`
+- `a % b` : reste de la division, ex. `19 % 8` → `3`
+- un quotient arrondi vers le bas peut ne pas suffire : vérifier avec un exemple
+- `int(input(...))` : lit un entier
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -586,6 +676,15 @@ Aux États-Unis, la température se donne en degrés Fahrenheit : on multiplie l
 
 Demander une température en Celsius (à virgule possible) et ranger dans `fahrenheit` sa valeur convertie, puis l'afficher.
 
+<PostIt>
+
+- `float(input(...))` : lit un nombre à virgule
+- priorités : `*` et `/` avant `+` et `-`
+- `x * 9 / 5` : calculé de gauche à droite
+- les parenthèses imposent un autre ordre si besoin
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -638,6 +737,15 @@ for c, f in [(0, 32), (-40, -40), (37.5, 99.5)]:
 Demander un prénom puis un nom, et ranger dans `initiales` les deux initiales en majuscules suivies d'un point.
 
 Exemple : `léa` et `dupont` donnent `L.D.`
+
+<PostIt>
+
+- `texte[0]` : premier caractère du texte, ex. `"léa"[0]` → `"l"`
+- `texte.upper()` : le texte en majuscules, ex. `"l".upper()` → `"L"`
+- `"a" + "b"` : colle deux textes
+- `input(...)` renvoie un texte
+
+</PostIt>
 
 <Indices>
 <Indice>

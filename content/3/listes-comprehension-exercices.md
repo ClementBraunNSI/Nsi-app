@@ -25,6 +25,15 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 
 Écrire une fonction `carres(n)` qui renvoie la liste `[0, 1, 4, …, (n-1)²]`, construite **par compréhension**.
 
+<PostIt>
+
+- `[expression for x in iterable]` : une liste construite en une ligne
+- ex. `[x + 1 for x in [1, 2, 3]]` → `[2, 3, 4]`
+- `range(n)` : 0, 1, …, `n - 1`
+- `x * x` ou `x ** 2` : le carré
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -73,6 +82,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 ### Tout en majuscules
 
 Écrire une fonction `majuscules(mots)` qui renvoie la liste des mots écrits en majuscules, par compréhension.
+
+<PostIt>
+
+- `[f(x) for x in liste]` : applique `f` à chaque élément
+- `mot.upper()` : le mot en majuscules
+- la liste reçue n'est pas modifiée
+- ex. `[m[0] for m in ["ab", "cd"]]` → `["a", "c"]`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -123,6 +141,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 
 Écrire une fonction `pairs(nombres)` qui renvoie, par compréhension, la liste des nombres pairs de `nombres`, dans l'ordre.
 
+<PostIt>
+
+- `[x for x in liste if condition]` : ne garde que les éléments qui vérifient la condition
+- `x % 2 == 0` : `x` est pair
+- l'ordre d'origine est conservé
+- ex. `[x for x in [5, -1, 3] if x > 0]` → `[5, 3]`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -172,6 +199,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 
 Écrire une fonction `longueurs(mots)` qui renvoie, par compréhension, la liste des longueurs des mots.
 
+<PostIt>
+
+- `[expression for x in liste]` : transforme chaque élément
+- `len(mot)` : nombre de caractères
+- la nouvelle liste a autant d'éléments que l'ancienne
+- `return` renvoie la liste construite
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -220,6 +256,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 ### Doubler les positifs
 
 Écrire une fonction `doubles_positifs(nombres)` qui renvoie, par compréhension, le double de chaque nombre **strictement positif**, en ignorant les autres.
+
+<PostIt>
+
+- `[expression for x in liste if condition]` : filtre et transforme en même temps
+- la condition s'écrit **après** le `for`
+- `>` : strictement positif, 0 exclu
+- ex. `[x * 10 for x in [1, 2, 3] if x != 2]` → `[10, 30]`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -271,6 +316,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 Écrire une fonction `sigle(expression)` qui renvoie le sigle d'une expression : les initiales en majuscules des mots de **plus de deux lettres**.
 
 Exemple : `sigle("numérique et sciences informatiques")` renvoie `"NSI"`.
+
+<PostIt>
+
+- `texte.split()` : liste des mots (séparés par des espaces)
+- `mot[0].upper()` : initiale en majuscule
+- `"".join(liste)` : colle les textes d'une liste sans séparateur
+- `len(mot) > 2` : plus de deux lettres
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -325,6 +379,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 
 Exemple : le premier élément de `table(7)` est `"7 x 1 = 7"`.
 
+<PostIt>
+
+- `range(1, 11)` : de 1 à 10
+- `f"{a} x {b}"` : insère des valeurs dans un texte
+- une expression peut se calculer dans les accolades : `f"{a * b}"`
+- `[f"..." for i in range(...)]` : une liste de textes
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -375,6 +438,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 
 Écrire une fonction `en_double(mot)` qui renvoie, par compréhension, la liste triée **sans doublon** des lettres qui apparaissent au moins deux fois dans `mot`.
 
+<PostIt>
+
+- `{expression for x in iterable}` : un **ensemble**, sans doublon
+- `mot.count(c)` : nombre d'apparitions de `c` dans `mot`
+- `sorted(ensemble)` : renvoie une liste triée
+- `for c in mot` : parcourt les caractères
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -423,6 +495,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 ### Grille indépendante
 
 Écrire une fonction `grille(n, p, valeur)` qui renvoie, par compréhension, une grille de `n` lignes et `p` colonnes remplie de `valeur`, dont les lignes sont **indépendantes**.
+
+<PostIt>
+
+- une compréhension peut contenir une autre compréhension : `[[...] for ...]`
+- `for _ in range(n)` : répète sans se servir du compteur
+- `[v] * p` dans une liste répétée crée des lignes partagées : à éviter ici
+- chaque ligne doit être une nouvelle liste
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -478,6 +559,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 
 Exemple : `[[1, 2], [3], []]` donne `[1, 2, 3]`.
 
+<PostIt>
+
+- deux `for` dans une même compréhension : `[x for a in A for x in a]`
+- les `for` se lisent dans l'ordre des boucles imbriquées
+- une ligne vide ne donne aucun élément
+- le résultat est une liste « à plat »
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -526,6 +616,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 ### Transposée
 
 Écrire une fonction `transposee(m)` qui renvoie, par compréhension, la transposée d'une matrice (pas forcément carrée).
+
+<PostIt>
+
+- `m[i][j]` : case en ligne `i`, colonne `j`
+- `len(m)` : nombre de lignes ; `len(m[0])` : nombre de colonnes
+- compréhension imbriquée : `[[... for i in ...] for j in ...]`
+- la boucle extérieure donne les lignes du résultat
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -577,6 +676,15 @@ assert any(isinstance(n, (ast.ListComp, ast.SetComp, ast.DictComp, ast.Generator
 Écrire une fonction `index_longueurs(mots)` qui renvoie, par compréhension de dictionnaire, le dictionnaire qui associe à chaque mot sa longueur.
 
 Exemple : `["le", "renard"]` donne `{"le": 2, "renard": 6}`.
+
+<PostIt>
+
+- `{cle: valeur for x in iterable}` : dictionnaire par compréhension
+- ex. `{n: n * n for n in range(3)}` → `{0: 0, 1: 1, 2: 4}`
+- `len(mot)` : nombre de caractères
+- les deux-points séparent la clé de la valeur
+
+</PostIt>
 
 <Indices>
 <Indice>

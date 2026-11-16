@@ -136,6 +136,40 @@ describe("hints in an exercise statement", () => {
   });
 });
 
+/** Niveaux qui reçoivent un post-it de syntaxe à côté de l'énoncé, dans toutes les fiches. */
+const POST_IT_LEVELS = ["premiers pas", "introduction", "facile", "moyen"];
+
+describe("post-it on easy exercises", () => {
+  const fold = (text: string) => text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+
+  it("gives every exercise of level Premiers pas to Moyen, on every sheet, one post-it in its énoncé", () => {
+    const missing: string[] = [];
+    let checked = 0;
+    const walk = (dir: string) => {
+      for (const name of fs.readdirSync(dir)) {
+        const full = path.join(dir, name);
+        if (fs.statSync(full).isDirectory()) walk(full);
+        else if (/\.mdx?$/.test(name)) {
+          const text = fs.readFileSync(full, "utf8").replace(/\r/g, "");
+          for (const match of text.matchAll(/<ExerciseSection\b([^>]*)>([\s\S]*?)<\/ExerciseSection>/g)) {
+            const label = match[1].match(/\blabel="([^"]*)"/)?.[1] ?? "";
+            const level = fold(label.match(/\[([^\]]+)\]/)?.[1] ?? "");
+            // Les sections « le cours » d'une fiche n'ont pas de correction : ce ne sont pas des exercices.
+            if (!POST_IT_LEVELS.includes(level) || !/<Correction>/.test(match[2])) continue;
+            checked++;
+            const enonce = match[2].match(/<Enonce>([\s\S]*?)<\/Enonce>/)?.[1] ?? "";
+            const id = match[1].match(/\bid="([^"]*)"/)?.[1] ?? "";
+            if (extractPostIts(enonce).postIts.length !== 1) missing.push(`${path.relative(process.cwd(), full)} ${id}`);
+          }
+        }
+      }
+    };
+    walk(path.join(process.cwd(), "content"));
+    expect(checked).toBeGreaterThan(300);
+    expect(missing).toEqual([]);
+  });
+});
+
 describe("reworked exercise sheets", () => {
   // SHEET=boucles npx vitest run tests/exercise-sheets.test.ts : une seule fiche, le temps de l'écrire.
   const only = process.env.SHEET;

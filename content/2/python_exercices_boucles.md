@@ -23,6 +23,15 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 
 Écrire une fonction `somme_carres(n)` qui renvoie `1² + 2² + … + n²` (et 0 pour `n = 0`).
 
+<PostIt>
+
+- `range(1, n + 1)` : de 1 à `n` inclus
+- `x ** 2` : `x` au carré
+- un total démarre à `0` avant la boucle : `total = total + ...`
+- `return` après la boucle, sans décalage
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -79,6 +88,15 @@ assert somme_carres(10) == 385, "Jusqu'à 10 : 385."
 Exemple : `repeter("ha", 3, "-")` renvoie `"ha-ha-ha"`. Pour `n = 0`, le résultat est `""`.
 
 Contrainte : avec une boucle, sans `join` ni `*`.
+
+<PostIt>
+
+- `for i in range(n):` : `i` vaut 0, 1, …, `n - 1`
+- `""` : texte vide, point de départ d'un texte construit
+- `t = t + "ha"` : ajoute `"ha"` à la fin de `t`
+- `join` et `*` sont interdits ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -139,6 +157,15 @@ assert "join" not in PROGRAMME and "*" not in PROGRAMME, "Sans join ni *."
 
 Contrainte : sans la méthode `count`.
 
+<PostIt>
+
+- `for c in texte:` : parcourt les caractères un par un
+- `==` : compare deux caractères
+- un compteur démarre à `0`
+- `count` est interdit ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -195,6 +222,15 @@ assert "count" not in PROGRAMME, "Sans count."
 Écrire une fonction `somme_multiples(n)` qui renvoie la somme de tous les entiers **strictement inférieurs** à `n` qui sont multiples de 3 ou de 5.
 
 Exemple : sous 10, ce sont 3, 5, 6 et 9, de somme 23.
+
+<PostIt>
+
+- `range(1, n)` : de 1 à `n - 1` (`n` exclu)
+- `i % 3 == 0` : `i` est multiple de 3
+- `or` : au moins une condition vraie
+- un `if` dans une boucle : double décalage
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -253,6 +289,15 @@ assert somme_multiples(3) == 0, "Sous 3 : 0."
 
 Contrainte : sans `**` ni `pow`.
 
+<PostIt>
+
+- `for _ in range(n):` : répète `n` fois, sans se servir du compteur
+- un produit qui s'accumule démarre à `1`
+- `r = r * x` : multiplie `r` par `x`
+- `**` et `pow` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -308,6 +353,15 @@ assert "**" not in PROGRAMME and "pow" not in PROGRAMME, "Sans ** ni pow."
 Écrire une fonction `nb_majuscules(texte)` qui renvoie le nombre de lettres majuscules de `A` à `Z` (sans accent) dans `texte`.
 
 Contrainte : sans `isupper`.
+
+<PostIt>
+
+- les caractères se comparent par ordre alphabétique : `"B" < "D"` → `True`
+- `"A" <= c <= "Z"` : comparaison enchaînée
+- `for c in texte:` : parcourt chaque caractère
+- `isupper` est interdit ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -366,6 +420,15 @@ assert "isupper" not in PROGRAMME, "Sans isupper."
 
 Contrainte : sans `find` ni `index`.
 
+<PostIt>
+
+- `range(len(texte))` : tous les indices du texte
+- `texte[i]` : caractère d'indice `i`
+- un `return` dans la boucle l'arrête aussitôt
+- `find` et `index` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -421,6 +484,15 @@ assert "find" not in PROGRAMME and "index" not in PROGRAMME, "Sans find ni index
 Écrire une fonction `sans_espaces(texte)` qui renvoie le texte privé de toutes ses espaces.
 
 Contrainte : sans `replace`, `split` ni `join`.
+
+<PostIt>
+
+- `for c in texte:` : parcourt chaque caractère
+- `!=` : différent de
+- `" "` : le caractère espace
+- `replace`, `split` et `join` sont interdits ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -481,6 +553,18 @@ Exemples : `racine_entiere(17)` renvoie `4`, `racine_entiere(16)` renvoie `4`.
 
 Contrainte : sans `**`, `sqrt` ni `math`.
 
+<PostIt>
+
+```python
+while condition:
+    ...
+```
+- répète tant que la condition est vraie
+- la condition doit finir par devenir fausse
+- `**`, `sqrt` et `math` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -538,6 +622,15 @@ Un palindrome se lit de la même façon dans les deux sens (`"kayak"`, `"ressass
 Écrire une fonction `est_palindrome(mot)` qui renvoie `True` si `mot` en est un.
 
 Contrainte : comparer les lettres avec leurs indices, sans `[::-1]` ni `reversed`.
+
+<PostIt>
+
+- `len(mot)` : nombre de caractères
+- `mot[0]` : premier caractère ; `mot[len(mot) - 1]` : dernier
+- `n // 2` : moitié entière
+- `return False` dans la boucle l'arrête aussitôt
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -599,6 +692,15 @@ Exemple : `somme_chiffres(2026)` renvoie `10`.
 
 Contrainte : par le calcul, sans convertir `n` en texte.
 
+<PostIt>
+
+- `n % 10` : dernier chiffre, ex. `2026 % 10` → `6`
+- `n // 10` : enlève le dernier chiffre, ex. `2026 // 10` → `202`
+- `while n > 0:` : répète tant que `n` est positif
+- convertir en texte est interdit ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -656,6 +758,15 @@ assert "str(" not in PROGRAMME, "Sans conversion en texte."
 Écrire une fonction `alterner(texte)` qui renvoie le texte avec les caractères d'indice pair en majuscules et ceux d'indice impair en minuscules.
 
 Exemple : `alterner("renard")` renvoie `"ReNaRd"`.
+
+<PostIt>
+
+- `range(len(texte))` : tous les indices
+- `i % 2 == 0` : `i` est pair
+- `c.upper()` / `c.lower()` : majuscule / minuscule
+- `t = t + c` : ajoute un caractère à la fin
+
+</PostIt>
 
 <Indices>
 <Indice>

@@ -24,6 +24,10 @@ export type RunReport = {
   saveWarning?: string;
   /** Présent pour un essai admin ou enseignant : la solution n'est pas enregistrée. */
   validationNote?: string;
+  /** Exécution libre : le programme attend une saisie (input), à demander à l'élève avant de relancer. */
+  needsInput?: boolean;
+  /** Question passée à input(). */
+  inputPrompt?: string;
 };
 
 export const SAVE_WARNING = 'La validation n\'a pas pu être enregistrée.';
@@ -31,8 +35,16 @@ export const SAVE_WARNING = 'La validation n\'a pas pu être enregistrée.';
 /** Le serveur n'a pas pu exécuter la vérification : ce n'est pas une erreur de l'élève. */
 export const CHECK_UNAVAILABLE = 'La vérification n\'a pas pu être lancée.';
 
-export function buildPythonCheckSource(userCode: string, verification: string | null): string {
-  const payload = JSON.stringify({ user: userCode ?? '', tests: verification ?? '' });
+/**
+ * `interactive` (exécution libre seulement) : les réponses déjà données à input(), et la graine du hasard de cette
+ * exécution. Sans réponse disponible, le programme s'arrête et le rapport indique la question posée.
+ */
+export function buildPythonCheckSource(userCode: string, verification: string | null, interactive?: { inputs: string[]; seed: number }): string {
+  const payload = JSON.stringify({
+    user: userCode ?? '',
+    tests: verification ?? '',
+    ...(interactive ? { inputs: interactive.inputs, seed: interactive.seed } : {}),
+  });
   return `${PYTHON_CHECK_RUNNER}
 __nsi_out = json.dumps(_nsi_entry(json.loads(${JSON.stringify(payload)})), ensure_ascii=False)
 __nsi_out
@@ -88,6 +100,7 @@ export function finalizeReport(raw: unknown): RunReport {
     error: error || undefined,
     errorDetail: errorDetail && errorDetail !== error ? errorDetail : undefined,
     testsSkipped: data.testsSkipped === true,
+    ...(data.needsInput === true ? { needsInput: true, inputPrompt: asText(data.inputPrompt, 400) } : {}),
   };
 }
 

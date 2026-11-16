@@ -26,6 +26,15 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 
 C'est l'opération de base de nombreux tris.
 
+<PostIt>
+
+- `t[i]` : lit la case `i` ; `t[i] = v` : écrit dans la case `i`
+- après `t[i] = t[j]`, l'ancienne valeur de `t[i]` est perdue
+- « sur place » : la liste reçue est modifiée, rien n'est renvoyé
+- une fonction sans `return` renvoie `None`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -77,6 +86,15 @@ assert t == [1, 8, 5], "Échanger une case avec elle-même ne change rien."
 Écrire une fonction `indice_min_depuis(t, debut)` qui renvoie l'indice du plus petit élément de `t` parmi ceux d'indice `debut` ou plus (le premier en cas d'égalité).
 
 C'est la brique du tri par sélection.
+
+<PostIt>
+
+- `range(a, len(t))` : indices de `a` jusqu'au dernier
+- garder un indice plutôt qu'une valeur : `t[i_min]` redonne la valeur
+- `<` strict garde le premier en cas d'égalité
+- le résultat est un indice, pas une valeur
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -135,6 +153,15 @@ assert indice_min_depuis(t, 5) == 5, "Depuis le dernier indice : lui-même."
 
 Une liste triée dans l'ordre croissant n'en a aucune.
 
+<PostIt>
+
+- `range(len(t) - 1)` : de 0 à l'avant-dernier indice
+- `t[i + 1]` : la case voisine de droite
+- un compteur démarre à `0`
+- une liste vide ou d'un seul élément : aucun tour de boucle
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -190,6 +217,15 @@ assert nb_desordres([1, 5, 2, 6, 3]) == 2, "[1, 5, 2, 6, 3] : 2 paires."
 Un **passage** du tri à bulles parcourt la liste de gauche à droite et échange chaque paire de voisins mal rangés. Le plus grand élément se retrouve alors à la fin.
 
 Écrire une fonction `passage(t)` qui effectue un passage sur place et renvoie le nombre d'échanges réalisés.
+
+<PostIt>
+
+- `t[i], t[j] = t[j], t[i]` : échange deux cases en une ligne
+- `range(len(t) - 1)` : évite de sortir de la liste avec `t[i + 1]`
+- un compteur s'incrémente à chaque échange
+- la liste reçue est modifiée sur place
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -248,6 +284,15 @@ assert passage(t) == 0, "Liste triée : aucun échange."
 Le tri par sélection cherche le plus petit élément et le place en première position, puis le plus petit des restants en deuxième position, et ainsi de suite.
 
 Écrire une fonction `tri_selection(t)` qui trie la liste `t` sur place, dans l'ordre croissant.
+
+<PostIt>
+
+- `t[i], t[j] = t[j], t[i]` : échange deux cases
+- deux boucles imbriquées : la seconde peut démarrer après l'indice de la première
+- `range(i + 1, len(t))` : indices après `i`
+- tri sur place : pas de `return`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -313,6 +358,15 @@ assert not re.search(r"\bsorted\s*\(|\.sort\s*\(", PROGRAMME), "Sans sort ni sor
 Écrire une fonction `inserer(t, x)` qui insère `x` à sa place dans la liste **déjà triée** `t`, sur place, pour qu'elle reste triée.
 
 Contrainte : sans `insert`, `sort` ni `sorted`. Ajouter `x` à la fin puis le faire reculer.
+
+<PostIt>
+
+- `t.append(x)` : ajoute `x` à la fin
+- `while a and b:` : répète tant que les deux conditions sont vraies
+- `i > 0` avant `t[i - 1]` évite de lire `t[-1]`
+- `insert`, `sort` et `sorted` sont interdits ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -381,6 +435,15 @@ Le tri par insertion parcourt la liste et insère chaque élément à sa place p
 
 Écrire une fonction `tri_insertion(t)` qui trie `t` sur place.
 
+<PostIt>
+
+- `range(1, len(t))` : à partir du deuxième élément
+- `while j > 0 and ...:` : `and` s'arrête dès que la première condition est fausse
+- `t[a], t[b] = t[b], t[a]` : échange deux cases
+- tri sur place : pas de `return`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -446,6 +509,15 @@ assert not re.search(r"\bsorted\s*\(|\.sort\s*\(", PROGRAMME), "Sans sort ni sor
 Écrire une fonction `fusion(a, b)` qui reçoit deux listes triées et renvoie une **nouvelle** liste triée contenant tous leurs éléments.
 
 Contrainte : un seul parcours de chaque liste, sans trier.
+
+<PostIt>
+
+- deux indices, un par liste : `i = 0`, `j = 0`
+- `while i < len(a) and j < len(b):` : tant qu'aucune liste n'est épuisée
+- `liste[k:]` : la fin de la liste à partir de l'indice `k`
+- `l1 + l2` ou `resultat.extend(l)` : ajoute plusieurs éléments
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -516,6 +588,15 @@ assert not re.search(r"\bsorted\s*\(|\.sort\s*\(", PROGRAMME), "Sans sort ni sor
 Le tri à bulles répète des passages jusqu'à ce que la liste soit triée. Un passage sans aucun échange prouve que la liste est triée : il est alors inutile de continuer.
 
 Écrire une fonction `tri_bulles(t)` qui trie `t` sur place et renvoie le **nombre de passages** effectués (le dernier passage, sans échange, compte).
+
+<PostIt>
+
+- `while drapeau:` : répète tant que le booléen vaut `True`
+- un booléen peut noter qu'un événement a eu lieu pendant un tour
+- `t[i], t[i + 1] = t[i + 1], t[i]` : échange deux voisins
+- un compteur s'incrémente à chaque tour de `while`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -590,6 +671,15 @@ Le tri doit être **stable** : deux élèves du même âge gardent leur ordre de
 
 Contrainte : adapter le tri par insertion, sans `sort` ni `sorted`.
 
+<PostIt>
+
+- `eleves[j][1]` : l'âge (deuxième élément) du tuple d'indice `j`
+- comparer seulement les âges, pas les tuples entiers
+- `>` strict : deux âges égaux ne s'échangent pas
+- `sort` et `sorted` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -653,6 +743,15 @@ assert not re.search(r"\bsorted\s*\(|\.sort\s*\(", PROGRAMME), "Sans sort ni sor
 Exemple : `union([1, 3, 5], [3, 4, 5, 8])` renvoie `[1, 3, 4, 5, 8]`.
 
 Contrainte : en un seul parcours, comme une fusion.
+
+<PostIt>
+
+- deux indices `i` et `j`, un par liste
+- `if` / `elif` / `else` : plus petit, plus grand ou égal
+- `liste[k:]` : ce qui reste d'une liste à partir de `k`
+- `resultat.append(x)` : ajoute à la fin
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -726,6 +825,15 @@ Le coût d'un tri se mesure en nombre de **comparaisons** entre éléments.
 Écrire une fonction `comparaisons_insertion(t)` qui trie une **copie** de `t` par insertion et renvoie le nombre de comparaisons `t[j - 1] > t[j]` effectuées.
 
 Pour une liste de `n` éléments déjà triée, le tri par insertion n'en fait que `n - 1`. Dans l'ordre inverse, il en fait `n(n - 1) / 2`.
+
+<PostIt>
+
+- `list(t)` : copie de la liste `t`
+- un compteur placé juste avant une comparaison compte chaque comparaison
+- `while j > 0:` puis un `if` à l'intérieur : la comparaison est faite même si elle est fausse
+- `break` : quitte la boucle en cours
+
+</PostIt>
 
 <Indices>
 <Indice>

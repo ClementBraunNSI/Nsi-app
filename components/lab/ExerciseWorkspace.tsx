@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Check, CheckCircle, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { ArrowLeft, BookOpen, Check, CheckCircle, ChevronLeft, ChevronRight, CornerDownLeft, Play, Square } from 'lucide-react';
 import { checkExerciseSolution, type ExerciseCheckResult, type ExerciseSheetNav, type LabExercise } from '@/app/actions/getExercises';
 import { supabase } from '@/lib/supabase';
 import { loadPythonPackages } from '@/lib/pyodide-packages';
@@ -121,6 +121,10 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
   const [report, setReport] = useState<RunReport | null>(null);
   const [statusLine, setStatusLine] = useState<string | null>(null);
   const [consoleState, setConsoleState] = useState<ConsoleState>(IDLE_CONSOLE);
+  // Le programme attend une saisie (input) : la zone de saisie s'affiche sous l'éditeur. Pour continuer, il repart du
+  // début avec les réponses déjà données et le même hasard (Pyodide ne peut pas attendre la page au milieu d'un calcul).
+  const [pendingInput, setPendingInput] = useState<{ prompt: string; answers: string[]; seed: number } | null>(null);
+  const [inputValue, setInputValue] = useState('');
   const [tab, setTab] = useState<'console' | 'tests'>('console');
   // Tablette et téléphone en paysage : l'énoncé se replie pour laisser toute la place au code.
   const [statementOpen, setStatementOpen] = useState(true);
@@ -247,7 +251,11 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
     return pyodideRef.current;
   };
 
-  const runPython = async () => {
+  useEffect(() => {
+    setPendingInput(null);
+  }, [code]);
+
+  const runPython = async (interactive?: { inputs: string[]; seed: number }) => {
     const pyodide = await ensurePython();
     if (exercise.pythonPackages?.length) {
       setStatusLine(`Chargement des modules : ${exercise.pythonPackages.join(', ')}`);
@@ -256,7 +264,7 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
     const leaked: string[] = [];
     pyodide.setStdout({ batched: (msg: string) => leaked.push(String(msg)) });
     pyodide.setStderr({ batched: (msg: string) => leaked.push(String(msg)) });
-    const raw = await pyodide.runPythonAsync(buildPythonCheckSource(codeRef.current, null));
+    const raw = await pyodide.runPythonAsync(buildPythonCheckSource(codeRef.current, null, interactive));
     const next = parsePythonCheckResult(raw);
     if (!next.prints.trim() && leaked.length > 0) next.prints = leaked.join('\n');
     return next;
@@ -287,14 +295,49 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
         return;
       }
 
-      const next = await runPython();
-      setConsoleState(consoleFromReport(next, emptyLine));
+      await runInteractive([], Math.floor(Math.random() * 2 ** 31));
     } catch (error: any) {
+      setPendingInput(null);
       setConsoleState(consoleFromReport(unexpectedRunReport(error?.message || 'Erreur inattendue.'), emptyLine));
     } finally {
       setStatusLine(null);
       setRunning(null);
     }
+  };
+
+  /** Exécution libre avec les réponses déjà données à input() ; s'arrête sur la prochaine question sans réponse. */
+  const runInteractive = async (answers: string[], seed: number) => {
+    const next = await runPython({ inputs: answers, seed });
+    if (next.needsInput) {
+      const shown = next.prints.replace(/\s+$/g, '');
+      setConsoleState({ tone: 'ok', text: [shown, '>>> Le programme attend une saisie, dans la zone sous l’éditeur.'].filter(Boolean).join('\n') });
+      setPendingInput({ prompt: next.inputPrompt ?? '', answers, seed });
+      setInputValue('');
+      return;
+    }
+    setPendingInput(null);
+    setConsoleState(consoleFromReport(next, emptyLine));
+  };
+
+  const submitInput = async () => {
+    if (!pendingInput || running !== null) return;
+    const answers = [...pendingInput.answers, inputValue];
+    setRunning('execute');
+    setStatusLine('Exécution du programme');
+    try {
+      await runInteractive(answers, pendingInput.seed);
+    } catch (error: any) {
+      setPendingInput(null);
+      setConsoleState(consoleFromReport(unexpectedRunReport(error?.message || 'Erreur inattendue.'), emptyLine));
+    } finally {
+      setStatusLine(null);
+      setRunning(null);
+    }
+  };
+
+  const stopInput = () => {
+    setPendingInput(null);
+    setConsoleState((state) => ({ ...state, text: `${state.text.replace(/\n>>> Le programme attend une saisie.*$/, '')}\n>>> Programme arrêté.` }));
   };
 
   const handleTest = async () => {
@@ -436,6 +479,34 @@ export function ExerciseWorkspace({ exercise, nav, embedded = false, onCompleted
           </span>
         }
       />
+      {pendingInput ? (
+        <form
+          className="exercise-input"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void submitInput();
+          }}
+        >
+          <label>
+            <span className="exercise-input-prompt">{pendingInput.prompt.trim() || 'Le programme attend une saisie'}</span>
+            <input
+              autoFocus
+              value={inputValue}
+              onChange={(event) => setInputValue(event.target.value)}
+              placeholder="Taper la réponse, puis Entrée"
+              aria-label={pendingInput.prompt.trim() || 'Saisie demandée par le programme'}
+              spellCheck={false}
+              autoComplete="off"
+            />
+          </label>
+          <button type="submit" className="exercise-input-send" disabled={running !== null}>
+            <CornerDownLeft size={14} aria-hidden /> Envoyer
+          </button>
+          <button type="button" className="exercise-input-stop" onClick={stopInput} disabled={running !== null}>
+            <Square size={12} aria-hidden /> Arrêter
+          </button>
+        </form>
+      ) : null}
       <LabOutput
         exercise={exercise}
         tab={tab}

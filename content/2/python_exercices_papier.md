@@ -26,6 +26,15 @@ Un point est représenté par un tuple `(x, y)`.
 
 Exemple : `milieu((0, 0), (4, 2))` renvoie `(2.0, 1.0)`.
 
+<PostIt>
+
+- `(x, y)` : un tuple de deux valeurs
+- `x, y = point` : range les deux valeurs du tuple dans `x` et `y`
+- `point[0]`, `point[1]` : accès par indice
+- `/` donne un flottant : `4 / 2` → `2.0`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -78,6 +87,15 @@ assert type(milieu((0, 0), (1, 1))) == tuple, "Le résultat est un tuple."
 
 Exemple : `echanger(("nord", 12))` renvoie `(12, "nord")`.
 
+<PostIt>
+
+- `t[0]` : premier élément ; `t[1]` : deuxième
+- un tuple ne se modifie pas : il faut en construire un nouveau
+- `(a, b)` : crée un tuple
+- un tuple peut mêler textes et nombres
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -128,6 +146,15 @@ assert c == (3, 4), "Le tuple d'origine n'a pas changé."
 Un élève est décrit par un tuple `(prenom, nom, age)`.
 
 Écrire une fonction `etiquette(eleve)` qui renvoie le texte `"Léa MARTIN (16 ans)"` pour `("Léa", "Martin", 16)`.
+
+<PostIt>
+
+- `a, b, c = t` : range les trois valeurs du tuple
+- `texte.upper()` : texte en majuscules
+- `f"{a} et {b}"` : insère des valeurs dans un texte
+- `str(16)` → `"16"` si la concaténation `+` est préférée
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -181,6 +208,15 @@ Une grille est une liste de lignes, chaque ligne étant une liste de même longu
 
 Exemple : `dimensions([[1, 2, 3], [4, 5, 6]])` renvoie `(2, 3)`.
 
+<PostIt>
+
+- `len(liste)` : nombre d'éléments
+- `grille[0]` : première ligne (elle-même une liste)
+- `(a, b)` : renvoie deux valeurs dans un tuple
+- toutes les lignes ont la même longueur
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -226,6 +262,15 @@ assert dimensions([[0]]) == (1, 1) and dimensions([[1], [2], [3]]) == (3, 1), "1
 ### Distance entre deux points
 
 Écrire une fonction `distance(a, b)` qui renvoie la distance entre les points `a` et `b` (des tuples `(x, y)`), arrondie au centième.
+
+<PostIt>
+
+- `xa, ya = a` : récupère les coordonnées d'un point
+- `x ** 2` : carré ; `x ** 0.5` : racine carrée
+- distance entre `(xa, ya)` et `(xb, yb)` : racine de `(xb - xa)² + (yb - ya)²`
+- `round(x, 2)` : arrondi au centième
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -278,6 +323,15 @@ assert distance((0, 0), (1, 1)) == 1.41 and distance((-2, 5), (1, 1)) == 5, "Aut
 `personnes` est une liste non vide de tuples `(prenom, age)`.
 
 Écrire une fonction `doyen(personnes)` qui renvoie le prénom de la personne la plus âgée (la première en cas d'égalité).
+
+<PostIt>
+
+- `for prenom, age in personnes:` : parcourt une liste de tuples en les dépliant
+- `nom, age = personnes[0]` : premier tuple de la liste
+- `>` strict garde le premier en cas d'égalité
+- `return` le prénom, pas le tuple
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -336,6 +390,15 @@ assert doyen([("Solo", 40)]) == "Solo", "Une seule personne."
 
 Exemple : pour `[[1, 2], [3, 4]]`, la diagonale est `[1, 4]`.
 
+<PostIt>
+
+- `matrice[i]` : ligne `i` (une liste)
+- `matrice[i][j]` : case en ligne `i`, colonne `j`
+- `len(matrice)` : nombre de lignes
+- `liste.append(v)` : ajoute à la fin
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -389,6 +452,15 @@ assert diagonale([[9]]) == [9], "Matrice 1 × 1."
 Écrire deux fonctions pour une grille de nombres :
 - `somme_ligne(grille, l)` : la somme des nombres de la ligne `l` ;
 - `somme_colonne(grille, c)` : la somme des nombres de la colonne `c`.
+
+<PostIt>
+
+- `grille[l]` : la ligne `l`, une liste
+- `ligne[c]` : case de la colonne `c` dans une ligne
+- `for ligne in grille:` : parcourt les lignes
+- deux fonctions, deux `def`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -455,6 +527,15 @@ La transposée d'une matrice échange lignes et colonnes : la ligne `i` devient 
 
 Exemple : `transposer([[1, 2, 3], [4, 5, 6]])` renvoie `[[1, 4], [2, 5], [3, 6]]`.
 
+<PostIt>
+
+- `len(m)` : nombre de lignes ; `len(m[0])` : nombre de colonnes
+- `m[l][c]` : case en ligne `l`, colonne `c`
+- deux boucles imbriquées : la seconde est décalée dans la première
+- une ligne se construit dans une liste vide `[]`, puis s'ajoute avec `append`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -515,6 +596,15 @@ assert transposer([[7]]) == [[7]] and transposer([[1, 2]]) == [[1], [2]], "1 × 
 
 Attention : `[[valeur] * p] * n` semble fonctionner, mais ce n'est pas le cas.
 
+<PostIt>
+
+- `[v] * p` : liste de `p` fois la valeur `v`
+- `[ligne] * n` répète `n` fois **la même** liste : modifier l'une modifie toutes
+- une liste créée dans une boucle est une nouvelle liste à chaque tour
+- `g.append(...)` : ajoute une ligne à la grille
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -571,6 +661,15 @@ assert grille(0, 4, ".") == [] and grille(1, 3, ".") == [[".", ".", "."]], "0 li
 
 Écrire une fonction `admis(resultats, seuil)` qui renvoie la liste des **noms** des candidats dont la note atteint au moins `seuil`, dans l'ordre de la liste.
 
+<PostIt>
+
+- `for nom, note in resultats:` : déplie chaque tuple
+- `>=` : au moins
+- `noms.append(nom)` : ajoute à la liste des noms
+- l'ordre de parcours garde l'ordre de la liste
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -624,6 +723,15 @@ assert admis(r, 20) == [] and admis([], 10) == [], "Personne."
 ### Rectangle englobant
 
 Écrire une fonction `englobant(points)` qui reçoit une liste non vide de points `(x, y)` et renvoie le tuple `((xmin, ymin), (xmax, ymax))` : les coins du plus petit rectangle qui contient tous les points.
+
+<PostIt>
+
+- `x, y = points[0]` : déplie le premier point
+- `for x, y in points:` : parcourt les points
+- `min(a, b)` et `max(a, b)` : plus petit et plus grand de deux valeurs
+- `((a, b), (c, d))` : un tuple de deux tuples
+
+</PostIt>
 
 <Indices>
 <Indice>

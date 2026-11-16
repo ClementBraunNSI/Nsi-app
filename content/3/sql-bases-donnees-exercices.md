@@ -33,6 +33,21 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     *La base de départ est vide.*
 
+    <PostIt>
+
+    ```sql
+    CREATE TABLE nom_table (
+      col1 TYPE,
+      col2 TYPE
+    );
+    INSERT INTO nom_table (col1, col2) VALUES (v1, v2);
+    ```
+    - colonnes séparées par des virgules, pas de virgule après la dernière
+    - un texte s'écrit entre apostrophes : `'Alice'`
+    - `INTEGER PRIMARY KEY` : numéroté tout seul, pas besoin de le donner
+
+    </PostIt>
+
     <Correction>
     ```sql
     CREATE TABLE etudiants (
@@ -76,6 +91,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Afficher toutes les colonnes de tous les étudiants.**
 
+    <PostIt>
+
+    - `SELECT colonnes FROM table;` : structure de base d'une requête
+    - `*` : toutes les colonnes
+    - une requête se termine par `;`
+    - les mots-clés s'écrivent en majuscules par habitude
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT * FROM etudiants;
@@ -96,6 +120,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Afficher seulement le nom et le prénom de chaque étudiant.**
 
+    <PostIt>
+
+    - `SELECT col1, col2 FROM table;` : seulement ces colonnes
+    - les noms de colonnes sont séparés par des virgules
+    - l'ordre des colonnes dans `SELECT` est l'ordre affiché
+    - les noms doivent être écrits comme dans la table
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT nom, prenom FROM etudiants;
@@ -115,6 +148,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     Table `etudiants(id, nom, prenom, age)`.
 
     **Afficher toutes les colonnes des étudiants qui ont 17 ans.**
+
+    <PostIt>
+
+    - `WHERE condition` : ne garde que les lignes qui vérifient la condition
+    - `WHERE` se place après `FROM table`
+    - `=` : égalité (un seul signe en SQL)
+    - un nombre s'écrit sans apostrophes
+
+    </PostIt>
 
     <Correction>
     ```sql
@@ -138,6 +180,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     *Indice : `LIKE 'D%'`.*
 
+    <PostIt>
+
+    - `LIKE 'motif'` : compare un texte à un motif
+    - `%` : n'importe quelle suite de caractères (même vide)
+    - `'%e'` : se termine par `e` ; `'%e%'` : contient `e`
+    - `LIKE` s'utilise dans une clause `WHERE`
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT * FROM etudiants WHERE nom LIKE 'D%';
@@ -159,6 +210,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     **Modifier l'âge de l'étudiante Martin pour le mettre à 18 ans.**
 
     *Pour voir le résultat, ajouter `SELECT * FROM etudiants;` après la modification.*
+
+    <PostIt>
+
+    - `UPDATE table SET colonne = valeur WHERE condition;`
+    - sans `WHERE`, **toutes** les lignes sont modifiées
+    - un texte s'écrit entre apostrophes : `'Dupont'`
+    - `UPDATE` n'affiche rien : un `SELECT` ensuite montre le résultat
+
+    </PostIt>
 
     <Correction>
     ```sql
@@ -182,6 +242,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Supprimer l'étudiante Durand.**
 
+    <PostIt>
+
+    - `DELETE FROM table WHERE condition;`
+    - sans `WHERE`, toutes les lignes sont supprimées
+    - la condition désigne les lignes à supprimer
+    - un texte s'écrit entre apostrophes
+
+    </PostIt>
+
     <Correction>
     ```sql
     DELETE FROM etudiants WHERE nom = 'Durand';
@@ -203,6 +272,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     Table `etudiants(id, nom, prenom, age)`.
 
     **Augmenter de 1 an l'âge de tous les étudiants, en une seule requête.**
+
+    <PostIt>
+
+    - `UPDATE table SET colonne = ...;`
+    - la nouvelle valeur peut se calculer à partir de l'ancienne : `colonne * 2`
+    - sans `WHERE`, toutes les lignes sont concernées
+    - une seule requête suffit
+
+    </PostIt>
 
     <Correction>
     ```sql
@@ -247,6 +325,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Afficher toutes les colonnes de tous les livres.**
 
+    <PostIt>
+
+    - `SELECT ... FROM table;` : lit une table
+    - `*` : toutes les colonnes
+    - le nom de la table respecte la majuscule : `Livres`
+    - une requête se termine par `;`
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT * FROM Livres;
@@ -266,6 +353,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     Table `Livres(id, titre, auteur, annee_publication, genre, disponible)`.
 
     **Afficher uniquement le `titre` et l'`auteur` de tous les livres.**
+
+    <PostIt>
+
+    - `SELECT col1, col2 FROM table;` : seulement certaines colonnes
+    - les colonnes sont séparées par des virgules
+    - l'ordre des colonnes demandé est l'ordre affiché
+    - recopier les noms de colonnes à l'identique
+
+    </PostIt>
 
     <Correction>
     ```sql
@@ -287,6 +383,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Afficher les titres des livres du genre `'SF'`.**
 
+    <PostIt>
+
+    - `WHERE colonne = 'texte'` : filtre sur une valeur texte
+    - les apostrophes entourent les textes
+    - les majuscules comptent dans la valeur : `'SF'`
+    - `SELECT` choisit les colonnes, `WHERE` choisit les lignes
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT titre FROM Livres WHERE genre = 'SF';
@@ -306,6 +411,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     Table `Livres(id, titre, auteur, annee_publication, genre, disponible)`.
 
     **Afficher les titres des livres actuellement disponibles (`disponible = 1`).**
+
+    <PostIt>
+
+    - `WHERE colonne = 1` : filtre sur une valeur numérique
+    - un booléen est souvent stocké en 0 / 1
+    - un nombre s'écrit sans apostrophes
+    - `SELECT` choisit les colonnes affichées
+
+    </PostIt>
 
     <Correction>
     ```sql
@@ -327,6 +441,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Afficher toutes les colonnes des livres publiés strictement après 1950.**
 
+    <PostIt>
+
+    - `>`, `<`, `>=`, `<=` : comparaisons
+    - « strictement après » exclut la valeur elle-même
+    - `WHERE` se place après `FROM`
+    - `*` : toutes les colonnes
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT * FROM Livres WHERE annee_publication > 1950;
@@ -346,6 +469,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     Table `Livres(id, titre, auteur, annee_publication, genre, disponible)`.
 
     **Afficher toutes les colonnes des livres écrits par `'George Orwell'` ou par `'Isaac Asimov'`.**
+
+    <PostIt>
+
+    - `OR` : au moins une condition vraie
+    - `AND` : toutes les conditions vraies
+    - chaque condition se répète en entier : `col = 'a' OR col = 'b'`
+    - les textes entre apostrophes
+
+    </PostIt>
 
     <Correction>
     ```sql
@@ -386,6 +518,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Afficher toutes les colonnes de toutes les voitures, triées par prix croissant.**
 
+    <PostIt>
+
+    - `ORDER BY colonne` : trie le résultat, croissant par défaut
+    - `ORDER BY colonne DESC` : décroissant
+    - `ORDER BY` se place à la fin de la requête
+    - `*` : toutes les colonnes
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT * FROM Voitures ORDER BY prix;
@@ -405,6 +546,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     Table `Voitures(id, marque, modele, couleur, annee, prix, kilometrage)`.
 
     **Afficher le modèle et le prix de toutes les voitures de marque `'Renault'`.**
+
+    <PostIt>
+
+    - `SELECT col1, col2 FROM table WHERE ...;`
+    - filtre sur un texte : `colonne = 'valeur'`
+    - `SELECT` : les colonnes affichées ; `WHERE` : les lignes gardées
+    - les apostrophes entourent les textes
+
+    </PostIt>
 
     <Correction>
     ```sql
@@ -426,6 +576,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Afficher toutes les colonnes des voitures fabriquées à partir de 2017 (inclus) et dont le prix est inférieur à 20 000 €.**
 
+    <PostIt>
+
+    - `AND` : les deux conditions doivent être vraies
+    - `>=` : borne incluse ; `<` : borne exclue
+    - un nombre s'écrit sans espace ni symbole : `20000`
+    - une seule clause `WHERE`, les conditions reliées par `AND`
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT * FROM Voitures WHERE annee >= 2017 AND prix < 20000;
@@ -445,6 +604,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     Table `Voitures(id, marque, modele, couleur, annee, prix, kilometrage)`.
 
     **Afficher la liste des couleurs présentes en stock, sans doublon.**
+
+    <PostIt>
+
+    - `SELECT DISTINCT colonne FROM table;` : chaque valeur une seule fois
+    - `DISTINCT` se place juste après `SELECT`
+    - seule la colonne demandée est affichée
+    - sans `DISTINCT`, les répétitions apparaissent
+
+    </PostIt>
 
     <Correction>
     ```sql
@@ -466,6 +634,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
 
     **Afficher toutes les colonnes des voitures ayant moins de 50 000 km, triées par kilométrage croissant.**
 
+    <PostIt>
+
+    - ordre des clauses : `SELECT` … `FROM` … `WHERE` … `ORDER BY` …
+    - `<` : strictement inférieur
+    - `ORDER BY colonne` : croissant par défaut
+    - un nombre s'écrit sans espace : `50000`
+
+    </PostIt>
+
     <Correction>
     ```sql
     SELECT * FROM Voitures WHERE kilometrage < 50000 ORDER BY kilometrage;
@@ -485,6 +662,15 @@ Chaque exercice s'écrit dans l'éditeur SQL. La base de l'exercice y est déjà
     Table `Voitures(id, marque, modele, couleur, annee, prix, kilometrage)`.
 
     **Afficher toutes les colonnes des voitures qui ne sont pas de couleur `'Blanc'`.**
+
+    <PostIt>
+
+    - `<>` (ou `!=`) : différent de
+    - `NOT` inverse une condition : `NOT (col = 'x')`
+    - les textes entre apostrophes, majuscules comprises
+    - `*` : toutes les colonnes
+
+    </PostIt>
 
     <Correction>
     ```sql

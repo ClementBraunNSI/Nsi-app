@@ -24,6 +24,19 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 
 Contrainte : sans la fonction `abs`.
 
+<PostIt>
+
+```python
+if condition:
+    return ...
+return ...
+```
+- `return` arrête la fonction : la suite n'est pas exécutée
+- `-x` : l'opposé de `x`
+- `abs` est interdit ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -77,6 +90,15 @@ assert "abs(" not in PROGRAMME, "Sans abs."
 
 Exemples : `accorder(3, "renard")` renvoie `"3 renards"`, `accorder(1, "renard")` renvoie `"1 renard"`, `accorder(0, "renard")` renvoie `"0 renard"`.
 
+<PostIt>
+
+- `str(3)` → `"3"` : un nombre converti en texte
+- `"a" + "b"` : concaténation
+- `>=` : supérieur ou égal
+- penser aux cas `0`, `1` et `2`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -127,6 +149,15 @@ assert accorder(2, "point") == "2 points", "2 points."
 ### Feu tricolore
 
 Écrire une fonction `consigne(couleur)` qui renvoie `"passer"` pour `"vert"`, `"ralentir"` pour `"orange"`, `"s'arrêter"` pour `"rouge"` et `"inconnu"` pour toute autre couleur.
+
+<PostIt>
+
+- `==` : compare deux valeurs ; `=` : range une valeur
+- `if` / `elif` / `elif` / `else` : un seul bloc exécuté
+- `else` attrape tous les cas non prévus
+- une apostrophe dans un texte : `"s'arrêter"` entre guillemets doubles
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -188,6 +219,15 @@ assert consigne("bleu") == "inconnu" and consigne("Rouge") == "inconnu", "Toute 
 
 Contrainte : sans la fonction `min`.
 
+<PostIt>
+
+- `<` : strictement inférieur
+- `return` arrête la fonction
+- deux nombres égaux : n'importe lequel convient
+- `min` est interdit ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -242,6 +282,15 @@ assert not re.search(r"\bmin\s*\(", PROGRAMME), "Sans min."
 - `"Bonjour"` de 6 h à 17 h inclus ;
 - `"Bonsoir"` de 18 h à 21 h inclus ;
 - `"Bonne nuit"` le reste du temps.
+
+<PostIt>
+
+- `a <= x <= b` : vrai si `x` est entre `a` et `b`, bornes incluses
+- `if` / `elif` / `else` : le premier test vrai l'emporte
+- `else` couvre tout le reste, même en deux morceaux (avant 6 h et après 21 h)
+- `return` renvoie le texte
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -298,6 +347,15 @@ for h, s in [(6, "Bonjour"), (17, "Bonjour"), (18, "Bonsoir"), (21, "Bonsoir"), 
 L'indice de masse corporelle vaut `poids / taille²` (poids en kg, taille en m).
 
 Écrire une fonction `categorie_imc(poids, taille)` qui renvoie `"maigreur"` (IMC sous 18,5), `"normal"` (sous 25), `"surpoids"` (sous 30) ou `"obésité"`.
+
+<PostIt>
+
+- `x ** 2` : `x` au carré
+- `/` : division (résultat flottant)
+- une variable locale peut stocker un calcul intermédiaire
+- `elif` ne se teste que si les tests au-dessus sont faux
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -367,6 +425,15 @@ assert categorie_imc(25, 1) == "surpoids" and categorie_imc(18.5, 1) == "normal"
 - de 40 à moins de 50 : 4 points ;
 - 50 km/h ou plus : 6 points.
 
+<PostIt>
+
+- calculer d'abord une variable intermédiaire évite de répéter `vitesse - limite`
+- `<` : borne exclue ; `<=` : borne incluse
+- une chaîne `elif` va dans l'ordre croissant ou décroissant
+- `else` pour le dernier cas
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -433,6 +500,15 @@ for v, l, p in cas:
 
 Écrire une fonction `quadrant(x, y)` qui renvoie le numéro du quadrant du point `(x, y)` : 1 en haut à droite, 2 en haut à gauche, 3 en bas à gauche, 4 en bas à droite. Un point sur un axe renvoie 0.
 
+<PostIt>
+
+- `or` : vrai si au moins une condition est vraie
+- un `if` peut contenir un autre `if` (double décalage)
+- `return` arrête la fonction : plus besoin de `else` après lui
+- `==` pour tester l'égalité à 0
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -497,6 +573,15 @@ Exemple : `milieu(7, 2, 5)` renvoie `5`.
 
 Contrainte : sans `sorted`, `sort`, `min` ni `max`.
 
+<PostIt>
+
+- `a <= b <= c` : comparaison enchaînée
+- `or` : au moins une des conditions vraie
+- avec trois valeurs, il y a 6 ordres possibles
+- `sorted`, `sort`, `min` et `max` sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -557,6 +642,15 @@ assert not re.search(r"\b(sorted|sort|min|max)\s*\(", PROGRAMME), "Sans sorted, 
 
 Rappel : un triangle est rectangle si le carré du plus grand côté est égal à la somme des carrés des deux autres.
 
+<PostIt>
+
+- `x ** 2` : `x` au carré
+- `==` : égalité ; `or` : au moins une condition vraie
+- `return condition` renvoie directement `True` ou `False`
+- le plus grand côté peut être `a`, `b` ou `c`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -604,6 +698,15 @@ assert est_rectangle(2, 3, 4) is False and est_rectangle(1, 1, 1) is False, "2, 
 ### Frais de port
 
 Écrire une fonction `frais_port(poids, express)` : `poids` est en kg (un flottant), `express` un booléen. Le tarif normal est de 5 € jusqu'à 1 kg, 8 € jusqu'à 5 kg et 12 € au-delà. L'envoi express coûte le double.
+
+<PostIt>
+
+- `<=` : jusqu'à ... inclus
+- `if express:` suffit pour tester un booléen (inutile d'écrire `== True`)
+- deux `if` à la suite sont indépendants
+- une variable peut être modifiée après coup : `x = x * 2`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -667,6 +770,15 @@ assert frais_port(0.5, True) == 10 and frais_port(3, True) == 16 and frais_port(
 Écrire une fonction `jour_suivant(jour)` qui renvoie le nom du jour qui suit `jour` (en minuscules) : `"lundi"` donne `"mardi"`, `"dimanche"` donne `"lundi"`.
 
 Contrainte : sans liste.
+
+<PostIt>
+
+- `==` : comparaison de deux textes
+- `if` / `elif` / … / `else` : un seul cas retenu
+- les jours sont en minuscules, sans accent manquant : `"mercredi"`
+- les listes sont interdites ici
+
+</PostIt>
 
 <Indices>
 <Indice>

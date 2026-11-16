@@ -24,6 +24,8 @@ type Props = {
   dashboard: HomeDashboard | null;
   privateCard: LandingPrivateCard;
   search: HomeSearch;
+  /** Élève connecté : le bouton « Signaler un bug » s'affiche, même sans tableau de bord. */
+  signedIn?: boolean;
 };
 
 const ACTIVITIES = [
@@ -157,7 +159,7 @@ function MobileResume({ dashboard }: { dashboard: HomeDashboard }) {
 }
 
 /** Accueil du téléphone : une composition à part, pensée pour le pouce, et non l'accueil de l'ordinateur empilé. */
-export default function HomeMobile({ levels, dashboard, privateCard, search }: Props) {
+export default function HomeMobile({ levels, dashboard, signedIn = false, privateCard, search }: Props) {
   const { query, setQuery, results, isSearching, quick } = search;
 
   return (
@@ -294,7 +296,7 @@ export default function HomeMobile({ levels, dashboard, privateCard, search }: P
               </span>
             </Link>
           ))}
-          {dashboard ? <BugReportButton variant="mobile" /> : null}
+          {signedIn ? <BugReportButton variant="mobile" /> : null}
         </div>
       </section>
 

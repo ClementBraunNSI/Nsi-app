@@ -27,6 +27,18 @@ Les noms de fonctions demandés servent aux tests du bouton **Vérifier** : les 
 
 Exemple : `perimetre(5, 3)` renvoie `16`.
 
+<PostIt>
+
+```python
+def nom(a, b):
+    return resultat
+```
+- les paramètres reçoivent les valeurs données à l'appel
+- `return` renvoie le résultat ; `print` ne fait qu'afficher
+- les parenthèses fixent l'ordre des calculs
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -80,6 +92,15 @@ Pour passer d'une vitesse en km/h à une vitesse en m/s, on divise par 3,6.
 
 Exemple : `kmh_vers_ms(90)` renvoie `25.0`.
 
+<PostIt>
+
+- `/` : division, le résultat est un flottant
+- en Python, `3,6` s'écrit `3.6`
+- `round(x, 1)` : arrondi au dixième
+- `return` renvoie la valeur calculée
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -132,6 +153,15 @@ assert type(kmh_vers_ms(90)) == float, "La fonction renvoie un float."
 
 Exemple : `initiales("Léa", "Dupont")` renvoie `"L.D."`.
 
+<PostIt>
+
+- `texte[0]` : premier caractère, ex. `"Léa"[0]` → `"L"`
+- `"a" + "b"` : colle deux textes
+- `"."` : un texte d'un seul caractère
+- la fonction renvoie un texte (`str`)
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -181,6 +211,15 @@ assert initiales("Éloi", "Ba") == "É.B.", "Les lettres accentuées restent tel
 Au marché, les fruits sont vendus au kilo. Écrire une fonction `prix_total(prix_kilo, grammes)` qui renvoie le prix à payer pour `grammes` grammes, **arrondi au centime**.
 
 Exemple : `prix_total(3.5, 500)` renvoie `1.75`.
+
+<PostIt>
+
+- 1 kg = 1 000 g
+- `*` et `/` se calculent de gauche à droite
+- `round(x, 2)` : arrondi au centime
+- un prix au kilo s'écrit avec un point : `3.5`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -235,6 +274,15 @@ En France, pour voter, il faut avoir au moins 18 ans et la nationalité françai
 
 Exemples : `peut_voter(20, "française")` renvoie `True` ; `peut_voter(16, "française")` renvoie `False`.
 
+<PostIt>
+
+- une comparaison donne un booléen : `age >= 18`
+- `and` : vrai si les deux conditions sont vraies
+- `==` compare deux textes, accents compris
+- `return condition` renvoie directement `True` ou `False`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -286,6 +334,15 @@ assert peut_voter(15, "italienne") is False, "Ni l'âge ni la nationalité : Fal
 Écrire une fonction `nb_chiffres(n)` qui renvoie le nombre de chiffres d'un entier positif `n`.
 
 Exemple : `nb_chiffres(2026)` renvoie `4`.
+
+<PostIt>
+
+- `str(2026)` → `"2026"` : entier vers texte
+- `len(texte)` : nombre de caractères
+- un appel de fonction peut en contenir un autre : `f(g(x))`
+- le résultat attendu est un `int`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -341,6 +398,15 @@ assert nb_chiffres(1000000) == 7, "nb_chiffres(1000000) vaut 7."
 - `"chaud"` à partir de 25 °C.
 
 `temperature` peut être un nombre à virgule.
+
+<PostIt>
+
+- `if` / `elif` / `else` : le premier test vrai l'emporte
+- `<` : strictement inférieur
+- une température à virgule (24,5 °C) doit aussi trouver sa case
+- `return` arrête la fonction
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -403,6 +469,15 @@ Un parking est gratuit pendant la première heure. Ensuite, chaque heure **comme
 Écrire une fonction `tarif_parking(minutes)` qui renvoie le prix à payer (un entier) pour une durée en minutes.
 
 Exemples : `tarif_parking(45)` renvoie `0` ; `tarif_parking(61)` renvoie `2` ; `tarif_parking(120)` renvoie `2` ; `tarif_parking(121)` renvoie `4`.
+
+<PostIt>
+
+- `//` : quotient entier, arrondi vers le bas, ex. `61 // 60` → `1`
+- `%` : reste, ex. `61 % 60` → `1`
+- un reste non nul signale une heure commencée
+- tester les exemples de l'énoncé un par un
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -467,6 +542,15 @@ assert tarif_parking(300) == 8, "5 h : quatre heures payantes, 8 €."
 - `hypotenuse(a, b)` renvoie la longueur de l'hypoténuse d'un triangle rectangle de côtés `a` et `b` (théorème de Pythagore), **arrondie au centième**, en appelant `somme_carres`.
 
 Exemple : `hypotenuse(3, 4)` renvoie `5.0`.
+
+<PostIt>
+
+- une fonction peut en appeler une autre déjà définie : `f(x) + f(y)`
+- l'ordre des définitions : la fonction appelée s'écrit au-dessus
+- `x ** 0.5` : racine carrée
+- `round(x, 2)` : arrondi au centième
+
+</PostIt>
 
 <Indices>
 <Indice>

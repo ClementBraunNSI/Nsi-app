@@ -142,6 +142,8 @@ function ResumeBand({ dashboard }: { dashboard: HomeDashboard }) {
 export default function HomeView({ levels }: { levels: HomeLevel[] }) {
   const [privateCard, setPrivateCard] = useState<LandingPrivateCard>(emptyPrivateCard);
   const [dashboard, setDashboard] = useState<HomeDashboard | null>(null);
+  // Élève connecté : le bouton « Signaler un bug » s'affiche même si le tableau de bord ne se charge pas.
+  const [signedIn, setSignedIn] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -150,10 +152,16 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
     const checkAccess = async (session: unknown) => {
       try {
         if (session) {
-          const [card, home] = await Promise.all([getLandingPrivateCard(), getHomeDashboard()]);
-          setPrivateCard(card);
-          setDashboard(home);
+          setSignedIn(true);
+          // Chargés à part : si l'un échoue, l'autre s'affiche quand même.
+          const [card, home] = await Promise.allSettled([getLandingPrivateCard(), getHomeDashboard()]);
+          setPrivateCard(card.status === "fulfilled" ? card.value : emptyPrivateCard);
+          setDashboard(home.status === "fulfilled" ? home.value : null);
+          for (const result of [card, home]) {
+            if (result.status === "rejected" && !isAbortError(result.reason)) console.error(result.reason);
+          }
         } else {
+          setSignedIn(false);
           setPrivateCard(emptyPrivateCard);
           setDashboard(null);
         }
@@ -173,6 +181,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
     refresh();
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_OUT" || !session) {
+        setSignedIn(false);
         setPrivateCard(emptyPrivateCard);
         setDashboard(null);
       }
@@ -227,6 +236,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
       <HomeMobile
         levels={levels}
         dashboard={dashboard}
+        signedIn={signedIn}
         privateCard={privateCard}
         search={{ query: searchQuery, setQuery: setSearchQuery, results, isSearching, quick: QUICK_SEARCHES }}
       />
@@ -417,7 +427,7 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                 </span>
               </Link>
               {/* Élève connecté : signaler un bug, avec une capture d'écran. */}
-              {dashboard ? <BugReportButton variant="desktop" /> : null}
+              {signedIn ? <BugReportButton variant="desktop" /> : null}
               {privateCard.show ? (
                 <div className="home-ex is-private">
                   <span className="home-ex-pic">

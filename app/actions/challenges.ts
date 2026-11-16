@@ -541,6 +541,24 @@ export async function getChallengeIncidents(challengeId: string, userId: string)
   }));
 }
 
+/** Verrouillage définitif d'un défi surveillé : le défi est terminé pour cet élève, ses réponses restent telles quelles. */
+export async function lockChallengeForGood(challengeId: string, userId: string): Promise<Result> {
+  const ctx = await teacher();
+  if (!ctx) return fail(NOT_ALLOWED);
+  const now = new Date().toISOString();
+  const { data, error } = await ctx.supabase
+    .from('challenge_submissions')
+    .update({ locked: true, finished_at: now })
+    .eq('challenge_id', challengeId)
+    .eq('user_id', userId)
+    .is('finished_at', null)
+    .select('user_id');
+  if (error) return fail(messageOf(error, "Le défi n'a pas pu être verrouillé."));
+  if (!data?.length) return fail('Ce défi est déjà terminé pour cet élève.');
+  revalidatePath(`/admin/defis/${challengeId}`);
+  return { ok: true };
+}
+
 export async function unlockChallengeRemotely(challengeId: string, userId: string): Promise<Result> {
   const ctx = await teacher();
   if (!ctx) return fail(NOT_ALLOWED);

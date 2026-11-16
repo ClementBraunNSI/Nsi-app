@@ -74,6 +74,19 @@ livre.titre       # "Dune"
 livre.est_long()  # True
 ```
 
+<PostIt>
+
+```python
+class Nom:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+```
+- `self.a` : attribut de l'objet, lisible dans toutes ses méthodes
+- une méthode peut renvoyer une comparaison : `return self.a > 10`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -158,6 +171,15 @@ r.aire()       # 12
 r.perimetre()  # 14
 r.est_carre()  # False
 ```
+
+<PostIt>
+
+- chaque méthode a `self` comme premier paramètre
+- `self.largeur` : lit l'attribut dans une méthode
+- `==` : égalité de deux valeurs
+- `return` renvoie le résultat de la méthode
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -253,6 +275,15 @@ p.x, p.y              # (3, 4)
 p.distance_origine()  # 5.0
 ```
 
+<PostIt>
+
+- `self.x = self.x + dx` : modifie un attribut
+- une méthode qui modifie l'objet ne renvoie rien
+- `x ** 2` : carré ; `x ** 0.5` : racine carrée
+- les paramètres `dx`, `dy` s'ajoutent aux attributs
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -344,6 +375,15 @@ c.incrementer()
 c.incrementer()
 c.lire()  # 2
 ```
+
+<PostIt>
+
+- `def __init__(self):` : un constructeur sans autre paramètre
+- `self.valeur = 0` : attribut créé avec une valeur fixe
+- `self.valeur = self.valeur + 1` : augmente l'attribut
+- `return self.valeur` : renvoie l'attribut
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -441,6 +481,15 @@ compte.retirer(30)    # True
 compte.retirer(500)   # False
 print(compte)         # Compte de Léa : 120 €
 ```
+
+<PostIt>
+
+- `def __init__(self, a, b=0):` : `b` vaut 0 s'il n'est pas donné
+- `return True` / `return False` : indique si l'opération a eu lieu
+- `__str__(self)` : texte utilisé par `print(obj)`
+- `f"Texte {self.a} : {self.b}"` : insère des attributs dans un texte
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -548,6 +597,15 @@ ch.avancer(125)
 print(ch)   # 02:05
 ```
 
+<PostIt>
+
+- `//` : quotient entier ; `%` : reste
+- 1 minute = 60 secondes
+- `f"{x:02d}"` : entier écrit sur deux chiffres, ex. `5` → `"05"`
+- `__str__(self)` : texte utilisé par `print(obj)`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -647,6 +705,15 @@ t.augmenter()
 t                   # Thermostat(19.5)
 t.est_au_maximum()  # False
 ```
+
+<PostIt>
+
+- `min(a, b)` et `max(a, b)` : plus petit et plus grand de deux nombres
+- `0,5` s'écrit `0.5` en Python
+- `__repr__(self)` : texte affiché par la console pour l'objet
+- `f"Nom({self.x})"` : insère un attribut dans un texte
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -756,6 +823,15 @@ p.nombre_articles()  # 2
 p.total()            # 2.15
 p.contient("beurre") # False
 ```
+
+<PostIt>
+
+- `self.articles = []` : liste vide créée dans le constructeur
+- `liste.append((a, b))` : ajoute un tuple (doubles parenthèses)
+- `len(liste)` : nombre d'éléments
+- `for nom, prix in liste:` : déplie chaque tuple
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -871,6 +947,15 @@ f.valeur()                       # 0.5
 f.est_egale(Fraction(2, 4))      # True
 ```
 
+<PostIt>
+
+- `autre.numerateur` : attribut de l'autre objet reçu en paramètre
+- `Fraction(a, b)` dans une méthode : crée un nouvel objet
+- `/` : division, résultat à virgule
+- deux fractions a/b et c/d sont égales quand a × d = c × b
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -982,6 +1067,16 @@ p.sommet()   # 7
 p.depiler()  # 7
 p.taille()   # 1
 ```
+
+<PostIt>
+
+- `liste.append(x)` : ajoute à la fin (le sommet)
+- `liste.pop()` : retire et renvoie le dernier élément
+- `liste[-1]` : dernier élément, sans le retirer
+- `raise IndexError("message")` : lève une erreur
+- `len(liste) == 0` : la liste est vide
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -1116,6 +1211,16 @@ f.defiler()  # 3
 f.premier()  # 8
 ```
 
+<PostIt>
+
+- `liste.append(x)` : ajoute à la fin
+- `liste.pop(0)` : retire et renvoie le premier élément
+- `liste[0]` : premier élément, sans le retirer
+- `raise IndexError("message")` : lève une erreur
+- `f"File({liste})"` : une liste s'écrit telle quelle dans un f-string
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -1246,6 +1351,16 @@ p.empiler("B")   # True
 p.empiler("C")   # False, la pile est pleine
 p.depiler()      # "B"
 ```
+
+<PostIt>
+
+- deux attributs : `self.contenu = []` et `self.capacite = capacite`
+- `len(self.contenu)` : nombre d'éléments
+- une méthode peut en appeler une autre : `self.est_pleine()`
+- `liste.pop()` : retire et renvoie le dernier élément
+- `raise IndexError("message")` : lève une erreur
+
+</PostIt>
 
 <Indices>
 <Indice>

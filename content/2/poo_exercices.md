@@ -28,6 +28,19 @@ Les noms de variables et de fonctions demandés servent aux tests du bouton **V�
 
 Exemple : `r = Renard("Roux", 4)` donne `r.nom == "Roux"` et `r.age == 4`.
 
+<PostIt>
+
+```python
+class Nom:
+    def __init__(self, a):
+        self.a = a
+```
+- `__init__` : le constructeur, appelé à la création de l'objet
+- `self` : l'objet en cours de création
+- `self.a = a` : range le paramètre dans un attribut
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -79,6 +92,15 @@ assert g.nom == "Goupil" and r.nom == "Roux", "Chaque objet a ses propres attrib
 ### Une méthode
 
 Reprendre la classe `Renard` et lui ajouter une méthode `fiche()` qui renvoie le texte `"Roux, 4 ans"` pour le renard de l'exemple, et une méthode `anniversaire()` qui augmente son âge de 1.
+
+<PostIt>
+
+- une méthode s'écrit dans la classe, avec `self` en premier paramètre
+- `self.attribut` : lit ou modifie un attribut de l'objet
+- `f"{a}, {b}"` : insère des valeurs dans un texte
+- une méthode qui modifie l'objet ne renvoie rien
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -142,6 +164,15 @@ assert r.age == 6 and r.fiche() == "Roux, 6 ans", "Deux anniversaires : 6 ans."
 - `incrementer()` ajoute 1 ;
 - `reinitialiser()` remet à 0.
 
+<PostIt>
+
+- `def __init__(self):` : un constructeur peut n'avoir que `self`
+- un attribut peut recevoir une valeur fixe : `self.x = 0`
+- `self.x = self.x + 1` : modifie l'attribut
+- chaque méthode commence par `def nom(self):`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -204,6 +235,15 @@ assert c.valeur == 0, "Remise à zéro."
 
 Écrire une classe `Rectangle` construite avec une `largeur` et une `hauteur`, qui a deux méthodes : `aire()` et `perimetre()`.
 
+<PostIt>
+
+- `self.largeur` : attribut lu dans une méthode
+- `return` renvoie le résultat de la méthode
+- périmètre d'un rectangle : deux largeurs et deux hauteurs
+- les méthodes s'appellent avec des parenthèses : `r.aire()`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -262,6 +302,15 @@ assert c.aire() == 6.25 and c.perimetre() == 10, "Carré de côté 2,5."
 
 Écrire une classe `Point` construite avec `x` et `y`, et une méthode `distance(autre)` qui renvoie la distance à un autre `Point`.
 
+<PostIt>
+
+- une méthode peut recevoir un autre objet : `def distance(self, autre):`
+- `autre.x` : attribut de l'autre objet
+- `x ** 2` : carré ; `x ** 0.5` : racine carrée
+- distance : racine de `(x2 - x1)² + (y2 - y1)²`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -318,6 +367,15 @@ assert a.distance(a) == 0, "Un point et lui-même."
 Écrire une classe `Compte` construite avec le nom du `titulaire`. Son `solde` part de 0.
 - `deposer(montant)` ajoute le montant ;
 - `retirer(montant)` retire le montant et renvoie `True` si le solde suffit. Sinon, elle ne change rien et renvoie `False`.
+
+<PostIt>
+
+- un attribut peut démarrer à une valeur fixe : `self.solde = 0`
+- `self.solde = self.solde + m` : modifie l'attribut
+- `return True` / `return False` : la méthode dit si l'opération a réussi
+- `>` : strictement supérieur
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -387,6 +445,15 @@ assert c.retirer(70) is True and c.solde == 0, "Retrait de tout le solde."
 - `ajouter(t)` enregistre une mesure ;
 - `moyenne()` renvoie la moyenne arrondie au dixième, ou `None` sans mesure ;
 - `ecart()` renvoie l'écart entre la plus haute et la plus basse mesure (0 sans mesure).
+
+<PostIt>
+
+- `self.mesures = []` : liste vide dans le constructeur
+- `self.mesures.append(t)` : ajoute à la liste de l'objet
+- `sum`, `len`, `min`, `max` fonctionnent sur la liste
+- `not liste` : vrai si la liste est vide ; `round(x, 1)` : arrondi au dixième
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -458,6 +525,15 @@ assert autre.mesures == [], "Une autre station a sa propre liste, vide."
 - une méthode `avancer(minutes)` qui avance l'heure, en revenant à 0 h après 23 h 59 ;
 - une méthode spéciale `__str__` qui renvoie l'heure sous la forme `"07:05"`. Ainsi, `str(horloge)` et `print(horloge)` affichent l'heure.
 
+<PostIt>
+
+- 1 jour = 1 440 minutes ; `%` ramène dans un intervalle, ex. `1500 % 1440` → `60`
+- `//` : quotient entier ; `%` : reste
+- `def __str__(self):` renvoie le texte utilisé par `str(obj)` et `print(obj)`
+- `f"{x:02d}"` : écrit l'entier `x` sur deux chiffres
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -525,6 +601,15 @@ assert str(h) == "00:10", "Passage de minuit."
 - est **toujours simplifiée** dès sa création, avec un dénominateur positif (`Fraction(6, -8)` a pour attributs `num = -3` et `den = 4`) ;
 - a une méthode `plus(autre)` qui renvoie une **nouvelle** `Fraction`, somme des deux ;
 - a une méthode `__str__` qui renvoie `"-3/4"`, ou seulement `"2"` si le dénominateur vaut 1.
+
+<PostIt>
+
+- `from math import gcd` : `gcd(a, b)` donne le PGCD de `a` et `b`
+- `a, b = -a, -b` : change les deux signes en une ligne
+- `Fraction(n, d)` appelé dans une méthode crée un nouvel objet
+- `def __str__(self):` : texte affiché par `print`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -610,6 +695,16 @@ assert (a.num, a.den) == (1, 2), "plus ne modifie pas la fraction de départ."
 - `total()` renvoie le prix total, arrondi au centime ;
 - `nb_objets()` renvoie le nombre total d'objets.
 
+<PostIt>
+
+- `self.articles = {}` : dictionnaire vide
+- `cle in d` : la clé existe-t-elle ?
+- `d[cle] = (a, b)` : range un tuple sous la clé
+- `d.pop(cle, None)` : retire la clé, sans erreur si elle est absente
+- `for nom, (p, q) in d.items():` : déplie aussi le tuple
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -685,6 +780,16 @@ assert p.total() == 3.5 and p.nb_objets() == 10, "Le pain est retiré ; le lait 
 Une **pile** range des éléments les uns sur les autres : on ne peut ajouter ou retirer qu'au sommet (comme une pile d'assiettes).
 
 Écrire une classe `Pile` avec les méthodes `empiler(x)`, `depiler()` (retire et renvoie le sommet, ou `None` si la pile est vide), `sommet()` (renvoie le sommet sans le retirer, ou `None`), `est_vide()` et `taille()`.
+
+<PostIt>
+
+- un attribut liste peut stocker les éléments : `self.elements = []`
+- `liste.append(x)` : ajoute à la fin
+- `liste.pop()` : retire et renvoie le dernier élément
+- `liste[-1]` : dernier élément, sans le retirer
+- une méthode peut en appeler une autre : `self.est_vide()`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -765,6 +870,15 @@ assert p.est_vide() is False, "Il reste un élément."
 - `fois(k)` : renvoie un nouveau vecteur multiplié par le nombre `k` ;
 - `scalaire(autre)` : renvoie le produit scalaire `x × x' + y × y'` ;
 - `norme()` : renvoie la longueur du vecteur.
+
+<PostIt>
+
+- `Vecteur(a, b)` dans une méthode : crée et renvoie un nouvel objet
+- `autre.x` : attribut de l'autre vecteur
+- `x ** 0.5` : racine carrée
+- la longueur d'un vecteur : racine de `x² + y²`
+
+</PostIt>
 
 <Indices>
 <Indice>

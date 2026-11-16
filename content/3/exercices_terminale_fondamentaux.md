@@ -27,6 +27,15 @@ Dans cette fiche, un arbre binaire est représenté par `None` (arbre vide) ou p
 
 Écrire une fonction **récursive** `somme(n)` qui renvoie `1 + 2 + … + n` (0 pour `n = 0`), sans boucle.
 
+<PostIt>
+
+- une fonction récursive s'appelle elle-même
+- cas de base : une valeur renvoyée sans appel récursif
+- chaque appel doit se rapprocher du cas de base (ex. `n - 1`)
+- aucune boucle `for` ni `while` ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -85,6 +94,15 @@ assert _recursive("somme"), "somme est récursive : elle s'appelle elle-même."
 
 Écrire une fonction récursive `puissance(x, n)` qui renvoie `x` à la puissance `n` (`n` entier positif ou nul), sans `**` ni boucle.
 
+<PostIt>
+
+- cas de base : la plus petite valeur de `n`, résultat connu sans calcul
+- appel récursif sur un problème plus petit : `f(x, n - 1)`
+- tout nombre à la puissance 0 vaut 1
+- `**`, `pow` et les boucles sont interdits ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -141,6 +159,15 @@ assert _recursive("puissance"), "puissance est récursive : elle s'appelle elle-
 ### Longueur sans len
 
 Écrire une fonction récursive `longueur(texte)` qui renvoie le nombre de caractères de `texte`, sans `len` ni boucle.
+
+<PostIt>
+
+- `texte[1:]` : le texte sans son premier caractère
+- `""` : texte vide, de longueur 0
+- cas de base, puis appel sur un texte plus court
+- `len` et les boucles sont interdits ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -200,6 +227,15 @@ assert _recursive("longueur"), "longueur est récursive : elle s'appelle elle-m�
 
 Écrire une fonction récursive `rebours(n)` qui renvoie la liste `[n, n - 1, …, 1, 0]`, sans boucle.
 
+<PostIt>
+
+- `[a] + liste` : nouvelle liste avec `a` en tête
+- `[0]` : liste d'un seul élément
+- cas de base, puis appel récursif avec `n - 1`
+- aucune boucle ici
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -255,6 +291,15 @@ assert _recursive("rebours"), "rebours est récursive : elle s'appelle elle-mêm
 ### Palindrome récursif
 
 Écrire une fonction récursive `palindrome(mot)` qui renvoie `True` si `mot` se lit de la même façon dans les deux sens.
+
+<PostIt>
+
+- `mot[0]` : premier caractère ; `mot[-1]` : dernier
+- `mot[1:-1]` : le mot sans son premier ni son dernier caractère
+- un mot de 0 ou 1 lettre est un cas de base
+- `and` : les deux conditions doivent être vraies
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -316,6 +361,15 @@ assert _recursive("palindrome"), "palindrome est récursive : elle s'appelle ell
 Écrire une fonction `dichotomie(t, x)` qui renvoie un indice de `x` dans la liste **triée** `t`, ou `-1` s'il est absent, en divisant à chaque étape l'intervalle de recherche par deux.
 
 La liste peut contenir un million d'éléments : un parcours de toute la liste est trop lent pour les tests.
+
+<PostIt>
+
+- deux indices délimitent la zone de recherche : `g` (gauche) et `d` (droite)
+- `(g + d) // 2` : indice du milieu
+- `while g <= d:` : tant que la zone n'est pas vide
+- la liste est triée : comparer avec le milieu indique la moitié à garder
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -381,6 +435,15 @@ assert ".index" not in PROGRAMME and " in t" not in PROGRAMME, "Sans index ni in
 ### Taille d'un arbre
 
 Écrire une fonction récursive `taille(arbre)` qui renvoie le nombre de nœuds d'un arbre binaire (0 pour l'arbre vide `None`).
+
+<PostIt>
+
+- arbre vide : `None` ; tester avec `arbre is None`
+- un nœud : un tuple `(valeur, gauche, droit)`
+- `v, g, d = arbre` : déplie le tuple
+- appels récursifs sur les sous-arbres `g` et `d`
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -450,6 +513,16 @@ assert _recursive("taille"), "taille est récursive : elle s'appelle elle-même.
 Exemple : `maximum(t, 0, len(t) - 1)` donne le maximum de toute la liste.
 
 Contrainte : sans `max` ni boucle.
+
+<PostIt>
+
+- `m = (g + d) // 2` : indice du milieu
+- deux moitiés : de `g` à `m`, puis de `m + 1` à `d`
+- cas de base : la zone ne contient qu'un élément (`g == d`)
+- `a if condition else b` : choisit entre deux valeurs
+- `max` et les boucles sont interdits ici
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -521,6 +594,15 @@ La suite de Fibonacci vaut `F(0) = 0`, `F(1) = 1` et `F(n) = F(n - 1) + F(n - 2)
 
 Écrire une fonction récursive `fib(n, memo)` qui garde dans le dictionnaire `memo` les valeurs déjà calculées. Elle s'appelle `fib(n, {})` et doit calculer `fib(300, {})` instantanément.
 
+<PostIt>
+
+- `n in memo` : la valeur est-elle déjà calculée ?
+- `memo[n] = valeur` : enregistre un résultat
+- le même dictionnaire `memo` est passé à chaque appel récursif
+- cas de base : `F(0)` et `F(1)`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -588,6 +670,15 @@ Pour calculer `xⁿ` avec peu de multiplications, on utilise : `xⁿ = (x^(n/2))
 
 Écrire une fonction récursive `puissance_rapide(x, n)` qui applique cette idée. Elle doit calculer `3^100000` en un instant.
 
+<PostIt>
+
+- `n // 2` : moitié entière ; `n % 2 == 0` : `n` est pair
+- ranger le résultat d'un appel dans une variable évite de le calculer deux fois
+- `y * y` : le carré de `y`
+- cas de base : `n == 0`
+
+</PostIt>
+
 <Indices>
 <Indice>
 
@@ -652,6 +743,15 @@ assert _recursive("puissance_rapide"), "puissance_rapide est récursive : elle s
 Écrire deux fonctions récursives sur les arbres binaires :
 - `hauteur(arbre)` : 0 pour l'arbre vide, 1 pour une feuille, et en général 1 plus la plus grande hauteur des sous-arbres ;
 - `prefixe(arbre)` : la liste des valeurs en parcours **préfixe** (le nœud, puis le sous-arbre gauche, puis le droit).
+
+<PostIt>
+
+- arbre vide : `None` ; un nœud : `(valeur, gauche, droit)`
+- `max(a, b)` : la plus grande de deux valeurs
+- `liste1 + liste2` : concaténation de listes
+- préfixe : le nœud d'abord, puis gauche, puis droit
+
+</PostIt>
 
 <Indices>
 <Indice>
@@ -728,6 +828,15 @@ assert _recursive("prefixe"), "prefixe est récursive : elle s'appelle elle-mêm
 ### Parcours en profondeur
 
 Écrire une fonction `profondeur(graphe, depart)` qui renvoie la liste des sommets atteignables depuis `depart`, dans l'ordre d'un **parcours en profondeur** récursif : visiter un sommet, puis visiter récursivement chacun de ses voisins non encore visités, dans l'ordre de la liste des voisins.
+
+<PostIt>
+
+- graphe : dictionnaire `{sommet: [voisins]}` ; `graphe[s]` : voisins de `s`
+- une fonction peut être définie dans une autre et lire ses variables
+- `liste.append(s)` : marque un sommet comme visité
+- `v not in liste` : sommet pas encore visité
+
+</PostIt>
 
 <Indices>
 <Indice>

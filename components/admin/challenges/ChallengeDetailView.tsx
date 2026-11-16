@@ -7,6 +7,7 @@ import { ArrowLeft, Check, Lock, LockOpen, Trash2, X } from "lucide-react";
 import {
   deleteChallenge,
   getChallengeIncidents,
+  lockChallengeForGood,
   unlockChallengeRemotely,
   type ChallengeDetail,
   type ChallengeIncident,
@@ -14,6 +15,7 @@ import {
 import { INCIDENT_LABELS } from "@/lib/evaluation-guard";
 import { PageHeader } from "@/components/ui";
 import ChallengeEditor from "./ChallengeEditor";
+import { LockControl } from "@/components/admin/LockControl";
 import { challengeState } from "./ChallengesAdmin";
 
 const dayFormat = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Paris" });
@@ -146,9 +148,23 @@ export default function ChallengeDetailView({ detail, classes }: { detail: Chall
                           </td>
                         ) : null}
                         {challenge.proctored ? (
-                          <td className="adm-eval-code">
-                            {row.unlockCode ?? "—"}
-                            {row.locked && row.failedUnlocks ? <small>{row.failedUnlocks} essai{row.failedUnlocks > 1 ? "s" : ""} faux</small> : null}
+                          <td>
+                            <LockControl
+                              code={row.unlockCode}
+                              locked={row.locked}
+                              active={Boolean(row.startedAt) && !row.finishedAt && state.key === "ouvert"}
+                              failedUnlocks={row.locked ? row.failedUnlocks : 0}
+                              name={row.name}
+                              onUnlock={async () => {
+                                await unlockChallengeRemotely(challenge.id, row.studentId);
+                                router.refresh();
+                              }}
+                              onLockForGood={async () => {
+                                const result = await lockChallengeForGood(challenge.id, row.studentId);
+                                if (!result.ok) window.alert(result.error);
+                                router.refresh();
+                              }}
+                            />
                           </td>
                         ) : null}
                         {challenge.exercises.map((exercise) => {

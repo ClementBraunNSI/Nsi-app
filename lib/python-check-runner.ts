@@ -293,16 +293,47 @@ def _scripted_input(values):
     return _input
 
 
-def _nsi_run(user_code, tests):
+class _NsiNeedInput(BaseException):
+    """input() sans réponse disponible pendant une exécution libre : la page demande la saisie, puis relance."""
+
+    def __init__(self, prompt):
+        super().__init__(prompt)
+        self.prompt = prompt
+
+
+def _interactive_input(values):
+    queue = list(values)
+
+    def _input(prompt=""):
+        if not queue:
+            raise _NsiNeedInput(str(prompt))
+        if prompt:
+            sys.stdout.write(str(prompt))
+        value = queue.pop(0)
+        sys.stdout.write(value + "\n")
+        return value
+
+    return _input
+
+
+def _nsi_run(user_code, tests, inputs=None, seed=None):
     user_code = user_code or ""
     tests = tests or ""
     ns = {"__name__": "__main__", "__builtins__": __builtins__}
     planned = _planned_inputs(tests) if tests.strip() else None
     if planned is not None:
         ns["input"] = _scripted_input(planned)
+    elif inputs is not None:
+        # Exécution libre : le programme repart du début à chaque saisie, avec le même hasard.
+        ns["input"] = _interactive_input([str(value) for value in inputs])
+        if seed is not None:
+            import random
+            random.seed(seed)
     user_error, stdout, stderr = _capture_exec(user_code, ns, "<programme>")
     stdout = _clip(stdout)
     stderr = _clip(stderr)
+    if isinstance(user_error, _NsiNeedInput):
+        return _empty_report(stdout=stdout, stderr=stderr, needsInput=True, inputPrompt=_clip(user_error.prompt, 400))
     if user_error is not None:
         return _empty_report(
             status="error",
@@ -386,6 +417,8 @@ def _nsi_entry(payload):
         if isinstance(payload, dict):
             user = payload.get("user") or ""
             tests = payload.get("tests") or ""
+            inputs = payload.get("inputs")
+            return _nsi_run(user, tests, inputs if isinstance(inputs, list) else None, payload.get("seed"))
         return _nsi_run(user, tests)
     except BaseException as exc:
         if isinstance(exc, KeyboardInterrupt):

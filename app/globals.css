@@ -505,7 +505,8 @@ body::before {
 }
 
 /* ---------- Accueil : en-tête, reprise élève, niveaux en bento ---------- */
-.home-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; padding: 4rem 0 3rem; position: relative; z-index: 10; }
+/* Au-dessus de la suite de la page (z-index 10) : la liste des résultats de recherche ne passe pas dessous. */
+.home-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; padding: 4rem 0 3rem; position: relative; z-index: 20; }
 .home-lead { font-size: 1.15rem; color: var(--muted); line-height: 1.6; font-weight: 500; margin: 1.75rem 0; max-width: 34rem; }
 .home-quick { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem; }
 .home-quick button { font-size: 0.8rem; font-weight: 500; color: var(--muted); border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 0.3rem 0.75rem; transition: color 150ms, border-color 150ms; }
@@ -3799,6 +3800,60 @@ input, textarea {
 }
 
 /* Barre d'actions */
+/* Saisie demandée par input() : sous l'éditeur, seulement quand le programme attend une réponse. */
+.exercise-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-top: 2px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+.exercise-input label {
+  display: flex;
+  flex: 1 1 18rem;
+  min-width: 0;
+  align-items: center;
+  gap: 0.6rem;
+}
+.exercise-input-prompt {
+  flex-shrink: 0;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+.exercise-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45rem 0.7rem;
+  border: 1.5px solid var(--accent);
+  border-radius: 0.55rem;
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.9rem;
+}
+.exercise-input input:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+.exercise-input-send,
+.exercise-input-stop {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+.exercise-input-send { background: var(--accent); color: var(--accent-fg); }
+.exercise-input-stop { border: 1px solid var(--border); background: var(--surface); color: var(--muted); }
+.exercise-input-send:disabled, .exercise-input-stop:disabled { opacity: 0.55; }
+
 .exercise-actions {
   display: flex;
   align-items: center;
@@ -6024,6 +6079,18 @@ a.admin-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 
 .admin-shell .adm-eval-panel, .admin-shell .adm-eval-row, .admin-shell .adm-eval-table-wrap, .admin-shell .adm-eval-subjects li, .admin-shell .adm-eval-card, .admin-shell .adm-eval-drawer-panel { border-color: var(--border); background: var(--surface); color: var(--fg); }
 .admin-shell .adm-eval-row:hover { border-color: var(--accent); }
+/* Code de déverrouillage et actions à distance (évaluations, défis surveillés). */
+.lock-control { position: relative; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.5rem; }
+.lock-control small { flex-basis: 100%; font-size: 0.72rem; color: var(--subtle); }
+.lock-control-toggle { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.2rem 0.5rem; border: 1px solid var(--border); border-radius: 99px; background: var(--surface); font-size: 0.75rem; font-weight: 650; color: var(--muted); white-space: nowrap; }
+.lock-control-toggle:hover { border-color: var(--accent); color: var(--fg); }
+.lock-control-toggle.is-locked { border-color: var(--admin-warn, #b91c1c); background: var(--admin-warn-soft, #fee2e2); color: var(--admin-warn, #b91c1c); }
+.lock-control-menu { position: absolute; top: calc(100% + 0.3rem); left: 0; z-index: 120; display: grid; gap: 0.2rem; min-width: 14rem; padding: 0.3rem; border: 1px solid var(--border); border-radius: 0.7rem; background: var(--surface); box-shadow: var(--shadow); }
+.lock-control-menu button { display: flex; align-items: center; gap: 0.45rem; padding: 0.5rem 0.65rem; border-radius: 0.5rem; font-size: 0.85rem; font-weight: 650; text-align: left; color: var(--fg); white-space: nowrap; }
+.lock-control-menu .is-unlock { background: var(--admin-ok-soft, #dcfce7); color: var(--admin-ok, #15803d); }
+.lock-control-menu .is-lock { color: var(--admin-warn, #b91c1c); }
+.lock-control-menu .is-lock:hover { background: var(--admin-warn-soft, #fee2e2); }
+.lock-control-menu button:disabled { opacity: 0.55; }
 /* Liste des évaluations : la corbeille à droite de chaque ligne. */
 .adm-eval-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; gap: 0.4rem; }
 .adm-eval-delete { display: grid; width: 2.6rem; place-items: center; border: 1px solid var(--border); border-radius: 0.9rem; background: var(--surface); color: var(--subtle); transition: color 150ms, border-color 150ms, background-color 150ms; }

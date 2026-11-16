@@ -44,6 +44,16 @@ Convertir les nombres suivants en binaire :
 - Convertir en hexadécimal : $30_{10}$, $75_{10}$, $128_{10}$, $255_{10}$
 - Convertir en décimal : $1A_{16}$, $3F_{16}$, $7D_{16}$, $2A_{16}$
 
+<PostIt>
+
+- puissances de 2 : 1, 2, 4, 8, 16, 32, 64, 128, 256
+- en binaire, chaque chiffre vaut une puissance de 2, à partir de la droite (2⁰)
+- décimal → binaire : divisions successives par 2, les restes se lisent de bas en haut
+- hexadécimal : chiffres 0 à 9 puis A = 10, …, F = 15
+- un chiffre hexadécimal = 4 bits ; ex. `2C₁₆` = 2 × 16 + 12
+
+</PostIt>
+
 </Enonce>
 <Correction>
 
@@ -122,6 +132,16 @@ Effectuer les opérations suivantes sans convertir en décimal (poser les opéra
 **Multiplications :**
 1. $1101_{2} \times 101_{2}$
 2. $1111_{2} \times 10_{2}$
+
+<PostIt>
+
+- addition : `0 + 0 = 0`, `0 + 1 = 1`, `1 + 1 = 10` (0, retenue 1), `1 + 1 + 1 = 11`
+- soustraction : `0 - 1` emprunte 1 au rang de gauche (`10 - 1 = 1`)
+- multiplication : comme en décimal, avec des tables de 0 et 1
+- multiplier par `10₂` décale tous les chiffres d'un rang vers la gauche
+- aligner les chiffres à droite avant de poser l'opération
+
+</PostIt>
 
 </Enonce>
 <Correction>

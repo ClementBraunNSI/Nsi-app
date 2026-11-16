@@ -8,6 +8,8 @@ import {
   answersToGrade,
   deleteEvaluation,
   getEvaluationBoard,
+  lockAttemptForGood,
+  unlockAttemptRemotely,
   gradeEvaluationAnswers,
   setEvaluationStatus,
   updateEvaluation,
@@ -18,6 +20,7 @@ import {
 import { INCIDENT_LABELS } from "@/lib/evaluation-guard";
 import { PageHeader } from "@/components/ui";
 import EvaluationForm from "./EvaluationForm";
+import { LockControl } from "@/components/admin/LockControl";
 import SubjectsEditor from "./SubjectsEditor";
 import AttemptPanel from "./AttemptPanel";
 import EvaluationSummaryModal from "./EvaluationSummaryModal";
@@ -287,7 +290,27 @@ export default function EvaluationManager({
                           {row.lockReason ? <small className="adm-eval-reason">{INCIDENT_LABELS[row.lockReason]}</small> : null}
                           {offline ? <small className="adm-eval-offline">hors ligne</small> : null}
                         </td>
-                        <td className="adm-eval-code">{row.unlockCode ?? "—"}{row.failedUnlocks ? <small>{row.failedUnlocks} essai{row.failedUnlocks > 1 ? "s" : ""} faux</small> : null}</td>
+                        <td>
+                          <LockControl
+                            code={row.unlockCode}
+                            locked={row.status === "verrouillee"}
+                            active={row.status === "en_cours" || row.status === "verrouillee"}
+                            failedUnlocks={row.failedUnlocks}
+                            name={row.name}
+                            onUnlock={async () => {
+                              if (!row.attemptId) return;
+                              const result = await unlockAttemptRemotely(row.attemptId);
+                              if (!result.ok) setMessage(result.error);
+                              await refresh();
+                            }}
+                            onLockForGood={async () => {
+                              if (!row.attemptId) return;
+                              const result = await lockAttemptForGood(row.attemptId);
+                              if (!result.ok) setMessage(result.error);
+                              await refresh();
+                            }}
+                          />
+                        </td>
                         <td>{row.subjectLabel ?? "—"}</td>
                         <td>{row.attemptId ? `${row.exercisesWritten} / ${row.exercisesTotal}` : "—"}</td>
                         <td>{row.graded ? `${row.passed} / ${row.exercisesTotal}` : row.toGrade ? "à corriger" : "—"}</td>
@@ -344,6 +367,7 @@ export default function EvaluationManager({
               scheduledAt: evaluation.scheduledAt,
             }}
             requireSchedule={evaluation.status === "programmee"}
+            hideClasses={evaluation.kind !== "evaluation"}
             busy={busy}
             submitLabel="Enregistrer"
             onSubmit={async (values) => {

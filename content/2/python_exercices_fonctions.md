@@ -26,6 +26,18 @@ groupeTitre: "Fonctions en Python"
     ### Exercice 1.1 [Facile] : Calcul de la moyenne
     **Écrire une fonction `moyenne` qui prend deux nombres en paramètres et renvoie leur moyenne.**
 
+    <PostIt>
+
+    ```python
+    def nom(a, b):
+        return resultat
+    ```
+    - les paramètres se placent entre les parenthèses, séparés par une virgule
+    - `return` renvoie le résultat
+    - les parenthèses fixent l'ordre des calculs
+
+    </PostIt>
+
     <Correction>
     ```python
     def moyenne(a, b):
@@ -47,6 +59,15 @@ assert moyenne(0, 10) == 5, "moyenne(0, 10) devrait renvoyer 5."
     <Enonce>
     ### Exercice 1.2 [Facile] : Fonction est_pair (En-tête)
     **Écrire l'en-tête d'une fonction `est_pair` qui prend en paramètre un nombre entier et renvoie un booléen.**
+
+    <PostIt>
+
+    - l'en-tête : la ligne `def ...:` d'une fonction
+    - `n: int` : le paramètre `n` est un entier (annotation de type)
+    - `-> bool` : la fonction renvoie un booléen
+    - l'en-tête se termine par `:`
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -71,6 +92,15 @@ assert est_pair(5) is False, "est_pair(5) doit renvoyer False."
     ### Exercice 1.3 [Facile] : Afficher la somme
     **Écrire l'en-tête d'une fonction `afficher_somme` qui prend deux nombres en paramètres et ne renvoie rien (procédure).**
 
+    <PostIt>
+
+    - une procédure fait une action (afficher) et ne renvoie rien
+    - `-> None` : annonce qu'aucune valeur n'est renvoyée
+    - `print(...)` affiche ; `return` renvoie
+    - l'en-tête se termine par `:`
+
+    </PostIt>
+
     <Correction>
     ```python
     def afficher_somme(a, b) -> None:
@@ -92,6 +122,15 @@ assert afficher_somme(2, 3) is None, "La fonction ne doit rien renvoyer (None)."
     ### Exercice 1.4 [Facile] : Fonction parité
     **Écrire une fonction `parite` qui prend un entier un paramètre et renvoie `True` si le nombre est pair, `False` sinon. Utiliser le type hinting.**
     *Exemple : parite(7) doit renvoyer False.*
+
+    <PostIt>
+
+    - `n: int` et `-> bool` : types du paramètre et du résultat
+    - `n % 2` : reste de la division par 2
+    - une comparaison donne directement `True` ou `False`
+    - `return` renvoie la valeur
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -115,6 +154,15 @@ assert parite(7) is False, "parite(7) doit renvoyer False."
     ### Exercice 1.5 [Facile] : Aire d'un triangle
     **Écrire une fonction `aire_triangle` qui prend en paramètres la base et la hauteur d'un triangle (nombres flottants) et renvoie son aire.**
 
+    <PostIt>
+
+    - `base: float` : paramètre de type flottant
+    - `-> float` : la fonction renvoie un flottant
+    - aire d'un triangle : base × hauteur ÷ 2
+    - `return` renvoie le résultat
+
+    </PostIt>
+
     <Correction>
     ```python
     def aire_triangle(base: float, hauteur: float) -> float:
@@ -135,6 +183,15 @@ assert aire_triangle(10.0, 5.0) == 25.0, "aire_triangle(10.0, 5.0) devrait renvo
     <Enonce>
     ### Exercice 1.6 [Facile] : Salutation
     **Écrire une fonction `saluer` qui prend une chaîne de caractères `nom` en paramètre et renvoie une salutation de la forme `"Bonjour, ... !"`.**
+
+    <PostIt>
+
+    - `"a" + "b"` : colle deux textes
+    - les espaces et la ponctuation se placent dans les guillemets
+    - `nom: str` : paramètre de type texte
+    - `return` renvoie le texte construit
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -159,6 +216,15 @@ assert saluer("Alice") == "Bonjour, Alice !", "Le format de salutation est incor
     <Enonce>
     ### Exercice 2.1 [Moyen] : Signe d'un nombre
     **Écrire une fonction `signe` qui prend un nombre entier en paramètre et renvoie `"positif"` s'il est strictement supérieur à 0, `"negatif"` s'il est strictement inférieur à 0, et `"nul"` sinon.**
+
+    <PostIt>
+
+    - `if` / `elif` / `else` : trois cas, un seul exécuté
+    - `>` et `<` : comparaisons strictes
+    - `return` arrête la fonction
+    - les textes renvoyés sont sans accent : `"negatif"`
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -187,6 +253,15 @@ assert signe(0) == "nul", "signe(0) devrait renvoyer 'nul'."
     ### Exercice 2.2 [Moyen] : Tarif cinéma
     **Écrire une fonction `prix_ticket` qui prend l'âge d'un spectateur (entier) et renvoie le prix en euros : `5` si moins de 14 ans, `8` si moins de 26 ans, et `11` sinon.**
 
+    <PostIt>
+
+    - `if` / `elif` / `else` : le premier test vrai l'emporte
+    - `<` : strictement inférieur
+    - les tests vont du plus petit âge au plus grand
+    - le prix renvoyé est un entier
+
+    </PostIt>
+
     <Correction>
     ```python
     def prix_ticket(age: int) -> int:
@@ -214,6 +289,15 @@ assert prix_ticket(35) == 11, "prix_ticket(35) devrait renvoyer 11."
     ### Exercice 2.3 [Moyen] : Année bissextile
     **Écrire une fonction `est_bissextile` qui prend une année en paramètre et renvoie `True` si elle est bissextile, `False` sinon. (Rappel : divisible par 4 mais pas par 100, ou divisible par 400).**
 
+    <PostIt>
+
+    - `%` : reste de la division ; divisible par `d` ⇔ `n % d == 0`
+    - `!=` : différent de
+    - `and` / `or` et parenthèses pour combiner les conditions
+    - `return condition` renvoie un booléen
+
+    </PostIt>
+
     <Correction>
     ```python
     def est_bissextile(annee: int) -> bool:
@@ -235,6 +319,15 @@ assert est_bissextile(2000) is True, "2000 est bissextile."
     <Enonce>
     ### Exercice 2.4 [Moyen] : Maximum de deux nombres
     **Écrire une fonction `maximum_deux` qui renvoie le plus grand de deux nombres passés en arguments, sans utiliser la fonction native `max()`.**
+
+    <PostIt>
+
+    - `>` : strictement supérieur
+    - `return` arrête la fonction : la ligne suivante n'est lue que si le test est faux
+    - deux nombres égaux : l'un ou l'autre convient
+    - `max` est interdit ici
+
+    </PostIt>
 
     <Correction>
     ```python
@@ -259,6 +352,15 @@ assert maximum_deux(-5, -1) == -1, "Le maximum entre -5 et -1 est -1."
     ### Exercice 2.5 [Moyen] : Conversion de secondes
     **Écrire une fonction `minutes_restantes` qui prend un nombre total de secondes en paramètre et renvoie le nombre de secondes restantes après avoir extrait les minutes complètes (opérateur modulo).**
 
+    <PostIt>
+
+    - `a % b` : reste de la division entière de `a` par `b`
+    - `a // b` : quotient entier
+    - 1 minute = 60 secondes
+    - `return` renvoie un entier
+
+    </PostIt>
+
     <Correction>
     ```python
     def minutes_restantes(secondes: int) -> int:
@@ -279,6 +381,15 @@ assert minutes_restantes(60) == 0, "60 secondes correspondent à 1 minute pile."
     <Enonce>
     ### Exercice 2.6 [Moyen] : Mention au Baccalauréat
     **Écrire une fonction `mention` qui prend une note (flottant entre 0 et 20) et renvoie `"Très Bien"` si la note est supérieure ou égale à 16, `"Bien"` si elle est entre 14 et 16 (exclu), `"Assez Bien"` entre 12 et 14 (exclu), et `"Pas de mention"` sinon.**
+
+    <PostIt>
+
+    - `>=` : supérieur ou égal ; `<` : strictement inférieur
+    - une chaîne `if` / `elif` part de la plus haute mention
+    - `else` : tous les autres cas
+    - les textes renvoyés respectent les majuscules de l'énoncé
+
+    </PostIt>
 
     <Correction>
     ```python
