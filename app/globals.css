@@ -6470,8 +6470,11 @@ a.admin-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 
 /* ---------- Signaler un bug (accueil, élève connecté) ---------- */
 button.home-ex.bug-card,
-button.hm-card.bug-card { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }
-button.home-ex.bug-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+button.hm-card.bug-card,
+button.home-ex.renart-card,
+button.hm-card.renart-card { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+button.home-ex.bug-card:hover,
+button.home-ex.renart-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .bug-overlay { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 1rem; background: rgb(15 23 42 / 0.45); }
 .bug-dialog {
   display: grid;
@@ -6566,6 +6569,39 @@ button.home-ex.bug-card:hover { border-color: var(--accent); transform: translat
 .bug-note span { font-size: 0.78rem; font-weight: 600; color: var(--muted); }
 .bug-note textarea { width: 100%; padding: 0.5rem 0.65rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--fg); font: inherit; font-size: 0.88rem; resize: vertical; }
 .bug-item-actions { display: flex; justify-content: flex-end; }
+
+/* ---------- Chasse aux Ren'Arts : envoi depuis l'accueil, modal de l'admin ---------- */
+/* Carte seule sur sa ligne (nombre impair de cartes, élève non connecté) : elle prend toute la largeur. */
+.home-extras > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+.renart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+@media (max-width: 480px) { .renart-row { grid-template-columns: 1fr; } }
+.admin-top-renarts { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.5rem 0.9rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--fg); font-size: 0.88rem; font-weight: 650; }
+.admin-top-renarts:hover { border-color: var(--accent); color: var(--accent); }
+.renart-modal {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  width: min(64rem, 100%);
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.25);
+}
+.renart-back { margin-left: 0; }
+.renart-class { display: grid; gap: 0.6rem; }
+.renart-class h3 { display: flex; align-items: baseline; gap: 0.5rem; margin: 0; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border); font-size: 1.05rem; font-weight: 650; color: var(--fg); }
+.renart-class h3 small { font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+.renart-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+.renart-grid button { display: grid; gap: 0.2rem; width: 100%; padding: 0.45rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); text-align: left; transition: border-color 150ms; }
+.renart-grid button:hover { border-color: var(--accent); }
+.renart-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 0.45rem; background: var(--surface-2); }
+.renart-grid b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9rem; color: var(--fg); }
+.renart-grid small { font-size: 0.75rem; color: var(--muted); }
+.renart-view { display: grid; gap: 0.6rem; }
+.renart-view img { justify-self: center; max-width: 100%; max-height: 68dvh; border: 1px solid var(--border); border-radius: var(--radius-sm); }
 
 /* ---------- Évaluations programmées ---------- */
 .adm-eval-status.is-programmee { background: color-mix(in srgb, #7c3aed 14%, var(--surface)); color: #6d28d9; }

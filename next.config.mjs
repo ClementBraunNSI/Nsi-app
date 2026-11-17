@@ -2,6 +2,13 @@
 const nextConfig = {
   // Cette option aide Turbopack à trouver ses repères
   transpilePackages: ['lucide-react'],
+  // Tableaux de la Chasse aux Ren'Arts et captures des bugs : des images de 1 à 2,5 Mo passent par des actions serveur,
+  // au-delà du 1 Mo permis par défaut.
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '4mb',
+    },
+  },
   // La vérification des exercices lance lib/pyodide-check-child.cjs, qui charge Pyodide,
   // et charge sql.js par un require dynamique : aucun import ne les relie,
   // il faut donc les embarquer explicitement avec la page d'exercice.

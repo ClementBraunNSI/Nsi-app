@@ -14,6 +14,7 @@ import ColleagueTeaser from "@/components/ColleagueTeaser";
 import { GAME_NAME } from "@/app/foxtest/academy/meta";
 import HomeMobile from "./HomeMobile";
 import { BugReportButton } from "@/components/bugs/BugReportButton";
+import { RenartSubmitButton } from "@/components/chasse/RenartSubmitButton";
 
 export type HomeLevel = {
   folder: string;
@@ -417,6 +418,8 @@ export default function HomeView({ levels }: { levels: HomeLevel[] }) {
                   <span className="home-ex-p">Les grands classiques revisités par les élèves.</span>
                 </span>
               </Link>
+              {/* Tous les élèves, connectés ou non : envoyer son tableau au professeur. */}
+              <RenartSubmitButton variant="desktop" firstName={dashboard?.firstName} />
               <Link href="/cours/ressources" className="home-ex">
                 <span className="home-ex-pic">
                   <Image src="/images/fox_c.svg" alt="" width={74} height={70} />

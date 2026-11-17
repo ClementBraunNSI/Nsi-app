@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ClipboardCheck, Code2, Plus, Search, Trophy, User, X } from "lucide-react";
 import { getAdminSearchIndex, type AdminSearchItem } from "@/app/actions/adminToday";
 import { useAdminClass } from "@/components/admin/AdminClassContext";
+import { RenartsButton } from "@/components/admin/chasse/RenartsModal";
 import { foldText } from "@/lib/revisions";
 
 const CREATE = [
@@ -143,7 +144,10 @@ function AdminSearch({ base, onClose }: { base: string; onClose: () => void }) {
   );
 }
 
-/** Barre du haut de l'admin : la classe affichée (valable sur toutes les pages), la recherche et le menu « Créer ». */
+/**
+ * Barre du haut de l'admin : la classe affichée (valable sur toutes les pages), la recherche,
+ * les tableaux de la Chasse aux Ren'Arts et le menu « Créer ».
+ */
 export function AdminTopbar({ base = "/admin" }: { base?: string }) {
   const { selection, choices, select } = useAdminClass();
   const [searching, setSearching] = useState(false);
@@ -189,6 +193,7 @@ export function AdminTopbar({ base = "/admin" }: { base?: string }) {
         <kbd>Ctrl</kbd>
         <kbd>K</kbd>
       </button>
+      <RenartsButton />
       <div className="admin-top-create" ref={createRef}>
         <button type="button" aria-expanded={creating} aria-haspopup="menu" onClick={() => setCreating(!creating)}>
           <Plus size={16} aria-hidden /> Créer

@@ -1,7 +1,9 @@
 "use client";
 
+import { Fragment } from "react";
 import Image from "next/image";
 import { BugReportButton } from "@/components/bugs/BugReportButton";
+import { RenartSubmitButton } from "@/components/chasse/RenartSubmitButton";
 import Link from "next/link";
 import { ArrowRight, ChevronRight, Medal, NotebookPen, Search } from "lucide-react";
 import type { LandingPrivateCard } from "@/app/actions/coursePages";
@@ -282,19 +284,23 @@ export default function HomeMobile({ levels, dashboard, signedIn = false, privat
         </h2>
         <div className="hm-rail">
           {ACTIVITIES.map((activity) => (
-            <Link key={activity.href} href={activity.href} className="hm-card">
-              <span className="hm-card-pic">
-                <Image src={activity.image} alt="" width={activity.size[0]} height={activity.size[1]} />
-              </span>
-              <span className="hm-card-body">
-                <span className="home-eyebrow">{activity.eyebrow}</span>
-                <b>{activity.title}</b>
-                <span className="hm-card-p">{activity.text}</span>
-                <span className="hm-card-link">
-                  {activity.cta} <ArrowRight size={14} aria-hidden />
+            <Fragment key={activity.href}>
+              <Link href={activity.href} className="hm-card">
+                <span className="hm-card-pic">
+                  <Image src={activity.image} alt="" width={activity.size[0]} height={activity.size[1]} />
                 </span>
-              </span>
-            </Link>
+                <span className="hm-card-body">
+                  <span className="home-eyebrow">{activity.eyebrow}</span>
+                  <b>{activity.title}</b>
+                  <span className="hm-card-p">{activity.text}</span>
+                  <span className="hm-card-link">
+                    {activity.cta} <ArrowRight size={14} aria-hidden />
+                  </span>
+                </span>
+              </Link>
+              {/* Juste après la galerie, pour tous les élèves : envoyer son tableau au professeur. */}
+              {activity.href === "/projets/chasse-aux-renards" ? <RenartSubmitButton variant="mobile" firstName={dashboard?.firstName} /> : null}
+            </Fragment>
           ))}
           {signedIn ? <BugReportButton variant="mobile" /> : null}
         </div>
