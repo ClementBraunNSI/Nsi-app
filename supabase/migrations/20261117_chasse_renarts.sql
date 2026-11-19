@@ -41,8 +41,8 @@ set search_path = ''
 as $$
 declare
   v_prenom text := left(regexp_replace(btrim(coalesce(p_prenom, '')), '\s+', ' ', 'g'), 40);
-  -- « 2gt04 », « 2 GT 04 » ou « 2GT-04 » valent « 2GT04 ».
-  v_classe text := upper(regexp_replace(coalesce(p_classe, ''), '[\s._-]', '', 'g'));
+  -- « 2gt04 », « 2 GT 04 », « 2GT-04 » ou « 2GT4 » valent « 2GT04 ».
+  v_classe text := regexp_replace(upper(regexp_replace(coalesce(p_classe, ''), '[\s._-]', '', 'g')), '^2GT([0-9])$', '2GT0\1');
   v_id uuid;
 begin
   if v_prenom = '' then
