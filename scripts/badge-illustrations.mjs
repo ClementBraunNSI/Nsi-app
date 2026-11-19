@@ -32,6 +32,7 @@ const SHEETS = {
   'premiere_projet': ['cheer', 'rocket'],
   'programmation-fonctionnelle': ['think', 'lambda'],
   'anatole-revision-poo': ['sit', 'stack'],
+  'listes-comprehension-premiere': ['wink', 'stack'],
   'revision-types-fonctions': ['reader', 'pybook'],
   'revision-bases-python': ['cheer', 'loop'],
   'proj_caisse_bilan': ['book', 'receipt'],

@@ -15,6 +15,7 @@ const SHEETS = [
   "2/python_exercices_conditions.md",
   "2/python_exercices_boucles.md",
   "2/python_exercices_listes.md",
+  "2/python_exercices_comprehension.md",
   "2/python_exercices_papier.md",
   "2/python_exercices_dictionnaires.md",
   "2/python_csv_exercices.md",
@@ -34,7 +35,7 @@ const REVISION_SHEETS = ["2/python_exercices_revision_types_fonctions.md"];
 const LEVELS = ["Introduction", "Facile", "Moyen", "Difficile", "Expert"];
 /** Niveau facultatif, avant Introduction : gestes de base guidés, avec un pense-bête <PostIt>. */
 const FIRST_STEPS = "Premiers pas";
-const FIRST_STEPS_SHEETS = ["2/python_exercices_listes.md"];
+const FIRST_STEPS_SHEETS = ["2/python_exercices_listes.md", "2/python_exercices_comprehension.md"];
 
 /** Fiche de révision par thème (« 2.3 [Conditions] - … ») : cinq exercices par thème, un post-it de cours chacun. */
 const THEME_SHEETS: Record<string, string[]> = {
