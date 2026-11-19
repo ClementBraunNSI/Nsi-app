@@ -1,4 +1,4 @@
-/** Archive ZIP minimale (fichiers stockés sans compression), pour télécharger les copies d'une évaluation. */
+/** Archive ZIP minimale (fichiers stockés sans compression), pour télécharger les copies d'une évaluation ou les tableaux des Ren'Arts. */
 
 const CRC_TABLE = (() => {
   const table = new Uint32Array(256);
@@ -22,19 +22,22 @@ function dosDateTime(date: Date) {
   return { time, day };
 }
 
-export function buildZip(files: { name: string; content: string }[], date = new Date()): Uint8Array {
+export type ZipFile = { name: string; content: string | Uint8Array; date?: Date };
+
+/** Morceaux de l'archive, dans l'ordre : un Blob peut les assembler sans tout recopier dans un seul tableau. */
+export function zipParts(files: ZipFile[], date = new Date()): Uint8Array[] {
   const encoder = new TextEncoder();
-  const { time, day } = dosDateTime(date);
   const locals: Uint8Array[] = [];
   const centrals: Uint8Array[] = [];
   let offset = 0;
 
   for (const file of files) {
     const name = encoder.encode(file.name);
-    const data = encoder.encode(file.content);
+    const data = typeof file.content === "string" ? encoder.encode(file.content) : file.content;
+    const { time, day } = dosDateTime(file.date ?? date);
     const crc = crc32(data);
 
-    const local = new Uint8Array(30 + name.length + data.length);
+    const local = new Uint8Array(30 + name.length);
     const lv = new DataView(local.buffer);
     lv.setUint32(0, 0x04034b50, true);
     lv.setUint16(4, 20, true);
@@ -47,7 +50,6 @@ export function buildZip(files: { name: string; content: string }[], date = new 
     lv.setUint32(22, data.length, true);
     lv.setUint16(26, name.length, true);
     local.set(name, 30);
-    local.set(data, 30 + name.length);
 
     const central = new Uint8Array(46 + name.length);
     const cv = new DataView(central.buffer);
@@ -65,9 +67,9 @@ export function buildZip(files: { name: string; content: string }[], date = new 
     cv.setUint32(42, offset, true);
     central.set(name, 46);
 
-    locals.push(local);
+    locals.push(local, data);
     centrals.push(central);
-    offset += local.length;
+    offset += local.length + data.length;
   }
 
   const centralSize = centrals.reduce((sum, part) => sum + part.length, 0);
@@ -78,10 +80,14 @@ export function buildZip(files: { name: string; content: string }[], date = new 
   ev.setUint16(10, files.length, true);
   ev.setUint32(12, centralSize, true);
   ev.setUint32(16, offset, true);
+  return [...locals, ...centrals, end];
+}
 
-  const out = new Uint8Array(offset + centralSize + end.length);
+export function buildZip(files: ZipFile[], date = new Date()): Uint8Array {
+  const parts = zipParts(files, date);
+  const out = new Uint8Array(parts.reduce((sum, part) => sum + part.length, 0));
   let position = 0;
-  for (const part of [...locals, ...centrals, end]) {
+  for (const part of parts) {
     out.set(part, position);
     position += part.length;
   }

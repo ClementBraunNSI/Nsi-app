@@ -85,3 +85,31 @@ export async function deleteRenart(id: string): Promise<Result> {
   if (error) return { ok: false, error: messageOf(error, "Le tableau n'a pas été supprimé.") };
   return { ok: true };
 }
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+/** Identifiants par requête : la liste passe dans l'adresse, elle doit rester courte. */
+const DELETE_CHUNK = 100;
+
+/**
+ * Retrait des tableaux que l'enseignant a téléchargés et dit avoir reçus : uniquement ces identifiants,
+ * pas les tableaux arrivés entre-temps. Renvoie ceux réellement supprimés.
+ */
+export async function deleteRenarts(ids: string[]): Promise<Result<{ deleted: string[] }>> {
+  const supabase = await teacher();
+  if (!supabase) return { ok: false, error: "Réservé aux comptes enseignant et admin." };
+  const wanted = [...new Set((Array.isArray(ids) ? ids : []).map(String).filter((id) => UUID.test(id)))];
+  const deleted: string[] = [];
+  for (let start = 0; start < wanted.length; start += DELETE_CHUNK) {
+    const { data, error } = await supabase
+      .from("chasse_renarts")
+      .delete()
+      .in("id", wanted.slice(start, start + DELETE_CHUNK))
+      .select("id");
+    if (error) {
+      if (deleted.length === 0) return { ok: false, error: messageOf(error, "Les tableaux n'ont pas été supprimés.") };
+      break;
+    }
+    deleted.push(...((data ?? []) as { id: string }[]).map((row) => String(row.id)));
+  }
+  return { ok: true, deleted };
+}

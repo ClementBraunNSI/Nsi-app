@@ -3,10 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ClipboardCheck, Code2, Plus, Search, Trophy, User, X } from "lucide-react";
+import { ClipboardCheck, Code2, Palette, Plus, Search, Trophy, User, X } from "lucide-react";
 import { getAdminSearchIndex, type AdminSearchItem } from "@/app/actions/adminToday";
 import { useAdminClass } from "@/components/admin/AdminClassContext";
-import { RenartsButton } from "@/components/admin/chasse/RenartsModal";
 import { foldText } from "@/lib/revisions";
 
 const CREATE = [
@@ -33,6 +32,7 @@ const PAGES: AdminSearchItem[] = [
   { kind: "evaluation", id: "p-evals", label: "Évaluations", hint: "Préparer", href: "/admin/evaluations" },
   { kind: "evaluation", id: "p-messages", label: "Messagerie", hint: "À corriger", href: "/admin/messages" },
   { kind: "evaluation", id: "p-bugs", label: "Bugs signalés", hint: "À corriger", href: "/admin/bugs" },
+  { kind: "evaluation", id: "p-renarts", label: "Chasse aux Ren'Arts", hint: "Tableaux des élèves", href: "/admin/renarts" },
 ];
 
 const KIND = {
@@ -193,7 +193,9 @@ export function AdminTopbar({ base = "/admin" }: { base?: string }) {
         <kbd>Ctrl</kbd>
         <kbd>K</kbd>
       </button>
-      <RenartsButton />
+      <Link href={`${base}/renarts`} className="admin-top-renarts">
+        <Palette size={16} aria-hidden /> Ren&apos;Arts
+      </Link>
       <div className="admin-top-create" ref={createRef}>
         <button type="button" aria-expanded={creating} aria-haspopup="menu" onClick={() => setCreating(!creating)}>
           <Plus size={16} aria-hidden /> Créer
