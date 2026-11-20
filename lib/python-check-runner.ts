@@ -61,19 +61,22 @@ def _printish(source):
     return bool(_PRINT_RE.search(source or ""))
 
 
-def _line_of(exc, filename):
+def _line_of(exc, filename=None):
+    # Toujours une ligne du code de l'élève : quand un test appelle sa fonction et qu'elle plante, c'est la ligne
+    # de sa fonction qui compte, pas celle du test caché (que l'élève ne voit pas).
     tb = getattr(exc, "__traceback__", None)
-    if tb is None:
-        lineno = getattr(exc, "lineno", None)
-        return lineno
-    for frame in reversed(traceback.extract_tb(tb)):
-        if frame.filename == filename and frame.lineno:
-            return frame.lineno
-    return getattr(exc, "lineno", None)
+    if tb is not None:
+        for frame in reversed(traceback.extract_tb(tb)):
+            if frame.filename == "<programme>" and frame.lineno:
+                return frame.lineno
+    # Erreur de syntaxe à la lecture du fichier compilé (le programme, ou le jeu de tests pour l'enseignant).
+    if isinstance(exc, SyntaxError) and (filename is None or getattr(exc, "filename", None) == filename):
+        return getattr(exc, "lineno", None)
+    return None
 
 
 def _french(exc, filename=None):
-    line = _line_of(exc, filename) if filename else getattr(exc, "lineno", None)
+    line = _line_of(exc, filename)
     suffix = " (ligne " + str(line) + ")" if line else ""
     if isinstance(exc, SyntaxError):
         msg = exc.msg or str(exc)

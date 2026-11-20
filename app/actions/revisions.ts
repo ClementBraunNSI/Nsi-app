@@ -17,7 +17,9 @@ import {
   pickRevisionExercises,
   practiceStatement,
   PRACTICE_DURATIONS,
+  PRACTICE_PICKS,
   type PracticeDuration,
+  type PracticePick,
   type RevisionExercise,
   type RevisionReason,
   type SheetRef,
@@ -331,17 +333,22 @@ export async function getPracticeSetup(): Promise<PracticeSetup | null> {
   };
 }
 
-export async function startPractice(key: string, minutes: number): Promise<{ ok: true; run: PracticeRun } | { ok: false; error: string }> {
+export async function startPractice(
+  key: string,
+  minutes: number,
+  pick: PracticePick = 'nouveaux',
+): Promise<{ ok: true; run: PracticeRun } | { ok: false; error: string }> {
   const ctx = await student();
   if (!ctx) return { ok: false, error: 'Réservé aux comptes élève.' };
   if (!PRACTICE_DURATIONS.includes(minutes as PracticeDuration)) return { ok: false, error: 'Durée inconnue.' };
+  if (!PRACTICE_PICKS.some((item) => item.id === pick)) return { ok: false, error: "Choix d'exercices inconnu." };
   const exercises = await practicableExercises();
   const choice = await resolveChoice(ctx, String(key || ''), exercises);
   if (!choice || choice.pool.length === 0) return { ok: false, error: 'Aucun exercice à tirer pour ce choix.' };
 
   const history = await loadHistory(ctx);
   const solved = new Set(Object.entries(history).filter(([, item]) => item.passedAt).map(([id]) => id));
-  const subject = drawPracticeSubject(choice.pool.map(asRevision), minutes as PracticeDuration, { solved });
+  const subject = drawPracticeSubject(choice.pool.map(asRevision), minutes as PracticeDuration, { solved, pick });
   const { data, error } = await ctx.supabase.rpc('practice_start', {
     p_label: choice.label,
     p_exercise_ids: subject.map((exercise) => exercise.id),

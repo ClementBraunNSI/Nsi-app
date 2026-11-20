@@ -214,6 +214,30 @@ describe("sujet blanc", () => {
     expect(subject.filter((e) => solved.has(e.id))).toHaveLength(0);
   });
 
+  it("sur demande, reprend les exercices déjà réussis, en priorité ou mêlés aux autres", () => {
+    // Fiche presque entièrement réussie, sauf un exercice par niveau (le cas signalé : un exercice difficile pas fait).
+    const solvedAll = new Set(exercises.map((e) => e.id));
+    for (const level of ["[Introduction]", "[Facile]", "[Moyen]", "[Difficile]"]) {
+      const left = exercises.find((e) => e.label.includes(level));
+      if (left) solvedAll.delete(left.id);
+    }
+    for (const seed of [1, 2, 3, 4, 5]) {
+      const again = drawPracticeSubject(exercises, 30, { random: seededRandom(seed), solved: solvedAll, pick: "reussis" });
+      expect(again).toHaveLength(3);
+      expect(again.every((e) => solvedAll.has(e.id))).toBe(true);
+      // Par défaut, les exercices pas encore réussis passent avant.
+      const fresh = drawPracticeSubject(exercises, 30, { random: seededRandom(seed), solved: solvedAll });
+      expect(fresh.every((e) => !solvedAll.has(e.id))).toBe(true);
+    }
+    // « Tous » : les deux sortes peuvent sortir selon le tirage.
+    const mixed = new Set(
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].flatMap((seed) =>
+        drawPracticeSubject(exercises, 30, { random: seededRandom(seed), solved: solvedAll, pick: "tous" }).map((e) => solvedAll.has(e.id)),
+      ),
+    );
+    expect(mixed).toEqual(new Set([true, false]));
+  });
+
   it("rend moins d'exercices quand la fiche n'en a pas assez", () => {
     expect(drawPracticeSubject(sheet("boucles").slice(0, 2), 45)).toHaveLength(2);
     expect(drawPracticeSubject([], 30)).toEqual([]);

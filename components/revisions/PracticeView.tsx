@@ -9,7 +9,7 @@ import { checkPracticeSolution } from "@/app/actions/getExercises";
 import { finishPractice, startPractice, type PracticeChoice, type PracticeExercise, type PracticeRun, type PracticeSetup } from "@/app/actions/revisions";
 import { ExerciseStatement } from "@/components/lab/ExerciseStatement";
 import { ExerciseWorkspace } from "@/components/lab/ExerciseWorkspace";
-import { cleanLabel, difficultyLabel, practiceRemaining, PRACTICE_DURATIONS } from "@/lib/revisions";
+import { cleanLabel, difficultyLabel, practiceRemaining, PRACTICE_DURATIONS, PRACTICE_PICKS, type PracticePick } from "@/lib/revisions";
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Paris" });
 
@@ -95,6 +95,7 @@ export function PracticeView({ setup, initialChoice }: { setup: PracticeSetup; i
 function PracticeStart({ choices, initialChoice, onStarted }: { choices: PracticeChoice[]; initialChoice?: string; onStarted: (run: PracticeRun) => void }) {
   const [choice, setChoice] = useState(() => (choices.some((item) => item.key === initialChoice) ? initialChoice! : choices[0]?.key ?? ""));
   const [minutes, setMinutes] = useState<number>(30);
+  const [pick, setPick] = useState<PracticePick>("nouveaux");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const groups = useMemo(() => {
@@ -110,7 +111,7 @@ function PracticeStart({ choices, initialChoice, onStarted }: { choices: Practic
   const start = async () => {
     setBusy(true);
     setError(null);
-    const response = await startPractice(choice, minutes).catch(() => null);
+    const response = await startPractice(choice, minutes, pick).catch(() => null);
     setBusy(false);
     if (!response || !response.ok) {
       setError(response && !response.ok ? response.error : "L'entraînement n'a pas pu commencer.");
@@ -148,8 +149,24 @@ function PracticeStart({ choices, initialChoice, onStarted }: { choices: Practic
           ))}
         </div>
       </fieldset>
+      <fieldset className="practice-field">
+        <legend>Exercices</legend>
+        <div className="practice-durations">
+          {PRACTICE_PICKS.map((item) => (
+            <label key={item.id} className={pick === item.id ? "is-on" : ""}>
+              <input type="radio" name="practice-pick" checked={pick === item.id} onChange={() => setPick(item.id)} />
+              {item.label}
+              <small>{item.hint}</small>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <ul className="practice-rules">
-        <li>Exercices tirés au hasard dans les fiches choisies, du plus facile au plus difficile, en évitant ceux déjà réussis.</li>
+        <li>
+          Exercices tirés au hasard dans les fiches choisies, du plus facile au plus difficile.
+          {pick === "nouveaux" ? " Ceux déjà réussis ne sont pris que s'il n'en reste pas d'autres au bon niveau." : null}
+          {pick === "reussis" ? " Ceux pas encore réussis ne sont pris que s'il n'en reste pas d'autres au bon niveau." : null}
+        </li>
         <li>Comme en évaluation : chrono visible, énoncés sans indices ni correction, code vérifié par les tests.</li>
         <li>Les essais comptent comme ceux des fiches : un exercice réussi est validé, une erreur rejoint le carnet d&apos;erreurs. Aucune note n&apos;est donnée.</li>
       </ul>

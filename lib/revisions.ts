@@ -293,6 +293,14 @@ export function buildHistory(
 export const PRACTICE_DURATIONS = [20, 30, 45] as const;
 export type PracticeDuration = (typeof PRACTICE_DURATIONS)[number];
 
+/** Exercices tirés : pas encore réussis d'abord, tous au hasard, ou déjà réussis d'abord (pour refaire ceux de la fiche). */
+export const PRACTICE_PICKS = [
+  { id: "nouveaux", label: "Pas encore réussis", hint: "en priorité" },
+  { id: "tous", label: "Tous", hint: "au hasard" },
+  { id: "reussis", label: "Déjà réussis", hint: "en priorité" },
+] as const;
+export type PracticePick = (typeof PRACTICE_PICKS)[number]["id"];
+
 // Niveaux visés par durée : 3 exercices en 20 et 30 minutes, 4 en 45 minutes, de difficulté croissante.
 const PRACTICE_LADDERS: Record<PracticeDuration, number[]> = {
   20: [1, 2, 3],
@@ -320,10 +328,13 @@ export function seededRandom(seed: number) {
 export function drawPracticeSubject(
   exercises: RevisionExercise[],
   minutes: PracticeDuration,
-  options: { random?: () => number; solved?: Set<string> } = {},
+  options: { random?: () => number; solved?: Set<string>; pick?: PracticePick } = {},
 ): (RevisionExercise & { difficulty: number })[] {
   const random = options.random ?? Math.random;
   const solved = options.solved ?? new Set<string>();
+  const pick = options.pick ?? "nouveaux";
+  // Exercices mis de côté tant qu'il en reste d'autres au bon niveau : les réussis, les autres, ou aucun.
+  const avoided = (id: string) => (pick === "nouveaux" ? solved.has(id) : pick === "reussis" ? !solved.has(id) : false);
   const pool = exercises
     .map((exercise) => ({ ...exercise, difficulty: difficultyRank(exercise.label) }))
     .filter((exercise) => exercise.difficulty < MINI_PROJECT);
@@ -334,9 +345,9 @@ export function drawPracticeSubject(
   for (const target of ladder) {
     const free = pool.filter((exercise) => !taken.has(exercise.id));
     if (free.length === 0) break;
-    // Le plus proche du niveau visé, en préférant les exercices pas encore réussis puis le niveau au-dessus.
+    // Le plus proche du niveau visé, en préférant les exercices du choix de l'élève puis le niveau au-dessus.
     const score = (exercise: { id: string; difficulty: number }) =>
-      Math.abs(exercise.difficulty - target) * 2 + (exercise.difficulty < target ? 1 : 0) + (solved.has(exercise.id) ? 10 : 0);
+      Math.abs(exercise.difficulty - target) * 2 + (exercise.difficulty < target ? 1 : 0) + (avoided(exercise.id) ? 10 : 0);
     const best = Math.min(...free.map(score));
     const candidates = free.filter((exercise) => score(exercise) === best);
     const chosen = candidates[Math.floor(random() * candidates.length) % candidates.length];
