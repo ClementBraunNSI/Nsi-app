@@ -58,6 +58,37 @@ export function shiftWeek(monday: string, weeks: number) {
   return shift(monday, weeks * 7);
 }
 
+export type MondaySlot = { monday: string; today: boolean; challenge: { id: string; title: string; open: boolean } | null };
+
+/**
+ * Défis du lundi des prochaines semaines, classe par classe : le lundi de la semaine en cours puis les suivants.
+ * Un défi compte pour le lundi du jour où il s'ouvre (heure de Paris).
+ */
+export function mondayPlan(
+  classes: string[],
+  challenges: { id: string; title: string; classes: string[]; opensAt: string; closesAt: string }[],
+  now: Date,
+  weeks = 4,
+): { mondays: string[]; rows: { classe: string; slots: MondaySlot[] }[] } {
+  const first = mondayOf(undefined, now);
+  const today = parisDay.format(now);
+  const mondays = Array.from({ length: weeks }, (_, index) => shiftWeek(first, index));
+  const rows = classes.map((classe) => ({
+    classe,
+    slots: mondays.map((monday) => {
+      const found = challenges.find((challenge) => challenge.classes.includes(classe) && mondayOf(dayOf(challenge.opensAt), now) === monday);
+      return {
+        monday,
+        today: monday === today,
+        challenge: found
+          ? { id: found.id, title: found.title, open: Date.parse(found.opensAt) <= now.getTime() && now.getTime() < Date.parse(found.closesAt) }
+          : null,
+      };
+    }),
+  }));
+  return { mondays, rows };
+}
+
 const dayLabel = new Intl.DateTimeFormat("fr-FR", { weekday: "short", day: "numeric", timeZone: "UTC" });
 const longLabel = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", timeZone: "UTC" });
 

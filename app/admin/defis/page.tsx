@@ -7,8 +7,8 @@ export const dynamic = "force-dynamic";
 // « Tester la correction » lance Python dans un processus séparé.
 export const maxDuration = 60;
 
-export default async function AdminChallengesPage({ searchParams }: { searchParams: Promise<{ nouveau?: string }> }) {
-  const [challenges, classes, { nouveau }] = await Promise.all([listChallenges(), listClasses(), searchParams]);
+export default async function AdminChallengesPage({ searchParams }: { searchParams: Promise<{ nouveau?: string; jour?: string; classe?: string }> }) {
+  const [challenges, classes, { nouveau, jour, classe }] = await Promise.all([listChallenges(), listClasses(), searchParams]);
   return (
     <div className="admin-page">
       <PageHeader
@@ -16,7 +16,12 @@ export default async function AdminChallengesPage({ searchParams }: { searchPara
         title="Défi du lundi"
         description="Un exercice inédit, ouvert chaque lundi à 7 h 30 aux classes choisies. Énoncé, tests et correction restent en base jusqu'à l'ouverture ; la correction est montrée aux élèves à la fermeture."
       />
-      <ChallengesAdmin challenges={challenges} classes={classes} startCreating={nouveau === "1"} />
+      <ChallengesAdmin
+        challenges={challenges}
+        classes={classes}
+        startCreating={nouveau === "1"}
+        preset={{ openDay: jour && /^\d{4}-\d{2}-\d{2}$/.test(jour) ? jour : undefined, classe }}
+      />
     </div>
   );
 }

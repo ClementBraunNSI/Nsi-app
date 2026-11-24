@@ -113,17 +113,23 @@ function mostCommon(values: (string | null)[]) {
   return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
 }
 
+/** Niveau d'une classe d'après celui de la plupart de ses élèves : dossier (couleur), libellé et renard. */
+export function classLevel(levels: (string | null)[]) {
+  const folder = levelFolder(mostCommon(levels));
+  const meta = folder ? NSI_LEVELS[folder as keyof typeof NSI_LEVELS] : null;
+  return { folder, levelLabel: meta?.label ?? null, image: meta?.image ?? "/images/fox_2.png" };
+}
+
 export function buildClassTiles(students: TodayStudent[], now: Date): TodayClass[] {
   const inClass = students.filter((student) => !student.has_private_lessons);
   const tiles = classGroups(inClass, (student) => student.classe).map((group) => {
-    const folder = levelFolder(mostCommon(group.items.map((student) => student.level)));
-    const meta = folder ? NSI_LEVELS[folder as keyof typeof NSI_LEVELS] : null;
+    const { folder, levelLabel, image } = classLevel(group.items.map((student) => student.level));
     return {
       key: group.key,
       label: group.label,
       folder,
-      levelLabel: meta?.label ?? (group.key === NO_CLASS ? "À ranger" : "Niveau non renseigné"),
-      image: meta?.image ?? "/images/fox_2.png",
+      levelLabel: levelLabel ?? (group.key === NO_CLASS ? "À ranger" : "Niveau non renseigné"),
+      image,
       total: group.items.length,
       inactive: group.items.filter((student) => isInactive(student.last_work_at, now)).length,
     };

@@ -20,18 +20,21 @@ const CREATE = [
 ];
 
 const PAGES: AdminSearchItem[] = [
+  { kind: "eleve", id: "p-classes", label: "Classes", hint: "Moyennes et classement", href: "/admin/classes" },
+  { kind: "evaluation", id: "p-file", label: "À corriger", hint: "Notes à valider", href: "/admin/a-corriger" },
+  { kind: "evaluation", id: "p-semaine", label: "Préparer", hint: "Évaluations et défis du lundi", href: "/admin/preparer" },
+  { kind: "evaluation", id: "p-messages", label: "Messagerie", hint: "Messages des élèves", href: "/admin/messages" },
+  { kind: "eleve", id: "p-parents", label: "Réunion parents", hint: "Bilan de chaque élève", href: "/admin/parents" },
   { kind: "evaluation", id: "p-classe", label: "En classe", hint: "Suivi en direct", href: "/admin/classe" },
-  { kind: "evaluation", id: "p-file", label: "À corriger", hint: "File de corrections", href: "/admin/a-corriger" },
-  { kind: "eleve", id: "p-eleves", label: "Liste des élèves", hint: "Élèves", href: "/admin/eleves" },
-  { kind: "eleve", id: "p-activite", label: "Activité", hint: "Élèves", href: "/admin/activite" },
-  { kind: "exercice", id: "p-code", label: "Codes réussis", hint: "Élèves", href: "/admin/code" },
-  { kind: "evaluation", id: "p-semaine", label: "Préparer la semaine", hint: "Préparer", href: "/admin/preparer" },
-  { kind: "evaluation", id: "p-annonces", label: "Annonces", hint: "Préparer", href: "/admin/annonces" },
-  { kind: "evaluation", id: "p-devoirs", label: "Devoirs et dates", hint: "Préparer", href: "/admin/devoirs" },
-  { kind: "defi", id: "p-defis", label: "Défis", hint: "Préparer", href: "/admin/defis" },
-  { kind: "evaluation", id: "p-evals", label: "Évaluations", hint: "Préparer", href: "/admin/evaluations" },
-  { kind: "evaluation", id: "p-messages", label: "Messagerie", hint: "À corriger", href: "/admin/messages" },
-  { kind: "evaluation", id: "p-bugs", label: "Bugs signalés", hint: "À corriger", href: "/admin/bugs" },
+  { kind: "eleve", id: "p-eleves", label: "Élèves et comptes", hint: "Autres pages", href: "/admin/eleves" },
+  { kind: "evaluation", id: "p-evals", label: "Toutes les évaluations", hint: "Autres pages", href: "/admin/evaluations" },
+  { kind: "defi", id: "p-defis", label: "Tous les défis", hint: "Autres pages", href: "/admin/defis" },
+  { kind: "evaluation", id: "p-annonces", label: "Annonces", hint: "Autres pages", href: "/admin/annonces" },
+  { kind: "evaluation", id: "p-devoirs", label: "Devoirs et dates", hint: "Autres pages", href: "/admin/devoirs" },
+  { kind: "evaluation", id: "p-ecrits", label: "Réponses écrites", hint: "Autres pages", href: "/admin/corrections" },
+  { kind: "evaluation", id: "p-bugs", label: "Bugs signalés", hint: "Autres pages", href: "/admin/bugs" },
+  { kind: "eleve", id: "p-activite", label: "Activité", hint: "Autres pages", href: "/admin/activite" },
+  { kind: "exercice", id: "p-code", label: "Codes réussis", hint: "Autres pages", href: "/admin/code" },
   { kind: "evaluation", id: "p-renarts", label: "Chasse aux Ren'Arts", hint: "Tableaux des élèves", href: "/admin/renarts" },
 ];
 

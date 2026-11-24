@@ -88,10 +88,11 @@ function QueueThread({ studentId, onDone }: { studentId: string; onDone: () => v
  * File « À corriger » : la liste à gauche, l'élément ouvert à droite. Tout ce qui est traité quitte la liste.
  * Clavier : J et K passent à l'élément suivant ou précédent, V valide la note de la copie ouverte.
  */
-export function ReviewQueue({ initial, initialType = "" }: { initial: QueueItem[]; initialType?: string }) {
+export function ReviewQueue({ initial, initialType = "", only }: { initial: QueueItem[]; initialType?: string; only?: QueueKind }) {
   const { selection, label } = useAdminClass();
-  const [items, setItems] = useState(initial);
-  const [filter, setFilter] = useState<QueueKind | "">(KINDS.find((kind) => kind.type === initialType)?.id ?? "");
+  // `only` : la file ne garde qu'un type d'élément (l'onglet « À corriger » ne montre que les notes à valider).
+  const [items, setItems] = useState(() => (only ? initial.filter((item) => item.kind === only) : initial));
+  const [filter, setFilter] = useState<QueueKind | "">(only ?? KINDS.find((kind) => kind.type === initialType)?.id ?? "");
   const [current, setCurrent] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [now] = useState(() => new Date());
@@ -104,8 +105,8 @@ export function ReviewQueue({ initial, initialType = "" }: { initial: QueueItem[
 
   const reload = useCallback(async () => {
     const next = await getReviewQueue();
-    if (next) setItems(next);
-  }, []);
+    if (next) setItems(only ? next.filter((item) => item.kind === only) : next);
+  }, [only]);
 
   const move = useCallback(
     (step: number) => {
@@ -159,23 +160,38 @@ export function ReviewQueue({ initial, initialType = "" }: { initial: QueueItem[
     <div className="admin-page">
       <header className="admin-today-head">
         <p className="admin-kicker">À corriger · {label}</p>
-        <h1>{inClass.length ? `${inClass.length} chose${inClass.length > 1 ? "s" : ""} à traiter` : "Tout est à jour"}</h1>
+        <h1>
+          {only === "note"
+            ? inClass.length
+              ? `${inClass.length} copie${inClass.length > 1 ? "s" : ""} à corriger`
+              : "Tout est corrigé"
+            : inClass.length
+              ? `${inClass.length} chose${inClass.length > 1 ? "s" : ""} à traiter`
+              : "Tout est à jour"}
+        </h1>
+        {only === "note" ? <p className="admin-hero-lead">Les copies d&apos;évaluation rendues dont la note n&apos;est pas encore validée.</p> : null}
       </header>
 
-      <div className="admin-chips is-flush" role="group" aria-label="Type d'élément">
-        <button type="button" aria-pressed={!filter} className={!filter ? "is-on" : ""} onClick={() => setFilter("")}>
-          Tout · {inClass.length}
-        </button>
-        {KINDS.map((kind) => (
-          <button key={kind.id} type="button" aria-pressed={filter === kind.id} className={filter === kind.id ? "is-on" : ""} onClick={() => setFilter(kind.id)}>
-            {kind.label} · {count(kind.id)}
+      {only ? null : (
+        <div className="admin-chips is-flush" role="group" aria-label="Type d'élément">
+          <button type="button" aria-pressed={!filter} className={!filter ? "is-on" : ""} onClick={() => setFilter("")}>
+            Tout · {inClass.length}
           </button>
-        ))}
-      </div>
+          {KINDS.map((kind) => (
+            <button key={kind.id} type="button" aria-pressed={filter === kind.id} className={filter === kind.id ? "is-on" : ""} onClick={() => setFilter(kind.id)}>
+              {kind.label} · {count(kind.id)}
+            </button>
+          ))}
+        </div>
+      )}
 
       {shown.length === 0 ? (
         <p className="admin-card admin-muted">
-          {filter ? `Rien dans « ${kindOf(filter).label} » pour ${label.toLowerCase()}.` : `Rien à traiter pour ${label.toLowerCase()} : les nouvelles demandes arrivent ici.`}
+          {only === "note"
+            ? `Aucune copie à corriger pour ${label.toLowerCase()} : les copies rendues arrivent ici.`
+            : filter
+              ? `Rien dans « ${kindOf(filter).label} » pour ${label.toLowerCase()}.`
+              : `Rien à traiter pour ${label.toLowerCase()} : les nouvelles demandes arrivent ici.`}
         </p>
       ) : (
         <div className="admin-split">

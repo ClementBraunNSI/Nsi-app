@@ -23,7 +23,7 @@ const STATUS_LABEL: Record<string, string> = { ouverte: "ouverte", fermee: "ferm
  * Place dans la classe, façon banc d'essai : la distribution des moyennes de la classe en barres, une réglette du
  * rouge au vert, et la moyenne de l'élève posée dessus avec la moyenne et la médiane de la classe.
  */
-function PositionGauge({ detail }: { detail: StudentDetail }) {
+export function PositionGauge({ detail }: { detail: StudentDetail }) {
   const { position, classAverages, classMean, classMedian } = detail;
   if (!position) return <p className={styles.muted}>Pas encore de note validée : la place dans la classe apparaîtra après la première évaluation corrigée.</p>;
   const bars = distribution(classAverages);
