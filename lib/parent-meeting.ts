@@ -1,9 +1,17 @@
 import { sheetProgressStatus, type SheetProgressStatus } from "./student-progress";
+import { classStanding, studentPosition, type StudentPosition } from "./student-overview";
 
 /*
  * Réunion parents-professeur : le travail de l'élève fiche par fiche (exercices validés, essayés, dernière activité)
- * pour montrer aux parents ce qui a été fait. Calcul sans base, testé dans tests/parent-meeting.test.ts.
+ * pour montrer aux parents ce qui a été fait, et sa place dans la classe en nombre d'exercices réussis. Calcul sans
+ * base, testé dans tests/admin-classes.test.ts.
  */
+
+/** Exercices réussis par les élèves de la classe sur une fiche (ceux qui ne l'ont pas ouverte comptent pour 0). */
+export type SheetClassStats = { mean: number | null; median: number | null; started: number; count: number };
+
+/** Place de l'élève dans sa classe en nombre d'exercices réussis, toutes fiches confondues. */
+export type ExercisesStanding = StudentPosition & { mean: number | null; median: number | null; max: number };
 
 export type ParentSheet = {
   courseId: string;
@@ -16,6 +24,8 @@ export type ParentSheet = {
   tried: number;
   lastAt: string | null;
   status: SheetProgressStatus;
+  /** Comparaison à la classe, absente sans camarades. */
+  classStats: SheetClassStats | null;
 };
 
 export type ParentWork = {
@@ -27,6 +37,7 @@ export type ParentWork = {
   /** Fiches du niveau de l'élève, et celles qu'il n'a pas encore ouvertes. */
   levelSheets: number;
   levelNotStarted: number;
+  classExercises: ExercisesStanding | null;
 };
 
 export function buildParentWork(input: {
@@ -38,6 +49,8 @@ export function buildParentWork(input: {
   submissions: { exerciseId: string; at: string }[];
   /** Fiches dont le badge est obtenu. */
   awarded: Set<string>;
+  /** Élèves de la classe (l'élève compris) et leurs exercices validés. */
+  classmates?: { ids: string[]; progress: { userId: string; exerciseId: string }[] };
 }): ParentWork {
   const validated = new Map<string, string | null>();
   for (const row of input.progress) validated.set(row.exerciseId, row.at);
@@ -56,6 +69,7 @@ export function buildParentWork(input: {
       tried: 0,
       lastAt: null,
       status: "not_started" as SheetProgressStatus,
+      classStats: null,
     };
     sheet.total += 1;
     if (validated.has(exercise.id)) sheet.validated += 1;
@@ -71,6 +85,28 @@ export function buildParentWork(input: {
     .sort((a, b) => a.chapter.localeCompare(b.chapter, "fr", { numeric: true }) || a.title.localeCompare(b.title, "fr"));
   const ofLevel = all.filter((sheet) => input.level && sheet.level === input.level);
 
+  // Exercices réussis par chaque camarade, fiche par fiche : il faut au moins deux élèves pour comparer.
+  const ids = [...new Set(input.classmates?.ids ?? [])];
+  let classExercises: ExercisesStanding | null = null;
+  if (ids.length >= 2) {
+    const sheetOf = new Map(input.catalog.map((exercise) => [exercise.id, exercise.courseId]));
+    const done = new Map(ids.map((id) => [id, new Set<string>()]));
+    for (const row of input.classmates!.progress) if (sheetOf.has(row.exerciseId)) done.get(row.userId)?.add(row.exerciseId);
+    const perSheet = new Map(ids.map((id) => [id, new Map<string, number>()]));
+    for (const [id, exercises] of done) {
+      const counts = perSheet.get(id)!;
+      for (const exercise of exercises) counts.set(sheetOf.get(exercise)!, (counts.get(sheetOf.get(exercise)!) ?? 0) + 1);
+    }
+    for (const sheet of started) {
+      const values = ids.map((id) => perSheet.get(id)!.get(sheet.courseId) ?? 0);
+      const { mean, median } = classStanding(values);
+      sheet.classStats = { mean, median, started: values.filter((value) => value > 0).length, count: ids.length };
+    }
+    const standing = classStanding(ids.map((id) => done.get(id)!.size));
+    const mine = started.reduce((sum, sheet) => sum + sheet.validated, 0);
+    classExercises = { ...studentPosition(mine, standing), mean: standing.mean, median: standing.median, max: Math.max(mine, ...standing.averages) };
+  }
+
   return {
     sheets: started,
     sheetsDone: started.filter((sheet) => sheet.status === "validated").length,
@@ -78,6 +114,7 @@ export function buildParentWork(input: {
     exercisesTried: started.reduce((sum, sheet) => sum + sheet.tried, 0),
     levelSheets: ofLevel.length,
     levelNotStarted: ofLevel.filter((sheet) => !started.includes(sheet)).length,
+    classExercises,
   };
 }
 

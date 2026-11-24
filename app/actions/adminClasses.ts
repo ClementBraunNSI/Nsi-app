@@ -19,6 +19,7 @@ type AttemptRow = { user_id: string; evaluation_id: string; total: string | null
 type ChallengeResultRow = { challenge_id: string; user_id: string; passed: boolean };
 type ProgressRow = { exercise_id: string; completed_at: string | null };
 type SubmissionRow = { exercise_id: string; created_at: string };
+type ClassProgressRow = { user_id: string; exercise_id: string };
 
 const PAGE = 1000;
 const MAX_PAGES = 20;
@@ -89,8 +90,9 @@ export async function getParentReport(studentId: string): Promise<ParentReport |
   const detail = await getStudentDetail(studentId);
   if (!detail) return null;
   const supabase = await createClient();
+  const { classe, privateLessons } = detail.card.student;
 
-  const [catalog, progress, submissions, badges, achievements] = await Promise.all([
+  const [catalog, progress, submissions, badges, achievements, classmates] = await Promise.all([
     listTrackedExercises(),
     allRows<ProgressRow>((from, to) =>
       supabase.from('user_progress').select('exercise_id, completed_at').eq('user_id', studentId).order('exercise_id').range(from, to),
@@ -100,7 +102,18 @@ export async function getParentReport(studentId: string): Promise<ParentReport |
     ),
     supabase.from('badges').select('course_id').eq('user_id', studentId),
     supabase.from('user_achievements').select('achievement_id').eq('user_id', studentId),
+    classe && !privateLessons
+      ? supabase.from('profiles').select('id').eq('role', 'student').eq('classe', classe)
+      : Promise.resolve({ data: [] as any[] }),
   ]);
+
+  // Exercices validés par toute la classe, pour situer l'élève fiche par fiche.
+  const classIds = ((classmates.data ?? []) as any[]).map((row) => String(row.id));
+  const classProgress = classIds.length
+    ? await allRows<ClassProgressRow>((from, to) =>
+        supabase.from('user_progress').select('user_id, exercise_id').in('user_id', classIds).order('user_id').order('exercise_id').range(from, to),
+      )
+    : [];
 
   const work = buildParentWork({
     level: detail.card.student.level,
@@ -111,6 +124,7 @@ export async function getParentReport(studentId: string): Promise<ParentReport |
       ((badges.data ?? []) as any[]).map((row) => row.course_id),
       ((achievements.data ?? []) as any[]).map((row) => row.achievement_id),
     ),
+    classmates: { ids: classIds, progress: classProgress.map((row: ClassProgressRow) => ({ userId: row.user_id, exerciseId: row.exercise_id })) },
   });
   return { detail, work };
 }

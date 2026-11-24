@@ -8,7 +8,7 @@ import { getParentReport, type ParentReport } from "@/app/actions/adminClasses";
 import { PositionGauge } from "@/components/admin/students/StudentModal";
 import { levelFox } from "@/components/admin/students/StudentTiles";
 import { gapLabel } from "@/lib/student-overview";
-import { standingSentence } from "@/lib/parent-meeting";
+import { standingSentence, type ExercisesStanding } from "@/lib/parent-meeting";
 import { lastActivityLabel } from "@/lib/activity-board";
 import styles from "@/components/admin/students/Students.module.css";
 
@@ -17,6 +17,45 @@ const dayFormat = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "sho
 /** « 3 fiches commencées » : chaque mot prend la marque du pluriel. */
 const plural = (count: number, words: string) => `${count} ${count > 1 ? words.replace(/(\S+)/g, "$1s") : words}`;
 const STATUS = { validated: ["Terminée", "is-ok"], in_progress: ["En cours", "is-accent"], not_started: ["Pas commencée", ""] } as const;
+
+/** Place de l'élève dans sa classe en nombre d'exercices réussis : médiane (trait) et moyenne (pointillés) de la classe. */
+function ExercisesGauge({ standing }: { standing: ExercisesStanding }) {
+  const top = Math.max(1, standing.max);
+  const pct = (value: number) => `${Math.min(100, Math.max(0, (value / top) * 100))}%`;
+  return (
+    <div className={styles.gauge}>
+      <div className={styles.gaugeHead}>
+        <span>
+          <b>{standing.average}</b> exercice{standing.average > 1 ? "s" : ""} réussi{standing.average > 1 ? "s" : ""}
+        </span>
+        <span>
+          Rang <b>{standing.rank}</b> sur {standing.count}
+        </span>
+      </div>
+      <div className={styles.rail}>
+        {standing.median !== null ? <span className={styles.tick} style={{ left: pct(standing.median) }} title={`Médiane de la classe : ${num(standing.median)}`} /> : null}
+        {standing.mean !== null ? <span className={`${styles.tick} ${styles.tickMean}`} style={{ left: pct(standing.mean) }} title={`Moyenne de la classe : ${num(standing.mean)}`} /> : null}
+        <span className={styles.pin} style={{ left: pct(standing.average) }} />
+      </div>
+      <div className={styles.axis} aria-hidden>
+        {[...new Set([0, Math.round(top / 2), top])].map((tick) => (
+          <span key={tick} style={{ left: pct(tick) }}>
+            {tick}
+          </span>
+        ))}
+      </div>
+      <div className={styles.gaugeFoot}>
+        <span className={styles.beats}>
+          <b>{standing.beats} %</b> de la classe a réussi moins d&apos;exercices
+        </span>
+        <span>
+          {gapLabel(standing.vsMedian, "médiane")} ({standing.median !== null ? num(standing.median) : "—"}) · {gapLabel(standing.vsMean, "moyenne")} (
+          {standing.mean !== null ? num(standing.mean) : "—"})
+        </span>
+      </div>
+    </div>
+  );
+}
 
 /** Contenu du bilan : chiffres clés, place dans la classe, évaluations, fiches d'exercices. */
 export function ParentReportBody({ report }: { report: ParentReport }) {
@@ -39,7 +78,13 @@ export function ParentReportBody({ report }: { report: ParentReport }) {
         <div>
           <dt>Exercices réussis</dt>
           <dd>{work.exercisesValidated}</dd>
-          <small>{work.exercisesTried ? `${work.exercisesTried} essayé${work.exercisesTried > 1 ? "s" : ""} sans réussite` : "aucun essai en suspens"}</small>
+          <small>
+            {work.classExercises?.median != null
+              ? `médiane de la classe : ${num(work.classExercises.median)}`
+              : work.exercisesTried
+                ? `${work.exercisesTried} essayé${work.exercisesTried > 1 ? "s" : ""} sans réussite`
+                : "aucun essai en suspens"}
+          </small>
         </div>
         <div>
           <dt>Défis du lundi réussis</dt>
@@ -105,6 +150,7 @@ export function ParentReportBody({ report }: { report: ParentReport }) {
             : "Aucune fiche d'exercices commencée pour le moment."}
           {work.levelSheets ? ` Fiches du niveau pas encore ouvertes : ${work.levelNotStarted} sur ${work.levelSheets}.` : ""}
         </p>
+        {work.classExercises ? <ExercisesGauge standing={work.classExercises} /> : null}
         {work.sheets.length ? (
           <div className="admin-table-wrap is-flat">
             <table className="admin-table">
@@ -112,6 +158,9 @@ export function ParentReportBody({ report }: { report: ParentReport }) {
                 <tr>
                   <th>Fiche</th>
                   <th>Exercices réussis</th>
+                  <th className="admin-num">Moyenne classe</th>
+                  <th className="admin-num">Médiane classe</th>
+                  <th>Situation</th>
                   <th className="admin-num">Essayés</th>
                   <th>Dernière activité</th>
                   <th>État</th>
@@ -120,6 +169,7 @@ export function ParentReportBody({ report }: { report: ParentReport }) {
               <tbody>
                 {work.sheets.map((sheet) => {
                   const [label, tone] = STATUS[sheet.status];
+                  const mates = sheet.classStats;
                   return (
                     <tr key={sheet.courseId}>
                       <td>
@@ -135,6 +185,12 @@ export function ParentReportBody({ report }: { report: ParentReport }) {
                             <i style={{ width: `${sheet.total ? (sheet.validated / sheet.total) * 100 : 0}%` }} />
                           </span>
                         </span>
+                      </td>
+                      <td className="admin-num">{mates?.mean != null ? num(mates.mean) : "—"}</td>
+                      <td className="admin-num">{mates?.median != null ? num(mates.median) : "—"}</td>
+                      <td className="admin-muted">
+                        {mates?.median != null ? gapLabel(sheet.validated - mates.median, "médiane") : "—"}
+                        {mates ? <small className="admin-subtle">{plural(mates.started, "élève")} sur {mates.count} l&apos;ont commencée</small> : null}
                       </td>
                       <td className="admin-num">{sheet.tried || "—"}</td>
                       <td>{sheet.lastAt ? dayFormat.format(new Date(sheet.lastAt)) : "—"}</td>

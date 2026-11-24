@@ -121,6 +121,38 @@ describe("parent meeting", () => {
     expect(work).toMatchObject({ sheetsDone: 1, levelSheets: 0 });
   });
 
+  it("places the student in the class by exercises validated", () => {
+    const work = buildParentWork({
+      level: "1NSI",
+      catalog,
+      progress: [
+        { exerciseId: "x1", at: null },
+        { exerciseId: "x2", at: null },
+      ],
+      submissions: [],
+      awarded: new Set(),
+      classmates: {
+        ids: ["me", "b", "c"],
+        progress: [
+          { userId: "me", exerciseId: "x1" },
+          { userId: "me", exerciseId: "x2" },
+          { userId: "b", exerciseId: "x1" },
+          { userId: "b", exerciseId: "y1" },
+          { userId: "b", exerciseId: "hors-catalogue" },
+          { userId: "zz", exerciseId: "x3" },
+        ],
+      },
+    });
+    expect(work.sheets[0].classStats).toEqual({ mean: 1, median: 1, started: 2, count: 3 });
+    expect(work.classExercises).toMatchObject({ average: 2, rank: 1, count: 3, mean: 1.33, median: 2, max: 2 });
+  });
+
+  it("skips the class comparison without classmates", () => {
+    const work = buildParentWork({ level: null, catalog, progress: [{ exerciseId: "x1", at: null }], submissions: [], awarded: new Set(), classmates: { ids: ["me"], progress: [] } });
+    expect(work.classExercises).toBeNull();
+    expect(work.sheets[0].classStats).toBeNull();
+  });
+
   it("phrases the standing for parents", () => {
     expect(standingSentence(null, 12)).toMatch(/Pas encore/);
     expect(standingSentence(12, null)).toMatch(/Pas assez/);
