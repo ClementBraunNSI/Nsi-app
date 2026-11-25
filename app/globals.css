@@ -4688,6 +4688,14 @@ input, textarea {
 }
 .sheet-gate svg { flex-shrink: 0; margin-top: 0.1rem; color: var(--accent); }
 .sheet-pick .sheet-gate { margin: 0.5rem 0 0; }
+.sheet-gate-open {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .sheet-num { width: 1.6rem; flex-shrink: 0; font-size: 0.72rem; color: var(--subtle); }
 .sheet-title { min-width: 0; }
 

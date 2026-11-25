@@ -1,12 +1,16 @@
+import { canOpenExerciseIde } from './exercise-type';
+
 /**
- * Verrouillage des niveaux d'une fiche (`<ExerciseTabs unlockAfter="Pas à pas">`) : tant qu'un élève n'a pas validé
- * tous les exercices du niveau `unlockAfter`, les exercices des autres niveaux restent fermés.
- * Seuls les élèves (rôles student et invite) sont concernés : leur progression est enregistrée.
+ * Verrouillage d'une fiche (`<ExerciseTabs unlockAfter="Pas à pas">`) :
+ * - les exercices du niveau `unlockAfter` s'ouvrent un par un, chacun une fois le précédent validé ;
+ * - les autres niveaux restent fermés tant que tout ce niveau n'est pas validé, puis toute la fiche s'ouvre.
+ * Le verrou vaut pour tout compte qui peut valider des exercices (élève, invité, enseignant). Un visiteur sans compte
+ * ne peut rien valider : il voit toute la fiche. `ouvert` lève le verrou (aperçu de l'enseignant).
  */
 export type GateItem = { id: string; difficulty: string };
 
 export type LevelGate = {
-  /** Exercices du niveau à réussir d'abord. */
+  /** Exercices du niveau à réussir d'abord, dans l'ordre de la fiche. */
   gateIds: string[];
   /** Combien d'entre eux sont validés. */
   gateDone: number;
@@ -17,16 +21,27 @@ export type LevelGate = {
 
 const fold = (text: string) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 
-export function levelGate(items: GateItem[], done: Set<string>, role: string | null, unlockAfter?: string): LevelGate {
+export function levelGate(
+  items: GateItem[],
+  done: Set<string>,
+  role: string | null,
+  unlockAfter?: string,
+  ouvert = false,
+): LevelGate {
   const gateIds = unlockAfter ? items.filter((item) => fold(item.difficulty) === fold(unlockAfter)).map((item) => item.id) : [];
   const gateDone = gateIds.filter((id) => done.has(id)).length;
-  const isStudent = role === 'student' || role === 'invite';
-  const active = isStudent && gateIds.length > 0 && gateDone < gateIds.length;
+  const active = !ouvert && canOpenExerciseIde(role) && gateIds.length > 0 && gateDone < gateIds.length;
   const known = new Set(items.map((item) => item.id));
+  // Premier exercice du niveau pas encore validé : il est ouvert, ceux qui le suivent ne le sont pas encore.
+  const firstTodo = gateIds.findIndex((id) => !done.has(id));
   return {
     gateIds,
     gateDone,
     active,
-    isLocked: (id) => Boolean(id && active && known.has(id) && !gateIds.includes(id)),
+    isLocked: (id) => {
+      if (!id || !active || !known.has(id)) return false;
+      const rank = gateIds.indexOf(id);
+      return rank < 0 || rank > firstTodo;
+    },
   };
 }

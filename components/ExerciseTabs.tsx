@@ -11,6 +11,7 @@ import { ExerciseWorkspace } from '@/components/lab/ExerciseWorkspace';
 import WrittenAnswer from './WrittenAnswer';
 import { PostItLayout } from '@/components/mdx/PostIt';
 import { levelGate } from '@/lib/exercise-gate';
+import { isElevatedUser } from '@/lib/course-access';
 
 interface TabProps {
   id: string;
@@ -228,8 +229,10 @@ export function ExerciseTabs({
   const hasIde = canOpenExerciseIde(role);
   const done = useMemo(() => new Set(completedIds), [completedIds]);
 
-  // Verrouillage des niveaux : seulement pour les élèves, dont la progression est enregistrée.
-  const gate = useMemo(() => levelGate(items, done, role, unlockAfter), [items, done, role, unlockAfter]);
+  // Verrouillage (unlockAfter) : pour tout compte qui valide des exercices. L'enseignant peut tout ouvrir pour un aperçu.
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const elevated = isElevatedUser(role);
+  const gate = useMemo(() => levelGate(items, done, role, unlockAfter, previewOpen), [items, done, role, unlockAfter, previewOpen]);
   const gateActive = gate.active;
   const gateDone = gate.gateDone;
   const gateItems = gate.gateIds;
@@ -302,11 +305,20 @@ export function ExerciseTabs({
     setFolded(false);
   };
 
+  const lockReason = (item: SheetItem) => (gateItems.includes(item.id)
+    ? "S'ouvre quand l'exercice précédent est validé"
+    : `S'ouvre quand le niveau « ${unlockAfter} » est validé`);
+
   const gateNote = gateActive ? (
-    <p className="sheet-gate">
+    <div className="sheet-gate">
       <Lock size={13} aria-hidden />
-      <span>Les autres niveaux se débloquent quand les {gateItems.length} exercices « {unlockAfter} » sont validés ({gateDone}/{gateItems.length}).</span>
-    </p>
+      <span>
+        Les exercices « {unlockAfter} » s'ouvrent un par un. Les autres niveaux s'ouvrent quand les {gateItems.length} sont validés ({gateDone}/{gateItems.length}).
+        {elevated ? (
+          <button type="button" className="sheet-gate-open" onClick={() => setPreviewOpen(true)}>Tout ouvrir (aperçu enseignant)</button>
+        ) : null}
+      </span>
+    </div>
   ) : null;
 
   // Le titre de la fiche est déjà en haut de la page : seule la progression de l'élève est rappelée.
@@ -365,7 +377,7 @@ export function ExerciseTabs({
                       className={`sheet-item ${item.id === selectedId ? 'is-current' : ''}`}
                       aria-current={item.id === selectedId ? 'true' : undefined}
                       disabled={isLocked(item)}
-                      title={isLocked(item) ? `Se débloque quand le niveau « ${unlockAfter} » est validé` : undefined}
+                      title={isLocked(item) ? lockReason(item) : undefined}
                       onClick={() => choose(item.id)}
                     >
                       {hasIde ? status(item) : null}
