@@ -195,6 +195,8 @@ export type EvaluationSummary = {
   targeted: number;
   /** Révision : classes de l'interrogation d'origine. */
   sourceClasses: string[];
+  /** Défi du lundi noté : le défi d'où viennent le sujet et les copies. */
+  challengeId: string | null;
 };
 
 export async function listEvaluations(): Promise<EvaluationSummary[]> {
@@ -206,7 +208,11 @@ export async function listEvaluations(): Promise<EvaluationSummary[]> {
     .select('id, title, status, classes, duration_minutes, scheduled_at, created_at, kind, students, from_evaluation, evaluation_subjects(id), evaluation_attempts(status, locked)')
     .order('created_at', { ascending: false });
   const classesOf = new Map((data ?? []).map((row: any) => [row.id, (row.classes ?? []) as string[]]));
+  // Défis du lundi notés : lus à part, pour que la liste reste lisible même sans la colonne challenge_id.
+  const { data: linked } = await ctx.supabase.from('evaluations').select('id, challenge_id').not('challenge_id', 'is', null);
+  const challengeOf = new Map((linked ?? []).map((row: any) => [row.id as string, row.challenge_id as string]));
   return (data ?? []).map((row: any) => ({
+    challengeId: challengeOf.get(row.id) ?? null,
     // Révision : les classes de l'interrogation d'origine (pour le choix de classe de la barre du haut).
     sourceClasses: row.from_evaluation ? classesOf.get(row.from_evaluation) ?? [] : [],
     kind: (row.kind ?? 'evaluation') as 'evaluation' | 'rattrapage' | 'travail',
@@ -258,6 +264,11 @@ export async function updateEvaluation(id: string, input: EvaluationInput): Prom
 export async function setEvaluationStatus(id: string, status: EvaluationStatus): Promise<Result> {
   const ctx = await teacher();
   if (!ctx) return fail(NOT_ALLOWED);
+  if (status !== 'fermee') {
+    // Défi du lundi noté : les copies viennent du défi, l'évaluation ne s'ouvre jamais aux élèves.
+    const { data: linked } = await ctx.supabase.from('evaluations').select('challenge_id').eq('id', id).maybeSingle();
+    if ((linked as any)?.challenge_id) return fail("Cette évaluation note un défi du lundi : elle ne s'ouvre pas aux élèves.");
+  }
   if (status === 'programmee') {
     const { data: planned } = await ctx.supabase.from('evaluations').select('scheduled_at').eq('id', id).single();
     if (!planned?.scheduled_at) return fail("Choisir la date et l'heure de passage dans les réglages.");
@@ -446,6 +457,8 @@ export type EvaluationBoard = {
     kind: 'evaluation' | 'rattrapage' | 'travail';
     /** Élèves visés (révision, fiche particulière) au lieu de classes. */
     students: number;
+    /** Défi du lundi noté : le défi d'où viennent le sujet et les copies. */
+    challengeId: string | null;
   };
   subjects: { id: string; label: string; source: string; exercises: EvaluationExercise[]; grading: EvaluationGrading[]; attempts: number }[];
   rows: BoardRow[];
@@ -493,6 +506,8 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
   for (const student of students ?? []) people.set(student.id, { name: student.full_name || 'Élève', classe: student.classe });
   // Fiche particulière ou de rattrapage : les élèves visés, même sans copie.
   const { data: targeted } = await supabase.from('evaluations').select('students, kind').eq('id', id).maybeSingle();
+  // Défi du lundi noté : lu à part, pour que le tableau reste lisible même sans la colonne challenge_id.
+  const { data: linkedChallenge } = await supabase.from('evaluations').select('challenge_id').eq('id', id).maybeSingle();
   // Un élève qui a changé de classe garde sa copie dans le tableau.
   const missing = [...new Set([...((targeted as any)?.students ?? []), ...(attempts ?? []).map((attempt: any) => attempt.user_id)])].filter(
     (userId: string) => !people.has(userId),
@@ -559,6 +574,7 @@ export async function getEvaluationBoard(id: string): Promise<EvaluationBoard | 
       scheduledAt: evaluation.scheduled_at ?? null,
       kind: ((targeted as any)?.kind ?? 'evaluation') as 'evaluation' | 'rattrapage' | 'travail',
       students: ((targeted as any)?.students ?? []).length,
+      challengeId: ((linkedChallenge as any)?.challenge_id as string | null) ?? null,
     },
     subjects: (subjects ?? []).map((subject: any) => ({
       id: subject.id,

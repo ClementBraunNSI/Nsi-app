@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, BarChart3, CalendarClock, Download, Eye, FileDown, Loader2, Lock, Play, ShieldCheck, Square, Wand2 } from "lucide-react";
+import { ArrowLeft, BarChart3, CalendarClock, Download, Eye, FileDown, Loader2, Lock, Play, RefreshCw, ShieldCheck, Square, Wand2 } from "lucide-react";
+import { gradeChallenge } from "@/app/actions/challengeGrading";
 import {
   answersToGrade,
   deleteEvaluation,
@@ -92,6 +93,23 @@ export default function EvaluationManager({
     if (result.ok && status === "fermee") setSummaryOpen(true);
   };
 
+  // Défi du lundi noté : nouvelles copies et code mis à jour depuis le défi (les copies relues ou validées ne bougent pas).
+  const syncChallenge = async () => {
+    if (!evaluation.challengeId) return;
+    setBusy(true);
+    setMessage(null);
+    const result = await gradeChallenge(evaluation.challengeId).catch(() => ({ ok: false as const, error: "Les copies du défi n'ont pas pu être reprises." }));
+    setBusy(false);
+    if (!result.ok) setMessage(result.error);
+    else
+      setMessage(
+        result.added || result.updated
+          ? `${result.added} copie${result.added > 1 ? "s" : ""} ajoutée${result.added > 1 ? "s" : ""}, ${result.updated} réponse${result.updated > 1 ? "s" : ""} mise${result.updated > 1 ? "s" : ""} à jour.`
+          : "Les copies sont déjà à jour.",
+      );
+    await refresh();
+  };
+
   // Correction automatique par lots de 8 exercices, corrigés quatre à la fois sur le serveur.
   const gradeAll = useCallback(async (manual = false) => {
     if (gradingRef.current) return;
@@ -143,7 +161,7 @@ export default function EvaluationManager({
       <PageHeader
         eyebrow={
           <span className="inline-flex items-center gap-2">
-            Évaluation
+            {evaluation.challengeId ? "Défi du lundi noté" : "Évaluation"}
             <span className={`adm-eval-status is-${evaluation.status}`}>{STATUS_LABELS[evaluation.status]}</span>
           </span>
         }
@@ -163,7 +181,17 @@ export default function EvaluationManager({
                 Annuler la programmation
               </button>
             ) : null}
-            {evaluation.status !== "ouverte" ? (
+            {evaluation.challengeId ? (
+              // Défi noté : pas d'ouverture aux élèves, les copies viennent du défi.
+              <>
+                <button type="button" className="adm-eval-secondary" disabled={busy} onClick={() => void syncChallenge()} title="Reprendre les réponses données dans le défi">
+                  {busy ? <Loader2 size={15} className="animate-spin" aria-hidden /> : <RefreshCw size={15} aria-hidden />} Reprendre les copies du défi
+                </button>
+                <Link className="adm-eval-secondary" href={`/admin/defis/${evaluation.challengeId}`}>
+                  Voir le défi
+                </Link>
+              </>
+            ) : evaluation.status !== "ouverte" ? (
               <button
                 type="button"
                 className={evaluation.status === "brouillon" && plannedLater ? "adm-eval-secondary" : "adm-eval-primary"}

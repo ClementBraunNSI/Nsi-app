@@ -6096,6 +6096,15 @@ a.admin-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .adm-eval-delete { display: grid; width: 2.6rem; place-items: center; border: 1px solid var(--border); border-radius: 0.9rem; background: var(--surface); color: var(--subtle); transition: color 150ms, border-color 150ms, background-color 150ms; }
 .adm-eval-delete:hover:not(:disabled) { border-color: var(--admin-warn); background: var(--admin-warn-soft); color: var(--admin-warn); }
 .adm-eval-delete:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Défis du lundi évalués, pas encore notés : à mettre en notation depuis la liste des évaluations. */
+.adm-eval-challenges { display: grid; gap: 0.6rem; padding: 1rem 1.1rem; border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border)); border-radius: 0.9rem; background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+.adm-eval-challenges h2 { display: flex; align-items: center; gap: 0.45rem; margin: 0; font-size: 0.98rem; font-weight: 650; color: var(--fg); }
+.adm-eval-challenges ul { display: grid; gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
+.adm-eval-challenges li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 0.7rem; background: var(--surface); }
+.adm-eval-challenges li b { display: block; color: var(--fg); }
+.adm-eval-challenges li small { display: block; color: var(--muted); font-size: 0.8rem; }
+.adm-eval-challenges .adm-eval-secondary:disabled { opacity: 0.55; cursor: not-allowed; }
 .admin-shell .adm-eval-secondary { border-color: var(--border); background: var(--surface); color: var(--fg); }
 .admin-shell .adm-eval-danger { border-color: color-mix(in srgb, var(--admin-warn) 40%, transparent); background: var(--surface); color: var(--admin-warn); }
 .admin-shell .adm-eval-primary { color: var(--accent-fg); }

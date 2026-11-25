@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LifeBuoy, Loader2, Lock, Plus, Trash2 } from "lucide-react";
+import { ClipboardCheck, LifeBuoy, Loader2, Lock, Plus, Trash2 } from "lucide-react";
 import { createEvaluation, deleteEvaluation, type EvaluationSummary } from "@/app/actions/evaluations";
+import { gradeChallenge, type GradableChallenge } from "@/app/actions/challengeGrading";
 import EvaluationForm, { type EvaluationFormValues } from "./EvaluationForm";
 import RevisionForm from "./RevisionForm";
 import { createRevisionEvaluation, type RevisionInput } from "@/app/actions/studentSheets";
@@ -28,11 +29,14 @@ export function scheduleLabel(iso: string) {
 export default function EvaluationsAdmin({
   evaluations,
   classes,
+  challenges = [],
   startCreating = false,
   startRevision = false,
 }: {
   evaluations: EvaluationSummary[];
   classes: string[];
+  /** Défis du lundi surveillés : ceux pas encore notés se mettent en notation d'ici. */
+  challenges?: GradableChallenge[];
   startCreating?: boolean;
   startRevision?: boolean;
 }) {
@@ -68,6 +72,23 @@ export default function EvaluationsAdmin({
     setDeleting(null);
     if (!result.ok) setError(result.error);
     else router.refresh();
+  };
+
+  // Défi du lundi évalué : une évaluation fermée est créée avec les copies du défi, puis s'ouvre pour la correction.
+  const [gradingChallenge, setGradingChallenge] = useState<string | null>(null);
+  const toGrade = challenges.filter((challenge) => !challenge.evaluationId);
+  const startGrading = async (challenge: GradableChallenge) => {
+    const stillOpen = Date.parse(challenge.closesAt) > Date.now();
+    if (stillOpen && !window.confirm(`« ${challenge.title} » est encore ouvert jusqu'au ${scheduleLabel(challenge.closesAt)}. Le noter maintenant ? Les copies pourront être reprises plus tard depuis l'évaluation.`)) return;
+    setGradingChallenge(challenge.id);
+    setError(null);
+    const result = await gradeChallenge(challenge.id).catch(() => ({ ok: false as const, error: "Le défi n'a pas pu être mis en notation." }));
+    setGradingChallenge(null);
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    router.push(`/admin/evaluations/${result.evaluationId}`);
   };
 
   const createRevision = async (values: RevisionInput) => {
@@ -109,6 +130,37 @@ export default function EvaluationsAdmin({
       )}
 
       {error && !creating ? <p className="adm-eval-error">{error}</p> : null}
+      {toGrade.length > 0 ? (
+        <section className="adm-eval-challenges" aria-labelledby="defis-a-noter">
+          <h2 id="defis-a-noter">
+            <ClipboardCheck size={16} aria-hidden /> Défis du lundi évalués à noter
+          </h2>
+          <ul>
+            {toGrade.map((challenge) => (
+              <li key={challenge.id}>
+                <span className="min-w-0">
+                  <b>{challenge.title}</b>
+                  <small>
+                    {challenge.classes.join(", ") || "Aucune classe"} · {scheduleLabel(challenge.opensAt)} · {challenge.started} élève
+                    {challenge.started > 1 ? "s" : ""}
+                    {Date.parse(challenge.closesAt) > Date.now() ? ` · ouvert jusqu'au ${scheduleLabel(challenge.closesAt)}` : ""}
+                  </small>
+                </span>
+                <button
+                  type="button"
+                  className="adm-eval-secondary"
+                  disabled={gradingChallenge !== null || challenge.started === 0}
+                  title={challenge.started === 0 ? "Aucun élève n'a ouvert ce défi" : undefined}
+                  onClick={() => void startGrading(challenge)}
+                >
+                  {gradingChallenge === challenge.id ? <Loader2 size={15} className="animate-spin" aria-hidden /> : <ClipboardCheck size={15} aria-hidden />}
+                  Noter ce défi
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
       {evaluations.length === 0 ? (
         <p className="text-sm text-slate-500">Aucune évaluation pour le moment.</p>
       ) : (
@@ -120,6 +172,7 @@ export default function EvaluationsAdmin({
                 <span className="min-w-0">
                   <b>{evaluation.title}</b>
                   <small>
+                    {evaluation.challengeId ? "Défi du lundi · " : ""}
                     {evaluation.kind === "rattrapage" ? "Révision · " : evaluation.kind === "travail" ? "Fiche particulière · " : ""}
                     {evaluation.kind !== "evaluation"
                       ? `${evaluation.targeted} élève${evaluation.targeted > 1 ? "s" : ""}`
