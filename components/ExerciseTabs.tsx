@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Check, Code2, Maximize2, Minimize2, PanelLeft, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Code2, Lock, Maximize2, Minimize2, PanelLeft, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { acceptsWrittenAnswer, canOpenExerciseIde, isEditorExercise, showsRealizeButton } from '@/lib/exercise-type';
 import { contentFolderFromParam } from '@/lib/nsi-levels';
@@ -10,6 +10,7 @@ import { getExerciseById, type LabExercise } from '@/app/actions/getExercises';
 import { ExerciseWorkspace } from '@/components/lab/ExerciseWorkspace';
 import WrittenAnswer from './WrittenAnswer';
 import { PostItLayout } from '@/components/mdx/PostIt';
+import { levelGate } from '@/lib/exercise-gate';
 
 interface TabProps {
   id: string;
@@ -18,11 +19,12 @@ interface TabProps {
   children: React.ReactNode;
 }
 
-const DIFFICULTY_LEVELS = ['Premiers pas', 'Introduction', 'Facile', 'Moyen', 'Avancé', 'Difficile', 'Expert', 'Mini-projet'] as const;
+const DIFFICULTY_LEVELS = ['Pas à pas', 'Premiers pas', 'Introduction', 'Facile', 'Moyen', 'Avancé', 'Difficile', 'Expert', 'Mini-projet'] as const;
 
 type ExerciseDifficulty = (typeof DIFFICULTY_LEVELS)[number];
 
 const DIFFICULTY_COLORS: Record<ExerciseDifficulty, string> = {
+  'Pas à pas': '#475569',
   'Premiers pas': '#64748b',
   Introduction: '#0ea5e9',
   Facile: '#16a34a',
@@ -101,7 +103,7 @@ function getExerciseGroup(label: string, id?: string): string {
 function cleanExerciseLabel(label: string): string {
   return label
     .replace(/^(\s*\d+(?:\.\d+)*\s*)\[[^\]]+\]/, '$1')
-    .replace(/\[(Premiers pas|Introduction|Facile|Moyen|Avancé|Difficile|Expert|Mini-projet)\]/gi, '')
+    .replace(/\[(Pas à pas|Premiers pas|Introduction|Facile|Moyen|Avancé|Difficile|Expert|Mini-projet)\]/gi, '')
     .replace(/\((Introduction|Facile|Moyen|Avancé|Difficile|Expert|Intermédiaire|Intermediaire)\)/gi, '')
     .replace(/^(Mini-projet|Introduction|Facile|Moyen|Avancé|Difficile|Expert|Easy|Medium|Med|Hard)\s*[-–]?\s*/i, '')
     .replace(/\s+/g, ' ')
@@ -136,8 +138,8 @@ type SheetItem = {
 };
 
 /** Premier exercice à faire sur le site : un onglet de consignes ne doit pas cacher les exercices. */
-function firstPractice(items: SheetItem[], done: Set<string>) {
-  const practice = items.filter((item) => isEditorExercise(item.type) || acceptsWrittenAnswer(item.type, item.label));
+function firstPractice(items: SheetItem[], done: Set<string>, locked: (item: SheetItem) => boolean = () => false) {
+  const practice = items.filter((item) => !locked(item) && (isEditorExercise(item.type) || acceptsWrittenAnswer(item.type, item.label)));
   return (practice.find((item) => !done.has(item.id)) ?? practice[0] ?? items[0])?.id ?? null;
 }
 
@@ -175,10 +177,16 @@ export function ExerciseTabs({
   children,
   courseId,
   courseTitle,
+  unlockAfter,
 }: {
   children: React.ReactNode,
   courseId: string,
   courseTitle: string,
+  /**
+   * Niveau à réussir d'abord, par exemple « Pas à pas » : pour un élève, les autres niveaux restent verrouillés
+   * tant que tous les exercices de ce niveau ne sont pas validés. Enseignants et visiteurs voient toute la fiche.
+   */
+  unlockAfter?: string,
 }) {
   const pathname = usePathname();
   const level = levelFromPath(pathname);
@@ -220,6 +228,13 @@ export function ExerciseTabs({
   const hasIde = canOpenExerciseIde(role);
   const done = useMemo(() => new Set(completedIds), [completedIds]);
 
+  // Verrouillage des niveaux : seulement pour les élèves, dont la progression est enregistrée.
+  const gate = useMemo(() => levelGate(items, done, role, unlockAfter), [items, done, role, unlockAfter]);
+  const gateActive = gate.active;
+  const gateDone = gate.gateDone;
+  const gateItems = gate.gateIds;
+  const isLocked = (item: SheetItem | null | undefined) => gate.isLocked(item?.id);
+
   useEffect(() => {
     const fetchProgress = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -249,8 +264,16 @@ export function ExerciseTabs({
 
   // L'élève arrive directement sur le premier exercice qui lui reste à faire.
   useEffect(() => {
-    if (authReady && hasIde && selectedId === null) setSelectedId(firstPractice(items, done));
-  }, [authReady, hasIde, selectedId, items, done]);
+    if (authReady && hasIde && selectedId === null) setSelectedId(firstPractice(items, done, isLocked));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authReady, hasIde, selectedId, items, done, gateActive]);
+
+  // Exercice verrouillé ouvert par un lien (?exercice=…) : retour au premier exercice disponible.
+  useEffect(() => {
+    if (!authReady || !gateActive || selectedId === null) return;
+    if (isLocked(items.find((item) => item.id === selectedId))) setSelectedId(firstPractice(items, done, isLocked));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authReady, gateActive, selectedId, items, done]);
 
   useEffect(() => {
     if (!fullScreen) return;
@@ -274,9 +297,17 @@ export function ExerciseTabs({
   const writable = Boolean(current && (role === 'student' || role === 'invite') && acceptsWrittenAnswer(current.type, current.label));
 
   const choose = (id: string) => {
+    if (isLocked(items.find((item) => item.id === id))) return;
     setSelectedId(id);
     setFolded(false);
   };
+
+  const gateNote = gateActive ? (
+    <p className="sheet-gate">
+      <Lock size={13} aria-hidden />
+      <span>Les autres niveaux se débloquent quand les {gateItems.length} exercices « {unlockAfter} » sont validés ({gateDone}/{gateItems.length}).</span>
+    </p>
+  ) : null;
 
   // Le titre de la fiche est déjà en haut de la page : seule la progression de l'élève est rappelée.
   const meter = hasIde && editorCount > 0 ? (
@@ -304,24 +335,27 @@ export function ExerciseTabs({
             {groups.map((group) => (
               <optgroup key={group.difficulty} label={group.difficulty}>
                 {group.items.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {hasIde ? (done.has(item.id) ? '✓ ' : '○ ') : ''}{item.number ? `${item.number} · ` : ''}{item.title}
+                  <option key={item.id} value={item.id} disabled={isLocked(item)}>
+                    {isLocked(item) ? '\u{1F512} ' : hasIde ? (done.has(item.id) ? '✓ ' : '○ ') : ''}{item.number ? `${item.number} · ` : ''}{item.title}
                   </option>
                 ))}
               </optgroup>
             ))}
           </select>
+          {gateNote}
         </div>
 
         <div className={`sheet-layout ${listOpen ? '' : 'is-list-closed'}`}>
           <nav className="sheet-list" aria-label="Exercices de la fiche">
             {meter}
+            {gateNote}
             {groups.map((group) => {
               const groupDone = group.items.filter((item) => done.has(item.id)).length;
+              const groupLocked = group.items.every((item) => isLocked(item));
               return (
-                <div key={group.difficulty} className="sheet-group">
+                <div key={group.difficulty} className={`sheet-group ${groupLocked ? 'is-locked' : ''}`}>
                   <p style={{ '--c': colorOf(group.difficulty) } as React.CSSProperties}>
-                    <span>{group.difficulty}</span>
+                    <span>{groupLocked ? <Lock size={11} aria-hidden className="sheet-lock" /> : null}{group.difficulty}</span>
                     <span>{hasIde ? `${groupDone}/${group.items.length}` : group.items.length}</span>
                   </p>
                   {group.items.map((item) => (
@@ -330,6 +364,8 @@ export function ExerciseTabs({
                       type="button"
                       className={`sheet-item ${item.id === selectedId ? 'is-current' : ''}`}
                       aria-current={item.id === selectedId ? 'true' : undefined}
+                      disabled={isLocked(item)}
+                      title={isLocked(item) ? `Se débloque quand le niveau « ${unlockAfter} » est validé` : undefined}
                       onClick={() => choose(item.id)}
                     >
                       {hasIde ? status(item) : null}
@@ -387,7 +423,7 @@ export function ExerciseTabs({
                       {previous ? (previous.number || 'Précédent') : ''}
                     </button>
                     <span>{editable ? 'Validé dès que tous les tests passent' : `Exercice ${index + 1} sur ${items.length}`}</span>
-                    <button type="button" disabled={!next} onClick={() => next && choose(next.id)}>
+                    <button type="button" disabled={!next || isLocked(next)} onClick={() => next && choose(next.id)}>
                       {next ? `${next.number ? `${next.number} · ` : ''}${next.title}` : ''}
                       <ArrowRight size={15} aria-hidden />
                     </button>

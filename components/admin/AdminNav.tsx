@@ -34,6 +34,7 @@ export const ADMIN_MORE: { path: string; label: string; count?: keyof AdminNavCo
   { path: "/classe", label: "En classe (suivi en direct)", count: "live" },
   { path: "/eleves", label: "Élèves et comptes" },
   { path: "/evaluations", label: "Toutes les évaluations" },
+  { path: "/evaluations/ds", label: "Corrections de DS" },
   { path: "/defis", label: "Tous les défis" },
   { path: "/annonces", label: "Annonces" },
   { path: "/devoirs", label: "Devoirs et dates" },

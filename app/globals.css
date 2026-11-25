@@ -4668,6 +4668,26 @@ input, textarea {
 .sheet-item:hover { background: color-mix(in srgb, var(--surface) 75%, transparent); }
 .sheet-item.is-current { background: var(--surface); box-shadow: inset 3px 0 0 var(--accent), 0 1px 2px rgba(20, 17, 14, 0.05); font-weight: 600; }
 .sheet-item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+/* Niveaux verrouillés (fiche avec unlockAfter) : visibles, mais pas encore ouvrables. */
+.sheet-item:disabled { color: var(--subtle); cursor: not-allowed; }
+.sheet-item:disabled:hover { background: transparent; }
+.sheet-group.is-locked > p { color: var(--subtle); }
+.sheet-group > p .sheet-lock { display: inline; margin: -0.1rem 0.3rem 0 0; vertical-align: middle; }
+.sheet-gate {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin: 0.1rem 0.5rem 0.7rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.sheet-gate svg { flex-shrink: 0; margin-top: 0.1rem; color: var(--accent); }
+.sheet-pick .sheet-gate { margin: 0.5rem 0 0; }
 .sheet-num { width: 1.6rem; flex-shrink: 0; font-size: 0.72rem; color: var(--subtle); }
 .sheet-title { min-width: 0; }
 
@@ -6783,3 +6803,40 @@ button.admin-class { width: 100%; border: 0; font: inherit; text-align: left; cu
   .parent-print-body { overflow: visible !important; }
   .parent-print section, .parent-print tr { break-inside: avoid; }
 }
+
+/* ---------- Corrections de DS (admin : /admin/evaluations/ds ; élève : /espace/ds) ---------- */
+.ds-md-field { display: grid; gap: 0.5rem; }
+.ds-md-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-weight: 400; font-size: 0.8rem; }
+.adm-eval-form textarea.ds-md-input { min-height: 14rem; font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.82rem; line-height: 1.5; resize: vertical; }
+.ds-md-preview { max-height: 32rem; overflow: auto; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); font-weight: 400; }
+.ds-admin-item .adm-eval-counts { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--muted); }
+
+.ds-empty { padding: 1.25rem; border: 1px dashed var(--border); border-radius: var(--radius); color: var(--muted); font-size: 0.9rem; }
+.ds-list { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+.ds-list-row { display: flex; align-items: center; gap: 0.85rem; padding: 0.9rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--fg); transition: border-color 160ms ease; }
+.ds-list-row:hover { border-color: var(--accent); }
+.ds-list-row > svg:first-child { flex: none; color: var(--accent); }
+.ds-list-row b { display: block; font-weight: 650; }
+.ds-list-row small { display: block; margin-top: 0.15rem; color: var(--muted); font-size: 0.82rem; }
+.ds-head h1 { margin: 0.2rem 0 0.3rem; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--fg); }
+.ds-head p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.ds-head .ds-kicker { color: var(--accent); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.ds-part { padding: 1.25rem 1.4rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.ds-part-title { display: inline-block; margin: 0 0 0.75rem; padding: 0.2rem 0.7rem; border-radius: 99px; background: var(--surface-2); color: var(--fg); font-size: 0.85rem; font-weight: 700; }
+.ds-part-title.is-correction { background: var(--accent-soft); color: var(--accent); }
+
+/* Coloration du code (rehype-highlight, classes hljs), aux couleurs du thème. */
+.ds-prose .hljs-keyword, .ds-prose .hljs-built_in, .ds-prose .hljs-literal, .ds-prose .hljs-selector-tag { color: #c2410c; font-weight: 600; }
+.ds-prose .hljs-string, .ds-prose .hljs-regexp, .ds-prose .hljs-addition { color: #15803d; }
+.ds-prose .hljs-number, .ds-prose .hljs-symbol, .ds-prose .hljs-bullet { color: #7c3aed; }
+.ds-prose .hljs-comment, .ds-prose .hljs-quote, .ds-prose .hljs-meta { color: #78716c; font-style: italic; }
+.ds-prose .hljs-title, .ds-prose .hljs-title.function_, .ds-prose .hljs-section { color: #1d4ed8; }
+.ds-prose .hljs-title.class_, .ds-prose .hljs-type, .ds-prose .hljs-attr, .ds-prose .hljs-attribute, .ds-prose .hljs-params { color: #0f766e; }
+.ds-prose .hljs-variable, .ds-prose .hljs-template-variable, .ds-prose .hljs-name, .ds-prose .hljs-deletion { color: #b91c1c; }
+.dark .ds-prose .hljs-keyword, .dark .ds-prose .hljs-built_in, .dark .ds-prose .hljs-literal, .dark .ds-prose .hljs-selector-tag { color: #fdba74; }
+.dark .ds-prose .hljs-string, .dark .ds-prose .hljs-regexp, .dark .ds-prose .hljs-addition { color: #86efac; }
+.dark .ds-prose .hljs-number, .dark .ds-prose .hljs-symbol, .dark .ds-prose .hljs-bullet { color: #c4b5fd; }
+.dark .ds-prose .hljs-comment, .dark .ds-prose .hljs-quote, .dark .ds-prose .hljs-meta { color: #a8a29e; }
+.dark .ds-prose .hljs-title, .dark .ds-prose .hljs-title.function_, .dark .ds-prose .hljs-section { color: #93c5fd; }
+.dark .ds-prose .hljs-title.class_, .dark .ds-prose .hljs-type, .dark .ds-prose .hljs-attr, .dark .ds-prose .hljs-attribute, .dark .ds-prose .hljs-params { color: #5eead4; }
+.dark .ds-prose .hljs-variable, .dark .ds-prose .hljs-template-variable, .dark .ds-prose .hljs-name, .dark .ds-prose .hljs-deletion { color: #fca5a5; }

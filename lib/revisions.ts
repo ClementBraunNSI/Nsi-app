@@ -161,7 +161,7 @@ export const MINI_PROJECT = 6;
 export function difficultyRank(label: string): number {
   const tag = foldText(label.match(/\[([^\]]+)\]/)?.[1] ?? "");
   if (/mini projet/.test(tag) || /mini[\s-]?projet/i.test(label)) return MINI_PROJECT;
-  const tagged: Record<string, number> = { "premiers pas": 1, introduction: 1, facile: 2, moyen: 3, avance: 4, difficile: 4, expert: 5 };
+  const tagged: Record<string, number> = { "pas a pas": 1, "premiers pas": 1, introduction: 1, facile: 2, moyen: 3, avance: 4, difficile: 4, expert: 5 };
   if (tagged[tag]) return tagged[tag];
   // Fiche de révision par thème (« 3.4 [Boucles] - … ») : le rang dans le thème donne la difficulté.
   const inTheme = Number(label.match(/^\d+\.(\d+)/)?.[1]);

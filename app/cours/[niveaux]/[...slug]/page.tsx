@@ -151,6 +151,7 @@ const MonstersGallery = dynamic(() => import('@/components/interactive/MonstersG
 const CallStackVisualizer = dynamic(() => import('@/components/interactive/CallStackVisualizer'), { loading: () => null });
 const TreeVisualizer = dynamic(() => import('@/components/interactive/TreeVisualizer'), { loading: () => null });
 const GraphVisualizer = dynamic(() => import('@/components/interactive/GraphVisualizer'), { loading: () => null });
+const LinearStructureVisualizer = dynamic(() => import('@/components/interactive/LinearStructureVisualizer'), { loading: () => null });
 import CourseNavigation from '@/components/CourseNavigation';
 import MobileBlocker from '@/components/MobileBlocker';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
@@ -319,6 +320,7 @@ export default async function CoursePage({
     CallStackVisualizer,
     TreeVisualizer,
     GraphVisualizer,
+    LinearStructureVisualizer,
   };
 
   const level = getNsiLevel(folder);

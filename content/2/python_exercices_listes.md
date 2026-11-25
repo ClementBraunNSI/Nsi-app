@@ -1252,74 +1252,7 @@ assert sans_doublons(["b", "a", "b"]) == ["b", "a"], "Avec des textes."
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="1nsi-listes-3-3" label="3.3 [Moyen] - Rotation" type="python">
-<Enonce>
-### Rotation
-
-Écrire une fonction `rotation(liste, k)` qui renvoie une nouvelle liste décalée de `k` positions vers la droite : les éléments qui sortent à droite reviennent à gauche.
-
-Exemple : `rotation([1, 2, 3, 4, 5], 2)` renvoie `[4, 5, 1, 2, 3]`. `k` peut dépasser la longueur.
-
-<PostIt>
-
-- `[None] * n` : liste de `n` cases vides, à remplir par indice
-- `liste[i] = v` : écrit dans la case `i`
-- `a % n` : ramène un indice entre `0` et `n - 1`, ex. `7 % 5` → `2`
-- `len(liste)` : nombre d'éléments
-
-</PostIt>
-
-<Indices>
-<Indice>
-
-L'élément d'indice `i` va à l'indice `(i + k) % n`, avec `n` la longueur.
-
-</Indice>
-<Indice>
-
-Commencer par une liste de la bonne taille, par exemple `[None] * n`, puis placer chaque élément.
-
-</Indice>
-<Indice>
-
-```text
-FONCTION rotation(liste, k)
-    n ← longueur(liste)
-    resultat ← liste de n cases vides
-    POUR i ALLANT DE 0 À n - 1
-        resultat[reste de (i + k) par n] ← liste[i]
-    RENVOYER resultat
-```
-
-</Indice>
-</Indices>
-
-<Correction>
-
-```python
-def rotation(liste: list, k: int) -> list:
-    n = len(liste)
-    resultat = [None] * n
-    for i in range(n):
-        resultat[(i + k) % n] = liste[i]
-    return resultat
-```
-
-</Correction>
-</Enonce>
-<Verification>
-
-```python
-assert rotation([1, 2, 3, 4, 5], 2) == [4, 5, 1, 2, 3], "Décalage de 2."
-assert rotation([1, 2, 3], 0) == [1, 2, 3] and rotation([1, 2, 3], 3) == [1, 2, 3], "Décalage de 0 ou de la longueur : rien ne change."
-assert rotation([1, 2, 3], 4) == [3, 1, 2], "Décalage de 4 sur 3 éléments : comme 1."
-assert rotation([], 5) == [], "Liste vide."
-```
-
-</Verification>
-</ExerciseSection>
-
-<ExerciseSection id="1nsi-listes-3-4" label="3.4 [Moyen] - Liste triée ?" type="python">
+<ExerciseSection id="1nsi-listes-3-4" label="3.3 [Moyen] - Liste triée ?" type="python">
 <Enonce>
 ### Liste triée ?
 
@@ -1383,7 +1316,148 @@ assert "sort" not in PROGRAMME, "Sans tri."
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="1nsi-listes-4-1" label="4.1 [Difficile] - Deuxième plus grand" type="python">
+<ExerciseSection id="1nsi-listes-3-5" label="3.4 [Moyen] - Échanger les extrêmes" type="python">
+<Enonce>
+### Échanger les extrêmes
+
+Écrire une fonction `echanger_extremes(liste)` qui modifie une liste non vide **sur place** : le plus petit élément et le plus grand élément échangent leurs positions. En cas d'égalité, on prend la première position de chacun. La fonction ne renvoie rien.
+
+Exemple : après `echanger_extremes(l)` avec `l = [4, 9, 1, 7]`, la liste `l` vaut `[4, 1, 9, 7]`.
+
+Contrainte : sans `min`, `max` ni `index`.
+
+<PostIt>
+
+- `range(len(liste))` : tous les indices
+- garder un indice, et non une valeur : `liste[i_min]` redonne la valeur
+- `a, b = b, a` : échange deux valeurs
+- `liste[i], liste[j] = liste[j], liste[i]` : échange deux cases
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Chercher d'abord l'indice du minimum, comme dans l'exercice « Où est le minimum ? », puis l'indice du maximum de la même façon.
+
+</Indice>
+<Indice>
+
+Une fois les deux indices connus, une seule ligne suffit pour échanger les deux cases.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION echanger_extremes(liste)
+    i_min ← 0 ; i_max ← 0
+    POUR i ALLANT DE 1 À longueur(liste) - 1
+        SI liste[i] < liste[i_min] ALORS i_min ← i
+        SI liste[i] > liste[i_max] ALORS i_max ← i
+    échanger liste[i_min] et liste[i_max]
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def echanger_extremes(liste: list) -> None:
+    i_min = 0
+    i_max = 0
+    for i in range(1, len(liste)):
+        if liste[i] < liste[i_min]:
+            i_min = i
+        if liste[i] > liste[i_max]:
+            i_max = i
+    liste[i_min], liste[i_max] = liste[i_max], liste[i_min]
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+import re
+l = [4, 9, 1, 7]
+r = echanger_extremes(l)
+assert l == [4, 1, 9, 7], "[4, 9, 1, 7] devient [4, 1, 9, 7]."
+assert r is None, "La fonction modifie la liste et ne renvoie rien."
+l = [3, 3, 8, 8]
+echanger_extremes(l)
+assert l == [8, 3, 3, 8], "En cas d'égalité, la première position de chacun : [3, 3, 8, 8] devient [8, 3, 3, 8]."
+l = [5]
+echanger_extremes(l)
+assert l == [5], "Un seul élément : rien ne change."
+l = [-2, 6, 0, -7, 6]
+echanger_extremes(l)
+assert l == [-2, -7, 0, 6, 6], "Avec des négatifs."
+assert not re.search(r"\b(min|max)\s*\(|\.index\s*\(", PROGRAMME), "Sans min, max ni index."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-3-3" label="4.1 [Difficile] - Rotation" type="python">
+<Enonce>
+### Rotation
+
+Écrire une fonction `rotation(liste, k)` qui renvoie une nouvelle liste décalée de `k` positions vers la droite : les éléments qui sortent à droite reviennent à gauche.
+
+Exemple : `rotation([1, 2, 3, 4, 5], 2)` renvoie `[4, 5, 1, 2, 3]`. `k` peut dépasser la longueur.
+
+<Indices>
+<Indice>
+
+L'élément d'indice `i` va à l'indice `(i + k) % n`, avec `n` la longueur.
+
+</Indice>
+<Indice>
+
+Commencer par une liste de la bonne taille, par exemple `[None] * n`, puis placer chaque élément.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION rotation(liste, k)
+    n ← longueur(liste)
+    resultat ← liste de n cases vides
+    POUR i ALLANT DE 0 À n - 1
+        resultat[reste de (i + k) par n] ← liste[i]
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+def rotation(liste: list, k: int) -> list:
+    n = len(liste)
+    resultat = [None] * n
+    for i in range(n):
+        resultat[(i + k) % n] = liste[i]
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<Verification>
+
+```python
+assert rotation([1, 2, 3, 4, 5], 2) == [4, 5, 1, 2, 3], "Décalage de 2."
+assert rotation([1, 2, 3], 0) == [1, 2, 3] and rotation([1, 2, 3], 3) == [1, 2, 3], "Décalage de 0 ou de la longueur : rien ne change."
+assert rotation([1, 2, 3], 4) == [3, 1, 2], "Décalage de 4 sur 3 éléments : comme 1."
+assert rotation([], 5) == [], "Liste vide."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="1nsi-listes-4-1" label="4.2 [Difficile] - Deuxième plus grand" type="python">
 <Enonce>
 ### Deuxième plus grand
 
@@ -1450,7 +1524,7 @@ assert "sort" not in PROGRAMME, "Sans tri."
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="1nsi-listes-4-2" label="4.2 [Difficile] - Plus longue hausse" type="python">
+<ExerciseSection id="1nsi-listes-4-2" label="4.3 [Difficile] - Plus longue hausse" type="python">
 <Enonce>
 ### Plus longue hausse
 
@@ -1516,7 +1590,7 @@ assert plus_longue_hausse([1, 2, 3, 4]) == 4, "Toute la liste."
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="1nsi-listes-4-3" label="4.3 [Difficile] - Supprimer sur place" type="python">
+<ExerciseSection id="1nsi-listes-4-3" label="4.4 [Difficile] - Supprimer sur place" type="python">
 <Enonce>
 ### Supprimer sur place
 
@@ -1580,7 +1654,7 @@ assert l == [1, 2, 3], "Rien à retirer."
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="1nsi-listes-4-4" label="4.4 [Difficile] - Histogramme des notes" type="python">
+<ExerciseSection id="1nsi-listes-4-4" label="4.5 [Difficile] - Histogramme des notes" type="python">
 <Enonce>
 ### Histogramme des notes
 

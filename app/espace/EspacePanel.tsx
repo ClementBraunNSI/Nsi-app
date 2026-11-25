@@ -9,6 +9,7 @@ import {
   CalendarDays,
   CheckCircle2,
   ClipboardList,
+  FileCheck2,
   Megaphone,
   MessageSquare,
   NotebookPen,
@@ -199,6 +200,17 @@ export function EspacePanel({
             <span className="min-w-0 flex-1">
               <b>Ma classe : {data.profile.classe}</b>
               <small>Devoirs, dates d&apos;interros et de DS, annonces de l&apos;enseignant.</small>
+            </span>
+            <span className="challenge-banner-cta">Ouvrir</span>
+          </Link>
+        ) : null}
+
+        {data.profile.classe ? (
+          <Link href="/espace/ds" className="challenge-banner">
+            <FileCheck2 size={20} aria-hidden />
+            <span className="min-w-0 flex-1">
+              <b>Corrections des DS</b>
+              <small>Le sujet et la correction de chaque DS, mis en ligne après l&apos;épreuve.</small>
             </span>
             <span className="challenge-banner-cta">Ouvrir</span>
           </Link>

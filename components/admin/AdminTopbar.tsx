@@ -15,6 +15,7 @@ const CREATE = [
   { label: "Défi", path: "/defis?nouveau=1" },
   { label: "Évaluation", path: "/evaluations?nouveau=1" },
   { label: "Évaluation de révision", path: "/evaluations?revision=1" },
+  { label: "Correction de DS", path: "/evaluations/ds?nouveau=1" },
   { label: "Élève", path: "/eleves?nouveau=1" },
   { label: "Élèves en lot", path: "/eleves?lot=1" },
 ];
@@ -28,6 +29,7 @@ const PAGES: AdminSearchItem[] = [
   { kind: "evaluation", id: "p-classe", label: "En classe", hint: "Suivi en direct", href: "/admin/classe" },
   { kind: "eleve", id: "p-eleves", label: "Élèves et comptes", hint: "Autres pages", href: "/admin/eleves" },
   { kind: "evaluation", id: "p-evals", label: "Toutes les évaluations", hint: "Autres pages", href: "/admin/evaluations" },
+  { kind: "evaluation", id: "p-ds", label: "Corrections de DS", hint: "Autres pages", href: "/admin/evaluations/ds" },
   { kind: "defi", id: "p-defis", label: "Tous les défis", hint: "Autres pages", href: "/admin/defis" },
   { kind: "evaluation", id: "p-annonces", label: "Annonces", hint: "Autres pages", href: "/admin/annonces" },
   { kind: "evaluation", id: "p-devoirs", label: "Devoirs et dates", hint: "Autres pages", href: "/admin/devoirs" },

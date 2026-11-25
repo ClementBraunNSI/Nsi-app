@@ -16,6 +16,7 @@ const SHEETS = [
   "2/python_exercices_boucles.md",
   "2/python_exercices_listes.md",
   "2/python_exercices_comprehension.md",
+  "2/python_exercices_listes_2d.md",
   "2/python_exercices_papier.md",
   "2/python_exercices_dictionnaires.md",
   "2/python_csv_exercices.md",
@@ -26,6 +27,7 @@ const SHEETS = [
   "3/listes-comprehension-exercices.md",
   "3/exercices_poo.md",
   "3/exercices_terminale_fondamentaux.md",
+  "3/structures_lineaires_exercices.md",
   "particuliers/anatole/exercices-revision-poo.md",
 ];
 
@@ -33,9 +35,17 @@ const SHEETS = [
 const REVISION_SHEETS = ["2/python_exercices_revision_types_fonctions.md"];
 
 const LEVELS = ["Introduction", "Facile", "Moyen", "Difficile", "Expert"];
-/** Niveau facultatif, avant Introduction : gestes de base guidés, avec un pense-bête <PostIt>. */
-const FIRST_STEPS = "Premiers pas";
-const FIRST_STEPS_SHEETS = ["2/python_exercices_listes.md", "2/python_exercices_comprehension.md"];
+/**
+ * Niveau facultatif, avant Introduction : gestes de base guidés, avec un pense-bête <PostIt>.
+ * « Pas à pas » (Terminale) fait construire une classe méthode par méthode ; il déverrouille la suite de la fiche.
+ */
+const FIRST_STEPS = ["Premiers pas", "Pas à pas"];
+const FIRST_STEPS_SHEETS = [
+  "2/python_exercices_listes.md",
+  "2/python_exercices_comprehension.md",
+  "2/python_exercices_listes_2d.md",
+  "3/structures_lineaires_exercices.md",
+];
 
 /** Fiche de révision par thème (« 2.3 [Conditions] - … ») : cinq exercices par thème, un post-it de cours chacun. */
 const THEME_SHEETS: Record<string, string[]> = {
@@ -138,7 +148,7 @@ describe("hints in an exercise statement", () => {
 });
 
 /** Niveaux qui reçoivent un post-it de syntaxe à côté de l'énoncé, dans toutes les fiches. */
-const POST_IT_LEVELS = ["premiers pas", "introduction", "facile", "moyen"];
+const POST_IT_LEVELS = ["pas a pas", "premiers pas", "introduction", "facile", "moyen"];
 
 describe("post-it on easy exercises", () => {
   const fold = (text: string) => text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
@@ -195,17 +205,26 @@ describe("reworked exercise sheets", () => {
       expect(sections.filter((section) => section.level === level).length, `${sheet} ${level}`).toBeGreaterThanOrEqual(4);
     }
     expect(sections.filter((section) => section.level === "Mini-projet").length, `${sheet} Mini-projet`).toBeGreaterThanOrEqual(1);
-    expect(sections.every((section) => [FIRST_STEPS, ...LEVELS, "Mini-projet"].includes(section.level)), `${sheet} niveau inconnu`).toBe(true);
-    const order = sections.map((section) => [FIRST_STEPS, ...LEVELS, "Mini-projet"].indexOf(section.level));
+    expect(sections.every((section) => [...FIRST_STEPS, ...LEVELS, "Mini-projet"].includes(section.level)), `${sheet} niveau inconnu`).toBe(true);
+    const order = sections.map((section) => [FIRST_STEPS[0], ...LEVELS, "Mini-projet"].indexOf(FIRST_STEPS.includes(section.level) ? FIRST_STEPS[0] : section.level));
     expect(order, `${sheet} : niveaux dans l'ordre`).toEqual([...order].sort((a, b) => a - b));
   });
 
   it.each(FIRST_STEPS_SHEETS.filter((sheet) => sheets.includes(sheet)))("%s starts with guided first steps, each with a syntax post-it", (sheet) => {
-    const firstSteps = all.filter((section) => section.sheet === sheet && section.level === FIRST_STEPS);
+    const firstSteps = all.filter((section) => section.sheet === sheet && FIRST_STEPS.includes(section.level));
     expect(firstSteps.length).toBeGreaterThanOrEqual(5);
     for (const section of firstSteps) {
       expect(extractPostIts(section.enonce).postIts, section.id).toHaveLength(1);
       expect(section.id, section.id).toMatch(/-0-\d+$/);
+    }
+  });
+
+  it("locks a sheet only behind one of its own levels (unlockAfter)", () => {
+    for (const sheet of sheets) {
+      const unlockAfter = read(sheet).match(/<ExerciseTabs[^>]*unlockAfter="([^"]*)"/)?.[1];
+      if (!unlockAfter) continue;
+      const gate = all.filter((section) => section.sheet === sheet && section.level === unlockAfter);
+      expect(gate.length, `${sheet} : niveau ${unlockAfter}`).toBeGreaterThan(0);
     }
   });
 

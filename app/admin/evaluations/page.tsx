@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/ui";
 import { listClasses, listEvaluations } from "@/app/actions/evaluations";
 import { listGradableChallenges } from "@/app/actions/challengeGrading";
 import EvaluationsAdmin from "@/components/admin/evaluations/EvaluationsAdmin";
+import { EvaluationsTabs } from "@/components/admin/evaluations/EvaluationsTabs";
 
 export const dynamic = "force-dynamic";
 
@@ -19,6 +20,7 @@ export default async function AdminEvaluationsPage({ searchParams }: { searchPar
         title="Évaluations"
         description="Interrogations pratiques en classe : chaque élève reçoit un sujet tiré au hasard, son code est enregistré, et la page se verrouille au moindre changement de fenêtre ou collage venu d'ailleurs."
       />
+      <EvaluationsTabs current="evaluations" />
       <EvaluationsAdmin
         evaluations={evaluations}
         classes={classes}
