@@ -35,6 +35,10 @@ export const SAVE_WARNING = 'La validation n\'a pas pu être enregistrée.';
 /** Le serveur n'a pas pu exécuter la vérification : ce n'est pas une erreur de l'élève. */
 export const CHECK_UNAVAILABLE = 'La vérification n\'a pas pu être lancée.';
 
+/** Le code de l'élève tournait encore quand le délai a expiré : le plus souvent, une boucle sans fin. */
+export const CHECK_TOO_LONG =
+  'Le programme ne s\'est pas arrêté à temps : une boucle ne finit sans doute jamais. Vérifier la condition de chaque boucle while, et que les méthodes appelées dans la boucle ont bien leurs parenthèses.';
+
 /**
  * `interactive` (exécution libre seulement) : les réponses déjà données à input(), et la graine du hasard de cette
  * exécution. Sans réponse disponible, le programme s'arrête et le rapport indique la question posée.

@@ -719,12 +719,13 @@ print(pile_de([4, 8, 2]))
 <Verification>
 
 ```python
+assert not str(pile_de([4, 8, 2])).endswith("\n"), "Pas de passage à la ligne après le dernier élément affiché (le fond de la pile)."
 assert str(pile_de([4, 8, 2])) == "2\n8\n4", "La pile 4, 8, 2 s'affiche 2, 8, 4, un par ligne : le sommet en haut."
 assert str(Pile()) == "(pile vide)", "Une pile vide s'affiche (pile vide)."
 assert str(pile_de(["a"])) == "a", "Une pile d'un seul élément."
 p = pile_de([1, 2])
 str(p)
-assert p.elements == [1, 2], "Afficher la pile ne la modifie pas."
+assert p.elements == [1, 2], "Afficher la pile ne la modifie pas : après str(p), elements vaut toujours [1, 2]."
 ```
 
 </Verification>

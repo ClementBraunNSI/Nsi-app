@@ -83,6 +83,23 @@ describe("failed tests get a hint", () => {
     expect(help?.title).toMatch(/pas le bon type/);
   });
 
+  it("spots an invisible line break left at the end of a text, instead of blaming the type", async () => {
+    const code = "def afficher(t):\n    s = ''\n    for x in t:\n        s += str(x) + '\\n'\n    return s";
+    const help = await explainTest(code, "assert afficher([2, 8, 4]) == '2\\n8\\n4'");
+    expect(help?.title).toMatch(/passage à la ligne en trop à la fin/);
+    expect(help?.hint).toMatch(/join/);
+  });
+
+  it("spots a missing space at the start of a text", async () => {
+    const help = await explainTest("def f():\n    return 'a'", "assert f() == ' a'");
+    expect(help?.title).toMatch(/Il manque un espace au début/);
+  });
+
+  it("reports a program that never stops as a loop problem, not as a server failure", async () => {
+    const report = await runPythonCheck("while True:\n    pass", "assert True");
+    expect(report.error).toMatch(/boucle ne finit sans doute jamais/);
+  }, 60_000);
+
   it("spots a text that only differs by case or accents", async () => {
     const help = await explainTest("def parite(n):\n    return 'Pair'", "assert parite(2) == 'pair'");
     expect(help?.title).toMatch(/presque juste/);

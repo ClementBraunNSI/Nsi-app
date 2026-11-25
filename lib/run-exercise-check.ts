@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
+  CHECK_TOO_LONG,
   CHECK_UNAVAILABLE,
   finalizeReport,
   parsePythonCheckResult,
@@ -23,6 +24,7 @@ const MAX_OUTPUT = 2_000_000;
 const CHILD_SCRIPT = path.join(process.cwd(), 'lib', 'pyodide-check-child.cjs');
 
 const UNAVAILABLE = CHECK_UNAVAILABLE;
+const USER_CODE_START = 'NSI_USER_CODE_START';
 
 /**
  * `keepSources` : garde la ligne assert de chaque test. Réservé à la correction des évaluations, côté enseignant :
@@ -139,6 +141,11 @@ function runPythonProcess(userCode: string, verification: string, packages: stri
     const chunks: Buffer[] = [];
     let size = 0;
     let settled = false;
+    // Le processus écrit ce repère sur stderr juste avant d'exécuter le code de l'élève.
+    let userCodeStarted = false;
+    child.stderr.on('data', (chunk: Buffer) => {
+      if (!userCodeStarted && chunk.toString('utf8').includes(USER_CODE_START)) userCodeStarted = true;
+    });
     const finish = (error: Error | null, stdout = '') => {
       if (settled) return;
       settled = true;
@@ -149,7 +156,8 @@ function runPythonProcess(userCode: string, verification: string, packages: stri
     // Le premier chargement de Pyodide prend quelques secondes ; les modules (numpy…) davantage.
     const timer = setTimeout(() => {
       child.kill('SIGKILL');
-      finish(new Error('timeout'));
+      // Pyodide chargé et code lancé : c'est le programme (ou les tests qu'il fait tourner) qui ne finit pas.
+      finish(new Error(userCodeStarted ? 'too-long' : 'timeout'));
     }, packages.length > 0 ? 45000 : 25000);
     child.stdout.on('data', (chunk: Buffer) => {
       size += chunk.length;
@@ -185,7 +193,8 @@ export async function runPythonCheck(
     const stdout = error && typeof error === 'object' && 'stdout' in error && typeof error.stdout === 'string'
       ? error.stdout
       : '';
-    return reportFromStdout(stdout, options.keepSources) ?? unexpectedRunReport(UNAVAILABLE);
+    const tooLong = error instanceof Error && error.message === 'too-long';
+    return reportFromStdout(stdout, options.keepSources) ?? unexpectedRunReport(tooLong ? CHECK_TOO_LONG : UNAVAILABLE);
   } finally {
     // Le dossier temporaire part avec le processus (voir spawnRunner).
     if (runner.child.exitCode === null) runner.child.kill('SIGKILL');

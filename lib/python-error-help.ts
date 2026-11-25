@@ -601,6 +601,22 @@ export function explainFailedTest(test: RunTest, code: string): ErrorHelp | null
       };
     }
   }
+  // Même texte à un espace ou un passage à la ligne près, au début ou à la fin : invisible dans les cadres du test.
+  if (test.actual !== test.expected && test.actual.trim() === test.expected.trim()) {
+    const describe = (text: string) => (text.includes("\n") ? "un passage à la ligne" : "un espace");
+    const tail = test.actual.slice(test.actual.trimEnd().length);
+    const wantedTail = test.expected.slice(test.expected.trimEnd().length);
+    const where = tail !== wantedTail ? "à la fin" : "au début";
+    const extra = tail.length > wantedTail.length || (where === "au début" && test.actual.length > test.expected.length);
+    const what = where === "à la fin" ? describe(extra ? tail : wantedTail) : describe(test.actual + test.expected);
+    return {
+      title: extra ? `Le texte a ${what} en trop ${where}.` : `Il manque ${what} ${where} du texte.`,
+      text: "Les deux textes s'affichent pareil, mais ils ne sont pas égaux : un espace ou un passage à la ligne (\\n) ne se voit pas dans les cadres ci-dessus.",
+      hint: extra && where === "à la fin" && what === "un passage à la ligne"
+        ? "Placer le \\n seulement entre deux éléments, par exemple avec \"\\n\".join(...), ou ne pas l'ajouter après le dernier."
+        : "Comparer caractère par caractère le début et la fin du texte attendu.",
+    };
+  }
   // Les textes s'affichent sans guillemets : une valeur identique à l'écran mais refusée n'a pas le bon type.
   if (test.actual.trim() === test.expected.trim()) {
     return {
