@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquette admin v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* =====================================================================
+     1. REPRIS TELS QUELS DE app/globals.css (thème, barre du site, coque admin)
+     ===================================================================== */
+  :root {
+    color-scheme: light;
+    --bg: #f7f4ef; --surface: #fffcf8; --surface-2: #f1ece4; --fg: #14110e; --muted: #5c564e; --subtle: #8a8278;
+    --border: color-mix(in srgb, #14110e 10%, transparent);
+    --accent: #ea580c; --accent-fg: #ffffff; --accent-soft: #fff1e6; --ring: #fb923c;
+    --radius: 1.15rem; --radius-sm: 0.7rem;
+    --inset: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    --shadow: var(--inset), 0 1px 1px rgba(20, 17, 14, 0.03), 0 22px 50px -32px rgba(20, 17, 14, 0.28);
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --header-h: 5rem; --sticky-top: var(--header-h);
+    --lvl-2: #ea580c; --lvl-2-on: #1a0a03; --lvl-3: #c2410c; --lvl-3-on: #ffffff;
+  }
+  .dark {
+    color-scheme: dark;
+    --bg: #0c1017; --surface: #161c27; --surface-2: #1e2633; --fg: #f6f1ea; --muted: #c4bdb3; --subtle: #8b847b;
+    --border: color-mix(in srgb, #f6f1ea 12%, transparent);
+    --accent: #fb923c; --accent-fg: #1a1204; --accent-soft: #2a2013; --ring: #fdba74;
+    --inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --shadow: var(--inset), 0 18px 44px -30px rgba(0, 0, 0, 0.7);
+    --lvl-2: #fb923c; --lvl-2-on: #431407; --lvl-3: #ea580c; --lvl-3-on: #1a0a03;
+  }
+  [data-level="2"] { --lc: var(--lvl-2); --lon: var(--lvl-2-on); }
+  [data-level="3"] { --lc: var(--lvl-3); --lon: var(--lvl-3-on); }
+  @media (max-width: 1023px) { :root { --header-h: 4.25rem; } }
+  @media (max-width: 767px) { :root { --header-h: 3.5rem; --sticky-top: 0px; } }
+
+  * { box-sizing: border-box; }
+  html { background-color: var(--bg); color: var(--fg); }
+  html, body { overflow-x: clip; }
+  body { margin: 0; background-color: var(--bg); color: var(--fg); font-family: "Geist", ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.011em; font-feature-settings: "ss01" 1, "cv11" 1; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+  body::before { content: ""; pointer-events: none; position: fixed; inset: 0; z-index: 1; opacity: 0.045; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); }
+  .dark body::before { mix-blend-mode: overlay; opacity: 0.07; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { background: none; border: 0; padding: 0; cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3, p { margin: 0; }
+  svg.i { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  svg.i.s { width: 16px; height: 16px; } svg.i.xs { width: 13px; height: 13px; }
+
+  /* Barre du site (components/layout/SiteHeader.tsx) : inchangée */
+  .site-header { position: sticky; top: 0; z-index: 100; height: var(--header-h); padding: 1.5rem 1.25rem 0; background: linear-gradient(to bottom, var(--bg) 45%, transparent); }
+  .site-header-inner { position: relative; max-width: 76rem; height: 100%; margin: 0 auto; padding: 0 0.625rem 0 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-radius: 18px; border: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(14px); box-shadow: var(--shadow); }
+  .site-brand { position: relative; display: flex; min-width: 0; flex-shrink: 0; align-self: stretch; align-items: center; padding-left: 6.5rem; }
+  .site-head { position: absolute; left: 0.5rem; top: -0.95rem; width: 5.5rem; height: 4.6rem; filter: drop-shadow(0 8px 8px rgba(20, 17, 14, 0.2)); }
+  .site-head svg { display: block; width: 100%; height: 100%; }
+  .site-brand-name { min-width: 0; font-size: 1rem; font-weight: 600; letter-spacing: -0.025em; white-space: nowrap; }
+  .site-brand-name .a { color: var(--accent); } .site-brand-name .m { color: var(--muted); }
+  .site-header-desktop { display: flex; min-width: 0; flex: 1; align-items: center; justify-content: flex-end; gap: 1.25rem; font-size: 0.875rem; font-weight: 600; }
+  .site-links { display: flex; min-width: 0; align-items: center; gap: 0.25rem; }
+  .site-nav-link { display: inline-flex; flex-shrink: 0; align-items: center; gap: 0.375rem; padding: 0.45rem 0.75rem; border-radius: 999px; white-space: nowrap; color: var(--muted); transition: color 150ms, background-color 150ms; }
+  .site-nav-link:hover { color: var(--accent); }
+  .site-tools { display: flex; flex-shrink: 0; align-items: center; gap: 0.5rem; }
+  .site-icon { display: grid; place-items: center; padding: 0.625rem; border-radius: 0.75rem; color: var(--muted); }
+  .site-icon:hover { background: var(--surface-2); }
+  .site-icon.logout:hover { color: #dc2626; }
+  .site-resume { display: inline-flex; padding: 0.5rem 0.75rem; border-radius: 0.75rem; background: var(--accent-soft); color: var(--accent); font-size: 0.75rem; font-weight: 600; }
+  .site-avatar { display: flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.75rem 0.375rem 0.375rem; border-radius: 0.75rem; border: 1px solid var(--accent); color: var(--fg); font-size: 0.875rem; font-weight: 600; }
+  .site-avatar span:first-child { display: grid; width: 1.75rem; height: 1.75rem; place-items: center; border-radius: 50%; background: var(--accent); color: var(--accent-fg); font-size: 0.75rem; font-weight: 700; }
+  @media (max-width: 1279px) { .site-resume { display: none; } }
+  @media (max-width: 1023px) { .site-brand-name .m { display: none; } }
+  @media (max-width: 767px) {
+    .site-header { padding: 1rem 0.5rem 0; }
+    .site-header-inner { padding: 0 0.375rem 0 0; gap: 0.5rem; border-radius: 16px; }
+    .site-brand { flex-shrink: 1; padding-left: 4.75rem; }
+    .site-head { left: 0.3rem; top: -0.7rem; width: 4.125rem; height: 3.45rem; }
+    .site-brand-name { font-size: 0.95rem; }
+    .site-links, .site-icon, .site-avatar b { display: none; }
+    .site-avatar { padding-right: 0.375rem; }
+  }
+
+  /* Coque de l'admin (AdminShell, AdminTopbar, AdminNav) : inchangée */
+  .admin-shell { position: relative; z-index: 2; min-height: 100vh; background: var(--bg); color: var(--fg); --admin-ok: #15803d; --admin-ok-soft: #dcfce7; --admin-warn: #b91c1c; --admin-warn-soft: #fee2e2; }
+  .dark .admin-shell { --admin-ok: #4ade80; --admin-ok-soft: #14301f; --admin-warn: #fca5a5; --admin-warn-soft: #3a1818; }
+  .admin-shell-inner { display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); gap: 2rem; max-width: 84rem; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .admin-side { position: sticky; top: calc(var(--sticky-top) + 4.4rem); align-self: start; }
+  .admin-main { display: grid; gap: 1.25rem; min-width: 0; align-content: start; }
+  .admin-main > * { min-width: 0; }
+  .admin-top { position: sticky; top: var(--sticky-top); z-index: 35; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.75rem; padding: 0.6rem max(1.5rem, calc((100% - 81rem) / 2)); border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(10px); }
+  .admin-top-classes { display: inline-flex; flex-wrap: wrap; padding: 3px; border-radius: 999px; background: var(--surface-2); }
+  .admin-top-classes button { padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 650; color: var(--muted); transition: background-color 150ms, color 150ms; }
+  .admin-top-classes button:hover { color: var(--fg); }
+  .admin-top-classes button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+  .admin-top-search { flex: 1 1 14rem; display: flex; align-items: center; gap: 0.5rem; min-width: 0; padding: 0.5rem 0.85rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font-size: 0.88rem; color: var(--subtle); text-align: left; }
+  .admin-top-search:hover { border-color: var(--accent); }
+  .admin-top-search span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .admin-shell kbd, .admin-find kbd { padding: 0.05rem 0.35rem; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 0.35rem; background: var(--surface); font: 600 0.72rem "Geist", system-ui; color: var(--muted); }
+  .admin-top-renarts { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.5rem 0.9rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--fg); font-size: 0.88rem; font-weight: 650; }
+  .admin-top-renarts:hover { border-color: var(--accent); color: var(--accent); }
+  .admin-top-create { position: relative; }
+  .admin-top-create > button { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; border-radius: 999px; background: var(--accent); color: var(--accent-fg); font-size: 0.88rem; font-weight: 700; }
+  .admin-top-create > button:hover { filter: brightness(1.05); }
+  .admin-top-menu { position: absolute; right: 0; top: calc(100% + 0.4rem); z-index: 40; display: grid; min-width: 12rem; padding: 0.35rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); box-shadow: var(--shadow); }
+  .admin-top-menu[hidden] { display: none; }
+  .admin-top-menu a { padding: 0.5rem 0.7rem; border-radius: 0.5rem; font-size: 0.88rem; font-weight: 550; color: var(--fg); }
+  .admin-top-menu a:hover { background: var(--accent-soft); color: var(--accent); }
+  .admin-find-back { position: fixed; inset: 0; z-index: 200; display: grid; justify-items: center; align-items: start; padding: 12vh 1rem 1rem; background: rgba(20, 17, 14, 0.45); }
+  .admin-find-back[hidden] { display: none; }
+  .admin-find { width: min(38rem, 100%); border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+  .admin-find-input { display: flex; align-items: center; gap: 0.6rem; padding: 0.2rem 1rem; border-bottom: 1px solid var(--border); color: var(--subtle); }
+  .admin-find-input input { flex: 1; min-width: 0; padding: 0.85rem 0; border: 0; background: transparent; color: var(--fg); outline: none; }
+  .admin-find-list { max-height: 50vh; margin: 0; padding: 0.35rem; overflow-y: auto; list-style: none; }
+  .admin-find-list button { display: flex; width: 100%; align-items: center; gap: 0.7rem; padding: 0.55rem 0.7rem; border-radius: 0.6rem; text-align: left; font-size: 0.9rem; color: var(--fg); }
+  .admin-find-list button.is-on { background: var(--accent-soft); }
+  .admin-find-list button svg { color: var(--accent); }
+  .admin-find-list button span { flex: 1; min-width: 0; display: grid; font-weight: 600; }
+  .admin-find-list small { font-weight: 400; font-size: 0.78rem; color: var(--muted); }
+  .admin-find-list i { font-style: normal; font-size: 0.72rem; font-weight: 700; color: var(--subtle); }
+  .admin-find-keys { margin: 0; padding: 0.55rem 1rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--subtle); }
+  .admin-nav { display: flex; flex-direction: column; gap: 0.2rem; }
+  .admin-nav-link { display: flex; width: 100%; align-items: center; gap: 0.65rem; padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.92rem; font-weight: 600; color: var(--fg); text-align: left; transition: background-color 150ms, color 150ms; }
+  .admin-nav-link > svg { flex-shrink: 0; color: var(--muted); }
+  .admin-nav-text { display: grid; min-width: 0; }
+  .admin-nav-text small { font-size: 0.75rem; font-weight: 400; color: var(--subtle); }
+  .admin-nav-link:hover { background: var(--surface-2); }
+  .admin-nav-link.is-active { background: var(--surface); box-shadow: inset 3px 0 0 var(--accent), var(--shadow); }
+  .admin-nav-link.is-active > svg { color: var(--accent); }
+  .admin-nav-count { margin-left: auto; min-width: 1.5rem; padding: 0.05rem 0.45rem; border-radius: 999px; background: var(--accent); color: var(--accent-fg); font-size: 0.72rem; font-style: normal; font-weight: 700; text-align: center; }
+  .admin-nav-count:empty { display: none; }
+  @media (max-width: 1023px) {
+    .admin-top { position: static; padding: 0.6rem 1rem; }
+    .admin-shell-inner { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; padding: 1rem 1rem 3rem; }
+    .admin-side { position: sticky; top: var(--sticky-top); z-index: 30; margin: -1rem -1rem 0; padding: 0.5rem 1rem; overflow-x: auto; background: color-mix(in srgb, var(--bg) 94%, transparent); border-bottom: 1px solid var(--border); }
+    .admin-nav { flex-direction: row; gap: 0.3rem; }
+    .admin-nav-link { width: auto; white-space: nowrap; padding: 0.5rem 0.7rem; }
+    .admin-nav-text small { display: none; }
+    .admin-nav-link.is-active { box-shadow: inset 0 -3px 0 var(--accent); }
+  }
+
+  /* Éléments de page admin existants */
+  .admin-page { display: none; gap: 1.75rem; min-width: 0; }
+  .admin-page.on { display: grid; }
+  .admin-page > * { min-width: 0; }
+  .admin-page-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; }
+  .admin-page-head h1 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.15; color: var(--fg); }
+  .admin-page-head p:not(.admin-kicker) { margin-top: 0.35rem; max-width: 40rem; font-size: 0.92rem; color: var(--muted); }
+  .admin-kicker { margin: 0 0 0.35rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--subtle); }
+  .admin-sec { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.6rem; font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; color: var(--fg); }
+  .admin-sec small, .admin-card-h small { font-size: 0.8rem; font-weight: 400; letter-spacing: 0; color: var(--subtle); }
+  .admin-card { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; padding: 1.1rem 1.2rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); color: var(--fg); transition: border-color 180ms var(--ease-out), transform 180ms var(--ease-out); }
+  button.admin-card { text-align: left; }
+  button.admin-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .admin-card-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.5rem; margin: 0; font-size: 1.05rem; font-weight: 650; }
+  .admin-card-k { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 600; color: var(--subtle); }
+  .admin-big { font-size: 2.3rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .admin-big small { margin-left: 0.35rem; font-size: 0.9rem; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+  .admin-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.6rem 1rem; border-radius: var(--radius-sm); background: var(--accent); color: var(--accent-fg); font-size: 0.875rem; font-weight: 600; white-space: nowrap; transition: filter 150ms, border-color 150ms; }
+  .admin-btn:hover { filter: brightness(1.05); }
+  .admin-btn.is-quiet { border: 1px solid var(--border); background: var(--surface); color: var(--fg); }
+  .admin-btn.is-quiet:hover { border-color: var(--accent); filter: none; }
+  .admin-btn.is-small { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
+  .admin-pill { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 0.74rem; font-weight: 600; white-space: nowrap; }
+  .admin-pill.is-accent { background: var(--accent-soft); color: var(--accent); }
+  .admin-pill.is-ok { background: var(--admin-ok-soft); color: var(--admin-ok); }
+  .admin-pill.is-warn { background: var(--admin-warn-soft); color: var(--admin-warn); }
+  .admin-search { flex: 0 1 16rem; display: flex; align-items: center; gap: 0.5rem; padding: 0 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); color: var(--subtle); }
+  .admin-search:focus-within { border-color: var(--accent); }
+  .admin-search input { flex: 1; min-width: 0; padding: 0.55rem 0; border: 0; background: transparent; color: var(--fg); font-size: 0.9rem; outline: none; }
+  .admin-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+  .admin-table-wrap.is-flat { border: 0; box-shadow: none; background: none; }
+  .admin-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem; }
+  .admin-table thead th { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.75rem; font-weight: 600; color: var(--subtle); white-space: nowrap; }
+  .admin-table td { padding: 0.65rem 1rem; border-top: 1px solid var(--border); vertical-align: middle; color: var(--muted); }
+  .admin-table-wrap.is-flat .admin-table td, .admin-table-wrap.is-flat .admin-table thead th { padding-left: 0; }
+  .admin-table tbody tr:hover td { background: color-mix(in srgb, var(--surface-2) 55%, transparent); }
+  .admin-avatar { display: grid; place-items: center; flex-shrink: 0; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+  .admin-avatar.is-big { width: 3rem; height: 3rem; font-size: 1.1rem; }
+  .admin-muted { font-size: 0.875rem; color: var(--muted); }
+  .admin-subtle { color: var(--subtle); font-size: 0.8rem; }
+  .admin-lines { display: flex; flex-direction: column; gap: 0.35rem; margin: 0; padding: 0; list-style: none; font-size: 0.875rem; }
+  .admin-lines li { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.55rem 0.75rem; border-radius: 0.6rem; background: var(--surface-2); }
+  .admin-lines b { font-weight: 600; }
+  .admin-classes { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem; }
+  .admin-class { position: relative; display: flex; flex-direction: column; gap: 0.15rem; min-height: 9.5rem; padding: 1rem 1.1rem; overflow: hidden; border-radius: var(--radius); background: color-mix(in srgb, var(--lc) 88%, var(--surface)); color: var(--lon); box-shadow: var(--shadow); text-align: left; transition: transform 180ms var(--ease-out), box-shadow 180ms; }
+  .admin-class:hover { transform: translateY(-3px); }
+  :root:not(.dark) .admin-class[data-level="3"] { --lon: #1a0a03; }
+  .admin-class small { position: relative; z-index: 1; font-size: 0.75rem; font-weight: 600; opacity: 0.85; }
+  .admin-class b { position: relative; z-index: 1; font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; }
+  .admin-class-meta { position: relative; z-index: 1; max-width: 70%; margin-top: auto; font-size: 0.8rem; font-weight: 600; }
+  .admin-class-plate { position: absolute; right: -16px; bottom: -18px; display: grid; place-items: center; width: 96px; height: 96px; border-radius: 50%; background: color-mix(in srgb, var(--surface) 88%, transparent); transition: transform 250ms var(--ease-out); }
+  .admin-class-plate img { width: 68px; height: 68px; object-fit: contain; transform: translate(-6px, -6px); }
+  .admin-class:hover .admin-class-plate { transform: scale(1.05) rotate(-4deg); }
+
+  /* =====================================================================
+     2. NOUVEAU : à ajouter dans globals.css, même vocabulaire que l'existant
+     ===================================================================== */
+  .admin-class-avg { position: relative; z-index: 1; margin-top: 0.35rem; font-size: 2rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .admin-class-avg span { font-size: 0.85rem; font-weight: 600; opacity: 0.8; letter-spacing: 0; }
+  .admin-class.is-on { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--fg), var(--shadow); }
+  .admin-stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.75rem; }
+  .admin-stats .admin-card { gap: 0.3rem; padding: 0.9rem 1rem; }
+  .admin-stats .admin-big { font-size: 1.6rem; }
+  .admin-duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 0.9rem; align-items: start; }
+  .admin-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
+  .num { font-variant-numeric: tabular-nums; }
+  .r { text-align: right !important; }
+
+  .admin-hist svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .admin-hist .grid line { stroke: var(--border); }
+  .admin-hist text { fill: var(--subtle); font-size: 11px; font-family: "Geist", system-ui, sans-serif; }
+  .admin-hist .bar { fill: var(--accent); transition: opacity 150ms; }
+  .admin-hist .hit { fill: transparent; }
+  .admin-hist svg:hover .bar { opacity: 0.45; }
+  .admin-hist g.b:hover .bar { opacity: 1; }
+  .admin-hist .ten { stroke: var(--fg); stroke-dasharray: 3 3; opacity: 0.45; }
+  .admin-tip { position: fixed; z-index: 300; max-width: 16rem; padding: 0.5rem 0.7rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); color: var(--fg); font-size: 0.8rem; pointer-events: none; box-shadow: var(--shadow); display: none; }
+  .admin-tip b { display: block; margin-bottom: 0.1rem; }
+
+  .admin-table th button { font-weight: 600; color: inherit; }
+  .admin-table th button:hover { color: var(--fg); }
+  .admin-table th button::after { content: " ↕"; opacity: 0.4; }
+  .admin-table th button[aria-sort="descending"]::after { content: " ↓"; opacity: 1; color: var(--accent); }
+  .admin-table th button[aria-sort="ascending"]::after { content: " ↑"; opacity: 1; color: var(--accent); }
+  .admin-rank { width: 2.5rem; font-weight: 700; color: var(--subtle) !important; }
+  .admin-rank.is-top { color: var(--accent) !important; }
+  .admin-who { font-weight: 600; color: var(--fg); text-align: left; }
+  button.admin-who:hover { color: var(--accent); }
+  .admin-avg { display: flex; align-items: center; gap: 0.6rem; min-width: 9rem; }
+  .admin-avg b { width: 2.6rem; text-align: right; font-weight: 650; color: var(--fg); font-variant-numeric: tabular-nums; }
+  .admin-meter { position: relative; flex: 1; height: 8px; border-radius: 99px; background: var(--surface-2); }
+  .admin-meter i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--accent); }
+  .admin-meter::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; border-left: 1px dashed var(--subtle); }
+  .is-low { color: var(--admin-warn) !important; }
+  .admin-note { font-variant-numeric: tabular-nums; color: var(--fg); }
+  .admin-note.is-wait { color: var(--subtle); font-style: italic; }
+  .admin-trend { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.8rem; font-weight: 600; }
+  .admin-trend.is-up { color: var(--admin-ok); } .admin-trend.is-down { color: var(--admin-warn); } .admin-trend.is-flat { color: var(--subtle); }
+  .admin-icon-btn { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 0.55rem; color: var(--muted); }
+  .admin-icon-btn:hover { background: var(--accent-soft); color: var(--accent); }
+
+  /* À corriger */
+  .admin-split { display: grid; grid-template-columns: 20rem minmax(0, 1fr); gap: 0.9rem; align-items: start; }
+  .admin-card.admin-queue { position: sticky; top: calc(var(--sticky-top) + 4.4rem); gap: 0; max-height: calc(100dvh - var(--sticky-top) - 5.5rem); padding: 0.4rem; overflow-y: auto; }
+  .admin-queue-group { padding: 0.55rem 0.6rem 0.4rem; }
+  .admin-queue-group + .admin-queue-group { border-top: 1px solid var(--border); margin-top: 0.3rem; }
+  .admin-queue-group h3 { font-size: 0.88rem; font-weight: 650; }
+  .admin-progress { display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0 0.4rem; font-size: 0.75rem; color: var(--subtle); }
+  .admin-progress span { flex: 1; height: 5px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+  .admin-progress i { display: block; height: 100%; background: var(--admin-ok); }
+  .admin-queue-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.05rem 0.5rem; width: 100%; padding: 0.55rem 0.7rem; border-radius: 0.65rem; text-align: left; color: var(--fg); font-size: 0.86rem; }
+  .admin-queue-item:hover { background: var(--surface-2); }
+  .admin-queue-item.is-on { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  .admin-queue-item b { font-weight: 600; }
+  .admin-queue-item small { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.25rem; font-size: 0.76rem; color: var(--muted); }
+  .admin-queue-item small.is-flag { color: var(--accent); font-weight: 600; }
+  .admin-paper { display: grid; gap: 0.75rem; }
+  .admin-paper-head { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
+  .admin-paper-head h2 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; }
+  .admin-exo { gap: 0.6rem; }
+  .admin-exo.is-flag { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); }
+  .admin-exo-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.75rem; align-items: start; }
+  .admin-exo-head h3 { font-size: 0.95rem; font-weight: 600; }
+  .admin-exo-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.3rem; font-size: 0.78rem; color: var(--subtle); }
+  .admin-pts { display: flex; align-items: center; gap: 0.35rem; font-weight: 600; color: var(--muted); }
+  .admin-pts input { width: 4.4rem; padding: 0.4rem 0.5rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--fg); text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .admin-pts input:focus { outline: none; border-color: var(--accent); }
+  .admin-pts input.is-changed { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .admin-fails { display: grid; gap: 0.2rem; margin: 0; padding: 0; list-style: none; font-size: 0.83rem; color: var(--muted); }
+  .admin-fails li { display: flex; gap: 0.4rem; align-items: center; }
+  .admin-fails svg { color: var(--admin-warn); }
+  .admin-exo details summary { cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+  .admin-exo details summary:hover { color: var(--accent); }
+  .admin-exo pre { margin: 0.5rem 0 0; padding: 0.75rem 0.9rem; border-radius: var(--radius-sm); background: var(--surface-2); font: 0.8rem/1.55 "Geist Mono", ui-monospace, monospace; color: var(--fg); overflow: auto; }
+  .admin-alert { padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); background: var(--admin-warn-soft); color: var(--admin-warn); font-size: 0.83rem; font-weight: 600; }
+  .admin-paper-actions { position: sticky; bottom: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0.9rem 0 0.5rem; background: linear-gradient(transparent, var(--bg) 35%); }
+
+  /* Préparer */
+  .admin-create { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; }
+  .admin-create .admin-card { flex-direction: row; align-items: center; gap: 1rem; padding: 1.2rem 1.3rem; }
+  .admin-create-icon { display: grid; place-items: center; flex-shrink: 0; width: 3rem; height: 3rem; border-radius: 0.9rem; background: var(--accent-soft); color: var(--accent); }
+  .admin-create b { display: block; font-size: 1.05rem; font-weight: 600; }
+  .admin-mondays { overflow-x: auto; }
+  .admin-mgrid { display: grid; grid-template-columns: 6.5rem repeat(4, minmax(8rem, 1fr)); min-width: 40rem; }
+  .admin-mgrid > div { padding: 0.45rem; border-top: 1px solid var(--border); font-size: 0.85rem; }
+  .admin-mgrid .mh { border-top: 0; font-size: 0.78rem; font-weight: 600; color: var(--subtle); }
+  .admin-mgrid .mh.is-today { color: var(--accent); }
+  .admin-mgrid .cl { display: flex; align-items: center; font-weight: 650; color: var(--fg); }
+  .admin-slot { display: grid; gap: 0.1rem; width: 100%; height: 100%; min-height: 3.4rem; padding: 0.5rem 0.65rem; border-radius: var(--radius-sm); text-align: left; font-size: 0.78rem; }
+  .admin-slot b { font-size: 0.86rem; font-weight: 600; color: var(--fg); }
+  .admin-slot.is-open { background: var(--admin-ok-soft); color: var(--admin-ok); }
+  .admin-slot.is-planned { background: var(--accent-soft); color: var(--accent); }
+  .admin-slot.is-missing { display: flex; align-items: center; justify-content: center; gap: 0.3rem; border: 1.5px dashed var(--border); color: var(--subtle); font-weight: 600; }
+  button.admin-slot.is-missing:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+  /* Panneau latéral (création, fiche élève) */
+  .admin-drawer-back { position: fixed; inset: 0; z-index: 150; background: rgba(20, 17, 14, 0.45); display: none; }
+  .admin-drawer-back.on { display: block; }
+  .admin-drawer { position: fixed; z-index: 160; top: 0; right: 0; bottom: 0; width: min(36rem, 100%); display: flex; flex-direction: column; background: var(--bg); border-left: 1px solid var(--border); box-shadow: var(--shadow); transform: translateX(105%); transition: transform 220ms var(--ease-out); }
+  .admin-drawer.on { transform: none; }
+  .admin-drawer-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .admin-drawer-head h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; }
+  .admin-drawer-body { flex: 1; overflow: auto; padding: 1.2rem 1.25rem; display: grid; gap: 1rem; align-content: start; }
+  .admin-drawer-foot { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; padding: 0.9rem 1.25rem; border-top: 1px solid var(--border); background: var(--surface); }
+  .admin-field { display: grid; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: var(--fg); }
+  .admin-field small { font-weight: 400; color: var(--subtle); }
+  .admin-field input, .admin-field select, .admin-field textarea { padding: 0.55rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--fg); font-weight: 400; font-size: 0.9rem; }
+  .admin-field input:focus, .admin-field select:focus, .admin-field textarea:focus { outline: none; border-color: var(--accent); }
+  .admin-field textarea { min-height: 12rem; resize: vertical; font: 0.8rem/1.55 "Geist Mono", ui-monospace, monospace; }
+  .admin-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
+  .admin-checks { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .admin-checks label { padding: 0.35rem 0.85rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font-size: 0.82rem; font-weight: 600; color: var(--muted); cursor: pointer; }
+  .admin-checks label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  .admin-checks input { position: absolute; opacity: 0; pointer-events: none; }
+  .admin-switch { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--fg); }
+  .admin-switch input { accent-color: var(--accent); width: 1rem; height: 1rem; }
+  .admin-hint { padding: 0.65rem 0.85rem; border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: var(--accent-soft); font-size: 0.83rem; color: var(--fg); }
+  .admin-student-top { display: flex; align-items: center; gap: 0.9rem; }
+  .admin-mini-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; }
+  .admin-mini-stats .admin-card { gap: 0.2rem; padding: 0.8rem 0.9rem; }
+  .admin-mini-stats .admin-big { font-size: 1.45rem; }
+
+  /* Messagerie */
+  .admin-inbox { display: grid; grid-template-columns: 20rem minmax(0, 1fr); height: calc(100dvh - var(--sticky-top) - 15rem); min-height: 30rem; padding: 0; gap: 0; overflow: hidden; }
+  .admin-inbox-list { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--border); }
+  .admin-inbox-tools { padding: 0.8rem; border-bottom: 1px solid var(--border); }
+  .admin-inbox-tools .admin-search { flex: none; }
+  .admin-inbox-threads { flex: 1; overflow-y: auto; padding: 0.35rem; }
+  .admin-inbox-thread { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.05rem 0.65rem; width: 100%; padding: 0.65rem 0.7rem; border-radius: 0.7rem; text-align: left; }
+  .admin-inbox-thread:hover { background: var(--surface-2); }
+  .admin-inbox-thread.is-on { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  .admin-inbox-thread .admin-avatar { grid-row: span 2; }
+  .admin-inbox-thread b { font-size: 0.88rem; font-weight: 600; color: var(--fg); }
+  .admin-inbox-thread b small { margin-left: 0.3rem; font-weight: 500; color: var(--subtle); }
+  .admin-inbox-thread time { font-size: 0.72rem; color: var(--subtle); }
+  .admin-inbox-thread .last { grid-column: 2 / 4; font-size: 0.8rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .admin-inbox-thread.is-unread .last { color: var(--fg); font-weight: 600; }
+  .admin-dot { display: inline-block; width: 0.5rem; height: 0.5rem; margin-left: 0.35rem; border-radius: 50%; background: var(--accent); vertical-align: middle; }
+  .admin-conv { display: flex; flex-direction: column; min-height: 0; }
+  .admin-conv-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+  .admin-conv-head .who { display: flex; align-items: center; gap: 0.7rem; }
+  .admin-conv-msgs { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.45rem; padding: 1rem; margin: 0; list-style: none; background: color-mix(in srgb, var(--bg) 60%, var(--surface)); }
+  .admin-conv-msgs li { align-self: flex-start; max-width: 75%; padding: 0.5rem 0.8rem; border-radius: 0.9rem; background: var(--surface-2); color: var(--fg); font-size: 0.9rem; }
+  .admin-conv-msgs li.is-mine { align-self: flex-end; background: var(--accent); color: var(--accent-fg); }
+  .admin-conv-msgs li small { display: block; font-size: 0.68rem; opacity: 0.75; }
+  .admin-conv-msgs .day { align-self: center; max-width: none; padding: 0; background: none; font-size: 0.72rem; color: var(--subtle); }
+  .admin-conv-form { display: flex; gap: 0.5rem; padding: 0.75rem; border-top: 1px solid var(--border); }
+  .admin-conv-form textarea { flex: 1; min-width: 0; height: 2.75rem; resize: none; padding: 0.6rem 0.85rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--fg); font-size: 0.9rem; }
+  .admin-conv-form textarea:focus { outline: none; border-color: var(--accent); }
+  .admin-empty { padding: 2.5rem 1rem; text-align: center; color: var(--muted); font-size: 0.9rem; }
+  .admin-empty b { display: block; margin-bottom: 0.25rem; font-size: 1.1rem; font-weight: 600; color: var(--fg); }
+
+  .admin-toast { position: fixed; left: 50%; bottom: 1.25rem; z-index: 300; transform: translate(-50%, 150%); opacity: 0; pointer-events: none; padding: 0.65rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); color: var(--fg); font-size: 0.875rem; font-weight: 600; box-shadow: var(--shadow); transition: transform 220ms var(--ease-out), opacity 220ms; }
+  .admin-toast.on { transform: translate(-50%, 0); opacity: 1; }
+  .admin-toast svg { color: var(--admin-ok); vertical-align: -3px; margin-right: 0.3rem; }
+
+  @media (max-width: 1180px) {
+    .admin-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .admin-duo, .admin-split { grid-template-columns: minmax(0, 1fr); }
+    .admin-card.admin-queue { position: static; max-height: 22rem; }
+  }
+  @media (max-width: 640px) {
+    .admin-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .admin-create { grid-template-columns: minmax(0, 1fr); }
+    .admin-inbox { grid-template-columns: minmax(0, 1fr); height: auto; }
+    .admin-inbox-list { border-right: 0; border-bottom: 1px solid var(--border); max-height: 16rem; }
+    .admin-conv-msgs { min-height: 20rem; }
+    .admin-fields { grid-template-columns: 1fr 1fr; }
+    .admin-conv-msgs li { max-width: 90%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= Barre du site : identique à SiteHeader (compte enseignant) ================= -->
+<header class="site-header">
+  <nav class="site-header-inner">
+    <a href="#" class="site-brand">
+      <span class="site-head" aria-hidden="true">
+        <svg viewBox="730 285 641 535"><path d="M818 292L983 437L848 560Q818 430 818 292Z" fill="#E4742B"/><path d="M835 337Q900 425 947 468L880 530Q852 450 835 337Z" fill="#281E1E"/><path d="M1283 292L1119 437L1254 560Q1283 430 1283 292Z" fill="#E4742B"/><path d="M1266 337Q1201 425 1155 468L1222 530Q1249 450 1266 337Z" fill="#281E1E"/><polygon points="735,662 1366,662 1080,815 1023,815" fill="#F9F6E3"/><polygon points="983,437 1051,437 1051,760 1028,766 995,660 968,613 912,598 862,634 735,662" fill="#EE973B"/><polygon points="1119,437 1051,437 1051,760 1074,766 1107,660 1133,613 1190,598 1240,634 1366,662" fill="#E4742B"/><polygon points="862,634 912,598 938,643 995,660 1028,766 980,700" fill="#C24F2E"/><polygon points="1240,634 1190,598 1164,643 1107,660 1074,766 1122,700" fill="#C24F2E"/><polygon points="912,598 968,613 984,630 995,660 938,643" fill="#281E1E"/><polygon points="1190,598 1133,613 1117,630 1107,660 1164,643" fill="#281E1E"/><polygon points="735,662 862,634 980,700 1000,745 1023,772 1051,797 1023,812" fill="#F9F6E3"/><polygon points="1366,662 1240,634 1122,700 1102,745 1080,772 1051,797 1080,812" fill="#F9F6E3"/><path d="M1030 762L1051 758L1072 762L1080 772Q1066 790 1051 797Q1036 790 1023 772Z" fill="#281E1E"/><polygon points="1023,810 1051,797 1080,810 1072,815 1030,815" fill="#281E1E"/></svg>
+      </span>
+      <span class="site-brand-name"><span class="a">La tanière du Code</span> <span class="m">par Clément BRAUN</span></span>
+    </a>
+    <div class="site-header-desktop">
+      <div class="site-links">
+        <a class="site-nav-link" href="#">Accueil</a>
+        <a class="site-nav-link" href="#">À propos</a>
+        <a class="site-nav-link" href="#">Évaluations</a>
+      </div>
+      <div class="site-tools">
+        <button class="site-icon" id="theme" title="Accessibilité (dans la maquette : bascule le mode sombre)"><svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button>
+        <a class="site-resume" href="#">Reprendre</a>
+        <a class="site-avatar" href="#" title="Administration"><span>C</span><b>Clément</b></a>
+        <button class="site-icon logout" title="Déconnexion"><svg class="i" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="admin-shell">
+  <!-- ================= Barre admin : identique à AdminTopbar ================= -->
+  <div class="admin-top">
+    <div class="admin-top-classes" role="group" aria-label="Classe affichée" id="class-select"></div>
+    <button type="button" class="admin-top-search" id="open-find"><span data-icon="search"></span><span>Chercher un élève, un exercice, une évaluation…</span><kbd>Ctrl</kbd><kbd>K</kbd></button>
+    <a href="#" class="admin-top-renarts"><span data-icon="palette"></span> Ren'Arts</a>
+    <div class="admin-top-create">
+      <button type="button" id="create-btn" aria-haspopup="menu" aria-expanded="false"><span data-icon="plus"></span> Créer</button>
+      <div role="menu" class="admin-top-menu" id="create-menu" hidden>
+        <a href="#" data-create="evaluation">Évaluation</a>
+        <a href="#" data-create="defi">Défi du lundi</a>
+        <a href="#" data-create="other">Annonce</a>
+        <a href="#" data-create="other">Devoir de classe</a>
+        <a href="#" data-create="other">Interro ou DS</a>
+        <a href="#" data-create="other">Évaluation de révision</a>
+        <a href="#" data-create="other">Élève</a>
+        <a href="#" data-create="other">Élèves en lot</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-shell-inner">
+    <aside class="admin-side"><nav class="admin-nav" aria-label="Administration" id="nav"></nav></aside>
+
+    <main class="admin-main">
+      <!-- CLASSES -->
+      <section class="admin-page on" id="classes">
+        <header class="admin-page-head">
+          <div>
+            <p class="admin-kicker" id="classes-kicker"></p>
+            <h1 id="classes-title"></h1>
+            <p>Moyennes calculées sur les notes validées. Une note encore à corriger s'affiche en gris et ne compte pas.</p>
+          </div>
+        </header>
+        <div class="admin-classes" id="class-cards"></div>
+        <div id="class-detail" style="display:grid;gap:1.75rem"></div>
+      </section>
+
+      <!-- À CORRIGER -->
+      <section class="admin-page" id="corriger">
+        <header class="admin-page-head">
+          <div>
+            <p class="admin-kicker" id="corr-kicker"></p>
+            <h1 id="corr-title"></h1>
+            <p>Les copies d'évaluation rendues dont la note n'est pas encore validée. La note proposée vient de la correction automatique.</p>
+          </div>
+        </header>
+        <div id="corr-body"></div>
+      </section>
+
+      <!-- PRÉPARER -->
+      <section class="admin-page" id="preparer">
+        <header class="admin-page-head">
+          <div>
+            <p class="admin-kicker" id="prep-kicker"></p>
+            <h1>Évaluations et défis du lundi</h1>
+            <p>Ce qui est prévu, ce qui manque, et de quoi le créer.</p>
+          </div>
+        </header>
+        <div class="admin-create">
+          <button class="admin-card" data-new="evaluation"><span class="admin-create-icon" data-icon="clipboard"></span><span><b>Nouvelle évaluation</b><span class="admin-muted">Sujets, barème, date d'ouverture, durée</span></span></button>
+          <button class="admin-card" data-new="defi"><span class="admin-create-icon" data-icon="trophy"></span><span><b>Nouveau défi du lundi</b><span class="admin-muted">Ouvert le lundi à 7 h 30, pour une semaine</span></span></button>
+        </div>
+        <section class="admin-card">
+          <h2 class="admin-card-h">Défis des prochains lundis <small>une case vide = un défi à créer</small></h2>
+          <div class="admin-mondays"><div class="admin-mgrid" id="mondays"></div></div>
+        </section>
+        <section class="admin-card">
+          <h2 class="admin-card-h">Évaluations à venir <small>brouillons et évaluations programmées</small></h2>
+          <ul class="admin-lines" id="upcoming"></ul>
+        </section>
+      </section>
+
+      <!-- MESSAGERIE -->
+      <section class="admin-page" id="messagerie">
+        <header class="admin-page-head">
+          <div>
+            <p class="admin-kicker" id="msg-kicker"></p>
+            <h1>Messagerie</h1>
+            <p>Une conversation par élève. Les messages non lus remontent en tête.</p>
+          </div>
+          <button class="admin-btn is-quiet" id="new-msg"><span data-icon="mail"></span> Écrire à un élève</button>
+        </header>
+        <div class="admin-card admin-inbox">
+          <aside class="admin-inbox-list">
+            <div class="admin-inbox-tools"><label class="admin-search"><span data-icon="search"></span><input id="msg-search" placeholder="Chercher un élève…" aria-label="Chercher un élève"></label></div>
+            <div class="admin-inbox-threads" id="threads"></div>
+          </aside>
+          <div class="admin-conv" id="conv"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- Recherche Ctrl K, comme AdminSearch -->
+<div class="admin-find-back" id="find" hidden>
+  <div class="admin-find" role="dialog" aria-modal="true" aria-label="Recherche dans l'admin">
+    <label class="admin-find-input"><span data-icon="search"></span><input id="find-input" placeholder="Chercher un élève, un exercice, une évaluation…" aria-label="Recherche"></label>
+    <ul class="admin-find-list" id="find-list"></ul>
+    <p class="admin-find-keys"><kbd>↑</kbd> <kbd>↓</kbd> choisir · <kbd>Entrée</kbd> ouvrir · <kbd>Échap</kbd> fermer</p>
+  </div>
+</div>
+
+<div class="admin-drawer-back" id="scrim"></div>
+<aside class="admin-drawer" id="drawer" aria-hidden="true">
+  <div class="admin-drawer-head"><h2 id="drawer-title"></h2><button class="admin-icon-btn" id="drawer-close" aria-label="Fermer"></button></div>
+  <div class="admin-drawer-body" id="drawer-body"></div>
+  <div class="admin-drawer-foot" id="drawer-foot"></div>
+</aside>
+<div class="admin-tip" id="tip" role="tooltip"></div>
+<div class="admin-toast" id="toast" role="status"></div>
+
+<script>
+/* ===================== Icônes lucide (celles de l'app) ===================== */
+const ICONS = {
+  users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  pen: '<path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/>',
+  calendar: '<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>',
+  message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  mail: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+  clipboard: '<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+  trophy: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+  alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+  search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  up: '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  down: '<polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/>',
+  arrow: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  user: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  play: '<polygon points="6 3 20 12 6 21 6 3"/>',
+  pencil: '<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>',
+  palette: '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>',
+};
+const ic = (name, size = "s") => `<svg class="i ${size}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name]}</svg>`;
+const fillIcons = (root = document) => root.querySelectorAll("[data-icon]").forEach((el) => { el.outerHTML = ic(el.dataset.icon, el.classList.contains("admin-create-icon") ? "" : "s").replace("<svg", el.classList.contains("admin-create-icon") ? '<span class="admin-create-icon"><svg style="width:22px;height:22px"' : "<svg") + (el.classList.contains("admin-create-icon") ? "</span>" : ""); });
+
+/* ===================== Données fictives (effectifs réels, format réel des copies) ===================== */
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const rand = mulberry32(7);
+const gauss = () => { let u = 0; while (!u) u = rand(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rand()); };
+const half = (x) => Math.round(x * 2) / 2;
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const pick = (list) => list[Math.floor(rand() * list.length)];
+const shuffle = (list) => { const out = [...list]; for (let i = out.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [out[i], out[j]] = [out[j], out[i]]; } return out; };
+
+const FIRST = ["Léa","Hugo","Inès","Nathan","Chloé","Lucas","Jade","Adam","Manon","Yanis","Camille","Théo","Sarah","Noah","Emma","Rayan","Lina","Enzo","Zoé","Mathis","Louise","Ethan","Anaïs","Sacha","Clara","Kylian","Maëlys","Tom","Ambre","Nolan","Romane","Axel","Lou","Mehdi","Elsa","Gabin","Nina","Malo","Lilou","Bastien","Jeanne","Samuel","Alice","Ilyes","Margaux","Timéo","Salomé","Louka","Eva","Aaron","Agathe","Valentin","Lisa","Robin","Océane","Ilan","Mila","Victor","Léna","Arthur","Juliette","Adrien","Rose","Paul","Yasmine","Jules"];
+const LAST = "ABCDEFGHJKLMNPRSTVW".split("");
+const CLASSES = [
+  { id: "1NSI1", n: 22, level: "Première NSI", folder: "2", image: "../public/images/fox_2.png" },
+  { id: "1NSI2", n: 23, level: "Première NSI", folder: "2", image: "../public/images/fox_2.png" },
+  { id: "TNSI", n: 21, level: "Terminale NSI", folder: "3", image: "../public/images/fox_3.png" },
+];
+const PRIVATE = "__particuliers";
+const CHOICES = [{ value: "", label: "Toutes" }, ...CLASSES.map((c) => ({ value: c.id, label: c.id })), { value: PRIVATE, label: "Particuliers" }];
+const classLabel = (sel) => sel === "" ? "toutes les classes" : sel === PRIVATE ? "cours particuliers" : sel;
+
+const EXOS = {
+  boucles: [
+    { label: "Exercice 1 - Somme des entiers", max: 4, code: ["def somme(n):\n    total = 0\n    for i in range(1, n + 1):\n        total += i\n    return total", "def somme(n):\n    total = 0\n    for i in range(n):\n        total += i\n    return total"], fails: ["somme(5) vaut 15.", "somme(1) vaut 1."] },
+    { label: "Exercice 2 - Table de multiplication", max: 4, code: ["def table(n):\n    for i in range(1, 11):\n        print(n, 'x', i, '=', n * i)", "def table(n):\n    i = 1\n    while i < 10:\n        print(n * i)\n        i += 1"], fails: ["table(3) affiche 10 lignes.", "Chaque ligne a la forme « 3 x 4 = 12 »."] },
+    { label: "Exercice 3 - Compter les voyelles", max: 5, code: ["def voyelles(mot):\n    n = 0\n    for c in mot:\n        if c in 'aeiouy':\n            n += 1\n    return n", "def voyelles(mot):\n    n = 0\n    for c in mot:\n        if c == 'a' or 'e' or 'i':\n            n += 1\n    return n"], fails: ["voyelles('python') vaut 2.", "voyelles('') vaut 0.", "voyelles('xyz') vaut 1."] },
+    { label: "Exercice 4 - Plus grand élément", max: 7, code: ["def maximum(t):\n    m = t[0]\n    for x in t:\n        if x > m:\n            m = x\n    return m", "def maximum(t):\n    m = 0\n    for x in t:\n        if x > m:\n            m = x\n    return m"], fails: ["maximum([-3, -1, -7]) vaut -1.", "maximum([4]) vaut 4."] },
+  ],
+  listes: [
+    { label: "Exercice 1 - Longueur d'une liste chaînée", max: 5, code: ["def longueur(lst):\n    n = 0\n    while lst is not None:\n        n += 1\n        lst = lst.suivant\n    return n", "def longueur(lst):\n    n = 0\n    while lst.suivant is not None:\n        n += 1\n        lst = lst.suivant\n    return n"], fails: ["longueur(None) vaut 0.", "longueur d'une liste à un maillon vaut 1."] },
+    { label: "Exercice 2 - Ajout en queue", max: 7, code: ["def ajouter_queue(lst, v):\n    if lst is None:\n        return Maillon(v, None)\n    m = lst\n    while m.suivant is not None:\n        m = m.suivant\n    m.suivant = Maillon(v, None)\n    return lst", "def ajouter_queue(lst, v):\n    m = lst\n    while m is not None:\n        m = m.suivant\n    m = Maillon(v, None)\n    return lst"], fails: ["Ajout dans une liste vide.", "Le dernier maillon contient la valeur ajoutée."] },
+    { label: "Exercice 3 - Inverser (récursif, justifier)", max: 8, written: true, code: ["def inverser(lst, acc=None):\n    if lst is None:\n        return acc\n    return inverser(lst.suivant, Maillon(lst.valeur, acc))\n# Terminaison : la liste raccourcit à chaque appel.", "def inverser(lst):\n    if lst is None:\n        return None\n    return Maillon(inverser(lst.suivant), lst.valeur)"], fails: ["inverser de 1 → 2 → 3 donne 3 → 2 → 1.", "inverser(None) vaut None."] },
+  ],
+};
+const EVALS = [
+  { id: "e1", title: "Types et variables", classes: ["1NSI1", "1NSI2"], date: "2026-10-06" },
+  { id: "e2", title: "Les conditions", classes: ["1NSI1", "1NSI2"], date: "2026-11-03" },
+  { id: "e3", title: "Les boucles", classes: ["1NSI1", "1NSI2"], date: "2026-11-17", exos: EXOS.boucles, pending: { "1NSI1": 14, "1NSI2": 9 } },
+  { id: "t1", title: "Récursivité", classes: ["TNSI"], date: "2026-10-13" },
+  { id: "t2", title: "Programmation objet", classes: ["TNSI"], date: "2026-11-10" },
+  { id: "t3", title: "Listes chaînées", classes: ["TNSI"], date: "2026-11-20", exos: EXOS.listes, pending: { TNSI: 6 } },
+];
+const DEFIS_PASSES = 5;
+
+const names = shuffle(FIRST);
+const STUDENTS = [];
+let k = 0;
+for (const c of CLASSES) for (let i = 0; i < c.n; i++, k++) STUDENTS.push({ id: "s" + k, name: `${names[k % names.length]} ${pick(LAST)}.`, classe: c.id, ability: clamp(11.5 + gauss() * 3.6, 3, 19.5), notes: {}, defis: 0 });
+for (const s of STUDENTS) s.defis = clamp(Math.round(clamp((s.ability - 6) / 13, 0, 1) * DEFIS_PASSES * (0.6 + rand() * 0.5)), 0, DEFIS_PASSES);
+
+function makeAnswers(student, exos) {
+  return exos.map((exo) => {
+    const p = clamp(student.ability / 20 + gauss() * 0.15, 0.02, 1);
+    const error = !exo.written && rand() < 0.08;
+    const total = exo.written ? 0 : 3 + Math.floor(rand() * 3);
+    const passed = error ? 0 : Math.round(total * p);
+    const auto = exo.written ? half(exo.max * clamp(p - 0.1, 0, 1)) : half(exo.max * (total ? passed / total : 0));
+    const failed = error ? [] : exo.fails.slice(0, Math.max(0, Math.min(exo.fails.length, total - passed)));
+    return { exo, error, testsTotal: total, testsPassed: passed, auto, points: auto, failed, code: exo.code[p > 0.6 ? 0 : 1], review: Boolean(exo.written) || error };
+  });
+}
+for (const ev of EVALS) for (const classe of ev.classes) {
+  const members = shuffle(STUDENTS.filter((s) => s.classe === classe));
+  const pendingCount = ev.pending?.[classe] ?? 0;
+  members.forEach((s, i) => {
+    if (rand() < 0.04) { s.notes[ev.id] = { absent: true }; return; }
+    if (ev.exos) { const answers = makeAnswers(s, ev.exos); s.notes[ev.id] = { value: answers.reduce((sum, a) => sum + a.points, 0), validated: i >= pendingCount, answers }; }
+    else s.notes[ev.id] = { value: half(clamp(s.ability + gauss() * 2.4, 0, 20)), validated: true };
+  });
+}
+
+const TODAY = "2026-11-23";
+const MONDAYS = ["2026-11-23", "2026-11-30", "2026-12-07", "2026-12-14"];
+const DEFIS = [
+  { title: "Palindromes", classes: ["1NSI1", "1NSI2"], monday: "2026-11-23", passed: 17 },
+  { title: "Pile bien parenthésée", classes: ["TNSI"], monday: "2026-11-23", passed: 9 },
+  { title: "Rendu de monnaie", classes: ["1NSI1", "1NSI2"], monday: "2026-11-30" },
+];
+const UPCOMING = [
+  { title: "Les fonctions", classes: ["1NSI1"], status: "programmee", at: "2026-11-26T10:00", duration: 55 },
+  { title: "Les fonctions", classes: ["1NSI2"], status: "brouillon", duration: 55 },
+  { title: "Arbres binaires", classes: ["TNSI"], status: "brouillon", duration: 110 },
+];
+const byClass = (c) => STUDENTS.filter((s) => s.classe === c);
+const THREADS = [
+  { s: byClass("1NSI1")[3], unread: true, msgs: [["them", "2026-11-23T08:12", "Bonjour, le défi Palindromes me met « IndentationError » alors que je n'ai rien changé à la première ligne. C'est normal ?"]] },
+  { s: byClass("TNSI")[5], unread: true, msgs: [["me", "2026-11-20T17:40", "Ta copie est rendue, tu auras ta note la semaine prochaine."], ["them", "2026-11-22T19:03", "Merci ! Est-ce que l'éval sur les arbres porte aussi sur les parcours en largeur ?"]] },
+  { s: byClass("1NSI2")[8], unread: true, msgs: [["them", "2026-11-21T12:30", "J'étais absent mardi 17, est-ce que je peux rattraper l'évaluation sur les boucles ?"]] },
+  { s: byClass("1NSI2")[1], unread: false, msgs: [["them", "2026-11-18T09:15", "Je n'arrive pas à me connecter à l'extension sur mon ordinateur."], ["me", "2026-11-18T12:02", "Va dans Réglages > Extension et génère un nouveau jeton, puis colle-le dans l'extension."], ["them", "2026-11-18T12:20", "Ça marche, merci !"]] },
+  { s: byClass("TNSI")[0], unread: false, msgs: [["them", "2026-11-14T16:45", "Pour le projet, on peut utiliser Pygame ?"], ["me", "2026-11-15T08:30", "Oui, tant que le cœur du jeu reste dans tes propres classes."]] },
+  { s: byClass("1NSI1")[10], unread: false, msgs: [["me", "2026-11-12T13:10", "Bravo pour le défi de lundi, réussi en premier !"], ["them", "2026-11-12T13:25", "Merci 😄"]] },
+  { s: byClass("1NSI1")[15], unread: false, msgs: [["them", "2026-11-08T21:05", "Bonsoir, je ne comprends pas la différence entre return et print."], ["me", "2026-11-09T07:50", "print affiche, return renvoie une valeur au programme qui a appelé la fonction. On en reparle lundi en classe."]] },
+];
+
+/* ===================== Outils ===================== */
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+const fr = (x, dg = 1) => x == null || Number.isNaN(x) || !Number.isFinite(x) ? "—" : x.toLocaleString("fr-FR", { minimumFractionDigits: dg, maximumFractionDigits: dg });
+const fn = (x) => x == null ? "—" : x.toLocaleString("fr-FR", { maximumFractionDigits: 2 });
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const initials = (name) => name.split(" ").map((w) => w[0]).join("").slice(0, 2);
+const dayFmt = new Intl.DateTimeFormat("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+const dayShort = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short" });
+const timeFmt = new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit" });
+const longDay = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+const d = (iso) => new Date(iso.length === 10 ? iso + "T12:00" : iso);
+const plural = (n, word) => `${n} ${word}${n > 1 ? "s" : ""}`;
+const mean = (xs) => xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null;
+function quantile(xs, q) { if (!xs.length) return null; const s = [...xs].sort((a, b) => a - b), pos = (s.length - 1) * q, lo = Math.floor(pos), hi = Math.ceil(pos); return s[lo] + (s[hi] - s[lo]) * (pos - lo); }
+const sd = (xs) => { const m = mean(xs); return xs.length ? Math.sqrt(mean(xs.map((x) => (x - m) ** 2))) : null; };
+
+const evalsOf = (classe) => EVALS.filter((e) => e.classes.includes(classe));
+const validatedNotes = (s) => evalsOf(s.classe).map((e) => s.notes[e.id]).filter((n) => n && !n.absent && n.validated).map((n) => n.value);
+const avgOf = (s) => mean(validatedNotes(s));
+const inSel = (classe) => state.sel === "" || state.sel === classe;
+const pendingCopies = () => { const out = []; for (const ev of EVALS) for (const s of STUDENTS) { const n = s.notes[ev.id]; if (ev.classes.includes(s.classe) && n && !n.absent && !n.validated) out.push({ ev, s, n }); } return out; };
+function stats(students) {
+  const avgs = students.map(avgOf).filter((x) => x != null);
+  return { students, avgs, mean: mean(avgs), median: quantile(avgs, 0.5), q1: quantile(avgs, 0.25), q3: quantile(avgs, 0.75), sd: sd(avgs), min: Math.min(...avgs), max: Math.max(...avgs), below: avgs.filter((x) => x < 10).length };
+}
+function toast(text) { const t = $("#toast"); t.innerHTML = ic("check") + esc(text); t.classList.add("on"); clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove("on"), 2600); }
+
+/* ===================== Coque : classe affichée, menu de gauche à quatre entrées ===================== */
+const SECTIONS = [
+  { id: "classes", label: "Classes", hint: "moyennes et classement", icon: "users" },
+  { id: "corriger", label: "À corriger", hint: "notes à valider", icon: "pen" },
+  { id: "preparer", label: "Préparer", hint: "évaluations et défis", icon: "calendar" },
+  { id: "messagerie", label: "Messagerie", hint: "messages des élèves", icon: "message" },
+];
+const state = { tab: "classes", sel: "", sort: { key: "avg", dir: -1 }, q: "", current: null, msgQ: "", thread: 0 };
+
+function renderShell() {
+  $("#class-select").innerHTML = CHOICES.map((c) => `<button type="button" aria-pressed="${state.sel === c.value}" data-sel="${c.value}">${c.label}</button>`).join("");
+  $$("#class-select [data-sel]").forEach((b) => b.addEventListener("click", () => { state.sel = b.dataset.sel; state.current = null; state.q = ""; render(); }));
+  const counts = { corriger: pendingCopies().filter((p) => inSel(p.s.classe)).length, messagerie: THREADS.filter((t) => t.unread && inSel(t.s.classe)).length };
+  $("#nav").innerHTML = SECTIONS.map((s) => `<button class="admin-nav-link ${state.tab === s.id ? "is-active" : ""}" data-tab="${s.id}" ${state.tab === s.id ? 'aria-current="page"' : ""}>
+    ${ic(s.icon, "")}<span class="admin-nav-text">${s.label}<small>${s.hint}</small></span><i class="admin-nav-count">${counts[s.id] || ""}</i></button>`).join("");
+  $$("#nav [data-tab]").forEach((b) => b.addEventListener("click", () => go(b.dataset.tab)));
+}
+function go(tab) { state.tab = tab; $$(".admin-page").forEach((s) => s.classList.toggle("on", s.id === tab)); render(); window.scrollTo({ top: 0 }); }
+function render() {
+  if (state.tab === "messagerie" && THREADS[state.thread] && inSel(THREADS[state.thread].s.classe)) THREADS[state.thread].unread = false;
+  renderShell();
+  ({ classes: renderClasses, corriger: renderCorriger, preparer: renderPreparer, messagerie: renderMessagerie })[state.tab]();
+}
+const privateEmpty = (what) => `<div class="admin-card admin-empty"><b>Pas de ${what} pour les cours particuliers</b>Choisis une classe dans la barre du haut.</div>`;
+
+/* ===================== CLASSES ===================== */
+function renderClasses() {
+  $("#classes-kicker").textContent = `Classes · ${classLabel(state.sel)}`;
+  $("#classes-title").textContent = state.sel && state.sel !== PRIVATE ? state.sel : "Vue d'ensemble";
+  if (state.sel === PRIVATE) { $("#class-cards").innerHTML = ""; $("#class-detail").innerHTML = privateEmpty("moyennes de classe"); return; }
+  $("#class-cards").innerHTML = CLASSES.map((c) => {
+    const st = stats(byClass(c.id)), pend = pendingCopies().filter((p) => p.s.classe === c.id).length;
+    return `<button class="admin-class ${state.sel === c.id ? "is-on" : ""}" data-level="${c.folder}" data-classe="${c.id}" aria-pressed="${state.sel === c.id}">
+      <small>${c.level}</small><b>${c.id}</b>
+      <span class="admin-class-avg" title="Moyenne de la classe">${fr(st.mean)}<span> /20</span></span>
+      <span class="admin-class-meta">Moyenne · ${st.students.length} élèves<br>${pend ? `${pend} à corriger` : "tout est corrigé"}</span>
+      <span class="admin-class-plate" aria-hidden="true"><img src="${c.image}" alt=""></span>
+    </button>`;
+  }).join("");
+  $$("#class-cards [data-classe]").forEach((b) => b.addEventListener("click", () => { state.sel = state.sel === b.dataset.classe ? "" : b.dataset.classe; state.q = ""; render(); }));
+  state.sel ? renderClassDetail(state.sel) : renderOverview();
+}
+
+function rankingTable(students, evs, showClass) {
+  const rows = students.map((s) => ({ s, avg: avgOf(s) })).sort((a, b) => (b.avg ?? -1) - (a.avg ?? -1));
+  rows.forEach((r, i) => { r.rank = r.avg == null ? null : i + 1; });
+  const { key, dir } = state.sort;
+  const val = (r) => key === "avg" ? r.avg : key === "name" ? r.s.name : key === "classe" ? r.s.classe : key === "defis" ? r.s.defis : (r.s.notes[key]?.absent ? null : r.s.notes[key]?.value);
+  const shown = rows.filter((r) => r.s.name.toLowerCase().includes(state.q.toLowerCase())).sort((a, b) => {
+    const x = val(a), y = val(b); if (x == null) return 1; if (y == null) return -1;
+    return typeof x === "string" ? dir * x.localeCompare(y) : dir * (x - y);
+  });
+  const sortBtn = (k2, label) => `<button data-sort="${k2}" aria-sort="${key === k2 ? (dir < 0 ? "descending" : "ascending") : "none"}">${label}</button>`;
+  const noteCell = (n) => {
+    if (!n) return `<td class="r">—</td>`;
+    if (n.absent) return `<td class="r"><span class="admin-pill">abs.</span></td>`;
+    if (!n.validated) return `<td class="r"><span class="admin-note is-wait" title="Note proposée, pas encore validée">${fn(n.value)} ?</span></td>`;
+    return `<td class="r"><span class="admin-note ${n.value < 10 ? "is-low" : ""}">${fn(n.value)}</span></td>`;
+  };
+  const trend = (s, avg) => {
+    const last = [...evalsOf(s.classe)].reverse().map((e) => s.notes[e.id]).find((n) => n && !n.absent && n.validated);
+    if (!last || avg == null || validatedNotes(s).length < 2) return `<span class="admin-trend is-flat">—</span>`;
+    const diff = last.value - avg;
+    if (diff >= 1.5) return `<span class="admin-trend is-up" title="Dernière note au-dessus de sa moyenne">${ic("up")} +${fr(diff)}</span>`;
+    if (diff <= -1.5) return `<span class="admin-trend is-down" title="Dernière note sous sa moyenne">${ic("down")} −${fr(-diff)}</span>`;
+    return `<span class="admin-trend is-flat">stable</span>`;
+  };
+  return `<section style="display:grid;gap:.8rem">
+    <div class="admin-toolbar">
+      <h2 class="admin-sec">Élèves classés par moyenne <small>${plural(students.length, "élève")} · un clic sur un nom ouvre sa fiche</small></h2>
+      <label class="admin-search">${ic("search")}<input id="stu-search" placeholder="Filtrer les élèves…" value="${esc(state.q)}" aria-label="Filtrer les élèves"></label>
+    </div>
+    <div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr><th>Rang</th><th>${sortBtn("name", "Élève")}</th>${showClass ? `<th>${sortBtn("classe", "Classe")}</th>` : ""}<th>${sortBtn("avg", "Moyenne")}</th>
+        ${evs.map((e) => `<th class="r">${sortBtn(e.id, esc(e.title))}</th>`).join("")}
+        <th class="r">${sortBtn("defis", "Défis")}</th><th>Tendance</th><th></th></tr></thead>
+      <tbody>${shown.map((r) => `<tr>
+        <td class="admin-rank ${r.rank && r.rank <= 3 ? "is-top" : ""}">${r.rank ?? "—"}</td>
+        <td><button class="admin-who" data-student="${r.s.id}">${esc(r.s.name)}</button></td>
+        ${showClass ? `<td>${r.s.classe}</td>` : ""}
+        <td><div class="admin-avg"><b class="${r.avg != null && r.avg < 10 ? "is-low" : ""}">${fr(r.avg)}</b><span class="admin-meter"><i style="width:${((r.avg ?? 0) / 20) * 100}%"></i></span></div></td>
+        ${evs.map((e) => noteCell(r.s.notes[e.id])).join("")}
+        <td class="r num">${r.s.defis}/${DEFIS_PASSES}</td>
+        <td>${trend(r.s, r.avg)}</td>
+        <td class="r"><button class="admin-icon-btn" data-message="${r.s.id}" title="Écrire à ${esc(r.s.name)}" aria-label="Écrire à ${esc(r.s.name)}">${ic("mail")}</button></td>
+      </tr>`).join("")}</tbody>
+    </table></div>
+  </section>`;
+}
+function bindRanking(rerender) {
+  $$("#class-detail [data-sort]").forEach((b) => b.addEventListener("click", () => {
+    const k2 = b.dataset.sort;
+    state.sort = state.sort.key === k2 ? { key: k2, dir: -state.sort.dir } : { key: k2, dir: k2 === "name" || k2 === "classe" ? 1 : -1 };
+    rerender();
+  }));
+  const search = $("#stu-search");
+  search.addEventListener("input", () => { state.q = search.value; rerender(); const s2 = $("#stu-search"); s2.focus(); s2.setSelectionRange(s2.value.length, s2.value.length); });
+  $$("#class-detail [data-student]").forEach((b) => b.addEventListener("click", () => openStudent(b.dataset.student)));
+  $$("#class-detail [data-message]").forEach((b) => b.addEventListener("click", () => messageStudent(b.dataset.message)));
+}
+
+function renderOverview() {
+  const row = (c) => { const st = stats(byClass(c.id)), pend = pendingCopies().filter((p) => p.s.classe === c.id).length; return `<tr>
+    <td><button class="admin-who" data-pick="${c.id}">${c.id}</button></td><td class="r num">${st.students.length}</td>
+    <td class="r num"><b class="admin-note">${fr(st.mean)}</b></td><td class="r num">${fr(st.median)}</td><td class="r num">${fr(st.sd)}</td>
+    <td class="r num">${fr(st.q1)} – ${fr(st.q3)}</td><td class="r num">${fr(st.min)} – ${fr(st.max)}</td><td class="r num">${st.below}</td>
+    <td class="r">${pend ? `<span class="admin-pill is-accent">${pend} à corriger</span>` : `<span class="admin-pill is-ok">${ic("check", "xs")} à jour</span>`}</td></tr>`; };
+  $("#class-detail").innerHTML = `
+    <section class="admin-card">
+      <h2 class="admin-card-h">Comparaison des classes <small>un clic sur une classe ouvre son détail</small></h2>
+      <div class="admin-table-wrap is-flat"><table class="admin-table"><thead><tr><th>Classe</th><th class="r">Élèves</th><th class="r">Moyenne</th><th class="r">Médiane</th><th class="r">Écart-type</th><th class="r">Q1 – Q3</th><th class="r">Min – max</th><th class="r">Sous 10</th><th class="r">Copies</th></tr></thead>
+      <tbody>${CLASSES.map(row).join("")}</tbody></table></div>
+    </section>
+    ${rankingTable(STUDENTS, [], true)}`;
+  $$("#class-detail [data-pick]").forEach((b) => b.addEventListener("click", () => { state.sel = b.dataset.pick; render(); }));
+  bindRanking(renderOverview);
+}
+
+function renderClassDetail(c) {
+  const st = stats(byClass(c)), evs = evalsOf(c);
+  const stat = (label, v) => `<div class="admin-card"><span class="admin-card-k">${label}</span><span class="admin-big">${v}</span></div>`;
+  const evRows = evs.map((ev) => {
+    const notes = st.students.map((s) => s.notes[ev.id]).filter((n) => n && !n.absent);
+    const val = notes.filter((n) => n.validated).map((n) => n.value), pend = notes.length - val.length;
+    return `<tr><td><span class="admin-who">${esc(ev.title)}</span><div class="admin-subtle">${dayFmt.format(d(ev.date))}</div></td>
+      <td class="r num">${fr(mean(val))}</td><td class="r num">${fr(quantile(val, 0.5))}</td>
+      <td class="r num">${val.length ? `${fr(Math.min(...val))} – ${fr(Math.max(...val))}` : "—"}</td>
+      <td class="r">${pend ? `<button class="admin-pill is-accent" data-goto-corr>${pend} à corriger ${ic("arrow", "xs")}</button>` : `<span class="admin-pill is-ok">${ic("check", "xs")} ${val.length} notes</span>`}</td></tr>`;
+  }).join("");
+  $("#class-detail").innerHTML = `
+    <div class="admin-stats">
+      ${stat("Moyenne", fr(st.mean))}${stat("Médiane", fr(st.median))}${stat("Écart-type", fr(st.sd))}
+      ${stat("Q1 – Q3", `${fr(st.q1)} – ${fr(st.q3)}`)}${stat("Min – max", `${fr(st.min)} – ${fr(st.max)}`)}${stat("Sous 10", `${st.below}<small>élève${st.below > 1 ? "s" : ""}</small>`)}
+    </div>
+    <div class="admin-duo">
+      <section class="admin-card admin-hist">
+        <h2 class="admin-card-h">Répartition des moyennes <small>élèves par tranche de 2 points</small></h2>
+        ${histogram(st.students.map((s) => ({ name: s.name, v: avgOf(s) })).filter((x) => x.v != null))}
+      </section>
+      <section class="admin-card">
+        <h2 class="admin-card-h">Évaluations <small>${plural(evs.length, "évaluation")} depuis la rentrée</small></h2>
+        <div class="admin-table-wrap is-flat"><table class="admin-table"><thead><tr><th>Évaluation</th><th class="r">Moy.</th><th class="r">Méd.</th><th class="r">Min – max</th><th class="r">Notes</th></tr></thead><tbody>${evRows}</tbody></table></div>
+      </section>
+    </div>
+    ${rankingTable(st.students, evs, false)}`;
+  $$("#class-detail [data-goto-corr]").forEach((b) => b.addEventListener("click", () => { state.current = null; go("corriger"); }));
+  bindRanking(() => renderClassDetail(c));
+  bindHistogram();
+}
+
+function histogram(items) {
+  const W = 420, H = 210, padL = 26, padB = 26, padT = 10;
+  const bins = Array.from({ length: 10 }, (_, i) => ({ lo: i * 2, hi: i * 2 + 2, who: [] }));
+  for (const it of items) bins[Math.min(9, Math.floor(it.v / 2))].who.push(it);
+  const maxN = Math.max(4, ...bins.map((b) => b.who.length)), step = maxN > 8 ? 4 : 2, top = Math.ceil(maxN / step) * step;
+  const x = (v) => padL + (v / 20) * (W - padL - 4), y = (n) => padT + (1 - n / top) * (H - padT - padB), bw = x(2) - x(0);
+  let g = `<g class="grid">`;
+  for (let n = 0; n <= top; n += step) g += `<line x1="${padL}" x2="${W - 4}" y1="${y(n)}" y2="${y(n)}"/><text x="${padL - 6}" y="${y(n) + 4}" text-anchor="end">${n}</text>`;
+  g += `</g>`;
+  const bars = bins.map((b, i) => {
+    const bx = x(b.lo) + 1, w = bw - 2, by = y(b.who.length), h = y(0) - by, r = Math.min(4, h, w / 2);
+    const path = b.who.length ? `M${bx},${y(0)} V${by + r} Q${bx},${by} ${bx + r},${by} H${bx + w - r} Q${bx + w},${by} ${bx + w},${by + r} V${y(0)} Z` : "";
+    return `<g class="b" data-bin="${i}"><rect class="hit" x="${x(b.lo)}" y="${padT}" width="${bw}" height="${H - padT - padB}"/>${path ? `<path class="bar" d="${path}"/>` : ""}</g>`;
+  }).join("");
+  const labels = [0, 4, 8, 10, 12, 16, 20].map((v) => `<text x="${x(v)}" y="${H - 8}" text-anchor="middle">${v}</text>`).join("");
+  histogram.bins = bins;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Histogramme des moyennes de la classe">${g}${bars}<line class="ten" x1="${x(10)}" x2="${x(10)}" y1="${padT}" y2="${y(0)}"/>${labels}</svg>
+    <p class="admin-subtle">Pointillés : 10/20. Survoler une barre pour voir les élèves.</p>`;
+}
+function bindHistogram() {
+  const tip = $("#tip");
+  $$(".admin-hist g.b").forEach((g) => {
+    const b = histogram.bins[g.dataset.bin];
+    g.addEventListener("mousemove", (e) => {
+      tip.innerHTML = `<b>${b.lo} à ${b.hi} : ${plural(b.who.length, "élève")}</b>${b.who.map((w) => `${esc(w.name)} (${fr(w.v)})`).join("<br>") || "personne"}`;
+      tip.style.display = "block";
+      tip.style.left = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8) + "px";
+      tip.style.top = (e.clientY + 14) + "px";
+    });
+    g.addEventListener("mouseleave", () => { tip.style.display = "none"; });
+  });
+}
+
+function openStudent(id) {
+  const s = STUDENTS.find((x) => x.id === id), avg = avgOf(s), st = stats(byClass(s.classe));
+  const rank = st.students.map((x) => ({ x, a: avgOf(x) })).filter((r) => r.a != null).sort((a, b) => b.a - a.a).findIndex((r) => r.x === s) + 1;
+  openDrawer("Fiche élève", `
+    <div class="admin-student-top"><span class="admin-avatar is-big">${initials(s.name)}</span><div><b style="font-size:1.1rem">${esc(s.name)}</b><div class="admin-subtle">${s.classe} · ${rank}<sup>${rank === 1 ? "er" : "e"}</sup> sur ${st.avgs.length}</div></div></div>
+    <div class="admin-mini-stats">
+      <div class="admin-card"><span class="admin-card-k">Moyenne</span><span class="admin-big">${fr(avg)}</span></div>
+      <div class="admin-card"><span class="admin-card-k">Écart à la classe</span><span class="admin-big">${avg == null ? "—" : (avg - st.mean >= 0 ? "+" : "−") + fr(Math.abs(avg - st.mean))}</span></div>
+      <div class="admin-card"><span class="admin-card-k">Défis réussis</span><span class="admin-big">${s.defis}<small>/${DEFIS_PASSES}</small></span></div>
+    </div>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Évaluation</th><th class="r">Note</th><th class="r">Moy. classe</th></tr></thead><tbody>
+    ${evalsOf(s.classe).map((e) => {
+      const n = s.notes[e.id], cls = st.students.map((x) => x.notes[e.id]).filter((m) => m && !m.absent && m.validated).map((m) => m.value);
+      const cell = !n ? "—" : n.absent ? `<span class="admin-pill">absent</span>` : n.validated ? `<b class="admin-note ${n.value < 10 ? "is-low" : ""}">${fn(n.value)}</b>` : `<span class="admin-pill is-accent">à corriger · ${fn(n.value)} proposé</span>`;
+      return `<tr><td><span class="admin-who">${esc(e.title)}</span><div class="admin-subtle">${dayFmt.format(d(e.date))}</div></td><td class="r">${cell}</td><td class="r num">${fr(mean(cls))}</td></tr>`;
+    }).join("")}</tbody></table></div>`,
+    `<button class="admin-btn is-quiet" data-close>Fermer</button><button class="admin-btn" id="drawer-msg">${ic("mail")} Écrire à ${esc(s.name.split(" ")[0])}</button>`);
+  $("#drawer-msg").addEventListener("click", () => { closeDrawer(); messageStudent(id); });
+}
+
+/* ===================== À CORRIGER ===================== */
+const key = (p) => p.ev.id + "|" + p.s.id;
+function renderCorriger() {
+  $("#corr-kicker").textContent = `À corriger · ${classLabel(state.sel)}`;
+  const list = pendingCopies().filter((p) => inSel(p.s.classe)), others = pendingCopies().length - list.length;
+  $("#corr-title").textContent = list.length ? `${plural(list.length, "copie")} à corriger` : "Tout est corrigé";
+  if (!list.length) {
+    $("#corr-body").innerHTML = `<div class="admin-card admin-empty"><b>Rien à corriger${state.sel ? " en " + classLabel(state.sel) : ""}</b>${others ? `Il reste ${plural(others, "copie")} dans les autres classes.` : "Les prochaines copies arriveront ici dès qu'une évaluation sera rendue."}</div>`;
+    return;
+  }
+  const groups = [];
+  for (const p of list) { const gk = p.ev.id + "|" + p.s.classe; let g = groups.find((x) => x.k === gk); if (!g) groups.push(g = { k: gk, ev: p.ev, classe: p.s.classe, items: [] }); g.items.push(p); }
+  groups.forEach((g) => g.items.sort((a, b) => a.s.name.localeCompare(b.s.name)));
+  const ordered = groups.flatMap((g) => g.items);
+  if (!state.current || !ordered.some((p) => key(p) === state.current)) state.current = key(ordered[0]);
+
+  const queue = groups.map((g) => {
+    const total = byClass(g.classe).filter((s) => s.notes[g.ev.id] && !s.notes[g.ev.id].absent).length, done = total - g.items.length;
+    const clean = g.items.filter((p) => !p.n.answers.some((a) => a.review)).length;
+    return `<div class="admin-queue-group">
+      <h3>${esc(g.ev.title)} · ${g.classe}</h3>
+      <div class="admin-progress">${dayShort.format(d(g.ev.date))} · ${done}/${total} validées <span><i style="width:${(done / total) * 100}%"></i></span></div>
+      ${g.items.map((p) => { const flags = p.n.answers.filter((a) => a.review).length; return `<button class="admin-queue-item ${key(p) === state.current ? "is-on" : ""}" data-copy="${key(p)}">
+        <b>${esc(p.s.name)}</b><span class="num">${fn(p.n.value)}/20</span>
+        ${flags ? `<small class="is-flag">${ic("alert", "xs")} ${plural(flags, "exercice")} à relire</small>` : `<small>Correction automatique complète</small>`}</button>`; }).join("")}
+      ${clean ? `<button class="admin-btn is-quiet is-small" style="margin:.4rem .2rem .2rem" data-bulk="${g.k}" title="Valide la note proposée des copies sans exercice à relire">${ic("check")} Valider les ${plural(clean, "copie")} sans alerte</button>` : ""}
+    </div>`;
+  }).join("");
+  $("#corr-body").innerHTML = `<div class="admin-split"><aside class="admin-card admin-queue">${queue}</aside><div id="paper"></div></div>`;
+  renderPaper(ordered.find((x) => key(x) === state.current), ordered);
+  $(".admin-queue-item.is-on")?.scrollIntoView({ block: "nearest" });
+  $$("[data-copy]").forEach((b) => b.addEventListener("click", () => { state.current = b.dataset.copy; renderCorriger(); }));
+  $$("[data-bulk]").forEach((b) => b.addEventListener("click", () => {
+    const g = groups.find((x) => x.k === b.dataset.bulk), clean = g.items.filter((x) => !x.n.answers.some((a) => a.review));
+    clean.forEach((x) => { x.n.validated = true; });
+    toast(`${plural(clean.length, "note")} validée${clean.length > 1 ? "s" : ""} · ${g.ev.title} ${g.classe}`);
+    render();
+  }));
+}
+function renderPaper(p, list) {
+  const n = p.n, sum = () => n.answers.reduce((s, a) => s + a.points, 0), st = stats(byClass(p.s.classe));
+  $("#paper").innerHTML = `<div class="admin-paper">
+    <div class="admin-card admin-paper-head">
+      <div><p class="admin-kicker">${esc(p.ev.title)} · ${p.s.classe} · rendue le ${dayShort.format(d(p.ev.date))}</p>
+        <h2><button class="admin-who" data-student="${p.s.id}">${esc(p.s.name)}</button></h2>
+        <p class="admin-subtle">Moyenne actuelle ${fr(avgOf(p.s))} · classe ${fr(st.mean)}</p></div>
+      <div style="text-align:right"><div class="admin-big" id="total">${fn(sum())}<small>/20</small></div><span class="admin-subtle">proposé : ${fn(n.answers.reduce((s, a) => s + a.auto, 0))}</span></div>
+    </div>
+    ${n.answers.map((a, i) => `<div class="admin-card admin-exo ${a.review ? "is-flag" : ""}">
+      <div class="admin-exo-head">
+        <div><h3>${esc(a.exo.label)}</h3>
+          <div class="admin-exo-meta">
+            ${a.exo.written ? `<span class="admin-pill is-accent">${ic("pencil", "xs")} réponse rédigée, à lire</span>` : a.error ? `<span class="admin-pill is-warn">${ic("alert", "xs")} vérification non lancée</span>` : `<span class="admin-pill ${a.testsPassed === a.testsTotal ? "is-ok" : ""}">${a.testsPassed}/${a.testsTotal} tests</span>`}
+            proposé : ${fn(a.auto)}/${a.exo.max}
+          </div></div>
+        <label class="admin-pts"><input type="number" min="0" max="${a.exo.max}" step="0.5" value="${a.points}" data-i="${i}" class="${a.points !== a.auto ? "is-changed" : ""}" aria-label="Points, ${esc(a.exo.label)}"> / ${a.exo.max}</label>
+      </div>
+      ${a.error ? `<div class="admin-alert">La vérification n'a pas pu être lancée : la note de cet exercice est à fixer à la main.</div>` : ""}
+      ${a.failed.length ? `<ul class="admin-fails">${a.failed.map((f) => `<li>${ic("x", "xs")} ${esc(f)}</li>`).join("")}</ul>` : ""}
+      <details ${a.review ? "open" : ""}><summary>Voir ${a.exo.written ? "la réponse" : "le code"}</summary><pre>${esc(a.code)}</pre></details>
+    </div>`).join("")}
+    <div class="admin-paper-actions">
+      <span class="admin-subtle">${list.length - 1 ? `Encore ${plural(list.length - 1, "copie")} après celle-ci` : "Dernière copie"} · <kbd>Entrée</kbd> valide</span>
+      <div style="display:flex;gap:.5rem"><button class="admin-btn is-quiet" id="skip">Passer</button><button class="admin-btn" id="validate">${ic("check")} <span>Valider ${fn(sum())}/20 et suivante</span></button></div>
+    </div>
+  </div>`;
+  $$("#paper input[data-i]").forEach((inp) => inp.addEventListener("input", () => {
+    const a = n.answers[inp.dataset.i];
+    a.points = clamp(half(Number(inp.value) || 0), 0, a.exo.max);
+    inp.classList.toggle("is-changed", a.points !== a.auto);
+    $("#total").innerHTML = `${fn(sum())}<small>/20</small>`;
+    $("#validate span").textContent = `Valider ${fn(sum())}/20 et suivante`;
+  }));
+  $("#paper [data-student]").addEventListener("click", () => openStudent(p.s.id));
+  $("#validate").addEventListener("click", () => {
+    const i = list.indexOf(p), nx = list[i + 1] ?? list[i - 1];
+    n.value = sum(); n.validated = true; state.current = nx ? key(nx) : null;
+    toast(`${p.s.name} : ${fn(n.value)}/20 validé`);
+    render();
+  });
+  $("#skip").addEventListener("click", () => { state.current = key(list[(list.indexOf(p) + 1) % list.length]); renderCorriger(); });
+}
+
+/* ===================== PRÉPARER ===================== */
+function renderPreparer() {
+  $("#prep-kicker").textContent = `Préparer · ${classLabel(state.sel)}`;
+  const shownClasses = CLASSES.filter((c) => inSel(c.id));
+  const head = `<div class="mh"></div>` + MONDAYS.map((m) => `<div class="mh ${m === TODAY ? "is-today" : ""}">${m === TODAY ? "Aujourd'hui · " : ""}lun. ${dayShort.format(d(m))}</div>`).join("");
+  const rows = shownClasses.map((c) => `<div class="cl">${c.id}</div>` + MONDAYS.map((m) => {
+    const df = DEFIS.find((x) => x.monday === m && x.classes.includes(c.id));
+    if (!df) return m === TODAY ? `<div><div class="admin-slot is-missing">Pas de défi</div></div>` : `<div><button class="admin-slot is-missing" data-new="defi" data-monday="${m}" data-classe="${c.id}">${ic("plus")} Créer le défi</button></div>`;
+    if (m === TODAY) return `<div><div class="admin-slot is-open"><b>${esc(df.title)}</b>En cours · ${df.passed ?? 0} réussis</div></div>`;
+    return `<div><div class="admin-slot is-planned"><b>${esc(df.title)}</b>Programmé · 7 h 30</div></div>`;
+  }).join("")).join("");
+  $("#mondays").innerHTML = shownClasses.length ? head + rows : `<p class="admin-muted" style="grid-column:1/-1">Pas de défi du lundi pour les cours particuliers.</p>`;
+  const ups = UPCOMING.filter((u) => u.classes.some(inSel));
+  $("#upcoming").innerHTML = ups.map((u) => `<li>
+    <span><b>${esc(u.title)}</b> · ${u.classes.join(", ")}<br><span class="admin-subtle">${u.duration} min${u.at ? ` · ${longDay.format(d(u.at))} à ${timeFmt.format(d(u.at))}` : ""}</span></span>
+    <span style="display:flex;align-items:center;gap:.6rem">${u.status === "programmee" ? `<span class="admin-pill is-accent">Programmée</span>` : `<span class="admin-pill">Brouillon</span>`}<button class="admin-btn is-quiet is-small">${u.status === "programmee" ? "Modifier" : "Programmer"}</button></span>
+  </li>`).join("") || `<li><span class="admin-muted">Aucune évaluation à venir.</span></li>`;
+  $$("#preparer [data-new]").forEach((b) => { b.onclick = () => b.dataset.new === "defi" ? newDefi(b.dataset.monday, b.dataset.classe) : newEvaluation(); });
+}
+const defaultClasses = () => (state.sel && state.sel !== PRIVATE ? [state.sel] : []);
+const classChecks = (chosen) => `<div class="admin-checks">${CLASSES.map((c) => `<label><input type="checkbox" name="classes" value="${c.id}" ${chosen.includes(c.id) ? "checked" : ""}>${c.id}</label>`).join("")}</div>`;
+function newDefi(monday, classe) {
+  const free = MONDAYS.find((m) => m !== TODAY && CLASSES.some((c) => !DEFIS.some((x) => x.monday === m && x.classes.includes(c.id))));
+  const m = monday && monday !== TODAY ? monday : free;
+  openDrawer("Nouveau défi du lundi", `
+    <label class="admin-field">Titre<input name="title" placeholder="Rendu de monnaie"></label>
+    <div class="admin-field">Classes ${classChecks(classe ? [classe] : defaultClasses())}</div>
+    <div class="admin-fields">
+      <label class="admin-field">Lundi<select name="monday">${MONDAYS.filter((x) => x !== TODAY).map((x) => `<option value="${x}" ${x === m ? "selected" : ""}>lun. ${dayShort.format(d(x))}</option>`).join("")}</select></label>
+      <label class="admin-field">Ouvert pendant<select><option>7 jours</option><option>3 jours</option><option>1 jour</option></select></label>
+      <label class="admin-field">Temps par élève<input placeholder="illimité"></label>
+    </div>
+    <label class="admin-switch"><input type="checkbox" checked> Surveillé (changement d'onglet, collage)</label>
+    <label class="admin-field">Énoncé, tests et correction <small>même format que les sujets d'évaluation</small>
+      <textarea spellcheck="false"># Rendu de monnaie
+
+Écrire une fonction \`rendu(somme)\` qui renvoie la liste des pièces…
+
+## Tests
+rendu(8) == [5, 2, 1]
+rendu(0) == []
+
+## Correction
+def rendu(somme): …</textarea></label>
+    <div class="admin-hint">Énoncé et correction restent cachés jusqu'au lundi 7 h 30. La correction est montrée aux élèves à la fermeture.</div>`,
+    `<button class="admin-btn is-quiet" data-close>Annuler</button><button class="admin-btn is-quiet">${ic("play")} Tester la correction</button><button class="admin-btn" id="save">Programmer le défi</button>`);
+  $("#save").addEventListener("click", () => {
+    const title = $("#drawer [name=title]").value.trim() || "Défi sans titre", classes = $$("#drawer [name=classes]:checked").map((x) => x.value), mon = $("#drawer [name=monday]").value;
+    if (!classes.length) return toast("Choisis au moins une classe");
+    DEFIS.push({ title, classes, monday: mon });
+    closeDrawer(); if (state.tab !== "preparer") go("preparer"); else renderPreparer();
+    toast(`« ${title} » programmé le lundi ${dayShort.format(d(mon))} · ${classes.join(", ")}`);
+  });
+}
+function newEvaluation() {
+  openDrawer("Nouvelle évaluation", `
+    <label class="admin-field">Titre<input name="title" placeholder="Interrogation : les fonctions"></label>
+    <div class="admin-field">Classes ${classChecks(defaultClasses())}</div>
+    <div class="admin-fields">
+      <label class="admin-field">Jour<input name="day" type="date" value="2026-11-26"></label>
+      <label class="admin-field">Heure<input name="time" type="time" value="10:00"></label>
+      <label class="admin-field">Durée (min)<input name="duration" type="number" value="55" min="5" max="600"></label>
+    </div>
+    <label class="admin-field">Sujet A <small>un sujet par variante ; chaque élève en reçoit un au hasard</small>
+      <textarea spellcheck="false"># Exercice 1 - Maximum de deux nombres (4 points)
+
+Écrire une fonction \`maxi(a, b)\`…
+
+## Tests
+maxi(3, 5) == 5
+
+# Exercice 2 - Expliquer (écrit, 6 points)
+…</textarea></label>
+    <button class="admin-btn is-quiet is-small" style="justify-self:start">${ic("plus")} Ajouter un sujet B</button>
+    <div class="admin-hint">Barème lu dans le sujet : 2 exercices, 10 points pour l'instant. L'évaluation s'ouvrira seule à l'heure dite.</div>`,
+    `<button class="admin-btn is-quiet" data-close>Annuler</button><button class="admin-btn is-quiet" id="draft">Garder en brouillon</button><button class="admin-btn" id="save">Programmer</button>`);
+  const save = (status) => {
+    const title = $("#drawer [name=title]").value.trim() || "Évaluation sans titre", classes = $$("#drawer [name=classes]:checked").map((x) => x.value);
+    if (!classes.length) return toast("Choisis au moins une classe");
+    const at = `${$("#drawer [name=day]").value}T${$("#drawer [name=time]").value}`;
+    UPCOMING.push({ title, classes, status, at: status === "programmee" ? at : null, duration: Number($("#drawer [name=duration]").value) || 55 });
+    closeDrawer(); if (state.tab !== "preparer") go("preparer"); else renderPreparer();
+    toast(status === "programmee" ? `« ${title} » s'ouvrira ${longDay.format(d(at))} à ${timeFmt.format(d(at))}` : `« ${title} » gardée en brouillon`);
+  };
+  $("#save").addEventListener("click", () => save("programmee"));
+  $("#draft").addEventListener("click", () => save("brouillon"));
+}
+
+/* ===================== MESSAGERIE ===================== */
+function renderMessagerie() {
+  $("#msg-kicker").textContent = `Messagerie · ${classLabel(state.sel)}`;
+  const shown = [...THREADS].sort((a, b) => (b.unread - a.unread) || (b.msgs.at(-1)?.[1] ?? "9").localeCompare(a.msgs.at(-1)?.[1] ?? "9"))
+    .filter((t) => inSel(t.s.classe) && t.s.name.toLowerCase().includes(state.msgQ.toLowerCase()));
+  if (!shown.includes(THREADS[state.thread]) && shown.length) { state.thread = THREADS.indexOf(shown[0]); shown[0].unread = false; renderShell(); }
+  $("#threads").innerHTML = shown.map((t) => {
+    const last = t.msgs.at(-1), i = THREADS.indexOf(t);
+    return `<button class="admin-inbox-thread ${t.unread ? "is-unread" : ""} ${i === state.thread ? "is-on" : ""}" data-t="${i}">
+      <span class="admin-avatar">${initials(t.s.name)}</span>
+      <b>${esc(t.s.name)}<small>${t.s.classe}</small>${t.unread ? `<i class="admin-dot" aria-label="non lu"></i>` : ""}</b>
+      <time>${last ? (last[1].slice(0, 10) === TODAY ? timeFmt.format(d(last[1])) : dayShort.format(d(last[1]))) : ""}</time>
+      <span class="last">${last ? (last[0] === "me" ? "Vous : " : "") + esc(last[2]) : "Nouvelle conversation"}</span>
+    </button>`;
+  }).join("") || `<p class="admin-empty">Aucune conversation</p>`;
+  $$("#threads [data-t]").forEach((b) => b.addEventListener("click", () => { state.thread = Number(b.dataset.t); render(); }));
+  renderConv(shown.includes(THREADS[state.thread]) ? THREADS[state.thread] : null);
+}
+function renderConv(t) {
+  if (!t) { $("#conv").innerHTML = `<div class="admin-empty">Choisis une conversation</div>`; return; }
+  let lastDay = "";
+  const body = t.msgs.map(([who, at, text]) => {
+    const day = at.slice(0, 10), sep = day !== lastDay ? `<li class="day">${day === TODAY ? "Aujourd'hui" : longDay.format(d(at))}</li>` : "";
+    lastDay = day;
+    return `${sep}<li class="${who === "me" ? "is-mine" : ""}">${esc(text)}<small>${timeFmt.format(d(at))}</small></li>`;
+  }).join("");
+  $("#conv").innerHTML = `
+    <div class="admin-conv-head"><div class="who"><span class="admin-avatar">${initials(t.s.name)}</span><div><b>${esc(t.s.name)}</b><div class="admin-subtle">${t.s.classe} · moyenne ${fr(avgOf(t.s))}</div></div></div>
+      <button class="admin-btn is-quiet is-small" id="conv-student">${ic("user")} Fiche élève</button></div>
+    <ol class="admin-conv-msgs" id="msgs">${body || `<li class="day">Nouvelle conversation avec ${esc(t.s.name)}</li>`}</ol>
+    <form class="admin-conv-form" id="compose"><textarea placeholder="Écrire à ${esc(t.s.name.split(" ")[0])}… (Entrée pour envoyer)" aria-label="Message"></textarea><button class="admin-btn">${ic("send")} Envoyer</button></form>`;
+  const msgs = $("#msgs"); msgs.scrollTop = msgs.scrollHeight;
+  const ta = $("#compose textarea");
+  const send = (e) => { e?.preventDefault(); const text = ta.value.trim(); if (!text) return; t.msgs.push(["me", `${TODAY}T${new Date().toTimeString().slice(0, 5)}`, text]); renderMessagerie(); $("#compose textarea").focus(); };
+  $("#compose").addEventListener("submit", send);
+  ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) send(e); });
+  $("#conv-student").addEventListener("click", () => openStudent(t.s.id));
+}
+$("#msg-search").addEventListener("input", (e) => { state.msgQ = e.target.value; renderMessagerie(); });
+$("#new-msg").addEventListener("click", () => {
+  openDrawer("Écrire à un élève", `<label class="admin-field">Élève<select id="pick-student">${CLASSES.filter((c) => inSel(c.id)).map((c) => `<optgroup label="${c.id}">${byClass(c.id).sort((a, b) => a.name.localeCompare(b.name)).map((s) => `<option value="${s.id}">${esc(s.name)}</option>`).join("")}</optgroup>`).join("")}</select></label>`,
+    `<button class="admin-btn is-quiet" data-close>Annuler</button><button class="admin-btn" id="go-msg">Ouvrir la conversation</button>`);
+  $("#go-msg").addEventListener("click", () => { const id = $("#pick-student").value; closeDrawer(); messageStudent(id); });
+});
+function messageStudent(id) {
+  const s = STUDENTS.find((x) => x.id === id);
+  let i = THREADS.findIndex((t) => t.s === s);
+  if (i < 0) { THREADS.push({ s, unread: false, msgs: [] }); i = THREADS.length - 1; }
+  state.thread = i; state.msgQ = ""; $("#msg-search").value = "";
+  if (!inSel(s.classe)) state.sel = "";
+  go("messagerie");
+  $("#compose textarea")?.focus();
+}
+
+/* ===================== Panneau latéral ===================== */
+function openDrawer(title, body, foot) {
+  $("#drawer-title").textContent = title; $("#drawer-body").innerHTML = body; $("#drawer-foot").innerHTML = foot;
+  $("#drawer").classList.add("on"); $("#drawer").setAttribute("aria-hidden", "false"); $("#scrim").classList.add("on");
+  $$("#drawer [data-close]").forEach((b) => b.addEventListener("click", closeDrawer));
+  setTimeout(() => $("#drawer-body input, #drawer-body select")?.focus(), 220);
+}
+function closeDrawer() { $("#drawer").classList.remove("on"); $("#drawer").setAttribute("aria-hidden", "true"); $("#scrim").classList.remove("on"); }
+$("#drawer-close").innerHTML = ic("x", "");
+$("#drawer-close").addEventListener("click", closeDrawer);
+$("#scrim").addEventListener("click", closeDrawer);
+
+/* ===================== Barre admin : Créer, recherche Ctrl K ===================== */
+const menu = $("#create-menu");
+$("#create-btn").addEventListener("click", () => { menu.hidden = !menu.hidden; $("#create-btn").setAttribute("aria-expanded", String(!menu.hidden)); });
+window.addEventListener("mousedown", (e) => { if (!e.target.closest(".admin-top-create")) menu.hidden = true; });
+$$("#create-menu [data-create]").forEach((a) => a.addEventListener("click", (e) => {
+  e.preventDefault(); menu.hidden = true;
+  if (a.dataset.create === "evaluation") newEvaluation();
+  else if (a.dataset.create === "defi") newDefi();
+  else toast(`« ${a.textContent} » ouvre la page actuelle, inchangée`);
+}));
+
+let findCursor = 0, findResults = [];
+function openFind() { $("#find").hidden = false; $("#find-input").value = ""; renderFind(); $("#find-input").focus(); }
+function closeFind() { $("#find").hidden = true; }
+function renderFind() {
+  const q = $("#find-input").value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  const pages = SECTIONS.map((s) => ({ icon: s.icon, label: s.label, hint: s.hint, kind: "Page", go: () => go(s.id) }));
+  const people = STUDENTS.map((s) => ({ icon: "user", label: s.name, hint: s.classe, kind: "Élève", go: () => openStudent(s.id) }));
+  const evals = EVALS.map((e) => ({ icon: "clipboard", label: e.title, hint: e.classes.join(", "), kind: "Évaluation", go: () => { state.sel = e.classes.length === 1 ? e.classes[0] : ""; go("classes"); } }));
+  const fold = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  findResults = q ? [...people, ...evals, ...pages].filter((r) => q.split(" ").every((w) => fold(`${r.label} ${r.hint}`).includes(w))).slice(0, 12) : pages;
+  findCursor = Math.min(findCursor, Math.max(0, findResults.length - 1));
+  $("#find-list").innerHTML = findResults.map((r, i) => `<li><button class="${i === findCursor ? "is-on" : ""}" data-i="${i}">${ic(r.icon)}<span>${esc(r.label)}<small>${esc(r.hint)}</small></span><i>${r.kind}</i></button></li>`).join("") || `<li class="admin-find-empty" style="padding:1rem;color:var(--muted)">Aucun résultat.</li>`;
+  $$("#find-list [data-i]").forEach((b) => { b.addEventListener("mouseenter", () => { findCursor = Number(b.dataset.i); renderFind(); }); b.addEventListener("click", () => { closeFind(); findResults[b.dataset.i].go(); }); });
+}
+$("#open-find").addEventListener("click", openFind);
+$("#find").addEventListener("mousedown", (e) => { if (e.target === e.currentTarget) closeFind(); });
+$("#find-input").addEventListener("input", () => { findCursor = 0; renderFind(); });
+$("#find-input").addEventListener("keydown", (e) => {
+  if (e.key === "ArrowDown") { e.preventDefault(); findCursor = Math.min(findCursor + 1, findResults.length - 1); renderFind(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); findCursor = Math.max(findCursor - 1, 0); renderFind(); }
+  else if (e.key === "Enter" && findResults[findCursor]) { closeFind(); findResults[findCursor].go(); }
+});
+
+document.addEventListener("keydown", (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openFind(); return; }
+  if (e.key === "Escape") { closeDrawer(); closeFind(); menu.hidden = true; return; }
+  if (state.tab === "corriger" && e.key === "Enter" && !$("#drawer").classList.contains("on") && $("#find").hidden && !["TEXTAREA", "BUTTON", "SELECT", "INPUT"].includes(e.target.tagName)) { e.preventDefault(); $("#validate")?.click(); }
+});
+
+// L'œil de la barre bascule le mode sombre (dans le site, il ouvre le menu d'accessibilité).
+$("#theme").addEventListener("click", () => document.documentElement.classList.toggle("dark"));
+const params = new URLSearchParams(location.search);
+if (params.has("dark")) document.documentElement.classList.add("dark");
+if (params.get("classe")) state.sel = params.get("classe");
+
+fillIcons();
+const start = params.get("onglet");
+if (start && SECTIONS.some((s) => s.id === start)) go(start); else render();
+</script>
+</body>
+</html>

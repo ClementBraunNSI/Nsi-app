@@ -14,14 +14,28 @@ export function challengeState(challenge: { opensAt: string; closesAt: string },
   return { key: "ferme", label: "Terminé" };
 }
 
-export default function ChallengesAdmin({ challenges, classes, startCreating = false }: { challenges: ChallengeSummary[]; classes: string[]; startCreating?: boolean }) {
+export default function ChallengesAdmin({
+  challenges,
+  classes,
+  startCreating = false,
+  preset,
+}: {
+  challenges: ChallengeSummary[];
+  classes: string[];
+  startCreating?: boolean;
+  /** Lundi et classe choisis depuis « Préparer ». */
+  preset?: { openDay?: string; classe?: string };
+}) {
   const [creating, setCreating] = useState(startCreating);
+  const initial = defaultChallenge(classes);
+  if (preset?.openDay) initial.openDay = preset.openDay;
+  if (preset?.classe && classes.includes(preset.classe)) initial.classes = [preset.classe];
   return (
     <div className="space-y-6">
       {creating ? (
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-slate-800">Nouveau défi</h2>
-          <ChallengeEditor initial={defaultChallenge(classes)} classes={classes} onDone={() => setCreating(false)} />
+          <ChallengeEditor initial={initial} classes={classes} onDone={() => setCreating(false)} />
         </section>
       ) : (
         <button type="button" className="adm-eval-primary" onClick={() => setCreating(true)}>
