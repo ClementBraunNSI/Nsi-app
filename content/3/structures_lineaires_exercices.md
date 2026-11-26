@@ -1092,46 +1092,566 @@ assert str(f) == "8 | 2 | fin" and f.taille() == 3, "Après un défilement et un
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="tnsi-pf-1-1" label="1.1 [Introduction] - Inverser une liste" type="python">
+<ExerciseSection id="tnsi-pf-1-1" label="1.1 [Introduction] - Suivre une pile à la main" type="python">
 <Enonce>
-### Inverser une liste
+### Suivre une pile à la main
 
-Écrire la fonction `inverser(liste)`, qui renvoie une nouvelle liste contenant les éléments de `liste` dans l'ordre inverse. La fonction passe par une pile : elle empile tous les éléments, puis les dépile un par un.
+Les instructions suivantes sont exécutées dans l'ordre :
 
-Exemple : `inverser([1, 2, 3])` renvoie `[3, 2, 1]`.
+```python
+p = Pile()
+p.empiler(5)
+p.empiler(8)
+p.empiler(3)
+a = p.depiler()
+p.empiler(1)
+p.empiler(6)
+b = p.depiler()
+c = p.sommet()
+d = p.taille()
+```
 
-Contrainte : sans `reverse`, `reversed` ni `[::-1]`.
+Sans exécuter ce code, compléter les variables du code de départ :
+
+- `contenu` : la liste des éléments de la pile à la fin, du fond vers le sommet ;
+- `a`, `b`, `c` et `d` : la valeur de chacune de ces variables à la fin.
+
+En cas d'erreur, recopier les instructions sous la classe et afficher `p.elements` après chaque ligne.
 
 <PostIt>
 
-- `p = Pile()` : une pile vide
-- `p.empiler(x)` pour chaque élément de la liste
-- `while not p.est_vide():` : tant que la pile n'est pas vide
-- `p.depiler()` : le dernier empilé sort le premier
+- `p.empiler(x)` : `x` se pose au sommet
+- `p.depiler()` : retire le sommet et le renvoie
+- `p.sommet()` : renvoie le sommet sans le retirer
+- `p.taille()` : le nombre d'éléments
 
 </PostIt>
 
 <Indices>
 <Indice>
 
-Après avoir empilé 1, 2 puis 3, le sommet est 3. Dépiler donne donc 3, puis 2, puis 1.
+Écrire l'état de la pile après chaque instruction, du fond vers le sommet, en partant de `[]`. Après les trois premiers empilements, la pile est `[5, 8, 3]`.
 
 </Indice>
 <Indice>
 
-Une boucle `while` vide la pile. Chaque élément dépilé est ajouté à la fin de la liste résultat.
+`sommet()` et `taille()` ne changent pas la pile : seules `empiler` et `depiler` la modifient.
 
 </Indice>
 <Indice>
 
 ```text
-FONCTION inverser(liste)
-    p ← nouvelle Pile
-    POUR CHAQUE x DE liste
-        empiler x sur p
-    resultat ← liste vide
-    TANT QUE p n'est pas vide
-        ajouter depiler(p) à la fin de resultat
+etat ← []  (le fond à gauche, le sommet à droite)
+POUR CHAQUE instruction, dans l'ordre
+    empiler(x) : ajouter x à droite de etat
+    depiler()  : retirer l'élément le plus à droite et noter sa valeur
+    sommet()   : noter l'élément le plus à droite, sans le retirer
+    taille()   : noter le nombre d'éléments de etat
+contenu ← etat à la fin
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+contenu = [5, 8, 1]
+a = 3
+b = 6
+c = 1
+d = 3
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+contenu = ...
+a = ...
+b = ...
+c = ...
+d = ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+assert contenu == [5, 8, 1], "contenu : les éléments restants, du fond vers le sommet."
+assert a == 3, "a : le sommet au moment du premier depiler()."
+assert b == 6, "b : le sommet au moment du second depiler()."
+assert c == 1, "c : sommet() lit le sommet sans le retirer."
+assert d == 3, "d : le nombre d'éléments à la fin."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-1-2" label="1.2 [Introduction] - Suivre une file à la main" type="python">
+<Enonce>
+### Suivre une file à la main
+
+Les instructions suivantes sont exécutées dans l'ordre :
+
+```python
+f = File()
+f.enfiler("A")
+f.enfiler("B")
+f.enfiler("C")
+a = f.defiler()
+f.enfiler("D")
+b = f.defiler()
+f.enfiler(a)
+c = f.premier()
+d = f.taille()
+e = f.est_vide()
+```
+
+Sans exécuter ce code, compléter les variables du code de départ :
+
+- `contenu` : la liste des éléments de la file à la fin, de la tête vers la queue ;
+- `a`, `b`, `c`, `d` et `e` : la valeur de chacune de ces variables à la fin.
+
+<PostIt>
+
+- `f.enfiler(x)` : `x` arrive en queue
+- `f.defiler()` : retire la tête et la renvoie
+- `f.premier()` : renvoie la tête sans la retirer
+- `f.est_vide()` : `True` ou `False`
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Écrire l'état de la file après chaque instruction, la tête à gauche et la queue à droite. Après les trois premières instructions, la file est `["A", "B", "C"]`.
+
+</Indice>
+<Indice>
+
+L'élément qui sort est toujours le plus à gauche. `f.enfiler(a)` remet en queue la valeur gardée dans `a`.
+
+</Indice>
+<Indice>
+
+```text
+etat ← []  (la tête à gauche, la queue à droite)
+POUR CHAQUE instruction, dans l'ordre
+    enfiler(x) : ajouter x à droite de etat
+    defiler()  : retirer l'élément le plus à gauche et noter sa valeur
+    premier()  : noter l'élément le plus à gauche, sans le retirer
+    taille()   : noter le nombre d'éléments de etat
+    est_vide() : noter True si etat est vide, False sinon
+contenu ← etat à la fin
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+contenu = ["C", "D", "A"]
+a = "A"
+b = "B"
+c = "C"
+d = 3
+e = False
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+contenu = ...
+a = ...
+b = ...
+c = ...
+d = ...
+e = ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+assert contenu == ["C", "D", "A"], "contenu : les éléments restants, de la tête vers la queue."
+assert a == "A", "a : la tête au moment du premier defiler()."
+assert b == "B", "b : la tête au moment du second defiler()."
+assert c == "C", "c : premier() lit la tête sans la retirer."
+assert d == 3, "d : le nombre d'éléments à la fin."
+assert e is False, "e : est_vide() renvoie un booléen."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-1-3" label="1.3 [Introduction] - Obtenir une pile donnée" type="python">
+<Enonce>
+### Obtenir une pile donnée
+
+La fonction `modifier_pile(p)` reçoit une pile qui contient, du fond vers le sommet, `2`, `4` et `6`. Écrire cette fonction pour qu'à la fin la pile contienne, du fond vers le sommet, `2`, `5`, `6` et `1`.
+
+La fonction ne renvoie rien. Elle utilise seulement `empiler` et `depiler`, sans créer d'autre pile.
+
+```python
+p = Pile()
+p.empiler(2)
+p.empiler(4)
+p.empiler(6)
+modifier_pile(p)
+print(p.elements)   # [2, 5, 6, 1]
+```
+
+<PostIt>
+
+- seul le sommet est accessible
+- `x = p.depiler()` : retire le sommet et le garde dans `x`
+- `p.empiler(x)` : remet `x` au sommet
+- la fonction n'a pas besoin de boucle
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Le `4` est sous le `6`. Pour le retirer, il faut d'abord dépiler le `6`.
+
+</Indice>
+<Indice>
+
+Garder le `6` dans une variable au moment de le dépiler. Une fois le `4` retiré, empiler `5`, puis le `6` gardé, puis `1`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION modifier_pile(p)
+    haut ← depiler(p)       (le 6)
+    depiler(p)              (le 4 disparaît)
+    empiler 5 sur p
+    empiler haut sur p
+    empiler 1 sur p
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def modifier_pile(p):
+    haut = p.depiler()
+    p.depiler()
+    p.empiler(5)
+    p.empiler(haut)
+    p.empiler(1)
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def modifier_pile(p):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def modifier_pile", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+p = Pile()
+p.empiler(2)
+p.empiler(4)
+p.empiler(6)
+assert modifier_pile(p) is None, "La fonction modifie la pile reçue et ne renvoie rien."
+assert p.elements == [2, 5, 6, 1], "À la fin, la pile contient 2, 5, 6, 1, du fond vers le sommet."
+assert ".depiler()" in corps and ".empiler(" in corps, "Utiliser depiler et empiler."
+assert ".elements" not in corps and "Pile()" not in corps, "Modifier la pile reçue avec ses méthodes, sans en créer une autre."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-1-4" label="1.4 [Introduction] - Obtenir une file donnée" type="python">
+<Enonce>
+### Obtenir une file donnée
+
+La fonction `modifier_file(f)` reçoit une file qui contient, de la tête vers la queue, `"a"`, `"b"` et `"c"`. Écrire cette fonction pour qu'à la fin la file contienne, de la tête vers la queue, `"c"`, `"a"` et `"x"`.
+
+La fonction ne renvoie rien. Elle utilise seulement `enfiler` et `defiler`, sans créer d'autre file.
+
+```python
+f = File()
+f.enfiler("a")
+f.enfiler("b")
+f.enfiler("c")
+modifier_file(f)
+print(f.elements)   # ['c', 'a', 'x']
+```
+
+<PostIt>
+
+- seule la tête peut sortir de la file
+- un nouvel élément arrive toujours en queue
+- `x = f.defiler()` : retire la tête et la garde dans `x`
+- un élément sorti peut être enfilé de nouveau
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+`"c"` doit se retrouver en tête : les deux éléments placés devant lui doivent sortir.
+
+</Indice>
+<Indice>
+
+`"a"` revient ensuite en queue, suivi de `"x"`. `"b"` n'est pas remis dans la file.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION modifier_file(f)
+    tete ← defiler(f)       (le "a")
+    defiler(f)              (le "b" disparaît)
+    enfiler tete dans f
+    enfiler "x" dans f
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def modifier_file(f):
+    tete = f.defiler()
+    f.defiler()
+    f.enfiler(tete)
+    f.enfiler("x")
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def modifier_file(f):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def modifier_file", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+f = File()
+f.enfiler("a")
+f.enfiler("b")
+f.enfiler("c")
+assert modifier_file(f) is None, "La fonction modifie la file reçue et ne renvoie rien."
+assert f.elements == ["c", "a", "x"], "À la fin, la file contient \"c\", \"a\", \"x\", de la tête vers la queue."
+assert ".defiler()" in corps and ".enfiler(" in corps, "Utiliser defiler et enfiler."
+assert ".elements" not in corps and "File()" not in corps, "Modifier la file reçue avec ses méthodes, sans en créer une autre."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-1-5" label="1.5 [Introduction] - Regarder sous le sommet" type="python">
+<Enonce>
+### Regarder sous le sommet
+
+Écrire la fonction `sous_sommet(p)`, qui renvoie l'élément placé juste sous le sommet de la pile `p`. À la fin, la pile doit avoir retrouvé son contenu de départ. Si la pile contient moins de deux éléments, la fonction renvoie `None`.
+
+```python
+p = Pile()
+p.empiler(3)
+p.empiler(7)
+p.empiler(9)
+print(sous_sommet(p))   # 7
+print(p.elements)       # [3, 7, 9]
+```
+
+<PostIt>
+
+- `p.taille()` : le nombre d'éléments
+- `p.sommet()` : lit le sommet sans le retirer
+- retirer le sommet, lire, puis remettre le sommet
+- `return None` si la pile est trop petite
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Une fois le sommet retiré, l'élément cherché devient le nouveau sommet.
+
+</Indice>
+<Indice>
+
+Remettre l'élément retiré avant de renvoyer le résultat, sinon la pile a perdu un élément.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION sous_sommet(p)
+    SI taille(p) < 2 ALORS RENVOYER None
+    haut ← depiler(p)
+    resultat ← sommet(p)
+    empiler haut sur p
     RENVOYER resultat
 ```
 
@@ -1165,13 +1685,12 @@ class Pile:
         return len(self.elements)
 
 
-def inverser(liste):
-    p = Pile()
-    for x in liste:
-        p.empiler(x)
-    resultat = []
-    while not p.est_vide():
-        resultat.append(p.depiler())
+def sous_sommet(p):
+    if p.taille() < 2:
+        return None
+    haut = p.depiler()
+    resultat = p.sommet()
+    p.empiler(haut)
     return resultat
 ```
 
@@ -1204,7 +1723,7 @@ class Pile:
         return len(self.elements)
 
 
-def inverser(liste):
+def sous_sommet(p):
     ...
 ```
 
@@ -1212,64 +1731,77 @@ def inverser(liste):
 <Verification>
 
 ```python
-import re
-corps = PROGRAMME.split("def inverser", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
-assert inverser([1, 2, 3]) == [3, 2, 1], "inverser([1, 2, 3]) renvoie [3, 2, 1]."
-assert inverser([]) == [] and inverser(["a"]) == ["a"], "Liste vide, puis un seul élément."
-depart = [5, 6, 7]
-inverser(depart)
-assert depart == [5, 6, 7], "La liste de départ n'est pas modifiée."
-assert "Pile()" in corps and ".depiler()" in corps, "Passer par une pile : Pile(), empiler, depiler."
-assert not re.search(r"reverse|\[::-1\]", corps), "Sans reverse, reversed ni [::-1]."
+corps = PROGRAMME.split("def sous_sommet", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+p = Pile()
+for x in [3, 7, 9]:
+    p.empiler(x)
+assert sous_sommet(p) == 7, "Sous le sommet 9 se trouve 7."
+assert p.elements == [3, 7, 9], "La pile retrouve son contenu de départ."
+q = Pile()
+q.empiler("x")
+q.empiler("y")
+assert sous_sommet(q) == "x" and q.elements == ["x", "y"], "Avec deux éléments, sous_sommet renvoie celui du fond."
+r = Pile()
+assert sous_sommet(r) is None, "Une pile vide : None."
+r.empiler(4)
+assert sous_sommet(r) is None and r.elements == [4], "Un seul élément : None, et la pile ne change pas."
+assert ".elements" not in corps and "Pile()" not in corps, "Utiliser les méthodes de la pile reçue, sans toucher à elements."
 ```
 
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="tnsi-pf-1-2" label="1.2 [Introduction] - Passage en caisse" type="python">
+<ExerciseSection id="tnsi-pf-1-6" label="1.6 [Introduction] - Une file d'attente limitée" type="python">
 <Enonce>
-### Passage en caisse
+### Une file d'attente limitée
 
-Des clients font la queue à une caisse. Écrire la fonction `caisse(clients, n)` :
+Un guichet n'accepte pas plus de `place_max` personnes dans sa file d'attente. Écrire deux fonctions :
 
-- les clients de la liste `clients`, rangés dans leur ordre d'arrivée, sont enfilés dans une file ;
-- la caisse sert ensuite `n` clients, ou tous les clients s'il y en a moins de `n` ;
-- la fonction renvoie le couple `(servis, en_attente)` : la liste des clients servis, dans l'ordre, et la liste de ceux qui attendent encore, de la tête à la queue.
+- `arriver(f, nom, place_max)` : si la file `f` compte moins de `place_max` personnes, enfile `nom` et renvoie `True` ; sinon, la file ne change pas et la fonction renvoie `False` ;
+- `servir(f)` : défile et renvoie la personne en tête, ou renvoie `None` si la file est vide.
 
-Exemple : `caisse(["Ada", "Alan", "Grace", "Linus"], 2)` renvoie `(["Ada", "Alan"], ["Grace", "Linus"])`.
+```python
+f = File()
+print(arriver(f, "Ada", 2))     # True
+print(arriver(f, "Alan", 2))    # True
+print(arriver(f, "Grace", 2))   # False : la file est pleine
+print(servir(f))                # Ada
+print(servir(f))                # Alan
+print(servir(f))                # None
+```
 
 <PostIt>
 
-- `f = File()` puis `f.enfiler(x)` : `x` arrive en queue
-- `f.defiler()` : la tête sort de la file
-- `for _ in range(n):` : répéter `n` fois
-- `f.est_vide()` : plus personne dans la file
+- `f.taille()` : le nombre de personnes dans la file
+- `f.est_vide()` : `True` si personne n'attend
+- `f.enfiler(nom)` et `f.defiler()`
+- chaque fonction tient en un `if`
 
 </PostIt>
 
 <Indices>
 <Indice>
 
-Une fois tous les clients enfilés, défiler `n` fois, en s'arrêtant plus tôt si la file se vide.
+`arriver` compare la taille de la file à `place_max` avant d'enfiler.
 
 </Indice>
 <Indice>
 
-Ceux qui restent dans la file s'obtiennent en défilant jusqu'à ce qu'elle soit vide.
+`servir` teste si la file est vide avant de défiler : défiler une file vide provoque une erreur.
 
 </Indice>
 <Indice>
 
 ```text
-FONCTION caisse(clients, n)
-    f ← nouvelle File ; enfiler chaque client dans f
-    servis ← liste vide
-    RÉPÉTER n FOIS
-        SI f n'est pas vide ALORS ajouter defiler(f) à servis
-    en_attente ← liste vide
-    TANT QUE f n'est pas vide
-        ajouter defiler(f) à en_attente
-    RENVOYER (servis, en_attente)
+FONCTION arriver(f, nom, place_max)
+    SI taille(f) < place_max ALORS
+        enfiler nom dans f
+        RENVOYER Vrai
+    RENVOYER Faux
+
+FONCTION servir(f)
+    SI f est vide ALORS RENVOYER None
+    RENVOYER defiler(f)
 ```
 
 </Indice>
@@ -1302,18 +1834,17 @@ class File:
         return len(self.elements)
 
 
-def caisse(clients, n):
-    f = File()
-    for client in clients:
-        f.enfiler(client)
-    servis = []
-    for _ in range(n):
-        if not f.est_vide():
-            servis.append(f.defiler())
-    en_attente = []
-    while not f.est_vide():
-        en_attente.append(f.defiler())
-    return (servis, en_attente)
+def arriver(f, nom, place_max):
+    if f.taille() < place_max:
+        f.enfiler(nom)
+        return True
+    return False
+
+
+def servir(f):
+    if f.est_vide():
+        return None
+    return f.defiler()
 ```
 
 </Correction>
@@ -1345,7 +1876,11 @@ class File:
         return len(self.elements)
 
 
-def caisse(clients, n):
+def arriver(f, nom, place_max):
+    ...
+
+
+def servir(f):
     ...
 ```
 
@@ -1353,59 +1888,58 @@ def caisse(clients, n):
 <Verification>
 
 ```python
-corps = PROGRAMME.split("def caisse", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
-assert caisse(["Ada", "Alan", "Grace", "Linus"], 2) == (["Ada", "Alan"], ["Grace", "Linus"]), "Deux clients servis, deux en attente."
-assert caisse(["Ada", "Alan"], 5) == (["Ada", "Alan"], []), "Moins de clients que n : tout le monde est servi."
-assert caisse(["Ada", "Alan"], 0) == ([], ["Ada", "Alan"]) and caisse([], 3) == ([], []), "Aucun client servi, puis aucun client."
-assert "File()" in corps and ".defiler()" in corps, "Passer par une file : File(), enfiler, defiler."
-assert ".elements" not in corps, "Utiliser les méthodes de la file, sans toucher à elements."
+corps_arriver = PROGRAMME.split("def arriver", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+corps_servir = PROGRAMME.split("def servir", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+f = File()
+assert arriver(f, "Ada", 2) is True and arriver(f, "Alan", 2) is True, "Deux places : Ada puis Alan entrent."
+assert arriver(f, "Grace", 2) is False, "La file est pleine : Grace n'entre pas."
+assert f.elements == ["Ada", "Alan"], "Une file pleine ne change pas."
+assert servir(f) == "Ada" and servir(f) == "Alan", "Les personnes sont servies dans leur ordre d'arrivée."
+assert servir(f) is None, "File vide : servir renvoie None."
+assert arriver(f, "Linus", 1) is True and arriver(f, "Guido", 0) is False, "place_max est relu à chaque appel."
+assert ".elements" not in corps_arriver + corps_servir, "Utiliser les méthodes de la file, sans toucher à elements."
 ```
 
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="tnsi-pf-1-3" label="1.3 [Introduction] - Vider une pile" type="python">
+<ExerciseSection id="tnsi-pf-2-1" label="2.1 [Facile] - Renverser une file" type="python">
 <Enonce>
-### Vider une pile
+### Renverser une file
 
-Ajouter à la classe `Pile` du code de départ la méthode `vider()`, qui retire tous les éléments de la pile et renvoie la liste des éléments retirés, dans leur ordre de sortie. La méthode utilise `self.depiler()`.
+Écrire la fonction `renverser(f)`, qui modifie la file `f` pour que ses éléments se retrouvent dans l'ordre inverse. La fonction passe par une pile : elle y empile tous les éléments de la file, puis les dépile un par un pour les enfiler de nouveau. Elle ne renvoie rien.
 
-```python
-p = Pile()
-for x in [1, 2, 3]:
-    p.empiler(x)
-print(p.vider())      # [3, 2, 1]
-print(p.est_vide())   # True
-```
+Exemple : si `f` contient `1 | 2 | 3`, la tête à gauche, après `renverser(f)` elle contient `3 | 2 | 1`.
 
 <PostIt>
 
-- une méthode appelle une autre méthode avec `self.` : `self.depiler()`
-- `while not self.est_vide():`
-- `resultat.append(...)` : ajoute à la fin
-- la méthode s'écrit dans la classe, avec la même indentation que les autres
+- `p = Pile()` : une pile vide
+- `p.empiler(f.defiler())` : la tête de la file passe sur la pile
+- `while not f.est_vide():` : tant que la file n'est pas vide
+- le dernier empilé sort le premier
 
 </PostIt>
 
 <Indices>
 <Indice>
 
-Tant que la pile n'est pas vide, dépiler un élément et l'ajouter à la liste résultat.
+Après avoir défilé `1`, `2` puis `3` et les avoir empilés, le sommet de la pile est `3`. Dépiler donne donc `3`, puis `2`, puis `1`.
 
 </Indice>
 <Indice>
 
-Pour une pile déjà vide, la boucle ne tourne pas et la méthode renvoie `[]`.
+Deux boucles `while` suffisent : la première vide la file dans la pile, la seconde vide la pile dans la file.
 
 </Indice>
 <Indice>
 
 ```text
-MÉTHODE vider()
-    retires ← liste vide
-    TANT QUE la pile n'est pas vide
-        ajouter depiler() à la fin de retires
-    RENVOYER retires
+FONCTION renverser(f)
+    p ← nouvelle Pile
+    TANT QUE f n'est pas vide
+        empiler defiler(f) sur p
+    TANT QUE p n'est pas vide
+        enfiler depiler(p) dans f
 ```
 
 </Indice>
@@ -1437,11 +1971,37 @@ class Pile:
     def taille(self):
         return len(self.elements)
 
-    def vider(self):
-        retires = []
-        while not self.est_vide():
-            retires.append(self.depiler())
-        return retires
+
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def renverser(f):
+    p = Pile()
+    while not f.est_vide():
+        p.empiler(f.defiler())
+    while not p.est_vide():
+        f.enfiler(p.depiler())
 ```
 
 </Correction>
@@ -1449,6 +2009,363 @@ class Pile:
 <CodeDepart>
 
 ```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def renverser(f):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def renverser", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+def file_de(elements):
+    f = File()
+    for x in elements:
+        f.enfiler(x)
+    return f
+f = file_de([1, 2, 3])
+assert renverser(f) is None and f.elements == [3, 2, 1], "1 | 2 | 3 devient 3 | 2 | 1."
+f = file_de(["a"])
+renverser(f)
+assert f.elements == ["a"], "Un seul élément : la file ne change pas."
+f = file_de([])
+renverser(f)
+assert f.elements == [], "Une file vide reste vide."
+f = file_de([4, 4, 1, 9])
+renverser(f)
+assert f.elements == [9, 1, 4, 4], "4 | 4 | 1 | 9 devient 9 | 1 | 4 | 4."
+assert "Pile()" in corps and ".depiler()" in corps, "Passer par une pile : Pile(), empiler, depiler."
+assert ".elements" not in corps and "reverse" not in corps, "Utiliser les méthodes de la file et de la pile, sans toucher à elements."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-2-2" label="2.2 [Facile] - Passage en caisse" type="python">
+<Enonce>
+### Passage en caisse
+
+Des clients font la queue à une caisse, dans la file `f`. Écrire la fonction `caisse(f, n)` :
+
+- la caisse sert `n` clients, ou tous les clients s'il y en a moins de `n` ;
+- la fonction renvoie une nouvelle file, qui contient les clients servis dans l'ordre où ils sont passés ;
+- les clients qui n'ont pas été servis restent dans `f`, dans leur ordre.
+
+Exemple : si `f` contient `"Ada" | "Alan" | "Grace" | "Linus"`, la tête à gauche, `servis = caisse(f, 2)` donne une file `servis` qui contient `"Ada" | "Alan"`, et `f` contient encore `"Grace" | "Linus"`.
+
+<PostIt>
+
+- `servis = File()` : la file des clients servis
+- `servis.enfiler(f.defiler())` : un client passe d'une file à l'autre
+- `for _ in range(n):` : répéter `n` fois
+- `f.est_vide()` : plus personne dans la file
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Défiler `n` fois depuis `f`, en s'arrêtant plus tôt si `f` se vide. Chaque client défilé est enfilé dans `servis`.
+
+</Indice>
+<Indice>
+
+Il n'y a rien à faire pour les clients qui attendent encore : ils sont restés dans `f`, dans leur ordre d'arrivée.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION caisse(f, n)
+    servis ← nouvelle File
+    RÉPÉTER n FOIS
+        SI f n'est pas vide ALORS
+            enfiler defiler(f) dans servis
+    RENVOYER servis
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def caisse(f, n):
+    servis = File()
+    for _ in range(n):
+        if not f.est_vide():
+            servis.enfiler(f.defiler())
+    return servis
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def caisse(f, n):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def caisse", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+def file_de(elements):
+    f = File()
+    for x in elements:
+        f.enfiler(x)
+    return f
+f = file_de(["Ada", "Alan", "Grace", "Linus"])
+servis = caisse(f, 2)
+assert isinstance(servis, File), "caisse renvoie une File."
+assert servis.elements == ["Ada", "Alan"] and f.elements == ["Grace", "Linus"], "Deux clients servis, deux en attente."
+f = file_de(["Ada", "Alan"])
+servis = caisse(f, 5)
+assert servis.elements == ["Ada", "Alan"] and f.est_vide(), "Moins de clients que n : tout le monde est servi."
+f = file_de(["Ada", "Alan"])
+assert caisse(f, 0).est_vide() and f.elements == ["Ada", "Alan"], "n = 0 : personne n'est servi."
+assert caisse(File(), 3).est_vide(), "Aucun client : la file renvoyée est vide."
+assert "File()" in corps and ".defiler()" in corps, "Passer par une file : File(), enfiler, defiler."
+assert ".elements" not in corps, "Utiliser les méthodes de la file, sans toucher à elements."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-2-3" label="2.3 [Facile] - Vider une pile" type="python">
+<Enonce>
+### Vider une pile
+
+Ajouter à la classe `Pile` du code de départ la méthode `vider()`, qui retire tous les éléments de la pile et renvoie une `File` contenant les éléments retirés, dans leur ordre de sortie. La méthode utilise `self.depiler()`.
+
+```python
+p = Pile()
+p.empiler(1)
+p.empiler(2)
+p.empiler(3)
+sortis = p.vider()
+print(sortis.defiler())   # 3 : le premier élément sorti de la pile
+print(sortis.taille())    # 2
+print(p.est_vide())       # True
+```
+
+<PostIt>
+
+- une méthode appelle une autre méthode avec `self.` : `self.depiler()`
+- `while not self.est_vide():`
+- `sortis = File()`, puis `sortis.enfiler(x)`
+- la méthode s'écrit dans la classe, avec la même indentation que les autres
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Tant que la pile n'est pas vide, dépiler un élément et l'enfiler dans la file.
+
+</Indice>
+<Indice>
+
+Le premier élément dépilé est le sommet : il se retrouve en tête de la file. Pour une pile déjà vide, la boucle ne tourne pas et la méthode renvoie une file vide.
+
+</Indice>
+<Indice>
+
+```text
+MÉTHODE vider()
+    sortis ← nouvelle File
+    TANT QUE la pile n'est pas vide
+        enfiler depiler() dans sortis
+    RENVOYER sortis
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+    def vider(self):
+        sortis = File()
+        while not self.est_vide():
+            sortis.enfiler(self.depiler())
+        return sortis
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
 class Pile:
     def __init__(self):
         self.elements = []
@@ -1480,37 +2397,41 @@ class Pile:
 <Verification>
 
 ```python
+corps = PROGRAMME.split("def vider", 1)[-1].split("\n    def ", 1)[0].split("\nclass ", 1)[0]
 p = Pile()
 for x in [1, 2, 3]:
     p.empiler(x)
-assert p.vider() == [3, 2, 1], "Les éléments sortent du sommet vers le fond : [3, 2, 1]."
+sortis = p.vider()
+assert isinstance(sortis, File), "vider renvoie une File."
+assert sortis.elements == [3, 2, 1], "Les éléments sortent du sommet vers le fond : 3 en tête de la file."
 assert p.est_vide(), "Après vider(), la pile est vide."
-assert Pile().vider() == [], "Vider une pile vide renvoie []."
-assert "self.depiler()" in PROGRAMME, "vider utilise self.depiler()."
+assert Pile().vider().est_vide(), "Vider une pile vide renvoie une file vide."
+assert "self.depiler()" in corps, "vider utilise self.depiler()."
+assert ".elements" not in corps, "Utiliser les méthodes de la pile et de la file, sans toucher à elements."
 ```
 
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="tnsi-pf-1-4" label="1.4 [Introduction] - Le bouton Précédent" type="python">
+<ExerciseSection id="tnsi-pf-2-4" label="2.4 [Facile] - Le bouton Précédent" type="python">
 <Enonce>
 ### Le bouton Précédent
 
-Un navigateur garde dans une pile les pages déjà visitées. La navigation commence sur la page `"accueil"`. La liste `actions` contient, dans l'ordre, ce que fait l'utilisateur :
+Un navigateur garde dans une pile les pages déjà visitées. La navigation commence sur la page `"accueil"`. La file `actions` contient, dans l'ordre, ce que fait l'utilisateur :
 
 - un nom de page, par exemple `"cours"`, signifie que l'utilisateur ouvre cette page ;
 - `"retour"` signifie qu'il clique sur le bouton Précédent, qui ramène à la page visitée juste avant. S'il n'y a pas de page précédente, rien ne se passe.
 
-Écrire la fonction `naviguer(actions)`, qui renvoie la page affichée à la fin.
+Écrire la fonction `naviguer(actions)`, qui renvoie la page affichée à la fin. La file `actions` peut être vidée par la fonction.
 
-Exemples : `naviguer(["cours", "exercices", "retour"])` renvoie `"cours"`, et `naviguer(["retour"])` renvoie `"accueil"`.
+Exemples : si `actions` contient `"cours" | "exercices" | "retour"`, la tête à gauche, `naviguer(actions)` renvoie `"cours"`. Si `actions` contient seulement `"retour"`, la fonction renvoie `"accueil"`.
 
 <PostIt>
 
 - `courante` : la page affichée, au départ `"accueil"`
+- `while not actions.est_vide():`, puis `action = actions.defiler()`
 - ouvrir une page : empiler `courante`, puis changer de page
-- `"retour"` : la page précédente est le sommet de la pile
-- tester `p.est_vide()` avant de dépiler
+- `"retour"` : la page précédente est le sommet de la pile, si elle n'est pas vide
 
 </PostIt>
 
@@ -1530,7 +2451,8 @@ La pile ne contient pas la page affichée, seulement celles qui ont été quitt�
 ```text
 FONCTION naviguer(actions)
     p ← nouvelle Pile ; courante ← "accueil"
-    POUR CHAQUE action DE actions
+    TANT QUE actions n'est pas vide
+        action ← defiler(actions)
         SI action = "retour" ALORS
             SI p n'est pas vide ALORS courante ← depiler(p)
         SINON
@@ -1568,10 +2490,35 @@ class Pile:
         return len(self.elements)
 
 
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
 def naviguer(actions):
     p = Pile()
     courante = "accueil"
-    for action in actions:
+    while not actions.est_vide():
+        action = actions.defiler()
         if action == "retour":
             if not p.est_vide():
                 courante = p.depiler()
@@ -1610,6 +2557,30 @@ class Pile:
         return len(self.elements)
 
 
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
 def naviguer(actions):
     ...
 ```
@@ -1619,17 +2590,23 @@ def naviguer(actions):
 
 ```python
 corps = PROGRAMME.split("def naviguer", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
-assert naviguer(["cours", "exercices", "retour"]) == "cours", "Un retour ramène de exercices à cours."
-assert naviguer(["retour"]) == "accueil" and naviguer([]) == "accueil", "Sans page précédente, on reste sur accueil."
-assert naviguer(["cours", "exercices", "retour", "retour", "retour"]) == "accueil", "Trois retours : le dernier ne fait rien."
-assert naviguer(["cours", "exercices", "retour", "corrections", "retour"]) == "cours", "Après un retour, une nouvelle page est empilée normalement."
-assert "Pile()" in corps, "Garder les pages quittées dans une pile."
+def file_de(elements):
+    f = File()
+    for x in elements:
+        f.enfiler(x)
+    return f
+assert naviguer(file_de(["cours", "exercices", "retour"])) == "cours", "Un retour ramène de exercices à cours."
+assert naviguer(file_de(["retour"])) == "accueil" and naviguer(File()) == "accueil", "Sans page précédente, on reste sur accueil."
+assert naviguer(file_de(["cours", "exercices", "retour", "retour", "retour"])) == "accueil", "Trois retours : le dernier ne fait rien."
+assert naviguer(file_de(["cours", "exercices", "retour", "corrections", "retour"])) == "cours", "Après un retour, une nouvelle page est empilée normalement."
+assert "Pile()" in corps and ".defiler()" in corps, "Lire les actions dans la file et garder les pages quittées dans une pile."
+assert ".elements" not in corps, "Utiliser les méthodes de la pile et de la file, sans toucher à elements."
 ```
 
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="tnsi-pf-2-1" label="2.1 [Facile] - Faire tourner une file" type="python">
+<ExerciseSection id="tnsi-pf-2-5" label="2.5 [Facile] - Faire tourner une file" type="python">
 <Enonce>
 ### Faire tourner une file
 
@@ -1760,7 +2737,7 @@ assert ".elements" not in corps, "Utiliser defiler et enfiler, sans toucher à e
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="tnsi-pf-2-2" label="2.2 [Facile] - Parenthèses" type="python">
+<ExerciseSection id="tnsi-pf-2-6" label="2.6 [Facile] - Parenthèses" type="python">
 <Enonce>
 ### Parenthèses
 
@@ -1894,7 +2871,7 @@ assert "Pile()" in corps and ".empiler(" in corps, "Utiliser une pile."
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="tnsi-pf-2-3" label="2.3 [Facile] - Alterner deux files" type="python">
+<ExerciseSection id="tnsi-pf-2-7" label="2.7 [Facile] - Alterner deux files" type="python">
 <Enonce>
 ### Alterner deux files
 
@@ -2029,7 +3006,7 @@ assert ".elements" not in corps, "Utiliser les méthodes des files, sans toucher
 </Verification>
 </ExerciseSection>
 
-<ExerciseSection id="tnsi-pf-2-4" label="2.4 [Facile] - Compter sans abîmer" type="python">
+<ExerciseSection id="tnsi-pf-2-8" label="2.8 [Facile] - Compter sans abîmer" type="python">
 <Enonce>
 ### Compter sans abîmer
 
@@ -2173,9 +3150,9 @@ Exemples : `"{[(a)(b)]}"` est bien formée, mais pas `"([)]"`, car le crochet se
 
 <PostIt>
 
-- `paires = {")": "(", "]": "[", "}": "{"}` : l'ouvrant attendu pour chaque fermant
-- `c in "([{"` : vrai si `c` est un ouvrant
-- comparer `p.depiler()` à `paires[c]`
+- `c in "([{"` : vrai si `c` est un ouvrant, `c in ")]}"` si c'est un fermant
+- une petite fonction `associes(ouvrant, fermant)` dit si deux symboles vont ensemble
+- un fermant : `associes(p.depiler(), c)` doit être vrai
 - à la fin, `p.est_vide()`
 
 </PostIt>
@@ -2194,12 +3171,16 @@ Un fermant sur une pile vide, ou un sommet qui n'est pas l'ouvrant attendu, donn
 <Indice>
 
 ```text
+FONCTION associes(ouvrant, fermant)
+    RENVOYER (ouvrant = "(" ET fermant = ")") OU (ouvrant = "[" ET fermant = "]")
+             OU (ouvrant = "{" ET fermant = "}")
+
 FONCTION bien_formee(expression)
-    p ← nouvelle Pile ; paires ← {")": "(", "]": "[", "}": "{"}
+    p ← nouvelle Pile
     POUR CHAQUE c DE expression
         SI c est un ouvrant ALORS empiler c sur p
         SINON SI c est un fermant ALORS
-            SI p est vide OU depiler(p) ≠ paires[c] ALORS RENVOYER Faux
+            SI p est vide OU NON associes(depiler(p), c) ALORS RENVOYER Faux
     RENVOYER p est vide
 ```
 
@@ -2233,14 +3214,17 @@ class Pile:
         return len(self.elements)
 
 
+def associes(ouvrant, fermant):
+    return (ouvrant == "(" and fermant == ")") or (ouvrant == "[" and fermant == "]") or (ouvrant == "{" and fermant == "}")
+
+
 def bien_formee(expression):
     p = Pile()
-    paires = {")": "(", "]": "[", "}": "{"}
     for c in expression:
         if c in "([{":
             p.empiler(c)
-        elif c in paires:
-            if p.est_vide() or p.depiler() != paires[c]:
+        elif c in ")]}":
+            if p.est_vide() or not associes(p.depiler(), c):
                 return False
     return p.est_vide()
 ```
@@ -2300,43 +3284,45 @@ assert "Pile()" in corps, "Utiliser une pile."
 
 En **notation polonaise inverse** (NPI), l'opérateur s'écrit après ses deux opérandes : `3 4 +` signifie `3 + 4`, et `3 4 + 2 *` signifie `(3 + 4) * 2`. Cette notation n'a besoin d'aucune parenthèse. Certaines calculatrices l'utilisent.
 
-Écrire la fonction `evaluer_npi(expression)`, qui calcule la valeur d'une expression en NPI. Les nombres sont des entiers positifs, les opérateurs sont `+`, `-` et `*`, et tous les morceaux sont séparés par des espaces.
+Écrire la fonction `evaluer_npi(f)`, qui calcule la valeur d'une expression en NPI. L'expression est donnée par la file `f`, dans l'ordre de lecture : chaque élément est un entier positif ou l'un des opérateurs `"+"`, `"-"` et `"*"`. La file peut être vidée par la fonction.
 
-Exemples : `evaluer_npi("3 4 + 2 *")` renvoie `14`, et `evaluer_npi("7 2 -")` renvoie `5`.
+Exemples, la tête à gauche :
 
-Contrainte : sans `eval`.
+- si `f` contient `3 | 4 | "+" | 2 | "*"`, `evaluer_npi(f)` renvoie `14` ;
+- si `f` contient `7 | 2 | "-"`, `evaluer_npi(f)` renvoie `5`.
 
 <PostIt>
 
-- `expression.split()` : la liste des morceaux, par exemple `["3", "4", "+"]`
-- `int("12")` vaut `12`
-- un nombre est empilé
+- `morceau = f.defiler()` : le morceau suivant de l'expression
+- un entier est empilé
 - un opérateur : dépiler `b`, puis `a`, et empiler `a op b`
+- à la fin, le résultat est le seul élément de la pile
 
 </PostIt>
 
 <Indices>
 <Indice>
 
-Lire les morceaux de gauche à droite. Les nombres attendent sur la pile que leur opérateur arrive.
+Défiler les morceaux un par un. Les nombres attendent sur la pile que leur opérateur arrive.
 
 </Indice>
 <Indice>
 
-Pour `7 2 -`, le premier élément dépilé est `2`, le second `7`. Le résultat est `7 - 2`, donc le second dépilé moins le premier.
+Pour `7 | 2 | "-"`, le premier élément dépilé est `2`, le second `7`. Le résultat est `7 - 2`, donc le second dépilé moins le premier.
 
 </Indice>
 <Indice>
 
 ```text
-FONCTION evaluer_npi(expression)
+FONCTION evaluer_npi(f)
     p ← nouvelle Pile
-    POUR CHAQUE morceau DE expression découpée aux espaces
-        SI morceau est un opérateur ALORS
+    TANT QUE f n'est pas vide
+        morceau ← defiler(f)
+        SI morceau est "+", "-" ou "*" ALORS
             b ← depiler(p) ; a ← depiler(p)
             empiler (a morceau b) sur p
         SINON
-            empiler l'entier morceau sur p
+            empiler morceau sur p
     RENVOYER depiler(p)
 ```
 
@@ -2370,10 +3356,35 @@ class Pile:
         return len(self.elements)
 
 
-def evaluer_npi(expression):
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def evaluer_npi(f):
     p = Pile()
-    for morceau in expression.split():
-        if morceau in "+-*":
+    while not f.est_vide():
+        morceau = f.defiler()
+        if morceau == "+" or morceau == "-" or morceau == "*":
             b = p.depiler()
             a = p.depiler()
             if morceau == "+":
@@ -2383,7 +3394,7 @@ def evaluer_npi(expression):
             else:
                 p.empiler(a * b)
         else:
-            p.empiler(int(morceau))
+            p.empiler(morceau)
     return p.depiler()
 ```
 
@@ -2416,7 +3427,31 @@ class Pile:
         return len(self.elements)
 
 
-def evaluer_npi(expression):
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def evaluer_npi(f):
     ...
 ```
 
@@ -2426,12 +3461,18 @@ def evaluer_npi(expression):
 ```python
 import re
 corps = PROGRAMME.split("def evaluer_npi", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
-assert evaluer_npi("3 4 + 2 *") == 14, "3 4 + 2 * vaut (3 + 4) * 2 = 14."
-assert evaluer_npi("7 2 -") == 5, "7 2 - vaut 7 - 2 = 5 : attention à l'ordre."
-assert evaluer_npi("42") == 42, "Un nombre seul."
-assert evaluer_npi("2 3 4 * +") == 14 and evaluer_npi("5 1 2 + 4 * + 3 -") == 14, "Plusieurs opérateurs."
-assert evaluer_npi("10 20 30 - -") == 20, "10 - (20 - 30) = 20."
-assert "Pile()" in corps and not re.search(r"\beval\s*\(", PROGRAMME), "Avec une pile, sans eval."
+def npi(texte):
+    f = File()
+    for morceau in texte.split():
+        f.enfiler(morceau if morceau in "+-*" else int(morceau))
+    return f
+assert evaluer_npi(npi("3 4 + 2 *")) == 14, "3 | 4 | \"+\" | 2 | \"*\" vaut (3 + 4) * 2 = 14."
+assert evaluer_npi(npi("7 2 -")) == 5, "7 | 2 | \"-\" vaut 7 - 2 = 5 : attention à l'ordre."
+assert evaluer_npi(npi("42")) == 42, "Un nombre seul."
+assert evaluer_npi(npi("2 3 4 * +")) == 14 and evaluer_npi(npi("5 1 2 + 4 * + 3 -")) == 14, "Plusieurs opérateurs."
+assert evaluer_npi(npi("10 20 30 - -")) == 20, "10 - (20 - 30) = 20."
+assert "Pile()" in corps and ".defiler()" in corps, "Lire l'expression dans la file, calculer avec une pile."
+assert ".elements" not in corps and not re.search(r"\beval\s*\(", corps), "Utiliser les méthodes de la pile et de la file, sans eval."
 ```
 
 </Verification>
@@ -2605,7 +3646,7 @@ assert ".elements" not in corps and ".pop(" not in corps, "Utiliser les méthode
 <Enonce>
 ### Annuler et rétablir
 
-Un éditeur de texte très simple part d'un texte vide. La liste `actions` contient, dans l'ordre :
+Un éditeur de texte très simple part d'un texte vide. La file `actions` contient, dans l'ordre :
 
 - `"+abc"` : écrire `abc` à la fin du texte (tout ce qui suit le `+`) ;
 - `"annuler"` : revenir au texte d'avant la dernière écriture qui n'a pas été annulée ;
@@ -2613,13 +3654,16 @@ Un éditeur de texte très simple part d'un texte vide. La liste `actions` conti
 
 Une nouvelle écriture efface les actions annulées : après elle, `"retablir"` ne fait plus rien. Annuler ou rétablir quand c'est impossible ne fait rien non plus.
 
-Écrire la fonction `editer(actions)`, qui renvoie le texte final. Elle utilise deux piles de textes : `historique`, qui garde les textes précédents, et `annules`, qui garde les textes annulés.
+Écrire la fonction `editer(actions)`, qui renvoie le texte final. La file `actions` peut être vidée par la fonction. La fonction utilise deux piles de textes : `historique`, qui garde les textes précédents, et `annules`, qui garde les textes annulés.
 
-Exemples : `editer(["+Bon", "+jour", "annuler", "+soir"])` renvoie `"Bonsoir"`, et `editer(["+a", "+b", "annuler", "annuler", "retablir"])` renvoie `"a"`.
+Exemples, la tête à gauche :
+
+- si `actions` contient `"+Bon" | "+jour" | "annuler" | "+soir"`, `editer(actions)` renvoie `"Bonsoir"` ;
+- si `actions` contient `"+a" | "+b" | "annuler" | "annuler" | "retablir"`, `editer(actions)` renvoie `"a"`.
 
 <PostIt>
 
-- `action[0] == "+"` : une écriture, et `action[1:]` le texte écrit
+- `action = actions.defiler()` ; `action[0] == "+"` repère une écriture, et `action[1:]` est le texte écrit
 - écrire : empiler le texte actuel dans `historique`
 - annuler : empiler le texte actuel dans `annules`, reprendre le sommet d'`historique`
 - une écriture vide la pile `annules` : `annules = Pile()`
@@ -2642,7 +3686,8 @@ Rétablir fait le chemin inverse d'annuler : le texte actuel retourne dans `hist
 ```text
 FONCTION editer(actions)
     texte ← "" ; historique ← nouvelle Pile ; annules ← nouvelle Pile
-    POUR CHAQUE action DE actions
+    TANT QUE actions n'est pas vide
+        action ← defiler(actions)
         SI action commence par "+" ALORS
             empiler texte sur historique ; texte ← texte + action sans le "+"
             annules ← nouvelle Pile
@@ -2683,11 +3728,36 @@ class Pile:
         return len(self.elements)
 
 
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
 def editer(actions):
     texte = ""
     historique = Pile()
     annules = Pile()
-    for action in actions:
+    while not actions.est_vide():
+        action = actions.defiler()
         if action[0] == "+":
             historique.empiler(texte)
             texte = texte + action[1:]
@@ -2730,6 +3800,30 @@ class Pile:
         return len(self.elements)
 
 
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
 def editer(actions):
     ...
 ```
@@ -2739,13 +3833,361 @@ def editer(actions):
 
 ```python
 corps = PROGRAMME.split("def editer", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
-assert editer(["+Bon", "+jour"]) == "Bonjour", "Deux écritures : Bonjour."
-assert editer(["+Bon", "+jour", "annuler", "+soir"]) == "Bonsoir", "Annuler jour, puis écrire soir."
-assert editer(["+a", "+b", "annuler", "annuler", "retablir"]) == "a", "Deux annulations puis un rétablissement : a."
-assert editer(["+a", "+b", "annuler", "annuler", "retablir", "retablir"]) == "ab", "Tout est rétabli : ab."
-assert editer(["+a", "annuler", "+b", "retablir"]) == "b", "Après une nouvelle écriture, rétablir ne fait rien."
-assert editer(["annuler", "retablir", "+x", "annuler", "annuler"]) == "", "Annuler ou rétablir sans rien à faire ne change rien."
-assert corps.count("Pile()") >= 2, "Utiliser deux piles."
+def file_de(elements):
+    f = File()
+    for x in elements:
+        f.enfiler(x)
+    return f
+assert editer(file_de(["+Bon", "+jour"])) == "Bonjour", "Deux écritures : Bonjour."
+assert editer(file_de(["+Bon", "+jour", "annuler", "+soir"])) == "Bonsoir", "Annuler jour, puis écrire soir."
+assert editer(file_de(["+a", "+b", "annuler", "annuler", "retablir"])) == "a", "Deux annulations puis un rétablissement : a."
+assert editer(file_de(["+a", "+b", "annuler", "annuler", "retablir", "retablir"])) == "ab", "Tout est rétabli : ab."
+assert editer(file_de(["+a", "annuler", "+b", "retablir"])) == "b", "Après une nouvelle écriture, rétablir ne fait rien."
+assert editer(file_de(["annuler", "retablir", "+x", "annuler", "annuler"])) == "", "Annuler ou rétablir sans rien à faire ne change rien."
+assert editer(File()) == "", "Aucune action : le texte reste vide."
+assert corps.count("Pile()") >= 2 and ".defiler()" in corps, "Lire les actions dans la file et utiliser deux piles."
+assert ".elements" not in corps, "Utiliser les méthodes des piles et de la file, sans toucher à elements."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-3-5" label="3.5 [Moyen] - Inverser le début d'une file" type="python">
+<Enonce>
+### Inverser le début d'une file
+
+Écrire la fonction `inverser_debut(f, k)`, qui inverse l'ordre des `k` premiers éléments de la file `f`, à partir de la tête. Les autres éléments gardent leur ordre et restent derrière. Si `k` dépasse la taille de la file, toute la file est inversée. La fonction ne renvoie rien.
+
+La fonction utilise une pile auxiliaire et les méthodes de la file.
+
+Exemple : si `f` contient `1 | 2 | 3 | 4 | 5`, la tête à gauche, après `inverser_debut(f, 3)` elle contient `3 | 2 | 1 | 4 | 5`.
+
+<PostIt>
+
+- défiler les `k` premiers éléments et les empiler
+- les dépiler pour les enfiler : leur ordre est inversé
+- ils se retrouvent alors derrière les autres
+- faire passer les autres, un par un, de la tête à la queue
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+Avec `1 | 2 | 3 | 4 | 5` et `k = 3` : après avoir défilé `1`, `2`, `3` vers une pile, puis les avoir dépilés vers la file, la file contient `4 | 5 | 3 | 2 | 1`.
+
+</Indice>
+<Indice>
+
+Il reste à faire passer en queue, une fois chacun, les éléments qui étaient derrière les `k` premiers. Leur nombre est la taille de départ moins `k`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION inverser_debut(f, k)
+    k ← minimum de k et de taille(f)
+    reste ← taille(f) - k
+    p ← nouvelle Pile
+    RÉPÉTER k FOIS
+        empiler defiler(f) sur p
+    TANT QUE p n'est pas vide
+        enfiler depiler(p) dans f
+    RÉPÉTER reste FOIS
+        enfiler defiler(f) dans f
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def inverser_debut(f, k):
+    k = min(k, f.taille())
+    reste = f.taille() - k
+    p = Pile()
+    for _ in range(k):
+        p.empiler(f.defiler())
+    while not p.est_vide():
+        f.enfiler(p.depiler())
+    for _ in range(reste):
+        f.enfiler(f.defiler())
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def inverser_debut(f, k):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def inverser_debut", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+def file_de(liste):
+    f = File()
+    for x in liste:
+        f.enfiler(x)
+    return f
+f = file_de([1, 2, 3, 4, 5])
+assert inverser_debut(f, 3) is None and f.elements == [3, 2, 1, 4, 5], "k = 3 : [1, 2, 3, 4, 5] devient [3, 2, 1, 4, 5]."
+f = file_de([1, 2, 3, 4, 5])
+inverser_debut(f, 5)
+assert f.elements == [5, 4, 3, 2, 1], "k = taille : toute la file est inversée."
+f = file_de(["a", "b", "c"])
+inverser_debut(f, 0)
+assert f.elements == ["a", "b", "c"], "k = 0 : la file ne change pas."
+f = file_de([1, 2])
+inverser_debut(f, 7)
+assert f.elements == [2, 1], "k plus grand que la taille : toute la file est inversée."
+f = file_de([])
+inverser_debut(f, 2)
+assert f.elements == [], "Une file vide reste vide."
+assert "Pile()" in corps, "Passer par une pile auxiliaire."
+assert ".elements" not in corps, "Utiliser les méthodes de la file, sans toucher à elements."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-3-6" label="3.6 [Moyen] - Effacer les paires" type="python">
+<Enonce>
+### Effacer les paires
+
+Dans un mot, deux lettres identiques placées côte à côte s'effacent. L'effacement continue tant qu'il reste une telle paire. Par exemple, dans `"abbaca"`, la paire `"bb"` s'efface et laisse `"aaca"`, puis la paire `"aa"` s'efface et laisse `"ca"`.
+
+Écrire la fonction `reduire(mot)`, qui renvoie le mot qui reste à la fin. La fonction parcourt le mot une seule fois, avec une pile.
+
+Exemples : `reduire("abbaca")` renvoie `"ca"`, `reduire("aabb")` renvoie `""` et `reduire("abc")` renvoie `"abc"`.
+
+Contrainte : sans `replace`.
+
+<PostIt>
+
+- parcourir le mot lettre par lettre
+- comparer la lettre au sommet de la pile
+- égale au sommet : dépiler ; sinon : empiler
+- à la fin, dépiler en ajoutant chaque lettre **devant** le résultat
+
+</PostIt>
+
+<Indices>
+<Indice>
+
+La pile contient le début du mot, déjà réduit. Une nouvelle lettre égale au sommet forme une paire avec lui : les deux disparaissent.
+
+</Indice>
+<Indice>
+
+Après le parcours, la pile contient le mot final, sa dernière lettre au sommet. En dépilant, les lettres sortent de la dernière à la première.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION reduire(mot)
+    p ← nouvelle Pile
+    POUR CHAQUE lettre DE mot
+        SI p n'est pas vide ET sommet(p) = lettre ALORS
+            depiler(p)
+        SINON
+            empiler lettre sur p
+    resultat ← ""
+    TANT QUE p n'est pas vide
+        resultat ← depiler(p) + resultat
+    RENVOYER resultat
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def reduire(mot):
+    p = Pile()
+    for lettre in mot:
+        if not p.est_vide() and p.sommet() == lettre:
+            p.depiler()
+        else:
+            p.empiler(lettre)
+    resultat = ""
+    while not p.est_vide():
+        resultat = p.depiler() + resultat
+    return resultat
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def reduire(mot):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def reduire", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+assert reduire("abbaca") == "ca", "\"abbaca\" : bb s'efface, puis aa, il reste \"ca\"."
+assert reduire("aabb") == "" and reduire("abba") == "", "Tout s'efface : le mot vide."
+assert reduire("abc") == "abc", "Aucune paire : le mot ne change pas."
+assert reduire("") == "", "Le mot vide reste vide."
+assert reduire("azxxzy") == "ay", "\"azxxzy\" : xx, puis zz, il reste \"ay\"."
+assert reduire("aaa") == "a", "\"aaa\" : une paire s'efface, il reste \"a\"."
+assert "Pile()" in corps and ".elements" not in corps, "Passer par une pile et ses méthodes."
+assert "replace" not in corps, "Sans replace."
 ```
 
 </Verification>
@@ -3293,6 +4735,280 @@ assert prochains_plus_grands([1, 1, 2]) == [2, 2, None], "Strictement plus grand
 grand = list(range(20000, 0, -1)) + [30000]
 assert prochains_plus_grands(grand)[0] == 30000, "Une longue liste se traite en un seul parcours."
 assert "Pile()" in corps, "Garder les indices en attente dans une pile."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-4-5" label="4.5 [Difficile] - La voie de garage" type="python">
+<Enonce>
+### La voie de garage
+
+Des wagons numérotés `1, 2, …, n` arrivent sur une voie, dans cet ordre. Avant de partir, chaque wagon entre dans une voie de garage en cul-de-sac, qui fonctionne comme une pile : seul le dernier wagon entré peut ressortir. À tout moment, le wagon au bout de la voie de garage peut partir sur la voie de sortie.
+
+Écrire la fonction `est_realisable(sortie)`, qui renvoie `True` si les wagons peuvent partir dans l'ordre donné par la liste `sortie`, et `False` sinon. La liste `sortie` contient chaque numéro de `1` à `n` une fois.
+
+Exemples :
+
+- `est_realisable([3, 2, 1])` renvoie `True` : les trois wagons entrent, puis partent ;
+- `est_realisable([2, 1, 3])` renvoie `True` ;
+- `est_realisable([3, 1, 2])` renvoie `False` : une fois le wagon 3 parti, le wagon 2 bloque le wagon 1.
+
+<Indices>
+<Indice>
+
+Parcourir `sortie` dans l'ordre. Pour faire partir le wagon attendu, faire entrer dans la voie de garage les wagons qui arrivent, jusqu'à ce qu'il soit au bout.
+
+</Indice>
+<Indice>
+
+Si le wagon attendu est déjà entré dans la voie de garage mais n'est pas au sommet, l'ordre est impossible. Une variable `prochain` garde le numéro du prochain wagon à arriver.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION est_realisable(sortie)
+    p ← nouvelle Pile ; prochain ← 1
+    POUR CHAQUE w DE sortie
+        TANT QUE prochain ≤ w
+            empiler prochain sur p ; prochain ← prochain + 1
+        SI p est vide OU sommet(p) ≠ w ALORS RENVOYER Faux
+        depiler(p)
+    RENVOYER Vrai
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def est_realisable(sortie):
+    p = Pile()
+    prochain = 1
+    for w in sortie:
+        while prochain <= w:
+            p.empiler(prochain)
+            prochain = prochain + 1
+        if p.est_vide() or p.sommet() != w:
+            return False
+        p.depiler()
+    return True
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def est_realisable(sortie):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def est_realisable", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+assert est_realisable([3, 2, 1]) is True and est_realisable([1, 2, 3]) is True, "[3, 2, 1] et [1, 2, 3] sont réalisables."
+assert est_realisable([2, 1, 3]) is True and est_realisable([2, 3, 1]) is True, "[2, 1, 3] et [2, 3, 1] sont réalisables."
+assert est_realisable([3, 1, 2]) is False, "[3, 1, 2] : le wagon 2 bloque le wagon 1."
+assert est_realisable([4, 5, 3, 2, 1]) is True and est_realisable([1, 5, 4, 3, 2]) is True, "Deux ordres réalisables avec 5 wagons."
+assert est_realisable([4, 3, 5, 1, 2]) is False, "[4, 3, 5, 1, 2] : le wagon 2 bloque le wagon 1."
+assert est_realisable([]) is True and est_realisable([1]) is True, "Aucun wagon, puis un seul wagon."
+assert "Pile()" in corps and ".elements" not in corps, "Représenter la voie de garage par une pile."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-4-6" label="4.6 [Difficile] - Le tourniquet" type="python">
+<Enonce>
+### Le tourniquet
+
+Un processeur exécute plusieurs programmes à tour de rôle. Chaque programme est un couple `(nom, duree)`, où `duree` est le temps de calcul dont il a besoin. Les programmes attendent dans une file, dans l'ordre de la liste. Le temps commence à `0`.
+
+À chaque tour, le programme en tête sort de la file et s'exécute pendant `quantum` unités de temps, ou moins s'il lui en reste moins. S'il n'a pas fini, il retourne en queue avec le temps de calcul qui lui reste.
+
+Écrire la fonction `tourniquet(programmes, quantum)`, qui renvoie la liste des couples `(nom, fin)`, où `fin` est l'instant où le programme se termine, dans l'ordre où les programmes se terminent.
+
+```python
+print(tourniquet([("A", 5), ("B", 2), ("C", 4)], 2))
+# [('B', 4), ('C', 10), ('A', 11)]
+```
+
+Dans cet exemple, A s'exécute de 0 à 2, B de 2 à 4 et se termine, C de 4 à 6, A de 6 à 8, C de 8 à 10 et se termine, puis A de 10 à 11.
+
+<Indices>
+<Indice>
+
+La file contient des couples `(nom, reste)`. Une variable `temps` avance de la durée de chaque exécution.
+
+</Indice>
+<Indice>
+
+Une exécution dure `min(quantum, reste)`. Si le reste tombe à `0`, le programme est terminé à l'instant `temps` ; sinon il est enfilé de nouveau.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION tourniquet(programmes, quantum)
+    f ← nouvelle File ; enfiler chaque couple de programmes dans f
+    temps ← 0 ; fins ← liste vide
+    TANT QUE f n'est pas vide
+        (nom, reste) ← defiler(f)
+        duree ← minimum de quantum et de reste
+        temps ← temps + duree ; reste ← reste - duree
+        SI reste = 0 ALORS ajouter (nom, temps) à fins
+        SINON enfiler (nom, reste) dans f
+    RENVOYER fins
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def tourniquet(programmes, quantum):
+    f = File()
+    for programme in programmes:
+        f.enfiler(programme)
+    temps = 0
+    fins = []
+    while not f.est_vide():
+        nom, reste = f.defiler()
+        duree = min(quantum, reste)
+        temps = temps + duree
+        reste = reste - duree
+        if reste == 0:
+            fins.append((nom, temps))
+        else:
+            f.enfiler((nom, reste))
+    return fins
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def tourniquet(programmes, quantum):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def tourniquet", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+assert tourniquet([("A", 5), ("B", 2), ("C", 4)], 2) == [("B", 4), ("C", 10), ("A", 11)], "L'exemple de l'énoncé."
+assert tourniquet([("A", 4), ("B", 4)], 2) == [("A", 6), ("B", 8)], "A et B alternent : A finit à 6, B à 8."
+assert tourniquet([("A", 3), ("B", 1)], 10) == [("A", 3), ("B", 4)], "Un grand quantum : chacun s'exécute d'un coup, dans l'ordre."
+assert tourniquet([("A", 3)], 1) == [("A", 3)], "Un seul programme."
+assert tourniquet([], 3) == [], "Aucun programme."
+programmes = [("A", 2)]
+tourniquet(programmes, 1)
+assert programmes == [("A", 2)], "La liste de départ n'est pas modifiée."
+assert "File()" in corps and ".elements" not in corps, "Faire attendre les programmes dans une file."
 ```
 
 </Verification>
@@ -3874,6 +5590,310 @@ plus_grand_rectangle(depart)
 assert depart == [1, 2], "La liste des hauteurs n'est pas modifiée."
 assert plus_grand_rectangle(list(range(1, 20001))) == 100010000, "Une longue liste se traite en un seul parcours."
 assert "Pile()" in corps, "Garder les indices dans une pile."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-5-5" label="5.5 [Expert] - Décompresser un texte" type="python">
+<Enonce>
+### Décompresser un texte
+
+Un texte est compressé avec la règle suivante : `k[texte]` remplace `texte` répété `k` fois. Le nombre `k` est un entier positif, qui peut avoir plusieurs chiffres. Les crochets peuvent être imbriqués, et les lettres hors des crochets restent telles quelles.
+
+Écrire la fonction `decompresser(code)`, qui renvoie le texte complet.
+
+```python
+print(decompresser("3[ab]c"))      # abababc
+print(decompresser("2[a3[b]]"))    # abbbabbb
+print(decompresser("10[x]"))       # xxxxxxxxxx
+```
+
+La fonction lit `code` une seule fois, caractère par caractère, avec une pile.
+
+<Indices>
+<Indice>
+
+À chaque crochet ouvrant, le texte déjà construit et le nombre qui vient d'être lu sont mis de côté sur la pile, sous la forme d'un couple. La construction repart alors d'un texte vide.
+
+</Indice>
+<Indice>
+
+Au crochet fermant, le texte en cours est répété, puis placé derrière le texte mis de côté. Un nombre de plusieurs chiffres se lit avec `nombre = nombre * 10 + int(c)`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION decompresser(code)
+    p ← nouvelle Pile ; courant ← "" ; nombre ← 0
+    POUR CHAQUE caractère c DE code
+        SI c est un chiffre ALORS
+            nombre ← nombre × 10 + valeur de c
+        SINON SI c = "[" ALORS
+            empiler (courant, nombre) sur p
+            courant ← "" ; nombre ← 0
+        SINON SI c = "]" ALORS
+            (avant, k) ← depiler(p)
+            courant ← avant + courant répété k fois
+        SINON
+            courant ← courant + c
+    RENVOYER courant
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def decompresser(code):
+    p = Pile()
+    courant = ""
+    nombre = 0
+    for c in code:
+        if c.isdigit():
+            nombre = nombre * 10 + int(c)
+        elif c == "[":
+            p.empiler((courant, nombre))
+            courant = ""
+            nombre = 0
+        elif c == "]":
+            avant, k = p.depiler()
+            courant = avant + courant * k
+        else:
+            courant = courant + c
+    return courant
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class Pile:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def empiler(self, x):
+        self.elements.append(x)
+
+    def depiler(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements.pop()
+
+    def sommet(self):
+        if self.est_vide():
+            raise IndexError("pile vide")
+        return self.elements[-1]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def decompresser(code):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+corps = PROGRAMME.split("def decompresser", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+assert decompresser("3[ab]c") == "abababc", "3[ab]c donne abababc."
+assert decompresser("2[a3[b]]") == "abbbabbb", "Crochets imbriqués : 2[a3[b]] donne abbbabbb."
+assert decompresser("10[x]") == "x" * 10 and decompresser("12[z]") == "z" * 12, "Un nombre de deux chiffres."
+assert decompresser("3[a2[c]]") == "accaccacc", "3[a2[c]] donne accaccacc."
+assert decompresser("2[ab]3[c]d") == "ababcccd", "Deux groupes à la suite."
+assert decompresser("abc") == "abc" and decompresser("") == "", "Sans crochets, le texte ne change pas."
+assert decompresser("x2[y2[z]]w") == "xyzzyzzw", "Des lettres avant, entre et après les groupes."
+assert "Pile()" in corps and ".elements" not in corps, "Passer par une pile et ses méthodes."
+assert "eval" not in corps and "replace" not in corps, "Sans eval ni replace."
+```
+
+</Verification>
+</ExerciseSection>
+
+<ExerciseSection id="tnsi-pf-5-6" label="5.6 [Expert] - Le tri par base" type="python">
+<Enonce>
+### Le tri par base
+
+Le tri par base range des entiers positifs ou nuls à l'aide de dix files, numérotées de `0` à `9` :
+
+1. chaque nombre de la liste, dans l'ordre, est enfilé dans la file qui porte le numéro de son chiffre des unités ;
+2. les files `0`, `1`, …, `9` sont ensuite vidées dans cet ordre, ce qui reforme la liste ;
+3. les deux étapes recommencent avec le chiffre des dizaines, puis celui des centaines, et ainsi de suite, autant de fois que le plus grand nombre a de chiffres.
+
+Écrire la fonction `tri_base(nombres)`, qui renvoie une nouvelle liste contenant les éléments de `nombres` dans l'ordre croissant. La liste `nombres` n'est pas modifiée.
+
+```python
+print(tri_base([170, 45, 75, 90, 802, 24, 2, 66]))
+# [2, 24, 45, 66, 75, 90, 170, 802]
+```
+
+Contrainte : sans `sort`, `sorted` ni `str`.
+
+<Indices>
+<Indice>
+
+Le chiffre de rang `r` d'un nombre `x` (le rang `0` pour les unités, `1` pour les dizaines…) vaut `(x // 10 ** r) % 10`. Le nombre de passages se calcule en divisant le plus grand élément par 10 jusqu'à obtenir 0.
+
+</Indice>
+<Indice>
+
+Une file garde l'ordre d'arrivée : deux nombres qui ont le même chiffre au rang étudié restent dans l'ordre obtenu au passage précédent. C'est pour cela que le tri est correct à la fin. Les dix files se rangent dans une liste : `files = [File() for _ in range(10)]`.
+
+</Indice>
+<Indice>
+
+```text
+FONCTION tri_base(nombres)
+    liste ← copie de nombres
+    SI liste est vide ALORS RENVOYER liste
+    passages ← 0 ; m ← maximum de liste
+    RÉPÉTER
+        passages ← passages + 1 ; m ← m // 10
+    JUSQU'À m = 0
+    POUR r ALLANT DE 0 À passages - 1
+        files ← liste de 10 nouvelles Files
+        POUR CHAQUE x DE liste
+            enfiler x dans files[(x // 10^r) mod 10]
+        liste ← liste vide
+        POUR CHAQUE file DE files, dans l'ordre
+            TANT QUE file n'est pas vide
+                ajouter defiler(file) à liste
+    RENVOYER liste
+```
+
+</Indice>
+</Indices>
+
+<Correction>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def tri_base(nombres):
+    liste = list(nombres)
+    if len(liste) == 0:
+        return liste
+    passages = 0
+    m = max(liste)
+    while True:
+        passages = passages + 1
+        m = m // 10
+        if m == 0:
+            break
+    for r in range(passages):
+        files = [File() for _ in range(10)]
+        for x in liste:
+            files[(x // 10 ** r) % 10].enfiler(x)
+        liste = []
+        for file in files:
+            while not file.est_vide():
+                liste.append(file.defiler())
+    return liste
+```
+
+</Correction>
+</Enonce>
+<CodeDepart>
+
+```python
+class File:
+    def __init__(self):
+        self.elements = []
+
+    def est_vide(self):
+        return len(self.elements) == 0
+
+    def enfiler(self, x):
+        self.elements.append(x)
+
+    def defiler(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements.pop(0)
+
+    def premier(self):
+        if self.est_vide():
+            raise IndexError("file vide")
+        return self.elements[0]
+
+    def taille(self):
+        return len(self.elements)
+
+
+def tri_base(nombres):
+    ...
+```
+
+</CodeDepart>
+<Verification>
+
+```python
+import re
+corps = PROGRAMME.split("def tri_base", 1)[-1].split("\nclass ", 1)[0].split("\ndef ", 1)[0]
+assert tri_base([170, 45, 75, 90, 802, 24, 2, 66]) == [2, 24, 45, 66, 75, 90, 170, 802], "L'exemple de l'énoncé."
+assert tri_base([3, 1, 2]) == [1, 2, 3] and tri_base([5]) == [5] and tri_base([]) == [], "Petites listes."
+assert tri_base([0, 0, 10, 0]) == [0, 0, 0, 10], "Des zéros et un nombre à deux chiffres."
+assert tri_base([1000, 1, 100, 10]) == [1, 10, 100, 1000], "Des nombres de longueurs très différentes."
+assert tri_base([42, 7, 42, 7]) == [7, 7, 42, 42], "Les doublons sont gardés."
+depart = [9, 8, 7]
+tri_base(depart)
+assert depart == [9, 8, 7], "La liste de départ n'est pas modifiée."
+assert "File()" in corps and ".elements" not in corps, "Passer par dix files et leurs méthodes."
+assert not re.search(r"\bsort|\bstr\(", corps), "Sans sort, sorted ni str."
 ```
 
 </Verification>
