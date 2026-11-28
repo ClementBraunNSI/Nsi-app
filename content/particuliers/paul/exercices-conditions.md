@@ -11,155 +11,7 @@ audience:
 
 Sur une exploitation, on prend sans cesse des décisions : arroser ou non la serre, moissonner aujourd'hui ou attendre, sortir les vaches au pré ou les garder à l'étable. En Python, ces décisions s'écrivent avec des **conditions**. Cette fiche reprend `print`, `input` et les variables de la fiche précédente, et ajoute de quoi faire choisir le programme. Chaque partie commence par une explication et un exemple, puis viennent les exercices, du plus simple au moins simple.
 
-## 1. Comparer deux valeurs
-
-Une comparaison pose une question à laquelle Python répond par `True` (vrai) ou `False` (faux). Ces deux valeurs s'appellent des **booléens** (type `bool`).
-
-| Comparaison | Symbole | Exemple | Résultat |
-|---|---|---|---|
-| Égal à | `==` | `12 == 12` | `True` |
-| Différent de | `!=` | `"blé" != "orge"` | `True` |
-| Strictement inférieur | `<` | `25 < 30` | `True` |
-| Strictement supérieur | `>` | `25 > 30` | `False` |
-| Inférieur ou égal | `<=` | `0 <= 0` | `True` |
-| Supérieur ou égal | `>=` | `14 >= 15` | `False` |
-
-Le résultat d'une comparaison se range dans une variable, comme un nombre ou un texte :
-
-```python
-temperature = 3
-gel = temperature <= 0
-print(gel)    # False : il fait 3 degrés, il ne gèle pas
-```
-
-Attention à ne pas confondre `=` et `==` : un seul `=` **range** une valeur dans une variable, deux `==` **testent** si deux valeurs sont égales.
-
-<ExerciseTabs courseId="paul-conditions-comparer" courseTitle="Comparer à la ferme">
-
-  <ExerciseSection id="paul-cond-1-1" label="1.1 [Introduction] - Risque de gel" type="python">
-    <Enonce>
-    ### Exercice 1.1 [Introduction] : Risque de gel
-    **Cette nuit, le thermomètre du verger indique -2 degrés. Créer la variable `temperature` qui vaut `-2`, puis ranger dans `gel` le résultat de la comparaison « la température est inférieure ou égale à 0 ». Afficher `gel`.**
-
-    Le programme doit afficher `True` : il gèle bien.
-
-    <PostIt>
-
-    - `<=` : inférieur ou égal
-    - `gel = temperature <= 0` : range `True` ou `False` dans `gel`
-    - un nombre négatif s'écrit avec le signe moins : `-2`
-    - `True` et `False` s'écrivent avec une majuscule, sans guillemets
-
-    </PostIt>
-
-    <Correction>
-    ```python
-    temperature = -2
-    gel = temperature <= 0
-    print(gel)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'temperature' in locals(), "La variable 'temperature' n'est pas définie."
-assert 'gel' in locals(), "La variable 'gel' n'est pas définie."
-assert temperature == -2, "La variable 'temperature' doit valoir -2."
-assert isinstance(gel, bool), "'gel' doit contenir le résultat d'une comparaison (True ou False), pas un texte."
-assert gel == True, "À -2 degrés, il gèle : 'gel' doit valoir True."
-assert "<=" in PROGRAMME, "Utiliser la comparaison <= pour calculer 'gel'."
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="paul-cond-1-2" label="1.2 [Introduction] - Le rendement du blé" type="python">
-    <Enonce>
-    ### Exercice 1.2 [Introduction] : Le rendement du blé
-    **Cette année, la parcelle de blé a donné 72 quintaux par hectare. L'objectif était d'au moins 70 quintaux, et le record de la ferme est de 85 quintaux. Créer `rendement` (72), puis calculer :**
-    - **`objectif_atteint` : le rendement est-il supérieur ou égal à 70 ?**
-    - **`record_battu` : le rendement est-il strictement supérieur à 85 ?**
-
-    **Afficher les deux variables.**
-
-    <PostIt>
-
-    - `>=` : supérieur ou égal (« au moins »)
-    - `>` : strictement supérieur (« plus que »)
-    - une comparaison par variable
-    - le programme doit afficher `True` puis `False`
-
-    </PostIt>
-
-    <Correction>
-    ```python
-    rendement = 72
-    objectif_atteint = rendement >= 70
-    record_battu = rendement > 85
-    print(objectif_atteint)
-    print(record_battu)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'rendement' in locals(), "La variable 'rendement' n'est pas définie."
-assert 'objectif_atteint' in locals(), "La variable 'objectif_atteint' n'est pas définie."
-assert 'record_battu' in locals(), "La variable 'record_battu' n'est pas définie."
-assert rendement == 72, "La variable 'rendement' doit valoir 72."
-assert isinstance(objectif_atteint, bool) and isinstance(record_battu, bool), "Les deux variables doivent contenir le résultat d'une comparaison (True ou False)."
-assert objectif_atteint == True, "72 quintaux, c'est au moins 70 : 'objectif_atteint' doit valoir True."
-assert record_battu == False, "72 quintaux ne dépassent pas 85 : 'record_battu' doit valoir False."
-    ```
-    </Verification>
-  </ExerciseSection>
-
-  <ExerciseSection id="paul-cond-1-3" label="1.3 [Facile] - La race du troupeau" type="python">
-    <Enonce>
-    ### Exercice 1.3 [Facile] : La race du troupeau
-    **Un éleveur de bovins viande a un troupeau de race Charolaise. Créer `race` qui vaut `"Charolaise"`, puis calculer :**
-    - **`est_charolaise` : `race` est-elle égale à `"Charolaise"` ?**
-    - **`pas_limousine` : `race` est-elle différente de `"Limousine"` ?**
-
-    **Afficher les deux variables.**
-
-    Deux textes sont égaux seulement s'ils ont exactement les mêmes lettres, majuscules comprises : `"charolaise" == "Charolaise"` vaut `False`.
-
-    <PostIt>
-
-    - `==` : est égal à ; `!=` : est différent de
-    - `=` range une valeur, `==` compare deux valeurs
-    - les textes comparés s'écrivent entre guillemets
-    - majuscules et minuscules comptent
-
-    </PostIt>
-
-    <Correction>
-    ```python
-    race = "Charolaise"
-    est_charolaise = race == "Charolaise"
-    pas_limousine = race != "Limousine"
-    print(est_charolaise)
-    print(pas_limousine)
-    ```
-    </Correction>
-    </Enonce>
-    <Verification>
-    ```python
-assert 'race' in locals(), "La variable 'race' n'est pas définie."
-assert 'est_charolaise' in locals(), "La variable 'est_charolaise' n'est pas définie."
-assert 'pas_limousine' in locals(), "La variable 'pas_limousine' n'est pas définie."
-assert race == "Charolaise", "La variable 'race' doit valoir \"Charolaise\"."
-assert isinstance(est_charolaise, bool) and isinstance(pas_limousine, bool), "Les deux variables doivent contenir le résultat d'une comparaison (True ou False)."
-assert est_charolaise == True, "'est_charolaise' doit valoir True."
-assert pas_limousine == True, "Une Charolaise n'est pas une Limousine : 'pas_limousine' doit valoir True."
-assert "!=" in PROGRAMME, "Utiliser != pour calculer 'pas_limousine'."
-    ```
-    </Verification>
-  </ExerciseSection>
-
-</ExerciseTabs>
-
-## 2. Agir seulement si : `if`
+## 1. Agir seulement si : `if`
 
 `if` (« si » en anglais) exécute des instructions **seulement si** une condition est vraie.
 
@@ -177,6 +29,178 @@ Trois règles à respecter :
 - les instructions qui dépendent de la condition sont **décalées vers la droite** (4 espaces, ou la touche Tab) : c'est l'**indentation** ;
 - la première ligne qui n'est plus décalée ne fait plus partie du `if` : ici, `Contrôle terminé.` s'affiche dans tous les cas.
 
+## 2. Comparer deux valeurs
+
+La condition écrite après `if` est le plus souvent une **comparaison** : une question à laquelle Python répond par vrai ou faux. Si la réponse est vraie, le bloc décalé est exécuté ; sinon, il est sauté.
+
+| Comparaison | Symbole | Exemple | Vrai ou faux ? |
+|---|---|---|---|
+| Égal à | `==` | `12 == 12` | vrai |
+| Différent de | `!=` | `"blé" != "orge"` | vrai |
+| Strictement inférieur | `<` | `25 < 30` | vrai |
+| Strictement supérieur | `>` | `25 > 30` | faux |
+| Inférieur ou égal | `<=` | `0 <= 0` | vrai |
+| Supérieur ou égal | `>=` | `14 >= 15` | faux |
+
+```python
+temperature = int(input("Température du verger ? "))
+if temperature <= 0:
+    print("Il gèle cette nuit.")
+```
+
+Attention à ne pas confondre `=` et `==` : un seul `=` **range** une valeur dans une variable, deux `==` **testent** si deux valeurs sont égales.
+
+Comme dans la fiche précédente, le bouton **Exécuter** pose les questions dans une fenêtre, et le bouton **Vérifier** essaie le programme avec plusieurs réponses préparées à l'avance, pour contrôler chaque cas.
+
+<ExerciseTabs courseId="paul-conditions-comparer" courseTitle="Comparer à la ferme">
+
+  <ExerciseSection id="paul-cond-1-1" label="1.1 [Introduction] - Risque de gel" type="python">
+    <Enonce>
+    ### Exercice 1.1 [Introduction] : Risque de gel
+    **Demander la température relevée cette nuit au verger (un nombre entier). Si elle est inférieure ou égale à 0, afficher `Risque de gel : protéger les fleurs.`**
+
+    Exemple d'exécution :
+    ```text
+    Température du verger ? -2
+    Risque de gel : protéger les fleurs.
+    ```
+
+    Avec 5 degrés, le programme n'affiche rien.
+
+    <PostIt>
+
+    - `<=` : inférieur ou égal
+    - `:` à la fin de la ligne du `if`
+    - le `print` est décalé sous le `if`
+    - un nombre négatif se tape avec le signe moins : `-2`
+
+    </PostIt>
+
+    <Correction>
+    ```python
+    temperature = int(input("Température du verger ? "))
+    if temperature <= 0:
+        print("Risque de gel : protéger les fleurs.")
+    ```
+    </Correction>
+    </Enonce>
+    <Verification>
+    ```python
+ENTREES = ["-2"]
+assert "Risque de gel : protéger les fleurs." in SORTIE, "À -2 degrés, afficher : Risque de gel : protéger les fleurs."
+_, sortie = relancer(["0"])
+assert "gel" in sortie, "À 0 degré pile, il gèle aussi : la condition est « inférieure ou égale à 0 »."
+_, sortie = relancer(["5"])
+assert "gel" not in sortie, "À 5 degrés, il ne gèle pas : ne rien afficher."
+assert "<=" in PROGRAMME, "Utiliser la comparaison <= dans le if."
+    ```
+    </Verification>
+  </ExerciseSection>
+
+  <ExerciseSection id="paul-cond-1-2" label="1.2 [Introduction] - Le rendement du blé" type="python">
+    <Enonce>
+    ### Exercice 1.2 [Introduction] : Le rendement du blé
+    **L'objectif de la ferme est de récolter au moins 70 quintaux de blé par hectare, et le record est de 85 quintaux. Demander le rendement de l'année (un nombre entier), puis :**
+    - **si le rendement est supérieur ou égal à 70, afficher `Objectif atteint.` ;**
+    - **si le rendement est strictement supérieur à 85, afficher `Record battu !`**
+
+    Exemple d'exécution :
+    ```text
+    Rendement (en quintaux par hectare) ? 90
+    Objectif atteint.
+    Record battu !
+    ```
+
+    Avec 72 quintaux, seul `Objectif atteint.` s'affiche ; avec 60, rien ne s'affiche.
+
+    <PostIt>
+
+    - `>=` : supérieur ou égal (« au moins »)
+    - `>` : strictement supérieur (« plus que »)
+    - deux `if` l'un après l'autre, chacun avec sa comparaison
+    - les deux `if` sont alignés, leurs `print` sont décalés
+
+    </PostIt>
+
+    <Correction>
+    ```python
+    rendement = int(input("Rendement (en quintaux par hectare) ? "))
+    if rendement >= 70:
+        print("Objectif atteint.")
+    if rendement > 85:
+        print("Record battu !")
+    ```
+    </Correction>
+    </Enonce>
+    <Verification>
+    ```python
+ENTREES = ["72"]
+assert "Objectif atteint." in SORTIE, "Avec 72 quintaux, afficher : Objectif atteint."
+assert "Record" not in SORTIE, "72 quintaux ne dépassent pas 85 : ne pas afficher Record battu !"
+_, sortie = relancer(["90"])
+assert "Objectif atteint." in sortie and "Record battu !" in sortie, "Avec 90 quintaux, afficher les deux messages."
+_, sortie = relancer(["70"])
+assert "Objectif atteint." in sortie, "Avec 70 quintaux pile, l'objectif est atteint : « au moins 70 »."
+_, sortie = relancer(["85"])
+assert "Record" not in sortie, "Avec 85 quintaux pile, le record est égalé mais pas battu : « strictement supérieur à 85 »."
+_, sortie = relancer(["60"])
+assert "Objectif" not in sortie and "Record" not in sortie, "Avec 60 quintaux, aucun message ne doit s'afficher."
+    ```
+    </Verification>
+  </ExerciseSection>
+
+  <ExerciseSection id="paul-cond-1-3" label="1.3 [Facile] - La race du troupeau" type="python">
+    <Enonce>
+    ### Exercice 1.3 [Facile] : La race du troupeau
+    **Un éleveur de bovins viande a un troupeau de race Charolaise. Lors du contrôle des bêtes, il saisit la race de chaque animal. Demander la race, puis :**
+    - **si elle est égale à `"Charolaise"`, afficher `Animal du troupeau.` ;**
+    - **si elle est différente de `"Charolaise"`, afficher `Animal à vérifier.`**
+
+    Exemple d'exécution :
+    ```text
+    Race de l'animal ? Limousine
+    Animal à vérifier.
+    ```
+
+    Deux textes sont égaux seulement s'ils ont exactement les mêmes lettres, majuscules comprises : `"charolaise" == "Charolaise"` est faux.
+
+    <PostIt>
+
+    - `==` : est égal à ; `!=` : est différent de
+    - `=` range une valeur, `==` compare deux valeurs
+    - le texte comparé s'écrit entre guillemets
+    - la race est un texte : pas de `int(...)`
+
+    </PostIt>
+
+    <Correction>
+    ```python
+    race = input("Race de l'animal ? ")
+    if race == "Charolaise":
+        print("Animal du troupeau.")
+    if race != "Charolaise":
+        print("Animal à vérifier.")
+    ```
+
+    Les deux conditions sont exactement contraires : un des deux messages s'affiche toujours, jamais les deux. La partie suivante montre une façon plus courte de l'écrire.
+    </Correction>
+    </Enonce>
+    <Verification>
+    ```python
+ENTREES = ["Charolaise"]
+assert "Animal du troupeau." in SORTIE, "Pour une Charolaise, afficher : Animal du troupeau."
+assert "vérifier" not in SORTIE, "Une Charolaise n'est pas à vérifier."
+for r in ["Limousine", "Salers", "charolaise"]:
+    _, sortie = relancer([r])
+    assert "Animal à vérifier." in sortie, f"Pour la race {r}, afficher : Animal à vérifier."
+    assert "troupeau" not in sortie, f"La race {r} n'est pas celle du troupeau."
+assert "!=" in PROGRAMME, "Utiliser != pour le deuxième test."
+    ```
+    </Verification>
+  </ExerciseSection>
+
+</ExerciseTabs>
+
 ## 3. Sinon : `else`
 
 `else` (« sinon ») donne les instructions à exécuter quand la condition est fausse. Un des deux blocs est toujours exécuté, jamais les deux.
@@ -190,8 +214,6 @@ else:
 ```
 
 `else` n'a pas de condition : il s'écrit seul, suivi des deux points, au même niveau que le `if`.
-
-Comme dans la fiche précédente, le bouton **Exécuter** pose les questions dans une fenêtre, et le bouton **Vérifier** essaie le programme avec plusieurs réponses préparées à l'avance, pour contrôler chaque cas.
 
 <ExerciseTabs courseId="paul-conditions-if" courseTitle="Si… sinon… aux champs">
 
